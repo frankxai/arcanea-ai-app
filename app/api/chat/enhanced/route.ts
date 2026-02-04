@@ -61,8 +61,8 @@ export async function POST(request: NextRequest) {
         })
 
     // Add multimodal suggestions if requested
-    if (multimodal && response.success) {
-      const multimodalSuggestions = await generateMultimodalSuggestions(response.data)
+    if (multimodal && response.success && response.data) {
+      const multimodalSuggestions = await generateMultimodalSuggestions(String(response.data))
       response.multimodal = multimodalSuggestions
     }
 
@@ -106,9 +106,9 @@ async function generateMultimodalSuggestions(content: string) {
       options: { temperature: 0.7, maxTokens: 800 }
     })
 
-    if (suggestions.success) {
+    if (suggestions.success && suggestions.data) {
       try {
-        return JSON.parse(suggestions.data)
+        return JSON.parse(String(suggestions.data))
       } catch {
         return {
           images: ['cinematic scene based on content'],

@@ -22,12 +22,6 @@ const nextConfig = {
       '@react-three/drei',
     ],
 
-    // Enable React 19 compiler optimizations
-    reactCompiler: true,
-
-    // Enable PPR (Partial Prerendering) for optimal performance
-    ppr: 'incremental',
-
     // Enable server actions
     serverActions: {
       bodySizeLimit: '2mb',

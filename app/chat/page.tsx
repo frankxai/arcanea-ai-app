@@ -321,7 +321,7 @@ export default function ChatInterface() {
               <Badge variant="outline" className={activeModel === 'gemini' ? 'bg-arcane-fire text-white' : ''}>
                 Gemini Ready
               </Badge>
-              {activeGuardian && (
+              {activeGuardian && GUARDIAN_PERSONALITIES[activeGuardian] && (
                 <Badge className="bg-arcane-fire text-white">
                   {GUARDIAN_PERSONALITIES[activeGuardian].name} Active
                 </Badge>
@@ -396,7 +396,7 @@ export default function ChatInterface() {
                       )}
 
                       {/* Usage Info */}
-                      {message.usage && (
+                      {message.usage && message.usage.cost !== undefined && (
                         <div className="mt-2 text-xs text-arcane-400 flex justify-between items-center">
                           <span>Generated with {message.providerId}</span>
                           <span>Cost: ${message.usage.cost.toFixed(4)}</span>
@@ -414,7 +414,7 @@ export default function ChatInterface() {
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 border-2 border-arcane-fire border-t-transparent rounded-full animate-spin" />
                     <span className="text-arcane-300">
-                      {activeGuardian 
+                      {activeGuardian && GUARDIAN_PERSONALITIES[activeGuardian]
                         ? `${GUARDIAN_PERSONALITIES[activeGuardian].name} is crafting response...`
                         : 'AI is thinking...'
                       }

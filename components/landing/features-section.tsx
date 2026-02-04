@@ -63,7 +63,7 @@ const FeatureCard = React.memo(function FeatureCard({
   feature,
   index
 }: {
-  feature: typeof features[0];
+  feature: (typeof features)[number];
   index: number;
 }) {
   const Icon = feature.icon;

@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
         type,
         position: [0, 0, 0],
         title,
-        description: response.data,
+        description: String(response.data || ''),
         guardian: guardianId || 'universal',
         status: 'active'
       }],

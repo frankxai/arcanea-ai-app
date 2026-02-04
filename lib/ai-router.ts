@@ -159,20 +159,20 @@ export class AIRouter {
     try {
       const baseResponse = await this.generateText(request)
       
-      if (!baseResponse.success || !request.options?.autoEnhance) {
+      if (!baseResponse.success || !request.options?.autoEnhance || !baseResponse.data) {
         return baseResponse
       }
 
       // Auto-enhancement based on content analysis
       const enhancedContent = await this.autoEnhanceContent(
-        baseResponse.data,
+        String(baseResponse.data),
         request.prompt,
         request.options?.guardianId
       )
 
       return {
         ...baseResponse,
-        data: enhancedContent.content,
+        data: enhancedContent.content as any,
         metadata: {
           original: baseResponse.data,
           enhancements: enhancedContent.enhancements,

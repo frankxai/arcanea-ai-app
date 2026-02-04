@@ -46,7 +46,7 @@ const TestimonialCard = React.memo(function TestimonialCard({
   isActive,
   onClick
 }: {
-  testimonial: typeof testimonials[0];
+  testimonial: (typeof testimonials)[number];
   index: number;
   isActive: boolean;
   onClick: () => void;
