@@ -2,14 +2,18 @@
 
 import { Canvas } from '@react-three/fiber'
 import { XR, VRButton, ARButton, Controllers, Hands } from '@react-three/xr'
-import { Suspense, useState, useEffect, useRef } from 'react'
+import { Suspense, useState, useEffect } from 'react'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Badge } from '@/components/ui/badge'
-import { 
-  PerformanceMonitor, 
+import {
+  PerformanceMonitor,
   AdaptiveRendering,
-  PerformanceStats 
+  PerformanceStats
 } from '@/components/performance-optimizer'
+
+// Safe devicePixelRatio accessor for SSR compatibility
+const getDevicePixelRatio = () =>
+  typeof window !== 'undefined' ? window.devicePixelRatio : 1
 
 interface SpatialStudioProps {
   children: React.ReactNode
@@ -108,7 +112,7 @@ export function SpatialStudio({
         shadows
         className="w-full h-full"
         performance={{ min: 0.5, max: 1, debounce: 200 }}
-        dpr={window.devicePixelRatio}
+        dpr={getDevicePixelRatio()}
       >
         <AdaptiveRendering quality={performanceStats.quality} />
         <PerformanceMonitor onStatsUpdate={setPerformanceStats} />

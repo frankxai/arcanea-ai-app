@@ -1,11 +1,36 @@
 'use client'
 
-import { useState } from 'react'
-import { Canvas } from '@react-three/fiber'
-import { OrbitControls, Environment, ContactShadows } from '@react-three/drei'
-import { SpatialStudio } from '@/components/spatial-studio'
-import { GuardianEntity, GuardianRealm } from '@/components/guardian-entity'
+import { useState, useEffect } from 'react'
+import dynamic from 'next/dynamic'
 import { GuardianConfig } from '@/types/guardian'
+
+// Dynamic imports for Three.js components (SSR disabled)
+const SpatialStudio = dynamic(
+  () => import('@/components/spatial-studio').then((mod) => mod.SpatialStudio),
+  { ssr: false }
+)
+const GuardianEntity = dynamic(
+  () => import('@/components/guardian-entity').then((mod) => mod.GuardianEntity),
+  { ssr: false }
+)
+const GuardianRealm = dynamic(
+  () => import('@/components/guardian-entity').then((mod) => mod.GuardianRealm),
+  { ssr: false }
+)
+
+// Static imports for Three.js primitives (only used within SpatialStudio)
+const OrbitControls = dynamic(
+  () => import('@react-three/drei').then((mod) => mod.OrbitControls),
+  { ssr: false }
+)
+const Environment = dynamic(
+  () => import('@react-three/drei').then((mod) => mod.Environment),
+  { ssr: false }
+)
+const ContactShadows = dynamic(
+  () => import('@react-three/drei').then((mod) => mod.ContactShadows),
+  { ssr: false }
+)
 
 const guardians: GuardianConfig[] = [
   {
@@ -48,6 +73,11 @@ const guardians: GuardianConfig[] = [
 export default function SpatialStudioPage() {
   const [activeGuardian, setActiveGuardian] = useState<string>('Draconia')
   const [isInteracting, setIsInteracting] = useState(false)
+  const [isClient, setIsClient] = useState(false)
+
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   const selectedGuardian = guardians.find(g => g.name === activeGuardian)
 
@@ -125,8 +155,9 @@ export default function SpatialStudioPage() {
       </div>
 
       {/* 3D Spatial Interface */}
-      <SpatialStudio enableVR={true} enableAR={false}>
-        <GuardianRealm guardian={selectedGuardian!}>
+      {isClient && selectedGuardian && (
+        <SpatialStudio enableVR={true} enableAR={false}>
+          <GuardianRealm guardian={selectedGuardian}>
           {/* Central Guardian Entity */}
           <GuardianEntity
             guardian={selectedGuardian!}
@@ -194,9 +225,10 @@ export default function SpatialStudioPage() {
           maxPolarAngle={Math.PI / 2}
         />
 
-        {/* Enhanced Environment */}
-        <Environment preset="night" />
-      </SpatialStudio>
+          {/* Enhanced Environment */}
+          <Environment preset="night" />
+        </SpatialStudio>
+      )}
 
       {/* Interactive Status */}
       {isInteracting && (

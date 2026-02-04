@@ -2,19 +2,21 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Menu, X, Sparkles, Zap, Shield } from 'lucide-react'
+import { Menu, X, Sparkles } from 'lucide-react'
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
+  const pathname = usePathname()
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20)
-      
+
       // Update active section based on scroll position
       const sections = ['home', 'features', 'guardians', 'pricing', 'testimonials']
       const currentSection = sections.find(section => {
@@ -25,23 +27,23 @@ export default function Navigation() {
         }
         return false
       })
-      
+
       if (currentSection) {
         setActiveSection(currentSection)
       }
-      
-      // Handle route-based active states
-      const path = window.location.pathname
-      if (path === '/chat') setActiveSection('chat')
-      else if (path === '/imagine') setActiveSection('imagine')
-      else if (path === '/prompt-books') setActiveSection('prompt-books')
-      else if (path === '/character-book') setActiveSection('character-book')
-      else if (path === '/world-builder') setActiveSection('world-builder')
     }
+
+    // Handle route-based active states on mount
+    if (pathname === '/chat') setActiveSection('chat')
+    else if (pathname === '/imagine') setActiveSection('imagine')
+    else if (pathname === '/prompt-books') setActiveSection('prompt-books')
+    else if (pathname === '/character-book') setActiveSection('character-book')
+    else if (pathname === '/world-builder') setActiveSection('world-builder')
+    else if (pathname === '/') setActiveSection('home')
 
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [pathname])
 
   const navItems = [
     { id: 'home', label: 'Home', href: '/' },
@@ -83,7 +85,7 @@ export default function Navigation() {
                 key={item.id}
                 href={item.href}
                 className={`text-sm font-medium transition-all duration-200 hover:text-arcane-crystal ${
-                  activeSection === item.id || window.location.pathname === item.href
+                  activeSection === item.id || pathname === item.href
                     ? 'text-arcane-crystal'
                     : 'text-arcane-300'
                 }`}
