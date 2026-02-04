@@ -1,19 +1,12 @@
 {
+  "framework": "nextjs",
   "buildCommand": "npm run build",
   "outputDirectory": ".next",
   "installCommand": "npm install",
-  "framework": "nextjs",
   "regions": ["iad1", "sfo1", "fra1"],
   "functions": {
-    "src": "app/api",
-    "runtime": "nodejs18.x",
-    "maxDuration": 30
-  },
-  "build": {
-    "env": {
-      "NEXT_TELEMETRY_DISABLED": "1",
-      "NEXT_DISABLE_SOURCEMAPS": "true",
-      "NODE_ENV": "production"
+    "app/api/**/*.ts": {
+      "maxDuration": 30
     }
   },
   "env": {
@@ -28,57 +21,15 @@
     "NEXTAUTH_URL": "@nextauth_url",
     "DATABASE_URL": "@database_url"
   },
-  "build": {
-    "env": {
-      "NEXT_TELEMETRY_DISABLED": "1",
-      "NEXT_DISABLE_SOURCEMAPS": "true"
-    }
-  },
-  "functions": {
-    "src": "app/api",
-    "runtime": "nodejs18.x"
-  },
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-Frame-Options", 
-          "value": "DENY"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
-        },
-        {
-          "key": "Referrer-Policy",
-          "value": "strict-origin-when-cross-origin"
-        },
-        {
-          "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:api.anthropic.com https:api.openai.com https:generativelanguage.googleapis.com; frame-ancestors 'none';"
-        },
-        {
-          "key": "Strict-Transport-Security",
-          "value": "max-age=31536000; includeSubDomains"
-        }
-      ]
-    },
-    {
-      "source": "/api/(.*)",
-      "headers": [
-        {
-          "key": "X-RateLimit-Limit",
-          "value": "100"
-        },
-        {
-          "key": "X-RateLimit-Remaining",
-          "value": "99"
-        }
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains" }
       ]
     }
   ],
