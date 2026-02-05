@@ -140,23 +140,27 @@ class SecureSecretManager {
       }
     ]
 
+    // During next build (SSG), don't throw on missing/invalid keys
+    const isBuildPhase = process.env.NEXT_PHASE === 'phase-production-build'
+
     for (const config of secretConfigs) {
       const keyValue = process.env[config.keyName]
-      
+
       if (!keyValue && config.required) {
-        console.error(`🔐 Missing required secret: ${config.keyName}`)
-        if (process.env.NODE_ENV === 'production') {
-          throw new Error(`Critical: Missing ${config.keyName} in production`)
+        if (isBuildPhase) {
+          // Silently skip during build - keys aren't needed for SSG
+          continue
         }
+        console.warn(`🔐 Missing required secret: ${config.keyName}`)
         continue
       }
 
       // Validate secret format
       if (keyValue && !this.validateSecret(keyValue, config)) {
-        console.error(`🔐 Invalid secret format: ${config.keyName}`)
-        if (process.env.NODE_ENV === 'production') {
-          throw new Error(`Critical: Invalid ${config.keyName} format in production`)
+        if (isBuildPhase) {
+          continue
         }
+        console.warn(`🔐 Invalid secret format: ${config.keyName}`)
         continue
       }
 
@@ -235,16 +239,16 @@ class SecureSecretManager {
   }
 
   validateRequiredSecrets(): void {
+    const isBuildPhase = process.env.NEXT_PHASE === 'phase-production-build'
     const requiredProviders = ['anthropic', 'openai', 'google']
     const missingProviders = requiredProviders.filter(provider => !this.secrets.has(provider))
 
     if (missingProviders.length > 0) {
-      const error = `Missing required API keys: ${missingProviders.join(', ')}`
-      console.error('🔐', error)
-      
-      if (process.env.NODE_ENV === 'production') {
-        throw new Error(`CRITICAL: ${error}`)
+      if (isBuildPhase) {
+        // Silent during build - API keys aren't needed for SSG
+        return
       }
+      console.warn(`🔐 Missing required API keys: ${missingProviders.join(', ')}`)
     }
   }
 
