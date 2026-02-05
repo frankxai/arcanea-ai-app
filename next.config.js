@@ -151,14 +151,15 @@ const nextConfig = {
     ];
   },
 
-  // TypeScript and ESLint configuration
+  // TypeScript configuration
   typescript: {
     // Enforce type checking during builds
     ignoreBuildErrors: false,
   },
-  eslint: {
-    // Enforce linting during builds
-    ignoreDuringBuilds: false,
+
+  // Turbopack configuration (Next.js 16 default)
+  turbopack: {
+    root: process.cwd(),
   },
 
   // Logging
