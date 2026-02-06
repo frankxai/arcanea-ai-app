@@ -2,10 +2,8 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Sparkles, 
-  ChevronLeft, 
-  ChevronRight,
+import {
+  Sparkles,
   Plus,
   Copy,
   Check,
@@ -20,9 +18,7 @@ import {
   Folder,
   Search,
   Settings,
-  X,
-  Maximize2,
-  Minimize2
+  X
 } from 'lucide-react';
 
 // Types
@@ -73,12 +69,12 @@ const WeightControl: React.FC<{
   return (
     <div className="flex flex-col gap-2">
       {label && (
-        <span className="text-xs text-gray-400 uppercase tracking-wider font-semibold">
+        <span className="text-xs text-text-muted uppercase tracking-wider font-display">
           {label}
         </span>
       )}
-      <div className="flex items-center gap-2 bg-slate-800/50 rounded-lg p-2 border border-slate-700">
-        <span className="text-sm font-mono text-purple-400 w-12 text-center">
+      <div className="flex items-center gap-2 bg-white/[0.03] rounded-xl p-2 border border-white/10">
+        <span className="text-sm font-mono text-arcane-crystal w-12 text-center">
           {value.toFixed(2)}
         </span>
         <input
@@ -88,7 +84,7 @@ const WeightControl: React.FC<{
           step={step}
           value={value}
           onChange={(e) => onChange(parseFloat(e.target.value))}
-          className="flex-1 h-1 bg-slate-600 rounded-lg appearance-none cursor-pointer accent-purple-500"
+          className="flex-1 h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-arcane-crystal"
         />
       </div>
       <div className="flex gap-1">
@@ -96,10 +92,10 @@ const WeightControl: React.FC<{
           <button
             key={preset}
             onClick={() => onChange(preset)}
-            className={`px-2 py-1 text-xs rounded font-mono transition-all ${
+            className={`px-2 py-1 text-xs rounded-lg font-mono transition-all ${
               Math.abs(value - preset) < 0.01
-                ? 'bg-purple-500 text-white'
-                : 'bg-slate-700 text-gray-400 hover:bg-slate-600'
+                ? 'bg-arcane-crystal/20 text-arcane-crystal border border-arcane-crystal/30'
+                : 'bg-white/[0.03] text-text-muted hover:bg-white/[0.06] border border-white/5'
             }`}
           >
             {preset.toFixed(1)}
@@ -116,11 +112,11 @@ const TagBuilder: React.FC<{
   onTagsChange: (tags: PromptTag[]) => void;
 }> = ({ tags, onTagsChange }) => {
   const categories = [
-    { id: 'quality', label: 'Quality', color: 'bg-purple-500', options: ['masterpiece', 'best quality', 'highly detailed', 'ultra-detailed', '8k', 'intricate'] },
-    { id: 'style', label: 'Style', color: 'bg-pink-500', options: ['realistic', 'anime', 'digital art', 'oil painting', 'watercolor', 'concept art'] },
-    { id: 'lighting', label: 'Lighting', color: 'bg-yellow-500', options: ['volumetric lighting', 'cinematic lighting', 'dramatic lighting', 'soft lighting', 'golden hour'] },
-    { id: 'mood', label: 'Mood', color: 'bg-blue-500', options: ['epic', 'mysterious', 'serene', 'dark', 'whimsical', 'melancholic'] },
-    { id: 'camera', label: 'Camera', color: 'bg-green-500', options: ['wide angle', 'close-up', 'portrait', 'aerial view', 'bokeh', 'depth of field'] },
+    { id: 'quality', label: 'Quality', color: 'bg-arcane-void', options: ['masterpiece', 'best quality', 'highly detailed', 'ultra-detailed', '8k', 'intricate'] },
+    { id: 'style', label: 'Style', color: 'bg-arcane-fire', options: ['realistic', 'anime', 'digital art', 'oil painting', 'watercolor', 'concept art'] },
+    { id: 'lighting', label: 'Lighting', color: 'bg-arcane-gold', options: ['volumetric lighting', 'cinematic lighting', 'dramatic lighting', 'soft lighting', 'golden hour'] },
+    { id: 'mood', label: 'Mood', color: 'bg-arcane-water', options: ['epic', 'mysterious', 'serene', 'dark', 'whimsical', 'melancholic'] },
+    { id: 'camera', label: 'Camera', color: 'bg-arcane-earth', options: ['wide angle', 'close-up', 'portrait', 'aerial view', 'bokeh', 'depth of field'] },
     { id: 'negative', label: 'Negative', color: 'bg-red-500', options: ['blurry', 'low quality', 'deformed', 'ugly', 'duplicate', 'watermark'] }
   ];
 
@@ -150,16 +146,16 @@ const TagBuilder: React.FC<{
         {categories.map((cat) => (
           <div key={cat.id} className="relative group">
             <button
-              className={`w-full px-3 py-2 rounded-lg text-xs font-semibold ${cat.color} text-white shadow-lg hover:shadow-xl transition-all hover:scale-105`}
+              className={`w-full px-3 py-2 rounded-xl text-xs font-display ${cat.color} text-white shadow-lg hover:shadow-xl transition-all hover:scale-105`}
             >
               {cat.label}
             </button>
-            <div className="absolute top-full left-0 mt-1 w-full bg-slate-800 border border-slate-700 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-opacity z-50 pointer-events-none group-hover:pointer-events-auto">
+            <div className="absolute top-full left-0 mt-1 w-full glass-strong border border-white/10 rounded-xl shadow-xl opacity-0 group-hover:opacity-100 transition-opacity z-50 pointer-events-none group-hover:pointer-events-auto">
               {cat.options.map((opt) => (
                 <button
                   key={opt}
                   onClick={() => addTag(cat.id, opt, cat.color)}
-                  className="w-full px-3 py-2 text-xs text-left text-gray-300 hover:bg-slate-700 first:rounded-t-lg last:rounded-b-lg"
+                  className="w-full px-3 py-2 text-xs text-left text-text-secondary hover:bg-white/[0.06] hover:text-white first:rounded-t-xl last:rounded-b-xl transition-colors font-body"
                 >
                   {opt}
                 </button>
@@ -177,9 +173,9 @@ const TagBuilder: React.FC<{
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            className="flex items-center gap-2 bg-slate-800/50 rounded-lg p-2 border border-slate-700"
+            className="flex items-center gap-2 bg-white/[0.03] rounded-xl p-2 border border-white/10"
           >
-            <span className={`px-2 py-1 rounded text-xs text-white ${tag.color}`}>
+            <span className={`px-2 py-1 rounded-lg text-xs text-white ${tag.color}`}>
               {tag.label}
             </span>
             <WeightControl
@@ -191,7 +187,7 @@ const TagBuilder: React.FC<{
             />
             <button
               onClick={() => removeTag(tag.id)}
-              className="p-1 text-gray-400 hover:text-red-400 transition-colors"
+              className="p-1 text-text-muted hover:text-red-400 transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
@@ -200,7 +196,7 @@ const TagBuilder: React.FC<{
       </div>
 
       {tags.length === 0 && (
-        <div className="text-center py-4 text-gray-500 text-sm">
+        <div className="text-center py-4 text-text-disabled text-sm font-body">
           Click a category above to add tags
         </div>
       )}
@@ -215,50 +211,50 @@ const Sidebar: React.FC<{
   onSectionChange: (id: string) => void;
 }> = ({ sections, activeSection, onSectionChange }) => {
   return (
-    <div className="w-64 bg-slate-900 border-r border-slate-800 flex flex-col">
+    <div className="w-64 bg-cosmic-deep border-r border-white/5 flex flex-col">
       {/* Header */}
-      <div className="p-4 border-b border-slate-800">
+      <div className="p-4 border-b border-white/5">
         <div className="flex items-center gap-2 mb-4">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-arcane-crystal to-arcane-water flex items-center justify-center">
             <Sparkles className="w-4 h-4 text-white" />
           </div>
-          <span className="font-bold text-white text-lg">Arcanea</span>
+          <span className="font-display text-white text-lg">Arcanea</span>
         </div>
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-text-disabled" />
           <input
             type="text"
             placeholder="Search prompts..."
-            className="w-full pl-9 pr-3 py-2 bg-slate-800 rounded-lg text-sm text-gray-300 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+            className="w-full pl-9 pr-3 py-2 bg-white/[0.03] border border-white/10 rounded-xl text-sm text-white placeholder-text-disabled focus:outline-none focus:ring-2 focus:ring-arcane-crystal/50 font-body"
           />
         </div>
       </div>
 
       {/* Sections */}
       <div className="flex-1 overflow-y-auto p-2">
-        <div className="text-xs text-gray-500 uppercase tracking-wider font-semibold mb-2 px-2">
+        <div className="text-xs text-text-disabled uppercase tracking-wider font-display mb-2 px-2">
           Sections
         </div>
         {sections.map((section) => (
           <button
             key={section.id}
             onClick={() => onSectionChange(section.id)}
-            className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-all ${
+            className={`w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm transition-all font-body ${
               activeSection === section.id
-                ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30'
-                : 'text-gray-400 hover:bg-slate-800 hover:text-gray-200'
+                ? 'bg-arcane-crystal/10 text-arcane-crystal border border-arcane-crystal/20'
+                : 'text-text-muted hover:bg-white/[0.03] hover:text-text-secondary'
             }`}
           >
             <Folder className="w-4 h-4" />
             <span className="flex-1 text-left">{section.name}</span>
-            <span className="text-xs text-gray-600">{section.prompts.length}</span>
+            <span className="text-xs text-text-disabled">{section.prompts.length}</span>
           </button>
         ))}
       </div>
 
       {/* Footer */}
-      <div className="p-4 border-t border-slate-800">
-        <button className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-gray-400 hover:bg-slate-800 transition-colors">
+      <div className="p-4 border-t border-white/5">
+        <button className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm text-text-muted hover:bg-white/[0.03] transition-colors font-body">
           <Settings className="w-4 h-4" />
           <span>Settings</span>
         </button>
@@ -287,10 +283,10 @@ const PromptEditor: React.FC<{
   }, [prompt]);
 
   const generatePrompt = () => {
-    const weightedTags = tags.map(t => 
+    const weightedTags = tags.map(t =>
       t.weight === 1.0 ? t.label : `(${t.label}:${t.weight.toFixed(2)})`
     ).join(', ');
-    
+
     return `${content}${weightedTags ? ', ' + weightedTags : ''}`;
   };
 
@@ -302,19 +298,19 @@ const PromptEditor: React.FC<{
 
   if (!prompt) {
     return (
-      <div className="flex-1 flex items-center justify-center bg-slate-950">
+      <div className="flex-1 flex items-center justify-center bg-cosmic-void">
         <div className="text-center">
-          <Sparkles className="w-16 h-16 text-slate-700 mx-auto mb-4" />
-          <p className="text-gray-500">Select a prompt to begin editing</p>
+          <Sparkles className="w-16 h-16 text-white/10 mx-auto mb-4" />
+          <p className="text-text-disabled font-body">Select a prompt to begin editing</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex-1 flex flex-col bg-slate-950">
+    <div className="flex-1 flex flex-col bg-cosmic-void">
       {/* Tabs */}
-      <div className="flex items-center gap-1 p-2 border-b border-slate-800 bg-slate-900/50">
+      <div className="flex items-center gap-1 p-2 border-b border-white/5 bg-cosmic-deep/50">
         {[
           { id: 'prompts', label: 'Prompts', icon: Sparkles },
           { id: 'txt2img', label: 'Txt2Img', icon: Zap },
@@ -323,10 +319,10 @@ const PromptEditor: React.FC<{
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id as 'prompts' | 'txt2img' | 'img2img')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-body transition-all ${
               activeTab === tab.id
-                ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30'
-                : 'text-gray-400 hover:bg-slate-800 hover:text-gray-200'
+                ? 'bg-arcane-crystal/10 text-arcane-crystal border border-arcane-crystal/20'
+                : 'text-text-muted hover:bg-white/[0.03] hover:text-text-secondary'
             }`}
           >
             <tab.icon className="w-4 h-4" />
@@ -352,45 +348,45 @@ const PromptEditor: React.FC<{
                   type="text"
                   value={prompt.name}
                   readOnly
-                  className="w-full text-2xl font-bold bg-transparent text-white border-none focus:outline-none placeholder-gray-600"
+                  className="w-full text-2xl font-display bg-transparent text-white border-none focus:outline-none placeholder-text-disabled"
                 />
               </div>
 
               {/* Main Prompt */}
               <div className="space-y-2">
-                <label className="text-sm text-gray-400 font-medium">Prompt</label>
+                <label className="text-sm text-text-muted font-display">Prompt</label>
                 <textarea
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
-                  className="w-full h-32 p-4 bg-slate-900 border border-slate-700 rounded-xl text-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500/50 resize-none"
+                  className="w-full h-32 p-4 bg-white/[0.03] border border-white/10 rounded-xl text-text-secondary font-body focus:outline-none focus:ring-2 focus:ring-arcane-crystal/50 focus:border-arcane-crystal/30 resize-none"
                   placeholder="Enter your prompt here..."
                 />
               </div>
 
               {/* Tag Builder */}
               <div className="space-y-2">
-                <label className="text-sm text-gray-400 font-medium">Enhancement Tags</label>
-                <div className="bg-slate-900 border border-slate-700 rounded-xl p-4">
+                <label className="text-sm text-text-muted font-display">Enhancement Tags</label>
+                <div className="bg-white/[0.03] border border-white/10 rounded-xl p-4">
                   <TagBuilder tags={tags} onTagsChange={setTags} />
                 </div>
               </div>
 
               {/* Negative Prompts */}
               <div className="space-y-2">
-                <label className="text-sm text-gray-400 font-medium">Negative Prompts</label>
+                <label className="text-sm text-text-muted font-display">Negative Prompts</label>
                 <textarea
                   value={negativePrompts}
                   onChange={(e) => setNegativePrompts(e.target.value)}
-                  className="w-full h-24 p-4 bg-slate-900 border border-red-900/30 rounded-xl text-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500/30 focus:border-red-500/30 resize-none"
+                  className="w-full h-24 p-4 bg-white/[0.03] border border-red-500/20 rounded-xl text-text-muted font-body focus:outline-none focus:ring-2 focus:ring-red-500/30 focus:border-red-500/30 resize-none"
                   placeholder="What to avoid in generation..."
                 />
               </div>
 
               {/* Generated Output */}
               <div className="space-y-2">
-                <label className="text-sm text-gray-400 font-medium">Generated Prompt</label>
-                <div className="bg-slate-900 border border-slate-700 rounded-xl p-4">
-                  <div className="font-mono text-sm text-gray-300 leading-relaxed">
+                <label className="text-sm text-text-muted font-display">Generated Prompt</label>
+                <div className="bg-white/[0.03] border border-white/10 rounded-xl p-4">
+                  <div className="font-mono text-sm text-text-secondary leading-relaxed">
                     {generatePrompt()}
                   </div>
                 </div>
@@ -402,17 +398,17 @@ const PromptEditor: React.FC<{
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={copyToClipboard}
-                  className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-semibold shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all"
+                  className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-arcane-crystal text-cosmic-void rounded-xl font-display shadow-[0_0_25px_rgba(127,255,212,0.3)] hover:shadow-[0_0_35px_rgba(127,255,212,0.5)] transition-all"
                 >
                   {copied ? <Check className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
                   {copied ? 'Copied!' : 'Copy Prompt'}
                 </motion.button>
-                
+
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => onSave({ ...prompt, content, tags, negativePrompts })}
-                  className="flex items-center gap-2 px-6 py-3 bg-slate-800 text-gray-300 rounded-xl font-semibold hover:bg-slate-700 transition-all"
+                  className="flex items-center gap-2 px-6 py-3 glass border border-white/10 text-text-secondary rounded-xl font-display hover:bg-white/[0.06] transition-all"
                 >
                   <Save className="w-5 h-5" />
                   Save
@@ -430,9 +426,9 @@ const PromptEditor: React.FC<{
               className="max-w-4xl mx-auto space-y-6"
             >
               <div className="text-center py-12">
-                <Zap className="w-16 h-16 text-yellow-500 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-white mb-2">Text to Image</h3>
-                <p className="text-gray-400">AI image generation coming soon...</p>
+                <Zap className="w-16 h-16 text-arcane-gold mx-auto mb-4" />
+                <h3 className="text-xl font-display text-white mb-2">Text to Image</h3>
+                <p className="text-text-muted font-body">AI image generation coming soon...</p>
               </div>
             </motion.div>
           )}
@@ -446,9 +442,9 @@ const PromptEditor: React.FC<{
               className="max-w-4xl mx-auto space-y-6"
             >
               <div className="text-center py-12">
-                <RefreshCw className="w-16 h-16 text-blue-500 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-white mb-2">Image to Image</h3>
-                <p className="text-gray-400">Image transformation coming soon...</p>
+                <RefreshCw className="w-16 h-16 text-arcane-water mx-auto mb-4" />
+                <h3 className="text-xl font-display text-white mb-2">Image to Image</h3>
+                <p className="text-text-muted font-body">Image transformation coming soon...</p>
               </div>
             </motion.div>
           )}
@@ -461,7 +457,7 @@ const PromptEditor: React.FC<{
 // Guardian Panel Component
 const GuardianPanel: React.FC = () => {
   const [activeGuardian, setActiveGuardian] = useState('dragon-forge');
-  
+
   const guardians = [
     { id: 'dragon-forge', name: 'Dragon Forge', element: 'fire', icon: Flame, color: COLORS.fire },
     { id: 'river-storyteller', name: 'River Story', element: 'water', icon: Droplets, color: COLORS.water },
@@ -471,8 +467,8 @@ const GuardianPanel: React.FC = () => {
   ];
 
   return (
-    <div className="w-72 bg-slate-900 border-l border-slate-800 p-4">
-      <div className="text-xs text-gray-500 uppercase tracking-wider font-semibold mb-4">
+    <div className="w-72 bg-cosmic-deep border-l border-white/5 p-4">
+      <div className="text-xs text-text-disabled uppercase tracking-wider font-display mb-4">
         Active Guardian
       </div>
 
@@ -483,13 +479,13 @@ const GuardianPanel: React.FC = () => {
             onClick={() => setActiveGuardian(guardian.id)}
             className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all ${
               activeGuardian === guardian.id
-                ? 'bg-slate-800 border border-slate-700'
-                : 'hover:bg-slate-800/50'
+                ? 'glass border border-white/10'
+                : 'hover:bg-white/[0.03]'
             }`}
           >
-            <div 
-              className="w-10 h-10 rounded-lg flex items-center justify-center"
-              style={{ 
+            <div
+              className="w-10 h-10 rounded-xl flex items-center justify-center"
+              style={{
                 background: `linear-gradient(135deg, ${guardian.color.primary}, ${guardian.color.secondary})`,
                 boxShadow: `0 0 20px ${guardian.color.glow}`
               }}
@@ -497,11 +493,11 @@ const GuardianPanel: React.FC = () => {
               <guardian.icon className="w-5 h-5 text-white" />
             </div>
             <div className="flex-1 text-left">
-              <div className="text-sm font-medium text-gray-200">{guardian.name}</div>
-              <div className="text-xs text-gray-500 capitalize">{guardian.element}</div>
+              <div className="text-sm font-body text-text-secondary">{guardian.name}</div>
+              <div className="text-xs text-text-disabled capitalize">{guardian.element}</div>
             </div>
             {activeGuardian === guardian.id && (
-              <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+              <div className="w-2 h-2 rounded-full bg-arcane-crystal animate-pulse" />
             )}
           </button>
         ))}
@@ -509,7 +505,7 @@ const GuardianPanel: React.FC = () => {
 
       {/* Suggestions */}
       <div className="space-y-3">
-        <div className="text-xs text-gray-500 uppercase tracking-wider font-semibold">
+        <div className="text-xs text-text-disabled uppercase tracking-wider font-display">
           Suggestions
         </div>
         <div className="space-y-2">
@@ -523,12 +519,12 @@ const GuardianPanel: React.FC = () => {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: i * 0.1 }}
-              className="p-3 bg-slate-800/50 rounded-lg border border-slate-700 cursor-pointer hover:bg-slate-800 transition-colors group"
+              className="p-3 glass-subtle rounded-xl border border-white/5 cursor-pointer hover:bg-white/[0.06] transition-colors group"
             >
-              <div className="text-xs text-gray-300 group-hover:text-white transition-colors">
+              <div className="text-xs text-text-secondary group-hover:text-white transition-colors font-body">
                 {suggestion.text}
               </div>
-              <div className="text-xs text-gray-500 mt-1">{suggestion.type}</div>
+              <div className="text-xs text-text-disabled mt-1">{suggestion.type}</div>
             </motion.div>
           ))}
         </div>
@@ -549,10 +545,10 @@ export default function ArcaneaPromptBooksPremium() {
           name: 'Atlantia',
           content: '/imagine prompt:Atlantia, holding a magical glowing Tulkun, avatar, pandora world, goddess, female embodiment of the Arcane power of the Arcanean Universe, Tulkun, Spade Wing, Skimwing, Sagittaria, Pincer Fish Nalutsa, Ilu, Akula, Anemonoid, musical vibes, vibrant full, tasteful, luxurious power, glowing details, smooth, looking at the viewer, surrounded by magical creatures and mystical landscapes, hourglass body',
           tags: [
-            { id: 't1', label: 'best quality', category: 'quality', weight: 1.1, color: 'bg-purple-500' },
-            { id: 't2', label: 'highly detailed', category: 'quality', weight: 1.05, color: 'bg-purple-500' },
-            { id: 't3', label: 'masterpiece', category: 'quality', weight: 1.0, color: 'bg-purple-500' },
-            { id: 't4', label: 'ultra', category: 'quality', weight: 1.0, color: 'bg-purple-500' }
+            { id: 't1', label: 'best quality', category: 'quality', weight: 1.1, color: 'bg-arcane-void' },
+            { id: 't2', label: 'highly detailed', category: 'quality', weight: 1.05, color: 'bg-arcane-void' },
+            { id: 't3', label: 'masterpiece', category: 'quality', weight: 1.0, color: 'bg-arcane-void' },
+            { id: 't4', label: 'ultra', category: 'quality', weight: 1.0, color: 'bg-arcane-void' }
           ],
           category: 'prompts',
           negativePrompts: 'blurry, low quality, deformed, ugly, duplicate, watermark'
@@ -562,8 +558,8 @@ export default function ArcaneaPromptBooksPremium() {
           name: 'Character Portrait',
           content: 'A mystical character portrait with ethereal lighting and detailed features',
           tags: [
-            { id: 't5', label: 'masterpiece', category: 'quality', weight: 1.1, color: 'bg-purple-500' },
-            { id: 't6', label: 'detailed face', category: 'quality', weight: 1.2, color: 'bg-purple-500' }
+            { id: 't5', label: 'masterpiece', category: 'quality', weight: 1.1, color: 'bg-arcane-void' },
+            { id: 't6', label: 'detailed face', category: 'quality', weight: 1.2, color: 'bg-arcane-void' }
           ],
           category: 'prompts'
         },
@@ -572,8 +568,8 @@ export default function ArcaneaPromptBooksPremium() {
           name: 'Fantasy Landscape',
           content: 'An epic fantasy landscape with floating islands and magical aurora',
           tags: [
-            { id: 't7', label: 'epic', category: 'mood', weight: 1.1, color: 'bg-blue-500' },
-            { id: 't8', label: '8k', category: 'quality', weight: 1.0, color: 'bg-purple-500' }
+            { id: 't7', label: 'epic', category: 'mood', weight: 1.1, color: 'bg-arcane-water' },
+            { id: 't8', label: '8k', category: 'quality', weight: 1.0, color: 'bg-arcane-void' }
           ],
           category: 'prompts'
         }
@@ -619,13 +615,12 @@ export default function ArcaneaPromptBooksPremium() {
 
   const handleSave = (prompt: PromptItem) => {
     console.log('Saving prompt:', prompt);
-    // In real app, this would save to backend or local storage
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex">
+    <div className="min-h-screen bg-cosmic-void flex">
       {/* Sidebar */}
-      <Sidebar 
+      <Sidebar
         sections={sections}
         activeSection={activeSection}
         onSectionChange={(id) => {
@@ -638,14 +633,14 @@ export default function ArcaneaPromptBooksPremium() {
       />
 
       {/* Prompt List */}
-      <div className="w-72 bg-slate-900 border-r border-slate-800 flex flex-col">
-        <div className="p-4 border-b border-slate-800">
+      <div className="w-72 bg-cosmic-deep border-r border-white/5 flex flex-col">
+        <div className="p-4 border-b border-white/5">
           <div className="flex items-center justify-between">
-            <span className="font-semibold text-white">
+            <span className="font-display text-white">
               {sections.find(s => s.id === activeSection)?.name}
             </span>
-            <button className="p-2 hover:bg-slate-800 rounded-lg transition-colors">
-              <Plus className="w-4 h-4 text-gray-400" />
+            <button className="p-2 hover:bg-white/[0.03] rounded-xl transition-colors">
+              <Plus className="w-4 h-4 text-text-muted" />
             </button>
           </div>
         </div>
@@ -656,16 +651,16 @@ export default function ArcaneaPromptBooksPremium() {
             <button
               key={prompt.id}
               onClick={() => setSelectedPrompt(prompt)}
-              className={`w-full text-left p-3 rounded-lg mb-1 transition-all ${
+              className={`w-full text-left p-3 rounded-xl mb-1 transition-all ${
                 selectedPrompt?.id === prompt.id
-                  ? 'bg-purple-500/20 border border-purple-500/30'
-                  : 'hover:bg-slate-800'
+                  ? 'bg-arcane-crystal/10 border border-arcane-crystal/20'
+                  : 'hover:bg-white/[0.03]'
               }`}
             >
-              <div className="font-medium text-sm text-gray-200 mb-1">
+              <div className="font-body text-sm text-text-secondary mb-1">
                 {prompt.name}
               </div>
-              <div className="text-xs text-gray-500 line-clamp-2">
+              <div className="text-xs text-text-disabled line-clamp-2 font-body">
                 {prompt.content.substring(0, 60)}...
               </div>
             </button>

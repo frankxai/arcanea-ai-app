@@ -14,19 +14,6 @@ interface ErrorBoundaryState {
   error: Error | null;
 }
 
-/**
- * ErrorBoundary Component
- *
- * Catches JavaScript errors in child component tree and displays fallback UI.
- * Essential for graceful error handling in React applications.
- *
- * @example
- * ```tsx
- * <ErrorBoundary>
- *   <YourComponent />
- * </ErrorBoundary>
- * ```
- */
 export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
@@ -44,7 +31,6 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    // Log to error reporting service (Sentry, LogRocket, etc.)
     console.error('ErrorBoundary caught error:', error, errorInfo);
   }
 
@@ -72,17 +58,17 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
             </div>
           </div>
 
-          <h3 className="text-xl font-semibold text-white mb-2 text-center">
+          <h3 className="text-xl font-display text-white mb-2 text-center">
             Component Error
           </h3>
 
-          <p className="text-slate-400 text-center max-w-md mb-6">
+          <p className="text-text-muted text-center max-w-md mb-6 font-body">
             This component encountered an unexpected error. Try refreshing to continue.
           </p>
 
           {process.env.NODE_ENV === 'development' && this.state.error && (
-            <div className="mb-6 p-4 bg-slate-900/50 border border-slate-800 rounded-lg max-w-xl w-full">
-              <p className="text-xs text-slate-500 font-mono mb-2">Error Details:</p>
+            <div className="mb-6 p-4 glass-strong rounded-xl max-w-xl w-full">
+              <p className="text-xs text-text-disabled font-mono mb-2">Error Details:</p>
               <p className="text-sm text-red-400 font-mono break-all">
                 {this.state.error.message}
               </p>
@@ -91,7 +77,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
           <button
             onClick={this.handleReset}
-            className="group inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-lg transition-all duration-300"
+            className="group inline-flex items-center gap-2 px-6 py-3 bg-arcane-crystal hover:bg-arcane-crystal-bright text-cosmic-void font-display rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(127,255,212,0.3)] hover:shadow-[0_0_30px_rgba(127,255,212,0.5)]"
           >
             <RefreshCw className="w-4 h-4 group-hover:rotate-180 transition-transform duration-500" />
             Try Again
@@ -104,16 +90,6 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   }
 }
 
-/**
- * withErrorBoundary HOC
- *
- * Wraps any component with an ErrorBoundary for automatic error handling.
- *
- * @example
- * ```tsx
- * export default withErrorBoundary(MyComponent);
- * ```
- */
 export function withErrorBoundary<P extends object>(
   Component: React.ComponentType<P>,
   fallback?: ReactNode

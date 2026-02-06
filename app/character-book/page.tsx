@@ -18,7 +18,7 @@ export default function CharacterBookPage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-arcane-cosmic via-arcane-shadow to-arcane-cosmic">
+    <div className="min-h-screen bg-cosmic-void">
       <Navigation />
 
       <main className="pt-20">

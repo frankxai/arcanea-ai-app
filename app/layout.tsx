@@ -1,22 +1,55 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import type { Metadata, Viewport } from 'next'
+import { Cinzel, Crimson_Pro, Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
+const cinzel = Cinzel({
+  subsets: ['latin'],
+  variable: '--font-cinzel',
+  display: 'swap',
+  weight: ['400', '500', '600', '700', '800', '900'],
+})
+
+const crimsonPro = Crimson_Pro({
+  subsets: ['latin'],
+  variable: '--font-crimson-pro',
+  display: 'swap',
+  weight: ['300', '400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+})
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-jetbrains',
+  display: 'swap',
+  weight: ['400', '500', '600', '700'],
+})
+
+export const viewport: Viewport = {
+  themeColor: '#0b0e14',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://arcanea.ai'),
   title: {
-    default: 'Arcanea.ai - Premium AI Spatial Worldbuilding',
+    default: 'Arcanea.ai — Where AI Becomes Creative Intelligence',
     template: '%s | Arcanea.ai'
   },
-  description: 'Where premium AI experience meets open-source community meets developer innovation. Transform your stories with embodied Guardian AI companions in immersive 3D spaces.',
-  keywords: ['AI worldbuilding', 'spatial computing', '3D creation', 'fantasy worlds', 'creative AI', 'Guardian AI', 'immersive storytelling'],
+  description: 'The premium AI creation platform. Multi-LLM superagent, multi-modal generation, and Guardian AI companions unified in one intelligent spatial experience.',
+  keywords: ['AI worldbuilding', 'spatial computing', '3D creation', 'fantasy worlds', 'creative AI', 'Guardian AI', 'immersive storytelling', 'AI platform', 'creative intelligence'],
   authors: [{ name: 'Arcanea' }],
   creator: 'Arcanea',
   openGraph: {
-    title: 'Arcanea.ai - Premium Spatial Worldbuilding',
-    description: 'Transform your stories with embodied Guardian AI companions in immersive 3D spaces',
+    title: 'Arcanea.ai — Where AI Becomes Creative Intelligence',
+    description: 'The premium AI creation platform with Guardian AI companions in immersive 3D spaces',
     url: 'https://arcanea.ai',
     siteName: 'Arcanea.ai',
     images: [
@@ -24,7 +57,7 @@ export const metadata: Metadata = {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Arcanea Premium Spatial Experience',
+        alt: 'Arcanea — Premium AI Creative Intelligence',
       },
     ],
     locale: 'en_US',
@@ -32,8 +65,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Arcanea.ai - Premium Spatial Worldbuilding',
-    description: 'Transform your stories with embodied Guardian AI companions',
+    title: 'Arcanea.ai — Where AI Becomes Creative Intelligence',
+    description: 'The premium AI creation platform with Guardian AI companions',
     images: ['/og-image.jpg'],
     creator: '@arcanea_ai',
   },
@@ -67,8 +100,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className={inter.className}>
+    <html
+      lang="en"
+      className={`dark ${cinzel.variable} ${crimsonPro.variable} ${inter.variable} ${jetbrainsMono.variable}`}
+      suppressHydrationWarning
+    >
+      <body className="font-body antialiased">
         {children}
       </body>
     </html>

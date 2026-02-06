@@ -11,9 +11,9 @@ import Footer from '@/components/landing/footer'
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-arcane-cosmic via-arcane-shadow to-arcane-cosmic">
+    <div className="min-h-[100dvh] bg-cosmic-void bg-cosmic-mesh">
       <Navigation />
-      
+
       <main>
         <HeroSection />
         <FeaturesSection />
@@ -22,7 +22,7 @@ export default function HomePage() {
         <TestimonialsSection />
         <CTASection />
       </main>
-      
+
       <Footer />
     </div>
   )

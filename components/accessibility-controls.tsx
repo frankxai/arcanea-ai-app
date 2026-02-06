@@ -3,14 +3,11 @@
 import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { 
-  Volume2, 
-  VolumeX, 
-  Eye, 
-  EyeOff, 
-  Type, 
-  ZoomIn, 
-  ZoomOut,
+import {
+  Volume2,
+  VolumeX,
+  Eye,
+  Type,
   Keyboard,
   Moon,
   Sun
@@ -39,25 +36,21 @@ export function AccessibilityControls() {
 
   const [isVisible, setIsVisible] = useState(false)
 
-  // Apply settings to document
   useEffect(() => {
     const root = document.documentElement
 
-    // High contrast mode
     if (settings.highContrast) {
       root.classList.add('high-contrast')
     } else {
       root.classList.remove('high-contrast')
     }
 
-    // Large text
     if (settings.largeText) {
       root.style.fontSize = '18px'
     } else {
       root.style.fontSize = '16px'
     }
 
-    // Reduced motion
     if (settings.reducedMotion) {
       root.style.setProperty('--transition-duration', '0ms')
       root.classList.add('reduce-motion')
@@ -66,20 +59,17 @@ export function AccessibilityControls() {
       root.classList.remove('reduce-motion')
     }
 
-    // Dark mode
     if (settings.darkMode) {
       root.classList.add('dark')
     } else {
       root.classList.remove('dark')
     }
 
-    // Announce changes to screen readers
     if (settings.announcements && settings.screenReader) {
       announceToScreenReader('Accessibility settings updated')
     }
   }, [settings])
 
-  // Keyboard navigation
   useEffect(() => {
     if (settings.keyboardNavigation) {
       const handleKeyDown = (e: KeyboardEvent) => {
@@ -121,7 +111,7 @@ export function AccessibilityControls() {
     announcement.className = 'sr-only'
     announcement.textContent = message
     document.body.appendChild(announcement)
-    
+
     setTimeout(() => {
       document.body.removeChild(announcement)
     }, 1000)
@@ -146,7 +136,7 @@ export function AccessibilityControls() {
         variant="outline"
         size="sm"
         onClick={() => setIsVisible(!isVisible)}
-        className="fixed top-20 left-4 z-50 bg-arcane-shadow/80 backdrop-blur-sm border-arcane-crystal/20"
+        className="fixed top-20 left-4 z-50 glass border-white/10"
         aria-label="Toggle accessibility controls"
       >
         <Keyboard className="w-4 h-4" />
@@ -155,12 +145,12 @@ export function AccessibilityControls() {
 
       {/* Accessibility Panel */}
       {isVisible && (
-        <div 
-          className="fixed top-16 left-4 z-40 bg-arcane-shadow/95 backdrop-blur-md rounded-xl p-6 border border-arcane-crystal/20 w-80 max-h-96 overflow-y-auto"
+        <div
+          className="fixed top-16 left-4 z-40 glass-strong rounded-xl p-6 border border-white/10 w-80 max-h-96 overflow-y-auto"
           role="dialog"
           aria-labelledby="accessibility-title"
         >
-          <h2 id="accessibility-title" className="text-arcane-crystal font-semibold mb-4">
+          <h2 id="accessibility-title" className="text-arcane-crystal font-display mb-4">
             Accessibility Settings
           </h2>
 
@@ -171,9 +161,9 @@ export function AccessibilityControls() {
                 {settings.screenReader ? (
                   <Volume2 className="w-4 h-4 text-arcane-crystal" />
                 ) : (
-                  <VolumeX className="w-4 h-4 text-arcane-400" />
+                  <VolumeX className="w-4 h-4 text-text-muted" />
                 )}
-                <span className="text-arcane-300 text-sm">Screen Reader</span>
+                <span className="text-text-secondary text-sm font-body">Screen Reader</span>
               </div>
               <Button
                 variant={settings.screenReader ? "default" : "outline"}
@@ -189,7 +179,7 @@ export function AccessibilityControls() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Eye className="w-4 h-4 text-arcane-crystal" />
-                <span className="text-arcane-300 text-sm">High Contrast</span>
+                <span className="text-text-secondary text-sm font-body">High Contrast</span>
               </div>
               <Button
                 variant={settings.highContrast ? "default" : "outline"}
@@ -205,7 +195,7 @@ export function AccessibilityControls() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Type className="w-4 h-4 text-arcane-crystal" />
-                <span className="text-arcane-300 text-sm">Large Text</span>
+                <span className="text-text-secondary text-sm font-body">Large Text</span>
               </div>
               <Button
                 variant={settings.largeText ? "default" : "outline"}
@@ -221,7 +211,7 @@ export function AccessibilityControls() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <div className="w-4 h-4 border-2 border-arcane-crystal rounded" />
-                <span className="text-arcane-300 text-sm">Reduced Motion</span>
+                <span className="text-text-secondary text-sm font-body">Reduced Motion</span>
               </div>
               <Button
                 variant={settings.reducedMotion ? "default" : "outline"}
@@ -237,7 +227,7 @@ export function AccessibilityControls() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Keyboard className="w-4 h-4 text-arcane-crystal" />
-                <span className="text-arcane-300 text-sm">Keyboard Navigation</span>
+                <span className="text-text-secondary text-sm font-body">Keyboard Navigation</span>
               </div>
               <Button
                 variant={settings.keyboardNavigation ? "default" : "outline"}
@@ -257,7 +247,7 @@ export function AccessibilityControls() {
                 ) : (
                   <Sun className="w-4 h-4 text-arcane-crystal" />
                 )}
-                <span className="text-arcane-300 text-sm">Dark Mode</span>
+                <span className="text-text-secondary text-sm font-body">Dark Mode</span>
               </div>
               <Button
                 variant={settings.darkMode ? "default" : "outline"}
@@ -272,9 +262,9 @@ export function AccessibilityControls() {
 
           {/* Keyboard Shortcuts */}
           {settings.keyboardNavigation && (
-            <div className="mt-6 pt-4 border-t border-arcane-crystal/20">
-              <h3 className="text-arcane-crystal font-medium mb-2">Keyboard Shortcuts</h3>
-              <div className="space-y-1 text-xs text-arcane-400">
+            <div className="mt-6 pt-4 border-t border-white/10">
+              <h3 className="text-arcane-crystal font-display text-sm mb-2">Keyboard Shortcuts</h3>
+              <div className="space-y-1 text-xs text-text-muted font-mono">
                 <div>Alt + A: Toggle accessibility</div>
                 <div>Alt + 1: Navigate to home</div>
                 <div>Alt + 2: Navigate to chat</div>
@@ -286,9 +276,9 @@ export function AccessibilityControls() {
           {/* Announcements */}
           {settings.screenReader && (
             <div className="mt-4">
-              <Badge 
-                variant="crystal" 
-                className="text-xs"
+              <Badge
+                variant="crystal"
+                className="text-xs cursor-pointer"
                 onClick={() => announceToScreenReader('Current page loaded')}
               >
                 Test Screen Reader
@@ -301,19 +291,17 @@ export function AccessibilityControls() {
   )
 }
 
-// Screen reader announcements component
 export function ScreenReaderAnnouncements() {
   return (
-    <div 
-      aria-live="polite" 
-      aria-atomic="true" 
+    <div
+      aria-live="polite"
+      aria-atomic="true"
       className="sr-only"
       id="screen-reader-announcements"
     />
   )
 }
 
-// Focus trap for modal accessibility
 export function FocusTrap({ children, isActive }: { children: React.ReactNode; isActive: boolean }) {
   useEffect(() => {
     if (!isActive) return

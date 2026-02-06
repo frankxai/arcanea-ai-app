@@ -7,7 +7,7 @@ interface SkeletonProps {
 function Skeleton({ className }: SkeletonProps) {
   return (
     <div
-      className={cn('animate-pulse rounded-md bg-arcane-cosmic/50', className)}
+      className={cn('animate-pulse rounded-xl bg-white/[0.06]', className)}
     />
   )
 }

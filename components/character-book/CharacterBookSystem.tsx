@@ -1,20 +1,14 @@
-/**
- * Arcanea CharacterBook System
- * 
- * Advanced character creation and management with Guardian integration
- * Supports AI enhancement, relationship mapping, and story integration
- */
-
 'use client';
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  User, Plus, Edit, Trash2, Eye, Download, Upload, 
-  Sparkles, Users, Link, Brain, Image, Mic, Heart,
+import {
+  User, Plus, Eye,
+  Sparkles, Users, Brain, Mic, Heart,
   Crown, Flame, Droplet, Mountain, Wind, Circle,
-  Save, X, ChevronRight, BookOpen, Settings
+  X, BookOpen
 } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 // Types
 interface CharacterRelationship {
@@ -22,7 +16,7 @@ interface CharacterRelationship {
   character: string;
   type: 'friend' | 'enemy' | 'family' | 'mentor' | 'rival' | 'ally' | 'love_interest' | 'complex';
   description: string;
-  strength: number; // 1-10
+  strength: number;
 }
 
 interface CharacterTrait {
@@ -80,15 +74,15 @@ const GUARDIANS: Guardian[] = [
     name: 'Draconia',
     element: 'fire',
     specialty: ['character_transformation', 'creative_breakthroughs', 'artistic_vision'],
-    color: 'from-red-500 to-orange-500',
+    color: 'from-arcane-fire to-arcane-fire-bright',
     icon: Flame
   },
   {
-    id: 'leylya',
-    name: 'Leylya', 
+    id: 'leyla',
+    name: 'Leyla',
     element: 'water',
     specialty: ['emotional_depth', 'relationship_mapping', 'empathetic_creation'],
-    color: 'from-blue-500 to-cyan-500',
+    color: 'from-arcane-water to-arcane-water-bright',
     icon: Droplet
   },
   {
@@ -96,7 +90,7 @@ const GUARDIANS: Guardian[] = [
     name: 'Lyssandria',
     element: 'earth',
     specialty: ['foundational_traits', 'consistent_backstory', 'structural_development'],
-    color: 'from-green-500 to-emerald-500',
+    color: 'from-arcane-earth to-arcane-earth-bright',
     icon: Mountain
   },
   {
@@ -104,7 +98,7 @@ const GUARDIANS: Guardian[] = [
     name: 'Alera',
     element: 'air',
     specialty: ['communication_styles', 'expressive_dialogue', 'social_dynamics'],
-    color: 'from-yellow-500 to-amber-500',
+    color: 'from-arcane-gold to-arcane-gold-bright',
     icon: Wind
   },
   {
@@ -112,7 +106,7 @@ const GUARDIANS: Guardian[] = [
     name: 'Elara',
     element: 'void',
     specialty: ['mysterious_origins', 'innovative_concepts', 'hidden_potential'],
-    color: 'from-purple-500 to-pink-500',
+    color: 'from-arcane-void to-arcane-void-bright',
     icon: Circle
   }
 ];
@@ -137,7 +131,7 @@ const CHARACTER_TEMPLATES = {
     elementalAlignment: ['earth', 'air']
   },
   'shadow-weaver': {
-    traits: ['mysterious', 'manipulative', 'charismatic', ' secretive'],
+    traits: ['mysterious', 'manipulative', 'charismatic', 'secretive'],
     motivations: ['power', 'knowledge', 'control', 'revenge'],
     fears: ['exposure', 'weakness', 'betrayal'],
     elementalAlignment: ['void', 'water']
@@ -149,10 +143,8 @@ export default function CharacterBookSystem() {
   const [selectedCharacter, setSelectedCharacter] = useState<CharacterArcanea | null>(null);
   const [isCreating, setIsCreating] = useState(false);
   const [selectedGuardian, setSelectedGuardian] = useState<string>('');
-  const [activeTab, setActiveTab] = useState<'characters' | 'relationships' | 'ai-enhancement'>('characters');
   const [isGenerating, setIsGenerating] = useState(false);
 
-  // Load sample data
   useEffect(() => {
     loadSampleCharacters();
   }, []);
@@ -222,12 +214,11 @@ export default function CharacterBookSystem() {
 
   const generateCharacterWithGuardian = async (archetype: string, guardianId: string) => {
     setIsGenerating(true);
-    
-    // Simulate AI generation with Guardian guidance
+
     setTimeout(() => {
       const guardian = GUARDIANS.find(g => g.id === guardianId);
       const template = CHARACTER_TEMPLATES[archetype as keyof typeof CHARACTER_TEMPLATES];
-      
+
       if (guardian && template) {
         const newCharacter: CharacterArcanea = {
           id: Date.now().toString(),
@@ -268,7 +259,7 @@ export default function CharacterBookSystem() {
         setCharacters(prev => [...prev, newCharacter]);
         setSelectedCharacter(newCharacter);
       }
-      
+
       setIsGenerating(false);
       setIsCreating(false);
     }, 2000);
@@ -276,8 +267,7 @@ export default function CharacterBookSystem() {
 
   const enhanceCharacterWithAI = async (character: CharacterArcanea) => {
     setIsGenerating(true);
-    
-    // Simulate AI enhancement
+
     setTimeout(() => {
       const enhancedCharacter = {
         ...character,
@@ -300,17 +290,31 @@ export default function CharacterBookSystem() {
   };
 
   const getGuardianById = (id: string) => GUARDIANS.find(g => g.id === id);
-  const getElementalGradient = (elements: string[]) => {
-    if (elements.includes('fire')) return 'from-red-500 to-orange-500';
-    if (elements.includes('water')) return 'from-blue-500 to-cyan-500';
-    if (elements.includes('earth')) return 'from-green-500 to-emerald-500';
-    if (elements.includes('air')) return 'from-yellow-500 to-amber-500';
-    if (elements.includes('void')) return 'from-purple-500 to-pink-500';
-    return 'from-gray-500 to-gray-600';
+
+  const getElementColor = (element: string) => {
+    switch (element) {
+      case 'fire': return 'bg-arcane-fire';
+      case 'water': return 'bg-arcane-water';
+      case 'earth': return 'bg-arcane-earth';
+      case 'air': return 'bg-arcane-gold';
+      case 'void': return 'bg-arcane-void';
+      default: return 'bg-arcane-crystal';
+    }
+  };
+
+  const getElementGradient = (element: string) => {
+    switch (element) {
+      case 'fire': return 'from-arcane-fire to-arcane-fire-bright';
+      case 'water': return 'from-arcane-water to-arcane-water-bright';
+      case 'earth': return 'from-arcane-earth to-arcane-earth-bright';
+      case 'air': return 'from-arcane-gold to-arcane-gold-bright';
+      case 'void': return 'from-arcane-void to-arcane-void-bright';
+      default: return 'from-arcane-crystal to-arcane-crystal-bright';
+    }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
+    <div className="min-h-screen bg-cosmic-void">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <motion.div
@@ -318,10 +322,13 @@ export default function CharacterBookSystem() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
-          <h1 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 mb-2">
-            🧙 Arcanea CharacterBook
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-arcane-void/10 border border-arcane-void/20 mb-4">
+            <BookOpen className="w-8 h-8 text-arcane-void" />
+          </div>
+          <h1 className="text-fluid-4xl font-display text-gradient-cosmic mb-2">
+            Arcanea CharacterBook
           </h1>
-          <p className="text-gray-300 text-lg">
+          <p className="text-text-secondary text-lg font-body">
             Create extraordinary characters with Guardian guidance and AI enhancement
           </p>
         </motion.div>
@@ -333,12 +340,12 @@ export default function CharacterBookSystem() {
           transition={{ delay: 0.1 }}
           className="mb-8"
         >
-          <div className="bg-slate-800/50 backdrop-blur-lg rounded-xl p-6 border border-slate-700">
+          <div className="glass rounded-2xl p-6 border border-white/10">
             <div className="flex items-center gap-3 mb-4">
-              <Crown className="w-6 h-6 text-yellow-400" />
-              <h2 className="text-xl font-bold text-white">Choose Your Guardian Guide</h2>
+              <Crown className="w-6 h-6 text-arcane-gold" />
+              <h2 className="text-xl font-display text-white">Choose Your Guardian Guide</h2>
             </div>
-            
+
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
               {GUARDIANS.map((guardian) => {
                 const GuardianIcon = guardian.icon;
@@ -350,15 +357,15 @@ export default function CharacterBookSystem() {
                     onClick={() => setSelectedGuardian(selectedGuardian === guardian.id ? '' : guardian.id)}
                     className={`p-4 rounded-xl border-2 transition-all ${
                       selectedGuardian === guardian.id
-                        ? `${guardian.color} border-white shadow-xl transform scale-105`
-                        : 'border-slate-600 hover:border-slate-500'
+                        ? `border-white/40 bg-gradient-to-br ${guardian.color} shadow-xl`
+                        : 'border-white/10 hover:border-white/20 bg-white/[0.03]'
                     }`}
                   >
                     <GuardianIcon className={`w-8 h-8 mx-auto mb-2 ${
-                      selectedGuardian === guardian.id ? 'text-white' : 'text-gray-400'
+                      selectedGuardian === guardian.id ? 'text-white' : 'text-text-muted'
                     }`} />
-                    <div className="text-sm font-bold text-white">{guardian.name}</div>
-                    <div className="text-xs text-gray-300 capitalize">{guardian.element}</div>
+                    <div className="text-sm font-display text-white">{guardian.name}</div>
+                    <div className="text-xs text-text-secondary capitalize">{guardian.element}</div>
                   </motion.button>
                 );
               })}
@@ -368,15 +375,15 @@ export default function CharacterBookSystem() {
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-slate-700/50 rounded-lg p-4"
+                className="glass-subtle rounded-xl p-4"
               >
                 <div className="flex items-center gap-3 mb-3">
-                  <Brain className="w-5 h-5 text-purple-400" />
-                  <span className="text-white font-semibold">Guardian Specialties</span>
+                  <Brain className="w-5 h-5 text-arcane-void" />
+                  <span className="text-white font-display text-sm">Guardian Specialties</span>
                 </div>
-                <div className="text-sm text-gray-300">
+                <div className="text-sm">
                   {getGuardianById(selectedGuardian)?.specialty.map(specialty => (
-                    <span key={specialty} className="inline-block px-2 py-1 bg-purple-500/20 text-purple-300 rounded-full mr-2 mb-2">
+                    <span key={specialty} className="inline-block px-2 py-1 bg-arcane-void/20 text-arcane-void-bright rounded-full mr-2 mb-2 text-xs">
                       {specialty.replace('_', ' ')}
                     </span>
                   ))}
@@ -393,17 +400,17 @@ export default function CharacterBookSystem() {
           transition={{ delay: 0.2 }}
           className="mb-8"
         >
-          <div className="bg-slate-800/50 backdrop-blur-lg rounded-xl p-6 border border-slate-700">
+          <div className="glass rounded-2xl p-6 border border-white/10">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                <Plus className="w-5 h-5 text-green-400" />
+              <h3 className="text-lg font-display text-white flex items-center gap-2">
+                <Plus className="w-5 h-5 text-arcane-earth" />
                 Create New Character
               </h3>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setIsCreating(!isCreating)}
-                className="px-4 py-2 bg-green-500 text-white rounded-lg font-medium hover:bg-green-600 transition-colors"
+                className="px-4 py-2 bg-arcane-crystal text-cosmic-void rounded-xl font-display text-sm hover:bg-arcane-crystal-bright transition-colors shadow-[0_0_20px_rgba(127,255,212,0.2)]"
               >
                 {isCreating ? 'Cancel' : 'Create Character'}
               </motion.button>
@@ -417,9 +424,9 @@ export default function CharacterBookSystem() {
                   exit={{ opacity: 0, height: 0 }}
                   className="overflow-hidden"
                 >
-                  <div className="border-t border-slate-600 pt-4 mt-4">
+                  <div className="border-t border-white/10 pt-4 mt-4">
                     <div className="mb-4">
-                      <label className="block text-sm font-medium text-gray-300 mb-2">Choose Archetype</label>
+                      <label className="block text-sm font-body text-text-secondary mb-2">Choose Archetype</label>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                         {ARCHETYPES.map((archetype) => (
                           <motion.button
@@ -428,7 +435,7 @@ export default function CharacterBookSystem() {
                             whileTap={{ scale: 0.98 }}
                             onClick={() => generateCharacterWithGuardian(archetype, selectedGuardian)}
                             disabled={isGenerating}
-                            className="p-3 bg-slate-700 border border-slate-600 rounded-lg hover:border-purple-500 transition-all text-sm text-gray-300 hover:text-white disabled:opacity-50"
+                            className="p-3 bg-white/[0.03] border border-white/10 rounded-xl hover:border-arcane-crystal/30 transition-all text-sm text-text-secondary hover:text-white disabled:opacity-50 font-body"
                           >
                             {archetype.replace('-', ' ')}
                           </motion.button>
@@ -438,8 +445,8 @@ export default function CharacterBookSystem() {
 
                     {isGenerating && (
                       <div className="text-center py-4">
-                        <div className="w-8 h-8 border-2 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
-                        <p className="text-gray-300">{getGuardianById(selectedGuardian)?.name} is crafting your character...</p>
+                        <div className="w-8 h-8 border-2 border-arcane-crystal border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+                        <p className="text-text-secondary font-body">{getGuardianById(selectedGuardian)?.name} is crafting your character...</p>
                       </div>
                     )}
                   </div>
@@ -459,55 +466,56 @@ export default function CharacterBookSystem() {
               transition={{ delay: index * 0.1 }}
               whileHover={{ scale: 1.02, y: -2 }}
               onClick={() => setSelectedCharacter(character)}
-              className="bg-slate-800/50 backdrop-blur-lg rounded-xl overflow-hidden border border-slate-700 hover:border-purple-500 transition-all cursor-pointer"
+              className="glow-card rounded-2xl overflow-hidden cursor-pointer"
             >
               {character.aiGenerated?.portrait && (
-                <div className="h-64 bg-gradient-to-br from-slate-700 to-slate-800 relative">
-                  <img 
-                    src={character.aiGenerated.portrait} 
+                <div className="h-64 bg-gradient-to-br from-cosmic-surface to-cosmic-deep relative">
+                  <img
+                    src={character.aiGenerated.portrait}
                     alt={character.name}
                     className="w-full h-full object-cover"
                   />
                   {character.guardian && (
-                    <div className="absolute top-3 right-3 p-2 rounded-full bg-gradient-to-br from-purple-500 to-pink-500">
+                    <div className={`absolute top-3 right-3 p-2 rounded-full bg-gradient-to-br ${getGuardianById(character.guardian)?.color || 'from-arcane-crystal to-arcane-crystal-bright'}`}>
                       {React.createElement(getGuardianById(character.guardian)?.icon || Crown, { className: "w-4 h-4 text-white" })}
                     </div>
                   )}
                 </div>
               )}
-              
+
               <div className="p-6">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className={`w-14 h-14 rounded-full bg-gradient-to-br ${getElementalGradient(character.elementalAlignment)} flex items-center justify-center`}>
+                  <div className={`w-14 h-14 rounded-full bg-gradient-to-br ${getElementGradient(character.elementalAlignment[0])} flex items-center justify-center`}>
                     <User className="w-7 h-7 text-white" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-lg font-bold text-white">{character.name}</h3>
-                    <p className="text-sm text-gray-400">{character.archetype} • {character.role}</p>
+                    <h3 className="text-lg font-display text-white">{character.name}</h3>
+                    <p className="text-sm text-text-muted font-body">{character.archetype} &middot; {character.role}</p>
                   </div>
                 </div>
-                
+
                 <div className="mb-4">
                   <div className="flex flex-wrap gap-2 mb-3">
                     {character.elementalAlignment.map((element) => (
-                      <span
+                      <Badge
                         key={element}
-                        className={`px-2 py-1 bg-gradient-to-r ${getElementalGradient([element])} text-white text-xs rounded-full`}
+                        variant={element === 'fire' ? 'fire' : element === 'water' ? 'water' : element === 'earth' ? 'earth' : element === 'void' ? 'void' : 'crystal'}
+                        className="text-xs capitalize"
                       >
                         {element}
-                      </span>
+                      </Badge>
                     ))}
                   </div>
-                  
-                  <div className="text-sm text-gray-300 line-clamp-2 mb-2">
+
+                  <div className="text-sm text-text-secondary line-clamp-2 mb-2 font-body">
                     {character.backstory}
                   </div>
-                  
-                  <div className="text-xs text-gray-500">
-                    {character.age} years • {character.traits.length} traits
+
+                  <div className="text-xs text-text-disabled">
+                    {character.age} years &middot; {character.traits.length} traits
                   </div>
                 </div>
-                
+
                 <div className="flex gap-2">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
@@ -517,29 +525,28 @@ export default function CharacterBookSystem() {
                       enhanceCharacterWithAI(character);
                     }}
                     disabled={isGenerating}
-                    className="flex-1 px-3 py-2 bg-purple-500 text-white rounded-lg text-sm hover:bg-purple-600 transition-colors disabled:opacity-50"
+                    className="flex-1 flex items-center justify-center gap-1 px-3 py-2 bg-arcane-crystal/10 border border-arcane-crystal/20 text-arcane-crystal rounded-xl text-sm hover:bg-arcane-crystal/20 transition-colors disabled:opacity-50 font-body"
                   >
                     {isGenerating ? (
                       <>
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-1" />
+                        <div className="w-4 h-4 border-2 border-arcane-crystal border-t-transparent rounded-full animate-spin" />
                         Enhancing...
                       </>
                     ) : (
                       <>
-                        <Sparkles className="w-4 h-4 mr-1" />
+                        <Sparkles className="w-4 h-4" />
                         AI Enhance
                       </>
                     )}
                   </motion.button>
-                  
+
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={(e) => {
                       e.stopPropagation();
-                      // View character details
                     }}
-                    className="px-3 py-2 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition-colors"
+                    className="px-3 py-2 bg-white/[0.03] border border-white/10 text-white rounded-xl hover:bg-white/[0.06] transition-colors"
                   >
                     <Eye className="w-4 h-4" />
                   </motion.button>
@@ -556,7 +563,7 @@ export default function CharacterBookSystem() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+              className="fixed inset-0 bg-cosmic-void/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
               onClick={() => setSelectedCharacter(null)}
             >
               <motion.div
@@ -564,27 +571,27 @@ export default function CharacterBookSystem() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 onClick={(e) => e.stopPropagation()}
-                className="bg-slate-800 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden border border-slate-700"
+                className="glass-strong rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden border border-white/10"
               >
                 <div className="grid grid-cols-1 md:grid-cols-2 h-full">
-                  {/* Left Column - Portrait and Basic Info */}
-                  <div className="p-6 border-r border-slate-700">
+                  {/* Left Column */}
+                  <div className="p-6 border-r border-white/10">
                     <div className="flex items-center justify-between mb-4">
-                      <h2 className="text-2xl font-bold text-white">{selectedCharacter.name}</h2>
+                      <h2 className="text-2xl font-display text-white">{selectedCharacter.name}</h2>
                       <motion.button
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={() => setSelectedCharacter(null)}
-                        className="p-2 bg-slate-700 rounded-lg hover:bg-slate-600 transition-colors"
+                        className="p-2 bg-white/[0.06] rounded-xl hover:bg-white/[0.1] transition-colors"
                       >
-                        <X className="w-5 h-5 text-gray-400" />
+                        <X className="w-5 h-5 text-text-muted" />
                       </motion.button>
                     </div>
 
                     {selectedCharacter.aiGenerated?.portrait && (
-                      <div className="mb-6 rounded-lg overflow-hidden">
-                        <img 
-                          src={selectedCharacter.aiGenerated.portrait} 
+                      <div className="mb-6 rounded-xl overflow-hidden">
+                        <img
+                          src={selectedCharacter.aiGenerated.portrait}
                           alt={selectedCharacter.name}
                           className="w-full h-80 object-cover"
                         />
@@ -593,42 +600,42 @@ export default function CharacterBookSystem() {
 
                     <div className="space-y-4">
                       <div>
-                        <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
-                          <Users className="w-5 h-5 text-purple-400" />
+                        <h3 className="text-lg font-display text-white mb-2 flex items-center gap-2">
+                          <Users className="w-5 h-5 text-arcane-void" />
                           Character Details
                         </h3>
-                        <div className="space-y-2 text-sm">
+                        <div className="space-y-2 text-sm font-body">
                           <div className="flex justify-between">
-                            <span className="text-gray-400">Archetype:</span>
+                            <span className="text-text-muted">Archetype:</span>
                             <span className="text-white capitalize">{selectedCharacter.archetype}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-gray-400">Role:</span>
+                            <span className="text-text-muted">Role:</span>
                             <span className="text-white">{selectedCharacter.role}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-gray-400">Age:</span>
+                            <span className="text-text-muted">Age:</span>
                             <span className="text-white">{selectedCharacter.age}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-gray-400">Guardian:</span>
+                            <span className="text-text-muted">Guardian:</span>
                             <span className="text-white capitalize">{selectedCharacter.guardian}</span>
                           </div>
                         </div>
                       </div>
 
                       <div>
-                        <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
-                          <Heart className="w-5 h-5 text-red-400" />
+                        <h3 className="text-lg font-display text-white mb-2 flex items-center gap-2">
+                          <Heart className="w-5 h-5 text-arcane-fire" />
                           Personality
                         </h3>
-                        <div className="space-y-2">
+                        <div className="space-y-2 font-body">
                           <div>
-                            <span className="text-gray-400 text-sm">Motivation:</span>
+                            <span className="text-text-muted text-sm">Motivation:</span>
                             <p className="text-white text-sm mt-1">{selectedCharacter.motivation}</p>
                           </div>
                           <div>
-                            <span className="text-gray-400 text-sm">Fears:</span>
+                            <span className="text-text-muted text-sm">Fears:</span>
                             <p className="text-white text-sm mt-1">{selectedCharacter.fears}</p>
                           </div>
                         </div>
@@ -636,27 +643,27 @@ export default function CharacterBookSystem() {
                     </div>
                   </div>
 
-                  {/* Right Column - AI Enhancement Details */}
+                  {/* Right Column - AI Enhancement */}
                   <div className="p-6 overflow-y-auto">
                     {selectedCharacter.aiGenerated && (
                       <>
                         <div className="mb-6">
-                          <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-                            <Mic className="w-5 h-5 text-blue-400" />
+                          <h3 className="text-lg font-display text-white mb-3 flex items-center gap-2">
+                            <Mic className="w-5 h-5 text-arcane-water" />
                             Voice Profile
                           </h3>
                           {selectedCharacter.aiGenerated.voiceProfile && (
-                            <div className="bg-slate-700/50 rounded-lg p-4 space-y-2 text-sm">
+                            <div className="glass-subtle rounded-xl p-4 space-y-2 text-sm font-body">
                               <div className="flex justify-between">
-                                <span className="text-gray-400">Pitch:</span>
+                                <span className="text-text-muted">Pitch:</span>
                                 <span className="text-white capitalize">{selectedCharacter.aiGenerated.voiceProfile.pitch}</span>
                               </div>
                               <div>
-                                <span className="text-gray-400">Tone:</span>
+                                <span className="text-text-muted">Tone:</span>
                                 <p className="text-white mt-1">{selectedCharacter.aiGenerated.voiceProfile.tone}</p>
                               </div>
                               <div className="flex justify-between">
-                                <span className="text-gray-400">Speed:</span>
+                                <span className="text-text-muted">Speed:</span>
                                 <span className="text-white capitalize">{selectedCharacter.aiGenerated.voiceProfile.speed}</span>
                               </div>
                             </div>
@@ -664,37 +671,37 @@ export default function CharacterBookSystem() {
                         </div>
 
                         <div className="mb-6">
-                          <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-                            <Brain className="w-5 h-5 text-purple-400" />
+                          <h3 className="text-lg font-display text-white mb-3 flex items-center gap-2">
+                            <Brain className="w-5 h-5 text-arcane-void" />
                             Personality Analysis
                           </h3>
                           {selectedCharacter.aiGenerated.personalityAnalysis && (
                             <div className="space-y-3">
                               <div>
-                                <span className="text-gray-400 text-sm">Core Traits:</span>
+                                <span className="text-text-muted text-sm font-body">Core Traits:</span>
                                 <div className="flex flex-wrap gap-2 mt-1">
                                   {selectedCharacter.aiGenerated.personalityAnalysis.core_traits.map((trait, index) => (
-                                    <span key={index} className="px-2 py-1 bg-purple-500/20 text-purple-300 text-xs rounded-full">
+                                    <span key={index} className="px-2 py-1 bg-arcane-void/20 text-arcane-void-bright text-xs rounded-full">
                                       {trait}
                                     </span>
                                   ))}
                                 </div>
                               </div>
                               <div>
-                                <span className="text-gray-400 text-sm">Emotional Drivers:</span>
+                                <span className="text-text-muted text-sm font-body">Emotional Drivers:</span>
                                 <div className="flex flex-wrap gap-2 mt-1">
                                   {selectedCharacter.aiGenerated.personalityAnalysis.emotional_drivers.map((driver, index) => (
-                                    <span key={index} className="px-2 py-1 bg-blue-500/20 text-blue-300 text-xs rounded-full">
+                                    <span key={index} className="px-2 py-1 bg-arcane-water/20 text-arcane-water-bright text-xs rounded-full">
                                       {driver}
                                     </span>
                                   ))}
                                 </div>
                               </div>
                               <div>
-                                <span className="text-gray-400 text-sm">Growth Potential:</span>
+                                <span className="text-text-muted text-sm font-body">Growth Potential:</span>
                                 <div className="flex flex-wrap gap-2 mt-1">
                                   {selectedCharacter.aiGenerated.personalityAnalysis.growth_potential.map((potential, index) => (
-                                    <span key={index} className="px-2 py-1 bg-green-500/20 text-green-300 text-xs rounded-full">
+                                    <span key={index} className="px-2 py-1 bg-arcane-earth/20 text-arcane-earth-bright text-xs rounded-full">
                                       {potential}
                                     </span>
                                   ))}
@@ -705,14 +712,14 @@ export default function CharacterBookSystem() {
                         </div>
 
                         <div>
-                          <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-                            <BookOpen className="w-5 h-5 text-yellow-400" />
+                          <h3 className="text-lg font-display text-white mb-3 flex items-center gap-2">
+                            <BookOpen className="w-5 h-5 text-arcane-gold" />
                             Story Suggestions
                           </h3>
                           {selectedCharacter.aiGenerated.story_suggestions && (
                             <div className="space-y-2">
                               {selectedCharacter.aiGenerated.story_suggestions.map((suggestion, index) => (
-                                <div key={index} className="bg-slate-700/50 rounded-lg p-3 text-sm text-gray-300">
+                                <div key={index} className="glass-subtle rounded-xl p-3 text-sm text-text-secondary font-body">
                                   {suggestion}
                                 </div>
                               ))}

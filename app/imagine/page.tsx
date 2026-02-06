@@ -3,10 +3,25 @@
 import { useState, useEffect } from 'react'
 import { AIRouter } from '@/lib/ai-router'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
 import { GENERATION_STYLES } from '@/lib/ai-providers'
+import {
+  Sparkles,
+  FileText,
+  Image,
+  Video,
+  Music,
+  Clock,
+  DollarSign,
+} from 'lucide-react'
+
+const tabConfig = [
+  { id: 'text' as const, name: 'Text', icon: FileText },
+  { id: 'image' as const, name: 'Image', icon: Image },
+  { id: 'video' as const, name: 'Video', icon: Video },
+  { id: 'audio' as const, name: 'Audio', icon: Music },
+]
 
 export default function ImagineInterface() {
   const [activeTab, setActiveTab] = useState<'text' | 'image' | 'video' | 'audio'>('image')
@@ -14,6 +29,7 @@ export default function ImagineInterface() {
   const [selectedStyle, setSelectedStyle] = useState('')
   const [selectedProvider, setSelectedProvider] = useState('')
   const [isGenerating, setIsGenerating] = useState(false)
+
   interface GenerationHistoryItem {
     id: string
     type: 'text' | 'image' | 'video' | 'audio'
@@ -41,7 +57,7 @@ export default function ImagineInterface() {
     if (!prompt.trim() || !aiRouter) return
 
     setIsGenerating(true)
-    
+
     try {
       let response
       const baseRequest = {
@@ -50,37 +66,22 @@ export default function ImagineInterface() {
           style: selectedStyle,
           dimensions: activeTab === 'image' ? { width: 1024, height: 1024 } : undefined,
           duration: activeTab === 'video' ? 10 : undefined,
-          quality: 'standard' as const
-        }
+          quality: 'standard' as const,
+        },
       }
 
       switch (activeTab) {
         case 'text':
-          response = await aiRouter.generateText({
-            ...baseRequest,
-            providerId: selectedProvider || 'claude'
-          })
+          response = await aiRouter.generateText({ ...baseRequest, providerId: selectedProvider || 'claude' })
           break
-        
         case 'image':
-          response = await aiRouter.generateImage({
-            ...baseRequest,
-            providerId: selectedProvider || 'dalle'
-          })
+          response = await aiRouter.generateImage({ ...baseRequest, providerId: selectedProvider || 'dalle' })
           break
-        
         case 'video':
-          response = await aiRouter.generateVideo({
-            ...baseRequest,
-            providerId: selectedProvider || 'runway'
-          })
+          response = await aiRouter.generateVideo({ ...baseRequest, providerId: selectedProvider || 'runway' })
           break
-        
         case 'audio':
-          response = await aiRouter.generateAudio({
-            ...baseRequest,
-            providerId: selectedProvider || 'suno'
-          })
+          response = await aiRouter.generateAudio({ ...baseRequest, providerId: selectedProvider || 'suno' })
           break
       }
 
@@ -91,10 +92,10 @@ export default function ImagineInterface() {
         provider: response.providerId,
         result: typeof response.data === 'string' ? response.data : JSON.stringify(response.data),
         usage: response.usage,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       }
 
-      setGenerationHistory(prev => [newGeneration, ...prev])
+      setGenerationHistory((prev) => [newGeneration, ...prev])
     } catch (error) {
       console.error('Generation error:', error)
     } finally {
@@ -108,23 +109,23 @@ export default function ImagineInterface() {
         return [
           { id: 'claude', name: 'Claude 3.5 Sonnet', desc: 'Analytical & Creative' },
           { id: 'gpt', name: 'GPT-4 Turbo', desc: 'Versatile & Fast' },
-          { id: 'gemini', name: 'Gemini Pro', desc: 'Multimodal' }
+          { id: 'gemini', name: 'Gemini Pro', desc: 'Multimodal' },
         ]
       case 'image':
         return [
           { id: 'dalle', name: 'DALL-E 3', desc: 'High Quality' },
           { id: 'midjourney', name: 'Midjourney', desc: 'Artistic Excellence' },
-          { id: 'stable', name: 'Stable Diffusion', desc: 'Cost Effective' }
+          { id: 'stable', name: 'Stable Diffusion', desc: 'Cost Effective' },
         ]
       case 'video':
         return [
           { id: 'runway', name: 'Runway Gen-2', desc: 'Premium Video' },
-          { id: 'pika', name: 'Pika Labs', desc: 'Character Animation' }
+          { id: 'pika', name: 'Pika Labs', desc: 'Character Animation' },
         ]
       case 'audio':
         return [
           { id: 'suno', name: 'Suno AI', desc: 'Music Generation' },
-          { id: 'elevenlabs', name: 'ElevenLabs', desc: 'Voice Synthesis' }
+          { id: 'elevenlabs', name: 'ElevenLabs', desc: 'Voice Synthesis' },
         ]
       default:
         return []
@@ -135,79 +136,85 @@ export default function ImagineInterface() {
     return GENERATION_STYLES[activeTab] || []
   }
 
+  const getTypeIcon = (type: string) => {
+    const config = tabConfig.find((t) => t.id === type)
+    return config?.icon || Sparkles
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-arcane-cosmic via-arcane-shadow to-arcane-cosmic">
+    <div className="min-h-screen bg-cosmic-void">
+      {/* Background */}
+      <div className="fixed inset-0 bg-cosmic-mesh" />
+
       {/* Header */}
-      <div className="bg-arcane-shadow/80 backdrop-blur-sm border-b border-arcane-crystal/20 p-6">
+      <div className="relative glass-strong border-b border-white/5 p-6">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-3xl font-display text-arcane-crystal mb-2">Imagine Studio</h1>
-          <p className="text-arcane-400">Multi-Modal Generation Suite</p>
+          <h1 className="text-2xl font-display text-white mb-1">Imagine Studio</h1>
+          <p className="text-text-muted text-sm font-sans">Multi-Modal Generation Suite</p>
         </div>
       </div>
 
-      <div className="flex h-[calc(100vh-100px)]">
-        {/* Sidebar - Generation Controls */}
-        <div className="w-96 bg-arcane-shadow/90 backdrop-blur-md border-r border-arcane-crystal/20 p-6 overflow-y-auto">
-          {/* Tab Selection */}
+      <div className="relative flex h-[calc(100vh-88px)]">
+        {/* Sidebar */}
+        <div className="w-96 glass-strong border-r border-white/5 p-6 overflow-y-auto">
+          {/* Tab selection */}
           <div className="mb-6">
-            <h3 className="text-arcane-300 font-medium mb-3">Generation Type</h3>
+            <h3 className="text-text-secondary font-sans font-medium text-sm mb-3">Generation Type</h3>
             <div className="grid grid-cols-2 gap-2">
-              {[
-                { id: 'text', name: 'Text', icon: '📝' },
-                { id: 'image', name: 'Image', icon: '🎨' },
-                { id: 'video', name: 'Video', icon: '🎬' },
-                { id: 'audio', name: 'Audio', icon: '🎵' }
-              ].map(tab => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id as 'image' | 'video' | 'audio')}
-                  className={`p-3 rounded-lg border transition-all ${
-                    activeTab === tab.id
-                      ? 'bg-arcane-fire border-arcane-fire text-white'
-                      : 'bg-arcane-cosmic/50 border-arcane-cosmic/50 text-arcane-300 hover:bg-arcane-cosmic/70'
-                  }`}
-                >
-                  <div className="text-2xl mb-1">{tab.icon}</div>
-                  <div className="text-sm font-medium">{tab.name}</div>
-                </button>
-              ))}
+              {tabConfig.map((tab) => {
+                const Icon = tab.icon
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`p-3 rounded-xl border transition-all font-sans ${
+                      activeTab === tab.id
+                        ? 'bg-gradient-to-r from-arcane-crystal/20 to-arcane-water/20 border-arcane-crystal/30 text-white'
+                        : 'bg-white/[0.03] border-white/5 text-text-secondary hover:bg-white/[0.06]'
+                    }`}
+                  >
+                    <Icon className="w-6 h-6 mx-auto mb-1" />
+                    <div className="text-sm font-medium">{tab.name}</div>
+                  </button>
+                )
+              })}
             </div>
           </div>
 
-          {/* Provider Selection */}
+          {/* Provider selection */}
           <div className="mb-6">
-            <h3 className="text-arcane-300 font-medium mb-3">AI Provider</h3>
+            <h3 className="text-text-secondary font-sans font-medium text-sm mb-3">AI Provider</h3>
             <div className="space-y-2">
-              {getProviderOptions().map(provider => (
+              {getProviderOptions().map((provider) => (
                 <button
                   key={provider.id}
                   onClick={() => setSelectedProvider(provider.id)}
-                  className={`w-full text-left p-3 rounded-lg border transition-all ${
+                  className={`w-full text-left p-3 rounded-xl border transition-all font-sans ${
                     selectedProvider === provider.id
-                      ? 'bg-arcane-crystal/20 border-arcane-crystal/30 text-arcane-crystal'
-                      : 'bg-arcane-cosmic/30 border-arcane-cosmic/40 text-arcane-300 hover:bg-arcane-cosmic/50'
+                      ? 'bg-arcane-crystal/10 border-arcane-crystal/20 text-arcane-crystal'
+                      : 'bg-white/[0.03] border-white/5 text-text-secondary hover:bg-white/[0.06]'
                   }`}
                 >
-                  <div className="font-medium">{provider.name}</div>
-                  <div className="text-xs opacity-75">{provider.desc}</div>
+                  <div className="font-medium text-sm">{provider.name}</div>
+                  <div className="text-xs text-text-muted mt-0.5">{provider.desc}</div>
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Style Selection */}
+          {/* Style selection */}
           {getStyleOptions().length > 0 && (
             <div className="mb-6">
-              <h3 className="text-arcane-300 font-medium mb-3">Style</h3>
+              <h3 className="text-text-secondary font-sans font-medium text-sm mb-3">Style</h3>
               <div className="grid grid-cols-2 gap-2">
-                {getStyleOptions().map(style => (
+                {getStyleOptions().map((style: string) => (
                   <button
                     key={style}
                     onClick={() => setSelectedStyle(style)}
-                    className={`p-2 rounded-lg border text-xs transition-all ${
+                    className={`p-2 rounded-lg border text-xs transition-all font-sans ${
                       selectedStyle === style
-                        ? 'bg-arcane-crystal/20 border-arcane-crystal/30 text-arcane-crystal'
-                        : 'bg-arcane-cosmic/30 border-arcane-cosmic/40 text-arcane-300 hover:bg-arcane-cosmic/50'
+                        ? 'bg-arcane-crystal/10 border-arcane-crystal/20 text-arcane-crystal'
+                        : 'bg-white/[0.03] border-white/5 text-text-secondary hover:bg-white/[0.06]'
                     }`}
                   >
                     {style}
@@ -217,44 +224,48 @@ export default function ImagineInterface() {
             </div>
           )}
 
-          {/* Prompt Input */}
+          {/* Prompt input */}
           <div className="mb-6">
-            <h3 className="text-arcane-300 font-medium mb-3">Prompt</h3>
+            <h3 className="text-text-secondary font-sans font-medium text-sm mb-3">Prompt</h3>
             <Textarea
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
-              placeholder={`Describe what you want to generate...`}
-              className="min-h-[100px]"
+              placeholder="Describe what you want to generate..."
+              className="min-h-[100px] bg-white/[0.03] border-white/10 focus:border-arcane-crystal/30 rounded-xl font-body text-white placeholder:text-text-disabled"
             />
           </div>
 
-          {/* Generate Button */}
+          {/* Generate button */}
           <Button
             onClick={handleGenerate}
             disabled={!prompt.trim() || isGenerating}
-            className="w-full bg-arcane-fire hover:bg-arcane-fire/80"
+            className="w-full"
+            size="lg"
           >
             {isGenerating ? (
               <>
-                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                <div className="w-4 h-4 border-2 border-cosmic-void border-t-transparent rounded-full animate-spin mr-2" />
                 Generating...
               </>
             ) : (
-              `Generate ${activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}`
+              <>
+                <Sparkles className="w-4 h-4 mr-2" />
+                Generate {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
+              </>
             )}
           </Button>
 
-          {/* Usage Stats */}
+          {/* Usage stats */}
           {aiRouter && (
-            <div className="mt-6 p-4 bg-arcane-cosmic/30 rounded-lg">
-              <h3 className="text-arcane-300 font-medium mb-2">Session Stats</h3>
-              <div className="space-y-1 text-sm">
+            <div className="mt-6 glow-card rounded-xl p-4">
+              <h3 className="text-text-secondary font-sans font-medium text-sm mb-2">Session Stats</h3>
+              <div className="space-y-1 text-sm font-sans">
                 <div className="flex justify-between">
-                  <span className="text-arcane-400">Total Cost:</span>
+                  <span className="text-text-muted">Total Cost:</span>
                   <span className="text-arcane-crystal">${aiRouter.getUsageStats().totalCost.toFixed(4)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-arcane-400">Generations:</span>
+                  <span className="text-text-muted">Generations:</span>
                   <span className="text-arcane-crystal">{generationHistory.length}</span>
                 </div>
               </div>
@@ -262,75 +273,79 @@ export default function ImagineInterface() {
           )}
         </div>
 
-        {/* Main Content Area */}
+        {/* Main content area */}
         <div className="flex-1 p-6 overflow-y-auto">
           <div className="max-w-6xl mx-auto">
-            {/* Generation History */}
+            {/* Generation history grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {generationHistory.map((gen) => (
-                <div key={gen.id} className="bg-arcane-shadow/80 backdrop-blur-sm border border-arcane-cosmic/30 rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <Badge variant="outline" className="capitalize">
-                      {gen.type}
-                    </Badge>
-                    <Badge variant="crystal">
-                      {gen.provider}
-                    </Badge>
-                  </div>
-                  
-                  <div className="mb-3">
-                    <p className="text-arcane-300 text-sm line-clamp-2">{gen.prompt}</p>
-                  </div>
+              {generationHistory.map((gen) => {
+                const TypeIcon = getTypeIcon(gen.type)
+                return (
+                  <div key={gen.id} className="glow-card rounded-2xl p-5">
+                    <div className="flex items-center justify-between mb-3">
+                      <Badge variant="outline" className="capitalize font-sans text-xs">
+                        <TypeIcon className="w-3 h-3 mr-1" />
+                        {gen.type}
+                      </Badge>
+                      <Badge variant="crystal" className="font-sans text-xs">
+                        {gen.provider}
+                      </Badge>
+                    </div>
 
-                  {/* Result Display */}
-                  <div className="bg-arcane-cosmic/30 rounded-lg p-4 min-h-[100px] flex items-center justify-center">
-                    {gen.type === 'text' && (
-                      <div className="text-arcane-300 text-sm">
-                        {gen.result?.substring(0, 200)}...
-                      </div>
-                    )}
-                    {gen.type === 'image' && (
-                      <div className="w-full h-32 bg-arcane-cosmic/50 rounded flex items-center justify-center">
-                        <span className="text-arcane-400">🖼️ Generated Image</span>
-                      </div>
-                    )}
-                    {gen.type === 'video' && (
-                      <div className="w-full h-32 bg-arcane-cosmic/50 rounded flex items-center justify-center">
-                        <span className="text-arcane-400">🎬 Generated Video</span>
-                      </div>
-                    )}
-                    {gen.type === 'audio' && (
-                      <div className="w-full h-32 bg-arcane-cosmic/50 rounded flex items-center justify-center">
-                        <span className="text-arcane-400">🎵 Generated Audio</span>
-                      </div>
-                    )}
-                  </div>
+                    <p className="text-text-secondary text-sm font-body line-clamp-2 mb-3">{gen.prompt}</p>
 
-                  <div className="mt-3 flex justify-between items-center">
-                    <span className="text-xs text-arcane-400">
-                      {new Date(gen.timestamp).toLocaleTimeString()}
-                    </span>
-                    <span className="text-xs text-arcane-crystal">
-                      ${gen.usage?.cost?.toFixed(4) ?? '0.0000'}
-                    </span>
+                    {/* Result display */}
+                    <div className="bg-white/[0.03] rounded-xl p-4 min-h-[100px] flex items-center justify-center border border-white/5">
+                      {gen.type === 'text' && (
+                        <div className="text-text-secondary text-sm font-body">
+                          {gen.result?.substring(0, 200)}...
+                        </div>
+                      )}
+                      {gen.type === 'image' && (
+                        <div className="w-full h-32 bg-cosmic-surface rounded-lg flex items-center justify-center">
+                          <Image className="w-8 h-8 text-text-disabled" />
+                        </div>
+                      )}
+                      {gen.type === 'video' && (
+                        <div className="w-full h-32 bg-cosmic-surface rounded-lg flex items-center justify-center">
+                          <Video className="w-8 h-8 text-text-disabled" />
+                        </div>
+                      )}
+                      {gen.type === 'audio' && (
+                        <div className="w-full h-32 bg-cosmic-surface rounded-lg flex items-center justify-center">
+                          <Music className="w-8 h-8 text-text-disabled" />
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="mt-3 flex justify-between items-center text-xs font-sans text-text-muted">
+                      <span className="flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
+                        {new Date(gen.timestamp).toLocaleTimeString()}
+                      </span>
+                      <span className="flex items-center gap-1 text-arcane-crystal">
+                        <DollarSign className="w-3 h-3" />
+                        {gen.usage?.cost?.toFixed(4) ?? '0.0000'}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
 
-            {/* Empty State */}
+            {/* Empty state */}
             {generationHistory.length === 0 && (
-              <div className="text-center py-20">
-                <div className="text-6xl mb-4">🎨</div>
-                <h3 className="text-2xl font-display text-arcane-crystal mb-2">Ready to Create</h3>
-                <p className="text-arcane-400 mb-6">
-                  Start generating amazing content with Arcanea's multi-modal AI suite
+              <div className="text-center py-24">
+                <Sparkles className="w-16 h-16 text-arcane-crystal/30 mx-auto mb-6" />
+                <h3 className="text-fluid-2xl font-display text-white mb-3">Ready to Create</h3>
+                <p className="text-text-secondary font-body mb-8 max-w-md mx-auto">
+                  Start generating amazing content with Arcanea&apos;s multi-modal AI suite
                 </p>
-                <div className="flex justify-center gap-4">
-                  <Badge variant="outline">DALL-E 3</Badge>
-                  <Badge variant="outline">Midjourney</Badge>
-                  <Badge variant="outline">Runway</Badge>
-                  <Badge variant="outline">Suno AI</Badge>
+                <div className="flex justify-center gap-3">
+                  <Badge variant="outline" className="font-sans">DALL-E 3</Badge>
+                  <Badge variant="outline" className="font-sans">Midjourney</Badge>
+                  <Badge variant="outline" className="font-sans">Runway</Badge>
+                  <Badge variant="outline" className="font-sans">Suno AI</Badge>
                 </div>
               </div>
             )}
