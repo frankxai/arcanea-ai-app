@@ -103,10 +103,10 @@ const config: Config = {
       },
 
       fontFamily: {
-        display: ['Cinzel', 'Georgia', 'serif'],
-        body: ['Crimson Pro', 'Georgia', 'serif'],
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+        display: ['var(--font-cinzel)', 'Cinzel', 'Georgia', 'serif'],
+        body: ['var(--font-crimson-pro)', 'Crimson Pro', 'Georgia', 'serif'],
+        sans: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-jetbrains)', 'JetBrains Mono', 'Fira Code', 'monospace'],
       },
 
       // === FLUID TYPOGRAPHY ===

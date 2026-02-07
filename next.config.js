@@ -6,8 +6,8 @@ const nextConfig = {
   // Power consumption optimization
   poweredByHeader: false,
 
-  // Transpile AI SDK packages for compatibility
-  transpilePackages: ['@anthropic-ai/sdk', 'three'],
+  // Transpile packages for compatibility
+  transpilePackages: ['three'],
 
   // Experimental features for Next.js 16
   experimental: {
@@ -126,20 +126,6 @@ const nextConfig = {
     ];
   },
 
-  // Rewrites for clean URLs
-  async rewrites() {
-    return [
-      {
-        source: '/studio',
-        destination: '/studio',
-      },
-      {
-        source: '/guardians/:guardian',
-        destination: '/guardians/:guardian',
-      },
-    ];
-  },
-
   // Redirects for SEO
   async redirects() {
     return [
@@ -153,13 +139,7 @@ const nextConfig = {
 
   // TypeScript configuration
   typescript: {
-    // Enforce type checking during builds
     ignoreBuildErrors: false,
-  },
-
-  // Turbopack configuration (Next.js 16 default)
-  turbopack: {
-    root: process.cwd(),
   },
 
   // Logging
@@ -168,9 +148,6 @@ const nextConfig = {
       fullUrl: process.env.NODE_ENV === 'development',
     },
   },
-
-  // Output configuration for deployment
-  output: 'standalone',
 };
 
 export default nextConfig;
