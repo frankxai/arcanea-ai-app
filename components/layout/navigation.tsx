@@ -19,6 +19,7 @@ const navItems = [
   { id: 'imagine', label: 'Create', href: '/imagine' },
   { id: 'studio', label: 'Studio', href: '/studio' },
   { id: 'design-lab', label: 'Design Lab', href: '/design-lab' },
+  { id: 'vision-board', label: 'Vision', href: '/vision-board' },
 ]
 
 export default function Navigation() {
