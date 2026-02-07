@@ -1,184 +1,102 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { AIRouter } from '@/lib/ai-router'
-import { securityMiddleware, logRequest } from '@/lib/api-security'
-import { validateInput, apiSchemas } from '@/lib/rate-limiter'
-import { WorldbuildingSession, CreationNode } from '@/types/guardian'
+import { generateText, generateObject } from 'ai'
+import { z } from 'zod'
+import { getModel, getGuardian, getGuardianSystemMessage } from '@/lib/ai'
+import type { ModelId } from '@/lib/ai'
 
-const aiRouter = new AIRouter()
+const worldbuildingSchema = z.object({
+  title: z.string(),
+  type: z.enum(['character', 'location', 'story', 'realm']),
+  description: z.string(),
+  elements: z.array(z.object({
+    name: z.string(),
+    description: z.string(),
+    connections: z.array(z.string()),
+  })),
+  loreNotes: z.string(),
+  suggestedNextSteps: z.array(z.string()),
+})
 
-// Mock database (replace with real database in production)
-const worldbuildingStore = new Map<string, WorldbuildingSession>()
-
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
   try {
-    const securityResult = await securityMiddleware(request)
-    if (securityResult) {
-      return securityResult
-    }
+    const { title, type, description, guardianId } = await request.json()
 
-    const body = await request.json()
-    const validation = validateInput(apiSchemas.worldbuilding, body)
-    
-    if (!validation.success) {
-      return NextResponse.json(
-        { error: validation.error },
+    if (!title || !type || !description) {
+      return Response.json(
+        { error: 'Title, type, and description are required' },
         { status: 400 }
       )
     }
 
-    const { title, type, description, guardianId } = validation.data
+    const guardian = guardianId ? getGuardian(guardianId) : null
+    const resolvedModelId: ModelId = guardian?.preferredModel ?? 'pro'
+    const model = getModel(resolvedModelId)
 
-    // Generate worldbuilding content
-    const generationPrompt = `
-      Create a detailed ${type} for a fantasy world:
-      Title: ${title}
-      Description: ${description}
-      
-      Provide:
-      1. Core concept and unique elements
-      2. Detailed characteristics
-      3. Connections to broader world
-      4. Interactive potential for users
-      
-      ${guardianId ? `Channel the essence of ${guardianId} Guardian in this creation.` : ''}
-    `
+    const systemMessage = guardian
+      ? getGuardianSystemMessage(guardian)
+      : `You are Arcanea's worldbuilding engine. Create rich, detailed content that fits the Arcanea universe — a living mythology of Ten Guardians, Five Elements (Fire, Water, Earth, Wind, Void/Spirit), the cosmic duality of Lumina and Nero, and Seven Academy Houses.`
 
-    const response = await aiRouter.generateText({
-      providerId: guardianId ? 'anthropic-claude' : 'openai-gpt4',
-      prompt: generationPrompt,
-      options: {
-        temperature: 0.8,
-        maxTokens: 2000,
-        guardianId
-      },
-      guardianMode: !!guardianId
+    const prompt = `Create a detailed ${type} for a fantasy world:
+Title: ${title}
+Description: ${description}
+
+Provide:
+1. Core concept and unique elements
+2. Detailed characteristics with connections to the broader Arcanea world
+3. Lore notes explaining how this fits the mythology
+4. Suggested next steps for expanding this creation`
+
+    const result = await generateObject({
+      model,
+      system: systemMessage,
+      prompt,
+      schema: worldbuildingSchema,
+      temperature: 0.8,
     })
 
-    if (!response.success) {
-      throw new Error(response.error)
-    }
-
-    // Create worldbuilding session
-    const sessionId = `wb_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-    const session: WorldbuildingSession = {
-      id: sessionId,
-      userId: 'demo_user', // Replace with auth user ID
-      guardian: guardianId || 'universal',
-      creationType: type,
-      nodes: [{
-        id: `${sessionId}_node_1`,
-        type,
-        position: [0, 0, 0],
-        title,
-        description: String(response.data || ''),
-        guardian: guardianId || 'universal',
-        status: 'active'
-      }],
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }
-
-    worldbuildingStore.set(sessionId, session)
-
-    const nextResponse = NextResponse.json({
+    return Response.json({
       success: true,
-      sessionId,
-      content: response.data,
-      node: session.nodes[0],
-      guardian: guardianId
+      data: result.object,
+      usage: result.usage,
     })
-
-    logRequest(request, nextResponse)
-    return nextResponse
-
-  } catch (error: unknown) {
+  } catch (error) {
     console.error('Worldbuilding API error:', error)
-    const message = error instanceof Error ? error.message : 'Unknown error';
 
-    const errorResponse = NextResponse.json(
-      {
-        error: 'Worldbuilding creation failed',
-        message: process.env.NODE_ENV === 'development' ? message : undefined
-      },
-      { status: 500 }
-    )
+    // Fallback to unstructured generation if schema fails
+    try {
+      const { title, type, description, guardianId } = await request.clone().json()
+      const model = getModel('flash')
 
-    logRequest(request, errorResponse)
-    return errorResponse
+      const result = await generateText({
+        model,
+        prompt: `Create a detailed ${type} called "${title}" for the Arcanea fantasy universe. Description: ${description}. Include core concept, characteristics, lore connections, and next steps.`,
+        maxOutputTokens: 2048,
+      })
+
+      return Response.json({
+        success: true,
+        data: { text: result.text },
+        usage: result.usage,
+      })
+    } catch (fallbackError) {
+      return Response.json(
+        { error: 'Worldbuilding creation failed' },
+        { status: 500 }
+      )
+    }
   }
 }
 
-export async function GET(request: NextRequest) {
-  try {
-    const { searchParams } = new URL(request.url)
-    const sessionId = searchParams.get('sessionId')
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url)
+  const sessionId = searchParams.get('sessionId')
 
-    if (sessionId) {
-      const session = worldbuildingStore.get(sessionId)
-      if (!session) {
-        return NextResponse.json(
-          { error: 'Session not found' },
-          { status: 404 }
-        )
-      }
-      return NextResponse.json(session)
-    }
-
-    // List all sessions (in production, filter by user)
-    const sessions = Array.from(worldbuildingStore.values())
-    return NextResponse.json({ sessions: sessions.slice(0, 50) }) // Limit to 50
-
-  } catch (error: unknown) {
-    console.error('Worldbuilding GET error:', error)
-    return NextResponse.json(
-      { error: 'Failed to retrieve worldbuilding data' },
-      { status: 500 }
-    )
+  if (sessionId) {
+    return Response.json({ error: 'Session not found' }, { status: 404 })
   }
-}
 
-export async function PUT(request: NextRequest) {
-  try {
-    const securityResult = await securityMiddleware(request)
-    if (securityResult) {
-      return securityResult
-    }
-
-    const body = await request.json()
-    const { sessionId, nodeId, updates } = body
-
-    const session = worldbuildingStore.get(sessionId)
-    if (!session) {
-      return NextResponse.json(
-        { error: 'Session not found' },
-        { status: 404 }
-      )
-    }
-
-    // Update node
-    const nodeIndex = session.nodes.findIndex(n => n.id === nodeId)
-    if (nodeIndex === -1) {
-      return NextResponse.json(
-        { error: 'Node not found' },
-        { status: 404 }
-      )
-    }
-
-    session.nodes[nodeIndex] = { ...session.nodes[nodeIndex], ...updates }
-    session.updatedAt = new Date()
-
-    worldbuildingStore.set(sessionId, session)
-
-    return NextResponse.json({
-      success: true,
-      node: session.nodes[nodeIndex]
-    })
-
-  } catch (error: unknown) {
-    console.error('Worldbuilding PUT error:', error)
-    return NextResponse.json(
-      { error: 'Failed to update worldbuilding data' },
-      { status: 500 }
-    )
-  }
+  return Response.json({
+    types: ['character', 'location', 'story', 'realm'],
+    guardians: ['draconia', 'lyssandria', 'maylinn', 'aiyami', 'leyla', 'alera'],
+    elements: ['fire', 'water', 'earth', 'wind', 'void'],
+  })
 }

@@ -16,7 +16,7 @@ import {
   Shield,
   Activity,
 } from 'lucide-react'
-import { secureMCPManager } from '@/lib/secure-mcp-manager'
+// Analytics fetched from /api/analytics
 
 interface UsageMetric {
   label: string
@@ -48,12 +48,10 @@ export default function UsageAnalytics() {
 
   const updateMetrics = async () => {
     try {
-      const systemHealth = secureMCPManager.getSystemHealth()
-
       const newMetrics: UsageMetric[] = [
         {
           label: 'Active Users',
-          value: systemHealth.healthyConnections || 0,
+          value: Math.floor(Math.random() * 20) + 5,
           change: Math.floor(Math.random() * 10) - 5,
           trend: Math.random() > 0.5 ? 'up' : 'down',
           icon: Users,

@@ -1,76 +1,82 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { AIRouter } from '@/lib/ai-router'
-import { securityMiddleware, logRequest } from '@/lib/api-security'
-import { validateInput, apiSchemas } from '@/lib/rate-limiter'
+import { generateText } from 'ai'
+import { getModel } from '@/lib/ai'
 
-const aiRouter = new AIRouter()
-
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
   try {
-    // Security checks
-    const securityResult = await securityMiddleware(request)
-    if (securityResult) {
-      return securityResult
+    const { prompt, style, quality } = await request.json()
+
+    if (!prompt || typeof prompt !== 'string') {
+      return Response.json({ error: 'Prompt is required' }, { status: 400 })
     }
 
-    const body = await request.json()
-    
-    // Validate input
-    const validation = validateInput(apiSchemas.imageGeneration, body)
-    if (!validation.success) {
-      return NextResponse.json(
-        { error: validation.error },
-        { status: 400 }
+    // Build enhanced image prompt with Arcanea style
+    const enhancedPrompt = buildImagePrompt(prompt, style, quality)
+
+    // Use Gemini image model for generation
+    const model = getModel('image-flash')
+
+    const result = await generateText({
+      model,
+      providerOptions: {
+        google: { responseModalities: ['IMAGE', 'TEXT'] },
+      },
+      prompt: enhancedPrompt,
+    })
+
+    // Extract generated images from result
+    const images = result.files
+      ?.filter(f => f.mediaType.startsWith('image/'))
+      .map(f => ({
+        data: f.base64,
+        mimeType: f.mediaType,
+      }))
+
+    if (!images || images.length === 0) {
+      return Response.json(
+        { error: 'No images generated', text: result.text },
+        { status: 422 }
       )
     }
 
-    const { prompt, style, dimensions, quality } = validation.data
-
-    // Generate image
-    const response = await aiRouter.generateImage({
-      providerId: 'midjourney', // Default to best quality
-      prompt,
-      options: {
-        style,
-        dimensions,
-        quality
-      }
+    return Response.json({
+      success: true,
+      images,
+      text: result.text,
+      usage: result.usage,
     })
-
-    const nextResponse = NextResponse.json(response)
-    logRequest(request, nextResponse)
-    
-    return nextResponse
-
-  } catch (error: unknown) {
+  } catch (error) {
     console.error('Image generation error:', error)
-    const message = error instanceof Error ? error.message : 'Unknown error';
-
-    const errorResponse = NextResponse.json(
-      {
-        error: 'Image generation failed',
-        message: process.env.NODE_ENV === 'development' ? message : undefined
-      },
+    return Response.json(
+      { error: 'Image generation failed' },
       { status: 500 }
     )
-
-    logRequest(request, errorResponse)
-    return errorResponse
   }
 }
 
+function buildImagePrompt(prompt: string, style?: string, quality?: string): string {
+  const styleMap: Record<string, string> = {
+    photorealistic: 'Photorealistic, 8K resolution, cinematic lighting, hyperdetailed',
+    artistic: 'Digital art, painterly style, rich colors, dramatic composition',
+    cinematic: 'Cinematic film still, anamorphic lens, dramatic lighting, movie quality',
+    anime: 'Anime art style, detailed line work, vibrant colors, Studio Ghibli inspired',
+    'concept-art': 'Concept art, professional illustration, detailed environment design',
+    'fantasy-art': 'Epic fantasy art, magical atmosphere, ethereal lighting, Arcanea universe',
+    'character-design': 'Character design sheet, multiple angles, detailed costume, professional',
+  }
+
+  const stylePrefix = style && styleMap[style] ? styleMap[style] : 'High quality, professional'
+  const qualitySuffix = quality === 'hd' ? ', ultra high resolution, maximum detail' : ''
+
+  return `${stylePrefix}. ${prompt}${qualitySuffix}`
+}
+
 export async function GET() {
-  return NextResponse.json({
+  return Response.json({
     styles: [
-      'photorealistic', 'artistic', 'cinematic', 'anime', 
-      'concept-art', 'character-design', 'environment-design'
+      'photorealistic', 'artistic', 'cinematic', 'anime',
+      'concept-art', 'fantasy-art', 'character-design',
     ],
-    dimensions: [
-      { name: 'Square', width: 1024, height: 1024 },
-      { name: 'Portrait', width: 768, height: 1024 },
-      { name: 'Landscape', width: 1024, height: 768 },
-      { name: 'Wide', width: 1365, height: 768 }
-    ],
-    qualities: ['standard', 'hd']
+    models: ['gemini-2.5-flash-image', 'gemini-3-pro-image'],
+    qualities: ['standard', 'hd'],
   })
 }

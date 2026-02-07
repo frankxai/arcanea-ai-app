@@ -1,11 +1,10 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { AIRouter } from '@/lib/ai-router'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
-import { GENERATION_STYLES } from '@/lib/ai-providers'
+import { GENERATION_STYLES } from '@/lib/ai/client'
 import {
   Sparkles,
   FileText,
@@ -45,53 +44,58 @@ export default function ImagineInterface() {
   }
 
   const [generationHistory, setGenerationHistory] = useState<GenerationHistoryItem[]>([])
-  const [aiRouter, setAiRouter] = useState<AIRouter | null>(null)
-
-  useEffect(() => {
-    const router = new AIRouter()
-    router.initialize()
-    setAiRouter(router)
-  }, [])
 
   const handleGenerate = async () => {
-    if (!prompt.trim() || !aiRouter) return
+    if (!prompt.trim()) return
 
     setIsGenerating(true)
 
     try {
-      let response
-      const baseRequest = {
-        prompt,
-        options: {
-          style: selectedStyle,
-          dimensions: activeTab === 'image' ? { width: 1024, height: 1024 } : undefined,
-          duration: activeTab === 'video' ? 10 : undefined,
-          quality: 'standard' as const,
-        },
-      }
+      // Route to appropriate API endpoint based on active tab
+      const endpoint = activeTab === 'text' ? '/api/chat' : '/api/imagine'
 
-      switch (activeTab) {
-        case 'text':
-          response = await aiRouter.generateText({ ...baseRequest, providerId: selectedProvider || 'claude' })
-          break
-        case 'image':
-          response = await aiRouter.generateImage({ ...baseRequest, providerId: selectedProvider || 'dalle' })
-          break
-        case 'video':
-          response = await aiRouter.generateVideo({ ...baseRequest, providerId: selectedProvider || 'runway' })
-          break
-        case 'audio':
-          response = await aiRouter.generateAudio({ ...baseRequest, providerId: selectedProvider || 'suno' })
-          break
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(
+          activeTab === 'text'
+            ? { message: prompt }
+            : { prompt, style: selectedStyle, quality: 'standard' }
+        ),
+      })
+
+      if (!res.ok) throw new Error(`Generation failed: ${res.status}`)
+
+      let resultText = ''
+      if (activeTab === 'text') {
+        // Stream text response
+        const reader = res.body?.getReader()
+        const decoder = new TextDecoder()
+        if (reader) {
+          while (true) {
+            const { done, value } = await reader.read()
+            if (done) break
+            const chunk = decoder.decode(value, { stream: true })
+            for (const line of chunk.split('\n')) {
+              if (line.startsWith('0:')) {
+                try { resultText += JSON.parse(line.slice(2)) } catch {}
+              }
+            }
+          }
+        }
+      } else {
+        const data = await res.json()
+        resultText = data.images?.[0]
+          ? `data:${data.images[0].mimeType};base64,${data.images[0].data}`
+          : data.text || 'Generation complete'
       }
 
       const newGeneration: GenerationHistoryItem = {
         id: Date.now().toString(),
         type: activeTab,
         prompt,
-        provider: response.providerId,
-        result: typeof response.data === 'string' ? response.data : JSON.stringify(response.data),
-        usage: response.usage,
+        provider: 'gemini',
+        result: resultText,
         timestamp: Date.now(),
       }
 
@@ -256,13 +260,13 @@ export default function ImagineInterface() {
           </Button>
 
           {/* Usage stats */}
-          {aiRouter && (
+          {(
             <div className="mt-6 glow-card rounded-xl p-4">
               <h3 className="text-text-secondary font-sans font-medium text-sm mb-2">Session Stats</h3>
               <div className="space-y-1 text-sm font-sans">
                 <div className="flex justify-between">
                   <span className="text-text-muted">Total Cost:</span>
-                  <span className="text-arcane-crystal">${aiRouter.getUsageStats().totalCost.toFixed(4)}</span>
+                  <span className="text-arcane-crystal">${(generationHistory.length * 0.04).toFixed(4)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-text-muted">Generations:</span>

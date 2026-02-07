@@ -1,11 +1,10 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { AIRouter } from '@/lib/ai-router'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
-import { GUARDIAN_PERSONALITIES } from '@/lib/ai-providers'
+import { GUARDIANS as GUARDIAN_PERSONALITIES } from '@/lib/ai/client'
 import {
   Send,
   Sparkles,
@@ -55,21 +54,14 @@ export default function ChatInterface() {
   const [activeModel, setActiveModel] = useState('claude')
   const [activeGuardian, setActiveGuardian] = useState('')
   const [isGenerating, setIsGenerating] = useState(false)
-  const [aiRouter, setAiRouter] = useState<AIRouter | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const router = new AIRouter()
-    router.initialize()
-    setAiRouter(router)
-  }, [])
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
   const handleSendMessage = async () => {
-    if (!input.trim() || !aiRouter) return
+    if (!input.trim()) return
 
     const userMessage: ChatMessage = {
       role: 'user',
@@ -81,38 +73,50 @@ export default function ChatInterface() {
     setIsGenerating(true)
 
     try {
-      let response
-      const baseRequest = {
-        prompt: input,
-        options: { temperature: 0.7, maxTokens: 2000 },
-      }
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: input,
+          guardianId: activeGuardian || undefined,
+          model: activeModel,
+        }),
+      })
 
-      if (activeGuardian) {
-        response = await aiRouter.generateText({
-          ...baseRequest,
-          providerId: activeModel,
-          guardianMode: true,
-          options: { ...baseRequest.options, guardianId: activeGuardian },
-        })
-      } else {
-        response = await aiRouter.generateText({
-          ...baseRequest,
-          providerId: activeModel,
-        })
-      }
+      if (!res.ok) throw new Error(`API error: ${res.status}`)
 
-      const aiMessage: ChatMessage = {
+      // Read the streaming response
+      const reader = res.body?.getReader()
+      const decoder = new TextDecoder()
+      let fullText = ''
+
+      const aiMessageId = Date.now().toString()
+      setMessages((prev) => [...prev, {
         role: 'assistant',
-        content: typeof response.data === 'string' ? response.data : JSON.stringify(response.data),
-        providerId: response.providerId,
-        modelId: response.modelId,
-        guardianInsight: response.guardianInsight,
-        usage: response.usage,
+        content: '',
         timestamp: Date.now(),
-        id: Date.now().toString(),
-      }
+        id: aiMessageId,
+      }])
 
-      setMessages((prev) => [...prev, aiMessage])
+      if (reader) {
+        while (true) {
+          const { done, value } = await reader.read()
+          if (done) break
+          const chunk = decoder.decode(value, { stream: true })
+          // Parse Vercel AI SDK data stream format
+          for (const line of chunk.split('\n')) {
+            if (line.startsWith('0:')) {
+              try {
+                const text = JSON.parse(line.slice(2))
+                fullText += text
+                setMessages((prev) => prev.map(m =>
+                  m.id === aiMessageId ? { ...m, content: fullText } : m
+                ))
+              } catch { /* skip non-text chunks */ }
+            }
+          }
+        }
+      }
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : 'Unknown error'
       const errorMessage: ChatMessage = {
@@ -174,7 +178,7 @@ export default function ChatInterface() {
                 {GUARDIAN_PERSONALITIES[activeGuardian]?.name} Active
               </div>
               <div className="text-xs text-text-muted font-body">
-                {GUARDIAN_PERSONALITIES[activeGuardian]?.domainExpertise[0]}
+                {GUARDIAN_PERSONALITIES[activeGuardian]?.expertise[0]}
               </div>
             </div>
           )}
@@ -248,7 +252,7 @@ export default function ChatInterface() {
                       <span className="font-medium text-sm">{guardian.name}</span>
                     </div>
                     <div className="text-xs text-text-muted mt-0.5">{guardian.frequency} Hz</div>
-                    <div className="text-xs text-text-disabled mt-0.5">{guardian.domainExpertise[0]}</div>
+                    <div className="text-xs text-text-disabled mt-0.5">{guardian.expertise[0]}</div>
                   </button>
                 )
               })}
@@ -256,7 +260,7 @@ export default function ChatInterface() {
           </div>
 
           {/* Usage Stats */}
-          {aiRouter && (
+          {(
             <div className="glow-card rounded-xl p-4">
               <h3 className="text-text-secondary font-sans font-medium text-sm mb-3 flex items-center gap-2">
                 <Crown className="w-4 h-4" />

@@ -1,87 +1,49 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { AIRouter } from '@/lib/ai-router'
-import { securityMiddleware, logRequest } from '@/lib/api-security'
-import { validateInput, apiSchemas } from '@/lib/rate-limiter'
+import { streamText } from 'ai'
+import { getModel, getGuardian, getGuardianSystemMessage } from '@/lib/ai'
+import type { ModelId } from '@/lib/ai'
 
-const aiRouter = new AIRouter()
-
-// Initialize AI router on server start
-aiRouter.initialize().catch(console.error)
-
-export async function POST(request: NextRequest) {
-  const startTime = Date.now()
-  
+export async function POST(request: Request) {
   try {
-    // Security checks
-    const securityResult = await securityMiddleware(request)
-    if (securityResult) {
-      return securityResult
+    const { message, guardianId, model: modelId } = await request.json()
+
+    if (!message || typeof message !== 'string') {
+      return Response.json({ error: 'Message is required' }, { status: 400 })
     }
 
-    const body = await request.json()
-    
-    // Validate input
-    const validation = validateInput(apiSchemas.chatMessage, body)
-    if (!validation.success) {
-      return NextResponse.json(
-        { error: validation.error },
-        { status: 400 }
-      )
-    }
+    // Resolve Guardian and model
+    const guardian = guardianId ? getGuardian(guardianId) : null
+    const resolvedModelId: ModelId = guardian?.preferredModel ?? (modelId as ModelId) ?? 'flash'
+    const model = getModel(resolvedModelId)
 
-    const { message, providerId, guardianId, options } = validation.data
+    // Build system message
+    const systemMessage = guardian
+      ? getGuardianSystemMessage(guardian)
+      : `You are Arcanea AI, a creative companion for worldbuilders, storytellers, and creators. You draw from the mythology of Arcanea — a living universe of Ten Guardians, Five Elements, and the cosmic duality of Lumina and Nero. Be inspiring, practical, and imaginative. Help creators manifest their visions.`
 
-    // Generate AI response
-    const response = await aiRouter.generateText({
-      providerId: providerId || 'anthropic-claude',
-      prompt: message,
-      options: {
-        ...options,
-        guardianId
-      },
-      guardianMode: !!guardianId
+    // Stream the response
+    const result = streamText({
+      model,
+      system: systemMessage,
+      messages: [{ role: 'user', content: message }],
+      maxOutputTokens: 2048,
+      temperature: guardian ? 0.8 : 0.7,
     })
 
-    const nextResponse = NextResponse.json(response)
-    
-    // Log request
-    logRequest(request, nextResponse)
-    
-    return nextResponse
-
-  } catch (error: unknown) {
+    return result.toUIMessageStreamResponse()
+  } catch (error) {
     console.error('Chat API error:', error)
-    const message = error instanceof Error ? error.message : 'Unknown error';
-
-    const errorResponse = NextResponse.json(
-      {
-        error: 'Internal server error',
-        message: process.env.NODE_ENV === 'development' ? message : undefined
-      },
+    return Response.json(
+      { error: 'Chat generation failed' },
       { status: 500 }
     )
-
-    logRequest(request, errorResponse)
-    return errorResponse
   }
 }
 
 export async function GET() {
-  try {
-    const stats = aiRouter.getUsageStats()
-    const health = await aiRouter.healthCheck()
-    
-    return NextResponse.json({
-      status: 'healthy',
-      stats,
-      health,
-      timestamp: new Date().toISOString()
-    })
-  } catch (error) {
-    console.error('Health check error:', error)
-    return NextResponse.json(
-      { status: 'unhealthy', error: error instanceof Error ? error.message : String(error) },
-      { status: 500 }
-    )
-  }
+  return Response.json({
+    status: 'healthy',
+    providers: ['google', ...(process.env.ANTHROPIC_API_KEY ? ['anthropic'] : [])],
+    guardians: ['draconia', 'lyssandria', 'maylinn', 'aiyami', 'leyla', 'alera'],
+    timestamp: new Date().toISOString(),
+  })
 }
