@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useRef, useEffect } from 'react'
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import Link from 'next/link'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -11,6 +11,7 @@ import {
   cosmicFadeIn,
   cosmicFadeInUp,
   fadeInViewport,
+  floatingOrb,
 } from '@/lib/animations'
 import {
   Box,
@@ -34,6 +35,38 @@ import {
   Copy,
   Check,
 } from 'lucide-react'
+
+// ============================================
+// COSMIC BACKGROUND
+// ============================================
+
+function LabCosmicBackground() {
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = container.getBoundingClientRect()
+      const x = ((e.clientX - rect.left) / rect.width) * 100
+      const y = ((e.clientY - rect.top) / rect.height) * 100
+      container.style.setProperty('--mouse-x', `${x}%`)
+      container.style.setProperty('--mouse-y', `${y}%`)
+    }
+    container.addEventListener('mousemove', handleMouseMove)
+    return () => container.removeEventListener('mousemove', handleMouseMove)
+  }, [])
+
+  return (
+    <div ref={containerRef} className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 opacity-40 transition-opacity duration-700" style={{ background: 'radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(127, 255, 212, 0.06), transparent 40%)' }} />
+      <div className="absolute inset-0 bg-cosmic-stars opacity-50" />
+      <motion.div variants={floatingOrb} animate="animate" className="absolute top-[10%] left-[15%] w-[600px] h-[600px] rounded-full bg-arcane-crystal/5 blur-[120px]" />
+      <motion.div variants={floatingOrb} animate="animate" className="absolute bottom-[10%] right-[10%] w-[500px] h-[500px] rounded-full bg-arcane-void/8 blur-[100px]" style={{ animationDelay: '3s' }} />
+      <div className="absolute inset-0 opacity-[0.025]" style={{ backgroundImage: 'linear-gradient(rgba(127, 255, 212, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(127, 255, 212, 0.5) 1px, transparent 1px)', backgroundSize: '80px 80px' }} />
+    </div>
+  )
+}
 
 const threejsPatterns = [
   {
@@ -346,6 +379,13 @@ const qualityTiers = [
 export default function DesignLabV8() {
   const [selectedPattern, setSelectedPattern] = useState(0)
   const [copied, setCopied] = useState(false)
+  const heroRef = useRef<HTMLElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  })
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0])
+  const heroY = useTransform(scrollYProgress, [0, 0.6], [0, 80])
 
   const handleCopyCode = (code: string) => {
     navigator.clipboard.writeText(code)
@@ -354,14 +394,18 @@ export default function DesignLabV8() {
   }
 
   return (
-    <div className="space-y-20">
-      {/* Hero */}
-      <motion.section
-        variants={staggerContainer}
-        initial="hidden"
-        animate="visible"
-        className="text-center pt-8"
-      >
+    <div className="relative -mx-4 sm:-mx-6 lg:-mx-8 -mt-8 lg:-mt-12">
+      <LabCosmicBackground />
+      <div className="relative z-10 px-4 sm:px-6 lg:px-8 pt-8 lg:pt-12 space-y-20 pb-20">
+        {/* Hero */}
+        <motion.section
+          ref={heroRef}
+          variants={staggerContainer}
+          initial="hidden"
+          animate="visible"
+          className="text-center pt-8 min-h-[50vh] flex flex-col items-center justify-center"
+          style={{ opacity: heroOpacity, y: heroY }}
+        >
         <motion.div variants={cosmicFadeIn}>
           <Badge variant="crystal" className="mb-6 font-sans text-xs tracking-wider px-4 py-1">
             <Box className="w-3.5 h-3.5 mr-2" />
@@ -640,25 +684,26 @@ export default function DesignLabV8() {
         </motion.div>
       </motion.section>
 
-      {/* Navigation */}
-      <motion.section
-        variants={cosmicFadeIn}
-        {...fadeInViewport}
-        className="flex items-center justify-between pt-8 border-t border-white/5"
-      >
-        <Link href="/design-lab/v7">
-          <Button variant="outline" className="rounded-2xl font-sans">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            v7 -- Responsive
-          </Button>
-        </Link>
-        <Link href="/design-lab/v9">
-          <Button className="rounded-2xl font-sans">
-            v9 -- AI Patterns
-            <ArrowRight className="w-4 h-4 ml-2" />
-          </Button>
-        </Link>
-      </motion.section>
+        {/* Navigation */}
+        <motion.section
+          variants={cosmicFadeIn}
+          {...fadeInViewport}
+          className="flex items-center justify-between pt-8 border-t border-white/5"
+        >
+          <Link href="/design-lab/v7">
+            <Button variant="outline" className="rounded-2xl font-sans">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              v7 -- Responsive
+            </Button>
+          </Link>
+          <Link href="/design-lab/v9">
+            <Button className="rounded-2xl font-sans">
+              v9 -- AI Patterns
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </Button>
+          </Link>
+        </motion.section>
+      </div>
     </div>
   )
 }
