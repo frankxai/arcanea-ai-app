@@ -18,6 +18,7 @@ const navItems = [
   { id: 'chat', label: 'AI Chat', href: '/chat' },
   { id: 'imagine', label: 'Create', href: '/imagine' },
   { id: 'studio', label: 'Studio', href: '/studio' },
+  { id: 'design-lab', label: 'Design Lab', href: '/design-lab' },
 ]
 
 export default function Navigation() {
