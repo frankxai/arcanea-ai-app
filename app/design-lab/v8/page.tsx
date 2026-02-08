@@ -394,7 +394,7 @@ export default function DesignLabV8() {
   }
 
   return (
-    <div className="relative -mx-4 sm:-mx-6 lg:-mx-8 -mt-8 lg:-mt-12">
+    <div className="min-h-[100dvh] bg-cosmic-void bg-cosmic-mesh relative">
       <LabCosmicBackground />
       <div className="relative z-10 px-4 sm:px-6 lg:px-8 pt-8 lg:pt-12 space-y-20 pb-20">
         {/* Hero */}

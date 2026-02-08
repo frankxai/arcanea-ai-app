@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -17,9 +17,9 @@ import {
   Box,
   Brain,
   Telescope,
-  Menu,
-  X,
   ArrowLeft,
+  ArrowRight,
+  ChevronDown,
   Gem,
 } from 'lucide-react'
 
@@ -28,9 +28,9 @@ const labVersions = [
   { id: 'v2', label: 'Components', desc: 'Buttons, Badges, Cards', icon: Component, color: 'text-arcane-water' },
   { id: 'v3', label: 'Motion', desc: 'Animations & Transitions', icon: Sparkles, color: 'text-arcane-void-bright' },
   { id: 'v4', label: 'Effects', desc: 'Glass & Glow Systems', icon: Layers, color: 'text-arcane-fire-bright' },
-  { id: 'v5', label: 'Layout', desc: 'Spatial Grid & Spacing', icon: Layout, color: 'text-arcane-wind' },
+  { id: 'v5', label: 'Layout', desc: 'Grid & Spatial System', icon: Layout, color: 'text-arcane-earth-bright' },
   { id: 'v6', label: 'Guardians', desc: 'Elemental Design Language', icon: Shield, color: 'text-arcane-gold' },
-  { id: 'v7', label: 'Responsive', desc: 'Accessibility & Mobile', icon: Smartphone, color: 'text-arcane-earth-bright' },
+  { id: 'v7', label: 'Responsive', desc: 'Accessibility & Mobile', icon: Smartphone, color: 'text-arcane-crystal' },
   { id: 'v8', label: '3D & Spatial', desc: 'Three.js & XR Patterns', icon: Box, color: 'text-arcane-crystal' },
   { id: 'v9', label: 'AI Patterns', desc: 'Integration & Intelligence', icon: Brain, color: 'text-arcane-void-bright' },
   { id: 'v10', label: 'Future Vision', desc: 'Roadmap & Evolution', icon: Telescope, color: 'text-arcane-gold' },
@@ -42,135 +42,145 @@ export default function DesignLabLayout({
   children: React.ReactNode
 }) {
   const pathname = usePathname()
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const isHub = pathname === '/design-lab'
+  const currentIdx = labVersions.findIndex(v => pathname.includes(`/design-lab/${v.id}`))
+  const current = currentIdx >= 0 ? labVersions[currentIdx] : null
+  const prev = currentIdx > 0 ? labVersions[currentIdx - 1] : null
+  const next = currentIdx >= 0 && currentIdx < labVersions.length - 1 ? labVersions[currentIdx + 1] : null
+  const [navOpen, setNavOpen] = useState(false)
 
-  const currentVersion = labVersions.find(v => pathname.includes(`/design-lab/${v.id}`))
+  // Close dropdown on route change
+  useEffect(() => { setNavOpen(false) }, [pathname])
+
+  // Hub page — zero chrome, full immersion
+  if (isHub) {
+    return <>{children}</>
+  }
 
   return (
-    <div className="min-h-[100dvh] bg-cosmic-void bg-cosmic-mesh">
-      {/* Top bar */}
-      <header className="fixed top-0 w-full z-50 glass-strong border-b border-arcane-crystal/10">
-        <div className="flex items-center justify-between h-14 px-4 lg:px-6">
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="lg:hidden p-2 rounded-lg text-text-secondary hover:text-white transition-colors"
-              aria-label="Toggle sidebar"
+    <>
+      {/* Floating navigation pill */}
+      <header className="fixed top-0 left-0 right-0 z-50 pointer-events-none">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-4">
+          <nav className="flex items-center justify-between h-12 px-4 rounded-2xl glass border border-white/[0.08] pointer-events-auto shadow-lg shadow-black/20">
+            {/* Left: Back to hub */}
+            <Link
+              href="/design-lab"
+              className="flex items-center gap-2 text-text-secondary hover:text-white transition-colors group"
             >
-              {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
-
-            <Link href="/" className="flex items-center gap-2 text-text-secondary hover:text-white transition-colors">
-              <ArrowLeft className="w-4 h-4" />
-              <span className="text-sm font-sans hidden sm:inline">arcanea.ai</span>
+              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
+              <Gem className="w-4 h-4 text-arcane-crystal" />
+              <span className="text-sm font-sans hidden sm:inline">Design Lab</span>
             </Link>
 
-            <div className="h-4 w-px bg-arcane-crystal/20" />
+            {/* Center: Version switcher */}
+            <div className="relative">
+              <button
+                onClick={() => setNavOpen(!navOpen)}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-white/5 transition-colors"
+              >
+                {current && (
+                  <>
+                    <current.icon className={cn('w-4 h-4', current.color)} />
+                    <span className="text-sm font-sans font-medium text-white">{current.label}</span>
+                    <Badge variant="void" className="text-[10px] px-1.5 py-0 font-mono hidden sm:inline-flex">
+                      {current.id.toUpperCase()}
+                    </Badge>
+                    <ChevronDown className={cn('w-3 h-3 text-text-muted transition-transform duration-200', navOpen && 'rotate-180')} />
+                  </>
+                )}
+              </button>
 
-            <Link href="/design-lab" className="flex items-center gap-2">
-              <Gem className="w-5 h-5 text-arcane-crystal" />
-              <span className="font-display text-white text-lg">Design Lab</span>
-              <Badge variant="crystal" className="text-[10px] px-1.5 py-0 font-sans">
-                v2.0
-              </Badge>
-            </Link>
-          </div>
-
-          {currentVersion && (
-            <div className="hidden sm:flex items-center gap-2">
-              <Badge variant="void" className="font-sans text-xs">
-                {currentVersion.id.toUpperCase()}
-              </Badge>
-              <span className="text-sm text-text-secondary font-sans">{currentVersion.label}</span>
+              <AnimatePresence>
+                {navOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -8, scale: 0.96 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute top-full mt-2 left-1/2 -translate-x-1/2 w-72 glass-strong rounded-2xl border border-white/[0.08] p-2 shadow-2xl shadow-black/40"
+                  >
+                    {labVersions.map((v) => {
+                      const Icon = v.icon
+                      const isActive = currentIdx >= 0 && labVersions[currentIdx].id === v.id
+                      return (
+                        <Link
+                          key={v.id}
+                          href={`/design-lab/${v.id}`}
+                          className={cn(
+                            'flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-150',
+                            isActive
+                              ? 'bg-arcane-crystal/10 text-white'
+                              : 'text-text-secondary hover:text-white hover:bg-white/5'
+                          )}
+                        >
+                          <Icon className={cn('w-4 h-4 flex-shrink-0', isActive ? v.color : 'text-text-muted')} />
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2">
+                              <span className="font-medium">{v.label}</span>
+                              <span className={cn('text-[10px] font-mono', isActive ? 'text-text-secondary' : 'text-text-disabled')}>
+                                {v.id}
+                              </span>
+                            </div>
+                            <div className="text-xs text-text-muted truncate">{v.desc}</div>
+                          </div>
+                          {isActive && (
+                            <div className="w-1.5 h-1.5 rounded-full bg-arcane-crystal flex-shrink-0" />
+                          )}
+                        </Link>
+                      )
+                    })}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
-          )}
+
+            {/* Right: Prev / Next */}
+            <div className="flex items-center gap-1">
+              {prev ? (
+                <Link
+                  href={`/design-lab/${prev.id}`}
+                  className="p-2 rounded-lg text-text-secondary hover:text-white transition-colors"
+                  title={`← ${prev.label}`}
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                </Link>
+              ) : (
+                <div className="w-8" />
+              )}
+              {next ? (
+                <Link
+                  href={`/design-lab/${next.id}`}
+                  className="p-2 rounded-lg text-text-secondary hover:text-white transition-colors"
+                  title={`${next.label} →`}
+                >
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              ) : (
+                <div className="w-8" />
+              )}
+            </div>
+          </nav>
         </div>
       </header>
 
-      <div className="flex pt-14">
-        {/* Sidebar */}
-        <aside
-          className={cn(
-            'fixed lg:sticky top-14 left-0 z-40 h-[calc(100dvh-3.5rem)] w-72 glass-strong border-r border-arcane-crystal/10 overflow-y-auto transition-transform duration-300 lg:translate-x-0',
-            sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-          )}
-        >
-          <nav className="p-4 space-y-1">
-            {/* Hub link */}
-            <Link
-              href="/design-lab"
-              onClick={() => setSidebarOpen(false)}
-              className={cn(
-                'flex items-center gap-3 px-3 py-2.5 rounded-xl font-sans text-sm transition-all duration-200',
-                pathname === '/design-lab'
-                  ? 'text-arcane-crystal bg-arcane-crystal/10 border border-arcane-crystal/20'
-                  : 'text-text-secondary hover:text-white hover:bg-white/5'
-              )}
-            >
-              <Gem className="w-4 h-4" />
-              <div>
-                <div className="font-medium">Overview</div>
-                <div className="text-xs text-text-muted">Design System Hub</div>
-              </div>
-            </Link>
+      {/* Click-outside overlay for dropdown */}
+      <AnimatePresence>
+        {navOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setNavOpen(false)}
+            className="fixed inset-0 z-40"
+          />
+        )}
+      </AnimatePresence>
 
-            <div className="h-px bg-arcane-crystal/10 my-3" />
-
-            <p className="px-3 text-[10px] font-sans font-semibold text-text-muted tracking-widest uppercase mb-2">
-              Evolution Stages
-            </p>
-
-            {labVersions.map((version) => {
-              const Icon = version.icon
-              const isActive = pathname.includes(`/design-lab/${version.id}`)
-              return (
-                <Link
-                  key={version.id}
-                  href={`/design-lab/${version.id}`}
-                  onClick={() => setSidebarOpen(false)}
-                  className={cn(
-                    'flex items-center gap-3 px-3 py-2.5 rounded-xl font-sans text-sm transition-all duration-200 group',
-                    isActive
-                      ? 'text-white bg-white/5 border border-arcane-crystal/20'
-                      : 'text-text-secondary hover:text-white hover:bg-white/5'
-                  )}
-                >
-                  <Icon className={cn('w-4 h-4 transition-colors', isActive ? version.color : 'text-text-muted group-hover:text-text-secondary')} />
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium">{version.label}</span>
-                      <span className={cn('text-[10px] font-mono', isActive ? version.color : 'text-text-disabled')}>
-                        {version.id}
-                      </span>
-                    </div>
-                    <div className="text-xs text-text-muted truncate">{version.desc}</div>
-                  </div>
-                </Link>
-              )
-            })}
-          </nav>
-        </aside>
-
-        {/* Backdrop for mobile */}
-        <AnimatePresence>
-          {sidebarOpen && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setSidebarOpen(false)}
-              className="fixed inset-0 bg-black/50 z-30 lg:hidden"
-            />
-          )}
-        </AnimatePresence>
-
-        {/* Main content */}
-        <main className="flex-1 min-w-0 lg:ml-0">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
-            {children}
-          </div>
-        </main>
-      </div>
-    </div>
+      {/* Full-bleed content */}
+      <main className="relative">
+        {children}
+      </main>
+    </>
   )
 }

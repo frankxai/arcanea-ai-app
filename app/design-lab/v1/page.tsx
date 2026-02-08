@@ -401,7 +401,7 @@ export default function DesignLabV1() {
   const heroScale = useTransform(scrollYProgress, [0, 0.6], [1, 0.96])
 
   return (
-    <div className="relative -mx-4 sm:-mx-6 lg:-mx-8 -mt-8 lg:-mt-12">
+    <div className="min-h-[100dvh] bg-cosmic-void bg-cosmic-mesh relative">
       <LabCosmicBackground />
 
       <div className="relative z-10">

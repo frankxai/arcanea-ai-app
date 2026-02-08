@@ -28,6 +28,7 @@ import {
   Brain,
   Telescope,
   ArrowRight,
+  ArrowLeft,
   Gem,
   Eye,
   Code2,
@@ -259,8 +260,17 @@ export default function DesignLabHub() {
   const heroScale = useTransform(scrollYProgress, [0, 0.6], [1, 0.96])
 
   return (
-    <div className="relative -mx-4 sm:-mx-6 lg:-mx-8 -mt-8 lg:-mt-12">
+    <div className="min-h-[100dvh] bg-cosmic-void bg-cosmic-mesh relative">
       <LabCosmicBackground />
+
+      {/* Floating back link */}
+      <Link
+        href="/"
+        className="fixed top-6 left-6 z-50 flex items-center gap-2 glass rounded-full px-4 py-2 text-sm font-sans text-text-secondary hover:text-white transition-all border border-white/[0.08] shadow-lg shadow-black/20"
+      >
+        <ArrowLeft className="w-3 h-3" />
+        arcanea.ai
+      </Link>
 
       <div className="relative z-10">
         {/* ===== HERO ===== */}
