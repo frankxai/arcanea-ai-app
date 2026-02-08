@@ -41,9 +41,55 @@ import {
   Check,
 } from 'lucide-react'
 
+// === COLOR MAP (static lookups for Tailwind purge safety) ===
+
+type ColorKey = 'arcane-crystal' | 'arcane-fire' | 'arcane-water' | 'arcane-void' | 'arcane-gold' | 'arcane-wind' | 'arcane-earth'
+
+const colorMap: Record<ColorKey, {
+  bg15: string
+  border30: string
+  text: string
+}> = {
+  'arcane-crystal': {
+    bg15: 'bg-arcane-crystal/15',
+    border30: 'border-arcane-crystal/30',
+    text: 'text-arcane-crystal',
+  },
+  'arcane-fire': {
+    bg15: 'bg-arcane-fire/15',
+    border30: 'border-arcane-fire/30',
+    text: 'text-arcane-fire',
+  },
+  'arcane-water': {
+    bg15: 'bg-arcane-water/15',
+    border30: 'border-arcane-water/30',
+    text: 'text-arcane-water',
+  },
+  'arcane-void': {
+    bg15: 'bg-arcane-void/15',
+    border30: 'border-arcane-void/30',
+    text: 'text-arcane-void',
+  },
+  'arcane-gold': {
+    bg15: 'bg-arcane-gold/15',
+    border30: 'border-arcane-gold/30',
+    text: 'text-arcane-gold',
+  },
+  'arcane-wind': {
+    bg15: 'bg-arcane-wind/15',
+    border30: 'border-arcane-wind/30',
+    text: 'text-arcane-wind',
+  },
+  'arcane-earth': {
+    bg15: 'bg-arcane-earth/15',
+    border30: 'border-arcane-earth/30',
+    text: 'text-arcane-earth',
+  },
+}
+
 // === DATA ===
 
-const skillCategories = [
+const skillCategories: Array<{ name: string; icon: typeof Palette; color: ColorKey; count: number; skills: string[] }> = [
   {
     name: 'Creative',
     icon: Palette,
@@ -142,7 +188,7 @@ function SkillBrowser() {
               className={cn(
                 'flex items-center gap-2 font-sans text-xs px-4 py-2 rounded-xl transition-all duration-300',
                 i === activeCategory
-                  ? `bg-${cat.color}/15 text-${cat.color} border border-${cat.color}/30`
+                  ? cn(colorMap[cat.color].bg15, colorMap[cat.color].text, 'border', colorMap[cat.color].border30)
                   : 'bg-white/5 text-text-secondary hover:bg-white/10 border border-transparent'
               )}
             >
@@ -170,7 +216,7 @@ function SkillBrowser() {
               className="glow-card rounded-xl p-4 hover-lift group cursor-pointer"
             >
               <div className="flex items-center gap-3">
-                <CategoryIcon className={cn('w-4 h-4 shrink-0', `text-${category.color}`)} />
+                <CategoryIcon className={cn('w-4 h-4 shrink-0', colorMap[category.color].text)} />
                 <span className="font-sans text-sm text-white group-hover:text-arcane-crystal transition-colors truncate">{skill}</span>
                 <ChevronRight className="w-3 h-3 text-text-disabled group-hover:text-text-muted ml-auto shrink-0 transition-colors" />
               </div>

@@ -42,9 +42,95 @@ import {
   Target,
 } from 'lucide-react'
 
+// === COLOR MAP (static lookups for Tailwind purge safety) ===
+
+type ColorKey = 'arcane-crystal' | 'arcane-fire' | 'arcane-water' | 'arcane-void' | 'arcane-gold' | 'arcane-wind' | 'arcane-earth'
+
+const colorMap: Record<ColorKey, {
+  bg10: string
+  bg15: string
+  bg20: string
+  border25: string
+  border30: string
+  border50: string
+  text: string
+  shadow: string
+}> = {
+  'arcane-crystal': {
+    bg10: 'bg-arcane-crystal/10',
+    bg15: 'bg-arcane-crystal/15',
+    bg20: 'bg-arcane-crystal/20',
+    border25: 'border-arcane-crystal/25',
+    border30: 'border-arcane-crystal/30',
+    border50: 'border-arcane-crystal/50',
+    text: 'text-arcane-crystal',
+    shadow: 'shadow-[0_0_20px_rgba(127,255,212,0.15)]',
+  },
+  'arcane-fire': {
+    bg10: 'bg-arcane-fire/10',
+    bg15: 'bg-arcane-fire/15',
+    bg20: 'bg-arcane-fire/20',
+    border25: 'border-arcane-fire/25',
+    border30: 'border-arcane-fire/30',
+    border50: 'border-arcane-fire/50',
+    text: 'text-arcane-fire',
+    shadow: 'shadow-[0_0_20px_rgba(255,100,50,0.15)]',
+  },
+  'arcane-water': {
+    bg10: 'bg-arcane-water/10',
+    bg15: 'bg-arcane-water/15',
+    bg20: 'bg-arcane-water/20',
+    border25: 'border-arcane-water/25',
+    border30: 'border-arcane-water/30',
+    border50: 'border-arcane-water/50',
+    text: 'text-arcane-water',
+    shadow: 'shadow-[0_0_20px_rgba(100,150,255,0.15)]',
+  },
+  'arcane-void': {
+    bg10: 'bg-arcane-void/10',
+    bg15: 'bg-arcane-void/15',
+    bg20: 'bg-arcane-void/20',
+    border25: 'border-arcane-void/25',
+    border30: 'border-arcane-void/30',
+    border50: 'border-arcane-void/50',
+    text: 'text-arcane-void',
+    shadow: 'shadow-[0_0_20px_rgba(150,100,255,0.15)]',
+  },
+  'arcane-gold': {
+    bg10: 'bg-arcane-gold/10',
+    bg15: 'bg-arcane-gold/15',
+    bg20: 'bg-arcane-gold/20',
+    border25: 'border-arcane-gold/25',
+    border30: 'border-arcane-gold/30',
+    border50: 'border-arcane-gold/50',
+    text: 'text-arcane-gold',
+    shadow: 'shadow-[0_0_20px_rgba(255,215,0,0.15)]',
+  },
+  'arcane-wind': {
+    bg10: 'bg-arcane-wind/10',
+    bg15: 'bg-arcane-wind/15',
+    bg20: 'bg-arcane-wind/20',
+    border25: 'border-arcane-wind/25',
+    border30: 'border-arcane-wind/30',
+    border50: 'border-arcane-wind/50',
+    text: 'text-arcane-wind',
+    shadow: 'shadow-[0_0_20px_rgba(200,200,220,0.15)]',
+  },
+  'arcane-earth': {
+    bg10: 'bg-arcane-earth/10',
+    bg15: 'bg-arcane-earth/15',
+    bg20: 'bg-arcane-earth/20',
+    border25: 'border-arcane-earth/25',
+    border30: 'border-arcane-earth/30',
+    border50: 'border-arcane-earth/50',
+    text: 'text-arcane-earth',
+    shadow: 'shadow-[0_0_20px_rgba(100,200,100,0.15)]',
+  },
+}
+
 // === DATA ===
 
-const gates = [
+const gates: Array<{ name: string; freq: string; guardian: string; element: string; icon: typeof Compass; color: ColorKey; desc: string }> = [
   { name: 'Foundation', freq: '396 Hz', guardian: 'Lyssandria', element: 'Earth', icon: Compass, color: 'arcane-earth', desc: 'Stability, survival, grounding' },
   { name: 'Flow', freq: '417 Hz', guardian: 'Leyla', element: 'Water', icon: Activity, color: 'arcane-water', desc: 'Creativity, emotion, fluidity' },
   { name: 'Fire', freq: '528 Hz', guardian: 'Draconia', element: 'Fire', icon: Flame, color: 'arcane-fire', desc: 'Power, will, transformation' },
@@ -57,7 +143,7 @@ const gates = [
   { name: 'Source', freq: '1111 Hz', guardian: 'Shinkami', element: 'All', icon: Sun, color: 'arcane-gold', desc: 'Meta-consciousness, origin' },
 ]
 
-const systemLayers = [
+const systemLayers: Array<{ name: string; desc: string; icon: typeof Shield; color: ColorKey; stats: string[] }> = [
   {
     name: 'Guardian Intelligence',
     desc: 'Ten specialized AI companions, each attuned to a creative frequency. They don\'t just respond — they understand the phase of creation you\'re in.',
@@ -88,7 +174,7 @@ const systemLayers = [
   },
 ]
 
-const arcPhases = [
+const arcPhases: Array<{ name: string; desc: string; icon: typeof Sun; glow: ColorKey }> = [
   { name: 'Potential', desc: 'The fertile void. Ideas form in darkness, waiting to be called forth.', icon: Sun, glow: 'arcane-void' },
   { name: 'Manifestation', desc: 'Creation ignites. Vision becomes form through focused will and craft.', icon: Wand2, glow: 'arcane-fire' },
   { name: 'Experience', desc: 'The work lives in the world. It teaches, resonates, transforms.', icon: Music, glow: 'arcane-crystal' },
@@ -116,8 +202,8 @@ function GateRing() {
             transition={{ duration: 0.3 }}
             className="space-y-3"
           >
-            <div className={cn('w-20 h-20 mx-auto rounded-2xl flex items-center justify-center', `bg-${active.color}/20 border border-${active.color}/30`)}>
-              <ActiveIcon className={cn('w-10 h-10', `text-${active.color}`)} />
+            <div className={cn('w-20 h-20 mx-auto rounded-2xl flex items-center justify-center', colorMap[active.color].bg20, 'border', colorMap[active.color].border30)}>
+              <ActiveIcon className={cn('w-10 h-10', colorMap[active.color].text)} />
             </div>
             <div className="font-mono text-xs text-text-muted tracking-widest">{active.freq}</div>
             <h3 className="text-fluid-2xl font-display text-white">Gate of {active.name}</h3>
@@ -145,14 +231,14 @@ function GateRing() {
               className={cn(
                 'group relative w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-300',
                 i === activeGate
-                  ? `bg-${gate.color}/20 border-2 border-${gate.color}/50 shadow-[0_0_20px_rgba(127,255,212,0.15)]`
+                  ? cn(colorMap[gate.color].bg20, 'border-2', colorMap[gate.color].border50, colorMap[gate.color].shadow)
                   : 'bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20'
               )}
               aria-label={`Gate of ${gate.name}`}
             >
               <GateIcon className={cn(
                 'w-5 h-5 transition-colors',
-                i === activeGate ? `text-${gate.color}` : 'text-text-muted group-hover:text-text-secondary'
+                i === activeGate ? colorMap[gate.color].text : 'text-text-muted group-hover:text-text-secondary'
               )} />
               <span className={cn(
                 'absolute -bottom-5 text-[10px] font-sans transition-opacity',
@@ -269,8 +355,8 @@ export default function ACOSPage() {
                     className="glow-card rounded-2xl p-8 hover-lift group"
                   >
                     <div className="flex items-start gap-5">
-                      <div className={cn('w-14 h-14 rounded-xl flex items-center justify-center shrink-0', `bg-${layer.color}/15 border border-${layer.color}/25`)}>
-                        <Icon className={cn('w-7 h-7', `text-${layer.color}`)} />
+                      <div className={cn('w-14 h-14 rounded-xl flex items-center justify-center shrink-0', colorMap[layer.color].bg15, 'border', colorMap[layer.color].border25)}>
+                        <Icon className={cn('w-7 h-7', colorMap[layer.color].text)} />
                       </div>
                       <div className="flex-1 min-w-0">
                         <h3 className="text-fluid-xl font-display text-white mb-2">{layer.name}</h3>
@@ -370,8 +456,8 @@ export default function ACOSPage() {
                       {String(i + 1).padStart(2, '0')}
                     </div>
 
-                    <div className={cn('w-12 h-12 mx-auto mb-4 rounded-xl flex items-center justify-center', `bg-${phase.glow}/15 border border-${phase.glow}/25`)}>
-                      <Icon className={cn('w-6 h-6', `text-${phase.glow}`)} />
+                    <div className={cn('w-12 h-12 mx-auto mb-4 rounded-xl flex items-center justify-center', colorMap[phase.glow].bg15, 'border', colorMap[phase.glow].border25)}>
+                      <Icon className={cn('w-6 h-6', colorMap[phase.glow].text)} />
                     </div>
 
                     <h3 className="text-fluid-lg font-display text-white mb-2">{phase.name}</h3>
@@ -421,22 +507,22 @@ export default function ACOSPage() {
               variants={staggerContainer}
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
             >
-              {[
-                { mode: '/create', desc: 'Generate, ideate, bold new work', color: 'arcane-fire', agents: 'concept, spark, ignition' },
-                { mode: '/analyze', desc: 'Evaluate, research, understand deeply', color: 'arcane-water', agents: 'depth, coherence, research' },
-                { mode: '/refine', desc: 'Edit, polish, perfect existing work', color: 'arcane-crystal', agents: 'precision, clarity, polish' },
-                { mode: '/structure', desc: 'Architect, organize, plan systems', color: 'arcane-earth', agents: 'foundation, blueprint, scaffold' },
-                { mode: '/express', desc: 'Communicate, document, find voice', color: 'arcane-wind', agents: 'voice, dialogue, narrative' },
-                { mode: '/vision', desc: 'Future-sight, possibilities, strategy', color: 'arcane-void', agents: 'oracle, possibility, horizon' },
-                { mode: '/orchestrate', desc: 'Multi-mode for complex tasks', color: 'arcane-gold', agents: 'spawns teams across all modes' },
-              ].map((m) => (
+              {([
+                { mode: '/create', desc: 'Generate, ideate, bold new work', color: 'arcane-fire' as ColorKey, agents: 'concept, spark, ignition' },
+                { mode: '/analyze', desc: 'Evaluate, research, understand deeply', color: 'arcane-water' as ColorKey, agents: 'depth, coherence, research' },
+                { mode: '/refine', desc: 'Edit, polish, perfect existing work', color: 'arcane-crystal' as ColorKey, agents: 'precision, clarity, polish' },
+                { mode: '/structure', desc: 'Architect, organize, plan systems', color: 'arcane-earth' as ColorKey, agents: 'foundation, blueprint, scaffold' },
+                { mode: '/express', desc: 'Communicate, document, find voice', color: 'arcane-wind' as ColorKey, agents: 'voice, dialogue, narrative' },
+                { mode: '/vision', desc: 'Future-sight, possibilities, strategy', color: 'arcane-void' as ColorKey, agents: 'oracle, possibility, horizon' },
+                { mode: '/orchestrate', desc: 'Multi-mode for complex tasks', color: 'arcane-gold' as ColorKey, agents: 'spawns teams across all modes' },
+              ]).map((m) => (
                 <motion.div
                   key={m.mode}
                   variants={staggerItem}
                   className="glow-card rounded-2xl p-5 hover-lift"
                 >
                   <div className="flex items-center gap-3 mb-3">
-                    <span className={cn('font-mono text-sm font-semibold', `text-${m.color}`)}>{m.mode}</span>
+                    <span className={cn('font-mono text-sm font-semibold', colorMap[m.color].text)}>{m.mode}</span>
                   </div>
                   <p className="text-sm font-body text-text-secondary mb-3">{m.desc}</p>
                   <div className="font-mono text-xs text-text-muted">
