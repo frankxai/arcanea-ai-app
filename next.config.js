@@ -142,6 +142,9 @@ const nextConfig = {
     ignoreBuildErrors: false,
   },
 
+  // Turbopack (Next.js 16 default build tool)
+  turbopack: {},
+
   // Logging
   logging: {
     fetches: {
