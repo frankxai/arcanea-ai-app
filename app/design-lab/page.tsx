@@ -266,9 +266,9 @@ export default function DesignLabHub() {
       {/* Floating back link */}
       <Link
         href="/"
-        className="fixed top-6 left-6 z-50 flex items-center gap-2 glass rounded-full px-4 py-2 text-sm font-sans text-text-secondary hover:text-white transition-all border border-white/[0.08] shadow-lg shadow-black/20"
+        className="fixed top-6 left-6 z-50 flex items-center gap-2 glass rounded-full px-4 py-2.5 text-sm font-sans text-text-secondary hover:text-white transition-all duration-300 border border-white/[0.08] hover:border-arcane-crystal/20 shadow-lg shadow-black/20 hover:shadow-arcane-crystal/5 group"
       >
-        <ArrowLeft className="w-3 h-3" />
+        <ArrowLeft className="w-3 h-3 group-hover:-translate-x-0.5 transition-transform" />
         arcanea.ai
       </Link>
 
