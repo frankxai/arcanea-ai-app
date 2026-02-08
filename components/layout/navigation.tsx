@@ -12,11 +12,10 @@ import { cn } from '@/lib/utils'
 
 const navItems = [
   { id: 'home', label: 'Home', href: '/' },
-  { id: 'features', label: 'Features', href: '/#features' },
-  { id: 'guardians', label: 'Guardians', href: '/#guardians' },
-  { id: 'pricing', label: 'Pricing', href: '/#pricing' },
+  { id: 'acos', label: 'ACOS', href: '/acos' },
   { id: 'chat', label: 'AI Chat', href: '/chat' },
   { id: 'imagine', label: 'Create', href: '/imagine' },
+  { id: 'skill-creator', label: 'Skills', href: '/skill-creator' },
   { id: 'studio', label: 'Studio', href: '/studio' },
   { id: 'design-lab', label: 'Design Lab', href: '/design-lab' },
   { id: 'vision-board', label: 'Vision', href: '/vision-board' },
