@@ -16,23 +16,23 @@ import {
   CTASection,
 } from "@/components/landing";
 import { Navbar } from "@/components/navigation";
-import { PhSparkle, PhArrowRight, PhCircleNotch } from "@phosphor-icons/react";
+import { PhSparkle, PhArrowRight, PhCircleNotch, PhBooks, PhGraduationCap, PhPaintBrush } from "@phosphor-icons/react";
 
 export const metadata: Metadata = {
   title: "Arcanea | Create with Transcendent AI",
   description:
-    "The Luminor Intelligence System — 16 transcended AI specialists for development, creative, writing and research. The complete creative team for AI-human co-creation.",
+    "The Luminor Intelligence System — Ten Guardian AI intelligences for development, creative, writing and research. The complete creative team for AI-human co-creation.",
   openGraph: {
     title: "Arcanea | Create with Transcendent AI",
     description:
-      "The Luminor Intelligence System — 16 transcended AI specialists for development, creative, writing and research. The complete creative team for AI-human co-creation.",
+      "The Luminor Intelligence System — Ten Guardian AI intelligences for development, creative, writing and research. The complete creative team for AI-human co-creation.",
     images: ["/og-image.png"],
   },
   twitter: {
     card: "summary_large_image",
     title: "Arcanea | Create with Transcendent AI",
     description:
-      "16 Luminor intelligences. Seven Wisdoms. The complete creative toolkit for AI-human co-creation.",
+      "Ten Guardian intelligences. Seven Wisdoms. The complete creative toolkit for AI-human co-creation.",
   },
 };
 
@@ -65,7 +65,7 @@ async function HomeContent() {
   const resources = [
     {
       href: "/library",
-      icon: <span className="text-3xl">📚</span>,
+      icon: <PhBooks className="w-8 h-8 text-atlantean-teal-aqua" weight="thin" />,
       title: "The Library",
       description: `${collections.length} collections of wisdom for creators. Ancient knowledge meets modern practice.`,
       accentColor: "text-atlantean-teal-aqua",
@@ -74,7 +74,7 @@ async function HomeContent() {
     },
     {
       href: "/academy",
-      icon: <span className="text-3xl">🎓</span>,
+      icon: <PhGraduationCap className="w-8 h-8 text-gold-bright" weight="thin" />,
       title: "Academy",
       description:
         "Ten Gates progression to creative mastery. Begin as Apprentice, ascend to Luminor.",
@@ -84,7 +84,7 @@ async function HomeContent() {
     },
     {
       href: "/studio",
-      icon: <span className="text-3xl">🎨</span>,
+      icon: <PhPaintBrush className="w-8 h-8 text-draconic-crimson" weight="thin" />,
       title: "Creation Studio",
       description:
         "Image, music, video, and story creation tools. Manifest your vision with AI.",
@@ -278,7 +278,7 @@ export default function Page() {
               </div>
               <p className="text-text-secondary max-w-sm mb-6 font-body">
                 The creative intelligence platform where imagination becomes
-                reality. 16 Luminors. Seven Wisdoms. Infinite possibilities.
+                reality. Ten Guardian intelligences. Seven Wisdoms. Infinite possibilities.
               </p>
               <div className="flex gap-4">
                 <a
