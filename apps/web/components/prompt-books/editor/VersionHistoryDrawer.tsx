@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { X, RotateCcw, Clock } from 'lucide-react'
+import { PhX, PhArrowCounterClockwise, PhClock } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { usePromptBooksStore } from '@/lib/prompt-books/store'
@@ -55,7 +55,7 @@ export function VersionHistoryDrawer({
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-white/5">
         <div className="flex items-center gap-2">
-          <Clock className="w-4 h-4 text-brand-accent" />
+          <PhClock className="w-4 h-4 text-brand-accent" />
           <h3 className="text-sm font-display text-text-primary">Version History</h3>
         </div>
         <Button
@@ -64,7 +64,7 @@ export function VersionHistoryDrawer({
           onClick={onClose}
           className="text-text-muted hover:text-text-primary"
         >
-          <X className="w-4 h-4" />
+          <PhX className="w-4 h-4" />
         </Button>
       </div>
 
@@ -143,7 +143,7 @@ export function VersionHistoryDrawer({
             onClick={() => onRestore(selectedVersion)}
             className="w-full liquid-glass gap-2"
           >
-            <RotateCcw className="w-4 h-4" />
+            <PhArrowCounterClockwise className="w-4 h-4" />
             Restore v{selectedVersion.version}
           </Button>
         </div>

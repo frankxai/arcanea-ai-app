@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Heart, Reply, MoreVertical } from 'lucide-react';
+import { PhPaperPlane, PhHeart, PhArrowBendUpLeft, PhDotsThreeVertical } from '@phosphor-icons/react';
 import { Comment } from '@/lib/types/profile';
 import { Button } from '@/lib/arcanea-ui';
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
@@ -89,7 +89,7 @@ export function CommentSection({
               disabled={!newComment.trim() || isSubmitting}
               className="px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
             >
-              <Send className="w-4 h-4" />
+              <PhPaperPlane className="w-4 h-4" />
             </Button>
           </motion.div>
         </div>
@@ -140,7 +140,7 @@ export function CommentSection({
                     onClick={() => onLikeComment && onLikeComment(comment.id)}
                     className="flex items-center gap-1 text-slate-500 hover:text-pink-500 transition-colors text-xs"
                   >
-                    <Heart className="w-3 h-3" />
+                    <PhHeart className="w-3 h-3" />
                     {comment.likes > 0 && (
                       <span className="font-medium">{comment.likes}</span>
                     )}
@@ -152,7 +152,7 @@ export function CommentSection({
                     onClick={() => setReplyingTo(comment.id)}
                     className="flex items-center gap-1 text-slate-500 hover:text-blue-500 transition-colors text-xs"
                   >
-                    <Reply className="w-3 h-3" />
+                    <PhArrowBendUpLeft className="w-3 h-3" />
                     <span>Reply</span>
                   </motion.button>
 
@@ -163,7 +163,7 @@ export function CommentSection({
                       onClick={() => onDeleteComment(comment.id)}
                       className="ml-auto text-slate-500 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100"
                     >
-                      <MoreVertical className="w-4 h-4" />
+                      <PhDotsThreeVertical className="w-4 h-4" />
                     </motion.button>
                   )}
                 </div>

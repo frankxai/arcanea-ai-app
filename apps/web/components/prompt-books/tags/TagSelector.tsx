@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { Search, Plus, X } from 'lucide-react'
+import { PhMagnifyingGlass, PhPlus, PhX } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
 import { TagChip } from './TagChip'
 import { TAG_CATEGORIES, DEFAULT_TAGS } from '@/lib/prompt-books/constants'
@@ -66,14 +66,14 @@ export function TagSelector({
           className="text-text-muted hover:text-text-primary"
           type="button"
         >
-          <X className="w-3.5 h-3.5" />
+          <PhX className="w-3.5 h-3.5" />
         </button>
       </div>
 
       {/* Search */}
       <div className="px-3 py-2 border-b border-white/[0.04]">
         <div className="flex items-center gap-2 glass-subtle rounded-lg px-2 py-1.5">
-          <Search className="w-3.5 h-3.5 text-text-muted shrink-0" />
+          <PhMagnifyingGlass className="w-3.5 h-3.5 text-text-muted shrink-0" />
           <input
             type="text"
             value={search}
@@ -119,7 +119,7 @@ export function TagSelector({
                 'glass text-text-primary hover:scale-[1.02] transition-transform',
               )}
             >
-              <Plus className="w-3 h-3" />
+              <PhPlus className="w-3 h-3" />
               Create &quot;{search}&quot;
             </button>
           </div>

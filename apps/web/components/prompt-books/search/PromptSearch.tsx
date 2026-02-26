@@ -7,10 +7,10 @@ import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  Search, X, ArrowUp, ArrowDown, CornerDownLeft, Command,
-  MessageSquare, Image, ImagePlus, MessagesSquare, Link,
-  ListOrdered, Code, PenTool, BarChart3, Clock, Tag,
-} from 'lucide-react'
+  PhMagnifyingGlass, PhX, PhArrowUp, PhArrowDown, PhCornerDownLeft, PhCommand,
+  PhChatSquare, PhImage, PhImageSquare, PhChats, PhLink,
+  PhListNumbers, PhCode, PhPen, PhChartBar, PhClock, PhTag,
+} from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
 import { usePromptBooksStore } from '@/lib/prompt-books/store'
 import { PROMPT_TYPES } from '@/lib/prompt-books/constants'
@@ -295,7 +295,7 @@ export function PromptSearch({ isOpen, onClose, onSelectPrompt }: PromptSearchPr
           >
             {/* Search Input */}
             <div className="flex items-center gap-3 px-5 py-4 border-b border-white/5">
-              <Search className="w-5 h-5 text-text-muted flex-shrink-0" aria-hidden />
+              <PhMagnifyingGlass className="w-5 h-5 text-text-muted flex-shrink-0" aria-hidden />
               <input
                 ref={inputRef}
                 type="text"
@@ -322,7 +322,7 @@ export function PromptSearch({ isOpen, onClose, onSelectPrompt }: PromptSearchPr
                   className="p-1 rounded-md text-text-muted hover:text-text-primary hover:bg-white/[0.04] transition-all duration-150"
                   aria-label="Clear search"
                 >
-                  <X className="w-4 h-4" />
+                  <PhX className="w-4 h-4" />
                 </button>
               )}
             </div>
@@ -348,7 +348,7 @@ export function PromptSearch({ isOpen, onClose, onSelectPrompt }: PromptSearchPr
               {/* Empty state with query */}
               {!isSearching && query.trim() && flatResults.length === 0 && (
                 <div className="px-5 py-10 text-center">
-                  <Search className="w-8 h-8 text-text-muted/50 mx-auto mb-3" />
+                  <PhMagnifyingGlass className="w-8 h-8 text-text-muted/50 mx-auto mb-3" />
                   <p className="text-sm font-sans text-text-muted">
                     No results for &ldquo;{query}&rdquo;
                   </p>
@@ -361,7 +361,7 @@ export function PromptSearch({ isOpen, onClose, onSelectPrompt }: PromptSearchPr
               {/* Empty state without query and no recents */}
               {!isSearching && !query.trim() && flatResults.length === 0 && (
                 <div className="px-5 py-10 text-center">
-                  <Clock className="w-8 h-8 text-text-muted/50 mx-auto mb-3" />
+                  <PhClock className="w-8 h-8 text-text-muted/50 mx-auto mb-3" />
                   <p className="text-sm font-sans text-text-muted">
                     No recent prompts
                   </p>
@@ -443,7 +443,7 @@ export function PromptSearch({ isOpen, onClose, onSelectPrompt }: PromptSearchPr
                             </p>
                             {tagCount > 0 && (
                               <div className="flex items-center gap-1 mt-1">
-                                <Tag className="w-3 h-3 text-text-muted/60" />
+                                <PhTag className="w-3 h-3 text-text-muted/60" />
                                 <span className="text-[10px] font-sans text-text-muted/60">
                                   {tagCount} tag{tagCount !== 1 ? 's' : ''}
                                 </span>
@@ -454,7 +454,7 @@ export function PromptSearch({ isOpen, onClose, onSelectPrompt }: PromptSearchPr
                           {/* Selected indicator */}
                           {isSelected && (
                             <div className="flex-shrink-0 mt-1">
-                              <CornerDownLeft className="w-3.5 h-3.5 text-text-muted/50" />
+                              <PhCornerDownLeft className="w-3.5 h-3.5 text-text-muted/50" />
                             </div>
                           )}
                         </div>
@@ -468,16 +468,16 @@ export function PromptSearch({ isOpen, onClose, onSelectPrompt }: PromptSearchPr
             <div className="px-5 py-2.5 border-t border-white/5 flex items-center gap-4">
               <div className="flex items-center gap-1.5 text-[11px] font-sans text-text-muted/60">
                 <kbd className="glass-subtle px-1.5 py-0.5 rounded text-[10px] font-mono">
-                  <ArrowUp className="w-3 h-3 inline" />
+                  <PhArrowUp className="w-3 h-3 inline" />
                 </kbd>
                 <kbd className="glass-subtle px-1.5 py-0.5 rounded text-[10px] font-mono">
-                  <ArrowDown className="w-3 h-3 inline" />
+                  <PhArrowDown className="w-3 h-3 inline" />
                 </kbd>
                 <span>Navigate</span>
               </div>
               <div className="flex items-center gap-1.5 text-[11px] font-sans text-text-muted/60">
                 <kbd className="glass-subtle px-1.5 py-0.5 rounded text-[10px] font-mono">
-                  <CornerDownLeft className="w-3 h-3 inline" />
+                  <PhCornerDownLeft className="w-3 h-3 inline" />
                 </kbd>
                 <span>Open</span>
               </div>
@@ -488,7 +488,7 @@ export function PromptSearch({ isOpen, onClose, onSelectPrompt }: PromptSearchPr
                 <span>Close</span>
               </div>
               <div className="ml-auto flex items-center gap-1.5 text-[11px] font-sans text-text-muted/40">
-                <Command className="w-3 h-3" />
+                <PhCommand className="w-3 h-3" />
                 <span>K</span>
               </div>
             </div>

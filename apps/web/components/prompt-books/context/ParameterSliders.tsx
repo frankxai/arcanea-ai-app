@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useCallback, useRef, type KeyboardEvent } from 'react'
-import { X } from 'lucide-react'
+import { PhX } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
 import type { ContextConfig } from '@/lib/prompt-books/types'
 
@@ -157,7 +157,7 @@ function StopSequencesInput({ value, onChange }: StopSequencesInputProps) {
               onClick={() => removeSequence(seq)}
               className="hover:text-brand-accent/70 transition-colors"
             >
-              <X className="w-3 h-3" />
+              <PhX className="w-3 h-3" />
             </button>
           </span>
         ))}

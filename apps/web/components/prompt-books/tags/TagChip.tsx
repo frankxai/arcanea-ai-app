@@ -1,6 +1,6 @@
 'use client'
 
-import { X } from 'lucide-react'
+import { PhX } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
 import { TAG_CATEGORIES } from '@/lib/prompt-books/constants'
 import type { Tag } from '@/lib/prompt-books/types'
@@ -81,7 +81,7 @@ export function TagChip({
           className="ml-0.5 text-text-muted hover:text-error transition-colors"
           aria-label={`Remove ${tag.name}`}
         >
-          <X className={size === 'sm' ? 'w-2.5 h-2.5' : 'w-3 h-3'} />
+          <PhX className={size === 'sm' ? 'w-2.5 h-2.5' : 'w-3 h-3'} />
         </span>
       )}
     </button>

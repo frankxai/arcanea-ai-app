@@ -1,6 +1,6 @@
 'use client'
 
-import { Plus } from 'lucide-react'
+import { PhPlus } from '@phosphor-icons/react'
 
 interface QuickCaptureFABProps {
   onClick: () => void
@@ -14,7 +14,7 @@ export function QuickCaptureFAB({ onClick }: QuickCaptureFABProps) {
       aria-label="Quick capture prompt"
       title="Quick capture (Cmd+Shift+P)"
     >
-      <Plus className="w-6 h-6 text-cosmic-void" />
+      <PhPlus className="w-6 h-6 text-cosmic-void" />
     </button>
   )
 }

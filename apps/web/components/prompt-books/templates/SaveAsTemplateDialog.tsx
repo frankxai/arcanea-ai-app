@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { X, Save, Globe, Lock } from 'lucide-react'
+import { PhX, PhFloppyDisk, PhGlobe, PhLock } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { extractVariables } from '@/lib/prompt-books/context-engine'
@@ -72,7 +72,7 @@ export function SaveAsTemplateDialog({
         <div className="px-5 py-4 border-b border-white/5 flex items-center justify-between">
           <h2 className="text-sm font-display text-text-primary">Save as Template</h2>
           <Button variant="ghost" size="icon" onClick={onClose} className="text-text-muted hover:text-text-primary">
-            <X className="w-4 h-4" />
+            <PhX className="w-4 h-4" />
           </Button>
         </div>
 
@@ -136,7 +136,7 @@ export function SaveAsTemplateDialog({
                     : 'border-white/10 text-text-muted bg-white/[0.03]',
                 )}
               >
-                {isPublic ? <Globe className="w-3 h-3" /> : <Lock className="w-3 h-3" />}
+                {isPublic ? <PhGlobe className="w-3 h-3" /> : <PhLock className="w-3 h-3" />}
                 {isPublic ? 'Public' : 'Private'}
               </button>
             </div>
@@ -204,7 +204,7 @@ export function SaveAsTemplateDialog({
             disabled={loading || !name.trim()}
             className="text-xs liquid-glass gap-2"
           >
-            <Save className="w-3.5 h-3.5" />
+            <PhFloppyDisk className="w-3.5 h-3.5" />
             {loading ? 'Saving...' : 'Save Template'}
           </Button>
         </div>

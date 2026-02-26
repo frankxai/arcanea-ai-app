@@ -4,7 +4,7 @@
 // Renders search results with highlighted matches, loading skeleton, and empty states
 
 import { useMemo, Fragment } from 'react'
-import { Search, FileQuestion } from 'lucide-react'
+import { PhMagnifyingGlass, PhFileQuestion } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
 import { usePromptBooksStore } from '@/lib/prompt-books/store'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -206,7 +206,7 @@ export function SearchResults({ onSelectPrompt, className }: SearchResultsProps)
       {/* Empty state */}
       {!isSearching && searchResults.length === 0 && (
         <div className="py-12 text-center">
-          <FileQuestion className="w-10 h-10 text-text-muted/30 mx-auto mb-3" />
+          <PhFileQuestion className="w-10 h-10 text-text-muted/30 mx-auto mb-3" />
           <p className="text-sm font-sans text-text-muted">
             No results for &ldquo;{searchQuery}&rdquo;
           </p>

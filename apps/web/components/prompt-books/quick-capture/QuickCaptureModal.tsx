@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { Zap, X } from 'lucide-react'
+import { PhLightning, PhX } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
@@ -66,7 +66,7 @@ export function QuickCaptureModal({
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <Zap className="w-4 h-4 text-brand-accent" />
+            <PhLightning className="w-4 h-4 text-brand-accent" />
             <h3 className="text-sm font-display font-bold text-text-primary tracking-wide">
               QUICK CAPTURE
             </h3>
@@ -75,7 +75,7 @@ export function QuickCaptureModal({
             onClick={() => onOpenChange(false)}
             className="p-1.5 rounded-lg hover:bg-cosmic-raised text-text-muted"
           >
-            <X className="w-4 h-4" />
+            <PhX className="w-4 h-4" />
           </button>
         </div>
 
@@ -114,7 +114,7 @@ export function QuickCaptureModal({
             disabled={!text.trim() || saving}
             className="liquid-glass hover:scale-[1.02] transition-transform gap-2"
           >
-            <Zap className="w-4 h-4" />
+            <PhLightning className="w-4 h-4" />
             {saving ? 'Saving...' : 'Capture'}
           </Button>
         </div>

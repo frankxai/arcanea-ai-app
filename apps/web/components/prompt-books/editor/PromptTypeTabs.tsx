@@ -1,23 +1,23 @@
 'use client'
 
 import {
-  MessageSquare, Image, ImagePlus, MessagesSquare, Link,
-  ListOrdered, Code, PenTool, BarChart3,
-} from 'lucide-react'
+  PhChatSquare, PhImage, PhImageSquare, PhChats, PhLink,
+  PhListNumbers, PhCode, PhPen, PhChartBar,
+} from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
 import { PROMPT_TYPES } from '@/lib/prompt-books/constants'
 import type { PromptType } from '@/lib/prompt-books/types'
 
 const ICONS: Record<string, React.ReactNode> = {
-  MessageSquare: <MessageSquare className="w-3.5 h-3.5" />,
-  Image: <Image className="w-3.5 h-3.5" />,
-  ImagePlus: <ImagePlus className="w-3.5 h-3.5" />,
-  MessagesSquare: <MessagesSquare className="w-3.5 h-3.5" />,
-  Link: <Link className="w-3.5 h-3.5" />,
-  ListOrdered: <ListOrdered className="w-3.5 h-3.5" />,
-  Code: <Code className="w-3.5 h-3.5" />,
-  PenTool: <PenTool className="w-3.5 h-3.5" />,
-  BarChart3: <BarChart3 className="w-3.5 h-3.5" />,
+  MessageSquare: <PhChatSquare className="w-3.5 h-3.5" />,
+  Image: <PhImage className="w-3.5 h-3.5" />,
+  ImagePlus: <PhImageSquare className="w-3.5 h-3.5" />,
+  MessagesSquare: <PhChats className="w-3.5 h-3.5" />,
+  Link: <PhLink className="w-3.5 h-3.5" />,
+  ListOrdered: <PhListNumbers className="w-3.5 h-3.5" />,
+  Code: <PhCode className="w-3.5 h-3.5" />,
+  PenTool: <PhPen className="w-3.5 h-3.5" />,
+  BarChart3: <PhChartBar className="w-3.5 h-3.5" />,
 }
 
 interface PromptTypeTabsProps {

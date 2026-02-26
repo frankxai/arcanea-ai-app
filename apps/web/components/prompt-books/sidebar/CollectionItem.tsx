@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, type ReactNode } from 'react'
-import { ChevronRight, Pin, BookOpen } from 'lucide-react'
+import { PhCaretRight, PhPushPin, PhBookOpen } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
 import { GUARDIAN_THEMES } from '@/lib/prompt-books/constants'
 import type { Collection } from '@/lib/prompt-books/types'
@@ -83,7 +83,7 @@ export function CollectionItem({
         {/* Badges */}
         <div className="flex items-center gap-1 flex-shrink-0">
           {collection.isPinned && (
-            <Pin className="w-3 h-3 text-brand-gold" />
+            <PhPushPin className="w-3 h-3 text-brand-gold" />
           )}
           {collection.promptCount > 0 && (
             <span className="text-xs font-mono text-text-muted">

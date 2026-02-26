@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { X } from 'lucide-react';
+import { PhX } from '@phosphor-icons/react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
@@ -109,7 +109,7 @@ const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
               'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-crystal/60'
             )}
           >
-            <X size={10} aria-hidden="true" />
+            <PhX size={10} aria-hidden="true" />
           </button>
         )}
       </span>

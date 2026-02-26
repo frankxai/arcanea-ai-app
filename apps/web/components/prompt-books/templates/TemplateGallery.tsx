@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { Search, X, Sparkles, LayoutGrid } from 'lucide-react'
+import { PhMagnifyingGlass, PhX, PhSparkle, PhGridFour } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { TemplateCard } from './TemplateCard'
@@ -85,17 +85,17 @@ export function TemplateGallery({
         <div className="px-6 py-4 border-b border-white/5">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <LayoutGrid className="w-4 h-4 text-brand-accent" />
+              <PhGridFour className="w-4 h-4 text-brand-accent" />
               <h2 className="text-sm font-display text-text-primary">Template Gallery</h2>
             </div>
             <Button variant="ghost" size="icon" onClick={onClose} className="text-text-muted hover:text-text-primary">
-              <X className="w-4 h-4" />
+              <PhX className="w-4 h-4" />
             </Button>
           </div>
 
           {/* Search */}
           <div className="flex items-center gap-2 glass-subtle rounded-lg px-3 py-2 mb-3">
-            <Search className="w-3.5 h-3.5 text-text-muted shrink-0" />
+            <PhMagnifyingGlass className="w-3.5 h-3.5 text-text-muted shrink-0" />
             <input
               type="text"
               value={search}
@@ -105,7 +105,7 @@ export function TemplateGallery({
             />
             {search && (
               <button onClick={() => setSearch('')} className="text-text-muted hover:text-text-primary">
-                <X className="w-3 h-3" />
+                <PhX className="w-3 h-3" />
               </button>
             )}
           </div>
@@ -157,7 +157,7 @@ export function TemplateGallery({
             </div>
           ) : filtered.length === 0 ? (
             <div className="text-center py-12">
-              <Sparkles className="w-8 h-8 text-text-muted/20 mx-auto mb-3" />
+              <PhSparkle className="w-8 h-8 text-text-muted/20 mx-auto mb-3" />
               <p className="text-sm font-sans text-text-muted">No templates found</p>
               <p className="text-xs font-sans text-text-muted/60 mt-1">
                 {search ? `No matches for "${search}"` : 'Templates will appear here as they are created'}

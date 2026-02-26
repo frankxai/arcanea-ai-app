@@ -2,9 +2,9 @@
 
 import { useRef, useCallback } from 'react'
 import {
-  Bold, Italic, Code, Heading1, Heading2, List, ListOrdered,
-  Quote, LinkIcon, Braces, WrapText, Minus,
-} from 'lucide-react'
+  PhTextB, PhTextItalic, PhCode, PhTextHOne, PhTextHTwo, PhList, PhListNumbers,
+  PhQuotes, PhLink, PhBraces, PhTextT, PhMinus,
+} from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
 
 interface ContentEditorProps {
@@ -25,17 +25,17 @@ interface ToolbarAction {
 }
 
 const TOOLBAR_ACTIONS: ToolbarAction[] = [
-  { icon: <Bold className="w-3.5 h-3.5" />, label: 'Bold', wrap: ['**', '**'] },
-  { icon: <Italic className="w-3.5 h-3.5" />, label: 'Italic', wrap: ['_', '_'] },
-  { icon: <Code className="w-3.5 h-3.5" />, label: 'Inline code', wrap: ['`', '`'] },
-  { icon: <Braces className="w-3.5 h-3.5" />, label: 'Code block', wrap: ['```\n', '\n```'], block: true },
-  { icon: <Heading1 className="w-3.5 h-3.5" />, label: 'Heading 1', wrap: ['# ', ''], block: true },
-  { icon: <Heading2 className="w-3.5 h-3.5" />, label: 'Heading 2', wrap: ['## ', ''], block: true },
-  { icon: <List className="w-3.5 h-3.5" />, label: 'List', wrap: ['- ', ''], block: true },
-  { icon: <ListOrdered className="w-3.5 h-3.5" />, label: 'Numbered list', wrap: ['1. ', ''], block: true },
-  { icon: <Quote className="w-3.5 h-3.5" />, label: 'Quote', wrap: ['> ', ''], block: true },
-  { icon: <LinkIcon className="w-3.5 h-3.5" />, label: 'Link', wrap: ['[', '](url)'] },
-  { icon: <Minus className="w-3.5 h-3.5" />, label: 'Divider', wrap: ['\n---\n', ''], block: true },
+  { icon: <PhTextB className="w-3.5 h-3.5" />, label: 'Bold', wrap: ['**', '**'] },
+  { icon: <PhTextItalic className="w-3.5 h-3.5" />, label: 'Italic', wrap: ['_', '_'] },
+  { icon: <PhCode className="w-3.5 h-3.5" />, label: 'Inline code', wrap: ['`', '`'] },
+  { icon: <PhBraces className="w-3.5 h-3.5" />, label: 'Code block', wrap: ['```\n', '\n```'], block: true },
+  { icon: <PhTextHOne className="w-3.5 h-3.5" />, label: 'Heading 1', wrap: ['# ', ''], block: true },
+  { icon: <PhTextHTwo className="w-3.5 h-3.5" />, label: 'Heading 2', wrap: ['## ', ''], block: true },
+  { icon: <PhList className="w-3.5 h-3.5" />, label: 'List', wrap: ['- ', ''], block: true },
+  { icon: <PhListNumbers className="w-3.5 h-3.5" />, label: 'Numbered list', wrap: ['1. ', ''], block: true },
+  { icon: <PhQuotes className="w-3.5 h-3.5" />, label: 'Quote', wrap: ['> ', ''], block: true },
+  { icon: <PhLink className="w-3.5 h-3.5" />, label: 'Link', wrap: ['[', '](url)'] },
+  { icon: <PhMinus className="w-3.5 h-3.5" />, label: 'Divider', wrap: ['\n---\n', ''], block: true },
 ]
 
 export function ContentEditor({

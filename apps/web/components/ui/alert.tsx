@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { X, CheckCircle, AlertCircle, AlertTriangle, Info } from 'lucide-react';
+import { PhX, PhCheckCircle, PhWarningCircle, PhWarning, PhInfo } from '@phosphor-icons/react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
@@ -134,7 +134,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
               'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crystal/50'
             )}
           >
-            <X size={14} aria-hidden="true" />
+            <PhX size={14} aria-hidden="true" />
           </button>
         )}
       </div>

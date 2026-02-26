@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react'
-import { Trash2, Pencil, GripVertical } from 'lucide-react'
+import { PhTrash, PhPencil, PhDotsSixVertical } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { TAG_CATEGORIES } from '@/lib/prompt-books/constants'
@@ -139,7 +139,7 @@ export function TagManager({
                   ) : (
                     /* Display mode */
                     <div className="flex items-center gap-3">
-                      <GripVertical className="w-3 h-3 text-text-muted/30 shrink-0" />
+                      <PhDotsSixVertical className="w-3 h-3 text-text-muted/30 shrink-0" />
 
                       <span
                         className="w-2 h-2 rounded-full shrink-0"
@@ -173,7 +173,7 @@ export function TagManager({
                         onClick={() => startEdit(tag)}
                         className="p-1 text-text-muted hover:text-text-primary transition-colors"
                       >
-                        <Pencil className="w-3 h-3" />
+                        <PhPencil className="w-3 h-3" />
                       </button>
 
                       <button
@@ -181,7 +181,7 @@ export function TagManager({
                         onClick={() => handleDelete(tag.id)}
                         className="p-1 text-text-muted hover:text-error transition-colors"
                       >
-                        <Trash2 className="w-3 h-3" />
+                        <PhTrash className="w-3 h-3" />
                       </button>
                     </div>
                   )}

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Plus, ChevronLeft, ChevronRight, BookOpen } from 'lucide-react'
+import { PhPlus, PhCaretLeft, PhCaretRight, PhBookOpen } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { usePromptBooksStore } from '@/lib/prompt-books/store'
@@ -49,7 +49,7 @@ export function PromptBooksSidebar({ onCreateCollection }: PromptBooksSidebarPro
       {/* Header */}
       <div className="p-4 border-b border-white/5 flex items-center gap-3">
         <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-accent/20 to-brand-primary/20 flex items-center justify-center">
-          <BookOpen className="w-4 h-4 text-brand-accent" />
+          <PhBookOpen className="w-4 h-4 text-brand-accent" />
         </div>
         {!sidebarCollapsed && (
           <h2 className="text-sm font-display font-bold text-text-primary tracking-wide">
@@ -65,7 +65,7 @@ export function PromptBooksSidebar({ onCreateCollection }: PromptBooksSidebarPro
             onClick={onCreateCollection}
             className="w-full glass-subtle justify-start gap-2 hover:scale-[1.02] transition-transform"
           >
-            <Plus className="w-4 h-4 text-brand-accent" />
+            <PhPlus className="w-4 h-4 text-brand-accent" />
             <span className="font-sans font-medium text-sm">New Collection</span>
           </Button>
         </div>
@@ -94,7 +94,7 @@ export function PromptBooksSidebar({ onCreateCollection }: PromptBooksSidebarPro
                 )}
                 title={c.name}
               >
-                <BookOpen className="w-4 h-4" />
+                <PhBookOpen className="w-4 h-4" />
               </button>
             ))}
           </div>
@@ -110,7 +110,7 @@ export function PromptBooksSidebar({ onCreateCollection }: PromptBooksSidebarPro
                   : 'text-text-secondary hover:text-text-primary hover:bg-cosmic-raised',
               )}
             >
-              <BookOpen className="w-4 h-4" />
+              <PhBookOpen className="w-4 h-4" />
               <span className="font-sans">All Prompts</span>
             </button>
 
@@ -135,9 +135,9 @@ export function PromptBooksSidebar({ onCreateCollection }: PromptBooksSidebarPro
           aria-label={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
           {sidebarCollapsed ? (
-            <ChevronRight className="w-4 h-4" />
+            <PhCaretRight className="w-4 h-4" />
           ) : (
-            <ChevronLeft className="w-4 h-4" />
+            <PhCaretLeft className="w-4 h-4" />
           )}
         </Button>
       </div>

@@ -1,6 +1,6 @@
 'use client'
 
-import { Search } from 'lucide-react'
+import { PhMagnifyingGlass } from '@phosphor-icons/react'
 import { Input } from '@/components/ui/input'
 
 interface SidebarSearchProps {
@@ -11,7 +11,7 @@ interface SidebarSearchProps {
 export function SidebarSearch({ value, onChange }: SidebarSearchProps) {
   return (
     <div className="relative">
-      <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
+      <PhMagnifyingGlass className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
       <Input
         value={value}
         onChange={(e) => onChange(e.target.value)}

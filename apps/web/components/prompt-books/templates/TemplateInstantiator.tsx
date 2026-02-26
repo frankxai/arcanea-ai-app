@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { X, Sparkles, ChevronDown } from 'lucide-react'
+import { PhX, PhSparkle, PhCaretDown } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { PROMPT_TYPES, GUARDIAN_THEMES } from '@/lib/prompt-books/constants'
@@ -74,7 +74,7 @@ export function TemplateInstantiator({
             )}
           </div>
           <Button variant="ghost" size="icon" onClick={onClose} className="text-text-muted hover:text-text-primary">
-            <X className="w-4 h-4" />
+            <PhX className="w-4 h-4" />
           </Button>
         </div>
 
@@ -136,7 +136,7 @@ export function TemplateInstantiator({
             disabled={loading}
             className="text-xs liquid-glass gap-2"
           >
-            <Sparkles className="w-3.5 h-3.5" />
+            <PhSparkle className="w-3.5 h-3.5" />
             {loading ? 'Creating...' : 'Create Prompt'}
           </Button>
         </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Search } from 'lucide-react';
+import { PhMagnifyingGlass } from '@phosphor-icons/react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 

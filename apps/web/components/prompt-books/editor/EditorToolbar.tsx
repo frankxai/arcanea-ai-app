@@ -1,9 +1,9 @@
 'use client'
 
 import {
-  Save, Copy, Trash2, ArrowLeft, Clock, History,
-  SplitSquareHorizontal, Download, Star, Bookmark,
-} from 'lucide-react'
+  PhFloppyDisk, PhCopy, PhTrash, PhArrowLeft, PhClock, PhClockCounterClockwise,
+  PhSplitHorizontal, PhDownload, PhStar, PhBookmark,
+} from '@phosphor-icons/react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
@@ -67,7 +67,7 @@ export function EditorToolbar({
           className="text-text-muted hover:text-text-primary shrink-0"
           aria-label="Back to collection"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <PhArrowLeft className="w-4 h-4" />
         </Button>
 
         {/* Title input */}
@@ -100,7 +100,7 @@ export function EditorToolbar({
               className="text-text-muted hover:text-brand-gold"
               aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
             >
-              <Star className={cn('w-4 h-4', isFavorite && 'fill-brand-gold text-brand-gold')} />
+              <PhStar className={cn('w-4 h-4', isFavorite && 'fill-brand-gold text-brand-gold')} />
             </Button>
           )}
 
@@ -112,7 +112,7 @@ export function EditorToolbar({
             className="text-text-muted hover:text-text-primary"
             aria-label="Save"
           >
-            <Save className="w-4 h-4" />
+            <PhFloppyDisk className="w-4 h-4" />
           </Button>
 
           <Button
@@ -122,7 +122,7 @@ export function EditorToolbar({
             className="text-text-muted hover:text-text-primary"
             aria-label="Copy prompt"
           >
-            <Copy className="w-4 h-4" />
+            <PhCopy className="w-4 h-4" />
           </Button>
 
           <Button
@@ -135,7 +135,7 @@ export function EditorToolbar({
             )}
             aria-label="Toggle split view"
           >
-            <SplitSquareHorizontal className="w-4 h-4" />
+            <PhSplitHorizontal className="w-4 h-4" />
           </Button>
 
           <Button
@@ -145,7 +145,7 @@ export function EditorToolbar({
             className="text-text-muted hover:text-text-primary"
             aria-label="Version history"
           >
-            <History className="w-4 h-4" />
+            <PhClockCounterClockwise className="w-4 h-4" />
           </Button>
 
           <Button
@@ -155,7 +155,7 @@ export function EditorToolbar({
             className="text-text-muted hover:text-text-primary"
             aria-label="Export as markdown"
           >
-            <Download className="w-4 h-4" />
+            <PhDownload className="w-4 h-4" />
           </Button>
 
           {onSaveAsTemplate && (
@@ -166,7 +166,7 @@ export function EditorToolbar({
               className="text-text-muted hover:text-brand-accent"
               aria-label="Save as template"
             >
-              <Bookmark className="w-4 h-4" />
+              <PhBookmark className="w-4 h-4" />
             </Button>
           )}
 
@@ -177,7 +177,7 @@ export function EditorToolbar({
             className="text-text-muted hover:text-error"
             aria-label="Delete prompt"
           >
-            <Trash2 className="w-4 h-4" />
+            <PhTrash className="w-4 h-4" />
           </Button>
         </div>
       </div>
@@ -185,7 +185,7 @@ export function EditorToolbar({
       {/* Stats bar */}
       <div className="flex items-center gap-4 px-4 py-1.5 text-xs font-sans text-text-muted border-t border-white/[0.03]">
         <span className="flex items-center gap-1">
-          <Clock className="w-3 h-3" />
+          <PhClock className="w-3 h-3" />
           {wordCount} word{wordCount !== 1 ? 's' : ''}
         </span>
         <span>{charCount} char{charCount !== 1 ? 's' : ''}</span>

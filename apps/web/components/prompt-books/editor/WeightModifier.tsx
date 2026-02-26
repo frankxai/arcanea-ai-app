@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react'
-import { ChevronUp, ChevronDown } from 'lucide-react'
+import { PhCaretUp, PhCaretDown } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
 import { formatWeight } from '@/lib/prompt-books/weight-syntax'
 import type { WeightSyntaxType } from '@/lib/prompt-books/constants'
@@ -67,7 +67,7 @@ export function WeightModifier({ onApply, className }: WeightModifierProps) {
           type="button"
           aria-label="Decrease weight"
         >
-          <ChevronDown className="w-3 h-3" />
+          <PhCaretDown className="w-3 h-3" />
         </button>
 
         <span className={cn(
@@ -83,7 +83,7 @@ export function WeightModifier({ onApply, className }: WeightModifierProps) {
           type="button"
           aria-label="Increase weight"
         >
-          <ChevronUp className="w-3 h-3" />
+          <PhCaretUp className="w-3 h-3" />
         </button>
       </div>
 

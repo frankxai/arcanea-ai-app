@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronDown, ChevronRight, Brain } from 'lucide-react'
+import { PhCaretDown, PhCaretRight, PhBrain } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
 
 interface SystemPromptEditorProps {
@@ -23,11 +23,11 @@ export function SystemPromptEditor({ value, onChange }: SystemPromptEditorProps)
         type="button"
       >
         {expanded ? (
-          <ChevronDown className="w-3.5 h-3.5" />
+          <PhCaretDown className="w-3.5 h-3.5" />
         ) : (
-          <ChevronRight className="w-3.5 h-3.5" />
+          <PhCaretRight className="w-3.5 h-3.5" />
         )}
-        <Brain className="w-3.5 h-3.5" />
+        <PhBrain className="w-3.5 h-3.5" />
         <span className="font-medium uppercase tracking-wider">System Prompt</span>
         {value && !expanded && (
           <span className="text-text-muted/60 truncate ml-2 font-mono text-[10px]">

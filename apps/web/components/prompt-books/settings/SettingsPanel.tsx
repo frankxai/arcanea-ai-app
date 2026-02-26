@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Settings, Keyboard, Palette, Type, Weight } from 'lucide-react'
+import { PhGear, PhKeyboard, PhPalette, PhTextT, PhTextAa } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
 import { usePromptBooksStore } from '@/lib/prompt-books/store'
 import type { WeightSyntaxType } from '@/lib/prompt-books/constants'
@@ -21,7 +21,7 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
       {/* Editor Settings */}
       <section>
         <h3 className="text-xs font-display text-text-primary mb-3 uppercase tracking-wider flex items-center gap-2">
-          <Type className="w-3.5 h-3.5 text-brand-accent" />
+          <PhTextT className="w-3.5 h-3.5 text-brand-accent" />
           Editor
         </h3>
         <div className="glass-subtle rounded-xl p-4 space-y-4">
@@ -102,7 +102,7 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
       {/* Weight Syntax */}
       <section>
         <h3 className="text-xs font-display text-text-primary mb-3 uppercase tracking-wider flex items-center gap-2">
-          <Weight className="w-3.5 h-3.5 text-brand-accent" />
+          <PhTextAa className="w-3.5 h-3.5 text-brand-accent" />
           Weight Syntax
         </h3>
         <div className="glass-subtle rounded-xl p-4">
@@ -133,7 +133,7 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
       {/* Keyboard Shortcuts */}
       <section>
         <h3 className="text-xs font-display text-text-primary mb-3 uppercase tracking-wider flex items-center gap-2">
-          <Keyboard className="w-3.5 h-3.5 text-brand-accent" />
+          <PhKeyboard className="w-3.5 h-3.5 text-brand-accent" />
           Keyboard Shortcuts
         </h3>
         <div className="glass-subtle rounded-xl p-4 space-y-2">

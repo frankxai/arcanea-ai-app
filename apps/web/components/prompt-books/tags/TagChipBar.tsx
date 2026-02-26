@@ -1,6 +1,6 @@
 'use client'
 
-import { Plus } from 'lucide-react'
+import { PhPlus } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
 import { TagChip } from './TagChip'
 import type { Tag } from '@/lib/prompt-books/types'
@@ -56,7 +56,7 @@ export function TagChipBar({
           'transition-all',
         )}
       >
-        <Plus className="w-2.5 h-2.5" />
+        <PhPlus className="w-2.5 h-2.5" />
         <span>Tag</span>
       </button>
     </div>

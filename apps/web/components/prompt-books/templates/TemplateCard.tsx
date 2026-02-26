@@ -1,6 +1,6 @@
 'use client'
 
-import { Sparkles, Copy, ArrowRight } from 'lucide-react'
+import { PhSparkle, PhCopy, PhArrowRight } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
 import { PROMPT_TYPES, GUARDIAN_THEMES } from '@/lib/prompt-books/constants'
 import type { Template, GuardianId } from '@/lib/prompt-books/types'
@@ -107,7 +107,7 @@ export function TemplateCard({ template, onUse, onPreview }: TemplateCardProps) 
             'opacity-0 group-hover:opacity-100',
           )}
         >
-          <Sparkles className="w-3 h-3" />
+          <PhSparkle className="w-3 h-3" />
           Use
         </button>
       </div>

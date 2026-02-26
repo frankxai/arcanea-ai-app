@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { UserPlus, UserCheck } from 'lucide-react';
+import { PhUserPlus, PhUserCheck } from '@phosphor-icons/react';
 import { Button } from '@/lib/arcanea-ui';
 
 interface FollowButtonProps {
@@ -62,12 +62,12 @@ export function FollowButton({
         <div className="flex items-center gap-2">
           {isFollowing ? (
             <>
-              <UserCheck className="w-4 h-4" />
+              <PhUserCheck className="w-4 h-4" />
               <span>Following</span>
             </>
           ) : (
             <>
-              <UserPlus className="w-4 h-4" />
+              <PhUserPlus className="w-4 h-4" />
               <span>Follow</span>
             </>
           )}

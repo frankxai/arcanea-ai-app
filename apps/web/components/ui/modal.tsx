@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { createPortal } from 'react-dom';
-import { X } from 'lucide-react';
+import { PhX } from '@phosphor-icons/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
@@ -137,7 +137,7 @@ const ModalHeader = React.forwardRef<HTMLDivElement, ModalHeaderProps>(
             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crystal/50'
           )}
         >
-          <X size={16} aria-hidden="true" />
+          <PhX size={16} aria-hidden="true" />
         </button>
       )}
     </div>
