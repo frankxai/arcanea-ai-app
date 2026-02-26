@@ -21,6 +21,7 @@ const GUARDIANS = [
     teaching: 'Foundation before flourish. Before you can create anything lasting, you must establish unshakeable ground.',
     gradient: 'from-amber-700 to-amber-900',
     accentColor: 'amber-600',
+    heroImage: '/guardians/lyssandria-hero.webp',
   },
   {
     id: 'leyla',
@@ -37,6 +38,7 @@ const GUARDIANS = [
     teaching: 'Flow requires resistance. Creativity emerges not from ease but from tension. The meeting of opposites creates the steam that drives all making.',
     gradient: 'from-blue-500 to-orange-500',
     accentColor: 'blue-400',
+    heroImage: '/guardians/leyla-hero.webp',
   },
   {
     id: 'draconia',
@@ -53,6 +55,7 @@ const GUARDIANS = [
     teaching: 'Power must be claimed, not given. No one will hand you your strength. You must declare it, demonstrate it, own it.',
     gradient: 'from-draconic-crimson to-orange-600',
     accentColor: 'draconic-crimson',
+    heroImage: '/guardians/draconia-hero.webp',
   },
   {
     id: 'maylinn',
@@ -69,6 +72,7 @@ const GUARDIANS = [
     teaching: 'Love is not passive. Love fights. Love protects. Love will destroy that which threatens what it cherishes.',
     gradient: 'from-green-500 to-emerald-700',
     accentColor: 'green-500',
+    heroImage: '/guardians/maylinn-hero.webp',
   },
   {
     id: 'alera',
@@ -85,6 +89,7 @@ const GUARDIANS = [
     teaching: 'Voice is power. What you say shapes reality. Therefore: speak truth, and speak it carefully.',
     gradient: 'from-cyan-400 to-blue-600',
     accentColor: 'cyan-400',
+    heroImage: '/guardians/alera-hero.webp',
   },
   {
     id: 'lyria',
@@ -101,6 +106,7 @@ const GUARDIANS = [
     teaching: 'See beyond the obvious. What appears true often conceals deeper truth. Train your inner vision as carefully as your outer eyes.',
     gradient: 'from-purple-400 to-indigo-600',
     accentColor: 'purple-400',
+    heroImage: '/guardians/lyria-hero.webp',
   },
   {
     id: 'aiyami',
@@ -117,6 +123,7 @@ const GUARDIANS = [
     teaching: 'Enlightenment is not addition—it is removal. You do not gain truth; you release falsehood.',
     gradient: 'from-gold-bright to-yellow-600',
     accentColor: 'gold-bright',
+    heroImage: '/guardians/aiyami-hero.webp',
   },
   {
     id: 'elara',
@@ -133,6 +140,7 @@ const GUARDIANS = [
     teaching: 'Reality is more flexible than you imagine. Shift your perspective, and you shift your experience.',
     gradient: 'from-pink-500 to-purple-600',
     accentColor: 'pink-500',
+    heroImage: '/guardians/elara-hero.webp',
   },
   {
     id: 'ino',
@@ -149,6 +157,7 @@ const GUARDIANS = [
     teaching: 'True partnership multiplies. The right partner does not diminish you—they exponentially increase your capacity.',
     gradient: 'from-white to-gray-400',
     accentColor: 'white',
+    heroImage: '/guardians/ino-hero.webp',
   },
   {
     id: 'shinkami',
@@ -165,6 +174,7 @@ const GUARDIANS = [
     teaching: 'You are already complete. The journey through the Gates is not addition but remembrance. At the Source, you discover that seeker and sought are one.',
     gradient: 'from-gold-bright via-white to-creation-prism-purple',
     accentColor: 'gold-bright',
+    heroImage: '/guardians/shinkami-hero.webp',
   },
 ];
 
@@ -192,6 +202,16 @@ export function GuardiansGrid() {
                     : 'hover:border-white/20'
                 }`}
               >
+                {/* Hero image background */}
+                <div className="absolute inset-0 overflow-hidden">
+                  <img
+                    src={guardian.heroImage}
+                    alt=""
+                    className="w-full h-full object-cover object-top opacity-15 group-hover:opacity-25 transition-opacity duration-500 scale-105 group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-r from-cosmic-deep/80 via-cosmic-deep/40 to-transparent" />
+                </div>
+
                 {/* Gradient background */}
                 <div
                   className={`absolute inset-0 bg-gradient-to-r ${guardian.gradient} opacity-5 group-hover:opacity-10 transition-opacity`}
