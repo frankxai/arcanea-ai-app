@@ -263,6 +263,10 @@ export default function VisionBoardPage() {
                       style={{ width: `${MONTHLY_FOCUS.progress}%` }}
                     />
                   </div>
+                  <p className="flex items-center gap-1 text-xs text-text-muted mt-1.5">
+                    <PhFlame className="w-3 h-3 text-brand-gold" />
+                    {MONTHLY_FOCUS.daysLeft} days remain
+                  </p>
                 </div>
                 <div className="text-right">
                   <div className="text-lg font-display font-semibold text-text-primary">
@@ -301,9 +305,9 @@ export default function VisionBoardPage() {
                         {goal.progress}%
                       </span>
                     </div>
-                    <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+                    <div className="h-2 bg-white/10 rounded-full overflow-hidden">
                       <div
-                        className="h-full rounded-full transition-all group-hover:opacity-80"
+                        className="h-full rounded-full transition-all duration-1000 group-hover:opacity-80"
                         style={{
                           width: `${goal.progress}%`,
                           backgroundColor: goal.color,
@@ -398,7 +402,7 @@ export default function VisionBoardPage() {
                     <div className="flex justify-between text-xs mb-1">
                       <span className="text-text-muted">Progress</span>
                       <span style={{ color: area.color }}>
-                        {area.completed}/{area.goals}
+                        {area.completed}/{area.goals} &mdash; {progressPercent}%
                       </span>
                     </div>
                     <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
@@ -429,7 +433,7 @@ export default function VisionBoardPage() {
             <h2 className="font-display text-lg font-semibold">Your Journey</h2>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {ACHIEVEMENTS.map((achievement) => {
               const Icon = achievement.icon;
               return (
@@ -449,7 +453,7 @@ export default function VisionBoardPage() {
                     <Icon
                       className={`w-5 h-5 ${
                         achievement.unlocked
-                          ? "text-brand-gold"
+                          ? "text-brand-gold animate-pulse"
                           : "text-text-muted"
                       }`}
                     />

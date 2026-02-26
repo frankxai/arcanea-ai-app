@@ -267,29 +267,38 @@ export default function CommunityStrategyPage() {
                     </p>
 
                     {/* Vote Bar */}
-                    <div className="mb-4">
-                      <div className="flex justify-between text-xs mb-2">
-                        <span className="text-crystal">
-                          For {forPercentage}%
-                        </span>
-                        <span className="text-fire">
-                          Against {againstPercentage}%
-                        </span>
+                    {proposal.status === "voting" ? (
+                      <div className="mb-4">
+                        <div className="flex justify-between text-xs mb-2">
+                          <span className="text-crystal">
+                            For {forPercentage}%
+                          </span>
+                          <span className="text-fire">
+                            Against {againstPercentage}%
+                          </span>
+                        </div>
+                        <div className="h-2 bg-white/10 rounded-full overflow-hidden flex">
+                          <div
+                            className="h-full bg-crystal rounded-full"
+                            style={{ width: `${forPercentage}%` }}
+                          />
+                          <div
+                            className="h-full bg-fire rounded-full"
+                            style={{ width: `${againstPercentage}%` }}
+                          />
+                        </div>
+                        <div className="text-xs text-text-muted mt-1">
+                          {proposal.totalVotes} votes
+                        </div>
                       </div>
-                      <div className="h-2 bg-white/10 rounded-full overflow-hidden flex">
-                        <div
-                          className="h-full bg-crystal rounded-full"
-                          style={{ width: `${forPercentage}%` }}
-                        />
-                        <div
-                          className="h-full bg-fire rounded-full"
-                          style={{ width: `${againstPercentage}%` }}
-                        />
+                    ) : (
+                      <div className="mb-4">
+                        <p className="text-xs text-text-muted flex items-center gap-1.5">
+                          <PhChatSquare className="w-3.5 h-3.5 text-brand-primary" />
+                          {proposal.totalVotes} participants in discussion
+                        </p>
                       </div>
-                      <div className="text-xs text-text-muted mt-1">
-                        {proposal.totalVotes} votes
-                      </div>
-                    </div>
+                    )}
 
                     <button className="flex items-center gap-2 text-sm text-crystal opacity-0 group-hover:opacity-100 transition-opacity">
                       <span>Cast Your Vote</span>
@@ -378,7 +387,7 @@ export default function CommunityStrategyPage() {
                 {PAST_PROPOSALS.map((proposal) => (
                   <tr
                     key={proposal.id}
-                    className="border-b border-white/5 hover:bg-white/5 transition-colors"
+                    className="border-b border-white/5 hover:bg-white/[0.03] transition-colors cursor-pointer"
                   >
                     <td className="px-6 py-4">
                       <span className="text-text-primary font-sans">
@@ -410,7 +419,7 @@ export default function CommunityStrategyPage() {
             <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/10 via-transparent to-crystal/8 pointer-events-none" />
 
             <div className="relative max-w-2xl text-center mx-auto">
-              <PhLightbulb className="w-8 h-8 text-brand-gold mx-auto mb-6" />
+              <PhLightbulb className="w-8 h-8 text-brand-gold mx-auto mb-6 pt-4" />
               <h2 className="text-fluid-3xl font-display font-bold mb-4">
                 Have a proposal?
               </h2>

@@ -224,7 +224,7 @@ export default function CommunityCreatePage() {
                   <div className="absolute top-0 right-0 w-32 h-32 bg-brand-primary/5 rounded-full blur-3xl group-hover:bg-brand-primary/10 transition-all" />
 
                   <div className="relative">
-                    <span className="text-4xl font-display font-bold text-brand-primary/20 mb-4 block">
+                    <span className="text-6xl font-display font-black text-brand-primary/10 mb-2 block select-none">
                       {item.step}
                     </span>
 
@@ -283,10 +283,10 @@ export default function CommunityCreatePage() {
                     {cat.description}
                   </p>
                   <span
-                    className="text-xs font-mono"
-                    style={{ color: cat.color }}
+                    className="inline-flex items-center gap-1 text-xs font-mono px-2 py-0.5 rounded-full"
+                    style={{ backgroundColor: `${cat.color}15`, color: cat.color }}
                   >
-                    {cat.projects} projects
+                    ● {cat.projects}
                   </span>
                 </Link>
               );
@@ -321,6 +321,11 @@ export default function CommunityCreatePage() {
                 )}
 
                 <div className="relative">
+                  {project.featured && (
+                    <div className="absolute top-3 left-3">
+                      <PhStar className="w-3 h-3 text-brand-gold" weight="fill" />
+                    </div>
+                  )}
                   <div className="flex items-center justify-between mb-4">
                     <span
                       className="text-xs font-mono px-2.5 py-1 rounded-full border"
@@ -375,7 +380,7 @@ export default function CommunityCreatePage() {
             <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/10 via-transparent to-crystal/8 pointer-events-none" />
 
             <div className="relative max-w-2xl text-center mx-auto">
-              <PhLightbulb className="w-8 h-8 text-brand-gold mx-auto mb-6" />
+              <PhLightbulb className="w-10 h-10 text-brand-gold mx-auto mb-6 animate-pulse" />
               <h2 className="text-fluid-3xl font-display font-bold mb-4">
                 Have a vision?
               </h2>
