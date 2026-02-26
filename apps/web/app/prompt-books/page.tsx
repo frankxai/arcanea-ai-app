@@ -2,10 +2,12 @@
 
 import { useState, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { usePromptBooksStore } from "@/lib/prompt-books/store";
 import { useQuickCapture } from "@/hooks/use-quick-capture";
+import { createClient } from "@/lib/supabase/client";
 import { PromptBooksSidebar } from "@/components/prompt-books/sidebar/PromptBooksSidebar";
 import { CollectionHeader } from "@/components/prompt-books/collections/CollectionHeader";
 import { CollectionGrid } from "@/components/prompt-books/collections/CollectionGrid";
@@ -17,7 +19,6 @@ import { FilterBar } from "@/components/prompt-books/search/FilterBar";
 import { TemplateGallery } from "@/components/prompt-books/templates/TemplateGallery";
 import { TagManager } from "@/components/prompt-books/tags/TagManager";
 import * as service from "@/lib/prompt-books/service";
-import { createClient } from "@/lib/supabase/client";
 import type {
   CreateCollectionInput,
   Prompt,
@@ -133,6 +134,64 @@ const Icons = {
   ),
 };
 
+// ─── Demo collections for unauthenticated preview ─────────────────────────────
+const DEMO_COLLECTIONS = [
+  { id: "d1", name: "Guardian Invocations", icon: "✦", color: "#7fffd4", promptCount: 12, description: "Prompts for each of the 10 Gates" },
+  { id: "d2", name: "World Building",       icon: "◈", color: "#8b5cf6", promptCount: 8,  description: "Universe creation with Shinkami" },
+  { id: "d3", name: "Creative Rituals",     icon: "◉", color: "#ffd700", promptCount: 17, description: "Daily practice prompts from the Library" },
+  { id: "d4", name: "Vault Imports",        icon: "⬡", color: "#78a6ff", promptCount: 24, description: "Captured from ChatGPT & Claude sessions" },
+];
+
+function PromptBooksLanding() {
+  return (
+    <div className="flex-1 overflow-auto">
+      <div className="max-w-4xl mx-auto px-6 py-16 text-center">
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-arcane-crystal/30 bg-arcane-crystal/10 mb-8">
+          <span className="text-xs font-mono tracking-widest uppercase text-arcane-crystal">Prompt Books</span>
+        </div>
+        <h1 className="text-4xl font-display font-bold text-white mb-4">Your AI Prompt Library</h1>
+        <p className="text-text-secondary font-body leading-relaxed mb-10 max-w-2xl mx-auto">
+          Organize, search, and reuse your best AI prompts across every platform.
+          Import from the Arcanea Vault Chrome extension or capture directly.
+        </p>
+
+        {/* Demo grid */}
+        <div className="grid sm:grid-cols-2 gap-4 mb-10 text-left">
+          {DEMO_COLLECTIONS.map((c) => (
+            <div key={c.id} className="glass rounded-2xl p-5 border border-white/5 opacity-75 select-none">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg"
+                  style={{ background: `${c.color}18`, border: `1px solid ${c.color}30` }}>
+                  {c.icon}
+                </div>
+                <div>
+                  <p className="font-display font-semibold text-text-primary text-sm">{c.name}</p>
+                  <p className="text-xs text-text-secondary">{c.promptCount} prompts</p>
+                </div>
+              </div>
+              <p className="text-xs text-text-secondary">{c.description}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="flex flex-wrap justify-center gap-4">
+          <Link href="/auth/login"
+            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-arcane-crystal text-cosmic-deep font-semibold hover:scale-[1.03] transition-all">
+            Sign In to Access Your Books
+          </Link>
+          <Link href="/arcanea-vault"
+            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-arcane-crystal/30 transition-all text-sm">
+            Get Arcanea Vault →
+          </Link>
+        </div>
+        <p className="text-xs text-text-secondary mt-6">
+          Vault = Chrome extension that exports ChatGPT/Claude/Gemini conversations directly into your Prompt Books
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function PromptBooksPage() {
   const {
     collections,
@@ -147,10 +206,31 @@ export default function PromptBooksPage() {
     updateTag,
     deleteTag,
     addPrompt,
+    initialize,
     _userId: userId,
   } = usePromptBooksStore();
 
   const router = useRouter();
+  const [authChecked, setAuthChecked] = useState(false);
+
+  // Initialize store with authenticated user's Supabase client
+  useEffect(() => {
+    const initAuth = async () => {
+      try {
+        const supabase = createClient();
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          await initialize(supabase, user.id);
+        }
+      } catch {
+        // Supabase not configured or offline — show landing
+      } finally {
+        setAuthChecked(true);
+      }
+    };
+    initAuth();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const {
     open: captureOpen,
     setOpen: setCaptureOpen,
@@ -247,6 +327,18 @@ export default function PromptBooksPage() {
     },
     [deleteTag],
   );
+
+  // Show nothing while auth is being determined
+  if (!authChecked) return null;
+
+  // Show landing page for unauthenticated users
+  if (!userId) {
+    return (
+      <div className="flex h-[calc(100dvh-64px)] pt-16">
+        <PromptBooksLanding />
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-[calc(100dvh-64px)] pt-16">
