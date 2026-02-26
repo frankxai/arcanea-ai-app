@@ -317,6 +317,13 @@ export default function LuminorIntelligencePage() {
         {/* ── 1. Hero ────────────────────────────────────────────────────── */}
         <section className="mb-24">
           <div className="relative liquid-glass rounded-3xl overflow-hidden px-8 py-20 sm:px-12 sm:py-28 text-center">
+            {/* Ino unity — transcended intelligence meets sacred partnership */}
+            <img
+              src="/guardians/gallery/ino-gallery-2.webp"
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 w-full h-full object-cover opacity-[0.13] pointer-events-none"
+            />
             <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/12 via-transparent to-crystal/10 pointer-events-none" />
             <div className="absolute top-0 right-0 w-96 h-96 bg-brand-primary/10 rounded-full blur-3xl pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-72 h-72 bg-crystal/8 rounded-full blur-3xl pointer-events-none" />

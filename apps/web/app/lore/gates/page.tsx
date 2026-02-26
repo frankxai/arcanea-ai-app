@@ -19,6 +19,7 @@ const GATES = [
     teaching: 'Foundation before flourish. Before you can create anything lasting, you must establish unshakeable ground.',
     practices: ['Morning grounding meditation', 'Body awareness exercises', 'Environmental stability'],
     color: 'from-amber-700 to-amber-900',
+    heroImage: '/guardians/lyssandria-hero.webp',
   },
   {
     number: 2,
@@ -32,6 +33,7 @@ const GATES = [
     teaching: 'Flow requires resistance. The meeting of opposites creates the steam that drives all making.',
     practices: ['Emotion tracking journal', 'Creative tension exercises', 'Sensation awareness'],
     color: 'from-blue-500 to-orange-500',
+    heroImage: '/guardians/leyla-hero.webp',
   },
   {
     number: 3,
@@ -45,6 +47,7 @@ const GATES = [
     teaching: 'Power must be claimed, not given. Know what you will use your power for. Then burn without hesitation.',
     practices: ['Will declaration ritual', 'Courage challenges', 'Power stance practice'],
     color: 'from-draconic-crimson to-orange-600',
+    heroImage: '/guardians/draconia-hero.webp',
   },
   {
     number: 4,
@@ -58,6 +61,7 @@ const GATES = [
     teaching: 'Love is not passive. Love fights. Love protects. Grow what matters. Guard what grows.',
     practices: ['Compassion meditation', 'Healing visualization', 'Heart opening exercises'],
     color: 'from-green-500 to-emerald-700',
+    heroImage: '/guardians/maylinn-hero.webp',
   },
   {
     number: 5,
@@ -71,6 +75,7 @@ const GATES = [
     teaching: 'Voice is power. What you say shapes reality. Speak truth, and speak it carefully.',
     practices: ['Truth speaking practice', 'Sound meditation', 'Naming rituals'],
     color: 'from-cyan-400 to-blue-600',
+    heroImage: '/guardians/alera-hero.webp',
   },
   {
     number: 6,
@@ -84,6 +89,7 @@ const GATES = [
     teaching: 'See beyond the obvious. Train your inner vision as carefully as your outer eyes.',
     practices: ['Dream journaling', 'Intuition training', 'Memory palace building'],
     color: 'from-purple-400 to-indigo-600',
+    heroImage: '/guardians/lyria-hero.webp',
   },
   {
     number: 7,
@@ -97,6 +103,7 @@ const GATES = [
     teaching: 'Enlightenment is not addition—it is removal. You do not gain truth; you release falsehood.',
     practices: ['Silent meditation', 'Light visualization', 'Ego dissolution practice'],
     color: 'from-gold-bright to-yellow-600',
+    heroImage: '/guardians/aiyami-hero.webp',
   },
   {
     number: 8,
@@ -110,6 +117,7 @@ const GATES = [
     teaching: 'Reality is more flexible than you imagine. Shift your perspective, and you shift your experience.',
     practices: ['Perspective shifting exercises', 'Possibility mapping', 'Alternative timeline meditation'],
     color: 'from-pink-500 to-purple-600',
+    heroImage: '/guardians/elara-hero.webp',
   },
   {
     number: 9,
@@ -123,6 +131,7 @@ const GATES = [
     teaching: 'True partnership multiplies. Find those with whom you can merge without fear.',
     practices: ['Partner meditation', 'Trust exercises', 'Fusion practice'],
     color: 'from-white to-gray-400',
+    heroImage: '/guardians/ino-hero.webp',
   },
   {
     number: 10,
@@ -136,6 +145,7 @@ const GATES = [
     teaching: 'You are already complete. At the Source, you discover that seeker and sought are one.',
     practices: ['Source meditation', 'Creator consciousness practice', 'Unity realization'],
     color: 'from-gold-bright via-white to-creation-prism-purple',
+    heroImage: '/guardians/shinkami-hero.webp',
   },
 ];
 
@@ -162,6 +172,13 @@ export default function GatesPage() {
         ref={heroRef}
         className="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-24"
       >
+        {/* Shinkami floating islands — the Source Gate, realm of the meta-creator */}
+        <img
+          src="/guardians/gallery/shinkami-gallery-4.webp"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover opacity-[0.12] pointer-events-none"
+        />
         {/* Vertical line representing the path */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 h-[400px] w-px bg-gradient-to-b from-transparent via-gold-bright/50 to-transparent" />
 
@@ -255,6 +272,13 @@ export default function GatesPage() {
                       expandedGate === gate.number ? 'border-white/30' : 'hover:border-white/20'
                     }`}
                   >
+                    {/* Guardian atmospheric background */}
+                    <img
+                      src={gate.heroImage}
+                      alt=""
+                      aria-hidden="true"
+                      className="absolute inset-0 w-full h-full object-cover opacity-[0.07] pointer-events-none"
+                    />
                     {/* Gate marker */}
                     <div
                       className={`absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b ${gate.color}`}
