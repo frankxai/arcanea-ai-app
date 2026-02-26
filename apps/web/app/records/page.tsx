@@ -45,12 +45,12 @@ const ACADEMY =
   "https://raw.githubusercontent.com/frankxai/Arcanea/main/public/images/academy/";
 
 const HERO_IMAGES: HeroImage[] = [
-  { id: "w1", title: "The Ten Gates", guardianTag: "All Gates", accent: "text-crystal", border: "border-crystal/30", src: ACADEMY + "02-ten-gates.png" },
-  { id: "w2", title: "The Guardian Council", guardianTag: "Council", accent: "text-brand-gold", border: "border-brand-gold/30", src: ACADEMY + "05-guardian-council.png" },
-  { id: "w3", title: "Draconia — Fire Gate", guardianTag: "Gate 03", accent: "text-orange-400", border: "border-orange-400/30", src: BASE + "draconia-ahra-beautiful-korean-dragon-rider-lovin-074.webp" },
-  { id: "w4", title: "Alera — Voice of Truth", guardianTag: "Gate 05", accent: "text-sky-300", border: "border-sky-400/30", src: BASE + "alera-alera-and-her-musical-spirit-animal-arca-001.webp" },
-  { id: "w5", title: "Aiyami — Crown of Light", guardianTag: "Gate 07", accent: "text-amber-300", border: "border-amber-400/30", src: BASE + "aiyami-devora-ultra-detailed-high-resolution-ep-001.webp" },
-  { id: "w6", title: "Elara — The Shifting Path", guardianTag: "Gate 08", accent: "text-emerald-300", border: "border-emerald-400/30", src: BASE + "elara-lelara-and-her-unicorn-spirit-animal-arc-001.webp" },
+  { id: "w1", title: "Arcanea — Cinematic City", guardianTag: "Shinkami", accent: "text-yellow-200", border: "border-yellow-300/30", src: "/guardians/gallery/shinkami-gallery-2.webp" },
+  { id: "w2", title: "Floating Islands of the Source", guardianTag: "Shinkami", accent: "text-yellow-200", border: "border-yellow-300/30", src: "/guardians/gallery/shinkami-gallery-4.webp" },
+  { id: "w3", title: "The Futuristic Cityscape", guardianTag: "Shinkami", accent: "text-yellow-200", border: "border-yellow-300/30", src: "/guardians/gallery/shinkami-gallery-5.webp" },
+  { id: "w4", title: "Trinity Fusion — Fire Gate", guardianTag: "Draconia", accent: "text-orange-400", border: "border-orange-400/30", src: "/guardians/gallery/draconia-gallery-4.webp" },
+  { id: "w5", title: "The Transformed World", guardianTag: "Elara", accent: "text-emerald-300", border: "border-emerald-400/30", src: "/guardians/gallery/elara-gallery-4.webp" },
+  { id: "w6", title: "Unified Civilization", guardianTag: "Ino", accent: "text-fuchsia-300", border: "border-fuchsia-400/30", src: "/guardians/gallery/ino-gallery-4.webp" },
 ];
 
 const CHRONICLES: Chronicle[] = [

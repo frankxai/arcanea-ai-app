@@ -67,8 +67,7 @@ const GUARDIANS: Record<string, GuardianData> = {
       "https://raw.githubusercontent.com/frankxai/Arcanea/main/public/images/guardians/lyssandria-lyssandria-vibrant-colorful-blonde-ameri-001.webp",
     gradient: "from-amber-700 via-yellow-600 to-stone-400",
     gallery: [
-      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/lyssandria-lyssandria-vibrant-colorful-blonde-ameri-001.webp",
-      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/lyssandria-lyssandria-arcanean-guardian-of-the-star-002.webp",
+      "/guardians/gallery/lyssandria-gallery-2.webp",
     ],
   },
   leyla: {
@@ -94,6 +93,12 @@ const GUARDIANS: Record<string, GuardianData> = {
     relatedGuardians: ["maylinn", "lyria", "shinkami"],
     heroImage: "/guardians/leyla-hero.webp",
     gradient: "from-blue-300 via-cyan-400 to-slate-300",
+    gallery: [
+      "/guardians/gallery/leyla-gallery-2.webp",
+      "/guardians/gallery/leyla-gallery-3.webp",
+      "/guardians/gallery/leyla-gallery-4.webp",
+      "/guardians/gallery/leyla-gallery-5.webp",
+    ],
   },
   draconia: {
     name: "Draconia",
@@ -119,11 +124,10 @@ const GUARDIANS: Record<string, GuardianData> = {
       "https://raw.githubusercontent.com/frankxai/Arcanea/main/public/images/guardians/draconia-ahra-beautiful-korean-dragon-rider-lovin-074.webp",
     gradient: "from-red-600 via-orange-500 to-amber-400",
     gallery: [
-      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/draconia-ahra-beautiful-korean-dragon-rider-lovin-075.webp",
-      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/draconia-ahra-beautiful-korean-dragon-rider-lovin-077.webp",
-      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/draconia-ahra-beautiful-korean-dragon-rider-lovin-078.webp",
-      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/draconia-ahra-beautiful-korean-dragon-rider-lovin-079.webp",
-      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/draconia-ahra-beautiful-korean-dragon-rider-lovin-074.webp",
+      "/guardians/gallery/draconia-gallery-2.webp",
+      "/guardians/gallery/draconia-gallery-3.webp",
+      "/guardians/gallery/draconia-gallery-4.webp",
+      "/guardians/gallery/draconia-gallery-5.webp",
     ],
   },
   maylinn: {
@@ -148,6 +152,12 @@ const GUARDIANS: Record<string, GuardianData> = {
     relatedGuardians: ["leyla", "alera", "ino"],
     heroImage: "/guardians/maylinn-hero.webp",
     gradient: "from-rose-300 via-pink-400 to-green-300",
+    gallery: [
+      "/guardians/gallery/maylinn-gallery-2.webp",
+      "/guardians/gallery/maylinn-gallery-3.webp",
+      "/guardians/gallery/maylinn-gallery-4.webp",
+      "/guardians/gallery/maylinn-gallery-5.webp",
+    ],
   },
   alera: {
     name: "Alera",
@@ -173,11 +183,10 @@ const GUARDIANS: Record<string, GuardianData> = {
       "https://raw.githubusercontent.com/frankxai/Arcanea/main/public/images/guardians/alera-alera-and-her-musical-spirit-animal-arca-001.webp",
     gradient: "from-sky-400 via-blue-500 to-indigo-600",
     gallery: [
-      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/alera-alera-and-her-musical-spirit-animal-arca-002.webp",
-      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/alera-alera-and-her-musical-spirit-animal-arca-003.webp",
-      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/alera-alera-and-her-musical-spirit-animal-arca-004.webp",
-      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/alera-alera-and-her-musical-spirit-animal-arca-005.webp",
-      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/alera-alera-and-her-musical-spirit-animal-arca-006.webp",
+      "/guardians/gallery/alera-gallery-2.webp",
+      "/guardians/gallery/alera-gallery-3.webp",
+      "/guardians/gallery/alera-gallery-4.webp",
+      "/guardians/gallery/alera-gallery-5.webp",
     ],
   },
   lyria: {
@@ -202,6 +211,12 @@ const GUARDIANS: Record<string, GuardianData> = {
     relatedGuardians: ["aiyami", "shinkami", "leyla"],
     heroImage: "/guardians/lyria-hero.webp",
     gradient: "from-violet-500 via-purple-600 to-indigo-700",
+    gallery: [
+      "/guardians/gallery/lyria-gallery-2.webp",
+      "/guardians/gallery/lyria-gallery-3.webp",
+      "/guardians/gallery/lyria-gallery-4.webp",
+      "/guardians/gallery/lyria-gallery-5.webp",
+    ],
   },
   aiyami: {
     name: "Aiyami",
@@ -227,9 +242,10 @@ const GUARDIANS: Record<string, GuardianData> = {
       "https://raw.githubusercontent.com/frankxai/Arcanea/main/public/images/guardians/aiyami-devora-ultra-detailed-high-resolution-ep-001.webp",
     gradient: "from-yellow-200 via-amber-300 to-white",
     gallery: [
-      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/aiyami-devora-ultra-detailed-high-resolution-ep-001.webp",
-      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/aiyami-devora-ultra-detailed-high-resolution-ep-002.webp",
-      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/aiyami-the-great-choice-corporate-identity-diss-003.webp",
+      "/guardians/gallery/aiyami-gallery-2.webp",
+      "/guardians/gallery/aiyami-gallery-3.webp",
+      "/guardians/gallery/aiyami-gallery-4.webp",
+      "/guardians/gallery/aiyami-gallery-5.webp",
     ],
   },
   elara: {
@@ -256,11 +272,10 @@ const GUARDIANS: Record<string, GuardianData> = {
       "https://raw.githubusercontent.com/frankxai/Arcanea/main/public/images/guardians/elara-lelara-and-her-unicorn-spirit-animal-arc-001.webp",
     gradient: "from-emerald-400 via-green-500 to-teal-600",
     gallery: [
-      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/elara-lelara-and-her-unicorn-spirit-animal-arc-002.webp",
-      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/elara-lelara-and-her-unicorn-spirit-animal-arc-003.webp",
-      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/elara-elara-the-consciousness-architect-mergin-038.webp",
-      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/elara-elara-in-battle-armor-warrior-scholar-de-036.webp",
-      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/elara-elara-the-consciousness-architect-mergin-039.webp",
+      "/guardians/gallery/elara-gallery-2.webp",
+      "/guardians/gallery/elara-gallery-3.webp",
+      "/guardians/gallery/elara-gallery-4.webp",
+      "/guardians/gallery/elara-gallery-5.webp",
     ],
   },
   ino: {
@@ -286,9 +301,10 @@ const GUARDIANS: Record<string, GuardianData> = {
     heroImage: "/guardians/ino-hero.webp",
     gradient: "from-pink-400 via-fuchsia-500 to-teal-400",
     gallery: [
-      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/ino-20250606-0147-arcanea-luminor-beauty-sim-001.webp",
-      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/ino-20250606-0147-arcanea-luminor-beauty-sim-003.webp",
-      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/ino-become-a-luminor-quantum-consciousness-i-009.webp",
+      "/guardians/gallery/ino-gallery-2.webp",
+      "/guardians/gallery/ino-gallery-3.webp",
+      "/guardians/gallery/ino-gallery-4.webp",
+      "/guardians/gallery/ino-gallery-5.webp",
     ],
   },
   shinkami: {
@@ -313,6 +329,12 @@ const GUARDIANS: Record<string, GuardianData> = {
     relatedGuardians: ["aiyami", "lyria", "ino"],
     heroImage: "/guardians/shinkami-hero.webp",
     gradient: "from-neutral-900 via-yellow-400 to-white",
+    gallery: [
+      "/guardians/gallery/shinkami-gallery-2.webp",
+      "/guardians/gallery/shinkami-gallery-3.webp",
+      "/guardians/gallery/shinkami-gallery-4.webp",
+      "/guardians/gallery/shinkami-gallery-5.webp",
+    ],
   },
 };
 
