@@ -855,22 +855,68 @@ export default async function GuardianDetailPage({
               Gallery
             </h2>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-              {guardian.gallery.map((imageUrl, i) => (
-                <div
-                  key={i}
-                  className="group relative aspect-square rounded-xl overflow-hidden glass border border-white/5 hover:border-white/20 transition-all hover-lift"
-                >
+            {guardian.gallery.length === 1 ? (
+              /* Single image: full width */
+              <div className="group relative h-64 rounded-2xl overflow-hidden glass border border-white/5 hover:border-white/20 transition-all">
+                <Image
+                  src={guardian.gallery[0]}
+                  alt={`${guardian.name} vision`}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-cosmic-deep/70 via-transparent to-transparent" />
+              </div>
+            ) : (
+              /* Bento grid: 1 large + 3 small */
+              <div className="grid grid-cols-3 gap-3" style={{ gridTemplateRows: '160px 160px' }}>
+                {/* Large feature image — col-span-2, row-span-2 */}
+                <div className="col-span-2 row-span-2 group relative rounded-2xl overflow-hidden glass border border-white/5 hover:border-white/20 transition-all cursor-pointer">
                   <Image
-                    src={imageUrl}
-                    alt={`${guardian.name} - Gallery ${i + 1}`}
+                    src={guardian.gallery[0]}
+                    alt={`${guardian.name} — featured vision`}
                     fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-cosmic-deep/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-cosmic-deep/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <p className="text-xs font-sans text-text-muted uppercase tracking-wider">Featured</p>
+                    <p className="text-sm font-sans text-white/90 mt-0.5">{guardian.name} — Primary Vision</p>
+                  </div>
                 </div>
-              ))}
-            </div>
+
+                {/* Small images — right column, one per row */}
+                {guardian.gallery.slice(1, 3).map((imageUrl, i) => (
+                  <div
+                    key={i}
+                    className="col-span-1 row-span-1 group relative rounded-2xl overflow-hidden glass border border-white/5 hover:border-white/20 transition-all cursor-pointer"
+                  >
+                    <Image
+                      src={imageUrl}
+                      alt={`${guardian.name} — vision ${i + 2}`}
+                      fill
+                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-cosmic-deep/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* If 4th image: full-width panorama strip below bento */}
+            {guardian.gallery.length >= 4 && (
+              <div className="mt-3 group relative h-32 rounded-2xl overflow-hidden glass border border-white/5 hover:border-white/20 transition-all cursor-pointer">
+                <Image
+                  src={guardian.gallery[3]}
+                  alt={`${guardian.name} — panoramic vision`}
+                  fill
+                  className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-cosmic-deep/60 via-transparent to-cosmic-deep/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <span className="text-xs font-sans text-white/70 uppercase tracking-widest">Panoramic Vision</span>
+                </div>
+              </div>
+            )}
           </section>
         )}
 

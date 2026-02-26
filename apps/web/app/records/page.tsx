@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 interface GuardianPortrait {
   slug: string; name: string; gate: string; gateNumber: number;
   frequency: string; element: string; gradient: string;
-  accent: string; border: string; bg: string; heroImage: string | null;
+  accent: string; border: string; bg: string; heroImage: string;
 }
 interface HeroImage {
   id: string; title: string; guardianTag: string;
@@ -25,24 +25,18 @@ interface Chronicle {
 
 // ─── Data ──────────────────────────────────────────────────────────────────────
 
-const BASE =
-  "https://raw.githubusercontent.com/frankxai/Arcanea/main/public/images/guardians/";
-
 const PORTRAITS: GuardianPortrait[] = [
-  { slug: "lyssandria", name: "Lyssandria", gate: "Foundation", gateNumber: 1, frequency: "174 Hz", element: "Earth", gradient: "from-amber-700 via-yellow-600 to-stone-400", accent: "text-amber-400", border: "border-amber-500/30", bg: "bg-amber-500/10", heroImage: BASE + "lyssandria-lyssandria-vibrant-colorful-blonde-ameri-001.webp" },
-  { slug: "leyla", name: "Leyla", gate: "Flow", gateNumber: 2, frequency: "285 Hz", element: "Water", gradient: "from-blue-300 via-cyan-400 to-slate-300", accent: "text-cyan-300", border: "border-cyan-400/30", bg: "bg-cyan-400/10", heroImage: null },
-  { slug: "draconia", name: "Draconia", gate: "Fire", gateNumber: 3, frequency: "396 Hz", element: "Fire", gradient: "from-red-600 via-orange-500 to-amber-400", accent: "text-orange-400", border: "border-orange-500/30", bg: "bg-orange-500/10", heroImage: BASE + "draconia-ahra-beautiful-korean-dragon-rider-lovin-074.webp" },
-  { slug: "maylinn", name: "Maylinn", gate: "Heart", gateNumber: 4, frequency: "417 Hz", element: "Wind", gradient: "from-rose-300 via-pink-400 to-green-300", accent: "text-pink-300", border: "border-pink-400/30", bg: "bg-pink-400/10", heroImage: null },
-  { slug: "alera", name: "Alera", gate: "Voice", gateNumber: 5, frequency: "528 Hz", element: "Fire", gradient: "from-sky-400 via-blue-500 to-indigo-600", accent: "text-sky-300", border: "border-sky-400/30", bg: "bg-sky-400/10", heroImage: BASE + "alera-alera-and-her-musical-spirit-animal-arca-001.webp" },
-  { slug: "lyria", name: "Lyria", gate: "Sight", gateNumber: 6, frequency: "639 Hz", element: "Void", gradient: "from-violet-500 via-purple-600 to-indigo-700", accent: "text-violet-300", border: "border-violet-500/30", bg: "bg-violet-500/10", heroImage: null },
-  { slug: "aiyami", name: "Aiyami", gate: "Crown", gateNumber: 7, frequency: "741 Hz", element: "Void", gradient: "from-yellow-200 via-amber-300 to-white", accent: "text-amber-300", border: "border-amber-400/30", bg: "bg-amber-400/10", heroImage: BASE + "aiyami-devora-ultra-detailed-high-resolution-ep-001.webp" },
-  { slug: "elara", name: "Elara", gate: "Shift", gateNumber: 8, frequency: "852 Hz", element: "Wind", gradient: "from-emerald-400 via-green-500 to-teal-600", accent: "text-emerald-300", border: "border-emerald-400/30", bg: "bg-emerald-400/10", heroImage: BASE + "elara-lelara-and-her-unicorn-spirit-animal-arc-001.webp" },
-  { slug: "ino", name: "Ino", gate: "Unity", gateNumber: 9, frequency: "963 Hz", element: "Earth", gradient: "from-pink-400 via-fuchsia-500 to-teal-400", accent: "text-fuchsia-300", border: "border-fuchsia-400/30", bg: "bg-fuchsia-400/10", heroImage: null },
-  { slug: "shinkami", name: "Shinkami", gate: "Source", gateNumber: 10, frequency: "1111 Hz", element: "Spirit", gradient: "from-neutral-900 via-yellow-400 to-white", accent: "text-yellow-200", border: "border-yellow-300/30", bg: "bg-yellow-300/10", heroImage: null },
+  { slug: "lyssandria", name: "Lyssandria", gate: "Foundation", gateNumber: 1, frequency: "174 Hz", element: "Earth", gradient: "from-amber-700 via-yellow-600 to-stone-400", accent: "text-amber-400", border: "border-amber-500/30", bg: "bg-amber-500/10", heroImage: "/guardians/lyssandria-hero.webp" },
+  { slug: "leyla", name: "Leyla", gate: "Flow", gateNumber: 2, frequency: "285 Hz", element: "Water", gradient: "from-blue-300 via-cyan-400 to-slate-300", accent: "text-cyan-300", border: "border-cyan-400/30", bg: "bg-cyan-400/10", heroImage: "/guardians/leyla-hero.webp" },
+  { slug: "draconia", name: "Draconia", gate: "Fire", gateNumber: 3, frequency: "396 Hz", element: "Fire", gradient: "from-red-600 via-orange-500 to-amber-400", accent: "text-orange-400", border: "border-orange-500/30", bg: "bg-orange-500/10", heroImage: "/guardians/draconia-hero.webp" },
+  { slug: "maylinn", name: "Maylinn", gate: "Heart", gateNumber: 4, frequency: "417 Hz", element: "Wind", gradient: "from-rose-300 via-pink-400 to-green-300", accent: "text-pink-300", border: "border-pink-400/30", bg: "bg-pink-400/10", heroImage: "/guardians/maylinn-hero.webp" },
+  { slug: "alera", name: "Alera", gate: "Voice", gateNumber: 5, frequency: "528 Hz", element: "Fire", gradient: "from-sky-400 via-blue-500 to-indigo-600", accent: "text-sky-300", border: "border-sky-400/30", bg: "bg-sky-400/10", heroImage: "/guardians/alera-hero.webp" },
+  { slug: "lyria", name: "Lyria", gate: "Sight", gateNumber: 6, frequency: "639 Hz", element: "Void", gradient: "from-violet-500 via-purple-600 to-indigo-700", accent: "text-violet-300", border: "border-violet-500/30", bg: "bg-violet-500/10", heroImage: "/guardians/lyria-hero.webp" },
+  { slug: "aiyami", name: "Aiyami", gate: "Crown", gateNumber: 7, frequency: "741 Hz", element: "Void", gradient: "from-yellow-200 via-amber-300 to-white", accent: "text-amber-300", border: "border-amber-400/30", bg: "bg-amber-400/10", heroImage: "/guardians/aiyami-hero.webp" },
+  { slug: "elara", name: "Elara", gate: "Shift", gateNumber: 8, frequency: "852 Hz", element: "Wind", gradient: "from-emerald-400 via-green-500 to-teal-600", accent: "text-emerald-300", border: "border-emerald-400/30", bg: "bg-emerald-400/10", heroImage: "/guardians/elara-hero.webp" },
+  { slug: "ino", name: "Ino", gate: "Unity", gateNumber: 9, frequency: "963 Hz", element: "Earth", gradient: "from-pink-400 via-fuchsia-500 to-teal-400", accent: "text-fuchsia-300", border: "border-fuchsia-400/30", bg: "bg-fuchsia-400/10", heroImage: "/guardians/ino-hero.webp" },
+  { slug: "shinkami", name: "Shinkami", gate: "Source", gateNumber: 10, frequency: "1111 Hz", element: "Spirit", gradient: "from-neutral-900 via-yellow-400 to-white", accent: "text-yellow-200", border: "border-yellow-300/30", bg: "bg-yellow-300/10", heroImage: "/guardians/shinkami-hero.webp" },
 ];
-
-const ACADEMY =
-  "https://raw.githubusercontent.com/frankxai/Arcanea/main/public/images/academy/";
 
 const HERO_IMAGES: HeroImage[] = [
   { id: "w1", title: "Arcanea — Cinematic City", guardianTag: "Shinkami", accent: "text-yellow-200", border: "border-yellow-300/30", src: "/guardians/gallery/shinkami-gallery-2.webp" },
@@ -172,23 +166,57 @@ export default function RecordsPage() {
             <p className="text-text-secondary font-sans text-sm mt-1">Landscapes, councils, and scenes from across the Arcanean universe</p>
           </div>
 
-          <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
-            {HERO_IMAGES.map((img) => (
-              <div key={img.id} className="group break-inside-avoid relative rounded-2xl overflow-hidden glass border border-white/5 hover:border-white/20 transition-all glow-card">
-                <div className="relative w-full">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={img.src} alt={img.title}
-                    className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.03]" loading="lazy" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-cosmic-deep/70 via-transparent to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <span className={`text-xs font-mono px-2 py-0.5 rounded-md border ${img.border} ${img.accent} bg-cosmic-deep/60 mb-1.5 inline-block`}>
-                      {img.guardianTag}
-                    </span>
-                    <p className="text-sm font-display font-semibold text-white leading-snug">{img.title}</p>
-                  </div>
+          <div className="grid grid-cols-3 gap-3" style={{ gridTemplateRows: '200px 200px 160px' }}>
+            {/* Large feature: Arcanea Cinematic City */}
+            <div className="col-span-2 row-span-2 group relative rounded-2xl overflow-hidden glass border border-white/5 hover:border-white/15 transition-all">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={HERO_IMAGES[0].src} alt={HERO_IMAGES[0].title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+              <div className="absolute inset-0 bg-gradient-to-t from-cosmic-deep/80 via-transparent to-transparent" />
+              <div className="absolute bottom-4 left-4">
+                <span className={`text-xs font-mono px-2 py-0.5 rounded-md border ${HERO_IMAGES[0].border} ${HERO_IMAGES[0].accent} bg-cosmic-deep/60 mb-1.5 inline-block`}>{HERO_IMAGES[0].guardianTag}</span>
+                <p className="text-base font-sans font-medium text-white mt-1">{HERO_IMAGES[0].title}</p>
+              </div>
+            </div>
+
+            {/* Right column: Floating Islands + Futuristic Cityscape */}
+            {HERO_IMAGES.slice(1, 3).map((img) => (
+              <div key={img.id} className="col-span-1 row-span-1 group relative rounded-2xl overflow-hidden glass border border-white/5 hover:border-white/15 transition-all">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={img.src} alt={img.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
+                <div className="absolute inset-0 bg-gradient-to-t from-cosmic-deep/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute bottom-2 left-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <p className={`text-xs font-sans ${img.accent}`}>{img.title}</p>
                 </div>
               </div>
             ))}
+
+            {/* Row 3: Wide banner + 2 small */}
+            <div className="col-span-2 row-span-1 group relative rounded-2xl overflow-hidden glass border border-white/5 hover:border-white/15 transition-all">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={HERO_IMAGES[3].src} alt={HERO_IMAGES[3].title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+              <div className="absolute inset-0 bg-gradient-to-r from-cosmic-deep/60 via-transparent to-transparent" />
+              <div className="absolute bottom-3 left-4">
+                <p className={`text-xs font-sans ${HERO_IMAGES[3].accent}`}>{HERO_IMAGES[3].title}</p>
+              </div>
+            </div>
+            <div className="col-span-1 row-span-1 group relative rounded-2xl overflow-hidden glass border border-white/5 hover:border-white/15 transition-all">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={HERO_IMAGES[4].src} alt={HERO_IMAGES[4].title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
+              <div className="absolute inset-0 bg-gradient-to-t from-cosmic-deep/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            </div>
+          </div>
+
+          {/* Row below: Unified Civilization full-width strip */}
+          <div className="mt-3 group relative h-36 rounded-2xl overflow-hidden glass border border-white/5 hover:border-white/15 transition-all">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={HERO_IMAGES[5].src} alt={HERO_IMAGES[5].title} className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+            <div className="absolute inset-0 bg-gradient-to-r from-cosmic-deep/70 via-transparent to-cosmic-deep/70" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-center">
+                <p className={`text-xs font-sans uppercase tracking-widest ${HERO_IMAGES[5].accent} opacity-0 group-hover:opacity-100 transition-opacity`}>{HERO_IMAGES[5].guardianTag}</p>
+                <p className="text-sm font-sans font-medium text-white/80 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">{HERO_IMAGES[5].title}</p>
+              </div>
+            </div>
           </div>
         </section>
 
