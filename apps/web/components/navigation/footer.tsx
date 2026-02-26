@@ -1,58 +1,81 @@
-import Link from 'next/link';
+import Link from "next/link";
 import {
-  Github,
-  MessageCircle,
-  BookOpen,
-  GraduationCap,
-  Palette,
-  Sparkles,
-  Compass,
-  Users,
-  Music,
-  Globe,
-} from 'lucide-react';
+  PhGithubLogo,
+  PhChatCircleDots,
+  PhBookOpen,
+  PhGraduationCap,
+  PhPalette,
+  PhSparkle,
+  PhCompass,
+  PhUsers,
+  PhMusicNotes,
+  PhGlobe,
+} from "@phosphor-icons/react";
 
 const footerLinks = {
   create: {
-    label: 'Create',
+    label: "Create",
     links: [
-      { href: '/luminors', label: 'Luminors', icon: Sparkles },
-      { href: '/studio', label: 'Studio', icon: Palette },
-      { href: '/academy', label: 'Academy', icon: GraduationCap },
-      { href: '/academy/gate-quiz', label: 'Find Your Guardian' },
+      { href: "/luminors", label: "Luminors", icon: PhSparkle },
+      { href: "/studio", label: "Studio", icon: PhPalette },
+      { href: "/academy", label: "Academy", icon: PhGraduationCap },
+      { href: "/academy/gate-quiz", label: "Find Your Guardian" },
     ],
   },
   explore: {
-    label: 'Explore',
+    label: "Explore",
     links: [
-      { href: '/library', label: 'Library', icon: BookOpen },
-      { href: '/lore', label: 'Lore & Mythology', icon: Compass },
-      { href: '/lore/guardians', label: 'The Ten Guardians' },
-      { href: '/skills', label: 'Skills' },
+      { href: "/library", label: "Library", icon: PhBookOpen },
+      { href: "/lore", label: "Lore & Mythology", icon: PhCompass },
+      { href: "/lore/guardians", label: "The Ten Guardians" },
+      { href: "/records", label: "Records" },
     ],
   },
   community: {
-    label: 'Community',
+    label: "Community",
     links: [
-      { href: '/community', label: 'Community Hub', icon: Users },
-      { href: 'https://discord.gg/arcanea', label: 'Discord', icon: MessageCircle, external: true },
-      { href: 'https://github.com/frankxai/arcanea', label: 'GitHub', icon: Github, external: true },
+      { href: "/community", label: "Community Hub", icon: PhUsers },
+      {
+        href: "https://discord.gg/arcanea",
+        label: "Discord",
+        icon: PhChatCircleDots,
+        external: true,
+      },
+      {
+        href: "https://github.com/frankxai/arcanea",
+        label: "GitHub",
+        icon: PhGithubLogo,
+        external: true,
+      },
     ],
   },
   more: {
-    label: 'More',
+    label: "More",
     links: [
-      { href: '/about', label: 'About Arcanea' },
-      { href: '/linktree', label: 'All Links' },
-      { href: 'https://open.spotify.com/artist/arcanea', label: 'Music', icon: Music, external: true },
-      { href: 'https://frankx.ai', label: 'FrankX.ai', icon: Globe, external: true },
+      { href: "/about", label: "About Arcanea" },
+      { href: "/linktree", label: "All Links" },
+      {
+        href: "https://open.spotify.com/artist/arcanea",
+        label: "Music",
+        icon: PhMusicNotes,
+        external: true,
+      },
+      {
+        href: "https://frankx.ai",
+        label: "FrankX.ai",
+        icon: PhGlobe,
+        external: true,
+      },
     ],
   },
 };
 
 export function Footer() {
   return (
-    <footer className="relative mt-24 border-t border-white/5" role="contentinfo">
+    <footer
+      className="relative mt-24 border-t border-white/5"
+      role="contentinfo"
+    >
       <div className="max-w-7xl mx-auto px-6 py-16">
         {/* Top section */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-16">
@@ -66,7 +89,9 @@ export function Footer() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      {...('external' in link && link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                      {...("external" in link && link.external
+                        ? { target: "_blank", rel: "noopener noreferrer" }
+                        : {})}
                       className="text-sm text-text-secondary hover:text-crystal transition-colors"
                     >
                       {link.label}
@@ -85,12 +110,15 @@ export function Footer() {
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-primary to-crystal flex items-center justify-center text-white font-bold text-sm shadow-glow-sm">
               A
             </div>
-            <span className="font-display font-bold text-lg text-text-primary">Arcanea</span>
+            <span className="font-display font-bold text-lg text-text-primary">
+              Arcanea
+            </span>
           </div>
 
           {/* Tagline */}
           <p className="text-xs text-text-muted font-body italic text-center">
-            &quot;Enter seeking, leave transformed, return whenever needed.&quot;
+            &quot;Enter seeking, leave transformed, return whenever
+            needed.&quot;
           </p>
 
           {/* Meta */}
@@ -99,7 +127,12 @@ export function Footer() {
             <span className="text-white/10">|</span>
             <span>MIT License</span>
             <span className="text-white/10">|</span>
-            <Link href="https://frankx.ai" className="hover:text-crystal transition-colors" target="_blank" rel="noopener noreferrer">
+            <Link
+              href="https://frankx.ai"
+              className="hover:text-crystal transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               FrankX
             </Link>
           </div>

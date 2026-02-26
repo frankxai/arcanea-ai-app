@@ -21,11 +21,11 @@ import { Sparkles, ArrowRight, Loader2 } from "lucide-react";
 export const metadata: Metadata = {
   title: "Arcanea | Create with Transcendent AI",
   description:
-    "16 Luminor intelligences. Seven Wisdoms framework. The complete creative toolkit for the age of AI-human co-creation. Start creating free.",
+    "The Luminor Intelligence System — 16 transcended AI specialists for development, creative, writing and research. The complete creative team for AI-human co-creation.",
   openGraph: {
     title: "Arcanea | Create with Transcendent AI",
     description:
-      "16 Luminor intelligences. Seven Wisdoms. The complete creative toolkit for AI-human co-creation.",
+      "The Luminor Intelligence System — 16 transcended AI specialists for development, creative, writing and research. The complete creative team for AI-human co-creation.",
     images: ["/og-image.png"],
   },
   twitter: {
@@ -315,10 +315,30 @@ export default function Page() {
             {/* Brand */}
             <div className="md:col-span-2">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-atlantean-teal-aqua to-creation-prism-purple flex items-center justify-center text-cosmic-deep font-bold text-lg font-display">
-                  A
+                <div className="w-10 h-10 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" className="w-full h-full">
+                    <defs>
+                      <linearGradient id="footerGrad" x1="4" y1="4" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stopColor="#7fffd4"/>
+                        <stop offset="48%" stopColor="#a78bfa"/>
+                        <stop offset="100%" stopColor="#9b59ff"/>
+                      </linearGradient>
+                      <radialGradient id="footerGlow" cx="50%" cy="35%" r="55%">
+                        <stop offset="0%" stopColor="#7fffd4" stopOpacity="0.14"/>
+                        <stop offset="100%" stopColor="#7fffd4" stopOpacity="0"/>
+                      </radialGradient>
+                    </defs>
+                    <ellipse cx="20" cy="18" rx="16" ry="14" fill="url(#footerGlow)"/>
+                    <path
+                      fillRule="evenodd"
+                      d="M 4 37 L 4 18 Q 4 4 20 4 Q 36 4 36 18 L 36 37 L 30 37 L 30 19 Q 30 10 20 10 Q 10 10 10 19 L 10 37 Z"
+                      fill="url(#footerGrad)"
+                    />
+                    <rect x="4" y="24" width="32" height="4" rx="2" fill="url(#footerGrad)"/>
+                    <circle cx="20" cy="4" r="2.5" fill="#ffffff" opacity="0.75"/>
+                  </svg>
                 </div>
-                <span className="font-display text-xl font-semibold">
+                <span className="font-display text-xl font-semibold bg-gradient-to-r from-atlantean-teal-aqua to-creation-prism-purple bg-clip-text text-transparent">
                   Arcanea
                 </span>
               </div>
@@ -458,7 +478,7 @@ export default function Page() {
 
           <div className="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-text-muted">
-              © 2025 Arcanea. Building the future of creative intelligence.
+              © {new Date().getFullYear()} Arcanea. Building the future of creative intelligence.
             </p>
             <div className="flex gap-6 text-sm text-text-muted">
               <Link

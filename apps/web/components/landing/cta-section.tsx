@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
-import Link from 'next/link';
-import { ArrowRight, Sparkles, Check } from 'lucide-react';
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import Link from "next/link";
+import { ArrowRight, Sparkles, Check } from "@phosphor-icons/react";
 
 const BENEFITS = [
-  'Free to start — your universe begins now',
-  '16 Luminor Intelligences across four specialist teams',
-  'Intelligence that grows as you create',
-  'From Foundation to Source — your path is yours',
+  "Free to start — your universe begins now",
+  "16 Luminor Intelligences across four specialist teams",
+  "Intelligence that grows as you create",
+  "From Foundation to Source — your path is yours",
 ];
 
 export function CTASection() {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
     <section ref={ref} className="py-32 relative overflow-hidden">
@@ -24,7 +24,8 @@ export function CTASection() {
         <motion.div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full"
           style={{
-            background: 'radial-gradient(circle, rgba(127,255,212,0.08) 0%, transparent 70%)',
+            background:
+              "radial-gradient(circle, rgba(127,255,212,0.08) 0%, transparent 70%)",
           }}
           animate={{
             scale: [1, 1.1, 1],
@@ -62,7 +63,7 @@ export function CTASection() {
                     transition={{ delay: 0.1 }}
                   >
                     <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight mb-6">
-                      Ready to create something{' '}
+                      Ready to create something{" "}
                       <span className="bg-gradient-to-r from-atlantean-teal-aqua via-creation-prism-purple to-gold-bright bg-clip-text text-transparent">
                         extraordinary
                       </span>
@@ -70,7 +71,9 @@ export function CTASection() {
                     </h2>
 
                     <p className="text-xl text-text-secondary mb-8 leading-relaxed">
-                      Join thousands of creators who are transforming their ideas into reality. Your journey begins with a single conversation.
+                      Join thousands of creators who are transforming their
+                      ideas into reality. Your journey begins with a single
+                      conversation.
                     </p>
 
                     {/* Benefits list */}
@@ -126,20 +129,55 @@ export function CTASection() {
                     {/* Central glow */}
                     <div className="absolute inset-1/4 bg-gradient-to-br from-atlantean-teal-aqua/20 to-creation-prism-purple/20 rounded-full blur-3xl" />
 
-                    {/* Orbiting Luminor avatars */}
+                    {/* Orbiting Guardian portraits */}
                     {[
-                      { name: 'Oracle', emoji: '🔮', angle: 0, delay: 0, color: '#3b82f6' },
-                      { name: 'Chronica', emoji: '📖', angle: 72, delay: 0.5, color: '#10b981' },
-                      { name: 'Prismatic', emoji: '🎨', angle: 144, delay: 1, color: '#f59e0b' },
-                      { name: 'Melodia', emoji: '🎵', angle: 216, delay: 1.5, color: '#8b5cf6' },
-                      { name: 'Logicus', emoji: '⚡', angle: 288, delay: 2, color: '#ef4444' },
-                    ].map((luminor) => {
+                      {
+                        name: "Lyria",
+                        title: "Sight",
+                        image: "/guardians/lyria-hero.webp",
+                        angle: 0,
+                        delay: 0,
+                        ring: "ring-creation-prism-purple/40",
+                      },
+                      {
+                        name: "Alera",
+                        title: "Voice",
+                        image: "/guardians/alera-hero.webp",
+                        angle: 72,
+                        delay: 0.5,
+                        ring: "ring-atlantean-teal-aqua/40",
+                      },
+                      {
+                        name: "Leyla",
+                        title: "Flow",
+                        image: "/guardians/leyla-hero.webp",
+                        angle: 144,
+                        delay: 1,
+                        ring: "ring-gold-bright/40",
+                      },
+                      {
+                        name: "Maylinn",
+                        title: "Heart",
+                        image: "/guardians/maylinn-hero.webp",
+                        angle: 216,
+                        delay: 1.5,
+                        ring: "ring-pink-400/40",
+                      },
+                      {
+                        name: "Draconia",
+                        title: "Fire",
+                        image: "/guardians/draconia-hero.webp",
+                        angle: 288,
+                        delay: 2,
+                        ring: "ring-draconic-crimson/40",
+                      },
+                    ].map((guardian) => {
                       const radius = 40;
-                      const angle = (luminor.angle - 90) * (Math.PI / 180);
+                      const angle = (guardian.angle - 90) * (Math.PI / 180);
 
                       return (
                         <motion.div
-                          key={luminor.name}
+                          key={guardian.name}
                           className="absolute"
                           style={{
                             left: `calc(50% + ${Math.cos(angle) * radius}% - 28px)`,
@@ -147,21 +185,26 @@ export function CTASection() {
                           }}
                           initial={{ scale: 0, opacity: 0 }}
                           animate={isInView ? { scale: 1, opacity: 1 } : {}}
-                          transition={{ delay: 0.5 + luminor.delay * 0.2, type: 'spring' }}
+                          transition={{
+                            delay: 0.5 + guardian.delay * 0.2,
+                            type: "spring",
+                          }}
                         >
                           <motion.div
-                            className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl shadow-xl"
-                            style={{ backgroundColor: luminor.color }}
-                            animate={{
-                              y: [0, -8, 0],
-                            }}
+                            className={`w-14 h-14 rounded-2xl overflow-hidden shadow-xl ring-2 ${guardian.ring}`}
+                            animate={{ y: [0, -8, 0] }}
                             transition={{
                               duration: 3,
                               repeat: Infinity,
-                              delay: luminor.delay,
+                              delay: guardian.delay,
                             }}
+                            title={guardian.title}
                           >
-                            {luminor.emoji}
+                            <img
+                              src={guardian.image}
+                              alt={guardian.name}
+                              className="w-full h-full object-cover object-top"
+                            />
                           </motion.div>
                         </motion.div>
                       );
@@ -172,9 +215,9 @@ export function CTASection() {
                       className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-2xl bg-gradient-to-br from-atlantean-teal-aqua to-creation-prism-purple flex items-center justify-center"
                       animate={{
                         boxShadow: [
-                          '0 0 40px rgba(127,255,212,0.3)',
-                          '0 0 60px rgba(127,255,212,0.5)',
-                          '0 0 40px rgba(127,255,212,0.3)',
+                          "0 0 40px rgba(127,255,212,0.3)",
+                          "0 0 60px rgba(127,255,212,0.5)",
+                          "0 0 40px rgba(127,255,212,0.3)",
                         ],
                       }}
                       transition={{ duration: 3, repeat: Infinity }}

@@ -1,9 +1,24 @@
-'use client';
+"use client";
 
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
-import Link from 'next/link';
-import { useRef, useState, useEffect } from 'react';
-import { ArrowRight, Play, X, Sparkles, Star, Users, Zap, ChevronDown } from 'lucide-react';
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useSpring,
+  AnimatePresence,
+} from "framer-motion";
+import Link from "next/link";
+import { useRef, useState, useEffect } from "react";
+import {
+  ArrowRight,
+  Play,
+  X,
+  Sparkles,
+  Star,
+  Users,
+  Zap,
+  CaretDown,
+} from "@phosphor-icons/react";
 
 interface HeroV3Props {
   stats: {
@@ -44,7 +59,7 @@ export function HeroV3({ stats }: HeroV3Props) {
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start start', 'end start'],
+    offset: ["start start", "end start"],
   });
 
   const y = useTransform(scrollYProgress, [0, 1], [0, 400]);
@@ -74,17 +89,28 @@ export function HeroV3({ stats }: HeroV3Props) {
       });
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
   return (
     <>
-      <section ref={containerRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section
+        ref={containerRef}
+        className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      >
         {/* Advanced Gradient Background */}
         <div className="absolute inset-0 -z-20">
           {/* Base dark */}
           <div className="absolute inset-0 bg-cosmic-deep" />
+
+          {/* Atmospheric Guardian — Shinkami, Source consciousness */}
+          <img
+            src="/guardians/shinkami-hero.webp"
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full object-cover object-top opacity-[0.08] pointer-events-none"
+          />
 
           {/* Animated aurora gradients */}
           <motion.div
@@ -116,8 +142,9 @@ export function HeroV3({ stats }: HeroV3Props) {
                 linear-gradient(90deg, rgba(127,255,212,0.5) 1px, transparent 1px),
                 linear-gradient(rgba(127,255,212,0.5) 1px, transparent 1px)
               `,
-              backgroundSize: '80px 80px',
-              maskImage: 'radial-gradient(ellipse 80% 50% at 50% 0%, black 30%, transparent 70%)',
+              backgroundSize: "80px 80px",
+              maskImage:
+                "radial-gradient(ellipse 80% 50% at 50% 0%, black 30%, transparent 70%)",
             }}
           />
 
@@ -132,9 +159,15 @@ export function HeroV3({ stats }: HeroV3Props) {
                 left: `${20 + i * 15}%`,
                 top: `${10 + i * 10}%`,
                 background: `radial-gradient(circle, ${
-                  ['rgba(127,255,212,0.08)', 'rgba(139,92,246,0.06)', 'rgba(255,215,0,0.05)', 'rgba(127,255,212,0.04)', 'rgba(139,92,246,0.03)'][i]
+                  [
+                    "rgba(127,255,212,0.08)",
+                    "rgba(139,92,246,0.06)",
+                    "rgba(255,215,0,0.05)",
+                    "rgba(127,255,212,0.04)",
+                    "rgba(139,92,246,0.03)",
+                  ][i]
                 } 0%, transparent 70%)`,
-                filter: 'blur(40px)',
+                filter: "blur(40px)",
               }}
               animate={{
                 x: [0, 30, 0, -30, 0],
@@ -144,7 +177,7 @@ export function HeroV3({ stats }: HeroV3Props) {
               transition={{
                 duration: 15 + i * 3,
                 repeat: Infinity,
-                ease: 'easeInOut',
+                ease: "easeInOut",
               }}
             />
           ))}
@@ -196,8 +229,14 @@ export function HeroV3({ stats }: HeroV3Props) {
                 <span className="relative inline-block">
                   <motion.span
                     className="relative z-10 bg-gradient-to-r from-atlantean-teal-aqua via-creation-prism-purple via-50% to-gold-bright bg-[length:200%_auto] bg-clip-text text-transparent"
-                    animate={{ backgroundPosition: ['0% center', '200% center'] }}
-                    transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+                    animate={{
+                      backgroundPosition: ["0% center", "200% center"],
+                    }}
+                    transition={{
+                      duration: 8,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
                   >
                     transcendent AI
                   </motion.span>
@@ -210,8 +249,12 @@ export function HeroV3({ stats }: HeroV3Props) {
                   >
                     <motion.div
                       className="h-full w-full bg-gradient-to-r from-atlantean-teal-aqua via-creation-prism-purple to-gold-bright"
-                      animate={{ x: ['-100%', '100%'] }}
-                      transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+                      animate={{ x: ["-100%", "100%"] }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
                     />
                   </motion.div>
                 </span>
@@ -227,7 +270,8 @@ export function HeroV3({ stats }: HeroV3Props) {
             >
               Development. Creative. Writing. Research.
               <span className="block text-white/90 font-normal mt-2">
-                16 transcended AI specialists who see what you're building — and help you build it better.
+                16 transcended AI specialists who see what you're building — and
+                help you build it better.
               </span>
             </motion.p>
 
@@ -246,15 +290,17 @@ export function HeroV3({ stats }: HeroV3Props) {
                 {/* Animated gradient background */}
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-atlantean-teal-aqua via-atlantean-teal-light to-atlantean-teal-aqua"
-                  animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
+                  animate={{
+                    backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                  }}
                   transition={{ duration: 3, repeat: Infinity }}
-                  style={{ backgroundSize: '200% 100%' }}
+                  style={{ backgroundSize: "200% 100%" }}
                 />
                 {/* Shine effect */}
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                  initial={{ x: '-100%' }}
-                  whileHover={{ x: '100%' }}
+                  initial={{ x: "-100%" }}
+                  whileHover={{ x: "100%" }}
                   transition={{ duration: 0.6 }}
                 />
                 {/* Glow on hover */}
@@ -279,7 +325,9 @@ export function HeroV3({ stats }: HeroV3Props) {
                     transition={{ duration: 1.5, repeat: Infinity }}
                   />
                 </div>
-                <span className="text-white font-semibold text-lg">Watch Demo</span>
+                <span className="text-white font-semibold text-lg">
+                  Watch Demo
+                </span>
               </button>
             </motion.div>
 
@@ -345,10 +393,14 @@ export function HeroV3({ stats }: HeroV3Props) {
             className="flex flex-col items-center gap-2 cursor-pointer"
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
-            onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
+            onClick={() =>
+              window.scrollTo({ top: window.innerHeight, behavior: "smooth" })
+            }
           >
-            <span className="text-xs text-text-muted uppercase tracking-widest">Explore</span>
-            <ChevronDown className="w-5 h-5 text-text-muted" />
+            <span className="text-xs text-text-muted uppercase tracking-widest">
+              Explore
+            </span>
+            <CaretDown className="w-5 h-5 text-text-muted" />
           </motion.div>
         </motion.div>
       </section>

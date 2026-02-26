@@ -1,60 +1,95 @@
-'use client';
+"use client";
 
-import { motion, useInView } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { motion, useInView } from "framer-motion";
+import { useRef, useState } from "react";
 import {
-  Sparkles,
-  Brain,
-  Palette,
-  BookOpen,
-  Zap,
-  Shield,
-  MessageSquare,
-  Layers,
-  Wand2,
-  GraduationCap,
-  Users,
-  Infinity
-} from 'lucide-react';
+  PhSparkle,
+  PhBrain,
+  PhPalette,
+  PhBookOpen,
+  PhZap,
+  PhShield,
+  PhChatCircle,
+  PhLayers,
+  PhWand,
+  PhGraduationCap,
+  PhUsers,
+  PhInfinity,
+} from "@phosphor-icons/react";
 
 const MAIN_FEATURES = [
   {
-    icon: Sparkles,
-    title: '16 Luminor Intelligences',
-    description: 'Each Luminor is a transcended AI with unique personality, expertise, and creative approach. From Chronica the storyteller to Prismatic the visual artist.',
-    gradient: 'from-atlantean-teal-aqua to-creation-prism-purple',
-    highlight: 'atlantean-teal-aqua',
+    icon: PhSparkle,
+    title: "16 Luminor Intelligences",
+    description:
+      "Each Luminor is a transcended AI with unique personality, expertise, and creative approach. From Chronica the storyteller to Prismatic the visual artist.",
+    gradient: "from-atlantean-teal-aqua to-creation-prism-purple",
+    highlight: "atlantean-teal-aqua",
   },
   {
-    icon: Brain,
-    title: 'Seven Wisdoms Framework',
-    description: 'Seven mental models every Luminor applies: Sophron (Structure), Kardia (Heart), Valora (Courage), Eudaira (Play), Orakis (Vision), Poiesis (Creation), Enduran (Endurance).',
-    gradient: 'from-gold-bright to-draconic-crimson',
-    highlight: 'gold-bright',
+    icon: PhBrain,
+    title: "Seven Wisdoms Framework",
+    description:
+      "Seven mental models every Luminor applies: Sophron (Structure), Kardia (Heart), Valora (Courage), Eudaira (Play), Orakis (Vision), Poiesis (Creation), Enduran (Endurance).",
+    gradient: "from-gold-bright to-draconic-crimson",
+    highlight: "gold-bright",
   },
   {
-    icon: Users,
-    title: 'Four Specialist Teams',
-    description: 'Development, Creative, Writing, Research — four teams, each with four Luminors. Every stage of your creative process has the right specialist.',
-    gradient: 'from-creation-prism-purple to-atlantean-teal-aqua',
-    highlight: 'creation-prism-purple',
+    icon: PhUsers,
+    title: "Four Specialist Teams",
+    description:
+      "Development, Creative, Writing, Research — four teams, each with four Luminors. Every stage of your creative process has the right specialist.",
+    gradient: "from-creation-prism-purple to-atlantean-teal-aqua",
+    highlight: "creation-prism-purple",
   },
 ];
 
 const CAPABILITY_GRID = [
-  { icon: MessageSquare, title: 'Natural Conversation', description: 'Talk to Luminors like trusted collaborators' },
-  { icon: Palette, title: 'Visual Creation', description: 'Generate stunning images and concept art' },
-  { icon: BookOpen, title: 'Story & World Building', description: 'Create immersive narratives and lore' },
-  { icon: Wand2, title: 'Music Composition', description: 'Compose melodies and soundscapes' },
-  { icon: GraduationCap, title: 'Learning Paths', description: 'Structured courses for creative growth' },
-  { icon: Users, title: 'Team Collaboration', description: 'Work with multiple Luminors at once' },
-  { icon: Shield, title: 'Private & Secure', description: 'Your creations stay yours' },
-  { icon: Infinity, title: 'Unlimited Potential', description: 'No creative limits or barriers' },
+  {
+    icon: PhChatCircle,
+    title: "Natural Conversation",
+    description: "Talk to Luminors like trusted collaborators",
+  },
+  {
+    icon: PhPalette,
+    title: "Visual Creation",
+    description: "Generate stunning images and concept art",
+  },
+  {
+    icon: PhBookOpen,
+    title: "Story & World Building",
+    description: "Create immersive narratives and lore",
+  },
+  {
+    icon: PhWand,
+    title: "Music Composition",
+    description: "Compose melodies and soundscapes",
+  },
+  {
+    icon: PhGraduationCap,
+    title: "Learning Paths",
+    description: "Structured courses for creative growth",
+  },
+  {
+    icon: PhUsers,
+    title: "Team Collaboration",
+    description: "Work with multiple Luminors at once",
+  },
+  {
+    icon: PhShield,
+    title: "Private & Secure",
+    description: "Your creations stay yours",
+  },
+  {
+    icon: PhInfinity,
+    title: "Unlimited Potential",
+    description: "No creative limits or barriers",
+  },
 ];
 
 export function FeaturesV2() {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [activeFeature, setActiveFeature] = useState(0);
 
   return (
@@ -67,8 +102,10 @@ export function FeaturesV2() {
           className="text-center mb-20"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-atlantean-teal-aqua/10 border border-atlantean-teal-aqua/20 mb-6">
-            <Zap className="w-4 h-4 text-atlantean-teal-aqua" />
-            <span className="text-sm font-medium text-atlantean-teal-aqua">Powerful Features</span>
+            <PhZap className="w-4 h-4 text-atlantean-teal-aqua" />
+            <span className="text-sm font-medium text-atlantean-teal-aqua">
+              Powerful Features
+            </span>
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
             Everything you need to
@@ -77,7 +114,8 @@ export function FeaturesV2() {
             </span>
           </h2>
           <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-            Arcanea combines transcendent AI intelligences, ancient wisdom frameworks, and modern creative tools into one unified platform.
+            Arcanea combines transcendent AI intelligences, ancient wisdom
+            frameworks, and modern creative tools into one unified platform.
           </p>
         </motion.div>
 
@@ -95,7 +133,7 @@ export function FeaturesV2() {
                 className={`group relative rounded-3xl border p-8 transition-all duration-500 cursor-pointer ${
                   activeFeature === i
                     ? `border-${feature.highlight}/50 bg-gradient-to-br from-${feature.highlight}/10 to-transparent`
-                    : 'border-white/10 bg-cosmic-surface/30 hover:border-white/20'
+                    : "border-white/10 bg-cosmic-surface/30 hover:border-white/20"
                 }`}
               >
                 {/* Icon */}
@@ -106,16 +144,25 @@ export function FeaturesV2() {
                 </div>
 
                 {/* Content */}
-                <h3 className="text-2xl font-display font-bold mb-4">{feature.title}</h3>
-                <p className="text-text-secondary leading-relaxed">{feature.description}</p>
+                <h3 className="text-2xl font-display font-bold mb-4">
+                  {feature.title}
+                </h3>
+                <p className="text-text-secondary leading-relaxed">
+                  {feature.description}
+                </p>
 
                 {/* Learn more link */}
-                <div className={`mt-6 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity ${
-                  feature.highlight === 'atlantean-teal-aqua' ? 'text-atlantean-aqua' :
-                  feature.highlight === 'gold-bright' ? 'text-gold-bright' :
-                  feature.highlight === 'creation-prism-purple' ? 'text-creation-prism-purple' :
-                  'text-text-primary'
-                }`}>
+                <div
+                  className={`mt-6 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity ${
+                    feature.highlight === "atlantean-teal-aqua"
+                      ? "text-atlantean-aqua"
+                      : feature.highlight === "gold-bright"
+                        ? "text-gold-bright"
+                        : feature.highlight === "creation-prism-purple"
+                          ? "text-creation-prism-purple"
+                          : "text-text-primary"
+                  }`}
+                >
                   Learn more →
                 </div>
 
@@ -159,7 +206,9 @@ export function FeaturesV2() {
                       <h4 className="font-semibold mb-1 group-hover:text-atlantean-teal-aqua transition-colors">
                         {capability.title}
                       </h4>
-                      <p className="text-sm text-text-muted">{capability.description}</p>
+                      <p className="text-sm text-text-muted">
+                        {capability.description}
+                      </p>
                     </div>
                   </motion.div>
                 );
@@ -179,7 +228,7 @@ export function FeaturesV2() {
             href="/luminors"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-white/5 border border-white/10 font-semibold hover:bg-white/10 hover:border-white/20 transition-all"
           >
-            <Sparkles className="w-5 h-5 text-atlantean-teal-aqua" />
+            <PhSparkle className="w-5 h-5 text-atlantean-teal-aqua" />
             Explore All Features
           </a>
         </motion.div>
