@@ -1,6 +1,6 @@
 'use client'
 
-import { Settings, Share2, Globe, Lock } from 'lucide-react'
+import { PhGear, PhShare, PhGlobe, PhLock } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/button'
 import { GUARDIAN_THEMES } from '@/lib/prompt-books/constants'
 import type { Collection } from '@/lib/prompt-books/types'
@@ -54,12 +54,12 @@ export function CollectionHeader({ collection, onEdit }: CollectionHeaderProps) 
               {/* Visibility badge */}
               {collection.visibility === 'public' ? (
                 <span className="flex items-center gap-1 glass-subtle px-2 py-0.5 rounded-full text-xs font-sans text-brand-accent">
-                  <Globe className="w-3 h-3" />
+                  <PhGlobe className="w-3 h-3" />
                   Public
                 </span>
               ) : (
                 <span className="flex items-center gap-1 text-text-muted">
-                  <Lock className="w-3 h-3" />
+                  <PhLock className="w-3 h-3" />
                 </span>
               )}
             </div>
@@ -84,7 +84,7 @@ export function CollectionHeader({ collection, onEdit }: CollectionHeaderProps) 
             className="text-text-muted hover:text-text-primary"
             aria-label="Share collection"
           >
-            <Share2 className="w-4 h-4" />
+            <PhShare className="w-4 h-4" />
           </Button>
           {onEdit && (
             <Button
@@ -94,7 +94,7 @@ export function CollectionHeader({ collection, onEdit }: CollectionHeaderProps) 
               className="text-text-muted hover:text-text-primary"
               aria-label="Edit collection"
             >
-              <Settings className="w-4 h-4" />
+              <PhGear className="w-4 h-4" />
             </Button>
           )}
         </div>

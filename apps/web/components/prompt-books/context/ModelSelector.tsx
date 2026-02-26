@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { ChevronDown, Check } from 'lucide-react'
+import { PhCaretDown, PhCheck } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
 
 // =====================================================================
@@ -170,7 +170,7 @@ export function ModelSelector({ value, onChange, className }: ModelSelectorProps
                       </span>
                     </div>
                     {isSelected && (
-                      <Check className="w-3.5 h-3.5 text-brand-accent shrink-0" />
+                      <PhCheck className="w-3.5 h-3.5 text-brand-accent shrink-0" />
                     )}
                   </button>
                 )

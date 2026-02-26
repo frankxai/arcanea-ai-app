@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback } from 'react'
-import { Plus, Trash2, ArrowDownCircle } from 'lucide-react'
+import { PhPlus, PhTrash, PhArrowCircleDown } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
 import type { ChainStep, Prompt } from '@/lib/prompt-books/types'
 
@@ -69,7 +69,7 @@ function StepCard({
             )}
             title="Remove step"
           >
-            <Trash2 className="w-3.5 h-3.5" />
+            <PhTrash className="w-3.5 h-3.5" />
           </button>
         </div>
 
@@ -204,7 +204,7 @@ function StepCard({
       {/* Arrow connector between steps */}
       {!isLast && (
         <div className="flex justify-center py-1.5">
-          <ArrowDownCircle className="w-4 h-4 text-brand-accent/30" />
+          <PhArrowCircleDown className="w-4 h-4 text-brand-accent/30" />
         </div>
       )}
     </div>
@@ -298,7 +298,7 @@ export function ChainBuilder({
             'transition-all duration-150',
           )}
         >
-          <Plus className="w-3 h-3" />
+          <PhPlus className="w-3 h-3" />
           Add Step
         </button>
       </div>

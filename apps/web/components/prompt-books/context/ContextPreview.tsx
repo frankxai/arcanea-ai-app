@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useCallback, useMemo } from 'react'
-import { Copy, Check, Code, MessageSquare } from 'lucide-react'
+import { PhCopy, PhCheck, PhCode, PhChatSquare } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
 import type { ContextPackage } from '@/lib/prompt-books/types'
 
@@ -126,7 +126,7 @@ export function ContextPreview({ contextPackage, className }: ContextPreviewProp
                 : 'text-text-muted hover:text-text-primary',
             )}
           >
-            <MessageSquare className="w-3 h-3" />
+            <PhChatSquare className="w-3 h-3" />
             Chat
           </button>
           <button
@@ -140,7 +140,7 @@ export function ContextPreview({ contextPackage, className }: ContextPreviewProp
                 : 'text-text-muted hover:text-text-primary',
             )}
           >
-            <Code className="w-3 h-3" />
+            <PhCode className="w-3 h-3" />
             JSON
           </button>
         </div>
@@ -160,9 +160,9 @@ export function ContextPreview({ contextPackage, className }: ContextPreviewProp
             title="Copy compiled output"
           >
             {copied ? (
-              <Check className="w-3.5 h-3.5" />
+              <PhCheck className="w-3.5 h-3.5" />
             ) : (
-              <Copy className="w-3.5 h-3.5" />
+              <PhCopy className="w-3.5 h-3.5" />
             )}
           </button>
         </div>

@@ -4,21 +4,21 @@ import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import {
-  ArrowLeft,
-  Sparkles,
-  Wand2,
-  Download,
-  RefreshCw,
-  Settings,
-  ImageIcon,
-  Palette,
-  Layers,
-  ZoomIn,
-  Copy,
-  Check,
-  ChevronDown,
-  Flame,
-} from 'lucide-react';
+  PhArrowLeft,
+  PhSparkle,
+  PhMagicWand,
+  PhDownload,
+  PhArrowsClockwise,
+  PhGear,
+  PhImage,
+  PhPalette,
+  PhStack,
+  PhMagnifyingGlassPlus,
+  PhCopy,
+  PhCheck,
+  PhCaretDown,
+  PhFlame,
+} from '@phosphor-icons/react';
 
 // Style presets aligned with Arcanea aesthetics
 const STYLE_PRESETS = [
@@ -134,11 +134,11 @@ export default function ImageForgePage() {
               href="/studio"
               className="p-2 rounded-lg hover:bg-white/10 transition-colors"
             >
-              <ArrowLeft className="w-5 h-5" />
+              <PhArrowLeft className="w-5 h-5" />
             </Link>
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-draconic-crimson to-orange-500 flex items-center justify-center">
-                <Flame className="w-5 h-5 text-white" />
+                <PhFlame className="w-5 h-5 text-white" />
               </div>
               <div>
                 <h1 className="font-display text-lg font-semibold">Image Forge</h1>
@@ -153,7 +153,7 @@ export default function ImageForgePage() {
               showSettings ? 'bg-white/10 text-white' : 'hover:bg-white/10 text-text-secondary'
             }`}
           >
-            <Settings className="w-5 h-5" />
+            <PhGear className="w-5 h-5" />
           </button>
         </div>
       </header>
@@ -178,7 +178,7 @@ export default function ImageForgePage() {
                   >
                     <div className="relative">
                       <div className="w-20 h-20 rounded-full border-4 border-draconic-crimson/20 border-t-draconic-crimson animate-spin" />
-                      <Wand2 className="w-8 h-8 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-draconic-crimson" />
+                      <PhMagicWand className="w-8 h-8 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-draconic-crimson" />
                     </div>
                     <p className="mt-6 text-text-secondary">Channeling creative fire...</p>
                     <p className="text-sm text-text-muted mt-2">Guardian Draconia is crafting your vision</p>
@@ -210,9 +210,9 @@ export default function ImageForgePage() {
                               title="Copy prompt"
                             >
                               {copied ? (
-                                <Check className="w-5 h-5 text-green-400" />
+                                <PhCheck className="w-5 h-5 text-green-400" />
                               ) : (
-                                <Copy className="w-5 h-5" />
+                                <PhCopy className="w-5 h-5" />
                               )}
                             </button>
                             <button
@@ -220,13 +220,13 @@ export default function ImageForgePage() {
                               className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
                               title="Download image"
                             >
-                              <Download className="w-5 h-5" />
+                              <PhDownload className="w-5 h-5" />
                             </button>
                             <button
                               className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
                               title="Zoom"
                             >
-                              <ZoomIn className="w-5 h-5" />
+                              <PhMagnifyingGlassPlus className="w-5 h-5" />
                             </button>
                           </div>
                         </div>
@@ -242,7 +242,7 @@ export default function ImageForgePage() {
                     className="absolute inset-0 flex flex-col items-center justify-center text-center p-8"
                   >
                     <div className="w-24 h-24 rounded-2xl bg-draconic-crimson/10 flex items-center justify-center mb-6">
-                      <ImageIcon className="w-12 h-12 text-draconic-crimson/60" />
+                      <PhImage className="w-12 h-12 text-draconic-crimson/60" />
                     </div>
                     <h3 className="text-xl font-display font-semibold mb-2">
                       Ready to Create
@@ -320,12 +320,12 @@ export default function ImageForgePage() {
               >
                 {isGenerating ? (
                   <>
-                    <RefreshCw className="w-5 h-5 animate-spin" />
+                    <PhArrowsClockwise className="w-5 h-5 animate-spin" />
                     Generating...
                   </>
                 ) : (
                   <>
-                    <Sparkles className="w-5 h-5" />
+                    <PhSparkle className="w-5 h-5" />
                     Generate Image
                   </>
                 )}
@@ -335,7 +335,7 @@ export default function ImageForgePage() {
             {/* Style presets */}
             <div className="bg-cosmic-surface/50 rounded-2xl border border-white/10 p-4">
               <div className="flex items-center gap-2 mb-3">
-                <Palette className="w-4 h-4 text-text-muted" />
+                <PhPalette className="w-4 h-4 text-text-muted" />
                 <label className="text-sm font-medium">Style</label>
               </div>
               <div className="grid grid-cols-2 gap-2">
@@ -361,7 +361,7 @@ export default function ImageForgePage() {
             {/* Aspect ratio */}
             <div className="bg-cosmic-surface/50 rounded-2xl border border-white/10 p-4">
               <div className="flex items-center gap-2 mb-3">
-                <Layers className="w-4 h-4 text-text-muted" />
+                <PhStack className="w-4 h-4 text-text-muted" />
                 <label className="text-sm font-medium">Aspect Ratio</label>
               </div>
               <div className="flex flex-wrap gap-2">

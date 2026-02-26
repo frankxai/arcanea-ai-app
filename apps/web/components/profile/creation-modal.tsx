@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronLeft, ChevronRight, Download, Heart, MessageCircle, Share2, Calendar, Sparkles } from 'lucide-react';
+import { PhX, PhCaretLeft, PhCaretRight, PhDownload, PhHeart, PhChatCircle, PhShare, PhCalendar, PhSparkle } from '@phosphor-icons/react';
 import { Creation } from '@/lib/types/profile';
 import { useEffect, useState } from 'react';
 import { Button } from '@/lib/arcanea-ui';
@@ -101,7 +101,7 @@ export function CreationModal({
         onClick={onClose}
         className="absolute top-6 right-6 z-50 p-3 rounded-full bg-slate-800/90 hover:bg-slate-700 text-white transition-colors"
       >
-        <X className="w-6 h-6" />
+        <PhX className="w-6 h-6" />
       </motion.button>
 
       {/* Navigation Buttons */}
@@ -115,7 +115,7 @@ export function CreationModal({
           }}
           className="absolute left-6 z-50 p-3 rounded-full bg-slate-800/90 hover:bg-slate-700 text-white transition-colors"
         >
-          <ChevronLeft className="w-6 h-6" />
+          <PhCaretLeft className="w-6 h-6" />
         </motion.button>
       )}
 
@@ -129,7 +129,7 @@ export function CreationModal({
           }}
           className="absolute right-6 z-50 p-3 rounded-full bg-slate-800/90 hover:bg-slate-700 text-white transition-colors"
         >
-          <ChevronRight className="w-6 h-6" />
+          <PhCaretRight className="w-6 h-6" />
         </motion.button>
       )}
 
@@ -181,7 +181,7 @@ export function CreationModal({
                     : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
                 }`}
               >
-                <Heart className={`w-5 h-5 ${isLiked ? 'fill-current' : ''}`} />
+                <PhHeart className={`w-5 h-5 ${isLiked ? 'fill-current' : ''}`} />
                 <span>{(creation.stats.likes + (isLiked ? 1 : 0)).toLocaleString()}</span>
               </Button>
 
@@ -189,24 +189,24 @@ export function CreationModal({
                 onClick={handleDownload}
                 className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 font-semibold transition-all duration-300"
               >
-                <Download className="w-5 h-5" />
+                <PhDownload className="w-5 h-5" />
               </Button>
 
               <Button
                 onClick={handleShare}
                 className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 font-semibold transition-all duration-300"
               >
-                <Share2 className="w-5 h-5" />
+                <PhShare className="w-5 h-5" />
               </Button>
             </div>
 
             <div className="flex items-center gap-6 text-sm text-slate-400">
               <div className="flex items-center gap-2">
-                <MessageCircle className="w-4 h-4" />
+                <PhChatCircle className="w-4 h-4" />
                 <span>{creation.stats.comments.toLocaleString()} comments</span>
               </div>
               <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4" />
+                <PhCalendar className="w-4 h-4" />
                 <span>{formatDate(creation.created_at)}</span>
               </div>
             </div>
@@ -217,7 +217,7 @@ export function CreationModal({
             {creation.prompt && (
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-purple-400 font-semibold">
-                  <Sparkles className="w-4 h-4" />
+                  <PhSparkle className="w-4 h-4" />
                   <span>Prompt</span>
                 </div>
                 <p className="text-slate-300 text-sm leading-relaxed bg-slate-800/50 p-4 rounded-xl border border-purple-500/20">

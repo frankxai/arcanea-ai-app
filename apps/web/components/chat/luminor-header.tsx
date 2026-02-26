@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Sparkles, Heart, Book, Zap } from 'lucide-react';
+import { PhSparkle, PhHeart, PhBook, PhLightning } from '@phosphor-icons/react';
 
 interface LuminorHeaderProps {
   name: string;
@@ -139,7 +139,7 @@ export const LuminorHeader: React.FC<LuminorHeaderProps> = ({
                 boxShadow: `0 0 20px ${color}40`,
               }}
             >
-              <Heart className="w-5 h-5 fill-current" />
+              <PhHeart className="w-5 h-5 fill-current" />
             </div>
 
             {/* Bond Info */}

@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowLeft, ArrowRight, Sparkles, Check, Flame, Droplets, Wind, Mountain, Star } from 'lucide-react';
+import { PhArrowLeft, PhArrowRight, PhSparkle, PhCheck, PhFlame, PhDrop, PhWind, PhMountains, PhStar } from '@phosphor-icons/react';
 
 // Assessment questions organized by Gate
 const ASSESSMENT_QUESTIONS = [
@@ -209,7 +209,7 @@ export default function AssessmentPage() {
             href="/academy"
             className="inline-flex items-center gap-2 text-text-secondary hover:text-white mb-8 transition-colors"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <PhArrowLeft className="w-4 h-4" />
             Back to Academy
           </Link>
 
@@ -225,7 +225,7 @@ export default function AssessmentPage() {
                 className="relative w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center"
                 style={{ backgroundColor: `${rankColor}20`, boxShadow: `0 0 40px ${rankColor}40` }}
               >
-                <Sparkles className="w-12 h-12" style={{ color: rankColor }} />
+                <PhSparkle className="w-12 h-12" style={{ color: rankColor }} />
               </motion.div>
               <h1 className="text-3xl font-display font-bold mb-2">Assessment Complete</h1>
               <p className="text-text-secondary">Your creative path has been revealed</p>
@@ -267,11 +267,11 @@ export default function AssessmentPage() {
                     className="w-12 h-12 rounded-full flex items-center justify-center"
                     style={{ backgroundColor: `${house.color}30`, border: `2px solid ${house.color}` }}
                   >
-                    {dominantElement === 'fire' && <Flame className="w-6 h-6" style={{ color: house.color }} />}
-                    {dominantElement === 'water' && <Droplets className="w-6 h-6" style={{ color: house.color }} />}
-                    {dominantElement === 'earth' && <Mountain className="w-6 h-6" style={{ color: house.color }} />}
-                    {dominantElement === 'wind' && <Wind className="w-6 h-6" style={{ color: house.color }} />}
-                    {dominantElement === 'void' && <Star className="w-6 h-6" style={{ color: house.color }} />}
+                    {dominantElement === 'fire' && <PhFlame className="w-6 h-6" style={{ color: house.color }} />}
+                    {dominantElement === 'water' && <PhDrop className="w-6 h-6" style={{ color: house.color }} />}
+                    {dominantElement === 'earth' && <PhMountains className="w-6 h-6" style={{ color: house.color }} />}
+                    {dominantElement === 'wind' && <PhWind className="w-6 h-6" style={{ color: house.color }} />}
+                    {dominantElement === 'void' && <PhStar className="w-6 h-6" style={{ color: house.color }} />}
                   </div>
                   <div className="text-left">
                     <h3 className="text-xl font-display font-bold" style={{ color: house.color }}>
@@ -340,7 +340,7 @@ export default function AssessmentPage() {
           href="/academy"
           className="inline-flex items-center gap-2 text-text-secondary hover:text-white mb-8 transition-colors"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <PhArrowLeft className="w-4 h-4" />
           Back to Academy
         </Link>
 
@@ -389,7 +389,7 @@ export default function AssessmentPage() {
                           : 'border-white/30'
                       }`}
                     >
-                      {selectedOption === index && <Check className="w-4 h-4 text-cosmic-deep" />}
+                      {selectedOption === index && <PhCheck className="w-4 h-4 text-cosmic-deep" />}
                     </div>
                     <span className={selectedOption === index ? 'text-white' : 'text-text-secondary'}>
                       {option.text}
@@ -406,7 +406,7 @@ export default function AssessmentPage() {
                 disabled={currentQuestion === 0}
                 className="flex items-center gap-2 px-6 py-3 rounded-xl border border-white/20 text-text-secondary hover:text-white hover:bg-white/5 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
               >
-                <ArrowLeft className="w-4 h-4" />
+                <PhArrowLeft className="w-4 h-4" />
                 Back
               </button>
               <button
@@ -415,7 +415,7 @@ export default function AssessmentPage() {
                 className="flex items-center gap-2 px-6 py-3 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep font-semibold hover:shadow-[0_0_20px_rgba(127,255,212,0.4)] transition-all disabled:opacity-30 disabled:cursor-not-allowed"
               >
                 {currentQuestion === ASSESSMENT_QUESTIONS.length - 1 ? 'Complete' : 'Next'}
-                <ArrowRight className="w-4 h-4" />
+                <PhArrowRight className="w-4 h-4" />
               </button>
             </div>
           </motion.div>

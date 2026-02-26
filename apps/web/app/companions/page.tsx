@@ -4,16 +4,16 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import {
-  Sparkles,
-  Code,
-  Palette,
-  PenTool,
-  Search,
-  MessageCircle,
-  Heart,
-  Star,
-  Filter,
-} from 'lucide-react';
+  PhSparkle,
+  PhCode,
+  PhPalette,
+  PhPen,
+  PhMagnifyingGlass,
+  PhChatCircle,
+  PhHeart,
+  PhStar,
+  PhFunnel,
+} from '@phosphor-icons/react';
 import { LUMINORS, TEAMS, type Team, type LuminorConfig } from '@/lib/luminors/config';
 
 /**
@@ -39,10 +39,10 @@ export default function CompanionsPage() {
   });
 
   const teamIcons: Record<Team, React.ReactNode> = {
-    development: <Code className="w-4 h-4" />,
-    creative: <Palette className="w-4 h-4" />,
-    writing: <PenTool className="w-4 h-4" />,
-    research: <Search className="w-4 h-4" />,
+    development: <PhCode className="w-4 h-4" />,
+    creative: <PhPalette className="w-4 h-4" />,
+    writing: <PhPen className="w-4 h-4" />,
+    research: <PhMagnifyingGlass className="w-4 h-4" />,
   };
 
   return (
@@ -67,7 +67,7 @@ export default function CompanionsPage() {
             {/* Search */}
             <div className="max-w-md mx-auto mb-8">
               <div className="relative">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                <PhMagnifyingGlass className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
                 <input
                   type="text"
                   placeholder="Search companions..."
@@ -144,7 +144,7 @@ export default function CompanionsPage() {
       {/* Premium Chat CTA */}
       <div className="max-w-7xl mx-auto px-4 pb-16">
         <div className="bg-gradient-to-r from-violet-600/20 to-indigo-600/20 border border-violet-500/30 rounded-2xl p-8 text-center">
-          <Sparkles className="w-12 h-12 text-violet-400 mx-auto mb-4" />
+          <PhSparkle className="w-12 h-12 text-violet-400 mx-auto mb-4" />
           <h2 className="text-2xl font-bold text-white mb-2">
             Just want a quick chat?
           </h2>
@@ -156,7 +156,7 @@ export default function CompanionsPage() {
             href="/chat"
             className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-medium rounded-xl hover:from-violet-500 hover:to-indigo-500 transition-all"
           >
-            <MessageCircle className="w-5 h-5" />
+            <PhChatCircle className="w-5 h-5" />
             Open Premium Chat
           </Link>
         </div>
@@ -224,7 +224,7 @@ function CompanionCard({
 
           {/* Specialty */}
           <div className="flex items-center gap-2 text-xs text-slate-500">
-            <Star className="w-3 h-3" />
+            <PhStar className="w-3 h-3" />
             <span>{luminor.specialty}</span>
           </div>
 
@@ -247,7 +247,7 @@ function CompanionCard({
               className="w-8 h-8 rounded-full flex items-center justify-center transition-colors group-hover:bg-opacity-100"
               style={{ backgroundColor: `${luminor.color}30` }}
             >
-              <MessageCircle className="w-4 h-4" style={{ color: luminor.color }} />
+              <PhChatCircle className="w-4 h-4" style={{ color: luminor.color }} />
             </div>
           </div>
         </div>

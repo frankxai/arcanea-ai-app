@@ -3,7 +3,7 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import Link from 'next/link';
-import { Star, Sparkles, ArrowRight, Shield, Zap, Crown, Orbit, Flame } from 'lucide-react';
+import { PhStar, PhSparkle, PhArrowRight, PhShield, PhLightning, PhCrown, PhSpiral, PhFlame } from '@phosphor-icons/react';
 import { cn } from '@/lib/utils';
 
 // ─── Canon Data ───────────────────────────────────────────────────────────────
@@ -24,7 +24,7 @@ const RANKS = [
     accentColor: '#6b7280',
     textColor: 'text-text-muted',
     badgeClass: 'bg-white/8 text-text-muted border-white/15',
-    icon: Star,
+    icon: PhStar,
     glowIntensity: 1,
     numberStyle: 'text-text-muted',
   },
@@ -43,7 +43,7 @@ const RANKS = [
     accentColor: '#78a6ff',
     textColor: 'text-blue-400',
     badgeClass: 'bg-blue-500/15 text-blue-400 border-blue-500/30',
-    icon: Zap,
+    icon: PhLightning,
     glowIntensity: 2,
     numberStyle: 'text-blue-400',
   },
@@ -62,7 +62,7 @@ const RANKS = [
     accentColor: '#a78bfa',
     textColor: 'text-purple-400',
     badgeClass: 'bg-purple-500/15 text-purple-400 border-purple-500/30',
-    icon: Shield,
+    icon: PhShield,
     glowIntensity: 3,
     numberStyle: 'text-purple-400',
   },
@@ -81,7 +81,7 @@ const RANKS = [
     accentColor: '#ffd700',
     textColor: 'text-brand-gold',
     badgeClass: 'bg-brand-gold/15 text-brand-gold border-brand-gold/30',
-    icon: Crown,
+    icon: PhCrown,
     glowIntensity: 4,
     numberStyle: 'text-brand-gold',
   },
@@ -100,7 +100,7 @@ const RANKS = [
     accentColor: '#7fffd4',
     textColor: 'text-crystal',
     badgeClass: 'bg-crystal/15 text-crystal border-crystal/30',
-    icon: Sparkles,
+    icon: PhSparkle,
     glowIntensity: 5,
     numberStyle: 'text-gradient-crystal',
     isPeak: true,
@@ -306,7 +306,7 @@ export function RanksPage() {
             transition={{ delay: 0.15 }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full liquid-glass border border-brand-gold/20 mb-8"
           >
-            <Orbit className="w-4 h-4 text-brand-gold" />
+            <PhSpiral className="w-4 h-4 text-brand-gold" />
             <span className="text-sm font-medium text-brand-gold font-sans">
               The Academy of Arcanea
             </span>
@@ -359,7 +359,7 @@ export function RanksPage() {
                   {r.rank}
                 </span>
                 {i < RANKS.length - 1 && (
-                  <ArrowRight className="w-3 h-3 text-text-muted" />
+                  <PhArrowRight className="w-3 h-3 text-text-muted" />
                 )}
               </span>
             ))}
@@ -424,7 +424,7 @@ export function RanksPage() {
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-14 h-14 rounded-2xl flex items-center justify-center"
                   style={{ backgroundColor: 'rgba(127,255,212,0.15)', boxShadow: '0 0 24px rgba(127,255,212,0.2)' }}>
-                  <Flame className="w-7 h-7 text-crystal animate-breathe" />
+                  <PhFlame className="w-7 h-7 text-crystal animate-breathe" />
                 </div>
                 <div>
                   <p className="text-xs uppercase tracking-[0.35em] text-crystal font-sans mb-1">
@@ -512,7 +512,7 @@ export function RanksPage() {
             initial={{ opacity: 0, y: 24 }}
             animate={isCtaInView ? { opacity: 1, y: 0 } : {}}
           >
-            <Sparkles className="w-10 h-10 mx-auto text-brand-gold mb-6 animate-float" />
+            <PhSparkle className="w-10 h-10 mx-auto text-brand-gold mb-6 animate-float" />
             <h2 className="font-display text-3xl font-bold mb-4 text-white">
               Begin Your Ascent
             </h2>
@@ -526,7 +526,7 @@ export function RanksPage() {
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-brand-gold text-cosmic-deep font-semibold hover:bg-brand-gold/90 transition-all hover:scale-[1.02]"
               >
                 Find Your Guardian
-                <ArrowRight className="w-4 h-4" />
+                <PhArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 href="/academy"

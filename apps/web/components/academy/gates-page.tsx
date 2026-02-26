@@ -13,20 +13,20 @@ import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import Link from 'next/link';
 import {
-  Mountain,
-  Droplets,
-  Flame,
-  Heart,
-  Wind,
-  Eye,
-  Crown,
-  Zap,
-  Infinity as InfinityIcon,
-  Circle,
-  ArrowRight,
-  Sparkles,
-  Radio,
-} from 'lucide-react';
+  PhMountains,
+  PhDrop,
+  PhFlame,
+  PhHeart,
+  PhWind,
+  PhEye,
+  PhCrown,
+  PhLightning,
+  PhInfinity,
+  PhCircle,
+  PhArrowRight,
+  PhSparkle,
+  PhRadio,
+} from '@phosphor-icons/react';
 import { cn } from '@/lib/utils';
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -64,7 +64,6 @@ const TEN_GATES: GateData[] = [
     glowColor: 'rgba(107,114,128,0.35)',
     description:
       'The root of all creation. Before you can build anything lasting, you must know where you stand. Lyssandria teaches the patient architecture of foundations — that every cathedral begins with a single stone placed with intention.',
-    icon: Mountain,
   },
   {
     number: 2,
@@ -80,7 +79,6 @@ const TEN_GATES: GateData[] = [
     glowColor: 'rgba(249,115,22,0.35)',
     description:
       'The second Gate is where creativity ceases to be a discipline and becomes a current. Leyla does not create — she releases. She trusts. She lets the river find its own path through the terrain of her craft.',
-    icon: Droplets,
   },
   {
     number: 3,
@@ -96,7 +94,6 @@ const TEN_GATES: GateData[] = [
     glowColor: 'rgba(239,68,68,0.35)',
     description:
       'Draconia burns away everything that is not the work. At the Fire Gate, potential becomes action, hesitation becomes momentum, and the creator discovers the terrifying freedom of full commitment.',
-    icon: Flame,
   },
   {
     number: 4,
@@ -112,7 +109,6 @@ const TEN_GATES: GateData[] = [
     glowColor: 'rgba(34,197,94,0.35)',
     description:
       'The Heart Gate is where creation stops being about the creator and becomes about the created. Maylinn teaches that the most powerful work is the work that heals — yourself, your audience, the living world.',
-    icon: Heart,
   },
   {
     number: 5,
@@ -128,7 +124,6 @@ const TEN_GATES: GateData[] = [
     glowColor: 'rgba(6,182,212,0.35)',
     description:
       'At the Voice Gate, the creator discovers that their unique perspective is itself the gift. Alera teaches the courage to speak when silence would be safer, and the clarity to know what is genuinely yours to say.',
-    icon: Wind,
   },
   {
     number: 6,
@@ -144,7 +139,6 @@ const TEN_GATES: GateData[] = [
     glowColor: 'rgba(139,92,246,0.35)',
     description:
       'Lyria sees what others cannot — the hidden patterns beneath the surface of things, the emerging forms before they take shape, the deep currents that govern what rises and what recedes. Her creations are portals.',
-    icon: Eye,
   },
   {
     number: 7,
@@ -160,7 +154,6 @@ const TEN_GATES: GateData[] = [
     glowColor: 'rgba(255,215,0,0.35)',
     description:
       'Aiyami has integrated all aspects of the creative path. At the Crown Gate, the creator no longer creates to express — they transmit. Something larger moves through them: wisdom, light, transcendent understanding.',
-    icon: Crown,
   },
   {
     number: 8,
@@ -176,7 +169,6 @@ const TEN_GATES: GateData[] = [
     glowColor: 'rgba(168,85,247,0.35)',
     description:
       'Elara is the master of seeing from every angle simultaneously. The Shift Gate teaches that creative breakthroughs come from releasing attachment to a single viewpoint — every assumption released opens a new dimension.',
-    icon: Zap,
   },
   {
     number: 9,
@@ -192,7 +184,7 @@ const TEN_GATES: GateData[] = [
     glowColor: 'rgba(59,130,246,0.35)',
     description:
       'Ino understands that the greatest creations emerge from the space between two souls working in harmony. At the Unity Gate, individual voices weave into something neither could achieve alone — the whole exceeds the sum.',
-    icon: InfinityIcon,
+    icon: PhInfinity,
   },
   {
     number: 10,
@@ -208,7 +200,6 @@ const TEN_GATES: GateData[] = [
     glowColor: 'rgba(255,255,255,0.25)',
     description:
       'At the Source Gate, the boundary between creator and creation dissolves. Shinkami exists at the point where all creation begins and to which all creation returns. To open this Gate is to become a living channel.',
-    icon: Circle,
   },
 ];
 
@@ -469,7 +460,7 @@ function FrequencySpectrum() {
         className="mb-8 text-center"
       >
         <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-crystal/20 bg-crystal/5 px-4 py-1.5">
-          <Radio className="h-3.5 w-3.5 text-crystal" />
+          <PhRadio className="h-3.5 w-3.5 text-crystal" />
           <span className="font-sans text-xs uppercase tracking-[0.3em] text-crystal">
             Solfeggio Frequency Spectrum
           </span>
@@ -617,7 +608,7 @@ function OpeningGatesPanel() {
             className="mb-6 flex items-center gap-3"
           >
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-gold/15 border border-brand-gold/25">
-              <Sparkles className="h-4 w-4 text-brand-gold" />
+              <PhSparkle className="h-4 w-4 text-brand-gold" />
             </div>
             <span className="font-sans text-xs uppercase tracking-[0.4em] text-brand-gold">
               What it means to open a Gate
@@ -749,7 +740,7 @@ function GatesHero() {
           custom={0.1}
           className="mb-5 inline-flex items-center gap-2 rounded-full border border-brand-gold/25 bg-brand-gold/8 px-5 py-2"
         >
-          <Crown className="h-4 w-4 text-brand-gold" />
+          <PhCrown className="h-4 w-4 text-brand-gold" />
           <span className="font-sans text-xs uppercase tracking-[0.4em] text-brand-gold">
             The Academy of Creation
           </span>
@@ -890,13 +881,13 @@ function GatesCTA() {
             className="liquid-glass group inline-flex items-center gap-3 rounded-xl border border-brand-primary/30 px-8 py-4 font-sans font-semibold text-text-primary transition-all hover:border-brand-primary/60 hover-lift"
           >
             Begin Your Journey
-            <ArrowRight className="h-5 w-5 text-brand-primary transition-transform group-hover:translate-x-1" />
+            <PhArrowRight className="h-5 w-5 text-brand-primary transition-transform group-hover:translate-x-1" />
           </Link>
           <Link
             href="/academy/gate-quiz"
             className="group inline-flex items-center gap-2 font-sans text-sm text-text-muted transition-colors hover:text-text-secondary"
           >
-            <Sparkles className="h-4 w-4 text-brand-gold" />
+            <PhSparkle className="h-4 w-4 text-brand-gold" />
             Find your Guardian first
           </Link>
         </div>

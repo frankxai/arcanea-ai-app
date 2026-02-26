@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { cosmicSlideUp } from '@/lib/animations';
 import { type Academy, getAcademyClasses } from '@/lib/theme-utils';
-import { User, Sparkles } from 'lucide-react';
+import { PhUser, PhSparkle } from '@phosphor-icons/react';
 
 export interface ChatMessageProps {
   role: 'user' | 'assistant';
@@ -55,9 +55,9 @@ const ChatMessage = React.memo<ChatMessageProps>(React.forwardRef<HTMLDivElement
           )}
         >
           {isUser ? (
-            <User className="h-4 w-4 text-text-primary" />
+            <PhUser className="h-4 w-4 text-text-primary" />
           ) : (
-            <Sparkles className={cn('h-4 w-4', academyClasses.text)} />
+            <PhSparkle className={cn('h-4 w-4', academyClasses.text)} />
           )}
         </div>
 

@@ -2,16 +2,16 @@
 
 import React, { useState } from 'react';
 import {
-  Sparkles,
-  Heart,
-  Calendar,
-  TrendingUp,
-  ChevronRight,
-  X,
-  Lightbulb,
-  Target,
-  Zap,
-} from 'lucide-react';
+  PhSparkle,
+  PhHeart,
+  PhCalendar,
+  PhTrendUp,
+  PhCaretRight,
+  PhX,
+  PhLightbulb,
+  PhTarget,
+  PhLightning,
+} from '@phosphor-icons/react';
 import { EmotionalTone } from '@/hooks/use-chat';
 
 interface KeyMoment {
@@ -98,7 +98,7 @@ export const ContextSidebar: React.FC<ContextSidebarProps> = ({
             onClick={onClose}
             className="lg:hidden p-1 rounded-lg hover:bg-gray-800 transition-colors"
           >
-            <X className="w-5 h-5 text-gray-400" />
+            <PhX className="w-5 h-5 text-gray-400" />
           </button>
         </div>
 
@@ -155,7 +155,7 @@ export const ContextSidebar: React.FC<ContextSidebarProps> = ({
               {/* Key Moments */}
               <div>
                 <h3 className="text-sm font-medium text-gray-400 mb-3 flex items-center gap-2">
-                  <Sparkles className="w-4 h-4" />
+                  <PhSparkle className="w-4 h-4" />
                   Key Moments
                 </h3>
                 <div className="space-y-3">
@@ -191,7 +191,7 @@ export const ContextSidebar: React.FC<ContextSidebarProps> = ({
               {/* Recent Topics */}
               <div>
                 <h3 className="text-sm font-medium text-gray-400 mb-3 flex items-center gap-2">
-                  <TrendingUp className="w-4 h-4" />
+                  <PhTrendUp className="w-4 h-4" />
                   Recent Topics
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -216,7 +216,7 @@ export const ContextSidebar: React.FC<ContextSidebarProps> = ({
               {Object.keys(creatorPreferences).length > 0 && (
                 <div>
                   <h3 className="text-sm font-medium text-gray-400 mb-3 flex items-center gap-2">
-                    <Heart className="w-4 h-4" />
+                    <PhHeart className="w-4 h-4" />
                     What {luminorName} Knows About You
                   </h3>
                   <div className="space-y-2">
@@ -297,19 +297,19 @@ export const ContextSidebar: React.FC<ContextSidebarProps> = ({
                 </h3>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center gap-2 text-gray-300">
-                    <Zap className="w-4 h-4 text-blue-400" />
+                    <PhLightning className="w-4 h-4 text-blue-400" />
                     <span>Have meaningful conversations (+10 XP)</span>
                   </div>
                   <div className="flex items-center gap-2 text-gray-300">
-                    <Sparkles className="w-4 h-4 text-purple-400" />
+                    <PhSparkle className="w-4 h-4 text-purple-400" />
                     <span>Create together (+30 XP)</span>
                   </div>
                   <div className="flex items-center gap-2 text-gray-300">
-                    <Target className="w-4 h-4 text-green-400" />
+                    <PhTarget className="w-4 h-4 text-green-400" />
                     <span>Complete lessons (+20 XP)</span>
                   </div>
                   <div className="flex items-center gap-2 text-gray-300">
-                    <Lightbulb className="w-4 h-4 text-yellow-400" />
+                    <PhLightbulb className="w-4 h-4 text-yellow-400" />
                     <span>Share breakthroughs (+50 XP)</span>
                   </div>
                 </div>

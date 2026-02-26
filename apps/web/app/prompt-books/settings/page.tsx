@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { ArrowLeft, Settings, Download, Upload } from 'lucide-react'
+import { PhArrowLeft, PhGear, PhDownload, PhUpload } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { SettingsPanel } from '@/components/prompt-books/settings/SettingsPanel'
@@ -15,8 +15,8 @@ export default function PromptBooksSettingsPage() {
   const [activeTab, setActiveTab] = useState<SettingsTab>('preferences')
 
   const tabs: { value: SettingsTab; label: string; icon: React.ReactNode }[] = [
-    { value: 'preferences', label: 'Preferences', icon: <Settings className="w-3.5 h-3.5" /> },
-    { value: 'import-export', label: 'Import / Export', icon: <Download className="w-3.5 h-3.5" /> },
+    { value: 'preferences', label: 'Preferences', icon: <PhGear className="w-3.5 h-3.5" /> },
+    { value: 'import-export', label: 'Import / Export', icon: <PhDownload className="w-3.5 h-3.5" /> },
   ]
 
   return (
@@ -29,7 +29,7 @@ export default function PromptBooksSettingsPage() {
           onClick={() => router.push('/prompt-books')}
           className="text-text-muted hover:text-text-primary"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <PhArrowLeft className="w-4 h-4" />
         </Button>
         <h1 className="text-lg font-display text-text-primary">Settings</h1>
       </div>

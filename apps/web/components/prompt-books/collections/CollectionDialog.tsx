@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { X } from 'lucide-react'
+import { PhX } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
@@ -73,7 +73,7 @@ export function CollectionDialog({ open, onOpenChange, collection, onSave }: Col
             onClick={() => onOpenChange(false)}
             className="p-1.5 rounded-lg hover:bg-cosmic-raised text-text-muted"
           >
-            <X className="w-4 h-4" />
+            <PhX className="w-4 h-4" />
           </button>
         </div>
 

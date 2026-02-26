@@ -6,7 +6,7 @@ import { type Academy, getAcademyTheme } from '@/lib/theme-utils';
 import { AcademyBadge } from '@/components/ui/academy-badge';
 import { BondIndicator } from '@/components/ui/bond-indicator';
 import { CosmicCard, CosmicCardHeader } from '@/components/ui/cosmic-card';
-import { MoreVertical } from 'lucide-react';
+import { PhDotsThreeVertical } from '@phosphor-icons/react';
 import { Button } from '@/components/ui/button';
 
 export interface ChatHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -71,7 +71,7 @@ const ChatHeader = React.forwardRef<HTMLDivElement, ChatHeaderProps>(
                 onClick={onMenuClick}
                 className="h-8 w-8"
               >
-                <MoreVertical className="h-5 w-5" />
+                <PhDotsThreeVertical className="h-5 w-5" />
               </Button>
             )}
           </div>

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { Sparkles, Heart, Download, Maximize2, Share2, Film, X, Check, Search, Palette, Layers } from 'lucide-react'
+import { PhSparkle, PhHeart, PhDownload, PhArrowsOut, PhShare, PhFilmStrip, PhX, PhCheck, PhMagnifyingGlass, PhPalette, PhStack } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import Image from 'next/image'
@@ -192,7 +192,7 @@ export function ImagineTab() {
             {/* Prompt Input */}
             <div className="glass rounded-2xl p-6 space-y-4">
               <div className="flex items-center gap-3 mb-2">
-                <Sparkles className="w-5 h-5 text-brand-accent" />
+                <PhSparkle className="w-5 h-5 text-brand-accent" />
                 <h3 className="text-lg font-display text-text-primary">Imagine</h3>
               </div>
               
@@ -253,7 +253,7 @@ export function ImagineTab() {
                 disabled={!prompt.trim() || isGenerating}
                 className="w-full liquid-glass hover:scale-[1.02] transition-all gap-2 h-12"
               >
-                <Sparkles className="w-5 h-5" />
+                <PhSparkle className="w-5 h-5" />
                 <span className="font-sans font-medium">{isGenerating ? 'Generating...' : 'Generate'}</span>
               </Button>
             </div>
@@ -287,16 +287,16 @@ export function ImagineTab() {
                                 image.liked ? 'text-brand-gold' : 'text-text-muted'
                               }`}
                             >
-                              <Heart className={`w-4 h-4 ${image.liked ? 'fill-current' : ''}`} />
+                              <PhHeart className={`w-4 h-4 ${image.liked ? 'fill-current' : ''}`} />
                             </Button>
                             <Button size="icon" variant="ghost" className="glass-subtle hover:scale-110 transition-transform text-text-muted">
-                              <Download className="w-4 h-4" />
+                              <PhDownload className="w-4 h-4" />
                             </Button>
                             <Button size="icon" variant="ghost" className="glass-subtle hover:scale-110 transition-transform text-text-muted">
-                              <Maximize2 className="w-4 h-4" />
+                              <PhArrowsOut className="w-4 h-4" />
                             </Button>
                             <Button size="icon" variant="ghost" className="glass-subtle hover:scale-110 transition-transform text-text-muted">
-                              <Share2 className="w-4 h-4" />
+                              <PhShare className="w-4 h-4" />
                             </Button>
                           </div>
                           
@@ -310,13 +310,13 @@ export function ImagineTab() {
                                 size="sm"
                                 className="liquid-glass gap-2 animate-pulse-glow"
                               >
-                                <Film className="w-4 h-4" />
+                                <PhFilmStrip className="w-4 h-4" />
                                 <span className="text-xs font-sans">Animate</span>
                               </Button>
                             )}
                             {image.animated && (
                               <div className="flex items-center gap-2 text-brand-accent">
-                                <Film className="w-4 h-4" />
+                                <PhFilmStrip className="w-4 h-4" />
                                 <span className="text-xs font-sans">Animated</span>
                               </div>
                             )}
@@ -367,12 +367,12 @@ export function ImagineTab() {
                       />
                       {image.liked && (
                         <div className="absolute top-2 right-2">
-                          <Heart className="w-5 h-5 text-brand-gold fill-current" />
+                          <PhHeart className="w-5 h-5 text-brand-gold fill-current" />
                         </div>
                       )}
                       {image.animated && (
                         <div className="absolute bottom-2 right-2">
-                          <Film className="w-5 h-5 text-brand-accent" />
+                          <PhFilmStrip className="w-5 h-5 text-brand-accent" />
                         </div>
                       )}
                     </div>
@@ -396,7 +396,7 @@ export function ImagineTab() {
                 onClick={() => setShowAnimation(false)}
                 className="text-text-muted hover:text-text-primary"
               >
-                <X className="w-5 h-5" />
+                <PhX className="w-5 h-5" />
               </Button>
             </div>
 
@@ -422,7 +422,7 @@ export function ImagineTab() {
                         </div>
                       </div>
                       {stage.completed && (
-                        <Check className="w-5 h-5 text-brand-accent" />
+                        <PhCheck className="w-5 h-5 text-brand-accent" />
                       )}
                     </div>
                     <div className="h-2 bg-cosmic-raised rounded-full overflow-hidden">

@@ -2,7 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
-import { Check, Sparkles, Zap, Crown, ArrowRight } from 'lucide-react';
+import { PhCheck, PhSparkle, PhLightning, PhCrown, PhArrowRight } from '@phosphor-icons/react';
 import Link from 'next/link';
 
 const PLANS = [
@@ -87,7 +87,7 @@ export function PricingSection() {
           className="text-center mb-16"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold-bright/10 border border-gold-bright/20 mb-6">
-            <Sparkles className="w-4 h-4 text-gold-bright" />
+            <PhSparkle className="w-4 h-4 text-gold-bright" />
             <span className="text-sm font-medium text-gold-bright">Simple Pricing</span>
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
@@ -197,7 +197,7 @@ export function PricingSection() {
                   }`}
                 >
                   {plan.cta}
-                  <ArrowRight className="w-4 h-4" />
+                  <PhArrowRight className="w-4 h-4" />
                 </Link>
 
                 {/* Features */}
@@ -211,7 +211,7 @@ export function PricingSection() {
                             : 'bg-white/10 text-white'
                         }`}
                       >
-                        <Check className="w-3 h-3" />
+                        <PhCheck className="w-3 h-3" />
                       </div>
                       <span className="text-sm text-text-secondary">{feature}</span>
                     </div>
@@ -245,7 +245,7 @@ export function PricingSection() {
             className="inline-flex items-center gap-2 text-atlantean-teal-aqua hover:underline"
           >
             Contact Sales
-            <ArrowRight className="w-4 h-4" />
+            <PhArrowRight className="w-4 h-4" />
           </Link>
         </motion.div>
       </div>

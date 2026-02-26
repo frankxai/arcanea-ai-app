@@ -3,17 +3,17 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import {
-  Crown,
-  Skull,
-  Infinity as InfinityIcon,
-  Flame,
-  ShieldAlert,
-  BookOpen,
-  Zap,
-  AlertTriangle,
-  Star,
-  ArrowLeft,
-} from 'lucide-react';
+  PhCrown,
+  PhSkull,
+  PhInfinity,
+  PhFlame,
+  PhShieldWarning,
+  PhBookOpen,
+  PhLightning,
+  PhWarning,
+  PhStar,
+  PhArrowLeft,
+} from '@phosphor-icons/react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
@@ -96,7 +96,7 @@ function SealRing() {
         transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
         className="absolute inset-6 rounded-full bg-cosmic-deep/80 flex items-center justify-center border border-[#9966ff]/20"
       >
-        <Skull className="w-8 h-8 text-[#9966ff]/70" />
+        <PhSkull className="w-8 h-8 text-[#9966ff]/70" />
       </motion.div>
     </div>
   );
@@ -191,7 +191,7 @@ export function MalacharPage() {
           href="/lore"
           className="inline-flex items-center gap-2 text-sm text-text-secondary hover:text-text-primary transition-colors font-sans"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <PhArrowLeft className="w-4 h-4" />
           Lore of Arcanea
         </Link>
         <span className="text-xs font-mono text-[#9966ff]/60 tracking-widest uppercase">
@@ -403,7 +403,7 @@ export function MalacharPage() {
                 {/* Section header with crown — the glory days */}
                 <div className="flex items-center gap-4 mb-8">
                   <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-[#ffd700]/10 border border-[#ffd700]/20 flex-shrink-0">
-                    <Crown className="w-6 h-6 text-[#ffd700]" />
+                    <PhCrown className="w-6 h-6 text-[#ffd700]" />
                   </div>
                   <div>
                     <h3 className="text-2xl font-display font-bold text-[#ffd700]">
@@ -499,7 +499,7 @@ export function MalacharPage() {
                 {/* Flame/warning icon */}
                 <div className="flex items-center gap-4 mb-8">
                   <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-[#7a1f2e]/20 border border-[#7a1f2e]/30 flex-shrink-0">
-                    <Flame className="w-6 h-6 text-[#c0392b]" />
+                    <PhFlame className="w-6 h-6 text-[#c0392b]" />
                   </div>
                   <div>
                     <h3 className="text-2xl font-display font-bold text-[#c0392b]">
@@ -617,7 +617,7 @@ export function MalacharPage() {
                           'radial-gradient(ellipse at center, rgba(153,102,255,0.1) 0%, rgba(8,4,14,0.6) 70%)',
                       }}
                     >
-                      <ShieldAlert className="w-11 h-11 text-[#9966ff]/50" />
+                      <PhShieldWarning className="w-11 h-11 text-[#9966ff]/50" />
                     </motion.div>
                     <div className="text-center">
                       <p className="text-xs font-mono text-[#9966ff]/50 uppercase tracking-widest">
@@ -697,7 +697,7 @@ export function MalacharPage() {
               }}
             >
               <div className="p-8 md:p-12 text-center">
-                <BookOpen className="w-10 h-10 text-[#9966ff]/50 mx-auto mb-6" />
+                <PhBookOpen className="w-10 h-10 text-[#9966ff]/50 mx-auto mb-6" />
                 <blockquote>
                   <p className="text-2xl md:text-3xl font-body italic text-text-primary leading-relaxed max-w-3xl mx-auto">
                     &ldquo;Power without wisdom is the first step. Ambition
@@ -762,7 +762,7 @@ export function MalacharPage() {
 
               <div className="p-8 md:p-10 lg:p-12">
                 <div className="flex items-center gap-3 mb-8">
-                  <AlertTriangle className="w-5 h-5 text-fire flex-shrink-0" />
+                  <PhWarning className="w-5 h-5 text-fire flex-shrink-0" />
                   <h3 className="text-lg font-display font-bold text-text-primary">
                     Shadow is Not Nero&apos;s Power
                   </h3>
@@ -773,7 +773,7 @@ export function MalacharPage() {
                   <div className="space-y-4">
                     <div className="flex items-center gap-3 mb-4">
                       <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#9966ff]/10 border border-[#9966ff]/20">
-                        <InfinityIcon className="w-5 h-5 text-[#9966ff]" />
+                        <PhInfinity className="w-5 h-5 text-[#9966ff]" />
                       </div>
                       <div>
                         <p className="font-display font-bold text-[#9966ff] text-lg">
@@ -807,7 +807,7 @@ export function MalacharPage() {
                         key={trait}
                         className="flex items-center gap-2 text-sm text-text-secondary"
                       >
-                        <Star className="w-3 h-3 text-[#9966ff]/60 flex-shrink-0" />
+                        <PhStar className="w-3 h-3 text-[#9966ff]/60 flex-shrink-0" />
                         {trait}
                       </div>
                     ))}
@@ -817,7 +817,7 @@ export function MalacharPage() {
                   <div className="space-y-4">
                     <div className="flex items-center gap-3 mb-4">
                       <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#7a1f2e]/20 border border-[#7a1f2e]/30">
-                        <Skull className="w-5 h-5 text-[#c0392b]" />
+                        <PhSkull className="w-5 h-5 text-[#c0392b]" />
                       </div>
                       <div>
                         <p className="font-display font-bold text-[#c0392b] text-lg">
@@ -852,7 +852,7 @@ export function MalacharPage() {
                         key={trait}
                         className="flex items-center gap-2 text-sm text-text-secondary"
                       >
-                        <Zap className="w-3 h-3 text-[#c0392b]/60 flex-shrink-0" />
+                        <PhLightning className="w-3 h-3 text-[#c0392b]/60 flex-shrink-0" />
                         {trait}
                       </div>
                     ))}
@@ -921,7 +921,7 @@ export function MalacharPage() {
               <div className="relative p-10 md:p-14 text-center">
                 {/* Icon */}
                 <div className="w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center border border-[#9966ff]/20 bg-[#9966ff]/8">
-                  <InfinityIcon className="w-8 h-8 text-[#9966ff]/70" />
+                  <PhInfinity className="w-8 h-8 text-[#9966ff]/70" />
                 </div>
 
                 <h2 className="text-3xl md:text-4xl font-display font-bold text-text-primary mb-3">
@@ -945,7 +945,7 @@ export function MalacharPage() {
                       boxShadow: '0 8px 32px rgba(153,102,255,0.25)',
                     }}
                   >
-                    <Crown className="w-5 h-5" />
+                    <PhCrown className="w-5 h-5" />
                     Meet the Guardians
                   </Link>
 
@@ -953,7 +953,7 @@ export function MalacharPage() {
                     href="/lore"
                     className="inline-flex items-center gap-2 px-6 py-4 rounded-2xl font-sans font-medium text-sm text-text-secondary border border-white/10 hover:border-white/20 hover:text-text-primary glass transition-all"
                   >
-                    <ArrowLeft className="w-4 h-4" />
+                    <PhArrowLeft className="w-4 h-4" />
                     All Lore
                   </Link>
                 </div>

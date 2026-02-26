@@ -3,7 +3,7 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { PhArrowRight } from '@phosphor-icons/react';
 
 const GUARDIANS = [
   {
@@ -260,7 +260,7 @@ export function GuardiansGrid() {
 
                     {/* Expand indicator */}
                     <div className={`transition-transform ${expandedId === guardian.id ? 'rotate-90' : ''}`}>
-                      <ArrowRight className="w-5 h-5 text-text-muted" />
+                      <PhArrowRight className="w-5 h-5 text-text-muted" />
                     </div>
                   </div>
                 </div>

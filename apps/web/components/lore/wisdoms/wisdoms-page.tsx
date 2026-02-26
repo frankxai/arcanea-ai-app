@@ -3,19 +3,19 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import {
-  Mountain,
-  Droplets,
-  Flame,
-  Wind,
-  Eye,
-  Sparkles,
-  Infinity as InfinityIcon,
-  Quote,
-  ChevronDown,
-  BookOpen,
-  Lightbulb,
-  Zap,
-} from 'lucide-react';
+  PhMountains,
+  PhDrop,
+  PhFlame,
+  PhWind,
+  PhEye,
+  PhSparkle,
+  PhInfinity,
+  PhQuotes,
+  PhCaretDown,
+  PhBookOpen,
+  PhLightbulb,
+  PhLightning,
+} from '@phosphor-icons/react';
 import { cn } from '@/lib/utils';
 
 // ---------------------------------------------------------------------------
@@ -30,7 +30,7 @@ const ELEMENT_CONFIGS = {
     bgClass: 'bg-earth/10',
     glowStyle: { boxShadow: '0 0 40px rgba(74, 124, 89, 0.25)' },
     orbColor: '#4a7c59',
-    icon: Mountain,
+    icon: PhMountains,
   },
   Water: {
     color: 'crystal',
@@ -39,7 +39,7 @@ const ELEMENT_CONFIGS = {
     bgClass: 'bg-crystal/10',
     glowStyle: { boxShadow: '0 0 40px rgba(127, 255, 212, 0.2)' },
     orbColor: '#7fffd4',
-    icon: Droplets,
+    icon: PhDrop,
   },
   Fire: {
     color: 'fire',
@@ -48,7 +48,7 @@ const ELEMENT_CONFIGS = {
     bgClass: 'bg-fire/10',
     glowStyle: { boxShadow: '0 0 40px rgba(255, 107, 53, 0.25)' },
     orbColor: '#ff6b35',
-    icon: Flame,
+    icon: PhFlame,
   },
   Air: {
     color: 'wind',
@@ -57,7 +57,7 @@ const ELEMENT_CONFIGS = {
     bgClass: 'bg-wind/5',
     glowStyle: { boxShadow: '0 0 40px rgba(200, 214, 229, 0.2)' },
     orbColor: '#c8d6e5',
-    icon: Wind,
+    icon: PhWind,
   },
   Void: {
     color: 'void-el',
@@ -66,7 +66,7 @@ const ELEMENT_CONFIGS = {
     bgClass: 'bg-void-el/10',
     glowStyle: { boxShadow: '0 0 40px rgba(153, 102, 255, 0.25)' },
     orbColor: '#9966ff',
-    icon: Eye,
+    icon: PhEye,
   },
   Light: {
     color: 'brand-gold',
@@ -75,7 +75,7 @@ const ELEMENT_CONFIGS = {
     bgClass: 'bg-brand-gold/10',
     glowStyle: { boxShadow: '0 0 40px rgba(255, 215, 0, 0.25)' },
     orbColor: '#ffd700',
-    icon: Sparkles,
+    icon: PhSparkle,
   },
   All: {
     color: 'brand-primary',
@@ -84,7 +84,7 @@ const ELEMENT_CONFIGS = {
     bgClass: 'bg-brand-primary/10',
     glowStyle: { boxShadow: '0 0 40px rgba(139, 92, 246, 0.25)' },
     orbColor: '#8b5cf6',
-    icon: InfinityIcon,
+    icon: PhInfinity,
   },
 } as const;
 
@@ -369,7 +369,7 @@ function WisdomCard({ wisdom, delay }: { wisdom: Wisdom; delay: number }) {
             )}
           >
             <p className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2 flex items-center gap-2">
-              <Lightbulb className="w-3 h-3" />
+              <PhLightbulb className="w-3 h-3" />
               Signature Question
             </p>
             <p className={cn('font-crimson italic text-lg leading-relaxed', config.textClass)}>
@@ -411,7 +411,7 @@ function WhenToInvokeSection() {
           className="text-center mb-16"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary/10 border border-brand-primary/20 mb-6">
-            <Zap className="w-4 h-4 text-brand-primary" />
+            <PhLightning className="w-4 h-4 text-brand-primary" />
             <span className="text-sm font-medium text-brand-primary">Practical Invocation</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
@@ -523,7 +523,7 @@ function AtAGlanceSection() {
           className="text-center mb-16"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-gold/10 border border-brand-gold/20 mb-6">
-            <BookOpen className="w-4 h-4 text-brand-gold" />
+            <PhBookOpen className="w-4 h-4 text-brand-gold" />
             <span className="text-sm font-medium text-brand-gold">Quick Reference</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
@@ -636,7 +636,7 @@ function PhilosophySection() {
           className="text-center mb-16"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-crystal/10 border border-crystal/20 mb-6">
-            <Sparkles className="w-4 h-4 text-crystal" />
+            <PhSparkle className="w-4 h-4 text-crystal" />
             <span className="text-sm font-medium text-crystal">The Nature of Wisdom</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
@@ -795,7 +795,7 @@ export function WisdomsPage() {
             transition={{ delay: 0.2 }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary/10 border border-brand-primary/25 mb-8"
           >
-            <Sparkles className="w-4 h-4 text-brand-primary" />
+            <PhSparkle className="w-4 h-4 text-brand-primary" />
             <span className="text-sm font-medium text-brand-primary">Lore of Arcanea</span>
           </motion.div>
 
@@ -861,7 +861,7 @@ export function WisdomsPage() {
               animate={{ y: [0, 8, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
-              <ChevronDown className="w-6 h-6 text-text-muted" />
+              <PhCaretDown className="w-6 h-6 text-text-muted" />
             </motion.div>
           </motion.div>
         </div>
@@ -881,7 +881,7 @@ export function WisdomsPage() {
           {/* Section label */}
           <WisdomsSectionHeader
             badge="The Seven"
-            badgeIcon={<BookOpen className="w-4 h-4 text-brand-gold" />}
+            badgeIcon={<PhBookOpen className="w-4 h-4 text-brand-gold" />}
             badgeClass="bg-brand-gold/10 border-brand-gold/20 text-brand-gold"
             title="Aspects of the Creator Mind"
             subtitle="Each wisdom is a complete philosophy. Together they form the full spectrum of creative consciousness."

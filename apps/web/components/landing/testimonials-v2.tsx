@@ -2,7 +2,7 @@
 
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
-import { Quote, ChevronLeft, ChevronRight, Star } from 'lucide-react';
+import { PhQuotes, PhCaretLeft, PhCaretRight, PhStar } from '@phosphor-icons/react';
 
 const TESTIMONIALS = [
   {
@@ -114,7 +114,7 @@ export function TestimonialsV2() {
           className="text-center mb-16"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-creation-prism-purple/10 border border-creation-prism-purple/20 mb-6">
-            <Quote className="w-4 h-4 text-creation-prism-purple" />
+            <PhQuotes className="w-4 h-4 text-creation-prism-purple" />
             <span className="text-sm font-medium text-creation-prism-purple">Creator Stories</span>
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
@@ -148,7 +148,7 @@ export function TestimonialsV2() {
                 <div className="max-w-3xl text-center">
                   {/* Quote icon */}
                   <div className={`w-16 h-16 mx-auto mb-8 rounded-2xl bg-${activeTestimonial.color}/10 flex items-center justify-center`}>
-                    <Quote className={`w-8 h-8 text-${activeTestimonial.color}`} />
+                    <PhQuotes className={`w-8 h-8 text-${activeTestimonial.color}`} />
                   </div>
 
                   {/* Stars */}
@@ -197,7 +197,7 @@ export function TestimonialsV2() {
               className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-text-muted hover:text-white hover:bg-white/10 transition-all"
               aria-label="Previous testimonial"
             >
-              <ChevronLeft className="w-5 h-5" />
+              <PhCaretLeft className="w-5 h-5" />
             </button>
 
             {/* Dots */}
@@ -224,7 +224,7 @@ export function TestimonialsV2() {
               className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-text-muted hover:text-white hover:bg-white/10 transition-all"
               aria-label="Next testimonial"
             >
-              <ChevronRight className="w-5 h-5" />
+              <PhCaretRight className="w-5 h-5" />
             </button>
           </div>
         </motion.div>

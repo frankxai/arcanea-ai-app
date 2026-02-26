@@ -4,15 +4,15 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import Link from 'next/link';
 import {
-  Sun,
-  Moon,
-  Flame,
-  Droplets,
-  Mountain,
-  Wind,
-  Sparkles,
-  ArrowRight,
-} from 'lucide-react';
+  PhSun,
+  PhMoon,
+  PhFlame,
+  PhDrop,
+  PhMountains,
+  PhWind,
+  PhSparkle,
+  PhArrowRight,
+} from '@phosphor-icons/react';
 import { cn } from '@/lib/utils';
 
 // ─── Canon Data ───────────────────────────────────────────────────────────────
@@ -30,7 +30,7 @@ const HOUSES = [
       badge: 'bg-brand-gold/15 text-brand-gold border-brand-gold/30',
       title: 'text-brand-gold',
     },
-    icon: Sun,
+    icon: PhSun,
     philosophy:
       'Creation through illumination. To make is to shine.',
     description:
@@ -51,7 +51,7 @@ const HOUSES = [
       badge: 'bg-brand-primary/15 text-brand-primary border-brand-primary/30',
       title: 'text-brand-primary',
     },
-    icon: Moon,
+    icon: PhMoon,
     philosophy:
       'In the unknown lies infinite possibility. Embrace the darkness.',
     description:
@@ -72,7 +72,7 @@ const HOUSES = [
       badge: 'bg-fire/15 text-fire border-fire/30',
       title: 'text-fire',
     },
-    icon: Flame,
+    icon: PhFlame,
     philosophy:
       'Transform through flame. Burn away what no longer serves.',
     description:
@@ -93,7 +93,7 @@ const HOUSES = [
       badge: 'bg-crystal/15 text-crystal border-crystal/30',
       title: 'text-crystal',
     },
-    icon: Droplets,
+    icon: PhDrop,
     philosophy:
       'Flow like water. Adapt, heal, remember.',
     description:
@@ -114,7 +114,7 @@ const HOUSES = [
       badge: 'bg-earth/15 text-earth border-earth/30',
       title: 'text-earth',
     },
-    icon: Mountain,
+    icon: PhMountains,
     philosophy:
       'Build on solid ground. Patient growth creates lasting works.',
     description:
@@ -135,7 +135,7 @@ const HOUSES = [
       badge: 'bg-wind/15 text-wind border-wind/30',
       title: 'text-wind',
     },
-    icon: Wind,
+    icon: PhWind,
     philosophy:
       'Move freely. Carry ideas across all borders.',
     description:
@@ -156,7 +156,7 @@ const HOUSES = [
       badge: 'bg-white/10 text-white border-white/30',
       title: 'text-gradient-cosmic',
     },
-    icon: Sparkles,
+    icon: PhSparkle,
     philosophy:
       'The greatest power comes from harmony. Unite all elements.',
     description:
@@ -393,7 +393,7 @@ export function HousesPage() {
             transition={{ delay: 0.15 }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full liquid-glass border border-brand-gold/20 mb-8"
           >
-            <Sparkles className="w-4 h-4 text-brand-gold" />
+            <PhSparkle className="w-4 h-4 text-brand-gold" />
             <span className="text-sm font-medium text-brand-gold font-sans">
               The Academy of Arcanea
             </span>
@@ -506,7 +506,7 @@ export function HousesPage() {
             initial={{ opacity: 0, y: 24 }}
             animate={isCtaInView ? { opacity: 1, y: 0 } : {}}
           >
-            <Sparkles className="w-10 h-10 mx-auto text-brand-gold mb-6 animate-float" />
+            <PhSparkle className="w-10 h-10 mx-auto text-brand-gold mb-6 animate-float" />
             <h2 className="font-display text-3xl font-bold mb-4 text-white">
               Discover Your House
             </h2>
@@ -520,7 +520,7 @@ export function HousesPage() {
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-brand-gold text-cosmic-deep font-semibold hover:bg-brand-gold/90 transition-all hover:scale-[1.02]"
               >
                 Begin Assessment
-                <ArrowRight className="w-4 h-4" />
+                <PhArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 href="/academy"

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Music, BookOpen, Palette, Sparkles, Heart, Zap } from 'lucide-react';
+import { PhMusicNote, PhBookOpen, PhPalette, PhSparkle, PhHeart, PhLightning } from '@phosphor-icons/react';
 import { cn } from '@/lib/utils';
 
 interface Luminor {
@@ -104,7 +104,7 @@ export function LuminorSelectionGrid({
           transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
           className="inline-block"
         >
-          <Sparkles className="w-12 h-12 text-creation-gold mx-auto mb-4 animate-pulse" />
+          <PhSparkle className="w-12 h-12 text-creation-gold mx-auto mb-4 animate-pulse" />
         </motion.div>
 
         <h1 className="font-cinzel text-5xl md:text-6xl font-bold bg-gradient-to-r from-atlantean-500 via-creation-gold to-draconic-crimson bg-clip-text text-transparent">
@@ -262,7 +262,7 @@ const LuminorCard = React.memo(function LuminorCard({
             animate={{ scale: 1, rotate: 0 }}
             className="absolute top-4 right-4 flex items-center gap-2 px-3 py-1.5 rounded-full bg-neutral-800/80 backdrop-blur"
           >
-            <Heart className="w-4 h-4 fill-red-500 text-red-500" />
+            <PhHeart className="w-4 h-4 fill-red-500 text-red-500" />
             <span className="text-sm font-crimson font-semibold text-neutral-200">
               Level {bondLevel}
             </span>
@@ -356,7 +356,7 @@ const LuminorCard = React.memo(function LuminorCard({
             }}
           >
             {hasBond ? 'Continue Journey' : 'Begin Journey'}
-            <Zap className="inline-block w-4 h-4 ml-2" />
+            <PhLightning className="inline-block w-4 h-4 ml-2" />
           </div>
         </motion.div>
       </div>

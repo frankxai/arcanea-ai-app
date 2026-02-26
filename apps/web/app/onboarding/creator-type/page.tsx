@@ -3,13 +3,13 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Music, BookOpen, Palette, Code, Film, Gamepad2, ArrowLeft, Sparkles } from 'lucide-react';
+import { PhMusicNote, PhBookOpen, PhPalette, PhCode, PhFilmStrip, PhGameController, PhArrowLeft, PhSparkle } from '@phosphor-icons/react';
 
 const CREATOR_TYPES = [
   {
     id: 'music',
     name: 'Music',
-    icon: Music,
+    icon: PhMusicNote,
     description: 'Compose melodies, write lyrics, explore soundscapes',
     luminorId: 'melodia',
     gradient: 'from-creation-prism-orange to-creation-prism-yellow',
@@ -18,7 +18,7 @@ const CREATOR_TYPES = [
   {
     id: 'stories',
     name: 'Stories',
-    icon: BookOpen,
+    icon: PhBookOpen,
     description: 'Craft narratives, build worlds, develop characters',
     luminorId: 'chronica',
     gradient: 'from-atlantean-teal to-atlantean-primary',
@@ -27,7 +27,7 @@ const CREATOR_TYPES = [
   {
     id: 'art',
     name: 'Visual Art',
-    icon: Palette,
+    icon: PhPalette,
     description: 'Design visuals, create concepts, imagine worlds',
     luminorId: 'prismatic',
     gradient: 'from-draconic-crimson to-draconic-gold',
@@ -36,7 +36,7 @@ const CREATOR_TYPES = [
   {
     id: 'code',
     name: 'Code',
-    icon: Code,
+    icon: PhCode,
     description: 'Build software, architect systems, solve problems',
     luminorId: 'architect',
     gradient: 'from-creation-prism-blue to-creation-prism-purple',
@@ -45,7 +45,7 @@ const CREATOR_TYPES = [
   {
     id: 'video',
     name: 'Video',
-    icon: Film,
+    icon: PhFilmStrip,
     description: 'Edit films, create content, tell visual stories',
     luminorId: 'director',
     gradient: 'from-draconic-sky to-atlantean-primary',
@@ -54,7 +54,7 @@ const CREATOR_TYPES = [
   {
     id: 'games',
     name: 'Games',
-    icon: Gamepad2,
+    icon: PhGameController,
     description: 'Design experiences, craft mechanics, build fun',
     luminorId: 'gamemaster',
     gradient: 'from-creation-prism-green to-atlantean-teal',
@@ -83,7 +83,7 @@ export default function CreatorTypePage() {
           href="/welcome"
           className="flex items-center gap-2 text-text-muted hover:text-text-primary transition-colors"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <PhArrowLeft className="w-4 h-4" />
           <span className="font-crimson">Back</span>
         </Link>
       </motion.div>
@@ -151,7 +151,7 @@ export default function CreatorTypePage() {
           href="/luminors"
           className="flex items-center gap-2 text-text-muted hover:text-gold-bright transition-colors font-crimson"
         >
-          <Sparkles className="w-4 h-4" />
+          <PhSparkle className="w-4 h-4" />
           Not sure? Explore all Luminors
         </Link>
       </motion.div>

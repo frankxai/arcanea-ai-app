@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Heart, MessageCircle, Eye, Play, Image as ImageIcon } from 'lucide-react';
+import { PhHeart, PhChatCircle, PhEye, PhPlay, PhImage } from '@phosphor-icons/react';
 import { Creation } from '@/lib/types/profile';
 
 interface CreationCardProps {
@@ -18,9 +18,9 @@ export const CreationCard = React.memo(function CreationCard({ creation, onClick
   const getTypeIcon = React.useCallback(() => {
     switch (creation.type) {
       case 'video':
-        return <Play className="w-5 h-5" />;
+        return <PhPlay className="w-5 h-5" />;
       case 'image':
-        return <ImageIcon className="w-5 h-5" />;
+        return <PhImage className="w-5 h-5" />;
       default:
         return null;
     }
@@ -116,7 +116,7 @@ export const CreationCard = React.memo(function CreationCard({ creation, onClick
               whileHover={{ scale: 1.2 }}
               className="w-16 h-16 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center border-2 border-white/30"
             >
-              <Play className="w-8 h-8 text-white ml-1" />
+              <PhPlay className="w-8 h-8 text-white ml-1" />
             </motion.div>
           </div>
         )}
@@ -144,15 +144,15 @@ export const CreationCard = React.memo(function CreationCard({ creation, onClick
             {/* Stats */}
             <div className="flex items-center gap-4 text-white/80">
               <div className="flex items-center gap-1.5 text-sm">
-                <Heart className="w-4 h-4" />
+                <PhHeart className="w-4 h-4" />
                 <span>{creation.stats.likes.toLocaleString()}</span>
               </div>
               <div className="flex items-center gap-1.5 text-sm">
-                <MessageCircle className="w-4 h-4" />
+                <PhChatCircle className="w-4 h-4" />
                 <span>{creation.stats.comments.toLocaleString()}</span>
               </div>
               <div className="flex items-center gap-1.5 text-sm">
-                <Eye className="w-4 h-4" />
+                <PhEye className="w-4 h-4" />
                 <span>{creation.stats.views.toLocaleString()}</span>
               </div>
             </div>
@@ -167,11 +167,11 @@ export const CreationCard = React.memo(function CreationCard({ creation, onClick
         </h3>
         <div className="flex items-center gap-3 text-slate-400 text-xs">
           <div className="flex items-center gap-1">
-            <Heart className="w-3 h-3" />
+            <PhHeart className="w-3 h-3" />
             <span>{creation.stats.likes}</span>
           </div>
           <div className="flex items-center gap-1">
-            <MessageCircle className="w-3 h-3" />
+            <PhChatCircle className="w-3 h-3" />
             <span>{creation.stats.comments}</span>
           </div>
         </div>

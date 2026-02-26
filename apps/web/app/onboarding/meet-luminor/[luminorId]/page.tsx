@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
-import { ArrowLeft, ArrowRight, Sparkles, Music, BookOpen, Palette } from 'lucide-react';
+import { PhArrowLeft, PhArrowRight, PhSparkle, PhMusicNote, PhBookOpen, PhPalette } from '@phosphor-icons/react';
 
 // Luminor data - expanded from the selection grid
 const LUMINORS: Record<string, {
@@ -103,7 +103,7 @@ export default function MeetLuminorPage() {
           href="/onboarding/creator-type"
           className="flex items-center gap-2 text-text-muted hover:text-text-primary transition-colors"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <PhArrowLeft className="w-4 h-4" />
           <span className="font-crimson">Back</span>
         </Link>
       </motion.div>
@@ -209,14 +209,14 @@ export default function MeetLuminorPage() {
             style={{ backgroundColor: luminor.primaryColor }}
           >
             Start Creating
-            <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+            <PhArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
           </button>
 
           <Link
             href="/luminors"
             className="flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-cosmic-border-bright text-text-secondary font-crimson font-medium hover:border-text-muted hover:text-text-primary transition-all"
           >
-            <Sparkles className="w-4 h-4" />
+            <PhSparkle className="w-4 h-4" />
             Meet other Luminors
           </Link>
         </motion.div>

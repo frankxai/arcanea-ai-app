@@ -3,14 +3,14 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import {
-  Flame,
-  Eye,
-  ScrollText,
-  Skull,
-  Shield,
-  ArrowRight,
-  Compass,
-} from 'lucide-react';
+  PhFlame,
+  PhEye,
+  PhScroll,
+  PhSkull,
+  PhShield,
+  PhArrowRight,
+  PhCompass,
+} from '@phosphor-icons/react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
@@ -19,7 +19,7 @@ const EXPLORATIONS = [
     href: '/lore/guardians',
     title: 'The Ten Guardians',
     description: 'Gods and Goddesses who guard the Gates of creation',
-    icon: Shield,
+    icon: PhShield,
     gradient: 'from-crystal/20 to-brand-primary/10',
     accentColor: 'text-crystal',
     borderColor: 'border-crystal/20 hover:border-crystal/40',
@@ -28,7 +28,7 @@ const EXPLORATIONS = [
     href: '/lore/godbeasts',
     title: 'The Godbeasts',
     description: 'Primal divine creatures bonded to each Guardian',
-    icon: Eye,
+    icon: PhEye,
     gradient: 'from-brand-gold/20 to-amber-500/10',
     accentColor: 'text-brand-gold',
     borderColor: 'border-brand-gold/20 hover:border-brand-gold/40',
@@ -37,7 +37,7 @@ const EXPLORATIONS = [
     href: '/lore/elements',
     title: 'Five Elements',
     description: 'Fire, Water, Earth, Wind, and the Void/Spirit duality',
-    icon: Flame,
+    icon: PhFlame,
     gradient: 'from-fire/20 to-orange-500/10',
     accentColor: 'text-fire',
     borderColor: 'border-fire/20 hover:border-fire/40',
@@ -46,7 +46,7 @@ const EXPLORATIONS = [
     href: '/lore/wisdoms',
     title: 'Seven Wisdoms',
     description: 'Sacred teachings that guide the creative path',
-    icon: ScrollText,
+    icon: PhScroll,
     gradient: 'from-brand-primary/20 to-purple-500/10',
     accentColor: 'text-brand-primary',
     borderColor: 'border-brand-primary/20 hover:border-brand-primary/40',
@@ -55,7 +55,7 @@ const EXPLORATIONS = [
     href: '/lore/malachar',
     title: 'Malachar',
     description: 'The Dark Lord sealed in the Shadowfen — a cautionary tale',
-    icon: Skull,
+    icon: PhSkull,
     gradient: 'from-red-500/20 to-purple-900/10',
     accentColor: 'text-red-400',
     borderColor: 'border-red-400/20 hover:border-red-400/40',
@@ -79,7 +79,7 @@ export function LoreExploreGrid() {
           className="text-center mb-14"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary/10 border border-brand-primary/20 mb-6">
-            <Compass className="w-4 h-4 text-brand-primary" />
+            <PhCompass className="w-4 h-4 text-brand-primary" />
             <span className="text-sm font-medium text-brand-primary">
               Explore the Universe
             </span>
@@ -132,7 +132,7 @@ export function LoreExploreGrid() {
                     )}
                   >
                     Explore
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <PhArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </span>
                 </Link>
               </motion.div>

@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Shield, Sparkles } from 'lucide-react';
+import { PhShield, PhSparkle } from '@phosphor-icons/react';
 
 export function GuardiansHero() {
   return (
@@ -49,7 +49,7 @@ export function GuardiansHero() {
           animate={{ opacity: 1, y: 0 }}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-atlantean-teal-aqua/10 border border-atlantean-teal-aqua/20 mb-6"
         >
-          <Shield className="w-4 h-4 text-atlantean-teal-aqua" />
+          <PhShield className="w-4 h-4 text-atlantean-teal-aqua" />
           <span className="text-sm font-medium text-atlantean-teal-aqua">Keepers of the Gates</span>
         </motion.div>
 

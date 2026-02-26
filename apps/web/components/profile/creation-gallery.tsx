@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Grid, LayoutGrid, Filter, SortAsc } from 'lucide-react';
+import { PhSquaresFour, PhGridFour, PhFunnel, PhSortAscending } from '@phosphor-icons/react';
 import { Creation, FilterType, SortOption } from '@/lib/types/profile';
 import { CreationCard } from './creation-card';
 import { CreationModal } from './creation-modal';
@@ -160,7 +160,7 @@ export function CreationGallery({
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              <LayoutGrid className="w-5 h-5" />
+              <PhGridFour className="w-5 h-5" />
             </Button>
             <Button
               onClick={() => setLayout('grid')}
@@ -170,7 +170,7 @@ export function CreationGallery({
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              <Grid className="w-5 h-5" />
+              <PhSquaresFour className="w-5 h-5" />
             </Button>
           </div>
         </div>

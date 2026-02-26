@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Sparkles, BookOpen, Lightbulb, Zap } from 'lucide-react';
+import { PhSparkle, PhBookOpen, PhLightbulb, PhLightning } from '@phosphor-icons/react';
 
 interface QuickAction {
   id: string;
@@ -141,21 +141,21 @@ const getActionsForLuminor = (
   return [
     {
       id: 'start-project',
-      icon: Sparkles,
+      icon: PhSparkle,
       label: 'Start a Project',
       prompt: 'I want to start a new creative project. Can you guide me?',
       color: luminorColor,
     },
     {
       id: 'learn-something',
-      icon: BookOpen,
+      icon: PhBookOpen,
       label: 'Learn Something',
       prompt: 'I want to learn something new. What can you teach me?',
       color: luminorColor,
     },
     {
       id: 'get-inspired',
-      icon: Lightbulb,
+      icon: PhLightbulb,
       label: 'Get Inspired',
       prompt: 'I need creative inspiration. Can you help spark some ideas?',
       color: luminorColor,

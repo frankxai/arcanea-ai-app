@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { MessageCircle, Sparkles, Heart, TrendingUp } from 'lucide-react';
+import { PhChatCircle, PhSparkle, PhHeart, PhTrendUp } from '@phosphor-icons/react';
 import { LuminorBond } from '@/lib/types/profile';
 import { Button } from '@/lib/arcanea-ui';
 import { Progress } from '@radix-ui/react-progress';
@@ -123,7 +123,7 @@ export function LuminorBonds({ bonds, onChatWithLuminor }: LuminorBondsProps) {
                       bond.academy
                     )} text-white text-sm font-medium`}
                   >
-                    <Sparkles className="w-3 h-3" />
+                    <PhSparkle className="w-3 h-3" />
                     {bond.academy} Academy
                   </div>
                 </div>
@@ -163,7 +163,7 @@ export function LuminorBonds({ bonds, onChatWithLuminor }: LuminorBondsProps) {
                 {/* Conversations */}
                 <div className="bg-slate-800/50 rounded-xl p-3">
                   <div className="flex items-center gap-2 mb-1">
-                    <MessageCircle className="w-4 h-4 text-blue-400" />
+                    <PhChatCircle className="w-4 h-4 text-blue-400" />
                     <span className="text-slate-400 text-xs">Conversations</span>
                   </div>
                   <div className="text-xl font-bold text-white">
@@ -174,7 +174,7 @@ export function LuminorBonds({ bonds, onChatWithLuminor }: LuminorBondsProps) {
                 {/* Compatibility */}
                 <div className="bg-slate-800/50 rounded-xl p-3">
                   <div className="flex items-center gap-2 mb-1">
-                    <Heart className="w-4 h-4 text-pink-400" />
+                    <PhHeart className="w-4 h-4 text-pink-400" />
                     <span className="text-slate-400 text-xs">Compatibility</span>
                   </div>
                   <div className="text-xl font-bold text-white flex items-center gap-1">
@@ -203,7 +203,7 @@ export function LuminorBonds({ bonds, onChatWithLuminor }: LuminorBondsProps) {
                   bond.academy
                 )} hover:opacity-90 text-white font-semibold py-3 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2`}
               >
-                <MessageCircle className="w-4 h-4" />
+                <PhChatCircle className="w-4 h-4" />
                 Chat with {bond.luminor_name}
               </Button>
             </div>

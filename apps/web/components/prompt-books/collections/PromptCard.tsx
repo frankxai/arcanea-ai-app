@@ -1,6 +1,6 @@
 'use client'
 
-import { Star, Copy, MoreVertical } from 'lucide-react'
+import { PhStar, PhCopy, PhDotsThreeVertical } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
 import { PROMPT_TYPES } from '@/lib/prompt-books/constants'
 import type { Prompt } from '@/lib/prompt-books/types'
@@ -80,7 +80,7 @@ export function PromptCard({
             className="p-1.5 rounded-lg hover:bg-cosmic-raised"
             title="Copy to clipboard"
           >
-            <Copy className="w-3.5 h-3.5 text-text-muted" />
+            <PhCopy className="w-3.5 h-3.5 text-text-muted" />
           </button>
           <button
             onClick={(e) => { e.stopPropagation(); onFavorite() }}

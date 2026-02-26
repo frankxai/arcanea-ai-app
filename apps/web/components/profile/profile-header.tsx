@@ -2,7 +2,7 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import { Button } from '@/lib/arcanea-ui';
-import { Share2, UserPlus, UserCheck, MessageCircle, MapPin } from 'lucide-react';
+import { PhShare, PhUserPlus, PhUserCheck, PhChatCircle, PhMapPin } from '@phosphor-icons/react';
 import { motion } from 'framer-motion';
 import { Profile } from '@/lib/types/profile';
 import { useState } from 'react';
@@ -131,7 +131,7 @@ export function ProfileHeader({
                     className="px-4 py-2 rounded-full bg-gradient-to-r from-purple-600/20 to-blue-600/20 border border-purple-500/30 backdrop-blur-sm"
                   >
                     <div className="flex items-center gap-2">
-                      <MapPin className="w-4 h-4 text-purple-400" />
+                      <PhMapPin className="w-4 h-4 text-purple-400" />
                       <span className="text-purple-300 font-medium">{academy}</span>
                     </div>
                   </motion.div>
@@ -185,12 +185,12 @@ export function ProfileHeader({
                   >
                     {isFollowing ? (
                       <>
-                        <UserCheck className="w-4 h-4 mr-2" />
+                        <PhUserCheck className="w-4 h-4 mr-2" />
                         Following
                       </>
                     ) : (
                       <>
-                        <UserPlus className="w-4 h-4 mr-2" />
+                        <PhUserPlus className="w-4 h-4 mr-2" />
                         Follow
                       </>
                     )}
@@ -201,7 +201,7 @@ export function ProfileHeader({
                       onClick={onMessage}
                       className="bg-slate-700 hover:bg-slate-600 text-white px-6 py-2 rounded-xl font-semibold transition-all duration-300"
                     >
-                      <MessageCircle className="w-4 h-4 mr-2" />
+                      <PhChatCircle className="w-4 h-4 mr-2" />
                       Message
                     </Button>
                   )}
@@ -212,7 +212,7 @@ export function ProfileHeader({
                 onClick={handleShareProfile}
                 className="bg-slate-700 hover:bg-slate-600 text-white px-6 py-2 rounded-xl font-semibold transition-all duration-300"
               >
-                <Share2 className="w-4 h-4 mr-2" />
+                <PhShare className="w-4 h-4 mr-2" />
                 Share
               </Button>
 

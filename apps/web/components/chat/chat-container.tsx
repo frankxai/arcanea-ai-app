@@ -3,7 +3,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { ChatMessage } from './message';
 import { StreamingMessage } from './streaming-message';
-import { ArrowDown, Loader2 } from 'lucide-react';
+import { PhArrowDown, PhCircleNotch } from '@phosphor-icons/react';
 import { EmotionalTone } from '@/hooks/use-chat';
 
 interface Message {
@@ -106,7 +106,7 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
             <div className="flex justify-center py-4">
               {isLoadingMore ? (
                 <div className="flex items-center gap-2 text-gray-400">
-                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <PhCircleNotch className="w-4 h-4 animate-spin" />
                   <span className="text-sm">Loading more messages...</span>
                 </div>
               ) : (
@@ -194,7 +194,7 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
             boxShadow: `0 4px 20px ${luminorColor}60`,
           }}
         >
-          <ArrowDown className="w-6 h-6 text-white" />
+          <PhArrowDown className="w-6 h-6 text-white" />
         </button>
       )}
     </div>

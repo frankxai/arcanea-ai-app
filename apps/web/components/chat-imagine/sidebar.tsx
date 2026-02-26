@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { MessageSquare, Sparkles, BookOpen, Wand2, Plus, ChevronLeft, ChevronRight, Settings, User, Search } from 'lucide-react'
+import { PhChatSquare, PhSparkle, PhBookOpen, PhMagicWand, PhPlus, PhCaretLeft, PhCaretRight, PhGear, PhUser, PhMagnifyingGlass } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
@@ -68,7 +68,7 @@ export function Sidebar({ activeTab, onTabChange, collapsed, onToggleCollapse }:
       {!collapsed && (
         <div className="p-3">
           <Button className="w-full liquid-glass justify-start gap-2 hover:scale-[1.02] transition-transform group">
-            <Plus className="w-4 h-4 text-brand-accent" />
+            <PhPlus className="w-4 h-4 text-brand-accent" />
             <span className="font-sans font-medium">New Chat</span>
           </Button>
         </div>
@@ -113,7 +113,7 @@ export function Sidebar({ activeTab, onTabChange, collapsed, onToggleCollapse }:
           {/* Search Bar */}
           <div className="px-2">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
+              <PhMagnifyingGlass className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
               <Input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -171,7 +171,7 @@ export function Sidebar({ activeTab, onTabChange, collapsed, onToggleCollapse }:
           <div className="glass-subtle rounded-lg p-3 space-y-2">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-brand-primary to-brand-accent flex items-center justify-center">
-                <User className="w-5 h-5 text-cosmic-void" />
+                <PhUser className="w-5 h-5 text-cosmic-void" />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-sans font-medium text-text-primary truncate">Explorer</p>
@@ -201,7 +201,7 @@ export function Sidebar({ activeTab, onTabChange, collapsed, onToggleCollapse }:
               className="flex-1 text-text-muted hover:text-text-primary hover:bg-cosmic-raised"
               aria-label="Settings"
             >
-              <Settings className="w-4 h-4" />
+              <PhGear className="w-4 h-4" />
             </Button>
           )}
           <Button
@@ -211,7 +211,7 @@ export function Sidebar({ activeTab, onTabChange, collapsed, onToggleCollapse }:
             className="text-text-muted hover:text-text-primary hover:bg-cosmic-raised"
             aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
-            {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
+            {collapsed ? <PhCaretRight className="w-4 h-4" /> : <PhCaretLeft className="w-4 h-4" />}
           </Button>
         </div>
       </div>

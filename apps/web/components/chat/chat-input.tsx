@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Image, Loader2, X, Paperclip } from 'lucide-react';
+import { PhPaperPlane, PhImage, PhCircleNotch, PhX, PhPaperclip } from '@phosphor-icons/react';
 
 interface ChatInputProps {
   onSend: (message: string, attachments?: File[]) => void;
@@ -109,7 +109,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
                       className="w-full h-full object-cover"
                     />
                   ) : (
-                    <Paperclip className="w-6 h-6 text-gray-400" />
+                    <PhPaperclip className="w-6 h-6 text-gray-400" />
                   )}
                 </div>
                 <button
@@ -117,7 +117,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
                   aria-label={`Remove attachment ${file.name}`}
                   className="absolute top-1 right-1 w-5 h-5 rounded-full bg-red-500 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                 >
-                  <X className="w-3 h-3 text-white" aria-hidden="true" />
+                  <PhX className="w-3 h-3 text-white" aria-hidden="true" />
                 </button>
               </div>
             ))}
@@ -172,9 +172,9 @@ export const ChatInput: React.FC<ChatInputProps> = ({
                   </span>
                 )}
                 {uploadingImage ? (
-                  <Loader2 className="w-5 h-5 animate-spin" aria-hidden="true" />
+                  <PhCircleNotch className="w-5 h-5 animate-spin" aria-hidden="true" />
                 ) : (
-                  <Image className="w-5 h-5" aria-hidden="true" />
+                  <PhImage className="w-5 h-5" aria-hidden="true" />
                 )}
               </button>
 
@@ -189,7 +189,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
                 }}
                 aria-label="Send message (Press Enter)"
               >
-                <Send className="w-5 h-5 text-white" aria-hidden="true" />
+                <PhPaperPlane className="w-5 h-5 text-white" aria-hidden="true" />
               </button>
             </div>
           </div>

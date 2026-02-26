@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Camera, Save, X } from 'lucide-react';
+import { PhCamera, PhFloppyDisk, PhX } from '@phosphor-icons/react';
 import { Button } from '@/lib/arcanea-ui';
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 
@@ -110,7 +110,7 @@ export default function EditProfilePage() {
                   htmlFor="avatar-upload"
                   className="absolute inset-0 flex items-center justify-center bg-black/60 rounded-full opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
                 >
-                  <Camera className="w-8 h-8 text-white" />
+                  <PhCamera className="w-8 h-8 text-white" />
                 </label>
                 <input
                   id="avatar-upload"
@@ -278,7 +278,7 @@ export default function EditProfilePage() {
               onClick={handleCancel}
               className="px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold transition-colors"
             >
-              <X className="w-4 h-4 mr-2" />
+              <PhX className="w-4 h-4 mr-2" />
               Cancel
             </Button>
 
@@ -287,7 +287,7 @@ export default function EditProfilePage() {
               disabled={isSubmitting}
               className="px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold transition-all duration-300 shadow-lg hover:shadow-purple-500/50 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <Save className="w-4 h-4 mr-2" />
+              <PhFloppyDisk className="w-4 h-4 mr-2" />
               {isSubmitting ? 'Saving...' : isSaved ? 'Saved!' : 'Save Changes'}
             </Button>
           </div>

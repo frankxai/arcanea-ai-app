@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Loader2, Image, Video, Music, Download, Eye, Sparkles } from 'lucide-react';
+import { PhCircleNotch, PhImage, PhVideo, PhMusicNote, PhDownload, PhEye, PhSparkle } from '@phosphor-icons/react';
 
 interface GenerationIndicatorProps {
   type: 'image' | 'video' | 'music';
@@ -101,7 +101,7 @@ export const GenerationIndicator: React.FC<GenerationIndicatorProps> = ({
           }}
         >
           {status === 'generating' ? (
-            <Loader2 className="w-5 h-5 animate-spin" />
+            <PhCircleNotch className="w-5 h-5 animate-spin" />
           ) : (
             <Icon className="w-5 h-5" />
           )}
@@ -113,7 +113,7 @@ export const GenerationIndicator: React.FC<GenerationIndicatorProps> = ({
               {label} Generation
             </h4>
             {status === 'completed' && (
-              <Sparkles className="w-4 h-4 text-yellow-400" />
+              <PhSparkle className="w-4 h-4 text-yellow-400" />
             )}
           </div>
           <p className="text-xs text-gray-400">{message}</p>
@@ -181,7 +181,7 @@ export const GenerationIndicator: React.FC<GenerationIndicatorProps> = ({
                   className="p-2 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-colors"
                   title="View full size"
                 >
-                  <Eye className="w-5 h-5 text-white" />
+                  <PhEye className="w-5 h-5 text-white" />
                 </button>
               )}
               {onSave && (
@@ -190,7 +190,7 @@ export const GenerationIndicator: React.FC<GenerationIndicatorProps> = ({
                   className="p-2 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-colors"
                   title="Save to profile"
                 >
-                  <Download className="w-5 h-5 text-white" />
+                  <PhDownload className="w-5 h-5 text-white" />
                 </button>
               )}
             </div>
@@ -210,7 +210,7 @@ export const GenerationIndicator: React.FC<GenerationIndicatorProps> = ({
                 onClick={onView}
                 className="flex-1 px-3 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300 text-sm font-medium transition-colors flex items-center justify-center gap-2"
               >
-                <Eye className="w-4 h-4" />
+                <PhEye className="w-4 h-4" />
                 View
               </button>
             )}
@@ -223,7 +223,7 @@ export const GenerationIndicator: React.FC<GenerationIndicatorProps> = ({
                   boxShadow: `0 0 20px ${luminorColor}40`,
                 }}
               >
-                <Download className="w-4 h-4 inline mr-1" />
+                <PhDownload className="w-4 h-4 inline mr-1" />
                 Save
               </button>
             )}

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Search, TrendingUp, Clock, Users, Sparkles } from 'lucide-react';
+import { PhMagnifyingGlass, PhTrendUp, PhClock, PhUsers, PhSparkle } from '@phosphor-icons/react';
 import { CreationCard } from '@/components/profile/creation-card';
 import { Creation } from '@/lib/types/profile';
 import { Button } from '@/lib/arcanea-ui';
@@ -108,7 +108,7 @@ export default function DiscoverPage() {
           className="max-w-2xl mx-auto"
         >
           <div className="relative">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
+            <PhMagnifyingGlass className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 w-5 h-5" />
             <input
               type="text"
               value={searchQuery}
@@ -134,7 +134,7 @@ export default function DiscoverPage() {
                 : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
             }`}
           >
-            <TrendingUp className="w-4 h-4" />
+            <PhTrendUp className="w-4 h-4" />
             Trending
           </Button>
 
@@ -146,7 +146,7 @@ export default function DiscoverPage() {
                 : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
             }`}
           >
-            <Clock className="w-4 h-4" />
+            <PhClock className="w-4 h-4" />
             Recent
           </Button>
 
@@ -158,7 +158,7 @@ export default function DiscoverPage() {
                 : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
             }`}
           >
-            <Users className="w-4 h-4" />
+            <PhUsers className="w-4 h-4" />
             Following
           </Button>
         </motion.div>
@@ -171,7 +171,7 @@ export default function DiscoverPage() {
         >
           <div className="text-center mb-4">
             <div className="flex items-center justify-center gap-2 text-slate-400 text-sm uppercase tracking-wider">
-              <Sparkles className="w-4 h-4" />
+              <PhSparkle className="w-4 h-4" />
               <span>Filter by Academy</span>
             </div>
           </div>

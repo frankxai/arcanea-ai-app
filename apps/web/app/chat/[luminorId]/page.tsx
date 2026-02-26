@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Menu, X, AlertCircle } from 'lucide-react';
+import { PhList, PhX, PhWarningCircle } from '@phosphor-icons/react';
 import { LuminorHeader } from '@/components/chat/luminor-header';
 import { ChatContainer } from '@/components/chat/chat-container';
 import { ChatInput } from '@/components/chat/chat-input';
@@ -111,14 +111,14 @@ export default function ChatPage() {
         <div className="bg-red-500/10 border-b border-red-500/30 px-4 py-3">
           <div className="max-w-5xl mx-auto flex items-center justify-between">
             <div className="flex items-center gap-2 text-red-400 text-sm">
-              <AlertCircle className="w-4 h-4" />
+              <PhWarningCircle className="w-4 h-4" />
               <span>{error}</span>
             </div>
             <button
               onClick={clearError}
               className="text-red-400 hover:text-red-300"
             >
-              <X className="w-4 h-4" />
+              <PhX className="w-4 h-4" />
             </button>
           </div>
         </div>
@@ -188,9 +188,9 @@ export default function ChatPage() {
         }}
       >
         {sidebarOpen ? (
-          <X className="w-6 h-6 text-white" />
+          <PhX className="w-6 h-6 text-white" />
         ) : (
-          <Menu className="w-6 h-6 text-white" />
+          <PhList className="w-6 h-6 text-white" />
         )}
       </button>
     </div>

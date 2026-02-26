@@ -2,9 +2,9 @@
 
 import { useState, useMemo, useCallback } from 'react'
 import {
-  ChevronDown, ChevronRight, PanelRightClose, PanelRightOpen,
-  Settings2, MessageSquareText, Link2, Eye,
-} from 'lucide-react'
+  PhCaretDown, PhCaretRight, PhSidebarSimple, PhSidebarSimple as PhSidebarOpen,
+  PhSlidersHorizontal, PhChatText, PhLink, PhEye,
+} from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
 import { compilePrompt } from '@/lib/prompt-books/context-engine'
 import type { Prompt, ContextConfig, FewShotExample, ChainStep } from '@/lib/prompt-books/types'
@@ -42,9 +42,9 @@ function Section({ title, icon, defaultOpen = true, children }: SectionProps) {
         )}
       >
         {open ? (
-          <ChevronDown className="w-3.5 h-3.5 text-text-muted" />
+          <PhCaretDown className="w-3.5 h-3.5 text-text-muted" />
         ) : (
-          <ChevronRight className="w-3.5 h-3.5 text-text-muted" />
+          <PhCaretRight className="w-3.5 h-3.5 text-text-muted" />
         )}
         {icon}
         <span className="uppercase tracking-wider">{title}</span>
@@ -117,7 +117,7 @@ export function ContextPanel({
           )}
           title="Open context panel"
         >
-          <PanelRightOpen className="w-4 h-4" />
+          <PhSidebarOpen className="w-4 h-4" />
         </button>
       </div>
     )
@@ -145,7 +145,7 @@ export function ContextPanel({
           )}
           title="Close context panel"
         >
-          <PanelRightClose className="w-4 h-4" />
+          <PhSidebarSimple className="w-4 h-4" />
         </button>
       </div>
 
@@ -154,7 +154,7 @@ export function ContextPanel({
         {/* Model & Parameters */}
         <Section
           title="Model & Parameters"
-          icon={<Settings2 className="w-3.5 h-3.5" />}
+          icon={<PhSlidersHorizontal className="w-3.5 h-3.5" />}
           defaultOpen
         >
           <div className="space-y-3">
@@ -178,7 +178,7 @@ export function ContextPanel({
         {typeConfig.hasFewShot && (
           <Section
             title="Few-Shot Examples"
-            icon={<MessageSquareText className="w-3.5 h-3.5" />}
+            icon={<PhChatText className="w-3.5 h-3.5" />}
             defaultOpen={fewShotExamples.length > 0}
           >
             <FewShotEditor
@@ -192,7 +192,7 @@ export function ContextPanel({
         {typeConfig.hasChain && (
           <Section
             title="Chain Steps"
-            icon={<Link2 className="w-3.5 h-3.5" />}
+            icon={<PhLink className="w-3.5 h-3.5" />}
             defaultOpen={chainSteps.length > 0}
           >
             <ChainBuilder
@@ -206,7 +206,7 @@ export function ContextPanel({
         {/* Preview */}
         <Section
           title="Preview"
-          icon={<Eye className="w-3.5 h-3.5" />}
+          icon={<PhEye className="w-3.5 h-3.5" />}
           defaultOpen={false}
         >
           <ContextPreview contextPackage={compiledPackage} />

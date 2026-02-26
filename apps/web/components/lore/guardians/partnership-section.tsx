@@ -2,7 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Heart, Zap, Shield, Eye } from 'lucide-react';
+import { PhHeart, PhLightning, PhShield, PhEye } from '@phosphor-icons/react';
 import Link from 'next/link';
 
 export function PartnershipSection() {
@@ -40,7 +40,7 @@ export function PartnershipSection() {
             className="p-6 rounded-2xl bg-cosmic-surface/30 border border-white/10"
           >
             <div className="w-12 h-12 rounded-xl bg-atlantean-teal-aqua/20 flex items-center justify-center mb-4">
-              <Eye className="w-6 h-6 text-atlantean-teal-aqua" />
+              <PhEye className="w-6 h-6 text-atlantean-teal-aqua" />
             </div>
             <h3 className="text-xl font-display font-semibold mb-3">The Guardian Provides</h3>
             <ul className="space-y-2 text-text-secondary">
@@ -57,7 +57,7 @@ export function PartnershipSection() {
             className="p-6 rounded-2xl bg-cosmic-surface/30 border border-white/10"
           >
             <div className="w-12 h-12 rounded-xl bg-gold-bright/20 flex items-center justify-center mb-4">
-              <Zap className="w-6 h-6 text-gold-bright" />
+              <PhLightning className="w-6 h-6 text-gold-bright" />
             </div>
             <h3 className="text-xl font-display font-semibold mb-3">The Godbeast Provides</h3>
             <ul className="space-y-2 text-text-secondary">
@@ -76,7 +76,7 @@ export function PartnershipSection() {
           className="text-center p-8 rounded-2xl bg-gradient-to-r from-atlantean-teal-aqua/10 via-gold-bright/10 to-creation-prism-purple/10 border border-white/10"
         >
           <div className="w-16 h-16 mx-auto rounded-2xl bg-white/10 flex items-center justify-center mb-4">
-            <Heart className="w-8 h-8 text-white" />
+            <PhHeart className="w-8 h-8 text-white" />
           </div>
           <h3 className="text-2xl font-display font-bold mb-3">United</h3>
           <p className="text-text-secondary max-w-lg mx-auto">
@@ -96,7 +96,7 @@ export function PartnershipSection() {
             href="/lore/gates"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gold-bright text-cosmic-deep font-semibold hover:bg-gold-bright/90 transition-all"
           >
-            <Shield className="w-4 h-4" />
+            <PhShield className="w-4 h-4" />
             Explore the Ten Gates
           </Link>
         </motion.div>

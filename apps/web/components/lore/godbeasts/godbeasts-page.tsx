@@ -4,22 +4,22 @@ import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import Link from 'next/link';
 import {
-  Shell,
-  Bird,
-  Flame,
-  TreePine,
-  Fish,
-  Eye,
-  Sun,
-  Cat,
-  Zap,
-  Star,
-  ArrowRight,
-  Shield,
-  Heart,
-  Infinity as InfinityIcon,
-  type LucideProps,
-} from 'lucide-react';
+  PhShell,
+  PhBird,
+  PhFlame,
+  PhTree,
+  PhFish,
+  PhEye,
+  PhSun,
+  PhCat,
+  PhLightning,
+  PhStar,
+  PhArrowRight,
+  PhShield,
+  PhHeart,
+  PhInfinity,
+  type Icon as PhIcon,
+} from '@phosphor-icons/react';
 import { cn } from '@/lib/utils';
 
 // ─── Godbeast Data ─────────────────────────────────────────────────────────────
@@ -37,7 +37,7 @@ interface Godbeast {
   gateNumber: number;
   frequency: number;
   frequencyLabel: string;
-  icon: React.FC<LucideProps>;
+  icon: React.FC<PhIcon>;
   lore: string;
   power: string;
   gradient: string;
@@ -59,7 +59,7 @@ const GODBEASTS: Godbeast[] = [
     gateNumber: 1,
     frequency: 174,
     frequencyLabel: '174 Hz',
-    icon: Shell,
+    icon: PhShell,
     lore:
       'Kaelith is the oldest of the Godbeasts — a creature so vast that mountains were formed by the impression of its ancient body. Its scales are indistinguishable from bedrock. To stand in its presence is to understand permanence.',
     power: 'Geological shaping, tectonic stability, root-deep survival instinct',
@@ -80,7 +80,7 @@ const GODBEASTS: Godbeast[] = [
     gateNumber: 2,
     frequency: 285,
     frequencyLabel: '285 Hz',
-    icon: Bird,
+    icon: PhBird,
     lore:
       'Veloura is paradox made manifest — a serpent that soars, fire that flows, water that burns. Its feathers shed both steam and song. Wherever Veloura passes, creative tension births new forms that neither fire nor water could produce alone.',
     power: 'Elemental fusion, creative catalysis, the generative tension of opposites',
@@ -101,7 +101,7 @@ const GODBEASTS: Godbeast[] = [
     gateNumber: 3,
     frequency: 396,
     frequencyLabel: '396 Hz',
-    icon: Flame,
+    icon: PhFlame,
     lore:
       'Draconis was born in the heart of a star. Its roar can ignite volcanoes; its silence can still them. The mane of living flame it wears is not decoration but a crown of will-made-real — a testament that power, once claimed, never dims.',
     power: 'Solar amplification, will-forging, the liberation of latent strength',
@@ -122,7 +122,7 @@ const GODBEASTS: Godbeast[] = [
     gateNumber: 4,
     frequency: 417,
     frequencyLabel: '417 Hz',
-    icon: TreePine,
+    icon: PhTree,
     lore:
       'Laeylinn is an enormous glowing stag whose antlers reach into the canopy of any forest it enters. Where Laeylinn rests, ancient trees grow in a single season. It does not merely nurture — it holds the emotional memory of every living thing within its territory.',
     power: 'Accelerated growth, emotional healing, the preservation of living memory',
@@ -143,7 +143,7 @@ const GODBEASTS: Godbeast[] = [
     gateNumber: 5,
     frequency: 528,
     frequencyLabel: '528 Hz',
-    icon: Fish,
+    icon: PhFish,
     lore:
       'Otome does not swim — it moves through the resonance of reality itself. Its songs are older than language. Those who hear a full Otome song cannot lie for three days afterward; truth has a way of loosening every knot.',
     power: 'Reality-resonance, compulsive truth, the dissolution of deception',
@@ -164,7 +164,7 @@ const GODBEASTS: Godbeast[] = [
     gateNumber: 6,
     frequency: 639,
     frequencyLabel: '639 Hz',
-    icon: Eye,
+    icon: PhEye,
     lore:
       'Yumiko exists partially in the waking world and partially in the Dreaming Beyond. Its body shifts like smoke over still water. It does not see with its eyes — it sees with the space between your thoughts, finding the visions you did not know you were already having.',
     power: 'Prophetic sight, dream-walking, revealing patterns hidden within intuition',
@@ -185,7 +185,7 @@ const GODBEASTS: Godbeast[] = [
     gateNumber: 7,
     frequency: 741,
     frequencyLabel: '741 Hz',
-    icon: Sun,
+    icon: PhSun,
     lore:
       'Sol is not made of fire but of crystallized divine light — a dragon whose scales refract into every visible hue and many that are not. To look upon Sol directly causes temporary blindness, not from damage, but from the mind\'s attempt to process a beauty beyond its current capacity.',
     power: 'Divine illumination, the shattering of illusion, transcendence crystallized',
@@ -206,7 +206,7 @@ const GODBEASTS: Godbeast[] = [
     gateNumber: 8,
     frequency: 852,
     frequencyLabel: '852 Hz',
-    icon: Cat,
+    icon: PhCat,
     lore:
       'Vaelith\'s eight tails each reflect a different facet of the same moment. When all eight are visible simultaneously, observers experience every possible interpretation of their current situation at once. This is not confusion — it is perspective, given primal form.',
     power: 'Reality refraction, simultaneous perspective, the echo of infinite possibility',
@@ -227,7 +227,7 @@ const GODBEASTS: Godbeast[] = [
     gateNumber: 9,
     frequency: 963,
     frequencyLabel: '963 Hz',
-    icon: Zap,
+    icon: PhLightning,
     lore:
       'Kyuro\'s nine plasma tails represent the nine forms of sacred partnership recognized in Arcanean cosmology. When Kyuro and Ino merge their presences, the resulting field cannot be entered by those whose commitments are false. Only authentic bonds survive this Godbeast\'s proximity.',
     power: 'Partnership amplification, covenant-testing, plasma equilibrium',
@@ -248,7 +248,7 @@ const GODBEASTS: Godbeast[] = [
     gateNumber: 10,
     frequency: 1111,
     frequencyLabel: '1111 Hz',
-    icon: Star,
+    icon: PhStar,
     lore:
       'Amaterasu is not entirely present in any single moment. Its body is made of the space between stars — the fertile void from which light is born. Shinkami is the only Guardian to achieve complete fusion with their Godbeast; they exist as one being who wears two names.',
     power: 'Omnipresent awareness, the meta-consciousness of all creation, source-level manifestation',
@@ -356,7 +356,7 @@ function GodbeastsHero() {
           transition={{ duration: 0.6 }}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-subtle border border-brand-gold/25 mb-8"
         >
-          <Star className="w-4 h-4 text-brand-gold" />
+          <PhStar className="w-4 h-4 text-brand-gold" />
           <span className="text-sm font-medium text-brand-gold tracking-wide">
             Primal Cosmic Companions
           </span>
@@ -505,7 +505,7 @@ function GodbeastCard({ beast, index, isInView }: GodbeastCardProps) {
                 </span>
                 {/* Guardian bond badge */}
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-brand-gold/8 border border-brand-gold/20 text-xs text-brand-gold">
-                  <Shield className="w-3 h-3 flex-shrink-0" />
+                  <PhShield className="w-3 h-3 flex-shrink-0" />
                   Bonded to {beast.guardian}
                 </span>
               </div>
@@ -529,7 +529,7 @@ function GodbeastCard({ beast, index, isInView }: GodbeastCardProps) {
                 transition={{ duration: 0.3 }}
                 className="mt-1"
               >
-                <ArrowRight className="w-4 h-4 text-text-muted" />
+                <PhArrowRight className="w-4 h-4 text-text-muted" />
               </motion.div>
             </div>
           </div>
@@ -545,7 +545,7 @@ function GodbeastCard({ beast, index, isInView }: GodbeastCardProps) {
               </span>
             </div>
             <motion.div animate={{ rotate: expanded ? 90 : 0 }} transition={{ duration: 0.3 }}>
-              <ArrowRight className="w-4 h-4 text-text-muted" />
+              <PhArrowRight className="w-4 h-4 text-text-muted" />
             </motion.div>
           </div>
         </div>
@@ -595,9 +595,9 @@ function GodbeastCard({ beast, index, isInView }: GodbeastCardProps) {
                     }}
                     onClick={(e) => e.stopPropagation()}
                   >
-                    <Shield className="w-4 h-4" />
+                    <PhShield className="w-4 h-4" />
                     Guardian: {beast.guardian}
-                    <ArrowRight className="w-3 h-3" />
+                    <PhArrowRight className="w-3 h-3" />
                   </Link>
                 </div>
               </div>
@@ -651,30 +651,30 @@ function BondMechanicsSection() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
-  const mechanics: Array<{ icon: React.FC<LucideProps>; color: string; hex: string; title: string; body: string }> = [
+  const mechanics: Array<{ icon: React.FC<PhIcon>; color: string; hex: string; title: string; body: string }> = [
     {
-      icon: Eye,
+      icon: PhEye,
       color: 'crystal',
       hex: '#7fffd4',
       title: 'First Recognition',
       body: 'A Godbeast does not choose its Guardian. The Guardian must demonstrate resonance with the frequency the Godbeast embodies — not through proof, but through being.',
     },
     {
-      icon: Heart,
+      icon: PhHeart,
       color: 'fire',
       hex: '#ff6b35',
       title: 'The Tethering',
       body: 'Once recognized, a bond forms. The Guardian does not command the Godbeast. They enter a permanent conversation — a living dialogue between consciousness and primal force.',
     },
     {
-      icon: Zap,
+      icon: PhLightning,
       color: 'brand-gold',
       hex: '#ffd700',
       title: 'Harmonic Amplification',
       body: 'Together, Guardian and Godbeast can express frequencies no single being could reach. The Guardian provides direction; the Godbeast provides scale. Separated, both diminish.',
     },
     {
-      icon: InfinityIcon,
+      icon: PhInfinity,
       color: 'brand-primary',
       hex: '#8b5cf6',
       title: 'Complete Fusion',
@@ -697,7 +697,7 @@ function BondMechanicsSection() {
           className="text-center mb-16"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-subtle border border-brand-primary/20 mb-6">
-            <Shield className="w-4 h-4 text-brand-primary" />
+            <PhShield className="w-4 h-4 text-brand-primary" />
             <span className="text-sm text-brand-primary">The Sacred Covenant</span>
           </div>
           <h2 className="text-fluid-4xl font-display font-bold mb-6">
@@ -754,7 +754,7 @@ function BondMechanicsSection() {
               border: '1px solid rgba(255,215,0,0.25)',
             }}
           >
-            <Star className="w-10 h-10 text-brand-gold" style={{ filter: 'drop-shadow(0 0 8px rgba(255,215,0,0.6))' }} />
+            <PhStar className="w-10 h-10 text-brand-gold" style={{ filter: 'drop-shadow(0 0 8px rgba(255,215,0,0.6))' }} />
           </div>
           <h3 className="text-2xl font-display font-bold mb-4 text-gradient-gold">
             Shinkami and Amaterasu
@@ -950,16 +950,16 @@ function GodbestsCTA() {
               href="/academy/gate-quiz"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-brand-gold text-cosmic-deep font-semibold text-sm hover:bg-gold-medium transition-all duration-200 shadow-glow-gold hover:shadow-glow-xl"
             >
-              <Star className="w-4 h-4" />
+              <PhStar className="w-4 h-4" />
               Discover Your Gate
             </Link>
             <Link
               href="/lore/guardians"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl glass border border-crystal/20 text-crystal font-semibold text-sm hover:border-crystal/40 hover:shadow-glow-md transition-all duration-200"
             >
-              <Shield className="w-4 h-4" />
+              <PhShield className="w-4 h-4" />
               Meet the Guardians
-              <ArrowRight className="w-4 h-4" />
+              <PhArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </motion.div>

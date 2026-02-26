@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback } from 'react'
-import { Plus, Trash2, ArrowUp, ArrowDown, Upload } from 'lucide-react'
+import { PhPlus, PhTrash, PhArrowUp, PhArrowDown, PhUpload } from '@phosphor-icons/react'
 import { cn } from '@/lib/utils'
 import type { FewShotExample } from '@/lib/prompt-books/types'
 
@@ -69,7 +69,7 @@ function ExamplePair({
             )}
             title="Move up"
           >
-            <ArrowUp className="w-3 h-3" />
+            <PhArrowUp className="w-3 h-3" />
           </button>
           <button
             type="button"
@@ -82,7 +82,7 @@ function ExamplePair({
             )}
             title="Move down"
           >
-            <ArrowDown className="w-3 h-3" />
+            <PhArrowDown className="w-3 h-3" />
           </button>
           <button
             type="button"
@@ -93,7 +93,7 @@ function ExamplePair({
             )}
             title="Remove example"
           >
-            <Trash2 className="w-3 h-3" />
+            <PhTrash className="w-3 h-3" />
           </button>
         </div>
       </div>
@@ -212,7 +212,7 @@ export function FewShotEditor({ examples, onChange, className }: FewShotEditorPr
             'transition-all duration-150',
           )}
         >
-          <Plus className="w-3 h-3" />
+          <PhPlus className="w-3 h-3" />
           Add Example
         </button>
 
@@ -229,7 +229,7 @@ export function FewShotEditor({ examples, onChange, className }: FewShotEditorPr
           )}
           title="Coming soon"
         >
-          <Upload className="w-3 h-3" />
+          <PhUpload className="w-3 h-3" />
           Import from Conversation
         </button>
       </div>

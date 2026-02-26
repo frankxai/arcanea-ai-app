@@ -1,6 +1,6 @@
 'use client'
 
-import { Users, Globe, Image, Mic, Wand2, Sparkles } from 'lucide-react'
+import { PhUsers, PhGlobe, PhImage, PhMicrophone, PhMagicWand, PhSparkle } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/button'
 
 interface Tool {
@@ -161,7 +161,7 @@ export function StudioTab() {
                         } transition-all gap-2 group/btn`}
                       >
                         <span className="font-sans font-medium">{tool.comingSoon ? 'Coming Soon' : 'Open Tool'}</span>
-                        {!tool.comingSoon && <Wand2 className="w-4 h-4 group-hover/btn:rotate-12 transition-transform" />}
+                        {!tool.comingSoon && <PhMagicWand className="w-4 h-4 group-hover/btn:rotate-12 transition-transform" />}
                       </Button>
                     </div>
                   </div>
@@ -173,7 +173,7 @@ export function StudioTab() {
           {/* Coming Soon Section */}
           <div className="mt-12 glass-subtle rounded-2xl p-8 text-center">
             <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-brand-accent/20 to-brand-primary/20 flex items-center justify-center animate-pulse-glow">
-              <Sparkles className="w-8 h-8 text-brand-accent animate-float" />
+              <PhSparkle className="w-8 h-8 text-brand-accent animate-float" />
             </div>
             <h3 className="text-xl font-display text-text-primary mb-2">More Tools Coming Soon</h3>
             <p className="text-sm text-text-secondary font-serif max-w-md mx-auto">

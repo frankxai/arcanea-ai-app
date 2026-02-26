@@ -3,7 +3,7 @@
 import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion';
 import Link from 'next/link';
 import { useRef, useEffect, useState } from 'react';
-import { ArrowRight, Play, Sparkles, Zap, Shield, Star } from 'lucide-react';
+import { PhArrowRight, PhPlay, PhSparkle, PhLightning, PhShield, PhStar } from '@phosphor-icons/react';
 
 interface HeroStats {
   luminors: number;
@@ -120,7 +120,7 @@ export function HeroV2({ stats }: HeroV2Props) {
               <span className="text-sm font-medium text-text-secondary group-hover:text-white transition-colors">
                 Introducing Arcanea 2.0
               </span>
-              <ArrowRight className="w-4 h-4 text-atlantean-teal-aqua group-hover:translate-x-0.5 transition-transform" />
+              <PhArrowRight className="w-4 h-4 text-atlantean-teal-aqua group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </motion.div>
 
@@ -174,13 +174,13 @@ export function HeroV2({ stats }: HeroV2Props) {
               <div className="absolute inset-0 bg-gradient-to-r from-atlantean-teal-aqua via-white/20 to-atlantean-teal-aqua bg-[length:200%_100%] opacity-0 group-hover:opacity-100 transition-opacity animate-shimmer" />
               <span className="relative z-10 text-cosmic-deep flex items-center gap-2">
                 Start Creating Free
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <PhArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </span>
             </Link>
 
             <button className="group px-8 py-4 rounded-2xl border border-white/20 text-white font-semibold text-lg backdrop-blur-sm hover:bg-white/5 hover:border-white/40 transition-all flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
-                <Play className="w-4 h-4 ml-0.5" />
+                <PhPlay className="w-4 h-4 ml-0.5" />
               </div>
               Watch Demo
             </button>
@@ -194,15 +194,15 @@ export function HeroV2({ stats }: HeroV2Props) {
             className="flex flex-wrap items-center justify-center gap-6 text-sm text-text-muted"
           >
             <div className="flex items-center gap-2">
-              <Shield className="w-4 h-4 text-atlantean-teal-aqua" />
+              <PhShield className="w-4 h-4 text-atlantean-teal-aqua" />
               <span>Enterprise-grade security</span>
             </div>
             <div className="flex items-center gap-2">
-              <Zap className="w-4 h-4 text-gold-bright" />
+              <PhLightning className="w-4 h-4 text-gold-bright" />
               <span>Real-time responses</span>
             </div>
             <div className="flex items-center gap-2">
-              <Star className="w-4 h-4 text-creation-prism-purple" />
+              <PhStar className="w-4 h-4 text-creation-prism-purple" />
               <span>10k+ creators</span>
             </div>
           </motion.div>
@@ -240,7 +240,7 @@ export function HeroV2({ stats }: HeroV2Props) {
               <div className="col-span-2 row-span-2 rounded-2xl bg-gradient-to-br from-atlantean-teal-aqua/10 to-transparent border border-atlantean-teal-aqua/20 p-6 flex flex-col">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-atlantean-teal-aqua to-creation-prism-purple flex items-center justify-center">
-                    <Sparkles className="w-6 h-6 text-white" />
+                    <PhSparkle className="w-6 h-6 text-white" />
                   </div>
                   <div>
                     <div className="font-semibold">Oracle</div>
@@ -315,7 +315,7 @@ export function HeroV2({ stats }: HeroV2Props) {
           >
             <div className="flex items-center gap-1">
               {[1, 2, 3, 4, 5].map((star) => (
-                <Star key={star} className="w-3 h-3 fill-gold-bright text-gold-bright" />
+                <PhStar key={star} className="w-3 h-3 fill-gold-bright text-gold-bright" />
               ))}
             </div>
             <span className="text-text-muted text-xs">4.9 rating</span>

@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { Sparkles, ArrowRight } from 'lucide-react';
+import { PhSparkle, PhArrowRight } from '@phosphor-icons/react';
 
 export default function WelcomePage() {
   return (
@@ -46,7 +46,7 @@ export default function WelcomePage() {
           className="mb-8"
         >
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-gold-bright/20 to-atlantean-teal/20 backdrop-blur-sm border border-gold-bright/30">
-            <Sparkles className="w-10 h-10 text-gold-bright" />
+            <PhSparkle className="w-10 h-10 text-gold-bright" />
           </div>
         </motion.div>
 
@@ -93,7 +93,7 @@ export default function WelcomePage() {
             className="group flex items-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-gold-bright to-gold-medium text-cosmic-void font-crimson font-semibold text-lg transition-all hover:scale-105 hover:shadow-glow-lg"
           >
             Begin Your Journey
-            <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+            <PhArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
           </Link>
 
           <Link

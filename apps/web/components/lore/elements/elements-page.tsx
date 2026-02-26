@@ -3,17 +3,17 @@
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { useRef, useState } from 'react';
 import {
-  Flame,
-  Droplets,
-  Mountain,
-  Wind,
-  Sparkles,
-  ChevronDown,
-  ArrowRight,
-  Orbit,
-  Zap,
-  Eye,
-} from 'lucide-react';
+  PhFlame,
+  PhDrop,
+  PhMountains,
+  PhWind,
+  PhSparkle,
+  PhCaretDown,
+  PhArrowRight,
+  PhSpiral,
+  PhLightning,
+  PhEye,
+} from '@phosphor-icons/react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
@@ -29,7 +29,7 @@ const ELEMENTS = [
       'Fire destroys to create, burns away the old to reveal the new. It is the animating spark behind every act of courage — the force that refuses to remain unmanifested. Light itself is Fire\'s creation aspect, born when Lumina blazed forth from the fertile dark.',
     philosophy:
       'What must burn before the new can emerge? The creator who wields Fire does not fear destruction — they understand it as the first act of making.',
-    icon: Flame,
+    icon: PhFlame,
     colors: {
       primary: '#ff6b35',
       secondary: '#ffd700',
@@ -57,7 +57,7 @@ const ELEMENTS = [
       'Water remembers everything, heals all wounds given time, and finds its way through any obstacle. It cannot be permanently blocked — only redirected. Water carries the memory of every shape it has ever held, every shore it has ever touched.',
     philosophy:
       'Flow does not mean surrender. Water is the most persistent force in existence. The patient path always arrives. What are you trying to force that wants to flow?',
-    icon: Droplets,
+    icon: PhDrop,
     colors: {
       primary: '#78a6ff',
       secondary: '#7fffd4',
@@ -85,7 +85,7 @@ const ELEMENTS = [
       'Earth provides the ground on which all creation stands. Patient, enduring, unyielding — it does not rush. Earth is the element that allows roots to form, that gives Water somewhere to collect, that keeps Fire from consuming everything. Without Earth, creation cannot persist.',
     philosophy:
       'Before any flourishing, there must be foundation. The most radical act sometimes is simply to remain — to be the unmoved mover, the stable ground from which everything else can grow.',
-    icon: Mountain,
+    icon: PhMountains,
     colors: {
       primary: '#4a7c59',
       secondary: '#6b9e7a',
@@ -113,7 +113,7 @@ const ELEMENTS = [
       'Wind carries seeds, spreads ideas, connects distant places. It cannot be contained, only channeled. Wind is the element of communication — it moves between all other elements, uniting them. Every idea that traveled from one mind to another was carried on Wind.',
     philosophy:
       'You cannot hold Wind, only open yourself to it. What ideas are trying to move through you right now? The artist who learns to be like Wind — formless, everywhere, connecting — becomes impossible to silence.',
-    icon: Wind,
+    icon: PhWind,
     colors: {
       primary: '#c8d6e5',
       secondary: '#dfe8f0',
@@ -141,7 +141,7 @@ const ELEMENTS = [
       'The Fifth Element carries a sacred duality. Void is Nero\'s aspect — the fertile darkness, pure potential, the unformed sea of everything that could ever be. Spirit is Lumina\'s aspect — transcendence, consciousness, the soul\'s capacity to witness itself. Shadow is not Spirit — it is Void corrupted, separated from Spirit.',
     philosophy:
       'The most profound creative act is to dwell in the space before form — to hold potential without forcing it into shape prematurely. Void is not emptiness. It is fullness without boundary.',
-    icon: Sparkles,
+    icon: PhSparkle,
     colors: {
       primary: '#9966ff',
       secondary: '#ffd700',
@@ -278,7 +278,7 @@ function ElementsHero() {
           transition={{ delay: 0.2 }}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full liquid-glass border border-brand-primary/30 mb-8"
         >
-          <Orbit className="w-4 h-4 text-brand-primary" />
+          <PhSpiral className="w-4 h-4 text-brand-primary" />
           <span className="text-sm font-medium text-brand-primary font-sans">
             The Foundations of All Creation
           </span>
@@ -350,7 +350,7 @@ function ElementsHero() {
         >
           <span className="text-sm text-text-muted font-sans">Descend into the elements</span>
           <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity }}>
-            <ChevronDown className="w-6 h-6 text-text-muted" />
+            <PhCaretDown className="w-6 h-6 text-text-muted" />
           </motion.div>
         </motion.div>
       </motion.div>
@@ -380,7 +380,7 @@ function ElementCardsSection() {
           className="text-center mb-20"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-crystal/10 border border-crystal/20 mb-6">
-            <Sparkles className="w-4 h-4 text-crystal" />
+            <PhSparkle className="w-4 h-4 text-crystal" />
             <span className="text-sm font-medium text-crystal">The Five Forces</span>
           </div>
           <h2 className="text-fluid-4xl font-display font-bold mb-4 text-white">
@@ -552,7 +552,7 @@ function ElementCardsSection() {
 
                         {/* Arc phase */}
                         <div className="flex items-center gap-3 p-3 rounded-xl" style={{ background: element.colors.bg, border: `1px solid ${element.colors.border}` }}>
-                          <Orbit className="w-4 h-4 flex-shrink-0" style={{ color: element.colors.primary }} />
+                          <PhSpiral className="w-4 h-4 flex-shrink-0" style={{ color: element.colors.primary }} />
                           <div>
                             <div className="text-xs text-text-muted font-mono mb-0.5">Arc Phase</div>
                             <div className="text-sm font-display font-semibold" style={{ color: element.colors.primary }}>
@@ -604,7 +604,7 @@ function FifthElementDuality() {
           className="text-center mb-16"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-void-el/10 border border-void-el/30 mb-6">
-            <Sparkles className="w-4 h-4 text-void-el" />
+            <PhSparkle className="w-4 h-4 text-void-el" />
             <span className="text-sm font-medium text-void-el">The Sacred Mystery</span>
           </div>
           <h2 className="text-fluid-4xl font-display font-bold mb-4">
@@ -639,7 +639,7 @@ function FifthElementDuality() {
               >
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 rounded-2xl bg-void-el/20 flex items-center justify-center shadow-glow-void">
-                    <Sparkles className="w-6 h-6 text-void-el" />
+                    <PhSparkle className="w-6 h-6 text-void-el" />
                   </div>
                   <div>
                     <div className="text-xs font-mono tracking-widest text-void-el uppercase">Nero's Aspect</div>
@@ -686,7 +686,7 @@ function FifthElementDuality() {
               >
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 rounded-2xl bg-brand-gold/20 flex items-center justify-center shadow-glow-gold">
-                    <Sparkles className="w-6 h-6 text-brand-gold" />
+                    <PhSparkle className="w-6 h-6 text-brand-gold" />
                   </div>
                   <div>
                     <div className="text-xs font-mono tracking-widest text-brand-gold uppercase">Lumina's Aspect</div>
@@ -725,13 +725,13 @@ function FifthElementDuality() {
           >
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 text-sm font-sans">
               <div className="flex items-start gap-2">
-                <Eye className="w-4 h-4 text-crystal flex-shrink-0 mt-0.5" />
+                <PhEye className="w-4 h-4 text-crystal flex-shrink-0 mt-0.5" />
                 <span className="text-text-secondary">
                   <span className="text-crystal font-semibold">Light</span> is Fire's creation aspect — not the Fifth Element
                 </span>
               </div>
               <div className="flex items-start gap-2">
-                <Eye className="w-4 h-4 text-fire flex-shrink-0 mt-0.5" />
+                <PhEye className="w-4 h-4 text-fire flex-shrink-0 mt-0.5" />
                 <span className="text-text-secondary">
                   <span className="text-fire font-semibold">Shadow</span> is corrupted Void — Void severed from Spirit, as Malachar became
                 </span>
@@ -761,7 +761,7 @@ function ElementRelationshipsSection() {
           className="text-center mb-16"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-gold/10 border border-brand-gold/20 mb-6">
-            <Zap className="w-4 h-4 text-brand-gold" />
+            <PhLightning className="w-4 h-4 text-brand-gold" />
             <span className="text-sm font-medium text-brand-gold">When Elements Meet</span>
           </div>
           <h2 className="text-fluid-3xl font-display font-bold mb-4 text-white">
@@ -786,7 +786,7 @@ function ElementRelationshipsSection() {
                 <span className="text-sm font-display font-semibold text-white">{rel.a}</span>
                 <span className="text-text-muted text-lg font-light">+</span>
                 <span className="text-sm font-display font-semibold text-white">{rel.b}</span>
-                <ArrowRight className="w-4 h-4 text-text-muted ml-auto" />
+                <PhArrowRight className="w-4 h-4 text-text-muted ml-auto" />
               </div>
 
               <div
@@ -813,16 +813,16 @@ function GuardianElementsSection() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   const GUARDIAN_ELEMENTS = [
-    { guardian: 'Lyssandria', gate: 1, freq: '174 Hz', element: 'Earth', color: '#4a7c59', icon: Mountain },
-    { guardian: 'Leyla', gate: 2, freq: '285 Hz', element: 'Water / Fire', color: '#78a6ff', icon: Droplets },
-    { guardian: 'Draconia', gate: 3, freq: '396 Hz', element: 'Fire', color: '#ff6b35', icon: Flame },
-    { guardian: 'Maylinn', gate: 4, freq: '417 Hz', element: 'Earth', color: '#4a7c59', icon: Mountain },
-    { guardian: 'Alera', gate: 5, freq: '528 Hz', element: 'Water / Sound', color: '#78a6ff', icon: Droplets },
-    { guardian: 'Lyria', gate: 6, freq: '639 Hz', element: 'Wind / Dream', color: '#c8d6e5', icon: Wind },
-    { guardian: 'Aiyami', gate: 7, freq: '741 Hz', element: 'Spirit / Light', color: '#ffd700', icon: Sparkles },
-    { guardian: 'Elara', gate: 8, freq: '852 Hz', element: 'Wind / Fractal', color: '#c8d6e5', icon: Wind },
-    { guardian: 'Ino', gate: 9, freq: '963 Hz', element: 'Void / Balance', color: '#9966ff', icon: Sparkles },
-    { guardian: 'Shinkami', gate: 10, freq: '1111 Hz', element: 'All / Spirit', color: '#ffd700', icon: Sparkles },
+    { guardian: 'Lyssandria', gate: 1, freq: '174 Hz', element: 'Earth', color: '#4a7c59', icon: PhMountains },
+    { guardian: 'Leyla', gate: 2, freq: '285 Hz', element: 'Water / Fire', color: '#78a6ff', icon: PhDrop },
+    { guardian: 'Draconia', gate: 3, freq: '396 Hz', element: 'Fire', color: '#ff6b35', icon: PhFlame },
+    { guardian: 'Maylinn', gate: 4, freq: '417 Hz', element: 'Earth', color: '#4a7c59', icon: PhMountains },
+    { guardian: 'Alera', gate: 5, freq: '528 Hz', element: 'Water / Sound', color: '#78a6ff', icon: PhDrop },
+    { guardian: 'Lyria', gate: 6, freq: '639 Hz', element: 'Wind / Dream', color: '#c8d6e5', icon: PhWind },
+    { guardian: 'Aiyami', gate: 7, freq: '741 Hz', element: 'Spirit / Light', color: '#ffd700', icon: PhSparkle },
+    { guardian: 'Elara', gate: 8, freq: '852 Hz', element: 'Wind / Fractal', color: '#c8d6e5', icon: PhWind },
+    { guardian: 'Ino', gate: 9, freq: '963 Hz', element: 'Void / Balance', color: '#9966ff', icon: PhSparkle },
+    { guardian: 'Shinkami', gate: 10, freq: '1111 Hz', element: 'All / Spirit', color: '#ffd700', icon: PhSparkle },
   ];
 
   return (
@@ -836,7 +836,7 @@ function GuardianElementsSection() {
           className="text-center mb-16"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary/10 border border-brand-primary/20 mb-6">
-            <Eye className="w-4 h-4 text-brand-primary" />
+            <PhEye className="w-4 h-4 text-brand-primary" />
             <span className="text-sm font-medium text-brand-primary">The Ten Guardians</span>
           </div>
           <h2 className="text-fluid-3xl font-display font-bold mb-4 text-white">
@@ -885,7 +885,7 @@ function GuardianElementsSection() {
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-primary/10 border border-brand-primary/20 text-brand-primary text-sm font-semibold hover:bg-brand-primary/20 transition-all"
           >
             Full Guardian Profiles
-            <ArrowRight className="w-4 h-4" />
+            <PhArrowRight className="w-4 h-4" />
           </Link>
         </motion.div>
       </div>
@@ -913,7 +913,7 @@ function TheArcSection() {
           className="text-center mb-16"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-gold/10 border border-brand-gold/20 mb-6">
-            <Orbit className="w-4 h-4 text-brand-gold" />
+            <PhSpiral className="w-4 h-4 text-brand-gold" />
             <span className="text-sm font-medium text-brand-gold">The Eternal Rhythm</span>
           </div>
           <h2 className="text-fluid-3xl font-display font-bold mb-4 text-white">
@@ -1026,7 +1026,7 @@ function ElementsCTA() {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="w-20 h-20 mx-auto rounded-full liquid-glass flex items-center justify-center mb-8 shadow-glow-md">
-            <Sparkles className="w-10 h-10 text-crystal" />
+            <PhSparkle className="w-10 h-10 text-crystal" />
           </div>
 
           <h2 className="text-fluid-3xl font-display font-bold mb-4">
@@ -1049,7 +1049,7 @@ function ElementsCTA() {
               href="/lore/guardians"
               className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-brand-primary text-white font-semibold hover:bg-brand-primary/90 shadow-glow-brand transition-all"
             >
-              <Sparkles className="w-4 h-4" />
+              <PhSparkle className="w-4 h-4" />
               Meet the Guardians
             </Link>
             <Link
@@ -1057,7 +1057,7 @@ function ElementsCTA() {
               className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl border border-brand-gold/30 text-brand-gold font-semibold hover:bg-brand-gold/10 transition-all"
             >
               Discover Your Gate
-              <ArrowRight className="w-4 h-4" />
+              <PhArrowRight className="w-4 h-4" />
             </Link>
             <Link
               href="/lore"

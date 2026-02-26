@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Image, Video, FolderOpen, Sparkles, Calendar, TrendingUp, Award } from 'lucide-react';
+import { PhImage, PhVideo, PhFolderOpen, PhSparkle, PhCalendar, PhTrendUp, PhTrophy } from '@phosphor-icons/react';
 import { ProfileStats, Creation } from '@/lib/types/profile';
 
 interface StatsDashboardProps {
@@ -242,7 +242,7 @@ export function StatsDashboard({ stats, creations }: StatsDashboardProps) {
                     animate={{ scale: 1 }}
                     transition={{ type: 'spring', delay: 0.9 + index * 0.1 }}
                   >
-                    <Award className="w-6 h-6 text-yellow-500 fill-current" />
+                    <PhTrophy className="w-6 h-6 text-yellow-500 fill-current" />
                   </motion.div>
                 </div>
               )}
