@@ -1,28 +1,28 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import {
-  MessageCircle,
-  Github,
-  Twitter,
-  Youtube,
-  Calendar,
-  Globe,
-  MapPin,
-  Star,
-  BookOpen,
-  Cpu,
-  PenTool,
-  Code2,
-  Languages,
-  Brush,
-  ArrowRight,
-  ArrowUpRight,
-  Users,
-  Sparkles,
-  Flame,
-  Droplets,
-  Leaf,
-} from "lucide-react";
+  PhChatCircle,
+  PhGithubLogo,
+  PhTwitterLogo,
+  PhYoutubeLogo,
+  PhCalendar,
+  PhGlobe,
+  PhMapPin,
+  PhStar,
+  PhBookOpen,
+  PhCpu,
+  PhPen,
+  PhCode,
+  PhTranslate,
+  PhPaintBrush,
+  PhArrowRight,
+  PhArrowUpRight,
+  PhUsers,
+  PhSparkle,
+  PhFlame,
+  PhDrop,
+  PhLeaf,
+} from "@phosphor-icons/react";
 import { NewsletterForm } from "@/components/community/newsletter-form";
 
 export const metadata: Metadata = {
@@ -62,7 +62,7 @@ const COMMUNITY_SPACES = [
     cta: "Join Discord",
     badge: "Primary",
     badgeColor: "brand-primary",
-    icon: MessageCircle,
+    icon: PhChatCircle,
     accentClass: "from-brand-primary/20 to-brand-primary/5",
     borderHoverClass: "hover:border-brand-primary/40",
     glowColor: "rgba(139,92,246,0.15)",
@@ -84,7 +84,7 @@ const COMMUNITY_SPACES = [
     href: "https://github.com/frankxai/arcanea",
     cta: "View on GitHub",
     badge: "Open Source",
-    icon: Github,
+    icon: PhGithubLogo,
     accentClass: "from-crystal/20 to-crystal/5",
     borderHoverClass: "hover:border-crystal/40",
     glowColor: "rgba(127,255,212,0.12)",
@@ -106,7 +106,7 @@ const COMMUNITY_SPACES = [
     href: "https://twitter.com/arcanea_ai",
     cta: "Follow @arcanea_ai",
     badge: "@arcanea_ai",
-    icon: Twitter,
+    icon: PhTwitterLogo,
     accentClass: "from-water/20 to-water/5",
     borderHoverClass: "hover:border-water/40",
     glowColor: "rgba(120,166,255,0.12)",
@@ -128,7 +128,7 @@ const COMMUNITY_SPACES = [
     href: "https://youtube.com/@arcanea_ai",
     cta: "Subscribe",
     badge: "Watch & Learn",
-    icon: Youtube,
+    icon: PhYoutubeLogo,
     accentClass: "from-fire/20 to-fire/5",
     borderHoverClass: "hover:border-fire/40",
     glowColor: "rgba(255,107,53,0.12)",
@@ -144,8 +144,8 @@ const EVENTS = [
     format: "Online",
     description:
       "Guided creation gatherings where community members build together in real time, supported by their Guardians. Each session focuses on a different Gate of mastery.",
-    icon: Sparkles,
-    formatIcon: Globe,
+    icon: PhSparkle,
+    formatIcon: PhGlobe,
     accent: "crystal",
     accentHex: "#7fffd4",
     badgeText: "Monthly",
@@ -156,8 +156,8 @@ const EVENTS = [
     format: "Online ritual",
     description:
       "Sacred gatherings aligned with the Ten Gates. A ceremony of reflection, celebration, and collective advancement. Creators share breakthroughs and honor the Arc.",
-    icon: Star,
-    formatIcon: Globe,
+    icon: PhStar,
+    formatIcon: PhGlobe,
     accent: "void-el",
     accentHex: "#9966ff",
     badgeText: "Quarterly",
@@ -168,8 +168,8 @@ const EVENTS = [
     format: "Hybrid — physical + digital",
     description:
       "The flagship gathering of the Arcanea world. A multi-day convergence of creators, builders, and visionaries. Keynotes, workshops, and the unveiling of what comes next.",
-    icon: Flame,
-    formatIcon: MapPin,
+    icon: PhFlame,
+    formatIcon: PhMapPin,
     accent: "brand-gold",
     accentHex: "#ffd700",
     badgeText: "Annual",
@@ -181,8 +181,8 @@ const EVENTS = [
     format: "In person",
     description:
       "Community-organized gatherings in cities worldwide. Find your local circle, share your work, and create connections that extend beyond the digital realm.",
-    icon: Users,
-    formatIcon: MapPin,
+    icon: PhUsers,
+    formatIcon: PhMapPin,
     accent: "earth",
     accentHex: "#4a7c59",
     badgeText: "Local",
@@ -227,7 +227,7 @@ const CONTRIBUTIONS = [
     title: "Write Library Texts",
     description:
       "Expand the 17 collections with your own wisdom. The Library is a living document—your voice belongs in it.",
-    icon: BookOpen,
+    icon: PhBookOpen,
     color: "crystal",
     hex: "#7fffd4",
   },
@@ -235,7 +235,7 @@ const CONTRIBUTIONS = [
     title: "Create Arcanea Skills",
     description:
       "Build procedural skills that equip creators and developers. Published skills become part of the intelligence layer.",
-    icon: Cpu,
+    icon: PhCpu,
     color: "brand-primary",
     hex: "#8b5cf6",
   },
@@ -243,7 +243,7 @@ const CONTRIBUTIONS = [
     title: "Design Guardian Art",
     description:
       "Bring the Guardians, Godbeasts, and cosmic landscapes to visual life. Your art may become canonical.",
-    icon: Brush,
+    icon: PhPaintBrush,
     color: "brand-gold",
     hex: "#ffd700",
   },
@@ -251,7 +251,7 @@ const CONTRIBUTIONS = [
     title: "Build Features",
     description:
       "The platform is open source. Pick an issue, build something real, and ship features that serve creators everywhere.",
-    icon: Code2,
+    icon: PhCode,
     color: "water",
     hex: "#78a6ff",
   },
@@ -259,7 +259,7 @@ const CONTRIBUTIONS = [
     title: "Write Narrative Content",
     description:
       "Parables, prophecies, chronicles—every form of Arcanean fiction grows the mythology and serves the community.",
-    icon: PenTool,
+    icon: PhPen,
     color: "fire",
     hex: "#ff6b35",
   },
@@ -267,7 +267,7 @@ const CONTRIBUTIONS = [
     title: "Translate Content",
     description:
       "Make the Library, Academy, and platform accessible to creators in every language. Translation is a sacred act.",
-    icon: Languages,
+    icon: PhTranslate,
     color: "earth",
     hex: "#4a7c59",
   },
@@ -303,7 +303,7 @@ export default function CommunityPage() {
 
             <div className="relative max-w-4xl">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-primary/30 bg-brand-primary/10 mb-8">
-                <Users className="w-3.5 h-3.5 text-brand-primary" />
+                <PhUsers className="w-3.5 h-3.5 text-brand-primary" />
                 <span className="text-xs font-mono tracking-widest uppercase text-brand-primary">
                   Community
                 </span>
@@ -328,7 +328,7 @@ export default function CommunityPage() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200"
                 >
-                  <MessageCircle className="w-4 h-4" />
+                  <PhChatCircle className="w-4 h-4" />
                   Join Discord
                 </a>
                 <a
@@ -337,7 +337,7 @@ export default function CommunityPage() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
                 >
-                  <Github className="w-4 h-4" />
+                  <PhGithubLogo className="w-4 h-4" />
                   Explore GitHub
                 </a>
               </div>
@@ -452,7 +452,7 @@ export default function CommunityPage() {
         >
           <div className="mb-12">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand-gold/20 bg-brand-gold/8 mb-5">
-              <Calendar className="w-3 h-3 text-brand-gold" />
+              <PhCalendar className="w-3 h-3 text-brand-gold" />
               <span className="text-xs font-mono tracking-widest uppercase text-brand-gold">
                 Gatherings
               </span>
@@ -535,9 +535,9 @@ export default function CommunityPage() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl glass border border-brand-gold/20 text-brand-gold text-sm font-semibold hover:bg-brand-gold/5 hover:border-brand-gold/40 transition-all"
             >
-              <Calendar className="w-4 h-4" />
+              <PhCalendar className="w-4 h-4" />
               Stay informed — join Discord for event announcements
-              <ArrowRight className="w-3.5 h-3.5" />
+              <PhArrowRight className="w-3.5 h-3.5" />
             </a>
           </div>
         </section>
@@ -549,7 +549,7 @@ export default function CommunityPage() {
         >
           <div className="mb-12">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-water/20 bg-water/8 mb-5">
-              <Star className="w-3 h-3 text-water" />
+              <PhStar className="w-3 h-3 text-water" />
               <span className="text-xs font-mono tracking-widest uppercase text-water">
                 Creator Spotlight
               </span>
@@ -653,7 +653,7 @@ export default function CommunityPage() {
         >
           <div className="mb-12">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-earth/30 bg-earth/10 mb-5">
-              <Leaf className="w-3 h-3 text-earth" />
+              <PhLeaf className="w-3 h-3 text-earth" />
               <span className="text-xs font-mono tracking-widest uppercase text-earth-bright">
                 Contribute
               </span>
@@ -706,15 +706,15 @@ export default function CommunityPage() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl glass border border-crystal/20 text-crystal text-sm font-semibold hover:bg-crystal/5 hover:border-crystal/40 transition-all"
             >
-              <Github className="w-4 h-4" />
+              <PhGithubLogo className="w-4 h-4" />
               Start on GitHub
-              <ArrowUpRight className="w-3.5 h-3.5" />
+              <PhArrowUpRight className="w-3.5 h-3.5" />
             </a>
             <Link
               href="/library"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl glass border border-white/10 text-text-secondary text-sm font-semibold hover:border-crystal/20 hover:text-text-primary transition-all"
             >
-              <BookOpen className="w-4 h-4" />
+              <PhBookOpen className="w-4 h-4" />
               Read the Library
             </Link>
           </div>
@@ -731,7 +731,7 @@ export default function CommunityPage() {
 
             <div className="relative max-w-2xl">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand-primary/30 bg-brand-primary/10 mb-6">
-                <Sparkles className="w-3 h-3 text-brand-primary" />
+                <PhSparkle className="w-3 h-3 text-brand-primary" />
                 <span className="text-xs font-mono tracking-widest uppercase text-brand-primary">
                   The Dispatch
                 </span>
@@ -773,19 +773,19 @@ export default function CommunityPage() {
                 aria-hidden="true"
               >
                 <div className="w-8 h-8 rounded-lg bg-fire/15 flex items-center justify-center">
-                  <Flame className="w-4 h-4 text-fire" />
+                  <PhFlame className="w-4 h-4 text-fire" />
                 </div>
                 <div className="w-8 h-8 rounded-lg bg-water/15 flex items-center justify-center">
-                  <Droplets className="w-4 h-4 text-water" />
+                  <PhDrop className="w-4 h-4 text-water" />
                 </div>
                 <div className="w-8 h-8 rounded-lg bg-earth/15 flex items-center justify-center">
-                  <Leaf className="w-4 h-4 text-earth" />
+                  <PhLeaf className="w-4 h-4 text-earth" />
                 </div>
                 <div className="w-8 h-8 rounded-lg bg-crystal/15 flex items-center justify-center">
-                  <Sparkles className="w-4 h-4 text-crystal" />
+                  <PhSparkle className="w-4 h-4 text-crystal" />
                 </div>
                 <div className="w-8 h-8 rounded-lg bg-brand-primary/15 flex items-center justify-center">
-                  <Star className="w-4 h-4 text-brand-primary" />
+                  <PhStar className="w-4 h-4 text-brand-primary" />
                 </div>
               </div>
 
@@ -814,7 +814,7 @@ export default function CommunityPage() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200"
                 >
-                  <MessageCircle className="w-4 h-4" />
+                  <PhChatCircle className="w-4 h-4" />
                   Join the community
                 </a>
                 <Link
@@ -822,7 +822,7 @@ export default function CommunityPage() {
                   className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
                 >
                   Begin your journey
-                  <ArrowRight className="w-4 h-4" />
+                  <PhArrowRight className="w-4 h-4" />
                 </Link>
               </div>
             </div>

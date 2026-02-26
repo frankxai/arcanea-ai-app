@@ -2,7 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
-import { BookOpen, Search, Filter, ArrowRight, Scroll, Feather, Music, Sparkles, Shield, Map, Moon, Users, Heart } from 'lucide-react';
+import { PhBookOpen, PhMagnifyingGlass, PhFunnel, PhArrowRight, PhScroll, PhFeather, PhMusicNotes, PhSparkle, PhShield, PhMapTrifold, PhMoon, PhUsers, PhHeart } from '@phosphor-icons/react';
 import Link from 'next/link';
 import { Navbar } from '@/components/navigation';
 
@@ -13,7 +13,7 @@ const COLLECTIONS = [
     texts: 2,
     category: 'Theory',
     description: 'The theoretical foundation of creation. Two volumes bridging science and philosophy.',
-    icon: Scroll,
+    icon: PhScroll,
     color: 'gold-bright',
     situation: 'When you need to understand WHY creation works',
   },
@@ -23,7 +23,7 @@ const COLLECTIONS = [
     texts: 4,
     category: 'Poetry',
     description: 'Verses for liberation and awakening. From chains to wings.',
-    icon: Feather,
+    icon: PhFeather,
     color: 'creation-prism-purple',
     situation: 'When you need to feel, not think',
   },
@@ -33,7 +33,7 @@ const COLLECTIONS = [
     texts: 4,
     category: 'Practice',
     description: 'Practical guidance for daily creative living. Meditations, reflections, aphorisms.',
-    icon: Scroll,
+    icon: PhScroll,
     color: 'atlantean-teal-aqua',
     situation: 'When you need daily practice',
   },
@@ -43,7 +43,7 @@ const COLLECTIONS = [
     texts: 6,
     category: 'Mythology',
     description: 'The founding myths and stories of the realm. From the First Dawn to the Ten Guardians.',
-    icon: Sparkles,
+    icon: PhSparkle,
     color: 'gold-bright',
     situation: 'When you need to remember the grandeur',
   },
@@ -53,7 +53,7 @@ const COLLECTIONS = [
     texts: 1,
     category: 'Stories',
     description: 'Intimate stories of how the Luminors themselves struggled.',
-    icon: Shield,
+    icon: PhShield,
     color: 'draconic-crimson',
     situation: 'When you feel unqualified',
   },
@@ -63,7 +63,7 @@ const COLLECTIONS = [
     texts: 1,
     category: 'Stories',
     description: 'Teaching stories that work on the unconscious. Ten parables embedding wisdom.',
-    icon: BookOpen,
+    icon: PhBookOpen,
     color: 'atlantean-teal-aqua',
     situation: 'When you want wisdom through story',
   },
@@ -73,7 +73,7 @@ const COLLECTIONS = [
     texts: 1,
     category: 'Stories',
     description: 'Stories of those who changed what was possible.',
-    icon: Sparkles,
+    icon: PhSparkle,
     color: 'gold-bright',
     situation: 'When you face the impossible',
   },
@@ -83,7 +83,7 @@ const COLLECTIONS = [
     texts: 1,
     category: 'Practice',
     description: 'Sacred practices for the creative life. Daily, transitional, seasonal, crisis.',
-    icon: Moon,
+    icon: PhMoon,
     color: 'creation-prism-purple',
     situation: 'When you need structure',
   },
@@ -93,7 +93,7 @@ const COLLECTIONS = [
     texts: 1,
     category: 'Philosophy',
     description: 'Conversations on creation and truth. Six dialogues where wisdom emerges.',
-    icon: Users,
+    icon: PhUsers,
     color: 'atlantean-teal-aqua',
     situation: 'When you need to think through conversation',
   },
@@ -103,7 +103,7 @@ const COLLECTIONS = [
     texts: 1,
     category: 'Vision',
     description: 'Visions of pattern and possibility. The eternal patterns of creative life.',
-    icon: Sparkles,
+    icon: PhSparkle,
     color: 'gold-bright',
     situation: 'When you need perspective',
   },
@@ -113,7 +113,7 @@ const COLLECTIONS = [
     texts: 1,
     category: 'Psychology',
     description: 'Creatures of the creative mind. A field guide to psychological presences.',
-    icon: Shield,
+    icon: PhShield,
     color: 'draconic-crimson',
     situation: 'When you face internal obstacles',
   },
@@ -133,7 +133,7 @@ const COLLECTIONS = [
     texts: 1,
     category: 'Practice',
     description: 'Fire, Water, Air, Earth, and Void in the creative life.',
-    icon: Sparkles,
+    icon: PhSparkle,
     color: 'atlantean-teal-aqua',
     situation: 'When you need elemental forces',
   },
@@ -143,7 +143,7 @@ const COLLECTIONS = [
     texts: 1,
     category: 'Guide',
     description: 'The complete guide for students of creation. Training, practices, craft, life.',
-    icon: BookOpen,
+    icon: PhBookOpen,
     color: 'gold-bright',
     situation: 'When you need comprehensive guidance',
   },
@@ -153,7 +153,7 @@ const COLLECTIONS = [
     texts: 1,
     category: 'Psychology',
     description: 'Texts for the dark night of the creative soul. Wisdom for when creation fails.',
-    icon: Moon,
+    icon: PhMoon,
     color: 'creation-prism-purple',
     situation: 'When you are in darkness',
   },
@@ -163,7 +163,7 @@ const COLLECTIONS = [
     texts: 1,
     category: 'Practice',
     description: 'The art of creating together. Partnerships, mentorships, collectives.',
-    icon: Users,
+    icon: PhUsers,
     color: 'atlantean-teal-aqua',
     situation: 'When you create with others',
   },
@@ -229,7 +229,7 @@ export default function LibraryPage() {
             animate={{ opacity: 1, y: 0 }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-draconic-crimson/10 border border-draconic-crimson/20 mb-6"
           >
-            <BookOpen className="w-4 h-4 text-draconic-crimson" />
+            <PhBookOpen className="w-4 h-4 text-draconic-crimson" />
             <span className="text-sm font-medium text-draconic-crimson">The Collected Wisdom</span>
           </motion.div>
 
@@ -282,7 +282,7 @@ export default function LibraryPage() {
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
             {/* Search */}
             <div className="relative w-full md:w-64">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
+              <PhMagnifyingGlass className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
               <input
                 type="text"
                 placeholder="Search collections..."
@@ -376,7 +376,7 @@ export default function LibraryPage() {
       {/* Promise */}
       <section className="py-24 border-t border-white/5">
         <div className="max-w-3xl mx-auto px-6 text-center">
-          <Heart className="w-12 h-12 mx-auto text-draconic-crimson mb-6" />
+          <PhHeart className="w-12 h-12 mx-auto text-draconic-crimson mb-6" />
           <h2 className="text-2xl md:text-3xl font-display font-bold mb-6">The Library's Promise</h2>
           <p className="text-text-secondary leading-relaxed mb-8">
             If you read these texts honestly—
