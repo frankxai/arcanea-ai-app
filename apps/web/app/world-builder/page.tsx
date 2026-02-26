@@ -119,6 +119,7 @@ const WORLD_TEMPLATES = [
     icon: PhCrown,
     color: "#ffd700",
     description: "Epic quests, magic systems, and legendary heroes",
+    tags: ["Epic Quests", "Magic", "Heroes"],
   },
   {
     id: "scifi",
@@ -126,6 +127,7 @@ const WORLD_TEMPLATES = [
     icon: PhLightning,
     color: "#3b82f6",
     description: "Future worlds, technology, and space exploration",
+    tags: ["Technology", "Space", "AI"],
   },
   {
     id: "cyberpunk",
@@ -133,6 +135,7 @@ const WORLD_TEMPLATES = [
     icon: WindIcon,
     color: "#a855f7",
     description: "High tech, low life, and corporate dystopias",
+    tags: ["Corporations", "Hacking", "Neon"],
   },
   {
     id: "historical",
@@ -140,6 +143,7 @@ const WORLD_TEMPLATES = [
     icon: PhBuildings,
     color: "#22c55e",
     description: "Real-world periods with creative interpretation",
+    tags: ["Real Events", "Cultures", "Period Art"],
   },
 ];
 
@@ -170,8 +174,8 @@ export default function WorldBuilderPage() {
               </div>
 
               <h1 className="text-fluid-hero font-display font-bold mb-6">
-                Craft infinite
-                <span className="block text-gradient-brand">worlds</span>
+                Craft worlds
+                <span className="block text-gradient-brand">beyond imagination</span>
               </h1>
 
               <p className="text-fluid-lg text-text-secondary leading-relaxed max-w-2xl font-body mb-8">
@@ -225,7 +229,7 @@ export default function WorldBuilderPage() {
                 >
                   <div
                     className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110"
-                    style={{ backgroundColor: `${template.color}18` }}
+                    style={{ '--accent': template.color, backgroundColor: 'color-mix(in srgb, var(--accent) 12%, transparent)' } as React.CSSProperties}
                   >
                     <Icon
                       className="w-4 h-4"
@@ -235,9 +239,19 @@ export default function WorldBuilderPage() {
                   <h3 className="font-display font-semibold mb-1">
                     {template.name}
                   </h3>
-                  <p className="text-xs text-text-muted font-sans">
+                  <p className="text-xs text-text-muted font-sans mb-3">
                     {template.description}
                   </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {template.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-xs px-2 py-0.5 rounded-full bg-white/5 text-text-muted"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </Link>
               );
             })}
@@ -321,15 +335,19 @@ export default function WorldBuilderPage() {
               <Link
                 key={world.id}
                 href={`/world-builder/${world.id}`}
-                className="group glass rounded-2xl p-6 hover-lift transition-all"
+                className="group glass rounded-2xl p-6 hover-lift transition-all relative overflow-hidden"
               >
+                <div
+                  className="h-1 w-full absolute top-0 left-0 right-0 rounded-t-2xl"
+                  style={{ background: `linear-gradient(90deg, ${world.color}80, transparent)` }}
+                />
                 <div className="flex items-center justify-between mb-4">
                   <div
                     className="w-3 h-3 rounded-full"
                     style={{ backgroundColor: world.color }}
                   />
                   <div className="flex items-center gap-2 text-xs text-text-muted">
-                    <PhClock />
+                    <PhClock className="w-3.5 h-3.5" />
                     {world.created}
                   </div>
                 </div>

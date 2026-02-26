@@ -15,25 +15,13 @@ import {
   PhGraphNetwork,
   PhStar,
   PhSpiral,
-  PhBroadcast,
-  PhSun,
-  PhMoon,
   PhPlanet,
-  PhComet,
-  PhCircleHalf,
   PhPlus,
-  PhLink,
   PhGitBranch,
-  PhShare,
-  PhGear,
   PhEye,
   PhHeart,
   PhUsers,
   PhCrown,
-  PhFlame,
-  PhDrop,
-  PhLeaf,
-  PhWind,
 } from "@phosphor-icons/react";
 
 export const metadata: Metadata = {
@@ -149,7 +137,7 @@ export default function UniverseBuilderPage() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Hero Section */}
-        <section className="pt-20 pb-16 lg:pt-28 lg:pb-20">
+        <section id="hero" className="pt-20 pb-16 lg:pt-28 lg:pb-20">
           <div className="relative liquid-glass rounded-3xl overflow-hidden px-8 py-16 sm:px-12 sm:py-20">
             <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/12 via-transparent to-crystal/10 pointer-events-none" />
             <div className="absolute top-0 right-0 w-64 h-64 bg-brand-primary/8 rounded-full blur-3xl pointer-events-none" />
@@ -164,9 +152,9 @@ export default function UniverseBuilderPage() {
               </div>
 
               <h1 className="text-fluid-hero font-display font-bold mb-6">
-                Build infinite
+                Build infinite worlds
                 <span className="block text-gradient-brand">
-                  interconnected worlds
+                  across infinite realities
                 </span>
               </h1>
 
@@ -197,7 +185,7 @@ export default function UniverseBuilderPage() {
         </section>
 
         {/* Canon Stats */}
-        <section className="py-8 border-t border-white/5">
+        <section id="stats" className="py-8 border-t border-white/5">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {CANON_ELEMENTS.map((element) => {
               const Icon = element.icon;
@@ -223,7 +211,7 @@ export default function UniverseBuilderPage() {
         </section>
 
         {/* Universe Templates */}
-        <section className="py-8 border-t border-white/5">
+        <section id="templates" className="py-8 border-t border-white/5">
           <div className="mb-6">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-crystal/20 bg-crystal/8 mb-4">
               <PhSparkle className="w-3 h-3 text-crystal" />
@@ -247,7 +235,7 @@ export default function UniverseBuilderPage() {
                 >
                   <div
                     className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110"
-                    style={{ backgroundColor: `${template.color}18` }}
+                    style={{ '--accent': template.color, backgroundColor: 'color-mix(in srgb, var(--accent) 12%, transparent)' } as React.CSSProperties}
                   >
                     <Icon
                       className="w-4 h-4"
@@ -267,7 +255,7 @@ export default function UniverseBuilderPage() {
         </section>
 
         {/* Your Universes */}
-        <section className="py-8 border-t border-white/5 pb-16">
+        <section id="your-universes" className="py-8 border-t border-white/5 pb-16">
           <div className="mb-6">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand-gold/20 bg-brand-gold/8 mb-4">
               <PhCrown className="w-3 h-3 text-brand-gold" />
@@ -287,11 +275,13 @@ export default function UniverseBuilderPage() {
                 href={`/universe-builder/${universe.id}`}
                 className="group glass rounded-2xl p-6 hover-lift transition-all"
               >
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-3">
                   <div
-                    className="w-4 h-4 rounded-full"
-                    style={{ backgroundColor: universe.color }}
-                  />
+                    className="w-10 h-10 rounded-xl"
+                    style={{ background: `linear-gradient(135deg, ${universe.color}40, ${universe.color}10)` }}
+                  >
+                    <PhPlanet className="w-5 h-5 m-2.5" style={{ color: universe.color }} />
+                  </div>
                   <span className="text-xs text-text-muted">
                     {universe.lastEdited}
                   </span>
