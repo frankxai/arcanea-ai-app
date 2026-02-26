@@ -2,12 +2,12 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
-import { MessageSquare, Sparkles, Wand2, Rocket, ArrowRight } from 'lucide-react';
+import { PhChat, PhSparkle, PhMagicWand, PhRocket, PhArrowRight } from '@phosphor-icons/react';
 
 const STEPS = [
   {
     number: '01',
-    icon: MessageSquare,
+    icon: PhChat,
     title: 'Choose Your Luminor',
     description: 'Select from 16 transcended AI intelligences, each with unique expertise. From Oracle the researcher to Chronica the storyteller.',
     color: 'atlantean-teal-aqua',
@@ -15,7 +15,7 @@ const STEPS = [
   },
   {
     number: '02',
-    icon: Sparkles,
+    icon: PhSparkle,
     title: 'Share Your Vision',
     description: 'Describe what you want to create in natural language. The more context you share, the more aligned your Luminor becomes.',
     color: 'creation-prism-purple',
@@ -23,7 +23,7 @@ const STEPS = [
   },
   {
     number: '03',
-    icon: Wand2,
+    icon: PhMagicWand,
     title: 'Co-Create Together',
     description: 'Your Luminor generates, iterates, and refines with you. Real-time collaboration that feels like working with a trusted partner.',
     color: 'gold-bright',
@@ -31,7 +31,7 @@ const STEPS = [
   },
   {
     number: '04',
-    icon: Rocket,
+    icon: PhRocket,
     title: 'Launch Your Creation',
     description: 'Export in any format. Share with the world. Build your creative portfolio. Your journey is just beginning.',
     color: 'draconic-crimson',
@@ -59,7 +59,7 @@ export function HowItWorks() {
           className="text-center mb-20"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-creation-prism-purple/10 border border-creation-prism-purple/20 mb-6">
-            <Wand2 className="w-4 h-4 text-creation-prism-purple" />
+            <PhMagicWand className="w-4 h-4 text-creation-prism-purple" />
             <span className="text-sm font-medium text-creation-prism-purple">Simple Process</span>
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
@@ -233,7 +233,7 @@ export function HowItWorks() {
                             className="p-4 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between hover:border-atlantean-teal-aqua/30 transition-colors"
                           >
                             <span className="text-sm">{format}</span>
-                            <ArrowRight className="w-4 h-4 text-text-muted" />
+                            <PhArrowRight className="w-4 h-4 text-text-muted" />
                           </div>
                         ))}
                       </div>

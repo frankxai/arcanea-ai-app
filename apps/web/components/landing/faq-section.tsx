@@ -2,7 +2,7 @@
 
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { useRef, useState } from 'react';
-import { HelpCircle, Plus, Minus } from 'lucide-react';
+import { PhQuestion, PhPlus, PhMinus } from '@phosphor-icons/react';
 
 const FAQS = [
   {
@@ -78,7 +78,7 @@ function FAQItem({
               : 'bg-white/5 text-text-muted group-hover:bg-white/10'
           }`}
         >
-          {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+          {isOpen ? <PhMinus className="w-4 h-4" /> : <PhPlus className="w-4 h-4" />}
         </span>
       </button>
       <AnimatePresence>
@@ -118,7 +118,7 @@ export function FAQSection() {
           className="text-center mb-16"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-atlantean-teal-aqua/10 border border-atlantean-teal-aqua/20 mb-6">
-            <HelpCircle className="w-4 h-4 text-atlantean-teal-aqua" />
+            <PhQuestion className="w-4 h-4 text-atlantean-teal-aqua" />
             <span className="text-sm font-medium text-atlantean-teal-aqua">FAQ</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">

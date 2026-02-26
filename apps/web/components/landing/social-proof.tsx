@@ -2,7 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Star, Quote } from 'lucide-react';
+import { PhStar, PhQuotes } from '@phosphor-icons/react';
 
 const TESTIMONIALS = [
   {
@@ -140,12 +140,12 @@ export function SocialProof() {
             >
               <div className="relative rounded-2xl border border-white/10 bg-cosmic-surface/50 backdrop-blur-sm p-6 hover:border-white/20 transition-all duration-300">
                 {/* Quote icon */}
-                <Quote className="absolute top-4 right-4 w-8 h-8 text-white/5" />
+                <PhQuotes className="absolute top-4 right-4 w-8 h-8 text-white/5" />
 
                 {/* Rating */}
                 <div className="flex gap-1 mb-4">
                   {Array.from({ length: testimonial.rating }).map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-gold-bright text-gold-bright" />
+                    <PhStar key={i} weight="fill" className="w-4 h-4 text-gold-bright" />
                   ))}
                 </div>
 
