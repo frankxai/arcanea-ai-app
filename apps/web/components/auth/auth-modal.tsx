@@ -3,7 +3,7 @@
 import React, { useState, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Lock, Eye, EyeOff, User, X, Sparkles, Github, Check } from 'lucide-react';
+import { PhEnvelope, PhLock, PhEye, PhEyeSlash, PhUser, PhX, PhSparkle, PhGithubLogo, PhCheck } from '@phosphor-icons/react';
 import { useAuth } from '@/lib/auth/context';
 
 interface AuthModalProps {
@@ -134,7 +134,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                   onClick={handleClose}
                   className="absolute top-4 right-4 p-2 rounded-full text-text-muted hover:text-white hover:bg-white/10 transition-colors z-10"
                 >
-                  <X className="w-5 h-5" />
+                  <PhX className="w-5 h-5" />
                 </button>
 
                 <div className="p-8">
@@ -146,7 +146,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                       className="text-center py-8"
                     >
                       <div className="w-16 h-16 rounded-full bg-atlantean-teal-aqua/20 flex items-center justify-center mx-auto mb-4">
-                        <Check className="w-8 h-8 text-atlantean-teal-aqua" />
+                        <PhCheck className="w-8 h-8 text-atlantean-teal-aqua" />
                       </div>
                       <h3 className="text-xl font-display font-bold mb-2">Check Your Email</h3>
                       <p className="text-text-secondary mb-6">
@@ -164,7 +164,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                       {/* Header */}
                       <div className="text-center mb-6">
                         <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-atlantean-teal-aqua to-creation-prism-purple flex items-center justify-center mx-auto mb-4">
-                          <Sparkles className="w-7 h-7 text-cosmic-deep" />
+                          <PhSparkle className="w-7 h-7 text-cosmic-deep" />
                         </div>
                         <Dialog.Title className="text-xl font-display font-bold">
                           {tab === 'login' ? 'Welcome Back' : 'Begin Your Journey'}
@@ -226,7 +226,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                           disabled={isLoading}
                           className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-white/20 hover:bg-white/5 transition-colors disabled:opacity-50 text-sm"
                         >
-                          <Github className="w-4 h-4" />
+                          <PhGithubLogo className="w-4 h-4" />
                           GitHub
                         </button>
                       </div>
@@ -251,7 +251,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                           >
                             <div className="relative">
                               <label htmlFor="login-email" className="sr-only">Email address</label>
-                              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" aria-hidden="true" />
+                              <PhEnvelope className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" aria-hidden="true" />
                               <input
                                 id="login-email"
                                 type="email"
@@ -266,7 +266,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
 
                             <div className="relative">
                               <label htmlFor="login-password" className="sr-only">Password</label>
-                              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" aria-hidden="true" />
+                              <PhLock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" aria-hidden="true" />
                               <input
                                 id="login-password"
                                 type={showPassword ? 'text' : 'password'}
@@ -283,7 +283,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                                 aria-label={showPassword ? "Hide password" : "Show password"}
                                 className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-white"
                               >
-                                {showPassword ? <EyeOff className="w-4 h-4" aria-hidden="true" /> : <Eye className="w-4 h-4" aria-hidden="true" />}
+                                {showPassword ? <PhEyeSlash className="w-4 h-4" aria-hidden="true" /> : <PhEye className="w-4 h-4" aria-hidden="true" />}
                               </button>
                             </div>
 
@@ -305,7 +305,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                             className="space-y-4"
                           >
                             <div className="relative">
-                              <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
+                              <PhUser className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
                               <input
                                 type="text"
                                 value={username}
@@ -318,7 +318,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                             </div>
 
                             <div className="relative">
-                              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
+                              <PhEnvelope className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
                               <input
                                 type="email"
                                 value={email}
@@ -331,7 +331,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
 
                             <div>
                               <div className="relative">
-                                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
+                                <PhLock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
                                 <input
                                   type={showPassword ? 'text' : 'password'}
                                   value={password}
@@ -345,7 +345,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                                   onClick={() => setShowPassword(!showPassword)}
                                   className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-white"
                                 >
-                                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                                  {showPassword ? <PhEyeSlash className="w-4 h-4" /> : <PhEye className="w-4 h-4" />}
                                 </button>
                               </div>
                               <div className="flex gap-3 mt-2 text-xs">

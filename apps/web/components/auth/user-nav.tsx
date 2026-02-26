@@ -4,7 +4,7 @@ import React, { useState, Fragment } from 'react';
 import Link from 'next/link';
 import { Menu, Transition } from '@headlessui/react';
 import { motion } from 'framer-motion';
-import { User, LogOut, Settings, Sparkles, BookOpen, Palette, ChevronDown } from 'lucide-react';
+import { PhUser, PhSignOut, PhGear, PhSparkle, PhBookOpen, PhPalette, PhCaretDown } from '@phosphor-icons/react';
 import { useAuth } from '@/lib/auth/context';
 import { AuthModal } from './auth-modal';
 
@@ -75,7 +75,7 @@ export function UserNav() {
           </div>
         )}
         <span className="text-sm font-medium hidden sm:block">{username}</span>
-        <ChevronDown className="w-4 h-4 text-text-muted" />
+        <PhCaretDown className="w-4 h-4 text-text-muted" />
       </Menu.Button>
 
       <Transition
@@ -104,7 +104,7 @@ export function UserNav() {
                     active ? 'bg-white/5 text-white' : 'text-text-secondary'
                   }`}
                 >
-                  <User className="w-4 h-4" />
+                  <PhUser className="w-4 h-4" />
                   Your Profile
                 </Link>
               )}
@@ -118,7 +118,7 @@ export function UserNav() {
                     active ? 'bg-white/5 text-white' : 'text-text-secondary'
                   }`}
                 >
-                  <Sparkles className="w-4 h-4" />
+                  <PhSparkle className="w-4 h-4" />
                   Your Luminors
                 </Link>
               )}
@@ -132,7 +132,7 @@ export function UserNav() {
                     active ? 'bg-white/5 text-white' : 'text-text-secondary'
                   }`}
                 >
-                  <Palette className="w-4 h-4" />
+                  <PhPalette className="w-4 h-4" />
                   Studio
                 </Link>
               )}
@@ -146,7 +146,7 @@ export function UserNav() {
                     active ? 'bg-white/5 text-white' : 'text-text-secondary'
                   }`}
                 >
-                  <BookOpen className="w-4 h-4" />
+                  <PhBookOpen className="w-4 h-4" />
                   Library
                 </Link>
               )}
@@ -160,7 +160,7 @@ export function UserNav() {
                     active ? 'bg-white/5 text-white' : 'text-text-secondary'
                   }`}
                 >
-                  <Settings className="w-4 h-4" />
+                  <PhGear className="w-4 h-4" />
                   Settings
                 </Link>
               )}
@@ -177,7 +177,7 @@ export function UserNav() {
                     active ? 'bg-white/5 text-red-400' : 'text-text-secondary'
                   }`}
                 >
-                  <LogOut className="w-4 h-4" />
+                  <PhSignOut className="w-4 h-4" />
                   Sign Out
                 </button>
               )}
