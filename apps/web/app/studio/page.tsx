@@ -325,6 +325,13 @@ export default function StudioPage() {
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-void" />
         <div className="absolute inset-0 bg-cosmic-mesh" />
+        {/* Draconia — Fire Gate, creation through power */}
+        <img
+          src="/guardians/gallery/draconia-gallery-2.webp"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover opacity-[0.07] pointer-events-none"
+        />
         <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(139,92,246,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(127,255,212,0.08),transparent_55%)]" />
       </div>
 
@@ -332,6 +339,13 @@ export default function StudioPage() {
         {/* Hero Section */}
         <section className="mb-16">
           <div className="relative liquid-glass rounded-3xl overflow-hidden px-8 py-12 sm:px-12 sm:py-16">
+            {/* Draconia dragon — Fire Gate energy for creation tools */}
+            <img
+              src="/guardians/gallery/draconia-gallery-3.webp"
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 w-full h-full object-cover opacity-[0.12] pointer-events-none object-right"
+            />
             <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/12 via-transparent to-crystal/10 pointer-events-none" />
             <div className="absolute top-0 right-0 w-64 h-64 bg-brand-primary/8 rounded-full blur-3xl pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-80 h-80 bg-fire/6 rounded-full blur-3xl pointer-events-none" />

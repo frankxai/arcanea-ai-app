@@ -289,6 +289,13 @@ export default function CommunityPage() {
         {/* ── 1. Hero ───────────────────────────────────────────────────────── */}
         <section className="pt-20 pb-20 lg:pt-28 lg:pb-28">
           <div className="relative liquid-glass rounded-3xl overflow-hidden px-8 py-16 sm:px-16 sm:py-20 lg:px-20 lg:py-24">
+            {/* Elara hunter+wolf — Shift Gate, perspective and the bonds that transcend dimension */}
+            <img
+              src="/guardians/gallery/elara-gallery-2.webp"
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 w-full h-full object-cover opacity-[0.11] pointer-events-none object-right"
+            />
             {/* Inner aurora gradient */}
             <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/12 via-transparent to-crystal/10 pointer-events-none" />
             <div className="absolute top-0 left-0 w-64 h-64 bg-brand-primary/8 rounded-full blur-3xl pointer-events-none" />
