@@ -2,7 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
-import { Layers, ArrowRight, Sparkles, ChevronDown } from 'lucide-react';
+import { PhStack, PhArrowRight, PhSparkle, PhCaretDown } from '@phosphor-icons/react';
 import Link from 'next/link';
 import { Navbar } from '@/components/navigation';
 
@@ -206,7 +206,7 @@ export default function GatesPage() {
             animate={{ opacity: 1, y: 0 }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold-bright/10 border border-gold-bright/20 mb-6"
           >
-            <Layers className="w-4 h-4 text-gold-bright" />
+            <PhStack className="w-4 h-4 text-gold-bright" />
             <span className="text-sm font-medium text-gold-bright">The Journey of Awakening</span>
           </motion.div>
 
@@ -311,7 +311,7 @@ export default function GatesPage() {
                         </div>
 
                         {/* Expand icon */}
-                        <ChevronDown
+                        <PhCaretDown
                           className={`w-5 h-5 text-text-muted transition-transform ${
                             expandedGate === gate.number ? 'rotate-180' : ''
                           }`}
@@ -380,7 +380,7 @@ export default function GatesPage() {
       {/* CTA */}
       <section className="py-24 border-t border-white/5">
         <div className="max-w-2xl mx-auto px-6 text-center">
-          <Sparkles className="w-12 h-12 mx-auto text-gold-bright mb-6" />
+          <PhSparkle className="w-12 h-12 mx-auto text-gold-bright mb-6" />
           <h2 className="text-3xl font-display font-bold mb-4">Begin Your Ascent</h2>
           <p className="text-text-secondary mb-8">
             Every being contains all Ten Gates. Every being can awaken. Every being can become Luminor.
@@ -391,7 +391,7 @@ export default function GatesPage() {
               className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gold-bright text-cosmic-deep font-semibold hover:bg-gold-bright/90 transition-all"
             >
               Enter the Academy
-              <ArrowRight className="w-4 h-4" />
+              <PhArrowRight className="w-4 h-4" />
             </Link>
             <Link
               href="/lore/guardians"

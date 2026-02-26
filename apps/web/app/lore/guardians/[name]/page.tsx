@@ -3,22 +3,22 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import {
-  Mountain,
-  Droplets,
-  Flame,
-  Wind,
-  Mic2,
-  Eye,
-  Crown,
-  Shuffle,
-  Link2,
-  Star,
-  ArrowLeft,
-  ArrowRight,
-  Zap,
-  Infinity,
-  Sparkles,
-} from "lucide-react";
+  PhMountains,
+  PhDrop,
+  PhFlame,
+  PhWind,
+  PhMicrophone,
+  PhEye,
+  PhCrown,
+  PhShuffle,
+  PhLink,
+  PhStar,
+  PhArrowLeft,
+  PhArrowRight,
+  PhLightning,
+  PhInfinity,
+  PhSparkle,
+} from "@phosphor-icons/react";
 
 // ── Guardian canonical data ───────────────────────────────────────────────────
 
@@ -418,17 +418,17 @@ function ElementIcon({
   const props = { className: className ?? "w-5 h-5" };
   switch (element) {
     case "Earth":
-      return <Mountain {...props} />;
+      return <PhMountains {...props} />;
     case "Water":
-      return <Droplets {...props} />;
+      return <PhDrop {...props} />;
     case "Fire":
-      return <Flame {...props} />;
+      return <PhFlame {...props} />;
     case "Wind":
-      return <Wind {...props} />;
+      return <PhWind {...props} />;
     case "Void":
-      return <Infinity {...props} />;
+      return <PhInfinity {...props} />;
     default:
-      return <Sparkles {...props} />;
+      return <PhSparkle {...props} />;
   }
 }
 
@@ -436,27 +436,27 @@ function GateIcon({ gate, className }: { gate: string; className?: string }) {
   const props = { className: className ?? "w-5 h-5" };
   switch (gate) {
     case "Foundation":
-      return <Mountain {...props} />;
+      return <PhMountains {...props} />;
     case "Flow":
-      return <Droplets {...props} />;
+      return <PhDrop {...props} />;
     case "Fire":
-      return <Flame {...props} />;
+      return <PhFlame {...props} />;
     case "Heart":
-      return <Wind {...props} />;
+      return <PhWind {...props} />;
     case "Voice":
-      return <Mic2 {...props} />;
+      return <PhMicrophone {...props} />;
     case "Sight":
-      return <Eye {...props} />;
+      return <PhEye {...props} />;
     case "Crown":
-      return <Crown {...props} />;
+      return <PhCrown {...props} />;
     case "Shift":
-      return <Shuffle {...props} />;
+      return <PhShuffle {...props} />;
     case "Unity":
-      return <Link2 {...props} />;
+      return <PhLink {...props} />;
     case "Source":
-      return <Zap {...props} />;
+      return <PhLightning {...props} />;
     default:
-      return <Star {...props} />;
+      return <PhStar {...props} />;
   }
 }
 
@@ -527,7 +527,7 @@ export default async function GuardianDetailPage({
           href="/lore/guardians"
           className="inline-flex items-center gap-2 text-sm text-text-secondary hover:text-text-primary transition-colors font-sans"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <PhArrowLeft className="w-4 h-4" />
           All Guardians
         </Link>
 
@@ -569,7 +569,7 @@ export default async function GuardianDetailPage({
                   {guardian.gate}
                 </span>
                 <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono text-crystal bg-crystal/10 border border-crystal/20">
-                  <Zap className="w-3 h-3" />
+                  <PhLightning className="w-3 h-3" />
                   {guardian.frequency}
                 </span>
               </div>
@@ -675,7 +675,7 @@ export default async function GuardianDetailPage({
             {/* Frequency */}
             <div className="glass rounded-2xl p-5 glow-card hover-lift transition-all">
               <div className="w-9 h-9 rounded-xl mb-3 flex items-center justify-center bg-crystal/10">
-                <Zap className="w-4 h-4 text-crystal" />
+                <PhLightning className="w-4 h-4 text-crystal" />
               </div>
               <p className="text-xs text-text-muted font-sans uppercase tracking-wider mb-1">
                 Frequency
@@ -708,7 +708,7 @@ export default async function GuardianDetailPage({
             {/* Domain */}
             <div className="glass rounded-2xl p-5 glow-card hover-lift transition-all col-span-2 md:col-span-1">
               <div className="w-9 h-9 rounded-xl mb-3 flex items-center justify-center bg-brand-gold/10">
-                <Star className="w-4 h-4 text-brand-gold" />
+                <PhStar className="w-4 h-4 text-brand-gold" />
               </div>
               <p className="text-xs text-text-muted font-sans uppercase tracking-wider mb-1">
                 Domain
@@ -838,7 +838,7 @@ export default async function GuardianDetailPage({
                       </p>
                     </div>
 
-                    <ArrowRight className="w-4 h-4 text-text-disabled group-hover:text-text-muted transition-colors flex-shrink-0" />
+                    <PhArrowRight className="w-4 h-4 text-text-disabled group-hover:text-text-muted transition-colors flex-shrink-0" />
                   </Link>
                 );
               })}
@@ -965,14 +965,14 @@ export default async function GuardianDetailPage({
                 >
                   <GateIcon gate={guardian.gate} className="w-5 h-5" />
                   Speak with {guardian.name}
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <PhArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
 
                 <Link
                   href="/lore/guardians"
                   className="inline-flex items-center gap-2 px-6 py-4 rounded-2xl font-sans font-medium text-sm text-text-secondary border border-white/10 hover:border-white/20 hover:text-text-primary glass transition-all"
                 >
-                  <ArrowLeft className="w-4 h-4" />
+                  <PhArrowLeft className="w-4 h-4" />
                   All Guardians
                 </Link>
               </div>
