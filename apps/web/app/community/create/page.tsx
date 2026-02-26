@@ -129,20 +129,20 @@ const HOW_IT_WORKS = [
     title: "Discover a Project",
     description:
       "Browse active collaborations or find one that matches your vision",
-    icon: Compass,
+    icon: PhCompass,
   },
   {
     step: "02",
     title: "Join the Circle",
     description:
       "Connect with fellow creators and align on the creative direction",
-    icon: Users,
+    icon: PhUsers,
   },
   {
     step: "03",
     title: "Create Together",
     description: "Manifest your contribution and watch the project come alive",
-    icon: Sparkles,
+    icon: PhSparkle,
   },
 ];
 

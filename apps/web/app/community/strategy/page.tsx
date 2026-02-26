@@ -99,34 +99,34 @@ const GOVERNANCE_ROLES = [
   {
     name: "Proposer",
     description: "Submit proposals for community consideration",
-    icon: Lightbulb,
+    icon: PhLightbulb,
     color: "#ffd700",
   },
   {
     name: "Validator",
     description: "Review and refine proposals before voting",
-    icon: Scale,
+    icon: PhScales,
     color: "#8b5cf6",
   },
   {
     name: "Voter",
     description: "Participate in governance decisions",
-    icon: Vote,
+    icon: PhChecks,
     color: "#7fffd4",
   },
   {
     name: "Moderator",
     description: "Ensure civil discourse in discussions",
-    icon: Shield,
+    icon: PhShield,
     color: "#ef4444",
   },
 ];
 
 const STATS = [
-  { label: "Active Proposals", value: "3", icon: FileText },
-  { label: "Total Votes Cast", value: "892", icon: Vote },
-  { label: "Community Members", value: "2.4K", icon: Users },
-  { label: "Proposals Passed", value: "18", icon: CheckCircle },
+  { label: "Active Proposals", value: "3", icon: PhFileText },
+  { label: "Total Votes Cast", value: "892", icon: PhChecks },
+  { label: "Community Members", value: "2.4K", icon: PhUsers },
+  { label: "Proposals Passed", value: "18", icon: PhCheckCircle },
 ];
 
 export default function CommunityStrategyPage() {

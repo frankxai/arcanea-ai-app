@@ -67,7 +67,7 @@ const WORLD_ELEMENTS = [
   {
     id: "magic",
     name: "Magic Systems",
-    icon: Sparkles,
+    icon: PhSparkle,
     color: "#a855f7",
     description: "Supernatural rules and abilities",
     elements: ["Sources", "Abilities", "Limitations", "Users", "Artifacts"],
@@ -75,7 +75,7 @@ const WORLD_ELEMENTS = [
   {
     id: "history",
     name: "History",
-    icon: Clock,
+    icon: PhClock,
     color: "#ffd700",
     description: "Timelines, events, and legacies",
     elements: ["Eras", "Conflicts", "Heroes", "Cataclysms", "Legends"],
@@ -123,21 +123,21 @@ const WORLD_TEMPLATES = [
   {
     id: "scifi",
     name: "Science Fiction",
-    icon: Zap,
+    icon: PhLightning,
     color: "#3b82f6",
     description: "Future worlds, technology, and space exploration",
   },
   {
     id: "cyberpunk",
     name: "Cyberpunk",
-    icon: PhWindIcon,
+    icon: WindIcon,
     color: "#a855f7",
     description: "High tech, low life, and corporate dystopias",
   },
   {
     id: "historical",
     name: "Historical",
-    icon: Castle,
+    icon: PhBuildings,
     color: "#22c55e",
     description: "Real-world periods with creative interpretation",
   },
