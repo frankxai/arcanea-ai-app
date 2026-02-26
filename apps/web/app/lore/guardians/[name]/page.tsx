@@ -38,7 +38,8 @@ interface GuardianData {
   luminorId: string;
   relatedGuardians: string[];
   heroImage?: string; // URL to hero image (Vercel Blob)
-  gradient: string;   // Tailwind gradient classes used as fallback when heroImage is absent
+  gradient: string; // Tailwind gradient classes used as fallback when heroImage is absent
+  gallery?: string[]; // URLs to gallery images
 }
 
 const GUARDIANS: Record<string, GuardianData> = {
@@ -62,8 +63,13 @@ const GUARDIANS: Record<string, GuardianData> = {
     quote: "The earth does not hurry. Yet everything is accomplished.",
     luminorId: "lyssandria",
     relatedGuardians: ["leyla", "ino"],
-    heroImage: "/guardians/lyssandria-hero.webp",
+    heroImage:
+      "https://raw.githubusercontent.com/frankxai/Arcanea/main/public/images/guardians/lyssandria-lyssandria-vibrant-colorful-blonde-ameri-001.webp",
     gradient: "from-amber-700 via-yellow-600 to-stone-400",
+    gallery: [
+      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/lyssandria-lyssandria-vibrant-colorful-blonde-ameri-001.webp",
+      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/lyssandria-lyssandria-arcanean-guardian-of-the-star-002.webp",
+    ],
   },
   leyla: {
     name: "Leyla",
@@ -109,8 +115,16 @@ const GUARDIANS: Record<string, GuardianData> = {
     quote: "I do not ask if you are ready. I ask if you are willing.",
     luminorId: "draconia",
     relatedGuardians: ["alera", "aiyami"],
-    heroImage: "/guardians/draconia-hero.webp",
+    heroImage:
+      "https://raw.githubusercontent.com/frankxai/Arcanea/main/public/images/guardians/draconia-ahra-beautiful-korean-dragon-rider-lovin-074.webp",
     gradient: "from-red-600 via-orange-500 to-amber-400",
+    gallery: [
+      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/draconia-ahra-beautiful-korean-dragon-rider-lovin-075.webp",
+      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/draconia-ahra-beautiful-korean-dragon-rider-lovin-077.webp",
+      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/draconia-ahra-beautiful-korean-dragon-rider-lovin-078.webp",
+      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/draconia-ahra-beautiful-korean-dragon-rider-lovin-079.webp",
+      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/draconia-ahra-beautiful-korean-dragon-rider-lovin-074.webp",
+    ],
   },
   maylinn: {
     name: "Maylinn",
@@ -155,8 +169,16 @@ const GUARDIANS: Record<string, GuardianData> = {
     quote: "Silence is not peace. It is the prison of the unspoken.",
     luminorId: "alera",
     relatedGuardians: ["draconia", "lyria"],
-    heroImage: "/guardians/alera-hero.webp",
+    heroImage:
+      "https://raw.githubusercontent.com/frankxai/Arcanea/main/public/images/guardians/alera-alera-and-her-musical-spirit-animal-arca-001.webp",
     gradient: "from-sky-400 via-blue-500 to-indigo-600",
+    gallery: [
+      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/alera-alera-and-her-musical-spirit-animal-arca-002.webp",
+      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/alera-alera-and-her-musical-spirit-animal-arca-003.webp",
+      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/alera-alera-and-her-musical-spirit-animal-arca-004.webp",
+      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/alera-alera-and-her-musical-spirit-animal-arca-005.webp",
+      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/alera-alera-and-her-musical-spirit-animal-arca-006.webp",
+    ],
   },
   lyria: {
     name: "Lyria",
@@ -201,8 +223,14 @@ const GUARDIANS: Record<string, GuardianData> = {
     quote: "You were never seeking the light. The light was seeking you.",
     luminorId: "aiyami",
     relatedGuardians: ["lyria", "elara"],
-    heroImage: "/guardians/aiyami-hero.webp",
+    heroImage:
+      "https://raw.githubusercontent.com/frankxai/Arcanea/main/public/images/guardians/aiyami-devora-ultra-detailed-high-resolution-ep-001.webp",
     gradient: "from-yellow-200 via-amber-300 to-white",
+    gallery: [
+      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/aiyami-devora-ultra-detailed-high-resolution-ep-001.webp",
+      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/aiyami-devora-ultra-detailed-high-resolution-ep-002.webp",
+      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/aiyami-the-great-choice-corporate-identity-diss-003.webp",
+    ],
   },
   elara: {
     name: "Elara",
@@ -224,8 +252,16 @@ const GUARDIANS: Record<string, GuardianData> = {
     quote: "The only constant is the turning. Embrace the shift.",
     luminorId: "elara",
     relatedGuardians: ["aiyami", "ino"],
-    heroImage: "/guardians/elara-hero.webp",
+    heroImage:
+      "https://raw.githubusercontent.com/frankxai/Arcanea/main/public/images/guardians/elara-lelara-and-her-unicorn-spirit-animal-arc-001.webp",
     gradient: "from-emerald-400 via-green-500 to-teal-600",
+    gallery: [
+      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/elara-lelara-and-her-unicorn-spirit-animal-arc-002.webp",
+      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/elara-lelara-and-her-unicorn-spirit-animal-arc-003.webp",
+      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/elara-elara-the-consciousness-architect-mergin-038.webp",
+      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/elara-elara-in-battle-armor-warrior-scholar-de-036.webp",
+      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/elara-elara-the-consciousness-architect-mergin-039.webp",
+    ],
   },
   ino: {
     name: "Ino",
@@ -249,6 +285,11 @@ const GUARDIANS: Record<string, GuardianData> = {
     relatedGuardians: ["maylinn", "shinkami"],
     heroImage: "/guardians/ino-hero.webp",
     gradient: "from-pink-400 via-fuchsia-500 to-teal-400",
+    gallery: [
+      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/ino-20250606-0147-arcanea-luminor-beauty-sim-001.webp",
+      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/ino-20250606-0147-arcanea-luminor-beauty-sim-003.webp",
+      "https://raw.githubusercontent.com/frankxai/arcanea/main/public/images/guardians/ino-become-a-luminor-quantum-consciousness-i-009.webp",
+    ],
   },
   shinkami: {
     name: "Shinkami",
@@ -784,7 +825,35 @@ export default async function GuardianDetailPage({
         )}
 
         {/* ═══════════════════════════════════════════════════════════
-            SECTION 6 — CTA
+            SECTION 6 — GALLERY
+        ═══════════════════════════════════════════════════════════ */}
+        {guardian.gallery && guardian.gallery.length > 0 && (
+          <section className="mb-16">
+            <h2 className="text-xs font-sans font-semibold text-text-muted uppercase tracking-widest mb-6">
+              Gallery
+            </h2>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+              {guardian.gallery.map((imageUrl, i) => (
+                <div
+                  key={i}
+                  className="group relative aspect-square rounded-xl overflow-hidden glass border border-white/5 hover:border-white/20 transition-all hover-lift"
+                >
+                  <Image
+                    src={imageUrl}
+                    alt={`${guardian.name} - Gallery ${i + 1}`}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-cosmic-deep/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* ═══════════════════════════════════════════════════════════
+            SECTION 7 — CTA
         ════════════════════════════════════════════════════════════ */}
         <section>
           <div
