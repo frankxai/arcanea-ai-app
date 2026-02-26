@@ -126,6 +126,8 @@ export function FeaturesV2() {
             return (
               <motion.div
                 key={feature.title}
+                role="article"
+                aria-label={feature.title}
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.1 + i * 0.1 }}
@@ -153,6 +155,7 @@ export function FeaturesV2() {
 
                 {/* Learn more link */}
                 <div
+                  aria-hidden="true"
                   className={`mt-6 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity ${
                     feature.highlight === "atlantean-teal-aqua"
                       ? "text-atlantean-aqua"
@@ -188,11 +191,11 @@ export function FeaturesV2() {
             <div className="absolute top-0 left-0 w-40 h-40 bg-atlantean-teal-aqua/10 rounded-full blur-3xl -z-10" />
             <div className="absolute bottom-0 right-0 w-40 h-40 bg-creation-prism-purple/10 rounded-full blur-3xl -z-10" />
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <ul className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 list-none p-0 m-0">
               {CAPABILITY_GRID.map((capability, i) => {
                 const Icon = capability.icon;
                 return (
-                  <motion.div
+                  <motion.li
                     key={capability.title}
                     initial={{ opacity: 0, y: 20 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -200,7 +203,7 @@ export function FeaturesV2() {
                     className="group flex items-start gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors"
                   >
                     <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0 group-hover:bg-atlantean-teal-aqua/10 transition-colors">
-                      <Icon className="w-5 h-5 text-atlantean-teal-aqua" />
+                      <Icon className="w-5 h-5 text-atlantean-teal-aqua" aria-hidden="true" />
                     </div>
                     <div>
                       <h4 className="font-semibold mb-1 group-hover:text-atlantean-teal-aqua transition-colors">
@@ -210,10 +213,10 @@ export function FeaturesV2() {
                         {capability.description}
                       </p>
                     </div>
-                  </motion.div>
+                  </motion.li>
                 );
               })}
-            </div>
+            </ul>
           </div>
         </motion.div>
 

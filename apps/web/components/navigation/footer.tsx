@@ -90,7 +90,11 @@ export function Footer() {
                     <Link
                       href={link.href}
                       {...("external" in link && link.external
-                        ? { target: "_blank", rel: "noopener noreferrer" }
+                        ? {
+                            target: "_blank",
+                            rel: "noopener noreferrer",
+                            "aria-label": `${link.label} (opens in new tab)`,
+                          }
                         : {})}
                       className="text-sm text-text-secondary hover:text-crystal transition-colors"
                     >
@@ -132,6 +136,7 @@ export function Footer() {
               className="hover:text-crystal transition-colors"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="FrankX.ai (opens in new tab)"
             >
               FrankX
             </Link>

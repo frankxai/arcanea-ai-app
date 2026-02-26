@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   List,
@@ -31,6 +32,7 @@ const navLinks = [
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <>
@@ -73,6 +75,7 @@ export function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
+                  aria-current={pathname === link.href ? "page" : undefined}
                   className={`text-sm transition-colors ${
                     link.primary
                       ? "text-atlantean-teal-aqua hover:text-atlantean-teal-aqua/80 font-medium"
@@ -87,9 +90,12 @@ export function Navbar() {
 
             {/* Mobile menu button */}
             <button
+              type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="md:hidden p-2 text-white hover:bg-white/10 rounded-lg transition-colors"
-              aria-label="Toggle menu"
+              aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-nav-menu"
             >
               {mobileMenuOpen ? (
                 <X className="w-6 h-6" />
@@ -105,11 +111,13 @@ export function Navbar() {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
+            id="mobile-nav-menu"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             className="fixed inset-x-0 top-[73px] z-40 md:hidden"
           >
+            <nav aria-label="Mobile navigation">
             <div className="bg-cosmic-deep/95 backdrop-blur-xl border-b border-white/10 shadow-xl">
               <div className="px-6 py-4 space-y-1">
                 {navLinks.map((link) => {
@@ -118,6 +126,7 @@ export function Navbar() {
                     <Link
                       key={link.href}
                       href={link.href}
+                      aria-current={pathname === link.href ? "page" : undefined}
                       onClick={() => setMobileMenuOpen(false)}
                       className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-white/5 ${
                         link.primary
@@ -125,7 +134,7 @@ export function Navbar() {
                           : "text-text-secondary hover:text-white"
                       }`}
                     >
-                      <Icon className="w-5 h-5" />
+                      <Icon className="w-5 h-5" aria-hidden="true" />
                       {link.label}
                     </Link>
                   );
@@ -140,6 +149,7 @@ export function Navbar() {
                 </div>
               </div>
             </div>
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>
