@@ -1,4 +1,4 @@
-import { Loader2 } from 'lucide-react';
+import { PhCircleNotch } from "@phosphor-icons/react";
 
 export default function Loading() {
   return (
@@ -6,7 +6,7 @@ export default function Loading() {
       {/* Animated loader with cosmic glow */}
       <div className="relative mb-8">
         <div className="absolute inset-0 animate-pulse blur-2xl bg-atlantean-teal-aqua/30 rounded-full" />
-        <Loader2 className="relative w-16 h-16 text-atlantean-teal-aqua animate-spin" />
+        <PhCircleNotch className="relative w-16 h-16 text-atlantean-teal-aqua animate-spin" />
       </div>
 
       {/* Loading text with shimmer effect */}
