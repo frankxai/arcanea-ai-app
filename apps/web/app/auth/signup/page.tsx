@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Mail, Lock, User, ArrowRight, Sparkles, Eye, EyeOff, Check } from 'lucide-react';
+import { createClient } from '@/lib/supabase/client';
+import { PhEnvelope, PhLock, PhUser, PhArrowRight, PhSparkle, PhEye, PhEyeSlash, PhCheck } from '@phosphor-icons/react';
 
 export default function SignupPage() {
   const router = useRouter();
@@ -24,29 +25,91 @@ export default function SignupPage() {
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
     setError('');
+
+    if (!name.trim() || !email.trim() || !password) {
+      setError('Please fill in all fields.');
+      return;
+    }
 
     // Validate password
     if (!passwordChecks.every(c => c.check)) {
       setError('Please ensure your password meets all requirements.');
-      setIsLoading(false);
       return;
     }
 
+    setIsLoading(true);
+
     try {
-      // TODO: Implement Supabase auth
-      // For now, simulate signup
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+        setError('Supabase auth is not configured. Add Supabase env vars in Vercel/local env.');
+        return;
+      }
 
-      // Store auth state
-      localStorage.setItem('arcanea_auth', JSON.stringify({ name, email }));
-      localStorage.setItem('arcanea_new_user', 'true');
+      const supabase = createClient();
+      const origin =
+        window.location.origin ||
+        process.env.NEXT_PUBLIC_APP_URL ||
+        'http://localhost:3001';
+      const emailRedirectTo = new URL('/auth/callback', origin);
+      emailRedirectTo.searchParams.set('next', '/welcome');
 
-      // Redirect to onboarding
-      router.push('/welcome');
-    } catch (err) {
+      const { error } = await supabase.auth.signUp({
+        email: email.trim(),
+        password,
+        options: {
+          emailRedirectTo: emailRedirectTo.toString(),
+          data: {
+            name: name.trim(),
+            full_name: name.trim(),
+          },
+        },
+      });
+
+      if (error) {
+        setError(error.message);
+        return;
+      }
+
+      router.push('/auth/login?message=check_email');
+      router.refresh();
+    } catch {
       setError('Something went wrong. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSocialSignup = async (provider: 'google' | 'github') => {
+    setIsLoading(true);
+    setError('');
+
+    try {
+      if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+        setError('Supabase auth is not configured. Add Supabase env vars in Vercel/local env.');
+        return;
+      }
+
+      const supabase = createClient();
+      const origin =
+        window.location.origin ||
+        process.env.NEXT_PUBLIC_APP_URL ||
+        'http://localhost:3001';
+      const callbackUrl = new URL('/auth/callback', origin);
+      callbackUrl.searchParams.set('next', '/welcome');
+
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: {
+          redirectTo: callbackUrl.toString(),
+        },
+      });
+
+      if (error) {
+        setError(error.message);
+      }
+    } catch {
+      setError(`Failed to sign up with ${provider}. Please try again.`);
     } finally {
       setIsLoading(false);
     }
@@ -64,7 +127,7 @@ export default function SignupPage() {
         <div className="text-center mb-8">
           <Link href="/" className="inline-block mb-6">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-atlantean-teal/20 to-gold-bright/20 backdrop-blur-sm border border-gold-bright/30">
-              <Sparkles className="w-8 h-8 text-gold-bright" />
+              <PhSparkle className="w-8 h-8 text-gold-bright" />
             </div>
           </Link>
           <h1 className="font-cinzel text-3xl font-bold text-text-primary mb-2">
@@ -84,7 +147,7 @@ export default function SignupPage() {
                 Creator Name
               </label>
               <div className="relative">
-                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
+                <PhUser className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
                 <input
                   id="name"
                   type="text"
@@ -103,7 +166,7 @@ export default function SignupPage() {
                 Email
               </label>
               <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
+                <PhEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
                 <input
                   id="email"
                   type="email"
@@ -122,7 +185,7 @@ export default function SignupPage() {
                 Password
               </label>
               <div className="relative">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
+                <PhLock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
                 <input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
@@ -137,7 +200,7 @@ export default function SignupPage() {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary transition-colors"
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showPassword ? <PhEyeSlash className="w-5 h-5" /> : <PhEye className="w-5 h-5" />}
                 </button>
               </div>
 
@@ -160,7 +223,7 @@ export default function SignupPage() {
                           check.check ? 'bg-success' : 'bg-cosmic-border'
                         }`}
                       >
-                        {check.check && <Check className="w-3 h-3 text-white" />}
+                        {check.check && <PhCheck className="w-3 h-3 text-white" />}
                       </div>
                       {check.label}
                     </div>
@@ -208,7 +271,7 @@ export default function SignupPage() {
               ) : (
                 <>
                   Create Account
-                  <ArrowRight className="w-5 h-5" />
+                  <PhArrowRight className="w-5 h-5" />
                 </>
               )}
             </button>
@@ -230,6 +293,8 @@ export default function SignupPage() {
           <div className="grid grid-cols-2 gap-4">
             <button
               type="button"
+              onClick={() => handleSocialSignup('google')}
+              disabled={isLoading}
               className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-cosmic-border hover:border-text-muted transition-colors font-crimson text-text-secondary"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -242,6 +307,8 @@ export default function SignupPage() {
             </button>
             <button
               type="button"
+              onClick={() => handleSocialSignup('github')}
+              disabled={isLoading}
               className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-cosmic-border hover:border-text-muted transition-colors font-crimson text-text-secondary"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">

@@ -3,25 +3,25 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
 
-// Icons - using lucide-react (to be replaced with Arcanea icon system when available)
 import {
-  Mail,
-  Lock,
-  ArrowRight,
-  Sparkles,
-  Eye,
-  EyeOff,
-  Loader2,
-  AlertCircle,
-} from "lucide-react";
+  PhEnvelope,
+  PhLock,
+  PhArrowRight,
+  PhSparkle,
+  PhEye,
+  PhEyeSlash,
+  PhCircleNotch,
+  PhWarningCircle,
+} from "@phosphor-icons/react";
 
 // Loading component
 function LoadingSpinner({ text }: { text: string }) {
   return (
     <div className="flex items-center gap-3">
-      <Loader2 className="w-5 h-5 animate-spin" />
+      <PhCircleNotch className="w-5 h-5 animate-spin" />
       <span>{text}</span>
     </div>
   );
@@ -35,7 +35,7 @@ function ErrorMessage({ message }: { message: string }) {
       animate={{ opacity: 1, y: 0 }}
       className="flex items-center gap-2 text-fire text-sm font-body"
     >
-      <AlertCircle className="w-4 h-4" />
+      <PhWarningCircle className="w-4 h-4" />
       {message}
     </motion.p>
   );
@@ -91,9 +91,9 @@ function InputField({
             className="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary transition-colors"
           >
             {toggleVisible ? (
-              <EyeOff className="w-5 h-5" />
+              <PhEyeSlash className="w-5 h-5" />
             ) : (
-              <Eye className="w-5 h-5" />
+              <PhEye className="w-5 h-5" />
             )}
           </button>
         )}
@@ -152,35 +152,55 @@ function SocialButton({
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const callbackError = searchParams.get("error");
+  const authMessage = searchParams.get("message");
+  const nextPath = searchParams.get("next") || "/chat";
+
+  const callbackErrorMessage =
+    callbackError === "callback_failed"
+      ? "Sign-in callback failed. Please try again."
+      : callbackError === "missing_code"
+        ? "Missing sign-in code. Please start the login flow again."
+        : "";
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
     setError("");
 
-    try {
-      // TODO: Implement Supabase auth
-      // For now, simulate login
-      await new Promise((resolve) => setTimeout(resolve, 1200));
+    if (!email || !password) {
+      setError("Please fill in all fields.");
+      return;
+    }
 
-      // Basic validation
-      if (!email || !password) {
-        setError("Please fill in all fields.");
+    setIsLoading(true);
+
+    try {
+      if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+        setError("Supabase auth is not configured. Add Supabase env vars in Vercel/local env.");
         return;
       }
 
-      // Store auth state
-      localStorage.setItem("arcanea_auth", JSON.stringify({ email }));
+      const supabase = createClient();
+      const { error } = await supabase.auth.signInWithPassword({
+        email: email.trim(),
+        password,
+      });
 
-      // Redirect to chat or dashboard
-      router.push("/chat");
-    } catch (err) {
-      setError("Invalid credentials. Please try again.");
+      if (error) {
+        setError(error.message);
+        return;
+      }
+
+      router.push(nextPath);
+      router.refresh();
+    } catch {
+      setError("Unable to sign in right now. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -191,10 +211,30 @@ export default function LoginPage() {
     setError("");
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      // TODO: Implement social auth
-      router.push("/chat");
-    } catch (err) {
+      if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+        setError("Supabase auth is not configured. Add Supabase env vars in Vercel/local env.");
+        return;
+      }
+
+      const supabase = createClient();
+      const origin =
+        window.location.origin ||
+        process.env.NEXT_PUBLIC_APP_URL ||
+        "http://localhost:3001";
+      const callbackUrl = new URL("/auth/callback", origin);
+      callbackUrl.searchParams.set("next", nextPath);
+
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: provider.toLowerCase() as "google" | "github",
+        options: {
+          redirectTo: callbackUrl.toString(),
+        },
+      });
+
+      if (error) {
+        setError(error.message);
+      }
+    } catch {
       setError(`Failed to sign in with ${provider}. Please try again.`);
     } finally {
       setIsLoading(false);
@@ -220,13 +260,13 @@ export default function LoginPage() {
         <div className="text-center mb-10">
           <Link href="/" className="inline-block mb-8">
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-brand-primary/20 to-crystal/20 backdrop-blur-sm border border-crystal/30">
-              <Sparkles className="w-10 h-10 text-crystal" />
+              <PhSparkle className="w-10 h-10 text-crystal" />
             </div>
           </Link>
 
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-primary/30 bg-brand-primary/10 mb-6">
-            <Sparkles className="w-3.5 h-3.5 text-brand-primary" />
+            <PhSparkle className="w-3.5 h-3.5 text-brand-primary" />
             <span className="text-xs font-mono tracking-widest uppercase text-brand-primary">
               Welcome Back
             </span>
@@ -242,6 +282,18 @@ export default function LoginPage() {
 
         {/* Login form */}
         <div className="glass rounded-3xl p-8 sm:p-10">
+          {authMessage === "check_email" && (
+            <motion.p
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-4 rounded-xl border border-brand-primary/20 bg-brand-primary/10 px-4 py-3 text-sm font-body text-text-primary"
+            >
+              Check your email for the confirmation link to complete sign-up.
+            </motion.p>
+          )}
+
+          {callbackErrorMessage && <ErrorMessage message={callbackErrorMessage} />}
+
           <form onSubmit={handleLogin} className="space-y-6">
             {/* Email field */}
             <InputField
@@ -250,7 +302,7 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="creator@arcanea.app"
-              icon={Mail}
+              icon={PhEnvelope}
               required
             />
 
@@ -261,7 +313,7 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
-              icon={Lock}
+              icon={PhLock}
               showToggle
               toggleVisible={showPassword}
               onToggle={() => setShowPassword(!showPassword)}
@@ -292,7 +344,7 @@ export default function LoginPage() {
               ) : (
                 <>
                   <span>Enter</span>
-                  <ArrowRight className="w-5 h-5" />
+                  <PhArrowRight className="w-5 h-5" />
                 </>
               )}
             </button>
