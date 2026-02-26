@@ -10,6 +10,7 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import type { Database } from '@/lib/database/types/supabase';
+import { getSupabaseEnv, getSupabaseServiceRoleKey } from '@/lib/supabase/env';
 
 /**
  * Create Supabase client for server-side usage
@@ -19,10 +20,11 @@ import type { Database } from '@/lib/database/types/supabase';
  */
 export async function createClient() {
   const cookieStore = await cookies();
+  const { url, anonKey } = getSupabaseEnv();
 
   return createServerClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    url,
+    anonKey,
     {
       cookies: {
         get(name: string) {
@@ -58,16 +60,12 @@ export async function createClient() {
  * @throws {Error} If SUPABASE_SERVICE_ROLE_KEY is not set
  */
 export function createAdminClient() {
-  if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
-    throw new Error(
-      'SUPABASE_SERVICE_ROLE_KEY is required for admin operations. ' +
-      'Please set this environment variable.'
-    );
-  }
+  const { url } = getSupabaseEnv();
+  const serviceRoleKey = getSupabaseServiceRoleKey();
 
   return createServerClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY,
+    url,
+    serviceRoleKey,
     {
       cookies: {
         get() { return undefined; },

@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import { EcosystemDiagram } from "@/components/ecosystem/ecosystem-diagram";
 
 export const metadata: Metadata = {
   title: "Ecosystem | Arcanea",
@@ -354,6 +355,13 @@ export default function EcosystemPage() {
                 </Link>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* ── Ecosystem Diagram ─────────────────────────────────────────── */}
+        <section className="mb-20">
+          <div className="glass rounded-3xl p-8 sm:p-12">
+            <EcosystemDiagram />
           </div>
         </section>
 
