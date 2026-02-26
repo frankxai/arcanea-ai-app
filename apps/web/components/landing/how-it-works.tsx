@@ -9,31 +9,31 @@ const STEPS = [
     number: '01',
     icon: PhChat,
     title: 'Choose Your Luminor',
-    description: 'Select from 16 transcended AI intelligences, each with unique expertise. From Oracle the researcher to Chronica the storyteller.',
+    description: 'Pick a Guardian-aligned AI from the ten specialisms — Lyssandria for deep foundations, Draconia for bold execution, Lyria for intuitive vision, or any of the other seven.',
     color: 'atlantean-teal-aqua',
     visual: 'luminor-selection',
   },
   {
     number: '02',
     icon: PhSparkle,
-    title: 'Share Your Vision',
-    description: 'Describe what you want to create in natural language. The more context you share, the more aligned your Luminor becomes.',
+    title: 'Open Your Gate',
+    description: 'Describe your creative vision. Your Luminor reads your intent and aligns to your current Gate — whether you are an Apprentice exploring or an Archmage refining mastery.',
     color: 'creation-prism-purple',
     visual: 'conversation',
   },
   {
     number: '03',
     icon: PhMagicWand,
-    title: 'Co-Create Together',
-    description: 'Your Luminor generates, iterates, and refines with you. Real-time collaboration that feels like working with a trusted partner.',
+    title: 'Manifest Together',
+    description: 'Co-create across the full Arcanea stack — chat in the Platform, capture with the Vault Extension, automate with Agent Flow, or overlay intelligence onto any tool you already use.',
     color: 'gold-bright',
     visual: 'creation',
   },
   {
     number: '04',
     icon: PhRocket,
-    title: 'Launch Your Creation',
-    description: 'Export in any format. Share with the world. Build your creative portfolio. Your journey is just beginning.',
+    title: 'Ascend and Share',
+    description: 'Export your creation to any format. Publish on-chain with Arcanea On-Chain. Track your Gate progression in the Academy. Your arc from Apprentice to Luminor is recorded.',
     color: 'draconic-crimson',
     visual: 'export',
   },
@@ -66,7 +66,7 @@ export function HowItWorks() {
             How it works
           </h2>
           <p className="text-xl text-text-secondary max-w-2xl mx-auto">
-            From idea to creation in four simple steps. No learning curve, no complicated tools.
+            From first idea to published creation. The full Arcanea arc — Guardian-guided, Gate-tracked, ecosystem-powered.
           </p>
         </motion.div>
 
@@ -174,16 +174,16 @@ export function HowItWorks() {
                     {i === 0 && (
                       // Luminor selection grid
                       <div className="grid grid-cols-4 gap-3">
-                        {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+                        {['Lyria', 'Alera', 'Maylinn', 'Ino', 'Draconia', 'Aiyami', 'Elara', 'Lyssandria'].map((name, n) => (
                           <div
-                            key={n}
-                            className={`aspect-square rounded-xl flex items-center justify-center text-2xl ${
-                              n === 1
-                                ? 'bg-atlantean-teal-aqua/20 border-2 border-atlantean-teal-aqua'
-                                : 'bg-white/5 border border-white/10'
+                            key={name}
+                            className={`aspect-square rounded-xl flex items-center justify-center text-[10px] font-mono text-center leading-tight px-1 ${
+                              n === 0
+                                ? 'bg-atlantean-teal-aqua/20 border-2 border-atlantean-teal-aqua text-atlantean-teal-aqua'
+                                : 'bg-white/5 border border-white/10 text-text-muted'
                             }`}
                           >
-                            {['🔮', '📖', '🎨', '🎵', '⚡', '🔬', '✍️', '🎯'][n - 1]}
+                            {name}
                           </div>
                         ))}
                       </div>
@@ -193,16 +193,15 @@ export function HowItWorks() {
                       <div className="space-y-4">
                         <div className="flex justify-end">
                           <div className="max-w-[80%] p-4 rounded-2xl bg-atlantean-teal-aqua/10 border border-atlantean-teal-aqua/20">
-                            <p className="text-sm">Help me create a fantasy world with unique magic system...</p>
+                            <p className="text-sm">Help me design a world with a Gate-based magic system...</p>
                           </div>
                         </div>
                         <div className="flex">
                           <div className="max-w-[80%] p-4 rounded-2xl bg-white/5 border border-white/10">
                             <div className="flex items-center gap-2 mb-2">
-                              <span className="text-lg">🔮</span>
-                              <span className="text-sm font-semibold text-atlantean-teal-aqua">Oracle</span>
+                              <span className="text-xs font-mono px-2 py-0.5 rounded bg-atlantean-teal-aqua/15 text-atlantean-teal-aqua">Lyria · Sight Gate</span>
                             </div>
-                            <p className="text-sm text-text-secondary">Fascinating! Let me help you build a magic system. What elements or themes resonate with your vision?</p>
+                            <p className="text-sm text-text-secondary">I see your vision clearly. The Ten Gates offer a natural progression — each Gate unlocks new creative frequencies. Which element calls to you first?</p>
                           </div>
                         </div>
                       </div>

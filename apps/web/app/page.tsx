@@ -16,7 +16,19 @@ import {
   CTASection,
 } from "@/components/landing";
 import { Navbar } from "@/components/navigation";
-import { PhSparkle, PhArrowRight, PhCircleNotch, PhBooks, PhGraduationCap, PhPaintBrush } from "@phosphor-icons/react";
+import {
+  PhSparkle,
+  PhArrowRight,
+  PhCircleNotch,
+  PhBooks,
+  PhGraduationCap,
+  PhPaintBrush,
+  PhHouse,
+  PhDatabase,
+  PhGraphNetwork,
+  PhCode,
+  PhLink,
+} from "@phosphor-icons/react";
 
 export const metadata: Metadata = {
   title: "Arcanea | Create with Transcendent AI",
@@ -194,6 +206,68 @@ async function HomeContent() {
                 </div>
               </Link>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Ecosystem strip */}
+      <section className="py-12 border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-8">
+            <p className="text-xs font-mono tracking-[0.35em] uppercase text-crystal mb-2">The Ecosystem</p>
+            <h2 className="text-2xl font-display font-bold">Every tool you need. One creative universe.</h2>
+          </div>
+          <div className="flex flex-wrap justify-center gap-3">
+            <Link
+              href="/chat"
+              className="group inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/10 hover:border-crystal/30 hover:bg-crystal/5 transition-all text-sm font-sans text-text-secondary hover:text-text-primary"
+            >
+              <PhHouse className="w-3.5 h-3.5 text-crystal" />
+              Platform
+              <PhArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </Link>
+            <Link
+              href="/arcanea-vault"
+              className="group inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/10 hover:border-crystal/30 hover:bg-crystal/5 transition-all text-sm font-sans text-text-secondary hover:text-text-primary"
+            >
+              <PhDatabase className="w-3.5 h-3.5 text-crystal" />
+              Vault Extension
+              <PhArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </Link>
+            <Link
+              href="/arcanea-code"
+              className="group inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/10 hover:border-crystal/30 hover:bg-crystal/5 transition-all text-sm font-sans text-text-secondary hover:text-text-primary"
+            >
+              <PhGraphNetwork className="w-3.5 h-3.5 text-crystal" />
+              Agent Flow
+              <PhArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </Link>
+            <Link
+              href="/overlays"
+              className="group inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/10 hover:border-crystal/30 hover:bg-crystal/5 transition-all text-sm font-sans text-text-secondary hover:text-text-primary"
+            >
+              <PhCode className="w-3.5 h-3.5 text-crystal" />
+              AI Overlays
+              <PhArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </Link>
+            <Link
+              href="/academy"
+              className="group inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/10 hover:border-crystal/30 hover:bg-crystal/5 transition-all text-sm font-sans text-text-secondary hover:text-text-primary"
+            >
+              <PhGraduationCap className="w-3.5 h-3.5 text-crystal" />
+              Academy
+              <PhArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </Link>
+            <a
+              href="https://github.com/frankxai/arcanea-onchain"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/10 hover:border-crystal/30 hover:bg-crystal/5 transition-all text-sm font-sans text-text-secondary hover:text-text-primary"
+            >
+              <PhLink className="w-3.5 h-3.5 text-crystal" />
+              On-Chain
+              <PhArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </a>
           </div>
         </div>
       </section>

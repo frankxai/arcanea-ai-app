@@ -13,6 +13,7 @@ import {
   GraduationCap,
   Info,
   Brain,
+  TreeStructure,
 } from "@phosphor-icons/react";
 import { UserNav } from "@/components/auth";
 
@@ -27,6 +28,7 @@ const navLinks = [
   { href: "/studio", label: "Studio", icon: Palette },
   { href: "/library", label: "Library", icon: BookOpen },
   { href: "/academy", label: "Academy", icon: GraduationCap },
+  { href: "/ecosystem", label: "Ecosystem", icon: TreeStructure },
   { href: "/about", label: "About", icon: Info },
 ];
 
