@@ -3,7 +3,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
-import { BookOpen, Music, Zap, ArrowRight } from "lucide-react";
+import { PhBookOpen, PhMusicNote, PhLightning, PhArrowRight } from "@phosphor-icons/react";
 
 // ─── Frequency orb data ────────────────────────────────────────────────────
 
@@ -24,7 +24,7 @@ const FREQUENCY_ORBS = [
 
 const PILLARS = [
   {
-    icon: BookOpen,
+    icon: PhBookOpen,
     headline: "Build your mythology.",
     color: "crystal" as const,
     colorHex: "#7fffd4",
@@ -36,7 +36,7 @@ const PILLARS = [
       "17 wisdom collections. Deep lore. Universe mythology that lives and breathes.",
   },
   {
-    icon: Music,
+    icon: PhMusicNote,
     headline: "Make your music.",
     color: "brand-gold" as const,
     colorHex: "#ffd700",
@@ -48,7 +48,7 @@ const PILLARS = [
       "Solfeggio frequencies. Guardian-guided sonic creation. Sound as a path to mastery.",
   },
   {
-    icon: Zap,
+    icon: PhLightning,
     headline: "Deploy your agents.",
     color: "brand-primary" as const,
     colorHex: "#8b5cf6",
@@ -517,7 +517,7 @@ export function IntelligenceOverlay() {
               className="group inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-brand-primary/80 to-crystal/60 hover:from-brand-primary hover:to-crystal text-white font-display font-semibold text-lg transition-all duration-300 shadow-[0_0_30px_rgba(139,92,246,0.3)] hover:shadow-[0_0_50px_rgba(139,92,246,0.5)] hover:-translate-y-1"
             >
               Discover your Gate
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <PhArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
             <p className="mt-4 text-xs text-text-muted font-mono tracking-widest uppercase">
               Takes 3 minutes &bull; Reveals your primary element

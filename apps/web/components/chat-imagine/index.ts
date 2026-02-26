@@ -10,7 +10,7 @@
  * Integration notes:
  * - Components use shadcn/ui primitives (@/components/ui/button, textarea)
  * - Import `cn` from `@/lib/utils`
- * - Additional deps needed: react-markdown, react-syntax-highlighter, lucide-react
+ * - Additional deps needed: react-markdown, react-syntax-highlighter, @phosphor-icons/react
  * - Glass CSS classes are in globals-v0-reference.css (merge into globals.css)
  * - Guardian data uses canonical Arcanea names, gates, and frequencies
  */

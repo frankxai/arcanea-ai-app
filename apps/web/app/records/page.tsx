@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -135,9 +136,9 @@ export default function RecordsPage() {
               >
                 <div className="relative aspect-[3/4] overflow-hidden">
                   {g.heroImage ? (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img src={g.heroImage} alt={`${g.name}, Guardian of the ${g.gate} Gate`}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                    <Image src={g.heroImage} alt={`${g.name}, Guardian of the ${g.gate} Gate`}
+                      fill className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw" />
                   ) : (
                     <div className={`absolute inset-0 bg-gradient-to-br ${g.gradient} opacity-50`} aria-hidden="true" />
                   )}
@@ -169,8 +170,9 @@ export default function RecordsPage() {
           <div className="grid grid-cols-3 gap-3" style={{ gridTemplateRows: '200px 200px 160px' }}>
             {/* Large feature: Arcanea Cinematic City */}
             <div className="col-span-2 row-span-2 group relative rounded-2xl overflow-hidden glass border border-white/5 hover:border-white/15 transition-all">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={HERO_IMAGES[0].src} alt={HERO_IMAGES[0].title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+              <Image src={HERO_IMAGES[0].src} alt={HERO_IMAGES[0].title}
+                fill className="object-cover group-hover:scale-105 transition-transform duration-700"
+                sizes="(max-width: 640px) 100vw, 66vw" priority />
               <div className="absolute inset-0 bg-gradient-to-t from-cosmic-deep/80 via-transparent to-transparent" />
               <div className="absolute bottom-4 left-4">
                 <span className={`text-xs font-mono px-2 py-0.5 rounded-md border ${HERO_IMAGES[0].border} ${HERO_IMAGES[0].accent} bg-cosmic-deep/60 mb-1.5 inline-block`}>{HERO_IMAGES[0].guardianTag}</span>
@@ -181,8 +183,9 @@ export default function RecordsPage() {
             {/* Right column: Floating Islands + Futuristic Cityscape */}
             {HERO_IMAGES.slice(1, 3).map((img) => (
               <div key={img.id} className="col-span-1 row-span-1 group relative rounded-2xl overflow-hidden glass border border-white/5 hover:border-white/15 transition-all">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={img.src} alt={img.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
+                <Image src={img.src} alt={img.title}
+                  fill className="object-cover group-hover:scale-110 transition-transform duration-500"
+                  sizes="(max-width: 640px) 33vw, 33vw" />
                 <div className="absolute inset-0 bg-gradient-to-t from-cosmic-deep/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="absolute bottom-2 left-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
                   <p className={`text-xs font-sans ${img.accent}`}>{img.title}</p>
@@ -192,24 +195,27 @@ export default function RecordsPage() {
 
             {/* Row 3: Wide banner + 2 small */}
             <div className="col-span-2 row-span-1 group relative rounded-2xl overflow-hidden glass border border-white/5 hover:border-white/15 transition-all">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={HERO_IMAGES[3].src} alt={HERO_IMAGES[3].title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+              <Image src={HERO_IMAGES[3].src} alt={HERO_IMAGES[3].title}
+                fill className="object-cover group-hover:scale-105 transition-transform duration-700"
+                sizes="(max-width: 640px) 100vw, 66vw" />
               <div className="absolute inset-0 bg-gradient-to-r from-cosmic-deep/60 via-transparent to-transparent" />
               <div className="absolute bottom-3 left-4">
                 <p className={`text-xs font-sans ${HERO_IMAGES[3].accent}`}>{HERO_IMAGES[3].title}</p>
               </div>
             </div>
             <div className="col-span-1 row-span-1 group relative rounded-2xl overflow-hidden glass border border-white/5 hover:border-white/15 transition-all">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={HERO_IMAGES[4].src} alt={HERO_IMAGES[4].title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
+              <Image src={HERO_IMAGES[4].src} alt={HERO_IMAGES[4].title}
+                fill className="object-cover group-hover:scale-110 transition-transform duration-500"
+                sizes="(max-width: 640px) 33vw, 33vw" />
               <div className="absolute inset-0 bg-gradient-to-t from-cosmic-deep/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
           </div>
 
           {/* Row below: Unified Civilization full-width strip */}
           <div className="mt-3 group relative h-36 rounded-2xl overflow-hidden glass border border-white/5 hover:border-white/15 transition-all">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={HERO_IMAGES[5].src} alt={HERO_IMAGES[5].title} className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700" loading="lazy" />
+            <Image src={HERO_IMAGES[5].src} alt={HERO_IMAGES[5].title}
+              fill className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
+              sizes="100vw" />
             <div className="absolute inset-0 bg-gradient-to-r from-cosmic-deep/70 via-transparent to-cosmic-deep/70" />
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center">

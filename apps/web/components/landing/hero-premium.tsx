@@ -11,17 +11,17 @@ import {
 import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
 import {
-  Sparkles,
-  Star,
-  Crown,
-  Heart,
-  Eye,
-  Wand2,
-  Globe,
-  Zap,
-  ArrowRight,
-  Compass,
-} from "lucide-react";
+  PhSparkle,
+  PhStar,
+  PhCrown,
+  PhHeart,
+  PhEye,
+  PhMagicWand,
+  PhGlobe,
+  PhLightning,
+  PhArrowRight,
+  PhCompass,
+} from "@phosphor-icons/react";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -306,28 +306,28 @@ export function HeroPremium({ stats }: HeroPremiumProps) {
   // Stat card data
   const statCards = [
     {
-      icon: Crown,
+      icon: PhCrown,
       value: stats.luminors,
       label: "Intelligences",
       gradientClass: "text-gradient-crystal",
       suffix: "+",
     },
     {
-      icon: Wand2,
+      icon: PhMagicWand,
       value: stats.wisdoms,
       label: "Creator Laws",
       gradientClass: "text-gradient-gold",
       suffix: "+",
     },
     {
-      icon: Globe,
+      icon: PhGlobe,
       value: stats.collections,
       label: "Collections",
       gradientClass: "text-gradient-brand",
       suffix: "+",
     },
     {
-      icon: Zap,
+      icon: PhLightning,
       value: Math.round(stats.words / 1000),
       label: "Words of Wisdom",
       gradientClass: "text-gradient-fire",
@@ -369,11 +369,11 @@ export function HeroPremium({ stats }: HeroPremiumProps) {
         <GlowingOrb size={200} color="#78a6ff" delay={6} />
 
         {/* Background floating icons */}
-        <FloatingElement icon={Sparkles} delay={0} x="5%"  y="15%" />
-        <FloatingElement icon={Star}     delay={1} x="90%" y="20%" />
-        <FloatingElement icon={Crown}    delay={2} x="85%" y="70%" />
-        <FloatingElement icon={Heart}    delay={3} x="10%" y="75%" />
-        <FloatingElement icon={Eye}      delay={4} x="50%" y="85%" />
+        <FloatingElement icon={PhSparkle} delay={0} x="5%"  y="15%" />
+        <FloatingElement icon={PhStar}     delay={1} x="90%" y="20%" />
+        <FloatingElement icon={PhCrown}    delay={2} x="85%" y="70%" />
+        <FloatingElement icon={PhHeart}    delay={3} x="10%" y="75%" />
+        <FloatingElement icon={PhEye}      delay={4} x="50%" y="85%" />
 
         {/* "LIVING" drift watermark */}
         <LivingWatermark />
@@ -393,7 +393,7 @@ export function HeroPremium({ stats }: HeroPremiumProps) {
           transition={{ duration: 0.6 }}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full iridescent-glass mb-8"
         >
-          <Sparkles className="w-4 h-4 text-crystal" />
+          <PhSparkle className="w-4 h-4 text-crystal" />
           <span className="text-sm font-medium text-crystal">
             Living Intelligence
           </span>
@@ -443,9 +443,9 @@ export function HeroPremium({ stats }: HeroPremiumProps) {
               href="/studio"
               className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-crystal to-brand-primary text-cosmic-deep font-display font-bold text-lg shadow-glow-md hover:shadow-glow-lg transition-all"
             >
-              <Wand2 className="w-5 h-5" />
+              <PhMagicWand className="w-5 h-5" />
               Begin Your Universe
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <PhArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               {/* Shine sweep */}
               <motion.div
                 className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none"
@@ -464,7 +464,7 @@ export function HeroPremium({ stats }: HeroPremiumProps) {
               href="/luminors"
               className="group inline-flex items-center gap-3 px-8 py-4 rounded-2xl glass border border-white/10 hover:border-crystal/30 text-text-primary font-display font-semibold text-lg transition-all"
             >
-              <Compass className="w-5 h-5" />
+              <PhCompass className="w-5 h-5" />
               Explore the Intelligences
             </Link>
           </MagneticButton>

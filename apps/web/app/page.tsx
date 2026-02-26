@@ -16,7 +16,7 @@ import {
   CTASection,
 } from "@/components/landing";
 import { Navbar } from "@/components/navigation";
-import { Sparkles, ArrowRight, Loader2 } from "lucide-react";
+import { PhSparkle, PhArrowRight, PhCircleNotch } from "@phosphor-icons/react";
 
 export const metadata: Metadata = {
   title: "Arcanea | Create with Transcendent AI",
@@ -108,7 +108,7 @@ function ResourceCard({
               className={`text-sm font-medium inline-flex items-center gap-1 group-hover:gap-2 transition-all ${accentColor}`}
             >
               Explore
-              <ArrowRight className="w-4 h-4 transition-transform" />
+              <PhArrowRight className="w-4 h-4 transition-transform" />
             </span>
           </div>
         </div>
@@ -211,7 +211,7 @@ async function HomeContent() {
           <div className="text-center mb-12">
             {/* Section badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-primary/30 bg-brand-primary/10 mb-6">
-              <Sparkles className="w-3.5 h-3.5 text-brand-primary" />
+              <PhSparkle className="w-3.5 h-3.5 text-brand-primary" />
               <span className="text-xs font-mono tracking-widest uppercase text-brand-primary">
                 Explore
               </span>
@@ -254,7 +254,7 @@ async function HomeContent() {
                     </p>
                     <span className="text-sm text-brand-primary font-medium inline-flex items-center gap-1 group-hover:gap-2 transition-all">
                       Explore
-                      <ArrowRight className="w-4 h-4 transition-transform" />
+                      <PhArrowRight className="w-4 h-4 transition-transform" />
                     </span>
                   </div>
                 </div>
@@ -288,7 +288,7 @@ function HomeLoading() {
     <div className="min-h-screen flex items-center justify-center">
       <div className="text-center">
         <div className="w-16 h-16 rounded-2xl bg-brand-primary/20 flex items-center justify-center mx-auto mb-6">
-          <Loader2 className="w-8 h-8 text-brand-primary animate-spin" />
+          <PhCircleNotch className="w-8 h-8 text-brand-primary animate-spin" />
         </div>
         <p className="text-text-secondary font-body">Entering the realm...</p>
       </div>

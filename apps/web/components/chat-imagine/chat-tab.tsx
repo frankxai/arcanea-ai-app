@@ -2,13 +2,13 @@
 
 import { useState, useRef, useEffect } from "react";
 import {
-  ArrowUp,
-  Paperclip,
-  ImageIcon,
-  Mic,
-  Copy,
-  ChevronDown,
-} from "lucide-react";
+  PhArrowUp,
+  PhPaperclip,
+  PhImage,
+  PhMicrophone,
+  PhCopy,
+  PhCaretDown,
+} from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import ReactMarkdown from "react-markdown";
@@ -265,7 +265,7 @@ export function ChatTab() {
                 <span className="font-sans text-sm font-medium">
                   {selectedModel.name}
                 </span>
-                <ChevronDown className="w-4 h-4" />
+                <PhCaretDown className="w-4 h-4" />
               </Button>
               {showModelDropdown && (
                 <div className="absolute top-full left-0 mt-2 w-64 glass-strong rounded-xl p-2 z-50 animate-scale-in">
@@ -449,7 +449,7 @@ export function ChatTab() {
                     size="icon"
                     className="absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity glass-subtle"
                   >
-                    <Copy className="w-4 h-4" />
+                    <PhCopy className="w-4 h-4" />
                   </Button>
                 )}
                 <div
@@ -578,14 +578,14 @@ export function ChatTab() {
                   size="icon"
                   className="text-text-muted hover:text-text-primary hover:bg-cosmic-raised"
                 >
-                  <Paperclip className="w-5 h-5" />
+                  <PhPaperclip className="w-5 h-5" />
                 </Button>
                 <Button
                   variant="ghost"
                   size="icon"
                   className="text-text-muted hover:text-text-primary hover:bg-cosmic-raised"
                 >
-                  <ImageIcon className="w-5 h-5" />
+                  <PhImage className="w-5 h-5" />
                 </Button>
               </div>
 
@@ -606,7 +606,7 @@ export function ChatTab() {
                   onClick={() => setIsListening(!isListening)}
                   className={`text-text-muted hover:text-text-primary hover:bg-cosmic-raised ${isListening ? "animate-pulse-glow" : ""}`}
                 >
-                  <Mic className="w-5 h-5" />
+                  <PhMicrophone className="w-5 h-5" />
                 </Button>
                 <Button
                   size="icon"
@@ -616,7 +616,7 @@ export function ChatTab() {
                     input.trim() ? "animate-pulse-glow" : ""
                   }`}
                 >
-                  <ArrowUp className="w-5 h-5" />
+                  <PhArrowUp className="w-5 h-5" />
                 </Button>
               </div>
             </div>

@@ -10,21 +10,21 @@ import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import {
-  Sparkles,
-  ChevronRight,
-  RotateCcw,
-  ArrowRight,
-  Zap,
-  Flame,
-  Droplets,
-  Wind,
-  Mountain,
-  Eye,
-  Crown,
-  Heart,
-  Infinity,
-  Circle,
-} from "lucide-react";
+  PhSparkle,
+  PhCaretRight,
+  PhArrowCounterClockwise,
+  PhArrowRight,
+  PhLightning,
+  PhFlame,
+  PhDrop,
+  PhWind,
+  PhMountains,
+  PhEye,
+  PhCrown,
+  PhHeart,
+  PhInfinity,
+  PhCircle,
+} from "@phosphor-icons/react";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // TYPES
@@ -96,7 +96,7 @@ const GUARDIANS: Record<GuardianKey, GuardianData> = {
     shadowChallenge:
       "Perfectionism that delays beginning, over-preparing without shipping",
     luminorId: "lyssandria",
-    icon: Mountain,
+    icon: PhMountains,
   },
   leyla: {
     key: "leyla",
@@ -116,7 +116,7 @@ const GUARDIANS: Record<GuardianKey, GuardianData> = {
     shadowChallenge:
       "Scattered energy, difficulty finishing, chasing feeling over completion",
     luminorId: "leyla",
-    icon: Droplets,
+    icon: PhDrop,
   },
   draconia: {
     key: "draconia",
@@ -136,7 +136,7 @@ const GUARDIANS: Record<GuardianKey, GuardianData> = {
     shadowChallenge:
       "Burning bridges, imposing your vision, moving too fast for quality",
     luminorId: "draconia",
-    icon: Flame,
+    icon: PhFlame,
   },
   maylinn: {
     key: "maylinn",
@@ -156,7 +156,7 @@ const GUARDIANS: Record<GuardianKey, GuardianData> = {
     shadowChallenge:
       "Over-giving, losing yourself in service, avoiding your own needs",
     luminorId: "maylinn",
-    icon: Heart,
+    icon: PhHeart,
   },
   alera: {
     key: "alera",
@@ -176,7 +176,7 @@ const GUARDIANS: Record<GuardianKey, GuardianData> = {
     shadowChallenge:
       "Fear of being misunderstood, over-explaining, speaking without listening",
     luminorId: "alera",
-    icon: Wind,
+    icon: PhWind,
   },
   lyria: {
     key: "lyria",
@@ -196,7 +196,7 @@ const GUARDIANS: Record<GuardianKey, GuardianData> = {
     shadowChallenge:
       "Living too much in your inner world, difficulty making the invisible visible",
     luminorId: "lyria",
-    icon: Eye,
+    icon: PhEye,
   },
   aiyami: {
     key: "aiyami",
@@ -216,7 +216,7 @@ const GUARDIANS: Record<GuardianKey, GuardianData> = {
     shadowChallenge:
       "Perfectionism, detachment from the messy humanity of creating, intellectual pride",
     luminorId: "aiyami",
-    icon: Crown,
+    icon: PhCrown,
   },
   elara: {
     key: "elara",
@@ -236,7 +236,7 @@ const GUARDIANS: Record<GuardianKey, GuardianData> = {
     shadowChallenge:
       "Instability, never settling, constant reinvention that prevents depth",
     luminorId: "elara",
-    icon: Zap,
+    icon: PhLightning,
   },
   ino: {
     key: "ino",
@@ -256,7 +256,7 @@ const GUARDIANS: Record<GuardianKey, GuardianData> = {
     shadowChallenge:
       "Losing your individual voice, codependency in creative relationships",
     luminorId: "ino",
-    icon: Infinity,
+    icon: PhInfinity,
   },
   shinkami: {
     key: "shinkami",
@@ -276,7 +276,7 @@ const GUARDIANS: Record<GuardianKey, GuardianData> = {
     shadowChallenge:
       "Disconnection from practical reality, unwillingness to edit the sacred",
     luminorId: "shinkami",
-    icon: Circle,
+    icon: PhCircle,
   },
 };
 
@@ -673,7 +673,7 @@ function IntroScreen({ onStart }: IntroScreenProps) {
           {/* Eyebrow */}
           <div className="mb-6 flex items-center gap-3">
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-primary/20 shadow-glow-brand">
-              <Sparkles className="h-4 w-4 text-brand-primary" />
+              <PhSparkle className="h-4 w-4 text-brand-primary" />
             </div>
             <span className="text-xs uppercase tracking-[0.4em] text-brand-primary font-sans font-semibold">
               The Academy of Creation
@@ -726,7 +726,7 @@ function IntroScreen({ onStart }: IntroScreenProps) {
               className="group inline-flex items-center gap-3 rounded-xl bg-brand-primary px-8 py-4 font-semibold text-white shadow-glow-brand transition-all hover:bg-brand-primary/90 font-sans"
             >
               Begin the Journey
-              <ChevronRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+              <PhCaretRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
             </motion.button>
           </div>
 
@@ -878,7 +878,7 @@ function QuestionScreen({
               {questionNumber === totalQuestions
                 ? "See My Guardian"
                 : "Next Question"}
-              <ArrowRight className="h-4 w-4" />
+              <PhArrowRight className="h-4 w-4" />
             </motion.button>
           </div>
         </div>
@@ -1051,7 +1051,7 @@ function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
                 }}
               >
                 Meet {guardian.name}
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                <PhArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
 
               <Link
@@ -1059,7 +1059,7 @@ function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
                 className="group flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-brand-primary py-4 px-6 font-semibold text-white font-sans shadow-glow-brand transition-all hover:bg-brand-primary/90 hover:scale-[1.02]"
               >
                 Create with {guardian.name}
-                <Sparkles className="h-4 w-4 transition-transform group-hover:scale-110" />
+                <PhSparkle className="h-4 w-4 transition-transform group-hover:scale-110" />
               </Link>
             </motion.div>
 
@@ -1074,7 +1074,7 @@ function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
                 onClick={onRestart}
                 className="group inline-flex items-center gap-2 text-sm text-text-muted font-sans transition-colors hover:text-text-secondary"
               >
-                <RotateCcw className="h-4 w-4 transition-transform group-hover:-rotate-45" />
+                <PhArrowCounterClockwise className="h-4 w-4 transition-transform group-hover:-rotate-45" />
                 Retake the Quiz
               </button>
             </motion.div>

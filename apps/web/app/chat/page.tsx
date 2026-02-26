@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Sparkles, ArrowRight, Loader2 } from "lucide-react";
+import { PhSparkle, PhArrowRight, PhCircleNotch } from "@phosphor-icons/react";
 import { LUMINORS, TEAMS, type Team } from "@/lib/luminors/config";
 
 const TEAM_ORDER: Team[] = ["development", "creative", "writing", "research"];
@@ -44,7 +44,7 @@ export default function ChatLandingPage() {
           className="fixed inset-0 bg-cosmic-void/80 backdrop-blur-sm z-50 flex items-center justify-center"
         >
           <div className="text-center">
-            <Loader2 className="w-10 h-10 text-brand-primary animate-spin mx-auto mb-4" />
+            <PhCircleNotch className="w-10 h-10 text-brand-primary animate-spin mx-auto mb-4" />
             <p className="text-text-secondary font-body">
               Opening session with{" "}
               {navigatingId
@@ -65,7 +65,7 @@ export default function ChatLandingPage() {
           className="text-center mb-12"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-primary/30 bg-brand-primary/10 mb-8">
-            <Sparkles className="w-3.5 h-3.5 text-brand-primary" />
+            <PhSparkle className="w-3.5 h-3.5 text-brand-primary" />
             <span className="text-xs font-mono tracking-widest uppercase text-brand-primary">
               Creation Session
             </span>
@@ -222,9 +222,9 @@ export default function ChatLandingPage() {
                           style={{ color: luminor.color }}
                         >
                           {isThisNavigating ? (
-                            <Loader2 className="w-4 h-4 animate-spin" />
+                            <PhCircleNotch className="w-4 h-4 animate-spin" />
                           ) : (
-                            <ArrowRight className="w-4 h-4" />
+                            <PhArrowRight className="w-4 h-4" />
                           )}
                         </motion.div>
                       </div>
@@ -248,14 +248,14 @@ export default function ChatLandingPage() {
               href="/luminors"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl glass border border-crystal/20 text-crystal text-sm font-semibold hover:bg-crystal/5 hover:border-crystal/40 transition-all"
             >
-              <Sparkles className="w-4 h-4" />
+              <PhSparkle className="w-4 h-4" />
               View Luminor profiles
             </Link>
             <Link
               href="/chat/chronica"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl glass border border-white/10 text-text-secondary text-sm font-semibold hover:border-brand-primary/20 hover:text-text-primary transition-all"
             >
-              <ArrowRight className="w-4 h-4" />
+              <PhArrowRight className="w-4 h-4" />
               Start with Chronica
             </Link>
           </div>

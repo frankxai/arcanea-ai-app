@@ -8,20 +8,20 @@ import { Button } from "@/components/ui/button";
 import { CosmicCard, CosmicCardContent } from "@/components/ui/cosmic-card";
 import { Skeleton, SkeletonCard } from "@/components/ui/skeleton";
 import {
-  Search,
-  Filter,
-  Grid3X3,
-  List,
-  ChevronLeft,
-  ChevronRight,
-  X,
-  SortAsc,
-  SortDesc,
-  Calendar,
-  Star,
-  Eye,
-  Heart,
-} from "lucide-react";
+  PhMagnifyingGlass,
+  PhFunnel,
+  PhGridNine,
+  PhListDashes,
+  PhCaretLeft,
+  PhCaretRight,
+  PhX,
+  PhSortAscending,
+  PhSortDescending,
+  PhCalendar,
+  PhStar,
+  PhEye,
+  PhHeart,
+} from "@phosphor-icons/react";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
@@ -186,7 +186,7 @@ function Controls({
         {/* Search */}
         {search && (
           <div className="relative w-full md:w-80">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
+            <PhMagnifyingGlass className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
             <input
               type="text"
               placeholder={search.placeholder || "Search..."}
@@ -233,7 +233,7 @@ function Controls({
                   : "text-text-muted hover:text-white hover:bg-cosmic-raised",
               )}
             >
-              <Grid3X3 className="w-5 h-5" />
+              <PhGridNine className="w-5 h-5" />
             </button>
             <button
               onClick={() => onViewModeChange?.("list")}
@@ -244,7 +244,7 @@ function Controls({
                   : "text-text-muted hover:text-white hover:bg-cosmic-raised",
               )}
             >
-              <List className="w-5 h-5" />
+              <PhListDashes className="w-5 h-5" />
             </button>
           </div>
         </div>
@@ -261,7 +261,7 @@ function FilterBar({ filters }: { filters?: ListingPageProps["filters"] }) {
   return (
     <div className="max-w-7xl mx-auto mb-8">
       <div className="flex flex-wrap items-center gap-2">
-        <Filter className="w-4 h-4 text-text-muted mr-2" />
+        <PhFunnel className="w-4 h-4 text-text-muted mr-2" />
         {filters.map((filter) => (
           <div key={filter.id} className="flex flex-wrap gap-2">
             {filter.options.map((option) => (
@@ -368,25 +368,25 @@ function ItemCard({
             <div className="flex items-center gap-4 text-xs text-text-muted">
               {item.metadata?.date && (
                 <div className="flex items-center gap-1">
-                  <Calendar className="w-3.5 h-3.5" />
+                  <PhCalendar className="w-3.5 h-3.5" />
                   <span>{item.metadata.date}</span>
                 </div>
               )}
               {item.metadata?.views !== undefined && (
                 <div className="flex items-center gap-1">
-                  <Eye className="w-3.5 h-3.5" />
+                  <PhEye className="w-3.5 h-3.5" />
                   <span>{item.metadata.views.toLocaleString()}</span>
                 </div>
               )}
               {item.metadata?.likes !== undefined && (
                 <div className="flex items-center gap-1">
-                  <Heart className="w-3.5 h-3.5" />
+                  <PhHeart className="w-3.5 h-3.5" />
                   <span>{item.metadata.likes.toLocaleString()}</span>
                 </div>
               )}
               {item.metadata?.rating !== undefined && (
                 <div className="flex items-center gap-1">
-                  <Star className="w-3.5 h-3.5 text-gold-medium" />
+                  <PhStar className="w-3.5 h-3.5 text-gold-medium" />
                   <span>{item.metadata.rating}</span>
                 </div>
               )}
@@ -419,7 +419,7 @@ function Pagination({
           disabled={currentPage === 1}
           onClick={() => onPageChange?.(currentPage - 1)}
         >
-          <ChevronLeft className="w-5 h-5" />
+          <PhCaretLeft className="w-5 h-5" />
         </Button>
 
         {/* Page numbers */}
@@ -457,7 +457,7 @@ function Pagination({
           disabled={currentPage === totalPages}
           onClick={() => onPageChange?.(currentPage + 1)}
         >
-          <ChevronRight className="w-5 h-5" />
+          <PhCaretRight className="w-5 h-5" />
         </Button>
       </div>
     </div>
@@ -471,7 +471,7 @@ function EmptyState({ config }: { config: ListingPageProps["config"] }) {
     <div className="max-w-7xl mx-auto">
       <div className="text-center py-20">
         <div className="w-20 h-20 rounded-2xl bg-cosmic-raised flex items-center justify-center mx-auto mb-6">
-          <Search className="w-10 h-10 text-text-muted" />
+          <PhMagnifyingGlass className="w-10 h-10 text-text-muted" />
         </div>
         <h3 className="text-xl font-display font-semibold text-white mb-2">
           No items found

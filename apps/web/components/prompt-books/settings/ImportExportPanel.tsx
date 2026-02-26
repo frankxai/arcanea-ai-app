@@ -2,14 +2,14 @@
 
 import { useState, useCallback, useRef } from "react";
 import {
-  Upload,
-  Download,
-  FileJson,
-  FileText,
-  FolderDown,
-  AlertCircle,
-  Check,
-} from "lucide-react";
+  PhUpload,
+  PhDownload,
+  PhFileCode,
+  PhFileText,
+  PhFolderOpen,
+  PhWarningCircle,
+  PhCheck,
+} from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { usePromptBooksStore } from "@/lib/prompt-books/store";
@@ -213,7 +213,7 @@ export function ImportExportPanel({ onClose }: ImportExportPanelProps) {
             )}
             onClick={() => fileInputRef.current?.click()}
           >
-            <Upload className="w-6 h-6 text-text-muted/40 mx-auto mb-2" />
+            <PhUpload className="w-6 h-6 text-text-muted/40 mx-auto mb-2" />
             <p className="text-xs font-sans text-text-muted">
               Drop files or click to browse
             </p>
@@ -248,9 +248,9 @@ export function ImportExportPanel({ onClose }: ImportExportPanelProps) {
             >
               <div className="flex items-center gap-1.5">
                 {result.failed > 0 ? (
-                  <AlertCircle className="w-3.5 h-3.5" />
+                  <PhWarningCircle className="w-3.5 h-3.5" />
                 ) : (
-                  <Check className="w-3.5 h-3.5" />
+                  <PhCheck className="w-3.5 h-3.5" />
                 )}
                 <span>
                   {result.success} imported, {result.failed} failed
@@ -280,7 +280,7 @@ export function ImportExportPanel({ onClose }: ImportExportPanelProps) {
             disabled={exporting || collections.length === 0}
             className="w-full justify-start gap-2 glass text-xs"
           >
-            <FolderDown className="w-3.5 h-3.5" />
+            <PhFolderOpen className="w-3.5 h-3.5" />
             Export All Collections (JSON)
           </Button>
 
@@ -299,7 +299,7 @@ export function ImportExportPanel({ onClose }: ImportExportPanelProps) {
                     "text-text-secondary hover:text-text-primary hover:bg-white/[0.03] transition-colors",
                   )}
                 >
-                  <FileJson className="w-3 h-3 text-text-muted shrink-0" />
+                  <PhFileCode className="w-3 h-3 text-text-muted shrink-0" />
                   {c.name}
                   <span className="text-[10px] text-text-muted/50 ml-auto">
                     {c.promptCount} prompts

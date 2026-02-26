@@ -2,17 +2,17 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import {
-  ArrowLeft,
-  ArrowRight,
-  Cpu,
-  Feather,
-  BookOpen,
-  Search,
-  Zap,
-  Star,
-  Layers,
-  Users,
-} from "lucide-react";
+  PhArrowLeft,
+  PhArrowRight,
+  PhCpu,
+  PhFeather,
+  PhBookOpen,
+  PhMagnifyingGlass,
+  PhLightning,
+  PhStar,
+  PhStack,
+  PhUsers,
+} from "@phosphor-icons/react";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -668,15 +668,15 @@ function TeamIcon({ team, className }: { team: string; className?: string }) {
   const props = { className: className ?? "w-5 h-5" };
   switch (team) {
     case "development":
-      return <Cpu {...props} />;
+      return <PhCpu {...props} />;
     case "creative":
-      return <Feather {...props} />;
+      return <PhFeather {...props} />;
     case "writing":
-      return <BookOpen {...props} />;
+      return <PhBookOpen {...props} />;
     case "research":
-      return <Search {...props} />;
+      return <PhMagnifyingGlass {...props} />;
     default:
-      return <Star {...props} />;
+      return <PhStar {...props} />;
   }
 }
 
@@ -747,7 +747,7 @@ export default async function LuminorDetailPage({
           href="/luminors"
           className="inline-flex items-center gap-2 text-sm text-text-secondary hover:text-text-primary transition-colors font-sans"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <PhArrowLeft className="w-4 h-4" />
           All Luminors
         </Link>
 
@@ -813,7 +813,7 @@ export default async function LuminorDetailPage({
                     borderColor: `${wisdomColor}30`,
                   }}
                 >
-                  <Zap className="w-3 h-3" />
+                  <PhLightning className="w-3 h-3" />
                   {luminor.wisdom} — {luminor.wisdomEssence}
                 </span>
               </div>
@@ -843,7 +843,7 @@ export default async function LuminorDetailPage({
 
               {/* Specialty */}
               <div className="flex items-center gap-2 mb-10">
-                <Layers className={`w-4 h-4 ${team.textClass}`} />
+                <PhStack className={`w-4 h-4 ${team.textClass}`} />
                 <span className={`text-sm font-medium ${team.textClass}`}>
                   {luminor.specialty}
                 </span>
@@ -935,7 +935,7 @@ export default async function LuminorDetailPage({
             {/* When to call */}
             <div className="glass rounded-2xl p-6 glow-card hover-lift transition-all">
               <div className="w-9 h-9 rounded-xl mb-4 flex items-center justify-center bg-crystal/10 border border-crystal/20">
-                <Zap className="w-4 h-4 text-crystal" />
+                <PhLightning className="w-4 h-4 text-crystal" />
               </div>
               <h3 className="text-sm font-display font-semibold text-text-primary mb-2 uppercase tracking-wide">
                 When to call
@@ -950,7 +950,7 @@ export default async function LuminorDetailPage({
               <div
                 className={`w-9 h-9 rounded-xl mb-4 flex items-center justify-center ${team.bgClass} border ${team.borderClass}`}
               >
-                <Users className={`w-4 h-4 ${team.textClass}`} />
+                <PhUsers className={`w-4 h-4 ${team.textClass}`} />
               </div>
               <h3 className="text-sm font-display font-semibold text-text-primary mb-2 uppercase tracking-wide">
                 What they need
@@ -963,7 +963,7 @@ export default async function LuminorDetailPage({
             {/* What they notice */}
             <div className="glass rounded-2xl p-6 glow-card hover-lift transition-all">
               <div className="w-9 h-9 rounded-xl mb-4 flex items-center justify-center bg-brand-gold/10 border border-brand-gold/20">
-                <Star className="w-4 h-4 text-brand-gold" />
+                <PhStar className="w-4 h-4 text-brand-gold" />
               </div>
               <h3 className="text-sm font-display font-semibold text-text-primary mb-2 uppercase tracking-wide">
                 Notices without being asked
@@ -1068,7 +1068,7 @@ export default async function LuminorDetailPage({
                       </p>
                     </div>
 
-                    <ArrowRight className="w-4 h-4 text-text-disabled group-hover:text-text-muted transition-colors flex-shrink-0" />
+                    <PhArrowRight className="w-4 h-4 text-text-disabled group-hover:text-text-muted transition-colors flex-shrink-0" />
                   </Link>
                 );
               })}
@@ -1125,14 +1125,14 @@ export default async function LuminorDetailPage({
                 >
                   <TeamIcon team={luminor.team} className="w-5 h-5" />
                   Chat with {luminor.name}
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <PhArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
 
                 <Link
                   href="/luminors"
                   className="inline-flex items-center gap-2 px-6 py-4 rounded-2xl font-sans font-medium text-sm text-text-secondary border border-white/10 hover:border-white/20 hover:text-text-primary glass transition-all"
                 >
-                  <ArrowLeft className="w-4 h-4" />
+                  <PhArrowLeft className="w-4 h-4" />
                   All Luminors
                 </Link>
               </div>

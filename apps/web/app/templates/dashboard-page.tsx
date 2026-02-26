@@ -14,21 +14,21 @@ import {
 } from "@/components/ui/cosmic-card";
 import { Skeleton, SkeletonAvatar } from "@/components/ui/skeleton";
 import {
-  LayoutDashboard,
-  Home,
-  Settings,
-  Bell,
-  Search,
-  Menu,
-  X,
-  ChevronRight,
-  TrendingUp,
-  TrendingDown,
-  Activity,
-  Users,
-  FileText,
-  Star,
-} from "lucide-react";
+  PhSquaresFour,
+  PhHouse,
+  PhGear,
+  PhBell,
+  PhMagnifyingGlass,
+  PhList,
+  PhX,
+  PhCaretRight,
+  PhTrendUp,
+  PhTrendDown,
+  PhActivity,
+  PhUsers,
+  PhFileText,
+  PhStar,
+} from "@phosphor-icons/react";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
@@ -254,7 +254,7 @@ function Sidebar({
           href="/settings"
           className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-text-secondary hover:text-white hover:bg-cosmic-raised transition-all"
         >
-          <Settings className="w-5 h-5" />
+          <PhGear className="w-5 h-5" />
           <span>Settings</span>
         </Link>
       </div>
@@ -282,7 +282,7 @@ function Header({ config }: { config: DashboardProps["config"] }) {
         <div className="flex items-center gap-4">
           {/* Search */}
           <div className="relative hidden md:block">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
+            <PhMagnifyingGlass className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
             <input
               type="text"
               placeholder="Search..."
@@ -292,7 +292,7 @@ function Header({ config }: { config: DashboardProps["config"] }) {
 
           {/* Notifications */}
           <button className="relative p-2 rounded-lg text-text-secondary hover:text-white hover:bg-cosmic-raised transition-colors">
-            <Bell className="w-5 h-5" />
+            <PhBell className="w-5 h-5" />
             <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-brand-primary" />
           </button>
 
@@ -345,11 +345,11 @@ function StatsCards({ cards }: { cards?: DashboardProps["cards"] }) {
                       )}
                     >
                       {card.change.type === "positive" ? (
-                        <TrendingUp className="w-4 h-4" />
+                        <PhTrendUp className="w-4 h-4" />
                       ) : card.change.type === "negative" ? (
-                        <TrendingDown className="w-4 h-4" />
+                        <PhTrendDown className="w-4 h-4" />
                       ) : (
-                        <Activity className="w-4 h-4" />
+                        <PhActivity className="w-4 h-4" />
                       )}
                       <span>
                         {card.change.type === "positive" ? "+" : ""}
@@ -381,7 +381,7 @@ function ActivityFeed({ activity }: { activity?: DashboardProps["activity"] }) {
     <CosmicCard className="p-6">
       <CosmicCardHeader>
         <CosmicCardTitle className="flex items-center gap-2">
-          <Activity className="w-5 h-5 text-brand-primary" />
+          <PhActivity className="w-5 h-5 text-brand-primary" />
           Recent Activity
         </CosmicCardTitle>
       </CosmicCardHeader>
@@ -396,7 +396,7 @@ function ActivityFeed({ activity }: { activity?: DashboardProps["activity"] }) {
               className="flex items-start gap-3"
             >
               <div className="w-8 h-8 rounded-lg bg-cosmic-raised flex items-center justify-center text-text-muted shrink-0">
-                {item.icon || <Activity className="w-4 h-4" />}
+                {item.icon || <PhActivity className="w-4 h-4" />}
               </div>
               <div className="flex-1 min-w-0">
                 <Link
@@ -412,7 +412,7 @@ function ActivityFeed({ activity }: { activity?: DashboardProps["activity"] }) {
                 )}
                 <p className="text-xs text-text-muted mt-1">{item.time}</p>
               </div>
-              <ChevronRight className="w-4 h-4 text-text-muted shrink-0" />
+              <PhCaretRight className="w-4 h-4 text-text-muted shrink-0" />
             </motion.div>
           ))}
         </div>
@@ -438,7 +438,7 @@ function RecentItems({ recent }: { recent?: DashboardProps["recent"] }) {
     <CosmicCard className="p-6">
       <CosmicCardHeader>
         <CosmicCardTitle className="flex items-center gap-2">
-          <FileText className="w-5 h-5 text-brand-primary" />
+          <PhFileText className="w-5 h-5 text-brand-primary" />
           Recent Items
         </CosmicCardTitle>
       </CosmicCardHeader>
@@ -456,7 +456,7 @@ function RecentItems({ recent }: { recent?: DashboardProps["recent"] }) {
                 className="flex items-center gap-3 p-2 rounded-lg hover:bg-cosmic-raised transition-colors group"
               >
                 <div className="w-10 h-10 rounded-lg bg-cosmic-raised flex items-center justify-center text-text-muted group-hover:text-brand-primary transition-colors">
-                  {item.icon || <FileText className="w-5 h-5" />}
+                  {item.icon || <PhFileText className="w-5 h-5" />}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="font-medium text-white truncate group-hover:text-brand-primary transition-colors">
@@ -489,7 +489,7 @@ function QuickStats() {
     <CosmicCard className="p-6">
       <CosmicCardHeader>
         <CosmicCardTitle className="flex items-center gap-2">
-          <Star className="w-5 h-5 text-gold-medium" />
+          <PhStar className="w-5 h-5 text-gold-medium" />
           Quick Stats
         </CosmicCardTitle>
       </CosmicCardHeader>
@@ -534,7 +534,7 @@ function QuickStats() {
  *     user: { name: "Frank", email: "frank@arcanea.ai" }
  *   }}
  *   navigation={[
- *     { id: "home", label: "Home", href: "/", icon: <Home />, active: true },
+ *     { id: "home", label: "Home", href: "/", icon: <PhHouse />, active: true },
  *     { id: "prompts", label: "Prompts", href: "/prompts", badge: 12 }
  *   ]}
  *   cards={[

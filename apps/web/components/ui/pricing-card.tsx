@@ -5,7 +5,7 @@ import { motion, Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Button, ButtonProps } from "./button";
 import { Badge } from "./badge";
-import { Check, X, Sparkles, Zap, Crown } from "lucide-react";
+import { PhCheck, PhX, PhSparkle, PhLightning, PhCrown } from "@phosphor-icons/react";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
@@ -88,7 +88,7 @@ const FeatureList: React.FC<FeatureListProps> = ({
                 compact ? "w-4 h-4" : "w-5 h-5",
                 "text-crystal",
               )}
-              strokeWidth={2.5}
+              weight="bold"
             />
           ) : (
             <X
@@ -97,7 +97,7 @@ const FeatureList: React.FC<FeatureListProps> = ({
                 compact ? "w-4 h-4" : "w-5 h-5",
                 "text-text-muted/40",
               )}
-              strokeWidth={2.5}
+              weight="bold"
             />
           )}
           <span
@@ -138,7 +138,7 @@ const PricingCard = React.forwardRef<HTMLDivElement, PricingCardProps>(
           <div className="absolute top-0 left-0 right-0">
             <div className="bg-gradient-to-r from-brand-gold/20 to-brand-gold/10 backdrop-blur-sm border-b border-brand-gold/30 px-4 py-2">
               <div className="flex items-center justify-center gap-2 text-brand-gold text-sm font-semibold">
-                <Sparkles className="w-4 h-4 animate-pulse" strokeWidth={2} />
+                <PhSparkle className="w-4 h-4 animate-pulse" />
                 Most Popular
               </div>
             </div>
@@ -160,7 +160,7 @@ const PricingCard = React.forwardRef<HTMLDivElement, PricingCardProps>(
             {tier.name}
           </h3>
           {isPopular && (
-            <Crown className="w-5 h-5 text-brand-gold" strokeWidth={2} />
+            <PhCrown className="w-5 h-5 text-brand-gold" />
           )}
         </div>
 
@@ -200,7 +200,7 @@ const PricingCard = React.forwardRef<HTMLDivElement, PricingCardProps>(
               size="lg"
             >
               {tier.cta}
-              {isPopular && <Zap className="w-4 h-4 ml-2" />}
+              {isPopular && <PhLightning className="w-4 h-4 ml-2" />}
             </Button>
           </div>
         )}

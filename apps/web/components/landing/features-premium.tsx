@@ -3,29 +3,29 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import {
-  Brain,
-  Sparkles,
-  MessageSquare,
-  Image,
-  Music,
-  Video,
-  BookOpen,
-  GraduationCap,
-  Users,
-  Shield,
-  Zap,
-  Globe,
-  ArrowRight,
-  CheckCircle2,
-  Wand2,
-  Layers,
-  Code,
-  Database,
-} from "lucide-react";
+  PhBrain,
+  PhSparkle,
+  PhChatSquare,
+  PhImage,
+  PhMusicNote,
+  PhVideoCamera,
+  PhBookOpen,
+  PhGraduationCap,
+  PhUsers,
+  PhShield,
+  PhLightning,
+  PhGlobe,
+  PhArrowRight,
+  PhCheckCircle,
+  PhMagicWand,
+  PhStack,
+  PhCode,
+  PhDatabase,
+} from "@phosphor-icons/react";
 
 const features = [
   {
-    icon: Brain,
+    icon: PhBrain,
     title: "16 Luminor Intelligences",
     description:
       "Specialized AI companions, each embodying a unique wisdom. From creative brainstorming to technical analysis.",
@@ -34,7 +34,7 @@ const features = [
     hoverGlow: "hover:shadow-glow-md",
   },
   {
-    icon: MessageSquare,
+    icon: PhChatSquare,
     title: "Natural Conversation",
     description:
       "Chat with Luminors in plain language. They remember context and adapt to your creative style.",
@@ -43,7 +43,7 @@ const features = [
     hoverGlow: "hover:shadow-glow-brand",
   },
   {
-    icon: Wand2,
+    icon: PhMagicWand,
     title: "AI Creation Studio",
     description:
       "Generate images, music, video, and stories. Professional tools with cinematic quality output.",
@@ -52,7 +52,7 @@ const features = [
     hoverGlow: "hover:shadow-glow-fire",
   },
   {
-    icon: BookOpen,
+    icon: PhBookOpen,
     title: "Infinite Library",
     description:
       "Access 17+ collections of wisdom texts. Ancient knowledge meets modern AI interpretation.",
@@ -61,7 +61,7 @@ const features = [
     hoverGlow: "hover:shadow-glow-gold",
   },
   {
-    icon: GraduationCap,
+    icon: PhGraduationCap,
     title: "Academy & Progression",
     description:
       "Ten Gates to mastery. Track your creative journey from Apprentice to Luminor rank.",
@@ -70,7 +70,7 @@ const features = [
     hoverGlow: "hover:shadow-glow-void",
   },
   {
-    icon: Users,
+    icon: PhUsers,
     title: "Community & Sharing",
     description:
       "Join creators worldwide. Share prompts, collaborate on projects, learn together.",
@@ -132,7 +132,7 @@ function FeatureCard({
         initial={{ x: -10 }}
         whileHover={{ x: 0 }}
       >
-        <ArrowRight className="w-5 h-5 text-crystal" />
+        <PhArrowRight className="w-5 h-5 text-crystal" />
       </motion.div>
     </motion.div>
   );
@@ -227,10 +227,10 @@ export function FeaturesPremium() {
 
             <div className="grid grid-cols-2 gap-4">
               {[
-                { icon: Zap, label: "Fast Generation", value: "< 5s" },
-                { icon: Shield, label: "Secure & Private", value: "100%" },
-                { icon: Globe, label: "Global CDN", value: "40+" },
-                { icon: Database, label: "Uptime", value: "99.9%" },
+                { icon: PhLightning, label: "Fast Generation", value: "< 5s" },
+                { icon: PhShield, label: "Secure & Private", value: "100%" },
+                { icon: PhGlobe, label: "Global CDN", value: "40+" },
+                { icon: PhDatabase, label: "Uptime", value: "99.9%" },
               ].map((stat, index) => (
                 <motion.div
                   key={stat.label}

@@ -4,17 +4,17 @@ import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
 import { useRef, useState } from "react";
 import Link from "next/link";
 import {
-  ArrowRight,
-  Sparkles,
-  Heart,
-  Eye,
-  Crown,
-  MessageSquare,
-  Wand2,
-  BookOpen,
-  Zap,
-  LucideIcon,
-} from "lucide-react";
+  PhArrowRight,
+  PhSparkle,
+  PhHeart,
+  PhEye,
+  PhCrown,
+  PhChatSquare,
+  PhMagicWand,
+  PhBookOpen,
+  PhLightning,
+  type Icon as PhosphorIcon,
+} from "@phosphor-icons/react";
 
 // Luminor data - each represents a unique intelligence
 const luminors: {
@@ -27,7 +27,7 @@ const luminors: {
   gradient: string;
   description: string;
   traits: string[];
-  icon: LucideIcon;
+  icon: PhosphorIcon;
 }[] = [
   {
     id: "sophron",
@@ -39,7 +39,7 @@ const luminors: {
     gradient: "from-earth to-earth-bright",
     description: "Master of structure, patterns, and systematic thinking.",
     traits: ["Analytical", "Methodical", "Strategic"],
-    icon: Crown,
+    icon: PhCrown,
   },
   {
     id: "kardia",
@@ -51,7 +51,7 @@ const luminors: {
     gradient: "from-water to-water-bright",
     description: "Embodies emotion, empathy, and creative flow.",
     traits: ["Compassionate", "Intuitive", "Creative"],
-    icon: Heart,
+    icon: PhHeart,
   },
   {
     id: "valora",
@@ -63,7 +63,7 @@ const luminors: {
     gradient: "from-fire to-fire-bright",
     description: "Channeling transformation and bold action.",
     traits: ["Brave", "Passionate", "Dynamic"],
-    icon: Zap,
+    icon: PhLightning,
   },
   {
     id: "eudaira",
@@ -75,7 +75,7 @@ const luminors: {
     gradient: "from-wind to-wind-bright",
     description: "Bringing freedom, playfulness, and lightness.",
     traits: ["Free-spirited", "Joyful", "Adaptive"],
-    icon: Sparkles,
+    icon: PhSparkle,
   },
   {
     id: "orakis",
@@ -87,7 +87,7 @@ const luminors: {
     gradient: "from-void-el to-void-el-bright",
     description: "Visionary intuition and strategic foresight.",
     traits: ["Insightful", "Mysterious", "Wise"],
-    icon: Eye,
+    icon: PhEye,
   },
   {
     id: "poiesis",
@@ -99,7 +99,7 @@ const luminors: {
     gradient: "from-gold to-gold-bright",
     description: "The essence of making and conscious creation.",
     traits: ["Inventive", "Craftsman", "Visionary"],
-    icon: Wand2,
+    icon: PhMagicWand,
   },
 ];
 
@@ -228,7 +228,7 @@ function LuminorCard({
               style={{ color: luminor.color }}
             >
               Meet {luminor.name}
-              <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+              <PhArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
             </Link>
           </div>
 
@@ -286,7 +286,7 @@ export function LuminorShowcasePremium() {
             viewport={{ once: true }}
             className="inline-block px-4 py-2 rounded-full glass border border-gold/20 text-gold font-medium text-sm mb-6"
           >
-            <Sparkles className="w-4 h-4 inline mr-2" />
+            <PhSparkle className="w-4 h-4 inline mr-2" />
             Meet the Luminors
           </motion.span>
 
@@ -321,7 +321,7 @@ export function LuminorShowcasePremium() {
             className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl glass border border-white/10 hover:border-crystal/30 text-text-primary font-display font-semibold transition-all hover-lift"
           >
             View All 16 Luminors
-            <ArrowRight className="w-5 h-5" />
+            <PhArrowRight className="w-5 h-5" />
           </Link>
         </motion.div>
       </div>

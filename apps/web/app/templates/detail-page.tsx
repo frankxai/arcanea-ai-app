@@ -14,20 +14,20 @@ import {
 } from "@/components/ui/cosmic-card";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-  ArrowLeft,
-  Calendar,
-  Clock,
-  Eye,
-  Heart,
-  Share2,
-  Bookmark,
-  Star,
-  User,
-  Tag,
-  ExternalLink,
-  Copy,
-  Check,
-} from "lucide-react";
+  PhArrowLeft,
+  PhCalendar,
+  PhClock,
+  PhEye,
+  PhHeart,
+  PhShare,
+  PhBookmark,
+  PhStar,
+  PhUser,
+  PhTag,
+  PhArrowSquareOut,
+  PhCopy,
+  PhCheck,
+} from "@phosphor-icons/react";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
@@ -164,7 +164,7 @@ function Header({
         href="javascript:history.back()"
         className="inline-flex items-center gap-2 text-text-secondary hover:text-white mb-6 transition-colors"
       >
-        <ArrowLeft className="w-4 h-4" />
+        <PhArrowLeft className="w-4 h-4" />
         <span>Back</span>
       </Link>
 
@@ -219,31 +219,31 @@ function Header({
           <div className="flex flex-wrap items-center gap-4 text-sm text-text-muted">
             {metadata.publishedDate && (
               <div className="flex items-center gap-1.5">
-                <Calendar className="w-4 h-4" />
+                <PhCalendar className="w-4 h-4" />
                 <span>{metadata.publishedDate}</span>
               </div>
             )}
             {metadata.readTime && (
               <div className="flex items-center gap-1.5">
-                <Clock className="w-4 h-4" />
+                <PhClock className="w-4 h-4" />
                 <span>{metadata.readTime}</span>
               </div>
             )}
             {metadata.views !== undefined && (
               <div className="flex items-center gap-1.5">
-                <Eye className="w-4 h-4" />
+                <PhEye className="w-4 h-4" />
                 <span>{metadata.views.toLocaleString()} views</span>
               </div>
             )}
             {metadata.likes !== undefined && (
               <div className="flex items-center gap-1.5">
-                <Heart className="w-4 h-4" />
+                <PhHeart className="w-4 h-4" />
                 <span>{metadata.likes.toLocaleString()}</span>
               </div>
             )}
             {metadata.rating !== undefined && (
               <div className="flex items-center gap-1.5">
-                <Star className="w-4 h-4 text-gold-medium fill-gold-medium" />
+                <PhStar className="w-4 h-4 text-gold-medium fill-gold-medium" />
                 <span>{metadata.rating}</span>
               </div>
             )}
@@ -313,7 +313,7 @@ function Tags({ tags }: { tags?: DetailPageProps["tags"] }) {
 
   return (
     <div className="flex flex-wrap items-center gap-2 mb-8">
-      <Tag className="w-4 h-4 text-text-muted" />
+      <PhTag className="w-4 h-4 text-text-muted" />
       {tags.map((tag) => (
         <Link
           key={tag.id}
@@ -353,12 +353,12 @@ function ActionButtons({ actions }: { actions?: DetailPageProps["actions"] }) {
       <Button variant="cosmic" size="sm" onClick={handleCopy}>
         {copied ? (
           <>
-            <Check className="w-4 h-4 mr-2" />
+            <PhCheck className="w-4 h-4 mr-2" />
             Copied
           </>
         ) : (
           <>
-            <Share2 className="w-4 h-4 mr-2" />
+            <PhShare className="w-4 h-4 mr-2" />
             Share
           </>
         )}
@@ -378,7 +378,7 @@ function ActionButtons({ actions }: { actions?: DetailPageProps["actions"] }) {
 
       {/* External link */}
       <Button variant="outline" size="sm">
-        <ExternalLink className="w-4 h-4 mr-2" />
+        <PhArrowSquareOut className="w-4 h-4 mr-2" />
         Original
       </Button>
     </div>
@@ -406,7 +406,7 @@ function Sidebar({
       {author && (
         <CosmicCard className="p-6">
           <h3 className="font-display font-semibold text-white mb-4 flex items-center gap-2">
-            <User className="w-4 h-4 text-brand-primary" />
+            <PhUser className="w-4 h-4 text-brand-primary" />
             Author
           </h3>
           <Link
@@ -436,7 +436,7 @@ function Sidebar({
             {metadata.views !== undefined && (
               <div className="flex items-center justify-between">
                 <span className="text-text-secondary flex items-center gap-2">
-                  <Eye className="w-4 h-4" />
+                  <PhEye className="w-4 h-4" />
                   Views
                 </span>
                 <span className="font-medium text-white">
@@ -447,7 +447,7 @@ function Sidebar({
             {metadata.likes !== undefined && (
               <div className="flex items-center justify-between">
                 <span className="text-text-secondary flex items-center gap-2">
-                  <Heart className="w-4 h-4" />
+                  <PhHeart className="w-4 h-4" />
                   Likes
                 </span>
                 <span className="font-medium text-white">
@@ -458,19 +458,19 @@ function Sidebar({
             {metadata.rating !== undefined && (
               <div className="flex items-center justify-between">
                 <span className="text-text-secondary flex items-center gap-2">
-                  <Star className="w-4 h-4" />
+                  <PhStar className="w-4 h-4" />
                   Rating
                 </span>
                 <span className="font-medium text-white flex items-center gap-1">
                   {metadata.rating}
-                  <Star className="w-3 h-3 text-gold-medium fill-gold-medium" />
+                  <PhStar className="w-3 h-3 text-gold-medium fill-gold-medium" />
                 </span>
               </div>
             )}
             {metadata.readTime && (
               <div className="flex items-center justify-between">
                 <span className="text-text-secondary flex items-center gap-2">
-                  <Clock className="w-4 h-4" />
+                  <PhClock className="w-4 h-4" />
                   Read Time
                 </span>
                 <span className="font-medium text-white">
@@ -486,7 +486,7 @@ function Sidebar({
       {tags && tags.length > 0 && (
         <CosmicCard className="p-6">
           <h3 className="font-display font-semibold text-white mb-4 flex items-center gap-2">
-            <Tag className="w-4 h-4 text-brand-primary" />
+            <PhTag className="w-4 h-4 text-brand-primary" />
             Tags
           </h3>
           <div className="flex flex-wrap gap-2">

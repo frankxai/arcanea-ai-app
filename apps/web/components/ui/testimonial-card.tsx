@@ -4,7 +4,7 @@ import * as React from "react";
 import { motion, Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarProps } from "./avatar";
-import { Quote } from "lucide-react";
+import { PhQuotes } from "@phosphor-icons/react";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 
@@ -139,7 +139,7 @@ const TestimonialCard = React.forwardRef<HTMLDivElement, TestimonialCardProps>(
       >
         {/* Quote icon */}
         <div className="absolute top-4 right-4 text-text-muted/20">
-          <Quote className="w-8 h-8" strokeWidth={1} />
+          <PhQuotes className="w-8 h-8" weight="thin" />
         </div>
 
         {/* Featured glow */}

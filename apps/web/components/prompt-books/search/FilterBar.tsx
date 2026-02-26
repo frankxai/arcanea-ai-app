@@ -6,19 +6,19 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  ChevronDown,
-  Star,
-  Tag,
-  X,
-  SlidersHorizontal,
-  Check,
-  ArrowUpDown,
-  Clock,
-  ArrowDownAZ,
-  TrendingUp,
-  Calendar,
-  CalendarDays,
-} from "lucide-react";
+  PhCaretDown,
+  PhStar,
+  PhTag,
+  PhX,
+  PhSlidersHorizontal,
+  PhCheck,
+  PhArrowsDownUp,
+  PhClock,
+  PhSortAscending,
+  PhTrendUp,
+  PhCalendar,
+  PhCalendarDots,
+} from "@phosphor-icons/react";
 import { cn } from "@/lib/utils";
 import { usePromptBooksStore } from "@/lib/prompt-books/store";
 import { PROMPT_TYPES } from "@/lib/prompt-books/constants";
@@ -42,11 +42,11 @@ interface SortConfig {
 }
 
 const SORT_OPTIONS: Record<SortOption, SortConfig> = {
-  newest: { label: "Newest", icon: Calendar },
-  oldest: { label: "Oldest", icon: CalendarDays },
-  most_used: { label: "Most Used", icon: TrendingUp },
-  alphabetical: { label: "A-Z", icon: ArrowDownAZ },
-  recently_used: { label: "Recently Used", icon: Clock },
+  newest: { label: "Newest", icon: PhCalendar },
+  oldest: { label: "Oldest", icon: PhCalendarDots },
+  most_used: { label: "Most Used", icon: PhTrendUp },
+  alphabetical: { label: "A-Z", icon: PhSortAscending },
+  recently_used: { label: "Recently Used", icon: PhClock },
 };
 
 // =====================================================================
@@ -209,7 +209,7 @@ export function FilterBar() {
       <div className="flex items-center gap-2 flex-wrap">
         {/* Filter icon */}
         <div className="flex items-center gap-1.5 text-text-muted mr-1">
-          <SlidersHorizontal className="w-3.5 h-3.5" />
+          <PhSlidersHorizontal className="w-3.5 h-3.5" />
           {activeFilterCount > 0 && (
             <span className="text-[10px] font-sans font-semibold bg-brand-accent/20 text-brand-accent px-1.5 py-0.5 rounded-full">
               {activeFilterCount}
@@ -236,7 +236,7 @@ export function FilterBar() {
             <span>
               {selectedType ? PROMPT_TYPES[selectedType].label : "Type"}
             </span>
-            <ChevronDown
+            <PhCaretDown
               className={cn(
                 "w-3 h-3 transition-transform duration-200",
                 typeDropdown.isOpen && "rotate-180",
@@ -280,7 +280,7 @@ export function FilterBar() {
                 >
                   <span>All Types</span>
                   {!selectedType && (
-                    <Check className="w-3 h-3 text-brand-accent" />
+                    <PhCheck className="w-3 h-3 text-brand-accent" />
                   )}
                 </button>
 
@@ -306,7 +306,7 @@ export function FilterBar() {
                   >
                     <span>{config.label}</span>
                     {selectedType === key && (
-                      <Check className="w-3 h-3 text-brand-accent" />
+                      <PhCheck className="w-3 h-3 text-brand-accent" />
                     )}
                   </button>
                 ))}
@@ -329,7 +329,7 @@ export function FilterBar() {
           aria-pressed={favoritesOnly}
           aria-label="Filter favorites"
         >
-          <Star className={cn("w-3 h-3", favoritesOnly && "fill-brand-gold")} />
+          <PhStar className={cn("w-3 h-3", favoritesOnly && "fill-brand-gold")} />
           <span>Favorites</span>
         </button>
 
@@ -349,13 +349,13 @@ export function FilterBar() {
             aria-haspopup="listbox"
             aria-expanded={tagDropdown.isOpen}
           >
-            <Tag className="w-3 h-3" />
+            <PhTag className="w-3 h-3" />
             <span>
               {selectedTagIds.length > 0
                 ? `${selectedTagIds.length} tag${selectedTagIds.length !== 1 ? "s" : ""}`
                 : "Tags"}
             </span>
-            <ChevronDown
+            <PhCaretDown
               className={cn(
                 "w-3 h-3 transition-transform duration-200",
                 tagDropdown.isOpen && "rotate-180",
@@ -414,7 +414,7 @@ export function FilterBar() {
                             <span className="truncate">{tag.name}</span>
                           </div>
                           {isSelected && (
-                            <Check className="w-3 h-3 text-brand-accent flex-shrink-0" />
+                            <PhCheck className="w-3 h-3 text-brand-accent flex-shrink-0" />
                           )}
                         </button>
                       );
@@ -442,9 +442,9 @@ export function FilterBar() {
             aria-haspopup="listbox"
             aria-expanded={sortDropdown.isOpen}
           >
-            <ArrowUpDown className="w-3 h-3" />
+            <PhArrowsDownUp className="w-3 h-3" />
             <span>{SORT_OPTIONS[sortBy].label}</span>
-            <ChevronDown
+            <PhCaretDown
               className={cn(
                 "w-3 h-3 transition-transform duration-200",
                 sortDropdown.isOpen && "rotate-180",
@@ -495,7 +495,7 @@ export function FilterBar() {
                       <SortIcon className="w-3.5 h-3.5 text-text-muted" />
                       <span className="flex-1">{config.label}</span>
                       {isActive && (
-                        <Check className="w-3 h-3 text-brand-accent" />
+                        <PhCheck className="w-3 h-3 text-brand-accent" />
                       )}
                     </button>
                   );
@@ -524,7 +524,7 @@ export function FilterBar() {
             <Badge
               variant="gold"
               size="sm"
-              icon={<Star className="w-3 h-3 fill-current" />}
+              icon={<PhStar className="w-3 h-3 fill-current" />}
               onDismiss={() => setFavoritesOnly(false)}
               dismissLabel="Remove favorites filter"
             >

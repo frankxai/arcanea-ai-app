@@ -2,7 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { Check, Sparkles, ArrowRight } from "lucide-react";
+import { PhCheck, PhSparkle, PhArrowRight } from "@phosphor-icons/react";
 import Link from "next/link";
 
 const plans = [
@@ -95,7 +95,7 @@ function PricingCard({
             whileInView={{ opacity: 1, scale: 1 }}
             className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-crystal to-brand-primary text-cosmic-deep font-bold text-sm"
           >
-            <Sparkles className="w-4 h-4 inline mr-1" />
+            <PhSparkle className="w-4 h-4 inline mr-1" />
             Most Popular
           </motion.div>
         )}
@@ -132,7 +132,7 @@ function PricingCard({
                   plan.popular ? "bg-crystal/20" : "bg-white/5"
                 }`}
               >
-                <Check
+                <PhCheck
                   className={`w-3 h-3 ${plan.popular ? "text-crystal" : "text-text-muted"}`}
                 />
               </div>
@@ -151,7 +151,7 @@ function PricingCard({
           }`}
         >
           {plan.cta}
-          <ArrowRight className="inline ml-2 w-4 h-4" />
+          <PhArrowRight className="inline ml-2 w-4 h-4" />
         </Link>
       </div>
     </motion.div>
