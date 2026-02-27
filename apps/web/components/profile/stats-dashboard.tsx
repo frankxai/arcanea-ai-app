@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { PhImage, PhVideo, PhFolderOpen, PhSparkle, PhCalendar, PhTrendUp, PhTrophy } from '@/lib/phosphor-icons';
+import { PhImage, PhVideo, PhFolderOpen, PhSparkle, PhCalendar, PhTrendUp, PhTrophy, Image as ImageIcon, PhStar } from '@/lib/phosphor-icons';
 import { ProfileStats, Creation } from '@/lib/types/profile';
 
 interface StatsDashboardProps {
@@ -111,28 +111,28 @@ export function StatsDashboard({ stats, creations }: StatsDashboardProps) {
         <h3 className="text-xl font-bold text-white mb-4">Creations by Type</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <StatCard
-            icon={Image}
+            icon={PhImage}
             label="Images"
             value={creationsByType.image}
             gradient="from-blue-500 to-cyan-500"
             index={0}
           />
           <StatCard
-            icon={Video}
+            icon={PhVideo}
             label="Videos"
             value={creationsByType.video}
             gradient="from-red-500 to-pink-500"
             index={1}
           />
           <StatCard
-            icon={FolderOpen}
+            icon={PhFolderOpen}
             label="Projects"
             value={creationsByType.project}
             gradient="from-purple-500 to-indigo-500"
             index={2}
           />
           <StatCard
-            icon={Sparkles}
+            icon={PhSparkle}
             label="Compositions"
             value={creationsByType.composition}
             gradient="from-green-500 to-emerald-500"
@@ -196,21 +196,21 @@ export function StatsDashboard({ stats, creations }: StatsDashboardProps) {
         <h3 className="text-xl font-bold text-white mb-4">Activity Stats</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <StatCard
-            icon={Calendar}
+            icon={PhCalendar}
             label="Active Days Streak"
             value={`${stats.active_days_streak} days`}
             gradient="from-orange-500 to-yellow-500"
             index={0}
           />
           <StatCard
-            icon={TrendingUp}
+            icon={PhTrendUp}
             label="Total Likes"
             value={stats.total_likes_received}
             gradient="from-pink-500 to-rose-500"
             index={1}
           />
           <StatCard
-            icon={Award}
+            icon={PhStar}
             label="Achievements"
             value={achievements.filter((a) => a.unlocked).length}
             gradient="from-indigo-500 to-purple-500"

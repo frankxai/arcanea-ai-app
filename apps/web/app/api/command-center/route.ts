@@ -136,7 +136,7 @@ function parseArcFrontmatter(content: string): { frontmatter: ArcFrontmatter; bo
               if (pk === 'blocked_by' && cleanVal.startsWith('[')) {
                 task.blocked_by = cleanVal.slice(1, -1).split(',').map(s => s.trim());
               } else {
-                (task as Record<string, unknown>)[pk] = cleanVal;
+                (task as unknown as Record<string, unknown>)[pk] = cleanVal;
               }
               i++;
             } else {

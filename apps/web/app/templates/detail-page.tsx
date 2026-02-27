@@ -660,5 +660,4 @@ export function DetailPage({
 }
 
 // ─── Exports ─────────────────────────────────────────────────────────────────
-
-export type { DetailPageProps };
+// DetailPageProps is already exported at its declaration above.

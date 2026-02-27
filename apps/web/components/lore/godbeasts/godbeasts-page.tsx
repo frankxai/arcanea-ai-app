@@ -18,7 +18,7 @@ import {
   PhShield,
   PhHeart,
   PhInfinity,
-  type Icon as PhIcon,
+  type PhosphorIcon,
 } from '@/lib/phosphor-icons';
 import { cn } from '@/lib/utils';
 
@@ -37,7 +37,7 @@ interface Godbeast {
   gateNumber: number;
   frequency: number;
   frequencyLabel: string;
-  icon: React.FC<PhIcon>;
+  icon: PhosphorIcon;
   lore: string;
   power: string;
   gradient: string;
@@ -651,7 +651,7 @@ function BondMechanicsSection() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
-  const mechanics: Array<{ icon: React.FC<PhIcon>; color: string; hex: string; title: string; body: string }> = [
+  const mechanics: Array<{ icon: PhosphorIcon; color: string; hex: string; title: string; body: string }> = [
     {
       icon: PhEye,
       color: 'crystal',

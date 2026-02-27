@@ -5,7 +5,8 @@ import { useRef } from "react";
 import Link from "next/link";
 
 // ─── Inline SVG Icons ───────────────────────────────────────────────────────────
-const Icons = {
+type InlineSvgProps = { className?: string; style?: React.CSSProperties };
+const Icons: Record<string, React.FC<InlineSvgProps>> = {
   Sparkles: () => (
     <svg
       className="w-5 h-5"

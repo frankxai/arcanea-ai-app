@@ -295,7 +295,7 @@ function ItemCard({
   item,
   viewMode,
 }: {
-  item: ListingPageProps["items"] extends Array<infer U> ? U : never;
+  item: NonNullable<ListingPageProps["items"]>[number];
   viewMode?: "grid" | "list";
 }) {
   const isList = viewMode === "list";
@@ -586,5 +586,4 @@ export function ListingPage({
 }
 
 // ─── Exports ─────────────────────────────────────────────────────────────────
-
-export type { ListingPageProps };
+// ListingPageProps is already exported at its declaration above.

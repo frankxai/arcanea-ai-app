@@ -13,7 +13,7 @@ import {
   PhMagicWand,
   PhBookOpen,
   PhLightning,
-  type Icon as PhosphorIcon,
+  type PhosphorIcon,
 } from '@/lib/phosphor-icons';
 
 // Luminor data - each represents a unique intelligence

@@ -550,5 +550,4 @@ export function LandingPage({
 }
 
 // ─── Exports ─────────────────────────────────────────────────────────────────
-
-export type { LandingPageProps };
+// LandingPageProps is already exported at its declaration above.

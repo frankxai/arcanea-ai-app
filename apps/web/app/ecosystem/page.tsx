@@ -1,3 +1,4 @@
+import type { JSX } from "react";
 import { Metadata } from "next";
 import Link from "next/link";
 import { EcosystemDiagram } from "@/components/ecosystem/ecosystem-diagram";
@@ -382,7 +383,7 @@ export default function EcosystemPage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {PRODUCTS.map((product) => {
               const ProductIcon = product.icon;
-              const Tag = product.external ? "a" : Link;
+              const Tag: React.ElementType = product.external ? "a" : Link;
               const tagProps = product.external
                 ? {
                     href: product.href,
@@ -394,7 +395,7 @@ export default function EcosystemPage() {
               return (
                 <Tag
                   key={product.id}
-                  {...(tagProps as Record<string, string>)}
+                  {...tagProps}
                   className="group relative glass rounded-2xl p-7 overflow-hidden transition-all hover:border-white/20 hover:-translate-y-0.5 hover:shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
                   aria-label={`${product.name} — ${product.tagline}`}
                 >

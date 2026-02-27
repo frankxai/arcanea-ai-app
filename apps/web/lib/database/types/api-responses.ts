@@ -156,3 +156,36 @@ export interface Activity {
   metadata?: Record<string, unknown> | null
   createdAt: string
 }
+
+// Luminor Bond types — used by bond-service
+export interface LuminorBond {
+  id: string
+  userId: string
+  luminorId: string
+  level: number
+  bondLevel: number
+  xp: number
+  relationshipType: string
+  memories: Memory[]
+  createdAt: string
+  updatedAt: string
+}
+
+export interface Memory {
+  id: string
+  content: string
+  emotionalTone?: string
+  createdAt: string
+}
+
+// Notification types — used by notification-service
+export interface Notification {
+  id: string
+  userId: string
+  type: string
+  title: string
+  message: string
+  read: boolean
+  metadata?: Record<string, unknown> | null
+  createdAt: string
+}

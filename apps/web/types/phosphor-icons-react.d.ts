@@ -1,16 +1,16 @@
 declare module '@phosphor-icons/react' {
-  import type { ComponentType, SVGProps } from 'react';
+  import type { SVGProps, ForwardRefExoticComponent, RefAttributes } from 'react';
 
-  export type PhosphorIcon = ComponentType<
-    SVGProps<SVGSVGElement> & {
-      size?: number | string;
-      weight?: 'thin' | 'light' | 'regular' | 'bold' | 'fill' | 'duotone';
-      mirrored?: boolean;
-    }
-  >;
+  export interface IconProps extends SVGProps<SVGSVGElement> {
+    size?: number | string;
+    weight?: 'thin' | 'light' | 'regular' | 'bold' | 'fill' | 'duotone';
+    mirrored?: boolean;
+  }
+
+  export type PhosphorIcon = ForwardRefExoticComponent<IconProps & RefAttributes<SVGSVGElement>>;
 
   export const IconContext: {
-    Provider: ComponentType<{
+    Provider: import('react').ComponentType<{
       value?: Record<string, unknown>;
       children?: import('react').ReactNode;
     }>;
@@ -98,6 +98,7 @@ declare module '@phosphor-icons/react' {
   export const Funnel: PhosphorIcon;
   export const GameController: PhosphorIcon;
   export const Gear: PhosphorIcon;
+  export const GearSix: PhosphorIcon;
   export const GitBranch: PhosphorIcon;
   export const GithubLogo: PhosphorIcon;
   export const Globe: PhosphorIcon;

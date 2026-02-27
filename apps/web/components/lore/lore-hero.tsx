@@ -4,7 +4,8 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 
 // ─── Inline SVG Icons ───────────────────────────────────────────────────────────
-const Icons = {
+type InlineSvgProps = { className?: string; style?: React.CSSProperties };
+const Icons: Record<string, React.FC<InlineSvgProps>> = {
   Sparkles: () => (
     <svg
       className="w-4 h-4"

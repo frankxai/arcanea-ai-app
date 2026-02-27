@@ -11,6 +11,7 @@ import {
   PhLink,
   PhPaintBrush,
   PhChatTeardrop,
+  type PhosphorIcon,
 } from '@/lib/phosphor-icons';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -19,7 +20,7 @@ interface Node {
   id: string;
   label: string;
   sublabel?: string;
-  Icon: React.ComponentType<{ weight?: string; size?: number; className?: string }>;
+  Icon: PhosphorIcon;
   color: string;
 }
 

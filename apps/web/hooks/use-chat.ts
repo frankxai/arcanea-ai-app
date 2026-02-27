@@ -101,7 +101,7 @@ export function useChat({
     return raw
       .map((msg) => ({
         id: typeof msg.id === 'string' ? msg.id : `msg-${Date.now()}`,
-        role: msg.role === 'assistant' ? 'assistant' : 'user',
+        role: (msg.role === 'assistant' ? 'assistant' : 'user') as 'user' | 'assistant',
         content: typeof msg.content === 'string' ? msg.content : '',
         timestamp: msg.timestamp ? new Date(String(msg.timestamp)) : new Date(),
         emotionalTone: msg.emotionalTone as EmotionalTone | undefined,

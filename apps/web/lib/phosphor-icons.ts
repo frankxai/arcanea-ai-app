@@ -229,16 +229,10 @@ import {
   YoutubeLogo,
 } from '@phosphor-icons/react';
 
-import type { ComponentType, SVGProps } from 'react';
-
-type IconComponent = ComponentType<SVGProps<SVGSVGElement> & {
-  size?: number | string;
-  weight?: 'thin' | 'light' | 'regular' | 'bold' | 'fill' | 'duotone';
-  mirrored?: boolean;
-}>;
+import type { IconProps, PhosphorIcon as IconComponent } from '@phosphor-icons/react';
 
 // Fallback for icons that don't exist in Phosphor but are used in the codebase
-const Fallback: IconComponent = (props) => null;
+const Fallback = (() => null) as unknown as IconComponent;
 
 // Ph-prefixed aliases — maps PhXxx to the real Phosphor icon Xxx
 export const PhActivity = Heartbeat;
@@ -464,3 +458,14 @@ export const ChevronRight = CaretRight;
 
 // Also export the fallback type for external use
 export type { IconComponent as PhosphorIcon };
+
+// Export the IconProps type so consumers can type icon prop interfaces
+export type { IconProps };
+
+// Type alias — some files import `Icon` as a type from this module
+export type Icon = IconProps;
+
+// Missing icon aliases — icons referenced but not in Phosphor
+export const TreeStructure = GitBranch;   // Phosphor doesn't have TreeStructure
+export const Gauge = Compass;             // Phosphor doesn't have Gauge — use Compass
+export const ShieldCheck = Shield;        // Phosphor doesn't have ShieldCheck

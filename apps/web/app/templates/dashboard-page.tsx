@@ -585,5 +585,4 @@ export function DashboardPage({
 }
 
 // ─── Exports ─────────────────────────────────────────────────────────────────
-
-export type { DashboardProps };
+// DashboardProps is already exported at its declaration above.

@@ -4,7 +4,8 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
 // ─── Inline SVG Icons ───────────────────────────────────────────────────────────
-const Icons = {
+type InlineSvgProps = { className?: string; style?: React.CSSProperties };
+const Icons: Record<string, React.FC<InlineSvgProps>> = {
   Sun: () => (
     <svg
       className="w-8 h-8"

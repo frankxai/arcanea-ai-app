@@ -144,9 +144,9 @@ export async function POST(req: NextRequest) {
         maxTokens,
       });
 
-      // Log usage to database
+      // Log usage to database (ai_usage table not yet in typed schema)
       if (userId) {
-        await supabase.from('ai_usage').insert({
+        await (supabase as unknown as { from: (table: string) => { insert: (row: Record<string, unknown>) => { then: (fn: () => void) => void } } }).from('ai_usage').insert({
           user_id: userId,
           operation: 'chat',
           model: 'gemini-2.0-flash',
