@@ -71,9 +71,8 @@ export function CTASection() {
                     </h2>
 
                     <p className="text-xl text-text-secondary mb-8 leading-relaxed">
-                      Join thousands of creators who are transforming their
-                      ideas into reality. Your journey begins with a single
-                      conversation.
+                      Imagine a good future. Build it here. Your journey
+                      through the Ten Gates begins with a single conversation.
                     </p>
 
                     {/* Benefits list */}
