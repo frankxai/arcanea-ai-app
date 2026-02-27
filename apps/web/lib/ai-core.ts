@@ -77,7 +77,7 @@ export function createGeminiChatProvider(config: GeminiConfig) {
       });
 
       // Handle both V1 and V2 SDK usage property names
-      const usage = result.usage as Record<string, number> | undefined;
+      const usage = result.usage as unknown as Record<string, number> | undefined;
       const promptTokens = usage?.promptTokens ?? usage?.inputTokens ?? 0;
       const completionTokens = usage?.completionTokens ?? usage?.outputTokens ?? 0;
 
