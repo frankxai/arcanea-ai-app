@@ -8,7 +8,7 @@ interface GalleryImage {
   guardian: string;
   slug: string;
   label: string;
-  tier: "hero" | "gallery";
+  tier: "hero" | "gallery" | "community";
   accent: string;
   element: string;
   gate: string;
@@ -128,9 +128,13 @@ export default function GalleryPage() {
                 {/* Hover overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-cosmic-deep/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                  {img.tier === "hero" && (
-                    <span className="inline-block px-2 py-0.5 rounded-full text-[10px] font-sans uppercase tracking-wider bg-arcane-gold/20 text-arcane-gold border border-arcane-gold/30 mb-1.5">
-                      Hero
+                  {img.tier !== "gallery" && (
+                    <span className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-sans uppercase tracking-wider mb-1.5 ${
+                      img.tier === "hero"
+                        ? "bg-arcane-gold/20 text-arcane-gold border border-arcane-gold/30"
+                        : "bg-arcane-cosmic/20 text-arcane-cosmic border border-arcane-cosmic/30"
+                    }`}>
+                      {img.tier === "hero" ? "Hero" : "Community"}
                     </span>
                   )}
                   <p className="text-sm font-sans font-medium text-white">{img.label}</p>
