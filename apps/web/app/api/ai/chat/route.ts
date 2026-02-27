@@ -6,7 +6,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createGeminiChatProvider } from '@/lib/ai-core';
 import { ARCANEA_MAGIC_SYSTEM, ARCANEA_TONE_GUIDELINES, ACADEMY_LORE } from '@/lib/lore';
-import { createClient } from '@supabase/supabase-js';
+import { createClient as createSupabaseClient } from '@/lib/supabase/server';
 
 export const runtime = 'edge';
 
@@ -33,21 +33,18 @@ interface ChatRequest {
 
 export async function POST(req: NextRequest) {
   try {
-    // Initialize Supabase client
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!
-    );
+    // Initialize Supabase client (cookie-based, respects RLS)
+    const supabase = await createSupabaseClient();
 
     // Optional auth: authenticated users are tracked and logged; guests can still chat.
-    const authHeader = req.headers.get('authorization');
     let userId: string | null = null;
-    if (authHeader) {
-      const token = authHeader.replace('Bearer ', '');
-      const { data: { user }, error: authError } = await supabase.auth.getUser(token);
+    try {
+      const { data: { user }, error: authError } = await supabase.auth.getUser();
       if (!authError && user) {
         userId = user.id;
       }
+    } catch {
+      // Auth check failed — continue as guest
     }
 
     // Rate limiting

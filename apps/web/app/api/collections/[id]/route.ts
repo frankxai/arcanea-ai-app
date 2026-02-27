@@ -8,7 +8,7 @@
 
 import { NextRequest } from 'next/server';
 import { z } from 'zod';
-import { supabaseServer } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase/server';
 import {
   successResponse,
   errorResponse,
@@ -28,6 +28,7 @@ interface RouteContext {
  */
 export async function GET(request: NextRequest, context: RouteContext) {
   try {
+    const supabaseServer = await createClient();
     const { id } = await context.params;
 
     // Fetch the collection
@@ -122,6 +123,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
  */
 export async function PATCH(request: NextRequest, context: RouteContext) {
   try {
+    const supabaseServer = await createClient();
     const { id } = await context.params;
 
     const body = await parseRequestBody(request);
@@ -187,6 +189,7 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
  */
 export async function DELETE(request: NextRequest, context: RouteContext) {
   try {
+    const supabaseServer = await createClient();
     const { id } = await context.params;
 
     // Delete all collection_items first (in case no FK cascade)

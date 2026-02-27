@@ -7,7 +7,7 @@
 
 import { NextRequest } from 'next/server';
 import { z } from 'zod';
-import { supabaseServer } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase/server';
 import {
   listCreations,
   createCreation,
@@ -38,6 +38,7 @@ import { VALIDATION_RULES, type CreationFilters } from '@/lib/database/types/api
  */
 export async function GET(request: NextRequest) {
   try {
+    const supabaseServer = await createClient();
     const { searchParams } = new URL(request.url);
     const { page, pageSize } = parsePaginationParams(searchParams);
 
@@ -95,6 +96,7 @@ export async function GET(request: NextRequest) {
  */
 export async function POST(request: NextRequest) {
   try {
+    const supabaseServer = await createClient();
     const body = await parseRequestBody(request);
     if (!body) {
       return errorResponse('INVALID_INPUT', 'Invalid request body', 400);

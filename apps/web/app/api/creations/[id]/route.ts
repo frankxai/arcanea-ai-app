@@ -8,7 +8,7 @@
 
 import { NextRequest } from 'next/server';
 import { z } from 'zod';
-import { supabaseServer } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase/server';
 import {
   getCreation,
   updateCreation,
@@ -32,6 +32,7 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const supabaseServer = await createClient();
     const { id } = await params;
 
     if (!id) {
@@ -65,6 +66,7 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const supabaseServer = await createClient();
     const { id } = await params;
 
     if (!id) {
@@ -118,6 +120,7 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const supabaseServer = await createClient();
     const { id } = await params;
 
     if (!id) {

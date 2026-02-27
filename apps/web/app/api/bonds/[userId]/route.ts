@@ -5,7 +5,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { supabaseServer } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase/server';
 import { getUserBonds } from '@/lib/database/services/bond-service';
 import { successResponse, errorResponse, handleApiError } from '@/lib/api-utils';
 
@@ -19,6 +19,7 @@ export async function GET(
   { params }: { params: Promise<{ userId: string }> }
 ) {
   try {
+    const supabaseServer = await createClient();
     const { userId } = await params;
 
     if (!userId) {

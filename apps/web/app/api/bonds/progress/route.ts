@@ -6,7 +6,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { supabaseServer } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase/server';
 import { updateBondProgress, getXpReward } from '@/lib/database/services/bond-service';
 import {
   successResponse,
@@ -29,6 +29,8 @@ import {
  */
 export async function POST(request: NextRequest) {
   try {
+    const supabaseServer = await createClient();
+
     // Parse request body
     const body = await parseRequestBody(request);
     if (!body) {

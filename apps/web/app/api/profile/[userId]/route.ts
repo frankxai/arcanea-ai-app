@@ -7,7 +7,7 @@
 
 import { NextRequest } from 'next/server';
 import { z } from 'zod';
-import { supabaseServer } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase/server';
 import {
   getProfileWithStats,
   updateProfile,
@@ -28,6 +28,7 @@ export async function GET(
   { params }: { params: Promise<{ userId: string }> }
 ) {
   try {
+    const supabaseServer = await createClient();
     const { userId } = await params;
 
     if (!userId) {
@@ -54,6 +55,7 @@ export async function PATCH(
   { params }: { params: Promise<{ userId: string }> }
 ) {
   try {
+    const supabaseServer = await createClient();
     const { userId } = await params;
 
     if (!userId) {

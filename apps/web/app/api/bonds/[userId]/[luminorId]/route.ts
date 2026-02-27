@@ -5,7 +5,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { supabaseServer } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase/server';
 import { getBondWithLuminor, createBond } from '@/lib/database/services/bond-service';
 import { successResponse, errorResponse, handleApiError } from '@/lib/api-utils';
 
@@ -20,6 +20,7 @@ export async function GET(
   { params }: { params: Promise<{ userId: string; luminorId: string }> }
 ) {
   try {
+    const supabaseServer = await createClient();
     const { userId, luminorId } = await params;
 
     if (!userId || !luminorId) {

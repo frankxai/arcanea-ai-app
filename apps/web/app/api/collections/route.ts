@@ -7,7 +7,7 @@
 
 import { NextRequest } from 'next/server';
 import { z } from 'zod';
-import { supabaseServer } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase/server';
 import {
   successResponse,
   errorResponse,
@@ -27,6 +27,7 @@ import { VALIDATION_RULES, type Visibility } from '@/lib/database/types/api-resp
  */
 export async function GET(request: NextRequest) {
   try {
+    const supabaseServer = await createClient();
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get('userId');
 
@@ -79,6 +80,7 @@ export async function GET(request: NextRequest) {
  */
 export async function POST(request: NextRequest) {
   try {
+    const supabaseServer = await createClient();
     const body = await parseRequestBody(request);
     if (!body) {
       return errorResponse('INVALID_INPUT', 'Invalid request body', 400);

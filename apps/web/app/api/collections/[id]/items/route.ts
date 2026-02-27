@@ -7,7 +7,7 @@
 
 import { NextRequest } from 'next/server';
 import { z } from 'zod';
-import { supabaseServer } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase/server';
 import {
   successResponse,
   errorResponse,
@@ -26,6 +26,7 @@ interface RouteContext {
  */
 export async function POST(request: NextRequest, context: RouteContext) {
   try {
+    const supabaseServer = await createClient();
     const { id: collectionId } = await context.params;
 
     const body = await parseRequestBody(request);
@@ -120,6 +121,7 @@ export async function POST(request: NextRequest, context: RouteContext) {
  */
 export async function DELETE(request: NextRequest, context: RouteContext) {
   try {
+    const supabaseServer = await createClient();
     const { id: collectionId } = await context.params;
 
     const body = await parseRequestBody(request);
