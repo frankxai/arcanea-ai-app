@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useCallback } from 'react'
 import {
-  PhCaretDown, PhCaretRight, PhSidebarSimple, PhSidebarSimple as PhSidebarOpen,
+  PhCaretDown, PhCaretRight, PhSidebarSimple, PhSidebarOpen,
   PhSlidersHorizontal, PhChatText, PhLink, PhEye,
 } from '@/lib/phosphor-icons'
 import { cn } from '@/lib/utils'
