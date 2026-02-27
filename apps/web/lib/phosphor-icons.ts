@@ -11,7 +11,7 @@ export * from '@phosphor-icons/react';
 
 // Import all icons from the real package
 import {
-  Activity,
+  Heartbeat,
   ArrowBendUpLeft,
   ArrowCircleDown,
   ArrowCounterClockwise,
@@ -30,7 +30,7 @@ import {
   BookOpen,
   Bookmark,
   Books,
-  Brackets,
+  BracketsSquare,
   BracketsCurly,
   Brain,
   Browser,
@@ -66,7 +66,7 @@ import {
   Command,
   Compass,
   Copy,
-  CornerDownLeft,
+  ArrowBendDownLeft,
   Cpu,
   Crown,
   Database,
@@ -207,7 +207,7 @@ type IconComponent = ComponentType<SVGProps<SVGSVGElement> & {
 const Fallback: IconComponent = (props) => null;
 
 // Ph-prefixed aliases — maps PhXxx to the real Phosphor icon Xxx
-export const PhActivity = Activity;
+export const PhActivity = Heartbeat;
 export const PhArrowBendUpLeft = ArrowBendUpLeft;
 export const PhArrowCircleDown = ArrowCircleDown;
 export const PhArrowCounterClockwise = ArrowCounterClockwise;
@@ -226,7 +226,7 @@ export const PhBook = Book;
 export const PhBookOpen = BookOpen;
 export const PhBookmark = Bookmark;
 export const PhBooks = Books;
-export const PhBraces = Brackets;
+export const PhBraces = BracketsSquare;
 export const PhBracketsCurly = BracketsCurly;
 export const PhBrain = Brain;
 export const PhBrowser = Browser;
@@ -264,7 +264,7 @@ export const PhCodeBlock = CodeBlock;
 export const PhCommand = Command;
 export const PhCompass = Compass;
 export const PhCopy = Copy;
-export const PhCornerDownLeft = CornerDownLeft;
+export const PhCornerDownLeft = ArrowBendDownLeft;
 export const PhCpu = Cpu;
 export const PhCrown = Crown;
 export const PhCrystals = Diamond;
