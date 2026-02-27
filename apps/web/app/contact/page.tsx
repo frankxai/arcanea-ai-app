@@ -156,7 +156,7 @@ const CONTACT_METHODS: ContactMethod[] = [
   {
     title: "Discord Community",
     description:
-      "Join thousands of creators in our Discord server for real-time discussion and support.",
+      "Connect with fellow creators in our Discord server for real-time discussion and support.",
     icon: "Discord",
     link: "https://discord.gg/arcanea",
     color: "#5865F2",
@@ -493,8 +493,7 @@ export default function ContactPage() {
                     Ready to Begin?
                   </h2>
                   <p className="text-text-secondary font-body leading-relaxed mb-8">
-                    Join thousands of Creators on their journey through the Ten
-                    Gates. Your Guardian awaits.
+                    Begin your journey through the Ten Gates. Your Guardian awaits.
                   </p>
                   <div className="flex flex-wrap justify-center gap-4">
                     <Link
