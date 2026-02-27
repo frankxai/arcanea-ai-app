@@ -75,7 +75,7 @@ export function LikeButton({
         }
         transition={{ duration: 0.3 }}
       >
-        <Heart
+        <PhHeart
           className={`${sizeClasses[size]} ${isLiked ? 'fill-current' : ''}`}
           aria-hidden="true"
         />

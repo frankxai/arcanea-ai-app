@@ -82,7 +82,7 @@ const FeatureList: React.FC<FeatureListProps> = ({
           )}
         >
           {feature.included ? (
-            <Check
+            <PhCheck
               className={cn(
                 "shrink-0 mt-0.5",
                 compact ? "w-4 h-4" : "w-5 h-5",
@@ -91,7 +91,7 @@ const FeatureList: React.FC<FeatureListProps> = ({
               weight="bold"
             />
           ) : (
-            <X
+            <PhX
               className={cn(
                 "shrink-0 mt-0.5",
                 compact ? "w-4 h-4" : "w-5 h-5",

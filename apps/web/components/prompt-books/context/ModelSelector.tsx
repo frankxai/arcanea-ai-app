@@ -112,7 +112,7 @@ export function ModelSelector({ value, onChange, className }: ModelSelectorProps
             </span>
           )}
         </div>
-        <ChevronDown
+        <PhCaretDown
           className={cn(
             'w-4 h-4 text-text-muted shrink-0 transition-transform duration-150',
             open && 'rotate-180',

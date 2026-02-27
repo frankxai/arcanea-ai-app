@@ -52,7 +52,7 @@ export function PromptCard({
             onClick={(e) => { e.stopPropagation(); onFavorite() }}
             className="p-1 rounded hover:bg-cosmic-raised"
           >
-            <Star
+            <PhStar
               className={cn(
                 'w-3.5 h-3.5',
                 prompt.isFavorite ? 'fill-brand-gold text-brand-gold' : 'text-text-muted',
@@ -86,7 +86,7 @@ export function PromptCard({
             onClick={(e) => { e.stopPropagation(); onFavorite() }}
             className="p-1.5 rounded-lg hover:bg-cosmic-raised"
           >
-            <Star
+            <PhStar
               className={cn(
                 'w-3.5 h-3.5',
                 prompt.isFavorite ? 'fill-brand-gold text-brand-gold' : 'text-text-muted',

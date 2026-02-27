@@ -370,7 +370,7 @@ function ActionButtons({ actions }: { actions?: DetailPageProps["actions"] }) {
         size="sm"
         onClick={handleBookmark}
       >
-        <Bookmark
+        <PhBookmark
           className={cn("w-4 h-4 mr-2", bookmarked && "fill-current")}
         />
         {bookmarked ? "Saved" : "Save"}
