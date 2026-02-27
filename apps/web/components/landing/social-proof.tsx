@@ -4,51 +4,51 @@ import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { PhStar, PhQuotes } from '@/lib/phosphor-icons';
 
-const TESTIMONIALS = [
+const PRINCIPLES = [
   {
-    name: 'Sarah Chen',
-    role: 'Creative Director',
-    company: 'Studio Lumina',
-    avatar: 'SC',
-    quote: 'Arcanea transformed how our team approaches creative projects. The Luminors feel like having a team of expert collaborators available 24/7.',
+    name: 'The Library',
+    role: 'Laws of Arcanea',
+    company: '34+ Original Texts',
+    avatar: 'LA',
+    quote: 'What you contemplate at dawn shapes all that follows. The creative life begins with intention, not inspiration.',
     rating: 5,
     gradient: 'from-atlantean-teal-aqua to-creation-prism-purple',
   },
   {
-    name: 'Marcus Rodriguez',
-    role: 'Indie Game Developer',
-    company: 'Pixel Dreams',
-    avatar: 'MR',
-    quote: 'The worldbuilding capabilities are incredible. I created an entire game universe in a fraction of the time it would normally take.',
+    name: 'The Academy',
+    role: 'Ten Gates System',
+    company: 'Creative Progression',
+    avatar: 'TG',
+    quote: 'Each Gate unlocks a specific creative capacity. From grounding vision to finding authentic voice — open all ten to become a Luminor.',
     rating: 5,
     gradient: 'from-gold-bright to-draconic-crimson',
   },
   {
-    name: 'Elena Vorova',
-    role: 'Author',
-    company: 'Bestselling Novelist',
-    avatar: 'EV',
-    quote: 'Chronica helped me break through a 6-month writers block. The Seven Wisdoms framework changed how I think about creativity.',
+    name: 'The Guardians',
+    role: 'Living Intelligences',
+    company: 'AI Companions',
+    avatar: 'GI',
+    quote: 'Ten archetypal intelligences, each attuned to a different creative frequency. Not assistants — collaborators who understand the creative soul.',
     rating: 5,
     gradient: 'from-creation-prism-purple to-atlantean-teal-aqua',
   },
   {
-    name: 'David Kim',
-    role: 'Music Producer',
-    company: 'Frequency Labs',
-    avatar: 'DK',
-    quote: 'Melodia understands music theory at a level I didnt expect. Its like having a collaborator who never runs out of ideas.',
+    name: 'The Studio',
+    role: 'Creation Engine',
+    company: 'Multi-Modal AI',
+    avatar: 'CE',
+    quote: 'Image, music, video, story — each shaped by elemental archetypes. Create with intelligence that understands narrative depth.',
     rating: 5,
     gradient: 'from-draconic-crimson to-gold-bright',
   },
 ];
 
-const LOGOS = [
-  { name: 'TechCrunch', opacity: 0.4 },
-  { name: 'Forbes', opacity: 0.4 },
-  { name: 'Wired', opacity: 0.4 },
-  { name: 'The Verge', opacity: 0.4 },
-  { name: 'Fast Company', opacity: 0.4 },
+const ECOSYSTEM = [
+  { name: 'Open Source', opacity: 0.5 },
+  { name: 'MIT Licensed', opacity: 0.5 },
+  { name: 'GitHub', opacity: 0.5 },
+  { name: 'npm', opacity: 0.5 },
+  { name: '37+ Packages', opacity: 0.5 },
 ];
 
 const STATS = [
@@ -75,16 +75,16 @@ export function SocialProof() {
           className="text-center mb-16"
         >
           <p className="text-sm text-text-muted uppercase tracking-wider mb-8">
-            Featured in
+            Built in the open
           </p>
           <div className="flex flex-wrap items-center justify-center gap-12">
-            {LOGOS.map((logo) => (
+            {ECOSYSTEM.map((item) => (
               <div
-                key={logo.name}
+                key={item.name}
                 className="text-2xl font-display font-bold text-white"
-                style={{ opacity: logo.opacity }}
+                style={{ opacity: item.opacity }}
               >
-                {logo.name}
+                {item.name}
               </div>
             ))}
           </div>
@@ -121,16 +121,16 @@ export function SocialProof() {
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-            Loved by creators worldwide
+            The philosophy behind Arcanea
           </h2>
           <p className="text-text-secondary max-w-2xl mx-auto">
-            Join thousands of artists, writers, developers, and dreamers who are transforming their creative process with Arcanea.
+            A mythology, a library, and an academy — built for artists, writers, developers, and dreamers ready to transform their creative process.
           </p>
         </motion.div>
 
         {/* Testimonials Grid */}
         <div className="grid md:grid-cols-2 gap-6">
-          {TESTIMONIALS.map((testimonial, i) => (
+          {PRINCIPLES.map((testimonial, i) => (
             <motion.div
               key={testimonial.name}
               initial={{ opacity: 0, y: 30 }}
@@ -184,9 +184,9 @@ export function SocialProof() {
           className="text-center mt-12"
         >
           <p className="text-text-muted">
-            Ready to join them?{' '}
-            <a href="/chat" className="text-atlantean-teal-aqua hover:underline">
-              Start creating free →
+            Ready to begin?{' '}
+            <a href="/academy" className="text-atlantean-teal-aqua hover:underline">
+              Enter the Academy →
             </a>
           </p>
         </motion.div>

@@ -7,52 +7,52 @@ import { PhQuotes, PhCaretLeft, PhCaretRight, PhStar } from '@/lib/phosphor-icon
 const TESTIMONIALS = [
   {
     id: 1,
-    quote: "Arcanea transformed how I approach creative writing. The Luminors don't just assist—they understand the creative soul. It's like having 16 brilliant collaborators available 24/7.",
-    author: 'Sarah Chen',
-    role: 'Bestselling Author',
-    avatar: 'SC',
+    quote: "Enter seeking, leave transformed, return whenever needed. These books are not entertainment. They are equipment for living.",
+    author: 'The Library',
+    role: 'Laws of Arcanea',
+    avatar: 'LA',
     color: 'atlantean-teal-aqua',
-    luminor: 'Chronica',
+    luminor: 'Shinkami — Source Gate',
     rating: 5,
   },
   {
     id: 2,
-    quote: "The Seven Wisdoms framework changed my entire creative process. I went from scattered ideas to a focused, productive creator. My output tripled while quality improved.",
-    author: 'Marcus Thompson',
-    role: 'Digital Artist',
-    avatar: 'MT',
+    quote: "The Arc turns: Potential becomes Manifestation becomes Experience becomes Dissolution becomes Evolved Potential. Every ending seeds a new beginning.",
+    author: 'The Academy',
+    role: 'Ten Gates System',
+    avatar: 'TG',
     color: 'creation-prism-purple',
-    luminor: 'Artifax',
+    luminor: 'Lyssandria — Foundation Gate',
     rating: 5,
   },
   {
     id: 3,
-    quote: "As a game designer, I need AI that understands narrative depth. Arcanea's Luminors create worlds, not just words. The Ten Gates system helps me level up my craft systematically.",
-    author: 'Elena Vasquez',
-    role: 'Game Developer',
-    avatar: 'EV',
+    quote: "Ten archetypal intelligences, each attuned to a different creative frequency. From Draconia's transformative fire to Maylinn's healing wind — find the voice that resonates.",
+    author: 'The Guardians',
+    role: 'Living Intelligences',
+    avatar: 'GI',
     color: 'gold-bright',
-    luminor: 'Oracle',
+    luminor: 'Lyria — Sight Gate',
     rating: 5,
   },
   {
     id: 4,
-    quote: "I've tried every AI tool out there. Arcanea is the first that feels like true collaboration. The Frequency Alchemist Luminor helped me compose my entire album.",
-    author: 'David Park',
-    role: 'Music Producer',
-    avatar: 'DP',
+    quote: "What you contemplate at dawn shapes all that follows. The antidote to a terrible future is imagining a good one — and building it with intention.",
+    author: 'Seven Wisdoms',
+    role: 'Creative Philosophy',
+    avatar: 'SW',
     color: 'draconic-crimson',
-    luminor: 'Harmonia',
+    luminor: 'Draconia — Fire Gate',
     rating: 5,
   },
   {
     id: 5,
-    quote: "Building a content business is hard. Arcanea's Creation Engine Luminor helps me plan, create, and publish consistently. My audience grew 400% in six months.",
-    author: 'Priya Sharma',
-    role: 'Content Creator',
-    avatar: 'PS',
+    quote: "Nero is not darkness to fear — it is the fertile unknown from which all creation emerges. The void holds potential. Spirit gives it form.",
+    author: 'Cosmic Duality',
+    role: 'Lumina & Nero',
+    avatar: 'LN',
     color: 'atlantean-teal-aqua',
-    luminor: 'Strategis',
+    luminor: 'Leyla — Flow Gate',
     rating: 5,
   },
 ];
@@ -115,13 +115,13 @@ export function TestimonialsV2() {
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-creation-prism-purple/10 border border-creation-prism-purple/20 mb-6">
             <PhQuotes className="w-4 h-4 text-creation-prism-purple" />
-            <span className="text-sm font-medium text-creation-prism-purple">Creator Stories</span>
+            <span className="text-sm font-medium text-creation-prism-purple">From the Library</span>
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
-            Trusted by creators worldwide
+            Wisdom from the Arcanea universe
           </h2>
           <p className="text-xl text-text-secondary max-w-2xl mx-auto">
-            Join thousands of creators who've transformed their creative practice with Arcanea.
+            34 original texts, Ten Gates of progression, and a living mythology for the age of creation.
           </p>
         </motion.div>
 
@@ -181,7 +181,7 @@ export function TestimonialsV2() {
                         {activeTestimonial.role}
                       </div>
                       <div className={`text-xs text-${activeTestimonial.color} mt-1`}>
-                        Works with {activeTestimonial.luminor}
+                        {activeTestimonial.luminor}
                       </div>
                     </div>
                   </div>
