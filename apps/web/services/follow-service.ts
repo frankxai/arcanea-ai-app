@@ -1,23 +1,20 @@
 /**
  * Follow Service - Web App Wrapper
  *
- * Wraps database service for user follows
+ * Wraps database service with Supabase client injection
  */
 
+import { createClient } from '@/lib/supabase/server';
 import {
   toggleFollow,
   getFollowStatus,
-  type Follow,
 } from '@/lib/database/services/follow-service';
 
-export type { Follow };
-
 export async function followUser(followerId: string, followingId: string) {
-  // First check if already following
-  const isFollowing = await getFollowStatus(followerId, followingId);
+  const supabase = await createClient();
+  const isFollowing = await getFollowStatus(supabase, followerId, followingId);
 
   if (isFollowing) {
-    // Already following, return current state
     return {
       id: `${followerId}-${followingId}`,
       followerId,
@@ -26,8 +23,7 @@ export async function followUser(followerId: string, followingId: string) {
     };
   }
 
-  // Toggle to follow
-  const result = await toggleFollow(followerId, followingId);
+  const result = await toggleFollow(supabase, followerId, followingId);
 
   return {
     id: `${followerId}-${followingId}`,
@@ -39,15 +35,13 @@ export async function followUser(followerId: string, followingId: string) {
 }
 
 export async function unfollowUser(followerId: string, followingId: string) {
-  // First check if following
-  const isFollowing = await getFollowStatus(followerId, followingId);
+  const supabase = await createClient();
+  const isFollowing = await getFollowStatus(supabase, followerId, followingId);
 
   if (!isFollowing) {
-    // Not following, already done
     return { success: true };
   }
 
-  // Toggle to unfollow
-  await toggleFollow(followerId, followingId);
+  await toggleFollow(supabase, followerId, followingId);
   return { success: true };
 }

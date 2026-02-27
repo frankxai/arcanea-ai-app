@@ -1,23 +1,20 @@
 /**
  * Like Service - Web App Wrapper
  *
- * Wraps database service for likes on creations
+ * Wraps database service with Supabase client injection
  */
 
+import { createClient } from '@/lib/supabase/server';
 import {
   toggleLike,
   getLikeStatus,
-  type Like,
 } from '@/lib/database/services/like-service';
 
-export type { Like };
-
 export async function likeCreation(userId: string, creationId: string) {
-  // Check current status
-  const isLiked = await getLikeStatus(userId, creationId);
+  const supabase = await createClient();
+  const isLiked = await getLikeStatus(supabase, userId, creationId);
 
   if (isLiked) {
-    // Already liked
     return {
       id: `${userId}-${creationId}`,
       userId,
@@ -26,8 +23,7 @@ export async function likeCreation(userId: string, creationId: string) {
     };
   }
 
-  // Toggle to like
-  const result = await toggleLike(userId, creationId, 'creation');
+  const result = await toggleLike(supabase, userId, creationId);
 
   if (result.liked) {
     return {
@@ -42,16 +38,14 @@ export async function likeCreation(userId: string, creationId: string) {
 }
 
 export async function unlikeCreation(userId: string, creationId: string) {
-  // Check current status
-  const isLiked = await getLikeStatus(userId, creationId);
+  const supabase = await createClient();
+  const isLiked = await getLikeStatus(supabase, userId, creationId);
 
   if (!isLiked) {
-    // Already not liked
     return { success: true };
   }
 
-  // Toggle to unlike
-  const result = await toggleLike(userId, creationId, 'creation');
+  const result = await toggleLike(supabase, userId, creationId);
 
   if (!result.liked) {
     return { success: true };

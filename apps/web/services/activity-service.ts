@@ -4,7 +4,7 @@
  * Wraps database service with Supabase client injection
  */
 
-import { supabaseServer } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase/server';
 import { getActivityFeed as dbGetActivityFeed } from '@/lib/database/services/activity-service';
 
 export interface ActivityFeedOptions {
@@ -15,11 +15,11 @@ export interface ActivityFeedOptions {
 export interface PersonalizedFeedResult {
   activities: Array<{
     id: string;
-    type: string;
+    action: string;
     userId: string;
-    targetId?: string;
-    targetType?: string;
-    metadata?: Record<string, unknown>;
+    entityType: string;
+    entityId?: string | null;
+    metadata?: Record<string, unknown> | null;
     createdAt: string;
   }>;
   pagination: {
@@ -35,8 +35,9 @@ export async function getPersonalizedFeed(
   options: ActivityFeedOptions = {}
 ): Promise<PersonalizedFeedResult> {
   const { page = 1, pageSize = 20 } = options;
+  const supabase = await createClient();
 
-  const result = await dbGetActivityFeed(supabaseServer, userId, {
+  const result = await dbGetActivityFeed(supabase, userId, {
     page,
     pageSize,
   });
