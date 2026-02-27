@@ -87,7 +87,7 @@ export default function ActivityPage() {
   useEffect(() => {
     if (authLoading) return;
     if (!user) {
-      setIsLoading(false);
+      router.push('/auth/login?next=/activity');
       return;
     }
 
