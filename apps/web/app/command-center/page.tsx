@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   Gauge,
@@ -215,8 +215,24 @@ function PackageTable({ tierId }: { tierId: PackageTier }) {
 export default function CommandCenterPage() {
   const { user } = useAuth();
   const [activeTier, setActiveTier] = useState<PackageTier>('foundation');
+  const [liveMilestones, setLiveMilestones] = useState<Milestone[] | null>(null);
+  const [dataSource, setDataSource] = useState<'static' | 'live'>('static');
   const isBuilder = !!user;
 
+  // Fetch live data from API (reads .arc files server-side)
+  useEffect(() => {
+    fetch('/api/command-center')
+      .then(res => res.json())
+      .then(data => {
+        if (data.source === 'filesystem' && data.milestones?.length > 0) {
+          setLiveMilestones(data.milestones);
+          setDataSource('live');
+        }
+      })
+      .catch(() => { /* static fallback — no action needed */ });
+  }, []);
+
+  const milestones = liveMilestones || MILESTONES;
   const sprintPercent = Math.round((CURRENT_SPRINT.completed / CURRENT_SPRINT.capacity) * 100);
 
   return (
@@ -257,6 +273,13 @@ export default function CommandCenterPage() {
                   Full ecosystem visibility — milestones, packages, sprint progress, and system health.
                   Everything at a glance.
                 </p>
+
+                {dataSource === 'live' && (
+                  <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#7fffd4]/10 border border-[#7fffd4]/20">
+                    <div className="w-2 h-2 rounded-full bg-[#7fffd4] animate-pulse" />
+                    <span className="text-xs font-mono text-[#7fffd4]">Live from .arc files</span>
+                  </div>
+                )}
               </div>
             </motion.div>
 
@@ -277,7 +300,7 @@ export default function CommandCenterPage() {
             </motion.div>
 
             <motion.div variants={stagger} className="grid md:grid-cols-2 gap-6">
-              {MILESTONES.map((m) => (
+              {milestones.map((m) => (
                 <MilestoneCard key={m.id} milestone={m} />
               ))}
             </motion.div>
