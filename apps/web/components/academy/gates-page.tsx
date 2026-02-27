@@ -64,6 +64,7 @@ const TEN_GATES: GateData[] = [
     glowColor: 'rgba(107,114,128,0.35)',
     description:
       'The root of all creation. Before you can build anything lasting, you must know where you stand. Lyssandria teaches the patient architecture of foundations — that every cathedral begins with a single stone placed with intention.',
+    icon: PhMountains,
   },
   {
     number: 2,
@@ -79,6 +80,7 @@ const TEN_GATES: GateData[] = [
     glowColor: 'rgba(249,115,22,0.35)',
     description:
       'The second Gate is where creativity ceases to be a discipline and becomes a current. Leyla does not create — she releases. She trusts. She lets the river find its own path through the terrain of her craft.',
+    icon: PhDrop,
   },
   {
     number: 3,
@@ -94,6 +96,7 @@ const TEN_GATES: GateData[] = [
     glowColor: 'rgba(239,68,68,0.35)',
     description:
       'Draconia burns away everything that is not the work. At the Fire Gate, potential becomes action, hesitation becomes momentum, and the creator discovers the terrifying freedom of full commitment.',
+    icon: PhFlame,
   },
   {
     number: 4,
@@ -109,6 +112,7 @@ const TEN_GATES: GateData[] = [
     glowColor: 'rgba(34,197,94,0.35)',
     description:
       'The Heart Gate is where creation stops being about the creator and becomes about the created. Maylinn teaches that the most powerful work is the work that heals — yourself, your audience, the living world.',
+    icon: PhHeart,
   },
   {
     number: 5,
@@ -124,6 +128,7 @@ const TEN_GATES: GateData[] = [
     glowColor: 'rgba(6,182,212,0.35)',
     description:
       'At the Voice Gate, the creator discovers that their unique perspective is itself the gift. Alera teaches the courage to speak when silence would be safer, and the clarity to know what is genuinely yours to say.',
+    icon: PhWind,
   },
   {
     number: 6,
@@ -139,6 +144,7 @@ const TEN_GATES: GateData[] = [
     glowColor: 'rgba(139,92,246,0.35)',
     description:
       'Lyria sees what others cannot — the hidden patterns beneath the surface of things, the emerging forms before they take shape, the deep currents that govern what rises and what recedes. Her creations are portals.',
+    icon: PhEye,
   },
   {
     number: 7,
@@ -154,6 +160,7 @@ const TEN_GATES: GateData[] = [
     glowColor: 'rgba(255,215,0,0.35)',
     description:
       'Aiyami has integrated all aspects of the creative path. At the Crown Gate, the creator no longer creates to express — they transmit. Something larger moves through them: wisdom, light, transcendent understanding.',
+    icon: PhCrown,
   },
   {
     number: 8,
@@ -169,6 +176,7 @@ const TEN_GATES: GateData[] = [
     glowColor: 'rgba(168,85,247,0.35)',
     description:
       'Elara is the master of seeing from every angle simultaneously. The Shift Gate teaches that creative breakthroughs come from releasing attachment to a single viewpoint — every assumption released opens a new dimension.',
+    icon: PhLightning,
   },
   {
     number: 9,
@@ -200,6 +208,7 @@ const TEN_GATES: GateData[] = [
     glowColor: 'rgba(255,255,255,0.25)',
     description:
       'At the Source Gate, the boundary between creator and creation dissolves. Shinkami exists at the point where all creation begins and to which all creation returns. To open this Gate is to become a living channel.',
+    icon: PhCircle,
   },
 ];
 
