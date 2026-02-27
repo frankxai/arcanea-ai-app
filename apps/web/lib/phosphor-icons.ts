@@ -1,3 +1,5 @@
+'use client';
+
 /**
  * Phosphor Icons Compatibility Layer
  *
@@ -104,7 +106,7 @@ import {
   Infinity as PhosphorInfinity,
   Info,
   Keyboard,
-  Layers,
+  Stack as Layers,
   Leaf,
   Lightbulb,
   Lightning,
@@ -404,6 +406,10 @@ export const PhWrench = Wrench;
 export const PhX = X;
 export const PhYoutubeLogo = YoutubeLogo;
 export const PhZap = Lightning;
+
+// Lucide-style aliases (some files use Lucide naming conventions)
+export const Sparkles = Sparkle;
+export const Zap = Lightning;
 
 // Also export the fallback type for external use
 export type { IconComponent as PhosphorIcon };
