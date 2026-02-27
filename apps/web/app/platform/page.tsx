@@ -635,7 +635,7 @@ export default function PlatformPage() {
                 Ready to Begin?
               </h2>
               <p className="text-text-secondary font-body leading-relaxed mb-8">
-                Join thousands of creators on the journey through the Ten Gates.
+                Begin your journey through the Ten Gates.
                 Your Guardian awaits.
               </p>
               <div className="flex flex-wrap justify-center gap-4">

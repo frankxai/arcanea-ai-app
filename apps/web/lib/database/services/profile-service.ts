@@ -25,8 +25,11 @@ export async function getProfileStats(
     supabase.from('creations').select('id', { count: 'exact', head: true }).eq('user_id', userId),
     supabase.from('follows').select('follower_id', { count: 'exact', head: true }).eq('following_id', userId),
     supabase.from('follows').select('following_id', { count: 'exact', head: true }).eq('follower_id', userId),
-    supabase.from('likes').select('user_id', { count: 'exact', head: true })
-      .in('creation_id', supabase.from('creations').select('id').eq('user_id', userId) as any),
+    supabase.from('creations').select('id').eq('user_id', userId).then(({ data: userCreations }) => {
+      const ids = (userCreations ?? []).map((c: { id: string }) => c.id);
+      if (ids.length === 0) return { count: 0, data: null, error: null, status: 200, statusText: 'OK' } as const;
+      return supabase.from('likes').select('user_id', { count: 'exact', head: true }).in('creation_id', ids);
+    }),
   ])
 
   return {

@@ -482,8 +482,8 @@ export default function PricingPage() {
                 Ready to begin your journey?
               </h2>
               <p className="text-lg text-text-secondary mb-10 max-w-2xl mx-auto">
-                Join thousands of creators who have discovered the power of the
-                Luminor Intelligence System.
+                Discover the Luminor Intelligence System. Your journey through
+                the Ten Gates begins here.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Link

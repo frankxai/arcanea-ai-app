@@ -559,8 +559,8 @@ export default function BlogPage() {
                 Stay in the Loop
               </h3>
               <p className="text-text-secondary max-w-md mx-auto mb-6">
-                Get notified when new articles drop. Join thousands of creators
-                learning from Arcanea.
+                Get notified when new articles drop. Wisdom from the Arcanea
+                Library, delivered to your inbox.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
                 <input
