@@ -2,6 +2,7 @@
  * Shared types and constants for the Creation Studio.
  */
 
+import type React from "react";
 import {
   Pen,
   Image,
