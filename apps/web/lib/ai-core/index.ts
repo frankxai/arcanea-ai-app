@@ -1,5 +1,11 @@
 import { google } from '@ai-sdk/google';
-import { streamText, generateText, type LanguageModel, type CoreMessage } from 'ai';
+import { streamText, generateText, type LanguageModel } from 'ai';
+
+// CoreMessage was removed in AI SDK v6 — define locally
+type CoreMessage = {
+  role: 'system' | 'user' | 'assistant' | 'tool';
+  content: string | Array<{ type: string; [key: string]: unknown }>;
+};
 import type {
   GeminiConfig,
   ChatMessage,
