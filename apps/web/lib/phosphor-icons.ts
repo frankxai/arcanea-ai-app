@@ -38,7 +38,7 @@ export {
   Spinner, Spiral, SplitHorizontal, SquaresFour, Stack, Star, Sun, Sword,
   Tag, Target, Terminal, TextAa, TextB, TextHOne, TextHTwo, TextItalic,
   TextT, Translate, Trash, Tree, TrendDown, TrendUp, Trophy, TwitterLogo,
-  Upload, User, UserCircle, UserPlus, Users, VideoCamera, Wand, Warning,
+  Upload, User, UserCircle, UserPlus, Users, VideoCamera, Warning,
   WarningCircle, Waves, WifiHigh, WifiSlash, Wind, Wrench, X, YoutubeLogo,
   Infinity as PhosphorInfinity,
 } from '@phosphor-icons/react';

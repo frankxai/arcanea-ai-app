@@ -8,7 +8,8 @@ export const metadata: Metadata = {
 };
 
 // ─── Inline SVG Icons ───────────────────────────────────────────────────────────
-const Icons: Record<string, React.FC<React.SVGProps<SVGElement>>> = {
+type InlineSvgProps = { className?: string; style?: React.CSSProperties };
+const Icons: Record<string, React.FC<InlineSvgProps>> = {
   Gamepad2: () => (
     <svg
       className="w-6 h-6"

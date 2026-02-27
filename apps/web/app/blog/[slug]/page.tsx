@@ -7,7 +7,8 @@ interface PageProps {
 }
 
 // ─── Inline SVG Icons ───────────────────────────────────────────────────────────
-const Icons: Record<string, React.FC<React.SVGProps<SVGElement>>> = {
+type InlineSvgProps = { className?: string; style?: React.CSSProperties };
+const Icons: Record<string, React.FC<InlineSvgProps>> = {
   ArrowLeft: () => (
     <svg
       className="w-4 h-4"

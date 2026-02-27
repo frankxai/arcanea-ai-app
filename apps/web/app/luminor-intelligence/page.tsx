@@ -1,5 +1,8 @@
+import type { JSX } from "react";
 import { Metadata } from "next";
 import Link from "next/link";
+
+type SvgProps = JSX.IntrinsicElements["svg"];
 
 export const metadata: Metadata = {
   title: "Luminor Intelligence System | Arcanea",
@@ -21,7 +24,7 @@ export const metadata: Metadata = {
 
 // ─── Inline SVG Icons ────────────────────────────────────────────────────────
 
-function IconZap(props: React.SVGProps<SVGSVGElement>) {
+function IconZap(props: SvgProps) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -37,7 +40,7 @@ function IconZap(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-function IconSparkles(props: React.SVGProps<SVGSVGElement>) {
+function IconSparkles(props: SvgProps) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -53,7 +56,7 @@ function IconSparkles(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-function IconPen(props: React.SVGProps<SVGSVGElement>) {
+function IconPen(props: SvgProps) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -69,7 +72,7 @@ function IconPen(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-function IconSearch(props: React.SVGProps<SVGSVGElement>) {
+function IconSearch(props: SvgProps) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -86,7 +89,7 @@ function IconSearch(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-function IconArrowRight(props: React.SVGProps<SVGSVGElement>) {
+function IconArrowRight(props: SvgProps) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -103,7 +106,7 @@ function IconArrowRight(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-function IconEye(props: React.SVGProps<SVGSVGElement>) {
+function IconEye(props: SvgProps) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -120,7 +123,7 @@ function IconEye(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-function IconStar(props: React.SVGProps<SVGSVGElement>) {
+function IconStar(props: SvgProps) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -136,7 +139,7 @@ function IconStar(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
-function IconShield(props: React.SVGProps<SVGSVGElement>) {
+function IconShield(props: SvgProps) {
   return (
     <svg
       viewBox="0 0 24 24"
