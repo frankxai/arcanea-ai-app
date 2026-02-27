@@ -25,12 +25,12 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://arcanea.com"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://arcanea.ai"),
   title: {
-    default: "Arcanea — Where Imagination Becomes Reality",
+    default: "Arcanea — Living Intelligence for Creators",
     template: "%s | Arcanea"
   },
-  description: "Create realms, summon guardians, and build with AI. A social platform where creators manifest their visions with AI companions guided by the Ten Guardians.",
+  description: "A creative intelligence platform where creators manifest their visions. Ten Guardians, a sacred Library of 34+ texts, and tools that transform imagination into reality.",
   keywords: ["AI", "creativity", "world building", "guardians", "fantasy", "social platform", "creation", "Lumina", "Nero"],
   authors: [{ name: "Arcanea" }],
   creator: "Arcanea",
@@ -38,22 +38,22 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "/",
-    title: "Arcanea — Where Imagination Becomes Reality",
-    description: "Create realms, summon guardians, and build with AI.",
+    title: "Arcanea — Living Intelligence for Creators",
+    description: "A creative intelligence platform. Ten Guardians, a Library of wisdom, and tools that transform imagination into reality.",
     siteName: "Arcanea",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Arcanea — Where Imagination Becomes Reality",
+        alt: "Arcanea — Living Intelligence for Creators",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Arcanea — Where Imagination Becomes Reality",
-    description: "Create realms, summon guardians, and build with AI.",
+    title: "Arcanea — Living Intelligence for Creators",
+    description: "A creative intelligence platform. Ten Guardians, a Library of wisdom, and tools that transform imagination into reality.",
     images: ["/og-image.jpg"],
   },
   icons: {
