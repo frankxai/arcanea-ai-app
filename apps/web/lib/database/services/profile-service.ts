@@ -21,22 +21,28 @@ export async function getProfileStats(
   supabase: SupabaseClient,
   userId: string
 ): Promise<ProfileStats> {
-  const [creations, followers, following, likes] = await Promise.all([
+  const [creations, followers, following, userCreations] = await Promise.all([
     supabase.from('creations').select('id', { count: 'exact', head: true }).eq('user_id', userId),
     supabase.from('follows').select('follower_id', { count: 'exact', head: true }).eq('following_id', userId),
     supabase.from('follows').select('following_id', { count: 'exact', head: true }).eq('follower_id', userId),
-    supabase.from('creations').select('id').eq('user_id', userId).then(({ data: userCreations }) => {
-      const ids = (userCreations ?? []).map((c: { id: string }) => c.id);
-      if (ids.length === 0) return { count: 0, data: null, error: null, status: 200, statusText: 'OK' } as const;
-      return supabase.from('likes').select('user_id', { count: 'exact', head: true }).in('creation_id', ids);
-    }),
+    supabase.from('creations').select('id').eq('user_id', userId),
   ])
+
+  let likesCount = 0
+  const creationIds = (userCreations.data ?? []).map((c: { id: string }) => c.id)
+  if (creationIds.length > 0) {
+    const likes = await supabase
+      .from('likes')
+      .select('user_id', { count: 'exact', head: true })
+      .in('creation_id', creationIds)
+    likesCount = likes.count ?? 0
+  }
 
   return {
     creationsCount: creations.count ?? 0,
     followersCount: followers.count ?? 0,
     followingCount: following.count ?? 0,
-    likesReceived: likes.count ?? 0,
+    likesReceived: likesCount,
     totalViews: 0,
   }
 }
