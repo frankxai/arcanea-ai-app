@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createImagenProvider } from '@/lib/ai-core';
 import { createClient } from '@supabase/supabase-js';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 export const maxDuration = 60; // 60 seconds for image generation
 
 // Rate limiting

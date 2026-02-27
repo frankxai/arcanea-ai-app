@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
+import { useAuth } from "@/lib/auth/context";
 import {
   Pen,
   Image,
@@ -711,6 +712,7 @@ and choir — the moment a Gate opens for the first time."
 // ---------------------------------------------------------------------------
 
 export default function StudioPage() {
+  const { user } = useAuth();
   const [activeMode, setActiveMode] = useState<CreationMode>("text");
   const [selectedElement, setSelectedElement] = useState("Earth");
   const [selectedGate, setSelectedGate] = useState("Foundation");
@@ -729,21 +731,108 @@ export default function StudioPage() {
     setLuminorMessages((prev) => [...prev, { role: "user", text: userMsg }]);
     setLuminorInput("");
 
-    // Simulate AI response (placeholder until API connected)
-    setTimeout(() => {
-      setLuminorMessages((prev) => [
-        ...prev,
-        {
-          role: "luminor",
-          text: `This is where Luminor Intelligence would respond to "${userMsg}". Connect your AI key in Settings to enable real-time writing assistance, suggestions, and creative guidance powered by the ${currentMode.guardian} Guardian.`,
-        },
-      ]);
-    }, 600);
+    // Call real Luminor AI via chat API
+    (async () => {
+      try {
+        const res = await fetch('/api/ai/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            messages: [
+              { role: 'system', content: `You are ${currentMode.guardian}, a ${currentMode.element} Guardian of Arcanea. Help the creator with their ${activeMode} work. Be concise, wise, and practical. Respond in 2-3 sentences.` },
+              ...luminorMessages.slice(-6).map((m) => ({
+                role: m.role === 'luminor' ? 'assistant' : 'user',
+                content: m.text,
+              })),
+              { role: 'user', content: userMsg },
+            ],
+            luminorId: currentMode.guardian.toLowerCase(),
+          }),
+        });
+
+        if (res.ok && res.body) {
+          const reader = res.body.getReader();
+          const decoder = new TextDecoder();
+          let fullText = '';
+
+          setLuminorMessages((prev) => [...prev, { role: 'luminor', text: '' }]);
+
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            fullText += decoder.decode(value, { stream: true });
+            setLuminorMessages((prev) => {
+              const updated = [...prev];
+              updated[updated.length - 1] = { role: 'luminor', text: fullText };
+              return updated;
+            });
+          }
+        } else {
+          setLuminorMessages((prev) => [
+            ...prev,
+            { role: 'luminor', text: `I sense your creative energy, but my connection is limited right now. Try again in a moment, or begin writing — the ${currentMode.element} element flows through your work.` },
+          ]);
+        }
+      } catch {
+        setLuminorMessages((prev) => [
+          ...prev,
+          { role: 'luminor', text: `The ${currentMode.element} flows through all creation. Begin writing, and let the work reveal its own wisdom.` },
+        ]);
+      }
+    })();
   }, [luminorInput, currentMode.guardian]);
 
-  const handleManifest = useCallback(() => {
-    // Placeholder action
-  }, []);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveMessage, setSaveMessage] = useState('');
+
+  const handleManifest = useCallback(async () => {
+    if (!textContent.trim() && activeMode === 'text') {
+      setSaveMessage('Write something first to manifest it.');
+      setTimeout(() => setSaveMessage(''), 3000);
+      return;
+    }
+
+    setIsSaving(true);
+    setSaveMessage('');
+
+    if (!user) {
+      setSaveMessage('Sign in to save your creations.');
+      setIsSaving(false);
+      setTimeout(() => setSaveMessage(''), 3000);
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/creations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: user.id,
+          title: textContent.slice(0, 100).trim() || `${activeMode} creation`,
+          description: textContent.slice(0, 500).trim(),
+          content: { body: textContent, mode: activeMode },
+          type: activeMode === 'text' ? 'text' : activeMode === 'image' ? 'image' : activeMode === 'code' ? 'code' : 'mixed',
+          status: 'draft',
+          visibility: 'private',
+          element: selectedElement as 'Fire' | 'Water' | 'Earth' | 'Wind' | 'Void' | 'Spirit',
+          gate: selectedGate as 'Foundation' | 'Flow' | 'Fire' | 'Heart' | 'Voice' | 'Sight' | 'Crown' | 'Shift' | 'Unity' | 'Source',
+          guardian: currentMode.guardian,
+        }),
+      });
+
+      if (res.ok) {
+        setSaveMessage('Creation manifested! Saved as draft.');
+      } else {
+        const data = await res.json().catch(() => ({}));
+        setSaveMessage(data.error?.message || 'Sign in to save creations.');
+      }
+    } catch {
+      setSaveMessage('Could not save. Check your connection.');
+    } finally {
+      setIsSaving(false);
+      setTimeout(() => setSaveMessage(''), 4000);
+    }
+  }, [textContent, activeMode, selectedElement, selectedGate, currentMode.guardian, user]);
 
   // Sync element/gate when changing mode
   const handleModeChange = useCallback((mode: CreationMode) => {
@@ -954,9 +1043,14 @@ export default function StudioPage() {
             Settings
           </button>
 
+          {saveMessage && (
+            <span className="text-xs text-atlantean-teal-aqua animate-pulse">{saveMessage}</span>
+          )}
+
           <button
             onClick={handleManifest}
-            className="group relative px-6 py-2.5 rounded-xl text-sm font-semibold transition-all overflow-hidden"
+            disabled={isSaving}
+            className="group relative px-6 py-2.5 rounded-xl text-sm font-semibold transition-all overflow-hidden disabled:opacity-50"
             style={{
               background: `linear-gradient(135deg, #7fffd4, ${currentMode.elementColor}cc, #7fffd4)`,
               backgroundSize: "200% 200%",

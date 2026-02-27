@@ -217,10 +217,7 @@ export default function LoginPage() {
       }
 
       const supabase = createClient();
-      const origin =
-        window.location.origin ||
-        process.env.NEXT_PUBLIC_APP_URL ||
-        "http://localhost:3001";
+      const origin = window.location.origin;
       const callbackUrl = new URL("/auth/callback", origin);
       callbackUrl.searchParams.set("next", nextPath);
 

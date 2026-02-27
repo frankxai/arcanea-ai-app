@@ -47,10 +47,7 @@ export default function SignupPage() {
       }
 
       const supabase = createClient();
-      const origin =
-        window.location.origin ||
-        process.env.NEXT_PUBLIC_APP_URL ||
-        'http://localhost:3001';
+      const origin = window.location.origin;
       const emailRedirectTo = new URL('/auth/callback', origin);
       emailRedirectTo.searchParams.set('next', '/welcome');
 
@@ -91,10 +88,7 @@ export default function SignupPage() {
       }
 
       const supabase = createClient();
-      const origin =
-        window.location.origin ||
-        process.env.NEXT_PUBLIC_APP_URL ||
-        'http://localhost:3001';
+      const origin = window.location.origin;
       const callbackUrl = new URL('/auth/callback', origin);
       callbackUrl.searchParams.set('next', '/welcome');
 
