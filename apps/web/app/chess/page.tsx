@@ -626,7 +626,7 @@ export default function ChessPage() {
                 <h3 className="font-display font-semibold">Analysis</h3>
               </div>
               <p className="text-sm text-text-secondary mb-4">
-                Review your games with AI-powered analysis. Understand your
+                Review your games with Guardian-guided analysis. Understand your
                 mistakes and improve your strategy.
               </p>
               <Link

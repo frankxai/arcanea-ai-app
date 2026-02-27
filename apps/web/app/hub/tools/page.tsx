@@ -60,7 +60,7 @@ const TOOLS = [
   {
     id: "image",
     name: "Vision Generator",
-    description: "AI-powered image generation for visualizing your creative concepts. Powered by advanced models.",
+    description: "Image generation for visualizing your creative concepts. Guided by elemental archetypes.",
     status: "coming",
     icon: "🖼️",
     color: "#10B981",

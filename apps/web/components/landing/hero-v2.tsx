@@ -195,7 +195,7 @@ export function HeroV2({ stats }: HeroV2Props) {
           >
             <div className="flex items-center gap-2">
               <PhShield className="w-4 h-4 text-atlantean-teal-aqua" />
-              <span>Enterprise-grade security</span>
+              <span>Private &amp; secure</span>
             </div>
             <div className="flex items-center gap-2">
               <PhLightning className="w-4 h-4 text-gold-bright" />
@@ -203,7 +203,7 @@ export function HeroV2({ stats }: HeroV2Props) {
             </div>
             <div className="flex items-center gap-2">
               <PhStar className="w-4 h-4 text-creation-prism-purple" />
-              <span>10k+ creators</span>
+              <span>10 Guardian archetypes</span>
             </div>
           </motion.div>
         </div>
@@ -304,8 +304,8 @@ export function HeroV2({ stats }: HeroV2Props) {
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 4, repeat: Infinity }}
           >
-            <span className="text-atlantean-teal-aqua">+2.5k</span>
-            <span className="text-text-muted ml-1">this week</span>
+            <span className="text-atlantean-teal-aqua">34+</span>
+            <span className="text-text-muted ml-1">sacred texts</span>
           </motion.div>
 
           <motion.div
@@ -318,7 +318,7 @@ export function HeroV2({ stats }: HeroV2Props) {
                 <PhStar key={star} className="w-3 h-3 fill-gold-bright text-gold-bright" />
               ))}
             </div>
-            <span className="text-text-muted text-xs">4.9 rating</span>
+            <span className="text-text-muted text-xs">7 Wisdoms</span>
           </motion.div>
         </motion.div>
       </motion.div>

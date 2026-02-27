@@ -74,7 +74,7 @@ const QUICK_START = [
 const INTEGRATIONS = [
   {
     name: "VS Code",
-    description: "AI-powered coding assistant in your editor",
+    description: "Guardian-guided coding assistant in your editor",
     icon: "💜",
     status: "Available",
     link: "#",
