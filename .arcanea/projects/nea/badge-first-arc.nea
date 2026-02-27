@@ -1,0 +1,29 @@
+---
+nea_version: 1
+id: arcanea-badge-first-arc
+type: badge
+title: "First Arc Complete"
+description: "Completed the first Arc sprint cycle in the Arcanea PM system"
+created: 2026-02-27
+creator: frankx
+rarity: uncommon
+element: earth
+gate: 1
+guardian: Lyssandria
+origin_project: arcanea
+origin_sprint: arc-2026-w09
+chain: null
+minted: false
+image: null
+colors: ["#2d5016", "#7fffd4", "#ffd700"]
+---
+
+# First Arc Complete
+
+The Arc turns for the first time. Potential became Manifestation.
+You tracked your work not in someone else's SaaS, but in your own files,
+in your own repo, owned forever.
+
+Lyssandria, Guardian of the Foundation Gate, marks this beginning.
+
+> "Every great system starts with a single file written with intention."

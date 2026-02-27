@@ -1,0 +1,542 @@
+"use client";
+
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useTransform,
+  useMotionValue,
+  useMotionTemplate,
+} from "framer-motion";
+import Link from "next/link";
+import { useRef, useState, useEffect } from "react";
+import {
+  PhSparkle,
+  PhStar,
+  PhCrown,
+  PhHeart,
+  PhEye,
+  PhMagicWand,
+  PhGlobe,
+  PhLightning,
+  PhArrowRight,
+  PhCompass,
+} from "@phosphor-icons/react";
+
+// ---------------------------------------------------------------------------
+// Types
+// ---------------------------------------------------------------------------
+
+interface HeroPremiumProps {
+  stats: {
+    luminors: number;
+    wisdoms: number;
+    collections: number;
+    words: number;
+  };
+}
+
+interface Phrase {
+  prefix: string;
+  gradientClass: string;
+  suffix: string;
+}
+
+// ---------------------------------------------------------------------------
+// Phrase data
+// ---------------------------------------------------------------------------
+
+const PHRASES: Phrase[] = [
+  { prefix: "Build",     gradientClass: "text-gradient-crystal", suffix: "your Universe."     },
+  { prefix: "Create",    gradientClass: "text-gradient-brand",   suffix: "your Luminor."      },
+  { prefix: "Design",    gradientClass: "text-gradient-gold",    suffix: "your Intelligence." },
+  { prefix: "Manifest",  gradientClass: "text-gradient-fire",    suffix: "your Mythology."    },
+  { prefix: "Architect", gradientClass: "text-gradient-cosmic",  suffix: "your Future."       },
+];
+
+const PHRASE_INTERVAL_MS = 2500;
+
+// ---------------------------------------------------------------------------
+// Sub-components
+// ---------------------------------------------------------------------------
+
+/**
+ * MagneticButton — subtle magnetic pull toward the cursor.
+ */
+function MagneticButton({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  const ref = useRef<HTMLButtonElement>(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouse = (e: React.MouseEvent) => {
+    if (!ref.current) return;
+    const { clientX, clientY } = e;
+    const { left, top, width, height } = ref.current.getBoundingClientRect();
+    const x = clientX - (left + width / 2);
+    const y = clientY - (top + height / 2);
+    setPosition({ x: x * 0.3, y: y * 0.3 });
+  };
+
+  const reset = () => setPosition({ x: 0, y: 0 });
+
+  return (
+    <motion.button
+      ref={ref}
+      className={className}
+      onMouseMove={handleMouse}
+      onMouseLeave={reset}
+      animate={{ x: position.x, y: position.y }}
+      transition={{ type: "spring", stiffness: 150, damping: 15 }}
+    >
+      {children}
+    </motion.button>
+  );
+}
+
+/**
+ * GlowingOrb — drifting ambient colour blob.
+ */
+function GlowingOrb({
+  size = 300,
+  color = "#7fffd4",
+  delay = 0,
+}: {
+  size?: number;
+  color?: string;
+  delay?: number;
+}) {
+  return (
+    <motion.div
+      className="absolute rounded-full blur-[80px] pointer-events-none"
+      style={{
+        width: size,
+        height: size,
+        background: `radial-gradient(circle, ${color}40 0%, transparent 70%)`,
+      }}
+      animate={{
+        x: [0, 50, 0, -30, 0],
+        y: [0, -40, 0, 30, 0],
+        scale: [1, 1.1, 1, 0.9, 1],
+      }}
+      transition={{
+        duration: 15,
+        repeat: Infinity,
+        ease: "easeInOut",
+        delay,
+      }}
+    />
+  );
+}
+
+/**
+ * FloatingElement — slow-floating icon in the background.
+ */
+function FloatingElement({
+  icon: Icon,
+  delay = 0,
+  x = "10%",
+  y = "20%",
+}: {
+  icon: React.ComponentType<{ size?: number; className?: string }>;
+  delay?: number;
+  x?: string;
+  y?: string;
+}) {
+  return (
+    <motion.div
+      className="absolute opacity-20 pointer-events-none"
+      style={{ left: x, top: y }}
+      animate={{ y: [0, -20, 0], rotate: [0, 10, -10, 0] }}
+      transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay }}
+    >
+      <Icon size={32} className="text-crystal" />
+    </motion.div>
+  );
+}
+
+/**
+ * AnimatedCounter — counts up from 0 to `end` with ease-out quart.
+ */
+function AnimatedCounter({
+  end,
+  suffix = "",
+  duration = 2000,
+}: {
+  end: number;
+  suffix?: string;
+  duration?: number;
+}) {
+  const [count, setCount] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setHasStarted(true), 500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!hasStarted) return;
+    let startTime: number | undefined;
+    const step = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 4);
+      setCount(Math.floor(eased * end));
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, [end, duration, hasStarted]);
+
+  return (
+    <span>
+      {count.toLocaleString()}
+      {suffix}
+    </span>
+  );
+}
+
+/**
+ * RotatingPhrase — cycles through PHRASES with slide-up/slide-in transitions.
+ *
+ * Exit:  y → -30, opacity → 0  (0.4 s)
+ * Enter: y  30 → 0, opacity → 1 (0.5 s)
+ */
+function RotatingPhrase() {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(
+      () => setIndex((prev) => (prev + 1) % PHRASES.length),
+      PHRASE_INTERVAL_MS
+    );
+    return () => clearInterval(id);
+  }, []);
+
+  const phrase = PHRASES[index];
+
+  return (
+    <div className="relative overflow-hidden" style={{ minHeight: "1.1em" }}>
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.span
+          key={index}
+          className="inline-block"
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -30, opacity: 0 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <span className={phrase.gradientClass}>{phrase.prefix}</span>
+          <span className="text-text-primary"> {phrase.suffix}</span>
+        </motion.span>
+      </AnimatePresence>
+    </div>
+  );
+}
+
+/**
+ * LivingWatermark — a faint "LIVING" text that drifts slowly in the background.
+ */
+function LivingWatermark() {
+  return (
+    <motion.div
+      className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden"
+      aria-hidden={true}
+    >
+      <motion.span
+        className="text-[20vw] font-display font-bold uppercase tracking-[0.3em] text-white/[0.018]"
+        animate={{
+          x: [0, 30, 0, -20, 0],
+          y: [0, -20, 0, 15, 0],
+          rotate: [-2, 1, -1, 2, -2],
+        }}
+        transition={{
+          duration: 30,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      >
+        LIVING
+      </motion.span>
+    </motion.div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Main component
+// ---------------------------------------------------------------------------
+
+export function HeroPremium({ stats }: HeroPremiumProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  });
+
+  const scrollY   = useTransform(scrollYProgress, [0, 1], [0, 300]);
+  const opacity   = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const scale     = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
+
+  // Mouse parallax
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const { innerWidth, innerHeight } = window;
+      mouseX.set((e.clientX - innerWidth  / 2) / 20);
+      mouseY.set((e.clientY - innerHeight / 2) / 20);
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [mouseX, mouseY]);
+
+  const backgroundGradient = useMotionTemplate`
+    radial-gradient(ellipse 100% 100% at 50% -30%,
+      rgba(127,255,212,0.2) 0%,
+      rgba(139,92,246,0.15) 40%,
+      rgba(255,215,0,0.1) 70%,
+      transparent 100%)
+  `;
+
+  // Stat card data
+  const statCards = [
+    {
+      icon: PhCrown,
+      value: stats.luminors,
+      label: "Intelligences",
+      gradientClass: "text-gradient-crystal",
+      suffix: "+",
+    },
+    {
+      icon: PhMagicWand,
+      value: stats.wisdoms,
+      label: "Creator Laws",
+      gradientClass: "text-gradient-gold",
+      suffix: "+",
+    },
+    {
+      icon: PhGlobe,
+      value: stats.collections,
+      label: "Collections",
+      gradientClass: "text-gradient-brand",
+      suffix: "+",
+    },
+    {
+      icon: PhLightning,
+      value: Math.round(stats.words / 1000),
+      label: "Words of Wisdom",
+      gradientClass: "text-gradient-fire",
+      suffix: "K+",
+    },
+  ] as const;
+
+  return (
+    <section
+      ref={containerRef}
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+    >
+      {/* ------------------------------------------------------------------ */}
+      {/* Animated background layer                                           */}
+      {/* ------------------------------------------------------------------ */}
+      <motion.div
+        className="absolute inset-0 -z-20"
+        style={{ background: backgroundGradient, y: scrollY }}
+      >
+        {/* Base dark fill */}
+        <div className="absolute inset-0 bg-cosmic-deep" />
+
+        {/* Subtle grid overlay */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(127,255,212,0.5) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(127,255,212,0.5) 1px, transparent 1px)
+            `,
+            backgroundSize: "60px 60px",
+          }}
+        />
+
+        {/* Glowing colour orbs */}
+        <GlowingOrb size={400} color="#7fffd4" delay={0} />
+        <GlowingOrb size={300} color="#8b5cf6" delay={2} />
+        <GlowingOrb size={250} color="#ffd700" delay={4} />
+        <GlowingOrb size={200} color="#78a6ff" delay={6} />
+
+        {/* Background floating icons */}
+        <FloatingElement icon={PhSparkle} delay={0} x="5%"  y="15%" />
+        <FloatingElement icon={PhStar}     delay={1} x="90%" y="20%" />
+        <FloatingElement icon={PhCrown}    delay={2} x="85%" y="70%" />
+        <FloatingElement icon={PhHeart}    delay={3} x="10%" y="75%" />
+        <FloatingElement icon={PhEye}      delay={4} x="50%" y="85%" />
+
+        {/* "LIVING" drift watermark */}
+        <LivingWatermark />
+      </motion.div>
+
+      {/* ------------------------------------------------------------------ */}
+      {/* Main content                                                        */}
+      {/* ------------------------------------------------------------------ */}
+      <motion.div
+        className="relative z-10 max-w-7xl mx-auto px-6 py-32 text-center"
+        style={{ opacity, scale }}
+      >
+        {/* Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full iridescent-glass mb-8"
+        >
+          <PhSparkle className="w-4 h-4 text-crystal" />
+          <span className="text-sm font-medium text-crystal">
+            Living Intelligence
+          </span>
+          <motion.span
+            className="w-2 h-2 rounded-full bg-crystal"
+            animate={{ opacity: [1, 0.3, 1], scale: [1, 0.8, 1] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </motion.div>
+
+        {/* Rotating H1 */}
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          className="text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-6 leading-[0.95]"
+          aria-live="polite"
+        >
+          <RotatingPhrase />
+        </motion.h1>
+
+        {/* Subtitle */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="max-w-2xl mx-auto mb-12 space-y-2"
+        >
+          <p className="text-xl text-text-secondary leading-relaxed">
+            Intelligence that grows as you create.
+          </p>
+          <p className="text-base text-text-muted leading-relaxed">
+            Your universe, powered by intelligence that knows your work.
+          </p>
+        </motion.div>
+
+        {/* CTA Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
+        >
+          {/* Primary CTA */}
+          <MagneticButton>
+            <Link
+              href="/studio"
+              className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-crystal to-brand-primary text-cosmic-deep font-display font-bold text-lg shadow-glow-md hover:shadow-glow-lg transition-all"
+            >
+              <PhMagicWand className="w-5 h-5" />
+              Begin Your Universe
+              <PhArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              {/* Shine sweep */}
+              <motion.div
+                className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none"
+                initial={{ x: "-100%" }}
+                whileHover={{ x: "100%" }}
+                transition={{ duration: 0.6 }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12" />
+              </motion.div>
+            </Link>
+          </MagneticButton>
+
+          {/* Secondary CTA */}
+          <MagneticButton>
+            <Link
+              href="/luminors"
+              className="group inline-flex items-center gap-3 px-8 py-4 rounded-2xl glass border border-white/10 hover:border-crystal/30 text-text-primary font-display font-semibold text-lg transition-all"
+            >
+              <PhCompass className="w-5 h-5" />
+              Explore the Intelligences
+            </Link>
+          </MagneticButton>
+        </motion.div>
+
+        {/* Stats bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.7 }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto"
+        >
+          {statCards.map((stat, index) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
+              className="group p-6 rounded-3xl glass border border-white/5 hover:border-white/10 hover-lift transition-all"
+            >
+              <stat.icon className="w-6 h-6 mx-auto mb-3 opacity-80 text-crystal" />
+              <div className={`text-3xl md:text-4xl font-display font-bold mb-1 ${stat.gradientClass}`}>
+                <AnimatedCounter
+                  end={stat.value}
+                  suffix={stat.suffix}
+                />
+              </div>
+              <div className="text-sm text-text-muted font-medium">
+                {stat.label}
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          aria-hidden={true}
+        >
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="flex flex-col items-center gap-2 text-text-muted"
+          >
+            <span className="text-xs uppercase tracking-widest">
+              Scroll to explore
+            </span>
+            <div className="w-6 h-10 rounded-full border-2 border-current flex items-start justify-center p-2">
+              <motion.div
+                className="w-1.5 h-1.5 rounded-full bg-current"
+                animate={{ y: [0, 12, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+            </div>
+          </motion.div>
+        </motion.div>
+      </motion.div>
+
+      {/* Mouse-follower glow */}
+      <motion.div
+        className="fixed w-96 h-96 rounded-full pointer-events-none -z-10 blur-3xl"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(127,255,212,0.15) 0%, transparent 70%)",
+          x: mouseX,
+          y: mouseY,
+        }}
+        aria-hidden={true}
+      />
+    </section>
+  );
+}

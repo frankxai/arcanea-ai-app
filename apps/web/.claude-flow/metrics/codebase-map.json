@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-02-27T15:57:29.379Z",
+  "projectRoot": "/mnt/c/Users/frank/Arcanea/apps/web",
+  "structure": {
+    "hasPackageJson": true,
+    "hasTsConfig": true,
+    "hasClaudeConfig": false,
+    "hasClaudeFlow": true
+  },
+  "scannedAt": 1772207849385
+}

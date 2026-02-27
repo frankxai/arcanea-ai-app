@@ -1,0 +1,118 @@
+name: Publish Packages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'packages/**'
+      - '.changeset/**'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: 'https://registry.npmjs.org'
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Build all packages
+        run: pnpm turbo run build --filter='./packages/*' --filter='!@arcanea/chrome-extension'
+
+      - name: Run tests
+        run: pnpm turbo run test --filter='./packages/*' --continue
+
+      - name: Create Release PR or Publish
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          publish: pnpm changeset publish
+          version: pnpm changeset version
+          title: 'chore: version packages'
+          commit: 'chore: version packages'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  vscode-extension:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Build @arcanea/os dependency
+        run: pnpm --filter @arcanea/os run build
+
+      - name: Build VS Code extension
+        working-directory: packages/vscode
+        run: |
+          npx esbuild ./src/extension.ts \
+            --bundle \
+            --outfile=dist/extension.js \
+            --external:vscode \
+            --format=cjs \
+            --platform=node \
+            --minify
+
+      - name: Package VSIX
+        working-directory: packages/vscode
+        run: npx @vscode/vsce package --no-dependencies
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: arcanea-code-vsix
+          path: packages/vscode/*.vsix
+
+  chrome-extension:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Build dependencies
+        run: |
+          pnpm --filter @arcanea/os run build
+          pnpm --filter @arcanea/extension-core run build
+
+      - name: Build Chrome extension
+        working-directory: packages/chrome-extension
+        run: node build.mjs
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: arcanea-chrome-extension
+          path: packages/chrome-extension/dist/
