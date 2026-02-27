@@ -3,7 +3,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
-import { ArrowRight, Sparkles, Check } from '@/lib/phosphor-icons';
+import { PhArrowRight, PhSparkle, PhCheck } from '@/lib/phosphor-icons';
 
 const BENEFITS = [
   "Free to start — your universe begins now",
@@ -87,7 +87,7 @@ export function CTASection() {
                           className="flex items-center gap-3"
                         >
                           <div className="w-5 h-5 rounded-full bg-atlantean-teal-aqua/20 flex items-center justify-center">
-                            <Check className="w-3 h-3 text-atlantean-teal-aqua" />
+                            <PhCheck className="w-3 h-3 text-atlantean-teal-aqua" />
                           </div>
                           <span className="text-text-secondary">{benefit}</span>
                         </motion.li>
@@ -103,7 +103,7 @@ export function CTASection() {
                         <div className="absolute inset-0 bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-light" />
                         <span className="relative z-10 text-cosmic-deep flex items-center gap-2">
                           Start Creating Free
-                          <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                          <PhArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </span>
                       </Link>
 
@@ -222,7 +222,7 @@ export function CTASection() {
                       }}
                       transition={{ duration: 3, repeat: Infinity }}
                     >
-                      <Sparkles className="w-12 h-12 text-white" />
+                      <PhSparkle className="w-12 h-12 text-white" />
                     </motion.div>
                   </div>
                 </motion.div>

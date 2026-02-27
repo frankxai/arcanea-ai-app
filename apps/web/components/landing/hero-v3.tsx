@@ -10,13 +10,13 @@ import {
 import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
 import {
-  ArrowRight,
-  Play,
-  X,
-  Sparkles,
-  Star,
-  Zap,
-  CaretDown,
+  PhArrowRight,
+  PhPlay,
+  PhX,
+  PhSparkle,
+  PhStar,
+  PhLightning,
+  PhCaretDown,
 } from '@/lib/phosphor-icons';
 
 interface HeroV3Props {
@@ -306,7 +306,7 @@ export function HeroV3({ stats }: HeroV3Props) {
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-atlantean-teal-aqua/50 blur-xl -z-10" />
                 <span className="relative z-10 text-cosmic-deep flex items-center gap-2">
                   Enter the Academy
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <PhArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </span>
               </Link>
 
@@ -318,7 +318,7 @@ export function HeroV3({ stats }: HeroV3Props) {
                 className="group px-10 py-5 rounded-2xl border border-white/20 backdrop-blur-sm hover:bg-white/5 hover:border-white/30 transition-all flex items-center gap-4"
               >
                 <div className="relative w-12 h-12 rounded-xl bg-gradient-to-br from-white/10 to-white/5 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Play className="w-5 h-5 ml-0.5 text-white" />
+                  <PhPlay className="w-5 h-5 ml-0.5 text-white" />
                   {/* Pulse ring */}
                   <motion.div
                     className="absolute inset-0 rounded-xl border border-white/30"
@@ -341,7 +341,7 @@ export function HeroV3({ stats }: HeroV3Props) {
             >
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-atlantean-teal-aqua/10 flex items-center justify-center">
-                  <Zap className="w-5 h-5 text-atlantean-teal-aqua" />
+                  <PhLightning className="w-5 h-5 text-atlantean-teal-aqua" />
                 </div>
                 <div className="text-left">
                   <div className="text-2xl font-bold text-white">
@@ -355,7 +355,7 @@ export function HeroV3({ stats }: HeroV3Props) {
 
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-gold-bright/10 flex items-center justify-center">
-                  <Star className="w-5 h-5 text-gold-bright" />
+                  <PhStar className="w-5 h-5 text-gold-bright" />
                 </div>
                 <div className="text-left">
                   <div className="text-2xl font-bold text-white">
@@ -369,7 +369,7 @@ export function HeroV3({ stats }: HeroV3Props) {
 
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-creation-prism-purple/10 flex items-center justify-center">
-                  <Sparkles className="w-5 h-5 text-creation-prism-purple" />
+                  <PhSparkle className="w-5 h-5 text-creation-prism-purple" />
                 </div>
                 <div className="text-left">
                   <div className="text-2xl font-bold text-white">
@@ -402,7 +402,7 @@ export function HeroV3({ stats }: HeroV3Props) {
             <span className="text-xs text-text-muted uppercase tracking-widest">
               Explore
             </span>
-            <CaretDown className="w-5 h-5 text-text-muted" aria-hidden="true" />
+            <PhCaretDown className="w-5 h-5 text-text-muted" aria-hidden="true" />
           </motion.button>
         </motion.div>
       </section>
@@ -430,14 +430,14 @@ export function HeroV3({ stats }: HeroV3Props) {
                 aria-label="Close video"
                 className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
               >
-                <X className="w-5 h-5" aria-hidden="true" />
+                <PhX className="w-5 h-5" aria-hidden="true" />
               </button>
 
               {/* Placeholder for video - replace with actual video embed */}
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center">
                   <div className="w-20 h-20 rounded-full bg-atlantean-teal-aqua/20 flex items-center justify-center mx-auto mb-4">
-                    <Play className="w-10 h-10 text-atlantean-teal-aqua ml-1" />
+                    <PhPlay className="w-10 h-10 text-atlantean-teal-aqua ml-1" />
                   </div>
                   <p className="text-text-secondary">Demo video coming soon</p>
                 </div>

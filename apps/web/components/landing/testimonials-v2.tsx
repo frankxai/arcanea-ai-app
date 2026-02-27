@@ -154,7 +154,7 @@ export function TestimonialsV2() {
                   {/* Stars */}
                   <div className="flex items-center justify-center gap-1 mb-6">
                     {[...Array(activeTestimonial.rating)].map((_, i) => (
-                      <Star
+                      <PhStar
                         key={i}
                         className="w-5 h-5 text-gold-bright fill-gold-bright"
                       />
