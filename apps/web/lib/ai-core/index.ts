@@ -1,11 +1,5 @@
 import { google } from '@ai-sdk/google';
 import { streamText, generateText, type LanguageModel } from 'ai';
-
-// CoreMessage was removed in AI SDK v6 — define locally
-type CoreMessage = {
-  role: 'system' | 'user' | 'assistant' | 'tool';
-  content: string | Array<{ type: string; [key: string]: unknown }>;
-};
 import type {
   GeminiConfig,
   ChatMessage,
@@ -36,9 +30,8 @@ export const createGeminiChatProvider = (config: GeminiConfig) => {
     streamText: (prompt: string, options: ChatOptions): StreamTextResult => {
       const { systemPrompt, images, history, temperature, maxTokens } = options;
 
-      // Convert history to Vercel AI SDK format if needed
-      // The SDK expects messages: CoreMessage[]
-      const messages: CoreMessage[] = [
+      // Build messages array for AI SDK v6 (expects ModelMessage[])
+      const messages = [
         ...(history?.map((h: ConversationHistory) => ({
           role: h.role as 'user' | 'assistant',
           content: h.parts[0].text
@@ -54,7 +47,7 @@ export const createGeminiChatProvider = (config: GeminiConfig) => {
 
       return streamText({
         model,
-        messages,
+        messages: messages as Parameters<typeof streamText>[0]['messages'],
         system: systemPrompt,
         temperature: temperature ?? config.temperature ?? 0.7,
         maxOutputTokens: maxTokens ?? config.maxTokens ?? 8192,
@@ -64,7 +57,7 @@ export const createGeminiChatProvider = (config: GeminiConfig) => {
     chat: async (prompt: string, options: ChatOptions): Promise<ChatResponse> => {
       const { systemPrompt, images, history, temperature, maxTokens } = options;
 
-      const messages: CoreMessage[] = [
+      const messages = [
         ...(history?.map((h: ConversationHistory) => ({
           role: h.role as 'user' | 'assistant',
           content: h.parts[0].text
@@ -80,7 +73,7 @@ export const createGeminiChatProvider = (config: GeminiConfig) => {
 
       const result = await generateText({
         model,
-        messages,
+        messages: messages as Parameters<typeof generateText>[0]['messages'],
         system: systemPrompt,
         temperature: temperature ?? config.temperature ?? 0.7,
         maxOutputTokens: maxTokens ?? config.maxTokens ?? 8192,
