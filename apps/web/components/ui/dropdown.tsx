@@ -271,7 +271,7 @@ const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
         >
           {trigger}
           {showChevron && (
-            <ChevronDown
+            <PhCaretDown
               size={14}
               className={cn(
                 'text-text-muted transition-transform duration-200',

@@ -35,10 +35,10 @@ export function Sidebar({ activeTab, onTabChange, collapsed, onToggleCollapse }:
   const [searchQuery, setSearchQuery] = useState('')
 
   const tabs = [
-    { id: 'chat' as Tab, icon: MessageSquare, label: 'Chat' },
-    { id: 'imagine' as Tab, icon: Sparkles, label: 'Imagine' },
-    { id: 'library' as Tab, icon: BookOpen, label: 'Library' },
-    { id: 'studio' as Tab, icon: Wand2, label: 'Studio' },
+    { id: 'chat' as Tab, icon: PhChatSquare, label: 'Chat' },
+    { id: 'imagine' as Tab, icon: PhSparkle, label: 'Imagine' },
+    { id: 'library' as Tab, icon: PhBookOpen, label: 'Library' },
+    { id: 'studio' as Tab, icon: PhMagicWand, label: 'Studio' },
   ]
 
   const filteredHistory = chatHistory.filter((item) =>

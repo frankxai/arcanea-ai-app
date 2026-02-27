@@ -379,7 +379,7 @@ function WisdomCard({ wisdom, delay }: { wisdom: Wisdom; delay: number }) {
 
           {/* Voice Sample */}
           <blockquote className="relative pl-5 border-l-2 border-white/20">
-            <Quote
+            <PhQuotes
               className="absolute -left-1 -top-1 w-4 h-4 text-text-muted opacity-50"
             />
             <p className="font-crimson italic text-text-secondary leading-relaxed">
@@ -473,7 +473,7 @@ function WhenToInvokeSection() {
                     </div>
 
                     {/* Expand */}
-                    <ChevronDown
+                    <PhCaretDown
                       className={cn(
                         'w-5 h-5 text-text-muted flex-shrink-0 transition-transform duration-300',
                         isOpen && 'rotate-180',

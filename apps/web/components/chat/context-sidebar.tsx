@@ -43,10 +43,10 @@ interface ContextSidebarProps {
 }
 
 const momentIcons = {
-  breakthrough: Lightbulb,
-  milestone: Target,
-  creation: Sparkles,
-  learning: TrendingUp,
+  breakthrough: PhLightbulb,
+  milestone: PhTarget,
+  creation: PhSparkle,
+  learning: PhTrendUp,
 };
 
 const momentColors = {

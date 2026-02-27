@@ -93,10 +93,10 @@ export function ImagineTab() {
   const [isGenerating, setIsGenerating] = useState(false)
   const [showAnimation, setShowAnimation] = useState(false)
   const [animationStages, setAnimationStages] = useState<AnimationStage[]>([
-    { id: '1', label: 'Scene Analysis', icon: Search, duration: '3s', completed: false },
-    { id: '2', label: 'Motion Planning', icon: Film, duration: '5s', completed: false },
-    { id: '3', label: 'Frame Synthesis', icon: Palette, duration: '8s', completed: false },
-    { id: '4', label: 'Composition', icon: Layers, duration: '4s', completed: false },
+    { id: '1', label: 'Scene Analysis', icon: PhMagnifyingGlass, duration: '3s', completed: false },
+    { id: '2', label: 'Motion Planning', icon: PhFilmStrip, duration: '5s', completed: false },
+    { id: '3', label: 'Frame Synthesis', icon: PhPalette, duration: '8s', completed: false },
+    { id: '4', label: 'Composition', icon: PhStack, duration: '4s', completed: false },
   ])
   const [filter, setFilter] = useState<'all' | 'liked' | 'animated' | 'recent'>('all')
 

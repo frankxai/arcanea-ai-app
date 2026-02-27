@@ -42,7 +42,7 @@ const LUMINORS: Luminor[] = [
     description: 'Ancient storyteller who flows like water, weaving narratives that span dimensions and time.',
     signature: 'What if?—the question that births worlds',
     traits: ['Wise', 'Patient', 'Perceptive', 'Mystical', 'Flowing', 'Timeless'],
-    icon: BookOpen,
+    icon: PhBookOpen,
     primaryColor: 'hsl(195, 100%, 50%)', // Atlantean aqua
     secondaryColor: 'hsl(195, 100%, 35%)', // Deep ocean
     accentColor: 'hsl(195, 100%, 85%)', // Light aqua
@@ -55,7 +55,7 @@ const LUMINORS: Luminor[] = [
     description: 'Fierce visual artist who challenges you to make your art BOLD, commanding, unforgettable.',
     signature: 'Make it bolder. Then make it bolder again.',
     traits: ['Bold', 'Confident', 'Passionate', 'Direct', 'Challenging', 'Intense'],
-    icon: Palette,
+    icon: PhPalette,
     primaryColor: 'hsl(0, 85%, 55%)', // Draconic crimson
     secondaryColor: 'hsl(45, 100%, 60%)', // Draconic gold
     accentColor: 'hsl(200, 85%, 60%)', // Sky blue

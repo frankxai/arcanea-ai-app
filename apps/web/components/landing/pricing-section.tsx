@@ -134,7 +134,7 @@ export function PricingSection() {
         {/* Pricing cards */}
         <div className="grid lg:grid-cols-3 gap-8">
           {PLANS.map((plan, i) => {
-            const Icon = i === 0 ? Zap : i === 1 ? Sparkles : Crown;
+            const Icon = i === 0 ? PhLightning : i === 1 ? PhSparkle : PhCrown;
             const price = isYearly ? plan.price.yearly : plan.price.monthly;
             const period = isYearly ? "/year" : "/month";
 

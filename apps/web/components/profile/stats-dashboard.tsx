@@ -43,25 +43,25 @@ export function StatsDashboard({ stats, creations }: StatsDashboardProps) {
   // Calculate achievements
   const achievements = [
     {
-      icon: Award,
+      icon: PhTrophy,
       title: 'First Creation',
       description: 'Created your first masterpiece',
       unlocked: creations.length > 0,
     },
     {
-      icon: TrendingUp,
+      icon: PhTrendUp,
       title: '10 Creations',
       description: 'Reached 10 total creations',
       unlocked: creations.length >= 10,
     },
     {
-      icon: Sparkles,
+      icon: PhSparkle,
       title: '100 Likes',
       description: 'Received 100 likes on your work',
       unlocked: stats.total_likes_received >= 100,
     },
     {
-      icon: Calendar,
+      icon: PhCalendar,
       title: '7 Day Streak',
       description: 'Created for 7 days in a row',
       unlocked: stats.active_days_streak >= 7,

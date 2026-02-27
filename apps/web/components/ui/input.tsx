@@ -86,7 +86,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
         <div className="relative">
           {variant === 'search' && (
-            <Search
+            <PhMagnifyingGlass
               className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none"
               size={16}
               aria-hidden="true"

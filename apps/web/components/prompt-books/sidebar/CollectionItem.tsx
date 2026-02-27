@@ -59,7 +59,7 @@ export function CollectionItem({
             }}
             className="p-0.5 -ml-1 rounded hover:bg-cosmic-raised/50"
           >
-            <ChevronRight
+            <PhCaretRight
               className={cn(
                 'w-3 h-3 transition-transform',
                 expanded && 'rotate-90',
@@ -69,7 +69,7 @@ export function CollectionItem({
         )}
 
         {/* Icon */}
-        <BookOpen
+        <PhBookOpen
           className={cn(
             'w-4 h-4 flex-shrink-0',
             isActive ? 'text-brand-accent' : 'text-text-muted group-hover:text-text-secondary',

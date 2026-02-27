@@ -19,7 +19,7 @@ interface QuickActionsProps {
 }
 
 // Icon cycle for the four starters — keeps it simple and icon-import-free
-const STARTER_ICONS = [Sparkles, BookOpen, Lightbulb, Zap];
+const STARTER_ICONS = [PhSparkle, PhBookOpen, PhLightbulb, PhLightning];
 
 // Specific starter prompts per Luminor, matching their specialty
 const LUMINOR_STARTERS: Record<string, string[]> = {

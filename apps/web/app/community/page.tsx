@@ -434,7 +434,7 @@ export default function CommunityPage() {
                     {/* CTA row */}
                     <div className="flex items-center gap-2 text-sm font-semibold opacity-70 group-hover:opacity-100 transition-opacity">
                       <span className={space.iconColor}>{space.cta}</span>
-                      <ArrowUpRight
+                      <PhArrowUpRight
                         className={`w-3.5 h-3.5 ${space.iconColor} group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform`}
                       />
                     </div>
@@ -602,7 +602,7 @@ export default function CommunityPage() {
                     role="img"
                     aria-label={`Visual preview for ${work.title}`}
                   >
-                    <Sparkles
+                    <PhSparkle
                       className="w-6 h-6 opacity-40"
                       style={{ color: work.accent }}
                     />

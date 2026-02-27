@@ -20,7 +20,7 @@ interface LuminorHeaderProps {
 const academyInfo = {
   creation_light: {
     name: 'Academy of Creation & Light',
-    icon: Sparkles,
+    icon: PhSparkle,
     gradient: 'from-yellow-500 to-orange-500',
   },
   atlantean: {
@@ -30,7 +30,7 @@ const academyInfo = {
   },
   draconic: {
     name: 'Draconic Academy',
-    icon: Zap,
+    icon: PhLightning,
     gradient: 'from-red-500 to-purple-500',
   },
 };

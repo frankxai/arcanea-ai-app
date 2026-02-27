@@ -19,9 +19,9 @@ interface GenerationIndicatorProps {
 }
 
 const generationIcons = {
-  image: Image,
-  video: Video,
-  music: Music,
+  image: PhImage,
+  video: PhVideo,
+  music: PhMusicNote,
 };
 
 const generationLabels = {
