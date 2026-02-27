@@ -5,7 +5,7 @@
  * POST /api/creations - Create new creation
  */
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import { z } from 'zod';
 import { supabaseServer } from '@/lib/supabase';
 import {
@@ -18,94 +18,70 @@ import {
   handleApiError,
   parseRequestBody,
   parsePaginationParams,
-  parseBoolean,
 } from '@/lib/api-utils';
 import { VALIDATION_RULES, type CreationFilters } from '@/lib/database/types/api-responses';
 
 /**
  * GET /api/creations
  *
- * List creations with optional filters
- *
  * Query parameters:
- * - type: Creation type filter
- * - luminorId: Filter by Luminor
- * - status: Filter by status
- * - isPublic: Filter by visibility
+ * - type: text|image|video|audio|code|mixed
+ * - element: Fire|Water|Earth|Wind|Void|Spirit
+ * - gate: Foundation|Flow|Fire|Heart|Voice|Sight|Crown|Shift|Unity|Source
+ * - guardian: Lyssandria|Leyla|Draconia|Maylinn|Alera|Lyria|Aiyami|Elara|Ino|Shinkami
+ * - status: draft|published|archived
+ * - visibility: public|private|unlisted
  * - tags: Comma-separated tags
- * - dateFrom: Start date (ISO string)
- * - dateTo: End date (ISO string)
- * - sortBy: Sort field
- * - sortOrder: Sort direction (asc/desc)
- * - page: Page number
- * - pageSize: Items per page
+ * - sortBy: recent|popular|created_at|updated_at|like_count|view_count
+ * - sortOrder: asc|desc
+ * - page, pageSize
  */
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-
-    // Parse pagination
     const { page, pageSize } = parsePaginationParams(searchParams);
 
-    // Parse filters
-    const filters: CreationFilters = {
-      page,
-      pageSize,
-    };
+    const filters: CreationFilters = { page, pageSize };
 
-    // Type filter
     const type = searchParams.get('type');
-    if (type && ['image', 'music', 'video', 'text', 'multimodal'].includes(type)) {
-      filters.type = type as any;
+    if (type && ['text', 'image', 'video', 'audio', 'code', 'mixed'].includes(type)) {
+      filters.type = type as CreationFilters['type'];
     }
 
-    // Luminor ID filter
-    const luminorId = searchParams.get('luminorId');
-    if (luminorId) {
-      filters.luminorId = luminorId;
-    }
+    const element = searchParams.get('element');
+    if (element) filters.element = element as CreationFilters['element'];
 
-    // Status filter
+    const gate = searchParams.get('gate');
+    if (gate) filters.gate = gate as CreationFilters['gate'];
+
+    const guardian = searchParams.get('guardian');
+    if (guardian) filters.guardian = guardian as CreationFilters['guardian'];
+
     const status = searchParams.get('status');
-    if (status && ['draft', 'processing', 'published', 'archived'].includes(status)) {
-      filters.status = status as any;
+    if (status && ['draft', 'published', 'archived'].includes(status)) {
+      filters.status = status as CreationFilters['status'];
     }
 
-    // Visibility filter
-    const isPublicParam = searchParams.get('isPublic');
-    if (isPublicParam !== null) {
-      filters.isPublic = parseBoolean(isPublicParam, true);
+    const visibility = searchParams.get('visibility');
+    if (visibility && ['public', 'private', 'unlisted'].includes(visibility)) {
+      filters.visibility = visibility as CreationFilters['visibility'];
     }
 
-    // Tags filter
     const tagsParam = searchParams.get('tags');
     if (tagsParam) {
       filters.tags = tagsParam.split(',').map(tag => tag.trim()).filter(Boolean);
     }
 
-    // Date filters
-    const dateFrom = searchParams.get('dateFrom');
-    if (dateFrom) {
-      filters.dateFrom = dateFrom;
-    }
-
-    const dateTo = searchParams.get('dateTo');
-    if (dateTo) {
-      filters.dateTo = dateTo;
-    }
-
-    // Sort options
     const sortBy = searchParams.get('sortBy');
-    if (sortBy && ['created_at', 'updated_at', 'like_count', 'view_count'].includes(sortBy)) {
-      filters.sortBy = sortBy as any;
+    if (sortBy && ['recent', 'popular', 'created_at', 'updated_at', 'like_count', 'view_count'].includes(sortBy)) {
+      filters.sortBy = sortBy as CreationFilters['sortBy'];
     }
 
     const sortOrder = searchParams.get('sortOrder');
     if (sortOrder && ['asc', 'desc'].includes(sortOrder)) {
-      filters.sortOrder = sortOrder as any;
+      filters.sortOrder = sortOrder as CreationFilters['sortOrder'];
     }
 
-    // Fetch creations
     const result = await listCreations(supabaseServer, filters);
 
     return successResponse(result);
@@ -116,80 +92,40 @@ export async function GET(request: NextRequest) {
 
 /**
  * POST /api/creations
- *
- * Create new creation
  */
 export async function POST(request: NextRequest) {
   try {
-    // Parse request body
     const body = await parseRequestBody(request);
     if (!body) {
       return errorResponse('INVALID_INPUT', 'Invalid request body', 400);
     }
 
-    // Validate input using Zod
     const createSchema = z.object({
       userId: z.string().uuid(),
-      title: z
-        .string()
-        .min(VALIDATION_RULES.title.minLength)
-        .max(VALIDATION_RULES.title.maxLength),
+      title: z.string().min(VALIDATION_RULES.title.minLength).max(VALIDATION_RULES.title.maxLength),
       description: z.string().max(VALIDATION_RULES.description.maxLength).optional(),
-      type: z.enum(['image', 'music', 'video', 'text', 'multimodal']),
-      fileUrl: z.string().url(),
+      content: z.record(z.any()).optional(),
+      type: z.enum(['text', 'image', 'video', 'audio', 'code', 'mixed']).default('text'),
+      status: z.enum(['draft', 'published']).default('draft'),
+      visibility: z.enum(['public', 'private', 'unlisted']).default('private'),
+      element: z.enum(['Fire', 'Water', 'Earth', 'Wind', 'Void', 'Spirit']).optional(),
+      gate: z.enum(['Foundation', 'Flow', 'Fire', 'Heart', 'Voice', 'Sight', 'Crown', 'Shift', 'Unity', 'Source']).optional(),
+      guardian: z.enum(['Lyssandria', 'Leyla', 'Draconia', 'Maylinn', 'Alera', 'Lyria', 'Aiyami', 'Elara', 'Ino', 'Shinkami']).optional(),
+      tags: z.array(z.string().max(VALIDATION_RULES.tags.maxLength)).max(VALIDATION_RULES.tags.maxCount).optional(),
       thumbnailUrl: z.string().url().optional(),
-      fileSize: z.number().positive().optional(),
-      fileFormat: z.string().max(50).optional(),
-      aiTool: z.string().max(50).optional(),
-      prompt: z.string().max(5000).optional(),
-      model: z.string().max(100).optional(),
-      generationParams: z.record(z.any()).optional(),
-      seed: z.number().int().optional(),
-      metadata: z.record(z.any()).optional(),
-      status: z.enum(['draft', 'published']).optional(),
-      isPublic: z.boolean().optional(),
-      tags: z
-        .array(z.string().max(VALIDATION_RULES.tags.maxLength))
-        .max(VALIDATION_RULES.tags.maxCount)
-        .optional(),
-      categories: z.array(z.string().max(50)).max(10).optional(),
-      license: z
-        .enum([
-          'cc_by',
-          'cc_by_sa',
-          'cc_by_nc',
-          'cc_by_nc_sa',
-          'cc_by_nd',
-          'all_rights_reserved',
-          'public_domain',
-        ])
-        .optional(),
-      allowRemix: z.boolean().optional(),
-      allowCommercial: z.boolean().optional(),
+      aiModel: z.string().max(100).optional(),
+      aiPrompt: z.string().max(5000).optional(),
     });
 
     const validation = createSchema.safeParse(body);
 
     if (!validation.success) {
-      return errorResponse(
-        'VALIDATION_ERROR',
-        'Invalid input',
-        400,
-        { errors: validation.error.errors }
-      );
+      return errorResponse('VALIDATION_ERROR', 'Invalid input', 400, { errors: validation.error.errors });
     }
 
-    const { userId, isPublic, ...restData } = validation.data;
+    const { userId, ...creationData } = validation.data;
 
-    // Convert isPublic to visibility and ensure required fields
-    const creationData = {
-      ...restData,
-      visibility: (isPublic !== false ? 'public' : 'private') as 'public' | 'private' | 'unlisted',
-      userId,
-    };
-
-    // Create creation - use type assertion for flexibility
-    const creation = await createCreation(supabaseServer, userId, creationData as any);
+    const creation = await createCreation(supabaseServer, userId, creationData);
 
     return successResponse({ creation }, 201);
   } catch (error) {

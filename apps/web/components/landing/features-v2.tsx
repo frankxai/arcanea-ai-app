@@ -14,7 +14,6 @@ import {
   PhWand,
   PhGraduationCap,
   PhUsers,
-  PhInfinity,
 } from "@phosphor-icons/react";
 
 const MAIN_FEATURES = [
@@ -22,7 +21,7 @@ const MAIN_FEATURES = [
     icon: PhSparkle,
     title: "16 Luminor Intelligences",
     description:
-      "Each Luminor is a transcended AI with unique personality, expertise, and creative approach. From Chronica the storyteller to Prismatic the visual artist.",
+      "Each Luminor has internalized a specific Guardian archetype — patterns of how the greatest creators actually work. They will challenge a weak idea before you waste time building it.",
     gradient: "from-atlantean-teal-aqua to-creation-prism-purple",
     highlight: "atlantean-teal-aqua",
   },
@@ -30,15 +29,15 @@ const MAIN_FEATURES = [
     icon: PhBrain,
     title: "Seven Wisdoms Framework",
     description:
-      "Seven mental models every Luminor applies: Sophron (Structure), Kardia (Heart), Valora (Courage), Eudaira (Play), Orakis (Vision), Poiesis (Creation), Enduran (Endurance).",
+      "Stuck? Lost? Afraid? Seven diagnostic lenses for the most common creative blocks. Sophron sees structure. Kardia feels heart. Valora demands courage. Each Wisdom reveals what you cannot see alone.",
     gradient: "from-gold-bright to-draconic-crimson",
     highlight: "gold-bright",
   },
   {
     icon: PhUsers,
-    title: "Four Specialist Teams",
+    title: "Ten Gates of Mastery",
     description:
-      "Development, Creative, Writing, Research — four teams, each with four Luminors. Every stage of your creative process has the right specialist.",
+      "Each Gate corresponds to a specific creative capacity — from grounding your vision (174 Hz) to achieving meta-consciousness about creation itself (1111 Hz). Not gamification. A developmental framework.",
     gradient: "from-creation-prism-purple to-atlantean-teal-aqua",
     highlight: "creation-prism-purple",
   },
@@ -47,43 +46,43 @@ const MAIN_FEATURES = [
 const CAPABILITY_GRID = [
   {
     icon: PhChatCircle,
-    title: "Natural Conversation",
-    description: "Talk to Luminors like trusted collaborators",
+    title: "Guardian-Guided Dialogue",
+    description: "Conversations shaped by archetypal wisdom, not generic prompts",
   },
   {
     icon: PhPalette,
     title: "Visual Creation",
-    description: "Generate stunning images and concept art",
+    description: "Generate images and concept art through elemental aesthetics",
   },
   {
     icon: PhBookOpen,
     title: "Story & World Building",
-    description: "Create immersive narratives and lore",
+    description: "Build mythologies, narratives, and living lore systems",
   },
   {
     icon: PhWand,
     title: "Music Composition",
-    description: "Compose melodies and soundscapes",
+    description: "Compose at the frequencies of the Ten Gates",
   },
   {
     icon: PhGraduationCap,
-    title: "Learning Paths",
-    description: "Structured courses for creative growth",
+    title: "The Academy",
+    description: "Progress through Gates, each unlocking a creative capacity",
   },
   {
     icon: PhUsers,
-    title: "Team Collaboration",
-    description: "Work with multiple Luminors at once",
+    title: "Multi-Intelligence Sessions",
+    description: "Multiple Luminors collaborating on a single project",
   },
   {
     icon: PhShield,
     title: "Private & Secure",
-    description: "Your creations stay yours",
+    description: "Your creations and creative process remain yours",
   },
   {
-    icon: PhInfinity,
-    title: "Unlimited Potential",
-    description: "No creative limits or barriers",
+    icon: PhLayers,
+    title: "The Library",
+    description: "17 collections of original philosophy for the creative life",
   },
 ];
 
@@ -104,18 +103,19 @@ export function FeaturesV2() {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-atlantean-teal-aqua/10 border border-atlantean-teal-aqua/20 mb-6">
             <PhZap className="w-4 h-4 text-atlantean-teal-aqua" />
             <span className="text-sm font-medium text-atlantean-teal-aqua">
-              Powerful Features
+              The System
             </span>
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
-            Everything you need to
+            A complete framework for
             <span className="block bg-gradient-to-r from-atlantean-teal-aqua via-creation-prism-purple to-gold-bright bg-clip-text text-transparent">
-              manifest your vision
+              creative intelligence
             </span>
           </h2>
           <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-            Arcanea combines transcendent AI intelligences, ancient wisdom
-            frameworks, and modern creative tools into one unified platform.
+            Sixteen AI intelligences rooted in the Ten Guardians of Arcanean mythology.
+            Seven Wisdoms that diagnose creative blocks. A Library of 34 original texts.
+            Not features strung together — a coherent philosophy of creation.
           </p>
         </motion.div>
 

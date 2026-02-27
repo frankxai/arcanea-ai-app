@@ -1,49 +1,40 @@
-// Creation Service - Stub implementation
-import { createClient, SupabaseClient } from '@supabase/supabase-js'
+// Creation Service — matches actual Supabase schema
+import type { SupabaseClient } from '@supabase/supabase-js'
 import type { Creation, CreationFilters } from '../types/api-responses'
 
-// Lazy-create Supabase client to avoid build-time errors
-let _defaultSupabase: SupabaseClient | null = null
-function getDefaultSupabase(): SupabaseClient {
-  if (!_defaultSupabase) {
-    const url = process.env.NEXT_PUBLIC_SUPABASE_URL
-    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-    if (!url || !key) {
-      throw new Error('Supabase environment variables not configured')
-    }
-    _defaultSupabase = createClient(url, key)
-  }
-  return _defaultSupabase
-}
-
-export async function getCreation(client: SupabaseClient, id: string, includePrivate: boolean = false): Promise<Creation | null> {
-  const supabase = client || getDefaultSupabase()
-  let query = supabase
+export async function getCreation(
+  client: SupabaseClient,
+  id: string
+): Promise<Creation | null> {
+  const { data, error } = await client
     .from('creations')
     .select('*')
     .eq('id', id)
     .single()
-  
-  // Logic for includePrivate would go here (e.g., checking user ID against RLS or manual check)
-  // For now, RLS handles most visibility
-
-  const { data, error } = await query
 
   if (error || !data) return null
 
   return mapCreation(data)
 }
 
-export async function getCreations(client: SupabaseClient, filters: CreationFilters = {}): Promise<Creation[]> {
-  const supabase = client || getDefaultSupabase()
-  let query = supabase.from('creations').select('*')
+export async function getCreations(
+  client: SupabaseClient,
+  filters: CreationFilters = {}
+): Promise<Creation[]> {
+  let query = client.from('creations').select('*')
 
   if (filters.type) query = query.eq('type', filters.type)
-  if (filters.luminorId) query = query.eq('luminor_id', filters.luminorId)
   if (filters.status) query = query.eq('status', filters.status)
   if (filters.visibility) query = query.eq('visibility', filters.visibility)
+  if (filters.element) query = query.eq('element', filters.element)
+  if (filters.gate) query = query.eq('gate', filters.gate)
+  if (filters.guardian) query = query.eq('guardian', filters.guardian)
+  if (filters.tags && filters.tags.length > 0) query = query.overlaps('tags', filters.tags)
 
-  query = query.order('created_at', { ascending: false })
+  const sortCol = filters.sortBy === 'popular' ? 'like_count'
+    : filters.sortBy === 'view_count' ? 'view_count'
+    : 'created_at'
+  query = query.order(sortCol, { ascending: filters.sortOrder === 'asc' })
 
   if (filters.limit) query = query.limit(filters.limit)
   if (filters.offset) query = query.range(filters.offset, (filters.offset || 0) + (filters.limit || 10) - 1)
@@ -55,12 +46,14 @@ export async function getCreations(client: SupabaseClient, filters: CreationFilt
   return data.map(mapCreation)
 }
 
-// Alias for getCreations to satisfy API route requirements
 export const listCreations = getCreations
 
-export async function getUserCreations(client: SupabaseClient, userId: string, filters: CreationFilters = {}): Promise<Creation[]> {
-  const supabase = client || getDefaultSupabase()
-  let query = supabase
+export async function getUserCreations(
+  client: SupabaseClient,
+  userId: string,
+  filters: CreationFilters = {}
+): Promise<Creation[]> {
+  let query = client
     .from('creations')
     .select('*')
     .eq('user_id', userId)
@@ -77,26 +70,43 @@ export async function getUserCreations(client: SupabaseClient, userId: string, f
   return data.map(mapCreation)
 }
 
-export async function createCreation(client: SupabaseClient, userId: string, creation: Omit<Creation, 'id' | 'createdAt' | 'updatedAt' | 'likesCount' | 'commentsCount' | 'viewsCount'>): Promise<Creation | null> {
-  const supabase = client || getDefaultSupabase()
-  // API passes userId separately, but it's likely also in the creation object or needs to be set
-  // Ensure userId matches
-  const payload = {
-    title: creation.title,
-    description: creation.description,
-    type: creation.type,
-    media_url: creation.mediaUrl,
-    thumbnail_url: creation.thumbnailUrl,
-    user_id: userId,
-    luminor_id: creation.luminorId,
-    visibility: creation.visibility,
-    status: creation.status,
-    tags: creation.tags
+export async function createCreation(
+  client: SupabaseClient,
+  userId: string,
+  creation: {
+    title: string
+    description?: string
+    content?: Record<string, unknown>
+    type?: string
+    status?: string
+    visibility?: string
+    element?: string
+    gate?: string
+    guardian?: string
+    tags?: string[]
+    thumbnailUrl?: string
+    aiModel?: string
+    aiPrompt?: string
   }
-
-  const { data, error } = await supabase
+): Promise<Creation | null> {
+  const { data, error } = await client
     .from('creations')
-    .insert(payload)
+    .insert({
+      title: creation.title,
+      description: creation.description,
+      content: creation.content,
+      type: creation.type || 'text',
+      status: creation.status || 'draft',
+      visibility: creation.visibility || 'private',
+      element: creation.element,
+      gate: creation.gate,
+      guardian: creation.guardian,
+      tags: creation.tags || [],
+      thumbnail_url: creation.thumbnailUrl,
+      ai_model: creation.aiModel,
+      ai_prompt: creation.aiPrompt,
+      user_id: userId,
+    })
     .select()
     .single()
 
@@ -105,19 +115,27 @@ export async function createCreation(client: SupabaseClient, userId: string, cre
   return mapCreation(data)
 }
 
-export async function updateCreation(client: SupabaseClient, id: string, userId: string, updates: Partial<Creation>): Promise<Creation | null> {
-  const supabase = client || getDefaultSupabase()
-  // userId parameter implies we should check ownership, but RLS/Supabase handles this usually.
-  // We'll proceed with update.
-  const { data, error } = await supabase
+export async function updateCreation(
+  client: SupabaseClient,
+  id: string,
+  _userId: string,
+  updates: Partial<Creation>
+): Promise<Creation | null> {
+  const payload: Record<string, unknown> = {}
+  if (updates.title !== undefined) payload.title = updates.title
+  if (updates.description !== undefined) payload.description = updates.description
+  if (updates.content !== undefined) payload.content = updates.content
+  if (updates.type !== undefined) payload.type = updates.type
+  if (updates.visibility !== undefined) payload.visibility = updates.visibility
+  if (updates.status !== undefined) payload.status = updates.status
+  if (updates.element !== undefined) payload.element = updates.element
+  if (updates.gate !== undefined) payload.gate = updates.gate
+  if (updates.guardian !== undefined) payload.guardian = updates.guardian
+  if (updates.tags !== undefined) payload.tags = updates.tags
+
+  const { data, error } = await client
     .from('creations')
-    .update({
-      title: updates.title,
-      description: updates.description,
-      visibility: updates.visibility,
-      status: updates.status,
-      tags: updates.tags
-    })
+    .update(payload)
     .eq('id', id)
     .select()
     .single()
@@ -127,42 +145,47 @@ export async function updateCreation(client: SupabaseClient, id: string, userId:
   return mapCreation(data)
 }
 
-export async function deleteCreation(client: SupabaseClient, id: string, userId: string): Promise<boolean> {
-  const supabase = client || getDefaultSupabase()
-  const { error } = await supabase
+export async function deleteCreation(
+  client: SupabaseClient,
+  id: string,
+  _userId: string
+): Promise<boolean> {
+  const { error } = await client
     .from('creations')
     .delete()
     .eq('id', id)
-    // .eq('user_id', userId) // Explicit check if needed, but RLS is better
 
   return !error
 }
 
-export async function incrementViewCount(client: SupabaseClient, id: string): Promise<void> {
-  const supabase = client || getDefaultSupabase()
-  const { error } = await supabase.rpc('increment_view_count', { row_id: id })
-  if (error) {
-    console.error('Error incrementing view count:', error)
-  }
+export async function incrementViewCount(
+  client: SupabaseClient,
+  creationId: string
+): Promise<void> {
+  await client.rpc('increment_view_count', { creation_id: creationId })
 }
 
 function mapCreation(data: Record<string, unknown>): Creation {
   return {
     id: data.id as string,
     title: data.title as string,
-    description: data.description as string | undefined,
-    type: data.type as Creation['type'],
-    mediaUrl: data.media_url as string | undefined,
-    thumbnailUrl: data.thumbnail_url as string | undefined,
-    userId: data.user_id as string,
-    luminorId: data.luminor_id as string | undefined,
-    visibility: data.visibility as Creation['visibility'],
-    status: data.status as Creation['status'],
+    description: data.description as string | null,
+    content: data.content as Record<string, unknown> | null,
+    type: (data.type || 'text') as Creation['type'],
+    status: (data.status || 'draft') as Creation['status'],
+    visibility: (data.visibility || 'private') as Creation['visibility'],
+    element: data.element as Creation['element'],
+    gate: data.gate as Creation['gate'],
+    guardian: data.guardian as Creation['guardian'],
     tags: (data.tags || []) as string[],
-    likesCount: (data.likes_count || 0) as number,
-    commentsCount: (data.comments_count || 0) as number,
-    viewsCount: (data.views_count || 0) as number,
+    thumbnailUrl: data.thumbnail_url as string | null,
+    viewCount: (data.view_count || 0) as number,
+    likeCount: (data.like_count || 0) as number,
+    aiModel: data.ai_model as string | null,
+    aiPrompt: data.ai_prompt as string | null,
+    userId: data.user_id as string,
+    metadata: data.metadata as Record<string, unknown> | null,
     createdAt: data.created_at as string,
-    updatedAt: data.updated_at as string
+    updatedAt: data.updated_at as string,
   }
 }

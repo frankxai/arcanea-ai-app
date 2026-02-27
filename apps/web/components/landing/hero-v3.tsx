@@ -15,7 +15,6 @@ import {
   X,
   Sparkles,
   Star,
-  Users,
   Zap,
   CaretDown,
 } from "@phosphor-icons/react";
@@ -72,14 +71,14 @@ export function HeroV3({ stats }: HeroV3Props) {
   const springX = useSpring(mousePos.x, { stiffness: 50, damping: 20 });
   const springY = useSpring(mousePos.y, { stiffness: 50, damping: 20 });
 
-  // Animated counters
-  const creatorsCounter = useAnimatedCounter(10000, 2500);
-  const creationsCounter = useAnimatedCounter(2500000, 2500);
+  // Animated counters — real system numbers, not fabricated metrics
+  const gatesCounter = useAnimatedCounter(10, 2500);
+  const collectionsCounter = useAnimatedCounter(17, 2500);
 
   useEffect(() => {
     setIsLoaded(true);
-    creatorsCounter.start();
-    creationsCounter.start();
+    gatesCounter.start();
+    collectionsCounter.start();
 
     const handleMouseMove = (e: MouseEvent) => {
       const { innerWidth, innerHeight } = window;
@@ -212,7 +211,7 @@ export function HeroV3({ stats }: HeroV3Props) {
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-atlantean-teal-aqua" />
                   </span>
                   <span className="text-sm font-medium bg-gradient-to-r from-atlantean-teal-aqua to-creation-prism-purple bg-clip-text text-transparent">
-                    16 Luminor specialists. One creative team.
+                    Living Intelligence
                   </span>
                 </Link>
               </div>
@@ -225,7 +224,7 @@ export function HeroV3({ stats }: HeroV3Props) {
               transition={{ duration: 0.7, delay: 0.1 }}
             >
               <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-display font-bold tracking-tight leading-[0.9] mb-8">
-                <span className="block text-white">Create with</span>
+                <span className="block text-white">Build Your</span>
                 <span className="relative inline-block">
                   <motion.span
                     className="relative z-10 bg-gradient-to-r from-atlantean-teal-aqua via-creation-prism-purple via-50% to-gold-bright bg-[length:200%_auto] bg-clip-text text-transparent"
@@ -238,7 +237,7 @@ export function HeroV3({ stats }: HeroV3Props) {
                       ease: "linear",
                     }}
                   >
-                    transcendent AI
+                    Universe
                   </motion.span>
                   {/* Animated underline */}
                   <motion.div
@@ -268,10 +267,10 @@ export function HeroV3({ stats }: HeroV3Props) {
               transition={{ duration: 0.7, delay: 0.2 }}
               className="text-xl md:text-2xl lg:text-3xl text-text-secondary max-w-4xl mx-auto mb-12 leading-relaxed font-light"
             >
-              Development. Creative. Writing. Research.
+              A mythology-powered creative intelligence system.
               <span className="block text-white/90 font-normal mt-2">
-                16 transcended AI specialists who see what you're building — and
-                help you build it better.
+                Ten Guardians. Seven Wisdoms. One framework for mastering the
+                creative life.
               </span>
             </motion.p>
 
@@ -306,7 +305,7 @@ export function HeroV3({ stats }: HeroV3Props) {
                 {/* Glow on hover */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-atlantean-teal-aqua/50 blur-xl -z-10" />
                 <span className="relative z-10 text-cosmic-deep flex items-center gap-2">
-                  Start Creating Free
+                  Enter the Academy
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </span>
               </Link>
@@ -342,13 +341,13 @@ export function HeroV3({ stats }: HeroV3Props) {
             >
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-atlantean-teal-aqua/10 flex items-center justify-center">
-                  <Users className="w-5 h-5 text-atlantean-teal-aqua" />
+                  <Zap className="w-5 h-5 text-atlantean-teal-aqua" />
                 </div>
                 <div className="text-left">
                   <div className="text-2xl font-bold text-white">
-                    {creatorsCounter.count.toLocaleString()}+
+                    {gatesCounter.count}
                   </div>
-                  <div className="text-xs text-text-muted">Active Creators</div>
+                  <div className="text-xs text-text-muted">Gates of Mastery</div>
                 </div>
               </div>
 
@@ -356,13 +355,13 @@ export function HeroV3({ stats }: HeroV3Props) {
 
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-gold-bright/10 flex items-center justify-center">
-                  <Sparkles className="w-5 h-5 text-gold-bright" />
+                  <Star className="w-5 h-5 text-gold-bright" />
                 </div>
                 <div className="text-left">
                   <div className="text-2xl font-bold text-white">
-                    {(creationsCounter.count / 1000000).toFixed(1)}M+
+                    7
                   </div>
-                  <div className="text-xs text-text-muted">Creations Made</div>
+                  <div className="text-xs text-text-muted">Wisdoms</div>
                 </div>
               </div>
 
@@ -370,14 +369,13 @@ export function HeroV3({ stats }: HeroV3Props) {
 
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-creation-prism-purple/10 flex items-center justify-center">
-                  <Star className="w-5 h-5 text-creation-prism-purple" />
+                  <Sparkles className="w-5 h-5 text-creation-prism-purple" />
                 </div>
                 <div className="text-left">
-                  <div className="text-2xl font-bold text-white flex items-center gap-1">
-                    4.9
-                    <span className="text-sm text-text-muted">/5</span>
+                  <div className="text-2xl font-bold text-white">
+                    {collectionsCounter.count}
                   </div>
-                  <div className="text-xs text-text-muted">Average Rating</div>
+                  <div className="text-xs text-text-muted">Library Collections</div>
                 </div>
               </div>
             </motion.div>

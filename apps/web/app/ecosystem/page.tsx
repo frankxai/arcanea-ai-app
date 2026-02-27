@@ -143,7 +143,7 @@ const PRODUCTS: Product[] = [
     name: "arcanea.ai",
     tagline: "Platform Hub",
     description:
-      "Chat, Imagine, Studio, and Records — four tabs, infinite possibility. Create universes, stories, and art alongside Guardian AI companions tuned to your creative frequency.",
+      "Chat, Imagine, Studio, and Records — four surfaces of one mythology. Create universes, stories, and art alongside Guardian intelligences tuned to your creative frequency.",
     status: "Live",
     statusVariant: "live",
     href: "/chat",
@@ -320,12 +320,12 @@ export default function EcosystemPage() {
               </div>
 
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold mb-6 leading-tight">
-                One vision.
+                One mythology.
                 <span className="block bg-gradient-to-r from-atlantean-teal-aqua via-cosmic-blue to-creation-prism-purple bg-clip-text text-transparent">
-                  Nine products.
+                  Nine surfaces.
                 </span>
                 <span className="block text-text-primary">
-                  Infinite possibility.
+                  Every stage of creation.
                 </span>
               </h1>
 

@@ -140,7 +140,7 @@ const GUARDIANS: Record<string, GuardianData> = {
     domain: "Love, healing, connection",
     godbeast: "Laeylinn",
     godBeastDesc:
-      "The luminous butterfly of a thousand wings — embodiment of transformation through love. Laeylinn appears where healing is needed, its wings carrying the frequencies of the heart's deepest knowing.",
+      "The Worldtree Deer — an enormous glowing stag whose antlers reach into the canopy of any forest it enters. Laeylinn appears where healing is needed, holding the emotional memory of every living thing within its territory.",
     color: "wind",
     teachings: [
       "The heart is not the enemy of good work. It is the source of the best work.",

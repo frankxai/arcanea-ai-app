@@ -31,20 +31,20 @@ import {
 } from "@phosphor-icons/react";
 
 export const metadata: Metadata = {
-  title: "Arcanea | Create with Transcendent AI",
+  title: "Arcanea | Build Your Universe",
   description:
-    "The Luminor Intelligence System — Ten Guardian AI intelligences for development, creative, writing and research. The complete creative team for AI-human co-creation.",
+    "A mythology-powered creative intelligence system. Ten Guardians. Seven Wisdoms. A Library of 34 original texts. The framework for mastering the creative life.",
   openGraph: {
-    title: "Arcanea | Create with Transcendent AI",
+    title: "Arcanea | Build Your Universe",
     description:
-      "The Luminor Intelligence System — Ten Guardian AI intelligences for development, creative, writing and research. The complete creative team for AI-human co-creation.",
+      "A mythology-powered creative intelligence system. Ten Guardians. Seven Wisdoms. A Library of 34 original texts. The framework for mastering the creative life.",
     images: ["/og-image.png"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Arcanea | Create with Transcendent AI",
+    title: "Arcanea | Build Your Universe",
     description:
-      "Ten Guardian intelligences. Seven Wisdoms. The complete creative toolkit for AI-human co-creation.",
+      "Ten Guardians. Seven Wisdoms. 34 original texts. The mythology-powered framework for mastering the creative life.",
   },
 };
 
@@ -79,7 +79,7 @@ async function HomeContent() {
       href: "/library",
       icon: <PhBooks className="w-8 h-8 text-atlantean-teal-aqua" weight="thin" />,
       title: "The Library",
-      description: `${collections.length} collections of wisdom for creators. Ancient knowledge meets modern practice.`,
+      description: `${collections.length} collections — laws, prophecies, meditations, parables. Original philosophy for the creative life.`,
       accentColor: "text-atlantean-teal-aqua",
       hoverColor: "border-atlantean-teal-aqua/30",
       bgClass: "from-atlantean-teal-aqua/20 to-atlantean-teal-aqua/5",
@@ -89,7 +89,7 @@ async function HomeContent() {
       icon: <PhGraduationCap className="w-8 h-8 text-gold-bright" weight="thin" />,
       title: "Academy",
       description:
-        "Ten Gates progression to creative mastery. Begin as Apprentice, ascend to Luminor.",
+        "Each Gate unlocks a specific creative capacity — from grounding vision to finding authentic voice. Open all ten to become a Luminor.",
       accentColor: "text-gold-bright",
       hoverColor: "border-gold-bright/30",
       bgClass: "from-gold-bright/20 to-gold-bright/5",
@@ -99,7 +99,7 @@ async function HomeContent() {
       icon: <PhPaintBrush className="w-8 h-8 text-draconic-crimson" weight="thin" />,
       title: "Creation Studio",
       description:
-        "Image, music, video, and story creation tools. Manifest your vision with AI.",
+        "Create with Guardian-guided intelligence. Image, music, video, and story — each shaped by elemental archetypes.",
       accentColor: "text-draconic-crimson",
       hoverColor: "border-draconic-crimson/30",
       bgClass: "from-draconic-crimson/20 to-draconic-crimson/5",
@@ -167,7 +167,7 @@ async function HomeContent() {
               The Arcanea Universe
             </h2>
             <p className="text-text-secondary max-w-2xl mx-auto font-body leading-relaxed">
-              Dive deeper into the world of creative wisdom and magical tools.
+              A mythology, a library, and an academy. Explore the systems behind the intelligence.
             </p>
           </div>
 
@@ -215,15 +215,15 @@ async function HomeContent() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-8">
             <p className="text-xs font-mono tracking-[0.35em] uppercase text-crystal mb-2">The Ecosystem</p>
-            <h2 className="text-2xl font-display font-bold">Every tool you need. One creative universe.</h2>
+            <h2 className="text-2xl font-display font-bold">One mythology. Many surfaces.</h2>
           </div>
           <div className="flex flex-wrap justify-center gap-3">
             <Link
-              href="/chat"
+              href="/workspace"
               className="group inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/10 hover:border-crystal/30 hover:bg-crystal/5 transition-all text-sm font-sans text-text-secondary hover:text-text-primary"
             >
               <PhHouse className="w-3.5 h-3.5 text-crystal" />
-              Platform
+              Workspace
               <PhArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
             </Link>
             <Link
@@ -351,8 +351,8 @@ export default function Page() {
                 </span>
               </div>
               <p className="text-text-secondary max-w-sm mb-6 font-body">
-                The creative intelligence platform where imagination becomes
-                reality. Ten Guardian intelligences. Seven Wisdoms. Infinite possibilities.
+                The antidote to a terrible future is imagining a good one.
+                Ten Guardians. Seven Wisdoms. A living mythology for the age of creation.
               </p>
               <div className="flex gap-4">
                 <a

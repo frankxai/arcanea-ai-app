@@ -1,0 +1,43 @@
+# Arcanea PM Configuration
+version: 1
+
+defaults:
+  priority: mage
+  effort: 3
+  element: earth
+  status: pending
+  type: task
+
+velocity:
+  window: 5
+  sprint_duration: 7  # 1-week sprints
+
+id_format:
+  prefix: auto
+  sequence: numeric
+  start: 1
+
+board:
+  columns:
+    - pending
+    - in_progress
+    - done
+    - blocked
+
+gates:
+  1: { name: Foundation, guardian: Lyssandria, element: earth, frequency: 174 }
+  2: { name: Flow, guardian: Leyla, element: water, frequency: 285 }
+  3: { name: Fire, guardian: Draconia, element: fire, frequency: 396 }
+  4: { name: Heart, guardian: Maylinn, element: water, frequency: 417 }
+  5: { name: Voice, guardian: Alera, element: wind, frequency: 528 }
+  6: { name: Sight, guardian: Lyria, element: void, frequency: 639 }
+  7: { name: Crown, guardian: Aiyami, element: void, frequency: 741 }
+  8: { name: Shift, guardian: Elara, element: wind, frequency: 852 }
+  9: { name: Unity, guardian: Ino, element: void, frequency: 963 }
+  10: { name: Source, guardian: Shinkami, element: void, frequency: 1111 }
+
+tokens:
+  auto_mint:
+    gate_complete: true
+    velocity_streak: 5
+    sprint_perfect: true

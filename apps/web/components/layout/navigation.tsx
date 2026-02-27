@@ -61,7 +61,7 @@ export function Navigation({ academy = 'default', className }: NavigationProps) 
             <nav className="hidden md:flex items-center gap-6" aria-label="Main navigation">
               <NavLink href="/studio">Studio</NavLink>
               <NavLink href="/discover">Discover</NavLink>
-              <NavLink href="/academies">Academies</NavLink>
+              <NavLink href="/academy">Academy</NavLink>
               <NavLink href="/library">Library</NavLink>
             </nav>
 
@@ -123,7 +123,7 @@ export function Navigation({ academy = 'default', className }: NavigationProps) 
           <nav className="flex flex-col items-center gap-6 text-lg" aria-label="Main navigation">
             <MobileNavLink href="/studio" onClick={() => setIsMobileMenuOpen(false)}>Studio</MobileNavLink>
             <MobileNavLink href="/discover" onClick={() => setIsMobileMenuOpen(false)}>Discover</MobileNavLink>
-            <MobileNavLink href="/academies" onClick={() => setIsMobileMenuOpen(false)}>Academies</MobileNavLink>
+            <MobileNavLink href="/academy" onClick={() => setIsMobileMenuOpen(false)}>Academy</MobileNavLink>
             <MobileNavLink href="/library" onClick={() => setIsMobileMenuOpen(false)}>Library</MobileNavLink>
           </nav>
           <div className="w-16 h-px bg-cosmic-border" aria-hidden="true" />

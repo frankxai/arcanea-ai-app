@@ -4,7 +4,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createGeminiChatProvider, createStreamResponse } from '@/lib/ai-core';
+import { createGeminiChatProvider } from '@/lib/ai-core';
 import { ARCANEA_MAGIC_SYSTEM, ARCANEA_TONE_GUIDELINES, ACADEMY_LORE } from '@/lib/lore';
 import { createClient } from '@supabase/supabase-js';
 
@@ -33,30 +33,29 @@ interface ChatRequest {
 
 export async function POST(req: NextRequest) {
   try {
-    // Get user from authorization header
-    const authHeader = req.headers.get('authorization');
-    if (!authHeader) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     // Initialize Supabase client
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.SUPABASE_SERVICE_ROLE_KEY!
     );
 
-    // Verify JWT token
-    const token = authHeader.replace('Bearer ', '');
-    const { data: { user }, error: authError } = await supabase.auth.getUser(token);
-
-    if (authError || !user) {
-      return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
+    // Optional auth: authenticated users are tracked and logged; guests can still chat.
+    const authHeader = req.headers.get('authorization');
+    let userId: string | null = null;
+    if (authHeader) {
+      const token = authHeader.replace('Bearer ', '');
+      const { data: { user }, error: authError } = await supabase.auth.getUser(token);
+      if (!authError && user) {
+        userId = user.id;
+      }
     }
 
     // Rate limiting
-    const userId = user.id;
+    const forwarded = req.headers.get('x-forwarded-for');
+    const ip = forwarded?.split(',')[0].trim() || 'anonymous';
+    const rateLimitKey = userId || `guest:${ip}`;
     const now = Date.now();
-    const userLimit = rateLimits.get(userId);
+    const userLimit = rateLimits.get(rateLimitKey);
 
     if (userLimit) {
       if (now < userLimit.resetAt) {
@@ -68,10 +67,10 @@ export async function POST(req: NextRequest) {
         }
         userLimit.count++;
       } else {
-        rateLimits.set(userId, { count: 1, resetAt: now + RATE_LIMIT_WINDOW });
+        rateLimits.set(rateLimitKey, { count: 1, resetAt: now + RATE_LIMIT_WINDOW });
       }
     } else {
-      rateLimits.set(userId, { count: 1, resetAt: now + RATE_LIMIT_WINDOW });
+      rateLimits.set(rateLimitKey, { count: 1, resetAt: now + RATE_LIMIT_WINDOW });
     }
 
     // Parse request
@@ -149,15 +148,17 @@ export async function POST(req: NextRequest) {
       });
 
       // Log usage to database
-      await supabase.from('ai_usage').insert({
-        user_id: userId,
-        operation: 'chat',
-        model: 'gemini-2.0-flash',
-        tokens_input: response.tokensUsed?.promptTokens || 0,
-        tokens_output: response.tokensUsed?.completionTokens || 0,
-        cost: response.cost || 0,
-        created_at: new Date().toISOString(),
-      });
+      if (userId) {
+        await supabase.from('ai_usage').insert({
+          user_id: userId,
+          operation: 'chat',
+          model: 'gemini-2.0-flash',
+          tokens_input: response.tokensUsed?.promptTokens || 0,
+          tokens_output: response.tokensUsed?.completionTokens || 0,
+          cost: response.cost || 0,
+          created_at: new Date().toISOString(),
+        });
+      }
 
       return NextResponse.json({
         text: response.text,

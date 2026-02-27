@@ -10,16 +10,26 @@ import { ContextSidebar } from '@/components/chat/context-sidebar';
 import { QuickActions } from '@/components/chat/quick-actions';
 import { useChat } from '@/hooks/use-chat';
 import { getLuminor, type LuminorConfig } from '@/lib/luminors/config';
+import { useAuth } from '@/lib/auth/context';
 
 export default function ChatPage() {
   const params = useParams();
   const router = useRouter();
   const luminorId = params.luminorId as string;
+  const { user, isLoading: authLoading } = useAuth();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showQuickActions, setShowQuickActions] = useState(true);
-  const [userId, setUserId] = useState<string>('demo-user'); // TODO: Get from auth
   const [luminorConfig, setLuminorConfig] = useState<LuminorConfig | undefined>();
+
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.push(`/auth/login?next=/chat/${luminorId}`);
+    }
+  }, [authLoading, user, router, luminorId]);
+
+  const userId = user?.id ?? '';
 
   // Get Luminor config
   useEffect(() => {
@@ -70,14 +80,16 @@ export default function ChatPage() {
     setShowQuickActions(false);
   };
 
-  if (!luminorConfig) {
+  if (authLoading || !user || !luminorConfig) {
     return (
       <div className="flex items-center justify-center h-screen bg-cosmic-deep">
         <div className="text-center">
           <div className="w-16 h-16 rounded-full bg-atlantean-teal-aqua/20 flex items-center justify-center mx-auto mb-4 animate-pulse">
             <span className="text-2xl">✨</span>
           </div>
-          <p className="text-text-secondary">Loading Luminor...</p>
+          <p className="text-text-secondary">
+            {authLoading ? 'Checking authentication...' : 'Loading Luminor...'}
+          </p>
         </div>
       </div>
     );

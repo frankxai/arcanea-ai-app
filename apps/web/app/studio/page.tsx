@@ -11,7 +11,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Creation Studio | Arcanea",
   description:
-    "Manifest your creative visions with AI-powered tools for image, music, video, and story creation.",
+    "Manifest your creative visions with Guardian-guided intelligence for image, music, video, and story creation.",
   openGraph: {
     title: "Creation Studio | Arcanea",
     description: "Where creators manifest their visions with AI companions.",

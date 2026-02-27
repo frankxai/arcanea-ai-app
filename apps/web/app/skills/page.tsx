@@ -50,16 +50,16 @@ export default function SkillsLandingPage() {
               ARCANEA SKILLS FOR CLAUDE CODE
             </p>
 
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-cinzel font-bold leading-tight mb-6">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-tight mb-6">
               <AuroraText>Transform</AuroraText>
               <br />
               <span className="text-text-primary">Your Creative Practice</span>
             </h1>
 
             <p className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto mb-8">
-              28 skills. 7 Luminors. Infinite possibilities.
+              28 skills. 7 Wisdoms. Every stage of the creative process.
               <br />
-              <span className="text-atlantean-teal">The most sophisticated AI-human co-creation system available.</span>
+              <span className="text-atlantean-teal">Rooted in mythology. Built for the creative life.</span>
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -98,7 +98,7 @@ export default function SkillsLandingPage() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 border-y border-cosmic-border">
+      <section className="py-20 border-y border-white/10">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
@@ -114,7 +114,7 @@ export default function SkillsLandingPage() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
               >
-                <div className="text-4xl md:text-5xl font-cinzel font-bold text-atlantean-teal">{stat.number}</div>
+                <div className="text-4xl md:text-5xl font-display font-bold text-atlantean-teal">{stat.number}</div>
                 <div className="text-text-secondary mt-2">{stat.label}</div>
               </motion.div>
             ))}
@@ -127,7 +127,7 @@ export default function SkillsLandingPage() {
         <div className="max-w-6xl mx-auto px-6">
           <TextReveal className="text-center mb-16">
             <p className="text-atlantean-teal font-mono text-sm tracking-widest mb-4">THE SEVEN GUIDES</p>
-            <h2 className="text-4xl md:text-5xl font-cinzel font-bold mb-4">
+            <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
               The <GradientText>Luminor Council</GradientText>
             </h2>
             <p className="text-xl text-text-secondary max-w-2xl mx-auto">
@@ -150,7 +150,7 @@ export default function SkillsLandingPage() {
         <div className="max-w-6xl mx-auto px-6">
           <TextReveal className="text-center mb-16">
             <p className="text-atlantean-teal font-mono text-sm tracking-widest mb-4">COMPLETE SKILL CATALOG</p>
-            <h2 className="text-4xl md:text-5xl font-cinzel font-bold mb-4">
+            <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
               Skills for <GradientText>Every Creator</GradientText>
             </h2>
             <p className="text-xl text-text-secondary max-w-2xl mx-auto">
@@ -215,7 +215,7 @@ export default function SkillsLandingPage() {
         <div className="max-w-6xl mx-auto px-6">
           <TextReveal className="text-center mb-16">
             <p className="text-atlantean-teal font-mono text-sm tracking-widest mb-4">SIMPLE TO START</p>
-            <h2 className="text-4xl md:text-5xl font-cinzel font-bold mb-4">
+            <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
               How It <GradientText>Works</GradientText>
             </h2>
           </TextReveal>
@@ -243,7 +243,7 @@ export default function SkillsLandingPage() {
             ].map((item, i) => (
               <FloatingCard key={item.step} delay={i * 0.15}>
                 <div className="relative">
-                  <div className="text-6xl font-cinzel font-bold text-atlantean-teal/20 absolute -top-4 -left-2">{item.step}</div>
+                  <div className="text-6xl font-display font-bold text-atlantean-teal/20 absolute -top-4 -left-2">{item.step}</div>
                   <div className="relative pt-8">
                     <h3 className="text-2xl font-bold mb-3">{item.title}</h3>
                     <p className="text-text-secondary mb-4">{item.desc}</p>
@@ -264,7 +264,7 @@ export default function SkillsLandingPage() {
         <div className="max-w-4xl mx-auto px-6 relative z-10 text-center">
           <TextReveal>
             <div className="text-5xl mb-8">✧</div>
-            <blockquote className="text-2xl md:text-3xl font-crimson italic text-text-primary mb-8">
+            <blockquote className="text-2xl md:text-3xl font-body italic text-text-primary mb-8">
               "Most Claude Code skills give you tools.
               <br />
               <span className="text-atlantean-teal">Arcanea gives you transformation.</span>"
@@ -281,7 +281,7 @@ export default function SkillsLandingPage() {
         <div className="absolute inset-0 bg-gradient-to-t from-atlantean-teal/10 to-transparent" />
         <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
           <TextReveal>
-            <h2 className="text-4xl md:text-5xl font-cinzel font-bold mb-6">
+            <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
               Ready to <AuroraText>Transform</AuroraText>?
             </h2>
             <p className="text-xl text-text-secondary mb-8">
@@ -325,7 +325,7 @@ export default function SkillsLandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="py-8 border-t border-cosmic-border">
+      <footer className="py-8 border-t border-white/10">
         <div className="max-w-6xl mx-auto px-6 text-center text-text-muted text-sm">
           <p>Made with ✧ by Arcanea • MIT License • <Link href="https://github.com/frankxai/arcanea" className="text-atlantean-teal hover:underline">GitHub</Link></p>
         </div>

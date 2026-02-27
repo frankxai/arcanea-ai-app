@@ -18,7 +18,7 @@ import {
 export const metadata: Metadata = {
   title: "Arcanea Code | Developer Platform & VS Code Extension",
   description:
-    "Build AI-powered applications with the Arcanea developer platform. TypeScript SDK, MCP tools, Guardian sidebar for VS Code, and 30+ specialized intelligence tools.",
+    "Build with the Arcanea developer platform. TypeScript SDK, MCP tools, Guardian sidebar for VS Code, and 30+ specialized intelligence tools.",
   openGraph: {
     title: "Arcanea Code | Developer Platform",
     description:
@@ -179,8 +179,8 @@ export default function ArcaneaCodePage() {
               </h1>
 
               <p className="text-text-secondary font-body text-lg leading-relaxed mb-8 max-w-2xl">
-                A complete developer platform for building AI-powered
-                applications with the Arcanea intelligence layer. TypeScript
+                A complete developer platform for building with the Arcanea
+                intelligence layer. TypeScript
                 SDK, 30+ MCP tools, intelligent Guardian agents, and a VS Code
                 extension that puts the cosmos inside your editor.
               </p>

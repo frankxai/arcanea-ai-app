@@ -1,4 +1,4 @@
-// Arcanea Database Types - Inlined for standalone deployment
+// Arcanea API Response Types — matches actual Supabase schema
 
 export type ErrorCode =
   | 'UNAUTHORIZED'
@@ -33,17 +33,24 @@ export interface ApiResponse<T = unknown> {
   }
 }
 
+// Arcanea domain enums
+export type MagicRank = 'Apprentice' | 'Mage' | 'Master' | 'Archmage' | 'Luminor'
+export type GateName = 'Foundation' | 'Flow' | 'Fire' | 'Heart' | 'Voice' | 'Sight' | 'Crown' | 'Shift' | 'Unity' | 'Source'
+export type GuardianName = 'Lyssandria' | 'Leyla' | 'Draconia' | 'Maylinn' | 'Alera' | 'Lyria' | 'Aiyami' | 'Elara' | 'Ino' | 'Shinkami'
+export type ElementName = 'Fire' | 'Water' | 'Earth' | 'Wind' | 'Void' | 'Spirit'
+export type AcademyHouse = 'Lumina' | 'Nero' | 'Pyros' | 'Aqualis' | 'Terra' | 'Ventus' | 'Synthesis'
+export type CreationType = 'text' | 'image' | 'video' | 'audio' | 'code' | 'mixed'
+export type CreationStatus = 'draft' | 'published' | 'archived'
+export type Visibility = 'private' | 'unlisted' | 'public'
+
 export interface CreationFilters {
-  type?: string
-  luminorId?: string
-  status?: string
-  visibility?: string
-  isPublic?: boolean
+  type?: CreationType
+  element?: ElementName
+  gate?: GateName
+  guardian?: GuardianName
+  status?: CreationStatus
+  visibility?: Visibility
   tags?: string[]
-  createdAfter?: Date
-  createdBefore?: Date
-  dateFrom?: string
-  dateTo?: string
   sortBy?: 'recent' | 'popular' | 'trending' | 'created_at' | 'updated_at' | 'like_count' | 'view_count'
   sortOrder?: 'asc' | 'desc'
   limit?: number
@@ -53,10 +60,9 @@ export interface CreationFilters {
 }
 
 export const VALIDATION_RULES = {
-  username: {
-    minLength: 3,
-    maxLength: 30,
-    pattern: /^[a-zA-Z0-9_]+$/
+  displayName: {
+    minLength: 1,
+    maxLength: 100
   },
   bio: {
     maxLength: 500
@@ -74,14 +80,22 @@ export const VALIDATION_RULES = {
   }
 }
 
-// Profile types
+// Profile types — matches profiles table
 export interface Profile {
   id: string
-  username: string
-  displayName?: string
-  avatarUrl?: string
-  bio?: string
-  academyId?: string
+  displayName: string
+  avatarUrl?: string | null
+  bio?: string | null
+  magicRank: MagicRank
+  gatesOpen: number
+  activeGate?: GateName | null
+  guardian?: GuardianName | null
+  academyHouse?: AcademyHouse | null
+  xp: number
+  level: number
+  streakDays: number
+  lastActiveAt?: string | null
+  metadata?: Record<string, unknown> | null
   createdAt: string
   updatedAt: string
 }
@@ -94,67 +108,51 @@ export interface ProfileStats {
   totalViews: number
 }
 
-// Creation types
+// Creation types — matches creations table
 export interface Creation {
   id: string
   title: string
-  description?: string
-  type: 'image' | 'music' | 'video' | 'story' | 'other'
-  mediaUrl?: string
-  thumbnailUrl?: string
-  userId: string
-  luminorId?: string
-  visibility: 'public' | 'private' | 'unlisted'
-  status: 'draft' | 'published' | 'archived'
+  description?: string | null
+  content?: Record<string, unknown> | null
+  type: CreationType
+  status: CreationStatus
+  visibility: Visibility
+  element?: ElementName | null
+  gate?: GateName | null
+  guardian?: GuardianName | null
   tags: string[]
-  likesCount: number
-  commentsCount: number
-  viewsCount: number
+  thumbnailUrl?: string | null
+  viewCount: number
+  likeCount: number
+  aiModel?: string | null
+  aiPrompt?: string | null
+  userId: string
+  metadata?: Record<string, unknown> | null
   createdAt: string
   updatedAt: string
 }
 
-// Bond types
-export interface LuminorBond {
+// Collection types — matches collections table
+export interface Collection {
   id: string
   userId: string
-  luminorId: string
-  level: number
-  bondLevel: number // Alias for level
-  xp: number
-  relationshipType: string
-  memories: Memory[]
+  title: string
+  description?: string | null
+  coverUrl?: string | null
+  visibility: Visibility
+  sortOrder: number
+  metadata?: Record<string, unknown> | null
   createdAt: string
   updatedAt: string
 }
 
-export interface Memory {
-  id: string
-  content: string
-  type: 'conversation' | 'creation' | 'milestone'
-  importance: number
-  createdAt: string
-}
-
-// Activity types
+// Activity types — matches activity_log table
 export interface Activity {
   id: string
-  type: 'creation' | 'like' | 'comment' | 'follow' | 'achievement'
   userId: string
-  targetId?: string
-  targetType?: string
-  metadata?: Record<string, unknown>
-  createdAt: string
-}
-
-// Notification types
-export interface Notification {
-  id: string
-  userId: string
-  type: string
-  title: string
-  message: string
-  read: boolean
-  actionUrl?: string
+  action: string
+  entityType: string
+  entityId?: string | null
+  metadata?: Record<string, unknown> | null
   createdAt: string
 }

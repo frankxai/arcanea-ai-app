@@ -237,10 +237,10 @@ export function TestimonialsV2() {
           className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 pt-12 border-t border-white/10"
         >
           {[
-            { value: '10,000+', label: 'Active Creators' },
-            { value: '2.5M+', label: 'Creations Made' },
-            { value: '4.9/5', label: 'Average Rating' },
-            { value: '99.9%', label: 'Uptime' },
+            { value: '10', label: 'Guardian Archetypes' },
+            { value: '7', label: 'Wisdom Frameworks' },
+            { value: '34+', label: 'Original Texts' },
+            { value: '50K+', label: 'Words of Wisdom' },
           ].map((stat, i) => (
             <div key={stat.label} className="text-center">
               <div className="text-3xl md:text-4xl font-display font-bold text-white mb-2">

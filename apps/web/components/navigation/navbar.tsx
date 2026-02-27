@@ -14,10 +14,12 @@ import {
   Info,
   Brain,
   TreeStructure,
+  Gauge,
 } from "@phosphor-icons/react";
 import { UserNav } from "@/components/auth";
 
 const navLinks = [
+  { href: "/workspace", label: "Workspace", icon: Sparkles, primary: true },
   { href: "/luminors", label: "Luminors", icon: Sparkles, primary: true },
   {
     href: "/luminor-intelligence",
@@ -29,6 +31,7 @@ const navLinks = [
   { href: "/library", label: "Library", icon: BookOpen },
   { href: "/academy", label: "Academy", icon: GraduationCap },
   { href: "/ecosystem", label: "Ecosystem", icon: TreeStructure },
+  { href: "/command-center", label: "Command Center", icon: Gauge },
   { href: "/about", label: "About", icon: Info },
 ];
 

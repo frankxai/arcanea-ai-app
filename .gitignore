@@ -8,9 +8,15 @@ out/
 build/
 dist/
 
-# Environment files
+# Environment files & secrets
 .env
 .env*.local
+.env.secrets
+.secrets/
+.arcanea/secrets/
+
+# MCP config (contains per-developer tokens — use .mcp.json.example as template)
+.mcp.json
 
 # IDE
 .vscode/

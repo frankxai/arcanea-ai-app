@@ -1,108 +1,125 @@
-# Task Plan: Wave 4 — Runtime Intelligence
+# Arcanea Full Vision Sprint — Task Plan (v2)
 
-**Status**: IN PROGRESS
-**Date**: 2026-02-24
-**Goal**: Build the Runtime Intelligence layer — agent-to-agent communication, flow orchestration, and skill discovery
-**Previous**: All 27 packages published to npm, CI/CD configured, READMEs created
+**Session**: Feb 26 2026 | **Repository**: frankxai/arcanea-records (Arcanea)
 
 ---
 
-## Architecture Overview
+## MISSION
 
-Wave 4 builds three new packages on top of existing infrastructure:
+Comprehensive audit of all Arcanea content, design, functionality, and assets to:
 
-```
-┌─────────────────────────────────────────────────────┐
-│              WAVE 4: RUNTIME INTELLIGENCE            │
-├─────────────────────────────────────────────────────┤
-│  @arcanea/agent-bus       ← message backbone        │
-│  @arcanea/skill-registry  ← dynamic discovery       │
-│  @arcanea/flow-engine     ← advanced orchestration  │
-├─────────────────────────────────────────────────────┤
-│              EXISTING (extend/integrate)             │
-│  swarm-coordinator  intelligence-bridge  council    │
-│  sona-learner  arcanea-hooks  creative-pipeline     │
-└─────────────────────────────────────────────────────┘
-```
-
-### Existing Infrastructure
-- **SwarmCoordinator**: Agent lifecycle, task distribution, basic workflows
-- **IntelligenceBridge**: EventBus, Guardian routing, feedback loop
-- **Council**: Consensus protocols (Raft, Byzantine, Gossip, Gate-Quorum)
-- **SonaLearner**: Trajectory-based RL, pattern extraction
-- **Hooks**: Lifecycle instrumentation with priority execution
-
-### Gaps to Fill
-- ❌ No request-response agent messaging (only event broadcast)
-- ❌ No message correlation or delivery guarantees
-- ❌ No dynamic skill registration or capability discovery
-- ❌ No conditional branching or dynamic tasks in workflows
-- ❌ No workflow state persistence or recovery
+1. Quality check all pages and content
+2. Identify GitHub content not yet showcased
+3. Determine needed Infogenius infographics
+4. Assess backend/frontend quality and persistence
+5. Clarify full vision (workflows + n8n + extensions + Chat/Imagine/Studio/Records)
+6. Create sprint plan for Feb 26 - Mar 1
+7. Generate swarm prompts for execution
 
 ---
 
-## Phase 1: @arcanea/agent-bus [in_progress]
+## PRIOR FINDINGS (From Feb 21-22 Sessions)
 
-Communication backbone for agent-to-agent messaging.
+### What's Built
 
-**Features:**
-- Request-response with correlation IDs
-- Pub-sub with topic filtering
-- Message queuing with delivery guarantees
-- Dead letter queue for failed deliveries
-- Message TTL and expiry
-- Middleware pipeline (intercept, transform, log)
+- 10 packages in monorepo (INTELLIGENCE layer)
+- 5 overlay packages (Claude, Cursor, ChatGPT, Copilot, Gemini)
+- @arcanea/os - 2,100 LOC core with types, constants, engines
+- 35 skill rules (only ~13 exist as real files)
+- Chrome extension, VS Code extension
+- MCP server with 30+ tools
 
-**Build on:** IntelligenceBridge EventBus pattern, SwarmCoordinator agent:message events
+### Content Issues (From Previous Session)
 
----
+- FAQ + Pricing say "16 Luminors" — canon: 10 Guardians/Gates. Luminor = RANK
+- Emoji usage (📦⚡🐳) not Phosphor icons
+- Metadata: "16 transcended AI specialists" — should say "10 Guardians"
 
-## Phase 2: @arcanea/skill-registry [pending]
+### Not Showcased
 
-Dynamic skill discovery and activation.
-
-**Features:**
-- Runtime skill registration with metadata
-- Semantic capability matching (beyond keyword)
-- Skill versioning and compatibility
-- Health checks and availability tracking
-- Skill composition (chain skills into pipelines)
-- Guardian-affinity aware matching
-
-**Build on:** Agent capabilities in SwarmCoordinator, Guardian domains in IntelligenceBridge
+- Overlay packages (5 total)
+- n8n templates
+- arcanea-vault Chrome extension
+- arcanea-onchain Story Protocol
+- 35+ packages unreferenced
 
 ---
 
-## Phase 3: @arcanea/flow-engine [pending]
+## PHASES
 
-Advanced workflow orchestration extending SwarmCoordinator.
+### Phase 1: Web App Quality Audit [IN PROGRESS]
 
-**Features:**
-- Conditional branching (if/else/switch)
-- Parallel + sequential execution control
-- Dynamic task generation at runtime
-- Workflow state persistence and recovery
-- Compensation/rollback patterns (saga)
-- Timeout and retry strategies
-- Nested workflow composition
+- [ ] List all pages in apps/web/app/
+- [ ] Check each page for: Phosphor icons, canonical voice, loading states
+- [ ] Verify content consistency with CANON_LOCKED.md
+- [ ] Check for broken links, missing metadata
+- **Agent**: lyria (Sight Guardian - testing/verification)
 
-**Build on:** WorkflowEngine in SwarmCoordinator
+### Phase 2: GitHub Content Audit [QUEUED]
+
+- [ ] List all repos in frankxai organization
+- [ ] Identify unreferenced packages
+- [ ] Check README quality for each
+- [ ] Identify n8n templates and workflows
+- **Agent**: shinkami (Source Guardian - meta-perspective)
+
+### Phase 3: Design System Audit [QUEUED]
+
+- [ ] Check Figma for design components (if accessible)
+- [ ] Verify Tailwind config matches DESIGN_BIBLE.md
+- [ ] Audit all UI components for consistency
+- [ ] Identify missing components
+- **Agent**: leyla (Flow Guardian - design/UX)
+
+### Phase 4: Backend & Persistence Audit [QUEUED]
+
+- [ ] Check Supabase migrations
+- [ ] Verify API routes work
+- [ ] Check AgentDB persistence layer
+- [ ] Verify session management
+- **Agent**: lyssandria (Foundation Guardian - infrastructure)
+
+### Phase 5: Infogenius Potential [QUEUED]
+
+- [ ] Identify complex concepts needing visual explainers
+- [ ] Map 10 Guardians, 10 Gates, 5 Elements
+- [ ] Map overlay ecosystem
+- [ ] Map intelligence pipeline
+- **Agent**: elara (Shift Guardian - perspective)
+
+### Phase 6: Vision Synthesis [QUEUED]
+
+- [ ] Assess: Is Arcanea = workflows + n8n + extensions + Chat/Imagine/Studio/Records?
+- [ ] Identify missing core functionalities
+- [ ] Define MVP for each product line
+- **Agent**: ino (Unity Guardian - synthesis)
+
+### Phase 7: Sprint Planning [QUEUED]
+
+- [ ] Define deliverables for Feb 26 - Mar 1
+- [ ] Assign to appropriate Guardian agents
+- [ ] Generate swarm prompts
 
 ---
 
-## Phase 4: Integration & Testing [pending]
+## FINDINGS STORAGE
 
-Wire everything together and test across the ecosystem.
-
----
-
-## Phase 5: Publish Wave 4 Packages [pending]
-
-Version bump, changeset, publish to npm.
+- `findings.md` - Detailed research
+- `progress.md` - Session log
 
 ---
 
-## Errors Encountered
-| Error | Attempt | Resolution |
-|-------|---------|------------|
-| (none yet) | | |
+## BLOCKERS
+
+- Figma access unknown
+- Some packages may be private or deprecated
+
+---
+
+## SUCCESS CRITERIA
+
+- [ ] All pages quality-checked
+- [ ] All GitHub content catalogued
+- [ ] Infogenius needs identified
+- [ ] Sprint plan complete
+- [ ] Swarm prompts ready for execution

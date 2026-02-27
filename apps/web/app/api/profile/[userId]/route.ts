@@ -5,13 +5,12 @@
  * PATCH /api/profile/[userId] - Update user profile
  */
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import { z } from 'zod';
 import { supabaseServer } from '@/lib/supabase';
 import {
   getProfileWithStats,
   updateProfile,
-  isUsernameAvailable,
 } from '@/lib/database/services/profile-service';
 import {
   successResponse,
@@ -23,8 +22,6 @@ import { VALIDATION_RULES } from '@/lib/database/types/api-responses';
 
 /**
  * GET /api/profile/[userId]
- *
- * Fetch user profile with statistics
  */
 export async function GET(
   request: NextRequest,
@@ -37,8 +34,11 @@ export async function GET(
       return errorResponse('INVALID_INPUT', 'User ID is required', 400);
     }
 
-    // Fetch profile with stats
     const profileData = await getProfileWithStats(supabaseServer, userId);
+
+    if (!profileData) {
+      return errorResponse('NOT_FOUND', 'Profile not found', 404);
+    }
 
     return successResponse(profileData);
   } catch (error) {
@@ -48,8 +48,6 @@ export async function GET(
 
 /**
  * PATCH /api/profile/[userId]
- *
- * Update user profile
  */
 export async function PATCH(
   request: NextRequest,
@@ -62,63 +60,31 @@ export async function PATCH(
       return errorResponse('INVALID_INPUT', 'User ID is required', 400);
     }
 
-    // Parse request body
     const body = await parseRequestBody(request);
     if (!body) {
       return errorResponse('INVALID_INPUT', 'Invalid request body', 400);
     }
 
-    // Validate input using Zod
     const updateSchema = z.object({
-      username: z
-        .string()
-        .min(VALIDATION_RULES.username.minLength)
-        .max(VALIDATION_RULES.username.maxLength)
-        .regex(
-          VALIDATION_RULES.username.pattern,
-          'Username can only contain letters, numbers, underscores, and hyphens'
-        )
-        .optional(),
-      displayName: z.string().max(50).optional(),
+      displayName: z.string().min(VALIDATION_RULES.displayName.minLength).max(VALIDATION_RULES.displayName.maxLength).optional(),
       bio: z.string().max(VALIDATION_RULES.bio.maxLength).optional(),
       avatarUrl: z.string().url().optional().or(z.literal('')),
-      location: z.string().max(100).optional(),
-      website: z.string().url().optional().or(z.literal('')),
-      preferences: z.record(z.any()).optional(),
+      activeGate: z.enum(['Foundation', 'Flow', 'Fire', 'Heart', 'Voice', 'Sight', 'Crown', 'Shift', 'Unity', 'Source']).optional(),
+      guardian: z.enum(['Lyssandria', 'Leyla', 'Draconia', 'Maylinn', 'Alera', 'Lyria', 'Aiyami', 'Elara', 'Ino', 'Shinkami']).optional(),
+      academyHouse: z.enum(['Lumina', 'Nero', 'Pyros', 'Aqualis', 'Terra', 'Ventus', 'Synthesis']).optional(),
     });
 
     const validation = updateSchema.safeParse(body);
 
     if (!validation.success) {
-      return errorResponse(
-        'VALIDATION_ERROR',
-        'Invalid input',
-        400,
-        { errors: validation.error.errors }
-      );
+      return errorResponse('VALIDATION_ERROR', 'Invalid input', 400, { errors: validation.error.errors });
     }
 
-    const updates = validation.data;
+    const updatedProfile = await updateProfile(supabaseServer, userId, validation.data);
 
-    // Check username availability if being updated
-    if (updates.username) {
-      const available = await isUsernameAvailable(
-        supabaseServer,
-        updates.username,
-        userId
-      );
-
-      if (!available) {
-        return errorResponse(
-          'ALREADY_EXISTS',
-          'Username is already taken',
-          409
-        );
-      }
+    if (!updatedProfile) {
+      return errorResponse('NOT_FOUND', 'Profile not found', 404);
     }
-
-    // Update profile
-    const updatedProfile = await updateProfile(supabaseServer, userId, updates);
 
     return successResponse({ profile: updatedProfile });
   } catch (error) {

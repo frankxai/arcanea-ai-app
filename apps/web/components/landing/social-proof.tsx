@@ -52,10 +52,10 @@ const LOGOS = [
 ];
 
 const STATS = [
-  { value: '10,000+', label: 'Active Creators' },
-  { value: '2.5M+', label: 'Creations Made' },
-  { value: '4.9/5', label: 'Average Rating' },
-  { value: '99.9%', label: 'Uptime' },
+  { value: '10', label: 'Guardian Archetypes' },
+  { value: '7', label: 'Wisdom Frameworks' },
+  { value: '34+', label: 'Original Texts' },
+  { value: '50K+', label: 'Words of Wisdom' },
 ];
 
 export function SocialProof() {

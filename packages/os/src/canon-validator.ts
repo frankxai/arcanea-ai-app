@@ -161,7 +161,7 @@ export const CANONICAL_GUARDIANS: readonly CanonicalGuardian[] = Object.freeze([
   { name: 'Alera',      gate: 'Voice',      frequency: 528, element: 'Wind',   godbeast: 'Otome',     domain: 'Truth, expression' },
   { name: 'Lyria',      gate: 'Sight',      frequency: 639, element: 'Water',  godbeast: 'Yumiko',    domain: 'Intuition, vision' },
   { name: 'Aiyami',     gate: 'Crown',      frequency: 741, element: 'Spirit', godbeast: 'Sol',       domain: 'Enlightenment' },
-  { name: 'Elara',      gate: 'Shift',      frequency: 852, element: 'Wind',   godbeast: 'Thessara',  domain: 'Perspective' },
+  { name: 'Elara',      gate: 'Shift',      frequency: 852, element: 'Wind',   godbeast: 'Vaelith',   domain: 'Perspective' },
   { name: 'Ino',        gate: 'Unity',      frequency: 963, element: 'Void',   godbeast: 'Kyuro',     domain: 'Partnership' },
   { name: 'Shinkami',   gate: 'Source',      frequency: 1111, element: 'Void/Spirit', godbeast: 'Amaterasu', domain: 'Meta-consciousness' },
 ] as const);
@@ -324,8 +324,9 @@ const GODBEAST_MISSPELLINGS: ReadonlyMap<string, string> = new Map([
   ['otomae', 'Otome'],
   ['yumico', 'Yumiko'],
   ['yumicko', 'Yumiko'],
-  ['thessera', 'Thessara'],
-  ['thesara', 'Thessara'],
+  ['thessara', 'Vaelith'],
+  ['thessera', 'Vaelith'],
+  ['thesara', 'Vaelith'],
   ['kyuuro', 'Kyuro'],
   ['kyyuro', 'Kyuro'],
   ['amaterasu', 'Amaterasu'], // correct

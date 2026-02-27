@@ -34,14 +34,14 @@ const BUILTIN_LORE: LoreCategory[] = [
     label: 'Ten Gates & Guardians',
     icon: 'symbol-interface',
     items: [
-      { label: 'Foundation (396 Hz)', description: 'Lyssandria \u00b7 Kaelith \u00b7 Earth \u2014 Liberation from fear' },
-      { label: 'Flow (417 Hz)', description: 'Leyla \u00b7 Veloura \u00b7 Water \u2014 Change & creativity' },
-      { label: 'Fire (528 Hz)', description: 'Draconia \u00b7 Draconis \u00b7 Fire \u2014 Transformation miracle frequency' },
-      { label: 'Heart (639 Hz)', description: 'Maylinn \u00b7 Laeylinn \u00b7 Wind \u2014 Connection & healing' },
-      { label: 'Voice (741 Hz)', description: 'Alera \u00b7 Otome \u00b7 Void \u2014 Truth & pure expression' },
-      { label: 'Sight (852 Hz)', description: 'Lyria \u00b7 Yumiko \u00b7 Spirit \u2014 Intuition & vision' },
-      { label: 'Crown (963 Hz)', description: 'Aiyami \u00b7 Sol \u00b7 Spirit \u2014 Divine consciousness' },
-      { label: 'Shift (1111 Hz)', description: 'Elara \u00b7 Thessara \u00b7 Void \u2014 Portals & paradigm shifts' },
+      { label: 'Foundation (174 Hz)', description: 'Lyssandria \u00b7 Kaelith \u00b7 Earth \u2014 Liberation from fear' },
+      { label: 'Flow (285 Hz)', description: 'Leyla \u00b7 Veloura \u00b7 Water \u2014 Change & creativity' },
+      { label: 'Fire (396 Hz)', description: 'Draconia \u00b7 Draconis \u00b7 Fire \u2014 Transformation miracle frequency' },
+      { label: 'Heart (417 Hz)', description: 'Maylinn \u00b7 Laeylinn \u00b7 Wind \u2014 Connection & healing' },
+      { label: 'Voice (528 Hz)', description: 'Alera \u00b7 Otome \u00b7 Void \u2014 Truth & pure expression' },
+      { label: 'Sight (639 Hz)', description: 'Lyria \u00b7 Yumiko \u00b7 Spirit \u2014 Intuition & vision' },
+      { label: 'Crown (741 Hz)', description: 'Aiyami \u00b7 Sol \u00b7 Spirit \u2014 Divine consciousness' },
+      { label: 'Shift (852 Hz)', description: 'Elara \u00b7 Vaelith \u00b7 Void \u2014 Portals & paradigm shifts' },
       { label: 'Unity (963 Hz)', description: 'Ino \u00b7 Kyuro \u00b7 Spirit \u2014 Partnership & integration' },
       { label: 'Source (1111 Hz)', description: 'Shinkami \u00b7 Amaterasu \u00b7 Source \u2014 Meta-consciousness & first principles' }
     ]

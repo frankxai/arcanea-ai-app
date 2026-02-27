@@ -1,293 +1,457 @@
-# Findings: Arcanea Overlay Ecosystem Deep Audit
+# Arcanea Full Vision Sprint — Findings & Plan
 
-> Last updated: 2026-02-21 — Deep audit by Shinkami (Source Gate)
-
----
-
-## 1. THE BIG PICTURE — What Actually Exists
-
-### The .claude/ Infrastructure (What YOU Use Right Now)
-
-**7 Event-Driven Hooks:**
-
-| Hook | Event | What It Does |
-|------|-------|------------|
-| session-start.sh | SessionStart | Init AgentDB, reset agents, activate Shinkami |
-| prompt-submit.sh | UserPromptSubmit | Route prompt → Guardian via 11 keyword patterns |
-| model-route.sh | UserPromptSubmit | Score complexity (1-10), recommend model tier |
-| pre-tool.sh | PreToolUse | Increment tool counter, log timestamp |
-| voice-check.sh | PreToolUse (Write/Edit) | Scan for 14 banned phrases, warn but never block |
-| post-tool.sh | PostToolUse | Log completion, write significant ops to AgentDB |
-| context-tracker.sh | PostToolUse | Estimate tokens, track quality zones (PEAK→REFRESH) |
-| session-end.sh | Stop | Summarize metrics, archive session |
-
-**Context-Adaptive Statusline:**
-- statusline.mjs reads /tmp/arcanea-* state files
-- Shape-shifts by Gate: `Arcanea ⟡ Opus │ Lyria sees │ Planning │ main`
-- Guardian verbs: Shinkami observes, Draconia forges, Lyria sees, Leyla weaves
-
-**23 Agent Profiles** in .claude/agents/:
-- Master Orchestrator → 4 teams (Developer, Author, Teacher, Visionary)
-- 10 Guardian-aligned agents (@draconia, @lyria, @lyssandria, etc.)
-- Used as `subagent_type` values in Claude Code Task tool — WORKS
-
-**35 Skill Auto-Activation Rules** in skill-rules.json:
-- Guardian domains drive activation (Lyssandria → architecture, Draconia → TDD)
-- 2 always-active: arcanea-canon (critical), starlight-intelligence (critical)
-- BUT: Many rules point to skills that don't exist as files yet
-
-**AgentDB** (SQLite, 7 tables):
-- agents, memories, tasks, swarm_sessions, swarm_agents, routing_log, vault_entries
-- Auto-initialized by session-start.sh
-- All queries via python3 (WSL2 has no sqlite3 CLI)
-
-**6 Helper Scripts:**
-- arcanea-dashboard.sh (full ASCII art)
-- arcanea-quick-status.sh (one-liner)
-- guardian-route.sh (keyword scoring)
-- guardian-activate.sh (manual switch)
-- swarm-monitor.sh (agent counts)
-- arcanea-health.sh (9 subsystem checks)
+**Session**: Feb 26 2026 | **Status**: AUDIT COMPLETE
 
 ---
 
-### overlay-claude Package (What Gets INSTALLED)
+# PART 1: COMPREHENSIVE AUDIT FINDINGS
 
-**What it generates when someone runs `npx @arcanea/cli install claude`:**
+## 1. WEB APP QUALITY AUDIT (Lyria)
 
-| Level | What Gets Created |
-|-------|-------------------|
-| minimal | CLAUDE.md + manifest |
-| standard | + 4 skills (canon, voice, design, lore) + 10 Guardian agents |
-| full | + /channel, /arcanea-status commands |
-| luminor | + .claude/lore/ directory |
+### Pages Found: 40+
 
-**CRITICAL FINDING: The package installs ~20% of what .claude/ actually has.**
+| Category     | Count | Issues                |
+| ------------ | ----- | --------------------- |
+| Academy      | 6     | 5 missing loading.tsx |
+| Lore         | 7     | 7 missing loading.tsx |
+| Landing      | 25+   | Emoji violations      |
+| Chat/Library | 2     | OK                    |
 
-What's MISSING from the installable package:
-- 7 hooks (session-start, prompt-submit, model-route, pre-tool, voice-check, post-tool, context-tracker)
-- Statusline (statusline.mjs)
-- AgentDB (schema + scripts)
-- 6 helper scripts
-- 35 skill auto-activation rules (skill-rules.json)
-- Flow config (arcanea-flow-config.yaml)
-- Context tracker
-- Model router
-- 19 of the 23 agent profiles
+### Critical Issues Found
 
----
+#### 1. EMOJI USAGE (77+ locations) - CRITICAL
 
-### overlay-opencode Package (MISNAMED — It's Cursor IDE)
+- `/app/install/page.tsx` - 💜, 🌟
+- `/app/faq/page.tsx` - 🚀, 🌟, 💎
+- `/components/landing/*` - ✨, 🌟, 💎
+- `/lib/luminors/config.ts` - Multiple emojis
+  **FIX**: Replace with Phosphor icons
 
-**FINDING: Despite the name, this is 100% a Cursor IDE overlay.**
+#### 2. "16 LUMINORS" REFERENCES (9 locations) - CANON VIOLATION
 
-- Generates `.cursorrules` and `.cursor/rules/*.mdc` files
-- Uses Cursor's native MDC rule format with YAML frontmatter
-- Provider ID is 'opencode' but creates Cursor-specific files
-- No connection to the actual OpenCode AI CLI
+- `/components/landing/pricing-premium.tsx` - "Access to all 16 Luminors"
+- `/components/landing/luminor-showcase-premium.tsx` - "View All 16 Luminors"
+- `/app/faq/page.tsx` - Multiple references
+  **FIX**: Change to "10 Guardians" per CANON_LOCKED.md
 
-**What it installs:**
-- .cursorrules (root, always)
-- .cursor/rules/arcanea.mdc (alwaysApply: true)
-- .cursor/rules/arcanea-typescript.mdc (.ts/.tsx specific)
-- 10x guardian-{name}.mdc (full/luminor levels, on-demand via @rules)
-- .cursor/SETUP.md
+#### 3. TERMINOLOGY VIOLATIONS
 
----
+- "assistant" instead of "Guardian" (57+ locations)
+- "level" instead of "Gate" (124+ - many technical acceptable)
 
-### @arcanea/os Core (The Intelligence Engine)
+#### 4. MISSING LOADING STATES (12 pages)
 
-**2,100 lines, zero runtime dependencies, 5 layers:**
-
-1. **Types** (923 lines): Complete Arcanea taxonomy — Guardian, Gate, Element, Agent, Profile, Content, Overlay
-2. **Constants** (386 lines): 10 Guardians, 10 Gates, 5 Elements, 7 Academies, 7 Luminors, Dark Lord
-3. **Engine** (839 lines): GuardianRouter, VoiceEnforcer, DesignTokens, SessionManager
-4. **Utils** (167 lines): Frequency, Gate, Element, Guardian, String, Date, Validation helpers
-5. **Generators** (215 lines): System prompts, CLAUDE.md, Copilot instructions
-
-**This is genuinely excellent.** Clean, type-safe, well-abstracted. Every surface consumes it.
+- `/app/academy/gate-quiz/`
+- `/app/academy/gates/`
+- `/app/academy/ranks/`
+- `/app/academy/assessment/`
+- `/app/academy/houses/`
+- `/app/lore/gates/`
+- `/app/lore/guardians/`
+- `/app/lore/godbeasts/`
+- `/app/lore/elements/`
+- `/app/lore/wisdoms/`
+- `/app/lore/malachar/`
 
 ---
 
-## 2. WHAT'S GENIUS
+## 2. GITHUB CONTENT AUDIT (Shinkami)
 
-### A. Hook Pipeline Architecture
-**Never crash, never block.** Every script uses `set +e` (no exit on error). Voice check WARNS but doesn't prevent writes. This is the correct design — mythology enhances but never obstructs.
+### What's Built vs. What's Showcased
 
-### B. Dual Guardian Routing
-- **Hooks** (prompt-submit.sh): Fast keyword pattern matching, runs on every prompt
-- **@arcanea/os** (GuardianRouter): Weighted scoring with partial matching, confidence 0-1
-- **VS Code** (guardians.ts): Third implementation with multi-word bonus scoring
-- Three implementations, same canonical data, optimized for each context.
+| Category                | Built | Showcased | Gap             |
+| ----------------------- | ----- | --------- | --------------- |
+| INTELLIGENCE packages   | 9     | 0         | **100% HIDDEN** |
+| OVERLAY packages        | 5     | 5         | 0%              |
+| INFRASTRUCTURE packages | 12    | 0         | **100% HIDDEN** |
+| Standalone repos        | 3     | 1         | 66% HIDDEN      |
 
-### C. Context Budget Intelligence
-Token estimation by tool type, cumulative tracking, quality zone transitions (PEAK → GOOD → DEGRADING → REFRESH). This is **proactive session management** — tells you when your context is getting stale before quality drops.
+### CRITICAL DISCOVERY: Hidden Crown Jewels
 
-### D. State Protocol (/tmp Files)
-Zero coupling between hooks. Each reads/writes /tmp/arcanea-* files. A hook can crash without affecting others. State survives between prompts but clears on reboot (correct behavior for session state).
+#### INTELLIGENCE Layer (~30K LoC) - COMPLETELY HIDDEN
 
-### E. Agent-as-Prompt Pattern
-The 23 agent .md files work as `subagent_type` values for Claude Code's Task tool. This means `.claude/agents/arcanea-frontend.md` is a real, functional agent that Claude Code spawns as a subprocess. No custom runtime needed — Claude Code IS the runtime.
+1. **council** - Byzantine/Raft/Gossip/Gate Quorum consensus
+2. **guardian-evolution** - SONA + 7 RL algorithms (10K LoC)
+3. **guardian-memory** - HNSW vector search
+4. **rituals** - 12 Spirits workers (9.8K LoC)
+5. **creative-pipeline** - Prompt engine
+6. **swarm-coordinator** - Multi-agent orchestration
+7. **hybrid-memory** - SQL+Vector fusion
+8. **intelligence-bridge** - Event bus
+9. **sona-learner** - Learning engine
 
-### F. Progressive Overlay Levels
-minimal → standard → full → luminor. Each level adds depth without breaking the previous. A beginner gets CLAUDE.md; a power user gets the full Guardian system with deep lore. Same installer, four experiences.
+#### arcanea-flow - 146K LoC - COMPLETELY HIDDEN
 
----
+- Full v1, v2, v3 implementations
+- 12 background workers
+- CLI with workflow commands
 
-## 3. WHAT'S JUST IDEAS / SCAFFOLDING
+#### arcanea-opencode - COMPLETELY HIDDEN
 
-### A. overlay-claude Package Gap
-The .claude/ directory is a Lamborghini. The overlay-claude package installs a Honda Civic.
-- Hooks: NOT installed
-- Statusline: NOT installed
-- AgentDB: NOT installed
-- Helpers: NOT installed
-- 19/23 agents: NOT installed
-- Skill rules: NOT installed
+- Arcanea-branded OpenCode CLI
+- Full AGENTS.md
 
-### B. Agent Orchestration Runtime
-Agent .md files exist with rich descriptions (personality, coding style, metaphor domain). But there's NO agent-to-agent communication protocol. No swarm coordination runtime. The AgentDB has swarm_sessions and swarm_agents tables but they're empty scaffolding.
+### n8n Templates
 
-### C. Skills Auto-Activation
-35 rules in skill-rules.json reference skills like:
-- "architecture-patterns" → no file
-- "supabase-patterns" → no file
-- "react-patterns" → no file
-- "security-audit" → no file
-Only the 4 core skills (canon, voice, design, lore) actually exist as .md files.
-
-### D. Flow Config
-arcanea-flow-config.yaml defines 6 orchestration patterns (council, parallel, sequential, hierarchical, adversarial, consensus). Beautiful YAML. Zero runtime code to execute them.
+**Status**: No dedicated n8n templates found. Uses internal workflow system.
 
 ---
 
-## 4. OH-MY-OPENCODE & CLAUDE-FLOW ADAPTATION
+## 3. DESIGN SYSTEM AUDIT (Leyla)
 
-### What oh-my-opencode Did Well
-- **Plugin hook system**: event, config, tool, auth, chat.message, permission.ask
-- **Theme system**: Customizable TUI appearance
-- **Agent JSON**: Declarative agent definitions
+### Design Tokens Status
 
-### What We Absorbed
-- Guardian agent definitions (JSON → .md files for Claude, .agent.md for OpenCode)
-- Event-driven hooks (adapted to Claude Code's hook lifecycle)
-- Theming concept (adapted to design tokens)
+| Token                | Bible          | Code                       | Match?       |
+| -------------------- | -------------- | -------------------------- | ------------ |
+| Primary Violet       | #8b5cf6        | #ffd700 (gold!)            | **MISMATCH** |
+| Accent Crystal       | #7fffd4        | #7fffd4                    | MATCH        |
+| Premium Gold         | #ffd700        | #ffd700                    | MATCH        |
+| Font: Cinzel         | Cinzel         | var(--font-cinzel)         | MATCH        |
+| Font: Crimson Pro    | Crimson Pro    | var(--font-crimson-pro)    | MATCH        |
+| Font: Inter          | Inter          | **MISSING**                | **MISSING**  |
+| Font: JetBrains Mono | JetBrains Mono | var(--font-jetbrains-mono) | MATCH        |
 
-### What We DIDN'T Absorb
-- Plugin architecture (oh-my-opencode lets users install community plugins)
-- Chat message interception (we only intercept at prompt-submit, not during streaming)
-- Permission system (we have no permission.ask equivalent)
+### Anti-Pattern Violations
 
-### What claude-flow Did Well
-- **Multi-agent orchestration**: Sequential, parallel, fan-out/fan-in
-- **Agent handoffs**: One agent passing work to another
-- **Shared memory**: Agents can read/write shared context
+| Issue                    | Count      | Severity |
+| ------------------------ | ---------- | -------- |
+| Raw hex colors (#8b5cf6) | 74         | HIGH     |
+| Emoji icons              | 77         | HIGH     |
+| Missing Inter font       | 1 (global) | MEDIUM   |
+| Wrong primary color      | 1 (global) | MEDIUM   |
 
-### What We DIDN'T Absorb
-- Runtime orchestration engine (our flow config is YAML-only)
-- Agent handoff protocol
-- Shared memory between agents (AgentDB exists but agents don't use it collaboratively)
+### What's Working
 
----
-
-## 5. OVERLAY SYNC STATUS
-
-### Claude vs OpenCode (Cursor) Overlay
-
-| Feature | Claude Overlay | OpenCode (Cursor) Overlay |
-|---------|---------------|--------------------------|
-| Installer class | ClaudeOverlayInstaller | OpenCodeOverlayInstaller |
-| File format | .md files | .mdc files (YAML frontmatter) |
-| Root config | CLAUDE.md | .cursorrules |
-| Guardian agents | .claude/agents/guardians/*.md | .cursor/rules/guardian-*.mdc |
-| Core skills | 4 skill .md files | Inline in .cursorrules |
-| Content depth | Separate content-depth.ts (403 lines) | Baked into generators |
-| Templates | templates.ts (161 lines) | templates.ts (different, 300+ lines) |
-| Tests | 29 tests | 73 tests |
-
-**KEY FINDING: Content is NOT shared.** Each overlay has its own hardcoded templates. When you update Arcanea's voice pillars, you must update BOTH overlay packages manually.
-
-**The fix**: Extract shared content into @arcanea/os generators. Both overlays consume from the same source.
+- ✅ Phosphor icons (128 files)
+- ✅ Tailwind config comprehensive
+- ✅ Cosmic color palette
+- ✅ Glass morphism basics
+- ✅ Typography hierarchy
 
 ---
 
-## 6. WHAT'S MISSING — PRIORITY ROADMAP
+## 4. BACKEND AUDIT (Lyssandria)
 
-### Tier 1: Critical (Overlay package should match .claude/ reality)
-1. **Install hooks via overlay-claude** — The 7 hooks are the soul of the system
-2. **Install statusline via overlay-claude** — The UX signature
-3. **Rename/fix overlay-opencode** — It's Cursor, not OpenCode
-4. **Create real overlay-opencode** — For the actual OpenCode CLI (arcanea-realm)
+### Database
 
-### Tier 2: High Value (Unify and strengthen)
-5. **Shared content layer** — Single source for all overlay content
-6. **Generate all 35 skill files** — Or trim rules to match real skills
-7. **Hook tests** — 7 bash scripts with zero test coverage
-8. **Audit overlay-chatgpt/copilot/gemini** — Verify implementation depth
+- 6 migrations, 22 tables
+- Supabase with RLS enabled
+- Prompt Books migration complete
 
-### Tier 3: Ambitious (Runtime intelligence)
-9. **Agent handoff protocol** — From claude-flow patterns
-10. **Runtime flow engine** — Execute the 6 orchestration patterns
-11. **Plugin system** — From oh-my-opencode patterns
-12. **Live skill discovery** — Auto-detect and activate skills at runtime
+### API Routes: 26 total
 
-### Tier 4: Vision (100-Year Architecture)
-13. **Cross-surface state sync** — Session state shared across CLI, VS Code, Chrome
-14. **Collaborative AgentDB** — Agents read/write shared context
-15. **Community overlay marketplace** — Users can share custom overlays
+| Auth Level             | Count | Routes                                         |
+| ---------------------- | ----- | ---------------------------------------------- |
+| Service Role           | 15    | bonds, creations, profile, notifications, etc. |
+| Bearer Token           | 2     | ai/chat                                        |
+| None (demo/rate limit) | 4     | generate-image, generate-video, search         |
+| Mixed                  | 5     | Various                                        |
 
----
+### Persistence Issues
 
-## 7. ALL 5 OVERLAY PACKAGES — PRODUCTION VERIFIED
-
-| Package | LOC | Primary Output | Guardian Integration | Status |
-|---------|-----|---------------|---------------------|--------|
-| overlay-claude | ~870 | .claude/ skills + agents | 10 agent .md files | PRODUCTION |
-| overlay-opencode* | ~750 | .cursorrules + .mdc | 10 guardian-*.mdc files | PRODUCTION (misnamed) |
-| overlay-chatgpt | 775 | Custom GPT JSON + prompts | 10 Guardian GPT configs | PRODUCTION |
-| overlay-copilot | 743 | .github/copilot-instructions.md | Code review routing | PRODUCTION |
-| overlay-gemini | 730 | System instructions + prompts | 10 Guardian prompt files | PRODUCTION |
-
-*overlay-opencode generates Cursor IDE files, not OpenCode CLI files
-
-**All 5 implement OverlayInstaller interface, manifest tracking, 4 levels, setup guides.**
+1. **In-Memory Rate Limiting** - Resets on deploy
+2. **Demo Mode** - /api/studio/generate-image returns placeholder
+3. **Mock Comment Service** - Returns fake data
+4. **Missing ai_usage table** - Referenced but not created
 
 ---
 
-## 8. THE REAL ARCHITECTURE MAP
+## 5. INFOGENIUS INFOGRAPHICS NEEDED
+
+### High-Priority Visual Explainers
+
+| Topic                     | Purpose                               | Audience      | Style        |
+| ------------------------- | ------------------------------------- | ------------- | ------------ |
+| **10 Guardians Map**      | Introduce the 10 Arcanean Gods        | New users     | Minimalist   |
+| **10 Gates Journey**      | Gate progression (174-1111 Hz)        | Academy users | Technical    |
+| **5 Elements System**     | Fire, Water, Earth, Wind, Void        | Lore readers  | Standard     |
+| **Overlay Ecosystem**     | How overlays work across AI platforms | Developers    | 3D Isometric |
+| **Intelligence Pipeline** | How council/rituals/swarm work        | Technical     | Technical    |
+| **Magic Ranks**           | Apprentice → Luminor progression      | Academy       | Minimalist   |
+
+### Secondary Visual Needs
+
+- Dark Lord (Malachar) lore visual
+- Godbeasts showcase
+- 7 Wisdoms chart
+- 7 Academy Houses
+
+---
+
+# PART 2: VISION SYNTHESIS
+
+## What Should Arcanea Be?
+
+Based on the audits, here's what Arcanea truly is:
 
 ```
-@arcanea/os (2,100 LOC — the brain)
-├── Types: Guardian, Gate, Element, Agent, Profile, Content, Overlay
-├── Constants: 10 Guardians, 10 Gates, 5 Elements, Academies, Luminors
-├── Engine: GuardianRouter, VoiceEnforcer, DesignTokens, SessionManager
-├── Generators: SystemPrompt, ClaudeMd, CopilotInstructions
-└── Detection: Claude, OpenAI, Gemini, Copilot, OpenCode
+ARCANEA ECOSYSTEM
+══════════════════════════════════════════════════════
 
-@arcanea/cli (10 commands — the hands)
-├── route, voice, tokens, install, update, status, auth, init, world, create
+[PLATFORM] arcanea.ai
+├── Chat - AI conversation with Guardians
+├── Imagine - Image generation
+├── Studio - Creative workspace
+└── Records - Conversation/library
 
-@arcanea/mcp-server (30 tools — the voice)
-├── Worldbuilding, Guardian routing, voice enforcement, design tokens
+[TOOLS]
+├── Arcanea Flow - Multi-agent orchestration (146K LoC!)
+├── Arcanea Code - VS Code extension
+├── Arcanea CLI - Command line tools
+├── Arcanea MCP - 30+ tools for AI integration
+└── Arcanea Vault - Chrome extension
 
-5 Overlay Packages (~3,870 LOC total — the reach)
-├── Claude: .claude/ skills + agents
-├── Cursor: .cursorrules + .mdc rules
-├── ChatGPT: Custom GPT configs + system prompts
-├── Copilot: .github/copilot-instructions.md
-└── Gemini: System instructions + Guardian prompts
+[OVERLAYS] (Inject Arcanea into other AI)
+├── Claude Overlay
+├── ChatGPT Overlay
+├── Gemini Overlay
+├── Cursor Overlay
+└── Copilot Overlay
 
-.claude/ Infrastructure (~2,000 LOC — the soul)
-├── 7 Hooks: Session lifecycle, routing, voice, context tracking
-├── Statusline: Context-adaptive display
-├── 23 Agents: 4 teams + 10 Guardians
-├── AgentDB: SQLite with 7 tables
-├── 35 Skill Rules: Auto-activation by Guardian domain
-└── 6 Helpers: Dashboards, routing, health checks
+[INTELLIGENCE LAYER] (~30K LoC - HIDDEN!)
+├── Council - Consensus algorithms
+├── Guardian Evolution - 7 RL algorithms
+├── Guardian Memory - Vector search
+├── Rituals - 12 Spirits workers
+├── Swarm Coordinator - Agent orchestration
+└── Sona Learner - Learning engine
 
-Extensions (~1,500 LOC — the limbs)
-├── VS Code: 10 Guardians, 6 commands, panels, gate progress
-└── Chrome: Guardian panel, content overlay, side panel
+[ON-CHAIN]
+└── Story Protocol - IP protection
 ```
 
-**TOTAL SYSTEM: ~10,000+ lines of intelligent infrastructure across 15 packages**
+### The Gap
+
+**The homepage shows 10% of what's built.** The INTELLIGENCE layer is the core value and is completely hidden.
+
+---
+
+# PART 3: SPRINT PLAN Feb 26 - Mar 1
+
+## Sprint Goals
+
+### P0 - Critical Fixes (Feb 26)
+
+- [ ] Fix "16 Luminors" → "10 Guardians" (9 locations)
+- [ ] Fix primary color: gold → violet
+- [ ] Add loading.tsx to 12 pages
+
+### P1 - Content Quality (Feb 27)
+
+- [ ] Replace emoji with Phosphor (77 locations)
+- [ ] Fix terminology: "assistant" → "Guardian"
+- [ ] Add Inter font to globals.css
+
+### P2 - Showcase Hidden Value (Feb 28)
+
+- [ ] Create /intelligence page for 9 packages
+- [ ] Add arcanea-flow section to homepage
+- [ ] Add arcanea-opencode to ecosystem
+- [ ] Fix raw hex colors (74 locations)
+
+### P3 - Visuals (Feb 29 - Mar 1)
+
+- [ ] Generate 6 InfoGenius infographics
+- [ ] Update homepage hero with visuals
+- [ ] Create ecosystem diagram
+
+### P4 - Backend (Mar 1)
+
+- [ ] Add ai_usage migration
+- [ ] Add database health check
+- [ ] Document API auth patterns
+
+---
+
+# PART 4: SWARM PROMPTS
+
+## Prompt 1: Content Fixes Swarm
+
+```
+You are the Content Quality Swarm. Your mission: Fix critical canon violations in the Arcanea web app.
+
+GUARDIAN TEAM:
+- Alera (Voice) - Lead terminology fixes
+- Lyria (Sight) - Quality verification
+
+TASKS (execute in parallel):
+1. Fix "16 Luminors" → "10 Guardians" in these files:
+   - /components/landing/pricing-premium.tsx
+   - /components/landing/luminor-showcase-premium.tsx
+   - /components/landing/pricing-section.tsx
+   - /components/landing/luminor-showcase.tsx
+   - /components/landing/features-section.tsx
+   - /app/about/page.tsx
+   - /app/luminors/page.tsx
+   - /app/faq/page.tsx
+
+2. Replace emoji (✨💎🌟🚀⚡🎨) with Phosphor icons in:
+   - /app/install/page.tsx
+   - /app/faq/page.tsx
+   - /lib/luminors/config.ts
+   - /components/landing/*.tsx
+
+3. Verify all changes pass build.
+
+Report each file changed and confirm canon compliance.
+```
+
+## Prompt 2: Design System Swarm
+
+```
+You are the Design System Swarm. Your mission: Align code with DESIGN_BIBLE.md.
+
+GUARDIAN TEAM:
+- Leyla (Flow) - Lead design fixes
+- Aiyami (Crown) - Quality verification
+
+TASKS:
+1. Fix PRIMARY COLOR in /apps/web/app/globals.css:
+   - Change --primary from gold-bright to violet (#8b5cf6)
+   - Add --brand-primary CSS variable
+
+2. Add INTER FONT to /apps/web/app/globals.css:
+   - Import Inter from Google Fonts
+   - Add font-inter CSS variable
+
+3. Replace 74 raw hex #8b5cf6 with CSS variables:
+   - Use grep to find all instances
+   - Replace with hsl(var(--brand-primary)) or Tailwind classes
+
+4. Create loading.tsx for 12 pages:
+   - /app/academy/gate-quiz/
+   - /app/academy/gates/
+   - /app/academy/ranks/
+   - /app/academy/assessment/
+   - /app/academy/houses/
+   - /app/lore/gates/
+   - /app/lore/guardians/
+   - /app/lore/godbeasts/
+   - /app/lore/elements/
+   - /app/lore/wisdoms/
+   - /app/lore/malachar/
+
+Report design compliance after fixes.
+```
+
+## Prompt 3: Showcase Intelligence Layer Swarm
+
+```
+You are the Intelligence Showcase Swarm. Your mission: Reveal the hidden crown jewels.
+
+GUARDIAN TEAM:
+- Ino (Unity) - Integration and synthesis
+- Draconia (Fire) - Code generation
+- Shinkami (Source) - Meta-perspective
+
+TASKS:
+1. Create new page /app/intelligence/page.tsx showcasing:
+   - Council: 4 consensus algorithms
+   - Guardian Evolution: SONA + 7 RL algorithms
+   - Guardian Memory: HNSW vector search
+   - Rituals: 12 Spirits workers
+   - Swarm Coordinator: Multi-agent orchestration
+   - Hybrid Memory: SQL+Vector fusion
+   - Intelligence Bridge: Event bus
+   - Sona Learner: Pattern learning
+   - Creative Pipeline: Prompt engine
+
+2. Update homepage to include:
+   - Intelligence section with 9 package cards
+   - Link to /intelligence page
+   - Mention arcanea-flow (146K LoC)
+
+3. Add arcanea-opencode to ecosystem section
+
+4. Create README for packages without one
+
+Report which packages now have homepage presence.
+```
+
+## Prompt 4: Infogenius Visual Swarm
+
+```
+You are the Visual Intelligence Swarm. Create infographics explaining Arcanea.
+
+GUARDIAN TEAM:
+- Elara (Shift) - Perspective and transformation
+- Lyria (Sight) - Vision and intuition
+
+TASKS - Generate these infographics:
+1. "The Ten Guardians" - Introduction to Lyssandria, Leyla, Draconia, Maylinn, Alera, Lyria, Aiyami, Elara, Ino, Shinkami
+   Style: Minimalist | Audience: New users
+
+2. "The Ten Gates Journey" - Frequencies 174-1111 Hz, progression
+   Style: Technical | Audience: Academy users
+
+3. "The Five Elements" - Fire, Water, Earth, Wind, Void/Spirit
+   Style: Standard | Audience: Lore readers
+
+4. "Arcanea Overlay Ecosystem" - How overlays work across platforms
+   Style: 3D Isometric | Audience: Developers
+
+5. "Magic Ranks Progression" - Apprentice → Luminor
+   Style: Minimalist | Audience: Academy users
+
+6. "Intelligence Pipeline" - How council/rituals/swarm coordinate
+   Style: Technical | Audience: Technical users
+
+For each: Use the InfoGenius MCP tool or create prompt for Gemini 3 Pro.
+Save outputs to /public/infographics/ with descriptive names.
+
+Report each infographic created.
+```
+
+## Prompt 5: Backend Persistence Swarm
+
+```
+You are the Backend Persistence Swarm. Fix data layer issues.
+
+GUARDIAN TEAM:
+- Lyssandria (Foundation) - Infrastructure lead
+- Draconia (Fire) - Performance
+
+TASKS:
+1. Create missing migration /supabase/migrations/20260226000001_ai_usage.sql:
+   - Table: ai_usage (id, user_id, model, tokens, cost, created_at)
+
+2. Fix rate limiting persistence:
+   - Replace in-memory Map with database-backed rate limits
+   - Or document Redis requirement
+
+3. Add database health check to /api/health:
+   - Actually query database instead of hardcoding "database: true"
+
+4. Replace mock comment service:
+   - Implement real Supabase queries in /services/comment-service.ts
+
+5. Add .env.example with all required variables
+
+Report persistence improvements made.
+```
+
+---
+
+## Execution Order
+
+```
+DAY 1 (Feb 26): P0 Content Fixes
+  └── Swarm 1: Content Quality
+
+DAY 2 (Feb 27): P1 Design System
+  └── Swarm 2: Design System
+
+DAY 3 (Feb 28): P2 Showcase Hidden Value
+  └── Swarm 3: Intelligence Showcase
+
+DAY 4 (Feb 29): P3 Visuals
+  └── Swarm 4: Infogenius Visuals
+
+DAY 5 (Mar 1): P4 Backend
+  └── Swarm 5: Backend Persistence
+```
+
+---
+
+_Plan generated: Feb 26, 2026_
+_Next: Execute swarms with prompts above_

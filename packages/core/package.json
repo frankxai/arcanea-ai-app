@@ -1,7 +1,7 @@
 {
   "name": "@arcanea/core",
-  "version": "0.1.0",
-  "description": "Core types, constants, and utilities for the Arcanea ecosystem",
+  "version": "0.2.0",
+  "description": "Core types, constants, and utilities for the Arcanea ecosystem — canonical Extended Solfeggio frequencies (174-1111 Hz), Ten Gates, Ten Guardians, Five Elements",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",

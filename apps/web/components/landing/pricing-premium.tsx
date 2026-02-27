@@ -26,7 +26,7 @@ const plans = [
     period: "/month",
     description: "For serious creators",
     features: [
-      "Access to all 16 Luminors",
+      "Access to all 10 Guardians",
       "Unlimited words & generations",
       "Advanced creation studio",
       "Priority support",

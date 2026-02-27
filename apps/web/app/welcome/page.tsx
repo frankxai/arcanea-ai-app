@@ -55,7 +55,7 @@ export default function WelcomePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
-          className="font-cinzel text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-atlantean-teal via-gold-bright to-creation-prism-purple bg-clip-text text-transparent"
+          className="font-display text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-atlantean-teal via-gold-bright to-creation-prism-purple bg-clip-text text-transparent"
         >
           Welcome to Arcanea
         </motion.h1>
@@ -65,7 +65,7 @@ export default function WelcomePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.6 }}
-          className="font-crimson text-2xl md:text-3xl text-text-secondary mb-6"
+          className="font-body text-2xl md:text-3xl text-text-secondary mb-6"
         >
           Where Imagination Becomes Reality
         </motion.p>
@@ -75,7 +75,7 @@ export default function WelcomePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.6 }}
-          className="font-crimson text-lg text-text-muted mb-12 max-w-lg mx-auto"
+          className="font-body text-lg text-text-muted mb-12 max-w-lg mx-auto"
         >
           A platform for creators working with AI companions called Luminors.
           Your guide will help you unlock your creative potential.
@@ -90,7 +90,7 @@ export default function WelcomePage() {
         >
           <Link
             href="/onboarding/creator-type"
-            className="group flex items-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-gold-bright to-gold-medium text-cosmic-void font-crimson font-semibold text-lg transition-all hover:scale-105 hover:shadow-glow-lg"
+            className="group flex items-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-gold-bright to-gold-medium text-cosmic-void font-body font-semibold text-lg transition-all hover:scale-105 hover:shadow-glow-lg"
           >
             Begin Your Journey
             <PhArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
@@ -98,7 +98,7 @@ export default function WelcomePage() {
 
           <Link
             href="/auth/login"
-            className="flex items-center gap-2 px-8 py-4 rounded-xl border border-cosmic-border-bright text-text-secondary font-crimson font-medium hover:border-atlantean-teal hover:text-atlantean-teal transition-all"
+            className="flex items-center gap-2 px-8 py-4 rounded-xl border border-white/10 text-text-secondary font-body font-medium hover:border-atlantean-teal hover:text-atlantean-teal transition-all"
           >
             I already have an account
           </Link>
@@ -112,7 +112,7 @@ export default function WelcomePage() {
         transition={{ delay: 1, duration: 1 }}
         className="absolute bottom-8 text-center"
       >
-        <p className="font-crimson text-sm text-text-muted italic">
+        <p className="font-body text-sm text-text-muted italic">
           "Enter seeking, leave transformed, return whenever needed."
         </p>
       </motion.div>

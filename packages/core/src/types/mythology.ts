@@ -56,7 +56,7 @@ export type GateName =
   | 'unity'
   | 'source';
 
-export type GateFrequency = 396 | 417 | 528 | 639 | 741 | 852 | 963 | 1111;
+export type GateFrequency = 174 | 285 | 396 | 417 | 528 | 639 | 741 | 852 | 963 | 1111;
 
 export interface Gate {
   name: GateName;
@@ -115,7 +115,7 @@ export type GodbeastName =
   | 'otome'
   | 'yumiko'
   | 'sol'
-  | 'thessara'
+  | 'vaelith'
   | 'kyuro'
   | 'amaterasu';
 

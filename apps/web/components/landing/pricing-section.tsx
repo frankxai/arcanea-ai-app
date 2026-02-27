@@ -1,66 +1,69 @@
-'use client';
+"use client";
 
-import { motion, useInView } from 'framer-motion';
-import { useRef, useState } from 'react';
-import { PhCheck, PhSparkle, PhLightning, PhCrown, PhArrowRight } from '@phosphor-icons/react';
-import Link from 'next/link';
+import { motion, useInView } from "framer-motion";
+import { useRef, useState } from "react";
+import {
+  PhCheck,
+  PhSparkle,
+  PhLightning,
+  PhCrown,
+  PhArrowRight,
+} from "@phosphor-icons/react";
+import Link from "next/link";
 
 const PLANS = [
   {
-    name: 'Explorer',
-    description: 'Start your creative journey',
+    name: "Explorer",
+    description: "Start your creative journey",
     price: { monthly: 0, yearly: 0 },
     featured: false,
-    cta: 'Start Free',
-    href: '/register',
+    cta: "Start Free",
+    href: "/register",
     features: [
-      '3 Luminor companions',
-      '10 creations per month',
-      'Basic Seven Wisdoms',
-      'Community access',
-      'Export to PDF',
+      "3 Luminor companions",
+      "10 creations per month",
+      "Basic Seven Wisdoms",
+      "Community access",
+      "Export to PDF",
     ],
-    limits: [
-      'Limited AI models',
-      'No custom prompts',
-    ],
+    limits: ["Limited AI models", "No custom prompts"],
   },
   {
-    name: 'Creator',
-    description: 'For serious creative work',
+    name: "Creator",
+    description: "For serious creative work",
     price: { monthly: 19, yearly: 190 },
     featured: true,
-    cta: 'Start Creating',
-    href: '/register?plan=creator',
-    badge: 'Most Popular',
+    cta: "Start Creating",
+    href: "/register?plan=creator",
+    badge: "Most Popular",
     features: [
-      'All 16 Luminors',
-      'Unlimited creations',
-      'Full Seven Wisdoms',
-      'Ten Gates progression',
-      'All export formats',
-      'Priority support',
-      'Custom prompts',
-      'Version history',
+      "All 10 Guardians",
+      "Unlimited creations",
+      "Full Seven Wisdoms",
+      "Ten Gates progression",
+      "All export formats",
+      "Priority support",
+      "Custom prompts",
+      "Version history",
     ],
     limits: [],
   },
   {
-    name: 'Studio',
-    description: 'Professional creative suite',
+    name: "Studio",
+    description: "Professional creative suite",
     price: { monthly: 49, yearly: 490 },
     featured: false,
-    cta: 'Go Pro',
-    href: '/register?plan=studio',
+    cta: "Go Pro",
+    href: "/register?plan=studio",
     features: [
-      'Everything in Creator',
-      'Team collaboration (5 seats)',
-      'API access',
-      'Custom Luminor training',
-      'White-label exports',
-      'Dedicated support',
-      'Early access features',
-      'Advanced analytics',
+      "Everything in Creator",
+      "Team collaboration (5 seats)",
+      "API access",
+      "Custom Luminor training",
+      "White-label exports",
+      "Dedicated support",
+      "Early access features",
+      "Advanced analytics",
     ],
     limits: [],
   },
@@ -68,7 +71,7 @@ const PLANS = [
 
 export function PricingSection() {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [isYearly, setIsYearly] = useState(true);
 
   return (
@@ -88,13 +91,16 @@ export function PricingSection() {
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold-bright/10 border border-gold-bright/20 mb-6">
             <PhSparkle className="w-4 h-4 text-gold-bright" />
-            <span className="text-sm font-medium text-gold-bright">Simple Pricing</span>
+            <span className="text-sm font-medium text-gold-bright">
+              Simple Pricing
+            </span>
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
             Choose your creative path
           </h2>
           <p className="text-xl text-text-secondary max-w-2xl mx-auto mb-10">
-            Start free, upgrade when you're ready. All plans include core Arcanea features.
+            Start free, upgrade when you're ready. All plans include core
+            Arcanea features.
           </p>
 
           {/* Billing toggle */}
@@ -103,8 +109,8 @@ export function PricingSection() {
               onClick={() => setIsYearly(false)}
               className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all ${
                 !isYearly
-                  ? 'bg-white text-cosmic-deep'
-                  : 'text-text-muted hover:text-white'
+                  ? "bg-white text-cosmic-deep"
+                  : "text-text-muted hover:text-white"
               }`}
             >
               Monthly
@@ -113,8 +119,8 @@ export function PricingSection() {
               onClick={() => setIsYearly(true)}
               className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${
                 isYearly
-                  ? 'bg-white text-cosmic-deep'
-                  : 'text-text-muted hover:text-white'
+                  ? "bg-white text-cosmic-deep"
+                  : "text-text-muted hover:text-white"
               }`}
             >
               Yearly
@@ -130,7 +136,7 @@ export function PricingSection() {
           {PLANS.map((plan, i) => {
             const Icon = i === 0 ? Zap : i === 1 ? Sparkles : Crown;
             const price = isYearly ? plan.price.yearly : plan.price.monthly;
-            const period = isYearly ? '/year' : '/month';
+            const period = isYearly ? "/year" : "/month";
 
             return (
               <motion.div
@@ -140,8 +146,8 @@ export function PricingSection() {
                 transition={{ delay: 0.1 + i * 0.1 }}
                 className={`relative rounded-3xl p-8 ${
                   plan.featured
-                    ? 'bg-gradient-to-b from-atlantean-teal-aqua/20 to-cosmic-surface/50 border-2 border-atlantean-teal-aqua/30 scale-105 lg:scale-110'
-                    : 'bg-cosmic-surface/30 border border-white/10'
+                    ? "bg-gradient-to-b from-atlantean-teal-aqua/20 to-cosmic-surface/50 border-2 border-atlantean-teal-aqua/30 scale-105 lg:scale-110"
+                    : "bg-cosmic-surface/30 border border-white/10"
                 }`}
               >
                 {/* Featured badge */}
@@ -155,18 +161,20 @@ export function PricingSection() {
                 <div className="mb-8">
                   <div
                     className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${
-                      plan.featured
-                        ? 'bg-atlantean-teal-aqua/20'
-                        : 'bg-white/5'
+                      plan.featured ? "bg-atlantean-teal-aqua/20" : "bg-white/5"
                     }`}
                   >
                     <Icon
                       className={`w-6 h-6 ${
-                        plan.featured ? 'text-atlantean-teal-aqua' : 'text-white'
+                        plan.featured
+                          ? "text-atlantean-teal-aqua"
+                          : "text-white"
                       }`}
                     />
                   </div>
-                  <h3 className="text-2xl font-display font-bold mb-2">{plan.name}</h3>
+                  <h3 className="text-2xl font-display font-bold mb-2">
+                    {plan.name}
+                  </h3>
                   <p className="text-text-secondary">{plan.description}</p>
                 </div>
 
@@ -174,7 +182,7 @@ export function PricingSection() {
                 <div className="mb-8">
                   <div className="flex items-baseline gap-2">
                     <span className="text-5xl font-display font-bold">
-                      {price === 0 ? 'Free' : `$${price}`}
+                      {price === 0 ? "Free" : `$${price}`}
                     </span>
                     {price > 0 && (
                       <span className="text-text-muted">{period}</span>
@@ -192,8 +200,8 @@ export function PricingSection() {
                   href={plan.href}
                   className={`w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold transition-all mb-8 ${
                     plan.featured
-                      ? 'bg-atlantean-teal-aqua text-cosmic-deep hover:bg-atlantean-teal-aqua/90'
-                      : 'bg-white/10 text-white hover:bg-white/20'
+                      ? "bg-atlantean-teal-aqua text-cosmic-deep hover:bg-atlantean-teal-aqua/90"
+                      : "bg-white/10 text-white hover:bg-white/20"
                   }`}
                 >
                   {plan.cta}
@@ -207,17 +215,22 @@ export function PricingSection() {
                       <div
                         className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
                           plan.featured
-                            ? 'bg-atlantean-teal-aqua/20 text-atlantean-teal-aqua'
-                            : 'bg-white/10 text-white'
+                            ? "bg-atlantean-teal-aqua/20 text-atlantean-teal-aqua"
+                            : "bg-white/10 text-white"
                         }`}
                       >
                         <PhCheck className="w-3 h-3" />
                       </div>
-                      <span className="text-sm text-text-secondary">{feature}</span>
+                      <span className="text-sm text-text-secondary">
+                        {feature}
+                      </span>
                     </div>
                   ))}
                   {plan.limits.map((limit) => (
-                    <div key={limit} className="flex items-start gap-3 opacity-50">
+                    <div
+                      key={limit}
+                      className="flex items-start gap-3 opacity-50"
+                    >
                       <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 bg-white/5">
                         <span className="w-2 h-0.5 bg-text-muted rounded-full" />
                       </div>

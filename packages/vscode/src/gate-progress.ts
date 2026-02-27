@@ -11,14 +11,14 @@ interface GateDefinition {
 }
 
 const GATE_DEFINITIONS: GateDefinition[] = [
-  { id: 'foundation', name: 'Foundation', frequency: '396 Hz', guardian: 'Lyssandria', element: 'Earth',  color: '#4ade80', description: 'Liberation from fear. Survival. Grounding.' },
-  { id: 'flow',       name: 'Flow',       frequency: '417 Hz', guardian: 'Leyla',      element: 'Water',  color: '#78a6ff', description: 'Change. Creativity. Dissolution of stagnation.' },
-  { id: 'fire',       name: 'Fire',       frequency: '528 Hz', guardian: 'Draconia',   element: 'Fire',   color: '#ff6b35', description: 'Transformation. DNA repair. Miraculous frequency.' },
-  { id: 'heart',      name: 'Heart',      frequency: '639 Hz', guardian: 'Maylinn',    element: 'Wind',   color: '#f472b6', description: 'Connection. Relationships. Harmonizing communities.' },
-  { id: 'voice',      name: 'Voice',      frequency: '741 Hz', guardian: 'Alera',      element: 'Void',   color: '#e879f9', description: 'Awakening intuition. Problem-solving. Pure expression.' },
-  { id: 'sight',      name: 'Sight',      frequency: '852 Hz', guardian: 'Lyria',      element: 'Spirit', color: '#a855f7', description: 'Intuition. Spiritual order. Returning to truth.' },
-  { id: 'crown',      name: 'Crown',      frequency: '963 Hz', guardian: 'Aiyami',     element: 'Spirit', color: '#fbbf24', description: 'Divine consciousness. Infinite intelligence. Synthesis.' },
-  { id: 'shift',      name: 'Shift',      frequency: '1111 Hz', guardian: 'Elara',     element: 'Void',   color: '#06b6d4', description: 'Portals. Paradigm transformation. Reframing.' },
+  { id: 'foundation', name: 'Foundation', frequency: '174 Hz', guardian: 'Lyssandria', element: 'Earth',  color: '#4ade80', description: 'Liberation from fear. Survival. Grounding.' },
+  { id: 'flow',       name: 'Flow',       frequency: '285 Hz', guardian: 'Leyla',      element: 'Water',  color: '#78a6ff', description: 'Change. Creativity. Dissolution of stagnation.' },
+  { id: 'fire',       name: 'Fire',       frequency: '396 Hz', guardian: 'Draconia',   element: 'Fire',   color: '#ff6b35', description: 'Transformation. DNA repair. Miraculous frequency.' },
+  { id: 'heart',      name: 'Heart',      frequency: '417 Hz', guardian: 'Maylinn',    element: 'Wind',   color: '#f472b6', description: 'Connection. Relationships. Harmonizing communities.' },
+  { id: 'voice',      name: 'Voice',      frequency: '528 Hz', guardian: 'Alera',      element: 'Void',   color: '#e879f9', description: 'Awakening intuition. Problem-solving. Pure expression.' },
+  { id: 'sight',      name: 'Sight',      frequency: '639 Hz', guardian: 'Lyria',      element: 'Spirit', color: '#a855f7', description: 'Intuition. Spiritual order. Returning to truth.' },
+  { id: 'crown',      name: 'Crown',      frequency: '741 Hz', guardian: 'Aiyami',     element: 'Spirit', color: '#fbbf24', description: 'Divine consciousness. Infinite intelligence. Synthesis.' },
+  { id: 'shift',      name: 'Shift',      frequency: '852 Hz', guardian: 'Elara',      element: 'Void',   color: '#06b6d4', description: 'Portals. Paradigm transformation. Reframing.' },
   { id: 'unity',      name: 'Unity',      frequency: '963 Hz', guardian: 'Ino',        element: 'Spirit', color: '#14b8a6', description: 'Partnership. Integration. Harmonious co-creation.' },
   { id: 'source',     name: 'Source',     frequency: '1111 Hz', guardian: 'Shinkami',  element: 'Source', color: '#ffd700', description: 'First principles. Meta-consciousness. Origin of all.' }
 ];

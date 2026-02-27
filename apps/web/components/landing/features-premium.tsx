@@ -210,8 +210,8 @@ export function FeaturesPremium() {
                 Comprehensive Capabilities
               </h3>
               <p className="text-text-secondary mb-6">
-                Whether you need to write, design, code, or create, Arcanea has
-                you covered with enterprise-grade AI capabilities.
+                Whether you need to write, design, code, or create, every tool
+                is guided by Guardian archetypes and the Seven Wisdoms framework.
               </p>
               <div className="flex flex-wrap gap-3">
                 {capabilities.slice(0, 4).map((cap) => (

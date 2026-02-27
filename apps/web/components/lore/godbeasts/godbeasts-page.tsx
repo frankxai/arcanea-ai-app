@@ -194,7 +194,7 @@ const GODBEASTS: Godbeast[] = [
     accentHex: '#ffd700',
   },
   {
-    id: 'thessara',
+    id: 'vaelith',
     name: 'Vaelith',
     type: 'Fox of Eight Prismatic Tails',
     element: 'Echo / Fractal',

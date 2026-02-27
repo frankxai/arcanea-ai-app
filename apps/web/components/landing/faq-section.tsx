@@ -15,7 +15,7 @@ const FAQS = [
   },
   {
     question: 'Is my creative work private and secure?',
-    answer: 'Absolutely. Your creations, prompts, and conversations are encrypted and never shared or used to train AI models. You retain full ownership of everything you create on Arcanea. We offer enterprise-grade security with SOC 2 Type II compliance for teams requiring additional assurance.',
+    answer: 'Absolutely. Your creations, prompts, and conversations are encrypted and never shared or used to train AI models. You retain full ownership of everything you create on Arcanea. Your creative process is sacred — we treat it that way.',
   },
   {
     question: 'Can I export my work?',

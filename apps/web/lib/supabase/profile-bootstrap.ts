@@ -1,46 +1,38 @@
 import type { User } from '@supabase/supabase-js';
 import { createAdminClient } from '@/lib/supabase/server';
 
-function sanitizeUsername(input: string) {
-  return input
-    .toLowerCase()
-    .replace(/[^a-z0-9_]+/g, '_')
-    .replace(/^_+|_+$/g, '')
-    .slice(0, 24);
-}
-
-function buildUsername(user: User) {
-  const metadataName =
-    (typeof user.user_metadata?.name === 'string' && user.user_metadata.name) ||
-    (typeof user.user_metadata?.full_name === 'string' && user.user_metadata.full_name) ||
-    '';
-  const emailLocal = user.email?.split('@')[0] ?? 'creator';
-  const base = sanitizeUsername(metadataName || emailLocal) || 'creator';
-  return `${base}_${user.id.slice(0, 6)}`;
-}
-
+/**
+ * Ensure a profile exists for the given user.
+ * Called from the auth callback route as a safety net.
+ * The DB trigger `on_auth_user_created` handles most cases,
+ * but OAuth sign-ins may race — this upsert catches any gaps.
+ */
 export async function ensureProfileForUser(user: User) {
   try {
     const admin = createAdminClient();
 
-    const payload = {
-      id: user.id,
-      username: buildUsername(user),
-      display_name:
-        (typeof user.user_metadata?.name === 'string' && user.user_metadata.name) ||
-        (typeof user.user_metadata?.full_name === 'string' && user.user_metadata.full_name) ||
-        null,
-      avatar_url:
-        (typeof user.user_metadata?.avatar_url === 'string' && user.user_metadata.avatar_url) ||
-        null,
-      bio: null,
-      academy_id: null,
-    };
+    const displayName =
+      (typeof user.user_metadata?.display_name === 'string' && user.user_metadata.display_name) ||
+      (typeof user.user_metadata?.name === 'string' && user.user_metadata.name) ||
+      (typeof user.user_metadata?.full_name === 'string' && user.user_metadata.full_name) ||
+      user.email?.split('@')[0] ||
+      'Creator';
 
-    const { error } = await (admin.from('profiles') as any).upsert(payload, {
-      onConflict: 'id',
-      ignoreDuplicates: false,
-    });
+    const avatarUrl =
+      (typeof user.user_metadata?.avatar_url === 'string' && user.user_metadata.avatar_url) ||
+      null;
+
+    const { error } = await admin.from('profiles').upsert(
+      {
+        id: user.id,
+        display_name: displayName,
+        avatar_url: avatarUrl,
+      },
+      {
+        onConflict: 'id',
+        ignoreDuplicates: true,
+      }
+    );
 
     if (error) {
       console.error('Profile bootstrap failed:', error.message);

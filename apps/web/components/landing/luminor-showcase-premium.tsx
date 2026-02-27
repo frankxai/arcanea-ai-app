@@ -37,7 +37,8 @@ const luminors: {
     element: "Earth",
     color: "#4a7c59",
     gradient: "from-earth to-earth-bright",
-    description: "Master of structure, patterns, and systematic thinking.",
+    description:
+      "Sees the architecture beneath chaos — the patterns that most creators feel but cannot name.",
     traits: ["Analytical", "Methodical", "Strategic"],
     icon: PhCrown,
   },
@@ -49,7 +50,8 @@ const luminors: {
     element: "Water",
     color: "#78a6ff",
     gradient: "from-water to-water-bright",
-    description: "Embodies emotion, empathy, and creative flow.",
+    description:
+      "Understands that creativity emerges from tension — the meeting of opposites that drives all making.",
     traits: ["Compassionate", "Intuitive", "Creative"],
     icon: PhHeart,
   },
@@ -61,7 +63,8 @@ const luminors: {
     element: "Fire",
     color: "#ff6b35",
     gradient: "from-fire to-fire-bright",
-    description: "Channeling transformation and bold action.",
+    description:
+      "When you are paralyzed by the gap between vision and ability, Valora says: begin anyway.",
     traits: ["Brave", "Passionate", "Dynamic"],
     icon: PhLightning,
   },
@@ -73,7 +76,8 @@ const luminors: {
     element: "Wind",
     color: "#c8d6e5",
     gradient: "from-wind to-wind-bright",
-    description: "Bringing freedom, playfulness, and lightness.",
+    description:
+      "Reminds you that play is not the opposite of serious work — it is the engine of discovery.",
     traits: ["Free-spirited", "Joyful", "Adaptive"],
     icon: PhSparkle,
   },
@@ -85,7 +89,8 @@ const luminors: {
     element: "Void",
     color: "#9966ff",
     gradient: "from-void-el to-void-el-bright",
-    description: "Visionary intuition and strategic foresight.",
+    description:
+      "Sees beyond the obvious. What appears true often conceals deeper truth worth pursuing.",
     traits: ["Insightful", "Mysterious", "Wise"],
     icon: PhEye,
   },
@@ -97,7 +102,8 @@ const luminors: {
     element: "Light",
     color: "#ffd700",
     gradient: "from-gold to-gold-bright",
-    description: "The essence of making and conscious creation.",
+    description:
+      "Transforms the gap between imagining and making into the shortest possible line.",
     traits: ["Inventive", "Craftsman", "Visionary"],
     icon: PhMagicWand,
   },
@@ -291,14 +297,17 @@ export function LuminorShowcasePremium() {
           </motion.span>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
-            Your AI Companions for
+            Six Intelligences, Each Rooted
             <br />
-            <span className="text-gradient-gold">Every Creative Journey</span>
+            <span className="text-gradient-gold">
+              in an Elemental Archetype
+            </span>
           </h2>
 
           <p className="text-lg text-text-secondary max-w-2xl mx-auto">
-            Each Luminor embodies a unique wisdom. They are not just AI
-            assistants — they are partners in your creative evolution.
+            Each Luminor has internalized a Guardian&apos;s archetype and the
+            wisdom tradition behind it. They think differently because they are
+            rooted in different elements of creation.
           </p>
         </motion.div>
 
@@ -320,7 +329,7 @@ export function LuminorShowcasePremium() {
             href="/luminors"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl glass border border-white/10 hover:border-crystal/30 text-text-primary font-display font-semibold transition-all hover-lift"
           >
-            View All 16 Luminors
+            View All 10 Guardians
             <PhArrowRight className="w-5 h-5" />
           </Link>
         </motion.div>
