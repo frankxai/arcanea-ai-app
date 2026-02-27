@@ -247,7 +247,7 @@ export const ContextSidebar: React.FC<ContextSidebarProps> = ({
               >
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
-                    <Heart
+                    <PhHeart
                       className="w-5 h-5 fill-current"
                       style={{ color: luminorColor }}
                     />
@@ -347,7 +347,7 @@ export const ContextSidebar: React.FC<ContextSidebarProps> = ({
 
                 {/* Next Step */}
                 <div className="flex items-start gap-2 p-3 rounded-lg bg-gray-900/50">
-                  <ChevronRight
+                  <PhCaretRight
                     className="w-5 h-5 flex-shrink-0 mt-0.5"
                     style={{ color: luminorColor }}
                   />

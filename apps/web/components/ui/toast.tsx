@@ -44,27 +44,27 @@ const variantConfig = {
   default: {
     borderColor: 'border-l-crystal/60',
     iconColor: 'text-crystal',
-    Icon: Info,
+    Icon: PhInfo,
   },
   success: {
     borderColor: 'border-l-[#20cc73]/80',
     iconColor: 'text-[#20cc73]',
-    Icon: CheckCircle,
+    Icon: PhCheckCircle,
   },
   warning: {
     borderColor: 'border-l-[#ffa500]/80',
     iconColor: 'text-[#ffa500]',
-    Icon: AlertTriangle,
+    Icon: PhWarning,
   },
   error: {
     borderColor: 'border-l-error/80',
     iconColor: 'text-error',
-    Icon: AlertCircle,
+    Icon: PhWarningCircle,
   },
   info: {
     borderColor: 'border-l-[#26b8e6]/80',
     iconColor: 'text-[#26b8e6]',
-    Icon: Info,
+    Icon: PhInfo,
   },
 } as const;
 

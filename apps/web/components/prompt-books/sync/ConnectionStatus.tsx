@@ -32,10 +32,10 @@ export function ConnectionStatus() {
   }, [setSyncStatus])
 
   const statusConfig = {
-    synced: { icon: Cloud, label: 'Synced', color: 'text-success', pulse: false },
-    syncing: { icon: RefreshCw, label: 'Syncing...', color: 'text-brand-accent', pulse: true },
-    offline: { icon: CloudOff, label: 'Offline', color: 'text-text-muted', pulse: false },
-    error: { icon: WifiOff, label: 'Sync error', color: 'text-error', pulse: false },
+    synced: { icon: PhCloud, label: 'Synced', color: 'text-success', pulse: false },
+    syncing: { icon: PhArrowsClockwise, label: 'Syncing...', color: 'text-brand-accent', pulse: true },
+    offline: { icon: PhCloudSlash, label: 'Offline', color: 'text-text-muted', pulse: false },
+    error: { icon: PhWifiSlash, label: 'Sync error', color: 'text-error', pulse: false },
   }
 
   const config = statusConfig[syncStatus]

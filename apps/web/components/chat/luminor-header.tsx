@@ -25,7 +25,7 @@ const academyInfo = {
   },
   atlantean: {
     name: 'Atlantean Academy',
-    icon: Book,
+    icon: PhBook,
     gradient: 'from-blue-500 to-cyan-500',
   },
   draconic: {

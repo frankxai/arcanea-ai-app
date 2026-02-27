@@ -21,20 +21,20 @@ import type { Prompt, PromptType } from '@/lib/prompt-books/types'
 // =====================================================================
 
 const PROMPT_TYPE_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
-  MessageSquare,
-  Image,
-  ImagePlus,
-  MessagesSquare,
-  Link,
-  ListOrdered,
-  Code,
-  PenTool,
-  BarChart3,
+  MessageSquare: PhChatSquare,
+  Image: PhImage,
+  ImagePlus: PhImageSquare,
+  MessagesSquare: PhChats,
+  Link: PhLink,
+  ListOrdered: PhListNumbers,
+  Code: PhCode,
+  PenTool: PhPen,
+  BarChart3: PhChartBar,
 }
 
 function getTypeIcon(promptType: PromptType) {
   const config = PROMPT_TYPES[promptType]
-  return PROMPT_TYPE_ICONS[config.icon] ?? MessageSquare
+  return PROMPT_TYPE_ICONS[config.icon] ?? PhChatSquare
 }
 
 // =====================================================================

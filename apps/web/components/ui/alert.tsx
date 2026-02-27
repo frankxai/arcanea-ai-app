@@ -10,25 +10,25 @@ import { cn } from '@/lib/utils';
 const variantConfig = {
   info: {
     border: 'border-l-[#26b8e6]/70',
-    icon: Info,
+    icon: PhInfo,
     iconClass: 'text-[#26b8e6]',
     bg: 'bg-[rgba(38,184,230,0.05)]',
   },
   success: {
     border: 'border-l-[#20cc73]/70',
-    icon: CheckCircle,
+    icon: PhCheckCircle,
     iconClass: 'text-[#20cc73]',
     bg: 'bg-[rgba(32,204,115,0.05)]',
   },
   warning: {
     border: 'border-l-[#ffa500]/70',
-    icon: AlertTriangle,
+    icon: PhWarning,
     iconClass: 'text-[#ffa500]',
     bg: 'bg-[rgba(255,165,0,0.05)]',
   },
   error: {
     border: 'border-l-error/70',
-    icon: AlertCircle,
+    icon: PhWarningCircle,
     iconClass: 'text-error',
     bg: 'bg-[rgba(245,41,82,0.05)]',
   },
