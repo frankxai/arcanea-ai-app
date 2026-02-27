@@ -1,16 +1,5 @@
-import { PlaceholderPage } from '@/components/system/placeholder-page';
+import { redirect } from 'next/navigation';
 
 export default function AcosDocsPage() {
-  return (
-    <PlaceholderPage
-      eyebrow="ACOS"
-      title="Arcanea Core Operating System Docs"
-      description="ACOS technical documentation is currently being merged into the new docs information architecture."
-      primaryHref="/acos"
-      primaryLabel="Open ACOS"
-      secondaryHref="/hub/tools"
-      secondaryLabel="Tools Catalog"
-    />
-  );
+  redirect('/docs');
 }
-
