@@ -21,7 +21,7 @@ import {
   PhStack,
   PhCode,
   PhDatabase,
-} from "@phosphor-icons/react";
+} from '@/lib/phosphor-icons';
 
 const features = [
   {

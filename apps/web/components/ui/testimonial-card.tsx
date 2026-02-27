@@ -4,7 +4,7 @@ import * as React from "react";
 import { motion, Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarProps } from "./avatar";
-import { PhQuotes } from "@phosphor-icons/react";
+import { PhQuotes } from "@/lib/phosphor-icons";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 

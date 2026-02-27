@@ -1,6 +1,6 @@
 'use client'
 
-import { PhPlus } from '@phosphor-icons/react'
+import { PhPlus } from '@/lib/phosphor-icons'
 import { cn } from '@/lib/utils'
 import { TagChip } from './TagChip'
 import type { Tag } from '@/lib/prompt-books/types'

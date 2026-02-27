@@ -1,6 +1,6 @@
 'use client'
 
-import { PhUsers, PhGlobe, PhImage, PhMicrophone, PhMagicWand, PhSparkle } from '@phosphor-icons/react'
+import { PhUsers, PhGlobe, PhImage, PhMicrophone, PhMagicWand, PhSparkle } from '@/lib/phosphor-icons'
 import { Button } from '@/components/ui/button'
 
 interface Tool {

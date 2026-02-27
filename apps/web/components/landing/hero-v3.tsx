@@ -17,7 +17,7 @@ import {
   Star,
   Zap,
   CaretDown,
-} from "@phosphor-icons/react";
+} from '@/lib/phosphor-icons';
 
 interface HeroV3Props {
   stats: {

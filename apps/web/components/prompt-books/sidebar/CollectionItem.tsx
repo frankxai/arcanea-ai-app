@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, type ReactNode } from 'react'
-import { PhCaretRight, PhPushPin, PhBookOpen } from '@phosphor-icons/react'
+import { PhCaretRight, PhPushPin, PhBookOpen } from '@/lib/phosphor-icons'
 import { cn } from '@/lib/utils'
 import { GUARDIAN_THEMES } from '@/lib/prompt-books/constants'
 import type { Collection } from '@/lib/prompt-books/types'

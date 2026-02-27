@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { PhX } from '@phosphor-icons/react';
+import { PhX } from '@/lib/phosphor-icons';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 

@@ -2,7 +2,7 @@
 
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { useRef, useState } from 'react';
-import { PhQuestion, PhPlus, PhMinus } from '@phosphor-icons/react';
+import { PhQuestion, PhPlus, PhMinus } from '@/lib/phosphor-icons';
 
 const FAQS = [
   {

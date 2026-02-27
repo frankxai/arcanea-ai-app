@@ -9,7 +9,7 @@ import {
   PhFolderOpen,
   PhWarningCircle,
   PhCheck,
-} from "@phosphor-icons/react";
+} from '@/lib/phosphor-icons';
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { usePromptBooksStore } from "@/lib/prompt-books/store";

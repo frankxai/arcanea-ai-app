@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { PhList, PhX, PhWarningCircle } from '@phosphor-icons/react';
+import { PhList, PhX, PhWarningCircle } from '@/lib/phosphor-icons';
 import { LuminorHeader } from '@/components/chat/luminor-header';
 import { ChatContainer } from '@/components/chat/chat-container';
 import { ChatInput } from '@/components/chat/chat-input';

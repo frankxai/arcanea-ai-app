@@ -5,7 +5,7 @@ import {
   PhLightning,
   PhCodeBlock,
   PhTerminal,
-} from "@phosphor-icons/react/dist/ssr";
+} from '@/lib/phosphor-icons';
 
 export const metadata: Metadata = {
   title: "Install | Arcanea Intelligence System",

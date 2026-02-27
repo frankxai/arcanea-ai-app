@@ -3,7 +3,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { ChatMessage } from './message';
 import { StreamingMessage } from './streaming-message';
-import { PhArrowDown, PhCircleNotch } from '@phosphor-icons/react';
+import { PhArrowDown, PhCircleNotch } from '@/lib/phosphor-icons';
 import { EmotionalTone } from '@/hooks/use-chat';
 
 interface Message {

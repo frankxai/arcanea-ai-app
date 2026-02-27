@@ -2,7 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { PhHeart, PhLightning, PhShield, PhEye } from '@phosphor-icons/react';
+import { PhHeart, PhLightning, PhShield, PhEye } from '@/lib/phosphor-icons';
 import Link from 'next/link';
 
 export function PartnershipSection() {

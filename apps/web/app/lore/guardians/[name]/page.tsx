@@ -18,7 +18,7 @@ import {
   PhLightning,
   PhInfinity,
   PhSparkle,
-} from "@phosphor-icons/react";
+} from '@/lib/phosphor-icons';
 
 // ── Guardian canonical data ───────────────────────────────────────────────────
 

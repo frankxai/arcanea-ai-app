@@ -14,7 +14,7 @@ import {
   Star,
   Clock,
   Sparkle,
-} from '@phosphor-icons/react';
+} from '@/lib/phosphor-icons';
 
 interface ActivityItem {
   id: string;

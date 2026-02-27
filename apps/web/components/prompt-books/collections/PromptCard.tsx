@@ -1,6 +1,6 @@
 'use client'
 
-import { PhStar, PhCopy, PhDotsThreeVertical } from '@phosphor-icons/react'
+import { PhStar, PhCopy, PhDotsThreeVertical } from '@/lib/phosphor-icons'
 import { cn } from '@/lib/utils'
 import { PROMPT_TYPES } from '@/lib/prompt-books/constants'
 import type { Prompt } from '@/lib/prompt-books/types'

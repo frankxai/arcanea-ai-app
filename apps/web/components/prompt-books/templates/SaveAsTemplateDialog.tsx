@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { PhX, PhFloppyDisk, PhGlobe, PhLock } from '@phosphor-icons/react'
+import { PhX, PhFloppyDisk, PhGlobe, PhLock } from '@/lib/phosphor-icons'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { extractVariables } from '@/lib/prompt-books/context-engine'

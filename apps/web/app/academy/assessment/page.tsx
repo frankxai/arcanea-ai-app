@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { PhArrowLeft, PhArrowRight, PhSparkle, PhCheck, PhFlame, PhDrop, PhWind, PhMountains, PhStar } from '@phosphor-icons/react';
+import { PhArrowLeft, PhArrowRight, PhSparkle, PhCheck, PhFlame, PhDrop, PhWind, PhMountains, PhStar } from '@/lib/phosphor-icons';
 
 // Assessment questions organized by Gate
 const ASSESSMENT_QUESTIONS = [

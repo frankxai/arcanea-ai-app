@@ -2,7 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
-import { PhStack, PhArrowRight, PhSparkle, PhCaretDown } from '@phosphor-icons/react';
+import { PhStack, PhArrowRight, PhSparkle, PhCaretDown } from '@/lib/phosphor-icons';
 import Link from 'next/link';
 import { Navbar } from '@/components/navigation';
 

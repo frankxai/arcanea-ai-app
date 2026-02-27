@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { PhArrowLeft, PhGear, PhDownload, PhUpload } from '@phosphor-icons/react'
+import { PhArrowLeft, PhGear, PhDownload, PhUpload } from '@/lib/phosphor-icons'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { SettingsPanel } from '@/components/prompt-books/settings/SettingsPanel'

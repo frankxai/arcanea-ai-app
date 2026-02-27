@@ -3,7 +3,7 @@ import {
   PhHouse,
   PhMagnifyingGlass,
   PhMapPin,
-} from "@phosphor-icons/react";
+} from "@/lib/phosphor-icons";
 import Link from "next/link";
 
 export default function NotFound() {

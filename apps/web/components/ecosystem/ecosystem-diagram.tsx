@@ -11,7 +11,7 @@ import {
   PhLink,
   PhPaintBrush,
   PhChatTeardrop,
-} from "@phosphor-icons/react";
+} from '@/lib/phosphor-icons';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 

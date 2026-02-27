@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useCallback, useMemo } from 'react'
-import { PhCopy, PhCheck, PhCode, PhChatSquare } from '@phosphor-icons/react'
+import { PhCopy, PhCheck, PhCode, PhChatSquare } from '@/lib/phosphor-icons'
 import { cn } from '@/lib/utils'
 import type { ContextPackage } from '@/lib/prompt-books/types'
 

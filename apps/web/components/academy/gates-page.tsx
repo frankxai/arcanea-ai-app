@@ -26,7 +26,7 @@ import {
   PhArrowRight,
   PhSparkle,
   PhRadio,
-} from '@phosphor-icons/react';
+} from '@/lib/phosphor-icons';
 import { cn } from '@/lib/utils';
 
 // ─────────────────────────────────────────────────────────────────────────────

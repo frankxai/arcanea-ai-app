@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { PhLightning, PhX } from '@phosphor-icons/react'
+import { PhLightning, PhX } from '@/lib/phosphor-icons'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 

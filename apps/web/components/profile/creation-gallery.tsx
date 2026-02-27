@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PhSquaresFour, PhGridFour, PhFunnel, PhSortAscending } from '@phosphor-icons/react';
+import { PhSquaresFour, PhGridFour, PhFunnel, PhSortAscending } from '@/lib/phosphor-icons';
 import { Creation, FilterType, SortOption } from '@/lib/types/profile';
 import { CreationCard } from './creation-card';
 import { CreationModal } from './creation-modal';

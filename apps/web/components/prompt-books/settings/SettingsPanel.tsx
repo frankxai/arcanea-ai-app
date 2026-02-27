@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { PhGear, PhKeyboard, PhPalette, PhTextT, PhTextAa } from '@phosphor-icons/react'
+import { PhGear, PhKeyboard, PhPalette, PhTextT, PhTextAa } from '@/lib/phosphor-icons'
 import { cn } from '@/lib/utils'
 import { usePromptBooksStore } from '@/lib/prompt-books/store'
 import type { WeightSyntaxType } from '@/lib/prompt-books/constants'

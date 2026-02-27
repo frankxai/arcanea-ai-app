@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { PhMusicNote, PhBookOpen, PhPalette, PhCode, PhFilmStrip, PhGameController, PhArrowLeft, PhSparkle } from '@phosphor-icons/react';
+import { PhMusicNote, PhBookOpen, PhPalette, PhCode, PhFilmStrip, PhGameController, PhArrowLeft, PhSparkle } from '@/lib/phosphor-icons';
 import { useAuth } from '@/lib/auth/context';
 import { createClient } from '@/lib/supabase/client';
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { PhX, PhCaretLeft, PhCaretRight, PhDownload, PhHeart, PhChatCircle, PhShare, PhCalendar, PhSparkle } from '@phosphor-icons/react';
+import { PhX, PhCaretLeft, PhCaretRight, PhDownload, PhHeart, PhChatCircle, PhShare, PhCalendar, PhSparkle } from '@/lib/phosphor-icons';
 import { Creation } from '@/lib/types/profile';
 import { useEffect, useState } from 'react';
 import { Button } from '@/lib/arcanea-ui';

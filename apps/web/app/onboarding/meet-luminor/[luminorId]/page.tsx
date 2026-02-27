@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
-import { PhArrowLeft, PhArrowRight, PhSparkle, PhMusicNote, PhBookOpen, PhPalette, PhCode, PhFilmStrip, PhGameController } from '@phosphor-icons/react';
+import { PhArrowLeft, PhArrowRight, PhSparkle, PhMusicNote, PhBookOpen, PhPalette, PhCode, PhFilmStrip, PhGameController } from '@/lib/phosphor-icons';
 
 // Luminor data mapped to canonical Arcanea Guardians
 // visual-artist -> Leyla (Flow/Water/Creativity, 285 Hz)

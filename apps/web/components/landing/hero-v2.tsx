@@ -3,7 +3,7 @@
 import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion';
 import Link from 'next/link';
 import { useRef, useEffect, useState } from 'react';
-import { PhArrowRight, PhPlay, PhSparkle, PhLightning, PhShield, PhStar } from '@phosphor-icons/react';
+import { PhArrowRight, PhPlay, PhSparkle, PhLightning, PhShield, PhStar } from '@/lib/phosphor-icons';
 
 interface HeroStats {
   luminors: number;

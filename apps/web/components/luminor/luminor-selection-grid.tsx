@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { PhMusicNote, PhBookOpen, PhPalette, PhSparkle, PhHeart, PhLightning } from '@phosphor-icons/react';
+import { PhMusicNote, PhBookOpen, PhPalette, PhSparkle, PhHeart, PhLightning } from '@/lib/phosphor-icons';
 import { cn } from '@/lib/utils';
 
 interface Luminor {

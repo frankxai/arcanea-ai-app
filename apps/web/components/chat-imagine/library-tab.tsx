@@ -18,7 +18,7 @@ import {
   PhLightning,
   PhMoon,
   PhSun,
-} from "@phosphor-icons/react";
+} from '@/lib/phosphor-icons';
 
 interface Collection {
   id: string;

@@ -28,7 +28,7 @@ import {
   PhFileText,
   PhImage,
   PhMusicNote,
-} from "@phosphor-icons/react";
+} from '@/lib/phosphor-icons';
 
 export const metadata: Metadata = {
   title: "Create Together | Arcanea Community",

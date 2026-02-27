@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { PhCircleNotch, PhImage, PhVideo, PhMusicNote, PhDownload, PhEye, PhSparkle } from '@phosphor-icons/react';
+import { PhCircleNotch, PhImage, PhVideo, PhMusicNote, PhDownload, PhEye, PhSparkle } from '@/lib/phosphor-icons';
 
 interface GenerationIndicatorProps {
   type: 'image' | 'video' | 'music';

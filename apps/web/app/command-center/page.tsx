@@ -19,7 +19,7 @@ import {
   Brain,
   Books,
   Users,
-} from '@phosphor-icons/react';
+} from '@/lib/phosphor-icons';
 import { Progress } from '@/components/ui/progress';
 import { useAuth } from '@/lib/auth/context';
 import {

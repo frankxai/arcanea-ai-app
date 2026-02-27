@@ -18,7 +18,7 @@ import {
   PhTrendUp,
   PhCalendar,
   PhCalendarDots,
-} from "@phosphor-icons/react";
+} from '@/lib/phosphor-icons';
 import { cn } from "@/lib/utils";
 import { usePromptBooksStore } from "@/lib/prompt-books/store";
 import { PROMPT_TYPES } from "@/lib/prompt-books/constants";

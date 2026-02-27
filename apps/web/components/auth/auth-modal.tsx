@@ -3,7 +3,7 @@
 import React, { useState, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PhEnvelope, PhLock, PhEye, PhEyeSlash, PhUser, PhX, PhSparkle, PhGithubLogo, PhCheck } from '@phosphor-icons/react';
+import { PhEnvelope, PhLock, PhEye, PhEyeSlash, PhUser, PhX, PhSparkle, PhGithubLogo, PhCheck } from '@/lib/phosphor-icons';
 import { useAuth } from '@/lib/auth/context';
 
 interface AuthModalProps {

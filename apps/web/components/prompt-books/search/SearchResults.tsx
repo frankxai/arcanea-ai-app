@@ -4,7 +4,7 @@
 // Renders search results with highlighted matches, loading skeleton, and empty states
 
 import { useMemo, Fragment } from 'react'
-import { PhMagnifyingGlass, PhFileQuestion } from '@phosphor-icons/react'
+import { PhMagnifyingGlass, PhFileQuestion } from '@/lib/phosphor-icons'
 import { cn } from '@/lib/utils'
 import { usePromptBooksStore } from '@/lib/prompt-books/store'
 import { Skeleton } from '@/components/ui/skeleton'

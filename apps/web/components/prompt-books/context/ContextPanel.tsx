@@ -4,7 +4,7 @@ import { useState, useMemo, useCallback } from 'react'
 import {
   PhCaretDown, PhCaretRight, PhSidebarSimple, PhSidebarSimple as PhSidebarOpen,
   PhSlidersHorizontal, PhChatText, PhLink, PhEye,
-} from '@phosphor-icons/react'
+} from '@/lib/phosphor-icons'
 import { cn } from '@/lib/utils'
 import { compilePrompt } from '@/lib/prompt-books/context-engine'
 import type { Prompt, ContextConfig, FewShotExample, ChainStep } from '@/lib/prompt-books/types'

@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback } from 'react'
-import { PhPlus, PhTrash, PhArrowUp, PhArrowDown, PhUpload } from '@phosphor-icons/react'
+import { PhPlus, PhTrash, PhArrowUp, PhArrowDown, PhUpload } from '@/lib/phosphor-icons'
 import { cn } from '@/lib/utils'
 import type { FewShotExample } from '@/lib/prompt-books/types'
 

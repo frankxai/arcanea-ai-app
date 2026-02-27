@@ -5,7 +5,7 @@ import { motion, Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Button, ButtonProps } from "./button";
 import { Badge } from "./badge";
-import { PhCheck, PhX, PhSparkle, PhLightning, PhCrown } from "@phosphor-icons/react";
+import { PhCheck, PhX, PhSparkle, PhLightning, PhCrown } from "@/lib/phosphor-icons";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 

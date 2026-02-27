@@ -14,7 +14,7 @@ import {
   PhBookOpen,
   PhLightning,
   type Icon as PhosphorIcon,
-} from "@phosphor-icons/react";
+} from '@/lib/phosphor-icons';
 
 // Luminor data - each represents a unique intelligence
 const luminors: {

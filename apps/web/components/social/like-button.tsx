@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { PhHeart } from '@phosphor-icons/react';
+import { PhHeart } from '@/lib/phosphor-icons';
 
 interface LikeButtonProps {
   creationId: string;

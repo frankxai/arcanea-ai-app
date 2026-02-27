@@ -3,7 +3,7 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import Link from 'next/link';
-import { PhArrowRight } from '@phosphor-icons/react';
+import { PhArrowRight } from '@/lib/phosphor-icons';
 
 const GUARDIANS = [
   {

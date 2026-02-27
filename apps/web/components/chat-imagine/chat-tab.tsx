@@ -8,7 +8,7 @@ import {
   PhMicrophone,
   PhCopy,
   PhCaretDown,
-} from "@phosphor-icons/react";
+} from '@/lib/phosphor-icons';
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import ReactMarkdown from "react-markdown";

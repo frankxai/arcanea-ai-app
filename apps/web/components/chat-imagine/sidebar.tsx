@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { PhChatSquare, PhSparkle, PhBookOpen, PhMagicWand, PhPlus, PhCaretLeft, PhCaretRight, PhGear, PhUser, PhMagnifyingGlass } from '@phosphor-icons/react'
+import { PhChatSquare, PhSparkle, PhBookOpen, PhMagicWand, PhPlus, PhCaretLeft, PhCaretRight, PhGear, PhUser, PhMagnifyingGlass } from '@/lib/phosphor-icons'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'

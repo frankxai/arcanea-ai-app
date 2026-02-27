@@ -2,7 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
-import { PhChat, PhSparkle, PhMagicWand, PhRocket, PhArrowRight } from '@phosphor-icons/react';
+import { PhChat, PhSparkle, PhMagicWand, PhRocket, PhArrowRight } from '@/lib/phosphor-icons';
 
 const STEPS = [
   {

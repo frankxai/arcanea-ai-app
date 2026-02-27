@@ -10,7 +10,7 @@ import {
   PhUsers,
   PhMusicNotes,
   PhGlobe,
-} from "@phosphor-icons/react";
+} from '@/lib/phosphor-icons';
 
 const footerLinks = {
   create: {

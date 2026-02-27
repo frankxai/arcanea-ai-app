@@ -3,7 +3,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
-import { ArrowRight, Sparkles, Check } from "@phosphor-icons/react";
+import { ArrowRight, Sparkles, Check } from '@/lib/phosphor-icons';
 
 const BENEFITS = [
   "Free to start — your universe begins now",

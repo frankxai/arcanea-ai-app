@@ -12,7 +12,7 @@ import {
   PhStar,
   PhStack,
   PhUsers,
-} from "@phosphor-icons/react";
+} from '@/lib/phosphor-icons';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 

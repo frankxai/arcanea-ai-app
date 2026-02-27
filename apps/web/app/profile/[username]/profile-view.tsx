@@ -21,7 +21,7 @@ import {
   PhFile,
   PhSparkle,
   PhFire,
-} from '@phosphor-icons/react'
+} from '@/lib/phosphor-icons'
 import type { Profile, ProfileStats, Creation } from '@/lib/database/types/api-responses'
 
 const GATE_COLORS: Record<string, string> = {

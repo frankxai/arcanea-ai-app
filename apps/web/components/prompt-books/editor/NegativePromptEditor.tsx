@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { PhCaretDown, PhCaretRight, PhShieldWarning } from '@phosphor-icons/react'
+import { PhCaretDown, PhCaretRight, PhShieldWarning } from '@/lib/phosphor-icons'
 import { cn } from '@/lib/utils'
 
 interface NegativePromptEditorProps {

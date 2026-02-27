@@ -15,7 +15,7 @@ import {
   PhBookOpen,
   PhLightbulb,
   PhLightning,
-} from '@phosphor-icons/react';
+} from '@/lib/phosphor-icons';
 import { cn } from '@/lib/utils';
 
 // ---------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { PhMagnifyingGlass, PhPlus, PhX } from '@phosphor-icons/react'
+import { PhMagnifyingGlass, PhPlus, PhX } from '@/lib/phosphor-icons'
 import { cn } from '@/lib/utils'
 import { TagChip } from './TagChip'
 import { TAG_CATEGORIES, DEFAULT_TAGS } from '@/lib/prompt-books/constants'

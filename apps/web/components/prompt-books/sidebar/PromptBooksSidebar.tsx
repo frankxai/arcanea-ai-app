@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { PhPlus, PhCaretLeft, PhCaretRight, PhBookOpen } from '@phosphor-icons/react'
+import { PhPlus, PhCaretLeft, PhCaretRight, PhBookOpen } from '@/lib/phosphor-icons'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { usePromptBooksStore } from '@/lib/prompt-books/store'

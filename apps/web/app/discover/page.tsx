@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { PhMagnifyingGlass, PhTrendUp, PhClock, PhUsers, PhSparkle } from '@phosphor-icons/react';
+import { PhMagnifyingGlass, PhTrendUp, PhClock, PhUsers, PhSparkle } from '@/lib/phosphor-icons';
 import { CreationCard } from '@/components/profile/creation-card';
 import { Creation } from '@/lib/types/profile';
 import { Button } from '@/lib/arcanea-ui';

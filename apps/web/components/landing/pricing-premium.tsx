@@ -2,7 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { PhCheck, PhSparkle, PhArrowRight } from "@phosphor-icons/react";
+import { PhCheck, PhSparkle, PhArrowRight } from '@/lib/phosphor-icons';
 import Link from "next/link";
 
 const plans = [

@@ -22,7 +22,7 @@ import {
   PhHeart,
   PhUsers,
   PhCrown,
-} from "@phosphor-icons/react";
+} from '@/lib/phosphor-icons';
 
 export const metadata: Metadata = {
   title: "Universe Builder | Arcanea",

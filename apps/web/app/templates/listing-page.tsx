@@ -21,7 +21,7 @@ import {
   PhStar,
   PhEye,
   PhHeart,
-} from "@phosphor-icons/react";
+} from '@/lib/phosphor-icons';
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 

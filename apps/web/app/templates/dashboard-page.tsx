@@ -28,7 +28,7 @@ import {
   PhUsers,
   PhFileText,
   PhStar,
-} from "@phosphor-icons/react";
+} from '@/lib/phosphor-icons';
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 

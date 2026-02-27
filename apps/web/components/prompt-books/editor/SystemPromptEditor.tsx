@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { PhCaretDown, PhCaretRight, PhBrain } from '@phosphor-icons/react'
+import { PhCaretDown, PhCaretRight, PhBrain } from '@/lib/phosphor-icons'
 import { cn } from '@/lib/utils'
 
 interface SystemPromptEditorProps {

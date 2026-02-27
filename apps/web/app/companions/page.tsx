@@ -13,7 +13,7 @@ import {
   PhHeart,
   PhStar,
   PhFunnel,
-} from '@phosphor-icons/react';
+} from '@/lib/phosphor-icons';
 import { LUMINORS, TEAMS, type Team, type LuminorConfig } from '@/lib/luminors/config';
 
 /**

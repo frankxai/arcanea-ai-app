@@ -18,7 +18,7 @@ import {
   PhCheck,
   PhCaretDown,
   PhFlame,
-} from '@phosphor-icons/react';
+} from '@/lib/phosphor-icons';
 
 // Style presets aligned with Arcanea aesthetics
 const STYLE_PRESETS = [

@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { PhEnvelope, PhLock, PhUser, PhArrowRight, PhSparkle, PhEye, PhEyeSlash, PhCheck } from '@phosphor-icons/react';
+import { PhEnvelope, PhLock, PhUser, PhArrowRight, PhSparkle, PhEye, PhEyeSlash, PhCheck } from '@/lib/phosphor-icons';
 
 export default function SignupPage() {
   const router = useRouter();

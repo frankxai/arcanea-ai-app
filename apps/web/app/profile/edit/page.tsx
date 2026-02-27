@@ -11,7 +11,7 @@ import {
   PhSpinner,
   PhCheck,
   PhWarning,
-} from '@phosphor-icons/react'
+} from '@/lib/phosphor-icons'
 import { useAuth } from '@/lib/auth/context'
 import { createClient } from '@/lib/supabase/client'
 import type {

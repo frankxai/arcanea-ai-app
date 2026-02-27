@@ -1,4 +1,4 @@
-import { PhCircleNotch } from "@phosphor-icons/react";
+import { PhCircleNotch } from '@/lib/phosphor-icons';
 
 export default function Loading() {
   return (

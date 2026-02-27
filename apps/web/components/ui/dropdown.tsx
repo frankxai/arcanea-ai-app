@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PhCaretDown } from '@phosphor-icons/react';
+import { PhCaretDown } from '@/lib/phosphor-icons';
 import { cn } from '@/lib/utils';
 
 // ─── Types ───────────────────────────────────────────────────────────────────

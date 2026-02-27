@@ -2,7 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
-import { PhBookOpen, PhMagnifyingGlass, PhFunnel, PhArrowRight, PhScroll, PhFeather, PhMusicNotes, PhSparkle, PhShield, PhMapTrifold, PhMoon, PhUsers, PhHeart } from '@phosphor-icons/react';
+import { PhBookOpen, PhMagnifyingGlass, PhFunnel, PhArrowRight, PhScroll, PhFeather, PhMusicNotes, PhSparkle, PhShield, PhMapTrifold, PhMoon, PhUsers, PhHeart } from '@/lib/phosphor-icons';
 import Link from 'next/link';
 import { Navbar } from '@/components/navigation';
 

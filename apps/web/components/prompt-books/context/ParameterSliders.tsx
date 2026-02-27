@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useCallback, useRef, type KeyboardEvent } from 'react'
-import { PhX } from '@phosphor-icons/react'
+import { PhX } from '@/lib/phosphor-icons'
 import { cn } from '@/lib/utils'
 import type { ContextConfig } from '@/lib/prompt-books/types'
 

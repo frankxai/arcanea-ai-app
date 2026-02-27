@@ -8,7 +8,7 @@ import {
   PhLightning,
   PhCrown,
   PhArrowRight,
-} from "@phosphor-icons/react";
+} from '@/lib/phosphor-icons';
 import Link from "next/link";
 
 const PLANS = [

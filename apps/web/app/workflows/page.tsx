@@ -13,7 +13,7 @@ import {
   PhCode,
   PhNotebook,
   PhChatTeardrop,
-} from "@phosphor-icons/react/dist/ssr";
+} from '@/lib/phosphor-icons';
 
 export const metadata: Metadata = {
   title: "Arcanea Workflows | Guardian-Powered n8n Automation",

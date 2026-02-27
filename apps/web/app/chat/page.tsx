@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { PhSparkle, PhArrowRight, PhCircleNotch } from "@phosphor-icons/react";
+import { PhSparkle, PhArrowRight, PhCircleNotch } from '@/lib/phosphor-icons';
 import { LUMINORS, TEAMS, type Team } from "@/lib/luminors/config";
 
 const TEAM_ORDER: Team[] = ["development", "creative", "writing", "research"];

@@ -19,7 +19,7 @@ import {
   PhHeart,
   PhInfinity,
   type Icon as PhIcon,
-} from '@phosphor-icons/react';
+} from '@/lib/phosphor-icons';
 import { cn } from '@/lib/utils';
 
 // ─── Godbeast Data ─────────────────────────────────────────────────────────────

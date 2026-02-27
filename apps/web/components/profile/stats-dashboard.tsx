@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { PhImage, PhVideo, PhFolderOpen, PhSparkle, PhCalendar, PhTrendUp, PhTrophy } from '@phosphor-icons/react';
+import { PhImage, PhVideo, PhFolderOpen, PhSparkle, PhCalendar, PhTrendUp, PhTrophy } from '@/lib/phosphor-icons';
 import { ProfileStats, Creation } from '@/lib/types/profile';
 
 interface StatsDashboardProps {

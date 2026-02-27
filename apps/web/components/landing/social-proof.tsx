@@ -2,7 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { PhStar, PhQuotes } from '@phosphor-icons/react';
+import { PhStar, PhQuotes } from '@/lib/phosphor-icons';
 
 const TESTIMONIALS = [
   {

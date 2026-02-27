@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { PhChatCircle, PhSparkle, PhHeart, PhTrendUp } from '@phosphor-icons/react';
+import { PhChatCircle, PhSparkle, PhHeart, PhTrendUp } from '@/lib/phosphor-icons';
 import { LuminorBond } from '@/lib/types/profile';
 import { Button } from '@/lib/arcanea-ui';
 import { Progress } from '@radix-ui/react-progress';

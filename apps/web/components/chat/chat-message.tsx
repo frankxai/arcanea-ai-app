@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { cosmicSlideUp } from '@/lib/animations';
 import { type Academy, getAcademyClasses } from '@/lib/theme-utils';
-import { PhUser, PhSparkle } from '@phosphor-icons/react';
+import { PhUser, PhSparkle } from '@/lib/phosphor-icons';
 
 export interface ChatMessageProps {
   role: 'user' | 'assistant';

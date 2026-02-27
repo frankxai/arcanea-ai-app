@@ -3,7 +3,7 @@
 import { useState } from "react";
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { PhBookOpen, PhBrain, PhChatCircleText, PhDatabase, PhPaintBrush, PhSparkle } from "@phosphor-icons/react";
+import { PhBookOpen, PhBrain, PhChatCircleText, PhDatabase, PhPaintBrush, PhSparkle } from '@/lib/phosphor-icons';
 
 type WorkspaceTab = "ask" | "create" | "library" | "vault" | "agents";
 

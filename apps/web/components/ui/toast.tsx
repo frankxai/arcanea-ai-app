@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PhX, PhCheckCircle, PhWarningCircle, PhWarning, PhInfo } from '@phosphor-icons/react';
+import { PhX, PhCheckCircle, PhWarningCircle, PhWarning, PhInfo } from '@/lib/phosphor-icons';
 import { cn } from '@/lib/utils';
 
 // ─── Types ───────────────────────────────────────────────────────────────────

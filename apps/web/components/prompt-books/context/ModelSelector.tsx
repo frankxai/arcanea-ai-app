@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { PhCaretDown, PhCheck } from '@phosphor-icons/react'
+import { PhCaretDown, PhCheck } from '@/lib/phosphor-icons'
 import { cn } from '@/lib/utils'
 
 // =====================================================================

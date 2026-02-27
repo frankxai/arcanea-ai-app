@@ -11,7 +11,7 @@ import {
   PhLightbulb,
   PhTarget,
   PhLightning,
-} from '@phosphor-icons/react';
+} from '@/lib/phosphor-icons';
 import { EmotionalTone } from '@/hooks/use-chat';
 
 interface KeyMoment {

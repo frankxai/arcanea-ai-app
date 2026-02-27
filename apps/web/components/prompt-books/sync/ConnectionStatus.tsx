@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { PhWifiHigh, PhWifiSlash, PhArrowsClockwise, PhCloud, PhCloudSlash } from '@phosphor-icons/react'
+import { PhWifiHigh, PhWifiSlash, PhArrowsClockwise, PhCloud, PhCloudSlash } from '@/lib/phosphor-icons'
 import { cn } from '@/lib/utils'
 import { usePromptBooksStore } from '@/lib/prompt-books/store'
 

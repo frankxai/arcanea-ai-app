@@ -1,6 +1,6 @@
 'use client'
 
-import { PhMagnifyingGlass } from '@phosphor-icons/react'
+import { PhMagnifyingGlass } from '@/lib/phosphor-icons'
 import { Input } from '@/components/ui/input'
 
 interface SidebarSearchProps {

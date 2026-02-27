@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { PhUserPlus, PhUserCheck } from '@phosphor-icons/react';
+import { PhUserPlus, PhUserCheck } from '@/lib/phosphor-icons';
 import { Button } from '@/lib/arcanea-ui';
 
 interface FollowButtonProps {

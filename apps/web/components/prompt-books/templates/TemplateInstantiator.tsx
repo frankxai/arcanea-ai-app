@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { PhX, PhSparkle, PhCaretDown } from '@phosphor-icons/react'
+import { PhX, PhSparkle, PhCaretDown } from '@/lib/phosphor-icons'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { PROMPT_TYPES, GUARDIAN_THEMES } from '@/lib/prompt-books/constants'

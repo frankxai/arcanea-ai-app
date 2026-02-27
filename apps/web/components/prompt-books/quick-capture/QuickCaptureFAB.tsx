@@ -1,6 +1,6 @@
 'use client'
 
-import { PhPlus } from '@phosphor-icons/react'
+import { PhPlus } from '@/lib/phosphor-icons'
 
 interface QuickCaptureFABProps {
   onClick: () => void

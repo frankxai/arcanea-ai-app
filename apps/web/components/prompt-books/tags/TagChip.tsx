@@ -1,6 +1,6 @@
 'use client'
 
-import { PhX } from '@phosphor-icons/react'
+import { PhX } from '@/lib/phosphor-icons'
 import { cn } from '@/lib/utils'
 import { TAG_CATEGORIES } from '@/lib/prompt-books/constants'
 import type { Tag } from '@/lib/prompt-books/types'

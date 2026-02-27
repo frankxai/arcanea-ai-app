@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PhPaperPlane, PhHeart, PhArrowBendUpLeft, PhDotsThreeVertical } from '@phosphor-icons/react';
+import { PhPaperPlane, PhHeart, PhArrowBendUpLeft, PhDotsThreeVertical } from '@/lib/phosphor-icons';
 import { Comment } from '@/lib/types/profile';
 import { Button } from '@/lib/arcanea-ui';
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';

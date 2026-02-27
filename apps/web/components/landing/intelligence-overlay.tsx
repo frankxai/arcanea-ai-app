@@ -3,7 +3,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
-import { PhBookOpen, PhMusicNote, PhLightning, PhArrowRight } from "@phosphor-icons/react";
+import { PhBookOpen, PhMusicNote, PhLightning, PhArrowRight } from '@/lib/phosphor-icons';
 
 // ─── Frequency orb data ────────────────────────────────────────────────────
 

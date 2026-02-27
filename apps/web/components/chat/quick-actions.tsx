@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { PhSparkle, PhBookOpen, PhLightbulb, PhLightning } from '@phosphor-icons/react';
+import { PhSparkle, PhBookOpen, PhLightbulb, PhLightning } from '@/lib/phosphor-icons';
 
 interface QuickAction {
   id: string;

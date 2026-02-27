@@ -3,7 +3,7 @@
 import {
   PhChatSquare, PhImage, PhImageSquare, PhChats, PhLink,
   PhListNumbers, PhCode, PhPen, PhChartBar,
-} from '@phosphor-icons/react'
+} from '@/lib/phosphor-icons'
 import { cn } from '@/lib/utils'
 import { PROMPT_TYPES } from '@/lib/prompt-books/constants'
 import type { PromptType } from '@/lib/prompt-books/types'

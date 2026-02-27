@@ -3,7 +3,7 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import Link from 'next/link';
-import { PhStar, PhSparkle, PhArrowRight, PhShield, PhLightning, PhCrown, PhSpiral, PhFlame } from '@phosphor-icons/react';
+import { PhStar, PhSparkle, PhArrowRight, PhShield, PhLightning, PhCrown, PhSpiral, PhFlame } from '@/lib/phosphor-icons';
 import { cn } from '@/lib/utils';
 
 // ─── Canon Data ───────────────────────────────────────────────────────────────

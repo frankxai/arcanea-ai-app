@@ -2,7 +2,7 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import { Button } from '@/lib/arcanea-ui';
-import { PhShare, PhUserPlus, PhUserCheck, PhChatCircle, PhMapPin } from '@phosphor-icons/react';
+import { PhShare, PhUserPlus, PhUserCheck, PhChatCircle, PhMapPin } from '@/lib/phosphor-icons';
 import { motion } from 'framer-motion';
 import { Profile } from '@/lib/types/profile';
 import { useState } from 'react';

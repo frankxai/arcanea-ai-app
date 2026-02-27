@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { PhShield, PhSparkle } from '@phosphor-icons/react';
+import { PhShield, PhSparkle } from '@/lib/phosphor-icons';
 
 export function GuardiansHero() {
   return (

@@ -1,6 +1,6 @@
 'use client'
 
-import { PhGear, PhShare, PhGlobe, PhLock } from '@phosphor-icons/react'
+import { PhGear, PhShare, PhGlobe, PhLock } from '@/lib/phosphor-icons'
 import { Button } from '@/components/ui/button'
 import { GUARDIAN_THEMES } from '@/lib/prompt-books/constants'
 import type { Collection } from '@/lib/prompt-books/types'

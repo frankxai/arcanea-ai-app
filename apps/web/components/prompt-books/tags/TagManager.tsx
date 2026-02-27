@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react'
-import { PhTrash, PhPencil, PhDotsSixVertical } from '@phosphor-icons/react'
+import { PhTrash, PhPencil, PhDotsSixVertical } from '@/lib/phosphor-icons'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { TAG_CATEGORIES } from '@/lib/prompt-books/constants'

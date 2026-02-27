@@ -28,7 +28,7 @@ import {
   PhGraphNetwork,
   PhCode,
   PhLink,
-} from "@phosphor-icons/react";
+} from '@/lib/phosphor-icons';
 
 export const metadata: Metadata = {
   title: "Arcanea | Build Your Universe",

@@ -15,7 +15,7 @@ import {
   Brain,
   TreeStructure,
   Gauge,
-} from "@phosphor-icons/react";
+} from '@/lib/phosphor-icons';
 import { UserNav } from "@/components/auth";
 
 const navLinks = [

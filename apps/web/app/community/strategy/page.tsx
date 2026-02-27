@@ -21,7 +21,7 @@ import {
   PhArrowUpRight,
   PhScales,
   PhHeart,
-} from "@phosphor-icons/react";
+} from '@/lib/phosphor-icons';
 
 export const metadata: Metadata = {
   title: "Strategy & Governance | Arcanea Community",

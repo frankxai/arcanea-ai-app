@@ -4,7 +4,7 @@ import { useRef, useCallback } from 'react'
 import {
   PhTextB, PhTextItalic, PhCode, PhTextHOne, PhTextHTwo, PhList, PhListNumbers,
   PhQuotes, PhLink, PhBraces, PhTextT, PhMinus,
-} from '@phosphor-icons/react'
+} from '@/lib/phosphor-icons'
 import { cn } from '@/lib/utils'
 
 interface ContentEditorProps {

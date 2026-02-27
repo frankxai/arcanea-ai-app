@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { PhPaperPlane, PhImage, PhCircleNotch, PhX, PhPaperclip } from '@phosphor-icons/react';
+import { PhPaperPlane, PhImage, PhCircleNotch, PhX, PhPaperclip } from '@/lib/phosphor-icons';
 
 interface ChatInputProps {
   onSend: (message: string, attachments?: File[]) => void;

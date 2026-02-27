@@ -22,7 +22,7 @@ import {
   PhFlame,
   PhDrop,
   PhLeaf,
-} from "@phosphor-icons/react";
+} from '@/lib/phosphor-icons';
 import { NewsletterForm } from "@/components/community/newsletter-form";
 
 export const metadata: Metadata = {

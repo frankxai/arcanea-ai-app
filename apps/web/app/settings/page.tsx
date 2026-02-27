@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth/context';
-import { GearSix, User, Bell, SignOut, Trash } from '@phosphor-icons/react';
+import { GearSix, User, Bell, SignOut, Trash } from '@/lib/phosphor-icons';
 
 export default function SettingsPage() {
   const router = useRouter();

@@ -12,7 +12,7 @@ import {
   PhWind,
   PhSparkle,
   PhArrowRight,
-} from '@phosphor-icons/react';
+} from '@/lib/phosphor-icons';
 import { cn } from '@/lib/utils';
 
 // ─── Canon Data ───────────────────────────────────────────────────────────────

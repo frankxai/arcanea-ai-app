@@ -21,7 +21,7 @@ import {
   PhLightning,
   PhArrowRight,
   PhCompass,
-} from "@phosphor-icons/react";
+} from '@/lib/phosphor-icons';
 
 // ---------------------------------------------------------------------------
 // Types

@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { PhSparkle, PhHeart, PhBook, PhLightning } from '@phosphor-icons/react';
+import { PhSparkle, PhHeart, PhBook, PhLightning } from '@/lib/phosphor-icons';
 
 interface LuminorHeaderProps {
   name: string;

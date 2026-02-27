@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { PhHeart, PhChatCircle, PhEye, PhPlay, PhImage } from '@phosphor-icons/react';
+import { PhHeart, PhChatCircle, PhEye, PhPlay, PhImage } from '@/lib/phosphor-icons';
 import { Creation } from '@/lib/types/profile';
 
 interface CreationCardProps {

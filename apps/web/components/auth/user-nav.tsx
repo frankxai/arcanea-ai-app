@@ -4,7 +4,7 @@ import React, { useState, Fragment } from 'react';
 import Link from 'next/link';
 import { Menu, Transition } from '@headlessui/react';
 import { motion } from 'framer-motion';
-import { PhUser, PhSignOut, PhGear, PhSparkle, PhBookOpen, PhPalette, PhCaretDown } from '@phosphor-icons/react';
+import { PhUser, PhSignOut, PhGear, PhSparkle, PhBookOpen, PhPalette, PhCaretDown } from '@/lib/phosphor-icons';
 import { useAuth } from '@/lib/auth/context';
 import { AuthModal } from './auth-modal';
 

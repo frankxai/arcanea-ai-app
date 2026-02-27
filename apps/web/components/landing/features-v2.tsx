@@ -14,7 +14,7 @@ import {
   PhWand,
   PhGraduationCap,
   PhUsers,
-} from "@phosphor-icons/react";
+} from '@/lib/phosphor-icons';
 
 const MAIN_FEATURES = [
   {

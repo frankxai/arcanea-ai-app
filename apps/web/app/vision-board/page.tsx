@@ -30,7 +30,7 @@ import {
   PhMusicNote,
   PhCode,
   PhVideo,
-} from "@phosphor-icons/react";
+} from '@/lib/phosphor-icons';
 
 export const metadata: Metadata = {
   title: "Vision Board | Arcanea",

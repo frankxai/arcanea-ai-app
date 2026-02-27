@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { PhSparkle, PhArrowRight } from '@phosphor-icons/react';
+import { PhSparkle, PhArrowRight } from '@/lib/phosphor-icons';
 
 export default function WelcomePage() {
   return (

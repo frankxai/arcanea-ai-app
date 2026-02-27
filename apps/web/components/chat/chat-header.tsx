@@ -6,7 +6,7 @@ import { type Academy, getAcademyTheme } from '@/lib/theme-utils';
 import { AcademyBadge } from '@/components/ui/academy-badge';
 import { BondIndicator } from '@/components/ui/bond-indicator';
 import { CosmicCard, CosmicCardHeader } from '@/components/ui/cosmic-card';
-import { PhDotsThreeVertical } from '@phosphor-icons/react';
+import { PhDotsThreeVertical } from '@/lib/phosphor-icons';
 import { Button } from '@/components/ui/button';
 
 export interface ChatHeaderProps extends React.HTMLAttributes<HTMLDivElement> {

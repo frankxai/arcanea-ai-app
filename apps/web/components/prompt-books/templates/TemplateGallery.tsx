@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { PhMagnifyingGlass, PhX, PhSparkle, PhGridFour } from '@phosphor-icons/react'
+import { PhMagnifyingGlass, PhX, PhSparkle, PhGridFour } from '@/lib/phosphor-icons'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { TemplateCard } from './TemplateCard'

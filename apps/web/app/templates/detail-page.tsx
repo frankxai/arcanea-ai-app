@@ -27,7 +27,7 @@ import {
   PhArrowSquareOut,
   PhCopy,
   PhCheck,
-} from "@phosphor-icons/react";
+} from '@/lib/phosphor-icons';
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 

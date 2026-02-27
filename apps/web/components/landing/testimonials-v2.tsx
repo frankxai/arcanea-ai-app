@@ -2,7 +2,7 @@
 
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
-import { PhQuotes, PhCaretLeft, PhCaretRight, PhStar } from '@phosphor-icons/react';
+import { PhQuotes, PhCaretLeft, PhCaretRight, PhStar } from '@/lib/phosphor-icons';
 
 const TESTIMONIALS = [
   {

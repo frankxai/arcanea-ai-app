@@ -1,6 +1,6 @@
 'use client'
 
-import { PhSparkle, PhCopy, PhArrowRight } from '@phosphor-icons/react'
+import { PhSparkle, PhCopy, PhArrowRight } from '@/lib/phosphor-icons'
 import { cn } from '@/lib/utils'
 import { PROMPT_TYPES, GUARDIAN_THEMES } from '@/lib/prompt-books/constants'
 import type { Template, GuardianId } from '@/lib/prompt-books/types'

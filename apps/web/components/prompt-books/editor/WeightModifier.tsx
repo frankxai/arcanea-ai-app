@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react'
-import { PhCaretUp, PhCaretDown } from '@phosphor-icons/react'
+import { PhCaretUp, PhCaretDown } from '@/lib/phosphor-icons'
 import { cn } from '@/lib/utils'
 import { formatWeight } from '@/lib/prompt-books/weight-syntax'
 import type { WeightSyntaxType } from '@/lib/prompt-books/constants'

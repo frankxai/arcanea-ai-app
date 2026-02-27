@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { PhX, PhArrowCounterClockwise, PhClock } from '@phosphor-icons/react'
+import { PhX, PhArrowCounterClockwise, PhClock } from '@/lib/phosphor-icons'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { usePromptBooksStore } from '@/lib/prompt-books/store'

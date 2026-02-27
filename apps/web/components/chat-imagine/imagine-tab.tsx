@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { PhSparkle, PhHeart, PhDownload, PhArrowsOut, PhShare, PhFilmStrip, PhX, PhCheck, PhMagnifyingGlass, PhPalette, PhStack } from '@phosphor-icons/react'
+import { PhSparkle, PhHeart, PhDownload, PhArrowsOut, PhShare, PhFilmStrip, PhX, PhCheck, PhMagnifyingGlass, PhPalette, PhStack } from '@/lib/phosphor-icons'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import Image from 'next/image'

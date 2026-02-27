@@ -15,7 +15,7 @@ import {
   PhEyeSlash,
   PhCircleNotch,
   PhWarningCircle,
-} from "@phosphor-icons/react";
+} from '@/lib/phosphor-icons';
 
 // Loading component
 function LoadingSpinner({ text }: { text: string }) {

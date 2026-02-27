@@ -24,7 +24,7 @@ import {
   PhHeart,
   PhInfinity,
   PhCircle,
-} from "@phosphor-icons/react";
+} from '@/lib/phosphor-icons';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // TYPES

@@ -10,7 +10,7 @@ import {
   PhShield,
   PhArrowRight,
   PhCompass,
-} from '@phosphor-icons/react';
+} from '@/lib/phosphor-icons';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 

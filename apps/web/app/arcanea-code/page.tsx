@@ -13,7 +13,7 @@ import {
   PhArrowRight,
   PhChevronRight,
   PhSparkle,
-} from "@phosphor-icons/react/dist/ssr";
+} from '@/lib/phosphor-icons';
 
 export const metadata: Metadata = {
   title: "Arcanea Code | Developer Platform & VS Code Extension",
