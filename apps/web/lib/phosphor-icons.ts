@@ -41,7 +41,6 @@ export {
   Upload, User, UserCircle, UserPlus, Users, VideoCamera, Wand, Warning,
   WarningCircle, Waves, WifiHigh, WifiSlash, Wind, Wrench, X, YoutubeLogo,
   Infinity as PhosphorInfinity,
-  Stack as Layers,
 } from '@phosphor-icons/react';
 
 // Import all icons from the real package
@@ -343,7 +342,7 @@ export const PhImageSquare = ImageSquare;
 export const PhInfinity = PhosphorInfinity;
 export const PhInfo = Info;
 export const PhKeyboard = Keyboard;
-export const PhLayers = Layers;
+export const PhLayers = Stack;
 export const PhLeaf = Leaf;
 export const PhLightbulb = Lightbulb;
 export const PhLightning = Lightning;
@@ -447,7 +446,7 @@ export const PhGearSix = GearSix;
 export const Sparkles = Sparkle;
 export const Zap = Lightning;
 export const Music = MusicNote;
-export { Layers };
+export const Layers = Stack;
 export const Search = MagnifyingGlass;
 export const Film = FilmStrip;
 export const Mic = Microphone;
