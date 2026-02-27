@@ -27,13 +27,13 @@ export const MILESTONES: Milestone[] = [
   {
     id: 'M001',
     name: 'Supabase Auth & Storage Wiring',
-    description: 'Full auth flow — SSR-safe client, profile system, 7 tables with RLS, 4 storage buckets, 5 services. Deployment plumbing remains.',
+    description: 'Full auth flow — SSR-safe client, profile system, 7 tables with RLS, 4 storage buckets, 5 services. Studio wired, auth redirects fixed. Vercel env vars remaining.',
     guardian: 'Lyssandria',
     element: 'crystal',
-    progress: 80,
+    progress: 88,
     status: 'active',
     tasksTotal: 17,
-    tasksDone: 12,
+    tasksDone: 15,
     blocked: 1,
     target: 'W10',
   },
@@ -66,13 +66,13 @@ export const MILESTONES: Milestone[] = [
   {
     id: 'M004',
     name: 'Arcanea PM Toolkit',
-    description: 'Git-native project management with .arc format, milestones, sprints, velocity tracking, and Linear sync.',
+    description: 'Git-native project management with .arc format, milestones, sprints, velocity tracking. Command Center live with .arc API.',
     guardian: 'Aiyami',
     element: 'gold',
-    progress: 40,
+    progress: 60,
     status: 'active',
     tasksTotal: 8,
-    tasksDone: 4,
+    tasksDone: 5,
     blocked: 0,
     target: 'W12',
   },
@@ -185,7 +185,7 @@ export const CURRENT_SPRINT: SprintData = {
   name: 'Wave 9 — Command & Control',
   arc: 'Foundation Arc',
   capacity: 40,
-  completed: 24,
+  completed: 34,
   startDate: '2026-02-24',
   endDate: '2026-03-02',
 };
@@ -201,14 +201,14 @@ export interface ActivityEntry {
 }
 
 export const RECENT_ACTIVITY: ActivityEntry[] = [
+  { id: 'a0a', timestamp: '2026-02-28 00:15', action: 'Profile service fix', detail: 'TypeScript build error resolved — deploys unblocked', category: 'fix' },
+  { id: 'a0b', timestamp: '2026-02-27 23:45', action: 'Studio wired to APIs', detail: 'Manifest → /api/creations, Luminor AI → /api/ai/chat streaming', category: 'feature' },
+  { id: 'a0c', timestamp: '2026-02-27 23:30', action: 'Auth redirects fixed', detail: 'Removed hardcoded localhost, secured edge runtime', category: 'fix' },
+  { id: 'a0d', timestamp: '2026-02-27 23:20', action: 'Content quality pass', detail: 'Removed inflated claims, fake testimonials → real content', category: 'fix' },
   { id: 'a1', timestamp: '2026-02-27 22:30', action: 'Gallery cloud migration', detail: 'Community upload + stats API deployed', category: 'feature' },
   { id: 'a2', timestamp: '2026-02-27 20:15', action: 'Loading skeletons', detail: 'Auth, chat, community, activity pages', category: 'build' },
   { id: 'a3', timestamp: '2026-02-27 18:00', action: 'User flows page', detail: '/user-flows + gallery Supabase Storage', category: 'feature' },
-  { id: 'a4', timestamp: '2026-02-27 15:30', action: 'Gallery fix', detail: 'Dynamic scanning + prompt-books auth gate', category: 'fix' },
   { id: 'a5', timestamp: '2026-02-27 12:00', action: 'Workflows page', detail: '/workflows + ecosystem diagram + arcanea-code', category: 'feature' },
-  { id: 'a6', timestamp: '2026-02-26 23:00', action: 'Memory system', detail: '38/38 tests, CLI binary, ArcaneMD format', category: 'milestone' },
-  { id: 'a7', timestamp: '2026-02-26 18:00', action: 'Profile system', detail: 'Settings, activity, collections CRUD', category: 'feature' },
-  { id: 'a8', timestamp: '2026-02-26 14:00', action: 'DB foundation', detail: '7 tables, RLS, triggers, storage buckets', category: 'deploy' },
 ];
 
 // ─── Ecosystem Stats ────────────────────────────────────────────────────────
