@@ -1,46 +1,83 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { PhList, PhX, PhWarningCircle } from '@/lib/phosphor-icons';
+import { PhList, PhX, PhWarningCircle, PhArrowLeft } from '@/lib/phosphor-icons';
 import { LuminorHeader } from '@/components/chat/luminor-header';
 import { ChatContainer } from '@/components/chat/chat-container';
 import { ChatInput } from '@/components/chat/chat-input';
 import { ContextSidebar } from '@/components/chat/context-sidebar';
 import { QuickActions } from '@/components/chat/quick-actions';
 import { useChat } from '@/hooks/use-chat';
-import { getLuminor, type LuminorConfig } from '@/lib/luminors/config';
-import { useAuth } from '@/lib/auth/context';
+import { getLuminor } from '@/lib/luminors/config';
+import Link from 'next/link';
+
+/**
+ * Generate a stable guest ID so the chat hook has a userId even
+ * when Supabase auth is not configured or the user is not logged in.
+ */
+function getGuestId(): string {
+  if (typeof window === 'undefined') return 'guest';
+  const key = 'arcanea-guest-id';
+  let id = localStorage.getItem(key);
+  if (!id) {
+    id = `guest-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    localStorage.setItem(key, id);
+  }
+  return id;
+}
 
 export default function ChatPage() {
   const params = useParams();
   const router = useRouter();
   const luminorId = params.luminorId as string;
-  const { user, isLoading: authLoading } = useAuth();
+
+  // Try to get auth context, but don't crash if AuthProvider is missing or auth fails
+  const [userId, setUserId] = useState<string>('');
+  const [authReady, setAuthReady] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function resolveUser() {
+      // Try dynamic import to avoid hard crash if Supabase is not configured
+      try {
+        const { createClient } = await import('@/lib/supabase/client');
+        const supabase = createClient();
+        const { data } = await supabase.auth.getSession();
+        if (!cancelled) {
+          if (data.session?.user) {
+            setUserId(data.session.user.id);
+          } else {
+            setUserId(getGuestId());
+          }
+          setAuthReady(true);
+        }
+      } catch {
+        // Supabase not configured or auth failed — use guest ID
+        if (!cancelled) {
+          setUserId(getGuestId());
+          setAuthReady(true);
+        }
+      }
+    }
+
+    resolveUser();
+    return () => { cancelled = true; };
+  }, []);
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showQuickActions, setShowQuickActions] = useState(true);
-  const [luminorConfig, setLuminorConfig] = useState<LuminorConfig | undefined>();
-
-  // Redirect to login if not authenticated
-  useEffect(() => {
-    if (!authLoading && !user) {
-      router.push(`/auth/login?next=/chat/${luminorId}`);
-    }
-  }, [authLoading, user, router, luminorId]);
-
-  const userId = user?.id ?? '';
 
   // Get Luminor config
-  useEffect(() => {
-    const config = getLuminor(luminorId);
-    setLuminorConfig(config);
+  const luminorConfig = useMemo(() => getLuminor(luminorId), [luminorId]);
 
-    // Redirect if invalid Luminor
-    if (!config) {
-      router.push('/luminors');
+  // Redirect if invalid Luminor
+  useEffect(() => {
+    if (luminorId && !luminorConfig) {
+      router.push('/chat');
     }
-  }, [luminorId, router]);
+  }, [luminorId, luminorConfig, router]);
 
   // Chat hook — pass Luminor's system prompt so every request carries persona context
   const {
@@ -56,8 +93,6 @@ export default function ChatPage() {
     isLoadingMore,
     error,
     clearError,
-    reconnect,
-    isConnected,
   } = useChat({
     luminorId,
     userId,
@@ -80,15 +115,18 @@ export default function ChatPage() {
     setShowQuickActions(false);
   };
 
-  if (authLoading || !user || !luminorConfig) {
+  // Loading state
+  if (!authReady || !luminorConfig) {
     return (
       <div className="flex items-center justify-center h-screen bg-cosmic-deep">
         <div className="text-center">
-          <div className="w-16 h-16 rounded-full bg-atlantean-teal-aqua/20 flex items-center justify-center mx-auto mb-4 animate-pulse">
-            <span className="text-2xl">✨</span>
+          <div className="w-16 h-16 rounded-full bg-brand-primary/20 flex items-center justify-center mx-auto mb-4 animate-pulse">
+            <span className="text-2xl">
+              {luminorConfig?.avatar || '...'}
+            </span>
           </div>
-          <p className="text-text-secondary">
-            {authLoading ? 'Checking authentication...' : 'Loading Luminor...'}
+          <p className="text-text-secondary font-body">
+            {!authReady ? 'Preparing session...' : 'Loading Intelligence...'}
           </p>
         </div>
       </div>
@@ -190,21 +228,29 @@ export default function ChatPage() {
         />
       </div>
 
-      {/* Mobile Menu Button */}
-      <button
-        onClick={() => setSidebarOpen(!sidebarOpen)}
-        className="lg:hidden fixed bottom-24 right-6 w-12 h-12 rounded-full shadow-lg flex items-center justify-center z-30"
-        style={{
-          backgroundColor: luminorConfig.color,
-          boxShadow: `0 4px 20px ${luminorConfig.color}60`,
-        }}
-      >
-        {sidebarOpen ? (
-          <PhX className="w-6 h-6 text-white" />
-        ) : (
-          <PhList className="w-6 h-6 text-white" />
-        )}
-      </button>
+      {/* Mobile: Back to selection + sidebar toggle */}
+      <div className="lg:hidden fixed bottom-24 right-6 flex flex-col gap-3 z-30">
+        <Link
+          href="/chat"
+          className="w-12 h-12 rounded-full bg-gray-800/90 backdrop-blur-sm border border-gray-700 flex items-center justify-center shadow-lg"
+        >
+          <PhArrowLeft className="w-5 h-5 text-gray-300" />
+        </Link>
+        <button
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          className="w-12 h-12 rounded-full shadow-lg flex items-center justify-center"
+          style={{
+            backgroundColor: luminorConfig.color,
+            boxShadow: `0 4px 20px ${luminorConfig.color}60`,
+          }}
+        >
+          {sidebarOpen ? (
+            <PhX className="w-6 h-6 text-white" />
+          ) : (
+            <PhList className="w-6 h-6 text-white" />
+          )}
+        </button>
+      </div>
     </div>
   );
 }

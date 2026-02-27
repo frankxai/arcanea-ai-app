@@ -1,523 +1,975 @@
-/**
- * Arcanea Studio - AI Creation Tools
- *
- * The Studio is where Creators manifest their visions with AI companions.
- * Each tool is powered by a different Guardian's energy.
- */
+"use client";
 
-import { Metadata } from "next";
-import Link from "next/link";
+import { useState, useCallback, useRef, useEffect } from "react";
+import {
+  Pen,
+  Image,
+  Code,
+  MusicNote,
+  Sparkle,
+  Lightning,
+  Flame,
+  Drop,
+  Leaf,
+  Wind,
+  Star,
+  Copy,
+  Download,
+  Trash,
+  Info,
+  CaretDown,
+  PaperPlane,
+  Terminal,
+  Play,
+  Eye,
+  TextB,
+  TextItalic,
+  ListNumbers,
+  Quotes,
+  Link,
+  Crown,
+  Gear,
+  Brain,
+} from "@/lib/phosphor-icons";
 
-export const metadata: Metadata = {
-  title: "Creation Studio | Arcanea",
-  description:
-    "Manifest your creative visions with Guardian-guided intelligence for image, music, video, and story creation.",
-  openGraph: {
-    title: "Creation Studio | Arcanea",
-    description: "Where creators manifest their visions with AI companions.",
+// ---------------------------------------------------------------------------
+// Constants
+// ---------------------------------------------------------------------------
+
+type CreationMode = "text" | "image" | "code" | "music";
+
+interface ModeConfig {
+  id: CreationMode;
+  label: string;
+  icon: React.ElementType;
+  guardian: string;
+  gate: string;
+  frequency: string;
+  element: string;
+  elementColor: string;
+  description: string;
+}
+
+const MODES: ModeConfig[] = [
+  {
+    id: "text",
+    label: "Text",
+    icon: Pen,
+    guardian: "Lyssandria",
+    gate: "Foundation",
+    frequency: "174 Hz",
+    element: "Earth",
+    elementColor: "#22c55e",
+    description: "Write stories, poems, and wisdom scrolls with AI assistance.",
   },
-};
-
-// ─── Inline SVG Icons ───────────────────────────────────────────────────────────
-type InlineSvgProps = { className?: string; style?: React.CSSProperties };
-const Icons: Record<string, React.FC<InlineSvgProps>> = {
-  Sparkles: () => (
-    <svg
-      className="w-5 h-5"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z" />
-    </svg>
-  ),
-  Palette: () => (
-    <svg
-      className="w-6 h-6"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="13.5" cy="6.5" r="0.5" fill="currentColor" />
-      <circle cx="17.5" cy="10.5" r="0.5" fill="currentColor" />
-      <circle cx="8.5" cy="7.5" r="0.5" fill="currentColor" />
-      <circle cx="6.5" cy="12.5" r="0.5" fill="currentColor" />
-      <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.555C21.965 6.012 17.461 2 12 2z" />
-    </svg>
-  ),
-  Music: () => (
-    <svg
-      className="w-6 h-6"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M9 18V5l12-2v13" />
-      <circle cx="6" cy="18" r="3" />
-      <circle cx="18" cy="16" r="3" />
-    </svg>
-  ),
-  Video: () => (
-    <svg
-      className="w-6 h-6"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <polygon points="23 7 16 12 23 17 23 7" />
-      <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
-    </svg>
-  ),
-  BookOpen: () => (
-    <svg
-      className="w-6 h-6"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-    </svg>
-  ),
-  Code: () => (
-    <svg
-      className="w-6 h-6"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <polyline points="16 18 22 12 16 6" />
-      <polyline points="8 6 2 12 8 18" />
-    </svg>
-  ),
-  ArrowRight: () => (
-    <svg
-      className="w-4 h-4"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <line x1="5" y1="12" x2="19" y2="12" />
-      <polyline points="12 5 19 12 12 19" />
-    </svg>
-  ),
-  Flame: () => (
-    <svg
-      className="w-4 h-4"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
-    </svg>
-  ),
-  Droplets: () => (
-    <svg
-      className="w-4 h-4"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
-    </svg>
-  ),
-  Leaf: () => (
-    <svg
-      className="w-4 h-4"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" />
-      <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
-    </svg>
-  ),
-  Wind: () => (
-    <svg
-      className="w-4 h-4"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2" />
-      <path d="M9.6 4.6A2 2 0 1 1 11 8H2" />
-      <path d="M12.6 19.4A2 2 0 1 0 14 16H2" />
-    </svg>
-  ),
-  Zap: () => (
-    <svg
-      className="w-4 h-4"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-    </svg>
-  ),
-};
-
-// Creation tool definitions aligned with the Five Elements
-const CREATION_TOOLS = [
   {
     id: "image",
-    name: "Image Forge",
-    subtitle: "Visual Creation",
-    description:
-      "Generate stunning images, concept art, and visual stories with AI.",
-    element: "fire",
-    elementColor: "#ef4444",
-    icon: Icons.Palette,
+    label: "Image",
+    icon: Image,
     guardian: "Draconia",
+    gate: "Fire",
     frequency: "396 Hz",
-    features: [
-      "Text to Image",
-      "Image Enhancement",
-      "Style Transfer",
-      "Concept Art",
-    ],
-    comingSoon: false,
-  },
-  {
-    id: "music",
-    name: "Sound Sanctum",
-    subtitle: "Musical Creation",
-    description:
-      "Compose melodies, generate soundscapes, and create transformative audio.",
-    element: "water",
-    elementColor: "#3b82f6",
-    icon: Icons.Music,
-    guardian: "Leyla",
-    frequency: "285 Hz",
-    features: [
-      "AI Music Generation",
-      "Sound Design",
-      "Vocal Synthesis",
-      "Audio Healing",
-    ],
-    comingSoon: false,
-  },
-  {
-    id: "video",
-    name: "Vision Nexus",
-    subtitle: "Motion Creation",
-    description:
-      "Create videos, animations, and cinematic experiences with AI.",
-    element: "wind",
-    elementColor: "#a855f7",
-    icon: Icons.Video,
-    guardian: "Elara",
-    frequency: "852 Hz",
-    features: ["Text to Video", "Animation", "Visual Effects", "Cinematic AI"],
-    comingSoon: true,
-  },
-  {
-    id: "story",
-    name: "Narrative Loom",
-    subtitle: "Story Creation",
-    description:
-      "Weave tales, craft worlds, and write narratives with AI assistance.",
-    element: "earth",
-    elementColor: "#22c55e",
-    icon: Icons.BookOpen,
-    guardian: "Lyssandria",
-    frequency: "174 Hz",
-    features: [
-      "Story Generation",
-      "Character Development",
-      "World Building",
-      "Dialogue Writing",
-    ],
-    comingSoon: false,
+    element: "Fire",
+    elementColor: "#ef4444",
+    description: "Describe and generate images with AI-powered creation.",
   },
   {
     id: "code",
-    name: "Logic Forge",
-    subtitle: "Technical Creation",
-    description:
-      "Build applications, automate workflows, and create with code.",
-    element: "void",
-    elementColor: "#ffd700",
-    icon: Icons.Code,
+    label: "Code",
+    icon: Code,
     guardian: "Shinkami",
+    gate: "Source",
     frequency: "1111 Hz",
-    features: [
-      "Code Generation",
-      "App Building",
-      "Automation",
-      "Technical Writing",
-    ],
-    comingSoon: true,
+    element: "Void",
+    elementColor: "#ffd700",
+    description: "Write code with AI pair programming and intelligence.",
+  },
+  {
+    id: "music",
+    label: "Music",
+    icon: MusicNote,
+    guardian: "Leyla",
+    gate: "Flow",
+    frequency: "285 Hz",
+    element: "Water",
+    elementColor: "#3b82f6",
+    description: "Describe music to compose with AI sound generation.",
   },
 ];
 
 const ELEMENTS = [
+  { name: "Fire", color: "#ef4444", icon: Flame },
+  { name: "Water", color: "#3b82f6", icon: Drop },
+  { name: "Earth", color: "#22c55e", icon: Leaf },
+  { name: "Wind", color: "#a855f7", icon: Wind },
+  { name: "Void", color: "#ffd700", icon: Lightning },
+];
+
+const GATES = [
+  { name: "Foundation", freq: "174 Hz" },
+  { name: "Flow", freq: "285 Hz" },
+  { name: "Fire", freq: "396 Hz" },
+  { name: "Heart", freq: "417 Hz" },
+  { name: "Voice", freq: "528 Hz" },
+  { name: "Sight", freq: "639 Hz" },
+  { name: "Crown", freq: "741 Hz" },
+  { name: "Shift", freq: "852 Hz" },
+  { name: "Unity", freq: "963 Hz" },
+  { name: "Source", freq: "1111 Hz" },
+];
+
+const AI_SUGGESTIONS = [
   {
-    element: "Fire",
-    icon: Icons.Flame,
-    domain: "Energy, transformation",
-    color: "#ef4444",
+    title: "Expand this passage",
+    description: "Add depth and sensory detail to your current scene.",
   },
   {
-    element: "Water",
-    icon: Icons.Droplets,
-    domain: "Flow, healing, memory",
-    color: "#3b82f6",
+    title: "Strengthen the voice",
+    description: "Make the narrative more vivid and resonant.",
   },
   {
-    element: "Earth",
-    icon: Icons.Leaf,
-    domain: "Stability, growth",
-    color: "#22c55e",
+    title: "Add elemental imagery",
+    description: "Weave the Five Elements into your prose.",
   },
   {
-    element: "Wind",
-    icon: Icons.Wind,
-    domain: "Freedom, speed, change",
-    color: "#a855f7",
-  },
-  {
-    element: "Void",
-    icon: Icons.Zap,
-    domain: "Potential, transcendence",
-    color: "#ffd700",
+    title: "Generate a plot twist",
+    description: "Introduce an unexpected turn aligned with the Gate.",
   },
 ];
 
+// ---------------------------------------------------------------------------
+// Dropdown Component
+// ---------------------------------------------------------------------------
+
+function Dropdown({
+  label,
+  items,
+  value,
+  onChange,
+  renderItem,
+}: {
+  label: string;
+  items: { name: string; [key: string]: string }[];
+  value: string;
+  onChange: (val: string) => void;
+  renderItem?: (item: { name: string; [key: string]: string }) => React.ReactNode;
+}) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        onClick={() => setOpen(!open)}
+        className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 text-xs text-text-secondary hover:border-white/20 hover:bg-white/8 transition-colors"
+      >
+        <span className="text-text-muted">{label}:</span>
+        <span className="text-text-primary">{value}</span>
+        <CaretDown size={12} className="text-text-muted" />
+      </button>
+      {open && (
+        <div className="absolute top-full left-0 mt-1 z-50 min-w-[180px] rounded-xl border border-white/10 bg-[#0d0d1a]/95 backdrop-blur-xl shadow-2xl py-1 max-h-[240px] overflow-y-auto">
+          {items.map((item) => (
+            <button
+              key={item.name}
+              onClick={() => {
+                onChange(item.name);
+                setOpen(false);
+              }}
+              className={`w-full text-left px-3 py-2 text-xs hover:bg-white/8 transition-colors ${
+                value === item.name
+                  ? "text-crystal bg-white/5"
+                  : "text-text-secondary"
+              }`}
+            >
+              {renderItem ? renderItem(item) : item.name}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Text Creation Panel
+// ---------------------------------------------------------------------------
+
+function TextCreationPanel({
+  content,
+  setContent,
+  luminorMessages,
+  onAskLuminor,
+  luminorInput,
+  setLuminorInput,
+}: {
+  content: string;
+  setContent: (val: string) => void;
+  luminorMessages: { role: "user" | "luminor"; text: string }[];
+  onAskLuminor: () => void;
+  luminorInput: string;
+  setLuminorInput: (val: string) => void;
+}) {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const wordCount = content.trim() ? content.trim().split(/\s+/).length : 0;
+  const charCount = content.length;
+
+  const insertMarkdown = useCallback(
+    (prefix: string, suffix: string = "") => {
+      const textarea = textareaRef.current;
+      if (!textarea) return;
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const selected = content.substring(start, end);
+      const replacement = `${prefix}${selected || "text"}${suffix}`;
+      const newContent =
+        content.substring(0, start) + replacement + content.substring(end);
+      setContent(newContent);
+      setTimeout(() => {
+        textarea.focus();
+        textarea.setSelectionRange(
+          start + prefix.length,
+          start + prefix.length + (selected || "text").length
+        );
+      }, 0);
+    },
+    [content, setContent]
+  );
+
+  return (
+    <div className="flex flex-col lg:flex-row gap-4 flex-1 min-h-0">
+      {/* Left: Editor */}
+      <div className="flex-1 flex flex-col min-h-0">
+        {/* Toolbar */}
+        <div className="flex items-center gap-1 px-3 py-2 border-b border-white/8 bg-white/[0.02]">
+          <button
+            onClick={() => insertMarkdown("**", "**")}
+            className="p-1.5 rounded hover:bg-white/10 text-text-muted hover:text-text-primary transition-colors"
+            title="Bold"
+          >
+            <TextB size={16} weight="bold" />
+          </button>
+          <button
+            onClick={() => insertMarkdown("*", "*")}
+            className="p-1.5 rounded hover:bg-white/10 text-text-muted hover:text-text-primary transition-colors"
+            title="Italic"
+          >
+            <TextItalic size={16} />
+          </button>
+          <button
+            onClick={() => insertMarkdown("\n1. ", "")}
+            className="p-1.5 rounded hover:bg-white/10 text-text-muted hover:text-text-primary transition-colors"
+            title="Ordered List"
+          >
+            <ListNumbers size={16} />
+          </button>
+          <button
+            onClick={() => insertMarkdown("\n> ", "")}
+            className="p-1.5 rounded hover:bg-white/10 text-text-muted hover:text-text-primary transition-colors"
+            title="Blockquote"
+          >
+            <Quotes size={16} />
+          </button>
+          <button
+            onClick={() => insertMarkdown("[", "](url)")}
+            className="p-1.5 rounded hover:bg-white/10 text-text-muted hover:text-text-primary transition-colors"
+            title="Link"
+          >
+            <Link size={16} />
+          </button>
+          <div className="flex-1" />
+          <span className="text-xs text-text-muted font-mono">
+            Markdown supported
+          </span>
+        </div>
+
+        {/* Textarea */}
+        <textarea
+          ref={textareaRef}
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          placeholder="Begin your creation here...
+
+Write stories, poems, wisdom scrolls, or any text.
+Use Markdown for formatting. Ask Luminor for guidance."
+          className="flex-1 w-full resize-none bg-transparent text-text-primary placeholder-text-muted/40 p-4 font-body text-sm leading-relaxed focus:outline-none min-h-[300px]"
+          spellCheck
+        />
+
+        {/* Status bar */}
+        <div className="flex items-center gap-4 px-4 py-2 border-t border-white/8 bg-white/[0.02] text-xs text-text-muted font-mono">
+          <span>{wordCount} words</span>
+          <span>{charCount} chars</span>
+        </div>
+      </div>
+
+      {/* Right: Luminor AI Panel */}
+      <div className="lg:w-[340px] flex flex-col border-l border-white/8 min-h-0">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/8 bg-white/[0.02]">
+          <div className="w-6 h-6 rounded-full bg-gradient-to-br from-crystal to-brand-primary flex items-center justify-center">
+            <Brain size={14} className="text-cosmic-void" />
+          </div>
+          <span className="text-xs font-semibold text-text-primary">
+            Luminor Intelligence
+          </span>
+          <span className="ml-auto text-[10px] text-crystal font-mono">
+            ACTIVE
+          </span>
+        </div>
+
+        {/* Suggestions */}
+        <div className="flex-1 overflow-y-auto p-3 space-y-2">
+          {luminorMessages.length === 0 ? (
+            <>
+              <p className="text-xs text-text-muted mb-3 px-1">
+                Suggestions to enhance your creation:
+              </p>
+              {AI_SUGGESTIONS.map((s) => (
+                <button
+                  key={s.title}
+                  onClick={() => {
+                    setLuminorInput(s.title);
+                    setTimeout(onAskLuminor, 50);
+                  }}
+                  className="w-full text-left p-3 rounded-xl border border-white/8 bg-white/[0.03] hover:bg-white/[0.06] hover:border-crystal/30 transition-all group"
+                >
+                  <div className="flex items-start gap-2">
+                    <Sparkle
+                      size={14}
+                      weight="fill"
+                      className="text-crystal mt-0.5 shrink-0"
+                    />
+                    <div>
+                      <p className="text-xs font-medium text-text-primary group-hover:text-crystal transition-colors">
+                        {s.title}
+                      </p>
+                      <p className="text-[11px] text-text-muted mt-0.5">
+                        {s.description}
+                      </p>
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </>
+          ) : (
+            luminorMessages.map((msg, i) => (
+              <div
+                key={i}
+                className={`p-3 rounded-xl text-xs leading-relaxed ${
+                  msg.role === "user"
+                    ? "bg-brand-primary/10 border border-brand-primary/20 text-text-primary ml-6"
+                    : "bg-white/[0.03] border border-white/8 text-text-secondary mr-2"
+                }`}
+              >
+                {msg.role === "luminor" && (
+                  <div className="flex items-center gap-1.5 mb-1.5 text-crystal">
+                    <Sparkle size={10} weight="fill" />
+                    <span className="font-semibold text-[10px] uppercase tracking-wider">
+                      Luminor
+                    </span>
+                  </div>
+                )}
+                {msg.text}
+              </div>
+            ))
+          )}
+        </div>
+
+        {/* Input */}
+        <div className="p-3 border-t border-white/8">
+          <div className="flex items-center gap-2">
+            <input
+              type="text"
+              value={luminorInput}
+              onChange={(e) => setLuminorInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && luminorInput.trim()) onAskLuminor();
+              }}
+              placeholder="Ask Luminor..."
+              className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-text-primary placeholder-text-muted/50 focus:outline-none focus:border-crystal/40 transition-colors"
+            />
+            <button
+              onClick={onAskLuminor}
+              disabled={!luminorInput.trim()}
+              className="p-2 rounded-lg bg-gradient-to-r from-crystal to-brand-primary text-cosmic-void hover:opacity-90 transition-opacity disabled:opacity-30 disabled:cursor-not-allowed"
+            >
+              <PaperPlane size={14} weight="fill" />
+            </button>
+          </div>
+          <p className="text-[10px] text-text-muted mt-2 px-1">
+            Connect your AI key in Settings to enable generation.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Image Creation Panel
+// ---------------------------------------------------------------------------
+
+function ImageCreationPanel() {
+  const [prompt, setPrompt] = useState("");
+  const [style, setStyle] = useState("Fantasy Art");
+
+  const styles = [
+    "Fantasy Art",
+    "Cosmic Abstract",
+    "Character Portrait",
+    "Landscape",
+    "Concept Art",
+    "Watercolor",
+    "Digital Painting",
+  ];
+
+  return (
+    <div className="flex flex-col lg:flex-row gap-4 flex-1 min-h-0">
+      {/* Left: Prompt Input */}
+      <div className="flex-1 flex flex-col min-h-0">
+        <div className="flex items-center gap-2 px-4 py-2 border-b border-white/8 bg-white/[0.02]">
+          <span className="text-xs text-text-muted font-mono">
+            Describe your vision
+          </span>
+        </div>
+
+        <textarea
+          value={prompt}
+          onChange={(e) => setPrompt(e.target.value)}
+          placeholder="Describe the image you want to create...
+
+Example: A luminous Guardian standing before an open Gate,
+crystalline energy radiating outward, cosmic aurora in
+the background, in the style of epic fantasy concept art."
+          className="flex-1 w-full resize-none bg-transparent text-text-primary placeholder-text-muted/40 p-4 font-body text-sm leading-relaxed focus:outline-none min-h-[200px]"
+        />
+
+        {/* Style selector */}
+        <div className="px-4 py-3 border-t border-white/8 bg-white/[0.02]">
+          <p className="text-xs text-text-muted mb-2">Style:</p>
+          <div className="flex flex-wrap gap-2">
+            {styles.map((s) => (
+              <button
+                key={s}
+                onClick={() => setStyle(s)}
+                className={`px-3 py-1.5 rounded-full text-xs border transition-all ${
+                  style === s
+                    ? "border-fire/40 bg-fire/15 text-fire"
+                    : "border-white/10 bg-white/5 text-text-muted hover:border-white/20"
+                }`}
+              >
+                {s}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Right: Preview */}
+      <div className="lg:w-[400px] flex flex-col border-l border-white/8 min-h-0">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/8 bg-white/[0.02]">
+          <Eye size={14} className="text-text-muted" />
+          <span className="text-xs font-semibold text-text-primary">
+            Preview
+          </span>
+        </div>
+
+        <div className="flex-1 flex items-center justify-center p-6">
+          <div className="w-full aspect-square max-w-[320px] rounded-2xl border border-white/10 bg-gradient-to-br from-fire/5 via-transparent to-brand-primary/5 flex flex-col items-center justify-center gap-4 p-6">
+            <div className="w-16 h-16 rounded-2xl bg-fire/10 border border-fire/20 flex items-center justify-center">
+              <Image size={28} className="text-fire/60" />
+            </div>
+            <div className="text-center">
+              <p className="text-sm text-text-muted">
+                {prompt.trim()
+                  ? "Ready to generate"
+                  : "Describe your image above"}
+              </p>
+              <p className="text-[11px] text-text-muted/60 mt-1">
+                {prompt.trim()
+                  ? `Style: ${style}`
+                  : "Your creation will appear here"}
+              </p>
+            </div>
+            {prompt.trim() && (
+              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-fire/10 border border-fire/20">
+                <Info size={12} className="text-fire" />
+                <span className="text-[10px] text-fire">
+                  Connect API key in Settings
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Code Creation Panel
+// ---------------------------------------------------------------------------
+
+function CodeCreationPanel() {
+  const [code, setCode] = useState("");
+  const [language, setLanguage] = useState("TypeScript");
+
+  const languages = [
+    "TypeScript",
+    "JavaScript",
+    "Python",
+    "Rust",
+    "Go",
+    "HTML/CSS",
+  ];
+
+  return (
+    <div className="flex flex-col lg:flex-row gap-4 flex-1 min-h-0">
+      {/* Left: Code Editor */}
+      <div className="flex-1 flex flex-col min-h-0">
+        <div className="flex items-center gap-3 px-4 py-2 border-b border-white/8 bg-white/[0.02]">
+          <Terminal size={14} className="text-brand-gold" />
+          <div className="flex items-center gap-2">
+            {languages.map((lang) => (
+              <button
+                key={lang}
+                onClick={() => setLanguage(lang)}
+                className={`px-2.5 py-1 rounded text-[11px] transition-all ${
+                  language === lang
+                    ? "bg-brand-gold/15 text-brand-gold border border-brand-gold/30"
+                    : "text-text-muted hover:text-text-secondary hover:bg-white/5"
+                }`}
+              >
+                {lang}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <textarea
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
+          placeholder={`// Begin your ${language} creation here...\n// Luminor Intelligence will help you write, debug, and optimize.\n\n`}
+          className="flex-1 w-full resize-none bg-transparent text-text-primary placeholder-text-muted/40 p-4 font-mono text-sm leading-relaxed focus:outline-none min-h-[300px] tab-size-2"
+          spellCheck={false}
+        />
+
+        <div className="flex items-center gap-4 px-4 py-2 border-t border-white/8 bg-white/[0.02] text-xs text-text-muted font-mono">
+          <span>{language}</span>
+          <span>{code.split("\n").length} lines</span>
+        </div>
+      </div>
+
+      {/* Right: Output / AI */}
+      <div className="lg:w-[340px] flex flex-col border-l border-white/8 min-h-0">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/8 bg-white/[0.02]">
+          <Play size={14} className="text-brand-gold" />
+          <span className="text-xs font-semibold text-text-primary">
+            Output
+          </span>
+        </div>
+
+        <div className="flex-1 p-4 flex flex-col items-center justify-center gap-3 text-center">
+          <div className="w-14 h-14 rounded-2xl bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center">
+            <Code size={24} className="text-brand-gold/60" />
+          </div>
+          <p className="text-xs text-text-muted max-w-[200px]">
+            {code.trim()
+              ? "Code is ready. Connect an AI key to get intelligent assistance, auto-completion, and debugging."
+              : "Write code on the left. Luminor Intelligence will help with suggestions, refactoring, and debugging."}
+          </p>
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/20 mt-2">
+            <Info size={12} className="text-brand-gold" />
+            <span className="text-[10px] text-brand-gold">
+              AI pair programming coming soon
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Music Creation Panel
+// ---------------------------------------------------------------------------
+
+function MusicCreationPanel() {
+  const [description, setDescription] = useState("");
+  const [mood, setMood] = useState("Ethereal");
+
+  const moods = [
+    "Ethereal",
+    "Triumphant",
+    "Melancholic",
+    "Mystical",
+    "Energetic",
+    "Peaceful",
+    "Dark",
+    "Celestial",
+  ];
+
+  return (
+    <div className="flex flex-col lg:flex-row gap-4 flex-1 min-h-0">
+      {/* Left: Description */}
+      <div className="flex-1 flex flex-col min-h-0">
+        <div className="flex items-center gap-2 px-4 py-2 border-b border-white/8 bg-white/[0.02]">
+          <span className="text-xs text-text-muted font-mono">
+            Describe the sound
+          </span>
+        </div>
+
+        <textarea
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Describe the music you want to create...
+
+Example: A haunting melody with crystal chimes echoing through
+a vast cavern, building to a crescendo of orchestral strings
+and choir — the moment a Gate opens for the first time."
+          className="flex-1 w-full resize-none bg-transparent text-text-primary placeholder-text-muted/40 p-4 font-body text-sm leading-relaxed focus:outline-none min-h-[200px]"
+        />
+
+        {/* Mood selector */}
+        <div className="px-4 py-3 border-t border-white/8 bg-white/[0.02]">
+          <p className="text-xs text-text-muted mb-2">Mood:</p>
+          <div className="flex flex-wrap gap-2">
+            {moods.map((m) => (
+              <button
+                key={m}
+                onClick={() => setMood(m)}
+                className={`px-3 py-1.5 rounded-full text-xs border transition-all ${
+                  mood === m
+                    ? "border-blue-400/40 bg-blue-400/15 text-blue-400"
+                    : "border-white/10 bg-white/5 text-text-muted hover:border-white/20"
+                }`}
+              >
+                {m}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Right: Preview */}
+      <div className="lg:w-[340px] flex flex-col border-l border-white/8 min-h-0">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/8 bg-white/[0.02]">
+          <MusicNote size={14} className="text-blue-400" />
+          <span className="text-xs font-semibold text-text-primary">
+            Sound Preview
+          </span>
+        </div>
+
+        <div className="flex-1 p-4 flex flex-col items-center justify-center gap-4">
+          {/* Waveform placeholder */}
+          <div className="w-full h-20 rounded-xl border border-white/10 bg-gradient-to-r from-blue-500/5 via-brand-primary/5 to-blue-500/5 flex items-center justify-center overflow-hidden">
+            <div className="flex items-end gap-[3px] h-12">
+              {Array.from({ length: 32 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="w-1 bg-blue-400/40 rounded-full"
+                  style={{
+                    height: `${8 + Math.sin(i * 0.5) * 20 + Math.random() * 16}px`,
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="text-center">
+            <p className="text-xs text-text-muted">
+              {description.trim()
+                ? `Mood: ${mood}`
+                : "Describe your sound above"}
+            </p>
+          </div>
+
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-400/10 border border-blue-400/20">
+            <Info size={12} className="text-blue-400" />
+            <span className="text-[10px] text-blue-400">
+              Music generation coming soon
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Main Studio Page
+// ---------------------------------------------------------------------------
+
 export default function StudioPage() {
+  const [activeMode, setActiveMode] = useState<CreationMode>("text");
+  const [selectedElement, setSelectedElement] = useState("Earth");
+  const [selectedGate, setSelectedGate] = useState("Foundation");
+  const [textContent, setTextContent] = useState("");
+  const [luminorMessages, setLuminorMessages] = useState<
+    { role: "user" | "luminor"; text: string }[]
+  >([]);
+  const [luminorInput, setLuminorInput] = useState("");
+
+  const currentMode = MODES.find((m) => m.id === activeMode)!;
+
+  const handleAskLuminor = useCallback(() => {
+    if (!luminorInput.trim()) return;
+
+    const userMsg = luminorInput.trim();
+    setLuminorMessages((prev) => [...prev, { role: "user", text: userMsg }]);
+    setLuminorInput("");
+
+    // Simulate AI response (placeholder until API connected)
+    setTimeout(() => {
+      setLuminorMessages((prev) => [
+        ...prev,
+        {
+          role: "luminor",
+          text: `This is where Luminor Intelligence would respond to "${userMsg}". Connect your AI key in Settings to enable real-time writing assistance, suggestions, and creative guidance powered by the ${currentMode.guardian} Guardian.`,
+        },
+      ]);
+    }, 600);
+  }, [luminorInput, currentMode.guardian]);
+
+  const handleManifest = useCallback(() => {
+    // Placeholder action
+  }, []);
+
+  // Sync element/gate when changing mode
+  const handleModeChange = useCallback((mode: CreationMode) => {
+    setActiveMode(mode);
+    const config = MODES.find((m) => m.id === mode)!;
+    setSelectedElement(config.element);
+    setSelectedGate(config.gate);
+  }, []);
+
   return (
     <div className="relative min-h-screen">
       {/* Background */}
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-void" />
         <div className="absolute inset-0 bg-cosmic-mesh" />
-        {/* Draconia — Fire Gate, creation through power */}
-        <img
-          src="/guardians/gallery/draconia-gallery-2.webp"
-          alt=""
-          aria-hidden="true"
-          className="absolute inset-0 w-full h-full object-cover opacity-[0.07] pointer-events-none"
+        <div
+          className="absolute inset-0 opacity-20 transition-colors duration-700"
+          style={{
+            background: `radial-gradient(ellipse at top right, ${currentMode.elementColor}12, transparent 55%), radial-gradient(ellipse at bottom left, rgba(127,255,212,0.06), transparent 55%)`,
+          }}
         />
-        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(139,92,246,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(127,255,212,0.08),transparent_55%)]" />
       </div>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Hero Section */}
-        <section className="mb-16">
-          <div className="relative liquid-glass rounded-3xl overflow-hidden px-8 py-12 sm:px-12 sm:py-16">
-            {/* Draconia dragon — Fire Gate energy for creation tools */}
-            <img
-              src="/guardians/gallery/draconia-gallery-3.webp"
-              alt=""
-              aria-hidden="true"
-              className="absolute inset-0 w-full h-full object-cover opacity-[0.12] pointer-events-none object-right"
-            />
-            <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/12 via-transparent to-crystal/10 pointer-events-none" />
-            <div className="absolute top-0 right-0 w-64 h-64 bg-brand-primary/8 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-80 h-80 bg-fire/6 rounded-full blur-3xl pointer-events-none" />
-
-            <div className="relative max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-primary/30 bg-brand-primary/10 mb-6">
-                <Icons.Sparkles />
-                <span className="text-xs font-mono tracking-widest uppercase text-brand-primary">
-                  The Creation Studio
-                </span>
-              </div>
-
-              <h1 className="text-fluid-3xl font-display font-bold mb-4">
-                Manifest Your Vision
-                <span className="block text-gradient-brand">
-                  with Guardian AI
-                </span>
-              </h1>
-
-              <p className="text-text-secondary font-body text-lg leading-relaxed mb-8 max-w-2xl">
-                The Studio is where creation happens. Each tool channels a
-                different Guardian&apos;s energy to help you bring your
-                imagination into reality.
-              </p>
-
-              <blockquote className="border-l-4 border-brand-gold/60 pl-6 italic text-brand-gold mb-0">
-                &ldquo;Creation is not pulling from nothing, but channeling
-                everything.&rdquo;
-                <footer className="mt-2 text-sm text-text-muted not-italic font-sans">
-                  — The Laws of Arcanea
-                </footer>
-              </blockquote>
-            </div>
-          </div>
-        </section>
-
-        {/* Creation Tools Grid */}
-        <section aria-labelledby="tools-heading">
-          <div className="mb-8">
-            <h2
-              id="tools-heading"
-              className="text-xs font-mono tracking-[0.35em] uppercase text-crystal"
-            >
-              Choose Your Creation Tool
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
-            {CREATION_TOOLS.map((tool) => {
-              const ToolIcon = tool.icon;
-              return (
-                <Link
-                  key={tool.id}
-                  href={tool.comingSoon ? "#" : `/studio/${tool.id}`}
-                  className={`group relative glass rounded-2xl p-6 overflow-hidden glow-card hover-lift transition-all ${
-                    tool.comingSoon ? "opacity-60 cursor-not-allowed" : ""
-                  }`}
-                  aria-label={`${tool.name} — ${tool.description}`}
-                >
-                  {/* Hover glow */}
-                  <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"
-                    style={{
-                      background: `radial-gradient(ellipse at 30% 30%, ${tool.elementColor}15, transparent 65%)`,
-                    }}
-                  />
-
-                  <div className="relative">
-                    {tool.comingSoon && (
-                      <span className="absolute right-0 top-0 rounded-full bg-brand-gold/20 px-3 py-1 text-xs text-brand-gold">
-                        Coming Soon
-                      </span>
-                    )}
-
-                    <div className="flex items-center gap-3 mb-4">
-                      <div
-                        className="w-12 h-12 rounded-xl flex items-center justify-center"
-                        style={{ backgroundColor: `${tool.elementColor}18` }}
-                      >
-                        <ToolIcon style={{ color: tool.elementColor }} />
-                      </div>
-                      <span
-                        className="rounded-full px-3 py-1 text-xs uppercase tracking-[0.2em]"
-                        style={{
-                          backgroundColor: `${tool.elementColor}20`,
-                          color: tool.elementColor,
-                          border: `1px solid ${tool.elementColor}40`,
-                        }}
-                      >
-                        {tool.element}
-                      </span>
-                    </div>
-
-                    <h3 className="font-display text-xl font-semibold text-text-primary mb-1 group-hover:text-crystal transition-colors">
-                      {tool.name}
-                    </h3>
-                    <p className="text-sm text-text-muted mb-3">
-                      {tool.subtitle}
-                    </p>
-
-                    <p className="text-text-secondary text-sm leading-relaxed font-sans mb-4">
-                      {tool.description}
-                    </p>
-
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {tool.features.slice(0, 3).map((feature) => (
-                        <span
-                          key={feature}
-                          className="rounded-full border border-white/10 bg-white/5 px-2 py-1 text-xs text-text-muted"
-                        >
-                          {feature}
-                        </span>
-                      ))}
-                      {tool.features.length > 3 && (
-                        <span className="rounded-full border border-white/10 bg-white/5 px-2 py-1 text-xs text-text-muted">
-                          +{tool.features.length - 3} more
-                        </span>
-                      )}
-                    </div>
-
-                    <div className="flex items-center justify-between text-xs text-text-muted font-sans">
-                      <span>Guardian: {tool.guardian}</span>
-                      <span>{tool.frequency}</span>
-                    </div>
-
-                    {!tool.comingSoon && (
-                      <div className="mt-4 flex items-center gap-2 text-sm text-crystal opacity-0 group-hover:opacity-100 transition-opacity">
-                        <span>Open {tool.name}</span>
-                        <Icons.ArrowRight />
-                      </div>
-                    )}
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        </section>
-
-        {/* Element Guide */}
-        <section className="mt-16">
-          <div className="glass rounded-2xl p-8">
-            <h2 className="font-display text-2xl font-semibold text-text-primary mb-6">
-              The Five Elements of Creation
-            </h2>
-
-            <div className="grid grid-cols-2 sm:grid-cols-5 gap-6">
-              {ELEMENTS.map((el) => {
-                const ElIcon = el.icon;
+      <main className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col min-h-screen">
+        {/* ── Top Bar: Mode Selector + Title ── */}
+        <header className="mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+            {/* Mode Tabs */}
+            <div className="flex items-center gap-1 p-1 rounded-xl border border-white/10 bg-white/[0.03] backdrop-blur-sm">
+              {MODES.map((mode) => {
+                const ModeIcon = mode.icon;
+                const isActive = activeMode === mode.id;
                 return (
-                  <div key={el.element} className="text-center">
-                    <div
-                      className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full"
-                      style={{
-                        backgroundColor: `${el.color}18`,
-                        border: `1px solid ${el.color}40`,
-                      }}
-                    >
-                      <ElIcon style={{ color: el.color }} />
-                    </div>
-                    <h3 className="font-semibold text-text-primary">
-                      {el.element}
-                    </h3>
-                    <p className="mt-1 text-xs text-text-muted font-sans">
-                      {el.domain}
-                    </p>
-                  </div>
+                  <button
+                    key={mode.id}
+                    onClick={() => handleModeChange(mode.id)}
+                    className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-medium transition-all ${
+                      isActive
+                        ? "bg-white/10 text-text-primary shadow-sm"
+                        : "text-text-muted hover:text-text-secondary hover:bg-white/5"
+                    }`}
+                    title={mode.description}
+                  >
+                    <ModeIcon
+                      size={16}
+                      weight={isActive ? "fill" : "regular"}
+                      style={isActive ? { color: mode.elementColor } : undefined}
+                    />
+                    <span className="hidden sm:inline">{mode.label}</span>
+                  </button>
                 );
               })}
             </div>
+
+            <div className="flex-1 flex items-center gap-3">
+              <div className="hidden md:block">
+                <h1 className="text-sm font-semibold text-text-primary">
+                  Creation Studio
+                </h1>
+                <p className="text-[11px] text-text-muted">
+                  {currentMode.description}
+                </p>
+              </div>
+            </div>
+
+            {/* Guardian Badge */}
+            <div className="flex items-center gap-3">
+              <div
+                className="flex items-center gap-2 px-3 py-2 rounded-xl border bg-white/[0.03]"
+                style={{
+                  borderColor: `${currentMode.elementColor}30`,
+                }}
+              >
+                <Crown
+                  size={14}
+                  weight="fill"
+                  style={{ color: currentMode.elementColor }}
+                />
+                <div>
+                  <p
+                    className="text-[10px] font-mono uppercase tracking-wider"
+                    style={{ color: currentMode.elementColor }}
+                  >
+                    Guardian
+                  </p>
+                  <p className="text-xs text-text-primary font-medium">
+                    {currentMode.guardian}
+                  </p>
+                </div>
+                <span className="text-[10px] text-text-muted ml-1 font-mono">
+                  {currentMode.frequency}
+                </span>
+              </div>
+            </div>
           </div>
-        </section>
+        </header>
+
+        {/* ── Workspace ── */}
+        <div className="flex-1 flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm overflow-hidden min-h-[500px]">
+          {/* Workspace Header */}
+          <div className="flex items-center gap-3 px-4 py-2.5 border-b border-white/8 bg-white/[0.02]">
+            {/* Element & Gate selectors */}
+            <Dropdown
+              label="Element"
+              value={selectedElement}
+              onChange={setSelectedElement}
+              items={ELEMENTS.map((e) => ({ name: e.name, color: e.color }))}
+              renderItem={(item) => {
+                const el = ELEMENTS.find((e) => e.name === item.name);
+                const ElIcon = el?.icon || Sparkle;
+                return (
+                  <span className="flex items-center gap-2">
+                    <ElIcon size={12} style={{ color: el?.color }} />
+                    {item.name}
+                  </span>
+                );
+              }}
+            />
+
+            <Dropdown
+              label="Gate"
+              value={selectedGate}
+              onChange={setSelectedGate}
+              items={GATES.map((g) => ({ name: g.name, freq: g.freq }))}
+              renderItem={(item) => {
+                const gate = GATES.find((g) => g.name === item.name);
+                return (
+                  <span className="flex items-center justify-between w-full">
+                    <span>{item.name}</span>
+                    <span className="text-text-muted ml-2">{gate?.freq}</span>
+                  </span>
+                );
+              }}
+            />
+
+            <div className="flex-1" />
+
+            {/* Actions */}
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => {
+                  if (textContent) {
+                    navigator.clipboard.writeText(textContent);
+                  }
+                }}
+                className="p-2 rounded-lg text-text-muted hover:text-text-primary hover:bg-white/8 transition-colors"
+                title="Copy to clipboard"
+              >
+                <Copy size={14} />
+              </button>
+              <button
+                className="p-2 rounded-lg text-text-muted hover:text-text-primary hover:bg-white/8 transition-colors"
+                title="Download"
+              >
+                <Download size={14} />
+              </button>
+              <button
+                onClick={() => {
+                  setTextContent("");
+                  setLuminorMessages([]);
+                }}
+                className="p-2 rounded-lg text-text-muted hover:text-red-400 hover:bg-red-400/10 transition-colors"
+                title="Clear"
+              >
+                <Trash size={14} />
+              </button>
+            </div>
+          </div>
+
+          {/* Content Area */}
+          {activeMode === "text" && (
+            <TextCreationPanel
+              content={textContent}
+              setContent={setTextContent}
+              luminorMessages={luminorMessages}
+              onAskLuminor={handleAskLuminor}
+              luminorInput={luminorInput}
+              setLuminorInput={setLuminorInput}
+            />
+          )}
+          {activeMode === "image" && <ImageCreationPanel />}
+          {activeMode === "code" && <CodeCreationPanel />}
+          {activeMode === "music" && <MusicCreationPanel />}
+        </div>
+
+        {/* ── Bottom Action Bar ── */}
+        <div className="mt-4 flex items-center gap-4">
+          <div className="flex items-center gap-2 text-xs text-text-muted">
+            <div
+              className="w-2 h-2 rounded-full"
+              style={{ backgroundColor: currentMode.elementColor }}
+            />
+            <span>
+              {currentMode.label} Creation
+            </span>
+            <span className="text-white/20">|</span>
+            <span>{selectedElement} Element</span>
+            <span className="text-white/20">|</span>
+            <span>{selectedGate} Gate ({GATES.find(g => g.name === selectedGate)?.freq})</span>
+          </div>
+
+          <div className="flex-1" />
+
+          <button
+            className="px-3 py-2 rounded-lg border border-white/10 bg-white/5 text-xs text-text-muted hover:text-text-primary hover:bg-white/8 transition-colors flex items-center gap-2"
+          >
+            <Gear size={14} />
+            Settings
+          </button>
+
+          <button
+            onClick={handleManifest}
+            className="group relative px-6 py-2.5 rounded-xl text-sm font-semibold transition-all overflow-hidden"
+            style={{
+              background: `linear-gradient(135deg, #7fffd4, ${currentMode.elementColor}cc, #7fffd4)`,
+              backgroundSize: "200% 200%",
+              color: "#0a0a1a",
+            }}
+          >
+            <span className="relative flex items-center gap-2">
+              <Star size={16} weight="fill" />
+              Manifest
+            </span>
+            <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors" />
+          </button>
+        </div>
       </main>
     </div>
   );

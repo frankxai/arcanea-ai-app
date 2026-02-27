@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { createClient } from '@/lib/supabase/client';
 
 // Emotional tone type (inlined from ai-core)
 export type EmotionalTone =
@@ -62,6 +61,22 @@ interface UseChatReturn {
   isConnected: boolean;
 }
 
+/**
+ * Try to get an auth token from Supabase.
+ * Returns null if Supabase is not configured or the user is not logged in.
+ * Never throws.
+ */
+async function getAuthToken(): Promise<string | null> {
+  try {
+    const { createClient } = await import('@/lib/supabase/client');
+    const supabase = createClient();
+    const { data } = await supabase.auth.getSession();
+    return data.session?.access_token ?? null;
+  } catch {
+    return null;
+  }
+}
+
 export function useChat({
   luminorId,
   userId,
@@ -84,88 +99,56 @@ export function useChat({
   const [error, setError] = useState<string | null>(null);
   const [isConnected, setIsConnected] = useState(false);
 
-  const eventSourceRef = useRef<EventSource | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
-  const supabaseRef = useRef(createClient());
 
-  const getAuthHeader = useCallback(async () => {
-    const { data } = await supabaseRef.current.auth.getSession();
-    const token = data.session?.access_token;
-    if (!token) {
-      return null;
-    }
-    return `Bearer ${token}`;
-  }, []);
-
-  const hydrateMessages = useCallback((raw: Array<Record<string, unknown>>): Message[] => {
-    return raw
-      .map((msg) => ({
-        id: typeof msg.id === 'string' ? msg.id : `msg-${Date.now()}`,
-        role: (msg.role === 'assistant' ? 'assistant' : 'user') as 'user' | 'assistant',
-        content: typeof msg.content === 'string' ? msg.content : '',
-        timestamp: msg.timestamp ? new Date(String(msg.timestamp)) : new Date(),
-        emotionalTone: msg.emotionalTone as EmotionalTone | undefined,
-        status: 'sent' as const,
-      }))
-      .filter((msg) => Boolean(msg.content));
-  }, []);
-
-  const persistMessages = useCallback(async (persistedMessages: Message[]) => {
-    if (!persistedMessages.length) return;
-    const authHeader = await getAuthHeader();
-    await fetch('/api/chat/history', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        ...(authHeader ? { authorization: authHeader } : {}),
-      },
-      body: JSON.stringify({
-        luminorId,
-        userId,
-        messages: persistedMessages.map((message) => ({
-          id: message.id,
-          role: message.role,
-          content: message.content,
-          timestamp: message.timestamp.toISOString(),
-        })),
-      }),
-    }).catch((error) => {
-      console.warn('Failed to persist chat history:', error);
-    });
-  }, [getAuthHeader, luminorId, userId]);
-
-  // Memoize loadChatHistory to prevent recreating on every render
+  // Try to load chat history (non-critical - fails silently)
   const loadChatHistory = useCallback(async () => {
     try {
-      const authHeader = await getAuthHeader();
+      const token = await getAuthToken();
+      const headers: Record<string, string> = {};
+      if (token) headers.authorization = `Bearer ${token}`;
+
       const response = await fetch(
         `/api/chat/history?luminorId=${luminorId}&userId=${userId}&limit=50`,
-        {
-          headers: authHeader ? { authorization: authHeader } : {},
-        }
+        { headers }
       );
-      if (!response.ok) throw new Error('Failed to load chat history');
+      if (!response.ok) {
+        // History endpoint may not exist or may fail — that is fine
+        setIsConnected(true);
+        return;
+      }
 
       const data = await response.json();
-      setMessages(hydrateMessages(data.messages || []));
-      setBondState(data.bondState || {
-        level: 1,
-        xp: 0,
-        xpToNextLevel: 100,
-        relationshipStatus: 'stranger',
-      });
+      if (data.messages && Array.isArray(data.messages)) {
+        setMessages(
+          data.messages
+            .map((msg: Record<string, unknown>) => ({
+              id: typeof msg.id === 'string' ? msg.id : `msg-${Date.now()}`,
+              role: (msg.role === 'assistant' ? 'assistant' : 'user') as 'user' | 'assistant',
+              content: typeof msg.content === 'string' ? msg.content : '',
+              timestamp: msg.timestamp ? new Date(String(msg.timestamp)) : new Date(),
+              status: 'sent' as const,
+            }))
+            .filter((msg: Message) => Boolean(msg.content))
+        );
+      }
+      if (data.bondState) {
+        setBondState(data.bondState);
+      }
       setHasMore(data.hasMore || false);
       setIsConnected(true);
-    } catch (err) {
-      console.error('Failed to load chat history:', err);
-      // Don't set error - just start with empty history
+    } catch {
+      // History loading failed — start with empty history, no error shown
+      setIsConnected(true);
     }
   }, [luminorId, userId]);
 
   // Load initial chat history
   useEffect(() => {
-    loadChatHistory();
-  }, [loadChatHistory]);
+    if (userId) {
+      loadChatHistory();
+    }
+  }, [loadChatHistory, userId]);
 
   const loadMore = useCallback(async () => {
     if (isLoadingMore || !hasMore) return;
@@ -173,17 +156,29 @@ export function useChat({
     setIsLoadingMore(true);
     try {
       const oldestMessage = messages[0];
-      const authHeader = await getAuthHeader();
+      const token = await getAuthToken();
+      const headers: Record<string, string> = {};
+      if (token) headers.authorization = `Bearer ${token}`;
+
       const response = await fetch(
         `/api/chat/history?luminorId=${luminorId}&userId=${userId}&before=${oldestMessage?.id}&limit=50`,
-        {
-          headers: authHeader ? { authorization: authHeader } : {},
-        }
+        { headers }
       );
       if (!response.ok) throw new Error('Failed to load more messages');
 
       const data = await response.json();
-      setMessages((prev) => [...hydrateMessages(data.messages || []), ...prev]);
+      if (data.messages && Array.isArray(data.messages)) {
+        const older = data.messages
+          .map((msg: Record<string, unknown>) => ({
+            id: typeof msg.id === 'string' ? msg.id : `msg-${Date.now()}`,
+            role: (msg.role === 'assistant' ? 'assistant' : 'user') as 'user' | 'assistant',
+            content: typeof msg.content === 'string' ? msg.content : '',
+            timestamp: msg.timestamp ? new Date(String(msg.timestamp)) : new Date(),
+            status: 'sent' as const,
+          }))
+          .filter((msg: Message) => Boolean(msg.content));
+        setMessages((prev) => [...older, ...prev]);
+      }
       setHasMore(data.hasMore || false);
     } catch (err) {
       console.error('Failed to load more messages:', err);
@@ -191,10 +186,12 @@ export function useChat({
     } finally {
       setIsLoadingMore(false);
     }
-  }, [luminorId, userId, messages, hasMore, isLoadingMore, getAuthHeader, hydrateMessages]);
+  }, [luminorId, userId, messages, hasMore, isLoadingMore]);
 
   const sendMessage = useCallback(
-    async (content: string, attachments?: File[]) => {
+    async (content: string, _attachments?: File[]) => {
+      if (!content.trim()) return;
+
       // Add user message optimistically
       const userMessage: Message = {
         id: `temp-${Date.now()}`,
@@ -206,39 +203,41 @@ export function useChat({
 
       setMessages((prev) => [...prev, userMessage]);
       setThinkingState('thinking');
+      setError(null);
 
-      if (attachments && attachments.length > 0) {
-        console.warn('Chat attachments are not yet supported by /api/ai/chat. Sending text only.');
-      }
-
-      const recentMessages = messages.slice(-5).map((msg) => ({
-        role: msg.role === 'assistant' ? 'model' : 'user',
+      // Build the messages payload (last 10 messages for context)
+      const recentMessages = messages.slice(-10).map((msg) => ({
+        role: msg.role === 'assistant' ? 'assistant' : 'user',
         content: msg.content,
       }));
       const payload = {
         messages: [...recentMessages, { role: 'user' as const, content }],
         systemPrompt,
-        stream: true,
       };
 
       try {
         // Create abort controller for this request
         abortControllerRef.current = new AbortController();
-        const authHeader = await getAuthHeader();
+
+        const token = await getAuthToken();
+        const headers: Record<string, string> = {
+          'content-type': 'application/json',
+        };
+        if (token) headers.authorization = `Bearer ${token}`;
 
         // Send message and start streaming
         const response = await fetch(apiEndpoint, {
           method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-            ...(authHeader ? { authorization: authHeader } : {}),
-          },
+          headers,
           body: JSON.stringify(payload),
           signal: abortControllerRef.current.signal,
         });
 
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          const errorData = await response.json().catch(() => null);
+          throw new Error(
+            errorData?.error || `Request failed with status ${response.status}`
+          );
         }
 
         // Update user message status
@@ -247,9 +246,11 @@ export function useChat({
             msg.id === userMessage.id ? { ...msg, status: 'sent' } : msg
           )
         );
-        void persistMessages([{ ...userMessage, status: 'sent' }]);
 
-        // Handle SSE streaming
+        // Persist user message (fire and forget)
+        persistMessages([{ ...userMessage, status: 'sent' }]);
+
+        // Handle streaming response
         const reader = response.body?.getReader();
         const decoder = new TextDecoder();
 
@@ -261,7 +262,6 @@ export function useChat({
         setStreamingContent('');
         setThinkingState('idle');
         let fullContent = '';
-        let currentEmotionalTone: EmotionalTone | undefined = undefined;
 
         while (true) {
           const { done, value } = await reader.read();
@@ -277,22 +277,23 @@ export function useChat({
           role: 'assistant',
           content: fullContent,
           timestamp: new Date(),
-          emotionalTone: currentEmotionalTone,
         };
         setMessages((prev) => [...prev, assistantMessage]);
-        void persistMessages([assistantMessage]);
+
+        // Persist assistant message (fire and forget)
+        persistMessages([assistantMessage]);
 
         setIsStreaming(false);
         setStreamingContent('');
         setThinkingState('idle');
         setIsConnected(true);
       } catch (err: unknown) {
-        console.error('Failed to send message:', err);
-
         if (err instanceof Error && err.name === 'AbortError') {
           // Request was aborted, ignore
           return;
         }
+
+        console.error('Failed to send message:', err);
 
         // Update user message status to error
         setMessages((prev) =>
@@ -301,15 +302,45 @@ export function useChat({
           )
         );
 
-        setError('Failed to send message. Please try again.');
+        setError(
+          err instanceof Error
+            ? err.message
+            : 'Failed to send message. Please try again.'
+        );
         setIsStreaming(false);
         setStreamingContent('');
         setThinkingState('idle');
-        setIsConnected(false);
       }
     },
-    [luminorId, userId, messages, apiEndpoint, systemPrompt, getAuthHeader, persistMessages]
+    [messages, apiEndpoint, systemPrompt]
   );
+
+  // Fire-and-forget persistence — never throws
+  const persistMessages = useCallback(async (msgs: Message[]) => {
+    if (!msgs.length) return;
+    try {
+      const token = await getAuthToken();
+      const headers: Record<string, string> = { 'content-type': 'application/json' };
+      if (token) headers.authorization = `Bearer ${token}`;
+
+      await fetch('/api/chat/history', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          luminorId,
+          userId,
+          messages: msgs.map((m) => ({
+            id: m.id,
+            role: m.role,
+            content: m.content,
+            timestamp: m.timestamp.toISOString(),
+          })),
+        }),
+      });
+    } catch {
+      // Persistence is best-effort
+    }
+  }, [luminorId, userId]);
 
   const clearError = useCallback(() => {
     setError(null);
@@ -323,9 +354,6 @@ export function useChat({
   // Cleanup on unmount
   useEffect(() => {
     return () => {
-      if (eventSourceRef.current) {
-        eventSourceRef.current.close();
-      }
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
       }

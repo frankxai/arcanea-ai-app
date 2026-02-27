@@ -155,8 +155,8 @@
     --card-foreground: var(--text-primary);
     --popover: var(--cosmic-raised);
     --popover-foreground: var(--text-primary);
-    --primary: var(--gold-bright);
-    --primary-foreground: var(--cosmic-void);
+    --primary: var(--creation-prism-purple);
+    --primary-foreground: #ffffff;
     --secondary: var(--atlantean-teal);
     --secondary-foreground: var(--cosmic-void);
     --muted: var(--cosmic-border);

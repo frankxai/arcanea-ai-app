@@ -2,19 +2,13 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { CosmicBackground } from "@/lib/arcanea-ui";
 import { ReactNode } from "react";
-import { Cinzel, Crimson_Pro, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { AuthProvider } from "@/lib/auth/context";
 
-const cinzel = Cinzel({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-cinzel",
-  display: "swap",
-});
-
-const crimsonPro = Crimson_Pro({
-  subsets: ["latin"],
-  variable: "--font-crimson-pro",
+  variable: "--font-inter",
   display: "swap",
 });
 
@@ -71,7 +65,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={cn(cinzel.variable, crimsonPro.variable, jetbrainsMono.variable)}>
+    <html lang="en" className={cn(inter.variable, jetbrainsMono.variable)}>
       <body>
         <AuthProvider>
           {/* Skip to main content link for keyboard users - WCAG 2.4.1 Level A */}

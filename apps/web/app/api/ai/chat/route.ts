@@ -1,12 +1,13 @@
 /**
- * Gemini Chat API Route for Arcanea MVP
- * Handles streaming chat with Gemini 2.0 Flash
+ * Gemini Chat API Route for Arcanea
+ *
+ * Streams AI responses using Vercel AI SDK with Google Gemini.
+ * Falls back gracefully when API keys are not configured.
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createGeminiChatProvider } from '@/lib/ai-core';
-import { ARCANEA_MAGIC_SYSTEM, ARCANEA_TONE_GUIDELINES, ACADEMY_LORE } from '@/lib/lore';
-import { createClient as createSupabaseClient } from '@/lib/supabase/server';
+import { createGoogleGenerativeAI } from '@ai-sdk/google';
+import { streamText } from 'ai';
 
 export const runtime = 'edge';
 
@@ -15,42 +16,73 @@ const rateLimits = new Map<string, { count: number; resetAt: number }>();
 const RATE_LIMIT_WINDOW = 60000; // 1 minute
 const MAX_REQUESTS_PER_WINDOW = 20;
 
+interface ChatMessage {
+  role: 'user' | 'assistant' | 'model' | 'system';
+  content: string;
+}
+
 interface ChatRequest {
-  messages: Array<{ 
-    role: 'user' | 'model';
-    content: string;
-    images?: string[];
-  }>;
+  messages: ChatMessage[];
   systemPrompt?: string;
   temperature?: number;
   maxTokens?: number;
-  stream?: boolean;
-  academyContext?: {
-    type: 'atlantean' | 'draconic' | 'creation-light';
-    luminorName?: string;
-  };
+}
+
+/**
+ * Resolve the API key from environment.
+ * Tries GOOGLE_GENERATIVE_AI_API_KEY first (standard Vercel AI SDK env var),
+ * then GEMINI_API_KEY (legacy / custom).
+ */
+function resolveApiKey(): string | undefined {
+  return (
+    process.env.GOOGLE_GENERATIVE_AI_API_KEY ||
+    process.env.GEMINI_API_KEY
+  );
+}
+
+/**
+ * Build a plain-text streaming response for when no AI provider is available.
+ * Returns a helpful message instead of an error.
+ */
+function createFallbackResponse(systemPrompt?: string): Response {
+  const luminorName = extractLuminorName(systemPrompt);
+  const greeting = luminorName
+    ? `Greetings, Creator. I am ${luminorName}, a Luminor Intelligence of Arcanea.`
+    : `Greetings, Creator. I am a Luminor Intelligence of Arcanea.`;
+
+  const body = [
+    greeting,
+    '',
+    'I am not yet fully awakened in this realm. The AI service is not configured on this deployment.',
+    '',
+    'To activate me, the following environment variable must be set:',
+    '- `GOOGLE_GENERATIVE_AI_API_KEY` (Google Gemini)',
+    '',
+    'Once configured, I will be able to assist you with creative work, code, storytelling, and more.',
+    '',
+    'Until then, may the Light of Lumina guide your path.',
+  ].join('\n');
+
+  return new Response(body, {
+    headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+  });
+}
+
+/**
+ * Try to extract a Luminor name from the system prompt, e.g. "You are Logicus, ..."
+ */
+function extractLuminorName(prompt?: string): string | null {
+  if (!prompt) return null;
+  const match = prompt.match(/^You are (\w+)/i);
+  return match ? match[1] : null;
 }
 
 export async function POST(req: NextRequest) {
   try {
-    // Initialize Supabase client (cookie-based, respects RLS)
-    const supabase = await createSupabaseClient();
-
-    // Optional auth: authenticated users are tracked and logged; guests can still chat.
-    let userId: string | null = null;
-    try {
-      const { data: { user }, error: authError } = await supabase.auth.getUser();
-      if (!authError && user) {
-        userId = user.id;
-      }
-    } catch {
-      // Auth check failed — continue as guest
-    }
-
-    // Rate limiting
+    // --- Rate limiting (by IP, no auth required) ---
     const forwarded = req.headers.get('x-forwarded-for');
     const ip = forwarded?.split(',')[0].trim() || 'anonymous';
-    const rateLimitKey = userId || `guest:${ip}`;
+    const rateLimitKey = `guest:${ip}`;
     const now = Date.now();
     const userLimit = rateLimits.get(rateLimitKey);
 
@@ -70,104 +102,54 @@ export async function POST(req: NextRequest) {
       rateLimits.set(rateLimitKey, { count: 1, resetAt: now + RATE_LIMIT_WINDOW });
     }
 
-    // Parse request
+    // --- Parse request ---
     const body: ChatRequest = await req.json();
-    const { messages, systemPrompt, temperature, maxTokens, stream = true, academyContext } = body;
+    const { messages, systemPrompt, temperature, maxTokens } = body;
 
     if (!messages || messages.length === 0) {
       return NextResponse.json({ error: 'Messages are required' }, { status: 400 });
     }
 
-    // Initialize Gemini provider
-    const gemini = createGeminiChatProvider({
-      apiKey: process.env.GEMINI_API_KEY,
+    // --- Resolve API key ---
+    const apiKey = resolveApiKey();
+
+    if (!apiKey) {
+      // No key configured — return a graceful fallback message
+      return createFallbackResponse(systemPrompt);
+    }
+
+    // --- Initialize Google Gemini via Vercel AI SDK ---
+    const google = createGoogleGenerativeAI({ apiKey });
+    const model = google('gemini-2.0-flash');
+
+    // Normalize message roles: convert 'model' to 'assistant' for Vercel AI SDK
+    const normalizedMessages = messages.map((msg) => ({
+      role: (msg.role === 'model' ? 'assistant' : msg.role) as 'user' | 'assistant',
+      content: msg.content,
+    }));
+
+    // --- Stream response ---
+    const result = streamText({
+      model,
+      system: systemPrompt || undefined,
+      messages: normalizedMessages,
       temperature: temperature ?? 0.7,
       maxTokens: maxTokens ?? 8192,
     });
 
-    // Build context-aware system prompt
-    let enhancedSystemPrompt = systemPrompt || '';
-    
-    // 1. Inject Global Lore (Magic + Tone)
-    const baseLore = `${ARCANEA_MAGIC_SYSTEM}\n\n${ARCANEA_TONE_GUIDELINES}`;
-    enhancedSystemPrompt = `${baseLore}\n\n${enhancedSystemPrompt}`;
-
-    // 2. Inject Academy Specific Lore
-    if (academyContext) {
-      const academyPrompts = {
-        atlantean: ACADEMY_LORE.ATLANTEAN,
-        draconic: ACADEMY_LORE.DRACONIC,
-        'creation-light': ACADEMY_LORE.CREATION_LIGHT,
-      };
-      
-      const specificLore = academyPrompts[academyContext.type];
-      if (specificLore) {
-         enhancedSystemPrompt = `${specificLore}\n\n${enhancedSystemPrompt}`;
-      }
-      
-      if (academyContext.luminorName) {
-        enhancedSystemPrompt = `You are ${academyContext.luminorName}.\n${enhancedSystemPrompt}`;
-      }
-    }
-
-    // Get last user message and images
-    const lastMessage = messages[messages.length - 1];
-    const prompt = lastMessage.content;
-    const images = lastMessage.images;
-
-    // Build history (exclude last message)
-    const history = messages.slice(0, -1).map(msg => ({
-      role: msg.role,
-      parts: [{ text: msg.content }],
-    }));
-
-    if (stream) {
-      // Stream response
-      const result = gemini.streamText(prompt, {
-        systemPrompt: enhancedSystemPrompt,
-        images,
-        history,
-        temperature,
-        maxTokens,
-      });
-
-      // Use Vercel AI SDK's built-in streaming response
-      // Note: result.toTextStreamResponse() handles the streaming headers
-      return result.toTextStreamResponse();
-    } else {
-      // Non-streaming response
-      const response = await gemini.chat(prompt, {
-        systemPrompt: enhancedSystemPrompt,
-        images,
-        history,
-        temperature,
-        maxTokens,
-      });
-
-      // Log usage to database (ai_usage table not yet in typed schema)
-      if (userId) {
-        await (supabase as unknown as { from: (table: string) => { insert: (row: Record<string, unknown>) => { then: (fn: () => void) => void } } }).from('ai_usage').insert({
-          user_id: userId,
-          operation: 'chat',
-          model: 'gemini-2.0-flash',
-          tokens_input: response.tokensUsed?.promptTokens || 0,
-          tokens_output: response.tokensUsed?.completionTokens || 0,
-          cost: response.cost || 0,
-          created_at: new Date().toISOString(),
-        });
-      }
-
-      return NextResponse.json({
-        text: response.text,
-        tokensUsed: response.tokensUsed,
-        cost: response.cost,
-        finishReason: response.finishReason,
-      });
-    }
+    return result.toTextStreamResponse();
   } catch (error) {
     console.error('Chat API error:', error);
+
+    const message = error instanceof Error ? error.message : 'Internal server error';
+
+    // If it's an API key issue, return a friendlier message
+    if (message.includes('API key') || message.includes('GEMINI') || message.includes('401')) {
+      return createFallbackResponse();
+    }
+
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Internal server error' },
+      { error: message },
       { status: 500 }
     );
   }
@@ -175,10 +157,12 @@ export async function POST(req: NextRequest) {
 
 // Health check
 export async function GET() {
+  const hasKey = Boolean(resolveApiKey());
   return NextResponse.json({
-    status: 'ok',
+    status: hasKey ? 'ok' : 'no-api-key',
     service: 'gemini-chat',
     model: 'gemini-2.0-flash',
-    version: '2.0.0-real'
+    version: '3.0.0',
+    configured: hasKey,
   });
 }

@@ -361,12 +361,13 @@ const config: Config = {
         'scale-in': 'scale-in 0.2s ease-out',
       },
       fontFamily: {
-        // Primary body font - Crimson Pro for refined readability
-        sans: ['var(--font-crimson-pro)', 'Crimson Pro', 'Georgia', 'serif'],
-        // Display font - Cinzel for mythic headings
-        cinzel: ['var(--font-cinzel)', 'Cinzel', 'serif'],
-        // Body font alias
-        crimson: ['var(--font-crimson-pro)', 'Crimson Pro', 'Georgia', 'serif'],
+        // Primary font - Inter for clean modern readability
+        sans: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
+        // Display font alias (maps to Inter — no Cinzel)
+        display: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
+        // Legacy alias — kept for backward compat, resolves to Inter
+        cinzel: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
+        crimson: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
         // Monospace for code
         mono: ['var(--font-jetbrains-mono)', 'JetBrains Mono', 'Consolas', 'monospace'],
       },
