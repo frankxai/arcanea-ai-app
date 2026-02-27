@@ -44,13 +44,19 @@ export const CreationCard = React.memo(function CreationCard({ creation, onClick
   const academyColor = React.useMemo(() => {
     switch (creation.academy) {
       case 'Lumina':
-        return 'from-yellow-400 to-orange-400';
-      case 'Umbra':
-        return 'from-purple-600 to-indigo-600';
-      case 'Aether':
-        return 'from-cyan-400 to-blue-400';
+        return 'from-amber-400 to-yellow-500';
+      case 'Nero':
+        return 'from-violet-600 to-purple-800';
+      case 'Pyros':
+        return 'from-red-500 to-orange-500';
+      case 'Aqualis':
+        return 'from-cyan-400 to-blue-500';
       case 'Terra':
-        return 'from-green-500 to-emerald-500';
+        return 'from-emerald-500 to-green-600';
+      case 'Ventus':
+        return 'from-sky-300 to-indigo-400';
+      case 'Synthesis':
+        return 'from-fuchsia-500 to-rose-500';
       default:
         return 'from-slate-400 to-slate-500';
     }
