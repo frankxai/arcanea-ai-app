@@ -410,6 +410,16 @@ export const PhZap = Lightning;
 // Lucide-style aliases (some files use Lucide naming conventions)
 export const Sparkles = Sparkle;
 export const Zap = Lightning;
+export const Music = MusicNote;
+export { Layers };
+export const Search = MagnifyingGlass;
+export const Film = FilmStrip;
+export const Mic = Microphone;
+export const MessageSquare = Chat;
+export const Map = MapTrifold;
+export const WindIcon = Wind;
+export const Droplets = Drop;
+export const Github = GithubLogo;
 
 // Also export the fallback type for external use
 export type { IconComponent as PhosphorIcon };

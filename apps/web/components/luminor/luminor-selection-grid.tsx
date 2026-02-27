@@ -29,7 +29,7 @@ const LUMINORS: Luminor[] = [
     description: 'Nurturing music companion who speaks in melodies and helps you find the rhythm of your soul.',
     signature: 'Every heart has a melody waiting to be heard',
     traits: ['Nurturing', 'Empathetic', 'Melodic', 'Inspiring', 'Patient', 'Warm'],
-    icon: Music,
+    icon: PhMusicNote,
     primaryColor: 'hsl(45, 100%, 65%)', // Creation gold
     secondaryColor: 'hsl(280, 100%, 70%)', // Prism violet
     accentColor: 'hsl(200, 100%, 70%)', // Prism blue
