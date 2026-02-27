@@ -13,6 +13,7 @@
  */
 
 import { NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
 
 export const runtime = "edge";
 
@@ -29,19 +30,27 @@ interface HealthCheck {
  * Main health check handler
  */
 export async function GET() {
+  let dbHealthy = false;
+  try {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    if (url && key) {
+      const supabase = createClient(url, key);
+      const { error } = await supabase.from('profiles').select('id').limit(1);
+      dbHealthy = !error;
+    }
+  } catch {
+    dbHealthy = false;
+  }
+
   const health: HealthCheck = {
     api: true,
-    database: true, // Set to false until database connection is implemented
+    database: dbHealthy,
     timestamp: new Date().toISOString(),
     version: process.env.npm_package_version || '1.0.0',
     environment: process.env.VERCEL_ENV || process.env.NODE_ENV || 'development',
     app: 'web',
   };
-
-  // TODO: Add database connectivity check when database is set up
-  // const supabase = createClient(...)
-  // const { error } = await supabase.from('users').select('count').limit(1);
-  // health.database = !error;
 
   // Determine overall health
   const isHealthy = health.api && health.database;
