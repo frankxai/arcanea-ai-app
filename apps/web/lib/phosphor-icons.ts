@@ -26,7 +26,7 @@ export {
   Cpu, Crown, Database, Diamond, DotsSixVertical, DotsThreeVertical,
   Download, Drop, Envelope, Eye, EyeSlash, Feather, File, FileCode,
   FileText, FilmStrip, Fire, Fish, Flame, FloppyDisk, FolderOpen, Funnel,
-  GameController, Gear, GitBranch, GithubLogo, Globe, GraduationCap,
+  GameController, Gear, GearSix, GitBranch, GithubLogo, Globe, GraduationCap,
   GridFour, GridNine, Heart, House, Image, ImageSquare, Info, Keyboard,
   Leaf, Lightbulb, Lightning, Link, List, ListDashes, ListNumbers, Lock,
   MagicWand, MagnifyingGlass, MagnifyingGlassPlus, MapPin, MapTrifold,
@@ -126,6 +126,7 @@ import {
   Funnel,
   GameController,
   Gear,
+  GearSix,
   GitBranch,
   GithubLogo,
   Globe,
@@ -139,7 +140,6 @@ import {
   Infinity as PhosphorInfinity,
   Info,
   Keyboard,
-  Stack as Layers,
   Leaf,
   Lightbulb,
   Lightning,
@@ -440,6 +440,9 @@ export const PhX = X;
 export const PhYoutubeLogo = YoutubeLogo;
 export const PhZap = Lightning;
 
+// Ph-prefixed alias for GearSix
+export const PhGearSix = GearSix;
+
 // Lucide-style aliases (some files use Lucide naming conventions)
 export const Sparkles = Sparkle;
 export const Zap = Lightning;
@@ -453,6 +456,12 @@ export const Map = MapTrifold;
 export const WindIcon = Wind;
 export const Droplets = Drop;
 export const Github = GithubLogo;
+
+// Lucide chevron aliases → Phosphor caret equivalents
+export const ChevronDown = CaretDown;
+export const ChevronUp = CaretUp;
+export const ChevronLeft = CaretLeft;
+export const ChevronRight = CaretRight;
 
 // Also export the fallback type for external use
 export type { IconComponent as PhosphorIcon };
