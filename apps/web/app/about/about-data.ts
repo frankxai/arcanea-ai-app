@@ -1,3 +1,4 @@
+import type React from "react";
 import type { IconProps } from "@/lib/phosphor-icons";
 import {
   Sparkle,
