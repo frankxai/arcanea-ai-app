@@ -47,7 +47,8 @@ export const createGeminiChatProvider = (config: GeminiConfig) => {
 
       return streamText({
         model,
-        messages: messages as Parameters<typeof streamText>[0]['messages'],
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        messages: messages as any,
         system: systemPrompt,
         temperature: temperature ?? config.temperature ?? 0.7,
         maxOutputTokens: maxTokens ?? config.maxTokens ?? 8192,
@@ -73,7 +74,8 @@ export const createGeminiChatProvider = (config: GeminiConfig) => {
 
       const result = await generateText({
         model,
-        messages: messages as Parameters<typeof generateText>[0]['messages'],
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        messages: messages as any,
         system: systemPrompt,
         temperature: temperature ?? config.temperature ?? 0.7,
         maxOutputTokens: maxTokens ?? config.maxTokens ?? 8192,

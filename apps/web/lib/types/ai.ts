@@ -2,11 +2,10 @@
  * AI-related TypeScript types for Arcanea
  */
 
-import type { StreamTextResult as AIStreamTextResult } from 'ai';
-
-// Type alias for StreamTextResult with default generics for no-tools usage
-// The AI SDK's StreamTextResult now requires 2 type arguments: TOOLS and PARTIAL_OUTPUT
-export type StreamTextResult = AIStreamTextResult<Record<string, never>, never>;
+// StreamTextResult generic arity differs across AI SDK versions (v5: 2 params, v6: 1 param)
+// Use any to avoid breakage — callers already cast with `as unknown as StreamTextResult`
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type StreamTextResult = any;
 
 // Emotional tone for Luminor responses
 export type EmotionalTone =
