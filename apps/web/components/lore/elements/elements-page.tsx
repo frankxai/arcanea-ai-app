@@ -498,7 +498,7 @@ function ElementCardsSection() {
                         animate={{ rotate: isExpanded ? 180 : 0 }}
                         transition={{ duration: 0.3 }}
                       >
-                        <ChevronDown
+                        <PhCaretDown
                           className="w-4 h-4"
                           style={{ color: element.colors.primary }}
                         />

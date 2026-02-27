@@ -11,6 +11,39 @@
 // Re-export everything from the real package (non-Ph names still work)
 export * from '@phosphor-icons/react';
 
+// CRITICAL: The local `import { X }` below shadows `export *` for those names.
+// We must explicitly re-export every locally-imported icon so bare names work.
+export {
+  Heartbeat, ArrowBendUpLeft, ArrowCircleDown, ArrowCounterClockwise,
+  ArrowDown, ArrowLeft, ArrowRight, ArrowSquareOut, ArrowUp, ArrowUpRight,
+  ArrowsClockwise, ArrowsDownUp, ArrowsOut, Bell, Bird, Book, BookOpen,
+  Bookmark, Books, BracketsSquare, BracketsCurly, Brain, Browser, Bug,
+  Buildings, Calendar, CalendarDots, Camera, CaretDown, CaretLeft,
+  CaretRight, CaretUp, Cat, ChartBar, Chat, ChatCircle, ChatCircleDots,
+  ChatCircleText, ChatTeardrop, ChatText, Chats, Check, CheckCircle,
+  Checks, Circle, CircleNotch, Clock, ClockCounterClockwise, Cloud,
+  CloudSlash, Code, CodeBlock, Command, Compass, Copy, ArrowBendDownLeft,
+  Cpu, Crown, Database, Diamond, DotsSixVertical, DotsThreeVertical,
+  Download, Drop, Envelope, Eye, EyeSlash, Feather, File, FileCode,
+  FileText, FilmStrip, Fire, Fish, Flame, FloppyDisk, FolderOpen, Funnel,
+  GameController, Gear, GitBranch, GithubLogo, Globe, GraduationCap,
+  GridFour, GridNine, Heart, House, Image, ImageSquare, Info, Keyboard,
+  Leaf, Lightbulb, Lightning, Link, List, ListDashes, ListNumbers, Lock,
+  MagicWand, MagnifyingGlass, MagnifyingGlassPlus, MapPin, MapTrifold,
+  Microphone, Minus, Moon, Mountains, MusicNote, MusicNotes, Notebook,
+  Package, PaintBrush, Palette, PaperPlane, Paperclip, Pen, Pencil,
+  PencilSimple, Planet, Play, Plus, PushPin, Question, Quotes, Radio,
+  Rocket, Scales, Scroll, Share, Shield, ShieldStar, Shuffle, SignOut,
+  Skull, SlidersHorizontal, SortAscending, SortDescending, Sparkle,
+  Spinner, Spiral, SplitHorizontal, SquaresFour, Stack, Star, Sun, Sword,
+  Tag, Target, Terminal, TextAa, TextB, TextHOne, TextHTwo, TextItalic,
+  TextT, Translate, Trash, Tree, TrendDown, TrendUp, Trophy, TwitterLogo,
+  Upload, User, UserCircle, UserPlus, Users, VideoCamera, Wand, Warning,
+  WarningCircle, Waves, WifiHigh, WifiSlash, Wind, Wrench, X, YoutubeLogo,
+  Infinity as PhosphorInfinity,
+  Stack as Layers,
+} from '@phosphor-icons/react';
+
 // Import all icons from the real package
 import {
   Heartbeat,
