@@ -1,6 +1,7 @@
 import type { JSX } from "react";
 import { Metadata } from "next";
 import Link from "next/link";
+import { Navbar } from "@/components/navigation";
 import { EcosystemDiagram } from "@/components/ecosystem/ecosystem-diagram";
 
 export const metadata: Metadata = {
@@ -304,7 +305,9 @@ export default function EcosystemPage() {
         <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(127,255,212,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(153,102,255,0.08),transparent_55%)]" />
       </div>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <Navbar />
+
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
         {/* ── Hero ─────────────────────────────────────────────────────── */}
         <section className="mb-16">
           <div className="relative liquid-glass rounded-3xl overflow-hidden px-8 py-14 sm:px-14 sm:py-20">
@@ -350,7 +353,7 @@ export default function EcosystemPage() {
                 </Link>
                 <Link
                   href="/academy"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-atlantean-teal-aqua/30 hover:bg-atlantean-teal-aqua/5 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-atlantean-teal-aqua/30 hover:bg-atlantean-teal-aqua/5 transition-all duration-200"
                 >
                   Begin the Academy
                 </Link>
@@ -361,7 +364,7 @@ export default function EcosystemPage() {
 
         {/* ── Ecosystem Diagram ─────────────────────────────────────────── */}
         <section className="mb-20">
-          <div className="glass rounded-3xl p-8 sm:p-12">
+          <div className="liquid-glass rounded-3xl p-8 sm:p-12">
             <EcosystemDiagram />
           </div>
         </section>
@@ -396,7 +399,7 @@ export default function EcosystemPage() {
                 <Tag
                   key={product.id}
                   {...tagProps}
-                  className="group relative glass rounded-2xl p-7 overflow-hidden transition-all hover:border-white/20 hover:-translate-y-0.5 hover:shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
+                  className="group relative card-3d liquid-glass rounded-2xl p-7 overflow-hidden transition-all hover:border-white/[0.12] hover:-translate-y-0.5 hover:shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
                   aria-label={`${product.name} — ${product.tagline}`}
                 >
                   {/* Hover glow */}
@@ -486,7 +489,7 @@ export default function EcosystemPage() {
             {PILLARS.map((pillar, index) => (
               <div
                 key={pillar.label}
-                className="relative glass rounded-2xl p-7 overflow-hidden"
+                className="relative card-3d liquid-glass rounded-2xl p-7 overflow-hidden"
               >
                 {/* Subtle gradient accent */}
                 <div
@@ -571,7 +574,7 @@ export default function EcosystemPage() {
                 </Link>
                 <Link
                   href="/about"
-                  className="inline-flex items-center gap-2 px-8 py-4 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-atlantean-teal-aqua/30 hover:bg-atlantean-teal-aqua/5 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-8 py-4 rounded-xl liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-atlantean-teal-aqua/30 hover:bg-atlantean-teal-aqua/5 transition-all duration-200"
                 >
                   Learn about Arcanea
                 </Link>

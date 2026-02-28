@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { PhSparkle, PhArrowRight, PhCircleNotch } from '@/lib/phosphor-icons';
 import { LUMINORS, TEAMS, type Team } from "@/lib/luminors/config";
+import { Navbar } from "@/components/navigation";
 
 const TEAM_ORDER: Team[] = ["development", "creative", "writing", "research"];
 
@@ -36,6 +37,8 @@ export default function ChatLandingPage() {
         <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(139,92,246,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(127,255,212,0.08),transparent_55%)]" />
       </div>
 
+      <Navbar />
+
       {/* Navigation overlay */}
       {isNavigating && (
         <motion.div
@@ -56,7 +59,7 @@ export default function ChatLandingPage() {
         </motion.div>
       )}
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -64,7 +67,7 @@ export default function ChatLandingPage() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-primary/30 bg-brand-primary/10 mb-8">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full liquid-glass border border-brand-primary/20 mb-8">
             <PhSparkle className="w-3.5 h-3.5 text-brand-primary" />
             <span className="text-xs font-mono tracking-widest uppercase text-brand-primary">
               Creation Session
@@ -93,8 +96,8 @@ export default function ChatLandingPage() {
             onClick={() => setActiveTeam("all")}
             className={`px-5 py-2 rounded-full text-sm font-mono font-semibold border transition-all duration-200 ${
               activeTeam === "all"
-                ? "bg-white/10 border-white/30 text-text-primary"
-                : "border-white/10 text-text-muted hover:border-white/20 hover:text-text-secondary"
+                ? "liquid-glass border-white/[0.15] text-text-primary"
+                : "border-white/[0.06] text-text-muted hover:border-white/[0.12] hover:text-text-secondary"
             }`}
           >
             All 16
@@ -144,7 +147,7 @@ export default function ChatLandingPage() {
                   className="group w-full text-left h-full"
                 >
                   <div
-                    className="relative h-full glass rounded-2xl p-6 overflow-hidden transition-all duration-300 hover:-translate-y-0.5"
+                    className="relative h-full card-3d liquid-glass rounded-2xl p-6 overflow-hidden transition-all duration-300 hover:-translate-y-0.5"
                     style={{
                       boxShadow: isThisNavigating
                         ? `0 0 24px ${luminor.color}40`
@@ -246,14 +249,14 @@ export default function ChatLandingPage() {
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/luminors"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl glass border border-crystal/20 text-crystal text-sm font-semibold hover:bg-crystal/5 hover:border-crystal/40 transition-all"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl liquid-glass border border-crystal/20 text-crystal text-sm font-semibold hover:bg-crystal/5 hover:border-crystal/40 transition-all btn-glow"
             >
               <PhSparkle className="w-4 h-4" />
               View Luminor profiles
             </Link>
             <Link
               href="/chat/chronica"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl glass border border-white/10 text-text-secondary text-sm font-semibold hover:border-brand-primary/20 hover:text-text-primary transition-all"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl liquid-glass border border-white/[0.06] text-text-secondary text-sm font-semibold hover:border-brand-primary/20 hover:text-text-primary transition-all"
             >
               <PhArrowRight className="w-4 h-4" />
               Start with Chronica

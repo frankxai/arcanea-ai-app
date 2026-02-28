@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { Navbar } from "@/components/navigation";
 import { CosmicParticles } from "@/components/magic/particles";
 import { TextReveal, AuroraText, GradientText } from "@/components/magic/text-reveal";
 import { GlowCard, FloatingCard } from "@/components/magic/glow-card";
@@ -31,6 +32,8 @@ const skills = {
 export default function SkillsLandingPage() {
   return (
     <div className="min-h-screen bg-cosmic-void text-text-primary">
+      <Navbar />
+
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <CosmicParticles />

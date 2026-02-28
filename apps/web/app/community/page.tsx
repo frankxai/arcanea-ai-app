@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import { Navbar } from "@/components/navigation";
 import {
   PhChatCircle,
   PhGithubLogo,
@@ -285,9 +286,11 @@ export default function CommunityPage() {
         <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(139,92,246,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(127,255,212,0.08),transparent_55%)]" />
       </div>
 
+      <Navbar />
+
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* ── 1. Hero ───────────────────────────────────────────────────────── */}
-        <section className="pt-20 pb-20 lg:pt-28 lg:pb-28">
+        <section className="pt-28 pb-20 lg:pt-36 lg:pb-28">
           <div className="relative liquid-glass rounded-3xl overflow-hidden px-8 py-16 sm:px-16 sm:py-20 lg:px-20 lg:py-24">
             {/* Elara hunter+wolf — Shift Gate, perspective and the bonds that transcend dimension */}
             <img
@@ -335,7 +338,7 @@ export default function CommunityPage() {
                   href="https://github.com/frankxai/arcanea"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
                 >
                   <PhGithubLogo className="w-4 h-4" />
                   Explore GitHub
@@ -377,7 +380,7 @@ export default function CommunityPage() {
                   href={space.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`group relative glass rounded-2xl p-8 overflow-hidden glow-card hover-lift transition-all ${space.borderHoverClass}`}
+                  className={`group relative card-3d liquid-glass rounded-2xl p-8 overflow-hidden glow-card hover-lift transition-all ${space.borderHoverClass}`}
                   aria-label={`${space.name} — ${space.tagline}`}
                 >
                   {/* Hover glow overlay */}
@@ -477,7 +480,7 @@ export default function CommunityPage() {
               return (
                 <div
                   key={event.title}
-                  className={`relative glass rounded-2xl p-6 overflow-hidden transition-all ${event.featured ? "ring-1 ring-brand-gold/30 shadow-glow-gold" : ""}`}
+                  className={`relative card-3d liquid-glass rounded-2xl p-6 overflow-hidden transition-all ${event.featured ? "ring-1 ring-brand-gold/30 shadow-glow-gold" : ""}`}
                 >
                   {event.featured && (
                     <div className="absolute inset-0 bg-gradient-to-br from-brand-gold/8 via-transparent to-transparent pointer-events-none rounded-2xl" />
@@ -533,7 +536,7 @@ export default function CommunityPage() {
               href="https://discord.gg/arcanea"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl glass border border-brand-gold/20 text-brand-gold text-sm font-semibold hover:bg-brand-gold/5 hover:border-brand-gold/40 transition-all"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl liquid-glass border border-brand-gold/20 text-brand-gold text-sm font-semibold hover:bg-brand-gold/5 hover:border-brand-gold/40 transition-all"
             >
               <PhCalendar className="w-4 h-4" />
               Stay informed — join Discord for event announcements
@@ -570,7 +573,7 @@ export default function CommunityPage() {
             {SPOTLIGHTS.map((work) => (
               <div
                 key={work.title}
-                className="group relative glass rounded-2xl p-7 overflow-hidden glow-card hover-lift transition-all"
+                className="group relative card-3d liquid-glass rounded-2xl p-7 overflow-hidden glow-card hover-lift transition-all"
               >
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"
@@ -676,7 +679,7 @@ export default function CommunityPage() {
               return (
                 <div
                   key={item.title}
-                  className="group glass rounded-2xl p-6 glow-card hover-lift transition-all"
+                  className="group card-3d liquid-glass rounded-2xl p-6 glow-card hover-lift transition-all"
                   style={{ "--hover-accent": item.hex } as React.CSSProperties}
                 >
                   <div
@@ -704,7 +707,7 @@ export default function CommunityPage() {
               href="https://github.com/frankxai/arcanea"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl glass border border-crystal/20 text-crystal text-sm font-semibold hover:bg-crystal/5 hover:border-crystal/40 transition-all"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl liquid-glass border border-crystal/20 text-crystal text-sm font-semibold hover:bg-crystal/5 hover:border-crystal/40 transition-all btn-glow"
             >
               <PhGithubLogo className="w-4 h-4" />
               Start on GitHub
@@ -712,7 +715,7 @@ export default function CommunityPage() {
             </a>
             <Link
               href="/library"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl glass border border-white/10 text-text-secondary text-sm font-semibold hover:border-crystal/20 hover:text-text-primary transition-all"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl liquid-glass border border-white/[0.06] text-text-secondary text-sm font-semibold hover:border-crystal/20 hover:text-text-primary transition-all"
             >
               <PhBookOpen className="w-4 h-4" />
               Read the Library
@@ -819,7 +822,7 @@ export default function CommunityPage() {
                 </a>
                 <Link
                   href="/academy"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
                 >
                   Begin your journey
                   <PhArrowRight className="w-4 h-4" />

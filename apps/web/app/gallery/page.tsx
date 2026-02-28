@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
+import { Navbar } from "@/components/navigation";
 import {
   PhHeart,
   PhEye,
@@ -147,6 +148,8 @@ export default function GalleryPage() {
 
   return (
     <div className="min-h-screen bg-cosmic-deep">
+      <Navbar />
+
       {/* Hero */}
       <HeroSection
         isShowcaseMode={isShowcaseMode}
@@ -214,7 +217,7 @@ function HeroSection({
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-amber-400/5 rounded-full blur-[80px]" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-20 pb-16">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-28 pb-16">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-xs font-sans text-white/40 uppercase tracking-widest mb-6">
           <Link href="/" className="hover:text-white/60 transition-colors">
@@ -284,7 +287,7 @@ function FilterBar({
   onCloseFilters: () => void;
 }) {
   return (
-    <div className="sticky top-0 z-30 bg-cosmic-deep/80 backdrop-blur-2xl border-b border-white/5">
+    <div className="sticky top-16 z-30 liquid-glass border-b border-white/[0.06]">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between py-3 gap-4">
           {/* Type filter tabs */}
@@ -314,7 +317,7 @@ function FilterBar({
           <div className="relative flex-shrink-0">
             <button
               onClick={onToggleFilters}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-sans text-white/40 hover:text-white/70 hover:bg-white/5 border border-white/10 transition-all"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-sans text-white/40 hover:text-white/70 hover:bg-white/5 border border-white/[0.06] transition-all"
             >
               <PhFunnel size={16} />
               <span className="hidden sm:inline">Sort</span>
@@ -323,7 +326,7 @@ function FilterBar({
             {showFilters && (
               <>
                 <div className="fixed inset-0 z-40" onClick={onCloseFilters} />
-                <div className="absolute right-0 top-full mt-2 w-48 rounded-xl bg-[#0d0f1a] border border-white/10 shadow-2xl shadow-black/50 z-50 overflow-hidden">
+                <div className="absolute right-0 top-full mt-2 w-48 rounded-xl liquid-glass-elevated border border-white/[0.08] shadow-[0_16px_48px_rgba(0,0,0,0.4)] z-50 overflow-hidden">
                   {(
                     [
                       { key: "popular", label: "Most Popular", icon: PhHeart },
@@ -370,7 +373,7 @@ function CreationCard({ item }: { item: CardItem }) {
   const TypeIcon = TYPE_ICONS[item.type];
 
   return (
-    <div className="group relative rounded-2xl overflow-hidden border border-white/5 hover:border-white/15 bg-white/[0.02] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/20">
+    <div className="group relative rounded-2xl overflow-hidden card-3d liquid-glass border border-white/[0.06] hover:border-white/[0.12] transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/20">
       {/* Gradient thumbnail area */}
       <div
         className={`relative h-44 bg-gradient-to-br ${elementStyle.gradient} flex items-center justify-center overflow-hidden`}
@@ -455,7 +458,7 @@ function SkeletonGrid() {
       {Array.from({ length: 12 }).map((_, i) => (
         <div
           key={i}
-          className="rounded-2xl bg-white/[0.03] border border-white/5 animate-pulse"
+          className="rounded-2xl liquid-glass border border-white/[0.06] animate-pulse"
           style={{ height: `${240 + (i % 3) * 40}px` }}
         />
       ))}
@@ -479,7 +482,7 @@ function EmptyState() {
 
 function ShowcaseNotice() {
   return (
-    <div className="mt-12 rounded-2xl border border-white/5 bg-white/[0.02] p-8 text-center">
+    <div className="mt-12 rounded-2xl liquid-glass border border-white/[0.06] p-8 text-center">
       <PhSparkle
         size={32}
         className="mx-auto mb-3 text-[#7fffd4]/60"
@@ -513,7 +516,7 @@ function FooterCTA({
       </p>
       <Link
         href="/studio"
-        className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#7fffd4]/10 border border-[#7fffd4]/20 text-[#7fffd4] font-sans text-sm hover:bg-[#7fffd4]/20 transition-all group"
+        className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#7fffd4]/10 border border-[#7fffd4]/20 text-[#7fffd4] font-sans text-sm hover:bg-[#7fffd4]/20 transition-all group btn-glow"
       >
         Create in Studio
         <PhArrowRight
