@@ -6,6 +6,7 @@ import { Playfair_Display, Crimson_Pro, Inter, JetBrains_Mono } from "next/font/
 import { cn } from "@/lib/utils";
 import { AuthProvider } from "@/lib/auth/context";
 import { Navbar, Footer } from "@/components/navigation";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
@@ -100,6 +101,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <Footer />
           </div>
         </AuthProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
