@@ -88,7 +88,11 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
     setIsLoading(true);
     const { error } = await signInWithGoogle();
     if (error) {
-      setError(error.message);
+      if (error.message.includes('provider') || error.message.includes('Unsupported')) {
+        setError('Google sign-in is not available yet. Please use email and password.');
+      } else {
+        setError(error.message);
+      }
       setIsLoading(false);
     }
   };
@@ -97,7 +101,11 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
     setIsLoading(true);
     const { error } = await signInWithGithub();
     if (error) {
-      setError(error.message);
+      if (error.message.includes('provider') || error.message.includes('Unsupported')) {
+        setError('GitHub sign-in is not available yet. Please use email and password.');
+      } else {
+        setError(error.message);
+      }
       setIsLoading(false);
     }
   };

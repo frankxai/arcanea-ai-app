@@ -229,7 +229,11 @@ export default function LoginPage() {
       });
 
       if (error) {
-        setError(error.message);
+        if (error.message.includes("provider") || error.message.includes("Unsupported")) {
+          setError(`${provider} sign-in is not available yet. Please use email and password.`);
+        } else {
+          setError(error.message);
+        }
       }
     } catch {
       setError(`Failed to sign in with ${provider}. Please try again.`);

@@ -100,7 +100,11 @@ export default function SignupPage() {
       });
 
       if (error) {
-        setError(error.message);
+        if (error.message.includes('provider') || error.message.includes('Unsupported')) {
+          setError(`${provider.charAt(0).toUpperCase() + provider.slice(1)} sign-up is not available yet. Please use email and password.`);
+        } else {
+          setError(error.message);
+        }
       }
     } catch {
       setError(`Failed to sign up with ${provider}. Please try again.`);
