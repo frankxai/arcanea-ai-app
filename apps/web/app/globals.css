@@ -675,3 +675,71 @@ p a, span a, li a {
     -webkit-backdrop-filter: blur(12px) saturate(1.4) !important;
   }
 }
+
+/* ============================================================
+   3D DEPTH CARDS — Perspective transforms on hover
+   ============================================================ */
+
+.card-3d {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: transform 500ms cubic-bezier(0.23, 1, 0.32, 1),
+              box-shadow 500ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.card-3d:hover {
+  transform: translateY(-8px) rotateX(2deg) rotateY(-1deg);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(127, 255, 212, 0.12),
+    0 0 40px rgba(127, 255, 212, 0.08);
+}
+
+/* Gradient border wrapper — use as parent around glass cards */
+.gradient-border {
+  position: relative;
+  border-radius: 1.5rem;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(127, 255, 212, 0.4),
+    rgba(139, 92, 246, 0.3) 50%,
+    rgba(255, 215, 0, 0.2)
+  );
+}
+
+.gradient-border > * {
+  border-radius: calc(1.5rem - 1px);
+}
+
+/* Premium button glow */
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+  transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.btn-glow::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, rgba(127,255,212,0.5), rgba(139,92,246,0.3), rgba(255,215,0,0.3));
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 300ms;
+  z-index: -1;
+  filter: blur(12px);
+}
+
+.btn-glow:hover::before {
+  opacity: 1;
+}
+
+/* Scrollbar hide utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
