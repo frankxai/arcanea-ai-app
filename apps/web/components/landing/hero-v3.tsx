@@ -85,7 +85,7 @@ export function HeroV3() {
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass border border-white/10 mb-10">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass border border-white/[0.06] mb-10">
               <div className="w-1.5 h-1.5 rounded-full bg-atlantean-teal-aqua animate-pulse" />
               <span className="text-xs font-mono tracking-[0.2em] uppercase text-atlantean-teal-aqua/90">
                 Living Intelligence
@@ -152,7 +152,7 @@ export function HeroV3() {
 
             <Link
               href="/library"
-              className="px-10 py-4 rounded-2xl liquid-glass border border-white/15 hover:border-atlantean-teal-aqua/30 hover:bg-white/[0.06] transition-all duration-300 text-white font-semibold text-lg hover:shadow-[0_0_30px_rgba(127,255,212,0.1)]"
+              className="px-10 py-4 rounded-2xl liquid-glass border border-white/[0.06] hover:border-atlantean-teal-aqua/30 hover:bg-white/[0.06] transition-all duration-300 text-white font-semibold text-lg hover:shadow-[0_0_30px_rgba(127,255,212,0.1)]"
             >
               Explore the Library
             </Link>

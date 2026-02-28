@@ -214,7 +214,7 @@ export default function AssessmentPage() {
           </Link>
 
           {/* Results card */}
-          <div className="bg-cosmic-surface/50 backdrop-blur-xl rounded-3xl border border-white/10 overflow-hidden">
+          <div className="liquid-glass rounded-3xl border border-white/[0.06] overflow-hidden">
             {/* Header */}
             <div className="relative p-8 text-center border-b border-white/10">
               <div className="absolute inset-0 bg-gradient-to-b from-gold-bright/10 to-transparent" />
@@ -366,7 +366,7 @@ export default function AssessmentPage() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
-            className="bg-cosmic-surface/50 backdrop-blur-xl rounded-3xl border border-white/10 p-8"
+            className="liquid-glass rounded-3xl border border-white/[0.06] p-8"
           >
             <h2 className="text-2xl font-display font-bold mb-8">{question.question}</h2>
 

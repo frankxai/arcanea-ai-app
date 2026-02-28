@@ -44,7 +44,7 @@ export default function PricingLoading() {
             {[1, 2, 3].map((i) => (
               <div
                 key={i}
-                className="p-8 rounded-2xl border border-white/10 glass-subtle"
+                className="p-8 rounded-2xl border border-white/[0.06] liquid-glass"
               >
                 <Skeleton variant="text" className="w-24 h-6 mb-2" />
                 <Skeleton variant="text" className="w-16 h-10 mb-2" />

@@ -20,7 +20,7 @@ export default function Loading() {
         </div>
 
         {/* Content Skeleton */}
-        <div className="glass rounded-2xl p-6 sm:p-10">
+        <div className="card-3d liquid-glass rounded-2xl p-6 sm:p-10">
           <div className="animate-pulse space-y-4">
             <div className="h-4 bg-white/10 rounded w-full" />
             <div className="h-4 bg-white/10 rounded w-full" />

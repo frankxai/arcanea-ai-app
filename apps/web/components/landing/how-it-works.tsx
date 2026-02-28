@@ -58,9 +58,9 @@ export function HowItWorks() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-20"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-creation-prism-purple/10 border border-creation-prism-purple/20 mb-6">
-            <PhMagicWand className="w-4 h-4 text-creation-prism-purple" />
-            <span className="text-sm font-medium text-creation-prism-purple">Simple Process</span>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass border border-creation-prism-purple/20 mb-6">
+            <PhMagicWand className="w-3.5 h-3.5 text-creation-prism-purple" />
+            <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-creation-prism-purple/90">How It Works</span>
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
             How it works
@@ -85,10 +85,10 @@ export function HowItWorks() {
                   animate={isInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ delay: 0.1 + i * 0.1 }}
                   onMouseEnter={() => setActiveStep(i)}
-                  className={`group relative p-6 rounded-2xl border cursor-pointer transition-all duration-300 ${
+                  className={`group relative p-6 rounded-2xl border cursor-pointer transition-all duration-500 ${
                     isActive
                       ? `bg-${step.color}/10 border-${step.color}/30`
-                      : 'glass-subtle border-white/10 hover:border-white/20'
+                      : 'liquid-glass border-white/[0.06] hover:border-white/[0.12]'
                   }`}
                 >
                   {/* Step number */}
@@ -145,9 +145,9 @@ export function HowItWorks() {
             className="relative"
           >
             {/* Browser mockup */}
-            <div className="relative rounded-2xl border border-white/10 bg-cosmic-surface/50 backdrop-blur-sm overflow-hidden shadow-2xl">
+            <div className="relative rounded-2xl liquid-glass-elevated border border-white/[0.08] overflow-hidden shadow-[0_16px_48px_rgba(0,0,0,0.4)]">
               {/* Browser header */}
-              <div className="flex items-center gap-2 px-4 py-3 border-b border-white/10 bg-cosmic-raised/50">
+              <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.08] bg-white/[0.03]">
                 <div className="flex gap-2">
                   <div className="w-3 h-3 rounded-full bg-red-500/80" />
                   <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
@@ -180,7 +180,7 @@ export function HowItWorks() {
                             className={`aspect-square rounded-xl flex items-center justify-center text-[10px] font-mono text-center leading-tight px-1 ${
                               n === 0
                                 ? 'bg-atlantean-teal-aqua/20 border-2 border-atlantean-teal-aqua text-atlantean-teal-aqua'
-                                : 'bg-white/5 border border-white/10 text-text-muted'
+                                : 'bg-white/5 border border-white/[0.06] text-text-muted'
                             }`}
                           >
                             {name}
@@ -197,7 +197,7 @@ export function HowItWorks() {
                           </div>
                         </div>
                         <div className="flex">
-                          <div className="max-w-[80%] p-4 rounded-2xl bg-white/5 border border-white/10">
+                          <div className="max-w-[80%] p-4 rounded-2xl bg-white/5 border border-white/[0.06]">
                             <div className="flex items-center gap-2 mb-2">
                               <span className="text-xs font-mono px-2 py-0.5 rounded bg-atlantean-teal-aqua/15 text-atlantean-teal-aqua">Lyria · Sight Gate</span>
                             </div>
@@ -209,7 +209,7 @@ export function HowItWorks() {
                     {i === 2 && (
                       // Creation in progress
                       <div className="h-full flex flex-col">
-                        <div className="flex-1 rounded-xl bg-white/5 border border-white/10 p-4">
+                        <div className="flex-1 rounded-xl bg-white/5 border border-white/[0.06] p-4">
                           <div className="flex items-center justify-between mb-4">
                             <span className="text-sm font-medium">World Document</span>
                             <span className="text-xs text-atlantean-teal-aqua">Generating...</span>
@@ -229,7 +229,7 @@ export function HowItWorks() {
                         {['PDF Document', 'Word Export', 'Markdown', 'Share Link'].map((format) => (
                           <div
                             key={format}
-                            className="p-4 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between hover:border-atlantean-teal-aqua/30 transition-colors"
+                            className="p-4 rounded-xl bg-white/5 border border-white/[0.06] flex items-center justify-between hover:border-atlantean-teal-aqua/30 transition-colors"
                           >
                             <span className="text-sm">{format}</span>
                             <PhArrowRight className="w-4 h-4 text-text-muted" />
@@ -247,7 +247,7 @@ export function HowItWorks() {
 
             {/* Floating badges */}
             <motion.div
-              className="absolute -right-4 top-1/4 px-4 py-2 rounded-xl bg-cosmic-surface border border-white/10 shadow-xl"
+              className="absolute -right-4 top-1/4 px-4 py-2 rounded-xl liquid-glass border border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 4, repeat: Infinity }}
             >

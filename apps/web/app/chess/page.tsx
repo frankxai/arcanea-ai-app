@@ -408,7 +408,7 @@ export default function ChessPage() {
             {GAME_MODES.map((mode) => (
               <button
                 key={mode.id}
-                className="glass rounded-xl p-5 text-left hover:border-crystal/30 transition-all group"
+                className="liquid-glass rounded-xl p-5 text-left hover:border-crystal/30 transition-all group"
               >
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-10 h-10 rounded-lg bg-brand-primary/15 flex items-center justify-center group-hover:bg-brand-primary/25 transition-colors">
@@ -442,7 +442,7 @@ export default function ChessPage() {
             {GUARDIANS.map((guardian) => (
               <div
                 key={guardian.id}
-                className="glass rounded-2xl overflow-hidden hover:border-crystal/30 transition-all group"
+                className="card-3d liquid-glass rounded-2xl overflow-hidden hover:border-crystal/30 transition-all group"
               >
                 {/* Accent bar */}
                 <div
@@ -544,7 +544,7 @@ export default function ChessPage() {
             </Link>
           </div>
 
-          <div className="glass rounded-2xl overflow-hidden">
+          <div className="card-3d liquid-glass rounded-2xl overflow-hidden">
             <table className="w-full">
               <thead>
                 <tr className="border-b border-white/10">
@@ -595,7 +595,7 @@ export default function ChessPage() {
 
         {/* Quick Play */}
         <section className="mb-12">
-          <div className="glass rounded-2xl p-6 sm:p-8">
+          <div className="card-3d liquid-glass rounded-2xl p-6 sm:p-8">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
               <div>
                 <h3 className="text-xl font-display font-semibold mb-2">
@@ -619,7 +619,7 @@ export default function ChessPage() {
         {/* Training Section */}
         <section>
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="glass rounded-2xl p-6">
+            <div className="card-3d liquid-glass rounded-2xl p-6">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 rounded-xl bg-brand-primary/15 flex items-center justify-center">
                   <Icons.RotateCcw className="w-5 h-5 text-brand-primary" />
@@ -639,7 +639,7 @@ export default function ChessPage() {
               </Link>
             </div>
 
-            <div className="glass rounded-2xl p-6">
+            <div className="card-3d liquid-glass rounded-2xl p-6">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 rounded-xl bg-crystal/15 flex items-center justify-center">
                   <Icons.Users className="w-5 h-5 text-crystal" />

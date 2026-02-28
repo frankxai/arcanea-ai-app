@@ -167,7 +167,7 @@ function LuminorCard({
             rotateY: mouseXSpring,
             transformStyle: "preserve-3d",
           }}
-          className="relative p-8 rounded-3xl glass border border-white/10 overflow-hidden"
+          className="relative p-8 rounded-3xl liquid-glass border border-white/[0.06] overflow-hidden"
         >
           {/* Gradient background */}
           <div
@@ -220,7 +220,7 @@ function LuminorCard({
               {luminor.traits.map((trait) => (
                 <span
                   key={trait}
-                  className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium"
+                  className="px-3 py-1 rounded-full bg-white/5 border border-white/[0.06] text-xs font-medium"
                 >
                   {trait}
                 </span>
@@ -327,7 +327,7 @@ export function LuminorShowcasePremium() {
         >
           <Link
             href="/luminors"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl glass border border-white/10 hover:border-crystal/30 text-text-primary font-display font-semibold transition-all hover-lift"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl liquid-glass border border-white/[0.06] hover:border-crystal/30 text-text-primary font-display font-semibold transition-all hover-lift"
           >
             View All 10 Guardians
             <PhArrowRight className="w-5 h-5" />

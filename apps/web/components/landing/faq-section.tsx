@@ -61,7 +61,7 @@ function FAQItem({
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: index * 0.05 }}
-      className="border-b border-white/10"
+      className="border-b border-white/[0.06]"
     >
       <button
         onClick={onToggle}
@@ -117,9 +117,9 @@ export function FAQSection() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-atlantean-teal-aqua/10 border border-atlantean-teal-aqua/20 mb-6">
-            <PhQuestion className="w-4 h-4 text-atlantean-teal-aqua" />
-            <span className="text-sm font-medium text-atlantean-teal-aqua">FAQ</span>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass border border-atlantean-teal-aqua/20 mb-6">
+            <PhQuestion className="w-3.5 h-3.5 text-atlantean-teal-aqua" />
+            <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-atlantean-teal-aqua/90">FAQ</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
             Frequently asked questions
@@ -130,7 +130,7 @@ export function FAQSection() {
         </motion.div>
 
         {/* FAQ list */}
-        <div className="border-t border-white/10">
+        <div className="border-t border-white/[0.06]">
           {FAQS.map((faq, i) => (
             <FAQItem
               key={i}
@@ -148,7 +148,7 @@ export function FAQSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.5 }}
-          className="mt-16 text-center p-8 rounded-2xl glass-subtle border border-white/10"
+          className="mt-16 text-center p-8 rounded-2xl liquid-glass border border-white/[0.06]"
         >
           <h3 className="text-xl font-display font-semibold mb-3">Still have questions?</h3>
           <p className="text-text-secondary mb-6">

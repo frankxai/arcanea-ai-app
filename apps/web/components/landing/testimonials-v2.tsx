@@ -113,9 +113,9 @@ export function TestimonialsV2() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-creation-prism-purple/10 border border-creation-prism-purple/20 mb-6">
-            <PhQuotes className="w-4 h-4 text-creation-prism-purple" />
-            <span className="text-sm font-medium text-creation-prism-purple">From the Library</span>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass border border-creation-prism-purple/20 mb-6">
+            <PhQuotes className="w-3.5 h-3.5 text-creation-prism-purple" />
+            <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-creation-prism-purple/90">From the Library</span>
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
             Wisdom from the Arcanea universe
@@ -194,7 +194,7 @@ export function TestimonialsV2() {
           <div className="flex items-center justify-center gap-4 mt-8">
             <button
               onClick={() => navigate(-1)}
-              className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-text-muted hover:text-white hover:bg-white/10 transition-all"
+              className="w-12 h-12 rounded-full liquid-glass border border-white/[0.06] flex items-center justify-center text-text-muted hover:text-white hover:bg-white/[0.08] transition-all"
               aria-label="Previous testimonial"
             >
               <PhCaretLeft className="w-5 h-5" />
@@ -221,7 +221,7 @@ export function TestimonialsV2() {
 
             <button
               onClick={() => navigate(1)}
-              className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-text-muted hover:text-white hover:bg-white/10 transition-all"
+              className="w-12 h-12 rounded-full liquid-glass border border-white/[0.06] flex items-center justify-center text-text-muted hover:text-white hover:bg-white/[0.08] transition-all"
               aria-label="Next testimonial"
             >
               <PhCaretRight className="w-5 h-5" />
@@ -234,7 +234,7 @@ export function TestimonialsV2() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.4 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 pt-12 border-t border-white/10"
+          className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 pt-12 border-t border-white/[0.06]"
         >
           {[
             { value: '10', label: 'Guardian Archetypes' },

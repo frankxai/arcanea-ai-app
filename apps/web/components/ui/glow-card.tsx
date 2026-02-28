@@ -23,7 +23,7 @@ export interface GlowCardProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Whether to apply hover-lift effect. */
   lift?: boolean;
   /** Glass tier class to apply (glass, liquid-glass, etc). Defaults to "glass". */
-  glass?: 'glass-subtle' | 'glass' | 'glass-strong' | 'liquid-glass' | 'liquid-glass-elevated' | 'iridescent-glass' | 'none';
+  glass?: 'liquid-glass' | 'glass' | 'glass-strong' | 'liquid-glass-elevated' | 'iridescent-glass' | 'none';
 }
 
 const GlowCard = React.forwardRef<HTMLDivElement, GlowCardProps>(

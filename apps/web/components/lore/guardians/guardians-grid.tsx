@@ -196,10 +196,10 @@ export function GuardiansGrid() {
               className="group"
             >
               <div
-                className={`relative rounded-2xl border border-white/10 glass-subtle backdrop-blur-sm overflow-hidden transition-all duration-500 ${
+                className={`relative rounded-2xl border border-white/[0.06] liquid-glass backdrop-blur-sm overflow-hidden transition-all duration-500 ${
                   expandedId === guardian.id
                     ? 'border-white/30'
-                    : 'hover:border-white/20'
+                    : 'hover:border-white/[0.12]'
                 }`}
               >
                 {/* Hero image background */}
@@ -271,7 +271,7 @@ export function GuardiansGrid() {
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
-                    className="relative border-t border-white/10"
+                    className="relative border-t border-white/[0.06]"
                   >
                     <div className="p-6 grid md:grid-cols-2 gap-6">
                       {/* Left - Description */}

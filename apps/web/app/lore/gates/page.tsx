@@ -237,7 +237,7 @@ export default function GatesPage() {
             {RANKS.map((rank) => (
               <div
                 key={rank.rank}
-                className="p-4 rounded-xl glass-subtle text-center hover-lift transition-all"
+                className="p-4 rounded-xl liquid-glass text-center hover-lift transition-all"
               >
                 <div className={`text-lg font-display font-bold ${rank.color}`}>{rank.rank}</div>
                 <div className="text-xs text-text-muted mt-1">{rank.gates} Gates</div>

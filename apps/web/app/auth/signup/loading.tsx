@@ -10,7 +10,7 @@ export default function Loading() {
         </div>
 
         {/* Form card */}
-        <div className="glass rounded-2xl border border-white/5 p-8 space-y-5">
+        <div className="card-3d liquid-glass rounded-2xl border border-white/[0.06] p-8 space-y-5">
           {/* Name field */}
           <div>
             <div className="w-24 h-4 bg-white/5 rounded mb-2" />

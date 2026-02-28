@@ -160,7 +160,7 @@ export function ImagineTab() {
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <header className="glass border-b border-white/5 px-6 py-4">
+      <header className="liquid-glass border-b border-white/[0.04] px-6 py-4">
         <div className="flex items-center gap-4">
           <button
             onClick={() => setSubTab('create')}
@@ -190,7 +190,7 @@ export function ImagineTab() {
         <div className="flex-1 overflow-y-auto px-6 py-8">
           <div className="max-w-5xl mx-auto space-y-6">
             {/* Prompt Input */}
-            <div className="glass rounded-2xl p-6 space-y-4">
+            <div className="liquid-glass rounded-2xl p-6 space-y-4">
               <div className="flex items-center gap-3 mb-2">
                 <PhSparkle className="w-5 h-5 text-brand-accent" />
                 <h3 className="text-lg font-display text-text-primary">Imagine</h3>
@@ -200,7 +200,7 @@ export function ImagineTab() {
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 placeholder="Describe the image you want to create..."
-                className="glass-subtle border-white/10 text-text-primary placeholder:text-text-muted h-12 text-base"
+                className="liquid-glass border-white/[0.06] text-text-primary placeholder:text-text-muted h-12 text-base"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
                     handleGenerate()
@@ -219,7 +219,7 @@ export function ImagineTab() {
                       className={`px-4 py-2 rounded-lg font-sans text-sm transition-all ${
                         selectedStyle === style
                           ? 'liquid-glass text-text-primary'
-                          : 'glass-subtle text-text-secondary hover:text-text-primary'
+                          : 'liquid-glass text-text-secondary hover:text-text-primary'
                       }`}
                     >
                       {style}
@@ -239,7 +239,7 @@ export function ImagineTab() {
                       className={`px-4 py-2 rounded-lg font-sans text-sm transition-all ${
                         selectedRatio === ratio.value
                           ? 'liquid-glass text-text-primary'
-                          : 'glass-subtle text-text-secondary hover:text-text-primary'
+                          : 'liquid-glass text-text-secondary hover:text-text-primary'
                       }`}
                     >
                       {ratio.label}
@@ -266,7 +266,7 @@ export function ImagineTab() {
                   className="break-inside-avoid animate-fade-in-up"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <div className="glass rounded-xl overflow-hidden group relative hover:-translate-y-1 transition-all duration-300">
+                  <div className="liquid-glass rounded-xl overflow-hidden group relative hover:-translate-y-1 transition-all duration-300">
                     <div className="relative aspect-square">
                       <Image
                         src={image.url}
@@ -274,7 +274,7 @@ export function ImagineTab() {
                         fill
                         className="object-cover"
                       />
-                      
+
                       {/* Overlay */}
                       <div className="absolute inset-0 bg-gradient-to-t from-cosmic-void/90 via-cosmic-void/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <div className="absolute inset-0 p-4 flex flex-col justify-between">
@@ -283,19 +283,19 @@ export function ImagineTab() {
                               size="icon"
                               variant="ghost"
                               onClick={() => handleLike(image.id)}
-                              className={`glass-subtle hover:scale-110 transition-transform ${
+                              className={`liquid-glass hover:scale-110 transition-transform ${
                                 image.liked ? 'text-brand-gold' : 'text-text-muted'
                               }`}
                             >
                               <PhHeart className={`w-4 h-4 ${image.liked ? 'fill-current' : ''}`} />
                             </Button>
-                            <Button size="icon" variant="ghost" className="glass-subtle hover:scale-110 transition-transform text-text-muted">
+                            <Button size="icon" variant="ghost" className="liquid-glass hover:scale-110 transition-transform text-text-muted">
                               <PhDownload className="w-4 h-4" />
                             </Button>
-                            <Button size="icon" variant="ghost" className="glass-subtle hover:scale-110 transition-transform text-text-muted">
+                            <Button size="icon" variant="ghost" className="liquid-glass hover:scale-110 transition-transform text-text-muted">
                               <PhArrowsOut className="w-4 h-4" />
                             </Button>
-                            <Button size="icon" variant="ghost" className="glass-subtle hover:scale-110 transition-transform text-text-muted">
+                            <Button size="icon" variant="ghost" className="liquid-glass hover:scale-110 transition-transform text-text-muted">
                               <PhShare className="w-4 h-4" />
                             </Button>
                           </div>
@@ -345,7 +345,7 @@ export function ImagineTab() {
                   className={`px-4 py-2 rounded-lg font-sans text-sm capitalize transition-all ${
                     filter === f
                       ? 'liquid-glass text-text-primary'
-                      : 'glass-subtle text-text-secondary hover:text-text-primary'
+                      : 'liquid-glass text-text-secondary hover:text-text-primary'
                   }`}
                 >
                   {f}
@@ -357,7 +357,7 @@ export function ImagineTab() {
             <div className="columns-1 sm:columns-2 lg:columns-4 gap-4 space-y-4">
               {filteredImages.map((image) => (
                 <div key={image.id} className="break-inside-avoid">
-                  <div className="glass rounded-xl overflow-hidden group relative hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+                  <div className="liquid-glass rounded-xl overflow-hidden group relative hover:-translate-y-1 transition-all duration-300 cursor-pointer">
                     <div className="relative aspect-square">
                       <Image
                         src={image.url}
@@ -411,7 +411,7 @@ export function ImagineTab() {
                           className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all ${
                             stage.completed
                               ? 'bg-gradient-to-br from-brand-accent/20 to-brand-primary/20 animate-pulse-glow'
-                              : 'glass-subtle opacity-50'
+                              : 'liquid-glass opacity-50'
                           }`}
                         >
                           <StageIcon className={`w-6 h-6 ${stage.completed ? 'text-brand-accent' : 'text-text-muted'}`} />
@@ -446,7 +446,7 @@ export function ImagineTab() {
               })}
             </div>
 
-            <div className="mt-8 glass-subtle rounded-xl p-4 aspect-video flex items-center justify-center">
+            <div className="mt-8 liquid-glass rounded-xl p-4 aspect-video flex items-center justify-center">
               <p className="text-text-muted font-sans">Animation preview will appear here</p>
             </div>
           </div>

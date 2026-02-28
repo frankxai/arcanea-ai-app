@@ -19,7 +19,7 @@ const cardVariants = cva(
           'bg-[rgba(18,24,38,0.65)] backdrop-blur-[16px]',
           'border-[rgba(127,255,212,0.12)]',
         ],
-        'glass-subtle': [
+        'liquid-glass-subtle': [
           'bg-[rgba(26,35,50,0.45)] backdrop-blur-[12px]',
           'border-[rgba(127,255,212,0.08)]',
         ],

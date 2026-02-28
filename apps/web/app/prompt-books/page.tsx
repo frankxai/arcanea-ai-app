@@ -370,7 +370,7 @@ export default function PromptBooksPage() {
             <button
               onClick={() => setSearchOpen(true)}
               className={cn(
-                "glass-subtle px-2 py-1 rounded-md",
+                "liquid-glass px-2 py-1 rounded-md",
                 "flex items-center gap-1",
                 "text-[10px] font-mono text-text-muted/50",
                 "hover:text-text-muted hover:bg-white/[0.04] transition-all duration-150",
@@ -407,7 +407,7 @@ export default function PromptBooksPage() {
 
           <div className="flex items-center gap-2">
             {/* View mode toggle */}
-            <div className="glass-subtle rounded-lg p-0.5 flex">
+            <div className="liquid-glass rounded-lg p-0.5 flex">
               <button
                 onClick={() => setViewMode("grid")}
                 className={cn(

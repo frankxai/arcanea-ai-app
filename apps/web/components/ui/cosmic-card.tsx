@@ -15,8 +15,8 @@ export interface CosmicCardProps {
 }
 
 const glassClasses = {
-  subtle: 'glass-subtle',
-  standard: 'glass',
+  subtle: 'liquid-glass',
+  standard: 'liquid-glass',
   strong: 'glass-strong',
   liquid: 'liquid-glass',
   'liquid-elevated': 'liquid-glass-elevated',

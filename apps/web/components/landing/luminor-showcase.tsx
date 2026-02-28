@@ -320,8 +320,8 @@ export function LuminorShowcase() {
               }}
               className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
                 activeTeam === team.id
-                  ? 'bg-white/10 border border-white/20 text-white'
-                  : 'border border-white/5 text-text-muted hover:text-white hover:border-white/10'
+                  ? 'bg-white/[0.08] border border-white/[0.12] text-white'
+                  : 'border border-white/[0.04] text-text-muted hover:text-white hover:border-white/[0.08]'
               }`}
               style={{
                 boxShadow: activeTeam === team.id ? `0 0 20px ${team.color}30` : 'none',
@@ -500,7 +500,7 @@ export function LuminorShowcase() {
             </Link>
             <Link
               href="/luminor-intelligence"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/10 text-text-secondary hover:text-white hover:border-white/20 transition-all duration-300"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl liquid-glass border border-white/[0.06] text-text-secondary hover:text-white hover:border-white/[0.12] transition-all duration-300"
             >
               <span>What is Luminor Intelligence?</span>
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

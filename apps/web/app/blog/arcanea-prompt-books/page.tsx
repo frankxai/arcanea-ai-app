@@ -430,7 +430,7 @@ function StatsGrid({ stats }: { stats: { label: string; value: string }[] }) {
   return (
     <div className="grid grid-cols-3 md:grid-cols-4 gap-3 not-prose">
       {stats.map((s) => (
-        <div key={s.label} className="glass-subtle rounded-xl p-4 text-center">
+        <div key={s.label} className="liquid-glass rounded-xl p-4 text-center">
           <div className="text-xl font-mono font-bold text-crystal mb-1">{s.value}</div>
           <div className="text-[10px] font-sans text-text-muted uppercase tracking-wider">{s.label}</div>
         </div>

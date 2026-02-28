@@ -137,7 +137,7 @@ export default function SignupPage() {
         </div>
 
         {/* Signup form */}
-        <div className="glass rounded-2xl p-8">
+        <div className="liquid-glass rounded-2xl p-8">
           <form onSubmit={handleSignup} className="space-y-5">
             {/* Name field */}
             <div>

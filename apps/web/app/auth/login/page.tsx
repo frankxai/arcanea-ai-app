@@ -282,7 +282,7 @@ export default function LoginPage() {
         </div>
 
         {/* Login form */}
-        <div className="glass rounded-3xl p-8 sm:p-10">
+        <div className="liquid-glass rounded-3xl p-8 sm:p-10">
           {authMessage === "check_email" && (
             <motion.p
               initial={{ opacity: 0, y: -10 }}

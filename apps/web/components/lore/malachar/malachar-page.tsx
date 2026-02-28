@@ -114,7 +114,7 @@ function StatPill({
   accent: string;
 }) {
   return (
-    <div className="glass rounded-2xl p-5 glow-card hover-lift transition-all">
+    <div className="card-3d liquid-glass rounded-2xl p-5 glow-card hover-lift transition-all">
       <p className="text-xs text-text-muted font-sans uppercase tracking-wider mb-1">
         {label}
       </p>
@@ -138,7 +138,7 @@ function TeachingCard({
 }) {
   return (
     <Fade delay={0.1 * index}>
-      <div className="group flex gap-5 p-6 glass rounded-2xl border border-white/5 hover:border-[#9966ff]/20 hover-lift glow-card transition-all">
+      <div className="group flex gap-5 p-6 card-3d liquid-glass rounded-2xl border border-white/[0.06] hover:border-[#9966ff]/20 hover-lift glow-card transition-all">
         <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 font-display font-bold text-sm bg-[#9966ff]/10 text-[#b38cff] border border-[#9966ff]/20 group-hover:scale-110 transition-transform">
           {number}
         </div>
@@ -357,7 +357,7 @@ export function MalacharPage() {
                 value="Sealed — Shadowfen"
                 accent="text-[#b38cff]"
               />
-              <div className="glass rounded-2xl p-5 col-span-2 md:col-span-1 glow-card hover-lift transition-all">
+              <div className="liquid-glass rounded-2xl p-5 col-span-2 md:col-span-1 glow-card hover-lift transition-all">
                 <p className="text-xs text-text-muted font-sans uppercase tracking-wider mb-1">
                   Corruption
                 </p>
@@ -380,7 +380,7 @@ export function MalacharPage() {
           </Fade>
 
           <Fade delay={0.1}>
-            <div className="relative glass rounded-3xl overflow-hidden">
+            <div className="relative liquid-glass rounded-3xl overflow-hidden">
               {/* Gold-tinted radial — former glory */}
               <div
                 className="absolute inset-0 pointer-events-none"
@@ -951,7 +951,7 @@ export function MalacharPage() {
 
                   <Link
                     href="/lore"
-                    className="inline-flex items-center gap-2 px-6 py-4 rounded-2xl font-sans font-medium text-sm text-text-secondary border border-white/10 hover:border-white/20 hover:text-text-primary glass transition-all"
+                    className="inline-flex items-center gap-2 px-6 py-4 rounded-2xl font-sans font-medium text-sm text-text-secondary border border-white/[0.06] hover:border-white/[0.12] hover:text-text-primary liquid-glass transition-all"
                   >
                     <PhArrowLeft className="w-4 h-4" />
                     All Lore

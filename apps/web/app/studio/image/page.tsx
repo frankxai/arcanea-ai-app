@@ -127,7 +127,7 @@ export default function ImageForgePage() {
   return (
     <div className="min-h-screen bg-cosmic-deep">
       {/* Header */}
-      <header className="border-b border-white/10 bg-cosmic-surface/50 backdrop-blur-xl sticky top-0 z-40">
+      <header className="border-b border-white/[0.06] liquid-glass sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link
@@ -164,7 +164,7 @@ export default function ImageForgePage() {
           <div className="space-y-6">
             {/* Image display */}
             <div
-              className="relative glass-subtle rounded-2xl overflow-hidden"
+              className="relative liquid-glass rounded-2xl overflow-hidden"
               style={{ aspectRatio: selectedRatio.replace(':', '/') }}
             >
               <AnimatePresence mode="wait">

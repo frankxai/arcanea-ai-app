@@ -118,7 +118,7 @@ export function Sidebar({ activeTab, onTabChange, collapsed, onToggleCollapse }:
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search chats..."
-                className="glass-subtle border-white/10 pl-9 h-9 text-sm text-text-primary placeholder:text-text-muted focus-visible:border-brand-accent/50"
+                className="liquid-glass border-white/[0.06] pl-9 h-9 text-sm text-text-primary placeholder:text-text-muted focus-visible:border-brand-accent/50"
               />
             </div>
           </div>
@@ -168,7 +168,7 @@ export function Sidebar({ activeTab, onTabChange, collapsed, onToggleCollapse }:
       {/* Bottom Section */}
       <div className="mt-auto border-t border-white/5 p-3 space-y-3">
         {!collapsed && (
-          <div className="glass-subtle rounded-lg p-3 space-y-2">
+          <div className="liquid-glass rounded-lg p-3 space-y-2">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-brand-primary to-brand-accent flex items-center justify-center">
                 <PhUser className="w-5 h-5 text-cosmic-void" />

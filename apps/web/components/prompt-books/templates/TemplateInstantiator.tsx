@@ -120,7 +120,7 @@ export function TemplateInstantiator({
             <label className="text-[10px] font-sans font-medium text-text-secondary uppercase tracking-wider mb-1 block">
               Preview
             </label>
-            <div className="glass-subtle rounded-lg p-3 text-xs font-mono text-text-secondary leading-relaxed max-h-32 overflow-y-auto whitespace-pre-wrap">
+            <div className="liquid-glass rounded-lg p-3 text-xs font-mono text-text-secondary leading-relaxed max-h-32 overflow-y-auto whitespace-pre-wrap">
               {preview}
             </div>
           </div>

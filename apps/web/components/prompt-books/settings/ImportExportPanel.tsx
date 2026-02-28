@@ -185,7 +185,7 @@ export function ImportExportPanel({ onClose }: ImportExportPanelProps) {
           Import
         </h3>
 
-        <div className="glass-subtle rounded-xl p-4 space-y-3">
+        <div className="liquid-glass rounded-xl p-4 space-y-3">
           {/* Target collection */}
           <div>
             <label className="text-[10px] font-sans text-text-muted mb-1 block">
@@ -194,7 +194,7 @@ export function ImportExportPanel({ onClose }: ImportExportPanelProps) {
             <select
               value={targetCollectionId}
               onChange={(e) => setTargetCollectionId(e.target.value)}
-              className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-3 py-2 text-xs font-sans text-text-primary focus:outline-none"
+              className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-xs font-sans text-text-primary focus:outline-none"
             >
               <option value="">No collection (uncategorized)</option>
               {collections.map((c) => (
@@ -209,7 +209,7 @@ export function ImportExportPanel({ onClose }: ImportExportPanelProps) {
           <div
             className={cn(
               "border-2 border-dashed rounded-xl p-6 text-center transition-colors cursor-pointer",
-              "border-white/10 hover:border-brand-accent/30 hover:bg-white/[0.02]",
+              "border-white/[0.06] hover:border-brand-accent/30 hover:bg-white/[0.02]",
             )}
             onClick={() => fileInputRef.current?.click()}
           >
@@ -274,7 +274,7 @@ export function ImportExportPanel({ onClose }: ImportExportPanelProps) {
           Export
         </h3>
 
-        <div className="glass-subtle rounded-xl p-4 space-y-2">
+        <div className="liquid-glass rounded-xl p-4 space-y-2">
           <Button
             onClick={handleExportAll}
             disabled={exporting || collections.length === 0}

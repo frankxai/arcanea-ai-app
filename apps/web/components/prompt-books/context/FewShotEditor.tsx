@@ -29,7 +29,7 @@ function ExamplePair({
   onMoveDown,
 }: ExamplePairProps) {
   return (
-    <div className="group relative glass-subtle rounded-lg border border-white/5 p-3 space-y-2">
+    <div className="group relative liquid-glass rounded-lg border border-white/[0.04] p-3 space-y-2">
       {/* Header: role toggle + actions */}
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-1">
@@ -223,7 +223,7 @@ export function FewShotEditor({ examples, onChange, className }: FewShotEditorPr
             'flex items-center gap-1.5 px-3 py-1.5 rounded-md',
             'text-xs font-sans text-text-muted',
             'bg-white/[0.02] hover:bg-white/[0.04]',
-            'border border-white/5',
+            'border border-white/[0.04]',
             'transition-all duration-150',
             'opacity-50 cursor-not-allowed',
           )}

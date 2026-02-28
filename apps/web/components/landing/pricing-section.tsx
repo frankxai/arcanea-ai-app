@@ -89,9 +89,9 @@ export function PricingSection() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold-bright/10 border border-gold-bright/20 mb-6">
-            <PhSparkle className="w-4 h-4 text-gold-bright" />
-            <span className="text-sm font-medium text-gold-bright">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass border border-gold-bright/20 mb-6">
+            <PhSparkle className="w-3.5 h-3.5 text-gold-bright" />
+            <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-gold-bright/90">
               Simple Pricing
             </span>
           </div>
@@ -104,7 +104,7 @@ export function PricingSection() {
           </p>
 
           {/* Billing toggle */}
-          <div className="inline-flex items-center gap-4 p-1.5 rounded-full bg-cosmic-surface/50 border border-white/10">
+          <div className="inline-flex items-center gap-4 p-1.5 rounded-full liquid-glass border border-white/[0.06]">
             <button
               onClick={() => setIsYearly(false)}
               className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all ${
@@ -147,7 +147,7 @@ export function PricingSection() {
                 className={`relative rounded-3xl p-8 ${
                   plan.featured
                     ? "bg-gradient-to-b from-atlantean-teal-aqua/20 to-cosmic-surface/50 border-2 border-atlantean-teal-aqua/30 scale-105 lg:scale-110"
-                    : "glass-subtle border border-white/10"
+                    : "liquid-glass border border-white/[0.06]"
                 }`}
               >
                 {/* Featured badge */}

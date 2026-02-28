@@ -21,7 +21,7 @@ export function PlaceholderPage({
 }: PlaceholderPageProps) {
   return (
     <section className="mx-auto max-w-3xl py-20">
-      <div className="glass rounded-2xl border border-white/10 p-8 md:p-10">
+      <div className="card-3d liquid-glass rounded-2xl border border-white/[0.06] p-8 md:p-10">
         <p className="mb-2 text-xs font-mono uppercase tracking-[0.35em] text-atlantean-teal-aqua">
           {eyebrow}
         </p>

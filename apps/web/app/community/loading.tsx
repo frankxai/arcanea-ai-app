@@ -33,7 +33,7 @@ export default function Loading() {
             {Array.from({ length: 4 }).map((_, i) => (
               <div
                 key={i}
-                className="glass rounded-2xl border border-white/5 p-8 space-y-5"
+                className="card-3d liquid-glass rounded-2xl border border-white/[0.06] p-8 space-y-5"
               >
                 <div className="flex items-start justify-between">
                   <div className="w-12 h-12 rounded-xl bg-white/5" />
@@ -68,7 +68,7 @@ export default function Loading() {
             {Array.from({ length: 4 }).map((_, i) => (
               <div
                 key={i}
-                className="glass rounded-2xl border border-white/5 p-6 space-y-4"
+                className="card-3d liquid-glass rounded-2xl border border-white/[0.06] p-6 space-y-4"
               >
                 <div className="w-10 h-10 rounded-xl bg-white/5" />
                 <div className="w-16 h-5 rounded-full bg-white/5" />
@@ -95,7 +95,7 @@ export default function Loading() {
             {Array.from({ length: 3 }).map((_, i) => (
               <div
                 key={i}
-                className="glass rounded-2xl border border-white/5 p-7 space-y-5"
+                className="card-3d liquid-glass rounded-2xl border border-white/[0.06] p-7 space-y-5"
               >
                 <div className="w-20 h-6 rounded-full bg-white/5" />
                 <div className="w-full h-28 rounded-xl bg-white/5" />
@@ -125,7 +125,7 @@ export default function Loading() {
             {Array.from({ length: 6 }).map((_, i) => (
               <div
                 key={i}
-                className="glass rounded-2xl border border-white/5 p-6 space-y-4"
+                className="card-3d liquid-glass rounded-2xl border border-white/[0.06] p-6 space-y-4"
               >
                 <div className="w-10 h-10 rounded-xl bg-white/5" />
                 <div className="w-36 h-5 bg-white/8 rounded" />

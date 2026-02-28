@@ -19,7 +19,7 @@ export default function Loading() {
               {/* Stats Grid */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8">
                 {[...Array(4)].map((_, i) => (
-                  <div key={i} className="glass rounded-xl p-4 text-center">
+                  <div key={i} className="liquid-glass rounded-xl p-4 text-center">
                     <div className="h-8 bg-white/10 rounded w-12 mx-auto mb-1" />
                     <div className="h-3 bg-white/10 rounded w-20 mx-auto" />
                   </div>
@@ -32,7 +32,7 @@ export default function Loading() {
         {/* Quick Links Skeleton */}
         <section className="mb-8 grid sm:grid-cols-3 gap-4">
           {[...Array(3)].map((_, i) => (
-            <div key={i} className="glass rounded-xl p-5 animate-pulse">
+            <div key={i} className="liquid-glass rounded-xl p-5 animate-pulse">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-white/10 rounded-xl" />
                 <div className="flex-1">
@@ -63,7 +63,7 @@ export default function Loading() {
           {[...Array(4)].map((_, i) => (
             <article
               key={i}
-              className="glass rounded-xl overflow-hidden animate-pulse"
+              className="liquid-glass rounded-xl overflow-hidden animate-pulse"
             >
               <div className="flex items-start gap-4 p-5">
                 <div className="w-12 h-12 bg-white/10 rounded-xl shrink-0" />

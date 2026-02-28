@@ -26,7 +26,7 @@ export default function Loading() {
           {Array.from({ length: 16 }).map((_, i) => (
             <div
               key={i}
-              className="glass rounded-2xl border border-white/5 p-6 space-y-4"
+              className="card-3d liquid-glass rounded-2xl border border-white/[0.06] p-6 space-y-4"
             >
               {/* Avatar */}
               <div className="w-14 h-14 rounded-xl bg-white/5" />

@@ -461,7 +461,7 @@ export default function WorkflowsPage() {
                   >
                     {step.step}
                   </div>
-                  <div className="glass-subtle rounded-xl p-5 pt-6 h-full">
+                  <div className="liquid-glass rounded-xl p-5 pt-6 h-full">
                     <h3 className="font-semibold text-text-primary mb-3 font-display text-sm">
                       {step.title}
                     </h3>

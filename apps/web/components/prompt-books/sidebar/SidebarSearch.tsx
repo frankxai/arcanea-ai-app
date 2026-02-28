@@ -16,7 +16,7 @@ export function SidebarSearch({ value, onChange }: SidebarSearchProps) {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder="Search collections..."
-        className="glass-subtle border-white/10 pl-9 h-8 text-sm text-text-primary placeholder:text-text-muted focus-visible:border-brand-accent/50"
+        className="liquid-glass border-white/[0.06] pl-9 h-8 text-sm text-text-primary placeholder:text-text-muted focus-visible:border-brand-accent/50"
       />
     </div>
   )

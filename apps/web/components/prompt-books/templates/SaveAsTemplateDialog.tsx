@@ -132,7 +132,7 @@ export function SaveAsTemplateDialog({
                 className={cn(
                   'flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-sans border transition-all',
                   isPublic
-                    ? 'border-brand-accent/30 text-brand-accent glass'
+                    ? 'border-brand-accent/30 text-brand-accent liquid-glass'
                     : 'border-white/10 text-text-muted bg-white/[0.03]',
                 )}
               >
@@ -150,7 +150,7 @@ export function SaveAsTemplateDialog({
               </label>
               <div className="space-y-2">
                 {variables.map((v, i) => (
-                  <div key={v.name} className="glass-subtle rounded-lg p-3 space-y-2">
+                  <div key={v.name} className="liquid-glass rounded-lg p-3 space-y-2">
                     <div className="flex items-center gap-2">
                       <span className="text-[10px] font-mono text-brand-gold">{'{{' + v.name + '}}'}</span>
                       <input

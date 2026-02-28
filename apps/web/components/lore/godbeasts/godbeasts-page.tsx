@@ -354,7 +354,7 @@ function GodbeastsHero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-subtle border border-brand-gold/25 mb-8"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full liquid-glass border border-brand-gold/25 mb-8"
         >
           <PhStar className="w-4 h-4 text-brand-gold" />
           <span className="text-sm font-medium text-brand-gold tracking-wide">
@@ -696,7 +696,7 @@ function BondMechanicsSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-subtle border border-brand-primary/20 mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full liquid-glass border border-brand-primary/20 mb-6">
             <PhShield className="w-4 h-4 text-brand-primary" />
             <span className="text-sm text-brand-primary">The Sacred Covenant</span>
           </div>
@@ -833,7 +833,7 @@ function FrequencySpectrum() {
                   <div className={cn('flex-1', isLeft ? 'text-right' : 'text-left')}>
                     <div
                       className={cn(
-                        'inline-block glass rounded-xl px-4 py-3 hover-lift glow-card transition-all duration-300'
+                        'inline-block liquid-glass rounded-xl px-4 py-3 hover-lift glow-card transition-all duration-300'
                       )}
                       style={{
                         borderColor: `${beast.accentHex}25`,
@@ -955,7 +955,7 @@ function GodbestsCTA() {
             </Link>
             <Link
               href="/lore/guardians"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl glass border border-crystal/20 text-crystal font-semibold text-sm hover:border-crystal/40 hover:shadow-glow-md transition-all duration-200"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl liquid-glass border border-crystal/20 text-crystal font-semibold text-sm hover:border-crystal/40 hover:shadow-glow-md transition-all duration-200"
             >
               <PhShield className="w-4 h-4" />
               Meet the Guardians

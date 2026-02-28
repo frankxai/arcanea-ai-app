@@ -217,7 +217,7 @@ export default function MeetLuminorPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1 }}
-          className="glass rounded-2xl p-6 mb-8"
+          className="card-3d liquid-glass rounded-2xl p-6 mb-8"
         >
           <div className="flex items-start gap-4">
             <div

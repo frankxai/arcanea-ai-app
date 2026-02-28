@@ -185,7 +185,7 @@ export default function UpdatesPage() {
                       />
 
                       {/* Content card */}
-                      <div className="p-5 rounded-xl glass-subtle hover:border-white/20 transition-all">
+                      <div className="p-5 rounded-xl liquid-glass hover:border-white/[0.12] transition-all">
                         {/* Header */}
                         <div className="flex items-start justify-between mb-3">
                           <div className="flex items-center gap-2">

@@ -28,7 +28,7 @@ export default function Loading() {
           <div className="h-5 bg-white/10 rounded w-32 mb-6" />
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[...Array(4)].map((_, i) => (
-              <div key={i} className="glass rounded-2xl p-5 animate-pulse">
+              <div key={i} className="card-3d liquid-glass rounded-2xl p-5 animate-pulse">
                 <div className="w-10 h-10 bg-white/10 rounded-xl mb-4" />
                 <div className="h-5 bg-white/10 rounded w-24 mb-2" />
                 <div className="h-3 bg-white/10 rounded w-full" />
@@ -42,7 +42,7 @@ export default function Loading() {
           <div className="h-5 bg-white/10 rounded w-36 mb-6" />
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[...Array(4)].map((_, i) => (
-              <div key={i} className="glass rounded-2xl p-6 animate-pulse">
+              <div key={i} className="card-3d liquid-glass rounded-2xl p-6 animate-pulse">
                 <div className="w-12 h-12 bg-white/10 rounded-xl mb-4" />
                 <div className="h-5 bg-white/10 rounded w-24 mb-2" />
                 <div className="h-3 bg-white/10 rounded w-full mb-3" />
@@ -61,7 +61,7 @@ export default function Loading() {
           <div className="h-5 bg-white/10 rounded w-36 mb-6" />
           <div className="grid md:grid-cols-3 gap-6">
             {[...Array(3)].map((_, i) => (
-              <div key={i} className="glass rounded-2xl p-6 animate-pulse">
+              <div key={i} className="card-3d liquid-glass rounded-2xl p-6 animate-pulse">
                 <div className="flex justify-between mb-4">
                   <div className="w-3 h-3 bg-white/10 rounded-full" />
                   <div className="h-3 bg-white/10 rounded w-16" />

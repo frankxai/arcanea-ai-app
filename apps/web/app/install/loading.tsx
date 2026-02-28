@@ -42,7 +42,7 @@ export default function InstallLoading() {
             {[1, 2, 3, 4].map((i) => (
               <div
                 key={i}
-                className="p-6 rounded-2xl border border-white/10 glass-subtle"
+                className="p-6 rounded-2xl border border-white/[0.06] liquid-glass"
               >
                 <Skeleton
                   variant="rect"
@@ -61,7 +61,7 @@ export default function InstallLoading() {
             {[1, 2, 3, 4].map((i) => (
               <div
                 key={i}
-                className="p-6 rounded-2xl border border-white/10 glass-subtle"
+                className="p-6 rounded-2xl border border-white/[0.06] liquid-glass"
               >
                 <Skeleton
                   variant="rect"

@@ -329,7 +329,7 @@ function ElementsHero() {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.9 + i * 0.08 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-subtle border"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full liquid-glass border"
                 style={{ borderColor: el.colors.border }}
               >
                 <Icon className="w-3.5 h-3.5" style={{ color: el.colors.primary }} />
@@ -678,7 +678,7 @@ function FifthElementDuality() {
             </div>
 
             {/* Spirit — Right / Lumina */}
-            <div className="p-10 md:pl-16 relative border-t border-white/10 md:border-t-0 md:border-l md:border-l-white/10">
+            <div className="p-10 md:pl-16 relative border-t border-white/[0.06] md:border-t-0 md:border-l md:border-l-white/[0.06]">
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -721,7 +721,7 @@ function FifthElementDuality() {
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ delay: 0.55 }}
-            className="relative border-t border-white/10 bg-white/3 px-10 py-6"
+            className="relative border-t border-white/[0.06] bg-white/3 px-10 py-6"
           >
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 text-sm font-sans">
               <div className="flex items-start gap-2">
@@ -780,7 +780,7 @@ function ElementRelationshipsSection() {
               initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ delay: i * 0.1 }}
-              className="group relative p-6 rounded-2xl glass hover:border-white/20 transition-all duration-300 hover-lift"
+              className="group relative p-6 rounded-2xl liquid-glass hover:border-white/[0.12] transition-all duration-300 hover-lift"
             >
               <div className="flex items-center gap-3 mb-4">
                 <span className="text-sm font-display font-semibold text-white">{rel.a}</span>
@@ -857,7 +857,7 @@ function GuardianElementsSection() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ delay: i * 0.06 }}
-                className="group relative p-4 rounded-2xl glass text-center hover:border-white/20 transition-all duration-300 hover-lift"
+                className="group relative p-4 rounded-2xl liquid-glass text-center hover:border-white/[0.12] transition-all duration-300 hover-lift"
               >
                 <div
                   className="w-8 h-8 rounded-xl flex items-center justify-center mx-auto mb-3"
@@ -956,7 +956,7 @@ function TheArcSection() {
 
                 {/* Phase card */}
                 <div
-                  className="flex-1 p-5 rounded-2xl glass-subtle border transition-all duration-300 hover:border-white/15 group"
+                  className="flex-1 p-5 rounded-2xl liquid-glass border transition-all duration-300 hover:border-white/15 group"
                   style={{ borderColor: `${phase.color}20` }}
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-2">
@@ -1061,7 +1061,7 @@ function ElementsCTA() {
             </Link>
             <Link
               href="/lore"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl border border-white/10 text-text-secondary font-semibold hover:bg-white/5 transition-all"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl border border-white/[0.06] text-text-secondary font-semibold hover:bg-white/5 transition-all"
             >
               Full Lore
             </Link>

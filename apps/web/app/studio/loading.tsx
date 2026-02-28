@@ -28,7 +28,7 @@ export default function Loading() {
 
           <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
             {[...Array(5)].map((_, i) => (
-              <div key={i} className="glass rounded-2xl p-6 animate-pulse">
+              <div key={i} className="card-3d liquid-glass rounded-2xl p-6 animate-pulse">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-12 h-12 bg-white/10 rounded-xl" />
                   <div className="h-4 bg-white/10 rounded w-20" />
@@ -48,7 +48,7 @@ export default function Loading() {
 
         {/* Elements Section Skeleton */}
         <section className="mt-16">
-          <div className="glass rounded-2xl p-8">
+          <div className="card-3d liquid-glass rounded-2xl p-8">
             <div className="h-8 bg-white/10 rounded w-64 mb-6" />
             <div className="grid grid-cols-2 sm:grid-cols-5 gap-6">
               {[...Array(5)].map((_, i) => (

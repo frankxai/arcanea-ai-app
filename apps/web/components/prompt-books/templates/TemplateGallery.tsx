@@ -94,7 +94,7 @@ export function TemplateGallery({
           </div>
 
           {/* Search */}
-          <div className="flex items-center gap-2 glass-subtle rounded-lg px-3 py-2 mb-3">
+          <div className="flex items-center gap-2 liquid-glass rounded-lg px-3 py-2 mb-3">
             <PhMagnifyingGlass className="w-3.5 h-3.5 text-text-muted shrink-0" />
             <input
               type="text"
@@ -152,7 +152,7 @@ export function TemplateGallery({
           {loading ? (
             <div className="grid grid-cols-3 gap-4">
               {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="glass rounded-xl h-40 animate-pulse" />
+                <div key={i} className="liquid-glass rounded-xl h-40 animate-pulse" />
               ))}
             </div>
           ) : filtered.length === 0 ? (

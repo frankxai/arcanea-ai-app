@@ -25,7 +25,7 @@ export default function Loading() {
           {/* Cards Grid */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[...Array(6)].map((_, i) => (
-              <div key={i} className="glass rounded-2xl p-6 animate-pulse">
+              <div key={i} className="card-3d liquid-glass rounded-2xl p-6 animate-pulse">
                 <div className="h-4 bg-white/10 rounded w-1/3 mb-4" />
                 <div className="h-6 bg-white/10 rounded w-3/4 mb-2" />
                 <div className="h-4 bg-white/10 rounded w-full" />

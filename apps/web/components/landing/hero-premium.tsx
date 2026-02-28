@@ -462,7 +462,7 @@ export function HeroPremium({ stats }: HeroPremiumProps) {
           <MagneticButton>
             <Link
               href="/luminors"
-              className="group inline-flex items-center gap-3 px-8 py-4 rounded-2xl glass border border-white/10 hover:border-crystal/30 text-text-primary font-display font-semibold text-lg transition-all"
+              className="group inline-flex items-center gap-3 px-8 py-4 rounded-2xl liquid-glass border border-white/[0.06] hover:border-crystal/30 text-text-primary font-display font-semibold text-lg transition-all"
             >
               <PhCompass className="w-5 h-5" />
               Explore the Intelligences
@@ -483,7 +483,7 @@ export function HeroPremium({ stats }: HeroPremiumProps) {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
-              className="group p-6 rounded-3xl glass border border-white/5 hover:border-white/10 hover-lift transition-all"
+              className="group p-6 rounded-3xl liquid-glass border border-white/[0.04] hover:border-white/[0.08] hover-lift transition-all"
             >
               <stat.icon className="w-6 h-6 mx-auto mb-3 opacity-80 text-crystal" />
               <div className={`text-3xl md:text-4xl font-display font-bold mb-1 ${stat.gradientClass}`}>

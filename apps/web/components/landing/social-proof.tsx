@@ -138,7 +138,7 @@ export function SocialProof() {
               transition={{ delay: 0.3 + i * 0.1 }}
               className="group relative"
             >
-              <div className="relative rounded-2xl border border-white/10 bg-cosmic-surface/50 backdrop-blur-sm p-6 hover:border-white/20 transition-all duration-300">
+              <div className="relative card-3d liquid-glass rounded-2xl border border-white/[0.06] p-6 hover:border-white/[0.12] transition-all duration-500">
                 {/* Quote icon */}
                 <PhQuotes className="absolute top-4 right-4 w-8 h-8 text-white/5" />
 

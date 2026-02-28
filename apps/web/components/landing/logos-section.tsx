@@ -19,7 +19,7 @@ export function LogosSection() {
   const isInView = useInView(ref, { once: true, margin: '-50px' });
 
   return (
-    <section ref={ref} className="py-16 border-y border-white/5 overflow-hidden">
+    <section ref={ref} className="py-16 border-y border-white/[0.04] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         <motion.p
           initial={{ opacity: 0, y: 10 }}

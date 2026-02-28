@@ -72,7 +72,7 @@ export function TagSelector({
 
       {/* Search */}
       <div className="px-3 py-2 border-b border-white/[0.04]">
-        <div className="flex items-center gap-2 glass-subtle rounded-lg px-2 py-1.5">
+        <div className="flex items-center gap-2 liquid-glass rounded-lg px-2 py-1.5">
           <PhMagnifyingGlass className="w-3.5 h-3.5 text-text-muted shrink-0" />
           <input
             type="text"

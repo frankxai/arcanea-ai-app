@@ -125,7 +125,7 @@ export function Navbar() {
             className="fixed inset-x-0 top-[65px] z-40 md:hidden"
           >
             <nav aria-label="Mobile navigation">
-              <div className="liquid-glass-elevated border-b border-white/10 mx-4 rounded-2xl mt-2 overflow-hidden">
+              <div className="liquid-glass-elevated border-b border-white/[0.08] mx-4 rounded-2xl mt-2 overflow-hidden">
                 <div className="p-4 space-y-1">
                   {navLinks.map((link) => {
                     const isActive = pathname === link.href;

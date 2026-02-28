@@ -99,7 +99,7 @@ function StatCard({ icon: Icon, label, value, accent }: {
   return (
     <motion.div
       variants={fadeUp}
-      className="glass rounded-xl p-5 border border-white/5 hover:border-white/10 transition-colors"
+      className="liquid-glass rounded-xl p-5 border border-white/[0.06] hover:border-white/[0.12] transition-colors"
     >
       <div className="flex items-center gap-3 mb-3">
         <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${accent}`}>
@@ -347,7 +347,7 @@ export default function CommandCenterPage() {
                       </span>
                     )}
                   </p>
-                  <div className="glass rounded-xl border border-white/5 overflow-hidden">
+                  <div className="liquid-glass rounded-xl border border-white/[0.06] overflow-hidden">
                     <PackageTable tierId={tier.id} />
                   </div>
                 </div>
@@ -364,7 +364,7 @@ export default function CommandCenterPage() {
 
             <motion.div variants={stagger} className="grid md:grid-cols-2 gap-6">
               {/* Sprint Progress */}
-              <motion.div variants={fadeUp} className="glass rounded-xl border border-white/5 p-6">
+              <motion.div variants={fadeUp} className="liquid-glass rounded-xl border border-white/[0.06] p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div>
                     <h3 className="font-semibold text-text-primary">{CURRENT_SPRINT.id}: {CURRENT_SPRINT.name}</h3>
@@ -417,7 +417,7 @@ export default function CommandCenterPage() {
               </motion.div>
 
               {/* Activity Timeline */}
-              <motion.div variants={fadeUp} className="glass rounded-xl border border-white/5 p-6">
+              <motion.div variants={fadeUp} className="liquid-glass rounded-xl border border-white/[0.06] p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="font-semibold text-text-primary">Recent Activity</h3>
                   {!isBuilder && (
@@ -469,7 +469,7 @@ export default function CommandCenterPage() {
                   <motion.div
                     key={note.id}
                     variants={fadeUp}
-                    className={`glass rounded-xl p-4 border transition-colors ${
+                    className={`liquid-glass rounded-xl p-4 border transition-colors ${
                       note.severity === 'high'
                         ? 'border-[#ff6b35]/20'
                         : note.severity === 'medium'

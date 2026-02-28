@@ -27,7 +27,7 @@ export default function Loading() {
         <section className="py-8 border-t border-white/5">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[...Array(4)].map((_, i) => (
-              <div key={i} className="glass rounded-xl p-4 animate-pulse">
+              <div key={i} className="liquid-glass rounded-xl p-4 animate-pulse">
                 <div className="w-5 h-5 bg-white/10 rounded mx-auto mb-2" />
                 <div className="h-6 bg-white/10 rounded w-12 mx-auto" />
                 <div className="h-3 bg-white/10 rounded w-24 mx-auto mt-2" />
@@ -41,7 +41,7 @@ export default function Loading() {
           <div className="h-4 bg-white/10 rounded w-40 mb-10" />
           <div className="space-y-6">
             {[...Array(3)].map((_, i) => (
-              <div key={i} className="glass rounded-2xl p-6 animate-pulse">
+              <div key={i} className="card-3d liquid-glass rounded-2xl p-6 animate-pulse">
                 <div className="flex justify-between mb-4">
                   <div className="flex gap-3">
                     <div className="h-5 bg-white/10 rounded w-16" />
@@ -62,7 +62,7 @@ export default function Loading() {
           <div className="h-4 bg-white/10 rounded w-40 mb-10" />
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[...Array(4)].map((_, i) => (
-              <div key={i} className="glass rounded-2xl p-6 animate-pulse">
+              <div key={i} className="card-3d liquid-glass rounded-2xl p-6 animate-pulse">
                 <div className="w-12 h-12 bg-white/10 rounded-xl mx-auto mb-4" />
                 <div className="h-5 bg-white/10 rounded w-24 mx-auto mb-2" />
                 <div className="h-3 bg-white/10 rounded w-32 mx-auto" />
@@ -74,7 +74,7 @@ export default function Loading() {
         {/* History Skeleton */}
         <section className="py-12 border-t border-white/5">
           <div className="h-4 bg-white/10 rounded w-32 mb-10" />
-          <div className="glass rounded-2xl overflow-hidden">
+          <div className="card-3d liquid-glass rounded-2xl overflow-hidden">
             <div className="p-6 border-b border-white/10">
               <div className="h-4 bg-white/10 rounded w-full" />
             </div>

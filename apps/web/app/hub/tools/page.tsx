@@ -145,7 +145,7 @@ export default function ToolsPage() {
                 <Link
                   key={tool.id}
                   href={tool.href}
-                  className="group relative p-6 rounded-2xl glass-subtle overflow-hidden hover:border-white/20 transition-all"
+                  className="group relative p-6 rounded-2xl liquid-glass overflow-hidden hover:border-white/[0.12] transition-all"
                 >
                   {/* Hover gradient */}
                   <div
@@ -236,7 +236,7 @@ export default function ToolsPage() {
         </section>
 
         {/* Request Tool */}
-        <div className="mt-16 p-8 rounded-2xl glass-subtle text-center">
+        <div className="mt-16 p-8 rounded-2xl liquid-glass text-center">
           <h3 className="text-xl font-display font-semibold mb-2">Need something else?</h3>
           <p className="text-text-secondary mb-6">
             We're always building new tools. Let us know what would help your creative process.

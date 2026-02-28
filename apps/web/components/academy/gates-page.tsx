@@ -653,7 +653,7 @@ function OpeningGatesPanel() {
                 initial="hidden"
                 animate={isInView ? 'visible' : 'hidden'}
                 custom={0.2 + i * 0.08}
-                className="glass rounded-2xl p-6"
+                className="liquid-glass rounded-2xl p-6"
               >
                 <h3 className="mb-3 font-display text-base font-semibold text-text-primary">
                   {point.title}
@@ -686,7 +686,7 @@ function OpeningGatesPanel() {
               ].map((level) => (
                 <div
                   key={level.rank}
-                  className="flex items-center gap-2 rounded-xl glass px-4 py-2.5"
+                  className="flex items-center gap-2 rounded-xl liquid-glass px-4 py-2.5"
                 >
                   <div
                     className="h-2 w-2 rounded-full"

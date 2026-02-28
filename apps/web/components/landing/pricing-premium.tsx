@@ -84,8 +84,8 @@ function PricingCard({
       <div
         className={`relative h-full p-8 rounded-3xl border transition-all duration-300 ${
           plan.popular
-            ? "glass border-crystal/30 bg-cosmic-deep/90"
-            : "glass border-white/5 hover:border-white/10"
+            ? "liquid-glass border-crystal/30 bg-cosmic-deep/90"
+            : "liquid-glass border-white/[0.06] hover:border-white/[0.12]"
         }`}
       >
         {/* Popular badge */}
@@ -147,7 +147,7 @@ function PricingCard({
           className={`block w-full py-4 rounded-2xl text-center font-display font-semibold transition-all ${
             plan.popular
               ? "bg-gradient-to-r from-crystal to-brand-primary text-cosmic-deep hover:shadow-glow-md"
-              : "glass border border-white/10 hover:border-crystal/30 text-text-primary"
+              : "liquid-glass border border-white/[0.06] hover:border-crystal/30 text-text-primary"
           }`}
         >
           {plan.cta}
@@ -212,7 +212,7 @@ export function PricingPremium() {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="inline-block px-4 py-2 rounded-full glass border border-brand-primary/20 text-brand-primary font-medium text-sm mb-6"
+            className="inline-block px-4 py-2 rounded-full liquid-glass border border-brand-primary/20 text-brand-primary font-medium text-sm mb-6"
           >
             Simple Pricing
           </motion.span>

@@ -86,7 +86,7 @@ export function CollectionDialog({ open, onOpenChange, collection, onSave }: Col
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="My Prompt Collection"
-            className="glass-subtle border-white/10 text-text-primary"
+            className="liquid-glass border-white/[0.06] text-text-primary"
             autoFocus
           />
         </div>
@@ -100,7 +100,7 @@ export function CollectionDialog({ open, onOpenChange, collection, onSave }: Col
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Optional description..."
-            className="glass-subtle border-white/10 text-text-primary"
+            className="liquid-glass border-white/[0.06] text-text-primary"
           />
         </div>
 
@@ -120,8 +120,8 @@ export function CollectionDialog({ open, onOpenChange, collection, onSave }: Col
                 className={cn(
                   'flex-1 px-3 py-2 rounded-lg text-sm font-sans capitalize transition-all',
                   visibility === v
-                    ? 'glass text-text-primary font-medium'
-                    : 'glass-subtle text-text-muted hover:text-text-secondary',
+                    ? 'liquid-glass text-text-primary font-medium'
+                    : 'liquid-glass text-text-muted hover:text-text-secondary',
                 )}
               >
                 {v}

@@ -309,7 +309,7 @@ export function IntelligenceOverlay() {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden border-t border-white/5"
+      className="relative overflow-hidden border-t border-white/[0.04]"
     >
       {/* ── Shared background ────────────────────────────────────── */}
       <div className="absolute inset-0 -z-10">
@@ -405,7 +405,7 @@ export function IntelligenceOverlay() {
       </div>
 
       {/* ── B: Scope Statement ──────────────────────────────────── */}
-      <div className="relative py-24 px-6 border-t border-white/5">
+      <div className="relative py-24 px-6 border-t border-white/[0.04]">
         <div className="max-w-6xl mx-auto">
           {/* Section label */}
           <motion.div
@@ -430,7 +430,7 @@ export function IntelligenceOverlay() {
       </div>
 
       {/* ── C: Arc Progression ──────────────────────────────────── */}
-      <div className="relative py-24 px-6 border-t border-white/5">
+      <div className="relative py-24 px-6 border-t border-white/[0.04]">
         <div className="max-w-6xl mx-auto">
           {/* Section header */}
           <motion.div
@@ -469,7 +469,7 @@ export function IntelligenceOverlay() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="flex items-start gap-4 p-5 rounded-2xl glass border border-white/5"
+                className="flex items-start gap-4 p-5 rounded-2xl liquid-glass border border-white/[0.04]"
               >
                 {/* Dot */}
                 <div

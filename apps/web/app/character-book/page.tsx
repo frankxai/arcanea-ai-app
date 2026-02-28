@@ -394,7 +394,7 @@ export default function CharacterBookPage() {
             <span className="text-sm text-text-muted">
               {CHARACTERS.length} characters
             </span>
-            <div className="glass-subtle rounded-lg p-0.5 flex">
+            <div className="liquid-glass rounded-lg p-0.5 flex">
               <button
                 className="p-2 rounded-md liquid-glass text-text-primary"
                 aria-label="Grid view"

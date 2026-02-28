@@ -212,7 +212,7 @@ export default function InstallPage() {
             {INSTALL_METHODS.map((method) => (
               <div
                 key={method.name}
-                className="group p-6 rounded-2xl glass-subtle hover:border-white/20 transition-all"
+                className="group p-6 rounded-2xl liquid-glass hover:border-white/[0.12] transition-all"
               >
                 <div className="mb-4">{method.icon}</div>
                 <h3 className="text-lg font-display font-semibold mb-2">
@@ -248,7 +248,7 @@ export default function InstallPage() {
                 <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm z-10">
                   {step.step}
                 </div>
-                <div className="p-6 rounded-2xl glass-subtle pt-10">
+                <div className="p-6 rounded-2xl liquid-glass pt-10">
                   <h3 className="text-lg font-display font-semibold mb-2">
                     {step.title}
                   </h3>
@@ -279,7 +279,7 @@ export default function InstallPage() {
             {FEATURES.map((feature) => (
               <div
                 key={feature.title}
-                className="p-6 rounded-2xl glass-subtle hover:border-atlantean-teal/30 transition-all"
+                className="p-6 rounded-2xl liquid-glass hover:border-atlantean-teal/30 transition-all"
               >
                 <div className="text-3xl mb-4">{feature.icon}</div>
                 <h3 className="font-display font-semibold mb-2">
@@ -308,7 +308,7 @@ export default function InstallPage() {
             {INTEGRATIONS.map((integration) => (
               <div
                 key={integration.name}
-                className="p-6 rounded-2xl glass-subtle flex items-center justify-between"
+                className="p-6 rounded-2xl liquid-glass flex items-center justify-between"
               >
                 <div className="flex items-center gap-4">
                   <div className="text-3xl">{integration.icon}</div>
@@ -370,7 +370,7 @@ export default function InstallPage() {
         <section className="py-20 border-t border-white/5">
           <div className="relative rounded-3xl overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 via-atlantean-teal/20 to-violet-500/20" />
-            <div className="absolute inset-0 bg-cosmic-surface/50 backdrop-blur-xl" />
+            <div className="absolute inset-0 liquid-glass" />
 
             <div className="relative p-12 md:p-16 text-center">
               <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">

@@ -85,7 +85,7 @@ export function StudioTab() {
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <header className="glass border-b border-white/5 px-6 py-4">
+      <header className="liquid-glass border-b border-white/[0.04] px-6 py-4">
         <div>
           <h2 className="text-2xl font-display text-text-primary mb-1">Creative Studio</h2>
           <p className="text-sm text-text-secondary font-serif">
@@ -103,11 +103,11 @@ export function StudioTab() {
               return (
                 <div
                   key={tool.id}
-                  className="glass rounded-2xl p-8 hover:-translate-y-1 transition-all duration-300 group animate-fade-in-up relative"
+                  className="liquid-glass rounded-2xl p-8 hover:-translate-y-1 transition-all duration-300 group animate-fade-in-up relative"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   {tool.comingSoon && (
-                    <div className="absolute top-4 right-4 glass-subtle px-3 py-1 rounded-full">
+                    <div className="absolute top-4 right-4 liquid-glass px-3 py-1 rounded-full">
                       <span className="text-xs font-sans font-medium text-brand-accent">Coming Soon</span>
                     </div>
                   )}
@@ -157,7 +157,7 @@ export function StudioTab() {
                       <Button
                         disabled={tool.comingSoon}
                         className={`${
-                          tool.comingSoon ? 'glass-subtle opacity-50 cursor-not-allowed' : 'liquid-glass hover:scale-[1.02]'
+                          tool.comingSoon ? 'liquid-glass opacity-50 cursor-not-allowed' : 'liquid-glass hover:scale-[1.02]'
                         } transition-all gap-2 group/btn`}
                       >
                         <span className="font-sans font-medium">{tool.comingSoon ? 'Coming Soon' : 'Open Tool'}</span>
@@ -171,7 +171,7 @@ export function StudioTab() {
           </div>
 
           {/* Coming Soon Section */}
-          <div className="mt-12 glass-subtle rounded-2xl p-8 text-center">
+          <div className="mt-12 liquid-glass rounded-2xl p-8 text-center">
             <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-brand-accent/20 to-brand-primary/20 flex items-center justify-center animate-pulse-glow">
               <PhSparkle className="w-8 h-8 text-brand-accent animate-float" />
             </div>

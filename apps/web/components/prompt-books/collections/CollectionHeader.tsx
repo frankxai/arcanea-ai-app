@@ -13,7 +13,7 @@ interface CollectionHeaderProps {
 export function CollectionHeader({ collection, onEdit }: CollectionHeaderProps) {
   if (!collection) {
     return (
-      <header className="glass border-b border-white/5 px-6 py-4">
+      <header className="liquid-glass border-b border-white/[0.06] px-6 py-4">
         <div>
           <h2 className="text-2xl font-display text-text-primary mb-1">All Prompts</h2>
           <p className="text-sm text-text-secondary font-serif">
@@ -29,7 +29,7 @@ export function CollectionHeader({ collection, onEdit }: CollectionHeaderProps) 
     : null
 
   return (
-    <header className="glass border-b border-white/5 px-6 py-4">
+    <header className="liquid-glass border-b border-white/[0.06] px-6 py-4">
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-4">
           {/* Guardian badge */}
@@ -53,7 +53,7 @@ export function CollectionHeader({ collection, onEdit }: CollectionHeaderProps) 
 
               {/* Visibility badge */}
               {collection.visibility === 'public' ? (
-                <span className="flex items-center gap-1 glass-subtle px-2 py-0.5 rounded-full text-xs font-sans text-brand-accent">
+                <span className="flex items-center gap-1 liquid-glass px-2 py-0.5 rounded-full text-xs font-sans text-brand-accent">
                   <PhGlobe className="w-3 h-3" />
                   Public
                 </span>

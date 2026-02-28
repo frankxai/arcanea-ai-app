@@ -287,7 +287,7 @@ function CreatureCard({ creature }: CreatureCardProps) {
   return (
     <Link
       href={`/bestiary/${creature.id}`}
-      className="group relative overflow-hidden rounded-2xl glass-subtle p-6 transition-all hover:border-draconic-crimson/50 hover:shadow-[0_0_50px_rgba(220,38,38,0.15)] hover-lift"
+      className="group relative overflow-hidden rounded-2xl liquid-glass p-6 transition-all hover:border-draconic-crimson/50 hover:shadow-[0_0_50px_rgba(220,38,38,0.15)] hover-lift"
     >
       <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" aria-hidden="true">
         <div

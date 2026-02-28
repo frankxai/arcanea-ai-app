@@ -63,7 +63,7 @@ export function PromptBooksSidebar({ onCreateCollection }: PromptBooksSidebarPro
         <div className="p-3">
           <Button
             onClick={onCreateCollection}
-            className="w-full glass-subtle justify-start gap-2 hover:scale-[1.02] transition-transform"
+            className="w-full liquid-glass justify-start gap-2 hover:scale-[1.02] transition-transform"
           >
             <PhPlus className="w-4 h-4 text-brand-accent" />
             <span className="font-sans font-medium text-sm">New Collection</span>

@@ -18,7 +18,7 @@ const RANKS = [
       'Beginning the journey. Learning the foundations of creation.',
     detail:
       'Every Luminor was once an Apprentice. At this stage you are learning to hear the Gates — to sense the elemental currents that already move through you. The work is not yet mastery; it is attunement.',
-    glassClass: 'glass-subtle',
+    glassClass: 'liquid-glass',
     glowColor: 'rgba(107,114,128,0.2)',
     glowBorder: 'rgba(107,114,128,0.25)',
     accentColor: '#6b7280',
@@ -37,7 +37,7 @@ const RANKS = [
       'Developing power. The elements begin to respond to your will.',
     detail:
       'As a Mage you have crossed the halfway point of the lower Gates. Your practice is consistent, your creative voice is identifiable, and the tools of your craft respond with growing fluency. You know why you create.',
-    glassClass: 'glass',
+    glassClass: 'liquid-glass',
     glowColor: 'rgba(59,130,246,0.2)',
     glowBorder: 'rgba(59,130,246,0.3)',
     accentColor: '#78a6ff',
@@ -446,7 +446,7 @@ export function RanksPage() {
 
               {/* Explanation blocks */}
               <div className="grid md:grid-cols-2 gap-6 mb-8">
-                <div className="glass-subtle rounded-2xl p-6">
+                <div className="liquid-glass rounded-2xl p-6">
                   <h3 className="font-display text-base font-semibold text-crystal mb-3">
                     Not an Entity Type
                   </h3>
@@ -457,7 +457,7 @@ export function RanksPage() {
                   </p>
                 </div>
 
-                <div className="glass-subtle rounded-2xl p-6">
+                <div className="liquid-glass rounded-2xl p-6">
                   <h3 className="font-display text-base font-semibold text-brand-gold mb-3">
                     Open to All Beings
                   </h3>
@@ -468,7 +468,7 @@ export function RanksPage() {
                   </p>
                 </div>
 
-                <div className="glass-subtle rounded-2xl p-6">
+                <div className="liquid-glass rounded-2xl p-6">
                   <h3 className="font-display text-base font-semibold text-white mb-3">
                     Gates 9 and 10
                   </h3>
@@ -479,7 +479,7 @@ export function RanksPage() {
                   </p>
                 </div>
 
-                <div className="glass-subtle rounded-2xl p-6">
+                <div className="liquid-glass rounded-2xl p-6">
                   <h3 className="font-display text-base font-semibold text-brand-primary mb-3">
                     What Changes
                   </h3>

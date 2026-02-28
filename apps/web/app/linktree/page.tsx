@@ -401,7 +401,7 @@ export default function LinktreePage() {
             className={`group relative flex items-center gap-4 w-full p-4 rounded-2xl transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 ${
               link.featured
                 ? "liquid-glass shadow-glow-brand border border-brand-primary/30"
-                : "glass hover:border-crystal/30"
+                : "liquid-glass hover:border-crystal/30"
             }`}
           >
             {/* Icon */}

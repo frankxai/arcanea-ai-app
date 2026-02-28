@@ -255,7 +255,7 @@ function WisdomCard({ wisdom, delay }: { wisdom: Wisdom; delay: number }) {
       <div
         className={cn(
           'relative rounded-3xl border backdrop-blur-md overflow-hidden',
-          'glass-subtle transition-all duration-500',
+          'liquid-glass transition-all duration-500',
           config.borderClass,
           'hover:scale-[1.02]',
         )}
@@ -648,7 +648,7 @@ function PhilosophySection() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.2, duration: 0.7 }}
-          className="rounded-3xl border border-white/10 glass-subtle backdrop-blur-md p-10 md:p-14"
+          className="rounded-3xl border border-white/[0.06] liquid-glass backdrop-blur-md p-10 md:p-14"
         >
           <div className="space-y-8 text-lg text-text-secondary leading-relaxed font-body">
             <p>

@@ -22,7 +22,7 @@ export default function Loading() {
         {/* Game Modes Skeleton */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="glass rounded-xl p-5 animate-pulse">
+            <div key={i} className="liquid-glass rounded-xl p-5 animate-pulse">
               <div className="h-10 w-10 bg-white/10 rounded-lg mb-3" />
               <div className="h-5 bg-white/10 rounded w-1/2 mb-2" />
               <div className="h-3 bg-white/10 rounded w-3/4" />
@@ -33,7 +33,7 @@ export default function Loading() {
         {/* Opponents Skeleton */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {[...Array(6)].map((_, i) => (
-            <div key={i} className="glass rounded-2xl p-5 animate-pulse">
+            <div key={i} className="card-3d liquid-glass rounded-2xl p-5 animate-pulse">
               <div className="h-1 bg-white/10 rounded-full mb-4" />
               <div className="flex items-center gap-4 mb-4">
                 <div className="h-12 w-12 bg-white/10 rounded-xl" />
@@ -53,7 +53,7 @@ export default function Loading() {
         </div>
 
         {/* Leaderboard Skeleton */}
-        <div className="glass rounded-2xl p-6">
+        <div className="card-3d liquid-glass rounded-2xl p-6">
           <div className="h-6 bg-white/10 rounded w-40 mb-6" />
           {[...Array(5)].map((_, i) => (
             <div

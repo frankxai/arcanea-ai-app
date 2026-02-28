@@ -253,14 +253,14 @@ export function ChatTab() {
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <header className="glass border-b border-white/5 px-6 py-4 space-y-4">
+      <header className="liquid-glass border-b border-white/[0.04] px-6 py-4 space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="relative">
               <Button
                 variant="outline"
                 onClick={() => setShowModelDropdown(!showModelDropdown)}
-                className="glass-subtle border-white/10 text-text-secondary hover:text-text-primary gap-2 animate-pulse-glow"
+                className="liquid-glass border-white/[0.06] text-text-secondary hover:text-text-primary gap-2 animate-pulse-glow"
               >
                 <span className="font-sans text-sm font-medium">
                   {selectedModel.name}
@@ -300,7 +300,7 @@ export function ChatTab() {
           <Button
             variant="outline"
             size="sm"
-            className="glass-subtle border-white/10 text-text-secondary hover:text-text-primary"
+            className="liquid-glass border-white/[0.06] text-text-secondary hover:text-text-primary"
           >
             Share
           </Button>
@@ -397,7 +397,7 @@ export function ChatTab() {
                 <button
                   key={i}
                   onClick={() => handlePromptClick(prompt)}
-                  className="glass-subtle p-4 rounded-xl text-left hover:-translate-y-1 transition-all duration-300 hover:border-brand-accent/30 group"
+                  className="liquid-glass p-4 rounded-xl text-left hover:-translate-y-1 transition-all duration-300 hover:border-brand-accent/30 group"
                   style={{ animationDelay: `${i * 100}ms` }}
                 >
                   <p className="text-sm font-sans text-text-secondary group-hover:text-text-primary transition-colors">
@@ -439,7 +439,7 @@ export function ChatTab() {
               <div
                 className={`group relative ${
                   message.role === "user"
-                    ? "glass-subtle rounded-2xl px-4 py-3 ml-auto"
+                    ? "liquid-glass rounded-2xl px-4 py-3 ml-auto"
                     : "rounded-lg"
                 }`}
               >
@@ -447,7 +447,7 @@ export function ChatTab() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity glass-subtle"
+                    className="absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity liquid-glass"
                   >
                     <PhCopy className="w-4 h-4" />
                   </Button>

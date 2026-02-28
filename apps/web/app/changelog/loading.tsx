@@ -41,7 +41,7 @@ export default function ChangelogLoading() {
             {[1, 2, 3].map((i) => (
               <div
                 key={i}
-                className="p-6 rounded-2xl border border-white/10 glass-subtle"
+                className="p-6 rounded-2xl border border-white/[0.06] liquid-glass"
               >
                 <div className="flex items-center gap-3 mb-4">
                   <Skeleton variant="rect" className="w-16 h-6 rounded-full" />
@@ -64,7 +64,7 @@ export default function ChangelogLoading() {
             {[1, 2, 3, 4].map((i) => (
               <div
                 key={i}
-                className="p-6 rounded-xl border border-white/10 glass-subtle text-center"
+                className="p-6 rounded-xl border border-white/[0.06] liquid-glass text-center"
               >
                 <Skeleton variant="text" className="w-12 h-8 mx-auto mb-1" />
                 <Skeleton variant="text" className="w-16 h-4 mx-auto" />

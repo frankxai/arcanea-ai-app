@@ -29,7 +29,7 @@ export function PromptCard({
     return (
       <button
         onClick={onClick}
-        className="w-full glass rounded-lg px-4 py-3 hover:bg-cosmic-raised/50 transition-all group flex items-center gap-4 text-left"
+        className="w-full liquid-glass rounded-lg px-4 py-3 hover:bg-cosmic-raised/50 transition-all group flex items-center gap-4 text-left"
       >
         {/* Type indicator */}
         <div className="w-1 h-8 rounded-full bg-brand-primary/30 flex-shrink-0" />
@@ -39,7 +39,7 @@ export function PromptCard({
             <h4 className="text-sm font-sans font-medium text-text-primary truncate">
               {prompt.title}
             </h4>
-            <span className="glass-subtle px-1.5 py-0.5 rounded text-[10px] font-sans font-medium text-text-muted flex-shrink-0">
+            <span className="liquid-glass px-1.5 py-0.5 rounded text-[10px] font-sans font-medium text-text-muted flex-shrink-0">
               {typeConfig.label}
             </span>
           </div>
@@ -67,11 +67,11 @@ export function PromptCard({
   return (
     <div
       onClick={onClick}
-      className="glass rounded-xl p-5 hover:-translate-y-1 hover:shadow-lg transition-all duration-200 cursor-pointer group relative"
+      className="liquid-glass rounded-xl p-5 hover:-translate-y-1 hover:shadow-lg transition-all duration-200 cursor-pointer group relative"
     >
       {/* Type badge */}
       <div className="flex items-start justify-between mb-3">
-        <span className="glass-subtle px-2 py-1 rounded-md text-xs font-sans font-medium text-brand-accent">
+        <span className="liquid-glass px-2 py-1 rounded-md text-xs font-sans font-medium text-brand-accent">
           {typeConfig.label}
         </span>
         <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -112,7 +112,7 @@ export function PromptCard({
           {prompt.tags.slice(0, 3).map((tag) => (
             <span
               key={tag.id}
-              className="glass-subtle px-1.5 py-0.5 rounded text-[10px] font-sans text-text-muted"
+              className="liquid-glass px-1.5 py-0.5 rounded text-[10px] font-sans text-text-muted"
             >
               {tag.name}
             </span>

@@ -219,9 +219,9 @@ export function HeroV2({ stats }: HeroV2Props) {
           <div className="absolute inset-0 bg-gradient-to-b from-atlantean-teal-aqua/20 via-creation-prism-purple/10 to-transparent blur-3xl -z-10" />
 
           {/* Browser mockup */}
-          <div className="relative rounded-2xl border border-white/10 bg-cosmic-surface/50 backdrop-blur-xl overflow-hidden shadow-2xl">
+          <div className="relative rounded-2xl liquid-glass-elevated border border-white/[0.08] overflow-hidden shadow-2xl">
             {/* Browser header */}
-            <div className="flex items-center gap-2 px-4 py-3 border-b border-white/10 bg-cosmic-raised/50">
+            <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.08] bg-white/[0.03]">
               <div className="flex gap-2">
                 <div className="w-3 h-3 rounded-full bg-red-500/80" />
                 <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
@@ -278,13 +278,13 @@ export function HeroV2({ stats }: HeroV2Props) {
               </div>
 
               {/* Words Card */}
-              <div className="rounded-2xl bg-white/5 border border-white/10 p-4">
+              <div className="rounded-2xl bg-white/5 border border-white/[0.06] p-4">
                 <div className="text-3xl font-bold">{Math.round(stats.words / 1000)}k+</div>
                 <div className="text-xs text-text-muted mt-1">Words</div>
               </div>
 
               {/* Activity Feed */}
-              <div className="col-span-2 rounded-2xl bg-white/5 border border-white/10 p-4">
+              <div className="col-span-2 rounded-2xl bg-white/5 border border-white/[0.06] p-4">
                 <div className="text-sm font-medium mb-3">Recent Activity</div>
                 <div className="space-y-2">
                   {['Chronica created a story outline', 'Prismatic generated concept art', 'Oracle researched market trends'].map((activity, i) => (
@@ -300,7 +300,7 @@ export function HeroV2({ stats }: HeroV2Props) {
 
           {/* Floating badges around the preview */}
           <motion.div
-            className="absolute -left-4 top-1/4 px-3 py-2 rounded-xl bg-cosmic-surface/80 border border-white/10 backdrop-blur-sm text-sm"
+            className="absolute -left-4 top-1/4 px-3 py-2 rounded-xl liquid-glass border border-white/[0.08] text-sm"
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 4, repeat: Infinity }}
           >
@@ -309,7 +309,7 @@ export function HeroV2({ stats }: HeroV2Props) {
           </motion.div>
 
           <motion.div
-            className="absolute -right-4 top-1/3 px-3 py-2 rounded-xl bg-cosmic-surface/80 border border-white/10 backdrop-blur-sm text-sm"
+            className="absolute -right-4 top-1/3 px-3 py-2 rounded-xl liquid-glass border border-white/[0.08] text-sm"
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 5, repeat: Infinity, delay: 1 }}
           >

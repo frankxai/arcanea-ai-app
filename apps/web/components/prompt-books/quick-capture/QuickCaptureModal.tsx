@@ -88,7 +88,7 @@ export function QuickCaptureModal({
           placeholder="Paste or type your prompt..."
           className={cn(
             'w-full h-32 px-4 py-3 rounded-xl resize-none',
-            'glass-subtle border border-white/10',
+            'liquid-glass border border-white/[0.06]',
             'text-text-primary font-mono text-sm',
             'placeholder:text-text-muted',
             'focus:outline-none focus:border-brand-accent/50',
@@ -101,7 +101,7 @@ export function QuickCaptureModal({
           <select
             value={collectionId}
             onChange={(e) => setCollectionId(e.target.value)}
-            className="flex-1 h-9 px-3 rounded-lg glass-subtle border border-white/10 text-sm font-sans text-text-secondary bg-transparent focus:outline-none focus:border-brand-accent/50"
+            className="flex-1 h-9 px-3 rounded-lg liquid-glass border border-white/[0.06] text-sm font-sans text-text-secondary bg-transparent focus:outline-none focus:border-brand-accent/50"
           >
             <option value="">Inbox (No collection)</option>
             {collections.map((c) => (

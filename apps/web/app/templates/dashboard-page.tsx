@@ -188,7 +188,7 @@ function Sidebar({
   navigation?: DashboardProps["navigation"];
 }) {
   return (
-    <aside className="w-64 border-r border-white/5 bg-cosmic-surface/50 backdrop-blur-sm hidden lg:flex flex-col">
+    <aside className="w-64 border-r border-white/[0.04] liquid-glass hidden lg:flex flex-col">
       {/* Logo & User */}
       <div className="p-4 border-b border-white/5">
         <div className="flex items-center gap-3 mb-4">

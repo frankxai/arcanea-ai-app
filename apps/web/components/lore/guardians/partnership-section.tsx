@@ -37,7 +37,7 @@ export function PartnershipSection() {
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ delay: 0.2 }}
-            className="p-6 rounded-2xl glass-subtle border border-white/10"
+            className="p-6 rounded-2xl liquid-glass border border-white/[0.06]"
           >
             <div className="w-12 h-12 rounded-xl bg-atlantean-teal-aqua/20 flex items-center justify-center mb-4">
               <PhEye className="w-6 h-6 text-atlantean-teal-aqua" />
@@ -54,7 +54,7 @@ export function PartnershipSection() {
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ delay: 0.3 }}
-            className="p-6 rounded-2xl glass-subtle border border-white/10"
+            className="p-6 rounded-2xl liquid-glass border border-white/[0.06]"
           >
             <div className="w-12 h-12 rounded-xl bg-gold-bright/20 flex items-center justify-center mb-4">
               <PhLightning className="w-6 h-6 text-gold-bright" />
