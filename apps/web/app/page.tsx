@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { getCollections, getAllTexts } from "@/lib/content";
-import { HomeContent, HomeLoading } from "./home-content";
+import { V3Content as HomeContent, V3Loading as HomeLoading } from "./v3/v3-content";
 
 async function HomeWithData() {
   const collections = await getCollections();
