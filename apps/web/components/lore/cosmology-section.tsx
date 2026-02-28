@@ -84,32 +84,27 @@ const ELEMENTS = [
   {
     name: "Fire",
     domain: "Energy, transformation",
-    color: "draconic-crimson",
-    emoji: "🔥",
+    dotColor: "#ef4444",
   },
   {
     name: "Water",
     domain: "Flow, healing, memory",
-    color: "atlantean-teal-aqua",
-    emoji: "💧",
+    dotColor: "#7fffd4",
   },
   {
     name: "Earth",
     domain: "Stability, growth",
-    color: "green-500",
-    emoji: "🌍",
+    dotColor: "#22c55e",
   },
   {
     name: "Wind",
     domain: "Freedom, speed, change",
-    color: "white",
-    emoji: "💨",
+    dotColor: "#c4b5fd",
   },
   {
     name: "Void/Spirit",
     domain: "Potential & transcendence",
-    color: "creation-prism-purple",
-    emoji: "✨",
+    dotColor: "#8b5cf6",
   },
 ];
 
@@ -131,7 +126,7 @@ export function CosmologySection() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-20"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-creation-prism-purple/10 border border-creation-prism-purple/20 mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full liquid-glass border border-creation-prism-purple/20 mb-6">
             <Icons.Orbit />
             <span className="text-sm font-medium text-creation-prism-purple">
               Cosmic Origins
@@ -159,7 +154,7 @@ export function CosmologySection() {
                 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ delay: 0.2 + i * 0.1 }}
-                className={`relative p-8 rounded-3xl border bg-cosmic-surface/30 backdrop-blur-sm ${
+                className={`relative card-3d p-8 rounded-3xl liquid-glass border ${
                   primordial.color === "gold-bright"
                     ? "border-gold-bright/20 hover:border-gold-bright/40"
                     : "border-creation-prism-purple/20 hover:border-creation-prism-purple/40"
@@ -244,7 +239,7 @@ export function CosmologySection() {
                 className={
                   step === "→"
                     ? "text-gold-bright"
-                    : "px-4 py-2 rounded-full bg-cosmic-surface/50 border border-white/10"
+                    : "px-4 py-2 rounded-full liquid-glass border border-white/[0.06]"
                 }
               >
                 {step}
@@ -273,11 +268,11 @@ export function CosmologySection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.6 + i * 0.05 }}
-                className="p-6 rounded-2xl bg-cosmic-surface/30 border border-white/10 text-center hover:border-white/20 transition-all group"
+                className="card-3d p-6 rounded-2xl liquid-glass border border-white/[0.06] text-center hover:border-white/[0.12] transition-all duration-300 group"
               >
-                <span className="text-4xl mb-4 block group-hover:scale-110 transition-transform">
-                  {element.emoji}
-                </span>
+                <div className="w-10 h-10 rounded-xl mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform" style={{ backgroundColor: `${element.dotColor}15` }}>
+                  <div className="w-3.5 h-3.5 rounded-full" style={{ backgroundColor: element.dotColor }} />
+                </div>
                 <h4 className="font-display font-semibold mb-1">
                   {element.name}
                 </h4>

@@ -139,7 +139,7 @@ export function GatesPreview() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold-bright/10 border border-gold-bright/20 mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full liquid-glass border border-gold-bright/20 mb-6">
             <Icons.Layers />
             <span className="text-sm font-medium text-gold-bright">
               The Journey
@@ -168,7 +168,7 @@ export function GatesPreview() {
                 transition={{ delay: 0.1 + i * 0.05 }}
                 className="relative group"
               >
-                <div className="p-4 rounded-2xl border border-white/10 bg-cosmic-deep/50 backdrop-blur-sm text-center hover:border-gold-bright/30 hover:bg-cosmic-surface/30 transition-all duration-300">
+                <div className="card-3d p-4 rounded-2xl liquid-glass border border-white/[0.06] text-center hover:border-gold-bright/30 transition-all duration-300">
                   {/* Gate number */}
                   <div className="w-10 h-10 mx-auto mb-3 rounded-full bg-gradient-to-br from-gold-bright/20 to-gold-bright/5 flex items-center justify-center text-gold-bright font-display font-bold">
                     {gate.number}
@@ -210,7 +210,7 @@ export function GatesPreview() {
             {RANKS.map((rank, i) => (
               <div
                 key={rank.rank}
-                className="px-6 py-3 rounded-xl bg-cosmic-surface/30 border border-white/10"
+                className="px-6 py-3 rounded-xl liquid-glass border border-white/[0.06]"
               >
                 <span className="text-sm text-text-muted">
                   {rank.gates} Gates:
@@ -234,7 +234,7 @@ export function GatesPreview() {
         >
           <Link
             href="/lore/gates"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gold-bright/10 border border-gold-bright/30 text-gold-bright font-semibold hover:bg-gold-bright hover:text-cosmic-deep transition-all"
+            className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold overflow-hidden btn-glow text-gold-bright bg-gold-bright/10 border border-gold-bright/30 hover:bg-gold-bright hover:text-cosmic-deep transition-all duration-300"
           >
             Begin Your Journey
             <Icons.ArrowRight />

@@ -32,6 +32,7 @@ import {
   Gear,
   Brain,
 } from "@/lib/phosphor-icons";
+import { Navbar } from "@/components/navigation";
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -179,7 +180,7 @@ function Dropdown({
         <CaretDown size={12} className="text-text-muted" />
       </button>
       {open && (
-        <div className="absolute top-full left-0 mt-1 z-50 min-w-[180px] rounded-xl border border-white/10 bg-[#0d0d1a]/95 backdrop-blur-xl shadow-2xl py-1 max-h-[240px] overflow-y-auto">
+        <div className="absolute top-full left-0 mt-1 z-50 min-w-[180px] rounded-xl liquid-glass-elevated border border-white/[0.08] shadow-[0_16px_48px_rgba(0,0,0,0.4)] py-1 max-h-[240px] overflow-y-auto">
           {items.map((item) => (
             <button
               key={item.name}
@@ -844,10 +845,11 @@ export default function StudioPage() {
 
   return (
     <div className="relative min-h-screen">
+      <Navbar />
+
       {/* Background */}
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-void" />
-        <div className="absolute inset-0 bg-cosmic-mesh" />
         <div
           className="absolute inset-0 opacity-20 transition-colors duration-700"
           style={{
@@ -856,12 +858,12 @@ export default function StudioPage() {
         />
       </div>
 
-      <main className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col min-h-screen">
+      <main className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-6 flex flex-col min-h-screen">
         {/* ── Top Bar: Mode Selector + Title ── */}
         <header className="mb-4">
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             {/* Mode Tabs */}
-            <div className="flex items-center gap-1 p-1 rounded-xl border border-white/10 bg-white/[0.03] backdrop-blur-sm">
+            <div className="flex items-center gap-1 p-1 rounded-xl liquid-glass border border-white/[0.06]">
               {MODES.map((mode) => {
                 const ModeIcon = mode.icon;
                 const isActive = activeMode === mode.id;
@@ -901,7 +903,7 @@ export default function StudioPage() {
             {/* Guardian Badge */}
             <div className="flex items-center gap-3">
               <div
-                className="flex items-center gap-2 px-3 py-2 rounded-xl border bg-white/[0.03]"
+                className="flex items-center gap-2 px-3 py-2 rounded-xl liquid-glass border"
                 style={{
                   borderColor: `${currentMode.elementColor}30`,
                 }}
@@ -931,7 +933,7 @@ export default function StudioPage() {
         </header>
 
         {/* ── Workspace ── */}
-        <div className="flex-1 flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm overflow-hidden min-h-[500px]">
+        <div className="flex-1 flex flex-col rounded-2xl liquid-glass border border-white/[0.06] overflow-hidden min-h-[500px]">
           {/* Workspace Header */}
           <div className="flex items-center gap-3 px-4 py-2.5 border-b border-white/8 bg-white/[0.02]">
             {/* Element & Gate selectors */}

@@ -74,7 +74,7 @@ export function AboutContent() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-gold-bright/30 bg-gold-bright/10 mb-8"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full liquid-glass border border-gold-bright/30 mb-8"
           >
             <Sparkle className="w-4 h-4 text-gold-bright" weight="fill" />
             <span className="text-sm font-medium text-gold-bright tracking-wide">
@@ -157,7 +157,7 @@ export function AboutContent() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.1 * i }}
-                  className={`relative p-6 rounded-2xl border bg-cosmic-surface/30 backdrop-blur-sm transition-all duration-300 group ${colorMap[card.color]}`}
+                  className={`relative card-3d p-6 rounded-2xl liquid-glass border transition-all duration-300 group ${colorMap[card.color]}`}
                 >
                   <div
                     className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${bgMap[card.color]}`}
@@ -205,7 +205,7 @@ export function AboutContent() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="relative p-8 rounded-3xl border border-gold-bright/20 bg-cosmic-surface/30 backdrop-blur-sm group hover:border-gold-bright/40 transition-all duration-500"
+              className="relative card-3d p-8 rounded-3xl liquid-glass border border-gold-bright/20 group hover:border-gold-bright/40 transition-all duration-500"
             >
               <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-gold-bright/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative">
@@ -233,7 +233,7 @@ export function AboutContent() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="relative p-8 rounded-3xl border border-creation-prism-purple/20 bg-cosmic-surface/30 backdrop-blur-sm group hover:border-creation-prism-purple/40 transition-all duration-500"
+              className="relative card-3d p-8 rounded-3xl liquid-glass border border-creation-prism-purple/20 group hover:border-creation-prism-purple/40 transition-all duration-500"
             >
               <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-creation-prism-purple/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative">
@@ -279,7 +279,7 @@ export function AboutContent() {
                 "Evolved Potential",
               ].map((step, i) => (
                 <span key={step} className="flex items-center gap-3">
-                  <span className="px-4 py-2 rounded-full bg-cosmic-surface/50 border border-white/10 text-text-secondary">
+                  <span className="px-4 py-2 rounded-full liquid-glass border border-white/[0.06] text-text-secondary">
                     {step}
                   </span>
                   {i < 4 && (
@@ -325,7 +325,7 @@ export function AboutContent() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="max-w-3xl mx-auto mb-20 p-6 rounded-2xl border border-purple-500/20 bg-purple-500/5"
+            className="max-w-3xl mx-auto mb-20 p-6 rounded-2xl liquid-glass border border-purple-500/20"
           >
             <p className="text-sm text-text-secondary leading-relaxed text-center">
               <span className="font-semibold text-purple-400">
@@ -356,7 +356,7 @@ export function AboutContent() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.03 * i }}
-                  className={`px-4 py-2 rounded-full border ${g.border} bg-cosmic-surface/30 text-sm`}
+                  className={`px-4 py-2 rounded-full liquid-glass border ${g.border} text-sm`}
                 >
                   <span className={`font-semibold ${g.accent}`}>
                     {g.gate}
@@ -380,7 +380,7 @@ export function AboutContent() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.05 * i }}
-                  className="px-5 py-3 rounded-xl border border-white/10 bg-cosmic-surface/30 text-center"
+                  className="px-5 py-3 rounded-xl liquid-glass border border-white/[0.06] text-center"
                 >
                   <span className={`font-display font-semibold text-sm ${house.color}`}>
                     House {house.name}
@@ -415,7 +415,7 @@ export function AboutContent() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.04 * i }}
-                className={`relative p-5 rounded-2xl border ${guardian.border} bg-gradient-to-br ${guardian.color} backdrop-blur-sm group hover:scale-[1.02] transition-transform duration-300`}
+                className={`relative card-3d p-5 rounded-2xl liquid-glass border ${guardian.border} group hover:scale-[1.02] transition-transform duration-300`}
               >
                 <div className="flex items-center gap-2 mb-3">
                   <MusicNote className={`w-4 h-4 ${guardian.accent}`} />
@@ -466,7 +466,7 @@ export function AboutContent() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.08 * i }}
-                className={`flex items-center gap-6 p-5 rounded-2xl border backdrop-blur-sm ${rank.color}`}
+                className={`flex items-center gap-6 p-5 rounded-2xl liquid-glass border ${rank.color}`}
               >
                 <div className="shrink-0 w-20 text-center">
                   <div className="text-xs font-mono text-text-muted">Gates</div>
@@ -493,7 +493,7 @@ export function AboutContent() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="p-8 rounded-3xl border border-gold-bright/20 bg-cosmic-surface/30 text-center"
+            className="p-8 rounded-3xl liquid-glass-elevated border border-gold-bright/20 text-center"
           >
             <blockquote className="text-xl md:text-2xl font-display italic text-text-secondary mb-4 max-w-2xl mx-auto leading-relaxed">
               &quot;Enter seeking, leave transformed, return whenever
@@ -531,14 +531,14 @@ export function AboutContent() {
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link
               href="/chat"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep font-semibold text-base hover:shadow-[0_0_30px_rgba(127,255,212,0.4)] transition-all duration-300"
+              className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep font-semibold text-base overflow-hidden btn-glow hover:shadow-[0_0_30px_rgba(127,255,212,0.4)] transition-all duration-300"
             >
               <ChatCircleDots className="w-5 h-5" weight="duotone" />
               Begin Your Journey
             </Link>
             <Link
               href="/library"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-white/20 text-white font-semibold text-base hover:bg-white/5 hover:border-white/30 transition-all duration-300"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl liquid-glass border border-white/15 text-white font-semibold text-base hover:bg-white/[0.06] hover:border-white/25 transition-all duration-300"
             >
               <Books className="w-5 h-5" weight="duotone" />
               Explore the Library

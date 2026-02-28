@@ -136,7 +136,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="relative w-full max-w-md transform overflow-hidden rounded-3xl bg-cosmic-surface/90 backdrop-blur-xl border border-white/10 shadow-2xl transition-all">
+              <Dialog.Panel className="relative w-full max-w-md transform overflow-hidden rounded-3xl liquid-glass-elevated border border-white/[0.08] shadow-[0_24px_64px_rgba(0,0,0,0.5)] transition-all">
                 {/* Close button */}
                 <button
                   onClick={handleClose}
@@ -180,7 +180,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                       </div>
 
                       {/* Tabs */}
-                      <div className="flex p-1 bg-white/5 rounded-xl mb-6">
+                      <div className="flex p-1 bg-white/[0.04] rounded-xl mb-6 border border-white/[0.04]">
                         <button
                           onClick={() => handleTabChange('login')}
                           className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${
@@ -219,7 +219,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                         <button
                           onClick={handleGoogleSignIn}
                           disabled={isLoading}
-                          className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-white/20 hover:bg-white/5 transition-colors disabled:opacity-50 text-sm"
+                          className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06] hover:border-white/[0.12] transition-all duration-300 disabled:opacity-50 text-sm"
                         >
                           <svg className="w-4 h-4" viewBox="0 0 24 24">
                             <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -232,7 +232,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                         <button
                           onClick={handleGithubSignIn}
                           disabled={isLoading}
-                          className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-white/20 hover:bg-white/5 transition-colors disabled:opacity-50 text-sm"
+                          className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06] hover:border-white/[0.12] transition-all duration-300 disabled:opacity-50 text-sm"
                         >
                           <PhGithubLogo className="w-4 h-4" />
                           GitHub
@@ -268,7 +268,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                                 placeholder="Email address"
                                 required
                                 aria-required="true"
-                                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/10 focus:border-atlantean-teal-aqua focus:outline-none text-sm"
+                                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-atlantean-teal-aqua/50 focus:bg-white/[0.06] focus:outline-none text-sm transition-all duration-300"
                               />
                             </div>
 
@@ -283,7 +283,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                                 placeholder="Password"
                                 required
                                 aria-required="true"
-                                className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/5 border border-white/10 focus:border-atlantean-teal-aqua focus:outline-none text-sm"
+                                className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-atlantean-teal-aqua/50 focus:bg-white/[0.06] focus:outline-none text-sm transition-all duration-300"
                               />
                               <button
                                 type="button"
@@ -321,7 +321,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                                 placeholder="Username"
                                 required
                                 minLength={3}
-                                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/10 focus:border-atlantean-teal-aqua focus:outline-none text-sm"
+                                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-atlantean-teal-aqua/50 focus:bg-white/[0.06] focus:outline-none text-sm transition-all duration-300"
                               />
                             </div>
 
@@ -333,7 +333,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="Email address"
                                 required
-                                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/10 focus:border-atlantean-teal-aqua focus:outline-none text-sm"
+                                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-atlantean-teal-aqua/50 focus:bg-white/[0.06] focus:outline-none text-sm transition-all duration-300"
                               />
                             </div>
 
@@ -346,7 +346,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                                   onChange={(e) => setPassword(e.target.value)}
                                   placeholder="Password"
                                   required
-                                  className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/5 border border-white/10 focus:border-atlantean-teal-aqua focus:outline-none text-sm"
+                                  className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-atlantean-teal-aqua/50 focus:bg-white/[0.06] focus:outline-none text-sm transition-all duration-300"
                                 />
                                 <button
                                   type="button"

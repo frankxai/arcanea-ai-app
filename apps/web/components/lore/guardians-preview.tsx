@@ -148,7 +148,7 @@ export function GuardiansPreview() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-atlantean-teal-aqua/10 border border-atlantean-teal-aqua/20 mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full liquid-glass border border-atlantean-teal-aqua/20 mb-6">
             <Icons.Shield />
             <span className="text-sm font-medium text-atlantean-teal-aqua">
               The Ten Guardians
@@ -176,8 +176,8 @@ export function GuardiansPreview() {
               className="relative group"
             >
               <div
-                className={`relative p-6 rounded-2xl border border-white/10 bg-cosmic-surface/30 backdrop-blur-sm overflow-hidden transition-all duration-300 ${
-                  hoveredIndex === i ? "border-white/30 scale-105 z-10" : ""
+                className={`relative card-3d p-6 rounded-2xl liquid-glass border border-white/[0.06] overflow-hidden transition-all duration-300 ${
+                  hoveredIndex === i ? "border-white/[0.15] scale-105 z-10" : ""
                 }`}
               >
                 {/* Gradient background on hover */}
@@ -237,7 +237,7 @@ export function GuardiansPreview() {
         >
           <Link
             href="/lore/guardians"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-atlantean-teal-aqua/10 border border-atlantean-teal-aqua/30 text-atlantean-teal-aqua font-semibold hover:bg-atlantean-teal-aqua hover:text-cosmic-deep transition-all"
+            className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold overflow-hidden btn-glow text-atlantean-teal-aqua bg-atlantean-teal-aqua/10 border border-atlantean-teal-aqua/30 hover:bg-atlantean-teal-aqua hover:text-cosmic-deep transition-all duration-300"
           >
             Explore All Guardians
             <Icons.ArrowRight />
