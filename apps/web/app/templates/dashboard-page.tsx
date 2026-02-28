@@ -94,7 +94,7 @@ function DashboardSkeleton() {
   return (
     <div className="min-h-screen flex">
       {/* Sidebar skeleton */}
-      <aside className="w-64 border-r border-white/5 p-4 hidden lg:block">
+      <aside className="w-64 border-r border-white/[0.04] p-4 hidden lg:block">
         <div className="flex items-center gap-3 mb-8">
           <Skeleton variant="circle" width={40} height={40} />
           <div>
@@ -190,7 +190,7 @@ function Sidebar({
   return (
     <aside className="w-64 border-r border-white/[0.04] liquid-glass hidden lg:flex flex-col">
       {/* Logo & User */}
-      <div className="p-4 border-b border-white/5">
+      <div className="p-4 border-b border-white/[0.04]">
         <div className="flex items-center gap-3 mb-4">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-atlantean-teal-aqua to-creation-prism-purple flex items-center justify-center text-cosmic-deep font-bold text-lg font-display">
             A
@@ -249,7 +249,7 @@ function Sidebar({
       </nav>
 
       {/* Footer links */}
-      <div className="p-4 border-t border-white/5">
+      <div className="p-4 border-t border-white/[0.04]">
         <Link
           href="/settings"
           className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-text-secondary hover:text-white hover:bg-cosmic-raised transition-all"
@@ -266,7 +266,7 @@ function Sidebar({
 
 function Header({ config }: { config: DashboardProps["config"] }) {
   return (
-    <header className="sticky top-0 z-40 border-b border-white/5 bg-cosmic-void/80 backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b border-white/[0.04] bg-cosmic-void/80 backdrop-blur-md">
       <div className="flex items-center justify-between px-6 py-4">
         {/* Title */}
         <div>

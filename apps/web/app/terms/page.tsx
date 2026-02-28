@@ -82,7 +82,7 @@ export default function TermsPage() {
         </header>
 
         {/* Divider */}
-        <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-8" />
+        <div className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent mb-8" />
 
         {/* Content */}
         <article className="font-body">
@@ -370,7 +370,7 @@ export default function TermsPage() {
         </article>
 
         {/* Footer divider */}
-        <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mt-12 mb-8" />
+        <div className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent mt-12 mb-8" />
 
         <footer className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-text-muted">
           <p>Arcanea &mdash; Build Your Universe</p>

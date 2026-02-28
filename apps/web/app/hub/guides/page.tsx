@@ -132,7 +132,7 @@ export default function GuidesPage() {
               <input
                 type="text"
                 placeholder="Search guides..."
-                className="w-full px-4 py-3 pl-11 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal-aqua"
+                className="w-full px-4 py-3 pl-11 rounded-xl bg-white/[0.04] border border-white/[0.06] text-white placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal-aqua"
               />
               <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -143,13 +143,13 @@ export default function GuidesPage() {
 
         {/* Difficulty Filter */}
         <div className="flex flex-wrap gap-3 mb-8">
-          <button className="px-4 py-2 rounded-lg bg-white/10 text-white text-sm font-medium hover:bg-white/20 transition-colors">
+          <button className="px-4 py-2 rounded-lg bg-white/[0.06] text-white text-sm font-medium hover:bg-white/[0.12] transition-colors">
             All Levels
           </button>
           {Object.entries(DIFFICULTY_CONFIG).map(([level, config]) => (
             <button
               key={level}
-              className="px-4 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/10"
+              className="px-4 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/[0.06]"
               style={{ color: config.color }}
             >
               {level}

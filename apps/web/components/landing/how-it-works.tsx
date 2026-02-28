@@ -102,7 +102,7 @@ export function HowItWorks() {
                       className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 ${
                         isActive
                           ? `bg-${step.color}/20`
-                          : 'bg-white/5 group-hover:bg-white/10'
+                          : 'bg-white/[0.04] group-hover:bg-white/[0.06]'
                       }`}
                     >
                       <Icon
@@ -154,7 +154,7 @@ export function HowItWorks() {
                   <div className="w-3 h-3 rounded-full bg-green-500/80" />
                 </div>
                 <div className="flex-1 flex justify-center">
-                  <div className="px-4 py-1 rounded-lg bg-white/5 text-xs text-text-muted">
+                  <div className="px-4 py-1 rounded-lg bg-white/[0.04] text-xs text-text-muted">
                     arcanea.ai
                   </div>
                 </div>
@@ -180,7 +180,7 @@ export function HowItWorks() {
                             className={`aspect-square rounded-xl flex items-center justify-center text-[10px] font-mono text-center leading-tight px-1 ${
                               n === 0
                                 ? 'bg-atlantean-teal-aqua/20 border-2 border-atlantean-teal-aqua text-atlantean-teal-aqua'
-                                : 'bg-white/5 border border-white/[0.06] text-text-muted'
+                                : 'bg-white/[0.04] border border-white/[0.06] text-text-muted'
                             }`}
                           >
                             {name}
@@ -197,7 +197,7 @@ export function HowItWorks() {
                           </div>
                         </div>
                         <div className="flex">
-                          <div className="max-w-[80%] p-4 rounded-2xl bg-white/5 border border-white/[0.06]">
+                          <div className="max-w-[80%] p-4 rounded-2xl bg-white/[0.04] border border-white/[0.06]">
                             <div className="flex items-center gap-2 mb-2">
                               <span className="text-xs font-mono px-2 py-0.5 rounded bg-atlantean-teal-aqua/15 text-atlantean-teal-aqua">Lyria · Sight Gate</span>
                             </div>
@@ -209,15 +209,15 @@ export function HowItWorks() {
                     {i === 2 && (
                       // Creation in progress
                       <div className="h-full flex flex-col">
-                        <div className="flex-1 rounded-xl bg-white/5 border border-white/[0.06] p-4">
+                        <div className="flex-1 rounded-xl bg-white/[0.04] border border-white/[0.06] p-4">
                           <div className="flex items-center justify-between mb-4">
                             <span className="text-sm font-medium">World Document</span>
                             <span className="text-xs text-atlantean-teal-aqua">Generating...</span>
                           </div>
                           <div className="space-y-2">
-                            <div className="h-3 bg-white/10 rounded w-full animate-pulse" />
-                            <div className="h-3 bg-white/10 rounded w-4/5 animate-pulse" />
-                            <div className="h-3 bg-white/10 rounded w-3/5 animate-pulse" />
+                            <div className="h-3 bg-white/[0.06] rounded w-full animate-pulse" />
+                            <div className="h-3 bg-white/[0.06] rounded w-4/5 animate-pulse" />
+                            <div className="h-3 bg-white/[0.06] rounded w-3/5 animate-pulse" />
                           </div>
                         </div>
                       </div>
@@ -229,7 +229,7 @@ export function HowItWorks() {
                         {['PDF Document', 'Word Export', 'Markdown', 'Share Link'].map((format) => (
                           <div
                             key={format}
-                            className="p-4 rounded-xl bg-white/5 border border-white/[0.06] flex items-center justify-between hover:border-atlantean-teal-aqua/30 transition-colors"
+                            className="p-4 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-between hover:border-atlantean-teal-aqua/30 transition-colors"
                           >
                             <span className="text-sm">{format}</span>
                             <PhArrowRight className="w-4 h-4 text-text-muted" />

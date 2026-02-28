@@ -212,7 +212,7 @@ export function TestimonialsV2() {
                   className={`h-2 rounded-full transition-all ${
                     i === activeIndex
                       ? 'w-8 bg-atlantean-teal-aqua'
-                      : 'w-2 bg-white/20 hover:bg-white/40'
+                      : 'w-2 bg-white/[0.12] hover:bg-white/[0.25]'
                   }`}
                   aria-label={`Go to testimonial ${i + 1}`}
                 />

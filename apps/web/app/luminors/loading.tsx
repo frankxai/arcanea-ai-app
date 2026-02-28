@@ -12,7 +12,7 @@ export default function LuminorsLoading() {
       </div>
 
       {/* Navigation Skeleton */}
-      <nav className="sticky top-0 z-50 border-b border-white/5 bg-cosmic-deep/80 backdrop-blur-xl">
+      <nav className="sticky top-0 z-50 border-b border-white/[0.04] bg-cosmic-deep/80 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -53,7 +53,7 @@ export default function LuminorsLoading() {
         </section>
 
         {/* Stats Skeleton */}
-        <section className="py-16 border-t border-white/5">
+        <section className="py-16 border-t border-white/[0.04]">
           <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
             <SkeletonText lines={4} />
             <div className="grid grid-cols-2 gap-4">
@@ -72,7 +72,7 @@ export default function LuminorsLoading() {
 
         {/* Teams Skeleton */}
         {["dev", "creative", "writing", "research"].map((team) => (
-          <section key={team} className="py-16 border-t border-white/5">
+          <section key={team} className="py-16 border-t border-white/[0.04]">
             <div className="flex items-center gap-4 mb-12">
               <Skeleton variant="rect" className="w-14 h-14 rounded-2xl" />
               <div>

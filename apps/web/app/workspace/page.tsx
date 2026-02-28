@@ -53,7 +53,7 @@ function Card({
   return (
     <Link
       href={href}
-      className="rounded-2xl border border-white/10 bg-cosmic-surface/40 p-5 transition hover:border-brand-primary/40 hover:bg-cosmic-surface/70"
+      className="rounded-2xl border border-white/[0.06] bg-cosmic-surface/40 p-5 transition hover:border-brand-primary/40 hover:bg-cosmic-surface/70"
     >
       <div className="mb-3 inline-flex rounded-lg bg-brand-primary/15 p-2 text-brand-primary">{icon}</div>
       <h3 className="font-display text-lg font-semibold text-text-primary">{title}</h3>
@@ -67,7 +67,7 @@ export default function WorkspacePage() {
 
   return (
     <div className="-mx-4 min-h-[calc(100dvh-2rem)] px-4 pb-10">
-      <div className="mb-6 rounded-2xl border border-white/10 bg-cosmic-deep/80 p-6">
+      <div className="mb-6 rounded-2xl border border-white/[0.06] bg-cosmic-deep/80 p-6">
         <div className="flex flex-wrap items-center gap-3">
           <div className="rounded-xl bg-brand-primary/15 p-2 text-brand-primary">
             <PhSparkle className="h-5 w-5" />

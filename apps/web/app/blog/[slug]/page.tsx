@@ -708,7 +708,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           {post.tags.map((tag) => (
             <span
               key={tag}
-              className="text-sm px-3 py-1 rounded-full bg-white/5 text-text-secondary"
+              className="text-sm px-3 py-1 rounded-full bg-white/[0.04] text-text-secondary"
             >
               #{tag}
             </span>
@@ -736,13 +736,13 @@ export default async function BlogPostPage({ params }: PageProps) {
         </div>
 
         {/* Navigation */}
-        <nav className="flex items-center justify-between pt-8 border-t border-white/10">
+        <nav className="flex items-center justify-between pt-8 border-t border-white/[0.06]">
           {prevSlug ? (
             <Link
               href={`/blog/${prevSlug}`}
               className="group flex items-center gap-3 text-left"
             >
-              <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center group-hover:bg-brand-primary/20 transition-all">
+              <div className="w-10 h-10 rounded-xl bg-white/[0.04] flex items-center justify-center group-hover:bg-brand-primary/20 transition-all">
                 <Icons.ChevronLeft />
               </div>
               <div>
@@ -767,7 +767,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                   {BLOG_POSTS[nextSlug].title}
                 </span>
               </div>
-              <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center group-hover:bg-brand-primary/20 transition-all">
+              <div className="w-10 h-10 rounded-xl bg-white/[0.04] flex items-center justify-center group-hover:bg-brand-primary/20 transition-all">
                 <Icons.ChevronRight />
               </div>
             </Link>

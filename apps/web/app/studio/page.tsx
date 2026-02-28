@@ -171,7 +171,7 @@ function Dropdown({
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 text-xs text-text-secondary hover:border-white/20 hover:bg-white/8 transition-colors"
+        className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/[0.06] bg-white/[0.04] text-xs text-text-secondary hover:border-white/[0.12] hover:bg-white/[0.08] transition-colors"
       >
         <span className="text-text-muted">{label}:</span>
         <span className="text-text-primary">{value}</span>
@@ -186,9 +186,9 @@ function Dropdown({
                 onChange(item.name);
                 setOpen(false);
               }}
-              className={`w-full text-left px-3 py-2 text-xs hover:bg-white/8 transition-colors ${
+              className={`w-full text-left px-3 py-2 text-xs hover:bg-white/[0.08] transition-colors ${
                 value === item.name
-                  ? "text-crystal bg-white/5"
+                  ? "text-crystal bg-white/[0.04]"
                   : "text-text-secondary"
               }`}
             >
@@ -251,38 +251,38 @@ function TextCreationPanel({
       {/* Left: Editor */}
       <div className="flex-1 flex flex-col min-h-0">
         {/* Toolbar */}
-        <div className="flex items-center gap-1 px-3 py-2 border-b border-white/8 bg-white/[0.02]">
+        <div className="flex items-center gap-1 px-3 py-2 border-b border-white/[0.08] bg-white/[0.02]">
           <button
             onClick={() => insertMarkdown("**", "**")}
-            className="p-1.5 rounded hover:bg-white/10 text-text-muted hover:text-text-primary transition-colors"
+            className="p-1.5 rounded hover:bg-white/[0.06] text-text-muted hover:text-text-primary transition-colors"
             title="Bold"
           >
             <TextB size={16} weight="bold" />
           </button>
           <button
             onClick={() => insertMarkdown("*", "*")}
-            className="p-1.5 rounded hover:bg-white/10 text-text-muted hover:text-text-primary transition-colors"
+            className="p-1.5 rounded hover:bg-white/[0.06] text-text-muted hover:text-text-primary transition-colors"
             title="Italic"
           >
             <TextItalic size={16} />
           </button>
           <button
             onClick={() => insertMarkdown("\n1. ", "")}
-            className="p-1.5 rounded hover:bg-white/10 text-text-muted hover:text-text-primary transition-colors"
+            className="p-1.5 rounded hover:bg-white/[0.06] text-text-muted hover:text-text-primary transition-colors"
             title="Ordered List"
           >
             <ListNumbers size={16} />
           </button>
           <button
             onClick={() => insertMarkdown("\n> ", "")}
-            className="p-1.5 rounded hover:bg-white/10 text-text-muted hover:text-text-primary transition-colors"
+            className="p-1.5 rounded hover:bg-white/[0.06] text-text-muted hover:text-text-primary transition-colors"
             title="Blockquote"
           >
             <Quotes size={16} />
           </button>
           <button
             onClick={() => insertMarkdown("[", "](url)")}
-            className="p-1.5 rounded hover:bg-white/10 text-text-muted hover:text-text-primary transition-colors"
+            className="p-1.5 rounded hover:bg-white/[0.06] text-text-muted hover:text-text-primary transition-colors"
             title="Link"
           >
             <Link size={16} />
@@ -307,15 +307,15 @@ Use Markdown for formatting. Ask Luminor for guidance."
         />
 
         {/* Status bar */}
-        <div className="flex items-center gap-4 px-4 py-2 border-t border-white/8 bg-white/[0.02] text-xs text-text-muted font-mono">
+        <div className="flex items-center gap-4 px-4 py-2 border-t border-white/[0.08] bg-white/[0.02] text-xs text-text-muted font-mono">
           <span>{wordCount} words</span>
           <span>{charCount} chars</span>
         </div>
       </div>
 
       {/* Right: Luminor AI Panel */}
-      <div className="lg:w-[340px] flex flex-col border-l border-white/8 min-h-0">
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/8 bg-white/[0.02]">
+      <div className="lg:w-[340px] flex flex-col border-l border-white/[0.08] min-h-0">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.08] bg-white/[0.02]">
           <div className="w-6 h-6 rounded-full bg-gradient-to-br from-crystal to-brand-primary flex items-center justify-center">
             <Brain size={14} className="text-cosmic-void" />
           </div>
@@ -341,7 +341,7 @@ Use Markdown for formatting. Ask Luminor for guidance."
                     setLuminorInput(s.title);
                     setTimeout(onAskLuminor, 50);
                   }}
-                  className="w-full text-left p-3 rounded-xl border border-white/8 bg-white/[0.03] hover:bg-white/[0.06] hover:border-crystal/30 transition-all group"
+                  className="w-full text-left p-3 rounded-xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06] hover:border-crystal/30 transition-all group"
                 >
                   <div className="flex items-start gap-2">
                     <Sparkle
@@ -368,7 +368,7 @@ Use Markdown for formatting. Ask Luminor for guidance."
                 className={`p-3 rounded-xl text-xs leading-relaxed ${
                   msg.role === "user"
                     ? "bg-brand-primary/10 border border-brand-primary/20 text-text-primary ml-6"
-                    : "bg-white/[0.03] border border-white/8 text-text-secondary mr-2"
+                    : "bg-white/[0.03] border border-white/[0.08] text-text-secondary mr-2"
                 }`}
               >
                 {msg.role === "luminor" && (
@@ -386,7 +386,7 @@ Use Markdown for formatting. Ask Luminor for guidance."
         </div>
 
         {/* Input */}
-        <div className="p-3 border-t border-white/8">
+        <div className="p-3 border-t border-white/[0.08]">
           <div className="flex items-center gap-2">
             <input
               type="text"
@@ -396,7 +396,7 @@ Use Markdown for formatting. Ask Luminor for guidance."
                 if (e.key === "Enter" && luminorInput.trim()) onAskLuminor();
               }}
               placeholder="Ask Luminor..."
-              className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-text-primary placeholder-text-muted/50 focus:outline-none focus:border-crystal/40 transition-colors"
+              className="flex-1 bg-white/[0.04] border border-white/[0.06] rounded-lg px-3 py-2 text-xs text-text-primary placeholder-text-muted/50 focus:outline-none focus:border-crystal/40 transition-colors"
             />
             <button
               onClick={onAskLuminor}
@@ -437,7 +437,7 @@ function ImageCreationPanel() {
     <div className="flex flex-col lg:flex-row gap-4 flex-1 min-h-0">
       {/* Left: Prompt Input */}
       <div className="flex-1 flex flex-col min-h-0">
-        <div className="flex items-center gap-2 px-4 py-2 border-b border-white/8 bg-white/[0.02]">
+        <div className="flex items-center gap-2 px-4 py-2 border-b border-white/[0.08] bg-white/[0.02]">
           <span className="text-xs text-text-muted font-mono">
             Describe your vision
           </span>
@@ -455,7 +455,7 @@ the background, in the style of epic fantasy concept art."
         />
 
         {/* Style selector */}
-        <div className="px-4 py-3 border-t border-white/8 bg-white/[0.02]">
+        <div className="px-4 py-3 border-t border-white/[0.08] bg-white/[0.02]">
           <p className="text-xs text-text-muted mb-2">Style:</p>
           <div className="flex flex-wrap gap-2">
             {styles.map((s) => (
@@ -465,7 +465,7 @@ the background, in the style of epic fantasy concept art."
                 className={`px-3 py-1.5 rounded-full text-xs border transition-all ${
                   style === s
                     ? "border-fire/40 bg-fire/15 text-fire"
-                    : "border-white/10 bg-white/5 text-text-muted hover:border-white/20"
+                    : "border-white/[0.06] bg-white/[0.04] text-text-muted hover:border-white/[0.12]"
                 }`}
               >
                 {s}
@@ -476,8 +476,8 @@ the background, in the style of epic fantasy concept art."
       </div>
 
       {/* Right: Preview */}
-      <div className="lg:w-[400px] flex flex-col border-l border-white/8 min-h-0">
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/8 bg-white/[0.02]">
+      <div className="lg:w-[400px] flex flex-col border-l border-white/[0.08] min-h-0">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.08] bg-white/[0.02]">
           <Eye size={14} className="text-text-muted" />
           <span className="text-xs font-semibold text-text-primary">
             Preview
@@ -485,7 +485,7 @@ the background, in the style of epic fantasy concept art."
         </div>
 
         <div className="flex-1 flex items-center justify-center p-6">
-          <div className="w-full aspect-square max-w-[320px] rounded-2xl border border-white/10 bg-gradient-to-br from-fire/5 via-transparent to-brand-primary/5 flex flex-col items-center justify-center gap-4 p-6">
+          <div className="w-full aspect-square max-w-[320px] rounded-2xl border border-white/[0.06] bg-gradient-to-br from-fire/5 via-transparent to-brand-primary/5 flex flex-col items-center justify-center gap-4 p-6">
             <div className="w-16 h-16 rounded-2xl bg-fire/10 border border-fire/20 flex items-center justify-center">
               <Image size={28} className="text-fire/60" />
             </div>
@@ -537,7 +537,7 @@ function CodeCreationPanel() {
     <div className="flex flex-col lg:flex-row gap-4 flex-1 min-h-0">
       {/* Left: Code Editor */}
       <div className="flex-1 flex flex-col min-h-0">
-        <div className="flex items-center gap-3 px-4 py-2 border-b border-white/8 bg-white/[0.02]">
+        <div className="flex items-center gap-3 px-4 py-2 border-b border-white/[0.08] bg-white/[0.02]">
           <Terminal size={14} className="text-brand-gold" />
           <div className="flex items-center gap-2">
             {languages.map((lang) => (
@@ -547,7 +547,7 @@ function CodeCreationPanel() {
                 className={`px-2.5 py-1 rounded text-[11px] transition-all ${
                   language === lang
                     ? "bg-brand-gold/15 text-brand-gold border border-brand-gold/30"
-                    : "text-text-muted hover:text-text-secondary hover:bg-white/5"
+                    : "text-text-muted hover:text-text-secondary hover:bg-white/[0.04]"
                 }`}
               >
                 {lang}
@@ -564,15 +564,15 @@ function CodeCreationPanel() {
           spellCheck={false}
         />
 
-        <div className="flex items-center gap-4 px-4 py-2 border-t border-white/8 bg-white/[0.02] text-xs text-text-muted font-mono">
+        <div className="flex items-center gap-4 px-4 py-2 border-t border-white/[0.08] bg-white/[0.02] text-xs text-text-muted font-mono">
           <span>{language}</span>
           <span>{code.split("\n").length} lines</span>
         </div>
       </div>
 
       {/* Right: Output / AI */}
-      <div className="lg:w-[340px] flex flex-col border-l border-white/8 min-h-0">
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/8 bg-white/[0.02]">
+      <div className="lg:w-[340px] flex flex-col border-l border-white/[0.08] min-h-0">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.08] bg-white/[0.02]">
           <Play size={14} className="text-brand-gold" />
           <span className="text-xs font-semibold text-text-primary">
             Output
@@ -623,7 +623,7 @@ function MusicCreationPanel() {
     <div className="flex flex-col lg:flex-row gap-4 flex-1 min-h-0">
       {/* Left: Description */}
       <div className="flex-1 flex flex-col min-h-0">
-        <div className="flex items-center gap-2 px-4 py-2 border-b border-white/8 bg-white/[0.02]">
+        <div className="flex items-center gap-2 px-4 py-2 border-b border-white/[0.08] bg-white/[0.02]">
           <span className="text-xs text-text-muted font-mono">
             Describe the sound
           </span>
@@ -641,7 +641,7 @@ and choir — the moment a Gate opens for the first time."
         />
 
         {/* Mood selector */}
-        <div className="px-4 py-3 border-t border-white/8 bg-white/[0.02]">
+        <div className="px-4 py-3 border-t border-white/[0.08] bg-white/[0.02]">
           <p className="text-xs text-text-muted mb-2">Mood:</p>
           <div className="flex flex-wrap gap-2">
             {moods.map((m) => (
@@ -651,7 +651,7 @@ and choir — the moment a Gate opens for the first time."
                 className={`px-3 py-1.5 rounded-full text-xs border transition-all ${
                   mood === m
                     ? "border-blue-400/40 bg-blue-400/15 text-blue-400"
-                    : "border-white/10 bg-white/5 text-text-muted hover:border-white/20"
+                    : "border-white/[0.06] bg-white/[0.04] text-text-muted hover:border-white/[0.12]"
                 }`}
               >
                 {m}
@@ -662,8 +662,8 @@ and choir — the moment a Gate opens for the first time."
       </div>
 
       {/* Right: Preview */}
-      <div className="lg:w-[340px] flex flex-col border-l border-white/8 min-h-0">
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/8 bg-white/[0.02]">
+      <div className="lg:w-[340px] flex flex-col border-l border-white/[0.08] min-h-0">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.08] bg-white/[0.02]">
           <MusicNote size={14} className="text-blue-400" />
           <span className="text-xs font-semibold text-text-primary">
             Sound Preview
@@ -672,7 +672,7 @@ and choir — the moment a Gate opens for the first time."
 
         <div className="flex-1 p-4 flex flex-col items-center justify-center gap-4">
           {/* Waveform placeholder */}
-          <div className="w-full h-20 rounded-xl border border-white/10 bg-gradient-to-r from-blue-500/5 via-brand-primary/5 to-blue-500/5 flex items-center justify-center overflow-hidden">
+          <div className="w-full h-20 rounded-xl border border-white/[0.06] bg-gradient-to-r from-blue-500/5 via-brand-primary/5 to-blue-500/5 flex items-center justify-center overflow-hidden">
             <div className="flex items-end gap-[3px] h-12">
               {Array.from({ length: 32 }).map((_, i) => (
                 <div
@@ -869,8 +869,8 @@ export default function StudioPage() {
                     onClick={() => handleModeChange(mode.id)}
                     className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-medium transition-all ${
                       isActive
-                        ? "bg-white/10 text-text-primary shadow-sm"
-                        : "text-text-muted hover:text-text-secondary hover:bg-white/5"
+                        ? "bg-white/[0.06] text-text-primary shadow-sm"
+                        : "text-text-muted hover:text-text-secondary hover:bg-white/[0.04]"
                     }`}
                     title={mode.description}
                   >
@@ -931,7 +931,7 @@ export default function StudioPage() {
         {/* ── Workspace ── */}
         <div className="flex-1 flex flex-col rounded-2xl liquid-glass border border-white/[0.06] overflow-hidden min-h-[500px]">
           {/* Workspace Header */}
-          <div className="flex items-center gap-3 px-4 py-2.5 border-b border-white/8 bg-white/[0.02]">
+          <div className="flex items-center gap-3 px-4 py-2.5 border-b border-white/[0.08] bg-white/[0.02]">
             {/* Element & Gate selectors */}
             <Dropdown
               label="Element"
@@ -976,13 +976,13 @@ export default function StudioPage() {
                     navigator.clipboard.writeText(textContent);
                   }
                 }}
-                className="p-2 rounded-lg text-text-muted hover:text-text-primary hover:bg-white/8 transition-colors"
+                className="p-2 rounded-lg text-text-muted hover:text-text-primary hover:bg-white/[0.08] transition-colors"
                 title="Copy to clipboard"
               >
                 <Copy size={14} />
               </button>
               <button
-                className="p-2 rounded-lg text-text-muted hover:text-text-primary hover:bg-white/8 transition-colors"
+                className="p-2 rounded-lg text-text-muted hover:text-text-primary hover:bg-white/[0.08] transition-colors"
                 title="Download"
               >
                 <Download size={14} />
@@ -1026,16 +1026,16 @@ export default function StudioPage() {
             <span>
               {currentMode.label} Creation
             </span>
-            <span className="text-white/20">|</span>
+            <span className="text-white/[0.12]">|</span>
             <span>{selectedElement} Element</span>
-            <span className="text-white/20">|</span>
+            <span className="text-white/[0.12]">|</span>
             <span>{selectedGate} Gate ({GATES.find(g => g.name === selectedGate)?.freq})</span>
           </div>
 
           <div className="flex-1" />
 
           <button
-            className="px-3 py-2 rounded-lg border border-white/10 bg-white/5 text-xs text-text-muted hover:text-text-primary hover:bg-white/8 transition-colors flex items-center gap-2"
+            className="px-3 py-2 rounded-lg border border-white/[0.06] bg-white/[0.04] text-xs text-text-muted hover:text-text-primary hover:bg-white/[0.08] transition-colors flex items-center gap-2"
           >
             <Gear size={14} />
             Settings
@@ -1059,7 +1059,7 @@ export default function StudioPage() {
               <Star size={16} weight="fill" />
               Manifest
             </span>
-            <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors" />
+            <div className="absolute inset-0 bg-white/0 group-hover:bg-white/[0.06] transition-colors" />
           </button>
         </div>
       </main>

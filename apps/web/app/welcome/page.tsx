@@ -98,7 +98,7 @@ export default function WelcomePage() {
 
           <Link
             href="/auth/login"
-            className="flex items-center gap-2 px-8 py-4 rounded-xl border border-white/10 text-text-secondary font-body font-medium hover:border-atlantean-teal hover:text-atlantean-teal transition-all"
+            className="flex items-center gap-2 px-8 py-4 rounded-xl border border-white/[0.06] text-text-secondary font-body font-medium hover:border-atlantean-teal hover:text-atlantean-teal transition-all"
           >
             I already have an account
           </Link>

@@ -24,7 +24,7 @@ export function UserNav() {
 
   if (isLoading) {
     return (
-      <div className="w-20 h-9 rounded-xl bg-white/5 animate-pulse" />
+      <div className="w-20 h-9 rounded-xl bg-white/[0.04] animate-pulse" />
     );
   }
 

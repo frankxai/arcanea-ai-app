@@ -38,7 +38,7 @@ export function CollectionItem({
         className={cn(
           'w-full flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-150 group text-sm',
           isActive
-            ? cn('glass text-text-primary font-medium', theme?.glowClass)
+            ? cn('liquid-glass text-text-primary font-medium', theme?.glowClass)
             : 'text-text-secondary hover:text-text-primary hover:bg-cosmic-raised',
         )}
         style={{

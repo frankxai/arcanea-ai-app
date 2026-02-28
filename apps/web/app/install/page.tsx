@@ -135,7 +135,7 @@ export default function InstallPage() {
       </div>
 
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 border-b border-white/5 bg-cosmic-deep/80 backdrop-blur-xl">
+      <nav className="sticky top-0 z-50 border-b border-white/[0.04] bg-cosmic-deep/80 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-3">
@@ -222,7 +222,7 @@ export default function InstallPage() {
                   {method.description}
                 </p>
                 <div className="relative">
-                  <code className="block px-4 py-2 rounded-lg bg-cosmic-void border border-white/10 text-sm font-mono text-atlantean-teal overflow-x-auto">
+                  <code className="block px-4 py-2 rounded-lg bg-cosmic-void border border-white/[0.06] text-sm font-mono text-atlantean-teal overflow-x-auto">
                     {method.command}
                   </code>
                 </div>
@@ -232,7 +232,7 @@ export default function InstallPage() {
         </section>
 
         {/* Quick Start */}
-        <section className="py-16 border-t border-white/5">
+        <section className="py-16 border-t border-white/[0.04]">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-display font-bold mb-4">
               Quick Start
@@ -255,7 +255,7 @@ export default function InstallPage() {
                   <p className="text-text-secondary text-sm mb-4">
                     {step.description}
                   </p>
-                  <code className="block px-3 py-2 rounded-lg bg-cosmic-void border border-white/10 text-xs font-mono text-atlantean-teal">
+                  <code className="block px-3 py-2 rounded-lg bg-cosmic-void border border-white/[0.06] text-xs font-mono text-atlantean-teal">
                     {step.code}
                   </code>
                 </div>
@@ -265,7 +265,7 @@ export default function InstallPage() {
         </section>
 
         {/* Features */}
-        <section className="py-16 border-t border-white/5">
+        <section className="py-16 border-t border-white/[0.04]">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-display font-bold mb-4">
               What You Get
@@ -294,7 +294,7 @@ export default function InstallPage() {
         </section>
 
         {/* Integrations */}
-        <section className="py-16 border-t border-white/5">
+        <section className="py-16 border-t border-white/[0.04]">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-display font-bold mb-4">
               Editor Integrations
@@ -325,7 +325,7 @@ export default function InstallPage() {
                   className={`text-xs px-3 py-1 rounded-full ${
                     integration.status === "Available"
                       ? "bg-atlantean-teal/20 text-atlantean-teal"
-                      : "bg-white/10 text-text-muted"
+                      : "bg-white/[0.06] text-text-muted"
                   }`}
                 >
                   {integration.status}
@@ -336,10 +336,10 @@ export default function InstallPage() {
         </section>
 
         {/* Terminal Preview */}
-        <section className="py-16 border-t border-white/5">
+        <section className="py-16 border-t border-white/[0.04]">
           <div className="max-w-3xl mx-auto">
-            <div className="rounded-2xl overflow-hidden border border-white/10">
-              <div className="flex items-center gap-2 px-4 py-3 bg-cosmic-surface border-b border-white/10">
+            <div className="rounded-2xl overflow-hidden border border-white/[0.06]">
+              <div className="flex items-center gap-2 px-4 py-3 bg-cosmic-surface border-b border-white/[0.06]">
                 <div className="w-3 h-3 rounded-full bg-red-500/50" />
                 <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
                 <div className="w-3 h-3 rounded-full bg-green-500/50" />
@@ -367,7 +367,7 @@ export default function InstallPage() {
         </section>
 
         {/* CTA */}
-        <section className="py-20 border-t border-white/5">
+        <section className="py-20 border-t border-white/[0.04]">
           <div className="relative rounded-3xl overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 via-atlantean-teal/20 to-violet-500/20" />
             <div className="absolute inset-0 liquid-glass" />
@@ -386,7 +386,7 @@ export default function InstallPage() {
                 </div>
                 <Link
                   href="/docs"
-                  className="px-8 py-4 rounded-xl border border-white/20 text-white font-semibold text-lg hover:bg-white/5 transition-all"
+                  className="px-8 py-4 rounded-xl border border-white/[0.12] text-white font-semibold text-lg hover:bg-white/[0.04] transition-all"
                 >
                   View Documentation
                 </Link>

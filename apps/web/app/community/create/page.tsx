@@ -206,7 +206,7 @@ export default function CommunityCreatePage() {
         </section>
 
         {/* How It Works */}
-        <section className="py-12 border-t border-white/5">
+        <section className="py-12 border-t border-white/[0.04]">
           <div className="mb-10">
             <h2 className="text-xs font-mono tracking-[0.35em] uppercase text-crystal mb-4">
               How It Works
@@ -247,7 +247,7 @@ export default function CommunityCreatePage() {
         </section>
 
         {/* Categories */}
-        <section id="browse" className="py-12 border-t border-white/5">
+        <section id="browse" className="py-12 border-t border-white/[0.04]">
           <div className="mb-10">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-crystal/20 bg-crystal/8 mb-5">
               <PhTarget className="w-3 h-3 text-crystal" />
@@ -295,7 +295,7 @@ export default function CommunityCreatePage() {
         </section>
 
         {/* Featured Projects */}
-        <section id="projects" className="py-12 border-t border-white/5">
+        <section id="projects" className="py-12 border-t border-white/[0.04]">
           <div className="mb-10">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand-gold/20 bg-brand-gold/8 mb-5">
               <PhTrophy className="w-3 h-3 text-brand-gold" />
@@ -362,7 +362,7 @@ export default function CommunityCreatePage() {
                     {project.description}
                   </p>
 
-                  <div className="flex items-center justify-between pt-4 border-t border-white/5">
+                  <div className="flex items-center justify-between pt-4 border-t border-white/[0.04]">
                     <button className="flex items-center gap-2 text-sm text-crystal opacity-0 group-hover:opacity-100 transition-opacity">
                       <span>Join Project</span>
                       <PhArrowRight className="w-3.5 h-3.5" />
@@ -375,7 +375,7 @@ export default function CommunityCreatePage() {
         </section>
 
         {/* CTA */}
-        <section className="py-16 border-t border-white/5">
+        <section className="py-16 border-t border-white/[0.04]">
           <div className="relative liquid-glass rounded-3xl overflow-hidden p-10 sm:p-14">
             <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/10 via-transparent to-crystal/8 pointer-events-none" />
 

@@ -40,7 +40,7 @@ export function PlaceholderPage({
           </Link>
           <Link
             href={secondaryHref}
-            className="rounded-xl border border-white/15 px-5 py-2.5 text-sm font-semibold text-text-secondary transition hover:border-white/30 hover:text-text-primary"
+            className="rounded-xl border border-white/[0.10] px-5 py-2.5 text-sm font-semibold text-text-secondary transition hover:border-white/[0.20] hover:text-text-primary"
           >
             {secondaryLabel}
           </Link>

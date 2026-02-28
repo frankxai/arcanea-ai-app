@@ -515,7 +515,7 @@ function RelatedItems({ related }: { related?: DetailPageProps["related"] }) {
   if (!related || related.length === 0) return null;
 
   return (
-    <section className="mt-16 pt-12 border-t border-white/5">
+    <section className="mt-16 pt-12 border-t border-white/[0.04]">
       <h2 className="text-2xl font-display font-bold text-white mb-8">
         Related Items
       </h2>

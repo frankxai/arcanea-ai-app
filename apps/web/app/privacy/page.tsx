@@ -82,7 +82,7 @@ export default function PrivacyPage() {
         </header>
 
         {/* Divider */}
-        <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-8" />
+        <div className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent mb-8" />
 
         {/* Content */}
         <article className="font-body">
@@ -97,7 +97,7 @@ export default function PrivacyPage() {
           {/* 1. Information We Collect */}
           <SectionHeading>1. Information We Collect</SectionHeading>
 
-          <h3 className="text-lg font-display font-semibold text-white/90 mt-6 mb-3">
+          <h3 className="text-lg font-display font-semibold text-white/[0.70] mt-6 mb-3">
             Account Information
           </h3>
           <Paragraph>
@@ -113,7 +113,7 @@ export default function PrivacyPage() {
             ]}
           />
 
-          <h3 className="text-lg font-display font-semibold text-white/90 mt-6 mb-3">
+          <h3 className="text-lg font-display font-semibold text-white/[0.70] mt-6 mb-3">
             Creations and Content
           </h3>
           <Paragraph>
@@ -123,7 +123,7 @@ export default function PrivacyPage() {
             association, and tags you apply.
           </Paragraph>
 
-          <h3 className="text-lg font-display font-semibold text-white/90 mt-6 mb-3">
+          <h3 className="text-lg font-display font-semibold text-white/[0.70] mt-6 mb-3">
             Activity and Usage Data
           </h3>
           <Paragraph>
@@ -383,7 +383,7 @@ export default function PrivacyPage() {
         </article>
 
         {/* Footer divider */}
-        <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mt-12 mb-8" />
+        <div className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent mt-12 mb-8" />
 
         <footer className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-text-muted">
           <p>Arcanea &mdash; Build Your Universe</p>

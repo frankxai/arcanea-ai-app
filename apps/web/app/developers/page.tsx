@@ -679,7 +679,7 @@ export default function DevelopersPage() {
                 return (
                   <div
                     key={layer.layer}
-                    className="text-center p-4 rounded-xl hover:bg-white/5 transition-colors"
+                    className="text-center p-4 rounded-xl hover:bg-white/[0.04] transition-colors"
                   >
                     <div
                       className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full"

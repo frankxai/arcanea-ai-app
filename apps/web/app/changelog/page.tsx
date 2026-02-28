@@ -124,7 +124,7 @@ export default function ChangelogPage() {
       </div>
 
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 border-b border-white/5 bg-cosmic-deep/80 backdrop-blur-xl">
+      <nav className="sticky top-0 z-50 border-b border-white/[0.04] bg-cosmic-deep/80 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-3">
@@ -205,7 +205,7 @@ export default function ChangelogPage() {
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white font-display font-bold text-lg shrink-0">
                   {year}
                 </div>
-                <div className="h-px flex-1 bg-white/10" />
+                <div className="h-px flex-1 bg-white/[0.06]" />
               </div>
 
               <div className="space-y-8 ml-0 md:ml-20">
@@ -226,7 +226,7 @@ export default function ChangelogPage() {
                                 ? "bg-violet-500/20 text-violet-400"
                                 : change.type === "minor"
                                   ? "bg-atlantean-teal/20 text-atlantean-teal"
-                                  : "bg-white/10 text-text-muted"
+                                  : "bg-white/[0.06] text-text-muted"
                             }`}
                           >
                             {change.version}
@@ -277,7 +277,7 @@ export default function ChangelogPage() {
         </div>
 
         {/* Stats */}
-        <section className="py-16 border-t border-white/5">
+        <section className="py-16 border-t border-white/[0.04]">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
               { label: "Versions", value: "12+" },
@@ -299,7 +299,7 @@ export default function ChangelogPage() {
         </section>
 
         {/* Subscribe */}
-        <section className="py-16 border-t border-white/5">
+        <section className="py-16 border-t border-white/[0.04]">
           <div className="p-8 rounded-2xl liquid-glass text-center">
             <h3 className="text-xl font-display font-semibold mb-2">
               Stay Updated
@@ -311,7 +311,7 @@ export default function ChangelogPage() {
               <input
                 type="email"
                 placeholder="your@email.com"
-                className="flex-1 px-4 py-3 rounded-xl bg-cosmic-void border border-white/10 text-white placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal"
+                className="flex-1 px-4 py-3 rounded-xl bg-cosmic-void border border-white/[0.06] text-white placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal"
               />
               <button className="px-6 py-3 rounded-xl bg-atlantean-teal text-cosmic-deep font-semibold hover:shadow-[0_0_20px_rgba(127,255,212,0.4)] transition-all">
                 Subscribe

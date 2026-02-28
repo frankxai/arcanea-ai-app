@@ -350,7 +350,7 @@ function WisdomCard({ wisdom, delay }: { wisdom: Wisdom; delay: number }) {
             >
               {wisdom.element}
             </span>
-            <span className="px-3 py-1 rounded-full text-xs font-semibold border border-white/10 bg-white/5 text-text-secondary">
+            <span className="px-3 py-1 rounded-full text-xs font-semibold border border-white/[0.06] bg-white/[0.04] text-text-secondary">
               Essence: {wisdom.essence}
             </span>
           </div>
@@ -378,7 +378,7 @@ function WisdomCard({ wisdom, delay }: { wisdom: Wisdom; delay: number }) {
           </div>
 
           {/* Voice Sample */}
-          <blockquote className="relative pl-5 border-l-2 border-white/20">
+          <blockquote className="relative pl-5 border-l-2 border-white/[0.12]">
             <PhQuotes
               className="absolute -left-1 -top-1 w-4 h-4 text-text-muted opacity-50"
             />
@@ -439,8 +439,8 @@ function WhenToInvokeSection() {
                   className={cn(
                     'rounded-2xl border backdrop-blur-sm overflow-hidden transition-all duration-300 cursor-pointer',
                     isOpen
-                      ? 'bg-cosmic-surface/50 border-white/20'
-                      : 'bg-cosmic-surface/20 border-white/8 hover:border-white/15',
+                      ? 'bg-cosmic-surface/50 border-white/[0.12]'
+                      : 'bg-cosmic-surface/20 border-white/[0.08] hover:border-white/[0.10]',
                   )}
                   onClick={() => setActiveIndex(isOpen ? null : i)}
                 >
@@ -488,7 +488,7 @@ function WhenToInvokeSection() {
                       animate={{ opacity: 1, height: 'auto' }}
                       exit={{ opacity: 0, height: 0 }}
                       transition={{ duration: 0.3 }}
-                      className={cn('border-t border-white/8 px-5 pb-5 pt-4', config.bgClass)}
+                      className={cn('border-t border-white/[0.08] px-5 pb-5 pt-4', config.bgClass)}
                     >
                       <p className="text-text-secondary leading-relaxed">
                         {wisdom.whenToInvoke}
@@ -512,8 +512,8 @@ function AtAGlanceSection() {
   return (
     <section ref={ref} className="py-28 relative overflow-hidden bg-cosmic-surface/10">
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
+        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6">
@@ -538,10 +538,10 @@ function AtAGlanceSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.2, duration: 0.7 }}
-          className="rounded-3xl border border-white/10 bg-cosmic-surface/40 backdrop-blur-md overflow-hidden"
+          className="rounded-3xl border border-white/[0.06] bg-cosmic-surface/40 backdrop-blur-md overflow-hidden"
         >
           {/* Table header */}
-          <div className="grid grid-cols-[2rem_1fr_1fr_1fr_2fr] gap-4 px-6 py-4 border-b border-white/10 bg-white/3">
+          <div className="grid grid-cols-[2rem_1fr_1fr_1fr_2fr] gap-4 px-6 py-4 border-b border-white/[0.06] bg-white/[0.03]">
             <span className="text-xs font-semibold text-text-muted uppercase tracking-wider">#</span>
             <span className="text-xs font-semibold text-text-muted uppercase tracking-wider">Wisdom</span>
             <span className="text-xs font-semibold text-text-muted uppercase tracking-wider hidden md:block">Element / Essence</span>
@@ -562,8 +562,8 @@ function AtAGlanceSection() {
                 transition={{ delay: 0.3 + i * 0.07 }}
                 className={cn(
                   'grid grid-cols-[2rem_1fr_1fr_1fr_2fr] gap-4 px-6 py-5 items-center',
-                  'border-b border-white/5 last:border-0',
-                  'hover:bg-white/3 transition-colors duration-200',
+                  'border-b border-white/[0.04] last:border-0',
+                  'hover:bg-white/[0.03] transition-colors duration-200',
                   'group',
                 )}
               >
@@ -704,7 +704,7 @@ function PhilosophySection() {
               ].map((item) => (
                 <div
                   key={item.label}
-                  className="p-5 rounded-2xl bg-cosmic-surface/40 border border-white/8"
+                  className="p-5 rounded-2xl bg-cosmic-surface/40 border border-white/[0.08]"
                 >
                   <p className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">
                     {item.label}

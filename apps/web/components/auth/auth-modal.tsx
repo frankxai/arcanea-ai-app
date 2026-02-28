@@ -140,7 +140,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                 {/* Close button */}
                 <button
                   onClick={handleClose}
-                  className="absolute top-4 right-4 p-2 rounded-full text-text-muted hover:text-white hover:bg-white/10 transition-colors z-10"
+                  className="absolute top-4 right-4 p-2 rounded-full text-text-muted hover:text-white hover:bg-white/[0.06] transition-colors z-10"
                 >
                   <PhX className="w-5 h-5" />
                 </button>
@@ -241,9 +241,9 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
 
                       {/* Divider */}
                       <div className="flex items-center gap-3 mb-4">
-                        <div className="flex-1 h-px bg-white/10" />
+                        <div className="flex-1 h-px bg-white/[0.06]" />
                         <span className="text-text-muted text-xs">or continue with email</span>
-                        <div className="flex-1 h-px bg-white/10" />
+                        <div className="flex-1 h-px bg-white/[0.06]" />
                       </div>
 
                       {/* Form */}

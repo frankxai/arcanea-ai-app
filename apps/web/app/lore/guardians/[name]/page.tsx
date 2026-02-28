@@ -555,7 +555,7 @@ export default async function GuardianDetailPage({
 
             {/* Top accent bar */}
             <div
-              className={`h-px w-full bg-gradient-to-r ${config.gradientFrom} via-white/20 ${config.gradientTo} opacity-50`}
+              className={`h-px w-full bg-gradient-to-r ${config.gradientFrom} via-white/[0.12] ${config.gradientTo} opacity-50`}
             />
 
             <div className="relative p-8 md:p-12 lg:p-16">
@@ -880,7 +880,7 @@ export default async function GuardianDetailPage({
                   <div className="absolute inset-0 bg-gradient-to-t from-cosmic-deep/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <p className="text-xs font-sans text-text-muted uppercase tracking-wider">Featured</p>
-                    <p className="text-sm font-sans text-white/90 mt-0.5">{guardian.name} — Primary Vision</p>
+                    <p className="text-sm font-sans text-white/[0.70] mt-0.5">{guardian.name} — Primary Vision</p>
                   </div>
                 </div>
 
@@ -913,7 +913,7 @@ export default async function GuardianDetailPage({
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-cosmic-deep/60 via-transparent to-cosmic-deep/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <span className="text-xs font-sans text-white/70 uppercase tracking-widest">Panoramic Vision</span>
+                  <span className="text-xs font-sans text-white/[0.50] uppercase tracking-widest">Panoramic Vision</span>
                 </div>
               </div>
             )}

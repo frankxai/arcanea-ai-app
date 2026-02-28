@@ -118,10 +118,10 @@ export function HeroV3() {
             initial={{ opacity: 0, y: 20 }}
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.35 }}
-            className="text-lg md:text-xl lg:text-2xl text-white/70 max-w-2xl mx-auto mb-12 leading-relaxed font-light"
+            className="text-lg md:text-xl lg:text-2xl text-white/[0.50] max-w-2xl mx-auto mb-12 leading-relaxed font-light"
           >
             Ten Guardians. A Library of original philosophy.
-            <span className="block text-white/90 mt-2 font-normal">
+            <span className="block text-white/[0.70] mt-2 font-normal">
               The mythology-powered framework for the creative life.
             </span>
           </motion.p>
@@ -139,7 +139,7 @@ export function HeroV3() {
             >
               <div className="absolute inset-0 bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-light" />
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent"
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.15] to-transparent"
                 initial={{ x: "-100%" }}
                 whileHover={{ x: "100%" }}
                 transition={{ duration: 0.5 }}
@@ -175,8 +175,8 @@ export function HeroV3() {
           transition={{ duration: 2.5, repeat: Infinity }}
           onClick={() => window.scrollTo({ top: window.innerHeight, behavior: "smooth" })}
         >
-          <span className="text-[10px] text-white/40 uppercase tracking-[0.3em]">Explore</span>
-          <PhCaretDown className="w-4 h-4 text-white/40" aria-hidden="true" />
+          <span className="text-[10px] text-white/[0.25] uppercase tracking-[0.3em]">Explore</span>
+          <PhCaretDown className="w-4 h-4 text-white/[0.25]" aria-hidden="true" />
         </motion.button>
       </motion.div>
     </section>

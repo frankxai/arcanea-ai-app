@@ -137,8 +137,8 @@ export function GuardiansPreview() {
     <section ref={ref} className="py-32 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
+        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6">
@@ -208,7 +208,7 @@ export function GuardiansPreview() {
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
-                    className="relative mt-4 pt-4 border-t border-white/10"
+                    className="relative mt-4 pt-4 border-t border-white/[0.06]"
                   >
                     <p className="text-xs text-text-secondary mb-2">
                       {guardian.description}

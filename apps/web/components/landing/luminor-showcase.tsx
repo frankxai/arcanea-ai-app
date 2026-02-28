@@ -427,7 +427,7 @@ export function LuminorShowcase() {
                   }}
                   className={`aspect-square rounded-2xl flex items-center justify-center text-3xl transition-all duration-300 relative overflow-hidden ${
                     activeLuminor === index
-                      ? 'ring-2 ring-white/50 scale-105'
+                      ? 'ring-2 ring-white/[0.30] scale-105'
                       : 'hover:scale-105 opacity-70 hover:opacity-100'
                   }`}
                   style={{
@@ -441,7 +441,7 @@ export function LuminorShowcase() {
                   {/* Shine effect on active */}
                   {activeLuminor === index && (
                     <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.20] to-transparent"
                       animate={{ x: ['-100%', '200%'] }}
                       transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
                     />
@@ -463,7 +463,7 @@ export function LuminorShowcase() {
                   className={`w-2 h-2 rounded-full transition-all duration-300 ${
                     activeLuminor === index
                       ? 'bg-atlantean-teal-aqua w-6'
-                      : 'bg-white/20 hover:bg-white/40'
+                      : 'bg-white/[0.12] hover:bg-white/[0.25]'
                   }`}
                 />
               ))}

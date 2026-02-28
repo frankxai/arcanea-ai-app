@@ -92,7 +92,7 @@ export function LoreCTA() {
 
             <Link
               href="/library/legends-of-arcanea/i-the-first-dawn"
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl liquid-glass border border-white/15 text-white font-semibold text-lg hover:bg-white/[0.06] hover:border-white/25 transition-all duration-300"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl liquid-glass border border-white/[0.10] text-white font-semibold text-lg hover:bg-white/[0.06] hover:border-white/[0.15] transition-all duration-300"
             >
               <Icons.Play />
               Read the First Legend

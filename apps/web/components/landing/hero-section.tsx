@@ -164,7 +164,7 @@ export function HeroSection({ stats }: HeroSectionProps) {
                   transition={{ duration: 3, repeat: Infinity }}
                 />
               </span>
-              <span className="block text-white/90">becomes reality</span>
+              <span className="block text-white/[0.70]">becomes reality</span>
             </motion.h1>
 
             {/* Subheadline */}
@@ -214,7 +214,7 @@ export function HeroSection({ stats }: HeroSectionProps) {
 
               <Link
                 href="/luminors"
-                className="group px-8 py-4 rounded-2xl border border-white/20 text-white font-semibold text-lg backdrop-blur-sm hover:bg-white/5 hover:border-atlantean-teal-aqua/50 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-cosmic-deep"
+                className="group px-8 py-4 rounded-2xl border border-white/[0.12] text-white font-semibold text-lg backdrop-blur-sm hover:bg-white/[0.04] hover:border-atlantean-teal-aqua/50 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/[0.30] focus:ring-offset-2 focus:ring-offset-cosmic-deep"
               >
                 <span className="flex items-center gap-2">
                   Meet the Luminors
@@ -412,7 +412,7 @@ function LuminorOrbit() {
             >
               {/* Shine effect */}
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.12] to-transparent"
                 animate={{ x: ['-100%', '200%'] }}
                 transition={{ duration: 3, repeat: Infinity, delay: i * 0.7 }}
               />

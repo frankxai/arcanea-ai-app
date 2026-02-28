@@ -157,7 +157,7 @@ export function GatesPreview() {
         {/* Gates Path */}
         <div className="relative mb-16">
           {/* Connection line */}
-          <div className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-y-1/2 hidden lg:block" />
+          <div className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.12] to-transparent -translate-y-1/2 hidden lg:block" />
 
           <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-10 gap-4">
             {GATES.map((gate, i) => (
@@ -182,7 +182,7 @@ export function GatesPreview() {
                   </p>
 
                   {/* Tooltip on hover */}
-                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-3 rounded-lg bg-cosmic-deep border border-white/20 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-3 rounded-lg bg-cosmic-deep border border-white/[0.12] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
                     <p className="text-xs text-text-secondary mb-1">
                       {gate.domain}
                     </p>

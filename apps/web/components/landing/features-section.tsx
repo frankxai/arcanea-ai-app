@@ -100,7 +100,7 @@ const FeatureCard = React.memo(function FeatureCard({
               >
                 {feature.icon}
               </motion.div>
-              <div className="px-3 py-1 rounded-full bg-white/5 border border-white/[0.06] text-xs text-text-muted">
+              <div className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] text-xs text-text-muted">
                 {feature.stats}
               </div>
             </div>

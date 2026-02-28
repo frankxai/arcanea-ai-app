@@ -230,7 +230,7 @@ export default function GatesPage() {
       </section>
 
       {/* Ranks Overview */}
-      <section className="py-16 border-y border-white/5">
+      <section className="py-16 border-y border-white/[0.04]">
         <div className="max-w-5xl mx-auto px-6">
           <h2 className="text-xl font-display font-bold text-center mb-8">Magic Ranks</h2>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
@@ -265,7 +265,7 @@ export default function GatesPage() {
                 >
                   <div
                     className={`relative rounded-2xl liquid-glass overflow-hidden transition-all duration-300 ${
-                      expandedGate === gate.number ? 'border-white/30 shadow-glow-sm' : 'hover:border-white/[0.12]'
+                      expandedGate === gate.number ? 'border-white/[0.20] shadow-glow-sm' : 'hover:border-white/[0.12]'
                     }`}
                   >
                     {/* Guardian atmospheric background */}
@@ -323,7 +323,7 @@ export default function GatesPage() {
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
                         transition={{ duration: 0.3, ease: 'easeInOut' }}
-                        className="border-t border-white/10 p-6 overflow-hidden"
+                        className="border-t border-white/[0.06] p-6 overflow-hidden"
                       >
                         <div className="grid md:grid-cols-2 gap-6">
                           {/* Left */}
@@ -378,7 +378,7 @@ export default function GatesPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 border-t border-white/5">
+      <section className="py-24 border-t border-white/[0.04]">
         <div className="max-w-2xl mx-auto px-6 text-center">
           <div className="w-20 h-20 mx-auto mb-6 rounded-2xl liquid-glass flex items-center justify-center">
             <PhSparkle className="w-10 h-10 text-gold-bright" />
@@ -397,7 +397,7 @@ export default function GatesPage() {
             </Link>
             <Link
               href="/lore/guardians"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-white/20 text-white font-semibold hover:bg-white/5 transition-all"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-white/[0.12] text-white font-semibold hover:bg-white/[0.04] transition-all"
             >
               Meet the Guardians
             </Link>

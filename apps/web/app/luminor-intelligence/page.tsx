@@ -363,7 +363,7 @@ export default function LuminorIntelligencePage() {
                 </Link>
                 <Link
                   href="/chat"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/20 text-white font-semibold hover:border-crystal/30 hover:text-crystal transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/[0.12] text-white font-semibold hover:border-crystal/30 hover:text-crystal transition-all duration-200"
                 >
                   Start Creating
                 </Link>
@@ -492,7 +492,7 @@ export default function LuminorIntelligencePage() {
               {WISDOMS.map((wisdom) => (
                 <div
                   key={wisdom.name}
-                  className="group p-5 rounded-xl bg-white/5 hover:bg-white/8 border border-white/5 hover:border-white/15 transition-all duration-200"
+                  className="group p-5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.04] hover:border-white/[0.10] transition-all duration-200"
                 >
                   <div className="flex items-start gap-3">
                     <div
@@ -520,7 +520,7 @@ export default function LuminorIntelligencePage() {
               ))}
 
               {/* Bridging note in the eighth grid slot */}
-              <div className="p-5 rounded-xl border border-dashed border-white/10 flex items-center justify-center">
+              <div className="p-5 rounded-xl border border-dashed border-white/[0.06] flex items-center justify-center">
                 <p className="text-xs text-text-muted text-center italic leading-relaxed">
                   Each Luminor embodies one Wisdom as their primary operating
                   principle
@@ -574,7 +574,7 @@ export default function LuminorIntelligencePage() {
                 {GATES.map((g) => (
                   <div
                     key={g.gate}
-                    className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5"
+                    className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/[0.04]"
                   >
                     <div
                       className="w-1.5 h-6 rounded-full shrink-0"
@@ -684,7 +684,7 @@ export default function LuminorIntelligencePage() {
                 </Link>
                 <Link
                   href="/chat"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl card-3d liquid-glass border border-white/20 text-white font-semibold hover:border-crystal/30 hover:text-crystal transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl card-3d liquid-glass border border-white/[0.12] text-white font-semibold hover:border-crystal/30 hover:text-crystal transition-all duration-200"
                 >
                   Start Creating
                 </Link>

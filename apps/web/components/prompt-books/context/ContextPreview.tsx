@@ -176,7 +176,7 @@ export function ContextPreview({ contextPackage, className }: ContextPreviewProp
           ))}
 
           {/* Parameters */}
-          <div className="mt-3 pt-3 border-t border-white/5">
+          <div className="mt-3 pt-3 border-t border-white/[0.04]">
             <div className="text-[10px] font-sans font-semibold text-text-muted uppercase tracking-wider mb-2">
               Parameters
             </div>
@@ -204,7 +204,7 @@ export function ContextPreview({ contextPackage, className }: ContextPreviewProp
       {viewMode === 'json' && (
         <div
           className={cn(
-            'bg-white/[0.02] border border-white/5 rounded-lg',
+            'bg-white/[0.02] border border-white/[0.04] rounded-lg',
             'p-3 overflow-x-auto',
             'max-h-64 overflow-y-auto scrollbar-thin',
           )}

@@ -205,7 +205,7 @@ export default function WorldBuilderPage() {
         </section>
 
         {/* Templates */}
-        <section className="py-8 border-t border-white/5">
+        <section className="py-8 border-t border-white/[0.04]">
           <div className="mb-6">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-crystal/20 bg-crystal/8 mb-4">
               <PhSparkle className="w-3 h-3 text-crystal" />
@@ -246,7 +246,7 @@ export default function WorldBuilderPage() {
                     {template.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="text-xs px-2 py-0.5 rounded-full bg-white/5 text-text-muted"
+                        className="text-xs px-2 py-0.5 rounded-full bg-white/[0.04] text-text-muted"
                       >
                         {tag}
                       </span>
@@ -259,7 +259,7 @@ export default function WorldBuilderPage() {
         </section>
 
         {/* World Elements */}
-        <section className="py-8 border-t border-white/5">
+        <section className="py-8 border-t border-white/[0.04]">
           <div className="mb-6">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand-gold/20 bg-brand-gold/8 mb-4">
               <PhMapTrifold className="w-3 h-3 text-brand-gold" />
@@ -299,7 +299,7 @@ export default function WorldBuilderPage() {
                     {element.elements.slice(0, 3).map((sub) => (
                       <span
                         key={sub}
-                        className="text-xs px-2 py-0.5 rounded-full bg-white/5 text-text-muted"
+                        className="text-xs px-2 py-0.5 rounded-full bg-white/[0.04] text-text-muted"
                       >
                         {sub}
                       </span>
@@ -317,7 +317,7 @@ export default function WorldBuilderPage() {
         </section>
 
         {/* Recent Worlds */}
-        <section className="py-8 border-t border-white/5 pb-16">
+        <section className="py-8 border-t border-white/[0.04] pb-16">
           <div className="mb-6">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-water/20 bg-water/8 mb-4">
               <PhStar className="w-3 h-3 text-water" />
@@ -365,7 +365,7 @@ export default function WorldBuilderPage() {
                   {world.preview}
                 </p>
 
-                <div className="flex items-center justify-between pt-4 border-t border-white/5">
+                <div className="flex items-center justify-between pt-4 border-t border-white/[0.04]">
                   <span className="text-xs text-text-muted">
                     {world.elements} elements
                   </span>
@@ -379,7 +379,7 @@ export default function WorldBuilderPage() {
             {/* New World Card */}
             <Link
               href="/world-builder/new"
-              className="group card-3d liquid-glass rounded-2xl p-6 border-2 border-dashed border-white/20 hover:border-brand-primary/40 hover:bg-brand-primary/5 transition-all flex flex-col items-center justify-center text-center min-h-[200px]"
+              className="group card-3d liquid-glass rounded-2xl p-6 border-2 border-dashed border-white/[0.12] hover:border-brand-primary/40 hover:bg-brand-primary/5 transition-all flex flex-col items-center justify-center text-center min-h-[200px]"
             >
               <PhPlus className="w-8 h-8 text-text-muted group-hover:text-brand-primary transition-colors mb-3" />
               <span className="text-text-muted group-hover:text-brand-primary transition-colors font-sans">

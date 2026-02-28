@@ -10,7 +10,7 @@ export default function ChangelogLoading() {
         <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top,rgba(255,215,0,0.15),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(139,92,246,0.15),transparent_50%)]" />
       </div>
 
-      <nav className="sticky top-0 z-50 border-b border-white/5 bg-cosmic-deep/80 backdrop-blur-xl">
+      <nav className="sticky top-0 z-50 border-b border-white/[0.04] bg-cosmic-deep/80 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -59,7 +59,7 @@ export default function ChangelogLoading() {
           </div>
         </section>
 
-        <section className="py-16 border-t border-white/5">
+        <section className="py-16 border-t border-white/[0.04]">
           <div className="grid grid-cols-4 gap-6">
             {[1, 2, 3, 4].map((i) => (
               <div

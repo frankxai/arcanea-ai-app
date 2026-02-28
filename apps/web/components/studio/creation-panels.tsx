@@ -70,7 +70,7 @@ export function TextCreationPanel({
     <div className="flex flex-col lg:flex-row gap-4 flex-1 min-h-0">
       {/* Left: Editor */}
       <div className="flex-1 flex flex-col min-h-0">
-        <div className="flex items-center gap-1 px-3 py-2 border-b border-white/8 bg-white/[0.02]">
+        <div className="flex items-center gap-1 px-3 py-2 border-b border-white/[0.08] bg-white/[0.02]">
           <ToolbarBtn onClick={() => insertMarkdown("**", "**")} title="Bold">
             <TextB size={16} weight="bold" />
           </ToolbarBtn>
@@ -101,15 +101,15 @@ export function TextCreationPanel({
           spellCheck
         />
 
-        <div className="flex items-center gap-4 px-4 py-2 border-t border-white/8 bg-white/[0.02] text-xs text-text-muted font-mono">
+        <div className="flex items-center gap-4 px-4 py-2 border-t border-white/[0.08] bg-white/[0.02] text-xs text-text-muted font-mono">
           <span>{wordCount} words</span>
           <span>{charCount} chars</span>
         </div>
       </div>
 
       {/* Right: Luminor AI Panel */}
-      <div className="lg:w-[340px] flex flex-col border-l border-white/8 min-h-0">
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/8 bg-white/[0.02]">
+      <div className="lg:w-[340px] flex flex-col border-l border-white/[0.08] min-h-0">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.08] bg-white/[0.02]">
           <div className="w-6 h-6 rounded-full bg-gradient-to-br from-crystal to-brand-primary flex items-center justify-center">
             <Brain size={14} className="text-cosmic-void" />
           </div>
@@ -132,7 +132,7 @@ export function TextCreationPanel({
                     setLuminorInput(s.title);
                     setTimeout(onAskLuminor, 50);
                   }}
-                  className="w-full text-left p-3 rounded-xl border border-white/8 bg-white/[0.03] hover:bg-white/[0.06] hover:border-crystal/30 transition-all group"
+                  className="w-full text-left p-3 rounded-xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06] hover:border-crystal/30 transition-all group"
                 >
                   <div className="flex items-start gap-2">
                     <Sparkle size={14} weight="fill" className="text-crystal mt-0.5 shrink-0" />
@@ -153,7 +153,7 @@ export function TextCreationPanel({
                 className={`p-3 rounded-xl text-xs leading-relaxed ${
                   msg.role === "user"
                     ? "bg-brand-primary/10 border border-brand-primary/20 text-text-primary ml-6"
-                    : "bg-white/[0.03] border border-white/8 text-text-secondary mr-2"
+                    : "bg-white/[0.03] border border-white/[0.08] text-text-secondary mr-2"
                 }`}
               >
                 {msg.role === "luminor" && (
@@ -170,7 +170,7 @@ export function TextCreationPanel({
           )}
         </div>
 
-        <div className="p-3 border-t border-white/8">
+        <div className="p-3 border-t border-white/[0.08]">
           <div className="flex items-center gap-2">
             <input
               type="text"
@@ -180,7 +180,7 @@ export function TextCreationPanel({
                 if (e.key === "Enter" && luminorInput.trim()) onAskLuminor();
               }}
               placeholder="Ask Luminor..."
-              className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-text-primary placeholder-text-muted/50 focus:outline-none focus:border-crystal/40 transition-colors"
+              className="flex-1 bg-white/[0.04] border border-white/[0.06] rounded-lg px-3 py-2 text-xs text-text-primary placeholder-text-muted/50 focus:outline-none focus:border-crystal/40 transition-colors"
             />
             <button
               onClick={onAskLuminor}
@@ -218,7 +218,7 @@ export function ImageCreationPanel() {
   return (
     <div className="flex flex-col lg:flex-row gap-4 flex-1 min-h-0">
       <div className="flex-1 flex flex-col min-h-0">
-        <div className="flex items-center gap-2 px-4 py-2 border-b border-white/8 bg-white/[0.02]">
+        <div className="flex items-center gap-2 px-4 py-2 border-b border-white/[0.08] bg-white/[0.02]">
           <span className="text-xs text-text-muted font-mono">Describe your vision</span>
         </div>
         <textarea
@@ -229,7 +229,7 @@ export function ImageCreationPanel() {
           }
           className="flex-1 w-full resize-none bg-transparent text-text-primary placeholder-text-muted/40 p-4 font-body text-sm leading-relaxed focus:outline-none min-h-[200px]"
         />
-        <div className="px-4 py-3 border-t border-white/8 bg-white/[0.02]">
+        <div className="px-4 py-3 border-t border-white/[0.08] bg-white/[0.02]">
           <p className="text-xs text-text-muted mb-2">Style:</p>
           <div className="flex flex-wrap gap-2">
             {IMAGE_STYLES.map((s) => (
@@ -241,13 +241,13 @@ export function ImageCreationPanel() {
         </div>
       </div>
 
-      <div className="lg:w-[400px] flex flex-col border-l border-white/8 min-h-0">
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/8 bg-white/[0.02]">
+      <div className="lg:w-[400px] flex flex-col border-l border-white/[0.08] min-h-0">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.08] bg-white/[0.02]">
           <Eye size={14} className="text-text-muted" />
           <span className="text-xs font-semibold text-text-primary">Preview</span>
         </div>
         <div className="flex-1 flex items-center justify-center p-6">
-          <div className="w-full aspect-square max-w-[320px] rounded-2xl border border-white/10 bg-gradient-to-br from-fire/5 via-transparent to-brand-primary/5 flex flex-col items-center justify-center gap-4 p-6">
+          <div className="w-full aspect-square max-w-[320px] rounded-2xl border border-white/[0.06] bg-gradient-to-br from-fire/5 via-transparent to-brand-primary/5 flex flex-col items-center justify-center gap-4 p-6">
             <div className="w-16 h-16 rounded-2xl bg-fire/10 border border-fire/20 flex items-center justify-center">
               <Image size={28} className="text-fire/60" />
             </div>
@@ -280,7 +280,7 @@ export function CodeCreationPanel() {
   return (
     <div className="flex flex-col lg:flex-row gap-4 flex-1 min-h-0">
       <div className="flex-1 flex flex-col min-h-0">
-        <div className="flex items-center gap-3 px-4 py-2 border-b border-white/8 bg-white/[0.02]">
+        <div className="flex items-center gap-3 px-4 py-2 border-b border-white/[0.08] bg-white/[0.02]">
           <Terminal size={14} className="text-brand-gold" />
           <div className="flex items-center gap-2">
             {LANGUAGES.map((lang) => (
@@ -290,7 +290,7 @@ export function CodeCreationPanel() {
                 className={`px-2.5 py-1 rounded text-[11px] transition-all ${
                   language === lang
                     ? "bg-brand-gold/15 text-brand-gold border border-brand-gold/30"
-                    : "text-text-muted hover:text-text-secondary hover:bg-white/5"
+                    : "text-text-muted hover:text-text-secondary hover:bg-white/[0.04]"
                 }`}
               >
                 {lang}
@@ -307,14 +307,14 @@ export function CodeCreationPanel() {
           spellCheck={false}
         />
 
-        <div className="flex items-center gap-4 px-4 py-2 border-t border-white/8 bg-white/[0.02] text-xs text-text-muted font-mono">
+        <div className="flex items-center gap-4 px-4 py-2 border-t border-white/[0.08] bg-white/[0.02] text-xs text-text-muted font-mono">
           <span>{language}</span>
           <span>{code.split("\n").length} lines</span>
         </div>
       </div>
 
-      <div className="lg:w-[340px] flex flex-col border-l border-white/8 min-h-0">
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/8 bg-white/[0.02]">
+      <div className="lg:w-[340px] flex flex-col border-l border-white/[0.08] min-h-0">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.08] bg-white/[0.02]">
           <Play size={14} className="text-brand-gold" />
           <span className="text-xs font-semibold text-text-primary">Output</span>
         </div>
@@ -354,7 +354,7 @@ export function MusicCreationPanel() {
   return (
     <div className="flex flex-col lg:flex-row gap-4 flex-1 min-h-0">
       <div className="flex-1 flex flex-col min-h-0">
-        <div className="flex items-center gap-2 px-4 py-2 border-b border-white/8 bg-white/[0.02]">
+        <div className="flex items-center gap-2 px-4 py-2 border-b border-white/[0.08] bg-white/[0.02]">
           <span className="text-xs text-text-muted font-mono">Describe the sound</span>
         </div>
         <textarea
@@ -365,7 +365,7 @@ export function MusicCreationPanel() {
           }
           className="flex-1 w-full resize-none bg-transparent text-text-primary placeholder-text-muted/40 p-4 font-body text-sm leading-relaxed focus:outline-none min-h-[200px]"
         />
-        <div className="px-4 py-3 border-t border-white/8 bg-white/[0.02]">
+        <div className="px-4 py-3 border-t border-white/[0.08] bg-white/[0.02]">
           <p className="text-xs text-text-muted mb-2">Mood:</p>
           <div className="flex flex-wrap gap-2">
             {MOODS.map((m) => (
@@ -377,8 +377,8 @@ export function MusicCreationPanel() {
         </div>
       </div>
 
-      <div className="lg:w-[340px] flex flex-col border-l border-white/8 min-h-0">
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/8 bg-white/[0.02]">
+      <div className="lg:w-[340px] flex flex-col border-l border-white/[0.08] min-h-0">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.08] bg-white/[0.02]">
           <MusicNote size={14} className="text-blue-400" />
           <span className="text-xs font-semibold text-text-primary">Sound Preview</span>
         </div>
@@ -409,7 +409,7 @@ function ToolbarBtn({
   return (
     <button
       onClick={onClick}
-      className="p-1.5 rounded hover:bg-white/10 text-text-muted hover:text-text-primary transition-colors"
+      className="p-1.5 rounded hover:bg-white/[0.06] text-text-muted hover:text-text-primary transition-colors"
       title={title}
     >
       {children}
@@ -457,7 +457,7 @@ function PillBtn({
       className={`px-3 py-1.5 rounded-full text-xs border transition-all ${
         active
           ? PILL_ACTIVE[variant]
-          : "border-white/10 bg-white/5 text-text-muted hover:border-white/20"
+          : "border-white/[0.06] bg-white/[0.04] text-text-muted hover:border-white/[0.12]"
       }`}
     >
       {children}
@@ -483,7 +483,7 @@ function StatusPill({
 
 function WaveformPlaceholder() {
   return (
-    <div className="w-full h-20 rounded-xl border border-white/10 bg-gradient-to-r from-blue-500/5 via-brand-primary/5 to-blue-500/5 flex items-center justify-center overflow-hidden">
+    <div className="w-full h-20 rounded-xl border border-white/[0.06] bg-gradient-to-r from-blue-500/5 via-brand-primary/5 to-blue-500/5 flex items-center justify-center overflow-hidden">
       <div className="flex items-end gap-[3px] h-12">
         {Array.from({ length: 32 }).map((_, i) => (
           <div

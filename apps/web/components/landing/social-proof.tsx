@@ -140,7 +140,7 @@ export function SocialProof() {
             >
               <div className="relative card-3d liquid-glass rounded-2xl border border-white/[0.06] p-6 hover:border-white/[0.12] transition-all duration-500">
                 {/* Quote icon */}
-                <PhQuotes className="absolute top-4 right-4 w-8 h-8 text-white/5" />
+                <PhQuotes className="absolute top-4 right-4 w-8 h-8 text-white/[0.04]" />
 
                 {/* Rating */}
                 <div className="flex gap-1 mb-4">

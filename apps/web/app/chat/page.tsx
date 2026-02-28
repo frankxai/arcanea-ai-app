@@ -205,7 +205,7 @@ export default function ChatLandingPage() {
                       </p>
 
                       {/* CTA row */}
-                      <div className="pt-4 border-t border-white/5 flex items-center justify-between">
+                      <div className="pt-4 border-t border-white/[0.04] flex items-center justify-between">
                         <span className="font-body text-xs text-text-muted">
                           Chat with {luminor.name}
                         </span>

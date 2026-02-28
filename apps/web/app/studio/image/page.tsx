@@ -132,7 +132,7 @@ export default function ImageForgePage() {
           <div className="flex items-center gap-4">
             <Link
               href="/studio"
-              className="p-2 rounded-lg hover:bg-white/10 transition-colors"
+              className="p-2 rounded-lg hover:bg-white/[0.06] transition-colors"
             >
               <PhArrowLeft className="w-5 h-5" />
             </Link>
@@ -150,7 +150,7 @@ export default function ImageForgePage() {
           <button
             onClick={() => setShowSettings(!showSettings)}
             className={`p-2 rounded-lg transition-colors ${
-              showSettings ? 'bg-white/10 text-white' : 'hover:bg-white/10 text-text-secondary'
+              showSettings ? 'bg-white/[0.06] text-white' : 'hover:bg-white/[0.06] text-text-secondary'
             }`}
           >
             <PhGear className="w-5 h-5" />
@@ -200,13 +200,13 @@ export default function ImageForgePage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity">
                       <div className="absolute bottom-0 left-0 right-0 p-6">
                         <div className="flex items-center justify-between">
-                          <p className="text-sm text-white/90 line-clamp-2 max-w-md">
+                          <p className="text-sm text-white/[0.70] line-clamp-2 max-w-md">
                             {selectedImage.prompt}
                           </p>
                           <div className="flex gap-2">
                             <button
                               onClick={handleCopyPrompt}
-                              className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
+                              className="p-2 rounded-lg bg-white/[0.06] hover:bg-white/[0.12] transition-colors"
                               title="Copy prompt"
                             >
                               {copied ? (
@@ -217,13 +217,13 @@ export default function ImageForgePage() {
                             </button>
                             <button
                               onClick={handleDownload}
-                              className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
+                              className="p-2 rounded-lg bg-white/[0.06] hover:bg-white/[0.12] transition-colors"
                               title="Download image"
                             >
                               <PhDownload className="w-5 h-5" />
                             </button>
                             <button
-                              className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
+                              className="p-2 rounded-lg bg-white/[0.06] hover:bg-white/[0.12] transition-colors"
                               title="Zoom"
                             >
                               <PhMagnifyingGlassPlus className="w-5 h-5" />
@@ -267,7 +267,7 @@ export default function ImageForgePage() {
                       className={`flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 transition-all ${
                         selectedImage?.id === img.id
                           ? 'border-draconic-crimson'
-                          : 'border-transparent hover:border-white/30'
+                          : 'border-transparent hover:border-white/[0.20]'
                       }`}
                     >
                       <img
@@ -285,7 +285,7 @@ export default function ImageForgePage() {
           {/* Sidebar - Controls */}
           <div className="space-y-6">
             {/* Prompt input */}
-            <div className="bg-cosmic-surface/50 rounded-2xl border border-white/10 p-4">
+            <div className="bg-cosmic-surface/50 rounded-2xl border border-white/[0.06] p-4">
               <label className="block text-sm font-medium mb-2">Describe Your Vision</label>
               <textarea
                 ref={textareaRef}
@@ -293,7 +293,7 @@ export default function ImageForgePage() {
                 onChange={(e) => setPrompt(e.target.value)}
                 placeholder="A majestic dragon guardian soaring through a cosmic nebula, scales shimmering with starlight..."
                 rows={4}
-                className="w-full bg-white/5 rounded-xl border border-white/10 p-3 text-sm focus:border-draconic-crimson focus:outline-none focus:ring-2 focus:ring-draconic-crimson/20 resize-none transition-all"
+                className="w-full bg-white/[0.04] rounded-xl border border-white/[0.06] p-3 text-sm focus:border-draconic-crimson focus:outline-none focus:ring-2 focus:ring-draconic-crimson/20 resize-none transition-all"
               />
 
               {/* Quick prompts */}
@@ -304,7 +304,7 @@ export default function ImageForgePage() {
                     <button
                       key={i}
                       onClick={() => handleQuickPrompt(qp)}
-                      className="text-xs px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 text-text-secondary hover:text-white transition-colors"
+                      className="text-xs px-3 py-1.5 rounded-full bg-white/[0.04] hover:bg-white/[0.06] text-text-secondary hover:text-white transition-colors"
                     >
                       {qp.slice(0, 30)}...
                     </button>
@@ -333,7 +333,7 @@ export default function ImageForgePage() {
             </div>
 
             {/* Style presets */}
-            <div className="bg-cosmic-surface/50 rounded-2xl border border-white/10 p-4">
+            <div className="bg-cosmic-surface/50 rounded-2xl border border-white/[0.06] p-4">
               <div className="flex items-center gap-2 mb-3">
                 <PhPalette className="w-4 h-4 text-text-muted" />
                 <label className="text-sm font-medium">Style</label>
@@ -346,7 +346,7 @@ export default function ImageForgePage() {
                     className={`p-3 rounded-xl border text-left transition-all ${
                       selectedStyle === style.id
                         ? 'border-draconic-crimson bg-draconic-crimson/10'
-                        : 'border-white/10 hover:border-white/30 hover:bg-white/5'
+                        : 'border-white/[0.06] hover:border-white/[0.20] hover:bg-white/[0.04]'
                     }`}
                   >
                     <p className={`text-sm font-medium ${selectedStyle === style.id ? 'text-draconic-crimson' : ''}`}>
@@ -359,7 +359,7 @@ export default function ImageForgePage() {
             </div>
 
             {/* Aspect ratio */}
-            <div className="bg-cosmic-surface/50 rounded-2xl border border-white/10 p-4">
+            <div className="bg-cosmic-surface/50 rounded-2xl border border-white/[0.06] p-4">
               <div className="flex items-center gap-2 mb-3">
                 <PhStack className="w-4 h-4 text-text-muted" />
                 <label className="text-sm font-medium">Aspect Ratio</label>
@@ -372,7 +372,7 @@ export default function ImageForgePage() {
                     className={`px-4 py-2 rounded-lg border text-sm transition-all ${
                       selectedRatio === ratio.id
                         ? 'border-draconic-crimson bg-draconic-crimson/10 text-draconic-crimson'
-                        : 'border-white/10 hover:border-white/30 text-text-secondary'
+                        : 'border-white/[0.06] hover:border-white/[0.20] text-text-secondary'
                     }`}
                   >
                     {ratio.name}
@@ -389,7 +389,7 @@ export default function ImageForgePage() {
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
-                  className="bg-cosmic-surface/50 rounded-2xl border border-white/10 p-4 overflow-hidden"
+                  className="bg-cosmic-surface/50 rounded-2xl border border-white/[0.06] p-4 overflow-hidden"
                 >
                   <h4 className="text-sm font-medium mb-4">Advanced Settings</h4>
 
@@ -411,7 +411,7 @@ export default function ImageForgePage() {
 
                     <div>
                       <label className="text-xs text-text-muted">Enhancement</label>
-                      <select className="w-full mt-2 bg-white/5 border border-white/10 rounded-lg p-2 text-sm focus:border-draconic-crimson focus:outline-none">
+                      <select className="w-full mt-2 bg-white/[0.04] border border-white/[0.06] rounded-lg p-2 text-sm focus:border-draconic-crimson focus:outline-none">
                         <option value="none">None</option>
                         <option value="upscale">Upscale 2x</option>
                         <option value="enhance">Enhance Details</option>
@@ -424,7 +424,7 @@ export default function ImageForgePage() {
                       <input
                         type="text"
                         placeholder="Things to avoid in the image..."
-                        className="w-full mt-2 bg-white/5 border border-white/10 rounded-lg p-2 text-sm focus:border-draconic-crimson focus:outline-none"
+                        className="w-full mt-2 bg-white/[0.04] border border-white/[0.06] rounded-lg p-2 text-sm focus:border-draconic-crimson focus:outline-none"
                       />
                     </div>
                   </div>

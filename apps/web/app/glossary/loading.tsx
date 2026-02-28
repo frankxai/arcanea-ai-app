@@ -1,12 +1,12 @@
 export default function Loading() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 animate-pulse">
-      <div className="h-12 w-52 bg-white/5 rounded-xl mb-4" />
-      <div className="h-4 w-80 bg-white/5 rounded mb-8" />
-      <div className="h-12 w-full max-w-lg bg-white/5 rounded-xl mb-12" />
+      <div className="h-12 w-52 bg-white/[0.04] rounded-xl mb-4" />
+      <div className="h-4 w-80 bg-white/[0.04] rounded mb-8" />
+      <div className="h-12 w-full max-w-lg bg-white/[0.04] rounded-xl mb-12" />
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {Array.from({ length: 12 }).map((_, i) => (
-          <div key={i} className="h-28 bg-white/5 rounded-2xl" />
+          <div key={i} className="h-28 bg-white/[0.04] rounded-2xl" />
         ))}
       </div>
     </div>

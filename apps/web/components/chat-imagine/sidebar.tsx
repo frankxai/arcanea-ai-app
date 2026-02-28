@@ -48,12 +48,12 @@ export function Sidebar({ activeTab, onTabChange, collapsed, onToggleCollapse }:
   return (
     <aside
       className={cn(
-        'glass-strong flex flex-col border-r border-white/5 transition-all duration-300 relative h-screen',
+        'glass-strong flex flex-col border-r border-white/[0.04] transition-all duration-300 relative h-screen',
         collapsed ? 'w-16' : 'w-72'
       )}
     >
       {/* Logo Section */}
-      <div className="p-4 border-b border-white/5 flex items-center gap-3">
+      <div className="p-4 border-b border-white/[0.04] flex items-center gap-3">
         <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-accent/20 to-brand-primary/20 flex items-center justify-center animate-pulse-glow">
           <div className="w-4 h-4 bg-brand-accent rounded-sm animate-float" style={{ clipPath: 'polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%)' }} />
         </div>
@@ -75,7 +75,7 @@ export function Sidebar({ activeTab, onTabChange, collapsed, onToggleCollapse }:
       )}
 
       {/* Navigation Tabs */}
-      <nav className="p-2 border-b border-white/5" role="tablist" aria-label="Main navigation">
+      <nav className="p-2 border-b border-white/[0.04]" role="tablist" aria-label="Main navigation">
         {tabs.map((tab) => {
           const Icon = tab.icon
           const isActive = activeTab === tab.id
@@ -166,7 +166,7 @@ export function Sidebar({ activeTab, onTabChange, collapsed, onToggleCollapse }:
       )}
 
       {/* Bottom Section */}
-      <div className="mt-auto border-t border-white/5 p-3 space-y-3">
+      <div className="mt-auto border-t border-white/[0.04] p-3 space-y-3">
         {!collapsed && (
           <div className="liquid-glass rounded-lg p-3 space-y-2">
             <div className="flex items-center gap-3">

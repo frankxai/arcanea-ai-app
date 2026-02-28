@@ -198,7 +198,7 @@ export default function FeedbackPage() {
                             ${
                               isSelected
                                 ? "bg-crystal/20 text-crystal"
-                                : "bg-white/5 text-text-muted"
+                                : "bg-white/[0.04] text-text-muted"
                             }
                           `}
                         >
@@ -304,7 +304,7 @@ export default function FeedbackPage() {
                   ${
                     canSubmit
                       ? "bg-crystal text-cosmic-deep shadow-[0_0_24px_rgba(127,255,212,0.2)] hover:shadow-[0_0_32px_rgba(127,255,212,0.3)] hover:scale-[1.02] active:scale-[0.98]"
-                      : "bg-white/5 text-text-muted border border-white/[0.06] cursor-not-allowed"
+                      : "bg-white/[0.04] text-text-muted border border-white/[0.06] cursor-not-allowed"
                   }
                 `}
               >

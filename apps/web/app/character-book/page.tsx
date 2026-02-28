@@ -467,7 +467,7 @@ export default function CharacterBookPage() {
                   </p>
 
                   {/* Element & Stats */}
-                  <div className="flex items-center justify-between pt-4 border-t border-white/5">
+                  <div className="flex items-center justify-between pt-4 border-t border-white/[0.04]">
                     <div className="flex items-center gap-2">
                       <div
                         className="w-8 h-8 rounded-lg flex items-center justify-center"
@@ -500,10 +500,10 @@ export default function CharacterBookPage() {
                 {/* Hover actions */}
                 <div className="absolute inset-0 bg-gradient-to-t from-cosmic-void/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
                   <div className="absolute bottom-6 left-6 right-6 flex gap-2">
-                    <button className="flex-1 px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm text-white text-sm font-medium hover:bg-white/20 transition-colors">
+                    <button className="flex-1 px-4 py-2 rounded-lg bg-white/[0.06] backdrop-blur-sm text-white text-sm font-medium hover:bg-white/[0.12] transition-colors">
                       Edit
                     </button>
-                    <button className="px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm text-white text-sm font-medium hover:bg-white/20 transition-colors">
+                    <button className="px-4 py-2 rounded-lg bg-white/[0.06] backdrop-blur-sm text-white text-sm font-medium hover:bg-white/[0.12] transition-colors">
                       <Icons.Eye />
                     </button>
                   </div>

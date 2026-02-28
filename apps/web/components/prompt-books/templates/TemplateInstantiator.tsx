@@ -56,9 +56,9 @@ export function TemplateInstantiator({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div className="glass-strong rounded-2xl border border-white/10 w-[560px] max-h-[80vh] flex flex-col shadow-2xl">
+      <div className="glass-strong rounded-2xl border border-white/[0.06] w-[560px] max-h-[80vh] flex flex-col shadow-2xl">
         {/* Header */}
-        <div className="px-5 py-4 border-b border-white/5 flex items-center justify-between">
+        <div className="px-5 py-4 border-b border-white/[0.04] flex items-center justify-between">
           <div>
             <div className="flex items-center gap-2 mb-1">
               {guardian && (
@@ -104,7 +104,7 @@ export function TemplateInstantiator({
               value={collectionId || ''}
               onChange={(e) => setCollectionId(e.target.value || undefined)}
               className={cn(
-                'w-full bg-white/[0.03] border border-white/10 rounded-lg px-3 py-2',
+                'w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2',
                 'text-xs font-sans text-text-primary focus:outline-none focus:border-brand-accent/40',
               )}
             >
@@ -127,7 +127,7 @@ export function TemplateInstantiator({
         </div>
 
         {/* Footer */}
-        <div className="px-5 py-3 border-t border-white/5 flex justify-end gap-2">
+        <div className="px-5 py-3 border-t border-white/[0.04] flex justify-end gap-2">
           <Button variant="ghost" onClick={onClose} className="text-xs">
             Cancel
           </Button>
@@ -167,7 +167,7 @@ function VariableField({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           className={cn(
-            'w-full bg-white/[0.03] border border-white/10 rounded-lg px-3 py-2',
+            'w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2',
             'text-xs font-sans text-text-primary focus:outline-none focus:border-brand-accent/40',
           )}
         >
@@ -182,7 +182,7 @@ function VariableField({
             type="checkbox"
             checked={value === 'true'}
             onChange={(e) => onChange(e.target.checked ? 'true' : 'false')}
-            className="rounded border-white/20 bg-white/5 text-brand-accent focus:ring-brand-accent/40"
+            className="rounded border-white/[0.12] bg-white/[0.04] text-brand-accent focus:ring-brand-accent/40"
           />
           <span className="text-xs font-sans text-text-secondary">Enabled</span>
         </label>
@@ -193,7 +193,7 @@ function VariableField({
           onChange={(e) => onChange(e.target.value)}
           placeholder={variable.default || '0'}
           className={cn(
-            'w-full bg-white/[0.03] border border-white/10 rounded-lg px-3 py-2',
+            'w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2',
             'text-xs font-mono text-text-primary focus:outline-none focus:border-brand-accent/40',
           )}
         />
@@ -204,7 +204,7 @@ function VariableField({
           onChange={(e) => onChange(e.target.value)}
           placeholder={variable.default || `Enter ${variable.label.toLowerCase()}...`}
           className={cn(
-            'w-full bg-white/[0.03] border border-white/10 rounded-lg px-3 py-2',
+            'w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2',
             'text-xs font-sans text-text-primary focus:outline-none focus:border-brand-accent/40',
           )}
         />

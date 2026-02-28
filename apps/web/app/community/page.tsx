@@ -347,7 +347,7 @@ export default function CommunityPage() {
 
         {/* ── 2. Community Spaces ───────────────────────────────────────────── */}
         <section
-          className="py-16 border-t border-white/5"
+          className="py-16 border-t border-white/[0.04]"
           aria-labelledby="spaces-heading"
         >
           <div className="mb-12">
@@ -447,7 +447,7 @@ export default function CommunityPage() {
 
         {/* ── 3. Events ─────────────────────────────────────────────────────── */}
         <section
-          className="py-16 border-t border-white/5"
+          className="py-16 border-t border-white/[0.04]"
           aria-labelledby="events-heading"
         >
           <div className="mb-12">
@@ -544,7 +544,7 @@ export default function CommunityPage() {
 
         {/* ── 4. Creator Spotlight ─────────────────────────────────────────── */}
         <section
-          className="py-16 border-t border-white/5"
+          className="py-16 border-t border-white/[0.04]"
           aria-labelledby="spotlight-heading"
         >
           <div className="mb-12">
@@ -622,7 +622,7 @@ export default function CommunityPage() {
                     {work.description}
                   </p>
 
-                  <div className="flex items-center justify-between pt-4 border-t border-white/5">
+                  <div className="flex items-center justify-between pt-4 border-t border-white/[0.04]">
                     <span className="text-xs text-text-muted font-sans">
                       {work.creator}
                     </span>
@@ -648,7 +648,7 @@ export default function CommunityPage() {
 
         {/* ── 5. Contribution Guide ────────────────────────────────────────── */}
         <section
-          className="py-16 border-t border-white/5"
+          className="py-16 border-t border-white/[0.04]"
           aria-labelledby="contribute-heading"
         >
           <div className="mb-12">
@@ -722,7 +722,7 @@ export default function CommunityPage() {
 
         {/* ── 6. Newsletter CTA ─────────────────────────────────────────────── */}
         <section
-          className="py-16 border-t border-white/5"
+          className="py-16 border-t border-white/[0.04]"
           aria-labelledby="newsletter-heading"
         >
           <div className="relative liquid-glass rounded-3xl overflow-hidden p-10 sm:p-14">
@@ -761,7 +761,7 @@ export default function CommunityPage() {
         </section>
 
         {/* ── 7. Philosophy Banner ──────────────────────────────────────────── */}
-        <section className="py-16 pb-24 border-t border-white/5">
+        <section className="py-16 pb-24 border-t border-white/[0.04]">
           <div className="relative overflow-hidden rounded-3xl">
             {/* Elemental bar */}
             <div className="h-0.5 w-full bg-gradient-to-r from-fire via-brand-primary via-crystal via-water to-earth" />

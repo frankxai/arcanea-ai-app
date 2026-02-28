@@ -112,10 +112,10 @@ export default function PromptBooksArticle() {
             <p className="text-text-secondary leading-relaxed mb-4">
               Six PostgreSQL tables with Row Level Security, managed through a single
               Supabase migration. The schema includes automatic version tracking via
-              a <code className="text-crystal bg-white/5 rounded px-1.5 py-0.5">pb_auto_version()</code> trigger
+              a <code className="text-crystal bg-white/[0.04] rounded px-1.5 py-0.5">pb_auto_version()</code> trigger
               that snapshots your prompt content before every update. Full-text search
-              runs through a dedicated <code className="text-crystal bg-white/5 rounded px-1.5 py-0.5">pb_search_prompts()</code> RPC
-              function with <code className="text-crystal bg-white/5 rounded px-1.5 py-0.5">ts_rank</code> scoring.
+              runs through a dedicated <code className="text-crystal bg-white/[0.04] rounded px-1.5 py-0.5">pb_search_prompts()</code> RPC
+              function with <code className="text-crystal bg-white/[0.04] rounded px-1.5 py-0.5">ts_rank</code> scoring.
             </p>
 
             <CodeBlock code={`-- Tables
@@ -136,19 +136,19 @@ pb_templates      -- Reusable prompt templates`} />
 
             <h3 className="text-xl font-display text-text-primary mt-8 mb-4">The State Layer</h3>
             <p className="text-text-secondary leading-relaxed mb-4">
-              A Zustand store with <code className="text-crystal bg-white/5 rounded px-1.5 py-0.5">persist</code> middleware.
+              A Zustand store with <code className="text-crystal bg-white/[0.04] rounded px-1.5 py-0.5">persist</code> middleware.
               Only UI preferences go to localStorage. Data lives in Supabase. Three
-              Realtime channels (<code className="text-crystal bg-white/5 rounded px-1.5 py-0.5">pb_collections_sync</code>,{" "}
-              <code className="text-crystal bg-white/5 rounded px-1.5 py-0.5">pb_prompts_sync</code>,{" "}
-              <code className="text-crystal bg-white/5 rounded px-1.5 py-0.5">pb_tags_sync</code>) filtered
-              by <code className="text-crystal bg-white/5 rounded px-1.5 py-0.5">user_id</code> dispatch
+              Realtime channels (<code className="text-crystal bg-white/[0.04] rounded px-1.5 py-0.5">pb_collections_sync</code>,{" "}
+              <code className="text-crystal bg-white/[0.04] rounded px-1.5 py-0.5">pb_prompts_sync</code>,{" "}
+              <code className="text-crystal bg-white/[0.04] rounded px-1.5 py-0.5">pb_tags_sync</code>) filtered
+              by <code className="text-crystal bg-white/[0.04] rounded px-1.5 py-0.5">user_id</code> dispatch
               INSERT/UPDATE/DELETE events directly to store actions.
             </p>
 
             <h3 className="text-xl font-display text-text-primary mt-8 mb-4">The Package</h3>
             <p className="text-text-secondary leading-relaxed mb-4">
               Platform-agnostic logic is extracted into{" "}
-              <code className="text-crystal bg-white/5 rounded px-1.5 py-0.5">@arcanea/prompt-books</code> &mdash;
+              <code className="text-crystal bg-white/[0.04] rounded px-1.5 py-0.5">@arcanea/prompt-books</code> &mdash;
               types, constants, the context engine, markdown parser, and weight syntax
               utilities. This package can be used by the Chrome extension (Arcanea Vault),
               the CLI, or any future surface.
@@ -239,7 +239,7 @@ pb_templates      -- Reusable prompt templates`} />
             <p className="text-text-secondary leading-relaxed mb-4">
               The context engine compiles your prompt, tags, system prompt, few-shot examples,
               and parameters into a{" "}
-              <code className="text-crystal bg-white/5 rounded px-1.5 py-0.5">ContextPackage</code> &mdash;
+              <code className="text-crystal bg-white/[0.04] rounded px-1.5 py-0.5">ContextPackage</code> &mdash;
               a structured object ready to send to any AI API:
             </p>
 
@@ -327,7 +327,7 @@ pb_templates      -- Reusable prompt templates`} />
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="mt-16 pt-12 border-t border-white/10 text-center"
+            className="mt-16 pt-12 border-t border-white/[0.06] text-center"
           >
             <p className="text-2xl font-display text-text-primary mb-4">
               Your prompts deserve better than a text file.
@@ -379,7 +379,7 @@ function Section({
 
 function CodeBlock({ code }: { code: string }) {
   return (
-    <pre className="bg-white/[0.03] border border-white/5 rounded-xl p-4 overflow-x-auto my-6">
+    <pre className="bg-white/[0.03] border border-white/[0.04] rounded-xl p-4 overflow-x-auto my-6">
       <code className="text-sm font-mono text-text-secondary leading-relaxed">{code}</code>
     </pre>
   );

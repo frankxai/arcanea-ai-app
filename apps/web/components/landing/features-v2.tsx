@@ -200,9 +200,9 @@ export function FeaturesV2() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ delay: 0.5 + i * 0.05 }}
-                    className="group flex items-start gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors"
+                    className="group flex items-start gap-4 p-4 rounded-xl hover:bg-white/[0.04] transition-colors"
                   >
-                    <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center flex-shrink-0 group-hover:bg-atlantean-teal-aqua/10 transition-colors">
+                    <div className="w-10 h-10 rounded-xl bg-white/[0.04] flex items-center justify-center flex-shrink-0 group-hover:bg-atlantean-teal-aqua/10 transition-colors">
                       <Icon className="w-5 h-5 text-atlantean-teal-aqua" aria-hidden="true" />
                     </div>
                     <div>

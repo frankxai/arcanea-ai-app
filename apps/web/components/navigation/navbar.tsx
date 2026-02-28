@@ -42,7 +42,7 @@ export function Navbar() {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 group">
-              <div className="relative w-9 h-9 rounded-xl overflow-hidden ring-1 ring-white/10 group-hover:ring-atlantean-teal-aqua/30 transition-all duration-300 group-hover:shadow-[0_0_20px_rgba(127,255,212,0.2)]">
+              <div className="relative w-9 h-9 rounded-xl overflow-hidden ring-1 ring-white/[0.06] group-hover:ring-atlantean-teal-aqua/30 transition-all duration-300 group-hover:shadow-[0_0_20px_rgba(127,255,212,0.2)]">
                 <Image
                   src={navLogo}
                   alt="Arcanea"
@@ -84,7 +84,7 @@ export function Navbar() {
                 );
               })}
 
-              <div className="w-px h-6 bg-white/10 mx-2" />
+              <div className="w-px h-6 bg-white/[0.06] mx-2" />
 
               <Link
                 href="/chat"
@@ -102,7 +102,7 @@ export function Navbar() {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2.5 text-white hover:bg-white/10 rounded-xl transition-colors"
+              className="md:hidden p-2.5 text-white hover:bg-white/[0.06] rounded-xl transition-colors"
               aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-nav-menu"
@@ -138,7 +138,7 @@ export function Navbar() {
                         className={`block px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
                           isActive
                             ? "text-atlantean-teal-aqua bg-atlantean-teal-aqua/10"
-                            : "text-text-secondary hover:text-white hover:bg-white/5"
+                            : "text-text-secondary hover:text-white hover:bg-white/[0.04]"
                         }`}
                       >
                         {link.label}
@@ -146,7 +146,7 @@ export function Navbar() {
                     );
                   })}
 
-                  <div className="h-px bg-white/10 my-3" />
+                  <div className="h-px bg-white/[0.06] my-3" />
 
                   <Link
                     href="/chat"

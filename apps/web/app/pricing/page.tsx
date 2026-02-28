@@ -144,7 +144,7 @@ export default function PricingPage() {
       </div>
 
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 border-b border-white/5 bg-cosmic-deep/80 backdrop-blur-xl">
+      <nav className="sticky top-0 z-50 border-b border-white/[0.04] bg-cosmic-deep/80 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-3">
@@ -284,7 +284,7 @@ export default function PricingPage() {
                   className={`block w-full py-3 rounded-xl text-center font-semibold transition-all ${
                     tier.popular
                       ? "bg-gradient-to-r from-violet-500 to-purple-600 text-white hover:shadow-[0_0_30px_rgba(139,92,246,0.5)]"
-                      : "border border-white/20 text-white hover:bg-white/5"
+                      : "border border-white/[0.12] text-white hover:bg-white/[0.04]"
                   }`}
                 >
                   {tier.cta}
@@ -295,7 +295,7 @@ export default function PricingPage() {
         </section>
 
         {/* Comparison Table */}
-        <section className="py-16 border-t border-white/5">
+        <section className="py-16 border-t border-white/[0.04]">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-display font-bold mb-4">
               Compare Plans
@@ -308,7 +308,7 @@ export default function PricingPage() {
           <div className="overflow-x-auto">
             <table className="w-full max-w-4xl mx-auto">
               <thead>
-                <tr className="border-b border-white/10">
+                <tr className="border-b border-white/[0.06]">
                   <th className="text-left py-4 px-4 text-text-muted font-medium">
                     Feature
                   </th>
@@ -325,7 +325,7 @@ export default function PricingPage() {
               </thead>
               <tbody>
                 {COMPARISON.map((row, i) => (
-                  <tr key={row.feature} className="border-b border-white/5">
+                  <tr key={row.feature} className="border-b border-white/[0.04]">
                     <td className="py-4 px-4 text-text-secondary">
                       {row.feature}
                     </td>
@@ -446,7 +446,7 @@ export default function PricingPage() {
         </section>
 
         {/* FAQ */}
-        <section className="py-16 border-t border-white/5">
+        <section className="py-16 border-t border-white/[0.04]">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-display font-bold mb-4">
@@ -472,7 +472,7 @@ export default function PricingPage() {
         </section>
 
         {/* CTA */}
-        <section className="py-20 border-t border-white/5">
+        <section className="py-20 border-t border-white/[0.04]">
           <div className="relative rounded-3xl overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-violet-500/20 via-atlantean-teal/20 to-gold-bright/20" />
             <div className="absolute inset-0 liquid-glass" />
@@ -494,7 +494,7 @@ export default function PricingPage() {
                 </Link>
                 <Link
                   href="/chat"
-                  className="px-8 py-4 rounded-xl border border-white/20 text-white font-semibold text-lg hover:bg-white/5 transition-all"
+                  className="px-8 py-4 rounded-xl border border-white/[0.12] text-white font-semibold text-lg hover:bg-white/[0.04] transition-all"
                 >
                   Talk to a Luminor
                 </Link>

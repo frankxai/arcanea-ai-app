@@ -158,7 +158,7 @@ function PromptBooksLanding() {
         {/* Demo grid */}
         <div className="grid sm:grid-cols-2 gap-4 mb-10 text-left">
           {DEMO_COLLECTIONS.map((c) => (
-            <div key={c.id} className="liquid-glass rounded-2xl p-5 border border-white/5 opacity-75 select-none">
+            <div key={c.id} className="liquid-glass rounded-2xl p-5 border border-white/[0.04] opacity-75 select-none">
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg"
                   style={{ background: `${c.color}18`, border: `1px solid ${c.color}30` }}>
@@ -354,7 +354,7 @@ export default function PromptBooksPage() {
         />
 
         {/* Toolbar */}
-        <div className="px-6 py-3 border-b border-white/5 flex items-center justify-between">
+        <div className="px-6 py-3 border-b border-white/[0.04] flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Button
               variant="ghost"

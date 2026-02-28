@@ -353,13 +353,13 @@ export default function BlogPage() {
                 className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all whitespace-nowrap ${
                   category.id === "all"
                     ? "card-3d liquid-glass border-brand-primary/30 bg-brand-primary/10 text-brand-primary"
-                    : "liquid-glass border-white/10 text-text-secondary hover:border-crystal/30 hover:text-crystal"
+                    : "liquid-glass border-white/[0.06] text-text-secondary hover:border-crystal/30 hover:text-crystal"
                 }`}
               >
                 <span className="text-sm font-sans">{category.label}</span>
                 <span
                   className={`text-xs font-mono px-2 py-0.5 rounded-full ${
-                    category.id === "all" ? "bg-brand-primary/20" : "bg-white/5"
+                    category.id === "all" ? "bg-brand-primary/20" : "bg-white/[0.04]"
                   }`}
                 >
                   {category.count}
@@ -436,7 +436,7 @@ export default function BlogPage() {
                       </p>
 
                       {/* Footer */}
-                      <div className="flex items-center justify-between pt-4 border-t border-white/5">
+                      <div className="flex items-center justify-between pt-4 border-t border-white/[0.04]">
                         <span className="text-xs text-text-muted">
                           by {post.author}
                         </span>
@@ -509,7 +509,7 @@ export default function BlogPage() {
                           <span className="text-xs hidden sm:block">
                             {post.readTime}
                           </span>
-                          <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-brand-primary/20 group-hover:text-brand-primary transition-all">
+                          <div className="w-8 h-8 rounded-full bg-white/[0.04] flex items-center justify-center group-hover:bg-brand-primary/20 group-hover:text-brand-primary transition-all">
                             <Icons.ArrowRight />
                           </div>
                         </div>

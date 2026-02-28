@@ -59,7 +59,7 @@ const ELEMENT_BG: Record<ElementVariant, string> = {
 
 const STATUS_BADGE: Record<PackageStatus, { label: string; className: string }> = {
   published: { label: 'Published', className: 'bg-[#7fffd4]/15 text-[#7fffd4] border-[#7fffd4]/30' },
-  private: { label: 'Private', className: 'bg-white/5 text-text-muted border-white/10' },
+  private: { label: 'Private', className: 'bg-white/[0.04] text-text-muted border-white/[0.06]' },
   alpha: { label: 'Alpha', className: 'bg-[#ffd700]/15 text-[#ffd700] border-[#ffd700]/30' },
   stale: { label: 'Stale', className: 'bg-[#ff6b35]/15 text-[#ff6b35] border-[#ff6b35]/30' },
 };
@@ -131,7 +131,7 @@ function MilestoneCard({ milestone }: { milestone: Milestone }) {
               </span>
             )}
             {milestone.status === 'planned' && (
-              <span className="px-2 py-0.5 text-[10px] font-mono uppercase rounded-full bg-white/5 text-text-muted">
+              <span className="px-2 py-0.5 text-[10px] font-mono uppercase rounded-full bg-white/[0.04] text-text-muted">
                 Planned
               </span>
             )}
@@ -175,7 +175,7 @@ function PackageTable({ tierId }: { tierId: PackageTier }) {
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-white/5 text-text-muted text-xs font-mono uppercase tracking-wider">
+          <tr className="border-b border-white/[0.04] text-text-muted text-xs font-mono uppercase tracking-wider">
             <th className="text-left py-3 px-4">Package</th>
             <th className="text-left py-3 px-4">Version</th>
             <th className="text-left py-3 px-4">Status</th>
@@ -323,7 +323,7 @@ export default function CommandCenterPage() {
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                     activeTier === tier.id
                       ? 'bg-brand-primary/20 text-brand-primary border border-brand-primary/30'
-                      : 'bg-white/5 text-text-secondary border border-white/5 hover:bg-white/10'
+                      : 'bg-white/[0.04] text-text-secondary border border-white/[0.04] hover:bg-white/[0.06]'
                   }`}
                 >
                   {tier.label}
@@ -399,7 +399,7 @@ export default function CommandCenterPage() {
 
                 {/* Additional ecosystem stats for builders */}
                 {isBuilder && (
-                  <div className="mt-6 pt-4 border-t border-white/5 grid grid-cols-3 gap-4">
+                  <div className="mt-6 pt-4 border-t border-white/[0.04] grid grid-cols-3 gap-4">
                     <div className="text-center">
                       <span className="text-sm font-bold text-[#9966ff] tabular-nums">{ECOSYSTEM_STATS.agents}</span>
                       <p className="text-[10px] font-mono uppercase text-text-muted mt-1">Agents</p>
@@ -437,7 +437,7 @@ export default function CommandCenterPage() {
                         key={entry.id}
                         className="flex items-start gap-3 py-2.5 border-b border-white/[0.03] last:border-0"
                       >
-                        <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 mt-0.5 bg-white/5 ${activityMeta.className}`}>
+                        <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 mt-0.5 bg-white/[0.04] ${activityMeta.className}`}>
                           <ActivityIcon weight="bold" className="w-3.5 h-3.5" />
                         </div>
                         <div className="min-w-0 flex-1">
@@ -474,7 +474,7 @@ export default function CommandCenterPage() {
                         ? 'border-[#ff6b35]/20'
                         : note.severity === 'medium'
                         ? 'border-[#ffd700]/20'
-                        : 'border-white/5'
+                        : 'border-white/[0.04]'
                     }`}
                   >
                     <div className="flex items-center gap-2 mb-2">
@@ -483,7 +483,7 @@ export default function CommandCenterPage() {
                           ? 'bg-[#ff6b35]/15 text-[#ff6b35] border-[#ff6b35]/30'
                           : note.severity === 'medium'
                           ? 'bg-[#ffd700]/15 text-[#ffd700] border-[#ffd700]/30'
-                          : 'bg-white/5 text-text-muted border-white/10'
+                          : 'bg-white/[0.04] text-text-muted border-white/[0.06]'
                       }`}>
                         {note.severity}
                       </span>

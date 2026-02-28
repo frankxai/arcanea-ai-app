@@ -397,7 +397,7 @@ export default function RoadmapPage() {
                       {phase.items.map((item) => (
                         <div
                           key={item.id}
-                          className="liquid-glass rounded-xl p-5 hover:bg-white/5 transition-colors"
+                          className="liquid-glass rounded-xl p-5 hover:bg-white/[0.04] transition-colors"
                         >
                           <div className="flex items-start justify-between gap-3 mb-2">
                             <h3 className="font-semibold text-text-primary">

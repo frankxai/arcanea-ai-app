@@ -108,7 +108,7 @@ export default function FAQPage() {
       </div>
 
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 border-b border-white/5 bg-cosmic-deep/80 backdrop-blur-xl">
+      <nav className="sticky top-0 z-50 border-b border-white/[0.04] bg-cosmic-deep/80 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-3">
@@ -185,7 +185,7 @@ export default function FAQPage() {
             <input
               type="text"
               placeholder="Search questions..."
-              className="w-full px-6 py-4 rounded-2xl bg-cosmic-surface border border-white/10 text-white placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal text-lg"
+              className="w-full px-6 py-4 rounded-2xl bg-cosmic-surface border border-white/[0.06] text-white placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal text-lg"
             />
             <svg
               className="absolute right-6 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted"
@@ -238,7 +238,7 @@ export default function FAQPage() {
                         />
                       </svg>
                     </summary>
-                    <div className="mt-4 pt-4 border-t border-white/5">
+                    <div className="mt-4 pt-4 border-t border-white/[0.04]">
                       <p className="text-text-secondary leading-relaxed">
                         {faq.a}
                       </p>
@@ -251,8 +251,8 @@ export default function FAQPage() {
         </div>
 
         {/* Still Have Questions */}
-        <section className="py-16 border-t border-white/5">
-          <div className="p-8 rounded-2xl border border-white/10 bg-gradient-to-br from-violet-500/10 to-atlantean-teal/10 text-center">
+        <section className="py-16 border-t border-white/[0.04]">
+          <div className="p-8 rounded-2xl border border-white/[0.06] bg-gradient-to-br from-violet-500/10 to-atlantean-teal/10 text-center">
             <h3 className="text-xl font-display font-semibold mb-2">
               Still have questions?
             </h3>
@@ -269,7 +269,7 @@ export default function FAQPage() {
               </Link>
               <a
                 href="https://discord.gg/arcanea"
-                className="px-6 py-3 rounded-xl border border-white/20 text-white font-semibold hover:bg-white/5 transition-all"
+                className="px-6 py-3 rounded-xl border border-white/[0.12] text-white font-semibold hover:bg-white/[0.04] transition-all"
               >
                 Join Discord
               </a>
@@ -278,7 +278,7 @@ export default function FAQPage() {
         </section>
 
         {/* Quick Links */}
-        <section className="py-16 border-t border-white/5">
+        <section className="py-16 border-t border-white/[0.04]">
           <div className="text-center mb-8">
             <h2 className="text-2xl font-display font-bold mb-4">
               Explore More

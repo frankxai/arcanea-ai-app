@@ -18,8 +18,8 @@ export function MarkdownPreview({ content, className }: MarkdownPreviewProps) {
         'prose prose-invert prose-sm max-w-none',
         'prose-headings:font-display prose-headings:text-text-primary',
         'prose-p:text-text-secondary prose-p:leading-relaxed',
-        'prose-code:text-brand-accent prose-code:bg-white/5 prose-code:rounded prose-code:px-1',
-        'prose-pre:bg-white/[0.03] prose-pre:border prose-pre:border-white/5',
+        'prose-code:text-brand-accent prose-code:bg-white/[0.04] prose-code:rounded prose-code:px-1',
+        'prose-pre:bg-white/[0.03] prose-pre:border prose-pre:border-white/[0.04]',
         'prose-blockquote:border-brand-primary/30 prose-blockquote:text-text-secondary',
         'prose-strong:text-text-primary',
         'prose-a:text-brand-accent prose-a:no-underline hover:prose-a:underline',
@@ -72,7 +72,7 @@ function renderPromptPreview(text: string): string {
   // Code blocks
   html = html.replace(
     /```(\w*)\n([\s\S]*?)```/g,
-    '<pre class="bg-white/[0.03] rounded-lg p-3 border border-white/5 overflow-x-auto"><code>$2</code></pre>',
+    '<pre class="bg-white/[0.03] rounded-lg p-3 border border-white/[0.04] overflow-x-auto"><code>$2</code></pre>',
   )
 
   // Inline code
@@ -92,7 +92,7 @@ function renderPromptPreview(text: string): string {
   html = html.replace(/^&gt; (.+)$/gm, '<blockquote>$1</blockquote>')
 
   // Horizontal rules
-  html = html.replace(/^---$/gm, '<hr class="border-white/10" />')
+  html = html.replace(/^---$/gm, '<hr class="border-white/[0.06]" />')
 
   // Links
   html = html.replace(

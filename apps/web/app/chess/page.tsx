@@ -474,7 +474,7 @@ export default function ChessPage() {
 
                   {/* Stats */}
                   <div className="grid grid-cols-3 gap-2 mb-4 text-center">
-                    <div className="p-2 rounded-lg bg-white/5">
+                    <div className="p-2 rounded-lg bg-white/[0.04]">
                       <span
                         className="text-xs font-mono block"
                         style={{ color: guardian.accent }}
@@ -485,7 +485,7 @@ export default function ChessPage() {
                         Difficulty
                       </span>
                     </div>
-                    <div className="p-2 rounded-lg bg-white/5">
+                    <div className="p-2 rounded-lg bg-white/[0.04]">
                       <span className="text-xs font-mono block text-brand-gold">
                         {guardian.winRate}
                       </span>
@@ -493,7 +493,7 @@ export default function ChessPage() {
                         Win Rate
                       </span>
                     </div>
-                    <div className="p-2 rounded-lg bg-white/5">
+                    <div className="p-2 rounded-lg bg-white/[0.04]">
                       <span className="text-xs font-mono block text-white">
                         {guardian.gamesPlayed.toLocaleString()}
                       </span>
@@ -547,7 +547,7 @@ export default function ChessPage() {
           <div className="card-3d liquid-glass rounded-2xl overflow-hidden">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-white/10">
+                <tr className="border-b border-white/[0.06]">
                   <th className="text-left py-3 px-4 text-sm font-mono text-text-muted">
                     Rank
                   </th>
@@ -566,7 +566,7 @@ export default function ChessPage() {
                 {LEADERBOARD.map((entry) => (
                   <tr
                     key={entry.rank}
-                    className="border-b border-white/5 hover:bg-white/5 transition-colors"
+                    className="border-b border-white/[0.04] hover:bg-white/[0.04] transition-colors"
                   >
                     <td className="py-3 px-4">
                       <span

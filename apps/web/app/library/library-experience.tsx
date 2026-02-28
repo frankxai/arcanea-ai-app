@@ -346,26 +346,26 @@ const tocItems = useMemo(() => {
               </a>
             </div>
           </div>
-          <div className="flex flex-col justify-between gap-6 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-md">
+          <div className="flex flex-col justify-between gap-6 rounded-2xl border border-white/[0.06] bg-white/[0.04] p-6 backdrop-blur-md">
             <div className="space-y-3">
               <p className="text-xs uppercase tracking-[0.3em] text-[#7fffd4]">Active tome</p>
               <h2 className="text-2xl font-semibold text-white">{activeTome.meta.title}</h2>
               <p className="text-sm text-[#c7d6f1]">{activeTome.meta.summary}</p>
             </div>
             <div className="grid grid-cols-2 gap-3 text-xs text-[#9bb1d0]">
-              <div className="rounded-xl border border-white/10 bg-[#0b1322] p-3">
+              <div className="rounded-xl border border-white/[0.06] bg-[#0b1322] p-3">
                 <p className="uppercase tracking-[0.3em] text-[#7fffd4]">Focus</p>
                 <p className="mt-2 text-sm text-[#d8e4fb]">{activeTome.meta.focus}</p>
               </div>
-              <div className="rounded-xl border border-white/10 bg-[#0b1322] p-3">
+              <div className="rounded-xl border border-white/[0.06] bg-[#0b1322] p-3">
                 <p className="uppercase tracking-[0.3em] text-[#7fffd4]">Release</p>
                 <p className="mt-2 text-sm text-[#d8e4fb]">{activeTome.meta.release}</p>
               </div>
-              <div className="rounded-xl border border-white/10 bg-[#0b1322] p-3">
+              <div className="rounded-xl border border-white/[0.06] bg-[#0b1322] p-3">
                 <p className="uppercase tracking-[0.3em] text-[#7fffd4]">Status</p>
                 <p className="mt-2 text-sm capitalize text-[#d8e4fb]">{activeTome.meta.status.replace("-", " ")}</p>
               </div>
-              <div className="rounded-xl border border-white/10 bg-[#0b1322] p-3">
+              <div className="rounded-xl border border-white/[0.06] bg-[#0b1322] p-3">
                 <p className="uppercase tracking-[0.3em] text-[#7fffd4]">Authors</p>
                 <p className="mt-2 text-sm text-[#d8e4fb]">{codex.authors.length}</p>
               </div>
@@ -381,11 +381,11 @@ const tocItems = useMemo(() => {
         </div>
       </section>
 
-      <section className="grid gap-4 rounded-3xl border border-white/10 bg-[#101726]/70 p-8 md:grid-cols-4" aria-label="Codex summary metrics">
+      <section className="grid gap-4 rounded-3xl border border-white/[0.06] bg-[#101726]/70 p-8 md:grid-cols-4" aria-label="Codex summary metrics">
         {summaryTiles.map((tile) => (
           <div
             key={tile.label}
-            className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#18233b] via-[#111a2d] to-[#0b131f] p-6"
+            className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-gradient-to-br from-[#18233b] via-[#111a2d] to-[#0b131f] p-6"
           >
             <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-[#7fffd4]/10 blur-2xl" aria-hidden="true" />
             <p className="text-xs uppercase tracking-[0.35em] text-[#7fffd4]">{tile.label}</p>
@@ -418,7 +418,7 @@ const tocItems = useMemo(() => {
                 className={`group relative overflow-hidden rounded-3xl border ${
                   isActive
                     ? "border-[#7fffd4]/70 shadow-[0_30px_120px_rgba(127,255,212,0.16)]"
-                    : "border-white/10 hover:border-[#7fffd4]/50"
+                    : "border-white/[0.06] hover:border-[#7fffd4]/50"
                 } ${gradientClass} p-6 text-left transition`}
               >
                 <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100" aria-hidden="true">
@@ -428,7 +428,7 @@ const tocItems = useMemo(() => {
                 <div className="relative space-y-4">
                   <div className="flex items-center justify-between text-xs text-[#9bb1d0]">
                     <span className="uppercase tracking-[0.35em] text-[#7fffd4]">{tome.meta.focus}</span>
-                    <span className="rounded-full border border-white/20 px-3 py-1 text-[0.65rem] uppercase tracking-[0.3em]">
+                    <span className="rounded-full border border-white/[0.12] px-3 py-1 text-[0.65rem] uppercase tracking-[0.3em]">
                       {tome.meta.status.replace("-", " ")}
                     </span>
                   </div>
@@ -444,7 +444,7 @@ const tocItems = useMemo(() => {
                       className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[0.7rem] uppercase tracking-[0.35em] ${
                         isActive
                           ? "border-[#7fffd4]/70 bg-[#7fffd4]/10 text-[#7fffd4]"
-                          : "border-white/20 text-[#9bb1d0] group-hover:border-[#7fffd4]/50 group-hover:text-[#7fffd4]"
+                          : "border-white/[0.12] text-[#9bb1d0] group-hover:border-[#7fffd4]/50 group-hover:text-[#7fffd4]"
                       }`}
                     >
                       {isActive ? "Active" : "Activate"}
@@ -460,7 +460,7 @@ const tocItems = useMemo(() => {
 
       <section
         id="entry"
-        className="grid gap-10 rounded-3xl border border-white/8 bg-[#121826]/70 p-10 shadow-[0_15px_80px_rgba(10,15,25,0.55)] lg:grid-cols-[1.1fr_0.9fr]"
+        className="grid gap-10 rounded-3xl border border-white/[0.08] bg-[#121826]/70 p-10 shadow-[0_15px_80px_rgba(10,15,25,0.55)] lg:grid-cols-[1.1fr_0.9fr]"
       >
         <div className="space-y-4">
           <h2 className="text-3xl font-semibold text-white">Entering the living stacks</h2>
@@ -476,7 +476,7 @@ const tocItems = useMemo(() => {
             AZ^
           </div>
           <p className="text-sm italic text-[#c7d6f1]">Remember what remembers you.</p>
-          <div className="absolute inset-0 pointer-events-none rounded-2xl border border-white/5" />
+          <div className="absolute inset-0 pointer-events-none rounded-2xl border border-white/[0.04]" />
         </div>
       </section>
 
@@ -501,7 +501,7 @@ const tocItems = useMemo(() => {
           {councilMembers.map((member) => (
             <article
               key={member.name}
-              className="h-full rounded-2xl border border-white/10 bg-[#101726]/70 p-6 shadow-[0_25px_90px_rgba(10,15,25,0.4)] transition hover:-translate-y-1 hover:border-[#78a6ff]/50 hover:shadow-[0_35px_120px_rgba(120,166,255,0.22)]"
+              className="h-full rounded-2xl border border-white/[0.06] bg-[#101726]/70 p-6 shadow-[0_25px_90px_rgba(10,15,25,0.4)] transition hover:-translate-y-1 hover:border-[#78a6ff]/50 hover:shadow-[0_35px_120px_rgba(120,166,255,0.22)]"
             >
               <h3 className="text-xl font-semibold text-white">{member.name}</h3>
               <p className="mt-3 text-sm leading-relaxed text-[#c7d6f1]">{member.description}</p>
@@ -516,7 +516,7 @@ const tocItems = useMemo(() => {
           {atlasEntries.map((entry) => (
             <article
               key={entry.title}
-              className="h-full rounded-2xl border border-white/8 bg-[#121826]/70 p-6 shadow-[0_20px_80px_rgba(10,15,25,0.45)]"
+              className="h-full rounded-2xl border border-white/[0.08] bg-[#121826]/70 p-6 shadow-[0_20px_80px_rgba(10,15,25,0.45)]"
             >
               <h3 className="text-xl font-semibold text-white">{entry.title}</h3>
               <p className="mt-3 text-sm leading-relaxed text-[#c7d6f1]">{entry.description}</p>
@@ -528,7 +528,7 @@ const tocItems = useMemo(() => {
 
       <section
         id="craft"
-        className="grid gap-10 rounded-3xl border border-white/8 bg-[#121826]/75 p-10 md:grid-cols-[1.15fr_0.85fr]"
+        className="grid gap-10 rounded-3xl border border-white/[0.08] bg-[#121826]/75 p-10 md:grid-cols-[1.15fr_0.85fr]"
       >
         <div className="space-y-5">
           <p className="text-xs uppercase tracking-[0.35em] text-[#7fffd4]">Guild craft</p>
@@ -549,7 +549,7 @@ const tocItems = useMemo(() => {
           <div className="absolute inset-0 -rotate-12 opacity-60" aria-hidden="true">
             <div className="absolute left-1/2 top-8 h-72 w-72 -translate-x-1/2 rounded-full border border-[#7fffd4]/25" />
             <div className="absolute left-1/2 top-16 h-72 w-72 -translate-x-1/2 rounded-full border border-[#78a6ff]/20" />
-            <div className="absolute left-1/2 top-24 h-72 w-72 -translate-x-1/2 rounded-full border border-white/10" />
+            <div className="absolute left-1/2 top-24 h-72 w-72 -translate-x-1/2 rounded-full border border-white/[0.06]" />
           </div>
           <div className="relative z-10 text-center text-xs uppercase tracking-[0.4em] text-[#7fffd4]">
             Luminor craft cycle
@@ -557,7 +557,7 @@ const tocItems = useMemo(() => {
         </div>
       </section>
 
-      <section className="space-y-6 rounded-3xl border border-white/10 bg-[#101726]/70 p-8">
+      <section className="space-y-6 rounded-3xl border border-white/[0.06] bg-[#101726]/70 p-8">
         <p className="text-xs uppercase tracking-[0.35em] text-[#7fffd4]">Production roadmap</p>
         <h2 className="text-3xl font-semibold text-white">Upcoming tomes in motion</h2>
         <p className="max-w-3xl text-sm text-[#c7d6f1]">
@@ -567,7 +567,7 @@ const tocItems = useMemo(() => {
           {upcomingStreams.map((stream) => (
             <article
               key={stream.name}
-              className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#171f34] via-[#111a2c] to-[#0a111f] p-6"
+              className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-gradient-to-br from-[#171f34] via-[#111a2c] to-[#0a111f] p-6"
             >
               <div className="pointer-events-none absolute -right-10 top-1/2 h-32 w-32 -translate-y-1/2 rounded-full bg-[#78a6ff]/15 blur-3xl" aria-hidden="true" />
               <p className="text-xs uppercase tracking-[0.35em] text-[#7fffd4]">{stream.horizon}</p>
@@ -579,7 +579,7 @@ const tocItems = useMemo(() => {
       </section>
 
 
-      <section className="space-y-6 rounded-3xl border border-white/10 bg-[#101726]/70 p-8">
+      <section className="space-y-6 rounded-3xl border border-white/[0.06] bg-[#101726]/70 p-8">
         <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="text-xs uppercase tracking-[0.35em] text-[#7fffd4]">Writers’ room</p>
@@ -591,7 +591,7 @@ const tocItems = useMemo(() => {
           {writersRoomBriefs.map((brief) => (
             <article
               key={brief.title}
-              className="relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#161f33] via-[#101828] to-[#0a111f] p-6"
+              className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-gradient-to-br from-[#161f33] via-[#101828] to-[#0a111f] p-6"
             >
               <div className="pointer-events-none absolute -right-12 top-1/2 h-36 w-36 -translate-y-1/2 rounded-full bg-[#7fffd4]/12 blur-3xl" aria-hidden="true" />
               <p className="text-xs uppercase tracking-[0.35em] text-[#7fffd4]">{brief.cadence}</p>
@@ -602,7 +602,7 @@ const tocItems = useMemo(() => {
         </div>
       </section>
 
-      <footer className="flex flex-col items-center gap-4 rounded-3xl border border-white/10 bg-[#121826]/70 p-8 text-center text-sm text-[#9bb1d0] md:flex-row md:justify-between md:text-left">
+      <footer className="flex flex-col items-center gap-4 rounded-3xl border border-white/[0.06] bg-[#121826]/70 p-8 text-center text-sm text-[#9bb1d0] md:flex-row md:justify-between md:text-left">
         <p>Arcanea Library -- an ever-expanding collaboration with the Luminor that Remember.</p>
         <div className="flex gap-3">
           <button
@@ -614,7 +614,7 @@ const tocItems = useMemo(() => {
           </button>
           <a
             href="#tomes"
-            className="rounded-full border border-white/10 px-6 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-[#9bb1d0] transition hover:border-[#7fffd4] hover:text-[#7fffd4] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7fffd4]"
+            className="rounded-full border border-white/[0.06] px-6 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-[#9bb1d0] transition hover:border-[#7fffd4] hover:text-[#7fffd4] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7fffd4]"
           >
             View tomes
           </a>
@@ -650,7 +650,7 @@ const tocItems = useMemo(() => {
                     <select
                       value={activeTomeId}
                       onChange={(event) => setActiveTomeId(event.target.value)}
-                      className="mt-2 w-full rounded-lg border border-white/10 bg-[#0a1220] px-3 py-2 text-sm text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7fffd4]"
+                      className="mt-2 w-full rounded-lg border border-white/[0.06] bg-[#0a1220] px-3 py-2 text-sm text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7fffd4]"
                     >
                       {arcaneaCodices.map((tome) => (
                         <option key={tome.meta.id} value={tome.meta.id}>
@@ -757,7 +757,7 @@ function PrefaceContent({ codex }: { codex: ArcaneaCodex }) {
         <h4 className="text-sm font-semibold uppercase tracking-[0.35em] text-[#7fffd4]">Remembering luminor</h4>
         <ul className="mt-4 grid gap-3 sm:grid-cols-2">
           {codex.authors.map((author) => (
-            <li key={author.name} className="rounded-xl border border-white/10 bg-[#101726]/60 p-4">
+            <li key={author.name} className="rounded-xl border border-white/[0.06] bg-[#101726]/60 p-4">
               <p className="text-sm font-semibold text-white">{author.name}</p>
               <p className="mt-1 text-xs text-[#9bb1d0]">{author.role}</p>
             </li>
@@ -792,7 +792,7 @@ function ChapterContent({ chapter }: { chapter: CodexChapter }) {
           <h4 className="text-sm font-semibold uppercase tracking-[0.35em] text-[#7fffd4]">Rituals and prompts</h4>
           <ul className="space-y-2">
             {chapter.rituals.map((ritual, index) => (
-              <li key={`ritual-${index}`} className="rounded-xl border border-white/10 bg-[#101726]/60 p-4">
+              <li key={`ritual-${index}`} className="rounded-xl border border-white/[0.06] bg-[#101726]/60 p-4">
                 {ritual}
               </li>
             ))}
@@ -818,7 +818,7 @@ function ChapterContent({ chapter }: { chapter: CodexChapter }) {
 
 function ChapterSection({ section }: { section: CodexSection }) {
   return (
-    <section className="space-y-4 rounded-2xl border border-white/10 bg-[#101726]/50 p-5">
+    <section className="space-y-4 rounded-2xl border border-white/[0.06] bg-[#101726]/50 p-5">
       <div>
         <h4 className="text-lg font-semibold text-white">{section.heading}</h4>
       </div>
@@ -865,7 +865,7 @@ function ChapterSection({ section }: { section: CodexSection }) {
             {section.principles.map((principle, index) => (
               <li
                 key={`principle-${index}`}
-                className="rounded-lg border border-white/10 bg-[#0f1727] p-3 text-sm text-[#c7d6f1]"
+                className="rounded-lg border border-white/[0.06] bg-[#0f1727] p-3 text-sm text-[#c7d6f1]"
               >
                 {principle}
               </li>
@@ -887,7 +887,7 @@ function AppendixContent({
       {appendix.entries?.map((entry, index) => (
         <section
           key={`${entry.heading}-${index}`}
-          className="space-y-4 rounded-2xl border border-white/10 bg-[#101726]/60 p-5"
+          className="space-y-4 rounded-2xl border border-white/[0.06] bg-[#101726]/60 p-5"
         >
           <h4 className="text-lg font-semibold text-white">{entry.heading}</h4>
           {entry.body?.map((paragraph, bodyIndex) => (
@@ -900,7 +900,7 @@ function AppendixContent({
               {entry.points.map((point, pointIndex) => (
                 <li
                   key={`entry-point-${pointIndex}`}
-                  className="rounded-lg border border-white/10 bg-[#0f1727] p-3 text-sm text-[#c7d6f1]"
+                  className="rounded-lg border border-white/[0.06] bg-[#0f1727] p-3 text-sm text-[#c7d6f1]"
                 >
                   {point}
                 </li>
@@ -916,7 +916,7 @@ function AppendixContent({
             {appendix.glossary.map((entry, index) => (
               <div
                 key={`glossary-${index}`}
-                className="rounded-xl border border-white/10 bg-[#0f1727] p-4"
+                className="rounded-xl border border-white/[0.06] bg-[#0f1727] p-4"
               >
                 <dt className="text-sm font-semibold uppercase tracking-[0.35em] text-[#7fffd4]">
                   {entry.term}

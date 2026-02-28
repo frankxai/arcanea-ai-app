@@ -178,7 +178,7 @@ export const GenerationIndicator: React.FC<GenerationIndicatorProps> = ({
               {onView && (
                 <button
                   onClick={onView}
-                  className="p-2 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-colors"
+                  className="p-2 rounded-full bg-white/[0.12] backdrop-blur-sm hover:bg-white/[0.20] transition-colors"
                   title="View full size"
                 >
                   <PhEye className="w-5 h-5 text-white" />
@@ -187,7 +187,7 @@ export const GenerationIndicator: React.FC<GenerationIndicatorProps> = ({
               {onSave && (
                 <button
                   onClick={onSave}
-                  className="p-2 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-colors"
+                  className="p-2 rounded-full bg-white/[0.12] backdrop-blur-sm hover:bg-white/[0.20] transition-colors"
                   title="Save to profile"
                 >
                   <PhDownload className="w-5 h-5 text-white" />

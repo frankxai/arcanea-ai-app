@@ -82,7 +82,7 @@ function InputField({
           onChange={onChange}
           placeholder={placeholder}
           required={required}
-          className="w-full pl-12 pr-12 py-3.5 rounded-xl bg-cosmic-surface/50 border border-white/10 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary/30 outline-none transition-all font-body text-text-primary placeholder:text-text-muted"
+          className="w-full pl-12 pr-12 py-3.5 rounded-xl bg-cosmic-surface/50 border border-white/[0.06] focus:border-brand-primary focus:ring-1 focus:ring-brand-primary/30 outline-none transition-all font-body text-text-primary placeholder:text-text-muted"
         />
         {showToggle && onToggle && (
           <button
@@ -119,7 +119,7 @@ function SocialButton({
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className="flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl border border-white/10 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all font-body text-text-secondary disabled:opacity-50 disabled:cursor-not-allowed"
+      className="flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl border border-white/[0.06] hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all font-body text-text-secondary disabled:opacity-50 disabled:cursor-not-allowed"
     >
       {isGoogle ? (
         <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -354,7 +354,7 @@ export default function LoginPage() {
           {/* Divider */}
           <div className="relative my-8">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-white/10" />
+              <div className="w-full border-t border-white/[0.06]" />
             </div>
             <div className="relative flex justify-center">
               <span className="px-4 bg-cosmic-deep font-body text-sm text-text-muted">

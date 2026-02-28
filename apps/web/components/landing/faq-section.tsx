@@ -75,7 +75,7 @@ function FAQItem({
           className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 transition-all ${
             isOpen
               ? 'bg-atlantean-teal-aqua text-cosmic-deep'
-              : 'bg-white/5 text-text-muted group-hover:bg-white/10'
+              : 'bg-white/[0.04] text-text-muted group-hover:bg-white/[0.06]'
           }`}
         >
           {isOpen ? <PhMinus className="w-4 h-4" /> : <PhPlus className="w-4 h-4" />}

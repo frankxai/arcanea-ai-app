@@ -273,7 +273,7 @@ export default function LibraryPage() {
       </section>
 
       {/* Filters */}
-      <section className="py-8 border-y border-white/5 sticky top-16 bg-cosmic-deep/95 backdrop-blur-sm z-20">
+      <section className="py-8 border-y border-white/[0.04] sticky top-16 bg-cosmic-deep/95 backdrop-blur-sm z-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
             {/* Search */}
@@ -284,7 +284,7 @@ export default function LibraryPage() {
                 placeholder="Search collections..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 rounded-xl bg-cosmic-surface/50 border border-white/10 text-white placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal-aqua/50"
+                className="w-full pl-10 pr-4 py-2 rounded-xl bg-cosmic-surface/50 border border-white/[0.06] text-white placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal-aqua/50"
               />
             </div>
 
@@ -370,7 +370,7 @@ export default function LibraryPage() {
       </section>
 
       {/* Promise */}
-      <section className="py-24 border-t border-white/5">
+      <section className="py-24 border-t border-white/[0.04]">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <PhHeart className="w-12 h-12 mx-auto text-draconic-crimson mb-6" />
           <h2 className="text-2xl md:text-3xl font-display font-bold mb-6">The Library's Promise</h2>

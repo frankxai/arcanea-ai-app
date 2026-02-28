@@ -185,7 +185,7 @@ export default function UniverseBuilderPage() {
         </section>
 
         {/* Canon Stats */}
-        <section id="stats" className="py-8 border-t border-white/5">
+        <section id="stats" className="py-8 border-t border-white/[0.04]">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {CANON_ELEMENTS.map((element) => {
               const Icon = element.icon;
@@ -211,7 +211,7 @@ export default function UniverseBuilderPage() {
         </section>
 
         {/* Universe Templates */}
-        <section id="templates" className="py-8 border-t border-white/5">
+        <section id="templates" className="py-8 border-t border-white/[0.04]">
           <div className="mb-6">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-crystal/20 bg-crystal/8 mb-4">
               <PhSparkle className="w-3 h-3 text-crystal" />
@@ -255,7 +255,7 @@ export default function UniverseBuilderPage() {
         </section>
 
         {/* Your Universes */}
-        <section id="your-universes" className="py-8 border-t border-white/5 pb-16">
+        <section id="your-universes" className="py-8 border-t border-white/[0.04] pb-16">
           <div className="mb-6">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand-gold/20 bg-brand-gold/8 mb-4">
               <PhCrown className="w-3 h-3 text-brand-gold" />
@@ -305,7 +305,7 @@ export default function UniverseBuilderPage() {
                   </span>
                 </div>
 
-                <div className="pt-4 border-t border-white/5">
+                <div className="pt-4 border-t border-white/[0.04]">
                   <div className="flex items-center justify-between">
                     <span
                       className="text-xs font-mono"
@@ -324,7 +324,7 @@ export default function UniverseBuilderPage() {
             {/* New Universe Card */}
             <Link
               href="/universe-builder/new"
-              className="group card-3d liquid-glass rounded-2xl p-6 border-2 border-dashed border-white/20 hover:border-brand-primary/40 hover:bg-brand-primary/5 transition-all flex flex-col items-center justify-center text-center min-h-[220px]"
+              className="group card-3d liquid-glass rounded-2xl p-6 border-2 border-dashed border-white/[0.12] hover:border-brand-primary/40 hover:bg-brand-primary/5 transition-all flex flex-col items-center justify-center text-center min-h-[220px]"
             >
               <PhPlus className="w-8 h-8 text-text-muted group-hover:text-brand-primary transition-colors mb-3" />
               <span className="text-text-muted group-hover:text-brand-primary transition-colors font-sans">

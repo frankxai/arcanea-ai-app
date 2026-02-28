@@ -217,7 +217,7 @@ export function FeaturesPremium() {
                 {capabilities.slice(0, 4).map((cap) => (
                   <span
                     key={cap}
-                    className="px-3 py-1.5 rounded-full bg-white/5 border border-white/[0.06] text-sm font-medium"
+                    className="px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.06] text-sm font-medium"
                   >
                     {cap}
                   </span>

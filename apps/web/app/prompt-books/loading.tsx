@@ -4,7 +4,7 @@ export default function PromptBooksLoading() {
   return (
     <div className="flex h-[calc(100dvh-64px)] pt-16">
       {/* Sidebar skeleton */}
-      <div className="w-72 glass-strong border-r border-white/5 p-4 space-y-4">
+      <div className="w-72 glass-strong border-r border-white/[0.04] p-4 space-y-4">
         <Skeleton variant="rect" className="h-10 w-full" />
         <Skeleton variant="rect" className="h-8 w-full" />
         <div className="space-y-2 pt-4">

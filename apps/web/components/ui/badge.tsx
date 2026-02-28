@@ -39,7 +39,7 @@ const badgeVariants = cva(
           'shadow-[0_0_8px_rgba(255,215,0,0.15)]',
         ],
         outline: [
-          'bg-transparent border-white/10 text-text-muted',
+          'bg-transparent border-white/[0.06] text-text-muted',
           'hover:border-crystal/30 hover:text-text-secondary',
         ],
         brand: [

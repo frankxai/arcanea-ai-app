@@ -100,7 +100,7 @@ export function ProfilePageClient({
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <span className="text-3xl font-display font-bold text-white/80">
+                <span className="text-3xl font-display font-bold text-white/[0.60]">
                   {initials}
                 </span>
               )}
@@ -115,7 +115,7 @@ export function ProfilePageClient({
                   {profile.displayName}
                 </h1>
                 {profile.bio && (
-                  <p className="text-white/60 font-body mt-2 max-w-xl leading-relaxed">
+                  <p className="text-white/[0.40] font-body mt-2 max-w-xl leading-relaxed">
                     {profile.bio}
                   </p>
                 )}
@@ -124,7 +124,7 @@ export function ProfilePageClient({
               {isOwnProfile && (
                 <Link
                   href="/profile/edit"
-                  className="flex items-center gap-2 px-4 py-2 border border-white/20 rounded-lg text-white/80 hover:bg-white/5 transition-colors font-body text-sm"
+                  className="flex items-center gap-2 px-4 py-2 border border-white/[0.12] rounded-lg text-white/[0.60] hover:bg-white/[0.04] transition-colors font-body text-sm"
                 >
                   <PhPencilSimple size={16} weight="duotone" />
                   Edit Profile
@@ -135,39 +135,39 @@ export function ProfilePageClient({
             {/* Badges row */}
             <div className="flex flex-wrap gap-2 mt-4">
               {/* Magic Rank */}
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 backdrop-blur-xl border border-white/10 text-sm font-body">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 backdrop-blur-xl border border-white/[0.06] text-sm font-body">
                 <PhStar size={14} weight="duotone" className="text-yellow-400" />
-                <span className="text-white/80">{profile.magicRank}</span>
-                <span className="text-white/40 text-xs">{RANK_ICONS[profile.magicRank]}</span>
+                <span className="text-white/[0.60]">{profile.magicRank}</span>
+                <span className="text-white/[0.25] text-xs">{RANK_ICONS[profile.magicRank]}</span>
               </span>
 
               {/* Gates Open */}
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 backdrop-blur-xl border border-white/10 text-sm font-body">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 backdrop-blur-xl border border-white/[0.06] text-sm font-body">
                 <PhLightning size={14} weight="duotone" className="text-cyan-400" />
-                <span className="text-white/80">{profile.gatesOpen}/10 Gates</span>
+                <span className="text-white/[0.60]">{profile.gatesOpen}/10 Gates</span>
               </span>
 
               {/* Active Gate */}
               {profile.activeGate && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 backdrop-blur-xl border border-white/10 text-sm font-body">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 backdrop-blur-xl border border-white/[0.06] text-sm font-body">
                   <PhFire size={14} weight="duotone" className="text-orange-400" />
-                  <span className="text-white/80">{profile.activeGate} Gate</span>
+                  <span className="text-white/[0.60]">{profile.activeGate} Gate</span>
                 </span>
               )}
 
               {/* Guardian */}
               {profile.guardian && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 backdrop-blur-xl border border-white/10 text-sm font-body">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 backdrop-blur-xl border border-white/[0.06] text-sm font-body">
                   <PhShieldStar size={14} weight="duotone" className="text-violet-400" />
-                  <span className="text-white/80">{profile.guardian}</span>
+                  <span className="text-white/[0.60]">{profile.guardian}</span>
                 </span>
               )}
 
               {/* Academy House */}
               {profile.academyHouse && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 backdrop-blur-xl border border-white/10 text-sm font-body">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 backdrop-blur-xl border border-white/[0.06] text-sm font-body">
                   <PhGraduationCap size={14} weight="duotone" className="text-emerald-400" />
-                  <span className="text-white/80">House {profile.academyHouse}</span>
+                  <span className="text-white/[0.60]">House {profile.academyHouse}</span>
                 </span>
               )}
             </div>
@@ -184,7 +184,7 @@ export function ProfilePageClient({
         </div>
 
         {/* Tabs */}
-        <div className="border-b border-white/10 mb-8">
+        <div className="border-b border-white/[0.06] mb-8">
           <div className="flex gap-1">
             {(['creations', 'about'] as const).map((tab) => (
               <button
@@ -193,7 +193,7 @@ export function ProfilePageClient({
                 className={`relative px-5 py-3 font-body text-sm font-medium transition-colors ${
                   activeTab === tab
                     ? 'text-white'
-                    : 'text-white/40 hover:text-white/60'
+                    : 'text-white/[0.25] hover:text-white/[0.40]'
                 }`}
               >
                 {tab === 'creations' ? `Creations (${creations.length})` : 'About'}
@@ -218,8 +218,8 @@ export function ProfilePageClient({
           >
             {creations.length === 0 ? (
               <div className="text-center py-20">
-                <PhSparkle size={48} weight="duotone" className="text-white/20 mx-auto mb-4" />
-                <p className="text-white/40 font-body text-lg">No creations yet</p>
+                <PhSparkle size={48} weight="duotone" className="text-white/[0.12] mx-auto mb-4" />
+                <p className="text-white/[0.25] font-body text-lg">No creations yet</p>
                 {isOwnProfile && (
                   <Link
                     href="/studio"
@@ -247,15 +247,15 @@ export function ProfilePageClient({
             className="space-y-6 pb-12"
           >
             {/* Bio Card */}
-            <div className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
+            <div className="bg-black/40 backdrop-blur-xl border border-white/[0.06] rounded-2xl p-6">
               <h3 className="text-lg font-display font-bold text-white mb-3">About</h3>
-              <p className="text-white/60 font-body leading-relaxed">
+              <p className="text-white/[0.40] font-body leading-relaxed">
                 {profile.bio || 'This creator has not written a bio yet.'}
               </p>
             </div>
 
             {/* Journey Details */}
-            <div className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
+            <div className="bg-black/40 backdrop-blur-xl border border-white/[0.06] rounded-2xl p-6">
               <h3 className="text-lg font-display font-bold text-white mb-4">Journey</h3>
               <div className="space-y-3">
                 <DetailRow label="Magic Rank" value={profile.magicRank} />
@@ -278,9 +278,9 @@ export function ProfilePageClient({
             </div>
 
             {/* Member Since */}
-            <div className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
+            <div className="bg-black/40 backdrop-blur-xl border border-white/[0.06] rounded-2xl p-6">
               <h3 className="text-lg font-display font-bold text-white mb-3">Member Since</h3>
-              <p className="text-white/60 font-body">
+              <p className="text-white/[0.40] font-body">
                 {new Date(profile.createdAt).toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: 'long',
@@ -305,12 +305,12 @@ function StatCard({
   icon: typeof PhSparkle
 }) {
   return (
-    <div className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-xl p-4 text-center">
-      <Icon size={18} weight="duotone" className="text-white/40 mx-auto mb-1" />
+    <div className="bg-black/40 backdrop-blur-xl border border-white/[0.06] rounded-xl p-4 text-center">
+      <Icon size={18} weight="duotone" className="text-white/[0.25] mx-auto mb-1" />
       <div className="text-xl font-display font-bold text-white">
         {value >= 1000 ? `${(value / 1000).toFixed(1)}k` : value}
       </div>
-      <div className="text-xs text-white/40 font-body">{label}</div>
+      <div className="text-xs text-white/[0.25] font-body">{label}</div>
     </div>
   )
 }
@@ -318,7 +318,7 @@ function StatCard({
 function DetailRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-center justify-between">
-      <span className="text-white/40 font-body text-sm">{label}</span>
+      <span className="text-white/[0.25] font-body text-sm">{label}</span>
       <span className="text-white font-body text-sm">{value}</span>
     </div>
   )
@@ -335,10 +335,10 @@ function CreationCard({ creation, index }: { creation: Creation; index: number }
     >
       <Link
         href={`/creations/${creation.id}`}
-        className="block group bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden hover:border-white/20 transition-all duration-300"
+        className="block group bg-black/40 backdrop-blur-xl border border-white/[0.06] rounded-2xl overflow-hidden hover:border-white/[0.12] transition-all duration-300"
       >
         {/* Thumbnail */}
-        <div className="aspect-square bg-white/5 relative overflow-hidden">
+        <div className="aspect-square bg-white/[0.04] relative overflow-hidden">
           {creation.thumbnailUrl ? (
             <Image
               src={creation.thumbnailUrl}
@@ -348,13 +348,13 @@ function CreationCard({ creation, index }: { creation: Creation; index: number }
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
-              <TypeIcon size={48} weight="duotone" className="text-white/10" />
+              <TypeIcon size={48} weight="duotone" className="text-white/[0.06]" />
             </div>
           )}
 
           {/* Type badge */}
           <div className="absolute top-3 left-3">
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-sm border border-white/10 text-xs text-white/70 font-body">
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-sm border border-white/[0.06] text-xs text-white/[0.50] font-body">
               <TypeIcon size={12} weight="duotone" />
               {creation.type}
             </span>
@@ -363,7 +363,7 @@ function CreationCard({ creation, index }: { creation: Creation; index: number }
           {/* Element badge */}
           {creation.element && (
             <div className="absolute top-3 right-3">
-              <span className="px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-sm border border-white/10 text-xs text-white/70 font-body">
+              <span className="px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-sm border border-white/[0.06] text-xs text-white/[0.50] font-body">
                 {creation.element}
               </span>
             </div>
@@ -376,13 +376,13 @@ function CreationCard({ creation, index }: { creation: Creation; index: number }
             {creation.title}
           </h3>
           {creation.description && (
-            <p className="text-white/40 text-xs font-body mt-1 line-clamp-2">
+            <p className="text-white/[0.25] text-xs font-body mt-1 line-clamp-2">
               {creation.description}
             </p>
           )}
 
           {/* Stats */}
-          <div className="flex items-center gap-3 mt-3 text-xs text-white/30 font-body">
+          <div className="flex items-center gap-3 mt-3 text-xs text-white/[0.20] font-body">
             <span className="inline-flex items-center gap-1">
               <PhEye size={12} weight="duotone" />
               {creation.viewCount}
@@ -392,7 +392,7 @@ function CreationCard({ creation, index }: { creation: Creation; index: number }
               {creation.likeCount}
             </span>
             {creation.gate && (
-              <span className="ml-auto text-white/20">
+              <span className="ml-auto text-white/[0.12]">
                 {creation.gate}
               </span>
             )}

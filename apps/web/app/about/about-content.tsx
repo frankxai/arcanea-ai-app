@@ -428,7 +428,7 @@ export function AboutContent() {
                   {guardian.gate} Gate
                 </p>
                 <p className="text-sm text-text-secondary">{guardian.domain}</p>
-                <div className="mt-3 pt-3 border-t border-white/5">
+                <div className="mt-3 pt-3 border-t border-white/[0.04]">
                   <span className="text-xs text-text-muted">{guardian.element}</span>
                 </div>
               </motion.div>
@@ -470,7 +470,7 @@ export function AboutContent() {
                   <div className="text-xs font-mono text-text-muted">Gates</div>
                   <div className="text-lg font-bold">{rank.gates}</div>
                 </div>
-                <div className="h-8 w-px bg-white/10" />
+                <div className="h-8 w-px bg-white/[0.06]" />
                 <div className="flex items-center gap-3">
                   <GraduationCap className="w-5 h-5 shrink-0" />
                   <span className="text-lg font-display font-semibold">
@@ -536,7 +536,7 @@ export function AboutContent() {
             </Link>
             <Link
               href="/library"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl liquid-glass border border-white/15 text-white font-semibold text-base hover:bg-white/[0.06] hover:border-white/25 transition-all duration-300"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl liquid-glass border border-white/[0.10] text-white font-semibold text-base hover:bg-white/[0.06] hover:border-white/[0.15] transition-all duration-300"
             >
               <Books className="w-5 h-5" weight="duotone" />
               Explore the Library

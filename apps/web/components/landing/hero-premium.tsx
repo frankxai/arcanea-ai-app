@@ -453,7 +453,7 @@ export function HeroPremium({ stats }: HeroPremiumProps) {
                 whileHover={{ x: "100%" }}
                 transition={{ duration: 0.6 }}
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12" />
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.20] to-transparent skew-x-12" />
               </motion.div>
             </Link>
           </MagneticButton>

@@ -329,7 +329,7 @@ const LINKS: LinkItem[] = [
     label: "GitHub",
     description: "Open source. MIT License. Star & contribute",
     icon: <Icons.Github />,
-    color: "from-white/20 to-white/5",
+    color: "from-white/[0.12] to-white/[0.04]",
     external: true,
   },
   {

@@ -31,7 +31,7 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
               onClick={toggleSplitView}
               className={cn(
                 'w-10 h-5 rounded-full transition-colors relative',
-                editorSplitView ? 'bg-brand-accent' : 'bg-white/10',
+                editorSplitView ? 'bg-brand-accent' : 'bg-white/[0.06]',
               )}
             >
               <span
@@ -50,7 +50,7 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
                 onClick={() => setViewMode('grid')}
                 className={cn(
                   'px-2.5 py-1 rounded-md text-[10px] font-sans transition-all',
-                  viewMode === 'grid' ? 'glass text-text-primary' : 'text-text-muted',
+                  viewMode === 'grid' ? 'liquid-glass text-text-primary' : 'text-text-muted',
                 )}
               >
                 Grid
@@ -59,7 +59,7 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
                 onClick={() => setViewMode('list')}
                 className={cn(
                   'px-2.5 py-1 rounded-md text-[10px] font-sans transition-all',
-                  viewMode === 'list' ? 'glass text-text-primary' : 'text-text-muted',
+                  viewMode === 'list' ? 'liquid-glass text-text-primary' : 'text-text-muted',
                 )}
               >
                 List
@@ -114,7 +114,7 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
                   onClick={() => setDefaultSyntax(s)}
                   className={cn(
                     'px-2.5 py-1 rounded-md text-[10px] font-mono transition-all',
-                    defaultSyntax === s ? 'glass text-text-primary' : 'text-text-muted',
+                    defaultSyntax === s ? 'liquid-glass text-text-primary' : 'text-text-muted',
                   )}
                 >
                   {s.toUpperCase()}

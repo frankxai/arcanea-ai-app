@@ -188,7 +188,7 @@ export default function ToolsPage() {
                       {tool.features.map((feature) => (
                         <span
                           key={feature}
-                          className="px-2 py-1 rounded-md text-xs bg-white/5 text-text-muted"
+                          className="px-2 py-1 rounded-md text-xs bg-white/[0.04] text-text-muted"
                         >
                           {feature}
                         </span>
@@ -220,7 +220,7 @@ export default function ToolsPage() {
             {comingTools.map((tool) => (
               <div
                 key={tool.id}
-                className="p-6 rounded-2xl border border-white/5 bg-cosmic-surface/20 opacity-60"
+                className="p-6 rounded-2xl border border-white/[0.04] bg-cosmic-surface/20 opacity-60"
               >
                 <div
                   className="w-12 h-12 rounded-xl flex items-center justify-center text-xl mb-4"
@@ -245,7 +245,7 @@ export default function ToolsPage() {
             href="https://github.com/frankxai/arcanea/issues/new"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/20 text-white hover:bg-white/5 transition-all"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/[0.12] text-white hover:bg-white/[0.04] transition-all"
           >
             Request a Tool
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

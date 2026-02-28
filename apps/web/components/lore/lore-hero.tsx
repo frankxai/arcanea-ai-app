@@ -98,7 +98,7 @@ export function LoreHero() {
           }}
         >
           <div className="absolute inset-0 bg-gradient-radial from-gold-bright/30 via-gold-bright/10 to-transparent rounded-full blur-3xl" />
-          <div className="absolute inset-20 bg-gradient-radial from-white/20 via-gold-bright/5 to-transparent rounded-full blur-2xl animate-pulse" />
+          <div className="absolute inset-20 bg-gradient-radial from-white/[0.12] via-gold-bright/5 to-transparent rounded-full blur-2xl animate-pulse" />
         </motion.div>
 
         {/* Nero - Deep Void (bottom left) */}

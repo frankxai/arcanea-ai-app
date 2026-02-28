@@ -198,7 +198,7 @@ export function GuardiansGrid() {
               <div
                 className={`relative rounded-2xl border border-white/[0.06] liquid-glass backdrop-blur-sm overflow-hidden transition-all duration-500 ${
                   expandedId === guardian.id
-                    ? 'border-white/30'
+                    ? 'border-white/[0.20]'
                     : 'hover:border-white/[0.12]'
                 }`}
               >
@@ -303,7 +303,7 @@ export function GuardiansGrid() {
                         </blockquote>
 
                         <div className="mt-6 flex gap-4">
-                          <div className="px-3 py-1 rounded-full bg-white/5 text-xs">
+                          <div className="px-3 py-1 rounded-full bg-white/[0.04] text-xs">
                             Wisdom: {guardian.wisdom}
                           </div>
                         </div>

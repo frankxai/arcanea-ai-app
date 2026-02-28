@@ -204,7 +204,7 @@ const FLOWS: Flow[] = [
 /* ─── Kind styling ───────────────────────────────────────────────────────── */
 const KIND: Record<NodeKind, { border: string; bg: string; icon: string; badge: string; badgeText: string }> = {
   start:     { border: "border-arcane-crystal/50", bg: "bg-arcane-crystal/8",  icon: "text-arcane-crystal",    badge: "bg-arcane-crystal/15 text-arcane-crystal",    badgeText: "Start" },
-  action:    { border: "border-white/10",           bg: "bg-white/4",           icon: "text-text-secondary",    badge: "bg-white/8 text-text-muted",                  badgeText: "Step" },
+  action:    { border: "border-white/[0.06]",           bg: "bg-white/[0.04]",           icon: "text-text-secondary",    badge: "bg-white/[0.08] text-text-muted",                  badgeText: "Step" },
   gate:      { border: "border-arcane-gold/50",     bg: "bg-arcane-gold/8",     icon: "text-arcane-gold",       badge: "bg-arcane-gold/15 text-arcane-gold",          badgeText: "Gate" },
   milestone: { border: "border-arcane-cosmic/50",   bg: "bg-arcane-cosmic/8",   icon: "text-arcane-cosmic",     badge: "bg-arcane-cosmic/15 text-arcane-cosmic",      badgeText: "Milestone" },
   end:       { border: "border-arcane-crystal/70",  bg: "bg-arcane-crystal/15", icon: "text-arcane-crystal",    badge: "bg-arcane-crystal/20 text-arcane-crystal",    badgeText: "Outcome" },
@@ -229,7 +229,7 @@ export default function UserFlowsPage() {
   return (
     <div className="min-h-screen bg-cosmic-deep">
       {/* Header */}
-      <div className="border-b border-white/5">
+      <div className="border-b border-white/[0.04]">
         <div className="max-w-7xl mx-auto px-6 py-16">
           <div className="flex items-center gap-2 text-xs font-sans text-text-muted uppercase tracking-widest mb-4">
             <span>Arcanea</span>
@@ -247,7 +247,7 @@ export default function UserFlowsPage() {
       </div>
 
       {/* Flow tabs */}
-      <div className="sticky top-0 z-10 bg-cosmic-deep/90 backdrop-blur-xl border-b border-white/5">
+      <div className="sticky top-0 z-10 bg-cosmic-deep/90 backdrop-blur-xl border-b border-white/[0.04]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex gap-1 overflow-x-auto py-3 scrollbar-hide">
             {FLOWS.map((f) => (
@@ -257,7 +257,7 @@ export default function UserFlowsPage() {
                 className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-sans transition-all ${
                   activeId === f.id
                     ? "bg-arcane-crystal/20 text-arcane-crystal border border-arcane-crystal/30"
-                    : "text-text-muted hover:text-white hover:bg-white/5 border border-transparent"
+                    : "text-text-muted hover:text-white hover:bg-white/[0.04] border border-transparent"
                 }`}
               >
                 {f.title}
@@ -325,7 +325,7 @@ export default function UserFlowsPage() {
                   {/* Arrow connector */}
                   {i < flow.steps.length - 1 && (
                     <div className="flex-shrink-0 flex items-center w-8">
-                      <div className="w-full h-px bg-white/10 relative">
+                      <div className="w-full h-px bg-white/[0.06] relative">
                         <span className="absolute -right-1 -top-2 text-text-muted text-sm">›</span>
                       </div>
                     </div>
@@ -338,7 +338,7 @@ export default function UserFlowsPage() {
 
         {/* Detail panel */}
         {activeStep ? (
-          <div className="liquid-glass rounded-2xl border border-white/5 p-6 md:p-8 mb-10 animate-in fade-in-0 slide-in-from-bottom-2 duration-200">
+          <div className="liquid-glass rounded-2xl border border-white/[0.04] p-6 md:p-8 mb-10 animate-in fade-in-0 slide-in-from-bottom-2 duration-200">
             <div className="flex items-start justify-between gap-4 mb-4">
               <div className="flex items-center gap-3">
                 <span className={`text-2xl ${KIND[activeStep.kind].icon}`}>{activeStep.icon}</span>
@@ -366,7 +366,7 @@ export default function UserFlowsPage() {
             </p>
           </div>
         ) : (
-          <div className="rounded-2xl border border-dashed border-white/8 p-6 mb-10 text-center">
+          <div className="rounded-2xl border border-dashed border-white/[0.08] p-6 mb-10 text-center">
             <p className="text-text-muted font-sans text-sm">
               Click any step to see detail and links
             </p>
@@ -385,7 +385,7 @@ export default function UserFlowsPage() {
         </div>
 
         {/* All flows summary */}
-        <div className="border-t border-white/5 pt-12">
+        <div className="border-t border-white/[0.04] pt-12">
           <h3 className="text-text-muted text-xs font-sans uppercase tracking-widest mb-6">All Journey Maps</h3>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {FLOWS.map((f) => (
@@ -393,7 +393,7 @@ export default function UserFlowsPage() {
                 key={f.id}
                 onClick={() => { setActiveId(f.id); setActiveStepId(null); window.scrollTo({ top: 0, behavior: "smooth" }); }}
                 className={`text-left card-3d liquid-glass rounded-2xl border p-5 hover:border-white/[0.12] transition-all hover-lift ${
-                  activeId === f.id ? "border-arcane-crystal/30 bg-arcane-crystal/5" : "border-white/5"
+                  activeId === f.id ? "border-arcane-crystal/30 bg-arcane-crystal/5" : "border-white/[0.04]"
                 }`}
               >
                 <p className={`text-xs font-mono mb-1 ${HZ_COLOR[f.hz] ?? "text-text-muted"}`}>

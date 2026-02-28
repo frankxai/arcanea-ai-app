@@ -263,7 +263,7 @@ const STATUS_STYLES: Record<StatusVariant, string> = {
   beta: "bg-gold-bright/15 text-gold-bright border-gold-bright/30",
   oss: "bg-green-500/15 text-green-400 border-green-500/30",
   templates: "bg-cosmic-blue/15 text-cosmic-blue border-cosmic-blue/30",
-  coming: "bg-white/5 text-text-muted border-white/10",
+  coming: "bg-white/[0.04] text-text-muted border-white/[0.06]",
 };
 
 // ─── Connection Pillars ───────────────────────────────────────────────────────

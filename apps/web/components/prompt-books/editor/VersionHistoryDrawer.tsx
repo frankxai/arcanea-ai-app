@@ -51,9 +51,9 @@ export function VersionHistoryDrawer({
   if (!open) return null
 
   return (
-    <div className="fixed inset-y-0 right-0 w-[420px] glass-strong border-l border-white/10 z-50 flex flex-col">
+    <div className="fixed inset-y-0 right-0 w-[420px] glass-strong border-l border-white/[0.06] z-50 flex flex-col">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-white/5">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.04]">
         <div className="flex items-center gap-2">
           <PhClock className="w-4 h-4 text-brand-accent" />
           <h3 className="text-sm font-display text-text-primary">Version History</h3>
@@ -69,7 +69,7 @@ export function VersionHistoryDrawer({
       </div>
 
       {/* Version list */}
-      <div className="border-b border-white/5 max-h-48 overflow-y-auto">
+      <div className="border-b border-white/[0.04] max-h-48 overflow-y-auto">
         {loading ? (
           <div className="px-4 py-6 text-center text-xs text-text-muted">Loading versions...</div>
         ) : versions.length === 0 ? (
@@ -138,7 +138,7 @@ export function VersionHistoryDrawer({
 
       {/* Restore button */}
       {selectedVersion && (
-        <div className="px-4 py-3 border-t border-white/5">
+        <div className="px-4 py-3 border-t border-white/[0.04]">
           <Button
             onClick={() => onRestore(selectedVersion)}
             className="w-full liquid-glass gap-2"

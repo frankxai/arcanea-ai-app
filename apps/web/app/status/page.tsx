@@ -171,7 +171,7 @@ export default function StatusPage() {
             <div className="absolute inset-0 bg-gradient-to-br from-atlantean-teal-aqua/5 via-transparent to-transparent pointer-events-none" />
 
             <div className="relative text-center max-w-2xl mx-auto">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/[0.06] bg-white/5 mb-8">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/[0.06] bg-white/[0.04] mb-8">
                 <span className="text-xs font-mono tracking-[0.3em] uppercase text-text-muted">
                   System Status
                 </span>
@@ -226,10 +226,10 @@ export default function StatusPage() {
               return (
                 <div
                   key={service.name}
-                  className="card-3d liquid-glass rounded-2xl p-6 transition-all hover:border-white/15"
+                  className="card-3d liquid-glass rounded-2xl p-6 transition-all hover:border-white/[0.10]"
                 >
                   <div className="flex items-start justify-between mb-5">
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-white/5 text-text-secondary">
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-white/[0.04] text-text-secondary">
                       <ServiceIcon />
                     </div>
                     <span className="text-xs font-mono text-text-muted">
@@ -310,7 +310,7 @@ export default function StatusPage() {
                   key={info.label}
                   className="liquid-glass rounded-2xl p-5 text-center"
                 >
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-white/5 text-text-secondary mx-auto mb-4">
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-white/[0.04] text-text-secondary mx-auto mb-4">
                     <InfoIcon />
                   </div>
                   <p className="text-xs font-mono text-text-muted mb-1">

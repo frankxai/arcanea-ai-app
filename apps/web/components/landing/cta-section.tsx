@@ -89,7 +89,7 @@ export function CTASection() {
                       >
                         <div className="absolute inset-0 bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-light" />
                         <motion.div
-                          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent"
+                          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.15] to-transparent"
                           initial={{ x: "-100%" }}
                           whileHover={{ x: "100%" }}
                           transition={{ duration: 0.5 }}
@@ -102,7 +102,7 @@ export function CTASection() {
 
                       <Link
                         href="/about"
-                        className="px-8 py-4 rounded-2xl border border-white/15 text-white font-semibold text-base hover:bg-white/[0.06] hover:border-white/25 transition-all duration-300"
+                        className="px-8 py-4 rounded-2xl border border-white/[0.10] text-white font-semibold text-base hover:bg-white/[0.06] hover:border-white/[0.15] transition-all duration-300"
                       >
                         Learn More
                       </Link>
@@ -144,7 +144,7 @@ export function CTASection() {
                           transition={{ delay: 0.5 + g.delay * 0.15, type: "spring" }}
                         >
                           <motion.div
-                            className="w-12 h-12 rounded-xl overflow-hidden ring-1 ring-white/20 shadow-xl shadow-black/40"
+                            className="w-12 h-12 rounded-xl overflow-hidden ring-1 ring-white/[0.12] shadow-xl shadow-black/40"
                             animate={{ y: [0, -6, 0] }}
                             transition={{ duration: 3.5, repeat: Infinity, delay: g.delay }}
                           >

@@ -278,7 +278,7 @@ export function ImportExportPanel({ onClose }: ImportExportPanelProps) {
           <Button
             onClick={handleExportAll}
             disabled={exporting || collections.length === 0}
-            className="w-full justify-start gap-2 glass text-xs"
+            className="w-full justify-start gap-2 liquid-glass text-xs"
           >
             <PhFolderOpen className="w-3.5 h-3.5" />
             Export All Collections (JSON)

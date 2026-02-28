@@ -32,7 +32,7 @@ export function Navigation({ academy = 'default', className }: NavigationProps) 
         className={cn(
           'sticky top-0 z-50 w-full transition-all duration-300',
           isScrolled || isMobileMenuOpen
-            ? 'glass shadow-lg border-b border-cosmic-border'
+            ? 'liquid-glass shadow-lg border-b border-cosmic-border'
             : 'bg-transparent',
           className
         )}

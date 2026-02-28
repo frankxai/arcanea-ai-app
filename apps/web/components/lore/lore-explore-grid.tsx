@@ -69,7 +69,7 @@ export function LoreExploreGrid() {
   return (
     <section ref={ref} className="py-24 relative overflow-hidden">
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6">

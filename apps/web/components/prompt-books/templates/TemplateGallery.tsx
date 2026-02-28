@@ -80,9 +80,9 @@ export function TemplateGallery({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div className="glass-strong rounded-2xl border border-white/10 w-[800px] max-h-[85vh] flex flex-col shadow-2xl">
+      <div className="glass-strong rounded-2xl border border-white/[0.06] w-[800px] max-h-[85vh] flex flex-col shadow-2xl">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-white/5">
+        <div className="px-6 py-4 border-b border-white/[0.04]">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
               <PhGridFour className="w-4 h-4 text-brand-accent" />
@@ -119,7 +119,7 @@ export function TemplateGallery({
                 className={cn(
                   'px-3 py-1.5 rounded-lg text-xs font-sans font-medium whitespace-nowrap transition-all',
                   activeCategory === cat.value
-                    ? 'glass text-text-primary'
+                    ? 'liquid-glass text-text-primary'
                     : 'text-text-muted hover:text-text-secondary hover:bg-white/[0.03]',
                 )}
               >
@@ -127,7 +127,7 @@ export function TemplateGallery({
               </button>
             ))}
 
-            <div className="w-px bg-white/5 mx-1" />
+            <div className="w-px bg-white/[0.04] mx-1" />
 
             {/* Type quick-filters */}
             {(['general', 'txt2img', 'chat', 'code'] as PromptType[]).map((type) => (
@@ -137,7 +137,7 @@ export function TemplateGallery({
                 className={cn(
                   'px-2 py-1.5 rounded-lg text-[10px] font-sans whitespace-nowrap transition-all',
                   activeType === type
-                    ? 'glass text-text-primary'
+                    ? 'liquid-glass text-text-primary'
                     : 'text-text-muted/60 hover:text-text-muted',
                 )}
               >

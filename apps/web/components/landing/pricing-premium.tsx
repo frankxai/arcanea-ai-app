@@ -129,7 +129,7 @@ function PricingCard({
             >
               <div
                 className={`mt-0.5 w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${
-                  plan.popular ? "bg-crystal/20" : "bg-white/5"
+                  plan.popular ? "bg-crystal/20" : "bg-white/[0.04]"
                 }`}
               >
                 <PhCheck

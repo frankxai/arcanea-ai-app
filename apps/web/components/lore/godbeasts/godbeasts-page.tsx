@@ -231,7 +231,7 @@ const GODBEASTS: Godbeast[] = [
     lore:
       'Kyuro\'s nine plasma tails represent the nine forms of sacred partnership recognized in Arcanean cosmology. When Kyuro and Ino merge their presences, the resulting field cannot be entered by those whose commitments are false. Only authentic bonds survive this Godbeast\'s proximity.',
     power: 'Partnership amplification, covenant-testing, plasma equilibrium',
-    gradient: 'from-white/10 via-slate-700/20 to-gray-800/30',
+    gradient: 'from-white/[0.06] via-slate-700/20 to-gray-800/30',
     glowColor: 'rgba(200, 214, 229, 0.35)',
     accentHex: '#c8d6e5',
   },
@@ -402,7 +402,7 @@ function GodbeastsHero() {
           <div className="relative h-px w-48 md:w-72">
             <div className="absolute inset-0 bg-gradient-to-r from-earth via-crystal via-brand-gold to-brand-gold rounded-full" />
             <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent rounded-full"
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.25] to-transparent rounded-full"
               animate={{ x: ['-100%', '100%'] }}
               transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
             />
@@ -474,7 +474,7 @@ function GodbeastCard({ beast, index, isInView }: GodbeastCardProps) {
                 style={{ color: beast.accentHex, filter: `drop-shadow(0 0 6px ${beast.glowColor})` }}
               />
               {/* Frequency badge */}
-              <div className="absolute -bottom-2 -right-2 px-1.5 py-0.5 rounded-md bg-cosmic-void/80 border border-white/10">
+              <div className="absolute -bottom-2 -right-2 px-1.5 py-0.5 rounded-md bg-cosmic-void/80 border border-white/[0.06]">
                 <span className="text-xs font-mono" style={{ color: beast.accentHex }}>
                   {beast.gateNumber.toString().padStart(2, '0')}
                 </span>
@@ -496,7 +496,7 @@ function GodbeastCard({ beast, index, isInView }: GodbeastCardProps) {
 
               <div className="flex flex-wrap gap-2">
                 {/* Element badge */}
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-xs">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] text-xs">
                   <span
                     className="w-1.5 h-1.5 rounded-full flex-shrink-0"
                     style={{ background: beast.accentHex, boxShadow: `0 0 4px ${beast.glowColor}` }}
@@ -557,7 +557,7 @@ function GodbeastCard({ beast, index, isInView }: GodbeastCardProps) {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="relative border-t border-white/8 overflow-hidden"
+            className="relative border-t border-white/[0.08] overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Subtle glow bar at the top of the expansion */}
@@ -683,7 +683,7 @@ function BondMechanicsSection() {
   ];
 
   return (
-    <section ref={ref} className="py-24 relative overflow-hidden border-t border-white/5">
+    <section ref={ref} className="py-24 relative overflow-hidden border-t border-white/[0.04]">
       {/* Background */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-gradient-radial from-brand-primary/6 to-transparent rounded-full" />
@@ -781,7 +781,7 @@ function FrequencySpectrum() {
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section ref={ref} className="py-24 relative overflow-hidden border-t border-white/5">
+    <section ref={ref} className="py-24 relative overflow-hidden border-t border-white/[0.04]">
       {/* Aurora background */}
       <div className="absolute inset-0 -z-10 bg-aurora opacity-60" />
 
@@ -929,7 +929,7 @@ function GodbestsCTA() {
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section ref={ref} className="py-24 relative border-t border-white/5">
+    <section ref={ref} className="py-24 relative border-t border-white/[0.04]">
       <div className="max-w-3xl mx-auto px-6 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

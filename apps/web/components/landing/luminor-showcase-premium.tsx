@@ -220,7 +220,7 @@ function LuminorCard({
               {luminor.traits.map((trait) => (
                 <span
                   key={trait}
-                  className="px-3 py-1 rounded-full bg-white/5 border border-white/[0.06] text-xs font-medium"
+                  className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] text-xs font-medium"
                 >
                   {trait}
                 </span>

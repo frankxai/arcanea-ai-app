@@ -284,7 +284,7 @@ export function FilterBar() {
                   )}
                 </button>
 
-                <div className="my-1 h-px bg-white/5" role="separator" />
+                <div className="my-1 h-px bg-white/[0.04]" role="separator" />
 
                 {promptTypeEntries.map(([key, config]) => (
                   <button

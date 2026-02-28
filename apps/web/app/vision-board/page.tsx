@@ -227,7 +227,7 @@ export default function VisionBoardPage() {
         </section>
 
         {/* Monthly Focus */}
-        <section className="py-8 border-t border-white/5">
+        <section className="py-8 border-t border-white/[0.04]">
           <div className="relative liquid-glass rounded-2xl p-6 overflow-hidden">
             <div className="absolute top-0 right-0 w-48 h-48 bg-brand-gold/5 rounded-full blur-3xl" />
 
@@ -257,7 +257,7 @@ export default function VisionBoardPage() {
                   <div className="text-xs text-text-muted">Complete</div>
                 </div>
                 <div className="w-24">
-                  <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                  <div className="h-2 bg-white/[0.06] rounded-full overflow-hidden">
                     <div
                       className="h-full bg-brand-gold rounded-full"
                       style={{ width: `${MONTHLY_FOCUS.progress}%` }}
@@ -280,7 +280,7 @@ export default function VisionBoardPage() {
         </section>
 
         {/* Quick Goals & Milestones */}
-        <section className="py-8 border-t border-white/5">
+        <section className="py-8 border-t border-white/[0.04]">
           <div className="grid md:grid-cols-2 gap-6">
             {/* Quick Goals */}
             <div className="liquid-glass rounded-2xl p-6">
@@ -305,7 +305,7 @@ export default function VisionBoardPage() {
                         {goal.progress}%
                       </span>
                     </div>
-                    <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                    <div className="h-2 bg-white/[0.06] rounded-full overflow-hidden">
                       <div
                         className="h-full rounded-full transition-all duration-1000 group-hover:opacity-80"
                         style={{
@@ -318,7 +318,7 @@ export default function VisionBoardPage() {
                 ))}
               </div>
 
-              <button className="mt-4 w-full py-2 rounded-lg border border-dashed border-white/20 text-text-muted text-sm hover:border-crystal/30 hover:text-crystal transition-all flex items-center justify-center gap-2">
+              <button className="mt-4 w-full py-2 rounded-lg border border-dashed border-white/[0.12] text-text-muted text-sm hover:border-crystal/30 hover:text-crystal transition-all flex items-center justify-center gap-2">
                 <PhPlus className="w-4 h-4" />
                 Add Goal
               </button>
@@ -337,7 +337,7 @@ export default function VisionBoardPage() {
                 {UPCOMING_MILESTONES.map((milestone) => (
                   <div
                     key={milestone.id}
-                    className="flex items-center gap-4 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors"
+                    className="flex items-center gap-4 p-3 rounded-xl bg-white/[0.04] hover:bg-white/[0.06] transition-colors"
                   >
                     <div
                       className="w-2 h-2 rounded-full"
@@ -359,7 +359,7 @@ export default function VisionBoardPage() {
         </section>
 
         {/* Creative Areas */}
-        <section className="py-8 border-t border-white/5">
+        <section className="py-8 border-t border-white/[0.04]">
           <div className="mb-6">
             <h2 className="font-display text-lg font-semibold mb-1">
               Creative Areas
@@ -405,7 +405,7 @@ export default function VisionBoardPage() {
                         {area.completed}/{area.goals} &mdash; {progressPercent}%
                       </span>
                     </div>
-                    <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+                    <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
                       <div
                         className="h-full rounded-full"
                         style={{
@@ -422,7 +422,7 @@ export default function VisionBoardPage() {
         </section>
 
         {/* Achievements */}
-        <section className="py-8 border-t border-white/5 pb-16">
+        <section className="py-8 border-t border-white/[0.04] pb-16">
           <div className="mb-6">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand-gold/20 bg-brand-gold/8 mb-4">
               <PhTrophy className="w-3 h-3 text-brand-gold" />
@@ -447,7 +447,7 @@ export default function VisionBoardPage() {
                 >
                   <div
                     className={`w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3 ${
-                      achievement.unlocked ? "bg-brand-gold/15" : "bg-white/5"
+                      achievement.unlocked ? "bg-brand-gold/15" : "bg-white/[0.04]"
                     }`}
                   >
                     <Icon

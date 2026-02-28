@@ -199,7 +199,7 @@ function OrbitNode({
               borderColor: `color-mix(in srgb, ${node.color} 30%, transparent)`,
             }}
           >
-            <p className="font-mono text-white/90 font-medium" style={{ fontSize: 9 }}>
+            <p className="font-mono text-white/[0.70] font-medium" style={{ fontSize: 9 }}>
               {node.label}
             </p>
             {(node as Node & { sublabel?: string }).sublabel && (
@@ -207,7 +207,7 @@ function OrbitNode({
                 {(node as Node & { sublabel?: string }).sublabel}
               </p>
             )}
-            <p className="text-white/50 mt-0.5" style={{ fontSize: 8 }}>
+            <p className="text-white/[0.30] mt-0.5" style={{ fontSize: 8 }}>
               {node.description}
             </p>
           </div>
@@ -413,7 +413,7 @@ export function EcosystemDiagram() {
           <span className="text-xs text-text-secondary">Developer Tools</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full border border-white/20" />
+          <div className="w-2 h-2 rounded-full border border-white/[0.12]" />
           <span className="text-xs text-text-secondary">Integrations</span>
         </div>
       </div>

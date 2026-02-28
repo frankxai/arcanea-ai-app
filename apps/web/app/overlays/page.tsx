@@ -235,7 +235,7 @@ function StatusBadge({ status }: { status: PlatformStatus }) {
     );
   }
   return (
-    <span className="text-xs font-mono px-2.5 py-1 rounded-full bg-white/5 text-text-muted border border-white/10">
+    <span className="text-xs font-mono px-2.5 py-1 rounded-full bg-white/[0.04] text-text-muted border border-white/[0.06]">
       {status}
     </span>
   );
@@ -312,7 +312,7 @@ export default function OverlaysPage() {
                   href="https://github.com/frankxai/arcanea"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/15 bg-white/5 text-text-primary font-semibold hover:bg-white/10 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/[0.10] bg-white/[0.04] text-text-primary font-semibold hover:bg-white/[0.06] transition-all duration-200"
                 >
                   <IconGithubLogo />
                   View on GitHub
@@ -448,7 +448,7 @@ export default function OverlaysPage() {
             ].map(({ step, title, body, iconEl, color }) => (
               <div key={step} className="card-3d liquid-glass rounded-2xl p-7 relative">
                 <div
-                  className="absolute top-5 right-5 text-4xl font-display font-bold text-white/5 select-none"
+                  className="absolute top-5 right-5 text-4xl font-display font-bold text-white/[0.04] select-none"
                   aria-hidden="true"
                 >
                   {step}
@@ -623,7 +623,7 @@ export default function OverlaysPage() {
                 </Link>
                 <Link
                   href="/install"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/15 bg-white/5 text-text-primary font-semibold hover:bg-white/10 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/[0.10] bg-white/[0.04] text-text-primary font-semibold hover:bg-white/[0.06] transition-all duration-200"
                 >
                   Full install guide
                   <IconArrowRight />

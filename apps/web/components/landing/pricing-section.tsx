@@ -161,7 +161,7 @@ export function PricingSection() {
                 <div className="mb-8">
                   <div
                     className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${
-                      plan.featured ? "bg-atlantean-teal-aqua/20" : "bg-white/5"
+                      plan.featured ? "bg-atlantean-teal-aqua/20" : "bg-white/[0.04]"
                     }`}
                   >
                     <Icon
@@ -201,7 +201,7 @@ export function PricingSection() {
                   className={`w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold transition-all mb-8 ${
                     plan.featured
                       ? "bg-atlantean-teal-aqua text-cosmic-deep hover:bg-atlantean-teal-aqua/90"
-                      : "bg-white/10 text-white hover:bg-white/20"
+                      : "bg-white/[0.06] text-white hover:bg-white/[0.12]"
                   }`}
                 >
                   {plan.cta}
@@ -216,7 +216,7 @@ export function PricingSection() {
                         className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
                           plan.featured
                             ? "bg-atlantean-teal-aqua/20 text-atlantean-teal-aqua"
-                            : "bg-white/10 text-white"
+                            : "bg-white/[0.06] text-white"
                         }`}
                       >
                         <PhCheck className="w-3 h-3" />
@@ -231,7 +231,7 @@ export function PricingSection() {
                       key={limit}
                       className="flex items-start gap-3 opacity-50"
                     >
-                      <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 bg-white/5">
+                      <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 bg-white/[0.04]">
                         <span className="w-2 h-0.5 bg-text-muted rounded-full" />
                       </div>
                       <span className="text-sm text-text-muted">{limit}</span>

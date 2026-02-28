@@ -187,7 +187,7 @@ export default function CommunityStrategyPage() {
         </section>
 
         {/* Stats */}
-        <section className="py-8 border-t border-white/5">
+        <section className="py-8 border-t border-white/[0.04]">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {STATS.map((stat) => {
               const Icon = stat.icon;
@@ -210,7 +210,7 @@ export default function CommunityStrategyPage() {
         </section>
 
         {/* Active Proposals */}
-        <section id="proposals" className="py-12 border-t border-white/5">
+        <section id="proposals" className="py-12 border-t border-white/[0.04]">
           <div className="mb-10">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand-gold/20 bg-brand-gold/8 mb-5">
               <PhChecks className="w-3 h-3 text-brand-gold" />
@@ -277,7 +277,7 @@ export default function CommunityStrategyPage() {
                             Against {againstPercentage}%
                           </span>
                         </div>
-                        <div className="h-2 bg-white/10 rounded-full overflow-hidden flex">
+                        <div className="h-2 bg-white/[0.06] rounded-full overflow-hidden flex">
                           <div
                             className="h-full bg-crystal rounded-full"
                             style={{ width: `${forPercentage}%` }}
@@ -312,7 +312,7 @@ export default function CommunityStrategyPage() {
         </section>
 
         {/* Governance Roles */}
-        <section className="py-12 border-t border-white/5">
+        <section className="py-12 border-t border-white/[0.04]">
           <div className="mb-10">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-crystal/20 bg-crystal/8 mb-5">
               <PhShield className="w-3 h-3 text-crystal" />
@@ -352,7 +352,7 @@ export default function CommunityStrategyPage() {
         </section>
 
         {/* Past Proposals */}
-        <section className="py-12 border-t border-white/5">
+        <section className="py-12 border-t border-white/[0.04]">
           <div className="mb-10">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-water/20 bg-water/8 mb-5">
               <PhCheckCircle className="w-3 h-3 text-water" />
@@ -368,7 +368,7 @@ export default function CommunityStrategyPage() {
           <div className="liquid-glass rounded-2xl overflow-hidden">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-white/10">
+                <tr className="border-b border-white/[0.06]">
                   <th className="text-left text-xs font-mono text-text-muted uppercase tracking-wider px-6 py-4">
                     Proposal
                   </th>
@@ -387,7 +387,7 @@ export default function CommunityStrategyPage() {
                 {PAST_PROPOSALS.map((proposal) => (
                   <tr
                     key={proposal.id}
-                    className="border-b border-white/5 hover:bg-white/[0.03] transition-colors cursor-pointer"
+                    className="border-b border-white/[0.04] hover:bg-white/[0.03] transition-colors cursor-pointer"
                   >
                     <td className="px-6 py-4">
                       <span className="text-text-primary font-sans">
@@ -414,7 +414,7 @@ export default function CommunityStrategyPage() {
         </section>
 
         {/* CTA */}
-        <section id="propose" className="py-16 border-t border-white/5 pb-24">
+        <section id="propose" className="py-16 border-t border-white/[0.04] pb-24">
           <div className="relative liquid-glass rounded-3xl overflow-hidden p-10 sm:p-14">
             <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/10 via-transparent to-crystal/8 pointer-events-none" />
 

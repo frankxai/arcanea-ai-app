@@ -97,7 +97,7 @@ async function HomeContent() {
 
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-20">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass border border-white/10 mb-8">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass border border-white/[0.06] mb-8">
               <PhSparkle className="w-3 h-3 text-atlantean-teal-aqua" />
               <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-atlantean-teal-aqua/90">
                 The System
@@ -206,7 +206,7 @@ async function HomeContent() {
                   <div className="absolute bottom-0 left-0 right-0 p-4 z-10">
                     <h3 className="font-display font-bold text-white text-lg leading-tight">{guardian.name}</h3>
                     <div className="flex items-center justify-between mt-1">
-                      <span className="text-[11px] text-white/50">{guardian.gate} Gate</span>
+                      <span className="text-[11px] text-white/[0.30]">{guardian.gate} Gate</span>
                       <span className="text-[11px] text-atlantean-teal-aqua/70 font-mono">{guardian.frequency}</span>
                     </div>
                   </div>
@@ -254,7 +254,7 @@ function HomeLoading() {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="text-center">
-        <div className="w-14 h-14 rounded-2xl liquid-glass flex items-center justify-center mx-auto mb-6 border border-white/10">
+        <div className="w-14 h-14 rounded-2xl liquid-glass flex items-center justify-center mx-auto mb-6 border border-white/[0.06]">
           <PhCircleNotch className="w-6 h-6 text-atlantean-teal-aqua animate-spin" />
         </div>
         <p className="text-sm text-text-muted">Entering the realm...</p>

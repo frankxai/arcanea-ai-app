@@ -602,7 +602,7 @@ export default function PlatformPage() {
                 return (
                   <div
                     key={el.element}
-                    className="text-center p-4 rounded-xl hover:bg-white/5 transition-colors"
+                    className="text-center p-4 rounded-xl hover:bg-white/[0.04] transition-colors"
                   >
                     <div
                       className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full"

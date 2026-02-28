@@ -18,7 +18,7 @@ const buttonVariants = cva(
         // Arcanean variants
         cosmic: 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg hover:shadow-xl transition-all duration-300',
         luminous: 'bg-gradient-to-r from-emerald-400 to-cyan-400 text-slate-900 shadow-lg hover:shadow-xl transition-all duration-300',
-        ethereal: 'bg-white/10 border border-white/20 text-white hover:bg-white/20 backdrop-blur-sm',
+        ethereal: 'bg-white/[0.06] border border-white/[0.12] text-white hover:bg-white/[0.12] backdrop-blur-sm',
       },
       size: {
         default: 'h-10 px-4 py-2',

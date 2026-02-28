@@ -98,7 +98,7 @@ export default function SkillsLandingPage() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 border-y border-white/10">
+      <section className="py-20 border-y border-white/[0.06]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[

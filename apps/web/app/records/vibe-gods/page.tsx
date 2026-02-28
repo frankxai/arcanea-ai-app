@@ -389,7 +389,7 @@ export default function VibeGodsPage() {
                 </p>
 
                 {/* Stats */}
-                <div className="flex items-center justify-between pt-4 border-t border-white/5">
+                <div className="flex items-center justify-between pt-4 border-t border-white/[0.04]">
                   <div className="flex items-center gap-4 text-xs text-text-muted">
                     <span className="flex items-center gap-1.5">
                       <Icons.Heart />

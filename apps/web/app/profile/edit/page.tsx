@@ -292,7 +292,7 @@ export default function EditProfilePage() {
         >
           <button
             onClick={() => router.push(`/profile/${user.id}`)}
-            className="inline-flex items-center gap-2 text-white/40 hover:text-white/60 transition-colors font-body text-sm mb-4"
+            className="inline-flex items-center gap-2 text-white/[0.25] hover:text-white/[0.40] transition-colors font-body text-sm mb-4"
           >
             <PhArrowLeft size={16} weight="duotone" />
             Back to Profile
@@ -300,7 +300,7 @@ export default function EditProfilePage() {
           <h1 className="text-3xl font-display font-bold bg-gradient-to-r from-violet-500 to-cyan-400 bg-clip-text text-transparent">
             Edit Profile
           </h1>
-          <p className="text-white/40 font-body mt-1">Shape your identity in the Arcanea universe</p>
+          <p className="text-white/[0.25] font-body mt-1">Shape your identity in the Arcanea universe</p>
         </motion.div>
 
         <form onSubmit={handleSubmit} className="space-y-8">
@@ -309,7 +309,7 @@ export default function EditProfilePage() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.05 }}
-            className="bg-black/40 backdrop-blur-xl rounded-2xl p-6 border border-white/10"
+            className="bg-black/40 backdrop-blur-xl rounded-2xl p-6 border border-white/[0.06]"
           >
             <h2 className="text-lg font-display font-bold text-white mb-5">Profile Picture</h2>
             <div className="flex items-center gap-6">
@@ -325,7 +325,7 @@ export default function EditProfilePage() {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <span className="text-2xl font-display font-bold text-white/60">
+                      <span className="text-2xl font-display font-bold text-white/[0.40]">
                         {initials}
                       </span>
                     )}
@@ -356,10 +356,10 @@ export default function EditProfilePage() {
               </div>
 
               <div>
-                <p className="text-white/60 font-body text-sm">
+                <p className="text-white/[0.40] font-body text-sm">
                   Click the avatar to upload a new picture
                 </p>
-                <p className="text-white/30 font-body text-xs mt-1">
+                <p className="text-white/[0.20] font-body text-xs mt-1">
                   JPG, PNG or WebP. Max 5 MB.
                 </p>
               </div>
@@ -371,7 +371,7 @@ export default function EditProfilePage() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="bg-black/40 backdrop-blur-xl rounded-2xl p-6 border border-white/10 space-y-5"
+            className="bg-black/40 backdrop-blur-xl rounded-2xl p-6 border border-white/[0.06] space-y-5"
           >
             <h2 className="text-lg font-display font-bold text-white">Basic Information</h2>
 
@@ -382,7 +382,7 @@ export default function EditProfilePage() {
                 value={formData.display_name}
                 onChange={handleChange}
                 maxLength={100}
-                className="w-full px-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/30 outline-none transition-all font-body text-sm placeholder:text-white/20"
+                className="w-full px-4 py-3 rounded-xl bg-white/[0.04] text-white border border-white/[0.06] focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/30 outline-none transition-all font-body text-sm placeholder:text-white/[0.12]"
                 placeholder="Your display name"
                 required
               />
@@ -395,7 +395,7 @@ export default function EditProfilePage() {
                 onChange={handleChange}
                 rows={4}
                 maxLength={500}
-                className="w-full px-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/30 outline-none transition-all font-body text-sm resize-none placeholder:text-white/20"
+                className="w-full px-4 py-3 rounded-xl bg-white/[0.04] text-white border border-white/[0.06] focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/30 outline-none transition-all font-body text-sm resize-none placeholder:text-white/[0.12]"
                 placeholder="Tell the world about your creative journey..."
               />
             </FieldGroup>
@@ -406,10 +406,10 @@ export default function EditProfilePage() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15 }}
-            className="bg-black/40 backdrop-blur-xl rounded-2xl p-6 border border-white/10 space-y-5"
+            className="bg-black/40 backdrop-blur-xl rounded-2xl p-6 border border-white/[0.06] space-y-5"
           >
             <h2 className="text-lg font-display font-bold text-white">Arcanea Identity</h2>
-            <p className="text-white/40 font-body text-sm -mt-2">
+            <p className="text-white/[0.25] font-body text-sm -mt-2">
               Choose your path through the universe
             </p>
 
@@ -418,9 +418,9 @@ export default function EditProfilePage() {
                 name="active_gate"
                 value={formData.active_gate}
                 onChange={handleChange}
-                className="w-full px-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/30 outline-none transition-all font-body text-sm appearance-none cursor-pointer"
+                className="w-full px-4 py-3 rounded-xl bg-white/[0.04] text-white border border-white/[0.06] focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/30 outline-none transition-all font-body text-sm appearance-none cursor-pointer"
               >
-                <option value="" className="bg-black text-white/40">
+                <option value="" className="bg-black text-white/[0.25]">
                   Select a gate...
                 </option>
                 {GATES.map((gate) => (
@@ -436,9 +436,9 @@ export default function EditProfilePage() {
                 name="guardian"
                 value={formData.guardian}
                 onChange={handleChange}
-                className="w-full px-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/30 outline-none transition-all font-body text-sm appearance-none cursor-pointer"
+                className="w-full px-4 py-3 rounded-xl bg-white/[0.04] text-white border border-white/[0.06] focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/30 outline-none transition-all font-body text-sm appearance-none cursor-pointer"
               >
-                <option value="" className="bg-black text-white/40">
+                <option value="" className="bg-black text-white/[0.25]">
                   Select a guardian...
                 </option>
                 {GUARDIANS.map((g) => (
@@ -454,9 +454,9 @@ export default function EditProfilePage() {
                 name="academy_house"
                 value={formData.academy_house}
                 onChange={handleChange}
-                className="w-full px-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/30 outline-none transition-all font-body text-sm appearance-none cursor-pointer"
+                className="w-full px-4 py-3 rounded-xl bg-white/[0.04] text-white border border-white/[0.06] focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/30 outline-none transition-all font-body text-sm appearance-none cursor-pointer"
               >
-                <option value="" className="bg-black text-white/40">
+                <option value="" className="bg-black text-white/[0.25]">
                   Select a house...
                 </option>
                 {ACADEMY_HOUSES.map((house) => (
@@ -478,7 +478,7 @@ export default function EditProfilePage() {
             <button
               type="button"
               onClick={() => router.push(`/profile/${user.id}`)}
-              className="px-5 py-2.5 border border-white/20 rounded-lg text-white/60 hover:bg-white/5 transition-colors font-body text-sm"
+              className="px-5 py-2.5 border border-white/[0.12] rounded-lg text-white/[0.40] hover:bg-white/[0.04] transition-colors font-body text-sm"
             >
               Cancel
             </button>
@@ -520,12 +520,12 @@ function FieldGroup({
   return (
     <div>
       <div className="flex items-baseline justify-between mb-2">
-        <label className="text-white/60 font-body text-sm font-medium">
+        <label className="text-white/[0.40] font-body text-sm font-medium">
           {label}
           {required && <span className="text-violet-400 ml-0.5">*</span>}
         </label>
         {hint && (
-          <span className="text-white/20 font-body text-xs">{hint}</span>
+          <span className="text-white/[0.12] font-body text-xs">{hint}</span>
         )}
       </div>
       {children}

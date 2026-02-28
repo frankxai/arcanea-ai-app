@@ -67,9 +67,9 @@ export function SaveAsTemplateDialog({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div className="glass-strong rounded-2xl border border-white/10 w-[480px] max-h-[80vh] flex flex-col shadow-2xl">
+      <div className="glass-strong rounded-2xl border border-white/[0.06] w-[480px] max-h-[80vh] flex flex-col shadow-2xl">
         {/* Header */}
-        <div className="px-5 py-4 border-b border-white/5 flex items-center justify-between">
+        <div className="px-5 py-4 border-b border-white/[0.04] flex items-center justify-between">
           <h2 className="text-sm font-display text-text-primary">Save as Template</h2>
           <Button variant="ghost" size="icon" onClick={onClose} className="text-text-muted hover:text-text-primary">
             <PhX className="w-4 h-4" />
@@ -87,7 +87,7 @@ export function SaveAsTemplateDialog({
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-3 py-2 text-xs font-sans text-text-primary focus:outline-none focus:border-brand-accent/40"
+              className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-xs font-sans text-text-primary focus:outline-none focus:border-brand-accent/40"
             />
           </div>
 
@@ -101,7 +101,7 @@ export function SaveAsTemplateDialog({
               onChange={(e) => setDescription(e.target.value)}
               rows={2}
               placeholder="What is this template for?"
-              className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-3 py-2 text-xs font-sans text-text-primary placeholder:text-text-muted/40 focus:outline-none focus:border-brand-accent/40 resize-none"
+              className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-xs font-sans text-text-primary placeholder:text-text-muted/40 focus:outline-none focus:border-brand-accent/40 resize-none"
             />
           </div>
 
@@ -114,7 +114,7 @@ export function SaveAsTemplateDialog({
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-3 py-2 text-xs font-sans text-text-primary focus:outline-none"
+                className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-xs font-sans text-text-primary focus:outline-none"
               >
                 {CATEGORIES.map((c) => (
                   <option key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1)}</option>
@@ -133,7 +133,7 @@ export function SaveAsTemplateDialog({
                   'flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-sans border transition-all',
                   isPublic
                     ? 'border-brand-accent/30 text-brand-accent liquid-glass'
-                    : 'border-white/10 text-text-muted bg-white/[0.03]',
+                    : 'border-white/[0.06] text-text-muted bg-white/[0.03]',
                 )}
               >
                 {isPublic ? <PhGlobe className="w-3 h-3" /> : <PhLock className="w-3 h-3" />}
@@ -157,7 +157,7 @@ export function SaveAsTemplateDialog({
                         type="text"
                         value={v.label}
                         onChange={(e) => updateVariable(i, 'label', e.target.value)}
-                        className="flex-1 bg-transparent text-xs font-sans text-text-primary focus:outline-none border-b border-transparent focus:border-white/10"
+                        className="flex-1 bg-transparent text-xs font-sans text-text-primary focus:outline-none border-b border-transparent focus:border-white/[0.06]"
                         placeholder="Label"
                       />
                     </div>
@@ -184,7 +184,7 @@ export function SaveAsTemplateDialog({
                           type="checkbox"
                           checked={v.required || false}
                           onChange={(e) => updateVariable(i, 'required', e.target.checked)}
-                          className="rounded border-white/20 bg-white/5 text-brand-accent w-3 h-3"
+                          className="rounded border-white/[0.12] bg-white/[0.04] text-brand-accent w-3 h-3"
                         />
                         Req
                       </label>
@@ -197,7 +197,7 @@ export function SaveAsTemplateDialog({
         </div>
 
         {/* Footer */}
-        <div className="px-5 py-3 border-t border-white/5 flex justify-end gap-2">
+        <div className="px-5 py-3 border-t border-white/[0.04] flex justify-end gap-2">
           <Button variant="ghost" onClick={onClose} className="text-xs">Cancel</Button>
           <Button
             onClick={handleSave}

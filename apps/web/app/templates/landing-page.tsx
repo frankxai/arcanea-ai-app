@@ -110,7 +110,7 @@ function LandingPageSkeleton() {
       </section>
 
       {/* Stats skeleton */}
-      <section className="py-16 px-6 border-t border-b border-white/5">
+      <section className="py-16 px-6 border-t border-b border-white/[0.04]">
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[1, 2, 3, 4].map((i) => (
@@ -280,7 +280,7 @@ function FeaturesSection({
   if (!features || features.length === 0) return null;
 
   return (
-    <section className="py-24 px-6 border-t border-white/5 relative">
+    <section className="py-24 px-6 border-t border-white/[0.04] relative">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-fluid-2xl font-display font-bold mb-4">
@@ -335,7 +335,7 @@ function TestimonialsSection({
   if (!testimonials || testimonials.length === 0) return null;
 
   return (
-    <section className="py-24 px-6 border-t border-white/5">
+    <section className="py-24 px-6 border-t border-white/[0.04]">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-fluid-2xl font-display font-bold mb-4">
@@ -394,7 +394,7 @@ function PricingSection({
   if (!pricing || pricing.length === 0) return null;
 
   return (
-    <section className="py-24 px-6 border-t border-white/5 relative">
+    <section className="py-24 px-6 border-t border-white/[0.04] relative">
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_bottom,rgba(127,255,212,0.1),transparent_50%)]" />
       </div>
@@ -476,7 +476,7 @@ function CTASection({ cta }: { cta?: LandingPageProps["cta"] }) {
   if (!cta) return null;
 
   return (
-    <section className="py-24 px-6 border-t border-white/5">
+    <section className="py-24 px-6 border-t border-white/[0.04]">
       <div className="max-w-4xl mx-auto text-center">
         <h2 className="text-fluid-2xl font-display font-bold mb-4">
           {cta.title}

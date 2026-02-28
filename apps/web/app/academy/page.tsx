@@ -54,7 +54,7 @@ export default function AcademyPage() {
           </div>
 
           <div className="relative max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass border border-white/10 mb-8">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass border border-white/[0.06] mb-8">
               <div className="w-1.5 h-1.5 rounded-full bg-gold-bright animate-pulse" />
               <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-gold-bright/90">
                 The Academy of Creation
@@ -85,7 +85,7 @@ export default function AcademyPage() {
               </Link>
               <Link
                 href="/library/academy-handbook"
-                className="px-8 py-3.5 rounded-2xl border border-white/15 text-white font-semibold hover:bg-white/[0.06] hover:border-white/25 transition-all duration-300"
+                className="px-8 py-3.5 rounded-2xl border border-white/[0.10] text-white font-semibold hover:bg-white/[0.06] hover:border-white/[0.15] transition-all duration-300"
               >
                 Read the Handbook
               </Link>

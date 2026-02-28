@@ -120,7 +120,7 @@ export const CreationCard = React.memo(function CreationCard({ creation, onClick
           <div className="absolute inset-0 flex items-center justify-center">
             <motion.div
               whileHover={{ scale: 1.2 }}
-              className="w-16 h-16 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center border-2 border-white/30"
+              className="w-16 h-16 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center border-2 border-white/[0.20]"
             >
               <PhPlay className="w-8 h-8 text-white ml-1" />
             </motion.div>
@@ -148,7 +148,7 @@ export const CreationCard = React.memo(function CreationCard({ creation, onClick
             )}
 
             {/* Stats */}
-            <div className="flex items-center gap-4 text-white/80">
+            <div className="flex items-center gap-4 text-white/[0.60]">
               <div className="flex items-center gap-1.5 text-sm">
                 <PhHeart className="w-4 h-4" />
                 <span>{creation.stats.likes.toLocaleString()}</span>

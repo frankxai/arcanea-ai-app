@@ -354,7 +354,7 @@ export default function AcosPage() {
                 </Link>
                 <Link
                   href="/docs/acos"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/20 text-white font-semibold hover:border-crystal/30 hover:text-crystal transition-all"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/[0.12] text-white font-semibold hover:border-crystal/30 hover:text-crystal transition-all"
                 >
                   <Icons.Terminal />
                   Read Documentation
@@ -412,7 +412,7 @@ export default function AcosPage() {
 
                 {/* Connector */}
                 {index < ARCHITECTURE_LAYERS.length - 1 && (
-                  <div className="hidden md:block absolute top-1/2 -right-2 w-4 h-0.5 bg-white/20 -translate-y-1/2" />
+                  <div className="hidden md:block absolute top-1/2 -right-2 w-4 h-0.5 bg-white/[0.12] -translate-y-1/2" />
                 )}
               </div>
             ))}
@@ -477,7 +477,7 @@ export default function AcosPage() {
               {CAPABILITIES.map((capability) => (
                 <div
                   key={capability}
-                  className="flex items-center gap-3 p-3 rounded-xl bg-white/5"
+                  className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.04]"
                 >
                   <div className="w-6 h-6 rounded-full bg-brand-primary/20 flex items-center justify-center shrink-0">
                     <Icons.CheckCircle className="w-3.5 h-3.5 text-brand-primary" />

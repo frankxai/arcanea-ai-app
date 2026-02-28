@@ -343,7 +343,7 @@ export default function WorkflowsPage() {
                 >
                   {/* Card header */}
                   <div
-                    className="px-6 py-5 border-b border-white/5"
+                    className="px-6 py-5 border-b border-white/[0.04]"
                     style={{
                       background: `color-mix(in srgb, ${wf.color === "gold" ? "var(--color-gold-bright)" : wf.color === "teal" ? "var(--color-atlantean-teal-aqua)" : "var(--color-creation-prism-purple)"} 6%, transparent)`,
                     }}
@@ -370,7 +370,7 @@ export default function WorkflowsPage() {
                   </div>
 
                   {/* Description */}
-                  <div className="px-6 py-4 border-b border-white/5">
+                  <div className="px-6 py-4 border-b border-white/[0.04]">
                     <p className="text-sm text-text-secondary font-body leading-relaxed">
                       {wf.description}
                     </p>
@@ -385,7 +385,7 @@ export default function WorkflowsPage() {
                       {wf.nodes.map((node, i) => {
                         const NodeIcon = node.icon;
                         const typeCls =
-                          NODE_TYPE_STYLES[node.type] ?? "bg-white/5 text-text-secondary";
+                          NODE_TYPE_STYLES[node.type] ?? "bg-white/[0.04] text-text-secondary";
                         return (
                           <li key={i} className="flex items-center gap-3">
                             <div
@@ -413,7 +413,7 @@ export default function WorkflowsPage() {
                   </div>
 
                   {/* Use cases */}
-                  <div className="px-6 py-4 border-t border-white/5 bg-white/[0.02]">
+                  <div className="px-6 py-4 border-t border-white/[0.04] bg-white/[0.02]">
                     <ul className="space-y-1.5">
                       {wf.useCases.map((uc, i) => (
                         <li key={i} className="flex items-start gap-2">

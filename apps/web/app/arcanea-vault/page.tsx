@@ -372,7 +372,7 @@ export default function ArcaneaVaultPage() {
                   {BENEFITS.map((benefit, idx) => (
                     <div
                       key={idx}
-                      className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors"
+                      className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/[0.04] transition-colors"
                     >
                       <div className="w-8 h-8 rounded-lg bg-brand-primary/20 flex items-center justify-center shrink-0">
                         <Icons.Check className="w-4 h-4 text-brand-primary" />

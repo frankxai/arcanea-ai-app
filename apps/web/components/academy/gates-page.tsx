@@ -284,7 +284,7 @@ function GateNode({ gate, side, index }: GateNodeProps) {
           }}
         >
           {/* Inner shimmer top edge */}
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-px rounded-t-2xl bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px rounded-t-2xl bg-gradient-to-r from-transparent via-white/[0.12] to-transparent" />
 
           {/* Header row */}
           <div className="mb-4 flex items-start justify-between gap-3">
@@ -489,7 +489,7 @@ function FrequencySpectrum() {
         {/* Spectrum track */}
         <div className="relative">
           {/* Background track */}
-          <div className="relative h-3 w-full rounded-full bg-white/5 overflow-hidden">
+          <div className="relative h-3 w-full rounded-full bg-white/[0.04] overflow-hidden">
             {/* Gradient fill */}
             <motion.div
               className="absolute inset-y-0 left-0 rounded-full"
@@ -605,7 +605,7 @@ function OpeningGatesPanel() {
           className="pointer-events-none absolute -bottom-24 -left-24 h-64 w-64 rounded-full blur-3xl"
           style={{ backgroundColor: 'rgba(255,215,0,0.06)' }}
         />
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/[0.10] to-transparent" />
 
         <div className="relative">
           {/* Section eyebrow */}
@@ -671,7 +671,7 @@ function OpeningGatesPanel() {
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}
             custom={0.5}
-            className="mt-8 border-t border-white/8 pt-8"
+            className="mt-8 border-t border-white/[0.08] pt-8"
           >
             <p className="mb-4 font-sans text-xs uppercase tracking-[0.3em] text-text-muted">
               The Path of Mastery
@@ -826,7 +826,7 @@ function GatesPathway() {
     <section className="relative mx-auto max-w-5xl px-4 md:px-6">
       {/* Central vertical line — full height background guide */}
       <div className="pointer-events-none absolute left-1/2 top-0 bottom-0 -translate-x-1/2 w-px hidden md:block">
-        <div className="h-full bg-gradient-to-b from-transparent via-white/6 to-transparent" />
+        <div className="h-full bg-gradient-to-b from-transparent via-white/[0.06] to-transparent" />
       </div>
 
       <div className="relative space-y-0">
@@ -925,11 +925,11 @@ export function GatesPage() {
           <Link href="/" className="transition-colors hover:text-text-secondary">
             Arcanea
           </Link>
-          <span className="text-white/20">/</span>
+          <span className="text-white/[0.12]">/</span>
           <Link href="/academy" className="transition-colors hover:text-text-secondary">
             Academy
           </Link>
-          <span className="text-white/20">/</span>
+          <span className="text-white/[0.12]">/</span>
           <span className="text-text-secondary">The Ten Gates</span>
         </nav>
       </div>

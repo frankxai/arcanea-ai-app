@@ -10,7 +10,7 @@ export function PartnershipSection() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section ref={ref} className="py-24 relative overflow-hidden border-t border-white/5">
+    <section ref={ref} className="py-24 relative overflow-hidden border-t border-white/[0.04]">
       {/* Background */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-radial from-gold-bright/5 to-transparent rounded-full" />
@@ -73,9 +73,9 @@ export function PartnershipSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.4 }}
-          className="text-center p-8 rounded-2xl bg-gradient-to-r from-atlantean-teal-aqua/10 via-gold-bright/10 to-creation-prism-purple/10 border border-white/10"
+          className="text-center p-8 rounded-2xl bg-gradient-to-r from-atlantean-teal-aqua/10 via-gold-bright/10 to-creation-prism-purple/10 border border-white/[0.06]"
         >
-          <div className="w-16 h-16 mx-auto rounded-2xl bg-white/10 flex items-center justify-center mb-4">
+          <div className="w-16 h-16 mx-auto rounded-2xl bg-white/[0.06] flex items-center justify-center mb-4">
             <PhHeart className="w-8 h-8 text-white" />
           </div>
           <h3 className="text-2xl font-display font-bold mb-3">United</h3>

@@ -568,7 +568,7 @@ export function ChatTab() {
       </div>
 
       {/* Input Area */}
-      <div className="glass-strong border-t border-white/5 px-6 py-4">
+      <div className="glass-strong border-t border-white/[0.04] px-6 py-4">
         <div className="max-w-4xl mx-auto">
           <div className="liquid-glass rounded-2xl p-2 focus-within:border-brand-accent/50 transition-all">
             <div className="flex items-end gap-2">
