@@ -6,12 +6,14 @@ import {
   useTransform,
   useSpring,
 } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
 import {
   PhArrowRight,
   PhCaretDown,
 } from '@/lib/phosphor-icons';
+import heroLogo from "@/assets/brand/arcanea-hero.jpg";
 
 export function HeroV3() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -103,9 +105,12 @@ export function HeroV3() {
               <div className="w-full h-full bg-gradient-to-b from-atlantean-teal-aqua/40 via-creation-prism-purple/30 to-gold-bright/20 rounded-full" />
             </div>
 
-            <img
-              src="/brand/arcanea-hero.jpg"
+            <Image
+              src={heroLogo}
               alt="Arcanea — Crystal A mark"
+              width={288}
+              height={384}
+              priority
               className="relative w-48 h-64 sm:w-56 sm:h-72 md:w-64 md:h-80 lg:w-72 lg:h-96 object-cover object-center rounded-3xl shadow-2xl shadow-black/50"
               style={{
                 maskImage: "linear-gradient(to bottom, black 80%, transparent 100%)",

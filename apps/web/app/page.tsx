@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Metadata } from "next";
 import { Suspense } from "react";
 import { getCollections, getAllTexts } from "@/lib/content";
@@ -15,6 +16,7 @@ import {
   PhGraduationCap,
   PhShieldStar,
 } from '@/lib/phosphor-icons';
+import footerLogo from "@/assets/brand/arcanea-hero.jpg";
 
 export const metadata: Metadata = {
   title: "Arcanea | Build Your Universe",
@@ -24,29 +26,29 @@ export const metadata: Metadata = {
     title: "Arcanea | Build Your Universe",
     description:
       "Ten Guardians. Seven Wisdoms. A Library of 34 original texts. The mythology-powered framework for mastering the creative life.",
-    images: ["/brand/arcanea-og.jpg"],
+    images: ["https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/brand/arcanea-og.jpg"],
   },
   twitter: {
     card: "summary_large_image",
     title: "Arcanea | Build Your Universe",
     description:
       "Ten Guardians. Seven Wisdoms. 34 original texts. The mythology-powered framework for mastering the creative life.",
-    images: ["/brand/arcanea-og.jpg"],
+    images: ["https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/brand/arcanea-og.jpg"],
   },
 };
 
 // The Ten Guardians with their real hero images
 const GUARDIANS = [
-  { name: "Lyssandria", gate: "Foundation", frequency: "174 Hz", element: "Earth", image: "/guardians/lyssandria-hero.webp" },
-  { name: "Leyla", gate: "Flow", frequency: "285 Hz", element: "Water", image: "/guardians/leyla-hero.webp" },
-  { name: "Draconia", gate: "Fire", frequency: "396 Hz", element: "Fire", image: "/guardians/draconia-hero.webp" },
-  { name: "Maylinn", gate: "Heart", frequency: "417 Hz", element: "Wind", image: "/guardians/maylinn-hero.webp" },
-  { name: "Alera", gate: "Voice", frequency: "528 Hz", element: "Void", image: "/guardians/alera-hero.webp" },
-  { name: "Lyria", gate: "Sight", frequency: "639 Hz", element: "Spirit", image: "/guardians/lyria-hero.webp" },
-  { name: "Aiyami", gate: "Crown", frequency: "741 Hz", element: "Light", image: "/guardians/aiyami-hero.webp" },
-  { name: "Elara", gate: "Shift", frequency: "852 Hz", element: "Void", image: "/guardians/elara-hero.webp" },
-  { name: "Ino", gate: "Unity", frequency: "963 Hz", element: "Spirit", image: "/guardians/ino-hero.webp" },
-  { name: "Shinkami", gate: "Source", frequency: "1111 Hz", element: "Arcane", image: "/guardians/shinkami-hero.webp" },
+  { name: "Lyssandria", gate: "Foundation", frequency: "174 Hz", element: "Earth", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/lyssandria-hero.webp" },
+  { name: "Leyla", gate: "Flow", frequency: "285 Hz", element: "Water", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/leyla-hero.webp" },
+  { name: "Draconia", gate: "Fire", frequency: "396 Hz", element: "Fire", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/draconia-hero.webp" },
+  { name: "Maylinn", gate: "Heart", frequency: "417 Hz", element: "Wind", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/maylinn-hero.webp" },
+  { name: "Alera", gate: "Voice", frequency: "528 Hz", element: "Void", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/alera-hero.webp" },
+  { name: "Lyria", gate: "Sight", frequency: "639 Hz", element: "Spirit", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/lyria-hero.webp" },
+  { name: "Aiyami", gate: "Crown", frequency: "741 Hz", element: "Light", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/aiyami-hero.webp" },
+  { name: "Elara", gate: "Shift", frequency: "852 Hz", element: "Void", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/elara-hero.webp" },
+  { name: "Ino", gate: "Unity", frequency: "963 Hz", element: "Spirit", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/ino-hero.webp" },
+  { name: "Shinkami", gate: "Source", frequency: "1111 Hz", element: "Arcane", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/shinkami-hero.webp" },
 ];
 
 async function HomeContent() {
@@ -274,9 +276,11 @@ export default function Page() {
             {/* Brand */}
             <div className="md:col-span-2">
               <div className="flex items-center gap-3 mb-6">
-                <img
-                  src="/brand/arcanea-hero.jpg"
+                <Image
+                  src={footerLogo}
                   alt="Arcanea"
+                  width={40}
+                  height={40}
                   className="w-10 h-10 rounded-lg object-cover object-center"
                 />
                 <span className="font-display text-xl font-semibold bg-gradient-to-r from-atlantean-teal-aqua to-creation-prism-purple bg-clip-text text-transparent">

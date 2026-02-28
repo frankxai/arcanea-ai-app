@@ -133,7 +133,7 @@ export function CTASection() {
                       {
                         name: "Lyria",
                         title: "Sight",
-                        image: "/guardians/lyria-hero.webp",
+                        image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/lyria-hero.webp",
                         angle: 0,
                         delay: 0,
                         ring: "ring-creation-prism-purple/40",
@@ -141,7 +141,7 @@ export function CTASection() {
                       {
                         name: "Alera",
                         title: "Voice",
-                        image: "/guardians/alera-hero.webp",
+                        image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/alera-hero.webp",
                         angle: 72,
                         delay: 0.5,
                         ring: "ring-atlantean-teal-aqua/40",
@@ -149,7 +149,7 @@ export function CTASection() {
                       {
                         name: "Leyla",
                         title: "Flow",
-                        image: "/guardians/leyla-hero.webp",
+                        image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/leyla-hero.webp",
                         angle: 144,
                         delay: 1,
                         ring: "ring-gold-bright/40",
@@ -157,7 +157,7 @@ export function CTASection() {
                       {
                         name: "Maylinn",
                         title: "Heart",
-                        image: "/guardians/maylinn-hero.webp",
+                        image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/maylinn-hero.webp",
                         angle: 216,
                         delay: 1.5,
                         ring: "ring-pink-400/40",
@@ -165,7 +165,7 @@ export function CTASection() {
                       {
                         name: "Draconia",
                         title: "Fire",
-                        image: "/guardians/draconia-hero.webp",
+                        image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/draconia-hero.webp",
                         angle: 288,
                         delay: 2,
                         ring: "ring-draconic-crimson/40",
