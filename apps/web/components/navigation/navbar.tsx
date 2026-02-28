@@ -14,7 +14,8 @@ const navLinks = [
   { href: "/library", label: "Library" },
   { href: "/academy", label: "Academy" },
   { href: "/studio", label: "Studio" },
-  { href: "/about", label: "About" },
+  { href: "/ecosystem", label: "Ecosystem" },
+  { href: "/community", label: "Community" },
 ];
 
 export function Navbar() {

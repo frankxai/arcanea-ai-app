@@ -5,6 +5,7 @@ import { ReactNode } from "react";
 import { Playfair_Display, Crimson_Pro, Inter, JetBrains_Mono } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { AuthProvider } from "@/lib/auth/context";
+import { Footer } from "@/components/navigation";
 
 const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
@@ -95,6 +96,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <div className="relative min-h-dvh bg-cosmic-void font-sans text-text-primary selection:bg-atlantean-aqua/30 selection:text-atlantean-aqua">
             <CosmicBackground />
             <main id="main-content" className="relative">{children}</main>
+            <Footer />
           </div>
         </AuthProvider>
       </body>
