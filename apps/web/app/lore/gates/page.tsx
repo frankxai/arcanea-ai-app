@@ -4,8 +4,6 @@ import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { PhStack, PhArrowRight, PhSparkle, PhCaretDown } from '@/lib/phosphor-icons';
 import Link from 'next/link';
-import { Navbar } from '@/components/navigation';
-
 const GATES = [
   {
     number: 1,
@@ -165,12 +163,10 @@ export default function GatesPage() {
 
   return (
     <div className="relative min-h-screen bg-cosmic-deep">
-      <Navbar />
-
       {/* Hero */}
       <section
         ref={heroRef}
-        className="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-24"
+        className="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-8"
       >
         {/* Shinkami floating islands — the Source Gate, realm of the meta-creator */}
         <img
@@ -268,8 +264,8 @@ export default function GatesPage() {
                   transition={{ delay: i * 0.05 }}
                 >
                   <div
-                    className={`relative rounded-2xl glass overflow-hidden transition-all duration-300 ${
-                      expandedGate === gate.number ? 'border-white/30 shadow-glow-sm' : 'hover:border-white/20'
+                    className={`relative rounded-2xl liquid-glass overflow-hidden transition-all duration-300 ${
+                      expandedGate === gate.number ? 'border-white/30 shadow-glow-sm' : 'hover:border-white/[0.12]'
                     }`}
                   >
                     {/* Guardian atmospheric background */}

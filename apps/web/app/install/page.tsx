@@ -396,47 +396,6 @@ export default function InstallPage() {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-white/5 mt-20">
-        <div className="max-w-7xl mx-auto px-6 py-12">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-atlantean-teal to-creation-prism-purple flex items-center justify-center text-cosmic-deep font-bold text-sm font-display">
-                A
-              </div>
-              <span className="text-sm text-text-muted">
-                Arcanea — Building the future of creative intelligence
-              </span>
-            </div>
-            <div className="flex items-center gap-6 text-sm text-text-muted">
-              <Link
-                href="/about"
-                className="hover:text-white transition-colors"
-              >
-                About
-              </Link>
-              <Link
-                href="/library"
-                className="hover:text-white transition-colors"
-              >
-                Library
-              </Link>
-              <Link
-                href="/skills"
-                className="hover:text-white transition-colors"
-              >
-                Skills
-              </Link>
-              <a
-                href="https://github.com/frankxai/arcanea"
-                className="hover:text-white transition-colors"
-              >
-                GitHub
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

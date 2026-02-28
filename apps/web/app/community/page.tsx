@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { Navbar } from "@/components/navigation";
 import {
   PhChatCircle,
   PhGithubLogo,
@@ -286,11 +285,9 @@ export default function CommunityPage() {
         <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(139,92,246,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(127,255,212,0.08),transparent_55%)]" />
       </div>
 
-      <Navbar />
-
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* ── 1. Hero ───────────────────────────────────────────────────────── */}
-        <section className="pt-28 pb-20 lg:pt-36 lg:pb-28">
+        <section className="pt-12 pb-20 lg:pt-20 lg:pb-28">
           <div className="relative liquid-glass rounded-3xl overflow-hidden px-8 py-16 sm:px-16 sm:py-20 lg:px-20 lg:py-24">
             {/* Elara hunter+wolf — Shift Gate, perspective and the bonds that transcend dimension */}
             <img

@@ -406,7 +406,7 @@ export default function DevelopersPage() {
         <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(139,92,246,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(127,255,212,0.08),transparent_55%)]" />
       </div>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12">
         {/* Hero Section */}
         <section className="mb-16">
           <div className="relative liquid-glass rounded-3xl overflow-hidden px-8 py-12 sm:px-12 sm:py-16">
@@ -445,7 +445,7 @@ export default function DevelopersPage() {
                 </a>
                 <Link
                   href="/skills"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
                 >
                   <Icons.Sparkles />
                   Create a Skill
@@ -477,7 +477,7 @@ export default function DevelopersPage() {
                 href={pkg.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative glass rounded-2xl p-6 overflow-hidden glow-card hover-lift transition-all hover:border-white/20"
+                className="group relative card-3d liquid-glass rounded-2xl p-6 overflow-hidden glow-card hover-lift transition-all hover:border-white/[0.12]"
               >
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"
@@ -541,7 +541,7 @@ export default function DevelopersPage() {
 
           <div className="grid md:grid-cols-3 gap-6">
             {TOOLS.map((category) => (
-              <div key={category.category} className="glass rounded-2xl p-6">
+              <div key={category.category} className="liquid-glass rounded-2xl p-6">
                 <div className="flex items-center gap-2 mb-4">
                   <div
                     className="w-2 h-2 rounded-full"
@@ -596,7 +596,7 @@ export default function DevelopersPage() {
                 <Link
                   key={item.title}
                   href={item.href}
-                  className="group relative glass rounded-2xl p-6 overflow-hidden glow-card hover-lift transition-all"
+                  className="group relative card-3d liquid-glass rounded-2xl p-6 overflow-hidden glow-card hover-lift transition-all"
                 >
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"
@@ -637,7 +637,7 @@ export default function DevelopersPage() {
 
         {/* Architecture */}
         <section className="mb-16">
-          <div className="glass rounded-2xl p-8">
+          <div className="liquid-glass rounded-2xl p-8">
             <h2 className="font-display text-2xl font-semibold text-text-primary mb-6 text-center">
               Architecture Overview
             </h2>
@@ -730,7 +730,7 @@ export default function DevelopersPage() {
                 </a>
                 <Link
                   href="/skills"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
                 >
                   <Icons.Zap />
                   Create a Skill

@@ -354,7 +354,7 @@ export default function AcosPage() {
                 </Link>
                 <Link
                   href="/docs/acos"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/20 text-white font-semibold hover:border-crystal/30 hover:text-crystal transition-all"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/20 text-white font-semibold hover:border-crystal/30 hover:text-crystal transition-all"
                 >
                   <Icons.Terminal />
                   Read Documentation
@@ -380,7 +380,7 @@ export default function AcosPage() {
             {ARCHITECTURE_LAYERS.map((layer, index) => (
               <div key={layer.name} className="relative group">
                 <div
-                  className="glass rounded-2xl p-6 text-center h-full transition-all hover:scale-[1.02]"
+                  className="card-3d liquid-glass rounded-2xl p-6 text-center h-full transition-all hover:scale-[1.02]"
                   style={{
                     borderColor: `${layer.color}40`,
                   }}
@@ -432,7 +432,7 @@ export default function AcosPage() {
             {FEATURES.map((feature) => (
               <div
                 key={feature.title}
-                className="glass rounded-2xl p-6 hover:border-crystal/30 transition-all group"
+                className="card-3d liquid-glass rounded-2xl p-6 hover:border-crystal/30 transition-all group"
               >
                 {/* Icon */}
                 <div
@@ -463,7 +463,7 @@ export default function AcosPage() {
 
         {/* Capabilities Grid */}
         <section className="mb-16">
-          <div className="glass rounded-2xl p-8 sm:p-10">
+          <div className="liquid-glass rounded-2xl p-8 sm:p-10">
             <div className="text-center mb-8">
               <h2 className="text-xl font-display font-semibold mb-2">
                 What ACOS Enables
@@ -513,7 +513,7 @@ export default function AcosPage() {
             ].map((partner) => (
               <div
                 key={partner}
-                className="px-6 py-3 rounded-xl glass border border-white/10 text-text-muted hover:text-white hover:border-crystal/30 transition-all"
+                className="px-6 py-3 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-muted hover:text-white hover:border-crystal/30 transition-all"
               >
                 <span className="font-medium">{partner}</span>
               </div>

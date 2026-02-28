@@ -1,7 +1,6 @@
 import type { JSX } from "react";
 import { Metadata } from "next";
 import Link from "next/link";
-import { Navbar } from "@/components/navigation";
 import { EcosystemDiagram } from "@/components/ecosystem/ecosystem-diagram";
 
 export const metadata: Metadata = {
@@ -305,9 +304,7 @@ export default function EcosystemPage() {
         <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(127,255,212,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(153,102,255,0.08),transparent_55%)]" />
       </div>
 
-      <Navbar />
-
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12">
         {/* ── Hero ─────────────────────────────────────────────────────── */}
         <section className="mb-16">
           <div className="relative liquid-glass rounded-3xl overflow-hidden px-8 py-14 sm:px-14 sm:py-20">

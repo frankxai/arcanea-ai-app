@@ -7,8 +7,6 @@
 
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { Navbar } from '@/components/navigation';
-
 export const metadata: Metadata = {
   title: 'Bestiary of Creation | Arcanea',
   description:
@@ -173,8 +171,7 @@ const DANGER_COLORS = {
 export default function BestiaryPage() {
   return (
     <>
-    <Navbar />
-    <main className="mx-auto max-w-7xl px-6 pb-24 pt-24">
+    <main className="mx-auto max-w-7xl px-6 pb-24 pt-8">
       {/* Hero Section */}
       <section className="relative mb-16 overflow-hidden rounded-3xl liquid-glass p-10">
         <div className="pointer-events-none absolute inset-0 opacity-40" aria-hidden="true">
@@ -235,7 +232,7 @@ export default function BestiaryPage() {
       </section>
 
       {/* How to Use */}
-      <section className="rounded-3xl glass p-8">
+      <section className="rounded-3xl liquid-glass p-8">
         <h2 className="mb-6 font-display text-2xl font-semibold text-text-primary">
           How to Use the Bestiary
         </h2>

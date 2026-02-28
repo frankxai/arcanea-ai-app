@@ -161,7 +161,7 @@ pb_templates      -- Reusable prompt templates`} />
               {
                 num: "01",
                 title: "Land on /prompt-books",
-                desc: "A glass sidebar on the left shows your collections, each with a Guardian-colored border. The main area shows your prompts in grid or list view. A floating action button glows in the bottom-right for quick capture.",
+                desc: "A liquid-glass sidebar on the left shows your collections, each with a Guardian-colored border. The main area shows your prompts in grid or list view. A floating action button glows in the bottom-right for quick capture.",
               },
               {
                 num: "02",
@@ -340,7 +340,7 @@ pb_templates      -- Reusable prompt templates`} />
             </p>
             <Link
               href="/prompt-books"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl liquid-glass text-text-primary font-display hover:scale-[1.02] transition-transform"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass text-text-primary font-display hover:scale-[1.02] transition-transform"
             >
               Open Prompt Books
             </Link>
@@ -391,7 +391,7 @@ function FeatureGrid({ features }: { features: { title: string; desc: string; ic
       {features.map((f) => (
         <div
           key={f.title}
-          className="glass rounded-xl p-5 border border-white/5 hover:border-white/10 transition-colors"
+          className="card-3d liquid-glass rounded-xl p-5 border border-white/[0.06] hover:border-white/[0.12] transition-colors"
         >
           <h4 className="text-sm font-display text-text-primary mb-2">{f.title}</h4>
           <p className="text-xs font-sans text-text-muted leading-relaxed">{f.desc}</p>
@@ -413,7 +413,7 @@ function Journey({ steps }: { steps: { num: string; title: string; desc: string 
           transition={{ duration: 0.4 }}
           className="flex gap-4"
         >
-          <div className="shrink-0 w-10 h-10 rounded-xl glass flex items-center justify-center">
+          <div className="shrink-0 w-10 h-10 rounded-xl liquid-glass flex items-center justify-center">
             <span className="text-xs font-mono text-crystal">{step.num}</span>
           </div>
           <div className="flex-1 pt-1">

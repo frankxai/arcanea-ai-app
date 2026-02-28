@@ -32,8 +32,6 @@ import {
   Gear,
   Brain,
 } from "@/lib/phosphor-icons";
-import { Navbar } from "@/components/navigation";
-
 // ---------------------------------------------------------------------------
 // Constants
 // ---------------------------------------------------------------------------
@@ -845,8 +843,6 @@ export default function StudioPage() {
 
   return (
     <div className="relative min-h-screen">
-      <Navbar />
-
       {/* Background */}
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-void" />
@@ -858,7 +854,7 @@ export default function StudioPage() {
         />
       </div>
 
-      <main className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-6 flex flex-col min-h-screen">
+      <main className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-6 flex flex-col min-h-screen">
         {/* ── Top Bar: Mode Selector + Title ── */}
         <header className="mb-4">
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">

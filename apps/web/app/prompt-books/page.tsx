@@ -158,7 +158,7 @@ function PromptBooksLanding() {
         {/* Demo grid */}
         <div className="grid sm:grid-cols-2 gap-4 mb-10 text-left">
           {DEMO_COLLECTIONS.map((c) => (
-            <div key={c.id} className="glass rounded-2xl p-5 border border-white/5 opacity-75 select-none">
+            <div key={c.id} className="liquid-glass rounded-2xl p-5 border border-white/5 opacity-75 select-none">
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg"
                   style={{ background: `${c.color}18`, border: `1px solid ${c.color}30` }}>
@@ -180,7 +180,7 @@ function PromptBooksLanding() {
             Sign In to Access Your Books
           </Link>
           <Link href="/arcanea-vault"
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-arcane-crystal/30 transition-all text-sm">
+            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-arcane-crystal/30 transition-all text-sm">
             Get Arcanea Vault →
           </Link>
         </div>
@@ -413,7 +413,7 @@ export default function PromptBooksPage() {
                 className={cn(
                   "p-1.5 rounded-md transition-all",
                   viewMode === "grid"
-                    ? "glass text-text-primary"
+                    ? "card-3d liquid-glass text-text-primary"
                     : "text-text-muted hover:text-text-secondary",
                 )}
                 aria-label="Grid view"
@@ -425,7 +425,7 @@ export default function PromptBooksPage() {
                 className={cn(
                   "p-1.5 rounded-md transition-all",
                   viewMode === "list"
-                    ? "glass text-text-primary"
+                    ? "card-3d liquid-glass text-text-primary"
                     : "text-text-muted hover:text-text-secondary",
                 )}
                 aria-label="List view"
@@ -437,7 +437,7 @@ export default function PromptBooksPage() {
             {/* New Prompt */}
             <Button
               onClick={() => setCaptureOpen(true)}
-              className="liquid-glass hover:scale-[1.02] transition-transform gap-2"
+              className="card-3d liquid-glass hover:scale-[1.02] transition-transform gap-2"
             >
               <Icons.Plus />
               <span className="font-sans font-medium text-sm">New Prompt</span>

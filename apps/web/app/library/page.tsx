@@ -2,8 +2,6 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { LibraryBrowse } from "./library-browse";
 import { getCollections } from "../../lib/content";
-import { Navbar } from "@/components/navigation";
-
 export const metadata: Metadata = {
   title: "Library of Arcanea | Wisdom, Legend, Poetry, and Practice",
   description:
@@ -19,9 +17,7 @@ export default async function LibraryPage() {
 
   return (
     <div className="relative min-h-screen">
-      <Navbar />
-
-      <main className="mx-auto max-w-7xl px-6 pb-24 pt-24">
+      <main className="mx-auto max-w-7xl px-6 pb-24 pt-8">
         {/* Tab Navigation */}
         <nav className="mb-12 flex items-center gap-3 border-b border-white/[0.06] pb-4">
           <Link

@@ -133,7 +133,7 @@ export default function FeedbackPage() {
 
         {/* Success State */}
         {submitState === "success" ? (
-          <section className="glass rounded-2xl p-8 sm:p-12 text-center">
+          <section className="liquid-glass rounded-2xl p-8 sm:p-12 text-center">
             <div className="w-16 h-16 rounded-full bg-crystal/20 flex items-center justify-center mx-auto mb-6">
               <PhCheck
                 size={32}
@@ -157,7 +157,7 @@ export default function FeedbackPage() {
               </button>
               <Link
                 href="/"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-crystal/30 transition-all duration-200"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 transition-all duration-200"
               >
                 Return Home
               </Link>
@@ -186,8 +186,8 @@ export default function FeedbackPage() {
                         relative p-4 rounded-xl text-left transition-all duration-200
                         ${
                           isSelected
-                            ? "glass border-2 border-crystal/50 bg-crystal/8 shadow-[0_0_20px_rgba(127,255,212,0.08)]"
-                            : "glass border border-white/10 hover:border-white/20 hover:bg-white/[0.03]"
+                            ? "card-3d liquid-glass border-2 border-crystal/50 bg-crystal/8 shadow-[0_0_20px_rgba(127,255,212,0.08)]"
+                            : "liquid-glass border border-white/[0.06] hover:border-white/[0.12] hover:bg-white/[0.03]"
                         }
                       `}
                     >
@@ -226,7 +226,7 @@ export default function FeedbackPage() {
             </section>
 
             {/* Form Fields */}
-            <section className="glass rounded-2xl p-6 sm:p-8 space-y-6">
+            <section className="liquid-glass rounded-2xl p-6 sm:p-8 space-y-6">
               {/* Message */}
               <div>
                 <label
@@ -243,7 +243,7 @@ export default function FeedbackPage() {
                   onChange={(e) =>
                     setFormData({ ...formData, message: e.target.value })
                   }
-                  className="w-full px-4 py-3 rounded-xl bg-cosmic-void/50 border border-white/10 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-crystal/50 focus:ring-1 focus:ring-crystal/50 transition-all resize-none"
+                  className="w-full px-4 py-3 rounded-xl bg-cosmic-void/50 border border-white/[0.06] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-crystal/50 focus:ring-1 focus:ring-crystal/50 transition-all resize-none"
                   placeholder={
                     formData.type === "bug"
                       ? "Describe what happened and how to reproduce it..."
@@ -277,7 +277,7 @@ export default function FeedbackPage() {
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
-                  className="w-full px-4 py-3 rounded-xl bg-cosmic-void/50 border border-white/10 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-crystal/50 focus:ring-1 focus:ring-crystal/50 transition-all"
+                  className="w-full px-4 py-3 rounded-xl bg-cosmic-void/50 border border-white/[0.06] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-crystal/50 focus:ring-1 focus:ring-crystal/50 transition-all"
                   placeholder="creator@arcanea.ai"
                 />
               </div>
@@ -304,7 +304,7 @@ export default function FeedbackPage() {
                   ${
                     canSubmit
                       ? "bg-crystal text-cosmic-deep shadow-[0_0_24px_rgba(127,255,212,0.2)] hover:shadow-[0_0_32px_rgba(127,255,212,0.3)] hover:scale-[1.02] active:scale-[0.98]"
-                      : "bg-white/5 text-text-muted border border-white/10 cursor-not-allowed"
+                      : "bg-white/5 text-text-muted border border-white/[0.06] cursor-not-allowed"
                   }
                 `}
               >

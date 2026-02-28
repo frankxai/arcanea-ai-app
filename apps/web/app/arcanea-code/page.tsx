@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Metadata } from "next";
-import { Navbar } from "@/components/navigation";
 import {
   PhCode,
   PhTerminal,
@@ -136,9 +135,7 @@ export default function ArcaneaCodePage() {
         />
       </div>
 
-      <Navbar />
-
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12">
         {/* ── Hero ─────────────────────────────────────────────────────────── */}
         <section className="mb-16">
           <div className="relative liquid-glass rounded-3xl overflow-hidden px-8 py-12 sm:px-12 sm:py-16">

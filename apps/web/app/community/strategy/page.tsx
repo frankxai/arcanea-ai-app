@@ -176,7 +176,7 @@ export default function CommunityStrategyPage() {
                 </Link>
                 <Link
                   href="#propose"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
                 >
                   <PhLightbulb className="w-4 h-4" />
                   Submit Proposal
@@ -194,7 +194,7 @@ export default function CommunityStrategyPage() {
               return (
                 <div
                   key={stat.label}
-                  className="glass rounded-xl p-4 text-center"
+                  className="liquid-glass rounded-xl p-4 text-center"
                 >
                   <Icon className="w-5 h-5 text-crystal mx-auto mb-2" />
                   <div className="text-2xl font-display font-bold text-text-primary">
@@ -233,7 +233,7 @@ export default function CommunityStrategyPage() {
               return (
                 <div
                   key={proposal.id}
-                  className="group relative glass rounded-2xl p-6 overflow-hidden transition-all hover-lift"
+                  className="group relative card-3d liquid-glass rounded-2xl p-6 overflow-hidden transition-all hover-lift"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-brand-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
@@ -331,7 +331,7 @@ export default function CommunityStrategyPage() {
               return (
                 <div
                   key={role.name}
-                  className="glass rounded-2xl p-6 text-center hover-lift transition-all"
+                  className="card-3d liquid-glass rounded-2xl p-6 text-center hover-lift transition-all"
                 >
                   <div
                     className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
@@ -365,7 +365,7 @@ export default function CommunityStrategyPage() {
             </h2>
           </div>
 
-          <div className="glass rounded-2xl overflow-hidden">
+          <div className="liquid-glass rounded-2xl overflow-hidden">
             <table className="w-full">
               <thead>
                 <tr className="border-b border-white/10">

@@ -73,18 +73,21 @@ const footerLinks = {
 export function Footer() {
   return (
     <footer
-      className="relative mt-24 border-t border-white/5"
+      className="relative mt-24 border-t border-white/[0.06]"
       role="contentinfo"
     >
+      {/* Subtle top glow line */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-atlantean-teal-aqua/20 to-transparent" />
+
       <div className="max-w-7xl mx-auto px-6 py-16">
         {/* Top section */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-16">
           {Object.values(footerLinks).map((section) => (
             <div key={section.label}>
-              <h3 className="text-xs uppercase tracking-[0.25em] font-sans font-semibold text-text-muted mb-4">
+              <h3 className="text-xs uppercase tracking-[0.25em] font-sans font-semibold text-text-muted mb-5">
                 {section.label}
               </h3>
-              <ul className="space-y-2.5">
+              <ul className="space-y-3">
                 {section.links.map((link) => (
                   <li key={link.href}>
                     <Link
@@ -96,7 +99,7 @@ export function Footer() {
                             "aria-label": `${link.label} (opens in new tab)`,
                           }
                         : {})}
-                      className="text-sm text-text-secondary hover:text-crystal transition-colors"
+                      className="text-sm text-text-secondary hover:text-atlantean-teal-aqua transition-colors duration-300"
                     >
                       {link.label}
                     </Link>
@@ -108,10 +111,10 @@ export function Footer() {
         </div>
 
         {/* Bottom section */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8 border-t border-white/5">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8 border-t border-white/[0.06]">
           {/* Brand */}
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-primary to-crystal flex items-center justify-center text-white font-bold text-sm shadow-glow-sm">
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-atlantean-teal-aqua to-creation-prism-purple flex items-center justify-center text-cosmic-deep font-bold text-sm shadow-[0_0_20px_rgba(127,255,212,0.15)]">
               A
             </div>
             <span className="font-display font-bold text-lg text-text-primary">
@@ -128,12 +131,14 @@ export function Footer() {
           {/* Meta */}
           <div className="flex items-center gap-4 text-xs text-text-muted font-sans">
             <span>&copy; {new Date().getFullYear()} Arcanea</span>
-            <span className="text-white/10">|</span>
-            <span>MIT License</span>
-            <span className="text-white/10">|</span>
+            <span className="text-white/[0.08]">|</span>
+            <Link href="/privacy" className="hover:text-atlantean-teal-aqua transition-colors duration-300">Privacy</Link>
+            <span className="text-white/[0.08]">|</span>
+            <Link href="/terms" className="hover:text-atlantean-teal-aqua transition-colors duration-300">Terms</Link>
+            <span className="text-white/[0.08]">|</span>
             <Link
               href="https://frankx.ai"
-              className="hover:text-crystal transition-colors"
+              className="hover:text-atlantean-teal-aqua transition-colors duration-300"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="FrankX.ai (opens in new tab)"

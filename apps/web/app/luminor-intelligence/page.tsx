@@ -363,7 +363,7 @@ export default function LuminorIntelligencePage() {
                 </Link>
                 <Link
                   href="/chat"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/20 text-white font-semibold hover:border-crystal/30 hover:text-crystal transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/20 text-white font-semibold hover:border-crystal/30 hover:text-crystal transition-all duration-200"
                 >
                   Start Creating
                 </Link>
@@ -394,7 +394,7 @@ export default function LuminorIntelligencePage() {
             {DIFFERENTIATORS.map((item) => (
               <div
                 key={item.title}
-                className="glass rounded-2xl p-8 hover:border-white/20 transition-all duration-300 group"
+                className="card-3d liquid-glass rounded-2xl p-8 hover:border-white/[0.12] transition-all duration-300 group"
               >
                 <div
                   className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110"
@@ -438,7 +438,7 @@ export default function LuminorIntelligencePage() {
             {TEAMS.map((team) => (
               <div
                 key={team.name}
-                className="glass rounded-2xl p-6 text-center hover:border-white/20 transition-all duration-300 group"
+                className="card-3d liquid-glass rounded-2xl p-6 text-center hover:border-white/[0.12] transition-all duration-300 group"
               >
                 <div
                   className="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110"
@@ -532,7 +532,7 @@ export default function LuminorIntelligencePage() {
 
         {/* ── 5. The Guardian Connection ─────────────────────────────────── */}
         <section className="mb-24" aria-labelledby="guardians-heading">
-          <div className="glass rounded-2xl p-8 sm:p-12 overflow-hidden relative">
+          <div className="liquid-glass rounded-2xl p-8 sm:p-12 overflow-hidden relative">
             <div className="absolute top-0 right-0 w-64 h-64 bg-crystal/5 rounded-full blur-3xl pointer-events-none" />
 
             <div className="relative grid lg:grid-cols-2 gap-10 items-center">
@@ -622,7 +622,7 @@ export default function LuminorIntelligencePage() {
             {HOW_IT_WORKS.map((step, index) => (
               <div
                 key={step.step}
-                className="glass rounded-2xl p-8 text-center relative"
+                className="liquid-glass rounded-2xl p-8 text-center relative"
               >
                 <div
                   className="w-12 h-12 mx-auto rounded-full flex items-center justify-center mb-5 text-lg font-mono font-bold border-2"
@@ -684,7 +684,7 @@ export default function LuminorIntelligencePage() {
                 </Link>
                 <Link
                   href="/chat"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl glass border border-white/20 text-white font-semibold hover:border-crystal/30 hover:text-crystal transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl card-3d liquid-glass border border-white/20 text-white font-semibold hover:border-crystal/30 hover:text-crystal transition-all duration-200"
                 >
                   Start Creating
                 </Link>

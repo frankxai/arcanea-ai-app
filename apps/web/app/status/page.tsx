@@ -167,11 +167,11 @@ export default function StatusPage() {
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* ── Hero ─────────────────────────────────────────────────────── */}
         <section className="mb-14">
-          <div className="relative glass rounded-3xl overflow-hidden px-8 py-12 sm:px-14 sm:py-16">
+          <div className="relative liquid-glass rounded-3xl overflow-hidden px-8 py-12 sm:px-14 sm:py-16">
             <div className="absolute inset-0 bg-gradient-to-br from-atlantean-teal-aqua/5 via-transparent to-transparent pointer-events-none" />
 
             <div className="relative text-center max-w-2xl mx-auto">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 mb-8">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/[0.06] bg-white/5 mb-8">
                 <span className="text-xs font-mono tracking-[0.3em] uppercase text-text-muted">
                   System Status
                 </span>
@@ -226,7 +226,7 @@ export default function StatusPage() {
               return (
                 <div
                   key={service.name}
-                  className="glass rounded-2xl p-6 transition-all hover:border-white/15"
+                  className="card-3d liquid-glass rounded-2xl p-6 transition-all hover:border-white/15"
                 >
                   <div className="flex items-start justify-between mb-5">
                     <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-white/5 text-text-secondary">
@@ -274,7 +274,7 @@ export default function StatusPage() {
             </p>
           </div>
 
-          <div className="glass rounded-2xl p-10 text-center">
+          <div className="liquid-glass rounded-2xl p-10 text-center">
             <div className="flex justify-center mb-5 text-atlantean-teal-aqua/60">
               <Icons.ShieldCheck />
             </div>
@@ -308,7 +308,7 @@ export default function StatusPage() {
               return (
                 <div
                   key={info.label}
-                  className="glass rounded-2xl p-5 text-center"
+                  className="liquid-glass rounded-2xl p-5 text-center"
                 >
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-white/5 text-text-secondary mx-auto mb-4">
                     <InfoIcon />
@@ -327,7 +327,7 @@ export default function StatusPage() {
 
         {/* ── CTA ─────────────────────────────────────────────────────── */}
         <section>
-          <div className="glass rounded-2xl px-8 py-10 sm:px-12 text-center">
+          <div className="liquid-glass rounded-2xl px-8 py-10 sm:px-12 text-center">
             <p className="font-display text-lg font-semibold text-text-primary mb-2">
               Questions about system status?
             </p>
@@ -345,7 +345,7 @@ export default function StatusPage() {
               </Link>
               <Link
                 href="/feedback"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-atlantean-teal-aqua/30 hover:bg-atlantean-teal-aqua/5 transition-all duration-200 text-sm"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-atlantean-teal-aqua/30 hover:bg-atlantean-teal-aqua/5 transition-all duration-200 text-sm"
               >
                 Submit feedback
               </Link>

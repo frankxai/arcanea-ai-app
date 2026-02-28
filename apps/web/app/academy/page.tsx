@@ -1,6 +1,5 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { Navbar } from '@/components/navigation';
 import { PhArrowRight } from '@/lib/phosphor-icons';
 
 export const metadata: Metadata = {
@@ -46,9 +45,7 @@ const RANKS = [
 export default function AcademyPage() {
   return (
     <div className="relative min-h-screen">
-      <Navbar />
-
-      <main className="mx-auto max-w-7xl px-6 pb-24 pt-24">
+      <main className="mx-auto max-w-7xl px-6 pb-24 pt-8">
         {/* Hero */}
         <section className="relative mb-20 overflow-hidden rounded-3xl liquid-glass-elevated border border-white/[0.08] p-10 md:p-14">
           <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">

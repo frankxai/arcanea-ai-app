@@ -79,7 +79,7 @@ export default function ResetPasswordPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="w-full max-w-md glass rounded-2xl p-8">
+      <div className="w-full max-w-md liquid-glass rounded-2xl p-8">
         <h1 className="text-2xl font-semibold mb-2 text-text-primary">Create New Password</h1>
         <p className="text-text-secondary mb-6">
           Choose a strong new password for your Arcanea account.
@@ -103,7 +103,7 @@ export default function ResetPasswordPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
               minLength={8}
-              className="w-full rounded-xl border border-white/10 bg-cosmic-surface/50 px-4 py-3 text-text-primary outline-none focus:border-brand-primary"
+              className="w-full rounded-xl border border-white/[0.06] bg-cosmic-surface/50 px-4 py-3 text-text-primary outline-none focus:border-brand-primary"
             />
           </div>
 
@@ -118,7 +118,7 @@ export default function ResetPasswordPage() {
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
               minLength={8}
-              className="w-full rounded-xl border border-white/10 bg-cosmic-surface/50 px-4 py-3 text-text-primary outline-none focus:border-brand-primary"
+              className="w-full rounded-xl border border-white/[0.06] bg-cosmic-surface/50 px-4 py-3 text-text-primary outline-none focus:border-brand-primary"
             />
           </div>
 

@@ -216,7 +216,7 @@ export default function VisionBoardPage() {
                 </button>
                 <Link
                   href="/vision-board/edit"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
                 >
                   <PhPalette className="w-4 h-4" />
                   Customize Board
@@ -228,7 +228,7 @@ export default function VisionBoardPage() {
 
         {/* Monthly Focus */}
         <section className="py-8 border-t border-white/5">
-          <div className="relative glass rounded-2xl p-6 overflow-hidden">
+          <div className="relative liquid-glass rounded-2xl p-6 overflow-hidden">
             <div className="absolute top-0 right-0 w-48 h-48 bg-brand-gold/5 rounded-full blur-3xl" />
 
             <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -283,7 +283,7 @@ export default function VisionBoardPage() {
         <section className="py-8 border-t border-white/5">
           <div className="grid md:grid-cols-2 gap-6">
             {/* Quick Goals */}
-            <div className="glass rounded-2xl p-6">
+            <div className="liquid-glass rounded-2xl p-6">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="font-display text-lg font-semibold">
                   Active Goals
@@ -325,7 +325,7 @@ export default function VisionBoardPage() {
             </div>
 
             {/* Upcoming Milestones */}
-            <div className="glass rounded-2xl p-6">
+            <div className="liquid-glass rounded-2xl p-6">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="font-display text-lg font-semibold">
                   Upcoming Milestones
@@ -379,7 +379,7 @@ export default function VisionBoardPage() {
               return (
                 <div
                   key={area.id}
-                  className="group glass rounded-2xl p-5 hover-lift transition-all cursor-pointer"
+                  className="group card-3d liquid-glass rounded-2xl p-5 hover-lift transition-all cursor-pointer"
                 >
                   <div className="flex items-center gap-3 mb-4">
                     <div
@@ -439,7 +439,7 @@ export default function VisionBoardPage() {
               return (
                 <div
                   key={achievement.id}
-                  className={`relative glass rounded-2xl p-5 text-center transition-all ${
+                  className={`relative card-3d liquid-glass rounded-2xl p-5 text-center transition-all ${
                     achievement.unlocked
                       ? "hover-lift cursor-pointer"
                       : "opacity-50"

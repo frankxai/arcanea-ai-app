@@ -588,7 +588,7 @@ export default async function BlogPostPage({ params }: PageProps) {
         </header>
 
         {/* Article Content */}
-        <article className="glass rounded-2xl p-6 sm:p-10 mb-10">
+        <article className="liquid-glass rounded-2xl p-6 sm:p-10 mb-10">
           <div className="prose prose-invert prose-lg max-w-none">
             {contentSections.map((section, index) => {
               const trimmed = section.trim();
@@ -663,7 +663,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                                 .map((cell, j) => (
                                   <td
                                     key={j}
-                                    className="px-3 py-2 border border-white/10"
+                                    className="px-3 py-2 border border-white/[0.06]"
                                   >
                                     {cell.trim()}
                                   </td>
@@ -717,19 +717,19 @@ export default async function BlogPostPage({ params }: PageProps) {
 
         {/* Actions */}
         <div className="flex flex-wrap gap-3 mb-12">
-          <button className="flex items-center gap-2 px-4 py-2 rounded-xl glass border border-white/10 text-text-secondary hover:border-crystal/30 hover:text-crystal transition-all">
+          <button className="flex items-center gap-2 px-4 py-2 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-secondary hover:border-crystal/30 hover:text-crystal transition-all">
             <Icons.ThumbsUp />
             Like
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 rounded-xl glass border border-white/10 text-text-secondary hover:border-crystal/30 hover:text-crystal transition-all">
+          <button className="flex items-center gap-2 px-4 py-2 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-secondary hover:border-crystal/30 hover:text-crystal transition-all">
             <Icons.Bookmark />
             Save
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 rounded-xl glass border border-white/10 text-text-secondary hover:border-crystal/30 hover:text-crystal transition-all">
+          <button className="flex items-center gap-2 px-4 py-2 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-secondary hover:border-crystal/30 hover:text-crystal transition-all">
             <Icons.Share2 />
             Share
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 rounded-xl glass border border-white/10 text-text-secondary hover:border-crystal/30 hover:text-crystal transition-all">
+          <button className="flex items-center gap-2 px-4 py-2 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-secondary hover:border-crystal/30 hover:text-crystal transition-all">
             <Icons.MessageCircle />
             Comment
           </button>

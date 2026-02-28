@@ -48,7 +48,7 @@ export default function ForgotPasswordPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="w-full max-w-md glass rounded-2xl p-8">
+      <div className="w-full max-w-md liquid-glass rounded-2xl p-8">
         <h1 className="text-2xl font-semibold mb-2 text-text-primary">Reset Password</h1>
         <p className="text-text-secondary mb-6">
           Enter your account email and we will send a recovery link.
@@ -65,7 +65,7 @@ export default function ForgotPasswordPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full rounded-xl border border-white/10 bg-cosmic-surface/50 px-4 py-3 text-text-primary outline-none focus:border-brand-primary"
+              className="w-full rounded-xl border border-white/[0.06] bg-cosmic-surface/50 px-4 py-3 text-text-primary outline-none focus:border-brand-primary"
               placeholder="creator@arcanea.ai"
             />
           </div>

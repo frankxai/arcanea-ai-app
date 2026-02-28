@@ -301,7 +301,7 @@ export default function UserFlowsPage() {
                     className={`group relative w-44 rounded-2xl border p-4 text-left transition-all duration-200 ${s.border} ${s.bg} ${
                       isActive
                         ? "ring-2 ring-arcane-crystal/40 scale-[1.03] shadow-lg shadow-arcane-crystal/10"
-                        : "hover:scale-[1.02] hover:border-white/20"
+                        : "hover:scale-[1.02] hover:border-white/[0.12]"
                     }`}
                   >
                     {/* Step number */}
@@ -317,7 +317,7 @@ export default function UserFlowsPage() {
                     <p className="text-text-muted text-xs font-sans leading-snug">{step.sub}</p>
 
                     {/* Step index */}
-                    <div className="absolute -top-3 -left-3 w-6 h-6 rounded-full bg-cosmic-deep border border-white/10 flex items-center justify-center">
+                    <div className="absolute -top-3 -left-3 w-6 h-6 rounded-full bg-cosmic-deep border border-white/[0.06] flex items-center justify-center">
                       <span className="text-[10px] font-mono text-text-muted">{i + 1}</span>
                     </div>
                   </button>
@@ -338,7 +338,7 @@ export default function UserFlowsPage() {
 
         {/* Detail panel */}
         {activeStep ? (
-          <div className="glass rounded-2xl border border-white/5 p-6 md:p-8 mb-10 animate-in fade-in-0 slide-in-from-bottom-2 duration-200">
+          <div className="liquid-glass rounded-2xl border border-white/5 p-6 md:p-8 mb-10 animate-in fade-in-0 slide-in-from-bottom-2 duration-200">
             <div className="flex items-start justify-between gap-4 mb-4">
               <div className="flex items-center gap-3">
                 <span className={`text-2xl ${KIND[activeStep.kind].icon}`}>{activeStep.icon}</span>
@@ -392,7 +392,7 @@ export default function UserFlowsPage() {
               <button
                 key={f.id}
                 onClick={() => { setActiveId(f.id); setActiveStepId(null); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-                className={`text-left glass rounded-2xl border p-5 hover:border-white/20 transition-all hover-lift ${
+                className={`text-left card-3d liquid-glass rounded-2xl border p-5 hover:border-white/[0.12] transition-all hover-lift ${
                   activeId === f.id ? "border-arcane-crystal/30 bg-arcane-crystal/5" : "border-white/5"
                 }`}
               >

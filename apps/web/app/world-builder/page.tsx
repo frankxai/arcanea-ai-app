@@ -194,7 +194,7 @@ export default function WorldBuilderPage() {
                 </Link>
                 <Link
                   href="/world-builder/templates"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
                 >
                   <PhCompass className="w-4 h-4" />
                   Templates
@@ -225,7 +225,7 @@ export default function WorldBuilderPage() {
                 <Link
                   key={template.id}
                   href={`/world-builder/new?template=${template.id}`}
-                  className="group glass rounded-2xl p-5 hover-lift transition-all"
+                  className="group card-3d liquid-glass rounded-2xl p-5 hover-lift transition-all"
                 >
                   <div
                     className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110"
@@ -278,7 +278,7 @@ export default function WorldBuilderPage() {
               return (
                 <div
                   key={element.id}
-                  className="group glass rounded-2xl p-6 hover-lift transition-all cursor-pointer"
+                  className="group card-3d liquid-glass rounded-2xl p-6 hover-lift transition-all cursor-pointer"
                 >
                   <div
                     className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110"
@@ -335,7 +335,7 @@ export default function WorldBuilderPage() {
               <Link
                 key={world.id}
                 href={`/world-builder/${world.id}`}
-                className="group glass rounded-2xl p-6 hover-lift transition-all relative overflow-hidden"
+                className="group card-3d liquid-glass rounded-2xl p-6 hover-lift transition-all relative overflow-hidden"
               >
                 <div
                   className="h-1 w-full absolute top-0 left-0 right-0 rounded-t-2xl"
@@ -379,7 +379,7 @@ export default function WorldBuilderPage() {
             {/* New World Card */}
             <Link
               href="/world-builder/new"
-              className="group glass rounded-2xl p-6 border-2 border-dashed border-white/20 hover:border-brand-primary/40 hover:bg-brand-primary/5 transition-all flex flex-col items-center justify-center text-center min-h-[200px]"
+              className="group card-3d liquid-glass rounded-2xl p-6 border-2 border-dashed border-white/20 hover:border-brand-primary/40 hover:bg-brand-primary/5 transition-all flex flex-col items-center justify-center text-center min-h-[200px]"
             >
               <PhPlus className="w-8 h-8 text-text-muted group-hover:text-brand-primary transition-colors mb-3" />
               <span className="text-text-muted group-hover:text-brand-primary transition-colors font-sans">

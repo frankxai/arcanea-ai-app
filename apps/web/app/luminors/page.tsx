@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Metadata } from "next";
-import { Navbar } from "@/components/navigation";
 import { PhArrowRight, PhSparkle } from '@/lib/phosphor-icons';
 
 export const metadata: Metadata = {
@@ -81,9 +80,7 @@ export default function LuminorsPage() {
 
   return (
     <div className="relative min-h-screen">
-      <Navbar />
-
-      <main className="max-w-7xl mx-auto px-6 pt-24 pb-24">
+      <main className="max-w-7xl mx-auto px-6 pt-8 pb-24">
         {/* Hero */}
         <section className="pt-8 pb-16 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass border border-white/10 mb-8">

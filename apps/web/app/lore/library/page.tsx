@@ -4,8 +4,6 @@ import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { PhBookOpen, PhMagnifyingGlass, PhFunnel, PhArrowRight, PhScroll, PhFeather, PhMusicNotes, PhSparkle, PhShield, PhMapTrifold, PhMoon, PhUsers, PhHeart } from '@/lib/phosphor-icons';
 import Link from 'next/link';
-import { Navbar } from '@/components/navigation';
-
 const COLLECTIONS = [
   {
     id: 'laws-of-arcanea',
@@ -201,12 +199,10 @@ export default function LibraryPage() {
 
   return (
     <div className="relative min-h-screen bg-cosmic-deep">
-      <Navbar />
-
       {/* Hero */}
       <section
         ref={heroRef}
-        className="relative min-h-[50vh] flex items-center justify-center overflow-hidden pt-24"
+        className="relative min-h-[50vh] flex items-center justify-center overflow-hidden pt-8"
       >
         {/* Book spines decoration */}
         <div className="absolute inset-0 flex items-center justify-center opacity-5">

@@ -367,7 +367,7 @@ export default function CharacterBookPage() {
                 </button>
                 <Link
                   href="/character-book/templates"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all"
                 >
                   <Icons.Sparkles />
                   Use Template
@@ -386,7 +386,7 @@ export default function CharacterBookPage() {
             <input
               type="text"
               placeholder="Search characters..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl glass border border-white/10 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-crystal/50 transition-all"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl liquid-glass border border-white/[0.06] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-crystal/50 transition-all"
             />
           </div>
 
@@ -396,7 +396,7 @@ export default function CharacterBookPage() {
             </span>
             <div className="glass-subtle rounded-lg p-0.5 flex">
               <button
-                className="p-2 rounded-md glass text-text-primary"
+                className="p-2 rounded-md liquid-glass text-text-primary"
                 aria-label="Grid view"
               >
                 <Icons.Grid />
@@ -417,7 +417,7 @@ export default function CharacterBookPage() {
             {CHARACTERS.map((character) => (
               <article
                 key={character.id}
-                className="group relative glass rounded-2xl overflow-hidden glow-card hover-lift transition-all"
+                className="group relative card-3d liquid-glass rounded-2xl overflow-hidden glow-card hover-lift transition-all"
               >
                 {/* Header with accent */}
                 <div
@@ -524,7 +524,7 @@ export default function CharacterBookPage() {
               Start building your character roster. Create detailed personas for
               your stories and games.
             </p>
-            <button className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl glass border border-crystal/20 text-crystal font-semibold hover:bg-crystal/5 transition-all">
+            <button className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl card-3d liquid-glass border border-crystal/20 text-crystal font-semibold hover:bg-crystal/5 transition-all">
               <Icons.Plus />
               Create Your First Character
             </button>
@@ -533,7 +533,7 @@ export default function CharacterBookPage() {
 
         {/* Quick Actions */}
         <section className="mt-12 grid sm:grid-cols-3 gap-4">
-          <button className="glass rounded-xl p-5 text-left hover:border-crystal/30 transition-all group">
+          <button className="card-3d liquid-glass rounded-xl p-5 text-left hover:border-crystal/30 transition-all group">
             <div className="flex items-center gap-3 mb-2">
               <div className="w-10 h-10 rounded-lg bg-fire/15 flex items-center justify-center text-fire">
                 <Icons.Flame />
@@ -546,7 +546,7 @@ export default function CharacterBookPage() {
               Browse character archetypes and templates
             </p>
           </button>
-          <button className="glass rounded-xl p-5 text-left hover:border-crystal/30 transition-all group">
+          <button className="card-3d liquid-glass rounded-xl p-5 text-left hover:border-crystal/30 transition-all group">
             <div className="flex items-center gap-3 mb-2">
               <div className="w-10 h-10 rounded-lg bg-water/15 flex items-center justify-center text-water">
                 <Icons.Zap />
@@ -559,7 +559,7 @@ export default function CharacterBookPage() {
               Generate random character traits and backgrounds
             </p>
           </button>
-          <button className="glass rounded-xl p-5 text-left hover:border-crystal/30 transition-all group">
+          <button className="card-3d liquid-glass rounded-xl p-5 text-left hover:border-crystal/30 transition-all group">
             <div className="flex items-center gap-3 mb-2">
               <div className="w-10 h-10 rounded-lg bg-brand-gold/15 flex items-center justify-center text-brand-gold">
                 <Icons.Crown />

@@ -174,7 +174,7 @@ export default function UniverseBuilderPage() {
                 </Link>
                 <Link
                   href="/universe-builder/templates"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
                 >
                   <PhGraphNetwork className="w-4 h-4" />
                   Explore Templates
@@ -192,7 +192,7 @@ export default function UniverseBuilderPage() {
               return (
                 <div
                   key={element.id}
-                  className="glass rounded-xl p-5 text-center"
+                  className="liquid-glass rounded-xl p-5 text-center"
                 >
                   <Icon
                     className="w-6 h-6 mx-auto mb-2"
@@ -231,7 +231,7 @@ export default function UniverseBuilderPage() {
                 <Link
                   key={template.id}
                   href={`/universe-builder/new?template=${template.id}`}
-                  className="group glass rounded-2xl p-5 hover-lift transition-all"
+                  className="group card-3d liquid-glass rounded-2xl p-5 hover-lift transition-all"
                 >
                   <div
                     className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110"
@@ -273,7 +273,7 @@ export default function UniverseBuilderPage() {
               <Link
                 key={universe.id}
                 href={`/universe-builder/${universe.id}`}
-                className="group glass rounded-2xl p-6 hover-lift transition-all"
+                className="group card-3d liquid-glass rounded-2xl p-6 hover-lift transition-all"
               >
                 <div className="flex items-center justify-between mb-3">
                   <div
@@ -324,7 +324,7 @@ export default function UniverseBuilderPage() {
             {/* New Universe Card */}
             <Link
               href="/universe-builder/new"
-              className="group glass rounded-2xl p-6 border-2 border-dashed border-white/20 hover:border-brand-primary/40 hover:bg-brand-primary/5 transition-all flex flex-col items-center justify-center text-center min-h-[220px]"
+              className="group card-3d liquid-glass rounded-2xl p-6 border-2 border-dashed border-white/20 hover:border-brand-primary/40 hover:bg-brand-primary/5 transition-all flex flex-col items-center justify-center text-center min-h-[220px]"
             >
               <PhPlus className="w-8 h-8 text-text-muted group-hover:text-brand-primary transition-colors mb-3" />
               <span className="text-text-muted group-hover:text-brand-primary transition-colors font-sans">

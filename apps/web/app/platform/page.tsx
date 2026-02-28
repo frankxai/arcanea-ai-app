@@ -422,7 +422,7 @@ export default function PlatformPage() {
                 </Link>
                 <Link
                   href="/studio"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
                 >
                   Explore Studio
                   <Icons.ChevronRight />
@@ -438,7 +438,7 @@ export default function PlatformPage() {
             {STATS.map((stat) => (
               <div
                 key={stat.label}
-                className="glass rounded-2xl p-4 text-center"
+                className="liquid-glass rounded-2xl p-4 text-center"
               >
                 <div className="text-2xl md:text-3xl font-display font-bold text-brand-primary mb-1">
                   {stat.value}
@@ -472,7 +472,7 @@ export default function PlatformPage() {
                 <Link
                   key={feature.title}
                   href={feature.href}
-                  className="group relative glass rounded-2xl p-8 overflow-hidden glow-card hover-lift transition-all"
+                  className="group relative card-3d liquid-glass rounded-2xl p-8 overflow-hidden glow-card hover-lift transition-all"
                 >
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"
@@ -524,7 +524,7 @@ export default function PlatformPage() {
 
           <div className="grid md:grid-cols-3 gap-6">
             {CAPABILITIES.map((category) => (
-              <div key={category.category} className="glass rounded-2xl p-6">
+              <div key={category.category} className="liquid-glass rounded-2xl p-6">
                 <div className="flex items-center gap-2 mb-4">
                   <div
                     className="w-2 h-2 rounded-full"
@@ -560,7 +560,7 @@ export default function PlatformPage() {
 
         {/* Elements Section */}
         <section className="mb-16">
-          <div className="glass rounded-2xl p-8">
+          <div className="liquid-glass rounded-2xl p-8">
             <h2 className="font-display text-2xl font-semibold text-text-primary mb-6 text-center">
               The Five Elements
             </h2>
@@ -648,7 +648,7 @@ export default function PlatformPage() {
                 </Link>
                 <Link
                   href="/lore"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
                 >
                   <Icons.Brain />
                   Explore the Lore

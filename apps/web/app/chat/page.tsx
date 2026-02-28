@@ -6,8 +6,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { PhSparkle, PhArrowRight, PhCircleNotch } from '@/lib/phosphor-icons';
 import { LUMINORS, TEAMS, type Team } from "@/lib/luminors/config";
-import { Navbar } from "@/components/navigation";
-
 const TEAM_ORDER: Team[] = ["development", "creative", "writing", "research"];
 
 export default function ChatLandingPage() {
@@ -37,8 +35,6 @@ export default function ChatLandingPage() {
         <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(139,92,246,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(127,255,212,0.08),transparent_55%)]" />
       </div>
 
-      <Navbar />
-
       {/* Navigation overlay */}
       {isNavigating && (
         <motion.div
@@ -59,7 +55,7 @@ export default function ChatLandingPage() {
         </motion.div>
       )}
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}

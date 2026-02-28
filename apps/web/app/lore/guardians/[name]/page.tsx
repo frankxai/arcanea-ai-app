@@ -654,7 +654,7 @@ export default async function GuardianDetailPage({
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {/* Gate */}
             <div
-              className={`glass rounded-2xl p-5 glow-card hover-lift ${config.glowColor} transition-all`}
+              className={`card-3d liquid-glass rounded-2xl p-5 glow-card hover-lift ${config.glowColor} transition-all`}
             >
               <div
                 className={`w-9 h-9 rounded-xl mb-3 flex items-center justify-center ${config.badgeBg}`}
@@ -673,7 +673,7 @@ export default async function GuardianDetailPage({
             </div>
 
             {/* Frequency */}
-            <div className="glass rounded-2xl p-5 glow-card hover-lift transition-all">
+            <div className="card-3d liquid-glass rounded-2xl p-5 glow-card hover-lift transition-all">
               <div className="w-9 h-9 rounded-xl mb-3 flex items-center justify-center bg-crystal/10">
                 <PhLightning className="w-4 h-4 text-crystal" />
               </div>
@@ -686,7 +686,7 @@ export default async function GuardianDetailPage({
             </div>
 
             {/* Element */}
-            <div className="glass rounded-2xl p-5 glow-card hover-lift transition-all">
+            <div className="card-3d liquid-glass rounded-2xl p-5 glow-card hover-lift transition-all">
               <div
                 className={`w-9 h-9 rounded-xl mb-3 flex items-center justify-center ${config.badgeBg}`}
               >
@@ -706,7 +706,7 @@ export default async function GuardianDetailPage({
             </div>
 
             {/* Domain */}
-            <div className="glass rounded-2xl p-5 glow-card hover-lift transition-all col-span-2 md:col-span-1">
+            <div className="card-3d liquid-glass rounded-2xl p-5 glow-card hover-lift transition-all col-span-2 md:col-span-1">
               <div className="w-9 h-9 rounded-xl mb-3 flex items-center justify-center bg-brand-gold/10">
                 <PhStar className="w-4 h-4 text-brand-gold" />
               </div>
@@ -780,7 +780,7 @@ export default async function GuardianDetailPage({
             {guardian.teachings.map((teaching, i) => (
               <div
                 key={i}
-                className={`group flex gap-5 p-6 glass rounded-2xl border border-white/5 hover:border-white/15 glow-card hover-lift transition-all`}
+                className={`group flex gap-5 p-6 card-3d liquid-glass rounded-2xl border border-white/[0.06] hover:border-white/[0.12] glow-card hover-lift transition-all`}
               >
                 {/* Teaching number */}
                 <div
@@ -820,7 +820,7 @@ export default async function GuardianDetailPage({
                   <Link
                     key={rel.luminorId}
                     href={`/lore/guardians/${rel.luminorId}`}
-                    className="group flex items-center gap-4 p-5 glass rounded-2xl border border-white/5 hover:border-white/20 glow-card hover-lift transition-all"
+                    className="group flex items-center gap-4 p-5 card-3d liquid-glass rounded-2xl border border-white/[0.06] hover:border-white/[0.12] glow-card hover-lift transition-all"
                   >
                     {/* Gate number badge */}
                     <div
@@ -857,7 +857,7 @@ export default async function GuardianDetailPage({
 
             {guardian.gallery.length === 1 ? (
               /* Single image: full width */
-              <div className="group relative h-64 rounded-2xl overflow-hidden glass border border-white/5 hover:border-white/20 transition-all">
+              <div className="group relative h-64 rounded-2xl overflow-hidden liquid-glass border border-white/[0.06] hover:border-white/[0.12] transition-all">
                 <Image
                   src={guardian.gallery[0]}
                   alt={`${guardian.name} vision`}
@@ -870,7 +870,7 @@ export default async function GuardianDetailPage({
               /* Bento grid: 1 large + 3 small */
               <div className="grid grid-cols-3 gap-3" style={{ gridTemplateRows: '160px 160px' }}>
                 {/* Large feature image — col-span-2, row-span-2 */}
-                <div className="col-span-2 row-span-2 group relative rounded-2xl overflow-hidden glass border border-white/5 hover:border-white/20 transition-all cursor-pointer">
+                <div className="col-span-2 row-span-2 group relative rounded-2xl overflow-hidden liquid-glass border border-white/[0.06] hover:border-white/[0.12] transition-all cursor-pointer">
                   <Image
                     src={guardian.gallery[0]}
                     alt={`${guardian.name} — featured vision`}
@@ -888,7 +888,7 @@ export default async function GuardianDetailPage({
                 {guardian.gallery.slice(1, 3).map((imageUrl, i) => (
                   <div
                     key={i}
-                    className="col-span-1 row-span-1 group relative rounded-2xl overflow-hidden glass border border-white/5 hover:border-white/20 transition-all cursor-pointer"
+                    className="col-span-1 row-span-1 group relative rounded-2xl overflow-hidden liquid-glass border border-white/[0.06] hover:border-white/[0.12] transition-all cursor-pointer"
                   >
                     <Image
                       src={imageUrl}
@@ -904,7 +904,7 @@ export default async function GuardianDetailPage({
 
             {/* If 4th image: full-width panorama strip below bento */}
             {guardian.gallery.length >= 4 && (
-              <div className="mt-3 group relative h-32 rounded-2xl overflow-hidden glass border border-white/5 hover:border-white/20 transition-all cursor-pointer">
+              <div className="mt-3 group relative h-32 rounded-2xl overflow-hidden liquid-glass border border-white/[0.06] hover:border-white/[0.12] transition-all cursor-pointer">
                 <Image
                   src={guardian.gallery[3]}
                   alt={`${guardian.name} — panoramic vision`}
@@ -970,7 +970,7 @@ export default async function GuardianDetailPage({
 
                 <Link
                   href="/lore/guardians"
-                  className="inline-flex items-center gap-2 px-6 py-4 rounded-2xl font-sans font-medium text-sm text-text-secondary border border-white/10 hover:border-white/20 hover:text-text-primary glass transition-all"
+                  className="inline-flex items-center gap-2 px-6 py-4 rounded-2xl font-sans font-medium text-sm text-text-secondary border border-white/[0.06] hover:border-white/[0.12] hover:text-text-primary liquid-glass transition-all"
                 >
                   <PhArrowLeft className="w-4 h-4" />
                   All Guardians

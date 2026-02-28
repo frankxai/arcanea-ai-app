@@ -352,8 +352,8 @@ export default function BlogPage() {
                 key={category.id}
                 className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all whitespace-nowrap ${
                   category.id === "all"
-                    ? "glass border-brand-primary/30 bg-brand-primary/10 text-brand-primary"
-                    : "glass border-white/10 text-text-secondary hover:border-crystal/30 hover:text-crystal"
+                    ? "card-3d liquid-glass border-brand-primary/30 bg-brand-primary/10 text-brand-primary"
+                    : "liquid-glass border-white/10 text-text-secondary hover:border-crystal/30 hover:text-crystal"
                 }`}
               >
                 <span className="text-sm font-sans">{category.label}</span>
@@ -378,7 +378,7 @@ export default function BlogPage() {
             <input
               type="text"
               placeholder="Search articles..."
-              className="w-full pl-12 pr-4 py-3 rounded-xl glass border border-white/10 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-crystal/50 focus:ring-1 focus:ring-crystal/20 transition-all"
+              className="w-full pl-12 pr-4 py-3 rounded-xl liquid-glass border border-white/[0.06] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-crystal/50 focus:ring-1 focus:ring-crystal/20 transition-all"
             />
           </div>
         </section>
@@ -397,7 +397,7 @@ export default function BlogPage() {
               {featuredPosts.map((post) => (
                 <article
                   key={post.slug}
-                  className="group relative glass rounded-2xl overflow-hidden glow-card hover-lift transition-all"
+                  className="group relative card-3d liquid-glass rounded-2xl overflow-hidden glow-card hover-lift transition-all"
                 >
                   <Link href={`/blog/${post.slug}`} className="block">
                     {/* Accent bar */}
@@ -468,7 +468,7 @@ export default function BlogPage() {
               {regularPosts.map((post) => (
                 <article key={post.slug} className="group">
                   <Link href={`/blog/${post.slug}`}>
-                    <div className="glass rounded-xl p-5 hover:border-crystal/30 transition-all">
+                    <div className="card-3d liquid-glass rounded-xl p-5 hover:border-crystal/30 transition-all">
                       <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                         {/* Accent indicator */}
                         <div
@@ -529,19 +529,19 @@ export default function BlogPage() {
         {/* Pagination */}
         <section className="mt-12">
           <div className="flex justify-center items-center gap-2">
-            <button className="p-2 rounded-lg glass border border-white/10 text-text-muted hover:border-crystal/30 hover:text-crystal transition-all">
+            <button className="p-2 rounded-lg card-3d liquid-glass border border-white/[0.06] text-text-muted hover:border-crystal/30 hover:text-crystal transition-all">
               <Icons.ChevronLeft />
             </button>
             <button className="w-10 h-10 rounded-lg bg-brand-primary/20 text-brand-primary font-mono text-sm">
               1
             </button>
-            <button className="p-2 rounded-lg glass border border-white/10 text-text-muted hover:border-crystal/30 hover:text-crystal transition-all">
+            <button className="p-2 rounded-lg card-3d liquid-glass border border-white/[0.06] text-text-muted hover:border-crystal/30 hover:text-crystal transition-all">
               2
             </button>
-            <button className="p-2 rounded-lg glass border border-white/10 text-text-muted hover:border-crystal/30 hover:text-crystal transition-all">
+            <button className="p-2 rounded-lg card-3d liquid-glass border border-white/[0.06] text-text-muted hover:border-crystal/30 hover:text-crystal transition-all">
               3
             </button>
-            <button className="p-2 rounded-lg glass border border-white/10 text-text-muted hover:border-crystal/30 hover:text-crystal transition-all">
+            <button className="p-2 rounded-lg card-3d liquid-glass border border-white/[0.06] text-text-muted hover:border-crystal/30 hover:text-crystal transition-all">
               <Icons.ChevronRight />
             </button>
           </div>
@@ -566,7 +566,7 @@ export default function BlogPage() {
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="flex-1 px-4 py-3 rounded-xl glass border border-white/10 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-crystal/50"
+                  className="flex-1 px-4 py-3 rounded-xl liquid-glass border border-white/[0.06] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-crystal/50"
                 />
                 <button className="px-6 py-3 rounded-xl bg-brand-primary text-white font-semibold hover:shadow-glow-brand transition-all">
                   Subscribe

@@ -744,7 +744,7 @@ function IntroScreen({ onStart }: IntroScreenProps) {
           return (
             <div
               key={g.key}
-              className="flex-shrink-0 flex flex-col items-center gap-1.5 glass rounded-xl p-3 min-w-[72px]"
+              className="flex-shrink-0 flex flex-col items-center gap-1.5 liquid-glass rounded-xl p-3 min-w-[72px]"
             >
               <span style={{ color: g.color }}>
                 <Icon className="h-5 w-5" />
@@ -818,7 +818,7 @@ function QuestionScreen({
                     "group w-full rounded-xl p-5 text-left transition-all duration-300 font-sans",
                     isSelected
                       ? "glass-strong border border-brand-primary/50 shadow-glow-brand"
-                      : "glass border border-white/8 hover:border-crystal/30 hover:bg-white/[0.03]",
+                      : "card-3d liquid-glass border border-white/8 hover:border-crystal/30 hover:bg-white/[0.03]",
                   ].join(" ")}
                 >
                   <div className="flex items-start gap-4">
@@ -995,7 +995,7 @@ function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.65, duration: 0.5 }}
-              className="glass rounded-2xl p-5"
+              className="liquid-glass rounded-2xl p-5"
             >
               <h3 className="mb-3 text-xs uppercase tracking-[0.3em] text-text-muted font-sans font-semibold">
                 Your Creative Nature
@@ -1012,7 +1012,7 @@ function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
               transition={{ delay: 0.8, duration: 0.5 }}
               className="grid gap-4 md:grid-cols-2"
             >
-              <div className="glass rounded-2xl p-5">
+              <div className="liquid-glass rounded-2xl p-5">
                 <h3
                   className="mb-2 text-xs uppercase tracking-[0.25em] font-semibold font-sans"
                   style={{ color: guardian.color }}
@@ -1023,7 +1023,7 @@ function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
                   {guardian.creativeStrength}
                 </p>
               </div>
-              <div className="glass rounded-2xl p-5">
+              <div className="liquid-glass rounded-2xl p-5">
                 <h3 className="mb-2 text-xs uppercase tracking-[0.25em] text-text-muted font-semibold font-sans">
                   Shadow to Transcend
                 </h3>
@@ -1103,7 +1103,7 @@ function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
                     "flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-sans transition-all hover-lift",
                     isMatch
                       ? "glass-strong border font-semibold"
-                      : "glass border border-white/8 text-text-muted hover:text-text-secondary",
+                      : "card-3d liquid-glass border border-white/8 text-text-muted hover:text-text-secondary",
                   ].join(" ")}
                   style={
                     isMatch

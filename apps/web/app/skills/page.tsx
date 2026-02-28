@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Navbar } from "@/components/navigation";
 import { CosmicParticles } from "@/components/magic/particles";
 import { TextReveal, AuroraText, GradientText } from "@/components/magic/text-reveal";
 import { GlowCard, FloatingCard } from "@/components/magic/glow-card";
@@ -32,8 +31,6 @@ const skills = {
 export default function SkillsLandingPage() {
   return (
     <div className="min-h-screen bg-cosmic-void text-text-primary">
-      <Navbar />
-
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <CosmicParticles />
@@ -327,12 +324,6 @@ export default function SkillsLandingPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-8 border-t border-white/10">
-        <div className="max-w-6xl mx-auto px-6 text-center text-text-muted text-sm">
-          <p>Made with ✧ by Arcanea • MIT License • <Link href="https://github.com/frankxai/arcanea" className="text-atlantean-teal hover:underline">GitHub</Link></p>
-        </div>
-      </footer>
     </div>
   );
 }

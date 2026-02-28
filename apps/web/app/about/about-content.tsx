@@ -3,7 +3,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
-import { Navbar } from "@/components/navigation";
+
 import {
   Sparkle,
   MusicNote,
@@ -58,10 +58,8 @@ function AnimatedSection({
 export function AboutContent() {
   return (
     <div className="relative min-h-screen bg-cosmic-deep">
-      <Navbar />
-
       {/* ── Section 1: Hero ───────────────────────────────────────────── */}
-      <section className="relative overflow-hidden pt-32 pb-24">
+      <section className="relative overflow-hidden pt-16 pb-24">
         {/* Cosmic gradient background */}
         <div className="absolute inset-0 -z-10">
           <div className="absolute top-0 left-1/4 w-[700px] h-[700px] bg-gradient-radial from-atlantean-teal-aqua/10 via-transparent to-transparent rounded-full blur-3xl" />

@@ -195,7 +195,7 @@ export default function CommunityCreatePage() {
                 </Link>
                 <Link
                   href="#browse"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
                 >
                   <PhCompass className="w-4 h-4" />
                   Browse Projects
@@ -219,7 +219,7 @@ export default function CommunityCreatePage() {
               return (
                 <div
                   key={item.step}
-                  className="relative glass rounded-2xl p-6 overflow-hidden group hover-lift transition-all"
+                  className="relative card-3d liquid-glass rounded-2xl p-6 overflow-hidden group hover-lift transition-all"
                 >
                   <div className="absolute top-0 right-0 w-32 h-32 bg-brand-primary/5 rounded-full blur-3xl group-hover:bg-brand-primary/10 transition-all" />
 
@@ -267,7 +267,7 @@ export default function CommunityCreatePage() {
                 <Link
                   key={cat.id}
                   href={`/community/create?category=${cat.id}`}
-                  className="group glass rounded-2xl p-6 hover-lift transition-all"
+                  className="group card-3d liquid-glass rounded-2xl p-6 hover-lift transition-all"
                 >
                   <div
                     className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110"
@@ -312,7 +312,7 @@ export default function CommunityCreatePage() {
             {FEATURED_PROJECTS.map((project) => (
               <div
                 key={project.id}
-                className={`group relative glass rounded-2xl p-6 overflow-hidden transition-all hover-lift ${
+                className={`group relative card-3d liquid-glass rounded-2xl p-6 overflow-hidden transition-all hover-lift ${
                   project.featured ? "ring-1 ring-brand-gold/30" : ""
                 }`}
               >

@@ -908,7 +908,7 @@ export default async function LuminorDetailPage({
             {luminor.capabilities.map((capability, i) => (
               <div
                 key={i}
-                className={`group flex gap-4 p-5 glass rounded-2xl border border-white/5 hover:border-white/15 glow-card hover-lift transition-all`}
+                className={`group flex gap-4 p-5 card-3d liquid-glass rounded-2xl border border-white/[0.06] hover:border-white/[0.12] glow-card hover-lift transition-all`}
               >
                 <div
                   className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 font-display font-bold text-xs ${team.bgClass} ${team.textClass} border ${team.borderClass} group-hover:scale-110 transition-transform`}
@@ -933,7 +933,7 @@ export default async function LuminorDetailPage({
 
           <div className="grid md:grid-cols-3 gap-5">
             {/* When to call */}
-            <div className="glass rounded-2xl p-6 glow-card hover-lift transition-all">
+            <div className="card-3d liquid-glass rounded-2xl p-6 glow-card hover-lift transition-all">
               <div className="w-9 h-9 rounded-xl mb-4 flex items-center justify-center bg-crystal/10 border border-crystal/20">
                 <PhLightning className="w-4 h-4 text-crystal" />
               </div>
@@ -946,7 +946,7 @@ export default async function LuminorDetailPage({
             </div>
 
             {/* What they need from you */}
-            <div className="glass rounded-2xl p-6 glow-card hover-lift transition-all">
+            <div className="card-3d liquid-glass rounded-2xl p-6 glow-card hover-lift transition-all">
               <div
                 className={`w-9 h-9 rounded-xl mb-4 flex items-center justify-center ${team.bgClass} border ${team.borderClass}`}
               >
@@ -961,7 +961,7 @@ export default async function LuminorDetailPage({
             </div>
 
             {/* What they notice */}
-            <div className="glass rounded-2xl p-6 glow-card hover-lift transition-all">
+            <div className="card-3d liquid-glass rounded-2xl p-6 glow-card hover-lift transition-all">
               <div className="w-9 h-9 rounded-xl mb-4 flex items-center justify-center bg-brand-gold/10 border border-brand-gold/20">
                 <PhStar className="w-4 h-4 text-brand-gold" />
               </div>
@@ -984,7 +984,7 @@ export default async function LuminorDetailPage({
           </h2>
 
           <div
-            className="glass rounded-2xl p-6 md:p-8 glow-card transition-all"
+            className="liquid-glass rounded-2xl p-6 md:p-8 glow-card transition-all"
             style={{ boxShadow: `0 0 30px ${wisdomColor}20` }}
           >
             <div className="flex flex-col md:flex-row md:items-center gap-6">
@@ -1050,7 +1050,7 @@ export default async function LuminorDetailPage({
                   <Link
                     key={connId}
                     href={`/luminors/${connId}`}
-                    className="group flex items-center gap-4 p-5 glass rounded-2xl border border-white/5 hover:border-white/20 glow-card hover-lift transition-all"
+                    className="group flex items-center gap-4 p-5 card-3d liquid-glass rounded-2xl border border-white/[0.06] hover:border-white/[0.12] glow-card hover-lift transition-all"
                   >
                     <div
                       className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 text-xl border ${connTeam.bgClass} ${connTeam.borderClass}`}
@@ -1130,7 +1130,7 @@ export default async function LuminorDetailPage({
 
                 <Link
                   href="/luminors"
-                  className="inline-flex items-center gap-2 px-6 py-4 rounded-2xl font-sans font-medium text-sm text-text-secondary border border-white/10 hover:border-white/20 hover:text-text-primary glass transition-all"
+                  className="inline-flex items-center gap-2 px-6 py-4 rounded-2xl font-sans font-medium text-sm text-text-secondary border border-white/[0.06] hover:border-white/[0.12] hover:text-text-primary liquid-glass transition-all"
                 >
                   <PhArrowLeft className="w-4 h-4" />
                   All Luminors

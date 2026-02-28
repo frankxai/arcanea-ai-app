@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
-import { Navbar } from "@/components/navigation";
 import {
   PhHeart,
   PhEye,
@@ -148,8 +147,6 @@ export default function GalleryPage() {
 
   return (
     <div className="min-h-screen bg-cosmic-deep">
-      <Navbar />
-
       {/* Hero */}
       <HeroSection
         isShowcaseMode={isShowcaseMode}
@@ -217,7 +214,7 @@ function HeroSection({
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-amber-400/5 rounded-full blur-[80px]" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-28 pb-16">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-12 pb-16">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-xs font-sans text-white/40 uppercase tracking-widest mb-6">
           <Link href="/" className="hover:text-white/60 transition-colors">

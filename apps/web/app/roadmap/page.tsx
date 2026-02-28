@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-
 // ─── Icons ─────────────────────────────────────────────────────────────────────
 const Icons = {
   Sparkles: () => (
@@ -297,7 +296,7 @@ export default function RoadmapPage() {
         <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(139,92,246,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(127,255,212,0.08),transparent_55%)]" />
       </div>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12">
         {isLoading ? (
           <LoadingState />
         ) : (
@@ -338,7 +337,7 @@ export default function RoadmapPage() {
                     </Link>
                     <Link
                       href="/feedback"
-                      className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
+                      className="inline-flex items-center gap-2 px-6 py-3 rounded-xl liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
                     >
                       Share Feedback
                       <Icons.ChevronRight />
@@ -398,7 +397,7 @@ export default function RoadmapPage() {
                       {phase.items.map((item) => (
                         <div
                           key={item.id}
-                          className="glass rounded-xl p-5 hover:bg-white/5 transition-colors"
+                          className="liquid-glass rounded-xl p-5 hover:bg-white/5 transition-colors"
                         >
                           <div className="flex items-start justify-between gap-3 mb-2">
                             <h3 className="font-semibold text-text-primary">
@@ -435,7 +434,7 @@ export default function RoadmapPage() {
 
             {/* Community Request */}
             <section className="mb-16">
-              <div className="glass rounded-2xl p-8">
+              <div className="liquid-glass rounded-2xl p-8">
                 <div className="flex flex-col md:flex-row items-center gap-6">
                   <div className="w-16 h-16 rounded-2xl bg-brand-primary/20 flex items-center justify-center shrink-0">
                     <Icons.Heart className="w-8 h-8 text-brand-primary" />

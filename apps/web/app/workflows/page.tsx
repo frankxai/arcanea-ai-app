@@ -308,7 +308,7 @@ export default function WorkflowsPage() {
                 </a>
                 <Link
                   href="/ecosystem"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-crystal/30 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 transition-all duration-200"
                 >
                   Full Ecosystem
                   <PhArrowRight weight="thin" size={16} />
@@ -339,7 +339,7 @@ export default function WorkflowsPage() {
               return (
                 <article
                   key={wf.id}
-                  className="glass rounded-2xl overflow-hidden flex flex-col"
+                  className="liquid-glass rounded-2xl overflow-hidden flex flex-col"
                 >
                   {/* Card header */}
                   <div
@@ -435,7 +435,7 @@ export default function WorkflowsPage() {
 
         {/* ── How to Use ────────────────────────────────────────────────────── */}
         <section className="mb-20" aria-labelledby="howto-heading">
-          <div className="glass rounded-2xl p-8 sm:p-12">
+          <div className="liquid-glass rounded-2xl p-8 sm:p-12">
             <div className="mb-10 text-center">
               <p
                 id="howto-heading"
@@ -512,7 +512,7 @@ export default function WorkflowsPage() {
                 </a>
                 <Link
                   href="/arcanea-code"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-crystal/30 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 transition-all duration-200"
                 >
                   Explore Dev Platform
                   <PhArrowRight weight="thin" size={16} />
