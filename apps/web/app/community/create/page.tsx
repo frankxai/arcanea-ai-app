@@ -1,10 +1,11 @@
+'use client';
+
 /**
  * Community Create - Collaborative Creation Space
  *
  * A space where creators gather to collaborate on projects.
  */
 
-import { Metadata } from "next";
 import Link from "next/link";
 import {
   PhUsers,
@@ -29,12 +30,6 @@ import {
   PhImage,
   PhMusicNote,
 } from '@/lib/phosphor-icons';
-
-export const metadata: Metadata = {
-  title: "Create Together | Arcanea Community",
-  description:
-    "Join collaborative creation projects with fellow Arcanea creators. Manifest visions together.",
-};
 
 // Project categories aligned with elements
 const CATEGORIES = [

@@ -1,4 +1,5 @@
-import { Metadata } from "next";
+'use client';
+
 import Link from "next/link";
 import {
   PhPackage,
@@ -6,12 +7,6 @@ import {
   PhCodeBlock,
   PhTerminal,
 } from '@/lib/phosphor-icons';
-
-export const metadata: Metadata = {
-  title: "Install | Arcanea Intelligence System",
-  description:
-    "Get Arcanea running locally. CLI, SDK, and integration options for every workflow.",
-};
 
 const INSTALL_METHODS = [
   {

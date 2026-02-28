@@ -1,5 +1,6 @@
+'use client';
+
 import Link from "next/link";
-import { Metadata } from "next";
 import {
   PhCode,
   PhTerminal,
@@ -14,17 +15,6 @@ import {
   PhChevronRight,
   PhSparkle,
 } from '@/lib/phosphor-icons';
-
-export const metadata: Metadata = {
-  title: "Arcanea Code | Developer Platform & VS Code Extension",
-  description:
-    "Build with the Arcanea developer platform. TypeScript SDK, MCP tools, Guardian sidebar for VS Code, and 30+ specialized intelligence tools.",
-  openGraph: {
-    title: "Arcanea Code | Developer Platform",
-    description:
-      "Complete developer platform with TypeScript SDK, MCP server, and the Arcanea Guardian VS Code extension.",
-  },
-};
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 

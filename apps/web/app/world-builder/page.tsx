@@ -1,10 +1,11 @@
+'use client';
+
 /**
  * World Builder - Create Immersive Worlds
  *
  * A creative tool for building detailed fictional worlds with AI assistance.
  */
 
-import { Metadata } from "next";
 import Link from "next/link";
 import {
   PhSparkle,
@@ -40,12 +41,6 @@ import {
   PhShare,
   PhClock,
 } from '@/lib/phosphor-icons';
-
-export const metadata: Metadata = {
-  title: "World Builder | Arcanea",
-  description:
-    "Create immersive fictional worlds with AI-assisted worldbuilding. Design continents, cultures, magic systems, and histories.",
-};
 
 const WORLD_ELEMENTS = [
   {

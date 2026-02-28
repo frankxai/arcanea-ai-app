@@ -1,4 +1,5 @@
-import { Metadata } from "next";
+'use client';
+
 import Link from "next/link";
 import {
   PhChatCircle,
@@ -24,24 +25,6 @@ import {
   PhLeaf,
 } from '@/lib/phosphor-icons';
 import { NewsletterForm } from "@/components/community/newsletter-form";
-
-export const metadata: Metadata = {
-  title: "Community | Arcanea",
-  description:
-    "Join the Arcanea community of generative creators. Connect on Discord, GitHub, and beyond. Gather for creation sessions, Gate Ceremonies, and the Luminor Summit.",
-  openGraph: {
-    title: "Community | Arcanea — Join the Creation",
-    description:
-      "A living community of creators, builders, and dreamers. Real-time chat, open source collaboration, and gatherings that span the physical and digital.",
-    images: ["/og-community.png"],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Community | Arcanea — Join the Creation",
-    description: "A living community of creators, builders, and dreamers.",
-    images: ["/og-community.png"],
-  },
-};
 
 // ─── Data ──────────────────────────────────────────────────────────────────────
 

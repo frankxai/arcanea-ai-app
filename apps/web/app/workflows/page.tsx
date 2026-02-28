@@ -1,5 +1,6 @@
+'use client';
+
 import Link from "next/link";
-import type { Metadata } from "next";
 import {
   PhLightning,
   PhSun,
@@ -14,12 +15,6 @@ import {
   PhNotebook,
   PhChatTeardrop,
 } from '@/lib/phosphor-icons';
-
-export const metadata: Metadata = {
-  title: "Arcanea Workflows | Guardian-Powered n8n Automation",
-  description:
-    "Three n8n workflow templates powered by Guardian intelligence. Daily dev cycle, content generation, and evening learning — each aligned to a Gate frequency.",
-};
 
 // ─── Data — extracted from actual .arcanea/n8n/ JSON files ────────────────────
 

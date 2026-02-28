@@ -1,10 +1,11 @@
+'use client';
+
 /**
  * Community Strategy - Planning & Governance
  *
  * A space for community governance, proposals, and strategic planning.
  */
 
-import { Metadata } from "next";
 import Link from "next/link";
 import {
   PhUsers,
@@ -22,12 +23,6 @@ import {
   PhScales,
   PhHeart,
 } from '@/lib/phosphor-icons';
-
-export const metadata: Metadata = {
-  title: "Strategy & Governance | Arcanea Community",
-  description:
-    "Shape the future of Arcanea through proposals, voting, and community governance.",
-};
 
 const ACTIVE_PROPOSALS = [
   {

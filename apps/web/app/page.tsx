@@ -1,6 +1,7 @@
+'use client';
+
 import Link from "next/link";
 
-import { Metadata } from "next";
 import { Suspense } from "react";
 import { getCollections, getAllTexts } from "@/lib/content";
 import {
@@ -16,25 +17,6 @@ import {
   PhShieldStar,
 } from '@/lib/phosphor-icons';
 
-
-export const metadata: Metadata = {
-  title: "Arcanea | Build Your Universe",
-  description:
-    "A mythology-powered creative intelligence system. Ten Guardians. A Library of 34 original texts. The framework for mastering the creative life.",
-  openGraph: {
-    title: "Arcanea | Build Your Universe",
-    description:
-      "Ten Guardians. A Library of 34 original texts. The mythology-powered framework for mastering the creative life.",
-    images: ["https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/brand/arcanea-og.jpg"],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Arcanea | Build Your Universe",
-    description:
-      "Ten Guardians. 34 original texts. The mythology-powered framework for mastering the creative life.",
-    images: ["https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/brand/arcanea-og.jpg"],
-  },
-};
 
 const GUARDIANS = [
   { name: "Lyssandria", gate: "Foundation", frequency: "174 Hz", element: "Earth", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/lyssandria-hero.webp" },

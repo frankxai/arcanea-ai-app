@@ -1,10 +1,11 @@
+'use client';
+
 /**
  * Vision Board - Personal Creative Goals
  *
  * A personal space for creators to visualize and track their creative goals.
  */
 
-import { Metadata } from "next";
 import Link from "next/link";
 import {
   PhSparkle,
@@ -31,12 +32,6 @@ import {
   PhCode,
   PhVideo,
 } from '@/lib/phosphor-icons';
-
-export const metadata: Metadata = {
-  title: "Vision Board | Arcanea",
-  description:
-    "Visualize your creative journey. Set goals, track progress, and manifest your aspirations.",
-};
 
 const QUICK_GOALS = [
   {

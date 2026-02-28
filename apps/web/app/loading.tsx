@@ -1,3 +1,5 @@
+'use client';
+
 import { PhCircleNotch } from '@/lib/phosphor-icons';
 
 export default function Loading() {

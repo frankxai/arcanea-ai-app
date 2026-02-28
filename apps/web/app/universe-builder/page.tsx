@@ -1,10 +1,11 @@
+'use client';
+
 /**
  * Universe Builder - Create Multi-World Canon
  *
  * A space for building interconnected universes across multiple worlds and stories.
  */
 
-import { Metadata } from "next";
 import Link from "next/link";
 import {
   PhSparkle,
@@ -23,12 +24,6 @@ import {
   PhUsers,
   PhCrown,
 } from '@/lib/phosphor-icons';
-
-export const metadata: Metadata = {
-  title: "Universe Builder | Arcanea",
-  description:
-    "Build interconnected multi-world universes. Connect worlds, characters, and timelines into a cohesive canon.",
-};
 
 const UNIVERSE_TEMPLATES = [
   {
