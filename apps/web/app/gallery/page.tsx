@@ -70,32 +70,32 @@ export default function GalleryPage() {
   const [sortBy, setSortBy] = useState<SortOption>("popular");
   const [showFilters, setShowFilters] = useState(false);
   const [liveCreations, setLiveCreations] = useState<Creation[] | null>(null);
-  const [loading, setLoading] = useState(true);
 
-  // Try fetching real creations from Supabase; fall back to showcase data
+  // Try fetching real creations from Supabase; showcase data shows immediately
   useEffect(() => {
-    let cancelled = false;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5000);
 
     async function fetchCreations() {
       try {
         const res = await fetch(
-          "/api/creations?visibility=public&status=published&sortBy=popular&limit=50"
+          "/api/creations?visibility=public&status=published&sortBy=popular&limit=50",
+          { signal: controller.signal }
         );
-        if (!res.ok) throw new Error("API unavailable");
+        if (!res.ok) return;
         const json = await res.json();
-        if (!cancelled && json.success && Array.isArray(json.data) && json.data.length > 0) {
+        if (json.success && Array.isArray(json.data) && json.data.length > 0) {
           setLiveCreations(json.data);
         }
       } catch {
-        // Supabase not configured or no data -- showcase mode
-      } finally {
-        if (!cancelled) setLoading(false);
+        // Supabase not configured, timeout, or no data -- stay in showcase mode
       }
     }
 
     fetchCreations();
     return () => {
-      cancelled = true;
+      clearTimeout(timeout);
+      controller.abort();
     };
   }, []);
 
@@ -167,9 +167,7 @@ export default function GalleryPage() {
 
       {/* Grid */}
       <div className="max-w-7xl mx-auto px-6 py-10">
-        {loading ? (
-          <SkeletonGrid />
-        ) : filtered.length === 0 ? (
+        {filtered.length === 0 ? (
           <EmptyState />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -180,10 +178,10 @@ export default function GalleryPage() {
         )}
 
         {/* Showcase notice */}
-        {isShowcaseMode && !loading && <ShowcaseNotice />}
+        {isShowcaseMode && <ShowcaseNotice />}
 
         {/* Footer CTA */}
-        {!loading && (
+        {(
           <FooterCTA
             shownCount={filtered.length}
             totalCount={allItems.length}
@@ -448,20 +446,6 @@ function CreationCard({ item }: { item: CardItem }) {
 // ---------------------------------------------------------------------------
 // Utility sub-components
 // ---------------------------------------------------------------------------
-
-function SkeletonGrid() {
-  return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-      {Array.from({ length: 12 }).map((_, i) => (
-        <div
-          key={i}
-          className="rounded-2xl liquid-glass border border-white/[0.06] animate-pulse"
-          style={{ height: `${240 + (i % 3) * 40}px` }}
-        />
-      ))}
-    </div>
-  );
-}
 
 function EmptyState() {
   return (
