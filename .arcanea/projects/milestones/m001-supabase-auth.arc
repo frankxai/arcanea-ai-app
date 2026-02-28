@@ -10,7 +10,7 @@ element: earth
 priority: P0
 created: 2026-02-27
 target: 2026-03-03
-progress: 80
+progress: 71
 tasks:
   - id: t001
     name: Configure Supabase Storage buckets
@@ -34,8 +34,8 @@ tasks:
     note: Documented Supabase Storage buckets, removed R2/S3 references
   - id: t006
     name: Add Supabase env vars to Vercel
-    status: done
-    note: Verified live via runtime logs — middleware 307, all pages 200
+    status: pending
+    note: NOT SET — auth fails silently on production. See GitHub issue #4
   - id: t007
     name: Database foundation (7 tables, RLS, triggers)
     status: done

@@ -30,10 +30,10 @@ export const MILESTONES: Milestone[] = [
     description: 'Full auth flow — SSR-safe client, profile system, 7 tables with RLS, 4 storage buckets, 5 services. Studio wired, auth redirects fixed. Vercel env vars remaining.',
     guardian: 'Lyssandria',
     element: 'crystal',
-    progress: 88,
+    progress: 71,
     status: 'active',
     tasksTotal: 17,
-    tasksDone: 15,
+    tasksDone: 12,
     blocked: 1,
     target: 'W10',
   },
@@ -201,6 +201,9 @@ export interface ActivityEntry {
 }
 
 export const RECENT_ACTIVITY: ActivityEntry[] = [
+  { id: 'a00', timestamp: '2026-02-28 14:00', action: 'GitHub Issues created', detail: '6 issues (3 milestones + 3 P0 blockers) — tracking layer 1 live', category: 'milestone' },
+  { id: 'a01', timestamp: '2026-02-28 12:00', action: 'Central Orchestrator built', detail: 'MASTER_PLAN.md + orchestrator skill + CLAUDE.md wiring', category: 'feature' },
+  { id: 'a02', timestamp: '2026-02-28 02:00', action: 'Academy build fix deployed', detail: 'Server Component → Client Component, Vercel unblocked after 10 failures', category: 'deploy' },
   { id: 'a0a', timestamp: '2026-02-28 00:15', action: 'Profile service fix', detail: 'TypeScript build error resolved — deploys unblocked', category: 'fix' },
   { id: 'a0b', timestamp: '2026-02-27 23:45', action: 'Studio wired to APIs', detail: 'Manifest → /api/creations, Luminor AI → /api/ai/chat streaming', category: 'feature' },
   { id: 'a0c', timestamp: '2026-02-27 23:30', action: 'Auth redirects fixed', detail: 'Removed hardcoded localhost, secured edge runtime', category: 'fix' },

@@ -41,6 +41,7 @@
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.39.0",
     "@vercel/postgres": "^0.10.0",
+    "@vercel/speed-insights": "^1.2.0",
     "ai": "^6.0.77",
     "autoprefixer": "^10.4.19",
     "class-variance-authority": "^0.7.1",

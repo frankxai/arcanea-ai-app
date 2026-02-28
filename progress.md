@@ -1,4 +1,42 @@
-# Progress: Arcanea — Feb 27 2026
+# Progress: Arcanea — Feb 28 2026
+
+## Session: Feb 28 — Orchestrator + Plan Tracking Layer
+
+### Academy Build Fix — DEPLOYED
+- Converted `apps/web/app/academy/page.tsx` from Server Component to Client Component
+- Root cause: `onMouseEnter`/`onMouseLeave` event handlers in Server Component (10 consecutive Vercel build failures)
+- Fix: `'use client'` directive, CSS-only `group-hover` interactions
+- Deployed to production: `dpl_EVYxDgjDxj1TQ1ytQjZJiMXVxme8` — READY
+
+### Central Orchestrator — BUILT
+- **MASTER_PLAN.md**: 450+ line single source of truth (111 pages, 4 milestones, 20-item priority queue, agent routing table)
+- **Orchestrator skill**: `.claude/skills/arcanea-orchestrator.md` — 5-step protocol for all agents
+- **CLAUDE.md updates**: Both `.arcanea/CLAUDE.md` and `.claude/CLAUDE.md` now reference MASTER_PLAN
+- **MEMORY.md**: Updated with orchestrator references, build status, milestone percentages
+
+### GitHub Issues — LAYER 1 LIVE
+Created 6 issues on `frankxai/arcanea-ai-app`:
+| Issue | Title | Labels |
+|-------|-------|--------|
+| #1 | M001: Supabase Auth — Complete Production Auth Flow | milestone, P0 |
+| #2 | M003: Memory System — Complete Starlight Vaults | milestone, P1 |
+| #3 | M004: PM Toolkit — Git-Native PM | milestone, P2 |
+| #4 | P0: Set Supabase env vars on Vercel | P0 |
+| #5 | P0: Build academy sub-pages (gates/[id], courses/[slug]) | P0 |
+| #6 | P0: Sync repos — local monorepo vs Vercel deploy source | P0 |
+
+### Data Consistency Fix
+- M001 `.arc` file: t006 corrected from `done` → `pending` (env vars NOT set)
+- M001 progress: corrected from 88% → 71% (12/17 tasks done)
+- `data.ts`: Updated to match `.arc` reality + added 3 new activity entries
+- MASTER_PLAN.md: M001 section updated with GitHub issue links and accurate task counts
+
+### Remaining for "All Three Layered" Plan Tracking
+- [ ] GitHub Projects board (needs `gh auth refresh -s project,read:project`)
+- [ ] Linear integration (lowest priority)
+- [ ] `/roadmap` page wired to real milestones instead of hardcoded fiction
+
+---
 
 ## Session: Feb 27 — Wave 9+10 (Deployment + Massive Action)
 
