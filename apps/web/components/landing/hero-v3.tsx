@@ -45,7 +45,7 @@ export function HeroV3() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden -mx-4 -mt-4"
+      className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden"
     >
       {/* Full-bleed crystal background */}
       <motion.div className="absolute inset-0 -z-20" style={{ scale: bgScale }}>

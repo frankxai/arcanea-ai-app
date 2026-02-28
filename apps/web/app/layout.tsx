@@ -94,7 +94,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </a>
           <div className="relative min-h-dvh bg-cosmic-void font-sans text-text-primary selection:bg-atlantean-aqua/30 selection:text-atlantean-aqua">
             <CosmicBackground />
-            <main id="main-content" className="relative mx-auto max-w-6xl p-4">{children}</main>
+            <main id="main-content" className="relative">{children}</main>
           </div>
         </AuthProvider>
       </body>
