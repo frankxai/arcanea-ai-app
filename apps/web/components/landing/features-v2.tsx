@@ -135,7 +135,7 @@ export function FeaturesV2() {
                 className={`group relative rounded-3xl border p-8 transition-all duration-500 cursor-pointer ${
                   activeFeature === i
                     ? `border-${feature.highlight}/50 bg-gradient-to-br from-${feature.highlight}/10 to-transparent`
-                    : "border-white/10 bg-cosmic-surface/30 hover:border-white/20"
+                    : "border-white/10 glass-subtle hover:border-white/20"
                 }`}
               >
                 {/* Icon */}
@@ -186,7 +186,7 @@ export function FeaturesV2() {
           className="relative"
         >
           {/* Grid container with gradient border */}
-          <div className="relative rounded-3xl border border-white/10 bg-cosmic-surface/30 backdrop-blur-sm p-8 lg:p-12">
+          <div className="relative rounded-3xl border border-white/10 glass-subtle backdrop-blur-sm p-8 lg:p-12">
             {/* Decorative corner gradients */}
             <div className="absolute top-0 left-0 w-40 h-40 bg-atlantean-teal-aqua/10 rounded-full blur-3xl -z-10" />
             <div className="absolute bottom-0 right-0 w-40 h-40 bg-creation-prism-purple/10 rounded-full blur-3xl -z-10" />

@@ -218,7 +218,7 @@ export default function FAQPage() {
                 {category.questions.map((faq, index) => (
                   <details
                     key={index}
-                    className="group p-6 rounded-2xl border border-white/10 bg-cosmic-surface/30 cursor-pointer"
+                    className="group p-6 rounded-2xl glass-subtle cursor-pointer"
                   >
                     <summary className="flex items-start justify-between gap-4 list-none">
                       <span className="font-semibold text-text-primary group-hover:text-atlantean-teal transition-colors">
@@ -305,7 +305,7 @@ export default function FAQPage() {
               <Link
                 key={link.title}
                 href={link.href}
-                className="p-6 rounded-xl border border-white/10 bg-cosmic-surface/30 hover:border-atlantean-teal/30 transition-all"
+                className="p-6 rounded-xl glass-subtle hover:border-atlantean-teal/30 transition-all"
               >
                 <h3 className="font-display font-semibold mb-1">
                   {link.title}

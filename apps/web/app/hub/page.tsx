@@ -83,7 +83,7 @@ export default function HubPage() {
             <Link
               key={section.id}
               href={section.href}
-              className="group relative p-8 rounded-2xl border border-white/10 bg-cosmic-surface/30 overflow-hidden transition-all hover:border-white/20 hover:shadow-[0_0_40px_rgba(139,92,246,0.15)]"
+              className="group relative p-8 rounded-2xl glass-subtle overflow-hidden transition-all hover:border-white/20 hover:shadow-[0_0_40px_rgba(139,92,246,0.15)]"
             >
               {/* Gradient overlay on hover */}
               <div
@@ -139,7 +139,7 @@ export default function HubPage() {
                 href={link.href}
                 target={link.external ? "_blank" : undefined}
                 rel={link.external ? "noopener noreferrer" : undefined}
-                className="flex items-center gap-3 p-4 rounded-xl border border-white/10 bg-cosmic-surface/20 hover:border-atlantean-teal-aqua/30 hover:bg-atlantean-teal-aqua/5 transition-all"
+                className="flex items-center gap-3 p-4 rounded-xl glass-subtle hover:border-atlantean-teal-aqua/30 hover:bg-atlantean-teal-aqua/5 transition-all"
               >
                 <span className="text-xl">{link.icon}</span>
                 <span className="text-sm font-medium">{link.label}</span>

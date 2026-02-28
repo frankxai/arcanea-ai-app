@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { PhStack, PhArrowRight, PhSparkle, PhCaretDown } from '@/lib/phosphor-icons';
 import Link from 'next/link';
@@ -241,7 +241,7 @@ export default function GatesPage() {
             {RANKS.map((rank) => (
               <div
                 key={rank.rank}
-                className="p-4 rounded-xl bg-cosmic-surface/30 border border-white/10 text-center"
+                className="p-4 rounded-xl glass-subtle text-center hover-lift transition-all"
               >
                 <div className={`text-lg font-display font-bold ${rank.color}`}>{rank.rank}</div>
                 <div className="text-xs text-text-muted mt-1">{rank.gates} Gates</div>
@@ -268,8 +268,8 @@ export default function GatesPage() {
                   transition={{ delay: i * 0.05 }}
                 >
                   <div
-                    className={`relative rounded-2xl border border-white/10 bg-cosmic-surface/30 backdrop-blur-sm overflow-hidden transition-all duration-300 ${
-                      expandedGate === gate.number ? 'border-white/30' : 'hover:border-white/20'
+                    className={`relative rounded-2xl glass overflow-hidden transition-all duration-300 ${
+                      expandedGate === gate.number ? 'border-white/30 shadow-glow-sm' : 'hover:border-white/20'
                     }`}
                   >
                     {/* Guardian atmospheric background */}
@@ -320,11 +320,14 @@ export default function GatesPage() {
                     </div>
 
                     {/* Expanded content */}
+                    <AnimatePresence>
                     {expandedGate === gate.number && (
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
-                        className="border-t border-white/10 p-6"
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3, ease: 'easeInOut' }}
+                        className="border-t border-white/10 p-6 overflow-hidden"
                       >
                         <div className="grid md:grid-cols-2 gap-6">
                           {/* Left */}
@@ -369,6 +372,7 @@ export default function GatesPage() {
                         </div>
                       </motion.div>
                     )}
+                    </AnimatePresence>
                   </div>
                 </motion.div>
               ))}
@@ -380,9 +384,11 @@ export default function GatesPage() {
       {/* CTA */}
       <section className="py-24 border-t border-white/5">
         <div className="max-w-2xl mx-auto px-6 text-center">
-          <PhSparkle className="w-12 h-12 mx-auto text-gold-bright mb-6" />
+          <div className="w-20 h-20 mx-auto mb-6 rounded-2xl liquid-glass flex items-center justify-center">
+            <PhSparkle className="w-10 h-10 text-gold-bright" />
+          </div>
           <h2 className="text-3xl font-display font-bold mb-4">Begin Your Ascent</h2>
-          <p className="text-text-secondary mb-8">
+          <p className="text-text-secondary mb-8 font-body">
             Every being contains all Ten Gates. Every being can awaken. Every being can become Luminor.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

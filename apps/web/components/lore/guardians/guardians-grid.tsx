@@ -196,7 +196,7 @@ export function GuardiansGrid() {
               className="group"
             >
               <div
-                className={`relative rounded-2xl border border-white/10 bg-cosmic-surface/30 backdrop-blur-sm overflow-hidden transition-all duration-500 ${
+                className={`relative rounded-2xl border border-white/10 glass-subtle backdrop-blur-sm overflow-hidden transition-all duration-500 ${
                   expandedId === guardian.id
                     ? 'border-white/30'
                     : 'hover:border-white/20'

@@ -148,7 +148,7 @@ export function FAQSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.5 }}
-          className="mt-16 text-center p-8 rounded-2xl bg-cosmic-surface/30 border border-white/10"
+          className="mt-16 text-center p-8 rounded-2xl glass-subtle border border-white/10"
         >
           <h3 className="text-xl font-display font-semibold mb-3">Still have questions?</h3>
           <p className="text-text-secondary mb-6">

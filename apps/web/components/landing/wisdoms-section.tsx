@@ -233,7 +233,7 @@ export function WisdomsSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.1 + index * 0.05 }}
-              className="p-4 rounded-2xl border border-white/10 bg-cosmic-surface/30 text-center hover:border-white/20 transition-all cursor-pointer group"
+              className="p-4 rounded-2xl border border-white/10 glass-subtle text-center hover:border-white/20 transition-all cursor-pointer group"
               style={{
                 boxShadow: `inset 0 1px 0 0 ${wisdom.color}10`,
               }}

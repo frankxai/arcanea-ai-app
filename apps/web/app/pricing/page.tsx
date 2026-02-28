@@ -227,7 +227,7 @@ export default function PricingPage() {
                 className={`relative p-8 rounded-2xl border backdrop-blur-xl transition-all hover:scale-[1.02] ${
                   tier.popular
                     ? "border-violet-500/50 bg-violet-500/5 shadow-[0_0_40px_rgba(139,92,246,0.2)]"
-                    : "border-white/10 bg-cosmic-surface/30 hover:border-white/20"
+                    : "glass-subtle hover:border-white/20"
                 }`}
               >
                 {tier.popular && (
@@ -459,7 +459,7 @@ export default function PricingPage() {
               {FAQs.map((faq, i) => (
                 <div
                   key={i}
-                  className="p-6 rounded-xl border border-white/10 bg-cosmic-surface/30"
+                  className="p-6 rounded-xl glass-subtle"
                 >
                   <h3 className="font-semibold mb-2">{faq.question}</h3>
                   <p className="text-text-secondary text-sm leading-relaxed">

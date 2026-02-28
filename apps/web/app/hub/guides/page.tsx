@@ -166,7 +166,7 @@ export default function GuidesPage() {
               <Link
                 key={guide.id}
                 href={`/hub/guides/${guide.id}`}
-                className="group p-6 rounded-2xl border border-white/10 bg-cosmic-surface/30 hover:border-white/20 transition-all"
+                className="group p-6 rounded-2xl glass-subtle hover:border-white/20 transition-all"
               >
                 <div className="flex items-start gap-4">
                   {/* Icon */}

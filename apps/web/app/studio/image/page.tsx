@@ -164,7 +164,7 @@ export default function ImageForgePage() {
           <div className="space-y-6">
             {/* Image display */}
             <div
-              className="relative bg-cosmic-surface/30 rounded-2xl border border-white/10 overflow-hidden"
+              className="relative glass-subtle rounded-2xl overflow-hidden"
               style={{ aspectRatio: selectedRatio.replace(':', '/') }}
             >
               <AnimatePresence mode="wait">

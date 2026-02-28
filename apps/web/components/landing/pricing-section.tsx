@@ -147,7 +147,7 @@ export function PricingSection() {
                 className={`relative rounded-3xl p-8 ${
                   plan.featured
                     ? "bg-gradient-to-b from-atlantean-teal-aqua/20 to-cosmic-surface/50 border-2 border-atlantean-teal-aqua/30 scale-105 lg:scale-110"
-                    : "bg-cosmic-surface/30 border border-white/10"
+                    : "glass-subtle border border-white/10"
                 }`}
               >
                 {/* Featured badge */}

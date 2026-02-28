@@ -60,7 +60,7 @@ export default function LuminorsLoading() {
               {[1, 2, 3, 4].map((i) => (
                 <div
                   key={i}
-                  className="p-5 rounded-2xl border border-white/10 bg-cosmic-surface/30"
+                  className="p-5 rounded-2xl border border-white/10 glass-subtle"
                 >
                   <Skeleton variant="text" className="w-12 h-8 mx-auto mb-1" />
                   <Skeleton variant="text" className="w-16 h-3 mx-auto" />
@@ -84,7 +84,7 @@ export default function LuminorsLoading() {
               {[1, 2, 3, 4].map((i) => (
                 <div
                   key={i}
-                  className="p-6 rounded-2xl border border-white/10 bg-cosmic-surface/30"
+                  className="p-6 rounded-2xl border border-white/10 glass-subtle"
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div>

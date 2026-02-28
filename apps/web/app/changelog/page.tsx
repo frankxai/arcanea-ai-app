@@ -212,7 +212,7 @@ export default function ChangelogPage() {
                 {changes.map((change, index) => (
                   <div
                     key={change.version}
-                    className="relative p-6 rounded-2xl border border-white/10 bg-cosmic-surface/30"
+                    className="relative p-6 rounded-2xl glass-subtle"
                   >
                     {/* Timeline Dot */}
                     <div className="absolute -left-[calc(1.5rem+1px)] top-8 w-3 h-3 rounded-full bg-gradient-to-r from-violet-500 to-atlantean-teal hidden md:block" />
@@ -287,7 +287,7 @@ export default function ChangelogPage() {
             ].map((stat) => (
               <div
                 key={stat.label}
-                className="p-6 rounded-xl border border-white/10 bg-cosmic-surface/30 text-center"
+                className="p-6 rounded-xl glass-subtle text-center"
               >
                 <div className="text-3xl font-display font-bold text-gold-bright mb-1">
                   {stat.value}
@@ -300,7 +300,7 @@ export default function ChangelogPage() {
 
         {/* Subscribe */}
         <section className="py-16 border-t border-white/5">
-          <div className="p-8 rounded-2xl border border-white/10 bg-cosmic-surface/30 text-center">
+          <div className="p-8 rounded-2xl glass-subtle text-center">
             <h3 className="text-xl font-display font-semibold mb-2">
               Stay Updated
             </h3>

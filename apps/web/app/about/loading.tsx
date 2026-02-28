@@ -49,7 +49,7 @@ export default function AboutLoading() {
             {[1, 2, 3, 4].map((i) => (
               <div
                 key={i}
-                className="p-6 rounded-2xl border border-white/10 bg-cosmic-surface/30"
+                className="p-6 rounded-2xl border border-white/10 glass-subtle"
               >
                 <Skeleton variant="text" className="w-24 h-3 mb-3" />
                 <Skeleton variant="text" className="w-full h-6 mb-2" />

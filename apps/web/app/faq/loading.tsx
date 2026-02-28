@@ -52,7 +52,7 @@ export default function FAQLoading() {
                 {[1, 2, 3, 4].map((faq) => (
                   <div
                     key={faq}
-                    className="p-6 rounded-2xl border border-white/10 bg-cosmic-surface/30"
+                    className="p-6 rounded-2xl border border-white/10 glass-subtle"
                   >
                     <Skeleton variant="text" className="w-3/4 h-5" />
                     <div className="mt-4 pt-4 border-t border-white/5">

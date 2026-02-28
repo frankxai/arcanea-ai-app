@@ -327,7 +327,7 @@ export default function LibraryPage() {
                 >
                   <Link
                     href={`/lore/library/${collection.id}`}
-                    className="block h-full p-6 rounded-2xl border border-white/10 bg-cosmic-surface/30 backdrop-blur-sm hover:border-white/20 hover:bg-cosmic-surface/50 transition-all group"
+                    className="block h-full p-6 rounded-2xl glass-subtle hover:border-white/20 transition-all group hover-lift"
                   >
                     <div className="flex items-start gap-4 mb-4">
                       <div

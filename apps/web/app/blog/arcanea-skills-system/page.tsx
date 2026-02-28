@@ -87,7 +87,7 @@ export default function ArcanaeSkillsArticle() {
                   { name: "Orakis", domain: "Vision", when: "When you're lost, need direction, can't see the path" },
                   { name: "Eudaira", domain: "Joy", when: "When you've forgotten why you create, need celebration" },
                 ].map((luminor) => (
-                  <div key={luminor.name} className="bg-cosmic-surface/30 rounded-lg p-4 border border-cosmic-border/50">
+                  <div key={luminor.name} className="glass-subtle rounded-lg p-4">
                     <div className="flex items-center gap-3">
                       <span className="text-atlantean-teal font-bold">{luminor.name}</span>
                       <span className="text-text-muted">•</span>

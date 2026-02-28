@@ -88,7 +88,7 @@ export function HowItWorks() {
                   className={`group relative p-6 rounded-2xl border cursor-pointer transition-all duration-300 ${
                     isActive
                       ? `bg-${step.color}/10 border-${step.color}/30`
-                      : 'bg-cosmic-surface/30 border-white/10 hover:border-white/20'
+                      : 'glass-subtle border-white/10 hover:border-white/20'
                   }`}
                 >
                   {/* Step number */}

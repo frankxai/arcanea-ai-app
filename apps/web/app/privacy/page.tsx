@@ -242,7 +242,7 @@ export default function PrivacyPage() {
           </Paragraph>
 
           <div className="space-y-4 mb-6">
-            <div className="rounded-xl bg-cosmic-surface/30 border border-white/10 p-5">
+            <div className="rounded-xl glass-subtle p-5">
               <h4 className="font-display font-semibold text-white mb-1">
                 Google Gemini
               </h4>
@@ -261,7 +261,7 @@ export default function PrivacyPage() {
               </p>
             </div>
 
-            <div className="rounded-xl bg-cosmic-surface/30 border border-white/10 p-5">
+            <div className="rounded-xl glass-subtle p-5">
               <h4 className="font-display font-semibold text-white mb-1">
                 Anthropic Claude
               </h4>
@@ -279,7 +279,7 @@ export default function PrivacyPage() {
               </p>
             </div>
 
-            <div className="rounded-xl bg-cosmic-surface/30 border border-white/10 p-5">
+            <div className="rounded-xl glass-subtle p-5">
               <h4 className="font-display font-semibold text-white mb-1">
                 Supabase
               </h4>
@@ -297,7 +297,7 @@ export default function PrivacyPage() {
               </p>
             </div>
 
-            <div className="rounded-xl bg-cosmic-surface/30 border border-white/10 p-5">
+            <div className="rounded-xl glass-subtle p-5">
               <h4 className="font-display font-semibold text-white mb-1">
                 Vercel
               </h4>
@@ -359,7 +359,7 @@ export default function PrivacyPage() {
             If you have questions about this Privacy Policy, your data, or your rights,
             reach out to us:
           </Paragraph>
-          <div className="rounded-xl bg-cosmic-surface/30 border border-white/10 p-6 mb-8">
+          <div className="rounded-xl glass-subtle p-6 mb-8">
             <p className="text-text-secondary mb-2">
               <span className="text-white font-semibold">Email:</span>{' '}
               <a
