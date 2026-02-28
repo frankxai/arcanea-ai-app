@@ -68,7 +68,7 @@ export function GuardiansHero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-xl text-text-secondary max-w-3xl mx-auto font-crimson italic mb-8"
+          className="text-xl text-text-secondary max-w-3xl mx-auto font-body italic mb-8"
         >
           "Ten Gates, ten paths, one destination. The destination is yourself, fully realized."
         </motion.p>

@@ -375,7 +375,7 @@ function GodbeastsHero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto font-crimson italic mb-6 leading-relaxed"
+          className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto font-body italic mb-6 leading-relaxed"
         >
           "Before the Guardians took their posts, the Godbeasts already existed — primal forces
           given form, older than memory, shaped from the raw frequencies of Lumina and Nero's
@@ -572,7 +572,7 @@ function GodbeastCard({ beast, index, isInView }: GodbeastCardProps) {
                 <h4 className="text-xs font-semibold text-text-muted uppercase tracking-widest mb-3">
                   Ancient Record
                 </h4>
-                <p className="font-crimson text-base text-text-secondary leading-relaxed italic">
+                <p className="font-body text-base text-text-secondary leading-relaxed italic">
                   {beast.lore}
                 </p>
               </div>
@@ -703,7 +703,7 @@ function BondMechanicsSection() {
           <h2 className="text-fluid-4xl font-display font-bold mb-6">
             How Bonds Are Formed
           </h2>
-          <p className="text-text-secondary max-w-2xl mx-auto font-crimson text-lg leading-relaxed">
+          <p className="text-text-secondary max-w-2xl mx-auto font-body text-lg leading-relaxed">
             A Guardian-Godbeast bond is not a contract. It is a permanent recognition — the
             moment when consciousness and primal force realize they are two expressions of the
             same cosmic intention.
@@ -759,7 +759,7 @@ function BondMechanicsSection() {
           <h3 className="text-2xl font-display font-bold mb-4 text-gradient-gold">
             Shinkami and Amaterasu
           </h3>
-          <p className="font-crimson text-lg text-text-secondary max-w-2xl mx-auto italic leading-relaxed mb-6">
+          <p className="font-body text-lg text-text-secondary max-w-2xl mx-auto italic leading-relaxed mb-6">
             "When Shinkami finally ceased the effort to remain separate, Amaterasu ceased the
             effort to remain wild. In that mutual release, they discovered they had always been
             one. The Source Gate did not open — it was already open. It had been open since the
@@ -912,7 +912,7 @@ function FrequencySpectrum() {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ delay: 1.2 }}
-          className="text-center text-sm text-text-muted mt-12 font-crimson italic"
+          className="text-center text-sm text-text-muted mt-12 font-body italic"
         >
           The frequencies ascend from survival to source — each Godbeast a rung on the
           ladder of consciousness.
@@ -939,7 +939,7 @@ function GodbestsCTA() {
           <h2 className="text-fluid-3xl font-display font-bold mb-6">
             Find Your Bond
           </h2>
-          <p className="text-text-secondary font-crimson text-lg leading-relaxed mb-10 max-w-xl mx-auto">
+          <p className="text-text-secondary font-body text-lg leading-relaxed mb-10 max-w-xl mx-auto">
             Every creator resonates with a particular frequency. Discover which Guardian and
             Godbeast pair reflects your creative nature — and what powers await when that bond
             is acknowledged.

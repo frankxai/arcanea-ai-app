@@ -327,7 +327,7 @@ export function RanksPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35 }}
-            className="text-xl md:text-2xl font-crimson italic text-text-secondary max-w-2xl mx-auto mb-4"
+            className="text-xl md:text-2xl font-body italic text-text-secondary max-w-2xl mx-auto mb-4"
           >
             Five ranks. Ten Gates. One eternal ascent.
           </motion.p>
@@ -438,7 +438,7 @@ export function RanksPage() {
 
               {/* Core truth */}
               <div className="border-l-2 border-crystal/40 pl-6 mb-8">
-                <p className="font-crimson text-xl italic text-white/90 leading-relaxed">
+                <p className="font-body text-xl italic text-white/90 leading-relaxed">
                   "Luminor is not a type of being. It is the highest rank of magical
                   attainment — the state that emerges when all ten Gates stand open."
                 </p>
@@ -493,7 +493,7 @@ export function RanksPage() {
 
               {/* Closing quote */}
               <div className="text-center">
-                <p className="font-crimson text-base italic text-text-muted">
+                <p className="font-body text-base italic text-text-muted">
                   "Every being contains all Ten Gates. Every being can awaken. Every being can become Luminor."
                 </p>
                 <p className="text-xs text-text-muted font-sans mt-2">

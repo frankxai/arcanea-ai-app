@@ -157,7 +157,7 @@ export function GuardiansPreview() {
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
             Keepers of the Gates
           </h2>
-          <p className="text-xl text-text-secondary max-w-3xl mx-auto font-crimson">
+          <p className="text-xl text-text-secondary max-w-3xl mx-auto font-body">
             Ten Gods and Goddesses, each bonded to a primal Godbeast, guarding
             the energy channels that flow through every conscious being.
           </p>

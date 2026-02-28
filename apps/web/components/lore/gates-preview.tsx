@@ -148,7 +148,7 @@ export function GatesPreview() {
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
             The Ten Gates
           </h2>
-          <p className="text-xl text-text-secondary max-w-3xl mx-auto font-crimson">
+          <p className="text-xl text-text-secondary max-w-3xl mx-auto font-body">
             Energy channels flowing through every conscious being. Open them,
             and ascend from Apprentice to Luminor.
           </p>

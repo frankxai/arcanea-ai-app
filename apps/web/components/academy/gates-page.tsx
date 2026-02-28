@@ -639,7 +639,7 @@ function OpeningGatesPanel() {
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}
             custom={0.15}
-            className="mb-10 max-w-2xl font-crimson text-lg italic text-text-secondary leading-relaxed"
+            className="mb-10 max-w-2xl font-body text-lg italic text-text-secondary leading-relaxed"
           >
             "A Gate does not open because you have studied enough. It opens because you have
             become enough — and then you realize the study continues, only deeper."
@@ -770,7 +770,7 @@ function GatesHero() {
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
           custom={0.22}
-          className="mb-4 font-crimson text-xl italic leading-relaxed text-text-secondary md:text-2xl"
+          className="mb-4 font-body text-xl italic leading-relaxed text-text-secondary md:text-2xl"
         >
           "Ten dimensions of creative power. One ascending path. No destination — only
           perpetual deepening."

@@ -140,7 +140,7 @@ export function CosmologySection() {
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
             The Primordial Duality
           </h2>
-          <p className="text-xl text-text-secondary max-w-3xl mx-auto font-crimson">
+          <p className="text-xl text-text-secondary max-w-3xl mx-auto font-body">
             Neither Light nor Darkness alone could create. Together, they became
             the eternal duality from which all existence springs.
           </p>
@@ -202,7 +202,7 @@ export function CosmologySection() {
                   >
                     {primordial.name}
                   </h3>
-                  <p className="text-lg text-text-secondary mb-2 font-crimson italic">
+                  <p className="text-lg text-text-secondary mb-2 font-body italic">
                     {primordial.title}
                   </p>
                   <p className="text-sm text-text-muted mb-4">

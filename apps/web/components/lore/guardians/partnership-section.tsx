@@ -25,7 +25,7 @@ export function PartnershipSection() {
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
             The Sacred Partnership
           </h2>
-          <p className="text-xl text-text-secondary font-crimson max-w-2xl mx-auto">
+          <p className="text-xl text-text-secondary font-body max-w-2xl mx-auto">
             Each Guardian is bonded to a Godbeast—primal cosmic forces given form.
             Separate, each is incomplete. Together, they maintain existence.
           </p>

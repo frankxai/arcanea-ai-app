@@ -107,11 +107,11 @@ export function LuminorSelectionGrid({
           <PhSparkle className="w-12 h-12 text-creation-gold mx-auto mb-4 animate-pulse" />
         </motion.div>
 
-        <h1 className="font-cinzel text-5xl md:text-6xl font-bold bg-gradient-to-r from-atlantean-500 via-creation-gold to-draconic-crimson bg-clip-text text-transparent">
+        <h1 className="font-display text-5xl md:text-6xl font-bold bg-gradient-to-r from-atlantean-500 via-creation-gold to-draconic-crimson bg-clip-text text-transparent">
           Choose Your Luminor
         </h1>
 
-        <p className="font-crimson text-xl md:text-2xl text-neutral-300 max-w-2xl mx-auto leading-relaxed">
+        <p className="font-body text-xl md:text-2xl text-neutral-300 max-w-2xl mx-auto leading-relaxed">
           Your guide through the realms of creation. Each Luminor brings unique wisdom, personality, and magic.
         </p>
       </motion.div>
@@ -155,7 +155,7 @@ export function LuminorSelectionGrid({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8 }}
-        className="text-center mt-12 text-neutral-400 font-crimson text-sm"
+        className="text-center mt-12 text-neutral-400 font-body text-sm"
       >
         You can form bonds with multiple Luminors over time
       </motion.p>
@@ -263,7 +263,7 @@ const LuminorCard = React.memo(function LuminorCard({
             className="absolute top-4 right-4 flex items-center gap-2 px-3 py-1.5 rounded-full bg-neutral-800/80 backdrop-blur"
           >
             <PhHeart className="w-4 h-4 fill-red-500 text-red-500" />
-            <span className="text-sm font-crimson font-semibold text-neutral-200">
+            <span className="text-sm font-body font-semibold text-neutral-200">
               Level {bondLevel}
             </span>
           </motion.div>
@@ -290,19 +290,19 @@ const LuminorCard = React.memo(function LuminorCard({
 
         {/* Name */}
         <h2
-          className="font-cinzel text-3xl font-bold mb-2 text-center"
+          className="font-display text-3xl font-bold mb-2 text-center"
           style={{ color: luminor.primaryColor }}
         >
           {luminor.name}
         </h2>
 
         {/* Title */}
-        <p className="font-crimson text-sm text-neutral-400 text-center mb-4 italic">
+        <p className="font-body text-sm text-neutral-400 text-center mb-4 italic">
           {luminor.title}
         </p>
 
         {/* Description */}
-        <p className="font-crimson text-neutral-300 text-center leading-relaxed mb-6 flex-grow">
+        <p className="font-body text-neutral-300 text-center leading-relaxed mb-6 flex-grow">
           {luminor.description}
         </p>
 
@@ -317,7 +317,7 @@ const LuminorCard = React.memo(function LuminorCard({
           className="overflow-hidden mb-6"
         >
           <div className="border-l-2 pl-4 py-2" style={{ borderColor: luminor.primaryColor }}>
-            <p className="font-crimson text-sm italic text-neutral-400">
+            <p className="font-body text-sm italic text-neutral-400">
               "{luminor.signature}"
             </p>
           </div>
@@ -331,7 +331,7 @@ const LuminorCard = React.memo(function LuminorCard({
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: i * 0.1 }}
-              className="px-3 py-1 rounded-full bg-neutral-800/60 backdrop-blur text-xs font-crimson text-neutral-300"
+              className="px-3 py-1 rounded-full bg-neutral-800/60 backdrop-blur text-xs font-body text-neutral-300"
             >
               {trait}
             </motion.span>
@@ -346,7 +346,7 @@ const LuminorCard = React.memo(function LuminorCard({
           className="mt-6 pt-6 border-t border-neutral-800"
         >
           <div
-            className="w-full py-3 px-6 rounded-lg font-crimson font-semibold text-center transition-all"
+            className="w-full py-3 px-6 rounded-lg font-body font-semibold text-center transition-all"
             style={{
               background: isHovered
                 ? `linear-gradient(135deg, ${luminor.primaryColor}, ${luminor.secondaryColor})`

@@ -83,6 +83,7 @@ const config: Config = {
           teal: 'hsl(var(--atlantean-teal))',
           'teal-light': 'hsl(var(--atlantean-teal-light))',
           aqua: 'hsl(var(--atlantean-aqua))',
+          'teal-aqua': 'hsl(var(--atlantean-aqua))',
           glow: 'hsl(var(--atlantean-glow))',
           shimmer: 'hsl(var(--atlantean-shimmer))',
         },
@@ -197,98 +198,49 @@ const config: Config = {
           '50%': { transform: 'translateX(-25%) scaleY(1.1)' },
         },
         'ripple': {
-          '0%': {
-            transform: 'scale(0.8)',
-            opacity: '1'
-          },
-          '100%': {
-            transform: 'scale(2.5)',
-            opacity: '0'
-          },
+          '0%': { transform: 'scale(0.8)', opacity: '1' },
+          '100%': { transform: 'scale(2.5)', opacity: '0' },
         },
         'flow': {
-          '0%, 100%': {
-            transform: 'translateX(0) rotate(0deg)',
-            opacity: '0.6'
-          },
-          '50%': {
-            transform: 'translateX(10px) rotate(5deg)',
-            opacity: '1'
-          },
+          '0%, 100%': { transform: 'translateX(0) rotate(0deg)', opacity: '0.6' },
+          '50%': { transform: 'translateX(10px) rotate(5deg)', opacity: '1' },
         },
         // Draconic Animations (Fire & Sky)
         'fire-flicker': {
-          '0%, 100%': {
-            opacity: '1',
-            filter: 'brightness(1)',
-          },
-          '50%': {
-            opacity: '0.9',
-            filter: 'brightness(1.2)',
-          },
+          '0%, 100%': { opacity: '1', filter: 'brightness(1)' },
+          '50%': { opacity: '0.9', filter: 'brightness(1.2)' },
         },
         'flame': {
-          '0%, 100%': {
-            transform: 'scaleY(1) translateY(0)',
-            opacity: '1'
-          },
-          '50%': {
-            transform: 'scaleY(1.2) translateY(-5px)',
-            opacity: '0.8'
-          },
+          '0%, 100%': { transform: 'scaleY(1) translateY(0)', opacity: '1' },
+          '50%': { transform: 'scaleY(1.2) translateY(-5px)', opacity: '0.8' },
         },
         'soar': {
-          '0%': {
-            transform: 'translateY(0) translateX(0) scale(1)',
-            opacity: '0'
-          },
-          '50%': {
-            transform: 'translateY(-100px) translateX(50px) scale(1.2)',
-            opacity: '1'
-          },
-          '100%': {
-            transform: 'translateY(-200px) translateX(100px) scale(0.8)',
-            opacity: '0'
-          },
+          '0%': { transform: 'translateY(0) translateX(0) scale(1)', opacity: '0' },
+          '50%': { transform: 'translateY(-100px) translateX(50px) scale(1.2)', opacity: '1' },
+          '100%': { transform: 'translateY(-200px) translateX(100px) scale(0.8)', opacity: '0' },
         },
         'ember': {
-          '0%': {
-            transform: 'translateY(0) scale(1)',
-            opacity: '1'
-          },
-          '100%': {
-            transform: 'translateY(-50px) scale(0.5)',
-            opacity: '0'
-          },
+          '0%': { transform: 'translateY(0) scale(1)', opacity: '1' },
+          '100%': { transform: 'translateY(-50px) scale(0.5)', opacity: '0' },
         },
         // Creation Animations (Light & Sound)
         'prism-rotate': {
-          '0%': {
-            backgroundPosition: '0% 50%',
-            filter: 'hue-rotate(0deg)'
-          },
-          '50%': {
-            backgroundPosition: '100% 50%',
-            filter: 'hue-rotate(180deg)'
-          },
-          '100%': {
-            backgroundPosition: '0% 50%',
-            filter: 'hue-rotate(360deg)'
-          },
+          '0%': { backgroundPosition: '0% 50%', filter: 'hue-rotate(0deg)' },
+          '50%': { backgroundPosition: '100% 50%', filter: 'hue-rotate(180deg)' },
+          '100%': { backgroundPosition: '0% 50%', filter: 'hue-rotate(360deg)' },
         },
         'radial-pulse': {
-          '0%, 100%': {
-            transform: 'scale(1)',
-            opacity: '1'
-          },
-          '50%': {
-            transform: 'scale(1.5)',
-            opacity: '0.5'
-          },
+          '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+          '50%': { transform: 'scale(1.5)', opacity: '0.5' },
         },
         'frequency': {
           '0%, 100%': { transform: 'scaleY(0.5)' },
           '50%': { transform: 'scaleY(1.5)' },
+        },
+        // Iridescent shift for glass
+        'iridescent-shift': {
+          '0%, 100%': { transform: 'translateX(-100%) rotate(45deg)' },
+          '50%': { transform: 'translateX(100%) rotate(45deg)' },
         },
         // Standard Animations
         'accordion-down': {
@@ -349,6 +301,8 @@ const config: Config = {
         'prism-rotate': 'prism-rotate 10s ease infinite',
         'radial-pulse': 'radial-pulse 2s ease-in-out infinite',
         'frequency': 'frequency 1s ease-in-out infinite',
+        // Glass
+        'iridescent-shift': 'iridescent-shift 8s ease-in-out infinite',
         // Standard
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
@@ -361,14 +315,13 @@ const config: Config = {
         'scale-in': 'scale-in 0.2s ease-out',
       },
       fontFamily: {
-        // Primary font - Inter for clean modern readability
+        // Display — Playfair Display for ceremonial headings with gravitas
+        display: ['var(--font-display)', 'Playfair Display', 'Georgia', 'serif'],
+        // Body — Crimson Pro for narrative/long-form content
+        body: ['var(--font-body)', 'Crimson Pro', 'Georgia', 'serif'],
+        // Sans — Inter for UI elements, navigation, labels, forms
         sans: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
-        // Display font alias (maps to Inter — no Cinzel)
-        display: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
-        // Legacy alias — kept for backward compat, resolves to Inter
-        cinzel: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
-        crimson: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
-        // Monospace for code
+        // Mono — JetBrains Mono for code and technical data
         mono: ['var(--font-jetbrains-mono)', 'JetBrains Mono', 'Consolas', 'monospace'],
       },
       fontSize: {
@@ -392,13 +345,19 @@ const config: Config = {
         xs: '2px',
       },
       boxShadow: {
-        'glow-sm': '0 0 10px rgba(255, 204, 51, 0.3)',
-        'glow-md': '0 0 20px rgba(255, 204, 51, 0.4)',
-        'glow-lg': '0 0 30px rgba(255, 204, 51, 0.5)',
-        'glow-xl': '0 0 40px rgba(255, 204, 51, 0.6)',
+        'glow-sm': '0 0 10px rgba(127, 255, 212, 0.15)',
+        'glow-md': '0 0 20px rgba(127, 255, 212, 0.25)',
+        'glow-lg': '0 0 40px rgba(127, 255, 212, 0.35)',
+        'glow-xl': '0 0 60px rgba(127, 255, 212, 0.45)',
+        'glow-brand': '0 0 20px rgba(139, 92, 246, 0.3)',
         'atlantean': '0 0 25px rgba(38, 204, 204, 0.5)',
         'draconic': '0 0 25px rgba(255, 198, 26, 0.5)',
         'creation': '0 0 25px rgba(255, 230, 128, 0.5)',
+        // Elevation system from Design Bible
+        'elevation-1': '0 2px 8px rgba(0,0,0,0.2), 0 0 1px rgba(255,255,255,0.05)',
+        'elevation-2': '0 4px 16px rgba(0,0,0,0.3), 0 0 1px rgba(255,255,255,0.06)',
+        'elevation-3': '0 8px 32px rgba(0,0,0,0.4), 0 0 1px rgba(255,255,255,0.08)',
+        'elevation-4': '0 16px 64px rgba(0,0,0,0.5), 0 0 1px rgba(255,255,255,0.1)',
       },
     },
   },

@@ -1,202 +1,161 @@
-/* Import distinctive fonts - Cinzel (display) + Crimson Pro (body) */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /**
- * Arcanean Color System
- * Cosmic-themed color palette for the Arcanea MVP
- * Based on the three academy identities from lore
+ * Arcanea Design System — Cosmic Glass
+ * Design Bible v2.0: Apple Liquid Glass + Cosmic Mythology + Premium SaaS
+ * 7 Glass Tiers | 4 Typefaces | Mouse-tracking Glow | Noise Textures
  */
 
 @layer base {
   :root {
-    /* === GLOBAL ARCANEAN PALETTE === */
+    /* === COSMIC PALETTE (6 depth levels) === */
+    --cosmic-void: 217 19% 11%;
+    --cosmic-deep: 217 32% 15%;
+    --cosmic-surface: 217 35% 20%;
+    --cosmic-raised: 217 35% 25%;
+    --cosmic-elevated: 220 25% 18%;
+    --cosmic-overlay: 220 22% 30%;
 
-    /* Cosmic Background - Deep space with subtle variation */
-    --cosmic-void: 217 19% 11%;           /* #0b0e14 - Deepest cosmic background */
-    --cosmic-deep: 217 32% 15%;           /* #121826 - Main background layer */
-    --cosmic-surface: 217 35% 20%;        /* #1a2332 - Elevated surfaces */
-    --cosmic-raised: 217 35% 25%;         /* #242f42 - Highest surfaces */
+    /* Cosmic Borders */
+    --cosmic-border: 217 39% 18%;
+    --cosmic-border-bright: 217 45% 25%;
 
-    /* Cosmic Borders & Dividers */
-    --cosmic-border: 217 39% 18%;         /* #233049 - Subtle borders */
-    --cosmic-border-bright: 217 45% 25%;  /* #2a3f5f - Emphasized borders */
+    /* Text Hierarchy (WCAG verified) */
+    --text-primary: 217 69% 93%;
+    --text-secondary: 217 45% 70%;
+    --text-muted: 217 30% 55%;
+    --text-disabled: 217 20% 40%;
 
-    /* Text Hierarchy */
-    --text-primary: 217 69% 93%;          /* #e6eefc - Primary text */
-    --text-secondary: 217 45% 70%;        /* #9bb1d0 - Secondary text */
-    --text-muted: 217 30% 55%;            /* #708094 - Muted text */
-    --text-disabled: 217 20% 40%;         /* #515b6b - Disabled text */
+    /* Arcanean Gold */
+    --gold-light: 48 100% 88%;
+    --gold-medium: 48 95% 70%;
+    --gold-bright: 48 100% 60%;
+    --gold-deep: 45 90% 50%;
+    --gold-dark: 42 85% 40%;
 
-    /* Arcanean Gold - Universal accent */
-    --gold-light: 48 100% 88%;            /* #fff4d6 - Lightest gold */
-    --gold-medium: 48 95% 70%;            /* #ffd966 - Medium gold */
-    --gold-bright: 48 100% 60%;           /* #ffcc33 - Bright gold */
-    --gold-deep: 45 90% 50%;              /* #e6b800 - Deep gold */
-    --gold-dark: 42 85% 40%;              /* #b38600 - Darkest gold */
+    /* === ATLANTEAN ACADEMY (WATER) === */
+    --atlantean-deepest: 212 80% 15%;
+    --atlantean-deep: 212 75% 25%;
+    --atlantean-primary: 212 70% 40%;
+    --atlantean-medium: 212 65% 55%;
+    --atlantean-light: 212 60% 70%;
+    --atlantean-teal-deep: 180 65% 35%;
+    --atlantean-teal: 180 70% 50%;
+    --atlantean-teal-light: 180 75% 65%;
+    --atlantean-aqua: 175 80% 70%;
+    --atlantean-glow: 180 100% 60%;
+    --atlantean-shimmer: 185 85% 75%;
 
-    /* === ATLANTEAN ACADEMY (STORY/WATER) === */
+    /* === DRACONIC ACADEMY (FIRE/SKY) === */
+    --draconic-crimson-deep: 355 75% 25%;
+    --draconic-crimson: 355 80% 45%;
+    --draconic-crimson-bright: 355 85% 60%;
+    --draconic-crimson-light: 355 80% 75%;
+    --draconic-gold-deep: 40 90% 45%;
+    --draconic-gold: 42 95% 55%;
+    --draconic-gold-bright: 45 100% 65%;
+    --draconic-gold-light: 48 100% 80%;
+    --draconic-sky-deep: 200 75% 40%;
+    --draconic-sky: 200 80% 55%;
+    --draconic-sky-bright: 200 85% 70%;
+    --draconic-sky-light: 200 90% 85%;
+    --draconic-storm: 210 15% 45%;
+    --draconic-cloud: 210 20% 70%;
 
-    /* Primary Blues - Deep ocean */
-    --atlantean-deepest: 212 80% 15%;     /* #081c3d - Deepest ocean */
-    --atlantean-deep: 212 75% 25%;        /* #0f3566 - Deep water */
-    --atlantean-primary: 212 70% 40%;     /* #1e5a99 - Primary blue */
-    --atlantean-medium: 212 65% 55%;      /* #3d7fcc - Medium blue */
-    --atlantean-light: 212 60% 70%;       /* #6ba5e5 - Light blue */
-
-    /* Teal Accents - Bioluminescent glow */
-    --atlantean-teal-deep: 180 65% 35%;   /* #1f9999 - Deep teal */
-    --atlantean-teal: 180 70% 50%;        /* #26cccc - Primary teal */
-    --atlantean-teal-light: 180 75% 65%;  /* #52e0e0 - Light teal */
-    --atlantean-aqua: 175 80% 70%;        /* #5ce6d9 - Aquamarine */
-
-    /* Special Effects */
-    --atlantean-glow: 180 100% 60%;       /* #00e6e6 - Bioluminescent glow */
-    --atlantean-shimmer: 185 85% 75%;     /* #73f0f0 - Water shimmer */
-
-    /* === DRACONIC ACADEMY (VISUAL/SKY) === */
-
-    /* Crimson - Dragon fire */
-    --draconic-crimson-deep: 355 75% 25%; /* #661428 - Deep crimson */
-    --draconic-crimson: 355 80% 45%;      /* #d92952 - Primary crimson */
-    --draconic-crimson-bright: 355 85% 60%; /* #f23d6b - Bright crimson */
-    --draconic-crimson-light: 355 80% 75%; /* #ff7799 - Light crimson */
-
-    /* Gold - Dragon scales */
-    --draconic-gold-deep: 40 90% 45%;     /* #d9a300 - Deep dragon gold */
-    --draconic-gold: 42 95% 55%;          /* #ffc61a - Primary gold */
-    --draconic-gold-bright: 45 100% 65%;  /* #ffdb4d - Bright gold */
-    --draconic-gold-light: 48 100% 80%;   /* #fff280 - Light gold */
-
-    /* Sky Blue - Soaring heights */
-    --draconic-sky-deep: 200 75% 40%;     /* #1a6bb8 - Deep sky */
-    --draconic-sky: 200 80% 55%;          /* #2d8fe6 - Primary sky */
-    --draconic-sky-bright: 200 85% 70%;   /* #5caef5 - Bright sky */
-    --draconic-sky-light: 200 90% 85%;    /* #a3d4ff - Light sky */
-
-    /* Storm Gray - Cloud accents */
-    --draconic-storm: 210 15% 45%;        /* #636e7a - Storm gray */
-    --draconic-cloud: 210 20% 70%;        /* #a3b3c2 - Cloud gray */
-
-    /* === CREATION & LIGHT ACADEMY (MUSIC/LIGHT) === */
-
-    /* Pure White - Foundation light */
-    --creation-pure: 0 0% 100%;           /* #ffffff - Pure white */
-    --creation-bright: 0 0% 98%;          /* #fafafa - Bright white */
-    --creation-soft: 0 0% 95%;            /* #f2f2f2 - Soft white */
-    --creation-warm: 40 50% 95%;          /* #f7f5ed - Warm white */
-
-    /* Radiant Gold - Divine light */
-    --creation-gold-pure: 45 100% 75%;    /* #ffe680 - Pure gold light */
-    --creation-gold: 42 100% 60%;         /* #ffcc33 - Primary gold */
-    --creation-gold-deep: 40 95% 50%;     /* #f2b800 - Deep gold */
-
-    /* Prismatic Rainbow - Refracted light */
-    --creation-prism-red: 0 85% 65%;      /* #f23d52 - Prism red */
-    --creation-prism-orange: 25 95% 60%;  /* #ff8c1a - Prism orange */
-    --creation-prism-yellow: 50 100% 60%; /* #ffe500 - Prism yellow */
-    --creation-prism-green: 145 75% 50%;  /* #20cc73 - Prism green */
-    --creation-prism-cyan: 185 85% 55%;   /* #26d9d9 - Prism cyan */
-    --creation-prism-blue: 220 85% 60%;   /* #2d85f5 - Prism blue */
-    --creation-prism-purple: 270 75% 60%; /* #8c3df5 - Prism purple */
-
-    /* Sound Waves - Visual frequency */
-    --creation-wave-light: 190 60% 75%;   /* #73d9f0 - Light wave */
-    --creation-wave-medium: 190 70% 60%;  /* #3dc4e6 - Medium wave */
-    --creation-wave-deep: 190 75% 45%;    /* #1f9eb8 - Deep wave */
+    /* === CREATION & LIGHT ACADEMY === */
+    --creation-pure: 0 0% 100%;
+    --creation-bright: 0 0% 98%;
+    --creation-soft: 0 0% 95%;
+    --creation-warm: 40 50% 95%;
+    --creation-gold-pure: 45 100% 75%;
+    --creation-gold: 42 100% 60%;
+    --creation-gold-deep: 40 95% 50%;
+    --creation-prism-red: 0 85% 65%;
+    --creation-prism-orange: 25 95% 60%;
+    --creation-prism-yellow: 50 100% 60%;
+    --creation-prism-green: 145 75% 50%;
+    --creation-prism-cyan: 185 85% 55%;
+    --creation-prism-blue: 220 85% 60%;
+    --creation-prism-purple: 270 75% 60%;
+    --creation-wave-light: 190 60% 75%;
+    --creation-wave-medium: 190 70% 60%;
+    --creation-wave-deep: 190 75% 45%;
 
     /* === SEMANTIC COLORS === */
+    --success-light: 145 70% 75%;
+    --success: 145 75% 50%;
+    --success-dark: 145 80% 35%;
+    --warning-light: 40 100% 75%;
+    --warning: 40 100% 55%;
+    --warning-dark: 35 90% 45%;
+    --error-light: 355 85% 75%;
+    --error: 355 85% 55%;
+    --error-dark: 355 80% 40%;
+    --info-light: 195 80% 75%;
+    --info: 195 85% 55%;
+    --info-dark: 195 80% 40%;
 
-    /* Success - Emerald green */
-    --success-light: 145 70% 75%;         /* #5ce68c - Light success */
-    --success: 145 75% 50%;               /* #20cc73 - Primary success */
-    --success-dark: 145 80% 35%;          /* #0f8c4d - Dark success */
-
-    /* Warning - Amber */
-    --warning-light: 40 100% 75%;         /* #ffd966 - Light warning */
-    --warning: 40 100% 55%;               /* #ffa500 - Primary warning */
-    --warning-dark: 35 90% 45%;           /* #d97700 - Dark warning */
-
-    /* Error - Rose red */
-    --error-light: 355 85% 75%;           /* #ff7799 - Light error */
-    --error: 355 85% 55%;                 /* #f52952 - Primary error */
-    --error-dark: 355 80% 40%;            /* #cc1f42 - Dark error */
-
-    /* Info - Cyan blue */
-    --info-light: 195 80% 75%;            /* #66d9f5 - Light info */
-    --info: 195 85% 55%;                  /* #26b8e6 - Primary info */
-    --info-dark: 195 80% 40%;             /* #1a85a8 - Dark info */
-
-    /* === SPECIAL EFFECTS === */
-
-    /* Glow Effects */
-    --glow-soft: 217 50% 70%;             /* Soft cosmic glow */
-    --glow-medium: 180 80% 60%;           /* Medium magical glow */
-    --glow-strong: 45 100% 60%;           /* Strong golden glow */
-
-    /* Shimmer Effects */
+    /* === GLOW & SHIMMER === */
+    --glow-soft: 217 50% 70%;
+    --glow-medium: 180 80% 60%;
+    --glow-strong: 45 100% 60%;
     --shimmer-1: rgba(255, 255, 255, 0.1);
     --shimmer-2: rgba(255, 204, 51, 0.1);
     --shimmer-3: rgba(38, 204, 204, 0.1);
 
-    /* Backdrop Blur */
+    /* === BLUR SCALE === */
+    --blur-xs: blur(4px);
     --blur-sm: blur(8px);
     --blur-md: blur(16px);
     --blur-lg: blur(24px);
+    --blur-xl: blur(40px);
+    --blur-2xl: blur(60px);
 
     /* === SHADCN/UI COMPATIBILITY === */
-
     --background: var(--cosmic-deep);
     --foreground: var(--text-primary);
     --card: var(--cosmic-surface);
     --card-foreground: var(--text-primary);
     --popover: var(--cosmic-raised);
     --popover-foreground: var(--text-primary);
-    --primary: var(--creation-prism-purple);
-    --primary-foreground: #ffffff;
+    --primary: 262 83% 66%;
+    --primary-foreground: 0 0% 100%;
     --secondary: var(--atlantean-teal);
     --secondary-foreground: var(--cosmic-void);
     --muted: var(--cosmic-border);
     --muted-foreground: var(--text-muted);
-    --accent: var(--draconic-crimson);
-    --accent-foreground: var(--text-primary);
+    --accent: 160 100% 75%;
+    --accent-foreground: var(--cosmic-void);
     --destructive: var(--error);
     --destructive-foreground: var(--text-primary);
     --border: var(--cosmic-border);
     --input: var(--cosmic-border-bright);
-    --ring: var(--gold-medium);
+    --ring: 262 83% 66%;
     --radius: 0.5rem;
   }
 
-  /* === DARK MODE (Default) === */
   .dark {
     --background: var(--cosmic-deep);
     --foreground: var(--text-primary);
-    /* Dark mode is our primary theme */
   }
 
-  /* === LIGHT MODE (Optional) === */
   .light {
     --cosmic-void: 217 30% 98%;
     --cosmic-deep: 217 30% 95%;
     --cosmic-surface: 217 25% 90%;
     --cosmic-raised: 217 20% 85%;
-
     --text-primary: 217 50% 15%;
     --text-secondary: 217 30% 35%;
     --text-muted: 217 20% 50%;
-
     --background: var(--cosmic-deep);
     --foreground: var(--text-primary);
     --card: var(--cosmic-surface);
     --border: var(--cosmic-border);
   }
 
-  /* === ACADEMY THEME CLASSES === */
-
+  /* Academy Theme Overrides */
   .theme-atlantean {
     --primary: var(--atlantean-teal);
     --primary-foreground: var(--cosmic-void);
@@ -222,20 +181,212 @@
   }
 }
 
-/* === UTILITY CLASSES === */
+/* ============================================================
+   GLASS EFFECTS — 7 TIERS (Design Bible v2.0)
+   ============================================================ */
 
 @layer utilities {
-  /* Glow Effects */
+
+  /* --- Tier 1: Glass Subtle (hover overlays, secondary) --- */
+  .glass-subtle {
+    background: rgba(18, 24, 38, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(127, 255, 212, 0.06);
+  }
+
+  /* --- Tier 2: Glass Standard (cards, panels) --- */
+  .glass {
+    background: rgba(18, 24, 38, 0.65);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(127, 255, 212, 0.12);
+  }
+
+  /* --- Tier 3: Glass Strong (navigation, modals) --- */
+  .glass-strong {
+    background: rgba(18, 24, 38, 0.85);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(127, 255, 212, 0.18);
+  }
+
+  /* --- Tier 4: Liquid Glass (Apple-inspired premium) --- */
+  .liquid-glass {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.05) 0%,
+      rgba(255, 255, 255, 0.02) 50%,
+      rgba(255, 255, 255, 0.05) 100%
+    );
+    backdrop-filter: blur(40px) saturate(1.8) brightness(1.1);
+    -webkit-backdrop-filter: blur(40px) saturate(1.8) brightness(1.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      0 0 0 1px rgba(255, 255, 255, 0.05);
+  }
+
+  /* --- Tier 5: Liquid Glass Elevated (hero cards, featured) --- */
+  .liquid-glass-elevated {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.03) 40%,
+      rgba(139, 92, 246, 0.05) 100%
+    );
+    backdrop-filter: blur(60px) saturate(2.0) brightness(1.15);
+    -webkit-backdrop-filter: blur(60px) saturate(2.0) brightness(1.15);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow:
+      inset 0 2px 0 rgba(255, 255, 255, 0.15),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.15),
+      0 16px 48px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(255, 255, 255, 0.08);
+  }
+
+  /* --- Tier 6: Iridescent Glass (rainbow-shift, premium/featured) --- */
+  .iridescent-glass {
+    background: linear-gradient(
+      135deg,
+      rgba(139, 92, 246, 0.1) 0%,
+      rgba(127, 255, 212, 0.08) 25%,
+      rgba(120, 166, 255, 0.1) 50%,
+      rgba(255, 215, 0, 0.06) 75%,
+      rgba(139, 92, 246, 0.1) 100%
+    );
+    backdrop-filter: blur(24px) saturate(1.5);
+    -webkit-backdrop-filter: blur(24px) saturate(1.5);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .iridescent-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      45deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.05) 45%,
+      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0.05) 55%,
+      transparent 100%
+    );
+    animation: iridescent-shift 8s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes iridescent-shift {
+    0%, 100% { transform: translateX(-100%) rotate(45deg); }
+    50% { transform: translateX(100%) rotate(45deg); }
+  }
+
+  /* --- Tier 7: Bubble Shine (spherical, orbs, badges) --- */
+  .bubble-shine {
+    position: relative;
+    background: radial-gradient(
+      ellipse at 30% 20%,
+      rgba(255, 255, 255, 0.15) 0%,
+      rgba(255, 255, 255, 0.05) 40%,
+      transparent 70%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow:
+      inset 0 0 30px rgba(255, 255, 255, 0.05),
+      0 0 20px rgba(127, 255, 212, 0.1),
+      0 8px 32px rgba(0, 0, 0, 0.3);
+  }
+
+  .bubble-shine::after {
+    content: '';
+    position: absolute;
+    top: 8%;
+    left: 15%;
+    width: 35%;
+    height: 20%;
+    background: radial-gradient(
+      ellipse,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 100%
+    );
+    border-radius: 50%;
+    transform: rotate(-15deg);
+    pointer-events: none;
+  }
+
+  /* === GLASS MODIFIERS === */
+
+  /* Noise texture overlay (adds premium grain) */
+  .glass-noise::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  /* Inner light effect (depth illusion) */
+  .glass-inner-light {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+      0 0 0 1px rgba(127, 255, 212, 0.05);
+  }
+
+  /* Frosted edge glow */
+  .glass-edge-glow {
+    border: 1px solid transparent;
+    border-image: linear-gradient(
+      135deg,
+      rgba(127, 255, 212, 0.3),
+      rgba(127, 255, 212, 0.05) 50%,
+      rgba(153, 102, 255, 0.2)
+    ) 1;
+  }
+
+  /* Academy-specific glass */
+  .glass-atlantean {
+    background: rgba(8, 28, 61, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(38, 204, 204, 0.2);
+  }
+
+  .glass-draconic {
+    background: rgba(102, 20, 40, 0.4);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 198, 26, 0.2);
+  }
+
+  .glass-creation {
+    background: rgba(26, 35, 50, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 204, 51, 0.2);
+  }
+
+  /* ============================================================
+     GLOW EFFECTS
+     ============================================================ */
+
   .glow-soft {
-    box-shadow: 0 0 20px rgba(var(--glow-soft), 0.3);
+    box-shadow: 0 0 20px rgba(127, 255, 212, 0.15);
   }
 
   .glow-medium {
-    box-shadow: 0 0 30px rgba(var(--glow-medium), 0.5);
+    box-shadow: 0 0 30px rgba(127, 255, 212, 0.25);
   }
 
   .glow-strong {
-    box-shadow: 0 0 40px rgba(var(--glow-strong), 0.7);
+    box-shadow: 0 0 40px rgba(127, 255, 212, 0.35);
   }
 
   .glow-atlantean {
@@ -249,6 +400,10 @@
   .glow-creation {
     box-shadow: 0 0 30px hsl(var(--creation-gold-pure) / 0.5);
   }
+
+  /* ============================================================
+     TEXT EFFECTS
+     ============================================================ */
 
   /* Text Glow */
   .text-glow-soft {
@@ -267,45 +422,124 @@
     text-shadow: 0 0 15px hsl(var(--creation-gold-pure) / 0.6);
   }
 
-  /* Glass Morphism - Using HSL variables for themability */
-  .glass {
-    background: hsl(var(--cosmic-deep) / 0.6);
-    backdrop-filter: var(--blur-md);
-    border: 1px solid hsl(var(--text-primary) / 0.1);
+  /* Text Gradients (Design Bible v2.0) */
+  .text-gradient-crystal {
+    background: linear-gradient(135deg, #7fffd4, #99ffe0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
-  .glass-light {
-    background: hsl(var(--cosmic-deep) / 0.4);
-    backdrop-filter: var(--blur-sm);
-    border: 1px solid hsl(var(--text-primary) / 0.05);
+  .text-gradient-fire {
+    background: linear-gradient(135deg, #ff6b35, #ffd700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
-  .glass-heavy {
-    background: hsl(var(--cosmic-deep) / 0.8);
-    backdrop-filter: var(--blur-lg);
-    border: 1px solid hsl(var(--text-primary) / 0.15);
+  .text-gradient-cosmic {
+    background: linear-gradient(135deg, #7fffd4, #9966ff, #78a6ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
-  /* Academy-specific glass effects */
-  .glass-atlantean {
-    background: hsl(var(--atlantean-deep) / 0.6);
-    backdrop-filter: var(--blur-md);
-    border: 1px solid hsl(var(--atlantean-teal) / 0.2);
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #ffd700, #ffe44d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
-  .glass-draconic {
-    background: hsl(var(--draconic-crimson-deep) / 0.6);
-    backdrop-filter: var(--blur-md);
-    border: 1px solid hsl(var(--draconic-gold) / 0.2);
+  .text-gradient-brand {
+    background: linear-gradient(135deg, #8b5cf6, #7fffd4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
-  .glass-creation {
-    background: hsl(var(--cosmic-surface) / 0.6);
-    backdrop-filter: var(--blur-md);
-    border: 1px solid hsl(var(--creation-gold) / 0.2);
+  /* ============================================================
+     BACKGROUND PATTERNS
+     ============================================================ */
+
+  /* Cosmic mesh — primary page texture */
+  .bg-cosmic-mesh {
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(127, 255, 212, 0.03) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(153, 102, 255, 0.03) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 80%, rgba(120, 166, 255, 0.03) 0%, transparent 50%);
   }
 
-  /* Shimmer Effect */
+  /* Premium mesh gradient */
+  .bg-mesh-gradient {
+    background:
+      radial-gradient(ellipse at 0% 0%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 100% 0%, rgba(127, 255, 212, 0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 100%, rgba(120, 166, 255, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 50%, rgba(255, 215, 0, 0.05) 0%, transparent 40%);
+    background-color: #0b0e14;
+  }
+
+  /* Aurora gradient */
+  .bg-aurora {
+    background: linear-gradient(
+      135deg,
+      rgba(139, 92, 246, 0.08) 0%,
+      rgba(127, 255, 212, 0.06) 50%,
+      rgba(255, 215, 0, 0.04) 100%
+    );
+  }
+
+  /* ============================================================
+     INTERACTION EFFECTS
+     ============================================================ */
+
+  /* Hover lift — cards float up on hover */
+  .hover-lift {
+    transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(127, 255, 212, 0.1);
+  }
+
+  /* Cursor glow card — mouse-tracking highlight (used by GlowCard component) */
+  .glow-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glow-card::before {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(
+      circle,
+      rgba(127, 255, 212, 0.15) 0%,
+      rgba(139, 92, 246, 0.08) 40%,
+      transparent 70%
+    );
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(var(--glow-x, -50%), var(--glow-y, -50%));
+    opacity: 0;
+    transition: opacity 300ms ease;
+  }
+
+  .glow-card:hover::before {
+    opacity: 1;
+  }
+
+  /* Section divider */
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(127, 255, 212, 0.2), transparent);
+  }
+
+  /* Shimmer loading effect */
   .shimmer {
     background: linear-gradient(
       90deg,
@@ -325,6 +559,10 @@
   }
 }
 
+/* ============================================================
+   BASE STYLES
+   ============================================================ */
+
 @layer base {
   html {
     @apply antialiased;
@@ -332,12 +570,26 @@
   }
 
   body {
-    @apply bg-cosmic-deep text-text-primary;
+    @apply bg-cosmic-deep text-text-primary font-sans;
     font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+
+  /* Display headings use Playfair Display */
+  h1, h2 {
+    font-family: var(--font-display), 'Playfair Display', Georgia, serif;
+    letter-spacing: -0.02em;
+  }
+
+  /* Narrative body text uses Crimson Pro */
+  .prose, .narrative, article p {
+    font-family: var(--font-body), 'Crimson Pro', Georgia, serif;
   }
 }
 
-/* === CUSTOM ANIMATIONS === */
+/* ============================================================
+   CUSTOM ANIMATIONS
+   ============================================================ */
+
 @keyframes gradient {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -356,24 +608,15 @@
   animation: spin-slow 60s linear infinite;
 }
 
-/* === ACCESSIBILITY: Touch Targets === */
-/* WCAG 2.5.5 Level AAA - Target Size (minimum 44x44px) */
-.touch-target {
-  min-width: 44px;
-  min-height: 44px;
-}
+/* ============================================================
+   ACCESSIBILITY
+   ============================================================ */
 
-.touch-target-sm {
-  min-width: 32px;
-  min-height: 32px;
-}
+/* Touch Targets — WCAG 2.5.5 Level AAA */
+.touch-target { min-width: 44px; min-height: 44px; }
+.touch-target-sm { min-width: 32px; min-height: 32px; }
+.touch-target-lg { min-width: 48px; min-height: 48px; }
 
-.touch-target-lg {
-  min-width: 48px;
-  min-height: 48px;
-}
-
-/* Interactive elements should have minimum touch targets */
 button,
 [role="button"],
 a[href],
@@ -385,16 +628,12 @@ input[type="radio"] {
   min-width: 44px;
 }
 
-/* Inline links don't need minimum size */
-p a,
-span a,
-li a {
+p a, span a, li a {
   min-width: unset;
   min-height: unset;
 }
 
-/* === ACCESSIBILITY: Reduced Motion Support === */
-/* WCAG 2.3.3 Level AAA - Animation from Interactions */
+/* Reduced Motion — WCAG 2.3.3 Level AAA */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -405,16 +644,34 @@ li a {
     scroll-behavior: auto !important;
   }
 
-  /* Preserve essential loading animations */
   [role="progressbar"],
   [aria-busy="true"],
   .loading-spinner {
     animation-duration: 1s !important;
   }
 
-  /* Disable shimmer effect */
   .shimmer {
     animation: none !important;
     background: transparent !important;
+  }
+
+  /* Disable glass blur on reduced motion (keep static) */
+  .liquid-glass,
+  .liquid-glass-elevated {
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+  }
+
+  .iridescent-glass::before {
+    animation: none !important;
+  }
+}
+
+/* Mobile performance — reduce blur on low-power devices */
+@media (max-width: 768px) {
+  .liquid-glass,
+  .liquid-glass-elevated {
+    backdrop-filter: blur(12px) saturate(1.4) !important;
+    -webkit-backdrop-filter: blur(12px) saturate(1.4) !important;
   }
 }

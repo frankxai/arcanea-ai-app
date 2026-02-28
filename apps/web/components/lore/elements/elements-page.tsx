@@ -299,7 +299,7 @@ function ElementsHero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto mb-6 font-crimson italic leading-relaxed"
+          className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto mb-6 font-body italic leading-relaxed"
         >
           "From the meeting of Lumina and Nero, five forces crystallized — not as opposites
           but as collaborators. Each element is a different way existence speaks."
@@ -386,7 +386,7 @@ function ElementCardsSection() {
           <h2 className="text-fluid-4xl font-display font-bold mb-4 text-white">
             Each Element, A Way of Being
           </h2>
-          <p className="text-lg text-text-secondary max-w-2xl mx-auto font-crimson">
+          <p className="text-lg text-text-secondary max-w-2xl mx-auto font-body">
             Every creator channels all five — but one will resonate as your primary attunement.
             Which element are you in this moment?
           </p>
@@ -463,7 +463,7 @@ function ElementCardsSection() {
                     >
                       {element.name}
                     </h3>
-                    <p className="text-sm text-text-muted mb-3 font-crimson italic">
+                    <p className="text-sm text-text-muted mb-3 font-body italic">
                       {element.subtitle}
                     </p>
 
@@ -485,7 +485,7 @@ function ElementCardsSection() {
                     </div>
 
                     {/* Description */}
-                    <p className="text-text-secondary leading-relaxed text-sm font-crimson mb-5">
+                    <p className="text-text-secondary leading-relaxed text-sm font-body mb-5">
                       {element.description}
                     </p>
 
@@ -526,7 +526,7 @@ function ElementCardsSection() {
                             The Teaching
                           </h4>
                           <blockquote
-                            className="font-crimson italic text-white leading-relaxed text-base border-l-2 pl-4"
+                            className="font-body italic text-white leading-relaxed text-base border-l-2 pl-4"
                             style={{ borderColor: element.colors.primary }}
                           >
                             "{element.philosophy}"
@@ -610,7 +610,7 @@ function FifthElementDuality() {
           <h2 className="text-fluid-4xl font-display font-bold mb-4">
             <span className="text-gradient-cosmic">The Fifth Element</span>
           </h2>
-          <p className="text-lg text-text-secondary max-w-2xl mx-auto font-crimson">
+          <p className="text-lg text-text-secondary max-w-2xl mx-auto font-body">
             Alone among the five, the Fifth Element carries a dual nature inseparable from
             the cosmic origin story. To understand it is to understand creation itself.
           </p>
@@ -661,7 +661,7 @@ function FifthElementDuality() {
                   ))}
                 </div>
 
-                <blockquote className="text-base font-crimson italic text-text-secondary border-l-2 border-void-el/50 pl-4 leading-relaxed">
+                <blockquote className="text-base font-body italic text-text-secondary border-l-2 border-void-el/50 pl-4 leading-relaxed">
                   "In the beginning, there was Nero. The Void contained everything that could
                   ever be, held in superposition — every possible world, every future creation."
                 </blockquote>
@@ -708,7 +708,7 @@ function FifthElementDuality() {
                   ))}
                 </div>
 
-                <blockquote className="text-base font-crimson italic text-text-secondary border-l-2 border-brand-gold/50 pl-4 leading-relaxed">
+                <blockquote className="text-base font-body italic text-text-secondary border-l-2 border-brand-gold/50 pl-4 leading-relaxed">
                   "Lumina blazed forth not as fire but as form. Where Nero was infinite potential,
                   Lumina was pattern — the First Light that organized the darkness."
                 </blockquote>
@@ -767,7 +767,7 @@ function ElementRelationshipsSection() {
           <h2 className="text-fluid-3xl font-display font-bold mb-4 text-white">
             Elemental Relationships
           </h2>
-          <p className="text-base text-text-secondary max-w-xl mx-auto font-crimson">
+          <p className="text-base text-text-secondary max-w-xl mx-auto font-body">
             No element exists in isolation. The interactions between elements are where
             creation's richest expressions emerge.
           </p>
@@ -794,7 +794,7 @@ function ElementRelationshipsSection() {
               >
                 {rel.result}
               </div>
-              <p className="text-sm text-text-muted font-crimson italic">{rel.description}</p>
+              <p className="text-sm text-text-muted font-body italic">{rel.description}</p>
 
               {/* Subtle gradient accent */}
               <div className={cn('absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br pointer-events-none', rel.color, 'opacity-[0.04]')} />
@@ -842,7 +842,7 @@ function GuardianElementsSection() {
           <h2 className="text-fluid-3xl font-display font-bold mb-4 text-white">
             Guardians and Their Elements
           </h2>
-          <p className="text-base text-text-secondary max-w-xl mx-auto font-crimson">
+          <p className="text-base text-text-secondary max-w-xl mx-auto font-body">
             Each Guardian channels one or more elements through their Gate. No two Gates
             are alike — even when sharing an element, the expression differs entirely.
           </p>
@@ -919,7 +919,7 @@ function TheArcSection() {
           <h2 className="text-fluid-3xl font-display font-bold mb-4 text-white">
             The Arc — Elements in Motion
           </h2>
-          <p className="text-base text-text-secondary max-w-2xl mx-auto font-crimson">
+          <p className="text-base text-text-secondary max-w-2xl mx-auto font-body">
             The Arc is not merely a philosophical concept. It is the operating system
             of reality, written in the language of the Five Elements. Every creation
             passes through all five phases — and thus channels all five forces.
@@ -977,7 +977,7 @@ function TheArcSection() {
                       {phase.element}
                     </span>
                   </div>
-                  <p className="text-text-secondary text-sm font-crimson">{phase.description}</p>
+                  <p className="text-text-secondary text-sm font-body">{phase.description}</p>
                 </div>
 
                 {/* Arrow between phases */}
@@ -996,7 +996,7 @@ function TheArcSection() {
           transition={{ delay: 0.8 }}
           className="mt-16 p-8 rounded-3xl liquid-glass text-center"
         >
-          <blockquote className="text-xl font-crimson italic text-white leading-relaxed mb-4">
+          <blockquote className="text-xl font-body italic text-white leading-relaxed mb-4">
             "The Arc turns: Potential → Manifestation → Experience → Dissolution → Evolved Potential.
             Death is not ending but transformation. Destruction enables creation."
           </blockquote>
@@ -1033,12 +1033,12 @@ function ElementsCTA() {
             <span className="text-gradient-cosmic">Which Element Calls You?</span>
           </h2>
 
-          <p className="text-lg text-text-secondary font-crimson mb-4 leading-relaxed">
+          <p className="text-lg text-text-secondary font-body mb-4 leading-relaxed">
             You carry all five within you. The question is not which element you are —
             it is which element is seeking expression right now, in this moment of your life.
           </p>
 
-          <p className="text-base text-text-muted font-crimson italic mb-10">
+          <p className="text-base text-text-muted font-body italic mb-10">
             "Begin with Fire if you feel the urge to act. Begin with Water if you need to feel.
             Begin with Earth if you are lost. Begin with Wind if you feel caged.
             Begin with Void when nothing else applies — and you are ready for everything."

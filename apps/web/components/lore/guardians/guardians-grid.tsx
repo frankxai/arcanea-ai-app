@@ -298,7 +298,7 @@ export function GuardiansGrid() {
                         <h4 className="text-sm font-semibold text-text-muted uppercase tracking-wider mb-3">
                           The Teaching
                         </h4>
-                        <blockquote className="text-lg font-crimson italic text-white leading-relaxed border-l-2 border-gold-bright/50 pl-4">
+                        <blockquote className="text-lg font-body italic text-white leading-relaxed border-l-2 border-gold-bright/50 pl-4">
                           "{guardian.teaching}"
                         </blockquote>
 

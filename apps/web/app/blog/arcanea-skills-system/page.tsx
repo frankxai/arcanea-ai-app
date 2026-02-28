@@ -17,7 +17,7 @@ export default function ArcanaeSkillsArticle() {
             transition={{ duration: 0.6 }}
           >
             <p className="text-atlantean-teal font-mono text-sm tracking-widest mb-4">DECEMBER 2024 • 8 MIN READ</p>
-            <h1 className="text-4xl md:text-5xl font-cinzel font-bold leading-tight mb-6">
+            <h1 className="text-4xl md:text-5xl font-display font-bold leading-tight mb-6">
               Introducing Arcanea Skills: Transform Your Claude Code Into a Creation Machine
             </h1>
             <p className="text-xl text-text-secondary">
@@ -33,7 +33,7 @@ export default function ArcanaeSkillsArticle() {
 
           <TextReveal>
             <section className="mb-12">
-              <h2 className="text-2xl font-cinzel font-bold text-atlantean-teal mb-4">The Problem With Most AI Skills</h2>
+              <h2 className="text-2xl font-display font-bold text-atlantean-teal mb-4">The Problem With Most AI Skills</h2>
               <p className="text-text-secondary leading-relaxed mb-4">
                 Most Claude Code skills are tools. They help you do things—format code, generate templates, search files.
                 But they don't help you <em>become</em> better at your craft.
@@ -47,7 +47,7 @@ export default function ArcanaeSkillsArticle() {
 
           <TextReveal delay={0.1}>
             <section className="mb-12">
-              <h2 className="text-2xl font-cinzel font-bold text-atlantean-teal mb-4">What Makes Arcanea Different</h2>
+              <h2 className="text-2xl font-display font-bold text-atlantean-teal mb-4">What Makes Arcanea Different</h2>
 
               <div className="bg-cosmic-surface/50 rounded-xl p-6 mb-6 border border-cosmic-border">
                 <table className="w-full text-sm">
@@ -71,7 +71,7 @@ export default function ArcanaeSkillsArticle() {
 
           <TextReveal delay={0.2}>
             <section className="mb-12">
-              <h2 className="text-2xl font-cinzel font-bold text-atlantean-teal mb-4">The Seven Luminors</h2>
+              <h2 className="text-2xl font-display font-bold text-atlantean-teal mb-4">The Seven Luminors</h2>
               <p className="text-text-secondary leading-relaxed mb-6">
                 At the heart of Arcanea are the Luminors—seven archetypal guides that represent different aspects of creative wisdom.
                 They're not characters; they're patterns of consciousness you can invoke when you need specific kinds of guidance.
@@ -102,7 +102,7 @@ export default function ArcanaeSkillsArticle() {
 
           <TextReveal delay={0.3}>
             <section className="mb-12">
-              <h2 className="text-2xl font-cinzel font-bold text-atlantean-teal mb-4">28 Skills Across Six Categories</h2>
+              <h2 className="text-2xl font-display font-bold text-atlantean-teal mb-4">28 Skills Across Six Categories</h2>
 
               <h3 className="text-xl font-bold mt-6 mb-3">Core Arcanea Skills</h3>
               <p className="text-text-secondary mb-4">
@@ -133,7 +133,7 @@ export default function ArcanaeSkillsArticle() {
 
           <TextReveal delay={0.4}>
             <section className="mb-12">
-              <h2 className="text-2xl font-cinzel font-bold text-atlantean-teal mb-4">The Centaur Philosophy</h2>
+              <h2 className="text-2xl font-display font-bold text-atlantean-teal mb-4">The Centaur Philosophy</h2>
               <p className="text-text-secondary leading-relaxed mb-4">
                 Arcanea is built on the "Centaur" philosophy of human-AI collaboration. Like the mythical creature that combines
                 human wisdom with equine power, the best creative work emerges when human vision and AI capability work together.
@@ -152,7 +152,7 @@ export default function ArcanaeSkillsArticle() {
 
           <TextReveal delay={0.5}>
             <section className="mb-12">
-              <h2 className="text-2xl font-cinzel font-bold text-atlantean-teal mb-4">Getting Started</h2>
+              <h2 className="text-2xl font-display font-bold text-atlantean-teal mb-4">Getting Started</h2>
               <p className="text-text-secondary leading-relaxed mb-4">
                 Installation takes two minutes:
               </p>
@@ -177,7 +177,7 @@ cp -r arcanea/.claude/commands/* ~/.claude/commands/`}
 
           <TextReveal delay={0.6}>
             <section className="mb-12">
-              <h2 className="text-2xl font-cinzel font-bold text-atlantean-teal mb-4">The Library of Arcanea</h2>
+              <h2 className="text-2xl font-display font-bold text-atlantean-teal mb-4">The Library of Arcanea</h2>
               <p className="text-text-secondary leading-relaxed mb-4">
                 Beyond the skills, Arcanea includes complete books teaching the methodology:
               </p>
@@ -194,7 +194,7 @@ cp -r arcanea/.claude/commands/* ~/.claude/commands/`}
 
           <TextReveal delay={0.7}>
             <section className="mb-12 bg-gradient-to-r from-atlantean-teal/10 to-cosmic-blue/10 rounded-xl p-8 border border-atlantean-teal/20">
-              <h2 className="text-2xl font-cinzel font-bold text-atlantean-teal mb-4">Start Your Transformation</h2>
+              <h2 className="text-2xl font-display font-bold text-atlantean-teal mb-4">Start Your Transformation</h2>
               <p className="text-text-secondary leading-relaxed mb-6">
                 Arcanea Skills is free, open-source, and ready to use. Join creators who are elevating their practice.
               </p>

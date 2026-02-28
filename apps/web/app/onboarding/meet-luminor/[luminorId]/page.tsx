@@ -103,7 +103,7 @@ export default function MeetLuminorPage() {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="text-center">
-          <h1 className="font-cinzel text-2xl text-text-primary mb-4">Luminor not found</h1>
+          <h1 className="font-display text-2xl text-text-primary mb-4">Luminor not found</h1>
           <Link href="/onboarding/creator-type" className="text-atlantean-teal hover:underline">
             Choose a different path
           </Link>
@@ -143,7 +143,7 @@ export default function MeetLuminorPage() {
           className="flex items-center gap-2 text-text-muted hover:text-text-primary transition-colors"
         >
           <PhArrowLeft className="w-4 h-4" />
-          <span className="font-crimson">Back</span>
+          <span className="font-body">Back</span>
         </Link>
       </motion.div>
 
@@ -175,14 +175,14 @@ export default function MeetLuminorPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
         >
-          <p className="font-crimson text-lg text-text-muted mb-2">Meet</p>
+          <p className="font-body text-lg text-text-muted mb-2">Meet</p>
           <h1
-            className="font-cinzel text-5xl md:text-6xl font-bold mb-2"
+            className="font-display text-5xl md:text-6xl font-bold mb-2"
             style={{ color: luminor.primaryColor }}
           >
             {luminor.name}
           </h1>
-          <p className="font-crimson text-xl text-text-secondary mb-6">
+          <p className="font-body text-xl text-text-secondary mb-6">
             {luminor.title}
           </p>
         </motion.div>
@@ -195,7 +195,7 @@ export default function MeetLuminorPage() {
           className="mb-8"
         >
           <blockquote
-            className="font-crimson text-2xl italic border-l-4 pl-6 text-text-primary inline-block text-left"
+            className="font-body text-2xl italic border-l-4 pl-6 text-text-primary inline-block text-left"
             style={{ borderColor: luminor.primaryColor }}
           >
             "{luminor.signature}"
@@ -207,7 +207,7 @@ export default function MeetLuminorPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
-          className="font-crimson text-lg text-text-secondary mb-8 leading-relaxed"
+          className="font-body text-lg text-text-secondary mb-8 leading-relaxed"
         >
           {luminor.description}
         </motion.p>
@@ -227,8 +227,8 @@ export default function MeetLuminorPage() {
               <Icon className="w-5 h-5 text-white" />
             </div>
             <div className="text-left">
-              <p className="font-crimson text-sm text-text-muted mb-1">{luminor.name}</p>
-              <p className="font-crimson text-text-primary leading-relaxed">
+              <p className="font-body text-sm text-text-muted mb-1">{luminor.name}</p>
+              <p className="font-body text-text-primary leading-relaxed">
                 "{luminor.firstGreeting}"
               </p>
             </div>
@@ -244,7 +244,7 @@ export default function MeetLuminorPage() {
         >
           <button
             onClick={handleStartCreating}
-            className="group flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-crimson font-semibold text-lg text-white transition-all hover:scale-105"
+            className="group flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-body font-semibold text-lg text-white transition-all hover:scale-105"
             style={{ backgroundColor: luminor.primaryColor }}
           >
             Start Creating
@@ -253,7 +253,7 @@ export default function MeetLuminorPage() {
 
           <Link
             href="/luminors"
-            className="flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-cosmic-border-bright text-text-secondary font-crimson font-medium hover:border-text-muted hover:text-text-primary transition-all"
+            className="flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-cosmic-border-bright text-text-secondary font-body font-medium hover:border-text-muted hover:text-text-primary transition-all"
           >
             <PhSparkle className="w-4 h-4" />
             Meet other Luminors

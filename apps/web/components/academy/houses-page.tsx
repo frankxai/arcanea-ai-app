@@ -236,7 +236,7 @@ function HouseCard({ house, index, isInView }: HouseCardProps) {
               </div>
 
               {/* Philosophy */}
-              <blockquote className="font-crimson text-xl italic text-white/90 mb-4 border-l-2 pl-4"
+              <blockquote className="font-body text-xl italic text-white/90 mb-4 border-l-2 pl-4"
                 style={{ borderColor: house.colors.accent }}>
                 "{house.philosophy}"
               </blockquote>
@@ -319,7 +319,7 @@ function HouseCard({ house, index, isInView }: HouseCardProps) {
 
           {/* Philosophy quote */}
           <blockquote
-            className="font-crimson text-base italic text-white/85 border-l-2 pl-3 leading-relaxed"
+            className="font-body text-base italic text-white/85 border-l-2 pl-3 leading-relaxed"
             style={{ borderColor: house.colors.accent }}
           >
             "{house.philosophy}"
@@ -414,7 +414,7 @@ export function HousesPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35 }}
-            className="text-xl md:text-2xl font-crimson italic text-text-secondary max-w-2xl mx-auto mb-4"
+            className="text-xl md:text-2xl font-body italic text-text-secondary max-w-2xl mx-auto mb-4"
           >
             Every creator finds their home.
           </motion.p>
@@ -488,7 +488,7 @@ export function HousesPage() {
             <p className="text-xs uppercase tracking-[0.35em] text-crystal font-sans mb-4">
               A Note on Sorting
             </p>
-            <p className="font-crimson text-lg italic text-text-secondary leading-relaxed mb-3">
+            <p className="font-body text-lg italic text-text-secondary leading-relaxed mb-3">
               "The House does not choose you because of who you are today.
               It chooses you because of who you are becoming."
             </p>

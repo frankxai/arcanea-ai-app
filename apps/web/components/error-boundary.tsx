@@ -88,7 +88,7 @@ export class ErrorBoundary extends Component<
             </div>
           </div>
 
-          <h3 className="text-xl font-cinzel font-semibold text-atlantean-teal-aqua mb-2 text-center">
+          <h3 className="text-xl font-display font-semibold text-atlantean-teal-aqua mb-2 text-center">
             Something Unexpected Happened
           </h3>
 

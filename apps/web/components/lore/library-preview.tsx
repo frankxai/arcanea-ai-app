@@ -166,7 +166,7 @@ export function LibraryPreview() {
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
             17 Collections of Wisdom
           </h2>
-          <p className="text-xl text-text-secondary max-w-3xl mx-auto font-crimson italic">
+          <p className="text-xl text-text-secondary max-w-3xl mx-auto font-body italic">
             &quot;These books are not entertainment. They are equipment for
             living. Use them.&quot;
           </p>

@@ -372,7 +372,7 @@ function WisdomCard({ wisdom, delay }: { wisdom: Wisdom; delay: number }) {
               <PhLightbulb className="w-3 h-3" />
               Signature Question
             </p>
-            <p className={cn('font-crimson italic text-lg leading-relaxed', config.textClass)}>
+            <p className={cn('font-body italic text-lg leading-relaxed', config.textClass)}>
               &ldquo;{wisdom.signatureQuestion}&rdquo;
             </p>
           </div>
@@ -382,7 +382,7 @@ function WisdomCard({ wisdom, delay }: { wisdom: Wisdom; delay: number }) {
             <PhQuotes
               className="absolute -left-1 -top-1 w-4 h-4 text-text-muted opacity-50"
             />
-            <p className="font-crimson italic text-text-secondary leading-relaxed">
+            <p className="font-body italic text-text-secondary leading-relaxed">
               &ldquo;{wisdom.voiceSample}&rdquo;
             </p>
           </blockquote>
@@ -417,7 +417,7 @@ function WhenToInvokeSection() {
           <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
             When to Invoke Each Wisdom
           </h2>
-          <p className="text-xl text-text-secondary max-w-2xl mx-auto font-crimson italic">
+          <p className="text-xl text-text-secondary max-w-2xl mx-auto font-body italic">
             Wisdoms are not chosen through preference. They arise when the situation demands them.
           </p>
         </motion.div>
@@ -467,7 +467,7 @@ function WhenToInvokeSection() {
                           {wisdom.essence}
                         </span>
                       </div>
-                      <p className="text-text-muted text-sm font-crimson italic truncate">
+                      <p className="text-text-muted text-sm font-body italic truncate">
                         &ldquo;{wisdom.signatureQuestion}&rdquo;
                       </p>
                     </div>
@@ -607,7 +607,7 @@ function AtAGlanceSection() {
                 </span>
 
                 {/* Signature Question */}
-                <p className="text-sm font-crimson italic text-text-secondary group-hover:text-text-primary transition-colors">
+                <p className="text-sm font-body italic text-text-secondary group-hover:text-text-primary transition-colors">
                   &ldquo;{wisdom.signatureQuestion}&rdquo;
                 </p>
               </motion.div>
@@ -650,7 +650,7 @@ function PhilosophySection() {
           transition={{ delay: 0.2, duration: 0.7 }}
           className="rounded-3xl border border-white/10 bg-cosmic-surface/30 backdrop-blur-md p-10 md:p-14"
         >
-          <div className="space-y-8 text-lg text-text-secondary leading-relaxed font-crimson">
+          <div className="space-y-8 text-lg text-text-secondary leading-relaxed font-body">
             <p>
               The Seven Wisdoms are not gods, guardians, or external authorities. They are{' '}
               <span className="text-white font-semibold">aspects of virtue</span> — tendencies of
@@ -816,7 +816,7 @@ export function WisdomsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45, duration: 0.7 }}
-            className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto mb-12 font-crimson italic leading-relaxed"
+            className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto mb-12 font-body italic leading-relaxed"
           >
             Aspects of virtue that illuminate the creator&rsquo;s path. Seven qualities of mind,
             seven ways of seeing — each one a gate within the gate.

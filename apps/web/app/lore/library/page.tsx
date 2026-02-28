@@ -248,7 +248,7 @@ export default function LibraryPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-xl text-text-secondary max-w-3xl mx-auto font-crimson italic mb-8"
+            className="text-xl text-text-secondary max-w-3xl mx-auto font-body italic mb-8"
           >
             "These books are not entertainment. They are equipment for living. Use them."
           </motion.p>

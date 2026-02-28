@@ -173,7 +173,7 @@ export function LoreHero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto mb-8 font-crimson italic"
+          className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto mb-8 font-body italic"
         >
           &quot;Before Lumina spoke, there was only Nero—the Fertile Unknown,
           pregnant with infinite possibility. And when the First Light pierced

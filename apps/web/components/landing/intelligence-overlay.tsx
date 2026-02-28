@@ -293,7 +293,7 @@ function ArcMilestone({
         <span className="block text-xs text-text-muted mb-2">
           {milestone.gates}
         </span>
-        <span className="block text-xs text-text-secondary leading-snug italic font-crimson">
+        <span className="block text-xs text-text-secondary leading-snug italic font-body">
           {milestone.promise}
         </span>
       </motion.div>
@@ -375,7 +375,7 @@ export function IntelligenceOverlay() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.25 }}
-            className="text-xl text-text-secondary font-crimson italic mb-16"
+            className="text-xl text-text-secondary font-body italic mb-16"
           >
             From Foundation to Source.
           </motion.p>
@@ -415,7 +415,7 @@ export function IntelligenceOverlay() {
             transition={{ duration: 0.5 }}
             className="text-center mb-16"
           >
-            <p className="text-lg text-text-secondary font-crimson italic">
+            <p className="text-lg text-text-secondary font-body italic">
               Build your mythology. Make your music. Deploy your agents.
             </p>
           </motion.div>
@@ -443,7 +443,7 @@ export function IntelligenceOverlay() {
             <h3 className="text-3xl md:text-4xl font-display font-bold mb-3">
               <span className="text-gradient-gold">From Foundation to Source.</span>
             </h3>
-            <p className="text-text-secondary font-crimson italic text-lg">
+            <p className="text-text-secondary font-body italic text-lg">
               A frequency journey through ten gates to creative sovereignty.
             </p>
           </motion.div>
@@ -496,7 +496,7 @@ export function IntelligenceOverlay() {
                   <span className="block text-xs text-text-muted mb-1.5">
                     {milestone.gates}
                   </span>
-                  <span className="block text-sm text-text-secondary leading-snug italic font-crimson">
+                  <span className="block text-sm text-text-secondary leading-snug italic font-body">
                     {milestone.promise}
                   </span>
                 </div>

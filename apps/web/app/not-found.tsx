@@ -19,10 +19,10 @@ export default function NotFound() {
 
       {/* 404 Message */}
       <div className="text-center mb-8">
-        <h1 className="text-8xl md:text-9xl font-cinzel font-bold bg-gradient-to-r from-creation-prism-1 via-creation-prism-2 to-creation-prism-3 bg-clip-text text-transparent mb-4">
+        <h1 className="text-8xl md:text-9xl font-display font-bold bg-gradient-to-r from-creation-prism-1 via-creation-prism-2 to-creation-prism-3 bg-clip-text text-transparent mb-4">
           404
         </h1>
-        <h2 className="text-2xl md:text-3xl font-cinzel font-bold text-atlantean-teal-aqua mb-4">
+        <h2 className="text-2xl md:text-3xl font-display font-bold text-atlantean-teal-aqua mb-4">
           Realm Not Found
         </h2>
         <p className="text-neutral-400 max-w-md">

@@ -1,36 +1,37 @@
 'use client';
 
 import * as React from 'react';
-import { motion, HTMLMotionProps } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { cosmicFadeIn, cosmicGlow } from '@/lib/animations';
+import { cosmicFadeIn } from '@/lib/animations';
 
 export interface CosmicCardProps {
   glow?: boolean;
   shimmer?: boolean;
-  glass?: boolean;
+  glass?: 'subtle' | 'standard' | 'strong' | 'liquid' | 'liquid-elevated' | 'iridescent' | boolean;
   academy?: 'atlantean' | 'draconic' | 'creation';
   children: React.ReactNode;
   className?: string;
 }
 
+const glassClasses = {
+  subtle: 'glass-subtle',
+  standard: 'glass',
+  strong: 'glass-strong',
+  liquid: 'liquid-glass',
+  'liquid-elevated': 'liquid-glass-elevated',
+  iridescent: 'iridescent-glass',
+};
+
 const CosmicCard = React.forwardRef<HTMLDivElement, CosmicCardProps>(
-  (
-    {
-      className,
-      glow = false,
-      shimmer = false,
-      glass = false,
-      academy,
-      children,
-    },
-    ref
-  ) => {
+  ({ className, glow = false, shimmer = false, glass = false, academy, children }, ref) => {
     const academyClasses = {
       atlantean: 'border-atlantean-teal/30 hover:border-atlantean-teal/60',
       draconic: 'border-draconic-gold/30 hover:border-draconic-gold/60',
       creation: 'border-creation-gold/30 hover:border-creation-gold/60',
     };
+
+    const resolvedGlass = glass === true ? 'glass' : glass ? glassClasses[glass] : undefined;
 
     return (
       <motion.div
@@ -38,15 +39,15 @@ const CosmicCard = React.forwardRef<HTMLDivElement, CosmicCardProps>(
         initial="hidden"
         animate="visible"
         variants={cosmicFadeIn}
-        whileHover={glow ? 'hover' : undefined}
         className={cn(
-          'rounded-lg border p-6 transition-all',
-          glass
-            ? 'glass'
-            : 'bg-cosmic-surface border-cosmic-border hover:bg-cosmic-raised',
+          'rounded-2xl p-6 transition-all',
+          resolvedGlass
+            ? resolvedGlass
+            : 'bg-cosmic-surface border border-cosmic-border hover:bg-cosmic-raised',
+          !resolvedGlass && 'border',
           shimmer && 'shimmer',
           academy && academyClasses[academy],
-          glow && 'hover:shadow-glow-md',
+          glow && 'hover:shadow-glow-md hover-lift',
           className
         )}
       >
@@ -62,11 +63,7 @@ const CosmicCardHeader = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn('flex flex-col space-y-1.5', className)}
-    {...props}
-  />
+  <div ref={ref} className={cn('flex flex-col space-y-1.5', className)} {...props} />
 ));
 CosmicCardHeader.displayName = 'CosmicCardHeader';
 
@@ -76,10 +73,7 @@ const CosmicCardTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h3
     ref={ref}
-    className={cn(
-      'text-2xl font-semibold leading-none tracking-tight text-text-primary',
-      className
-    )}
+    className={cn('text-2xl font-semibold leading-none tracking-tight text-text-primary', className)}
     {...props}
   />
 ));
@@ -89,11 +83,7 @@ const CosmicCardDescription = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, ...props }, ref) => (
-  <p
-    ref={ref}
-    className={cn('text-sm text-text-secondary', className)}
-    {...props}
-  />
+  <p ref={ref} className={cn('text-sm text-text-secondary', className)} {...props} />
 ));
 CosmicCardDescription.displayName = 'CosmicCardDescription';
 
@@ -109,11 +99,7 @@ const CosmicCardFooter = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn('flex items-center pt-4', className)}
-    {...props}
-  />
+  <div ref={ref} className={cn('flex items-center pt-4', className)} {...props} />
 ));
 CosmicCardFooter.displayName = 'CosmicCardFooter';
 
