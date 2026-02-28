@@ -1,15 +1,7 @@
-import { Metadata } from 'next';
+'use client';
+
 import Link from 'next/link';
 import { PhArrowRight } from '@/lib/phosphor-icons';
-
-export const metadata: Metadata = {
-  title: 'Academy of Creation | Arcanea',
-  description: 'Begin your creative journey through the Ten Gates. Learn, grow, and master the art of creation.',
-  openGraph: {
-    title: 'Academy of Creation | Arcanea',
-    description: 'Where creators begin their journey through the Ten Gates.',
-  },
-};
 
 const TEN_GATES = [
   { number: 1, name: 'Foundation', frequency: '174 Hz', guardian: 'Lyssandria', godbeast: 'Kaelith', domain: 'Earth, survival, grounding', color: '#7fffd4', description: 'The root of all creation. Ground yourself and establish your creative foundation.' },
@@ -174,17 +166,10 @@ export default function AcademyPage() {
               {SEVEN_HOUSES.map((house) => (
                 <div key={house.name} className="text-center group">
                   <div
-                    className="mx-auto mb-3 h-12 w-12 rounded-2xl border flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                    className="mx-auto mb-3 h-12 w-12 rounded-2xl border flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_25px_rgba(127,255,212,0.2)]"
                     style={{
                       borderColor: `${house.color}40`,
                       backgroundColor: `${house.color}10`,
-                      boxShadow: `0 0 0 0 ${house.color}00`,
-                    }}
-                    onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLElement).style.boxShadow = `0 0 25px ${house.color}30`;
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLElement).style.boxShadow = `0 0 0 0 ${house.color}00`;
                     }}
                   >
                     <div
