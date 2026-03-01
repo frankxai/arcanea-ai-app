@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { AuthProvider } from "@/lib/auth/context";
 import { Navbar, Footer } from "@/components/navigation";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 
 const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
@@ -82,6 +83,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <Footer />
           </div>
           <SpeedInsights />
+          <Analytics />
         </AuthProvider>
       </body>
     </html>
