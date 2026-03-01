@@ -208,8 +208,7 @@ function Controls({
                   (o) => o.value === e.target.value,
                 );
                 if (option) {
-                  // Trigger sort change
-                  console.log("Sort changed:", option.value);
+                  // Sort handler — TODO: wire to actual state
                 }
               }}
               className="h-10 px-3 rounded-lg bg-cosmic-raised border border-cosmic-border text-white focus:outline-none focus:border-brand-primary/50 transition-colors cursor-pointer"
