@@ -1,7 +1,7 @@
 # Arcanea Master Plan — Central Orchestrator
 
-> **Last Updated**: 2026-02-28
-> **Version**: 1.0.0
+> **Last Updated**: 2026-03-01
+> **Version**: 1.1.0
 > **Guardian**: Shinkami (Source Gate, 1111 Hz)
 > **Status**: Active
 
@@ -13,12 +13,12 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
 
 | Metric | Value | Target |
 |--------|-------|--------|
-| Total Pages | 111 | 80 (prune redirects/stubs) |
-| Pages with Metadata | ~65 | 100% |
-| Pages with loading.tsx | ~35 | 100% of dynamic pages |
-| Milestones Active | 4 | Complete M001 first |
+| Total Pages | 201 (routes) | 80 (prune redirects/stubs) |
+| Pages with Metadata | ~77 (+12) | 100% |
+| Pages with loading.tsx | ~81 (+32) | 100% of dynamic pages |
+| Milestones Active | 9 (M001-M009) | Complete M001 → M008 → M005 |
 | Vercel Build | PASSING | Maintain green |
-| Last Deploy | 2026-02-28 | d1db9f0b |
+| Last Deploy | 2026-03-01 | c6538cb4 |
 | Live URL | arcanea.ai | arcanea.ai |
 
 ---
@@ -61,6 +61,46 @@ Source: `.arcanea/projects/milestones/`
   - [ ] Linear migration tool
   - [ ] Sprint velocity tracking
 - **Files**: `m004-arcanea-pm.arc`
+
+### M005: Premium UI Overhaul via v0 (5%) — P0
+- **Guardian**: Leyla (Flow Gate)
+- **Target**: 2026-03-15
+- **v0 Chats Generated**:
+  - Studio UI: `kAvqGXxPRym` — [v0.app/chat/kAvqGXxPRym](https://v0.app/chat/kAvqGXxPRym)
+  - Onboarding: `sOnFGuExkoy` — [v0.app/chat/sOnFGuExkoy](https://v0.app/chat/sOnFGuExkoy)
+  - Gallery: `hJWNhFkicaR` — [v0.app/chat/hJWNhFkicaR](https://v0.app/chat/hJWNhFkicaR)
+  - Settings: `nlNsLw1Dtlz` — [v0.app/chat/nlNsLw1Dtlz](https://v0.app/chat/nlNsLw1Dtlz)
+- **Remaining**: Extract v0 output, adapt to Arcanea stack, wire to Supabase
+- **Tasks**: 8 total (Studio, Settings, Onboarding, Gallery, Chat, Academy, Community, Pricing)
+- **Files**: `m005-premium-ui-v0.arc`
+
+### M006: Creator Tools Backend (0%) — P1
+- **Guardian**: Draconia (Fire Gate)
+- **Target**: 2026-03-22
+- **Scope**: Creation pipeline, AI generation APIs, Prompt Books persistence, Reading progress, Course system, Gallery social
+- **Depends on**: M001, M005
+- **Files**: `m006-creator-tools-backend.arc`
+
+### M007: Community & Social (0%) — P2
+- **Guardian**: Ino (Unity Gate)
+- **Target**: 2026-03-29
+- **Scope**: Creator discovery, social interactions, forums, events/challenges, collaboration
+- **Depends on**: M001, M006
+- **Files**: `m007-community-social.arc`
+
+### M008: Onboarding & Conversion (0%) — P0
+- **Guardian**: Maylinn (Heart Gate)
+- **Target**: 2026-03-10
+- **Scope**: Onboarding wizard integration, welcome dashboard, activation loops, analytics, auth UX
+- **Depends on**: M005
+- **Files**: `m008-onboarding-conversion.arc`
+
+### M009: Performance & Production Polish (0%) — P1
+- **Guardian**: Elara (Shift Gate)
+- **Target**: 2026-03-22
+- **Scope**: Core Web Vitals, SEO, accessibility, error handling, production hardening, cleanup
+- **Depends on**: M005, M008
+- **Files**: `m009-performance-polish.arc`
 
 ---
 
@@ -136,12 +176,12 @@ packages/              → 37 workspace packages
 #### Academy Sub-pages
 | Route | Status | Needs |
 |-------|--------|-------|
-| `/academy/gates` | PARTIAL | loading.tsx |
-| `/academy/gates/[id]` | PLANNED | Build individual gate detail pages with lessons, guardian info, exercises |
-| `/academy/houses` | PARTIAL | loading.tsx |
-| `/academy/ranks` | PARTIAL | loading.tsx |
-| `/academy/assessment` | PARTIAL | loading.tsx, save results to profile |
-| `/academy/gate-quiz` | PARTIAL | loading.tsx, save results to profile |
+| `/academy/gates` | LIVE | loading.tsx added |
+| `/academy/gates/[id]` | LIVE | 10 gates pre-rendered, generateMetadata, element colors, teachings, navigation |
+| `/academy/houses` | PARTIAL | loading.tsx added |
+| `/academy/ranks` | PARTIAL | loading.tsx added |
+| `/academy/assessment` | PARTIAL | loading.tsx added, save results to profile |
+| `/academy/gate-quiz` | PARTIAL | loading.tsx added, save results to profile |
 | `/academy/courses/[slug]` | PLANNED | Build course system with lessons, progress tracking |
 
 #### Library `/library`
@@ -151,7 +191,7 @@ packages/              → 37 workspace packages
 - **Loading**: MISSING
 - **Current**: 17 collections from filesystem, tab navigation, situation-based finding
 - **Needs**:
-  - [ ] Add loading.tsx
+  - [x] Add loading.tsx — DONE (2026-03-01)
   - [ ] Reading progress tracking (per user, per text)
   - [ ] Bookmarks/favorites system
   - [ ] Related texts recommendations
@@ -160,10 +200,10 @@ packages/              → 37 workspace packages
 #### Library Sub-pages
 | Route | Status | Needs |
 |-------|--------|-------|
-| `/library/[collection]` | LIVE | loading.tsx |
-| `/library/[collection]/[text]` | LIVE | loading.tsx, reading time estimate, bookmarks |
-| `/library/codex` | LIVE | loading.tsx |
-| `/library/graph` | LIVE | loading.tsx |
+| `/library/[collection]` | LIVE | loading.tsx added |
+| `/library/[collection]/[text]` | LIVE | loading.tsx added, reading time estimate, bookmarks |
+| `/library/codex` | LIVE | loading.tsx added |
+| `/library/graph` | LIVE | loading.tsx added |
 
 #### Luminors `/luminors`
 - **Status**: LIVE
@@ -193,7 +233,7 @@ packages/              → 37 workspace packages
 
 | Route | Status | Needs |
 |-------|--------|-------|
-| `/chat/[luminorId]` | PARTIAL | loading.tsx, metadata (generateMetadata), chat persistence |
+| `/chat/[luminorId]` | LIVE | loading.tsx added, generateMetadata via layout, chat persistence wired to Supabase |
 
 #### Lore `/lore`
 - **Status**: LIVE
@@ -206,14 +246,14 @@ packages/              → 37 workspace packages
 
 | Route | Status | Needs |
 |-------|--------|-------|
-| `/lore/gates` | PARTIAL | loading.tsx |
-| `/lore/guardians` | PARTIAL | loading.tsx |
-| `/lore/guardians/[name]` | LIVE | loading.tsx |
-| `/lore/godbeasts` | PARTIAL | loading.tsx |
-| `/lore/elements` | PARTIAL | loading.tsx |
-| `/lore/malachar` | PARTIAL | loading.tsx |
-| `/lore/wisdoms` | PARTIAL | loading.tsx |
-| `/lore/library` | PARTIAL | loading.tsx |
+| `/lore/gates` | LIVE | loading.tsx added, deep narrative + sacred geometry + creative lessons |
+| `/lore/guardians` | LIVE | loading.tsx added, full personality profiles, 3-column layout |
+| `/lore/guardians/[name]` | LIVE | enriched godbeast descriptions + deeper teachings |
+| `/lore/godbeasts` | LIVE | loading.tsx added, origin narratives + legendary encounters |
+| `/lore/elements` | LIVE | loading.tsx added, cosmological context + Malachar connection |
+| `/lore/malachar` | LIVE | loading.tsx added, 2 new teaching cards |
+| `/lore/wisdoms` | LIVE | loading.tsx added, richer domains + voice samples |
+| `/lore/library` | LIVE | loading.tsx added |
 
 ---
 
@@ -387,39 +427,48 @@ These add file count without value. Consider removing or combining:
 ### P0 — Deploy Blockers & Core Experience
 1. Set Supabase env vars on Vercel (M001 blocker)
 2. Configure Supabase Dashboard Site URL + Redirect URLs
-3. Add metadata to `/academy` (layout.tsx with generateMetadata)
-4. Build `/academy/gates/[id]` dynamic route
-5. Add chat persistence (Supabase table for messages)
-6. Fix `/chat/[luminorId]` metadata
+3. ~~Add metadata to `/academy`~~ — DONE (2026-03-01, layout.tsx with generateMetadata)
+4. ~~Build `/academy/gates/[id]` dynamic route~~ — DONE (2026-03-01, 10 gates pre-rendered)
+5. ~~Add chat persistence (Supabase tables + service)~~ — DONE (2026-03-01, chat_sessions + chat_messages)
+6. ~~Fix `/chat/[luminorId]` metadata~~ — DONE (2026-03-01, generateMetadata via layout)
 
 ### P1 — Quality & Polish
-7. Add loading.tsx to all Tier 1 pages (library, lore subtrees)
-8. Add metadata to all Tier 2 pages (prompt-books, community)
-9. Wire settings persistence to Supabase
-10. Reading progress tracking in Library
-11. Memory MCP package (M003)
+7. ~~Add loading.tsx to all Tier 1 pages~~ — DONE (2026-03-01, 32+17 new, 98 total)
+8. ~~Add metadata to all Tier 2 pages~~ — DONE (2026-03-01, 12 new layout.tsx)
+9. ~~Wire settings persistence to Supabase~~ — DONE (2026-03-01, avatar + prefs + metadata JSONB)
+10. ~~Migrate legacy API routes~~ — DONE (2026-03-01, 5 of 7 migrated, 2 intentional exceptions)
+11. Integrate v0 Studio UI into /studio (M005-T1)
+12. Integrate v0 Gallery UI into /gallery (M005-T4)
+13. Reading progress tracking in Library (M006-T4)
+14. Memory MCP package (M003)
 
 ### P2 — Feature Expansion
-12. Academy course system
-13. World/Universe builder backends
-14. Community features (forums, groups)
-15. Cloudflare Stream integration (M002)
+15. Integrate v0 Onboarding wizard (M008-T1)
+16. Integrate v0 Settings page (M005-T2)
+17. Academy course system (M006-T5)
+18. World/Universe builder backends
+19. Community features — forums, groups (M007)
+20. Cloudflare Stream integration (M002)
 
 ### P3 — Cleanup & Optimization
-16. Prune redirect-only pages
-17. Fix icon aliases (PhGraphNetwork, PhFlow, PhShieldCheck)
-18. Remove `/workspace` or build it out
-19. Migrate 11 legacy API routes
-20. Performance audit (Core Web Vitals)
+21. Prune 15+ redirect-only pages
+22. Core Web Vitals audit (M009-T1)
+23. WCAG 2.2 accessibility audit (M009-T3)
+24. Remove `/workspace` or build it out
+25. TypeScript strict mode cleanup
 
 ---
 
 ## Cross-Cutting Concerns
 
 ### Security
+- ~~RLS on arcanea table~~ — FIXED (2026-03-01)
+- ~~Overly permissive feedback policy~~ — FIXED (2026-03-01)
+- ~~auth_rls_initplan performance~~ — FIXED (2026-03-01)
 - Gemini chat uses service-role key in API route — should use anon key
-- 11 API routes still use old `lib/supabase.ts` (server-only singleton)
-- Settings page doesn't persist — preferences reset on refresh
+- ~~11 API routes still use old `lib/supabase.ts`~~ — 5 migrated (2026-03-01), 2 intentional exceptions, 4 remaining
+- ~~Settings page doesn't persist~~ — FIXED (2026-03-01, wired to Supabase profiles)
+- Enable leaked password protection in Supabase Dashboard
 
 ### Design System
 - Liquid glass system fully deployed (7 tiers)
@@ -475,6 +524,28 @@ When an agent starts work, consult this table for the right specialist:
 ---
 
 ## Changelog
+
+### v1.2.0 (2026-03-01) — v0 Premium UI + Milestones Sprint
+- 5 new milestones created: M005 (Premium UI v0), M006 (Creator Backend), M007 (Community), M008 (Onboarding), M009 (Performance)
+- 4 v0 premium UI components generated: Studio, Settings, Onboarding, Gallery
+- Feedback route build error fixed (untyped table bypass)
+- Legacy API migration: 5 routes migrated to SSR-safe Supabase client
+- Settings page wired to Supabase profiles (avatar, preferences, metadata JSONB)
+- Chat hook enhanced with sessionId tracking and sessions sidebar
+- 17 new loading.tsx files created (98 total)
+- 2 Supabase RLS policies tightened
+- Build: PASSING (201 routes, 0 errors)
+
+### v1.1.0 (2026-03-01) — Massive Action Session
+- Academy Gates system built: 10 individual gate pages, lib/gates.ts data layer
+- Chat persistence: chat_sessions + chat_messages tables, chat-service.ts, Supabase RLS
+- 32 new loading.tsx files (81 total across platform)
+- 12 new metadata layout.tsx files
+- All lore pages enriched with deep narrative content
+- 3 Supabase security advisories resolved (RLS fixes + index)
+- Build: 201 routes, 0 errors — pushed to both remotes
+- P0 items 3-6 completed, P1 items 7-8 completed
+- Commit: c6538cb4
 
 ### v1.0.0 (2026-02-28)
 - Initial creation from comprehensive audit

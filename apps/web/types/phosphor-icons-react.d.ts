@@ -73,12 +73,14 @@ declare module '@phosphor-icons/react' {
   export const CodeBlock: PhosphorIcon;
   export const Command: PhosphorIcon;
   export const Compass: PhosphorIcon;
+  export const Coins: PhosphorIcon;
   export const Copy: PhosphorIcon;
   export const Cpu: PhosphorIcon;
   export const Crown: PhosphorIcon;
   export const Database: PhosphorIcon;
   export const Diamond: PhosphorIcon;
   export const DotsSixVertical: PhosphorIcon;
+  export const DotsThree: PhosphorIcon;
   export const DotsThreeVertical: PhosphorIcon;
   export const Download: PhosphorIcon;
   export const Drop: PhosphorIcon;
@@ -95,6 +97,7 @@ declare module '@phosphor-icons/react' {
   export const Flame: PhosphorIcon;
   export const FloppyDisk: PhosphorIcon;
   export const FolderOpen: PhosphorIcon;
+  export const FolderSimple: PhosphorIcon;
   export const Funnel: PhosphorIcon;
   export const GameController: PhosphorIcon;
   export const Gear: PhosphorIcon;
@@ -118,6 +121,7 @@ declare module '@phosphor-icons/react' {
   export const Lightning: PhosphorIcon;
   export const Link: PhosphorIcon;
   export const List: PhosphorIcon;
+  export const ListBullets: PhosphorIcon;
   export const ListDashes: PhosphorIcon;
   export const ListNumbers: PhosphorIcon;
   export const Lock: PhosphorIcon;
@@ -126,6 +130,7 @@ declare module '@phosphor-icons/react' {
   export const MagnifyingGlassPlus: PhosphorIcon;
   export const MapPin: PhosphorIcon;
   export const MapTrifold: PhosphorIcon;
+  export const Metronome: PhosphorIcon;
   export const Microphone: PhosphorIcon;
   export const Minus: PhosphorIcon;
   export const Moon: PhosphorIcon;
@@ -139,6 +144,7 @@ declare module '@phosphor-icons/react' {
   export const PaperPlane: PhosphorIcon;
   export const Paperclip: PhosphorIcon;
   export const Pen: PhosphorIcon;
+  export const Pause: PhosphorIcon;
   export const Pencil: PhosphorIcon;
   export const PencilSimple: PhosphorIcon;
   export const Planet: PhosphorIcon;
@@ -148,6 +154,7 @@ declare module '@phosphor-icons/react' {
   export const Question: PhosphorIcon;
   export const Quotes: PhosphorIcon;
   export const Radio: PhosphorIcon;
+  export const Robot: PhosphorIcon;
   export const Rocket: PhosphorIcon;
   export const Scales: PhosphorIcon;
   export const Scroll: PhosphorIcon;
@@ -160,6 +167,7 @@ declare module '@phosphor-icons/react' {
   export const SlidersHorizontal: PhosphorIcon;
   export const SortAscending: PhosphorIcon;
   export const SortDescending: PhosphorIcon;
+  export const SpeakerHigh: PhosphorIcon;
   export const Sparkle: PhosphorIcon;
   export const Spinner: PhosphorIcon;
   export const Spiral: PhosphorIcon;
@@ -174,10 +182,14 @@ declare module '@phosphor-icons/react' {
   export const Terminal: PhosphorIcon;
   export const TextAa: PhosphorIcon;
   export const TextB: PhosphorIcon;
+  export const TextH: PhosphorIcon;
   export const TextHOne: PhosphorIcon;
   export const TextHTwo: PhosphorIcon;
   export const TextItalic: PhosphorIcon;
   export const TextT: PhosphorIcon;
+  export const TextUnderline: PhosphorIcon;
+  export const ThumbsDown: PhosphorIcon;
+  export const ThumbsUp: PhosphorIcon;
   export const Translate: PhosphorIcon;
   export const Trash: PhosphorIcon;
   export const Tree: PhosphorIcon;
@@ -192,6 +204,7 @@ declare module '@phosphor-icons/react' {
   export const Users: PhosphorIcon;
   export const VideoCamera: PhosphorIcon;
   export const Wand: PhosphorIcon;
+  export const Waveform: PhosphorIcon;
   export const Warning: PhosphorIcon;
   export const WarningCircle: PhosphorIcon;
   export const Waves: PhosphorIcon;

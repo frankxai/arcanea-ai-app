@@ -1,11 +1,12 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Workflows | Arcanea',
-  description: 'Automate your creative process — explore n8n workflows and automation tools built for Arcanea creators.',
+  title: 'Arcanea Workflows — Automate Your Creative Process',
+  description: 'Discover automation workflows built for creators. Streamline your creative practice with intelligent pipelines powered by the Arcanea platform.',
   openGraph: {
-    title: 'Workflows | Arcanea — Creator Automation',
-    description: 'Explore n8n-powered automation workflows to supercharge your creative practice.',
+    title: 'Arcanea Workflows — Automate Your Creative Process',
+    description: 'Discover automation workflows built for creators. Streamline your creative practice with intelligent pipelines powered by the Arcanea platform.',
+    type: 'website',
   },
 };
 

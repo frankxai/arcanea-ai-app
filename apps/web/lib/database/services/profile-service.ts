@@ -59,6 +59,7 @@ export async function updateProfile(
   if (updates.activeGate !== undefined) payload.active_gate = updates.activeGate
   if (updates.guardian !== undefined) payload.guardian = updates.guardian
   if (updates.academyHouse !== undefined) payload.academy_house = updates.academyHouse
+  if (updates.metadata !== undefined) payload.metadata = updates.metadata
 
   const { data, error } = await supabase
     .from('profiles')

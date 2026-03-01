@@ -29,34 +29,42 @@ export async function POST(req: NextRequest) {
 
     // Try to get authenticated user (optional — feedback works without auth)
     let userId: string | null = null;
-    const authHeader = req.headers.get("authorization");
-    if (authHeader && process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
-      const supabase = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL,
-        process.env.SUPABASE_SERVICE_ROLE_KEY
-      );
-      const token = authHeader.replace("Bearer ", "");
-      const { data: { user } } = await supabase.auth.getUser(token);
-      userId = user?.id ?? null;
-    }
+    const supabaseConfigured =
+      !!process.env.NEXT_PUBLIC_SUPABASE_URL &&
+      !!process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-    // Insert into Supabase if configured
-    if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    if (supabaseConfigured) {
       const supabase = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL,
-        process.env.SUPABASE_SERVICE_ROLE_KEY
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_ROLE_KEY!,
       );
 
-      const { error } = await supabase.from("feedback").insert({
-        type: feedbackType,
-        message: message.trim().slice(0, 2000),
-        email: email?.trim().slice(0, 255) || null,
-        user_id: userId,
-      });
+      const authHeader = req.headers.get("authorization");
+      if (authHeader) {
+        try {
+          const token = authHeader.replace("Bearer ", "");
+          const { data: { user } } = await supabase.auth.getUser(token);
+          userId = user?.id ?? null;
+        } catch {
+          // Auth lookup failed — proceed without user ID
+        }
+      }
 
-      if (error) {
-        // Table might not exist yet — log and return success anyway
-        console.warn("[Feedback] Supabase insert failed:", error.message);
+      try {
+        const { error } = await supabase.from("feedback").insert({
+          type: feedbackType,
+          message: message.trim().slice(0, 2000),
+          email: email?.trim().slice(0, 255) || null,
+          user_id: userId,
+        });
+
+        if (error) {
+          // Table might not exist yet — log and return success anyway
+          console.warn("[Feedback] Supabase insert failed:", error.message);
+        }
+      } catch {
+        // createAdminClient throws if service role key is missing — log and continue
+        console.warn("[Feedback] Supabase admin client unavailable");
       }
     } else {
       // Fallback: log only

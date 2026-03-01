@@ -13,7 +13,7 @@
  * @module lib/services/vector-search
  */
 
-import { getSupabaseAdmin, supabaseServer } from '@/lib/supabase';
+import { createAdminClient } from '@/lib/supabase/server';
 import { getEmbeddingService, TaskType } from './embeddings';
 
 // ============================================
@@ -134,7 +134,7 @@ export class VectorSearchService {
     );
 
     // Use the Supabase RPC function for vector similarity search
-    const supabase = getSupabaseAdmin();
+    const supabase = createAdminClient();
 
     // First try the match_lore function
     try {
@@ -226,7 +226,7 @@ export class VectorSearchService {
       TaskType.RETRIEVAL_QUERY
     );
 
-    const supabase = getSupabaseAdmin();
+    const supabase = createAdminClient();
 
     // Build base query
     let queryBuilder = supabase
@@ -328,7 +328,7 @@ export class VectorSearchService {
     fragmentId: string,
     limit: number = 5
   ): Promise<SearchResult<LoreFragment>[]> {
-    const supabase = getSupabaseAdmin();
+    const supabase = createAdminClient();
 
     // Get the reference fragment's embedding
     const { data: fragment, error } = await supabase
@@ -363,7 +363,7 @@ export class VectorSearchService {
     fragment: Partial<LoreFragment> & { content: string; category: LoreCategory; title: string },
     generateEmbedding: boolean = true
   ): Promise<LoreFragment> {
-    const supabase = getSupabaseAdmin();
+    const supabase = createAdminClient();
 
     let embedding: number[] | undefined;
 
@@ -447,7 +447,7 @@ export class VectorSearchService {
    * @returns Number of deleted fragments
    */
   async deleteLoreBySource(sourceFile: string): Promise<number> {
-    const supabase = getSupabaseAdmin();
+    const supabase = createAdminClient();
 
     const { data, error } = await supabase
       .from('lore_fragments')
@@ -477,7 +477,7 @@ export class VectorSearchService {
   ): Promise<SearchResult<T>[]> {
     const { limit = DEFAULT_LIMIT, threshold = DEFAULT_THRESHOLD, category, tags, sourceFile } = options;
 
-    const supabase = getSupabaseAdmin();
+    const supabase = createAdminClient();
 
     // Fetch all items with embeddings
     let query = supabase.from(table).select('*');

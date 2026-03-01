@@ -1,11 +1,12 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Community | Arcanea',
-  description: 'Join the Creator Collective — connect with creators, share your work, and build together in the Arcanea community.',
+  title: 'Arcanea Community — Join the Creative Civilization',
+  description: 'Connect with creators, share your work, and build together in the Arcanea community. Join a civilization of creative minds shaping the future.',
   openGraph: {
-    title: 'Community | Arcanea — Join the Creator Collective',
-    description: 'Connect with creators, share your work, and build together in the Arcanea community.',
+    title: 'Arcanea Community — Join the Creative Civilization',
+    description: 'Connect with creators, share your work, and build together in the Arcanea community. Join a civilization of creative minds shaping the future.',
+    type: 'website',
   },
 };
 

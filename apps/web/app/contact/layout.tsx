@@ -1,11 +1,12 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Contact | Arcanea',
-  description: 'Reach the Arcanea Academy — get in touch with our team, report issues, or explore partnership opportunities.',
+  title: 'Contact Arcanea — Get in Touch',
+  description: 'Reach the Arcanea team for support, partnerships, or general inquiries. We are building the future of creative intelligence together.',
   openGraph: {
-    title: 'Contact | Arcanea — Reach the Academy',
-    description: 'Get in touch with the Arcanea team for support, partnerships, or general inquiries.',
+    title: 'Contact Arcanea — Get in Touch',
+    description: 'Reach the Arcanea team for support, partnerships, or general inquiries. We are building the future of creative intelligence together.',
+    type: 'website',
   },
 };
 

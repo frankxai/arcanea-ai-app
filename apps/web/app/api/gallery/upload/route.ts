@@ -7,13 +7,16 @@
  *   - file: image/webp|png|jpg (max 10MB)
  *   - guardian: Guardian name
  *   - title: Optional caption
+ *
+ * NOTE: This route creates an RLS-scoped client by injecting the user's JWT
+ * as an Authorization header. This preserves Storage RLS path policies
+ * (community/[userId]/) without bypassing them via admin client.
  */
 
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import type { Database } from "@/lib/database/types/supabase";
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
-const SUPABASE_ANON = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
 const BUCKET = "arcanea-gallery";
 const MAX_SIZE = 10 * 1024 * 1024; // 10MB
 
@@ -23,7 +26,10 @@ const VALID_GUARDIANS = new Set([
 ]);
 
 export async function POST(request: NextRequest) {
-  if (!SUPABASE_URL || !SUPABASE_ANON) {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!supabaseUrl || !supabaseAnon) {
     return NextResponse.json({ error: "Storage not configured" }, { status: 503 });
   }
 
@@ -35,8 +41,10 @@ export async function POST(request: NextRequest) {
 
   const token = authHeader.slice(7);
 
-  // Create authenticated Supabase client
-  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON, {
+  // Create RLS-scoped client by injecting the user's JWT as Authorization header.
+  // This ensures Storage RLS policies (community/[userId]/ path scoping) are enforced.
+  // Do NOT use createAdminClient here — that would bypass RLS.
+  const supabase = createClient<Database>(supabaseUrl, supabaseAnon, {
     global: { headers: { Authorization: `Bearer ${token}` } },
   });
 

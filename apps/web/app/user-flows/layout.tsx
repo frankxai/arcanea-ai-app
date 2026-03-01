@@ -1,11 +1,12 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'User Flows | Arcanea',
-  description: 'Explore interactive journey maps for the Arcanea platform — from creator onboarding to vault management.',
+  title: 'User Flows — Journey Through the Arcanea Experience',
+  description: 'Explore interactive journey maps showing how creators navigate the Arcanea platform, from onboarding through the Ten Gates to mastery.',
   openGraph: {
-    title: 'User Flows | Arcanea — Journey Maps',
-    description: 'Interactive journey maps showing how creators experience the Arcanea platform.',
+    title: 'User Flows — Journey Through the Arcanea Experience',
+    description: 'Explore interactive journey maps showing how creators navigate the Arcanea platform, from onboarding through the Ten Gates to mastery.',
+    type: 'website',
   },
 };
 

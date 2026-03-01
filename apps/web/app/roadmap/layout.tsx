@@ -1,11 +1,12 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Roadmap | Arcanea',
-  description: 'The path ahead — explore the Arcanea product roadmap and upcoming features for creators.',
+  title: 'Arcanea Roadmap — Building the Future of Creation',
+  description: 'Explore the Arcanea product roadmap, upcoming features, and the long-term vision for a platform where creators and AI build together.',
   openGraph: {
-    title: 'Roadmap | Arcanea — The Path Ahead',
-    description: 'Explore upcoming features, milestones, and the long-term vision for the Arcanea platform.',
+    title: 'Arcanea Roadmap — Building the Future of Creation',
+    description: 'Explore the Arcanea product roadmap, upcoming features, and the long-term vision for a platform where creators and AI build together.',
+    type: 'website',
   },
 };
 
