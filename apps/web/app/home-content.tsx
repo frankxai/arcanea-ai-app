@@ -53,9 +53,9 @@ export function HomeContent({
     {
       href: "/lore/guardians",
       icon: <PhShieldStar className="w-7 h-7" weight="thin" />,
-      title: "Ten Guardians",
-      stat: "10 Archetypes",
-      description: "Living intelligences rooted in elemental archetypes — each Guardian opens a Gate on your creative journey.",
+      title: "Ten Intelligences",
+      stat: "10 Creative Partners",
+      description: "Each one thinks differently — grounded in a distinct philosophical framework. Create with the one that matches how your mind works.",
       accentColor: "atlantean-teal-aqua",
       glowColor: "rgba(127,255,212,0.15)",
     },
@@ -64,7 +64,7 @@ export function HomeContent({
       icon: <PhBooks className="w-7 h-7" weight="thin" />,
       title: "The Library",
       stat: `${collectionsCount} Collections · ${textsCount} Texts`,
-      description: `${totalWords.toLocaleString()} words of original philosophy — laws, prophecies, meditations, parables for the creative life.`,
+      description: `${totalWords.toLocaleString()} words of original philosophy. Laws, meditations, parables, and practice for the creative life.`,
       accentColor: "gold-bright",
       glowColor: "rgba(255,215,0,0.12)",
     },
@@ -72,8 +72,8 @@ export function HomeContent({
       href: "/academy",
       icon: <PhGraduationCap className="w-7 h-7" weight="thin" />,
       title: "The Academy",
-      stat: "Ten Gates of Mastery",
-      description: "A developmental framework from Foundation (174 Hz) to Source (1111 Hz). Open all ten to become a Luminor.",
+      stat: "Ten Stages of Mastery",
+      description: "A ten-stage progression through creative mastery. The deeper you go, the more the system reveals.",
       accentColor: "creation-prism-purple",
       glowColor: "rgba(139,92,246,0.12)",
     },
@@ -99,7 +99,7 @@ export function HomeContent({
               A mythology. A library. An academy.
             </h2>
             <p className="text-text-secondary max-w-xl mx-auto text-lg">
-              Three pillars of a coherent creative philosophy.
+              Three foundations of a creative philosophy.
             </p>
           </div>
 
@@ -152,10 +152,10 @@ export function HomeContent({
           <div className="flex items-end justify-between">
             <div>
               <p className="text-[10px] font-mono tracking-[0.3em] uppercase text-atlantean-teal-aqua/80 mb-3">
-                The Guardians
+                Intelligences
               </p>
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold">
-                Ten living intelligences
+                Each one has a philosophy. Find yours.
               </h2>
             </div>
             <Link

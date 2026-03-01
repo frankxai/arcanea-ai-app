@@ -6,10 +6,10 @@ import Link from "next/link";
 import { PhArrowRight, PhCheck } from '@/lib/phosphor-icons';
 
 const BENEFITS = [
-  "Free to start — your universe begins now",
-  "Ten Guardian Intelligences guiding your path",
-  "A Library of 34+ original texts of wisdom",
-  "From Foundation to Source — your journey awaits",
+  "Ten creative intelligences, each with a distinct philosophy",
+  "A library of 34 original texts — philosophy for makers",
+  "A progression system that deepens the more you create",
+  "No limits on what you build",
 ];
 
 export function CTASection() {
@@ -53,16 +53,15 @@ export function CTASection() {
                     transition={{ delay: 0.15 }}
                   >
                     <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold leading-tight mb-6">
-                      Ready to create something{" "}
+                      Imagine a good future.{" "}
                       <span className="bg-gradient-to-r from-atlantean-teal-aqua via-creation-prism-purple to-gold-bright bg-clip-text text-transparent">
-                        extraordinary
+                        Build it here.
                       </span>
-                      ?
                     </h2>
 
                     <p className="text-lg text-text-secondary mb-8 leading-relaxed">
-                      Imagine a good future. Build it here. Your journey
-                      through the Ten Gates begins with a single step.
+                      Arcanea is free. Start with any intelligence, explore
+                      the Library, create whatever you want.
                     </p>
 
                     <ul className="space-y-3 mb-10">

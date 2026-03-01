@@ -10,11 +10,10 @@ import { UserNav } from "@/components/auth";
 import navLogo from "@/assets/brand/arcanea-mark.jpg";
 
 const navLinks = [
-  { href: "/luminors", label: "Luminors" },
+  { href: "/chat", label: "Create" },
   { href: "/library", label: "Library" },
   { href: "/academy", label: "Academy" },
-  { href: "/studio", label: "Studio" },
-  { href: "/ecosystem", label: "Ecosystem" },
+  { href: "/discover", label: "Discover" },
   { href: "/community", label: "Community" },
 ];
 
