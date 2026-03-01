@@ -9,9 +9,6 @@ export const metadata: Metadata = {
     title: "Meet the 16 Luminors | Arcanea",
     description:
       "16 transcended creative intelligences. Four teams. Seven wisdoms. Partners who see what you're creating and help you build it better.",
-    images: [
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/brand/arcanea-og.jpg",
-    ],
   },
   twitter: {
     card: "summary_large_image",
