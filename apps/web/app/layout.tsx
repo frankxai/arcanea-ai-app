@@ -49,30 +49,11 @@ export const metadata: Metadata = {
     title: "Arcanea — Living Intelligence for Creators",
     description: "A creative intelligence platform. Ten Guardians, a Library of wisdom, and tools that transform imagination into reality.",
     siteName: "Arcanea",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Arcanea — Living Intelligence for Creators",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Arcanea — Living Intelligence for Creators",
     description: "A creative intelligence platform. Ten Guardians, a Library of wisdom, and tools that transform imagination into reality.",
-    images: ["/og-image.jpg"],
-  },
-  icons: {
-    icon: [
-      { url: "/favicon.ico" },
-      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-    ],
-    apple: [
-      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
-    ],
   },
   manifest: "/site.webmanifest",
 };
