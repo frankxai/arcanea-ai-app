@@ -247,8 +247,26 @@ export default async function GateDetailPage({
   const gate = resolveGate(id);
   if (!gate) notFound();
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: `${gate.name} — Gate ${gate.number}`,
+    description: gate.description,
+    url: `https://arcanea.ai/academy/gates/${id}`,
+    provider: { '@type': 'Organization', name: 'Arcanean Academy', url: 'https://arcanea.ai/academy' },
+    breadcrumb: {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Academy', item: 'https://arcanea.ai/academy' },
+        { '@type': 'ListItem', position: 2, name: 'Gates', item: 'https://arcanea.ai/academy/gates' },
+        { '@type': 'ListItem', position: 3, name: gate.name, item: `https://arcanea.ai/academy/gates/${id}` },
+      ],
+    },
+  };
+
   return (
     <div className="relative min-h-screen">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <main className="mx-auto max-w-5xl px-6 pb-24 pt-8">
 
         {/* Breadcrumb */}

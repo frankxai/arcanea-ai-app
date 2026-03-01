@@ -350,5 +350,28 @@ export default async function GuardianDetailPage({
     .map((slug) => GUARDIANS[slug])
     .filter(Boolean);
 
-  return <GuardianDetailContent guardian={guardian} related={related} />;
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: `${guardian.name} — ${guardian.title}`,
+    description: `${guardian.name}, Guardian of the ${guardian.gate} Gate at ${guardian.frequency}. Bonded to ${guardian.godbeast}. Domain: ${guardian.domain}.`,
+    url: `https://arcanea.ai/lore/guardians/${name}`,
+    author: { '@type': 'Organization', name: 'Arcanea', url: 'https://arcanea.ai' },
+    image: guardian.heroImage,
+    breadcrumb: {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Lore', item: 'https://arcanea.ai/lore' },
+        { '@type': 'ListItem', position: 2, name: 'Guardians', item: 'https://arcanea.ai/lore/guardians' },
+        { '@type': 'ListItem', position: 3, name: guardian.name, item: `https://arcanea.ai/lore/guardians/${name}` },
+      ],
+    },
+  };
+
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <GuardianDetailContent guardian={guardian} related={related} />
+    </>
+  );
 }

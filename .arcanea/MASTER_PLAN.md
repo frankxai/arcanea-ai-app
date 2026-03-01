@@ -18,7 +18,7 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
 | Pages with loading.tsx | ~81 (+32) | 100% of dynamic pages |
 | Milestones Active | 9 (M001-M009) | Complete M001 → M008 → M005 |
 | Vercel Build | PASSING | Maintain green |
-| Last Deploy | 2026-03-01 | c4d09708 |
+| Last Deploy | 2026-03-01 | 3e0ee035 |
 | Live URL | arcanea.ai | arcanea.ai |
 
 ---
@@ -103,7 +103,7 @@ Source: `.arcanea/projects/milestones/`
 - **Depends on**: M005
 - **Files**: `m008-onboarding-conversion.arc`
 
-### M009: Performance & Production Polish (0%) — P1
+### M009: Performance & Production Polish (30%) — P1
 - **Guardian**: Elara (Shift Gate)
 - **Target**: 2026-03-22
 - **Scope**: Core Web Vitals, SEO, accessibility, error handling, production hardening, cleanup
@@ -398,10 +398,10 @@ packages/              → 37 workspace packages
 | `/blog` | LIVE | JSON-LD, aria-labels, shared data module |
 | `/blog/[slug]` | LIVE | Article JSON-LD, safe rendering, shared data |
 | `/hub` | LIVE | None |
-| `/contact` | PARTIAL | metadata |
-| `/platform` | PARTIAL | metadata, loading.tsx |
-| `/roadmap` | PARTIAL | metadata |
-| `/install` | PARTIAL | metadata |
+| `/contact` | LIVE | None |
+| `/platform` | LIVE | None |
+| `/roadmap` | LIVE | None |
+| `/install` | LIVE | None |
 | `/privacy` | LIVE | loading.tsx (low priority) |
 | `/terms` | LIVE | loading.tsx (low priority) |
 | `/status` | LIVE | None |
@@ -413,12 +413,12 @@ packages/              → 37 workspace packages
 | Route | Status | Needs |
 |-------|--------|-------|
 | `/acos` | LIVE | None |
-| `/arcanea-os` | PARTIAL | loading.tsx |
-| `/arcanea-vault` | PARTIAL | loading.tsx |
-| `/arcanea-code` | PARTIAL | metadata, loading.tsx |
+| `/arcanea-os` | LIVE | None |
+| `/arcanea-vault` | LIVE | None |
+| `/arcanea-code` | LIVE | None |
 | `/overlays` | LIVE | None |
-| `/workflows` | PARTIAL | metadata |
-| `/user-flows` | PARTIAL | metadata |
+| `/workflows` | LIVE | None |
+| `/user-flows` | LIVE | None |
 | `/records` | LIVE | None |
 | `/records/vibe-gods` | PARTIAL | loading.tsx |
 | `/companions` | LIVE | None |
@@ -496,22 +496,28 @@ packages/              → 37 workspace packages
 34. ~~JSON-LD structured data for 6 key page types~~ — DONE (2026-03-01, Academy/Library/Collections/Texts/Luminors/About)
 35. ~~Vercel Web Analytics~~ — DONE (2026-03-01, @vercel/analytics installed, Analytics component in root layout)
 36. ~~Discover page title SEO~~ — DONE (2026-03-01, improved from "Discover" to descriptive title)
+37. ~~Dynamic blog sitemap~~ — DONE (2026-03-01, 6 blog posts from shared data module)
+38. ~~JSON-LD for FAQ/Lore/Guardians/Pricing/Ecosystem~~ — DONE (2026-03-01, FAQPage + ItemList + Product schemas)
+39. ~~Lazy-load react-syntax-highlighter~~ — DONE (2026-03-01, CodeBlock component, ~150KB savings)
+40. ~~Lazy-load graph visualization~~ — DONE (2026-03-01, dynamic import with ssr:false, ~150KB savings)
+41. ~~Lazy-load onboarding steps~~ — DONE (2026-03-01, React.lazy for steps 2-5)
+42. ~~All PARTIAL pages verified~~ — DONE (2026-03-01, contact/platform/roadmap/install/workflows/user-flows/arcanea-code/arcanea-os/arcanea-vault all have metadata+loading)
 
 ### P2 — Feature Expansion
-37. Integrate v0 Onboarding wizard (M008-T1)
-38. Integrate v0 Settings page (M005-T2)
-39. Academy course system (M006-T5)
-40. World/Universe builder backends
-41. Community features — forums, groups (M007)
-42. Cloudflare Stream integration (M002)
+43. Integrate v0 Onboarding wizard (M008-T1)
+44. Integrate v0 Settings page (M005-T2)
+45. Academy course system (M006-T5)
+46. World/Universe builder backends
+47. Community features — forums, groups (M007)
+48. Cloudflare Stream integration (M002)
 
 ### P3 — Cleanup & Optimization
-43. ~~Prune 15+ redirect-only pages~~ — DONE (2026-03-01, 16 routes deleted)
-44. Core Web Vitals audit (M009-T1)
-45. WCAG 2.2 accessibility audit (M009-T3)
-46. Remove `/workspace` or build it out
-47. TypeScript strict mode cleanup
-48. Lazy-load framer-motion on heavy pages (28 pages import it)
+49. ~~Prune 15+ redirect-only pages~~ — DONE (2026-03-01, 16 routes deleted)
+50. Core Web Vitals audit (M009-T1)
+51. WCAG 2.2 accessibility audit (M009-T3)
+52. Remove `/workspace` or build it out
+53. TypeScript strict mode cleanup
+54. Lazy-load framer-motion on heavy pages (28 pages import it)
 
 ---
 
