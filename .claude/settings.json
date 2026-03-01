@@ -132,9 +132,7 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "node /mnt/c/Users/frank/Arcanea/.claude/statusline.mjs",
-    "refreshMs": 5000,
-    "enabled": true
+    "command": "node /mnt/c/Users/frank/Arcanea/.claude/statusline.mjs"
   },
   "permissions": {
     "allow": [
