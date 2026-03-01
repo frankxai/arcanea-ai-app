@@ -12,7 +12,6 @@ export const metadata: Metadata = {
     title: "Luminor Intelligence System | Arcanea",
     description:
       "16 domain-mastered AI specialists. Four teams. Seven Wisdoms. Intelligence that transcends the ordinary.",
-    images: ["/og-image.png"],
   },
   twitter: {
     card: "summary_large_image",

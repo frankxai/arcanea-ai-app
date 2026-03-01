@@ -9,29 +9,13 @@
   "orientation": "any",
   "icons": [
     {
-      "src": "/favicon-16x16.png",
-      "sizes": "16x16",
-      "type": "image/png"
-    },
-    {
-      "src": "/favicon-32x32.png",
+      "src": "/icon",
       "sizes": "32x32",
       "type": "image/png"
     },
     {
-      "src": "/apple-touch-icon.png",
+      "src": "/apple-icon",
       "sizes": "180x180",
-      "type": "image/png"
-    },
-    {
-      "src": "/android-chrome-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/android-chrome-512x512.png",
-      "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }
@@ -42,22 +26,19 @@
       "name": "Chat with Luminors",
       "short_name": "Chat",
       "description": "Start a conversation with AI Guardians",
-      "url": "/chat",
-      "icons": [{ "src": "/shortcuts/chat-icon.png", "sizes": "96x96" }]
+      "url": "/chat"
     },
     {
       "name": "Library",
       "short_name": "Library",
       "description": "Explore the Library of Arcanea",
-      "url": "/library",
-      "icons": [{ "src": "/shortcuts/library-icon.png", "sizes": "96x96" }]
+      "url": "/library"
     },
     {
       "name": "Academy",
       "short_name": "Academy",
       "description": "Learn at the Academy of Creation",
-      "url": "/academy",
-      "icons": [{ "src": "/shortcuts/academy-icon.png", "sizes": "96x96" }]
+      "url": "/academy"
     }
   ]
 }

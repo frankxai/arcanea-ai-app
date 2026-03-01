@@ -12,7 +12,6 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Lore of Arcanea | The Living Mythology',
     description: 'Explore the cosmic origins and sacred wisdom of Arcanea.',
-    images: ['/og-lore.png'],
   },
 };
 

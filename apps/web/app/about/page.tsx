@@ -9,7 +9,6 @@ export const metadata: Metadata = {
     title: "About Arcanea | A Living Mythology",
     description:
       "A fantasy universe, social platform, philosophy of creation, and library of wisdom — all woven into one living mythology.",
-    images: ["/og-about.png"],
   },
 };
 
