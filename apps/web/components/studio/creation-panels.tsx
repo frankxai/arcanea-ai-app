@@ -95,7 +95,7 @@ export function TextCreationPanel({
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder={
-            "Begin your creation here...\n\nWrite stories, poems, wisdom scrolls, or any text.\nUse Markdown for formatting. Ask Luminor for guidance."
+            "Start writing here...\n\nStories, essays, poems, scripts — anything.\nUse Markdown for formatting."
           }
           className="flex-1 w-full resize-none bg-transparent text-text-primary placeholder-text-muted/40 p-4 font-body text-sm leading-relaxed focus:outline-none min-h-[300px]"
           spellCheck
@@ -114,7 +114,7 @@ export function TextCreationPanel({
             <Brain size={14} className="text-cosmic-void" />
           </div>
           <span className="text-xs font-semibold text-text-primary">
-            Luminor Intelligence
+            AI Assistant
           </span>
           <span className="ml-auto text-[10px] text-crystal font-mono">ACTIVE</span>
         </div>

@@ -62,7 +62,7 @@ export function ImageTab({ generationState }: ImageTabProps) {
             onChange={(e) => setPrompt(e.target.value)}
             rows={4}
             className="w-full text-xs bg-[#16161f] border border-[rgba(139,92,246,0.15)] rounded-xl p-3 text-foreground placeholder:text-muted-foreground outline-none focus:border-[#8b5cf6] transition-colors resize-none leading-relaxed"
-            placeholder="Describe your mythological vision in vivid detail…"
+            placeholder="Describe what you want to create in detail…"
           />
           <div className="flex items-center justify-between mt-1.5">
             <span className="text-[10px] text-muted-foreground font-mono">{prompt.length}/1000</span>

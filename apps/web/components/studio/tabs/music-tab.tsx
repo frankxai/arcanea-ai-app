@@ -55,7 +55,7 @@ function WaveformBars({ isPlaying, color = "#8b5cf6" }: { isPlaying: boolean; co
 
 export function MusicTab({ generationState }: MusicTabProps) {
   const [prompt, setPrompt] = useState(
-    "Epic mythological battle hymn, divine choir ascending, thunderous war drums, triumphant brass fanfare as the gods descend"
+    "Cinematic orchestral track, rising choir, deep war drums, brass fanfare building to a triumphant crescendo"
   )
   const [bpm, setBpm] = useState(128)
   const [duration, setDuration] = useState(60)

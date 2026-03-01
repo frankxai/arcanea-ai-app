@@ -228,7 +228,7 @@ export function FeaturesV2() {
           className="text-center mt-16"
         >
           <a
-            href="/luminors"
+            href="/lore/guardians"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl liquid-glass border border-white/[0.06] font-semibold hover:bg-white/[0.08] hover:border-white/[0.12] transition-all duration-300"
           >
             <PhSparkle className="w-5 h-5 text-atlantean-teal-aqua" />

@@ -175,7 +175,7 @@ export function VideoTab({ generationState }: VideoTabProps) {
             </div>
             <div className="text-center">
               <p className="font-serif text-xl text-foreground mb-2">Animating the Epic…</p>
-              <p className="text-sm text-muted-foreground">Rendering {duration} seconds of mythological cinema</p>
+              <p className="text-sm text-muted-foreground">Rendering {duration} seconds of video</p>
             </div>
             <div className="w-full max-w-md">
               <div className="flex justify-between text-[10px] text-muted-foreground font-mono mb-1.5">

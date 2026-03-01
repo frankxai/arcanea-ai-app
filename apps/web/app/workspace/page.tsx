@@ -97,13 +97,13 @@ export default function WorkspacePage() {
           <Card
             href="/chat"
             title="Open Chat Surface"
-            description="Start with a Luminor and continue persistent sessions."
+            description="Start with an intelligence and continue persistent sessions."
             icon={<PhChatCircleText className="h-5 w-5" />}
           />
           <Card
-            href="/luminors"
+            href="/chat"
             title="Choose Specialist"
-            description="Select from the 16 Luminors by team and specialty."
+            description="Select from 16 creative intelligences by team and specialty."
             icon={<PhBrain className="h-5 w-5" />}
           />
         </div>

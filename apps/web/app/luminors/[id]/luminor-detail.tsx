@@ -147,11 +147,11 @@ export function LuminorDetailContent({
       {/* Navigation */}
       <nav className="relative z-20 flex items-center justify-between px-6 py-5 max-w-5xl mx-auto">
         <Link
-          href="/luminors"
+          href="/lore/guardians"
           className="inline-flex items-center gap-2 text-sm text-text-secondary hover:text-text-primary transition-colors font-sans"
         >
           <PhArrowLeft className="w-4 h-4" />
-          All Luminors
+          All Intelligences
         </Link>
 
         <div className="flex items-center gap-3">
@@ -532,11 +532,11 @@ export function LuminorDetailContent({
                 </Link>
 
                 <Link
-                  href="/luminors"
+                  href="/lore/guardians"
                   className="inline-flex items-center gap-2 px-6 py-4 rounded-2xl font-sans font-medium text-sm text-text-secondary border border-white/[0.06] hover:border-white/[0.12] hover:text-text-primary liquid-glass transition-all"
                 >
                   <PhArrowLeft className="w-4 h-4" />
-                  All Luminors
+                  All Intelligences
                 </Link>
               </div>
             </div>

@@ -461,7 +461,7 @@ export function HeroPremium({ stats }: HeroPremiumProps) {
           {/* Secondary CTA */}
           <MagneticButton>
             <Link
-              href="/luminors"
+              href="/lore/guardians"
               className="group inline-flex items-center gap-3 px-8 py-4 rounded-2xl liquid-glass border border-white/[0.06] hover:border-crystal/30 text-text-primary font-display font-semibold text-lg transition-all"
             >
               <PhCompass className="w-5 h-5" />

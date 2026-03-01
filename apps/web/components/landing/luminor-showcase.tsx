@@ -490,10 +490,10 @@ export function LuminorShowcase() {
         >
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
-              href="/luminors"
+              href="/lore/guardians"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-atlantean-teal-aqua/50 text-atlantean-teal-aqua hover:bg-atlantean-teal-aqua/10 transition-all duration-300"
             >
-              <span>Explore all 16 Luminors in detail</span>
+              <span>Explore all intelligences</span>
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>

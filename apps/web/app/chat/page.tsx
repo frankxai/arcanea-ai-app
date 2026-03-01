@@ -237,11 +237,11 @@ export default function ChatLandingPage() {
         >
           <div className="flex flex-wrap justify-center gap-4">
             <Link
-              href="/luminors"
+              href="/lore/guardians"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl liquid-glass border border-crystal/20 text-crystal text-sm font-semibold hover:bg-crystal/5 hover:border-crystal/40 transition-all btn-glow"
             >
               <PhSparkle className="w-4 h-4" />
-              View Luminor profiles
+              View all intelligences
             </Link>
             <Link
               href="/chat/chronica"

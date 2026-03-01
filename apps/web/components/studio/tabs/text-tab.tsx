@@ -82,7 +82,7 @@ export function TextTab({ generationState }: TextTabProps) {
             </div>
             <div className="text-center">
               <p className="font-serif text-lg text-foreground mb-1">Weaving narrative threads…</p>
-              <p className="text-sm text-muted-foreground">The Arcana AI is crafting your mythological text</p>
+              <p className="text-sm text-muted-foreground">Generating your text</p>
             </div>
             <div className="w-full max-w-md space-y-2">
               {[100, 85, 70, 55].map((w, i) => (

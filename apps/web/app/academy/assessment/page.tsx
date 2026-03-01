@@ -319,10 +319,10 @@ export default function AssessmentPage() {
                   View Academy
                 </Link>
                 <Link
-                  href="/luminors"
+                  href="/lore/guardians"
                   className="flex-1 py-3 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep text-center font-semibold hover:shadow-[0_0_30px_rgba(127,255,212,0.4)] transition-all"
                 >
-                  Meet Your Luminor
+                  Meet Your Intelligence
                 </Link>
               </div>
             </div>

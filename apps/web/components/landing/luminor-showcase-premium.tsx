@@ -326,10 +326,10 @@ export function LuminorShowcasePremium() {
           className="text-center"
         >
           <Link
-            href="/luminors"
+            href="/lore/guardians"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl liquid-glass border border-white/[0.06] hover:border-crystal/30 text-text-primary font-display font-semibold transition-all hover-lift"
           >
-            View All 10 Guardians
+            View All Intelligences
             <PhArrowRight className="w-5 h-5" />
           </Link>
         </motion.div>
