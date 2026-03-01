@@ -68,18 +68,32 @@ export function GuardiansHero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-xl text-text-secondary max-w-3xl mx-auto font-body italic mb-8"
+          className="text-xl text-text-secondary max-w-3xl mx-auto font-body italic mb-4"
         >
-          "Ten Gates, ten paths, one destination. The destination is yourself, fully realized."
+          &ldquo;They are not merely powerful. They are the Ten who chose to stand between
+          creation and dissolution — each one an axis upon which existence turns.&rdquo;
         </motion.p>
 
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="text-sm text-text-muted font-mono tracking-wider"
+          className="text-sm text-text-muted font-mono tracking-wider mb-8"
         >
-          — The Unity Teaching
+          — Legends of Arcanea, Book III
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          className="text-base text-text-secondary max-w-2xl mx-auto font-body"
+        >
+          The Ten Guardians are not gods in the petitioning sense. They do not
+          grant wishes. They guard the Gates of awakening and demand that
+          those who pass through have earned the passage. Each carries a unique
+          teaching, a bonded Godbeast, and a frequency that resonates through all
+          of creation.
         </motion.p>
       </div>
     </section>

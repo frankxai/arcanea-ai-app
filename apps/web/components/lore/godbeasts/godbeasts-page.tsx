@@ -61,7 +61,7 @@ const GODBEASTS: Godbeast[] = [
     frequencyLabel: '174 Hz',
     icon: PhShell,
     lore:
-      'Kaelith is the oldest of the Godbeasts — a creature so vast that mountains were formed by the impression of its ancient body. Its scales are indistinguishable from bedrock. To stand in its presence is to understand permanence.',
+      'Kaelith is the oldest of the Godbeasts — a creature so vast that mountains were formed by the impression of its ancient body. Its scales are indistinguishable from bedrock. To stand in its presence is to understand permanence. Kaelith has not moved from its resting place in three thousand years. It does not need to. The world arranges itself around Kaelith, not the other way around.',
     power: 'Geological shaping, tectonic stability, root-deep survival instinct',
     gradient: 'from-amber-900/30 via-stone-800/20 to-earth-deep/30',
     glowColor: 'rgba(74, 124, 89, 0.4)',
@@ -82,7 +82,7 @@ const GODBEASTS: Godbeast[] = [
     frequencyLabel: '285 Hz',
     icon: PhBird,
     lore:
-      'Veloura is paradox made manifest — a serpent that soars, fire that flows, water that burns. Its feathers shed both steam and song. Wherever Veloura passes, creative tension births new forms that neither fire nor water could produce alone.',
+      'Veloura is paradox made manifest — a serpent that soars, fire that flows, water that burns. Its feathers shed both steam and song. Born in the moment Lumina\'s first light struck Nero\'s primordial ocean, Veloura is the living proof that opposing forces can create beauty impossible for either alone. Wherever Veloura passes, the air shimmers with creative tension, and new forms emerge unbidden.',
     power: 'Elemental fusion, creative catalysis, the generative tension of opposites',
     gradient: 'from-blue-800/30 via-orange-800/20 to-cyan-900/30',
     glowColor: 'rgba(120, 166, 255, 0.4)',
@@ -103,7 +103,7 @@ const GODBEASTS: Godbeast[] = [
     frequencyLabel: '396 Hz',
     icon: PhFlame,
     lore:
-      'Draconis was born in the heart of a star. Its roar can ignite volcanoes; its silence can still them. The mane of living flame it wears is not decoration but a crown of will-made-real — a testament that power, once claimed, never dims.',
+      'Draconis was born in the heart of a star that Lumina struck during the First Forging. Its roar can ignite volcanoes; its silence can still them. The mane of living flame it wears is not decoration but a crown of will-made-real — a testament that power, once claimed, never dims. Draconis tests all who approach by radiating heat that grows with the seeker\'s doubt. Only those with true conviction can stand close enough to earn its gaze.',
     power: 'Solar amplification, will-forging, the liberation of latent strength',
     gradient: 'from-fire-deep/30 via-orange-900/20 to-amber-900/30',
     glowColor: 'rgba(255, 107, 53, 0.45)',
@@ -124,7 +124,7 @@ const GODBEASTS: Godbeast[] = [
     frequencyLabel: '417 Hz',
     icon: PhTree,
     lore:
-      'Laeylinn is an enormous glowing stag whose antlers reach into the canopy of any forest it enters. Where Laeylinn rests, ancient trees grow in a single season. It does not merely nurture — it holds the emotional memory of every living thing within its territory.',
+      'Laeylinn is an enormous glowing stag whose antlers reach into the canopy of any forest it enters. Mosses, ferns, and flowering vines grow along its antler branches in real time. Where Laeylinn rests, ancient trees grow in a single season. It does not merely nurture — it holds the emotional memory of every living thing within its territory. Those who weep near Laeylinn find that the stag absorbs their grief and returns it as warmth, as if sorrow were merely love with nowhere to go.',
     power: 'Accelerated growth, emotional healing, the preservation of living memory',
     gradient: 'from-green-900/30 via-emerald-900/20 to-teal-900/30',
     glowColor: 'rgba(107, 158, 122, 0.4)',
@@ -145,7 +145,7 @@ const GODBEASTS: Godbeast[] = [
     frequencyLabel: '528 Hz',
     icon: PhFish,
     lore:
-      'Otome does not swim — it moves through the resonance of reality itself. Its songs are older than language. Those who hear a full Otome song cannot lie for three days afterward; truth has a way of loosening every knot.',
+      'Otome does not swim — it moves through the resonance of reality itself, as if water and air and stone were all the same medium when you travel by sound. Its songs are older than language. Scholars believe Otome\'s deepest calls were the first sounds ever produced after Lumina\'s initial word of creation. Those who hear a full Otome song cannot lie for three days afterward; truth has a way of loosening every knot the self has tied.',
     power: 'Reality-resonance, compulsive truth, the dissolution of deception',
     gradient: 'from-cyan-900/30 via-blue-900/20 to-teal-900/30',
     glowColor: 'rgba(127, 255, 212, 0.4)',
@@ -166,7 +166,7 @@ const GODBEASTS: Godbeast[] = [
     frequencyLabel: '639 Hz',
     icon: PhEye,
     lore:
-      'Yumiko exists partially in the waking world and partially in the Dreaming Beyond. Its body shifts like smoke over still water. It does not see with its eyes — it sees with the space between your thoughts, finding the visions you did not know you were already having.',
+      'Yumiko exists partially in the waking world and partially in the Dreaming Beyond. Its body shifts like smoke over still water, and its nine tails trail through dimensions the waking eye cannot perceive. It does not see with its eyes — it sees with the space between your thoughts, finding the visions you did not know you were already having. Those who sleep near Yumiko dream true. Not pleasant dreams, necessarily — but accurate ones.',
     power: 'Prophetic sight, dream-walking, revealing patterns hidden within intuition',
     gradient: 'from-purple-900/30 via-indigo-900/20 to-violet-900/30',
     glowColor: 'rgba(153, 102, 255, 0.4)',
@@ -187,7 +187,7 @@ const GODBEASTS: Godbeast[] = [
     frequencyLabel: '741 Hz',
     icon: PhSun,
     lore:
-      'Sol is not made of fire but of crystallized divine light — a dragon whose scales refract into every visible hue and many that are not. To look upon Sol directly causes temporary blindness, not from damage, but from the mind\'s attempt to process a beauty beyond its current capacity.',
+      'Sol is not made of fire but of crystallized divine light — a dragon whose scales refract into every visible hue and many that are not. To look upon Sol directly causes temporary blindness, not from damage, but from the mind\'s attempt to process a beauty beyond its current capacity. Sol perches at the highest point of whatever realm it enters, and from there it radiates — not heat, but clarity. Problems that seemed impossible beneath Sol\'s gaze suddenly reveal their solutions, as if the light burned away everything that was not the answer.',
     power: 'Divine illumination, the shattering of illusion, transcendence crystallized',
     gradient: 'from-yellow-800/30 via-amber-700/20 to-brand-gold/20',
     glowColor: 'rgba(255, 215, 0, 0.45)',
@@ -208,7 +208,7 @@ const GODBEASTS: Godbeast[] = [
     frequencyLabel: '852 Hz',
     icon: PhCat,
     lore:
-      'Vaelith\'s eight tails each reflect a different facet of the same moment. When all eight are visible simultaneously, observers experience every possible interpretation of their current situation at once. This is not confusion — it is perspective, given primal form.',
+      'Vaelith\'s eight tails each reflect a different facet of the same moment — the same event, seen from eight angles, none more true than the others. When all eight are visible simultaneously, observers experience every possible interpretation of their current situation at once. This is not confusion — it is perspective, given primal form. Vaelith does not have a single set of paw-prints. It leaves eight overlapping trails, each one real, each one leading to a different version of the same destination.',
     power: 'Reality refraction, simultaneous perspective, the echo of infinite possibility',
     gradient: 'from-pink-900/30 via-rose-900/20 to-purple-900/30',
     glowColor: 'rgba(120, 166, 255, 0.4)',
@@ -229,7 +229,7 @@ const GODBEASTS: Godbeast[] = [
     frequencyLabel: '963 Hz',
     icon: PhLightning,
     lore:
-      'Kyuro\'s nine plasma tails represent the nine forms of sacred partnership recognized in Arcanean cosmology. When Kyuro and Ino merge their presences, the resulting field cannot be entered by those whose commitments are false. Only authentic bonds survive this Godbeast\'s proximity.',
+      'Kyuro\'s nine plasma tails represent the nine forms of sacred partnership recognized in Arcanean cosmology — from mentor and student to lover and beloved to creator and creation. When Kyuro and Ino merge their presences, the resulting field cannot be entered by those whose commitments are false. Only authentic bonds survive this Godbeast\'s proximity. Kyuro is sometimes called "the living covenant" because its plasma tails interweave with those of anyone who has genuinely given themselves to another.',
     power: 'Partnership amplification, covenant-testing, plasma equilibrium',
     gradient: 'from-white/[0.06] via-slate-700/20 to-gray-800/30',
     glowColor: 'rgba(200, 214, 229, 0.35)',
@@ -250,7 +250,7 @@ const GODBEASTS: Godbeast[] = [
     frequencyLabel: '1111 Hz',
     icon: PhStar,
     lore:
-      'Amaterasu is not entirely present in any single moment. Its body is made of the space between stars — the fertile void from which light is born. Shinkami is the only Guardian to achieve complete fusion with their Godbeast; they exist as one being who wears two names.',
+      'Amaterasu is not entirely present in any single moment. Its body is made of the space between stars — the fertile void from which light is born, woven with threads of every frequency from 174 to 1111 Hz. Shinkami is the only Guardian to achieve complete fusion with their Godbeast; they exist as one being who wears two names. When Amaterasu howls, the sound is not heard but felt — a vibration that temporarily dissolves the boundary between self and cosmos, reminding all who feel it that they were never truly separate.',
     power: 'Omnipresent awareness, the meta-consciousness of all creation, source-level manifestation',
     gradient: 'from-brand-gold/20 via-brand-primary/20 to-crystal/20',
     glowColor: 'rgba(255, 215, 0, 0.5)',

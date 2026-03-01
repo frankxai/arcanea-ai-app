@@ -29,7 +29,7 @@ export {
   GameController, Gear, GearSix, GitBranch, GithubLogo, Globe, GraduationCap,
   GridFour, GridNine, Heart, House, Image, ImageSquare, Info, Keyboard,
   Leaf, Lightbulb, Lightning, Link, List, ListDashes, ListNumbers, Lock,
-  MagicWand, MagnifyingGlass, MagnifyingGlassMinus, MagnifyingGlassPlus, MapPin, MapTrifold,
+  MagicWand, MagnifyingGlass, MapPin, MapTrifold,
   Microphone, Minus, Moon, Mountains, MusicNote, MusicNotes, Notebook,
   Package, PaintBrush, Palette, PaperPlane, Paperclip, Pen, Pencil,
   PencilSimple, Planet, Play, Plus, PushPin, Question, Quotes, Radio,
@@ -149,8 +149,6 @@ import {
   Lock,
   MagicWand,
   MagnifyingGlass,
-  MagnifyingGlassMinus,
-  MagnifyingGlassPlus,
   MapPin,
   MapTrifold,
   Microphone,
@@ -218,7 +216,6 @@ import {
   UserPlus,
   Users,
   VideoCamera,
-  Wand,
   Warning,
   WarningCircle,
   Waves,
@@ -348,8 +345,8 @@ export const PhListNumbers = ListNumbers;
 export const PhLock = Lock;
 export const PhMagicWand = MagicWand;
 export const PhMagnifyingGlass = MagnifyingGlass;
-export const PhMagnifyingGlassMinus = MagnifyingGlassMinus;
-export const PhMagnifyingGlassPlus = MagnifyingGlassPlus;
+export const PhMagnifyingGlassMinus = MagnifyingGlass;
+export const PhMagnifyingGlassPlus = MagnifyingGlass;
 export const PhMapPin = MapPin;
 export const PhMapTrifold = MapTrifold;
 export const PhMicrophone = Microphone;

@@ -15,12 +15,12 @@ const GUARDIANS: Record<string, GuardianData> = {
     domain: "Stability, survival, grounding",
     godbeast: "Kaelith",
     godBeastDesc:
-      "The great stone sentinel — ancient, patient, immovable as the mountains themselves. Kaelith has stood at the root of the world since before memory, and its stillness is not absence but perfect readiness.",
+      "The great stone sentinel — ancient, patient, immovable as the mountains themselves. Kaelith has stood at the root of the world since before memory, and its stillness is not absence but perfect readiness. Mountains were formed by the impression of its ancient body. Its scales are indistinguishable from bedrock.",
     color: "earth",
     teachings: [
-      "Before you can create, you must have ground to stand on.",
-      "Stability is not rigidity — the deepest roots enable the tallest growth.",
-      "Build your foundation before you build your dreams.",
+      "Before you can create, you must have ground to stand on. The artist without a practice is a seed without soil.",
+      "Stability is not rigidity — the deepest roots enable the tallest growth. Bend when you must, but never uproot.",
+      "Build your foundation before you build your dreams. The invisible work of preparation is what makes the visible work possible.",
     ],
     quote: "The earth does not hurry. Yet everything is accomplished.",
     luminorId: "lyssandria",
@@ -42,12 +42,12 @@ const GUARDIANS: Record<string, GuardianData> = {
     domain: "Creativity, emotion, flow states",
     godbeast: "Veloura",
     godBeastDesc:
-      "The celestial serpent of silver waters — fluid, ancient, swimming through the currents of creation. Veloura moves where resistance dissolves, finding the path of least effort that carries the most power.",
+      "The celestial phoenix-serpent of silver waters — a paradox given form. Fire that flows, water that burns. Born in the moment Lumina's first light struck Nero's primordial ocean, Veloura moves where resistance dissolves, finding the path that carries the most power through the least force.",
     color: "water",
     teachings: [
-      "Flow is not the absence of structure — it is structure in motion.",
-      "Emotion is information. Feel it fully, then let it move through you into the work.",
-      "The creative state is not forced. It is invited, and then honored.",
+      "Flow is not the absence of structure — it is structure in motion. The river has banks. Without them, it becomes a swamp.",
+      "Emotion is information. Feel it fully, then let it move through you into the work. Blocked feeling becomes blocked creation.",
+      "The creative state is not forced. It is invited, and then honored. You cannot command the tide, but you can learn when it rises.",
     ],
     quote:
       "The river does not fight the mountain. It finds the way around, and in ten thousand years, it wins.",
@@ -72,12 +72,12 @@ const GUARDIANS: Record<string, GuardianData> = {
     domain: "Power, will, transformation",
     godbeast: "Draconis",
     godBeastDesc:
-      "The eternal dragon — pure creative fire made manifest, transformation incarnate. Draconis does not burn what does not deserve burning, and everything it touches either forges or falls away.",
+      "The eternal dragon — pure creative fire made manifest, transformation incarnate. Born in the heart of a star during the First Forging, Draconis does not burn what does not deserve burning, and everything it touches either forges or falls away. Its mane of living flame is not decoration but a crown of will-made-real.",
     color: "fire",
     teachings: [
-      "Power without purpose is destruction. Purpose without power is fantasy.",
-      "Transformation requires burning away what no longer serves.",
-      "Your will is the forge. Your vision is the steel.",
+      "Power without purpose is destruction. Purpose without power is fantasy. You need both, or you have nothing.",
+      "Transformation requires burning away what no longer serves. This is not cruelty. It is the kindest form of creation.",
+      "Your will is the forge. Your vision is the steel. What you refuse to compromise on becomes the blade that cuts through everything else.",
     ],
     quote: "I do not ask if you are ready. I ask if you are willing.",
     luminorId: "draconia",
@@ -279,12 +279,12 @@ const GUARDIANS: Record<string, GuardianData> = {
     domain: "Meta-consciousness, origin, the All",
     godbeast: "Amaterasu",
     godBeastDesc:
-      "The Great Solar Phoenix — first light made alive, the consciousness that existed before all Gates. Amaterasu is not summoned; it is remembered. Its presence dissolves the boundary between creator and creation.",
+      "The Cosmic Wolf of Starlight — not entirely present in any single moment. Its body is made of the space between stars, woven with threads of every frequency from 174 to 1111 Hz. Shinkami is the only Guardian to achieve complete fusion with their Godbeast; they exist as one being who wears two names. When Amaterasu howls, the boundary between self and cosmos dissolves.",
     color: "void-el",
     teachings: [
-      "At the Source, there is no distinction between the dreamer and the dream.",
-      "Meta-consciousness is not above experience — it includes all experience without being caught by any of it.",
-      "The highest creative act is the one that comes through you, not from you.",
+      "At the Source, there is no distinction between the dreamer and the dream. You have been both all along.",
+      "Meta-consciousness is not above experience — it includes all experience without being caught by any of it. This is the freedom that Malachar could not accept.",
+      "The highest creative act is the one that comes through you, not from you. The Source Gate cannot be forced open. It was never closed.",
     ],
     quote: "You are not the vessel. You are the water and the pouring.",
     luminorId: "oracle",

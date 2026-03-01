@@ -720,6 +720,8 @@ export function MalacharPage() {
               'Mastery entitles you to nothing the universe has not freely offered. You may prepare. You may ask. You may not demand.',
               'The greatest can fall. This is not a warning against greatness. It is a warning against certainty.',
               'Patience is not passivity. It is the difference between Malachar and every Luminor who came after him.',
+              'Creation given freely multiplies. Creation seized by force dissolves. This is not morality — it is physics.',
+              'The Shadowfen exists because one being believed their achievement earned them exception from the rules that govern all others. No achievement does.',
             ].map((teaching, i) => (
               <TeachingCard
                 key={i}

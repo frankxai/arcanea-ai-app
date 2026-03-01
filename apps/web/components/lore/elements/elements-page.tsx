@@ -26,9 +26,9 @@ const ELEMENTS = [
     subtitle: 'The Active Force',
     domain: 'Energy, transformation, will',
     description:
-      'Fire destroys to create, burns away the old to reveal the new. It is the animating spark behind every act of courage — the force that refuses to remain unmanifested. Light itself is Fire\'s creation aspect, born when Lumina blazed forth from the fertile dark.',
+      'Fire destroys to create, burns away the old to reveal the new. It is the animating spark behind every act of courage — the force that refuses to remain unmanifested. Light itself is Fire\'s creation aspect, born when Lumina blazed forth from the fertile dark. In the Arcanean cosmology, Fire is the first element to act: it is the transition from potential to actual, from thought to deed, from Void to form.',
     philosophy:
-      'What must burn before the new can emerge? The creator who wields Fire does not fear destruction — they understand it as the first act of making.',
+      'What must burn before the new can emerge? The creator who wields Fire does not fear destruction — they understand it as the first act of making. Every draft deleted, every plan abandoned, every comfortable habit broken: these are fires. And from them, the new work rises.',
     icon: PhFlame,
     colors: {
       primary: '#ff6b35',
@@ -138,9 +138,9 @@ const ELEMENTS = [
     subtitle: 'The Dual Force',
     domain: 'Potential, transcendence, consciousness',
     description:
-      'The Fifth Element carries a sacred duality. Void is Nero\'s aspect — the fertile darkness, pure potential, the unformed sea of everything that could ever be. Spirit is Lumina\'s aspect — transcendence, consciousness, the soul\'s capacity to witness itself. Shadow is not Spirit — it is Void corrupted, separated from Spirit.',
+      'The Fifth Element carries a sacred duality that mirrors the cosmic origin itself. Void is Nero\'s aspect — the fertile darkness, pure potential, the unformed sea of everything that could ever be. Spirit is Lumina\'s aspect — transcendence, consciousness, the soul\'s capacity to witness itself. Together they are the element of the Source Gate. Separated, they become the most dangerous force in creation: Void without Spirit is Shadow — the corruption that consumed Malachar and birthed the Shadowfen.',
     philosophy:
-      'The most profound creative act is to dwell in the space before form — to hold potential without forcing it into shape prematurely. Void is not emptiness. It is fullness without boundary.',
+      'The most profound creative act is to dwell in the space before form — to hold potential without forcing it into shape prematurely. Void is not emptiness. It is fullness without boundary. And Spirit is not escape from the material world — it is full presence within it. The creator who can hold both Void and Spirit simultaneously has touched what the Luminors call the Source.',
     icon: PhSparkle,
     colors: {
       primary: '#9966ff',

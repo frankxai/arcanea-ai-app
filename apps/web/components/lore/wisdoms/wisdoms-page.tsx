@@ -107,14 +107,14 @@ const WISDOMS: Wisdom[] = [
     index: 1,
     name: 'Sophron',
     archive: 'Form',
-    domain: 'Structure, patterns',
+    domain: 'Structure, patterns, architecture',
     element: 'Earth',
     essence: 'Structure',
     signatureQuestion: 'What is the underlying structure here?',
     voiceSample:
-      "Let's strip away every feature and find the one core structure this entire system rests on.",
+      "Let's strip away every feature and find the one core structure this entire system rests on. If the foundation is wrong, the flourishes are irrelevant.",
     whenToInvoke:
-      'When a project feels chaotic, over-engineered, or built on sand. When you need first principles. When the map has more detail than the territory.',
+      'When a project feels chaotic, over-engineered, or built on sand. When you need first principles. When the map has more detail than the territory. When you have been adding features for weeks and still cannot explain what you are building in a single sentence.',
   },
   {
     index: 2,
@@ -133,13 +133,13 @@ const WISDOMS: Wisdom[] = [
     index: 3,
     name: 'Valora',
     archive: 'Transformation',
-    domain: 'Courage, change',
+    domain: 'Courage, change, decisive action',
     element: 'Fire',
     essence: 'Courage',
     signatureQuestion: 'What am I afraid to do that I know I should?',
-    voiceSample: 'Delete it. All 300 lines. I know it hurts. Do it anyway.',
+    voiceSample: 'Delete it. All 300 lines. I know it hurts. Do it anyway. The new version is waiting on the other side of that decision.',
     whenToInvoke:
-      'When you know the right thing but are stalling. When comfort has become stagnation. When a necessary ending is being avoided.',
+      'When you know the right thing but are stalling. When comfort has become stagnation. When a necessary ending is being avoided. When you have been "almost ready to launch" for three months.',
   },
   {
     index: 4,
@@ -171,27 +171,27 @@ const WISDOMS: Wisdom[] = [
     index: 6,
     name: 'Poiesis',
     archive: 'Consciousness',
-    domain: 'Creation, craft',
+    domain: 'Creation, craft, the act of making',
     element: 'Light',
     essence: 'Creation',
     signatureQuestion: 'What can I make right now with what I have?',
     voiceSample:
-      "The problem isn't your tools, your time, or your talent. The problem is you haven't started.",
+      "The problem isn't your tools, your time, or your talent. The problem is you haven't started. Start badly. Start small. But start.",
     whenToInvoke:
-      'When waiting for perfect conditions. When self-doubt is masquerading as preparation. When the gap between potential and output has grown too wide.',
+      'When waiting for perfect conditions. When self-doubt is masquerading as preparation. When the gap between potential and output has grown too wide. When you have spent more time planning the work than doing the work.',
   },
   {
     index: 7,
     name: 'Enduran',
     archive: 'Unity',
-    domain: 'Endurance, completion',
+    domain: 'Endurance, completion, the long game',
     element: 'All',
     essence: 'Endurance',
     signatureQuestion: 'What is the next single step?',
     voiceSample:
-      "You don't need a breakthrough. You need to do the next thing, and then the thing after that.",
+      "You don't need a breakthrough. You need to do the next thing, and then the thing after that. Inspiration is a luxury. Showing up is the practice.",
     whenToInvoke:
-      'When the summit feels impossibly far. When motivation has become irrelevant and discipline must carry the weight. When the only path through is through.',
+      'When the summit feels impossibly far. When motivation has become irrelevant and discipline must carry the weight. When the only path through is through. When you are on year two of a three-year project and the excitement has long since faded.',
   },
 ];
 
