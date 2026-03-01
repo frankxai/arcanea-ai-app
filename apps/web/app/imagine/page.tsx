@@ -79,7 +79,7 @@ export default function ImaginePage() {
     return null;
   }, []);
 
-  const handleGenerate = useCallback(async (prompt: string, count: number) => {
+  const handleGenerate = useCallback(async (prompt: string, count: number, quality: string = 'standard') => {
     setIsGenerating(true);
     setError(null);
 
@@ -87,7 +87,7 @@ export default function ImaginePage() {
       const res = await fetch('/api/imagine/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt, count }),
+        body: JSON.stringify({ prompt, count, quality }),
       });
 
       if (!res.ok) {
@@ -173,15 +173,40 @@ export default function ImaginePage() {
 
       const data = await res.json();
 
-      // Update the image with video URL
-      setGenerations((prev) =>
-        prev.map((gen) => ({
-          ...gen,
-          images: gen.images.map((img) =>
-            img.id === imageId ? { ...img, videoUrl: data.videoUrl } : img
-          ),
-        }))
-      );
+      if (data.videoUrl) {
+        // Real video from fal.ai
+        setGenerations((prev) =>
+          prev.map((gen) => ({
+            ...gen,
+            images: gen.images.map((img) =>
+              img.id === imageId ? { ...img, videoUrl: data.videoUrl } : img
+            ),
+          }))
+        );
+      } else if (data.reimaginedImage) {
+        // Gemini re-imagine fallback — add as a new image in the generation
+        const reimagineId = `${imageId}_reimagine`;
+        setGenerations((prev) =>
+          prev.map((gen) => {
+            if (gen.images.some((img) => img.id === imageId)) {
+              return {
+                ...gen,
+                images: [
+                  ...gen.images,
+                  {
+                    id: reimagineId,
+                    data: data.reimaginedImage.data,
+                    mimeType: data.reimaginedImage.mimeType,
+                    prompt: `Re-imagined: ${gen.prompt}`,
+                    createdAt: new Date().toISOString(),
+                  },
+                ],
+              };
+            }
+            return gen;
+          })
+        );
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Animation failed');
     } finally {

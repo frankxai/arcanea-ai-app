@@ -2,21 +2,24 @@
 
 import { useState, useRef, useCallback } from 'react';
 
+type Quality = 'standard' | 'premium';
+
 interface PromptInputProps {
-  onGenerate: (prompt: string, count: number) => void;
+  onGenerate: (prompt: string, count: number, quality: Quality) => void;
   isGenerating: boolean;
 }
 
 export function PromptInput({ onGenerate, isGenerating }: PromptInputProps) {
   const [prompt, setPrompt] = useState('');
   const [count, setCount] = useState(2);
+  const [quality, setQuality] = useState<Quality>('standard');
   const [isEnhancing, setIsEnhancing] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmit = useCallback(() => {
     if (!prompt.trim() || isGenerating) return;
-    onGenerate(prompt.trim(), count);
-  }, [prompt, count, isGenerating, onGenerate]);
+    onGenerate(prompt.trim(), count, quality);
+  }, [prompt, count, quality, isGenerating, onGenerate]);
 
   const handleEnhance = useCallback(async () => {
     if (!prompt.trim() || isEnhancing) return;
@@ -68,16 +71,16 @@ export function PromptInput({ onGenerate, isGenerating }: PromptInputProps) {
 
           <div className="flex items-center justify-between px-4 py-3 border-t border-[hsl(var(--cosmic-border))]/30">
             {/* Left controls */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               {/* Image count selector */}
               <div className="flex items-center gap-2">
-                <span className="text-xs text-[hsl(var(--text-muted))] uppercase tracking-wider">Images</span>
+                <span className="text-xs text-[hsl(var(--text-muted))] uppercase tracking-wider">Qty</span>
                 <div className="flex gap-1">
                   {[1, 2, 4].map((n) => (
                     <button
                       key={n}
                       onClick={() => setCount(n)}
-                      className={`w-8 h-8 rounded-lg text-sm font-medium transition-all ${
+                      className={`w-7 h-7 rounded-lg text-xs font-medium transition-all ${
                         count === n
                           ? 'bg-[hsl(var(--gold-bright))]/20 text-[hsl(var(--gold-bright))] border border-[hsl(var(--gold-bright))]/40'
                           : 'text-[hsl(var(--text-muted))] hover:text-[hsl(var(--text-secondary))] hover:bg-[hsl(var(--cosmic-raised))]/50'
@@ -89,25 +92,45 @@ export function PromptInput({ onGenerate, isGenerating }: PromptInputProps) {
                 </div>
               </div>
 
+              {/* Quality toggle */}
+              <div className="flex items-center gap-1 bg-[hsl(var(--cosmic-deep))]/60 rounded-lg p-0.5">
+                <button
+                  onClick={() => setQuality('standard')}
+                  className={`px-2.5 py-1 rounded-md text-xs font-medium transition-all ${
+                    quality === 'standard'
+                      ? 'bg-[hsl(var(--cosmic-raised))] text-[hsl(var(--text-primary))] shadow-sm'
+                      : 'text-[hsl(var(--text-muted))] hover:text-[hsl(var(--text-secondary))]'
+                  }`}
+                >
+                  Standard
+                </button>
+                <button
+                  onClick={() => setQuality('premium')}
+                  className={`px-2.5 py-1 rounded-md text-xs font-medium transition-all ${
+                    quality === 'premium'
+                      ? 'bg-gradient-to-r from-amber-600/80 to-yellow-500/80 text-white shadow-sm'
+                      : 'text-[hsl(var(--text-muted))] hover:text-amber-400'
+                  }`}
+                >
+                  Premium
+                </button>
+              </div>
+
               {/* Enhance with Grok button */}
               <button
                 onClick={handleEnhance}
                 disabled={!prompt.trim() || isEnhancing || isGenerating}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all disabled:opacity-30 disabled:cursor-not-allowed text-[hsl(var(--text-muted))] hover:text-purple-300 hover:bg-purple-500/10 border border-transparent hover:border-purple-500/20"
+                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all disabled:opacity-30 disabled:cursor-not-allowed text-[hsl(var(--text-muted))] hover:text-purple-300 hover:bg-purple-500/10 border border-transparent hover:border-purple-500/20"
                 title="Enhance prompt with Grok AI"
               >
                 {isEnhancing ? (
                   <span className="flex items-center gap-1.5">
                     <span className="w-3 h-3 border-2 border-purple-400/30 border-t-purple-400 rounded-full animate-spin" />
-                    Enhancing
                   </span>
                 ) : (
-                  <>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                    </svg>
-                    Enhance
-                  </>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                  </svg>
                 )}
               </button>
             </div>
@@ -124,7 +147,7 @@ export function PromptInput({ onGenerate, isGenerating }: PromptInputProps) {
                   Imagining...
                 </span>
               ) : (
-                'Imagine'
+                quality === 'premium' ? 'Imagine HD' : 'Imagine'
               )}
             </button>
           </div>
