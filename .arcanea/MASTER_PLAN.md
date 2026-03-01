@@ -18,7 +18,7 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
 | Pages with loading.tsx | ~81 (+32) | 100% of dynamic pages |
 | Milestones Active | 9 (M001-M009) | Complete M001 → M008 → M005 |
 | Vercel Build | PASSING | Maintain green |
-| Last Deploy | 2026-03-01 | 3d6e6bf9 |
+| Last Deploy | 2026-03-01 | d85977c7 |
 | Live URL | arcanea.ai | arcanea.ai |
 
 ---
@@ -474,21 +474,29 @@ packages/              → 37 workspace packages
 12. Integrate v0 Gallery UI into /gallery (M005-T4)
 13. Reading progress tracking in Library (M006-T4)
 14. Memory MCP package (M003)
+15. ~~Add missing API routes~~ — DONE (2026-03-01, /api/creations/upload, /api/profiles, /api/profiles/[username], /api/notifications/unread-count, /api/notifications/read-all)
+16. ~~Add JSON-LD structured data to homepage~~ — DONE (2026-03-01, Organization + WebSite schemas)
+17. ~~Fix broken OG image references~~ — DONE (2026-03-01, 6 refs to non-existent static images removed)
+18. ~~Fix site.webmanifest icons~~ — DONE (2026-03-01, point to dynamic /icon and /apple-icon routes)
+19. ~~Add production OG/Twitter/favicon~~ — DONE (2026-03-01, opengraph-image.tsx, twitter-image.tsx, icon.tsx, apple-icon.tsx)
+20. ~~Add global-error.tsx~~ — DONE (2026-03-01, root error boundary with branded UI)
+21. ~~Wire dashboard to Supabase~~ — DONE (2026-03-01, profile + stats + activity from live services)
+22. ~~Improve robots.txt~~ — DONE (2026-03-01, exclude auth/dashboard/settings/onboarding)
 
 ### P2 — Feature Expansion
-15. Integrate v0 Onboarding wizard (M008-T1)
-16. Integrate v0 Settings page (M005-T2)
-17. Academy course system (M006-T5)
-18. World/Universe builder backends
-19. Community features — forums, groups (M007)
-20. Cloudflare Stream integration (M002)
+23. Integrate v0 Onboarding wizard (M008-T1)
+24. Integrate v0 Settings page (M005-T2)
+25. Academy course system (M006-T5)
+26. World/Universe builder backends
+27. Community features — forums, groups (M007)
+28. Cloudflare Stream integration (M002)
 
 ### P3 — Cleanup & Optimization
-21. ~~Prune 15+ redirect-only pages~~ — DONE (2026-03-01, 16 routes deleted)
-22. Core Web Vitals audit (M009-T1)
-23. WCAG 2.2 accessibility audit (M009-T3)
-24. Remove `/workspace` or build it out
-25. TypeScript strict mode cleanup
+29. ~~Prune 15+ redirect-only pages~~ — DONE (2026-03-01, 16 routes deleted)
+30. Core Web Vitals audit (M009-T1)
+31. WCAG 2.2 accessibility audit (M009-T3)
+32. Remove `/workspace` or build it out
+33. TypeScript strict mode cleanup
 
 ---
 
