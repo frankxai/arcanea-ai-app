@@ -387,7 +387,7 @@ export default function ChessPage() {
 
               <div className="flex flex-wrap gap-4">
                 <Link
-                  href="/chess/play"
+                  href="/chess"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200"
                 >
                   <Icons.Play />
@@ -513,7 +513,7 @@ export default function ChessPage() {
 
                   {/* Play Button */}
                   <Link
-                    href={`/chess/play?opponent=${guardian.id}`}
+                    href="/chess"
                     className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border transition-all"
                     style={{
                       borderColor: `${guardian.accent}40`,
@@ -537,7 +537,7 @@ export default function ChessPage() {
               Leaderboard
             </h2>
             <Link
-              href="/chess/leaderboard"
+              href="/chess"
               className="text-sm text-brand-primary hover:text-crystal transition-colors"
             >
               View All
@@ -606,7 +606,7 @@ export default function ChessPage() {
                 </p>
               </div>
               <Link
-                href="/chess/play?mode=random"
+                href="/chess"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-primary text-white font-semibold hover:shadow-glow-brand transition-all"
               >
                 <Icons.Play />
@@ -631,7 +631,7 @@ export default function ChessPage() {
                 mistakes and improve your strategy.
               </p>
               <Link
-                href="/chess/analysis"
+                href="/chess"
                 className="text-sm text-brand-primary hover:text-crystal transition-colors inline-flex items-center gap-1"
               >
                 Analyze Games
@@ -651,7 +651,7 @@ export default function ChessPage() {
                 alongside fellow Arcanea chess enthusiasts.
               </p>
               <Link
-                href="/chess/community"
+                href="/chess"
                 className="text-sm text-brand-primary hover:text-crystal transition-colors inline-flex items-center gap-1"
               >
                 Join Community

@@ -210,7 +210,7 @@ export default function VisionBoardPage() {
                   Add Goal
                 </button>
                 <Link
-                  href="/vision-board/edit"
+                  href="/vision-board"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
                 >
                   <PhPalette className="w-4 h-4" />

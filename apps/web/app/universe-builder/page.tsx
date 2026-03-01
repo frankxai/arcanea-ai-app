@@ -161,14 +161,14 @@ export default function UniverseBuilderPage() {
 
               <div className="flex flex-wrap gap-4">
                 <Link
-                  href="/universe-builder/new"
+                  href="/universe-builder"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200"
                 >
                   <PhPlus className="w-4 h-4" />
                   New Universe
                 </Link>
                 <Link
-                  href="/universe-builder/templates"
+                  href="/universe-builder"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
                 >
                   <PhGraphNetwork className="w-4 h-4" />
@@ -318,7 +318,7 @@ export default function UniverseBuilderPage() {
 
             {/* New Universe Card */}
             <Link
-              href="/universe-builder/new"
+              href="/universe-builder"
               className="group card-3d liquid-glass rounded-2xl p-6 border-2 border-dashed border-white/[0.12] hover:border-brand-primary/40 hover:bg-brand-primary/5 transition-all flex flex-col items-center justify-center text-center min-h-[220px]"
             >
               <PhPlus className="w-8 h-8 text-text-muted group-hover:text-brand-primary transition-colors mb-3" />

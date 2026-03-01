@@ -366,7 +366,7 @@ export default function CharacterBookPage() {
                   Create Character
                 </button>
                 <Link
-                  href="/character-book/templates"
+                  href="/character-book"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all"
                 >
                   <Icons.Sparkles />

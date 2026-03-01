@@ -353,7 +353,7 @@ export default function AcosPage() {
                   <Icons.ArrowRight />
                 </Link>
                 <Link
-                  href="/docs/acos"
+                  href="/docs"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/[0.12] text-white font-semibold hover:border-crystal/30 hover:text-crystal transition-all"
                 >
                   <Icons.Terminal />
