@@ -119,54 +119,6 @@ export default function FAQPage() {
         <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_left,rgba(127,255,212,0.15),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(139,92,246,0.15),transparent_50%)]" />
       </div>
 
-      {/* Navigation */}
-      <nav className="sticky top-0 z-50 border-b border-white/[0.04] bg-cosmic-deep/80 backdrop-blur-xl">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-atlantean-teal to-creation-prism-purple flex items-center justify-center text-cosmic-deep font-bold text-lg font-display">
-                A
-              </div>
-              <span className="font-display text-xl font-semibold">
-                Arcanea
-              </span>
-            </Link>
-            <div className="hidden md:flex items-center gap-8">
-              <Link
-                href="/luminors"
-                className="text-sm text-text-secondary hover:text-atlantean-teal transition-colors"
-              >
-                Luminors
-              </Link>
-              <Link
-                href="/library"
-                className="text-sm text-text-secondary hover:text-atlantean-teal transition-colors"
-              >
-                Library
-              </Link>
-              <Link
-                href="/academy"
-                className="text-sm text-text-secondary hover:text-atlantean-teal transition-colors"
-              >
-                Academy
-              </Link>
-              <Link
-                href="/about"
-                className="text-sm text-text-secondary hover:text-atlantean-teal transition-colors"
-              >
-                About
-              </Link>
-              <Link
-                href="/chat"
-                className="px-4 py-2 rounded-lg bg-atlantean-teal text-cosmic-deep text-sm font-semibold hover:shadow-[0_0_20px_rgba(127,255,212,0.4)] transition-all"
-              >
-                Start Creating
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
-
       <main className="max-w-4xl mx-auto px-6">
         {/* Hero */}
         <section className="pt-20 pb-16 text-center">
