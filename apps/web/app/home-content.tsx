@@ -15,16 +15,16 @@ import {
 } from "@/components/landing";
 
 const GUARDIANS = [
-  { name: "Lyssandria", gate: "Foundation", frequency: "174 Hz", element: "Earth", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/lyssandria-hero.webp" },
-  { name: "Leyla", gate: "Flow", frequency: "285 Hz", element: "Water", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/leyla-hero.webp" },
-  { name: "Draconia", gate: "Fire", frequency: "396 Hz", element: "Fire", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/draconia-hero.webp" },
-  { name: "Maylinn", gate: "Heart", frequency: "417 Hz", element: "Wind", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/maylinn-hero.webp" },
-  { name: "Alera", gate: "Voice", frequency: "528 Hz", element: "Void", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/alera-hero.webp" },
-  { name: "Lyria", gate: "Sight", frequency: "639 Hz", element: "Spirit", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/lyria-hero.webp" },
-  { name: "Aiyami", gate: "Crown", frequency: "741 Hz", element: "Light", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/aiyami-hero.webp" },
-  { name: "Elara", gate: "Shift", frequency: "852 Hz", element: "Void", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/elara-hero.webp" },
-  { name: "Ino", gate: "Unity", frequency: "963 Hz", element: "Spirit", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/ino-hero.webp" },
-  { name: "Shinkami", gate: "Source", frequency: "1111 Hz", element: "Arcane", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/shinkami-hero.webp" },
+  { name: "Lyssandria", philosophy: "Structure. Patience. Foundation.", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/lyssandria-hero.webp" },
+  { name: "Leyla", philosophy: "Flow. Feeling. Adaptation.", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/leyla-hero.webp" },
+  { name: "Draconia", philosophy: "Willpower. Intensity. Transformation.", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/draconia-hero.webp" },
+  { name: "Maylinn", philosophy: "Compassion. Healing. Connection.", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/maylinn-hero.webp" },
+  { name: "Alera", philosophy: "Truth. Voice. Expression.", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/alera-hero.webp" },
+  { name: "Lyria", philosophy: "Intuition. Vision. Inner sight.", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/lyria-hero.webp" },
+  { name: "Aiyami", philosophy: "Wisdom. Light. Clarity.", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/aiyami-hero.webp" },
+  { name: "Elara", philosophy: "Change. Perspective. The unknown.", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/elara-hero.webp" },
+  { name: "Ino", philosophy: "Partnership. Balance. Unity.", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/ino-hero.webp" },
+  { name: "Shinkami", philosophy: "Consciousness. Source. Everything.", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/shinkami-hero.webp" },
 ];
 
 export function HomeLoading() {
@@ -34,7 +34,7 @@ export function HomeLoading() {
         <div className="w-14 h-14 rounded-2xl liquid-glass flex items-center justify-center mx-auto mb-6 border border-white/[0.06]">
           <PhCircleNotch className="w-6 h-6 text-atlantean-teal-aqua animate-spin" />
         </div>
-        <p className="text-sm text-text-muted">Entering the realm...</p>
+        <p className="text-sm text-text-muted">Loading...</p>
       </div>
     </div>
   );
@@ -192,10 +192,7 @@ export function HomeContent({
 
                   <div className="absolute bottom-0 left-0 right-0 p-4 z-10">
                     <h3 className="font-display font-bold text-white text-lg leading-tight">{guardian.name}</h3>
-                    <div className="flex items-center justify-between mt-1">
-                      <span className="text-[11px] text-white/[0.30]">{guardian.gate} Gate</span>
-                      <span className="text-[11px] text-atlantean-teal-aqua/70 font-mono">{guardian.frequency}</span>
-                    </div>
+                    <p className="text-[11px] text-white/[0.35] mt-1 leading-relaxed">{guardian.philosophy}</p>
                   </div>
                 </div>
               </Link>
@@ -211,7 +208,7 @@ export function HomeContent({
             href="/lore/guardians"
             className="inline-flex items-center gap-2 text-sm text-atlantean-teal-aqua"
           >
-            View all Guardians
+            View all
             <PhArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>

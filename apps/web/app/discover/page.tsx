@@ -262,7 +262,7 @@ export default function DiscoverPage() {
             Discover Creations
           </h1>
           <p className="text-text-secondary text-lg max-w-2xl mx-auto font-sans">
-            Explore visions from creators across all Seven Academy Houses
+            Browse what creators are building across the platform
           </p>
         </motion.div>
 
@@ -274,7 +274,7 @@ export default function DiscoverPage() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search creations, elements, or Guardians..."
+              placeholder="Search creations..."
               className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white/[0.04] backdrop-blur-sm text-white placeholder-text-muted border border-white/[0.08] focus:border-arcane-crystal/30 outline-none transition-colors font-sans"
             />
           </div>

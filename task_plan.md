@@ -98,15 +98,30 @@ Used existing `metadata` JSONB column on profiles table (no migration needed).
 
 ---
 
-## WAVE 12: Onboarding + MASTER_PLAN Sync — `in_progress`
+## WAVE 12: Onboarding + MASTER_PLAN Sync — `complete`
 
 - [x] Update MASTER_PLAN with Wave 11 completions (routes pruned, legacy migration, stale metadata fixes)
 - [x] Wire onboarding wizard completion to Supabase (guardian, gate, creator types, metadata)
 - [x] Change signup redirect: /welcome → /onboarding (new users get 5-step wizard)
 - [x] Fix welcome page CTA link: /onboarding/creator-type → /onboarding
 - [x] Update M008 milestone progress (20% → 45%)
-- [ ] Build verification
-- [ ] Commit + push to both remotes
+- [x] Commit 18719682 + pushed to both remotes
+
+## WAVE 13: Language & Experience Transformation — `in_progress`
+
+Strategy: `.arcanea/strategy/LANGUAGE_EXPERIENCE_STRATEGY.md`
+Milestone: M010 — P0 priority
+
+- [x] Full UX copy audit (every page, every string)
+- [x] Brand/voice guidelines review (voice.yaml, BRAND_GUIDELINES, VOICE_BIBLE)
+- [x] Strategic document: LANGUAGE_EXPERIENCE_STRATEGY.md
+- [x] MASTER_PLAN integration (M010, Priority Queue #1)
+- [ ] Phase 1: Nav + Homepage copy (navbar, hero-v3, home-content, cta-section)
+- [ ] Phase 2: Onboarding copy (welcome, step2, step3)
+- [ ] Phase 3: Studio + Dashboard UX (studio/page, dashboard/page)
+- [ ] Phase 4: Chat + Discover + Library (chat/page, discover/page)
+- [ ] Phase 5: Hidden depth system
+- [ ] Build + deploy
 
 ---
 

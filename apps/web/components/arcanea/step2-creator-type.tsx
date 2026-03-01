@@ -97,11 +97,11 @@ export default function Step2CreatorType({ selected, onSelect, onNext, onBack }:
           Step 2 of 5
         </div>
         <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-3">
-          Choose Your{' '}
-          <span className="text-gold-gradient">Creative Identity</span>
+          What do you{' '}
+          <span className="text-gold-gradient">create?</span>
         </h2>
         <p className="text-[#7c7c9a] text-sm font-sans">
-          Select all that apply — you can choose more than one
+          Pick everything that applies
         </p>
       </div>
 
