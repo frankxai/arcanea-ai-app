@@ -14,7 +14,11 @@
 
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import type { Database } from '@/lib/database/types/supabase';
 
+// NOTE: This route uses runtime = "edge" which is incompatible with @supabase/ssr
+// (SSR client requires Node.js cookie APIs). We use createClient from @supabase/supabase-js
+// directly here with anon key — no session cookies needed for a health check ping.
 export const runtime = "edge";
 
 interface HealthCheck {
@@ -32,10 +36,10 @@ interface HealthCheck {
 export async function GET() {
   let dbHealthy = false;
   try {
-    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
     if (url && key) {
-      const supabase = createClient(url, key);
+      const supabase = createClient<Database>(url, key);
       const { error } = await supabase.from('profiles').select('id').limit(1);
       dbHealthy = !error;
     }
@@ -52,11 +56,20 @@ export async function GET() {
     app: 'web',
   };
 
+  // Diagnostic: show which env var names are present (not values)
+  const envDiag: Record<string, boolean> = {
+    NEXT_PUBLIC_SUPABASE_URL: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    SUPABASE_URL: !!process.env.SUPABASE_URL,
+    SUPABASE_ANON_KEY: !!process.env.SUPABASE_ANON_KEY,
+    SUPABASE_SERVICE_ROLE_KEY: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
+  };
+
   // Determine overall health
   const isHealthy = health.api && health.database;
 
   return NextResponse.json(
-    health,
+    { ...health, env: envDiag },
     {
       status: isHealthy ? 200 : 503,
       headers: {
@@ -78,4 +91,3 @@ export async function HEAD() {
     },
   });
 }
-
