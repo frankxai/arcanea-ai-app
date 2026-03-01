@@ -53,7 +53,7 @@ export default async function LibraryPage() {
             href="/library/codex"
             className="rounded-xl border border-white/[0.06] px-4 py-2 text-sm text-text-muted hover:border-atlantean-teal-aqua/20 hover:text-atlantean-teal-aqua transition-all duration-300"
           >
-            Luminor Codex
+            Codex
           </Link>
           <Link
             href="/library/graph"

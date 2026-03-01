@@ -63,13 +63,6 @@ export default function ChatLandingPage() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full liquid-glass border border-brand-primary/20 mb-8">
-            <PhSparkle className="w-3.5 h-3.5 text-brand-primary" />
-            <span className="text-xs font-mono tracking-widest uppercase text-brand-primary">
-              Creation Session
-            </span>
-          </div>
-
           <h1 className="text-fluid-hero font-display font-bold mb-6 leading-none tracking-tight">
             Choose an
             <span className="block text-gradient-brand">Intelligence</span>
