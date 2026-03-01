@@ -160,7 +160,7 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const callbackError = searchParams.get("error");
   const authMessage = searchParams.get("message");
-  const nextPath = searchParams.get("next") || "/chat";
+  const nextPath = searchParams.get("next") || "/dashboard";
 
   const callbackErrorMessage =
     callbackError === "callback_failed"

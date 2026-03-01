@@ -90,7 +90,7 @@ export default function SignupPage() {
       const supabase = createClient();
       const origin = window.location.origin;
       const callbackUrl = new URL('/auth/callback', origin);
-      callbackUrl.searchParams.set('next', '/welcome');
+      callbackUrl.searchParams.set('next', '/onboarding');
 
       const { error } = await supabase.auth.signInWithOAuth({
         provider,

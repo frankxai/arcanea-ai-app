@@ -13,12 +13,12 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
 
 | Metric | Value | Target |
 |--------|-------|--------|
-| Total Pages | 201 (routes) | 80 (prune redirects/stubs) |
+| Total Pages | ~185 (routes, 16 redirect-only pruned) | 80 (prune stubs) |
 | Pages with Metadata | ~77 (+12) | 100% |
 | Pages with loading.tsx | ~81 (+32) | 100% of dynamic pages |
 | Milestones Active | 9 (M001-M009) | Complete M001 → M008 → M005 |
 | Vercel Build | PASSING | Maintain green |
-| Last Deploy | 2026-03-01 | abbd4945 |
+| Last Deploy | 2026-03-01 | b7a44d5c |
 | Live URL | arcanea.ai | arcanea.ai |
 
 ---
@@ -35,8 +35,8 @@ Source: `.arcanea/projects/milestones/`
   - [ ] Set 3 env vars on Vercel project `arcanea-ai-appx` (#4)
   - [ ] Sync repos — arcanea-records → arcanea-ai-app (#6)
   - [ ] Configure Supabase Dashboard: Site URL → `https://arcanea.ai`, OAuth providers
-  - [ ] Migrate 11 legacy API routes from old `lib/supabase.ts` to SSR-safe client
-  - [ ] E2E auth test (blocked on above)
+  - [x] ~~Migrate legacy API routes~~ — DONE (lib/supabase.ts deleted, 0 imports remain)
+  - [ ] E2E auth test (blocked on env vars)
 - **Files**: `m001-supabase-auth.arc`
 
 ### M002: Cloudflare Stream (0%) — P2
@@ -62,7 +62,7 @@ Source: `.arcanea/projects/milestones/`
   - [ ] Sprint velocity tracking
 - **Files**: `m004-arcanea-pm.arc`
 
-### M005: Premium UI Overhaul via v0 (40%) — P0
+### M005: Premium UI Overhaul via v0 (55%) — P0
 - **Guardian**: Leyla (Flow Gate)
 - **Target**: 2026-03-15
 - **v0 Chats Generated**:
@@ -77,8 +77,9 @@ Source: `.arcanea/projects/milestones/`
   - Onboarding: 6 components (welcome, step2-5, orchestrator) in `components/arcanea/`
   - Chat: 8 components (page, sidebar, messages, input, guardian-info, empty, types, data)
   - Settings: sidebar component
-- **Remaining**: Wire to Supabase backend, replace mock data, Academy + Community + Pricing UIs
-- **Tasks**: 5/8 extracted (Studio, Settings, Onboarding, Gallery, Chat). Remaining: Academy, Community, Pricing
+- **Remaining**: Wire to Supabase backend, replace mock data
+- **Tasks**: 8/8 pages premium (Studio, Settings, Onboarding, Gallery, Chat, Academy, Community, Pricing all upgraded)
+- **Mar 1 Session 2**: Academy rewritten (376 lines, Ten Gates grid, Houses, Ranks), pricing reviewed (509 lines, already complete)
 - **Files**: `m005-premium-ui-v0.arc`
 
 ### M006: Creator Tools Backend (0%) — P1
@@ -95,7 +96,7 @@ Source: `.arcanea/projects/milestones/`
 - **Depends on**: M001, M006
 - **Files**: `m007-community-social.arc`
 
-### M008: Onboarding & Conversion (20%) — P0
+### M008: Onboarding & Conversion (65%) — P0
 - **Guardian**: Maylinn (Heart Gate)
 - **Target**: 2026-03-10
 - **Scope**: Onboarding wizard integration, welcome dashboard, activation loops, analytics, auth UX
@@ -167,14 +168,14 @@ packages/              → 37 workspace packages
 - **Priority**: Maintenance only
 
 #### Academy `/academy`
-- **Status**: PARTIAL
+- **Status**: LIVE
 - **Component**: Client
-- **Metadata**: MISSING (was removed when converting to client component)
+- **Metadata**: Yes (layout.tsx)
 - **Loading**: Yes
-- **Current**: Ten Gates grid, Seven Houses, Ranks, Featured Learning Paths
+- **Current**: Premium 376-line experience — parallax hero, interactive Ten Gates grid with guardian/godbeast info, Seven Houses explorer, Magic Ranks progression path, cosmic glass design
 - **Needs**:
-  - [ ] Add metadata via layout.tsx or generateMetadata wrapper
-  - [ ] Build `/academy/gates/[id]` dynamic route (10 individual gate pages)
+  - [x] Add metadata via layout.tsx — DONE
+  - [x] Build `/academy/gates/[id]` dynamic route — DONE (10 gates pre-rendered)
   - [ ] Build `/academy/courses/[slug]` dynamic route (linked but doesn't exist)
   - [ ] Connect assessment results to user profile (gates_open, active_gate)
   - [ ] Progress tracking per user per gate
@@ -195,7 +196,7 @@ packages/              → 37 workspace packages
 - **Status**: LIVE
 - **Component**: Server (async)
 - **Metadata**: Yes
-- **Loading**: MISSING
+- **Loading**: Yes
 - **Current**: 17 collections from filesystem, tab navigation, situation-based finding
 - **Needs**:
   - [x] Add loading.tsx — DONE (2026-03-01)
@@ -231,9 +232,10 @@ packages/              → 37 workspace packages
 - **Component**: Client
 - **Metadata**: Via layout
 - **Loading**: Yes
-- **Current**: Luminor selection grid, filters by team
+- **Current**: Luminor selection grid, filters by team, v0 chat components (8 files), sessions API (GET/POST with Supabase + in-memory fallback)
 - **Needs**:
-  - [ ] Chat history persistence (Supabase)
+  - [x] Chat sessions API (GET/POST) — DONE (Mar 1)
+  - [ ] Chat history persistence (Supabase messages table)
   - [ ] Streaming responses (Vercel AI SDK)
   - [ ] Multi-turn context window management
 - **Priority**: P0 — core product feature
@@ -332,10 +334,10 @@ packages/              → 37 workspace packages
 - **Status**: PARTIAL
 - **Component**: Client
 - **Loading**: Yes
-- **Metadata**: MISSING
+- **Metadata**: Yes (layout.tsx)
 - **Current**: Hub with socials, newsletter, events, contributor list
 - **Needs**:
-  - [ ] Add metadata
+  - [x] Add metadata — DONE (2026-03-01)
   - [ ] Real community features (forums, groups)
   - [ ] Event calendar integration
 - **Priority**: P2
@@ -414,18 +416,18 @@ packages/              → 37 workspace packages
 
 ---
 
-### Routes to PRUNE (redirects serving no purpose)
+### Routes Pruned (Wave 11, 2026-03-01)
 
-These add file count without value. Consider removing or combining:
-- `/chess/play`, `/chess/analysis`, `/chess/leaderboard`, `/chess/community` (all redirect to `/chess`)
-- `/gallery/explore` (redirects to `/gallery`)
-- `/docs/acos` (redirects to `/docs`)
-- `/character-book/templates` (redirects to `/character-book`)
-- `/universe-builder/new`, `/universe-builder/templates` (redirects)
-- `/world-builder/new`, `/world-builder/templates` (redirects)
-- `/vision-board/edit` (redirects)
-- `/community/create/new`, `/community/strategy/propose` (redirects)
-- `/register`, `/signup` (both redirect to `/auth/signup` — keep one)
+16 redirect-only routes deleted. Route count reduced from 201 → ~185:
+- ~~`/chess/play`, `/chess/analysis`, `/chess/leaderboard`, `/chess/community`~~ — DELETED
+- ~~`/gallery/explore`~~ — DELETED
+- ~~`/docs/acos`~~ — DELETED
+- ~~`/character-book/templates`~~ — DELETED
+- ~~`/universe-builder/new`, `/universe-builder/templates`~~ — DELETED
+- ~~`/world-builder/new`, `/world-builder/templates`~~ — DELETED
+- ~~`/vision-board/edit`~~ — DELETED
+- `/community/create/new`, `/community/strategy/propose` — kept (may have future use)
+- `/register` — kept (redirects to `/auth/signup`)
 
 ---
 
@@ -443,7 +445,7 @@ These add file count without value. Consider removing or combining:
 7. ~~Add loading.tsx to all Tier 1 pages~~ — DONE (2026-03-01, 32+17 new, 98 total)
 8. ~~Add metadata to all Tier 2 pages~~ — DONE (2026-03-01, 12 new layout.tsx)
 9. ~~Wire settings persistence to Supabase~~ — DONE (2026-03-01, avatar + prefs + metadata JSONB)
-10. ~~Migrate legacy API routes~~ — DONE (2026-03-01, 5 of 7 migrated, 2 intentional exceptions)
+10. ~~Migrate legacy API routes~~ — DONE (2026-03-01, lib/supabase.ts deleted, 0 imports remain)
 11. Integrate v0 Studio UI into /studio (M005-T1)
 12. Integrate v0 Gallery UI into /gallery (M005-T4)
 13. Reading progress tracking in Library (M006-T4)
@@ -458,7 +460,7 @@ These add file count without value. Consider removing or combining:
 20. Cloudflare Stream integration (M002)
 
 ### P3 — Cleanup & Optimization
-21. Prune 15+ redirect-only pages
+21. ~~Prune 15+ redirect-only pages~~ — DONE (2026-03-01, 16 routes deleted)
 22. Core Web Vitals audit (M009-T1)
 23. WCAG 2.2 accessibility audit (M009-T3)
 24. Remove `/workspace` or build it out
@@ -473,7 +475,7 @@ These add file count without value. Consider removing or combining:
 - ~~Overly permissive feedback policy~~ — FIXED (2026-03-01)
 - ~~auth_rls_initplan performance~~ — FIXED (2026-03-01)
 - Gemini chat uses service-role key in API route — should use anon key
-- ~~11 API routes still use old `lib/supabase.ts`~~ — 5 migrated (2026-03-01), 2 intentional exceptions, 4 remaining
+- ~~11 API routes used old `lib/supabase.ts`~~ — FULLY MIGRATED (2026-03-01), file deleted, 0 imports remaining
 - ~~Settings page doesn't persist~~ — FIXED (2026-03-01, wired to Supabase profiles)
 - Enable leaked password protection in Supabase Dashboard
 

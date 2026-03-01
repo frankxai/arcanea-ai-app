@@ -118,3 +118,7 @@ arcanea-opencode-fork/
 # Windows path junk that leaks into WSL
 "C:\\Users\\*"
 starlight-intelligence-system/.starlight/
+
+
+#Ignore cursor AI rules
+.cursor\rules\codacy.mdc

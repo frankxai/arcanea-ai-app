@@ -85,8 +85,8 @@ export default function ArcanealOnboarding() {
   const handleComplete = useCallback(async () => {
     setCompleted(true)
     await saveOnboardingData()
-    // Redirect to studio after a brief moment
-    setTimeout(() => router.push('/studio'), 2500)
+    // Redirect to dashboard after a brief moment
+    setTimeout(() => router.push('/dashboard'), 2500)
   }, [saveOnboardingData, router])
 
   if (completed) {

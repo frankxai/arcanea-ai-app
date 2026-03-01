@@ -3,7 +3,7 @@
 import React, { useState, Fragment } from 'react';
 import Link from 'next/link';
 import { Menu, Transition } from '@headlessui/react';
-import { PhUser, PhSignOut, PhGear, PhSparkle, PhBookOpen, PhPalette, PhCaretDown } from '@/lib/phosphor-icons';
+import { PhUser, PhSignOut, PhGear, PhSparkle, PhBookOpen, PhPalette, PhCaretDown, PhHouse } from '@/lib/phosphor-icons';
 import { useAuth } from '@/lib/auth/context';
 import { AuthModal } from './auth-modal';
 
@@ -95,6 +95,7 @@ export function UserNav() {
 
           <div className="py-1.5">
             {[
+              { href: '/dashboard', icon: PhHouse, label: 'Dashboard' },
               { href: '/profile', icon: PhUser, label: 'Your Profile' },
               { href: '/luminors', icon: PhSparkle, label: 'Your Luminors' },
               { href: '/studio', icon: PhPalette, label: 'Studio' },
