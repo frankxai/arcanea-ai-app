@@ -177,6 +177,7 @@ export function Sidebar({
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search conversations..."
+              aria-label="Search conversations"
               className={cn(
                 'w-full pl-8 pr-3 py-2 rounded-lg text-xs',
                 'bg-[rgba(255,255,255,0.04)] border border-[rgba(139,92,246,0.15)]',

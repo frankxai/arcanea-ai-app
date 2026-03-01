@@ -20,11 +20,20 @@ import {
   getTextsInCollection,
   getRelatedTexts,
   getCollection,
+  getAllTexts,
   COLLECTIONS,
 } from '../../../../lib/content';
 
 interface Props {
   params: Promise<{ collection: string; text: string }>;
+}
+
+export async function generateStaticParams() {
+  const texts = await getAllTexts();
+  return texts.map((t) => {
+    const [collection, ...rest] = t.slug.split('/');
+    return { collection, text: rest.join('/') };
+  });
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
