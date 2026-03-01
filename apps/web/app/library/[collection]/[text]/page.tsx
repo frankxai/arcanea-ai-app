@@ -76,8 +76,35 @@ export default async function TextPage({ params }: Props) {
   // Filter headings to show only h2 and h3 for table of contents
   const tocHeadings = text.headings.filter((h) => h.level === 2 || h.level === 3);
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: text.frontmatter.title,
+    description: text.frontmatter.excerpt,
+    url: `https://arcanea.ai/library/${fullSlug}`,
+    author: { '@type': 'Organization', name: 'Arcanea' },
+    publisher: { '@type': 'Organization', name: 'Arcanea', url: 'https://arcanea.ai' },
+    isPartOf: {
+      '@type': 'CollectionPage',
+      name: collection?.name,
+      url: `https://arcanea.ai/library/${collectionSlug}`,
+    },
+    breadcrumb: {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Library', item: 'https://arcanea.ai/library' },
+        { '@type': 'ListItem', position: 2, name: collection?.name, item: `https://arcanea.ai/library/${collectionSlug}` },
+        { '@type': 'ListItem', position: 3, name: text.frontmatter.title },
+      ],
+    },
+  };
+
   return (
     <div className="min-h-screen bg-cosmic-deep">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Skip to content link */}
       <a
         href="#main-content"

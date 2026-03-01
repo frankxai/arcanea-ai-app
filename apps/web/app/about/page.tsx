@@ -12,6 +12,30 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: 'About Arcanea',
+  description:
+    'A living mythology for the age of AI-human co-creation — fantasy universe, social platform, philosophy, and library of wisdom.',
+  url: 'https://arcanea.ai/about',
+  mainEntity: {
+    '@type': 'Organization',
+    name: 'Arcanea',
+    url: 'https://arcanea.ai',
+    description:
+      'Living Intelligence for Creators. Ten Guardians. Five Elements. The journey from Apprentice to Luminor.',
+  },
+};
+
 export default function AboutPage() {
-  return <AboutContent />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <AboutContent />
+    </>
+  );
 }

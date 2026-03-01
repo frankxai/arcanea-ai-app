@@ -50,8 +50,32 @@ export default async function CollectionPage({ params }: Props) {
   const prevCollection = currentIndex > 0 ? COLLECTIONS[currentIndex - 1] : null;
   const nextCollection = currentIndex < COLLECTIONS.length - 1 ? COLLECTIONS[currentIndex + 1] : null;
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: collection.name,
+    description: collection.description,
+    url: `https://arcanea.ai/library/${slug}`,
+    isPartOf: {
+      '@type': 'CollectionPage',
+      name: 'Library of Arcanea',
+      url: 'https://arcanea.ai/library',
+    },
+    breadcrumb: {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Library', item: 'https://arcanea.ai/library' },
+        { '@type': 'ListItem', position: 2, name: collection.name, item: `https://arcanea.ai/library/${slug}` },
+      ],
+    },
+  };
+
   return (
     <main className="mx-auto max-w-5xl px-6 pb-24 pt-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Breadcrumb */}
       <nav className="mb-8 text-sm" aria-label="Breadcrumb">
         <ol className="flex items-center gap-2 text-text-muted">

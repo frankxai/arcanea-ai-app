@@ -15,8 +15,31 @@ export const metadata: Metadata = {
 export default async function LibraryPage() {
   const collections = await getCollections();
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Library of Arcanea',
+    description:
+      'Seventeen collections of wisdom, legend, poetry, and practice for the creative soul.',
+    url: 'https://arcanea.ai/library',
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: collections.length,
+      itemListElement: collections.map((c, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: c.name,
+        url: `https://arcanea.ai/library/${c.slug}`,
+      })),
+    },
+  };
+
   return (
     <div className="relative min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <main className="mx-auto max-w-7xl px-6 pb-24 pt-8">
         {/* Tab Navigation */}
         <nav className="mb-12 flex items-center gap-3 border-b border-white/[0.06] pb-4">

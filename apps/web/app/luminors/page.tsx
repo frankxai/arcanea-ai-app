@@ -18,6 +18,24 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: '16 Luminor Creative Intelligences',
+  description:
+    'Transcended masters of development, creative design, writing, and research.',
+  url: 'https://arcanea.ai/luminors',
+  numberOfItems: 16,
+};
+
 export default function LuminorsPage() {
-  return <LuminorsExperience />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <LuminorsExperience />
+    </>
+  );
 }

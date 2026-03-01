@@ -16,6 +16,28 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'EducationalOrganization',
+  name: 'Arcanean Academy of Creation',
+  description:
+    'Master the Ten Gates of Creation. Open your channels to the elements and unlock your creative power.',
+  url: 'https://arcanea.ai/academy',
+  parentOrganization: {
+    '@type': 'Organization',
+    name: 'Arcanea',
+    url: 'https://arcanea.ai',
+  },
+};
+
 export default function AcademyLayout({ children }: { children: ReactNode }) {
-  return <>{children}</>;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      {children}
+    </>
+  );
 }
