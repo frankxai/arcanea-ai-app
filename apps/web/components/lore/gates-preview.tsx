@@ -236,7 +236,7 @@ export function GatesPreview() {
             href="/lore/gates"
             className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold overflow-hidden btn-glow text-gold-bright bg-gold-bright/10 border border-gold-bright/30 hover:bg-gold-bright hover:text-cosmic-deep transition-all duration-300"
           >
-            Begin Your Journey
+            Start Creating
             <Icons.ArrowRight />
           </Link>
         </motion.div>

@@ -889,7 +889,7 @@ function GatesCTA() {
             href="/academy"
             className="liquid-glass group inline-flex items-center gap-3 rounded-xl border border-brand-primary/30 px-8 py-4 font-sans font-semibold text-text-primary transition-all hover:border-brand-primary/60 hover-lift"
           >
-            Begin Your Journey
+            Start Creating
             <PhArrowRight className="h-5 w-5 text-brand-primary transition-transform group-hover:translate-x-1" />
           </Link>
           <Link

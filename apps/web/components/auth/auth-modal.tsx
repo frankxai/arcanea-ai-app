@@ -175,7 +175,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                           <PhSparkle className="w-7 h-7 text-cosmic-deep" />
                         </div>
                         <Dialog.Title className="text-xl font-display font-bold">
-                          {tab === 'login' ? 'Welcome Back' : 'Begin Your Journey'}
+                          {tab === 'login' ? 'Welcome Back' : 'Create Account'}
                         </Dialog.Title>
                       </div>
 

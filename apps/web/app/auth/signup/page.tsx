@@ -129,7 +129,7 @@ export default function SignupPage() {
             </div>
           </Link>
           <h1 className="font-display text-3xl font-bold text-text-primary mb-2">
-            Begin Your Journey
+            Create Account
           </h1>
           <p className="font-body text-text-secondary">
             Create your Arcanea account

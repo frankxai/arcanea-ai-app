@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Begin Your Journey | Arcanea',
-  description: 'Choose your creative path, meet your Guardian Intelligence, and create your first work in the Arcanea universe.',
+  title: 'Get Started | Arcanea',
+  description: 'Choose what you create, find your AI creative partner, and make your first work on Arcanea.',
   openGraph: {
-    title: 'Begin Your Journey | Arcanea',
-    description: 'Your journey into Arcanea begins here. Discover your Guardian and creative path.',
+    title: 'Get Started | Arcanea',
+    description: 'Choose what you create, find your AI creative partner, and get started on Arcanea.',
   },
 }
 

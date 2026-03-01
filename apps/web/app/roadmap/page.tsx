@@ -481,7 +481,7 @@ export default function RoadmapPage() {
                       className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200"
                     >
                       <Icons.Rocket />
-                      Begin Your Journey
+                      Start Creating
                     </Link>
                   </div>
                 </div>

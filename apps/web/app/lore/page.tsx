@@ -44,7 +44,7 @@ export default function LorePage() {
         {/* Library Preview - The Wisdom */}
         <LibraryPreview />
 
-        {/* CTA - Begin Your Journey */}
+        {/* CTA */}
         <LoreCTA />
       </main>
     </div>

@@ -519,7 +519,7 @@ export function AboutContent() {
         >
           <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">
             <span className="bg-gradient-to-r from-atlantean-teal-aqua to-gold-bright bg-clip-text text-transparent">
-              Begin Your Journey
+              Start Creating
             </span>
           </h2>
           <p className="text-lg text-text-secondary mb-10 max-w-xl mx-auto leading-relaxed">
@@ -532,7 +532,7 @@ export function AboutContent() {
               className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep font-semibold text-base overflow-hidden btn-glow hover:shadow-[0_0_30px_rgba(127,255,212,0.4)] transition-all duration-300"
             >
               <ChatCircleDots className="w-5 h-5" weight="duotone" />
-              Begin Your Journey
+              Start Creating
             </Link>
             <Link
               href="/library"

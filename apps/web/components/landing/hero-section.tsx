@@ -198,7 +198,7 @@ export function HeroSection({ stats }: HeroSectionProps) {
                 {/* Glow effect on hover */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-atlantean-teal-aqua blur-xl" />
                 <span className="relative z-10 text-cosmic-deep flex items-center gap-2">
-                  Begin Your Journey
+                  Start Creating
                   <motion.svg
                     className="w-5 h-5"
                     fill="none"

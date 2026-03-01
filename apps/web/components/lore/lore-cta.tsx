@@ -85,7 +85,7 @@ export function LoreCTA() {
               <div className="absolute inset-0 bg-gradient-to-r from-atlantean-teal-aqua to-creation-prism-purple" />
               <span className="relative z-10 flex items-center gap-3">
                 <Icons.Sparkles />
-                Begin Your Journey
+                Start Creating
                 <Icons.ArrowRight className="group-hover:translate-x-1 transition-transform" />
               </span>
             </Link>
