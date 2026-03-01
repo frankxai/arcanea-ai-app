@@ -8,17 +8,11 @@ import {
   Code,
   MusicNote,
   Sparkle,
-  Lightning,
-  Flame,
-  Drop,
-  Leaf,
-  Wind,
   Star,
   Copy,
   Download,
   Trash,
   Info,
-  CaretDown,
   PaperPlane,
   Terminal,
   Play,
@@ -28,7 +22,6 @@ import {
   ListNumbers,
   Quotes,
   Link,
-  Crown,
   Gear,
   Brain,
 } from "@/lib/phosphor-icons";
@@ -44,7 +37,6 @@ interface ModeConfig {
   icon: React.ElementType;
   guardian: string;
   gate: string;
-  frequency: string;
   element: string;
   elementColor: string;
   description: string;
@@ -57,10 +49,9 @@ const MODES: ModeConfig[] = [
     icon: Pen,
     guardian: "Lyssandria",
     gate: "Foundation",
-    frequency: "174 Hz",
     element: "Earth",
     elementColor: "#22c55e",
-    description: "Write stories, poems, and wisdom scrolls with AI assistance.",
+    description: "Write stories, essays, scripts, and more.",
   },
   {
     id: "image",
@@ -68,10 +59,9 @@ const MODES: ModeConfig[] = [
     icon: Image,
     guardian: "Draconia",
     gate: "Fire",
-    frequency: "396 Hz",
     element: "Fire",
     elementColor: "#ef4444",
-    description: "Describe and generate images with AI-powered creation.",
+    description: "Generate and refine images with AI.",
   },
   {
     id: "code",
@@ -79,10 +69,9 @@ const MODES: ModeConfig[] = [
     icon: Code,
     guardian: "Shinkami",
     gate: "Source",
-    frequency: "1111 Hz",
     element: "Void",
     elementColor: "#ffd700",
-    description: "Write code with AI pair programming and intelligence.",
+    description: "Build software with a thinking partner.",
   },
   {
     id: "music",
@@ -90,32 +79,10 @@ const MODES: ModeConfig[] = [
     icon: MusicNote,
     guardian: "Leyla",
     gate: "Flow",
-    frequency: "285 Hz",
     element: "Water",
     elementColor: "#3b82f6",
-    description: "Describe music to compose with AI sound generation.",
+    description: "Compose original music with AI.",
   },
-];
-
-const ELEMENTS = [
-  { name: "Fire", color: "#ef4444", icon: Flame },
-  { name: "Water", color: "#3b82f6", icon: Drop },
-  { name: "Earth", color: "#22c55e", icon: Leaf },
-  { name: "Wind", color: "#a855f7", icon: Wind },
-  { name: "Void", color: "#ffd700", icon: Lightning },
-];
-
-const GATES = [
-  { name: "Foundation", freq: "174 Hz" },
-  { name: "Flow", freq: "285 Hz" },
-  { name: "Fire", freq: "396 Hz" },
-  { name: "Heart", freq: "417 Hz" },
-  { name: "Voice", freq: "528 Hz" },
-  { name: "Sight", freq: "639 Hz" },
-  { name: "Crown", freq: "741 Hz" },
-  { name: "Shift", freq: "852 Hz" },
-  { name: "Unity", freq: "963 Hz" },
-  { name: "Source", freq: "1111 Hz" },
 ];
 
 const AI_SUGGESTIONS = [
@@ -128,78 +95,14 @@ const AI_SUGGESTIONS = [
     description: "Make the narrative more vivid and resonant.",
   },
   {
-    title: "Add elemental imagery",
-    description: "Weave the Five Elements into your prose.",
+    title: "Add imagery",
+    description: "Weave richer visual language into your prose.",
   },
   {
-    title: "Generate a plot twist",
-    description: "Introduce an unexpected turn aligned with the Gate.",
+    title: "Suggest a direction",
+    description: "Get an unexpected angle on where this could go.",
   },
 ];
-
-// ---------------------------------------------------------------------------
-// Dropdown Component
-// ---------------------------------------------------------------------------
-
-function Dropdown({
-  label,
-  items,
-  value,
-  onChange,
-  renderItem,
-}: {
-  label: string;
-  items: { name: string; [key: string]: string }[];
-  value: string;
-  onChange: (val: string) => void;
-  renderItem?: (item: { name: string; [key: string]: string }) => React.ReactNode;
-}) {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    function handleClick(e: MouseEvent) {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, []);
-
-  return (
-    <div ref={ref} className="relative">
-      <button
-        onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/[0.06] bg-white/[0.04] text-xs text-text-secondary hover:border-white/[0.12] hover:bg-white/[0.08] transition-colors"
-      >
-        <span className="text-text-muted">{label}:</span>
-        <span className="text-text-primary">{value}</span>
-        <CaretDown size={12} className="text-text-muted" />
-      </button>
-      {open && (
-        <div className="absolute top-full left-0 mt-1 z-50 min-w-[180px] rounded-xl liquid-glass-elevated border border-white/[0.08] shadow-[0_16px_48px_rgba(0,0,0,0.4)] py-1 max-h-[240px] overflow-y-auto">
-          {items.map((item) => (
-            <button
-              key={item.name}
-              onClick={() => {
-                onChange(item.name);
-                setOpen(false);
-              }}
-              className={`w-full text-left px-3 py-2 text-xs hover:bg-white/[0.08] transition-colors ${
-                value === item.name
-                  ? "text-crystal bg-white/[0.04]"
-                  : "text-text-secondary"
-              }`}
-            >
-              {renderItem ? renderItem(item) : item.name}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
 
 // ---------------------------------------------------------------------------
 // Text Creation Panel
@@ -298,10 +201,9 @@ function TextCreationPanel({
           ref={textareaRef}
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          placeholder="Begin your creation here...
+          placeholder="Start writing...
 
-Write stories, poems, wisdom scrolls, or any text.
-Use Markdown for formatting. Ask Luminor for guidance."
+Use Markdown for formatting. The AI panel can help you develop ideas."
           className="flex-1 w-full resize-none bg-transparent text-text-primary placeholder-text-muted/40 p-4 font-body text-sm leading-relaxed focus:outline-none min-h-[300px]"
           spellCheck
         />
@@ -320,10 +222,7 @@ Use Markdown for formatting. Ask Luminor for guidance."
             <Brain size={14} className="text-cosmic-void" />
           </div>
           <span className="text-xs font-semibold text-text-primary">
-            Luminor Intelligence
-          </span>
-          <span className="ml-auto text-[10px] text-crystal font-mono">
-            ACTIVE
+            AI Assistant
           </span>
         </div>
 
@@ -448,9 +347,9 @@ function ImageCreationPanel() {
           onChange={(e) => setPrompt(e.target.value)}
           placeholder="Describe the image you want to create...
 
-Example: A luminous Guardian standing before an open Gate,
-crystalline energy radiating outward, cosmic aurora in
-the background, in the style of epic fantasy concept art."
+Example: A solitary figure on a cliff edge at twilight,
+crystalline light spreading across the horizon,
+in the style of epic fantasy concept art."
           className="flex-1 w-full resize-none bg-transparent text-text-primary placeholder-text-muted/40 p-4 font-body text-sm leading-relaxed focus:outline-none min-h-[200px]"
         />
 
@@ -559,7 +458,7 @@ function CodeCreationPanel() {
         <textarea
           value={code}
           onChange={(e) => setCode(e.target.value)}
-          placeholder={`// Begin your ${language} creation here...\n// Luminor Intelligence will help you write, debug, and optimize.\n\n`}
+          placeholder={`// Start writing ${language}...\n// The AI panel will help with suggestions and debugging.\n\n`}
           className="flex-1 w-full resize-none bg-transparent text-text-primary placeholder-text-muted/40 p-4 font-mono text-sm leading-relaxed focus:outline-none min-h-[300px] tab-size-2"
           spellCheck={false}
         />
@@ -585,8 +484,8 @@ function CodeCreationPanel() {
           </div>
           <p className="text-xs text-text-muted max-w-[200px]">
             {code.trim()
-              ? "Code is ready. Connect an AI key to get intelligent assistance, auto-completion, and debugging."
-              : "Write code on the left. Luminor Intelligence will help with suggestions, refactoring, and debugging."}
+              ? "Code is ready. Connect an AI key for assistance, auto-completion, and debugging."
+              : "Write code on the left. The AI will help with suggestions, refactoring, and debugging."}
           </p>
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/20 mt-2">
             <Info size={12} className="text-brand-gold" />
@@ -635,8 +534,8 @@ function MusicCreationPanel() {
           placeholder="Describe the music you want to create...
 
 Example: A haunting melody with crystal chimes echoing through
-a vast cavern, building to a crescendo of orchestral strings
-and choir — the moment a Gate opens for the first time."
+a vast space, building to a crescendo of orchestral strings
+and choir — tension resolving into stillness."
           className="flex-1 w-full resize-none bg-transparent text-text-primary placeholder-text-muted/40 p-4 font-body text-sm leading-relaxed focus:outline-none min-h-[200px]"
         />
 
@@ -713,8 +612,6 @@ and choir — the moment a Gate opens for the first time."
 export default function StudioPage() {
   const { user } = useAuth();
   const [activeMode, setActiveMode] = useState<CreationMode>("text");
-  const [selectedElement, setSelectedElement] = useState("Earth");
-  const [selectedGate, setSelectedGate] = useState("Foundation");
   const [textContent, setTextContent] = useState("");
   const [luminorMessages, setLuminorMessages] = useState<
     { role: "user" | "luminor"; text: string }[]
@@ -769,13 +666,13 @@ export default function StudioPage() {
         } else {
           setLuminorMessages((prev) => [
             ...prev,
-            { role: 'luminor', text: `I sense your creative energy, but my connection is limited right now. Try again in a moment, or begin writing — the ${currentMode.element} element flows through your work.` },
+            { role: 'luminor', text: 'Connection is limited right now. Try again in a moment, or keep writing — sometimes the work itself is the best guide.' },
           ]);
         }
       } catch {
         setLuminorMessages((prev) => [
           ...prev,
-          { role: 'luminor', text: `The ${currentMode.element} flows through all creation. Begin writing, and let the work reveal its own wisdom.` },
+          { role: 'luminor', text: 'Begin writing, and let the work reveal its own direction. The best ideas come from momentum.' },
         ]);
       }
     })();
@@ -786,7 +683,7 @@ export default function StudioPage() {
 
   const handleManifest = useCallback(async () => {
     if (!textContent.trim() && activeMode === 'text') {
-      setSaveMessage('Write something first to manifest it.');
+      setSaveMessage('Write something first.');
       setTimeout(() => setSaveMessage(''), 3000);
       return;
     }
@@ -813,14 +710,14 @@ export default function StudioPage() {
           type: activeMode === 'text' ? 'text' : activeMode === 'image' ? 'image' : activeMode === 'code' ? 'code' : 'mixed',
           status: 'draft',
           visibility: 'private',
-          element: selectedElement as 'Fire' | 'Water' | 'Earth' | 'Wind' | 'Void' | 'Spirit',
-          gate: selectedGate as 'Foundation' | 'Flow' | 'Fire' | 'Heart' | 'Voice' | 'Sight' | 'Crown' | 'Shift' | 'Unity' | 'Source',
+          element: currentMode.element as 'Fire' | 'Water' | 'Earth' | 'Wind' | 'Void' | 'Spirit',
+          gate: currentMode.gate as 'Foundation' | 'Flow' | 'Fire' | 'Heart' | 'Voice' | 'Sight' | 'Crown' | 'Shift' | 'Unity' | 'Source',
           guardian: currentMode.guardian,
         }),
       });
 
       if (res.ok) {
-        setSaveMessage('Creation manifested! Saved as draft.');
+        setSaveMessage('Saved as draft.');
       } else {
         const data = await res.json().catch(() => ({}));
         setSaveMessage(data.error?.message || 'Sign in to save creations.');
@@ -831,15 +728,8 @@ export default function StudioPage() {
       setIsSaving(false);
       setTimeout(() => setSaveMessage(''), 4000);
     }
-  }, [textContent, activeMode, selectedElement, selectedGate, currentMode.guardian, user]);
+  }, [textContent, activeMode, currentMode.element, currentMode.gate, currentMode.guardian, user]);
 
-  // Sync element/gate when changing mode
-  const handleModeChange = useCallback((mode: CreationMode) => {
-    setActiveMode(mode);
-    const config = MODES.find((m) => m.id === mode)!;
-    setSelectedElement(config.element);
-    setSelectedGate(config.gate);
-  }, []);
 
   return (
     <div className="relative min-h-screen">
@@ -866,7 +756,7 @@ export default function StudioPage() {
                 return (
                   <button
                     key={mode.id}
-                    onClick={() => handleModeChange(mode.id)}
+                    onClick={() => setActiveMode(mode.id)}
                     className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-medium transition-all ${
                       isActive
                         ? "bg-white/[0.06] text-text-primary shadow-sm"
@@ -896,35 +786,11 @@ export default function StudioPage() {
               </div>
             </div>
 
-            {/* Guardian Badge */}
-            <div className="flex items-center gap-3">
-              <div
-                className="flex items-center gap-2 px-3 py-2 rounded-xl liquid-glass border"
-                style={{
-                  borderColor: `${currentMode.elementColor}30`,
-                }}
-              >
-                <Crown
-                  size={14}
-                  weight="fill"
-                  style={{ color: currentMode.elementColor }}
-                />
-                <div>
-                  <p
-                    className="text-[10px] font-mono uppercase tracking-wider"
-                    style={{ color: currentMode.elementColor }}
-                  >
-                    Guardian
-                  </p>
-                  <p className="text-xs text-text-primary font-medium">
-                    {currentMode.guardian}
-                  </p>
-                </div>
-                <span className="text-[10px] text-text-muted ml-1 font-mono">
-                  {currentMode.frequency}
-                </span>
-              </div>
-            </div>
+            {/* Mode indicator */}
+            <div
+              className="w-2 h-2 rounded-full hidden sm:block"
+              style={{ backgroundColor: currentMode.elementColor }}
+            />
           </div>
         </header>
 
@@ -932,40 +798,6 @@ export default function StudioPage() {
         <div className="flex-1 flex flex-col rounded-2xl liquid-glass border border-white/[0.06] overflow-hidden min-h-[500px]">
           {/* Workspace Header */}
           <div className="flex items-center gap-3 px-4 py-2.5 border-b border-white/[0.08] bg-white/[0.02]">
-            {/* Element & Gate selectors */}
-            <Dropdown
-              label="Element"
-              value={selectedElement}
-              onChange={setSelectedElement}
-              items={ELEMENTS.map((e) => ({ name: e.name, color: e.color }))}
-              renderItem={(item) => {
-                const el = ELEMENTS.find((e) => e.name === item.name);
-                const ElIcon = el?.icon || Sparkle;
-                return (
-                  <span className="flex items-center gap-2">
-                    <ElIcon size={12} style={{ color: el?.color }} />
-                    {item.name}
-                  </span>
-                );
-              }}
-            />
-
-            <Dropdown
-              label="Gate"
-              value={selectedGate}
-              onChange={setSelectedGate}
-              items={GATES.map((g) => ({ name: g.name, freq: g.freq }))}
-              renderItem={(item) => {
-                const gate = GATES.find((g) => g.name === item.name);
-                return (
-                  <span className="flex items-center justify-between w-full">
-                    <span>{item.name}</span>
-                    <span className="text-text-muted ml-2">{gate?.freq}</span>
-                  </span>
-                );
-              }}
-            />
-
             <div className="flex-1" />
 
             {/* Actions */}
@@ -1024,12 +856,8 @@ export default function StudioPage() {
               style={{ backgroundColor: currentMode.elementColor }}
             />
             <span>
-              {currentMode.label} Creation
+              {currentMode.label}
             </span>
-            <span className="text-white/[0.12]">|</span>
-            <span>{selectedElement} Element</span>
-            <span className="text-white/[0.12]">|</span>
-            <span>{selectedGate} Gate ({GATES.find(g => g.name === selectedGate)?.freq})</span>
           </div>
 
           <div className="flex-1" />
@@ -1057,7 +885,7 @@ export default function StudioPage() {
           >
             <span className="relative flex items-center gap-2">
               <Star size={16} weight="fill" />
-              Manifest
+              Save
             </span>
             <div className="absolute inset-0 bg-white/0 group-hover:bg-white/[0.06] transition-colors" />
           </button>

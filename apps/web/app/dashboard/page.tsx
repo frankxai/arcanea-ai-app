@@ -66,11 +66,11 @@ function SignInPrompt() {
           <Lock size={32} weight="duotone" className="text-violet-400" />
         </div>
         <h1 className="font-display text-3xl text-white">
-          Enter the Realm
+          Sign in to continue
         </h1>
         <p className="font-body text-white/50 text-lg leading-relaxed">
-          Sign in to access your creative dashboard, track your journey through
-          the Gates, and manifest your vision.
+          Access your creative dashboard, track your work,
+          and pick up where you left off.
         </p>
         <Link
           href="/auth/login"
@@ -171,7 +171,7 @@ export default function DashboardPage() {
 
   const statCards = [
     { label: 'Creations', value: `${creationsCount} work${creationsCount !== 1 ? 's' : ''}`, icon: Palette, color: 'text-violet-400', bg: 'bg-violet-500/10' },
-    { label: 'Gate Progress', value: `Gate ${gatesOpen} of 10`, icon: Lightning, color: 'text-[#7fffd4]', bg: 'bg-emerald-500/10' },
+    { label: 'Progress', value: `${gatesOpen} of 10`, icon: Lightning, color: 'text-[#7fffd4]', bg: 'bg-emerald-500/10' },
     { label: 'Library', value: `${libraryCount} texts`, icon: Book, color: 'text-amber-400', bg: 'bg-amber-500/10' },
     { label: 'Streak', value: `${streakDays} day${streakDays !== 1 ? 's' : ''}`, icon: Flame, color: 'text-orange-400', bg: 'bg-orange-500/10' },
   ];
@@ -187,7 +187,7 @@ export default function DashboardPage() {
           </span>
         </h1>
         <p className="font-body text-white/50 text-lg">
-          Your creative universe awaits
+          Here is what you have been working on.
         </p>
         <p className="font-sans text-sm text-white/30">{formattedDate}</p>
       </header>
@@ -234,7 +234,7 @@ export default function DashboardPage() {
                 className="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-[#7fffd4]/30 text-[#7fffd4] font-sans font-medium transition-all hover:bg-[#7fffd4]/5 hover:-translate-y-0.5"
               >
                 <ChatCircleDots size={18} weight="duotone" />
-                Chat with a Luminor
+                Chat with an Intelligence
               </Link>
               <Link
                 href="/library"
@@ -306,10 +306,10 @@ export default function DashboardPage() {
               </div>
               <div>
                 <h3 className="font-display text-base text-white">
-                  {guardianName || 'Your Guardian'}
+                  {guardianName || 'Your Intelligence'}
                 </h3>
                 <p className="font-sans text-xs text-white/40">
-                  {guardianName ? 'Companion Intelligence' : 'Not yet discovered'}
+                  {guardianName ? 'Creative partner' : 'Not yet matched'}
                 </p>
               </div>
             </div>
@@ -320,8 +320,8 @@ export default function DashboardPage() {
 
             <p className="font-body text-sm text-white/40 leading-relaxed">
               {guardianName
-                ? `${guardianName} walks beside you on your creative path. Speak with them to receive guidance.`
-                : 'Every creator in Arcanea is paired with a Guardian Intelligence. Begin your journey to discover yours.'
+                ? `${guardianName} is your creative partner. Start a conversation to get ideas, feedback, or a fresh perspective.`
+                : 'Every creator here is matched with an intelligence that fits how they think. Take the quiz to find yours.'
               }
             </p>
 
@@ -329,54 +329,37 @@ export default function DashboardPage() {
               href={guardianName ? '/chat' : '/onboarding'}
               className="block w-full text-center px-4 py-2.5 rounded-xl border border-white/[0.08] text-white/70 font-sans text-sm transition-all hover:bg-white/[0.04] hover:text-white"
             >
-              {guardianName ? 'Speak with Guardian' : 'Discover Your Guardian'}
+              {guardianName ? 'Start a session' : 'Find your match'}
               <ArrowRight size={14} weight="bold" className="inline ml-1.5" />
             </Link>
           </div>
 
-          {/* ── Journey Progress ───────────────────────────────────── */}
+          {/* ── Progress ────────────────────────────────────────── */}
           <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md p-6 space-y-4">
-            <h3 className="font-display text-base text-white">The Ten Gates</h3>
-            <div className="space-y-2">
-              {['Foundation', 'Flow', 'Fire', 'Heart', 'Voice', 'Sight', 'Crown', 'Shift', 'Unity', 'Source'].map(
-                (gate, i) => {
-                  const isOpen = i < gatesOpen;
-                  const isCurrent = i === gatesOpen;
-                  return (
-                    <div key={gate} className="flex items-center gap-3">
-                      <div
-                        className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-sans font-medium ${
-                          isOpen
-                            ? 'bg-[#7fffd4]/30 text-[#7fffd4]'
-                            : isCurrent
-                              ? 'bg-[#7fffd4]/20 text-[#7fffd4] ring-1 ring-[#7fffd4]/30'
-                              : 'bg-white/[0.04] text-white/20'
-                        }`}
-                      >
-                        {i + 1}
-                      </div>
-                      <span
-                        className={`font-sans text-sm ${
-                          isOpen || isCurrent ? 'text-white/80' : 'text-white/25'
-                        }`}
-                      >
-                        {gate}
-                        {isOpen && <span className="ml-1 text-[#7fffd4]/60 text-xs">(open)</span>}
-                      </span>
-                    </div>
-                  );
-                }
-              )}
-            </div>
-            <div className="pt-2">
-              <p className="font-sans text-xs text-white/30">
-                Rank: <span className="text-[#ffd700]">{magicRank}</span>
+            <h3 className="font-display text-base text-white">Progress</h3>
+            <div className="space-y-3">
+              {/* Progress bar */}
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="font-sans text-xs text-white/50">{gatesOpen} of 10</span>
+                  <span className="font-sans text-xs text-[#ffd700]">{magicRank}</span>
+                </div>
+                <div className="w-full h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-[#7fffd4] to-[#7fffd4]/60 transition-all duration-500"
+                    style={{ width: `${(gatesOpen / 10) * 100}%` }}
+                  />
+                </div>
+              </div>
+              <p className="font-sans text-xs text-white/30 leading-relaxed">
+                Create, read, and explore to advance. Each stage reveals more of the platform.
               </p>
-              {profile?.activeGate && (
-                <p className="font-sans text-xs text-white/30 mt-1">
-                  Active Gate: <span className="text-[#7fffd4]">{getGateName(gatesOpen)}</span>
-                </p>
-              )}
+              <Link
+                href="/academy"
+                className="block text-center px-4 py-2 rounded-xl border border-white/[0.06] text-white/50 font-sans text-xs transition-all hover:bg-white/[0.04] hover:text-white/70"
+              >
+                View stages
+              </Link>
             </div>
           </div>
         </aside>
