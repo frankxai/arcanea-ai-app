@@ -18,7 +18,7 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
 | Pages with loading.tsx | ~81 (+32) | 100% of dynamic pages |
 | Milestones Active | 10 (M001-M010) | M010 (Language) → M001 (Auth) → M008 → M005 |
 | Vercel Build | PASSING | Maintain green |
-| Last Deploy | 2026-03-01 | f3573c00 |
+| Last Deploy | 2026-03-01 | 483c67d2 |
 | Live URL | arcanea.ai | arcanea.ai |
 
 ---
@@ -110,7 +110,7 @@ Source: `.arcanea/projects/milestones/`
 - **Depends on**: M005, M008
 - **Files**: `m009-performance-polish.arc`
 
-### M010: Language & Experience Transformation (0%) — P0
+### M010: Language & Experience Transformation (65%) — P0
 - **Guardian**: Alera (Voice Gate)
 - **Target**: 2026-03-08
 - **Strategy**: `.arcanea/strategy/LANGUAGE_EXPERIENCE_STRATEGY.md`
@@ -118,10 +118,10 @@ Source: `.arcanea/projects/milestones/`
 - **Scope**: Rewrite all user-facing copy across the platform. Replace jargon-first, lore-dump UX with progressive disclosure that respects viewer intelligence. Implement hidden depth system (color shifts, progressive vocabulary, Easter eggs).
 - **Depends on**: Nothing — this is THE priority
 - **Phases**:
-  - [ ] Phase 1: Nav + Homepage copy transformation
-  - [ ] Phase 2: Onboarding copy transformation
-  - [ ] Phase 3: Studio + Dashboard UX simplification
-  - [ ] Phase 4: Chat + Discover + Library refinement
+  - [x] Phase 1: Nav + Homepage copy transformation (34890534, 986703aa)
+  - [x] Phase 2: Onboarding copy transformation (7f4763c9)
+  - [x] Phase 3: Studio + Dashboard UX simplification (92e69b01) — removed Guardian badge, Gate/Element dropdowns, 10-Gates sidebar, "Manifest"→"Save"
+  - [x] Phase 4: Chat + Discover + Library refinement (483c67d2) — removed chat badge, "Luminor Codex"→"Codex"
   - [ ] Phase 5: Hidden depth system (progressive vocabulary, color shifts, Easter eggs)
   - [ ] Phase 6: Glossary and reference refinement
   - [ ] Update voice.yaml with new anti-slop principles
