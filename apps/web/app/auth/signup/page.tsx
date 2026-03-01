@@ -49,7 +49,7 @@ export default function SignupPage() {
       const supabase = createClient();
       const origin = window.location.origin;
       const emailRedirectTo = new URL('/auth/callback', origin);
-      emailRedirectTo.searchParams.set('next', '/welcome');
+      emailRedirectTo.searchParams.set('next', '/onboarding');
 
       const { error } = await supabase.auth.signUp({
         email: email.trim(),

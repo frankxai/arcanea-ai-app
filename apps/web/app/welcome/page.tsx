@@ -89,7 +89,7 @@ export default function WelcomePage() {
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
           <Link
-            href="/onboarding/creator-type"
+            href="/onboarding"
             className="group flex items-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-gold-bright to-gold-medium text-cosmic-void font-body font-semibold text-lg transition-all hover:scale-105 hover:shadow-glow-lg"
           >
             Begin Your Journey

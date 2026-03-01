@@ -89,21 +89,25 @@ function SessionsSidebar({
     setLoading(true);
     try {
       const res = await fetch(
-        `/api/chat/sessions?luminorId=${encodeURIComponent(luminorId)}`
+        `/api/chat/sessions?userId=${encodeURIComponent('me')}&luminorId=${encodeURIComponent(luminorId)}`
       );
       if (res.ok) {
-        const data = await res.json();
-        if (Array.isArray(data.sessions)) {
-          setSessions(
-            data.sessions.map(
-              (s: { id: string; title: string | null; updatedAt: string }) => ({
-                id: s.id,
-                title: s.title,
-                updatedAt: s.updatedAt,
-              })
-            )
-          );
-        }
+        const json = await res.json();
+        // Support both { data } (new) and { sessions } (legacy) response shapes
+        const list = Array.isArray(json.data)
+          ? json.data
+          : Array.isArray(json.sessions)
+          ? json.sessions
+          : [];
+        setSessions(
+          list.map(
+            (s: { id: string; title: string | null; updatedAt: string }) => ({
+              id: s.id,
+              title: s.title,
+              updatedAt: s.updatedAt,
+            })
+          )
+        );
       }
     } catch {
       // Non-critical

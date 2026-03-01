@@ -392,8 +392,10 @@ export function useChat({
         body: JSON.stringify({ luminorId }),
       });
       if (res.ok) {
-        const data = await res.json().catch(() => null);
-        if (typeof data?.sessionId === 'string') setSessionId(data.sessionId);
+        const json = await res.json().catch(() => null);
+        // Support both { data: { id } } (new) and { sessionId } (legacy) response shapes
+        const newSessionId = json?.data?.id ?? json?.sessionId;
+        if (typeof newSessionId === 'string') setSessionId(newSessionId);
       }
     } catch {
       // Best-effort — the next message will create a session via getOrCreateSession

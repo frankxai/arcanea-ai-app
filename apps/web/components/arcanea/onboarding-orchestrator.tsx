@@ -1,6 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
+import { useRouter } from 'next/navigation'
+import { useAuth } from '@/lib/auth/context'
+import { createClient } from '@/lib/supabase/client'
+import { updateProfile } from '@/lib/database/services/profile-service'
 import Step1Welcome from './onboarding-welcome'
 import Step2CreatorType from './step2-creator-type'
 import Step3Guardian from './step3-guardian'
@@ -12,9 +16,25 @@ import CosmicParticles from './cosmic-particles'
 
 const STEP_LABELS = ['Welcome', 'Identity', 'Guardian', 'Creation', 'Universe']
 
+const GUARDIAN_GATE_MAP: Record<string, string> = {
+  Lyssandria: 'Foundation',
+  Leyla: 'Flow',
+  Draconia: 'Fire',
+  Maylinn: 'Heart',
+  Alera: 'Voice',
+  Lyria: 'Sight',
+  Aiyami: 'Crown',
+  Elara: 'Shift',
+  Ino: 'Unity',
+  Shinkami: 'Source',
+}
+
 export default function ArcanealOnboarding() {
+  const router = useRouter()
+  const { user } = useAuth()
   const [step, setStep] = useState(1)
   const [transitioning, setTransitioning] = useState(false)
+  const [saving, setSaving] = useState(false)
 
   // Accumulated data
   const [selectedCreatorTypes, setSelectedCreatorTypes] = useState<string[]>([])
@@ -33,6 +53,41 @@ export default function ArcanealOnboarding() {
 
   const next = () => goToStep(step + 1)
   const back = () => goToStep(step - 1)
+
+  // Save onboarding data to Supabase profile
+  const saveOnboardingData = useCallback(async () => {
+    if (!user) return
+    setSaving(true)
+    try {
+      const supabase = createClient()
+      const guardianName = matchedGuardian?.name || null
+      const gate = guardianName ? GUARDIAN_GATE_MAP[guardianName] || 'Foundation' : 'Foundation'
+
+      await updateProfile(supabase, user.id, {
+        guardian: guardianName as Parameters<typeof updateProfile>[2]['guardian'],
+        activeGate: gate as Parameters<typeof updateProfile>[2]['activeGate'],
+        metadata: {
+          creatorTypes: selectedCreatorTypes,
+          onboardingComplete: true,
+          onboardingDate: new Date().toISOString(),
+          firstCreation: firstCreationPrompt
+            ? { prompt: firstCreationPrompt, response: firstCreationResponse }
+            : null,
+        },
+      })
+    } catch (err) {
+      console.error('Failed to save onboarding data:', err)
+    } finally {
+      setSaving(false)
+    }
+  }, [user, matchedGuardian, selectedCreatorTypes, firstCreationPrompt, firstCreationResponse])
+
+  const handleComplete = useCallback(async () => {
+    setCompleted(true)
+    await saveOnboardingData()
+    // Redirect to studio after a brief moment
+    setTimeout(() => router.push('/studio'), 2500)
+  }, [saveOnboardingData, router])
 
   if (completed) {
     return (
@@ -54,13 +109,16 @@ export default function ArcanealOnboarding() {
             Welcome to Arcanea
           </h1>
           <p className="text-[#7c7c9a] font-sans text-sm">
-            Your universe has been created. Your journey begins now.
+            {saving ? 'Weaving your universe...' : 'Your universe has been created. Your journey begins now.'}
           </p>
           {matchedGuardian && (
             <p className="mt-3 text-sm font-sans" style={{ color: matchedGuardian.color }}>
               {matchedGuardian.name} walks beside you.
             </p>
           )}
+          <p className="mt-4 text-xs text-[#3a3a5a] font-sans animate-pulse">
+            Entering the Studio...
+          </p>
         </div>
       </div>
     )
@@ -149,7 +207,7 @@ export default function ArcanealOnboarding() {
                 guardian={matchedGuardian}
                 firstCreationPrompt={firstCreationPrompt}
                 firstCreationResponse={firstCreationResponse}
-                onEnter={() => setCompleted(true)}
+                onEnter={handleComplete}
               />
             )}
           </div>
