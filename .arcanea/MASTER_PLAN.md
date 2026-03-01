@@ -18,7 +18,7 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
 | Pages with loading.tsx | ~81 (+32) | 100% of dynamic pages |
 | Milestones Active | 9 (M001-M009) | Complete M001 → M008 → M005 |
 | Vercel Build | PASSING | Maintain green |
-| Last Deploy | 2026-03-01 | 725f858a |
+| Last Deploy | 2026-03-01 | c4d09708 |
 | Live URL | arcanea.ai | arcanea.ai |
 
 ---
@@ -350,7 +350,7 @@ packages/              → 37 workspace packages
 #### Dashboard `/dashboard`
 - **Status**: LIVE
 - **Component**: Client
-- **Metadata**: No (needs layout.tsx)
+- **Metadata**: Yes (layout.tsx with OG)
 - **Loading**: Yes
 - **Current**: Auth guard, welcome header, stats grid (4), quick actions (3), recent activity, guardian companion sidebar, Ten Gates progress sidebar
 - **Needs**:
@@ -395,8 +395,8 @@ packages/              → 37 workspace packages
 | `/developers` | LIVE | None |
 | `/glossary` | LIVE | None |
 | `/linktree` | LIVE | None |
-| `/blog` | LIVE | None |
-| `/blog/[slug]` | LIVE | None |
+| `/blog` | LIVE | JSON-LD, aria-labels, shared data module |
+| `/blog/[slug]` | LIVE | Article JSON-LD, safe rendering, shared data |
 | `/hub` | LIVE | None |
 | `/contact` | PARTIAL | metadata |
 | `/platform` | PARTIAL | metadata, loading.tsx |
@@ -488,21 +488,30 @@ packages/              → 37 workspace packages
 26. ~~Metadata for builder pages~~ — DONE (2026-03-01, world-builder, universe-builder, vision-board)
 27. ~~Auth form accessibility~~ — DONE (2026-03-01, sr-only labels, aria-required, aria-label)
 28. ~~Verify API key usage~~ — DONE (2026-03-01, chat uses GOOGLE_AI_KEY not service-role)
+29. ~~Blog JSON-LD structured data~~ — DONE (2026-03-01, Article schema on all 6 blog posts)
+30. ~~Extract shared blog data~~ — DONE (2026-03-01, DRY — lib/blog-data.ts, removed 300 LOC duplication)
+31. ~~Fix blog XSS~~ — DONE (2026-03-01, replaced dangerouslySetInnerHTML with safe React rendering)
+32. ~~Fix blog Chinese characters~~ — DONE (2026-03-01, 9-step protocol translated to English)
+33. ~~Blog pagination accessibility~~ — DONE (2026-03-01, aria-labels, nav landmark, aria-current)
+34. ~~JSON-LD structured data for 6 key page types~~ — DONE (2026-03-01, Academy/Library/Collections/Texts/Luminors/About)
+35. ~~Vercel Web Analytics~~ — DONE (2026-03-01, @vercel/analytics installed, Analytics component in root layout)
+36. ~~Discover page title SEO~~ — DONE (2026-03-01, improved from "Discover" to descriptive title)
 
 ### P2 — Feature Expansion
-29. Integrate v0 Onboarding wizard (M008-T1)
-30. Integrate v0 Settings page (M005-T2)
-31. Academy course system (M006-T5)
-32. World/Universe builder backends
-33. Community features — forums, groups (M007)
-34. Cloudflare Stream integration (M002)
+37. Integrate v0 Onboarding wizard (M008-T1)
+38. Integrate v0 Settings page (M005-T2)
+39. Academy course system (M006-T5)
+40. World/Universe builder backends
+41. Community features — forums, groups (M007)
+42. Cloudflare Stream integration (M002)
 
 ### P3 — Cleanup & Optimization
-35. ~~Prune 15+ redirect-only pages~~ — DONE (2026-03-01, 16 routes deleted)
-36. Core Web Vitals audit (M009-T1)
-37. WCAG 2.2 accessibility audit (M009-T3)
-38. Remove `/workspace` or build it out
-39. TypeScript strict mode cleanup
+43. ~~Prune 15+ redirect-only pages~~ — DONE (2026-03-01, 16 routes deleted)
+44. Core Web Vitals audit (M009-T1)
+45. WCAG 2.2 accessibility audit (M009-T3)
+46. Remove `/workspace` or build it out
+47. TypeScript strict mode cleanup
+48. Lazy-load framer-motion on heavy pages (28 pages import it)
 
 ---
 
