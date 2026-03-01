@@ -18,7 +18,7 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
 | Pages with loading.tsx | ~81 (+32) | 100% of dynamic pages |
 | Milestones Active | 9 (M001-M009) | Complete M001 → M008 → M005 |
 | Vercel Build | PASSING | Maintain green |
-| Last Deploy | 2026-03-01 | d85977c7 |
+| Last Deploy | 2026-03-01 | 725f858a |
 | Live URL | arcanea.ai | arcanea.ai |
 
 ---
@@ -482,21 +482,27 @@ packages/              → 37 workspace packages
 20. ~~Add global-error.tsx~~ — DONE (2026-03-01, root error boundary with branded UI)
 21. ~~Wire dashboard to Supabase~~ — DONE (2026-03-01, profile + stats + activity from live services)
 22. ~~Improve robots.txt~~ — DONE (2026-03-01, exclude auth/dashboard/settings/onboarding)
+23. ~~Security headers in next.config.js~~ — DONE (2026-03-01, HSTS, X-Frame, Referrer-Policy, Permissions-Policy)
+24. ~~Dynamic sitemap with Library content~~ — DONE (2026-03-01, ~190 URLs: 17 collections + 76 texts + 10 gates)
+25. ~~Pre-render Library texts~~ — DONE (2026-03-01, generateStaticParams → 59 pages pre-rendered)
+26. ~~Metadata for builder pages~~ — DONE (2026-03-01, world-builder, universe-builder, vision-board)
+27. ~~Auth form accessibility~~ — DONE (2026-03-01, sr-only labels, aria-required, aria-label)
+28. ~~Verify API key usage~~ — DONE (2026-03-01, chat uses GOOGLE_AI_KEY not service-role)
 
 ### P2 — Feature Expansion
-23. Integrate v0 Onboarding wizard (M008-T1)
-24. Integrate v0 Settings page (M005-T2)
-25. Academy course system (M006-T5)
-26. World/Universe builder backends
-27. Community features — forums, groups (M007)
-28. Cloudflare Stream integration (M002)
+29. Integrate v0 Onboarding wizard (M008-T1)
+30. Integrate v0 Settings page (M005-T2)
+31. Academy course system (M006-T5)
+32. World/Universe builder backends
+33. Community features — forums, groups (M007)
+34. Cloudflare Stream integration (M002)
 
 ### P3 — Cleanup & Optimization
-29. ~~Prune 15+ redirect-only pages~~ — DONE (2026-03-01, 16 routes deleted)
-30. Core Web Vitals audit (M009-T1)
-31. WCAG 2.2 accessibility audit (M009-T3)
-32. Remove `/workspace` or build it out
-33. TypeScript strict mode cleanup
+35. ~~Prune 15+ redirect-only pages~~ — DONE (2026-03-01, 16 routes deleted)
+36. Core Web Vitals audit (M009-T1)
+37. WCAG 2.2 accessibility audit (M009-T3)
+38. Remove `/workspace` or build it out
+39. TypeScript strict mode cleanup
 
 ---
 
@@ -506,16 +512,18 @@ packages/              → 37 workspace packages
 - ~~RLS on arcanea table~~ — FIXED (2026-03-01)
 - ~~Overly permissive feedback policy~~ — FIXED (2026-03-01)
 - ~~auth_rls_initplan performance~~ — FIXED (2026-03-01)
-- Gemini chat uses service-role key in API route — should use anon key
+- ~~Gemini chat uses service-role key~~ — VERIFIED OK (2026-03-01, uses GOOGLE_GENERATIVE_AI_API_KEY, not service-role)
 - ~~11 API routes used old `lib/supabase.ts`~~ — FULLY MIGRATED (2026-03-01), file deleted, 0 imports remaining
 - ~~Settings page doesn't persist~~ — FIXED (2026-03-01, wired to Supabase profiles)
+- ~~Session helper hardcoded localhost~~ — FIXED (2026-03-01, clean URL construction)
 - Enable leaked password protection in Supabase Dashboard
+- Security headers added to next.config.js (HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy)
 
 ### Design System
 - Liquid glass system fully deployed (7 tiers)
 - Opacity hierarchy standardized across 177 files
 - Icon aliases using wrong Phosphor icons (3 instances)
-- `font-cinzel` references may still exist (should be `font-display`)
+- ~~`font-cinzel` references~~ — VERIFIED: 0 remaining (2026-03-01)
 
 ### Repo Sync
 - Local monorepo remote: `origin` → `arcanea-records`
