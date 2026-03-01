@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
 import { COLLECTIONS, getAllTexts } from '@/lib/content';
+import { BLOG_POSTS } from '@/lib/blog-data';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://arcanea.ai';
@@ -73,8 +74,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // ── Content ─────────────────────────────────────────────
     { url: `${baseUrl}/blog`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
-    { url: `${baseUrl}/blog/arcanea-prompt-books`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${baseUrl}/blog/arcanea-skills-system`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${baseUrl}/glossary`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
     { url: `${baseUrl}/changelog`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
     { url: `${baseUrl}/roadmap`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.75 },
@@ -143,11 +142,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.75,
   }));
 
+  // Blog post pages (dynamic from shared data)
+  const blogPages: MetadataRoute.Sitemap = BLOG_POSTS.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.date),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }));
+
   return [
     ...staticPages,
     ...guardianPages,
     ...libraryCollectionPages,
     ...libraryTextPages,
     ...gatePages,
+    ...blogPages,
   ];
 }
