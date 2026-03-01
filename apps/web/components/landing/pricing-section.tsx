@@ -18,7 +18,7 @@ const PLANS = [
     price: { monthly: 0, yearly: 0 },
     featured: false,
     cta: "Start Free",
-    href: "/register",
+    href: "/auth/signup",
     features: [
       "3 Luminor companions",
       "10 creations per month",
@@ -34,7 +34,7 @@ const PLANS = [
     price: { monthly: 19, yearly: 190 },
     featured: true,
     cta: "Start Creating",
-    href: "/register?plan=creator",
+    href: "/auth/signup?plan=creator",
     badge: "Most Popular",
     features: [
       "All 10 Guardians",
@@ -54,7 +54,7 @@ const PLANS = [
     price: { monthly: 49, yearly: 490 },
     featured: false,
     cta: "Go Pro",
-    href: "/register?plan=studio",
+    href: "/auth/signup?plan=studio",
     features: [
       "Everything in Creator",
       "Team collaboration (5 seats)",

@@ -11,25 +11,6 @@ export default function AboutLoading() {
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_top_left,rgba(127,255,212,0.15),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(245,158,11,0.1),transparent_50%)]" />
       </div>
 
-      {/* Navigation Skeleton */}
-      <nav className="sticky top-0 z-50 border-b border-white/[0.04] bg-cosmic-deep/80 backdrop-blur-xl">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Skeleton variant="rect" className="w-10 h-10 rounded-xl" />
-              <Skeleton variant="text" className="w-24 h-6" />
-            </div>
-            <div className="hidden md:flex items-center gap-8">
-              <Skeleton variant="text" className="w-16 h-4" />
-              <Skeleton variant="text" className="w-16 h-4" />
-              <Skeleton variant="text" className="w-16 h-4" />
-              <Skeleton variant="text" className="w-16 h-4" />
-              <Skeleton variant="rect" className="w-32 h-9 rounded-lg" />
-            </div>
-          </div>
-        </div>
-      </nav>
-
       <main className="max-w-7xl mx-auto px-6">
         {/* Hero Skeleton */}
         <section className="pt-20 pb-16">

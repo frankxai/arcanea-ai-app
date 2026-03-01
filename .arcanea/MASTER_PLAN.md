@@ -16,9 +16,9 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
 | Total Pages | ~185 (routes, 16 redirect-only pruned) | 80 (prune stubs) |
 | Pages with Metadata | ~77 (+12) | 100% |
 | Pages with loading.tsx | ~81 (+32) | 100% of dynamic pages |
-| Milestones Active | 9 (M001-M009) | Complete M001 → M008 → M005 |
+| Milestones Active | 10 (M001-M010) | M010 (Language) → M001 (Auth) → M008 → M005 |
 | Vercel Build | PASSING | Maintain green |
-| Last Deploy | 2026-03-01 | 3e0ee035 |
+| Last Deploy | 2026-03-01 | f3573c00 |
 | Live URL | arcanea.ai | arcanea.ai |
 
 ---
@@ -103,12 +103,29 @@ Source: `.arcanea/projects/milestones/`
 - **Depends on**: M005
 - **Files**: `m008-onboarding-conversion.arc`
 
-### M009: Performance & Production Polish (30%) — P1
+### M009: Performance & Production Polish (45%) — P1
 - **Guardian**: Elara (Shift Gate)
 - **Target**: 2026-03-22
 - **Scope**: Core Web Vitals, SEO, accessibility, error handling, production hardening, cleanup
 - **Depends on**: M005, M008
 - **Files**: `m009-performance-polish.arc`
+
+### M010: Language & Experience Transformation (0%) — P0
+- **Guardian**: Alera (Voice Gate)
+- **Target**: 2026-03-08
+- **Strategy**: `.arcanea/strategy/LANGUAGE_EXPERIENCE_STRATEGY.md`
+- **Principle**: Creation first. Mythology as earned discovery.
+- **Scope**: Rewrite all user-facing copy across the platform. Replace jargon-first, lore-dump UX with progressive disclosure that respects viewer intelligence. Implement hidden depth system (color shifts, progressive vocabulary, Easter eggs).
+- **Depends on**: Nothing — this is THE priority
+- **Phases**:
+  - [ ] Phase 1: Nav + Homepage copy transformation
+  - [ ] Phase 2: Onboarding copy transformation
+  - [ ] Phase 3: Studio + Dashboard UX simplification
+  - [ ] Phase 4: Chat + Discover + Library refinement
+  - [ ] Phase 5: Hidden depth system (progressive vocabulary, color shifts, Easter eggs)
+  - [ ] Phase 6: Glossary and reference refinement
+  - [ ] Update voice.yaml with new anti-slop principles
+  - [ ] Update ARCANEA_BRAND_GUIDELINES.md
 
 ---
 
@@ -458,8 +475,9 @@ packages/              → 37 workspace packages
 ## Priority Queue (Next Actions)
 
 ### P0 — Deploy Blockers & Core Experience
-1. Set Supabase env vars on Vercel (M001 blocker)
-2. Configure Supabase Dashboard Site URL + Redirect URLs
+1. **Language & Experience Transformation (M010)** — Rewrite nav, homepage, onboarding, studio, dashboard copy. Kill jargon-first UX. Progressive disclosure. Hidden depth system. See `.arcanea/strategy/LANGUAGE_EXPERIENCE_STRATEGY.md`
+2. Set Supabase env vars on Vercel (M001 blocker)
+3. Configure Supabase Dashboard Site URL + Redirect URLs
 3. ~~Add metadata to `/academy`~~ — DONE (2026-03-01, layout.tsx with generateMetadata)
 4. ~~Build `/academy/gates/[id]` dynamic route~~ — DONE (2026-03-01, 10 gates pre-rendered)
 5. ~~Add chat persistence (Supabase tables + service)~~ — DONE (2026-03-01, chat_sessions + chat_messages)
@@ -502,22 +520,27 @@ packages/              → 37 workspace packages
 40. ~~Lazy-load graph visualization~~ — DONE (2026-03-01, dynamic import with ssr:false, ~150KB savings)
 41. ~~Lazy-load onboarding steps~~ — DONE (2026-03-01, React.lazy for steps 2-5)
 42. ~~All PARTIAL pages verified~~ — DONE (2026-03-01, contact/platform/roadmap/install/workflows/user-flows/arcanea-code/arcanea-os/arcanea-vault all have metadata+loading)
+43. ~~JSON-LD for guardian detail + academy gate pages~~ — DONE (2026-03-01, Article+Breadcrumb for 10 guardians, Course+Breadcrumb for 10 gates)
+44. ~~Fix 25 broken internal links~~ — DONE (2026-03-01, /signup→/auth/signup, /register→/auth/signup, pruned sub-route links)
+45. ~~Remove 4 duplicate navbars~~ — DONE (2026-03-01, FAQ/pricing/changelog/install had custom nav duplicating global Navbar)
+46. ~~Canonical URL~~ — DONE (2026-03-01, alternates.canonical in root layout metadata)
+47. ~~Remove debug console.log~~ — DONE (2026-03-01, chat-imagine gate invocation)
 
 ### P2 — Feature Expansion
-43. Integrate v0 Onboarding wizard (M008-T1)
-44. Integrate v0 Settings page (M005-T2)
-45. Academy course system (M006-T5)
-46. World/Universe builder backends
-47. Community features — forums, groups (M007)
-48. Cloudflare Stream integration (M002)
+48. Integrate v0 Onboarding wizard (M008-T1)
+49. Integrate v0 Settings page (M005-T2)
+50. Academy course system (M006-T5)
+51. World/Universe builder backends
+52. Community features — forums, groups (M007)
+53. Cloudflare Stream integration (M002)
 
 ### P3 — Cleanup & Optimization
-49. ~~Prune 15+ redirect-only pages~~ — DONE (2026-03-01, 16 routes deleted)
-50. Core Web Vitals audit (M009-T1)
-51. WCAG 2.2 accessibility audit (M009-T3)
-52. Remove `/workspace` or build it out
-53. TypeScript strict mode cleanup
-54. Lazy-load framer-motion on heavy pages (28 pages import it)
+54. ~~Prune 15+ redirect-only pages~~ — DONE (2026-03-01, 16 routes deleted)
+55. Core Web Vitals audit (M009-T1)
+56. WCAG 2.2 accessibility audit (M009-T3)
+57. Remove `/workspace` or build it out
+58. TypeScript strict mode cleanup
+59. Lazy-load framer-motion on heavy pages (28 pages import it)
 
 ---
 
