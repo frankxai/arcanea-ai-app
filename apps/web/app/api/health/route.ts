@@ -35,16 +35,23 @@ interface HealthCheck {
  */
 export async function GET() {
   let dbHealthy = false;
+  let dbError: string | null = null;
+  let urlPrefix: string | null = null;
   try {
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
     const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
     if (url && key) {
+      urlPrefix = url.substring(0, 30) + '...';
       const supabase = createClient<Database>(url, key);
       const { error } = await supabase.from('profiles').select('id').limit(1);
       dbHealthy = !error;
+      if (error) dbError = `${error.code}: ${error.message}`;
+    } else {
+      dbError = 'missing env vars';
     }
-  } catch {
+  } catch (e) {
     dbHealthy = false;
+    dbError = e instanceof Error ? e.message : String(e);
   }
 
   const health: HealthCheck = {
@@ -69,7 +76,7 @@ export async function GET() {
   const isHealthy = health.api && health.database;
 
   return NextResponse.json(
-    { ...health, env: envDiag },
+    { ...health, env: envDiag, dbError, urlPrefix },
     {
       status: isHealthy ? 200 : 503,
       headers: {
