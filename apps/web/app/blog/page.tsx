@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import { BLOG_POSTS, BLOG_CATEGORIES } from "@/lib/blog-data";
 
 export const metadata: Metadata = {
   title: "Blog | Arcanea",
@@ -197,90 +198,7 @@ const Icons: Record<string, React.FC<InlineSvgProps>> = {
   ),
 };
 
-// ─── Blog Data ─────────────────────────────────────────────────────────────────
-const BLOG_POSTS = [
-  {
-    slug: "arcanea-skills-system",
-    title: "The Arcanea Skills System",
-    excerpt:
-      "Discover how the skill-rules engine empowers Guardians with 35 activation rules and 9-step protocols.",
-    category: "Platform",
-    author: "Arcanea Team",
-    date: "2026-02-15",
-    readTime: "8 min read",
-    featured: true,
-    accent: "#8b5cf6",
-  },
-  {
-    slug: "arcanea-prompt-books",
-    title: "Mastering Prompt Books",
-    excerpt:
-      "Learn to create and curate powerful prompt collections that unlock the full potential of AI companions.",
-    category: "Tutorial",
-    author: "Luminor Archive",
-    date: "2026-02-10",
-    readTime: "12 min read",
-    featured: true,
-    accent: "#7fffd4",
-  },
-  {
-    slug: "guardian-evolution",
-    title: "The Guardian Evolution System",
-    excerpt:
-      "How AI companions grow from Level 1 Spark to Level 50 Transcendent through XP and personality adaptation.",
-    category: "Feature",
-    author: "System Architect",
-    date: "2026-02-05",
-    readTime: "10 min read",
-    featured: false,
-    accent: "#ffd700",
-  },
-  {
-    slug: "seven-wisdoms-guide",
-    title: "A Guide to the Seven Wisdoms",
-    excerpt:
-      "Understanding Sophron, Kardia, Valora, Eudaira, Orakis, Poiesis, and Enduran in daily practice.",
-    category: "Lore",
-    author: "Shinkami",
-    date: "2026-01-28",
-    readTime: "15 min read",
-    featured: false,
-    accent: "#9966ff",
-  },
-  {
-    slug: "ten-gates-overview",
-    title: "Journey Through the Ten Gates",
-    excerpt:
-      "A comprehensive overview of the Extended Solfeggio frequencies and their transformative power.",
-    category: "Lore",
-    author: "Lyria",
-    date: "2026-01-20",
-    readTime: "20 min read",
-    featured: false,
-    accent: "#ff6b35",
-  },
-  {
-    slug: "community-spotlight-february",
-    title: "Community Spotlight: February 2026",
-    excerpt:
-      "Celebrating the most inspiring creations and contributions from the Arcanea community this month.",
-    category: "Community",
-    author: "Community Team",
-    date: "2026-02-01",
-    readTime: "5 min read",
-    featured: false,
-    accent: "#10b981",
-  },
-];
-
-const CATEGORIES = [
-  { id: "all", label: "All Posts", count: 24 },
-  { id: "platform", label: "Platform", count: 8 },
-  { id: "tutorial", label: "Tutorials", count: 6 },
-  { id: "feature", label: "Features", count: 5 },
-  { id: "lore", label: "Lore", count: 9 },
-  { id: "community", label: "Community", count: 4 },
-];
+const CATEGORIES = BLOG_CATEGORIES;
 
 function formatDate(dateStr: string): string {
   const date = new Date(dateStr);
@@ -378,6 +296,7 @@ export default function BlogPage() {
             <input
               type="text"
               placeholder="Search articles..."
+              aria-label="Search articles"
               className="w-full pl-12 pr-4 py-3 rounded-xl liquid-glass border border-white/[0.06] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-crystal/50 focus:ring-1 focus:ring-crystal/20 transition-all"
             />
           </div>
@@ -528,23 +447,23 @@ export default function BlogPage() {
 
         {/* Pagination */}
         <section className="mt-12">
-          <div className="flex justify-center items-center gap-2">
-            <button className="p-2 rounded-lg card-3d liquid-glass border border-white/[0.06] text-text-muted hover:border-crystal/30 hover:text-crystal transition-all">
+          <nav className="flex justify-center items-center gap-2" aria-label="Blog pagination">
+            <button aria-label="Previous page" className="p-2 rounded-lg card-3d liquid-glass border border-white/[0.06] text-text-muted hover:border-crystal/30 hover:text-crystal transition-all">
               <Icons.ChevronLeft />
             </button>
-            <button className="w-10 h-10 rounded-lg bg-brand-primary/20 text-brand-primary font-mono text-sm">
+            <button aria-label="Page 1" aria-current="page" className="w-10 h-10 rounded-lg bg-brand-primary/20 text-brand-primary font-mono text-sm">
               1
             </button>
-            <button className="p-2 rounded-lg card-3d liquid-glass border border-white/[0.06] text-text-muted hover:border-crystal/30 hover:text-crystal transition-all">
+            <button aria-label="Page 2" className="p-2 rounded-lg card-3d liquid-glass border border-white/[0.06] text-text-muted hover:border-crystal/30 hover:text-crystal transition-all">
               2
             </button>
-            <button className="p-2 rounded-lg card-3d liquid-glass border border-white/[0.06] text-text-muted hover:border-crystal/30 hover:text-crystal transition-all">
+            <button aria-label="Page 3" className="p-2 rounded-lg card-3d liquid-glass border border-white/[0.06] text-text-muted hover:border-crystal/30 hover:text-crystal transition-all">
               3
             </button>
-            <button className="p-2 rounded-lg card-3d liquid-glass border border-white/[0.06] text-text-muted hover:border-crystal/30 hover:text-crystal transition-all">
+            <button aria-label="Next page" className="p-2 rounded-lg card-3d liquid-glass border border-white/[0.06] text-text-muted hover:border-crystal/30 hover:text-crystal transition-all">
               <Icons.ChevronRight />
             </button>
-          </div>
+          </nav>
         </section>
 
         {/* Newsletter CTA */}
@@ -566,6 +485,7 @@ export default function BlogPage() {
                 <input
                   type="email"
                   placeholder="Enter your email"
+                  aria-label="Email address for newsletter"
                   className="flex-1 px-4 py-3 rounded-xl liquid-glass border border-white/[0.06] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-crystal/50"
                 />
                 <button className="px-6 py-3 rounded-xl bg-brand-primary text-white font-semibold hover:shadow-glow-brand transition-all">
