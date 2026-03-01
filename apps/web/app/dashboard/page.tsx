@@ -1,8 +1,12 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth/context';
+import { createClient } from '@/lib/supabase/client';
+import { getProfile, getProfileStats } from '@/lib/database/services/profile-service';
+import { getActivityFeed } from '@/lib/database/services/activity-service';
+import type { Profile, ProfileStats, Activity } from '@/lib/database/types/api-responses';
 import {
   Sparkle,
   Palette,
@@ -19,23 +23,40 @@ import {
   Spinner,
 } from '@/lib/phosphor-icons';
 
-// ─── Mock Data ────────────────────────────────────────────────────────────────
+// ─── Activity Icon Map ──────────────────────────────────────────────────────
 
-const RECENT_ACTIVITY = [
-  { id: 1, icon: PencilSimple, text: "Created 'The Oracle's Lament'", time: '2 hours ago', color: 'text-violet-400' },
-  { id: 2, icon: Lightning, text: 'Reached Gate 1 — Foundation', time: '1 day ago', color: 'text-[#7fffd4]' },
-  { id: 3, icon: Book, text: "Read 'The First Dawn' from Legends", time: '2 days ago', color: 'text-amber-400' },
-  { id: 4, icon: Star, text: 'Earned Apprentice rank', time: '3 days ago', color: 'text-[#ffd700]' },
-];
+const ACTIVITY_ICON_MAP: Record<string, { icon: typeof PencilSimple; color: string }> = {
+  create: { icon: PencilSimple, color: 'text-violet-400' },
+  read: { icon: Book, color: 'text-amber-400' },
+  like: { icon: Star, color: 'text-[#ffd700]' },
+  follow: { icon: Lightning, color: 'text-[#7fffd4]' },
+  gate_open: { icon: Lightning, color: 'text-[#7fffd4]' },
+  rank_up: { icon: Star, color: 'text-[#ffd700]' },
+  login: { icon: Sparkle, color: 'text-violet-400' },
+}
 
-const STATS = [
-  { label: 'Creations', value: '3 works', icon: Palette, color: 'text-violet-400', bg: 'bg-violet-500/10' },
-  { label: 'Gate Progress', value: 'Gate 1 of 10', icon: Lightning, color: 'text-[#7fffd4]', bg: 'bg-emerald-500/10' },
-  { label: 'Library', value: '34 texts to explore', icon: Book, color: 'text-amber-400', bg: 'bg-amber-500/10' },
-  { label: 'Streak', value: '1 day', icon: Flame, color: 'text-orange-400', bg: 'bg-orange-500/10' },
-];
+const DEFAULT_ICON = { icon: Sparkle, color: 'text-white/50' }
 
-// ─── Unauthenticated View ─────────────────────────────────────────────────────
+// ─── Helpers ────────────────────────────────────────────────────────────────
+
+function timeAgo(dateStr: string): string {
+  const diff = Date.now() - new Date(dateStr).getTime()
+  const mins = Math.floor(diff / 60000)
+  if (mins < 1) return 'just now'
+  if (mins < 60) return `${mins}m ago`
+  const hours = Math.floor(mins / 60)
+  if (hours < 24) return `${hours}h ago`
+  const days = Math.floor(hours / 24)
+  if (days < 7) return `${days}d ago`
+  return `${Math.floor(days / 7)}w ago`
+}
+
+function getGateName(gatesOpen: number): string {
+  const gates = ['Foundation', 'Flow', 'Fire', 'Heart', 'Voice', 'Sight', 'Crown', 'Shift', 'Unity', 'Source']
+  return gates[Math.min(gatesOpen, 9)] || 'Foundation'
+}
+
+// ─── Unauthenticated View ─────────────────────────────────────────────────
 
 function SignInPrompt() {
   return (
@@ -69,16 +90,24 @@ function SignInPrompt() {
   );
 }
 
-// ─── Dashboard Page ───────────────────────────────────────────────────────────
+// ─── Dashboard Page ───────────────────────────────────────────────────────
 
 export default function DashboardPage() {
-  const { user, isLoading } = useAuth();
+  const { user, isLoading: authLoading } = useAuth();
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [stats, setStats] = useState<ProfileStats | null>(null);
+  const [activities, setActivities] = useState<Activity[]>([]);
+  const [dataLoading, setDataLoading] = useState(true);
 
-  const displayName = user?.user_metadata?.display_name
+  const displayName = profile?.displayName
     || user?.user_metadata?.full_name
+    || user?.user_metadata?.display_name
     || 'Creator';
 
-  const guardianName = user?.user_metadata?.guardian || null;
+  const guardianName = profile?.guardian || user?.user_metadata?.guardian || null;
+  const gatesOpen = profile?.gatesOpen ?? 0;
+  const magicRank = profile?.magicRank || 'Apprentice';
+  const streakDays = profile?.streakDays ?? 0;
 
   const formattedDate = useMemo(() => {
     return new Date().toLocaleDateString('en-US', {
@@ -89,8 +118,42 @@ export default function DashboardPage() {
     });
   }, []);
 
+  // Fetch profile, stats, and recent activity
+  useEffect(() => {
+    if (!user) {
+      setDataLoading(false);
+      return;
+    }
+
+    let cancelled = false;
+
+    async function fetchData() {
+      try {
+        const supabase = createClient();
+        const [profileData, statsData, activityData] = await Promise.all([
+          getProfile(supabase, user!.id),
+          getProfileStats(supabase, user!.id),
+          getActivityFeed(supabase, user!.id, { pageSize: 5 }),
+        ]);
+
+        if (cancelled) return;
+
+        setProfile(profileData);
+        setStats(statsData);
+        setActivities(activityData.activities);
+      } catch {
+        // Supabase may not be configured — show fallback UI
+      } finally {
+        if (!cancelled) setDataLoading(false);
+      }
+    }
+
+    fetchData();
+    return () => { cancelled = true; };
+  }, [user]);
+
   // ── Loading state ──
-  if (isLoading) {
+  if (authLoading) {
     return (
       <div className="min-h-[70vh] flex items-center justify-center">
         <Spinner size={32} className="text-violet-400 animate-spin" />
@@ -102,6 +165,16 @@ export default function DashboardPage() {
   if (!user) {
     return <SignInPrompt />;
   }
+
+  const creationsCount = stats?.creationsCount ?? 0;
+  const libraryCount = 34; // Fixed: Library has 34 texts
+
+  const statCards = [
+    { label: 'Creations', value: `${creationsCount} work${creationsCount !== 1 ? 's' : ''}`, icon: Palette, color: 'text-violet-400', bg: 'bg-violet-500/10' },
+    { label: 'Gate Progress', value: `Gate ${gatesOpen} of 10`, icon: Lightning, color: 'text-[#7fffd4]', bg: 'bg-emerald-500/10' },
+    { label: 'Library', value: `${libraryCount} texts`, icon: Book, color: 'text-amber-400', bg: 'bg-amber-500/10' },
+    { label: 'Streak', value: `${streakDays} day${streakDays !== 1 ? 's' : ''}`, icon: Flame, color: 'text-orange-400', bg: 'bg-orange-500/10' },
+  ];
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-8">
@@ -127,7 +200,7 @@ export default function DashboardPage() {
 
           {/* ── Stats Grid ──────────────────────────────────────────── */}
           <section className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {STATS.map(({ label, value, icon: Icon, color, bg }) => (
+            {statCards.map(({ label, value, icon: Icon, color, bg }) => (
               <div
                 key={label}
                 className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md p-5 space-y-3"
@@ -136,7 +209,9 @@ export default function DashboardPage() {
                   <Icon size={22} weight="duotone" className={color} />
                 </div>
                 <div>
-                  <p className="font-sans text-lg font-semibold text-white">{value}</p>
+                  <p className="font-sans text-lg font-semibold text-white">
+                    {dataLoading ? <span className="inline-block w-16 h-5 bg-white/[0.06] rounded animate-pulse" /> : value}
+                  </p>
                   <p className="font-sans text-sm text-white/40">{label}</p>
                 </div>
               </div>
@@ -175,20 +250,47 @@ export default function DashboardPage() {
           <section className="space-y-3">
             <h2 className="font-display text-xl text-white/80">Recent Activity</h2>
             <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md divide-y divide-white/[0.04]">
-              {RECENT_ACTIVITY.map(({ id, icon: Icon, text, time, color }) => (
-                <div key={id} className="flex items-center gap-4 px-5 py-4">
-                  <div className="w-9 h-9 rounded-xl bg-white/[0.04] flex items-center justify-center flex-shrink-0">
-                    <Icon size={18} weight="duotone" className={color} />
+              {dataLoading ? (
+                Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="flex items-center gap-4 px-5 py-4">
+                    <div className="w-9 h-9 rounded-xl bg-white/[0.04] animate-pulse" />
+                    <div className="flex-1 space-y-2">
+                      <div className="h-4 w-48 bg-white/[0.06] rounded animate-pulse" />
+                      <div className="h-3 w-20 bg-white/[0.04] rounded animate-pulse" />
+                    </div>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-sans text-sm text-white/80 truncate">{text}</p>
-                    <p className="font-sans text-xs text-white/30 flex items-center gap-1 mt-0.5">
-                      <Clock size={12} />
-                      {time}
-                    </p>
-                  </div>
+                ))
+              ) : activities.length > 0 ? (
+                activities.map((activity) => {
+                  const { icon: Icon, color } = ACTIVITY_ICON_MAP[activity.action] || DEFAULT_ICON;
+                  const description = activity.metadata?.description as string
+                    || `${activity.action} ${activity.entityType}`;
+                  return (
+                    <div key={activity.id} className="flex items-center gap-4 px-5 py-4">
+                      <div className="w-9 h-9 rounded-xl bg-white/[0.04] flex items-center justify-center flex-shrink-0">
+                        <Icon size={18} weight="duotone" className={color} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-sans text-sm text-white/80 truncate">{description}</p>
+                        <p className="font-sans text-xs text-white/30 flex items-center gap-1 mt-0.5">
+                          <Clock size={12} />
+                          {timeAgo(activity.createdAt)}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="px-5 py-8 text-center">
+                  <p className="font-sans text-sm text-white/30">No activity yet. Start creating to see your journey unfold.</p>
+                  <Link
+                    href="/studio"
+                    className="inline-flex items-center gap-1 mt-3 text-sm text-violet-400 hover:text-violet-300 transition-colors font-sans"
+                  >
+                    Create your first work <ArrowRight size={14} />
+                  </Link>
                 </div>
-              ))}
+              )}
             </div>
           </section>
         </div>
@@ -204,7 +306,7 @@ export default function DashboardPage() {
               </div>
               <div>
                 <h3 className="font-display text-base text-white">
-                  {guardianName ? `${guardianName}` : 'Your Guardian'}
+                  {guardianName || 'Your Guardian'}
                 </h3>
                 <p className="font-sans text-xs text-white/40">
                   {guardianName ? 'Companion Intelligence' : 'Not yet discovered'}
@@ -212,7 +314,6 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            {/* Guardian image placeholder */}
             <div className="w-full aspect-square rounded-xl bg-gradient-to-br from-violet-500/5 via-transparent to-[#7fffd4]/5 border border-white/[0.04] flex items-center justify-center">
               <Sparkle size={40} weight="duotone" className="text-white/10" />
             </div>
@@ -238,32 +339,44 @@ export default function DashboardPage() {
             <h3 className="font-display text-base text-white">The Ten Gates</h3>
             <div className="space-y-2">
               {['Foundation', 'Flow', 'Fire', 'Heart', 'Voice', 'Sight', 'Crown', 'Shift', 'Unity', 'Source'].map(
-                (gate, i) => (
-                  <div key={gate} className="flex items-center gap-3">
-                    <div
-                      className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-sans font-medium ${
-                        i === 0
-                          ? 'bg-[#7fffd4]/20 text-[#7fffd4] ring-1 ring-[#7fffd4]/30'
-                          : 'bg-white/[0.04] text-white/20'
-                      }`}
-                    >
-                      {i + 1}
+                (gate, i) => {
+                  const isOpen = i < gatesOpen;
+                  const isCurrent = i === gatesOpen;
+                  return (
+                    <div key={gate} className="flex items-center gap-3">
+                      <div
+                        className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-sans font-medium ${
+                          isOpen
+                            ? 'bg-[#7fffd4]/30 text-[#7fffd4]'
+                            : isCurrent
+                              ? 'bg-[#7fffd4]/20 text-[#7fffd4] ring-1 ring-[#7fffd4]/30'
+                              : 'bg-white/[0.04] text-white/20'
+                        }`}
+                      >
+                        {i + 1}
+                      </div>
+                      <span
+                        className={`font-sans text-sm ${
+                          isOpen || isCurrent ? 'text-white/80' : 'text-white/25'
+                        }`}
+                      >
+                        {gate}
+                        {isOpen && <span className="ml-1 text-[#7fffd4]/60 text-xs">(open)</span>}
+                      </span>
                     </div>
-                    <span
-                      className={`font-sans text-sm ${
-                        i === 0 ? 'text-white/80' : 'text-white/25'
-                      }`}
-                    >
-                      {gate}
-                    </span>
-                  </div>
-                )
+                  );
+                }
               )}
             </div>
             <div className="pt-2">
               <p className="font-sans text-xs text-white/30">
-                Rank: <span className="text-[#ffd700]">Apprentice</span>
+                Rank: <span className="text-[#ffd700]">{magicRank}</span>
               </p>
+              {profile?.activeGate && (
+                <p className="font-sans text-xs text-white/30 mt-1">
+                  Active Gate: <span className="text-[#7fffd4]">{getGateName(gatesOpen)}</span>
+                </p>
+              )}
             </div>
           </div>
         </aside>

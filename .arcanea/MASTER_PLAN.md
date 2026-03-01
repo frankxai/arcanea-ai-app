@@ -18,7 +18,7 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
 | Pages with loading.tsx | ~81 (+32) | 100% of dynamic pages |
 | Milestones Active | 9 (M001-M009) | Complete M001 → M008 → M005 |
 | Vercel Build | PASSING | Maintain green |
-| Last Deploy | 2026-03-01 | b7a44d5c |
+| Last Deploy | 2026-03-01 | a052945e |
 | Live URL | arcanea.ai | arcanea.ai |
 
 ---
@@ -96,7 +96,7 @@ Source: `.arcanea/projects/milestones/`
 - **Depends on**: M001, M006
 - **Files**: `m007-community-social.arc`
 
-### M008: Onboarding & Conversion (65%) — P0
+### M008: Onboarding & Conversion (75%) — P0
 - **Guardian**: Maylinn (Heart Gate)
 - **Target**: 2026-03-10
 - **Scope**: Onboarding wizard integration, welcome dashboard, activation loops, analytics, auth UX
@@ -346,6 +346,30 @@ packages/              → 37 workspace packages
 |-------|--------|-------|
 | `/community/create` | PARTIAL | metadata |
 | `/community/strategy` | PARTIAL | metadata |
+
+#### Dashboard `/dashboard`
+- **Status**: LIVE
+- **Component**: Client
+- **Metadata**: No (needs layout.tsx)
+- **Loading**: Yes
+- **Current**: Auth guard, welcome header, stats grid (4), quick actions (3), recent activity, guardian companion sidebar, Ten Gates progress sidebar
+- **Needs**:
+  - [ ] Add metadata via layout.tsx
+  - [ ] Wire stats to real Supabase data (creations count, gates_open, streak)
+  - [ ] Wire recent activity to activity_log table
+  - [ ] Guardian image from media catalog
+- **Priority**: P0 — post-login landing page
+
+#### Onboarding `/onboarding`
+- **Status**: LIVE
+- **Component**: Client
+- **Loading**: No (needs)
+- **Current**: 5-step wizard (Welcome → Creator Type → Guardian → Creation → Universe), saves to Supabase profile, redirects to /dashboard
+- **Needs**:
+  - [ ] Add loading.tsx
+  - [ ] Add metadata via layout.tsx
+  - [ ] Wire creation step to real AI generation (currently mock)
+- **Priority**: P0 — conversion funnel
 
 #### Profile System
 | Route | Status | Needs |
