@@ -18,7 +18,7 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
 | Pages with loading.tsx | ~81 (+32) | 100% of dynamic pages |
 | Milestones Active | 9 (M001-M009) | Complete M001 → M008 → M005 |
 | Vercel Build | PASSING | Maintain green |
-| Last Deploy | 2026-03-01 | c6538cb4 |
+| Last Deploy | 2026-03-01 | abbd4945 |
 | Live URL | arcanea.ai | arcanea.ai |
 
 ---
@@ -62,7 +62,7 @@ Source: `.arcanea/projects/milestones/`
   - [ ] Sprint velocity tracking
 - **Files**: `m004-arcanea-pm.arc`
 
-### M005: Premium UI Overhaul via v0 (5%) — P0
+### M005: Premium UI Overhaul via v0 (40%) — P0
 - **Guardian**: Leyla (Flow Gate)
 - **Target**: 2026-03-15
 - **v0 Chats Generated**:
@@ -70,8 +70,15 @@ Source: `.arcanea/projects/milestones/`
   - Onboarding: `sOnFGuExkoy` — [v0.app/chat/sOnFGuExkoy](https://v0.app/chat/sOnFGuExkoy)
   - Gallery: `hJWNhFkicaR` — [v0.app/chat/hJWNhFkicaR](https://v0.app/chat/hJWNhFkicaR)
   - Settings: `nlNsLw1Dtlz` — [v0.app/chat/nlNsLw1Dtlz](https://v0.app/chat/nlNsLw1Dtlz)
-- **Remaining**: Extract v0 output, adapt to Arcanea stack, wire to Supabase
-- **Tasks**: 8 total (Studio, Settings, Onboarding, Gallery, Chat, Academy, Community, Pricing)
+  - Chat: `kWa3haHToWu` — [v0.app/chat/kWa3haHToWu](https://v0.app/chat/kWa3haHToWu)
+- **Extracted & Build-Verified** (Mar 1):
+  - Studio: 8 components (sidebar, right-panel, bottom-bar, 5 tabs)
+  - Gallery: 3 new + 5 existing (masonry, skeletons, gallery-page, data)
+  - Onboarding: 6 components (welcome, step2-5, orchestrator) in `components/arcanea/`
+  - Chat: 8 components (page, sidebar, messages, input, guardian-info, empty, types, data)
+  - Settings: sidebar component
+- **Remaining**: Wire to Supabase backend, replace mock data, Academy + Community + Pricing UIs
+- **Tasks**: 5/8 extracted (Studio, Settings, Onboarding, Gallery, Chat). Remaining: Academy, Community, Pricing
 - **Files**: `m005-premium-ui-v0.arc`
 
 ### M006: Creator Tools Backend (0%) — P1
@@ -88,7 +95,7 @@ Source: `.arcanea/projects/milestones/`
 - **Depends on**: M001, M006
 - **Files**: `m007-community-social.arc`
 
-### M008: Onboarding & Conversion (0%) — P0
+### M008: Onboarding & Conversion (20%) — P0
 - **Guardian**: Maylinn (Heart Gate)
 - **Target**: 2026-03-10
 - **Scope**: Onboarding wizard integration, welcome dashboard, activation loops, analytics, auth UX
