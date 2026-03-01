@@ -1,18 +1,19 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, lazy, Suspense } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/lib/auth/context'
 import { createClient } from '@/lib/supabase/client'
 import { updateProfile } from '@/lib/database/services/profile-service'
 import Step1Welcome from './onboarding-welcome'
-import Step2CreatorType from './step2-creator-type'
-import Step3Guardian from './step3-guardian'
-import Step4Creation from './step4-creation'
-import Step5YourUniverse from './step5-your-universe'
 import ProgressStepper from './progress-stepper'
 import type { Guardian } from './step3-guardian'
 import CosmicParticles from './cosmic-particles'
+
+const Step2CreatorType = lazy(() => import('./step2-creator-type'))
+const Step3Guardian = lazy(() => import('./step3-guardian'))
+const Step4Creation = lazy(() => import('./step4-creation'))
+const Step5YourUniverse = lazy(() => import('./step5-your-universe'))
 
 const STEP_LABELS = ['Welcome', 'Identity', 'Guardian', 'Creation', 'Universe']
 
@@ -172,44 +173,46 @@ export default function ArcanealOnboarding() {
           >
             {step === 1 && <Step1Welcome onNext={next} />}
 
-            {step === 2 && (
-              <Step2CreatorType
-                selected={selectedCreatorTypes}
-                onSelect={setSelectedCreatorTypes}
-                onNext={next}
-                onBack={back}
-              />
-            )}
+            <Suspense fallback={<div className="flex items-center justify-center py-16"><div className="w-8 h-8 border-2 border-[#8b5cf6]/40 border-t-[#8b5cf6] rounded-full animate-spin" /></div>}>
+              {step === 2 && (
+                <Step2CreatorType
+                  selected={selectedCreatorTypes}
+                  onSelect={setSelectedCreatorTypes}
+                  onNext={next}
+                  onBack={back}
+                />
+              )}
 
-            {step === 3 && (
-              <Step3Guardian
-                onGuardianMatched={(g) => setMatchedGuardian(g)}
-                onNext={next}
-                onBack={back}
-              />
-            )}
+              {step === 3 && (
+                <Step3Guardian
+                  onGuardianMatched={(g) => setMatchedGuardian(g)}
+                  onNext={next}
+                  onBack={back}
+                />
+              )}
 
-            {step === 4 && (
-              <Step4Creation
-                guardian={matchedGuardian}
-                onCreationSaved={(prompt, response) => {
-                  setFirstCreationPrompt(prompt)
-                  setFirstCreationResponse(response)
-                }}
-                onNext={next}
-                onBack={back}
-              />
-            )}
+              {step === 4 && (
+                <Step4Creation
+                  guardian={matchedGuardian}
+                  onCreationSaved={(prompt, response) => {
+                    setFirstCreationPrompt(prompt)
+                    setFirstCreationResponse(response)
+                  }}
+                  onNext={next}
+                  onBack={back}
+                />
+              )}
 
-            {step === 5 && (
-              <Step5YourUniverse
-                creatorTypes={selectedCreatorTypes}
-                guardian={matchedGuardian}
-                firstCreationPrompt={firstCreationPrompt}
-                firstCreationResponse={firstCreationResponse}
-                onEnter={handleComplete}
-              />
-            )}
+              {step === 5 && (
+                <Step5YourUniverse
+                  creatorTypes={selectedCreatorTypes}
+                  guardian={matchedGuardian}
+                  firstCreationPrompt={firstCreationPrompt}
+                  firstCreationResponse={firstCreationResponse}
+                  onEnter={handleComplete}
+                />
+              )}
+            </Suspense>
           </div>
 
           {/* Bottom edge shimmer */}

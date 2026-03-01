@@ -13,8 +13,28 @@ export const metadata: Metadata = {
 };
 
 export default function GuardiansPage() {
+  const guardians = [
+    'Lyssandria', 'Leyla', 'Draconia', 'Maylinn', 'Alera',
+    'Lyria', 'Aiyami', 'Elara', 'Ino', 'Shinkami',
+  ];
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'The Ten Guardians of Arcanea',
+    description: 'The Ten Gods and Goddesses who guard the Gates of creation.',
+    url: 'https://arcanea.ai/lore/guardians',
+    numberOfItems: 10,
+    itemListElement: guardians.map((name, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name,
+      url: `https://arcanea.ai/lore/guardians/${name.toLowerCase()}`,
+    })),
+  };
+
   return (
     <div className="relative min-h-screen bg-cosmic-deep">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <main>
         <GuardiansHero />
         <GuardiansGrid />

@@ -16,8 +16,18 @@ export const metadata: Metadata = {
 };
 
 export default function LorePage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Lore of Arcanea',
+    description: 'Explore the cosmic origins, Ten Guardians, and sacred wisdom of Arcanea.',
+    url: 'https://arcanea.ai/lore',
+    isPartOf: { '@type': 'WebSite', name: 'Arcanea', url: 'https://arcanea.ai' },
+  };
+
   return (
     <div className="relative min-h-screen bg-cosmic-deep">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <main>
         {/* Hero - Immersive entry point */}
         <LoreHero />

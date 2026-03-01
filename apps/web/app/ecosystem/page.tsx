@@ -295,8 +295,18 @@ const PILLARS = [
 // ─── Page ────────────────────────────────────────────────────────────────────
 
 export default function EcosystemPage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Arcanea Ecosystem',
+    description: 'The complete Arcanea creator ecosystem — platform, tools, overlays, on-chain, and automation.',
+    url: 'https://arcanea.ai/ecosystem',
+    isPartOf: { '@type': 'WebSite', name: 'Arcanea', url: 'https://arcanea.ai' },
+  };
+
   return (
     <div className="relative min-h-screen">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {/* Background */}
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-void" />

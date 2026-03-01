@@ -12,8 +12,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import ReactMarkdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { lazy, Suspense } from "react";
+
+const LazyCodeBlock = lazy(() => import("@/components/chat/code-block"));
 
 interface Message {
   id: string;
@@ -467,19 +468,11 @@ export function ChatTab() {
                         }: any) {
                           const match = /language-(\w+)/.exec(className || "");
                           return !inline && match ? (
-                            <SyntaxHighlighter
-                              style={vscDarkPlus}
-                              language={match[1]}
-                              PreTag="div"
-                              customStyle={{
-                                background: "var(--cosmic-deep)",
-                                borderRadius: "0.5rem",
-                                border: "1px solid rgba(127, 255, 212, 0.12)",
-                              }}
-                              {...props}
-                            >
-                              {String(children).replace(/\n$/, "")}
-                            </SyntaxHighlighter>
+                            <Suspense fallback={<pre className="p-3 rounded bg-cosmic-deep text-sm overflow-x-auto border border-atlantean-teal-aqua/10"><code>{String(children).replace(/\n$/, "")}</code></pre>}>
+                              <LazyCodeBlock language={match[1]}>
+                                {String(children).replace(/\n$/, "")}
+                              </LazyCodeBlock>
+                            </Suspense>
                           ) : (
                             <code
                               className="bg-cosmic-deep px-1.5 py-0.5 rounded text-brand-accent font-mono text-sm"

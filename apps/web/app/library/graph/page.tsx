@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { buildContentGraph, getCollections } from "../../../lib/content";
-import { ContentGraphVisualization } from "./graph-visualization";
+import { GraphLoader } from "./graph-loader";
 
 export const metadata: Metadata = {
   title: "The Web of Wisdom | Arcanea Library",
@@ -131,7 +131,7 @@ export default async function GraphPage() {
 
       {/* ── Graph Visualization ── */}
       <section className="mx-auto max-w-7xl px-6 pb-12">
-        <ContentGraphVisualization graph={graph} collections={collections} />
+        <GraphLoader graph={graph} collections={collections} />
       </section>
 
       {/* ── Legend ── */}

@@ -135,8 +135,27 @@ const FAQs = [
 ];
 
 export default function PricingPage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Arcanea Pricing',
+    url: 'https://arcanea.ai/pricing',
+    mainEntity: TIERS.map((tier) => ({
+      '@type': 'Product',
+      name: `Arcanea ${tier.name}`,
+      description: tier.description,
+      offers: {
+        '@type': 'Offer',
+        price: tier.price === 'Free' ? '0' : tier.price.replace('$', ''),
+        priceCurrency: 'USD',
+        availability: 'https://schema.org/InStock',
+      },
+    })),
+  };
+
   return (
     <div className="relative min-h-screen">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {/* Background */}
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-deep" />

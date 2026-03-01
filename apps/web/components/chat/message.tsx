@@ -1,10 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { EmotionalTone } from '@/hooks/use-chat';
+
+const LazyCodeBlock = lazy(() => import('./code-block'));
 
 interface ChatMessageProps {
   id: string;
@@ -159,13 +159,11 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
                   const match = /language-(\w+)/.exec(className || '');
                   const isBlock = match && String(children).includes('\n');
                   return isBlock ? (
-                    <SyntaxHighlighter
-                      style={vscDarkPlus as Record<string, React.CSSProperties>}
-                      language={match[1]}
-                      PreTag="div"
-                    >
-                      {String(children).replace(/\n$/, '')}
-                    </SyntaxHighlighter>
+                    <Suspense fallback={<pre className="p-3 rounded bg-gray-900 text-sm overflow-x-auto"><code>{String(children).replace(/\n$/, '')}</code></pre>}>
+                      <LazyCodeBlock language={match[1]}>
+                        {String(children).replace(/\n$/, '')}
+                      </LazyCodeBlock>
+                    </Suspense>
                   ) : (
                     <code className={className}>
                       {children}
