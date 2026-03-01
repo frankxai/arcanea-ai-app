@@ -289,7 +289,7 @@ export default function ArcaneaVaultPage() {
 
                   <div className="flex flex-wrap gap-4">
                     <Link
-                      href="/register"
+                      href="/auth/signup"
                       className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200"
                     >
                       Open Your Vault
@@ -402,7 +402,7 @@ export default function ArcaneaVaultPage() {
                   </p>
                   <div className="flex flex-wrap justify-center gap-4">
                     <Link
-                      href="/register"
+                      href="/auth/signup"
                       className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200"
                     >
                       <Icons.Vault />

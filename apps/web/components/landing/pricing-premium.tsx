@@ -143,7 +143,7 @@ function PricingCard({
 
         {/* CTA */}
         <Link
-          href={plan.price === "Free" ? "/studio" : "/signup"}
+          href={plan.price === "Free" ? "/studio" : "/auth/signup"}
           className={`block w-full py-4 rounded-2xl text-center font-display font-semibold transition-all ${
             plan.popular
               ? "bg-gradient-to-r from-crystal to-brand-primary text-cosmic-deep hover:shadow-glow-md"

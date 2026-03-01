@@ -56,6 +56,9 @@ export const metadata: Metadata = {
     title: "Arcanea — Living Intelligence for Creators",
     description: "A creative intelligence platform. Ten Guardians, a Library of wisdom, and tools that transform imagination into reality.",
   },
+  alternates: {
+    canonical: "/",
+  },
   manifest: "/site.webmanifest",
 };
 

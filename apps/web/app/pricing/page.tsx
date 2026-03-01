@@ -20,7 +20,7 @@ const TIERS = [
       "Community Discord",
     ],
     cta: "Start Free",
-    href: "/signup",
+    href: "/auth/signup",
     popular: false,
     color: "crystal",
   },
@@ -39,7 +39,7 @@ const TIERS = [
       "API access",
     ],
     cta: "Start Ascending",
-    href: "/signup?plan=ascendant",
+    href: "/auth/signup?plan=ascendant",
     popular: true,
     color: "violet",
   },
@@ -506,7 +506,7 @@ export default function PricingPage() {
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Link
-                  href="/signup"
+                  href="/auth/signup"
                   className="px-8 py-4 rounded-xl bg-atlantean-teal text-cosmic-deep font-semibold text-lg hover:shadow-[0_0_40px_rgba(127,255,212,0.5)] transition-all"
                 >
                   Start Free Today

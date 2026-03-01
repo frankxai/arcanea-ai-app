@@ -79,7 +79,7 @@ export function LoreCTA() {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
-              href="/register"
+              href="/auth/signup"
               className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-semibold text-lg overflow-hidden btn-glow text-cosmic-deep transition-all"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-atlantean-teal-aqua to-creation-prism-purple" />

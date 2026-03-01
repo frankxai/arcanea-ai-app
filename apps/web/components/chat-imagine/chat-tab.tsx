@@ -167,9 +167,8 @@ interface GateInvocation {
   element: 'Fire' | 'Water' | 'Earth' | 'Wind' | 'Void';
 }
 
-function invokeGate(invocation: GateInvocation): void {
-  console.log(\`Invoking \${invocation.guardian} at \${invocation.frequency}Hz\`);
-  console.log(\`Opening Gate \${invocation.gate} - Element: \${invocation.element}\`);
+function invokeGate(_invocation: GateInvocation): void {
+  // Gate invocation is visual-only in the current implementation
 }
 
 // Example: Invoke Lyria's Sight Gate
