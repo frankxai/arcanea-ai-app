@@ -67,7 +67,7 @@ export default function WelcomePage() {
           transition={{ delay: 0.4, duration: 0.6 }}
           className="font-body text-2xl md:text-3xl text-text-secondary mb-6"
         >
-          Where Imagination Becomes Reality
+          A platform for creators
         </motion.p>
 
         {/* Description */}
@@ -77,8 +77,8 @@ export default function WelcomePage() {
           transition={{ delay: 0.5, duration: 0.6 }}
           className="font-body text-lg text-text-muted mb-12 max-w-lg mx-auto"
         >
-          A platform for creators working with AI companions called Luminors.
-          Your guide will help you unlock your creative potential.
+          Ten creative intelligences, each with a distinct philosophy.
+          A library of original texts. Tools that think with you.
         </motion.p>
 
         {/* CTA Buttons */}
@@ -92,7 +92,7 @@ export default function WelcomePage() {
             href="/onboarding"
             className="group flex items-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-gold-bright to-gold-medium text-cosmic-void font-body font-semibold text-lg transition-all hover:scale-105 hover:shadow-glow-lg"
           >
-            Begin Your Journey
+            Get Started
             <PhArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
           </Link>
 

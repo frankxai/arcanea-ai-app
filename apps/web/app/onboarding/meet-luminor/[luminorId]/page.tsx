@@ -103,7 +103,7 @@ export default function MeetLuminorPage() {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="text-center">
-          <h1 className="font-display text-2xl text-text-primary mb-4">Luminor not found</h1>
+          <h1 className="font-display text-2xl text-text-primary mb-4">Intelligence not found</h1>
           <Link href="/onboarding/creator-type" className="text-atlantean-teal hover:underline">
             Choose a different path
           </Link>
@@ -252,11 +252,11 @@ export default function MeetLuminorPage() {
           </button>
 
           <Link
-            href="/luminors"
+            href="/lore/guardians"
             className="flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-cosmic-border-bright text-text-secondary font-body font-medium hover:border-text-muted hover:text-text-primary transition-all"
           >
             <PhSparkle className="w-4 h-4" />
-            Meet other Luminors
+            Meet other intelligences
           </Link>
         </motion.div>
       </div>

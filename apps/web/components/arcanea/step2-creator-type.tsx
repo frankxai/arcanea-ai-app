@@ -15,7 +15,7 @@ const CREATOR_TYPES: CreatorType[] = [
   {
     id: 'writer',
     label: 'Writer',
-    description: 'Craft tales that transcend time and space',
+    description: 'Write fiction, essays, scripts, and poetry',
     icon: <QuillIcon />,
     color: '#a78bfa',
     glowColor: 'rgba(167,139,250,0.3)',
@@ -23,7 +23,7 @@ const CREATOR_TYPES: CreatorType[] = [
   {
     id: 'visual-artist',
     label: 'Visual Artist',
-    description: 'Paint worlds with light and imagination',
+    description: 'Design visuals, illustrations, and concepts',
     icon: <PaletteIcon />,
     color: '#7fffd4',
     glowColor: 'rgba(127,255,212,0.3)',
@@ -31,7 +31,7 @@ const CREATOR_TYPES: CreatorType[] = [
   {
     id: 'musician',
     label: 'Musician',
-    description: 'Compose symphonies of the cosmos',
+    description: 'Compose melodies, write lyrics, produce tracks',
     icon: <MusicIcon />,
     color: '#ffd700',
     glowColor: 'rgba(255,215,0,0.3)',
@@ -39,7 +39,7 @@ const CREATOR_TYPES: CreatorType[] = [
   {
     id: 'developer',
     label: 'Developer',
-    description: 'Engineer the architecture of new realities',
+    description: 'Build software, apps, and systems',
     icon: <CodeIcon />,
     color: '#60a5fa',
     glowColor: 'rgba(96,165,250,0.3)',
@@ -47,7 +47,7 @@ const CREATOR_TYPES: CreatorType[] = [
   {
     id: 'storyteller',
     label: 'Storyteller',
-    description: 'Weave mythologies that echo through ages',
+    description: 'Build worlds, develop characters, craft narratives',
     icon: <StarIcon />,
     color: '#f472b6',
     glowColor: 'rgba(244,114,182,0.3)',
@@ -55,7 +55,7 @@ const CREATOR_TYPES: CreatorType[] = [
   {
     id: 'polymath',
     label: 'Polymath',
-    description: 'Master all arts, bound by none',
+    description: 'Work across multiple creative disciplines',
     icon: <PolymathIcon />,
     color: '#ffd700',
     glowColor: 'rgba(255,215,0,0.35)',
@@ -101,7 +101,7 @@ export default function Step2CreatorType({ selected, onSelect, onNext, onBack }:
           <span className="text-gold-gradient">Creative Identity</span>
         </h2>
         <p className="text-[#7c7c9a] text-sm font-sans">
-          Select all that resonate with your spirit — you may choose multiple
+          Select all that apply — you can choose more than one
         </p>
       </div>
 
@@ -234,7 +234,7 @@ export default function Step2CreatorType({ selected, onSelect, onNext, onBack }:
           }}
         >
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-          <span className="relative">Continue to Guardian Match</span>
+          <span className="relative">Continue</span>
         </button>
       </div>
     </div>

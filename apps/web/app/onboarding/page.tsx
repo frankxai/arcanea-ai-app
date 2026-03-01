@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import ArcanealOnboarding from '@/components/arcanea/onboarding-orchestrator'
 
 export const metadata: Metadata = {
-  title: 'Begin Your Journey | Arcanea',
+  title: 'Get Started | Arcanea',
   description:
-    'Choose your creative path, meet your Guardian Intelligence, and create your first work in the Arcanea universe.',
+    'Choose what you create, find your AI creative partner, and make your first work on Arcanea.',
 }
 
 export default function OnboardingPage() {

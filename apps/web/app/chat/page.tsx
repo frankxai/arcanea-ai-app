@@ -71,13 +71,13 @@ export default function ChatLandingPage() {
           </div>
 
           <h1 className="text-fluid-hero font-display font-bold mb-6 leading-none tracking-tight">
-            Begin with a
-            <span className="block text-gradient-brand">Luminor</span>
+            Choose an
+            <span className="block text-gradient-brand">Intelligence</span>
           </h1>
 
           <p className="text-fluid-lg text-text-secondary leading-relaxed max-w-2xl mx-auto font-body">
-            Choose your specialist. Each one brings deep mastery to a different
-            domain of creative work.
+            Each one thinks differently. Pick the one that fits
+            what you are working on.
           </p>
         </motion.div>
 

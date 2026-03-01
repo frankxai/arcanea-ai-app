@@ -14,15 +14,15 @@ import Link from "next/link";
 const PLANS = [
   {
     name: "Explorer",
-    description: "Start your creative journey",
+    description: "Get started for free",
     price: { monthly: 0, yearly: 0 },
     featured: false,
     cta: "Start Free",
     href: "/auth/signup",
     features: [
-      "3 Luminor companions",
+      "3 creative intelligences",
       "10 creations per month",
-      "Basic Seven Wisdoms",
+      "Core Library access",
       "Community access",
       "Export to PDF",
     ],
@@ -37,10 +37,10 @@ const PLANS = [
     href: "/auth/signup?plan=creator",
     badge: "Most Popular",
     features: [
-      "All 10 Guardians",
+      "All 10 intelligences",
       "Unlimited creations",
-      "Full Seven Wisdoms",
-      "Ten Gates progression",
+      "Full Library access",
+      "Progression system",
       "All export formats",
       "Priority support",
       "Custom prompts",
@@ -59,7 +59,7 @@ const PLANS = [
       "Everything in Creator",
       "Team collaboration (5 seats)",
       "API access",
-      "Custom Luminor training",
+      "Custom intelligence training",
       "White-label exports",
       "Dedicated support",
       "Early access features",
@@ -96,7 +96,7 @@ export function PricingSection() {
             </span>
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
-            Choose your creative path
+            Simple, transparent pricing
           </h2>
           <p className="text-xl text-text-secondary max-w-2xl mx-auto mb-10">
             Start free, upgrade when you're ready. All plans include core

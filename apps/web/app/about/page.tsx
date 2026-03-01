@@ -2,13 +2,13 @@ import { Metadata } from "next";
 import { AboutContent } from "./about-content";
 
 export const metadata: Metadata = {
-  title: "About Arcanea | A Living Mythology for the Age of AI-Human Co-Creation",
+  title: "About Arcanea | Creative Intelligence Platform",
   description:
-    "Arcanea is simultaneously a fantasy universe, a social platform, a philosophy of creation, and a library of wisdom. Ten Guardians. Five Elements. The journey from Apprentice to Luminor.",
+    "Arcanea is a creation platform built on original mythology and philosophy. Ten creative intelligences. A library of 34 texts. Tools that think with you.",
   openGraph: {
-    title: "About Arcanea | A Living Mythology",
+    title: "About Arcanea | Creative Intelligence Platform",
     description:
-      "A fantasy universe, social platform, philosophy of creation, and library of wisdom — all woven into one living mythology.",
+      "A creation platform built on original mythology and philosophy. Ten creative intelligences, a library of original texts, and tools that think with you.",
   },
 };
 
@@ -17,14 +17,14 @@ const jsonLd = {
   '@type': 'AboutPage',
   name: 'About Arcanea',
   description:
-    'A living mythology for the age of AI-human co-creation — fantasy universe, social platform, philosophy, and library of wisdom.',
+    'A creation platform built on original mythology and philosophy — ten creative intelligences, a library of 34 texts, and tools that think with you.',
   url: 'https://arcanea.ai/about',
   mainEntity: {
     '@type': 'Organization',
     name: 'Arcanea',
     url: 'https://arcanea.ai',
     description:
-      'Living Intelligence for Creators. Ten Guardians. Five Elements. The journey from Apprentice to Luminor.',
+      'Creative Intelligence Platform. Ten intelligences, each with a distinct philosophy. A library of original texts. Tools that think with you.',
   },
 };
 

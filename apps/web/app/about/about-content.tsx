@@ -76,7 +76,7 @@ export function AboutContent() {
           >
             <Sparkle className="w-4 h-4 text-gold-bright" weight="fill" />
             <span className="text-sm font-medium text-gold-bright tracking-wide">
-              The Living Mythology
+              About Arcanea
             </span>
           </motion.div>
 
@@ -97,7 +97,7 @@ export function AboutContent() {
             transition={{ delay: 0.3 }}
             className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto leading-relaxed"
           >
-            A living mythology for the age of AI-human co-creation.
+            A creation platform built on original mythology and philosophy.
           </motion.p>
 
           <motion.p
@@ -106,9 +106,9 @@ export function AboutContent() {
             transition={{ delay: 0.4 }}
             className="text-base text-text-muted max-w-2xl mx-auto mt-6 leading-relaxed"
           >
-            Arcanea weaves ancient mythological structure with modern creative
-            technology. It is a universe you can inhabit, a system you can
-            master, and a community that grows with every creator who enters.
+            Ten creative intelligences, each grounded in a distinct philosophy.
+            A library of 34 original texts. A progression system that deepens
+            the more you create. No limits on what you build.
           </motion.p>
         </div>
       </section>

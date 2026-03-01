@@ -162,14 +162,14 @@ export default function Step3Guardian({ onGuardianMatched, onNext, onBack }: Ste
           Step 3 of 5
         </div>
         <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-3">
-          {matchedGuardian ? 'Your Guardian Has ' : 'Find Your '}
+          {matchedGuardian ? 'Meet ' : 'Find Your '}
           <span className="text-gold-gradient">
-            {matchedGuardian ? 'Awakened' : 'Guardian'}
+            {matchedGuardian ? matchedGuardian.name : 'Intelligence'}
           </span>
         </h2>
         {!matchedGuardian && (
           <p className="text-[#7c7c9a] text-sm font-sans">
-            Answer 3 questions to reveal your mythological guardian
+            Answer 3 questions to find the intelligence that fits how you think
           </p>
         )}
       </div>
@@ -392,7 +392,7 @@ export default function Step3Guardian({ onGuardianMatched, onNext, onBack }: Ste
             }}
           >
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-            <span className="relative">Begin Your First Creation</span>
+            <span className="relative">Start Creating</span>
           </button>
         )}
       </div>

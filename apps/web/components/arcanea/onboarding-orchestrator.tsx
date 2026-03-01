@@ -15,7 +15,7 @@ const Step3Guardian = lazy(() => import('./step3-guardian'))
 const Step4Creation = lazy(() => import('./step4-creation'))
 const Step5YourUniverse = lazy(() => import('./step5-your-universe'))
 
-const STEP_LABELS = ['Welcome', 'Identity', 'Guardian', 'Creation', 'Universe']
+const STEP_LABELS = ['Welcome', 'Identity', 'Intelligence', 'Creation', 'Ready']
 
 const GUARDIAN_GATE_MAP: Record<string, string> = {
   Lyssandria: 'Foundation',
@@ -110,7 +110,7 @@ export default function ArcanealOnboarding() {
             Welcome to Arcanea
           </h1>
           <p className="text-[#7c7c9a] font-sans text-sm">
-            {saving ? 'Weaving your universe...' : 'Your universe has been created. Your journey begins now.'}
+            {saving ? 'Setting things up...' : 'You are ready. Let us create.'}
           </p>
           {matchedGuardian && (
             <p className="mt-3 text-sm font-sans" style={{ color: matchedGuardian.color }}>
@@ -118,7 +118,7 @@ export default function ArcanealOnboarding() {
             </p>
           )}
           <p className="mt-4 text-xs text-[#3a3a5a] font-sans animate-pulse">
-            Entering the Studio...
+            Loading your workspace...
           </p>
         </div>
       </div>

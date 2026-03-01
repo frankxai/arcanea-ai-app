@@ -55,7 +55,7 @@ export default function OnboardingWelcome({ onNext }: OnboardingWelcomeProps) {
         style={{ transitionDelay: '0.25s' }}
       >
         <div className="text-xs tracking-[0.35em] uppercase text-violet-400 font-semibold mb-3">
-          Mythological AI Platform
+          Creative Intelligence
         </div>
         <h1 className="font-display text-5xl md:text-6xl font-bold leading-tight mb-4 text-gradient-gold">
           Welcome to
@@ -63,10 +63,10 @@ export default function OnboardingWelcome({ onNext }: OnboardingWelcomeProps) {
           Arcanea
         </h1>
         <p className="text-white/60 text-lg leading-relaxed max-w-sm mx-auto mb-2">
-          Your creative universe awaits
+          Ten intelligences. One creative platform.
         </p>
         <p className="text-white/30 text-sm leading-relaxed max-w-xs mx-auto">
-          Discover your guardian, forge your identity, and bring mythological creations to life.
+          Pick what you create, meet your AI partner, and make something real.
         </p>
       </div>
 
@@ -84,7 +84,7 @@ export default function OnboardingWelcome({ onNext }: OnboardingWelcomeProps) {
           <div className="absolute -inset-0.5 bg-gradient-to-r from-violet-500 to-atlantean-aqua rounded-[18px] opacity-0 group-hover:opacity-60 blur-sm transition-all duration-300 -z-10" />
           <span className="relative text-white flex items-center gap-2">
             <Sparkle size={16} weight="fill" />
-            Begin Your Journey
+            Get Started
           </span>
         </button>
         <p className="mt-4 text-white/20 text-xs tracking-wide">

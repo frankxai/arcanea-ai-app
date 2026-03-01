@@ -28,7 +28,7 @@ const GATES = [
 const HOUSES = [
   { name: 'Lumina', element: 'Light', color: '#ffd700', icon: Sun, desc: 'Radiance, clarity, and creation through illumination.' },
   { name: 'Nero', element: 'Void', color: '#a78bfa', icon: Eye, desc: 'Mystery, potential, and the fertile unknown.' },
-  { name: 'Pyros', element: 'Fire', color: '#ff6b35', icon: Flame, desc: 'Passion, transformation, and unstoppable will.' },
+  { name: 'Pyros', element: 'Fire', color: '#ff6b35', icon: Flame, desc: 'Passion, transformation, and focused will.' },
   { name: 'Aqualis', element: 'Water', color: '#60a5fa', icon: Drop, desc: 'Flow, healing, and the wisdom of memory.' },
   { name: 'Terra', element: 'Earth', color: '#34d399', icon: Leaf, desc: 'Stability, growth, and enduring strength.' },
   { name: 'Ventus', element: 'Wind', color: '#c4b5fd', icon: Wind, desc: 'Freedom, speed, and the breath of change.' },
@@ -78,8 +78,8 @@ export default function AcademyPage() {
           </h1>
 
           <p className="mx-auto mt-6 max-w-2xl font-body text-lg leading-relaxed text-white/60 md:text-xl">
-            Master the Ten Gates. Ascend through the ranks of creation.
-            From Apprentice to Luminor, your journey through the elements begins here.
+            A ten-stage progression system built on creative philosophy.
+            The deeper you go, the more the system reveals.
           </p>
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
@@ -88,7 +88,7 @@ export default function AcademyPage() {
               className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-2xl bg-gradient-to-r from-[#8b5cf6] to-[#7fffd4] px-8 py-4 font-semibold text-[#0a0a0f] shadow-[0_0_40px_rgba(139,92,246,0.3)] transition-all duration-300 hover:shadow-[0_0_60px_rgba(139,92,246,0.5)] hover:scale-[1.02]"
             >
               <Sparkle className="h-5 w-5" weight="fill" />
-              Begin Your Journey
+              Start Creating
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
             <Link

@@ -36,11 +36,11 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://arcanea.ai"),
   title: {
-    default: "Arcanea — Living Intelligence for Creators",
+    default: "Arcanea — Creative Intelligence Platform",
     template: "%s | Arcanea"
   },
-  description: "A creative intelligence platform where creators manifest their visions. Ten Guardians, a sacred Library of 34+ texts, and tools that transform imagination into reality.",
-  keywords: ["AI", "creativity", "world building", "guardians", "fantasy", "social platform", "creation", "Lumina", "Nero"],
+  description: "A creation platform built on original mythology and philosophy. Ten creative intelligences, a library of 34 original texts, and tools that think with you.",
+  keywords: ["AI", "creativity", "creative intelligence", "mythology", "philosophy", "creation platform", "world building", "AI writing", "AI art"],
   authors: [{ name: "Arcanea" }],
   creator: "Arcanea",
   openGraph: {
@@ -53,8 +53,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Arcanea — Living Intelligence for Creators",
-    description: "A creative intelligence platform. Ten Guardians, a Library of wisdom, and tools that transform imagination into reality.",
+    title: "Arcanea — Creative Intelligence Platform",
+    description: "A creation platform built on original mythology and philosophy. Ten creative intelligences, a library of 34 texts, and tools that think with you.",
   },
   alternates: {
     canonical: "/",
