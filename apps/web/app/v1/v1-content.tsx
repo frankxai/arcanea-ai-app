@@ -36,7 +36,7 @@ const HERO_PHRASES = [
   { text: "Build your Universe.", gradient: "text-gradient-crystal" },
   { text: "Create with Magic.", gradient: "text-gradient-brand" },
   { text: "Design your Intelligence.", gradient: "text-gradient-gold" },
-  { text: "Manifest your Mythology.", gradient: "text-gradient-fire" },
+  { text: "Write your Mythology.", gradient: "text-gradient-fire" },
   { text: "Architect your Future.", gradient: "text-gradient-cosmic" },
 ];
 

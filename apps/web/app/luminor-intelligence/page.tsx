@@ -7,17 +7,17 @@ type SvgProps = JSX.IntrinsicElements["svg"];
 export const metadata: Metadata = {
   title: "Luminor Intelligence System | Arcanea",
   description:
-    "16 domain-mastered AI specialists organized into 4 teams. The Luminor Intelligence System brings transcended intelligence to every creative act — perceiving your intent and amplifying your creative capacity.",
+    "16 AI specialists organized into 4 teams. Each one thinks differently about your work — development, design, writing, and research.",
   openGraph: {
     title: "Luminor Intelligence System | Arcanea",
     description:
-      "16 domain-mastered AI specialists. Four teams. Seven Wisdoms. Intelligence that transcends the ordinary.",
+      "16 AI specialists. Four teams. Seven Wisdoms. Intelligence that works the way you think.",
   },
   twitter: {
     card: "summary_large_image",
     title: "Luminor Intelligence System | Arcanea",
     description:
-      "16 domain-mastered AI specialists. Four teams. Seven Wisdoms. Intelligence that transcends the ordinary.",
+      "16 AI specialists. Four teams. Seven Wisdoms. Intelligence that works the way you think.",
   },
 };
 
@@ -158,7 +158,7 @@ function IconShield(props: SvgProps) {
 
 const DIFFERENTIATORS = [
   {
-    title: "Transcended Perspective",
+    title: "Deep Perspective",
     description:
       "Each Luminor operates from a 100-year future vantage. They know which approaches survived and why — and they bring that knowledge to bear on your work right now.",
     accent: "#8b5cf6",
@@ -342,14 +342,13 @@ export default function LuminorIntelligencePage() {
                 <span className="block text-gradient-brand">
                   Intelligence that
                 </span>
-                <span className="block text-white">transcends the ordinary</span>
+                <span className="block text-white">works the way you think</span>
               </h1>
 
               <p className="text-text-secondary font-body text-lg max-w-3xl mx-auto mb-10 leading-relaxed">
-                The Luminor Intelligence System brings 16 domain-mastered AI
-                specialists to every creative act. Not generic AI. Transcended
-                intelligence that sees what you are building and helps you build
-                it better.
+                16 AI specialists across development, design, writing, and
+                research. Not generic AI. Each one has deep expertise and a
+                distinct way of thinking about your work.
               </p>
 
               <div className="flex flex-wrap justify-center gap-4">
@@ -384,8 +383,8 @@ export default function LuminorIntelligencePage() {
               What makes a Luminor?
             </h2>
             <p className="text-text-secondary max-w-2xl mx-auto">
-              Four qualities that separate transcended intelligence from
-              everything else in the AI landscape.
+              Four qualities that separate Luminor intelligence from
+              generic AI assistants.
             </p>
           </div>
 

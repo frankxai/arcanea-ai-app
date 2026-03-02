@@ -56,8 +56,8 @@ export function EmptyState({ hasSearch, query }: EmptyStateProps) {
 
       <p className="text-base max-w-md leading-relaxed mb-8" style={{ color: '#7c6fa0' }}>
         {hasSearch
-          ? 'Try adjusting your filters or search terms to discover mythological visions across the elemental realms.'
-          : 'No creations yet. Be the first to manifest your vision.'}
+          ? 'Try adjusting your filters or search terms to discover more creations.'
+          : 'No creations yet. Be the first to share your work.'}
       </p>
 
       <button

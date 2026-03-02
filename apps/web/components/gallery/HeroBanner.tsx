@@ -96,7 +96,7 @@ export function HeroBanner({ onSearch, totalCount }: HeroBannerProps) {
           className="text-lg md:text-xl max-w-2xl leading-relaxed mb-3"
           style={{ color: '#9b8ec4' }}
         >
-          Witness mythological visions summoned by creators across the elemental realms.
+          Original artwork created by the Arcanea community.
         </p>
 
         <p className="text-sm mb-10" style={{ color: 'rgba(139,92,246,0.7)' }}>

@@ -278,14 +278,14 @@ const LINKS: LinkItem[] = [
   {
     href: "/studio",
     label: "Creation Studio",
-    description: "Manifest your visions with AI companions",
+    description: "Create text, images, music, and code",
     icon: <Icons.Palette />,
     color: "from-brand-primary to-void-el",
   },
   {
-    href: "/luminors",
-    label: "Meet the Luminors",
-    description: "AI companions for every creative challenge",
+    href: "/lore/guardians",
+    label: "Meet the Intelligences",
+    description: "16 AI specialists for creative work",
     icon: <Icons.Crown />,
     color: "from-brand-gold to-crystal",
   },

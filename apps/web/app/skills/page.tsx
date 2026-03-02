@@ -270,7 +270,7 @@ export default function SkillsLandingPage() {
               <span className="text-atlantean-teal">Arcanea gives you transformation.</span>"
             </blockquote>
             <p className="text-text-secondary">
-              Built on mythological wisdom, battle-tested creative frameworks, and the philosophy that the best work emerges from the synthesis of human vision and AI capability.
+              Built on original creative philosophy, battle-tested frameworks, and the principle that the best work emerges from the synthesis of human vision and AI capability.
             </p>
           </TextReveal>
         </div>

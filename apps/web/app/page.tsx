@@ -10,7 +10,7 @@ const jsonLd = {
       name: "Arcanea",
       url: "https://arcanea.ai",
       description:
-        "A creative intelligence platform where creators manifest their visions with AI companions, mythological wisdom, and collaborative tools.",
+        "A creative intelligence platform with ten AI specialists, an original philosophy library, and tools for writing, design, music, and code.",
       potentialAction: {
         "@type": "SearchAction",
         target: "https://arcanea.ai/library?q={search_term_string}",

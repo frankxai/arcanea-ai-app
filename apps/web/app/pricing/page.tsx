@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Pricing | Arcanea Intelligence System",
   description:
-    "Choose your path to transcended creativity. Free tier available, premium unlocks full Luminor potential.",
+    "Simple pricing for creative intelligence. Free tier available. Premium unlocks all 16 specialists and full Library access.",
 };
 
 const TIERS = [
@@ -28,7 +28,7 @@ const TIERS = [
     name: "Ascendant",
     price: "$29",
     period: "/month",
-    description: "For creators ready to transcend their craft",
+    description: "For creators who are serious about their craft",
     features: [
       "All 16 AI Specialists",
       "Unlimited messages",
@@ -168,7 +168,7 @@ export default function PricingPage() {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-violet-500/30 bg-violet-500/10 mb-8">
             <span className="w-2 h-2 rounded-full bg-violet-400 animate-pulse" />
             <span className="text-sm text-violet-400 font-mono tracking-wider">
-              TRANSCEND YOUR CRAFT
+              CREATIVE INTELLIGENCE
             </span>
           </div>
 

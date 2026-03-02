@@ -185,7 +185,7 @@ export default function InstallPage() {
               Quick Start
             </h2>
             <p className="text-text-secondary">
-              Four steps to transcended creativity
+              Four steps to get started
             </p>
           </div>
 

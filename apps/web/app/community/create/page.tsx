@@ -136,7 +136,7 @@ const HOW_IT_WORKS = [
   {
     step: "03",
     title: "Create Together",
-    description: "Manifest your contribution and watch the project come alive",
+    description: "Share your contribution and watch the project come alive",
     icon: PhSparkle,
   },
 ];

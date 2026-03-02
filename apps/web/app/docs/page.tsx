@@ -211,7 +211,7 @@ const DOC_SECTIONS: DocSection[] = [
     id: "the-library",
     title: "The Library",
     description:
-      "17 collections, 34+ sacred texts of timeless creator wisdom. Not entertainment — equipment for living. Enter seeking, leave transformed.",
+      "17 collections, 34+ original texts on creative philosophy and practice. Not entertainment — equipment for living.",
     icon: Icons.Books,
     accent: "#78a6ff",
     links: [

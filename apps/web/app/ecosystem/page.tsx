@@ -248,7 +248,7 @@ const PRODUCTS: Product[] = [
     name: "The Library",
     tagline: "Knowledge System",
     description:
-      "17 collections, 34+ sacred texts of timeless creator wisdom. Not entertainment — equipment for living. Enter seeking, leave transformed.",
+      "17 collections, 34+ original texts on creative philosophy and practice. Not entertainment — equipment for living.",
     status: "Live",
     statusVariant: "live",
     href: "/library",

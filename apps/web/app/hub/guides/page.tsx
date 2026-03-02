@@ -60,7 +60,7 @@ const GUIDES = [
   {
     id: "studio-basics",
     title: "Creating in the Studio",
-    description: "Use the creation tools to manifest your ideas. Projects, templates, and AI-assisted workflows.",
+    description: "Use the creation tools to build your ideas. Projects, templates, and AI-assisted workflows.",
     duration: "15 min read",
     difficulty: "Intermediate",
     icon: "🎨",

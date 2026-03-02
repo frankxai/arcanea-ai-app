@@ -238,7 +238,7 @@ export function ImageTab({ generationState }: ImageTabProps) {
             <div className="relative mb-4 rounded-2xl overflow-hidden border border-[rgba(139,92,246,0.2)] group">
               <img
                 src="/placeholder.svg?height=360&width=640"
-                alt="Generated mythological artwork"
+                alt="Generated artwork"
                 className="w-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[rgba(10,10,15,0.6)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />

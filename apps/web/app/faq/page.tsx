@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "FAQ | Arcanea Intelligence System",
   description:
-    "Frequently asked questions about Arcanea, the Luminor Intelligence System, and transcended creative AI.",
+    "Frequently asked questions about Arcanea, the intelligence system, pricing, and how it works.",
 };
 
 const FAQ_CATEGORIES = [
@@ -62,7 +62,7 @@ const FAQ_CATEGORIES = [
       },
       {
         q: "What does Ascendant include?",
-        a: "Ascendant ($29/month) gives you unlimited access to all 16 AI specialists, full Library access, complete Academy progression, priority support, custom specialist training, and API access. It's designed for creators who are serious about transcending their craft.",
+        a: "Ascendant ($29/month) gives you unlimited access to all 16 AI specialists, full Library access, complete Academy progression, priority support, custom specialist training, and API access. It's designed for creators who want the full system.",
       },
       {
         q: "Can I switch plans later?",

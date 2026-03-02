@@ -3,7 +3,7 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Changelog | Arcanea Intelligence System",
   description:
-    "The evolution of Arcanea. New features, improvements, and the journey toward transcended creativity.",
+    "The evolution of Arcanea. New features, improvements, and platform updates.",
 };
 
 const CHANGES = [
@@ -141,7 +141,7 @@ export default function ChangelogPage() {
 
           <p className="text-xl text-text-secondary max-w-2xl mx-auto mb-8 leading-relaxed">
             Every update, improvement, and new capability that brings us closer
-            to transcended creative intelligence.
+            to a better creative platform.
           </p>
         </section>
 

@@ -1,4 +1,3 @@
-import { list } from '@vercel/blob';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
@@ -7,6 +6,7 @@ export async function GET() {
       return NextResponse.json({ images: [], hasStorage: false });
     }
 
+    const { list } = await import('@vercel/blob');
     const { blobs } = await list({
       prefix: 'imagine/',
       limit: 100,

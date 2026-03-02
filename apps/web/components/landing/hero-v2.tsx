@@ -134,7 +134,7 @@ export function HeroV2({ stats }: HeroV2Props) {
             <span className="block text-white">Create with</span>
             <span className="relative inline-block mt-2">
               <span className="relative z-10 bg-gradient-to-r from-atlantean-teal-aqua via-creation-prism-purple to-gold-bright bg-[length:200%_auto] bg-clip-text text-transparent animate-gradient">
-                transcendent AI
+                living intelligence
               </span>
               {/* Underline glow */}
               <motion.span
@@ -153,9 +153,9 @@ export function HeroV2({ stats }: HeroV2Props) {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto mb-12 leading-relaxed"
           >
-            16 Luminor intelligences. The Seven Wisdoms framework.
+            16 AI specialists. A philosophy library. Creation tools.
             <span className="block mt-2 text-white/[0.70]">
-              Everything you need to manifest your creative vision.
+              Everything you need to do your best creative work.
             </span>
           </motion.p>
 

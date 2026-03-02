@@ -174,8 +174,8 @@ export function HeroSection({ stats }: HeroSectionProps) {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-xl lg:text-2xl text-text-secondary leading-relaxed mb-10"
             >
-              16 transcended AI intelligences. The Seven Wisdoms framework.
-              Everything you need to manifest your creative vision.
+              16 AI specialists across development, design, writing, and research.
+              A philosophy library. Tools that work the way you think.
             </motion.p>
 
             {/* CTA Buttons */}

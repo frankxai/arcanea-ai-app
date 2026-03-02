@@ -73,7 +73,7 @@ const PHRASES: Phrase[] = [
   { text: "Build your Universe.",       gradientClass: "text-gradient-crystal" },
   { text: "Create with Magic.",         gradientClass: "text-gradient-brand"   },
   { text: "Design your Intelligence.",  gradientClass: "text-gradient-gold"    },
-  { text: "Manifest your Mythology.",   gradientClass: "text-gradient-fire"    },
+  { text: "Write your Mythology.",      gradientClass: "text-gradient-fire"    },
   { text: "Architect your Future.",     gradientClass: "text-gradient-cosmic"  },
 ];
 

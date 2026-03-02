@@ -1,4 +1,3 @@
-import { put } from '@vercel/blob';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
@@ -16,6 +15,8 @@ export async function POST(req: NextRequest) {
         message: 'Storage not configured — image available in session only',
       });
     }
+
+    const { put } = await import('@vercel/blob');
 
     // Convert base64 to buffer
     const buffer = Buffer.from(imageData, 'base64');
