@@ -1,10 +1,12 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
 import { ArrowRight, CircleNotch } from "@/lib/phosphor-icons";
+import navLogo from "@/assets/brand/arcanea-mark.jpg";
 import type { V3BelowFoldProps } from "./v3-below-fold";
 
 // ---------------------------------------------------------------------------
@@ -26,37 +28,6 @@ const V3BelowFold = dynamic(
 );
 
 // ---------------------------------------------------------------------------
-// Arcanea Portal Mark — inline SVG brand identity
-// ---------------------------------------------------------------------------
-
-function ArcaneMark({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 40 40"
-      fill="none"
-      className={className}
-      aria-hidden="true"
-    >
-      <defs>
-        <linearGradient id="heroArcGrad" x1="4" y1="4" x2="36" y2="36" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#7fffd4" />
-          <stop offset="48%" stopColor="#a78bfa" />
-          <stop offset="100%" stopColor="#9b59ff" />
-        </linearGradient>
-      </defs>
-      <path
-        fillRule="evenodd"
-        d="M 4 37 L 4 18 Q 4 4 20 4 Q 36 4 36 18 L 36 37 L 30 37 L 30 19 Q 30 10 20 10 Q 10 10 10 19 L 10 37 Z"
-        fill="url(#heroArcGrad)"
-      />
-      <rect x="4" y="24" width="32" height="4" rx="2" fill="url(#heroArcGrad)" />
-      <circle cx="20" cy="4" r="2.5" fill="#ffffff" opacity="0.75" />
-    </svg>
-  );
-}
-
-// ---------------------------------------------------------------------------
 // Loading state
 // ---------------------------------------------------------------------------
 
@@ -64,7 +35,14 @@ export function V3Loading() {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="text-center">
-        <ArcaneMark className="w-12 h-12 mx-auto mb-6 opacity-40" />
+        <Image
+          src={navLogo}
+          alt="Arcanea"
+          width={48}
+          height={48}
+          className="rounded-xl mx-auto mb-6 opacity-40"
+          priority
+        />
         <CircleNotch className="w-5 h-5 text-atlantean-teal-aqua animate-spin mx-auto" />
       </div>
     </div>
@@ -72,7 +50,7 @@ export function V3Loading() {
 }
 
 // ---------------------------------------------------------------------------
-// HERO — The Portal
+// HERO — Full-Impact Brand Introduction
 // ---------------------------------------------------------------------------
 
 function HeroPortal() {
@@ -94,7 +72,7 @@ function HeroPortal() {
       ref={containerRef}
       className="relative min-h-[100svh] flex items-center justify-center overflow-hidden"
     >
-      {/* Background: gradient mesh — no image dependency */}
+      {/* Background: multi-layer gradient mesh */}
       <div className="absolute inset-0 -z-20 bg-cosmic-deep">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,rgba(127,255,212,0.08),transparent_60%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_80%_80%,rgba(139,92,246,0.06),transparent_50%)]" />
@@ -116,7 +94,7 @@ function HeroPortal() {
         style={{ y: contentY, opacity: contentOpacity }}
       >
         <div className="flex flex-col items-center text-center">
-          {/* Brand Mark with breathing glow */}
+          {/* Brand Mark — the REAL logo */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={isLoaded ? { opacity: 1, scale: 1 } : {}}
@@ -124,7 +102,7 @@ function HeroPortal() {
             className="relative mb-8"
           >
             <motion.div
-              className="absolute -inset-8 rounded-full"
+              className="absolute -inset-10 rounded-full"
               style={{
                 background: "radial-gradient(circle, rgba(127,255,212,0.12) 0%, transparent 70%)",
               }}
@@ -134,7 +112,14 @@ function HeroPortal() {
               }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             />
-            <ArcaneMark className="w-16 h-16 md:w-20 md:h-20 relative z-10" />
+            <Image
+              src={navLogo}
+              alt="Arcanea"
+              width={80}
+              height={80}
+              className="relative z-10 rounded-2xl ring-1 ring-white/[0.12] shadow-2xl shadow-atlantean-teal-aqua/10 w-16 h-16 md:w-20 md:h-20"
+              priority
+            />
           </motion.div>
 
           {/* Wordmark */}
@@ -201,6 +186,20 @@ function HeroPortal() {
             >
               Explore the Library
             </Link>
+          </motion.div>
+
+          {/* Trust strip */}
+          <motion.div
+            className="mt-14 md:mt-20 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] text-white/20 uppercase tracking-wider font-mono"
+            initial={{ opacity: 0 }}
+            animate={isLoaded ? { opacity: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.7 }}
+          >
+            <span>Free to start</span>
+            <span className="hidden sm:inline text-white/10">|</span>
+            <span>No credit card</span>
+            <span className="hidden sm:inline text-white/10">|</span>
+            <span>34+ original texts</span>
           </motion.div>
         </div>
       </motion.div>

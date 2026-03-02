@@ -5,6 +5,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
 import { ArrowRight, ArrowUpRight } from "@/lib/phosphor-icons";
+import { LogosSection } from "@/components/landing/logos-section";
+import { FeaturesSection } from "@/components/landing/features-section";
+import { HowItWorks } from "@/components/landing/how-it-works";
+import { PricingSection } from "@/components/landing/pricing-section";
+import { FAQSection } from "@/components/landing/faq-section";
+import { TestimonialsV2 } from "@/components/landing/testimonials-v2";
+import { CTASection } from "@/components/landing/cta-section";
 
 // ---------------------------------------------------------------------------
 // Data
@@ -109,8 +116,8 @@ function MetricsStrip() {
   const metrics = [
     { value: 10,  suffix: "",   label: "Intelligences" },
     { value: 17,  suffix: "",   label: "Collections" },
-    { value: 50,  suffix: "K+", label: "Words" },
-    { value: 364, suffix: "+",  label: "Artworks" },
+    { value: 50,  suffix: "K+", label: "Words of Wisdom" },
+    { value: 364, suffix: "+",  label: "Original Artworks" },
   ];
 
   return (
@@ -168,9 +175,8 @@ function ThreePillars({
           </h2>
         </motion.div>
 
-        {/* Bento Grid: 2 cols on desktop */}
         <div className="grid md:grid-cols-2 gap-4">
-          {/* Guardians — full height left */}
+          {/* Guardians */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -180,7 +186,6 @@ function ThreePillars({
               href="/lore/guardians"
               className="group block h-full rounded-2xl border border-white/[0.06] hover:border-white/[0.12] transition-all duration-500 overflow-hidden relative min-h-[400px]"
             >
-              {/* Guardian portrait mosaic background */}
               <div className="absolute inset-0 grid grid-cols-2 grid-rows-2 opacity-30 group-hover:opacity-40 transition-opacity duration-500">
                 {[ALL_GUARDIANS[0], ALL_GUARDIANS[2], ALL_GUARDIANS[5], ALL_GUARDIANS[9]].map((g) => (
                   <div key={g.name} className="relative overflow-hidden">
@@ -189,7 +194,6 @@ function ThreePillars({
                 ))}
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-cosmic-deep via-cosmic-deep/80 to-cosmic-deep/40" />
-
               <div className="relative h-full flex flex-col justify-end p-8">
                 <p className="text-xs font-mono text-atlantean-teal-aqua/70 tracking-wide uppercase mb-3">
                   10 Archetypes
@@ -208,7 +212,6 @@ function ThreePillars({
 
           {/* Right column: Library + Academy stacked */}
           <div className="flex flex-col gap-4">
-            {/* Library */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -238,7 +241,6 @@ function ThreePillars({
               </Link>
             </motion.div>
 
-            {/* Academy */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -275,7 +277,7 @@ function ThreePillars({
 }
 
 // ---------------------------------------------------------------------------
-// SECTION 3: Guardian Showcase — Cinematic Cards
+// SECTION 5: Guardian Showcase — Cinematic Cards
 // ---------------------------------------------------------------------------
 
 function GuardianShowcase() {
@@ -284,7 +286,6 @@ function GuardianShowcase() {
 
   return (
     <section ref={ref} className="py-24 md:py-32 relative overflow-hidden">
-      {/* Subtle accent glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-[radial-gradient(ellipse,rgba(127,255,212,0.04),transparent_60%)] pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-6">
@@ -325,11 +326,8 @@ function GuardianShowcase() {
                   className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
                   sizes="(max-width: 640px) 50vw, 25vw"
                 />
-                {/* Gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
                 <div className={`absolute inset-0 bg-gradient-to-br ${g.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-
-                {/* Content */}
                 <div className="absolute bottom-0 left-0 right-0 p-5">
                   <p className="text-xs font-mono text-white/40 tracking-wide uppercase mb-1.5">
                     {g.gate} &middot; {g.element}
@@ -344,7 +342,7 @@ function GuardianShowcase() {
           ))}
         </div>
 
-        {/* All 10 guardians strip on mobile */}
+        {/* Mobile link */}
         <div className="mt-8 md:hidden">
           <Link
             href="/lore/guardians"
@@ -354,14 +352,14 @@ function GuardianShowcase() {
           </Link>
         </div>
 
-        {/* Guardian portrait strip — subtle */}
+        {/* Guardian portrait strip — desktop */}
         <motion.div
           className="hidden md:flex items-center justify-center gap-2 mt-12"
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ delay: 0.8 }}
         >
-          {ALL_GUARDIANS.map((g, i) => (
+          {ALL_GUARDIANS.map((g) => (
             <Link
               key={g.name}
               href="/lore/guardians"
@@ -381,7 +379,7 @@ function GuardianShowcase() {
 }
 
 // ---------------------------------------------------------------------------
-// SECTION 4: Library Quote
+// SECTION 7: Library Quote
 // ---------------------------------------------------------------------------
 
 function LibraryQuote({
@@ -405,7 +403,6 @@ function LibraryQuote({
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
         >
-          {/* Subtle background glow */}
           <div
             className="absolute -inset-12 -z-10 rounded-3xl"
             style={{ background: "radial-gradient(circle, rgba(139,92,246,0.05) 0%, transparent 60%)" }}
@@ -449,65 +446,7 @@ function LibraryQuote({
 }
 
 // ---------------------------------------------------------------------------
-// SECTION 5: Final CTA
-// ---------------------------------------------------------------------------
-
-function FinalCTA() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-
-  return (
-    <section ref={ref} className="py-32 md:py-40 relative overflow-hidden">
-      {/* Background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(127,255,212,0.05),rgba(139,92,246,0.03)_40%,transparent_70%)] pointer-events-none" />
-
-      <motion.div
-        className="max-w-3xl mx-auto px-6 text-center"
-        initial={{ opacity: 0, y: 30 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8 }}
-      >
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold leading-tight mb-6">
-          Imagine a good future.{" "}
-          <span className="bg-gradient-to-r from-atlantean-teal-aqua via-creation-prism-purple to-gold-bright bg-clip-text text-transparent">
-            Build it here.
-          </span>
-        </h2>
-        <p className="text-base md:text-lg text-white/40 mb-10 max-w-lg mx-auto">
-          Arcanea is free. Start with any intelligence, explore the Library, create whatever you want.
-        </p>
-
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link
-            href="/chat"
-            className="group relative px-8 py-3.5 rounded-xl font-semibold text-base overflow-hidden"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-light" />
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.15] to-transparent"
-              initial={{ x: "-100%" }}
-              whileHover={{ x: "100%" }}
-              transition={{ duration: 0.5 }}
-            />
-            <span className="relative z-10 text-cosmic-deep flex items-center gap-2">
-              Start Creating Free
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" weight="bold" />
-            </span>
-          </Link>
-          <Link
-            href="/about"
-            className="px-8 py-3.5 rounded-xl border border-white/[0.08] hover:border-white/[0.16] text-white/60 hover:text-white font-medium text-base transition-all duration-300"
-          >
-            Learn More
-          </Link>
-        </div>
-      </motion.div>
-    </section>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Exported below-fold composition
+// Exported below-fold composition — 10 sections for depth & SEO
 // ---------------------------------------------------------------------------
 
 export interface V3BelowFoldProps {
@@ -519,11 +458,38 @@ export interface V3BelowFoldProps {
 export function V3BelowFold({ collectionsCount, textsCount, totalWords }: V3BelowFoldProps) {
   return (
     <>
+      {/* 1. Social proof: tech ecosystem */}
+      <LogosSection />
+
+      {/* 2. Metrics strip */}
       <MetricsStrip />
+
+      {/* 3. Three pillars bento: Guardians, Library, Academy */}
       <ThreePillars collectionsCount={collectionsCount} textsCount={textsCount} totalWords={totalWords} />
+
+      {/* 4. Features grid: 6 core capabilities */}
+      <FeaturesSection />
+
+      {/* 5. Guardian showcase: cinematic cards */}
       <GuardianShowcase />
+
+      {/* 6. How it works: 4-step workflow */}
+      <HowItWorks />
+
+      {/* 7. Library quote: canonical first law */}
       <LibraryQuote collectionsCount={collectionsCount} textsCount={textsCount} totalWords={totalWords} />
-      <FinalCTA />
+
+      {/* 8. Wisdom carousel from the Library */}
+      <TestimonialsV2 />
+
+      {/* 9. Pricing tiers */}
+      <PricingSection />
+
+      {/* 10. FAQ — excellent for SEO/AEO */}
+      <FAQSection />
+
+      {/* 11. Final CTA with Guardian orbit */}
+      <CTASection />
     </>
   );
 }
