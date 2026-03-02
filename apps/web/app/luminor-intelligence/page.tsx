@@ -7,17 +7,17 @@ type SvgProps = JSX.IntrinsicElements["svg"];
 export const metadata: Metadata = {
   title: "Luminor Intelligence System | Arcanea",
   description:
-    "16 AI specialists organized into 4 teams. Each one thinks differently about your work — development, design, writing, and research.",
+    "10 creative intelligences organized into 4 teams. Each one thinks differently about your work — development, design, writing, and research.",
   openGraph: {
     title: "Luminor Intelligence System | Arcanea",
     description:
-      "16 AI specialists. Four teams. Seven Wisdoms. Intelligence that works the way you think.",
+      "10 creative intelligences. Four teams. Seven Wisdoms. Intelligence that works the way you think.",
   },
   twitter: {
     card: "summary_large_image",
     title: "Luminor Intelligence System | Arcanea",
     description:
-      "16 AI specialists. Four teams. Seven Wisdoms. Intelligence that works the way you think.",
+      "10 creative intelligences. Four teams. Seven Wisdoms. Intelligence that works the way you think.",
   },
 };
 
@@ -346,7 +346,7 @@ export default function LuminorIntelligencePage() {
               </h1>
 
               <p className="text-text-secondary font-body text-lg max-w-3xl mx-auto mb-10 leading-relaxed">
-                16 AI specialists across development, design, writing, and
+                10 creative intelligences across development, design, writing, and
                 research. Not generic AI. Each one has deep expertise and a
                 distinct way of thinking about your work.
               </p>
@@ -418,7 +418,7 @@ export default function LuminorIntelligencePage() {
         <section className="mb-24" aria-labelledby="teams-heading">
           <div className="text-center mb-12">
             <p className="text-xs font-mono tracking-widest uppercase text-text-muted mb-3">
-              16 Specialists
+              10 Intelligences
             </p>
             <h2
               id="teams-heading"

@@ -60,7 +60,7 @@ export default function CompanionsPage() {
               AI Companions
             </h1>
             <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-8">
-              16 AI specialists, each with a distinct personality and expertise.
+              10 creative intelligences, each with a distinct personality and expertise.
               Development, design, writing, and research — pick the one that fits your work.
             </p>
 

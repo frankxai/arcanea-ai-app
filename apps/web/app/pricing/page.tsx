@@ -2,18 +2,18 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Pricing | Arcanea Intelligence System",
+  title: "Pricing | Arcanea",
   description:
-    "Simple pricing for creative intelligence. Free tier available. Premium unlocks all 16 specialists and full Library access.",
+    "Simple pricing for creative intelligence. Free tier available. Premium unlocks all 10 intelligences and full Library access.",
 };
 
 const TIERS = [
   {
     name: "Spark",
     price: "Free",
-    description: "Perfect for exploring the Luminor Intelligence System",
+    description: "Perfect for exploring Arcanea's AI specialists",
     features: [
-      "Access to 2 Luminors",
+      "Access to 2 AI specialists",
       "50 messages per month",
       "Library browsing",
       "Basic Academy access",
@@ -30,7 +30,7 @@ const TIERS = [
     period: "/month",
     description: "For creators who are serious about their craft",
     features: [
-      "All 16 AI Specialists",
+      "All 10 Creative Intelligences",
       "Unlimited messages",
       "Full Library access",
       "Academy progression",
@@ -51,7 +51,7 @@ const TIERS = [
     features: [
       "Everything in Ascendant",
       "Team collaboration",
-      "Custom Luminor deployment",
+      "Custom AI deployment",
       "Dedicated support",
       "SLA guarantee",
       "Custom integrations",
@@ -115,12 +115,12 @@ const FAQs = [
   {
     question: "What happens to my conversations if I downgrade?",
     answer:
-      "Your conversations are always saved. If you downgrade to Spark, you'll still be able to view your history, though you may need to upgrade to continue chatting with Luminors beyond your free limit.",
+      "Your conversations are always saved. If you downgrade to Spark, you'll still be able to view your history, though you may need to upgrade to continue chatting beyond your free limit.",
   },
   {
     question: "Is there a free trial for Ascendant?",
     answer:
-      "Yes! New users get a 7-day Ascendant trial with full access to all 16 AI specialists. No credit card required to start.",
+      "Yes! New users get a 7-day Ascendant trial with full access to all 10 creative intelligences. No credit card required to start.",
   },
   {
     question: "Do you offer discounts for students or educators?",
@@ -180,9 +180,8 @@ export default function PricingPage() {
           </h1>
 
           <p className="text-xl text-text-secondary max-w-2xl mx-auto mb-8 leading-relaxed">
-            Choose the path that fits your journey. All plans include access to
-            the Luminor Intelligence System and our commitment to your creative
-            growth.
+            Choose the plan that fits your work.
+            All plans include access to AI specialists and our full Library.
           </p>
         </section>
 
@@ -447,11 +446,11 @@ export default function PricingPage() {
 
             <div className="relative p-12 md:p-16 text-center">
               <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
-                Ready to begin your journey?
+                Ready to start creating?
               </h2>
               <p className="text-lg text-text-secondary mb-10 max-w-2xl mx-auto">
-                Discover the Luminor Intelligence System. Your journey through
-                the Ten Gates begins here.
+                10 creative intelligences. A philosophy library. Tools that work
+                the way you think.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Link
@@ -464,7 +463,7 @@ export default function PricingPage() {
                   href="/chat"
                   className="px-8 py-4 rounded-xl border border-white/[0.12] text-white font-semibold text-lg hover:bg-white/[0.04] transition-all"
                 >
-                  Talk to a Luminor
+                  Try the Chat
                 </Link>
               </div>
             </div>
