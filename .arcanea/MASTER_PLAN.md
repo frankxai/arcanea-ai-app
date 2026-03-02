@@ -249,17 +249,19 @@ packages/              → 37 workspace packages
 | `/luminor-intelligence` | LIVE | loading.tsx |
 
 #### Chat `/chat`
-- **Status**: PARTIAL
+- **Status**: LIVE
 - **Component**: Client
 - **Metadata**: Via layout
 - **Loading**: Yes
-- **Current**: Luminor selection grid, filters by team, v0 chat components (8 files), sessions API (GET/POST with Supabase + in-memory fallback)
+- **Current**: Luminor selection grid, streaming via useChat() + /api/ai/chat (Gemini), session persistence (Supabase + file fallback), bond state calculation, guest mode
 - **Needs**:
   - [x] Chat sessions API (GET/POST) — DONE (Mar 1)
-  - [ ] Chat history persistence (Supabase messages table)
-  - [ ] Streaming responses (Vercel AI SDK)
+  - [x] Chat history persistence (Supabase + file fallback) — DONE
+  - [x] Streaming responses (Vercel AI SDK + Google Gemini) — DONE
   - [ ] Multi-turn context window management
-- **Priority**: P0 — core product feature
+  - [ ] Typing indicators
+  - [ ] File attachments
+- **Priority**: P1 — polish features
 
 | Route | Status | Needs |
 |-------|--------|-------|

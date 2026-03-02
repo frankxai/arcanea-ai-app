@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 
 export const metadata: Metadata = {
   title: 'Imagine — Arcanea',
-  description: 'Describe your vision. Watch it materialize. AI-powered image generation with one-click animation.',
+  description: 'AI-powered image generation. Describe what you see, generate it, animate it.',
   openGraph: {
     title: 'Imagine — Arcanea',
     description: 'AI-powered generative art. Describe. Create. Animate.',
