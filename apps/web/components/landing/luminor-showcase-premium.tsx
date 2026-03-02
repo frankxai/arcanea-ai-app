@@ -305,9 +305,9 @@ export function LuminorShowcasePremium() {
           </h2>
 
           <p className="text-lg text-text-secondary max-w-2xl mx-auto">
-            Each Luminor has internalized a Guardian&apos;s archetype and the
-            wisdom tradition behind it. They think differently because they are
-            rooted in different elements of creation.
+            Each specialist has internalized a distinct creative philosophy.
+            They think differently because they are rooted in different
+            approaches to creation.
           </p>
         </motion.div>
 

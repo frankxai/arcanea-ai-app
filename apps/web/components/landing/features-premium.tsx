@@ -26,9 +26,9 @@ import {
 const features = [
   {
     icon: PhBrain,
-    title: "16 Luminor Intelligences",
+    title: "16 AI Specialists",
     description:
-      "Specialized AI companions, each embodying a unique wisdom. From creative brainstorming to technical analysis.",
+      "Each specialist has mastered a specific domain — from system architecture to narrative design to deep research.",
     gradient: "from-crystal to-brand-primary",
     borderColor: "border-crystal/30",
     hoverGlow: "hover:shadow-glow-md",
@@ -37,7 +37,7 @@ const features = [
     icon: PhChatSquare,
     title: "Natural Conversation",
     description:
-      "Chat with Luminors in plain language. They remember context and adapt to your creative style.",
+      "Chat in plain language. They remember context and adapt to your creative style.",
     gradient: "from-brand-primary to-water-bright",
     borderColor: "border-brand-primary/30",
     hoverGlow: "hover:shadow-glow-brand",
