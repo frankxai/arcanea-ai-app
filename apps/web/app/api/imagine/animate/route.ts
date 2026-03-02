@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Image URL is required' }, { status: 400 });
     }
 
-    // Try fal.ai first (best quality for image-to-video)
+    // Primary: fal.ai image-to-video (best quality)
     if (process.env.FAL_KEY) {
       const { fal } = await import('@fal-ai/client');
       fal.config({ credentials: process.env.FAL_KEY });
@@ -33,11 +33,11 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Fallback: use Gemini to create a "motion-inspired" re-imagined version
-    // This isn't true video, but it gives visual feedback while FAL_KEY isn't set
-    if (process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY) {
+    // Fallback: Gemini re-imagine (not true video, but visual feedback)
+    const geminiKey = process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;
+    if (geminiKey) {
       const { GoogleGenerativeAI } = await import('@google/generative-ai');
-      const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY || '');
+      const genAI = new GoogleGenerativeAI(geminiKey);
 
       const model = genAI.getGenerativeModel({
         model: 'gemini-2.0-flash-exp',
@@ -67,8 +67,8 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json(
-      { error: 'Animation requires FAL_KEY for video, or GEMINI_API_KEY for re-imagination.' },
-      { status: 503 }
+      { error: 'Animation requires FAL_KEY (video) or GEMINI_API_KEY (re-imagination).' },
+      { status: 503 },
     );
   } catch (error) {
     console.error('Animate API error:', error);
