@@ -24,35 +24,60 @@ export interface GlowCardProps extends React.HTMLAttributes<HTMLDivElement> {
   lift?: boolean;
   /** Glass tier class to apply (glass, liquid-glass, etc). Defaults to "glass". */
   glass?: 'liquid-glass' | 'glass' | 'glass-strong' | 'liquid-glass-elevated' | 'iridescent-glass' | 'none';
+  /** Border glow on hover — adds a subtle gradient border. */
+  borderGlow?: boolean;
 }
 
 const GlowCard = React.forwardRef<HTMLDivElement, GlowCardProps>(
-  ({ className, glowColor, glowSize = 300, lift = true, glass = 'glass', children, onMouseMove, onMouseLeave, style, ...props }, ref) => {
+  ({ className, glowColor, glowSize = 300, lift = true, glass = 'glass', borderGlow = false, children, onMouseMove, onMouseLeave, style, ...props }, ref) => {
     const cardRef = React.useRef<HTMLDivElement | null>(null);
     const glowRef = React.useRef<HTMLDivElement | null>(null);
 
-    const handleMouseMove = React.useCallback(
-      (e: React.MouseEvent<HTMLDivElement>) => {
+    const positionGlow = React.useCallback(
+      (clientX: number, clientY: number) => {
         if (!cardRef.current || !glowRef.current) return;
         const rect = cardRef.current.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+        const x = clientX - rect.left;
+        const y = clientY - rect.top;
         glowRef.current.style.transform = `translate(${x - glowSize / 2}px, ${y - glowSize / 2}px)`;
         glowRef.current.style.opacity = '1';
+      },
+      [glowSize]
+    );
+
+    const hideGlow = React.useCallback(() => {
+      if (glowRef.current) {
+        glowRef.current.style.opacity = '0';
+      }
+    }, []);
+
+    const handleMouseMove = React.useCallback(
+      (e: React.MouseEvent<HTMLDivElement>) => {
+        positionGlow(e.clientX, e.clientY);
         onMouseMove?.(e);
       },
-      [glowSize, onMouseMove]
+      [positionGlow, onMouseMove]
     );
 
     const handleMouseLeave = React.useCallback(
       (e: React.MouseEvent<HTMLDivElement>) => {
-        if (glowRef.current) {
-          glowRef.current.style.opacity = '0';
-        }
+        hideGlow();
         onMouseLeave?.(e);
       },
-      [onMouseLeave]
+      [hideGlow, onMouseLeave]
     );
+
+    const handleTouchMove = React.useCallback(
+      (e: React.TouchEvent<HTMLDivElement>) => {
+        const touch = e.touches[0];
+        if (touch) positionGlow(touch.clientX, touch.clientY);
+      },
+      [positionGlow]
+    );
+
+    const handleTouchEnd = React.useCallback(() => {
+      hideGlow();
+    }, [hideGlow]);
 
     const setRefs = React.useCallback(
       (node: HTMLDivElement | null) => {
@@ -71,13 +96,17 @@ const GlowCard = React.forwardRef<HTMLDivElement, GlowCardProps>(
       <div
         ref={setRefs}
         className={cn(
-          'relative overflow-hidden rounded-2xl transition-all',
+          'relative overflow-hidden rounded-2xl transition-all duration-300',
           glass !== 'none' && glass,
           lift && 'hover-lift',
+          borderGlow && 'border border-white/[0.06] hover:border-white/[0.14]',
           className
         )}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
+        onTouchStart={handleTouchMove}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
         style={style}
         {...props}
       >

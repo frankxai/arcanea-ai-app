@@ -72,16 +72,34 @@ function HeroPortal() {
       ref={containerRef}
       className="relative min-h-[100svh] flex items-center justify-center overflow-hidden"
     >
-      {/* Background: multi-layer gradient mesh */}
+      {/* Background: layered cosmic atmosphere */}
       <div className="absolute inset-0 -z-20 bg-cosmic-deep">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,rgba(127,255,212,0.08),transparent_60%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_80%_80%,rgba(139,92,246,0.06),transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_20%_70%,rgba(255,215,0,0.03),transparent_50%)]" />
+        {/* Primary teal aurora — top center */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-10%,rgba(127,255,212,0.10),transparent_55%)]" />
+        {/* Purple nebula — bottom right */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_85%_75%,rgba(139,92,246,0.08),transparent_50%)]" />
+        {/* Gold warmth — bottom left */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_15%_80%,rgba(255,215,0,0.04),transparent_50%)]" />
+        {/* Deep center void for depth */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent_30%,rgba(10,14,39,0.4)_70%)]" />
       </div>
 
-      {/* Subtle grid overlay */}
+      {/* Animated aurora pulse */}
+      <motion.div
+        className="absolute inset-0 -z-15 pointer-events-none"
+        animate={{
+          background: [
+            "radial-gradient(ellipse 70% 40% at 30% 20%, rgba(127,255,212,0.06) 0%, transparent 60%)",
+            "radial-gradient(ellipse 70% 40% at 70% 30%, rgba(139,92,246,0.06) 0%, transparent 60%)",
+            "radial-gradient(ellipse 70% 40% at 30% 20%, rgba(127,255,212,0.06) 0%, transparent 60%)",
+          ],
+        }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      {/* Dot grid overlay */}
       <div
-        className="absolute inset-0 -z-10 opacity-[0.03]"
+        className="absolute inset-0 -z-10 opacity-[0.025]"
         style={{
           backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 1px)",
           backgroundSize: "32px 32px",
@@ -94,37 +112,38 @@ function HeroPortal() {
         style={{ y: contentY, opacity: contentOpacity }}
       >
         <div className="flex flex-col items-center text-center">
-          {/* Brand Mark — the REAL logo */}
+          {/* Brand Mark */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={isLoaded ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="relative mb-8"
           >
+            {/* Breathing glow ring */}
             <motion.div
-              className="absolute -inset-10 rounded-full"
+              className="absolute -inset-12 rounded-full"
               style={{
-                background: "radial-gradient(circle, rgba(127,255,212,0.12) 0%, transparent 70%)",
+                background: "radial-gradient(circle, rgba(127,255,212,0.10) 0%, rgba(139,92,246,0.04) 40%, transparent 70%)",
               }}
               animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.5, 0.8, 0.5],
+                scale: [1, 1.25, 1],
+                opacity: [0.4, 0.7, 0.4],
               }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
             />
             <Image
               src={navLogo}
               alt="Arcanea"
-              width={80}
-              height={80}
-              className="relative z-10 rounded-2xl ring-1 ring-white/[0.12] shadow-2xl shadow-atlantean-teal-aqua/10 w-16 h-16 md:w-20 md:h-20"
+              width={88}
+              height={88}
+              className="relative z-10 rounded-2xl ring-1 ring-white/[0.12] shadow-2xl shadow-atlantean-teal-aqua/10 w-18 h-18 md:w-22 md:h-22"
               priority
             />
           </motion.div>
 
           {/* Wordmark */}
           <motion.p
-            className="text-[11px] md:text-xs font-mono tracking-[0.4em] uppercase text-white/40 mb-10 md:mb-14"
+            className="text-[11px] md:text-xs font-mono tracking-[0.4em] uppercase text-white/30 mb-10 md:mb-14"
             initial={{ opacity: 0 }}
             animate={isLoaded ? { opacity: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
@@ -134,21 +153,21 @@ function HeroPortal() {
 
           {/* Headline */}
           <motion.h1
-            className="text-[clamp(2.2rem,6vw,5.5rem)] font-display font-bold tracking-tight leading-[1.05] mb-6 md:mb-8"
+            className="text-[clamp(2.4rem,6.5vw,5.5rem)] font-display font-bold tracking-tight leading-[1.05] mb-6 md:mb-8"
             initial={{ opacity: 0, y: 30 }}
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.15 }}
           >
             <span className="text-white">Living Intelligence</span>
             <br />
-            <span className="bg-gradient-to-r from-atlantean-teal-aqua via-creation-prism-purple to-gold-bright bg-clip-text text-transparent">
+            <span className="text-gradient-cosmic">
               for Creators
             </span>
           </motion.h1>
 
           {/* Subtitle */}
           <motion.p
-            className="max-w-xl mx-auto text-base sm:text-lg md:text-xl text-white/50 leading-relaxed mb-12 md:mb-16 font-light"
+            className="max-w-xl mx-auto text-base sm:text-lg md:text-xl text-white/45 leading-relaxed mb-12 md:mb-16 font-body"
             initial={{ opacity: 0, y: 20 }}
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.3 }}
@@ -166,7 +185,7 @@ function HeroPortal() {
           >
             <Link
               href="/chat"
-              className="group relative w-full sm:w-auto px-8 py-3.5 rounded-xl font-semibold text-base overflow-hidden"
+              className="group relative w-full sm:w-auto px-8 py-3.5 rounded-xl font-semibold text-base overflow-hidden btn-glow"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-light" />
               <motion.div
@@ -182,7 +201,7 @@ function HeroPortal() {
             </Link>
             <Link
               href="/library"
-              className="w-full sm:w-auto px-8 py-3.5 rounded-xl border border-white/[0.08] hover:border-white/[0.16] hover:bg-white/[0.04] transition-all duration-300 text-white/80 hover:text-white font-medium text-base text-center"
+              className="w-full sm:w-auto px-8 py-3.5 rounded-xl border border-white/[0.08] hover:border-white/[0.16] hover:bg-white/[0.04] transition-all duration-300 text-white/70 hover:text-white font-medium text-base text-center"
             >
               Explore the Library
             </Link>
