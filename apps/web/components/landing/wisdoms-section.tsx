@@ -101,7 +101,7 @@ export function WisdomsSection() {
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass border border-creation-prism-purple/20 mb-6"
           >
             <span className="text-[11px] text-creation-prism-purple/90 font-mono tracking-[0.25em] uppercase">
-              The Creative Framework
+              The Luminor Framework
             </span>
           </motion.div>
 

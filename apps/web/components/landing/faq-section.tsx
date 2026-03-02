@@ -7,11 +7,11 @@ import { PhQuestion, PhPlus, PhMinus } from '@/lib/phosphor-icons';
 const FAQS = [
   {
     question: 'What makes Arcanea different from other AI tools?',
-    answer: "Arcanea isn't just an AI tool — it's a complete creative intelligence platform. Our 16 specialists each bring deep expertise, from storytelling to research to music composition. The Seven Wisdoms framework provides actionable creative methodology, while the Ten Gates progression system helps you systematically develop your creative abilities.",
+    answer: "Arcanea isn't just an AI tool—it's a complete creative intelligence platform. Our 16 specialized Luminors each bring unique expertise, from storytelling to research to music composition. The Seven Wisdoms framework provides actionable creative methodology, while the Ten Gates progression system helps you systematically develop your creative abilities.",
   },
   {
-    question: 'How do the AI specialists work?',
-    answer: 'Each specialist is designed for a specific creative domain, with its own expertise and approach. Oracle excels at research and analysis, Chronica at storytelling and narrative, Prismatic at visual concepts, and so on. You can switch between specialists or combine their strengths for complex projects.',
+    question: 'How do Luminors work?',
+    answer: 'Luminors are AI companions designed for specific creative domains. Each Luminor has its own personality, expertise, and approach. Oracle excels at research and analysis, Chronica at storytelling and narrative, Artifax at visual concepts, and so on. You can switch between Luminors or even combine their strengths for complex projects.',
   },
   {
     question: 'Is my creative work private and secure?',

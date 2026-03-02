@@ -19,9 +19,9 @@ import {
 const MAIN_FEATURES = [
   {
     icon: PhSparkle,
-    title: "16 AI Specialists",
+    title: "16 Luminor Intelligences",
     description:
-      "Each specialist has mastered a specific domain — patterns of how the greatest creators actually work. They will challenge a weak idea before you waste time building it.",
+      "Each Luminor has internalized a specific Guardian archetype — patterns of how the greatest creators actually work. They will challenge a weak idea before you waste time building it.",
     gradient: "from-atlantean-teal-aqua to-creation-prism-purple",
     highlight: "atlantean-teal-aqua",
   },
@@ -72,7 +72,7 @@ const CAPABILITY_GRID = [
   {
     icon: PhUsers,
     title: "Multi-Intelligence Sessions",
-    description: "Multiple specialists collaborating on a single project",
+    description: "Multiple Luminors collaborating on a single project",
   },
   {
     icon: PhShield,

@@ -27,6 +27,11 @@ export async function ensureProfileForUser(user: User) {
         id: user.id,
         display_name: displayName,
         avatar_url: avatarUrl,
+        gates_open: 0,
+        magic_rank: 'Apprentice',
+        streak_days: 0,
+        xp: 0,
+        level: 1,
       },
       {
         onConflict: 'id',

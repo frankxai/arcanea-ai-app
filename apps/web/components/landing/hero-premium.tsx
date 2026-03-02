@@ -48,9 +48,9 @@ interface Phrase {
 
 const PHRASES: Phrase[] = [
   { prefix: "Build",     gradientClass: "text-gradient-crystal", suffix: "your Universe."     },
-  { prefix: "Create",    gradientClass: "text-gradient-brand",   suffix: "your Vision."       },
+  { prefix: "Create",    gradientClass: "text-gradient-brand",   suffix: "your Luminor."      },
   { prefix: "Design",    gradientClass: "text-gradient-gold",    suffix: "your Intelligence." },
-  { prefix: "Shape",     gradientClass: "text-gradient-fire",    suffix: "your Mythology."    },
+  { prefix: "Manifest",  gradientClass: "text-gradient-fire",    suffix: "your Mythology."    },
   { prefix: "Architect", gradientClass: "text-gradient-cosmic",  suffix: "your Future."       },
 ];
 

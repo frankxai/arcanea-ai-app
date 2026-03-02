@@ -60,6 +60,11 @@ export async function updateProfile(
   if (updates.guardian !== undefined) payload.guardian = updates.guardian
   if (updates.academyHouse !== undefined) payload.academy_house = updates.academyHouse
   if (updates.metadata !== undefined) payload.metadata = updates.metadata
+  if (updates.gatesOpen !== undefined) payload.gates_open = updates.gatesOpen
+  if (updates.magicRank !== undefined) payload.magic_rank = updates.magicRank
+  if (updates.streakDays !== undefined) payload.streak_days = updates.streakDays
+  if (updates.xp !== undefined) payload.xp = updates.xp
+  if (updates.level !== undefined) payload.level = updates.level
 
   const { data, error } = await supabase
     .from('profiles')

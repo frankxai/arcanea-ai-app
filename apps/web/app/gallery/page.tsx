@@ -70,8 +70,8 @@ export default function GalleryPage() {
   const [sortBy, setSortBy] = useState<SortOption>("popular");
   const [showFilters, setShowFilters] = useState(false);
   const [liveCreations, setLiveCreations] = useState<Creation[] | null>(null);
+  const [fetchError, setFetchError] = useState(false);
 
-  // Try fetching real creations from Supabase; showcase data shows immediately
   useEffect(() => {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 5000);
@@ -82,13 +82,16 @@ export default function GalleryPage() {
           "/api/creations?visibility=public&status=published&sortBy=popular&limit=50",
           { signal: controller.signal }
         );
-        if (!res.ok) return;
+        if (!res.ok) {
+          setFetchError(true);
+          return;
+        }
         const json = await res.json();
         if (json.success && Array.isArray(json.data) && json.data.length > 0) {
           setLiveCreations(json.data);
         }
       } catch {
-        // Supabase not configured, timeout, or no data -- stay in showcase mode
+        setFetchError(true);
       }
     }
 

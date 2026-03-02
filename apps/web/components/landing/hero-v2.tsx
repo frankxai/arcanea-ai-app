@@ -262,7 +262,7 @@ export function HeroV2({ stats }: HeroV2Props) {
               {/* Stats Card */}
               <div className="rounded-2xl bg-gradient-to-br from-gold-bright/10 to-transparent border border-gold-bright/20 p-4">
                 <div className="text-3xl font-bold text-gold-bright">{stats.luminors}</div>
-                <div className="text-xs text-text-muted mt-1">Specialists</div>
+                <div className="text-xs text-text-muted mt-1">Luminors</div>
               </div>
 
               {/* Wisdom Card */}

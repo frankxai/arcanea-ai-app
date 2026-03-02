@@ -67,6 +67,7 @@ export default function ArcanealOnboarding() {
       await updateProfile(supabase, user.id, {
         guardian: guardianName as Parameters<typeof updateProfile>[2]['guardian'],
         activeGate: gate as Parameters<typeof updateProfile>[2]['activeGate'],
+        gatesOpen: 1,
         metadata: {
           creatorTypes: selectedCreatorTypes,
           onboardingComplete: true,
