@@ -230,7 +230,7 @@ export function HeroSection({ stats }: HeroSectionProps) {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="flex flex-wrap gap-8 mt-16 pt-8 border-t border-white/[0.06]"
             >
-              <StatItem value={stats.luminors} label="Luminor Intelligences" color="atlantean-teal-aqua" />
+              <StatItem value={stats.luminors} label="AI Specialists" color="atlantean-teal-aqua" />
               <StatItem value={stats.wisdoms} label="Wisdoms Framework" color="gold-bright" />
               <StatItem value={stats.collections} label="Wisdom Collections" color="creation-prism-purple" />
               <StatItem value={`${Math.round(stats.words / 1000)}k+`} label="Words of Wisdom" color="draconic-crimson" />
@@ -366,7 +366,7 @@ function LuminorOrbit() {
           >
             16
           </motion.div>
-          <div className="text-sm text-text-muted mt-1">Luminors</div>
+          <div className="text-sm text-text-muted mt-1">Specialists</div>
         </div>
 
         {/* Pulsing ring */}

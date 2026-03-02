@@ -6,9 +6,9 @@ import Link from "next/link";
 
 const FEATURES = [
   {
-    title: "Luminor Intelligence System",
+    title: "16 AI Specialists",
     description:
-      "16 AI intelligences, each rooted in a Guardian archetype. They will challenge a weak idea before you waste time building it.",
+      "Each specialist has mastered a specific domain. They will challenge a weak idea before you waste time building it.",
     icon: "PhStar",
     href: "/luminors",
     gradient: "from-purple-500/20 to-blue-500/20",

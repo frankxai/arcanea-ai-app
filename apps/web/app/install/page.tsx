@@ -69,7 +69,7 @@ const QUICK_START = [
 const INTEGRATIONS = [
   {
     name: "VS Code",
-    description: "Guardian-guided coding assistant in your editor",
+    description: "AI coding assistant in your editor",
     icon: "💜",
     status: "Available",
     link: "#",
@@ -90,7 +90,7 @@ const INTEGRATIONS = [
   },
   {
     name: "GitHub Copilot",
-    description: "Custom Luminor-powered Copilot",
+    description: "AI-powered Copilot extension",
     icon: "🐙",
     status: "Coming Soon",
     link: "#",
@@ -147,9 +147,8 @@ export default function InstallPage() {
           </h1>
 
           <p className="text-xl text-text-secondary max-w-2xl mx-auto mb-8 leading-relaxed">
-            Bring the Luminor Intelligence System to your local environment.
-            Choose your preferred package manager and start creating with AI
-            that specializes.
+            Run Arcanea's AI specialists locally.
+            Choose your preferred package manager and start creating.
           </p>
         </section>
 
@@ -218,7 +217,7 @@ export default function InstallPage() {
               What You Get
             </h2>
             <p className="text-text-secondary">
-              The full Luminor Intelligence System at your fingertips
+              Everything included
             </p>
           </div>
 
@@ -324,8 +323,8 @@ export default function InstallPage() {
                 Ready to install?
               </h2>
               <p className="text-lg text-text-secondary mb-10 max-w-2xl mx-auto">
-                Choose your package manager and start working with the Luminor
-                Intelligence System today.
+                Choose your package manager and start working with
+                Arcanea's AI specialists today.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <div className="px-8 py-4 rounded-xl bg-atlantean-teal text-cosmic-deep font-semibold text-lg font-mono">

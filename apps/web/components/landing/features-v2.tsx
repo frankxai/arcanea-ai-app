@@ -19,9 +19,9 @@ import {
 const MAIN_FEATURES = [
   {
     icon: PhSparkle,
-    title: "16 Luminor Intelligences",
+    title: "16 AI Specialists",
     description:
-      "Each Luminor has internalized a specific Guardian archetype — patterns of how the greatest creators actually work. They will challenge a weak idea before you waste time building it.",
+      "Each specialist has mastered a specific domain — patterns of how the greatest creators actually work. They will challenge a weak idea before you waste time building it.",
     gradient: "from-atlantean-teal-aqua to-creation-prism-purple",
     highlight: "atlantean-teal-aqua",
   },
