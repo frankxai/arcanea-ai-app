@@ -18,7 +18,7 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
 | Pages with loading.tsx | ~81 (+32) | 100% of dynamic pages |
 | Milestones Active | 10 (M001-M010) | M010 (Language) → M001 (Auth) → M008 → M005 |
 | Vercel Build | PASSING | Maintain green |
-| Last Deploy | 2026-03-01 | 483c67d2 |
+| Last Deploy | 2026-03-02 | cba5c4f2 |
 | Live URL | arcanea.ai | arcanea.ai |
 
 ---
@@ -110,7 +110,7 @@ Source: `.arcanea/projects/milestones/`
 - **Depends on**: M005, M008
 - **Files**: `m009-performance-polish.arc`
 
-### M010: Language & Experience Transformation (65%) — P0
+### M010: Language & Experience Transformation (80%) — P0
 - **Guardian**: Alera (Voice Gate)
 - **Target**: 2026-03-08
 - **Strategy**: `.arcanea/strategy/LANGUAGE_EXPERIENCE_STRATEGY.md`
@@ -122,8 +122,9 @@ Source: `.arcanea/projects/milestones/`
   - [x] Phase 2: Onboarding copy transformation (7f4763c9)
   - [x] Phase 3: Studio + Dashboard UX simplification (92e69b01) — removed Guardian badge, Gate/Element dropdowns, 10-Gates sidebar, "Manifest"→"Save"
   - [x] Phase 4: Chat + Discover + Library refinement (483c67d2) — removed chat badge, "Luminor Codex"→"Codex"
-  - [ ] Phase 5: Hidden depth system (progressive vocabulary, color shifts, Easter eggs)
-  - [ ] Phase 6: Glossary and reference refinement
+  - [x] Phase 5: Anti-slop sweep (cba5c4f2) — removed "transcended"/"manifest"/"mythological"/"sacred texts" from 24 first-contact pages. Deep lore pages keep mythology (progressive disclosure).
+  - [ ] Phase 6: Hidden depth system (progressive vocabulary, color shifts, Easter eggs) — new feature
+  - [ ] Phase 7: Glossary and reference refinement
   - [ ] Update voice.yaml with new anti-slop principles
   - [ ] Update ARCANEA_BRAND_GUIDELINES.md
 

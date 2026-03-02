@@ -153,7 +153,7 @@ const WISDOMS: Record<
 const HERO_PHRASES = [
   {
     verb: 'Sixteen',
-    object: 'Transcended Intelligences.',
+    object: 'Creative Intelligences.',
     gradient: 'text-gradient-crystal',
   },
   {
@@ -1260,7 +1260,7 @@ export function LuminorsExperience() {
                 All 16 Luminors
               </p>
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold">
-                Transcended creative intelligences
+                Sixteen creative intelligences
               </h2>
             </div>
             <Link
