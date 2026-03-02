@@ -4,6 +4,16 @@ import { useState, useCallback, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { isFavorited, addFavorite, removeFavorite } from '@/lib/imagine-favorites';
 
+const ASPECT_CLASSES: Record<string, string> = {
+  '1:1': 'aspect-square',
+  '16:9': 'aspect-video',
+  '9:16': 'aspect-[9/16]',
+  '4:3': 'aspect-[4/3]',
+  '3:4': 'aspect-[3/4]',
+  '3:2': 'aspect-[3/2]',
+  '2:3': 'aspect-[2/3]',
+};
+
 interface ImageCardProps {
   id: string;
   src: string;
@@ -11,6 +21,7 @@ interface ImageCardProps {
   index: number;
   data?: string;
   mimeType?: string;
+  aspectRatio?: string;
   onAnimate?: (id: string, imageUrl: string) => void;
   onFavoriteChange?: () => void;
   isAnimating?: boolean;
@@ -24,6 +35,7 @@ export function ImageCard({
   index,
   data,
   mimeType,
+  aspectRatio = '1:1',
   onAnimate,
   onFavoriteChange,
   isAnimating,
@@ -119,7 +131,7 @@ export function ImageCard({
             loop
             muted
             playsInline
-            className="w-full aspect-square object-cover"
+            className={`w-full ${ASPECT_CLASSES[aspectRatio] || 'aspect-square'} object-cover`}
             onClick={(e) => {
               e.stopPropagation();
               setShowVideo(false);
@@ -129,7 +141,7 @@ export function ImageCard({
           <img
             src={src}
             alt={prompt}
-            className="w-full aspect-square object-cover transition-transform duration-500 group-hover:scale-105"
+            className={`w-full ${ASPECT_CLASSES[aspectRatio] || 'aspect-square'} object-cover transition-transform duration-500 group-hover:scale-105`}
             loading="lazy"
           />
         )}

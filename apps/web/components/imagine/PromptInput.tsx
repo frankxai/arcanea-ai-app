@@ -206,20 +206,25 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
             </div>
 
             {/* Generate button */}
-            <button
-              onClick={handleSubmit}
-              disabled={!prompt.trim() || isGenerating}
-              className="px-5 py-2 rounded-xl font-medium text-sm transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white hover:shadow-[0_0_24px_rgba(139,92,246,0.4)] active:scale-95"
-            >
-              {isGenerating ? (
-                <span className="flex items-center gap-2">
-                  <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Imagining...
-                </span>
-              ) : (
-                'Imagine'
-              )}
-            </button>
+            <div className="flex items-center gap-2">
+              <kbd className="hidden sm:inline text-[10px] text-text-muted/50 px-1.5 py-0.5 rounded border border-white/[0.06] font-mono">
+                Enter
+              </kbd>
+              <button
+                onClick={handleSubmit}
+                disabled={!prompt.trim() || isGenerating}
+                className="px-5 py-2 rounded-xl font-medium text-sm transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white hover:shadow-[0_0_24px_rgba(139,92,246,0.4)] active:scale-95"
+              >
+                {isGenerating ? (
+                  <span className="flex items-center gap-2">
+                    <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    Imagining...
+                  </span>
+                ) : (
+                  'Imagine'
+                )}
+              </button>
+            </div>
           </div>
 
           {/* Expanded options panel */}

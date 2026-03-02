@@ -18,6 +18,7 @@ interface GenerationRow {
   id: string;
   images: GeneratedImage[];
   prompt: string;
+  aspectRatio: string;
   createdAt: string;
   isLoading?: boolean;
 }
@@ -88,6 +89,7 @@ export default function ImaginePage() {
       id,
       images,
       prompt,
+      aspectRatio,
       createdAt: new Date().toISOString(),
     };
   }, []);
@@ -107,6 +109,7 @@ export default function ImaginePage() {
       id: loadingId,
       images: [],
       prompt,
+      aspectRatio,
       createdAt: new Date().toISOString(),
       isLoading: true,
     }, ...prev]);
@@ -138,6 +141,7 @@ export default function ImaginePage() {
       id: loadingId,
       images: [],
       prompt: currentPrompt,
+      aspectRatio: currentAspectRatio,
       createdAt: new Date().toISOString(),
       isLoading: true,
     }]);
@@ -364,10 +368,27 @@ export default function ImaginePage() {
             {row.isLoading && (
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {Array.from({ length: 4 }).map((_, i) => (
-                  <div key={i} className="aspect-square rounded-2xl bg-cosmic-surface/60 animate-pulse border border-white/[0.04] flex items-center justify-center">
-                    <div className="flex flex-col items-center gap-3">
-                      <div className="w-8 h-8 border-2 border-violet-500/30 border-t-violet-500 rounded-full animate-spin" />
-                      <span className="text-xs text-text-muted">Imagining...</span>
+                  <div
+                    key={i}
+                    className={`rounded-2xl border border-white/[0.04] relative overflow-hidden ${
+                      row.aspectRatio === '16:9' ? 'aspect-video' :
+                      row.aspectRatio === '9:16' ? 'aspect-[9/16]' :
+                      row.aspectRatio === '4:3' ? 'aspect-[4/3]' :
+                      row.aspectRatio === '3:4' ? 'aspect-[3/4]' :
+                      'aspect-square'
+                    }`}
+                  >
+                    {/* Shimmer gradient skeleton */}
+                    <div className="absolute inset-0 bg-cosmic-surface/60" />
+                    <div className="absolute inset-0 shimmer opacity-40" style={{ animationDelay: `${i * 0.2}s` }} />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="flex flex-col items-center gap-2.5">
+                        <div className="relative w-10 h-10">
+                          <div className="absolute inset-0 border-2 border-violet-500/20 rounded-full" />
+                          <div className="absolute inset-0 border-2 border-transparent border-t-violet-500 rounded-full animate-spin" />
+                        </div>
+                        <span className="text-[11px] text-text-muted/70 font-body">Creating...</span>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -390,6 +411,7 @@ export default function ImaginePage() {
                     prompt={img.prompt}
                     data={img.data}
                     mimeType={img.mimeType}
+                    aspectRatio={row.aspectRatio}
                     index={i}
                     onAnimate={handleAnimate}
                     onFavoriteChange={refreshFavorites}
