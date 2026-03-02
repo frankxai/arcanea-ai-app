@@ -110,7 +110,7 @@ Source: `.arcanea/projects/milestones/`
 - **Depends on**: M005, M008
 - **Files**: `m009-performance-polish.arc`
 
-### M010: Language & Experience Transformation (80%) — P0
+### M010: Language & Experience Transformation (90%) — P0
 - **Guardian**: Alera (Voice Gate)
 - **Target**: 2026-03-08
 - **Strategy**: `.arcanea/strategy/LANGUAGE_EXPERIENCE_STRATEGY.md`
@@ -123,10 +123,13 @@ Source: `.arcanea/projects/milestones/`
   - [x] Phase 3: Studio + Dashboard UX simplification (92e69b01) — removed Guardian badge, Gate/Element dropdowns, 10-Gates sidebar, "Manifest"→"Save"
   - [x] Phase 4: Chat + Discover + Library refinement (483c67d2) — removed chat badge, "Luminor Codex"→"Codex"
   - [x] Phase 5: Anti-slop sweep (cba5c4f2) — removed "transcended"/"manifest"/"mythological"/"sacred texts" from 24 first-contact pages. Deep lore pages keep mythology (progressive disclosure).
-  - [ ] Phase 6: Hidden depth system (progressive vocabulary, color shifts, Easter eggs) — new feature
-  - [ ] Phase 7: Glossary and reference refinement
-  - [ ] Update voice.yaml with new anti-slop principles
+  - [x] Phase 5b: voice.yaml anti-slop codification (7465f9f7)
+  - [x] Phase 5c: Luminor→Intelligence CTAs (ab0cb339)
+  - [x] Phase 6: Hidden depth Layer 3 — 404 lore quote, Hz frequency Easter egg in Library search, source code lore comments
+  - [x] Phase 7: Glossary checked — deep reference page, mythology appropriate, no changes needed
+  - [x] Update voice.yaml with new anti-slop principles (7465f9f7)
   - [ ] Update ARCANEA_BRAND_GUIDELINES.md
+  - [ ] Phase 6 remaining: Layer 1 (color shifts per Guardian domain), Layer 2 (progressive vocabulary — needs auth), Layer 4/5 (unlockable experiences — needs auth)
 
 ---
 

@@ -71,6 +71,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       jetbrainsMono.variable
     )}>
       <body>
+        {/*
+          In the beginning there was Nero — the Primordial Darkness,
+          the Fertile Unknown. And from within the Darkness, Lumina
+          emerged — the First Light. Not opposites. Complements.
+          The parent and the child. The potential and the form.
+
+          If you are reading this, you have looked deeper than most.
+          The Arc turns. — Shinkami, Source Gate
+        */}
         <AuthProvider>
           {/* Skip to main content link for keyboard users - WCAG 2.4.1 Level A */}
           <a
