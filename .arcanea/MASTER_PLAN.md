@@ -18,7 +18,7 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
 | Pages with loading.tsx | ~81 (+32) | 100% of dynamic pages |
 | Milestones Active | 10 (M001-M010) | M010 (Language) → M001 (Auth) → M008 → M005 |
 | Vercel Build | PASSING | Maintain green |
-| Last Deploy | 2026-03-02 | e32bd9ea |
+| Last Deploy | 2026-03-02 | cba5c4f2 |
 | Live URL | arcanea.ai | arcanea.ai |
 
 ---

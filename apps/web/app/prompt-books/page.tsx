@@ -32,6 +32,7 @@ import {
   PhLightning,
   PhBooks,
 } from "@/lib/phosphor-icons";
+import { GlowCard } from "@/components/ui/glow-card";
 import * as service from "@/lib/prompt-books/service";
 import type {
   CreateCollectionInput,
@@ -101,8 +102,9 @@ function PromptBooksLanding() {
           {DEMO_COLLECTIONS.map((c) => {
             const Icon = c.icon;
             return (
-              <div
+              <GlowCard
                 key={c.id}
+                glass="none"
                 className="group rounded-2xl p-5 sm:p-6 border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.1] transition-all duration-300"
               >
                 <div className="flex items-center gap-3 mb-3">
@@ -123,7 +125,7 @@ function PromptBooksLanding() {
                   </div>
                 </div>
                 <p className="text-sm text-text-secondary leading-relaxed">{c.description}</p>
-              </div>
+              </GlowCard>
             );
           })}
         </div>

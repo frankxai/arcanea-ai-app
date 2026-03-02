@@ -18,6 +18,7 @@ import {
   PhCircleNotch,
   PhGithubLogo,
 } from "@/lib/phosphor-icons";
+import { GlowCard } from "@/components/ui/glow-card";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -165,7 +166,7 @@ export default function SignupPage() {
         </div>
 
         {/* Signup card */}
-        <div className="rounded-2xl sm:rounded-3xl border border-white/[0.08] bg-white/[0.02] p-6 sm:p-8">
+        <GlowCard glass="none" className="rounded-2xl sm:rounded-3xl border border-white/[0.08] bg-white/[0.02] p-6 sm:p-8">
           {/* Social signup buttons */}
           <div className="grid grid-cols-2 gap-3 mb-5">
             <button
@@ -382,7 +383,7 @@ export default function SignupPage() {
               )}
             </button>
           </form>
-        </div>
+        </GlowCard>
 
         {/* Login link */}
         <p className="text-center mt-8 font-body text-text-secondary text-sm">

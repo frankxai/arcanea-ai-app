@@ -17,6 +17,8 @@ import {
   PhWarningCircle,
   PhGithubLogo,
 } from "@/lib/phosphor-icons";
+import type { PhosphorIcon } from "@/lib/phosphor-icons";
+import { GlowCard } from "@/components/ui/glow-card";
 
 function LoadingSpinner({ text }: { text: string }) {
   return (
@@ -60,7 +62,7 @@ function InputField({
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
-  icon: React.ComponentType<{ className?: string; weight?: string }>;
+  icon: PhosphorIcon;
   showToggle?: boolean;
   toggleVisible?: boolean;
   onToggle?: () => void;
@@ -263,7 +265,7 @@ export default function LoginPage() {
         </div>
 
         {/* Login card */}
-        <div className="rounded-2xl sm:rounded-3xl border border-white/[0.08] bg-white/[0.02] p-6 sm:p-8">
+        <GlowCard glass="none" className="rounded-2xl sm:rounded-3xl border border-white/[0.08] bg-white/[0.02] p-6 sm:p-8">
           {authMessage === "check_email" && (
             <motion.p
               initial={{ opacity: 0, y: -8 }}
@@ -379,7 +381,7 @@ export default function LoginPage() {
               )}
             </button>
           </form>
-        </div>
+        </GlowCard>
 
         {/* Sign up link */}
         <p className="text-center mt-8 font-body text-text-secondary text-sm">

@@ -12,6 +12,7 @@ import {
   PhWarningCircle,
   PhCheckCircle,
 } from "@/lib/phosphor-icons";
+import { GlowCard } from "@/components/ui/glow-card";
 
 export default function ForgotPasswordPage() {
   const router = useRouter();
@@ -65,7 +66,7 @@ export default function ForgotPasswordPage() {
         transition={{ duration: 0.5 }}
         className="w-full max-w-md"
       >
-        <div className="rounded-2xl sm:rounded-3xl border border-white/[0.08] bg-white/[0.02] p-6 sm:p-8">
+        <GlowCard glass="none" className="rounded-2xl sm:rounded-3xl border border-white/[0.08] bg-white/[0.02] p-6 sm:p-8">
           <h1 className="text-xl sm:text-2xl font-display font-bold mb-2 text-text-primary">
             Reset Password
           </h1>
@@ -133,7 +134,7 @@ export default function ForgotPasswordPage() {
             <PhArrowLeft className="w-4 h-4" />
             Back to sign in
           </Link>
-        </div>
+        </GlowCard>
       </motion.div>
     </div>
   );

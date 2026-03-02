@@ -3,6 +3,7 @@
 import { PhStar, PhCopy } from '@/lib/phosphor-icons'
 import { cn } from '@/lib/utils'
 import { PROMPT_TYPES } from '@/lib/prompt-books/constants'
+import { GlowCard } from '@/components/ui/glow-card'
 import type { Prompt } from '@/lib/prompt-books/types'
 
 interface PromptCardProps {
@@ -66,8 +67,10 @@ export function PromptCard({
   }
 
   return (
-    <div
+    <GlowCard
       onClick={onClick}
+      glass="none"
+      lift={false}
       className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5 hover:bg-white/[0.04] hover:border-white/[0.1] hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200 cursor-pointer group relative"
     >
       {/* Type badge */}
@@ -137,7 +140,7 @@ export function PromptCard({
           <span>v{prompt.version}</span>
         </div>
       </div>
-    </div>
+    </GlowCard>
   )
 }
 
