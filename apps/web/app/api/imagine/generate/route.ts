@@ -3,17 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export const maxDuration = 60;
 
 // Grok Imagine API: model grok-imagine-image at api.x.ai/v1/images/generations
-// Falls back to Gemini Flash if no XAI_API_KEY
-
-const ASPECT_RATIOS: Record<string, string> = {
-  '1:1': '1024x1024',
-  '16:9': '1792x1024',
-  '9:16': '1024x1792',
-  '4:3': '1024x768',
-  '3:4': '768x1024',
-  '3:2': '1536x1024',
-  '2:3': '1024x1536',
-};
+// Falls back to Gemini Flash on any Grok failure
 
 interface GrokImageResponse {
   data: { url: string; revised_prompt?: string }[];
@@ -27,7 +17,6 @@ async function generateWithGrok(
   const apiKey = process.env.XAI_API_KEY;
   if (!apiKey) throw new Error('NO_XAI_KEY');
 
-  const size = ASPECT_RATIOS[aspectRatio] || '1024x1024';
   const n = Math.min(count, 10);
 
   const res = await fetch('https://api.x.ai/v1/images/generations', {
@@ -37,10 +26,10 @@ async function generateWithGrok(
       Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: 'grok-2-image',
+      model: 'grok-imagine-image',
       prompt,
       n,
-      size,
+      aspect_ratio: aspectRatio,
       response_format: 'url',
     }),
   });
@@ -118,7 +107,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Prompt is required' }, { status: 400 });
     }
 
-    // Try Grok first (primary), fall back to Gemini
+    // Try Grok first, fall back to Gemini on any failure
+    let grokError = '';
     try {
       const result = await generateWithGrok(prompt, count, aspectRatio);
       return NextResponse.json({
@@ -127,37 +117,35 @@ export async function POST(req: NextRequest) {
         prompt,
       });
     } catch (grokErr) {
-      const grokMsg = grokErr instanceof Error ? grokErr.message : '';
+      grokError = grokErr instanceof Error ? grokErr.message : 'Grok failed';
+    }
 
-      // Only fall back if Grok isn't configured — real API errors should surface
-      if (grokMsg !== 'NO_XAI_KEY') {
-        return NextResponse.json({ error: grokMsg || 'Image generation failed' }, { status: 500 });
+    // Gemini fallback
+    try {
+      const result = await generateWithGemini(prompt, count);
+      if (result.images.length === 0) {
+        return NextResponse.json(
+          { error: grokError || 'All image generations failed. Try a different prompt.' },
+          { status: 500 },
+        );
       }
-
-      // Gemini fallback
-      try {
-        const result = await generateWithGemini(prompt, count);
-        if (result.images.length === 0) {
-          return NextResponse.json(
-            { error: 'All image generations failed. Try a different prompt.' },
-            { status: 500 },
-          );
-        }
-        return NextResponse.json({
-          images: result.images,
-          provider: result.provider,
-          prompt,
-        });
-      } catch (geminiErr) {
-        const geminiMsg = geminiErr instanceof Error ? geminiErr.message : '';
-        if (geminiMsg === 'NO_GEMINI_KEY') {
-          return NextResponse.json(
-            { error: 'No image generation API configured. Set XAI_API_KEY (recommended) or GEMINI_API_KEY in Vercel.' },
-            { status: 503 },
-          );
-        }
-        return NextResponse.json({ error: geminiMsg || 'Image generation failed' }, { status: 500 });
+      return NextResponse.json({
+        images: result.images,
+        provider: result.provider,
+        prompt,
+      });
+    } catch (geminiErr) {
+      const geminiMsg = geminiErr instanceof Error ? geminiErr.message : '';
+      if (grokError === 'NO_XAI_KEY' && geminiMsg === 'NO_GEMINI_KEY') {
+        return NextResponse.json(
+          { error: 'No image generation API configured. Set XAI_API_KEY (recommended) or GEMINI_API_KEY in Vercel.' },
+          { status: 503 },
+        );
       }
+      return NextResponse.json(
+        { error: grokError || geminiMsg || 'Image generation failed' },
+        { status: 500 },
+      );
     }
   } catch (error) {
     console.error('Imagine API error:', error);
@@ -167,4 +155,3 @@ export async function POST(req: NextRequest) {
     );
   }
 }
-// env refresh 20260302T012230
