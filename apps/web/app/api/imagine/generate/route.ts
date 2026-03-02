@@ -27,9 +27,9 @@ async function generateWithGrok(
   const apiKey = process.env.XAI_API_KEY;
   if (!apiKey) throw new Error('NO_XAI_KEY');
 
-  const size = ASPECT_RATIOS[aspectRatio] || '1024x1024';
   const n = Math.min(count, 10);
 
+  // Grok API does not support size/aspect_ratio — generates default dimensions
   const res = await fetch('https://api.x.ai/v1/images/generations', {
     method: 'POST',
     headers: {
@@ -40,7 +40,6 @@ async function generateWithGrok(
       model: 'grok-2-image',
       prompt,
       n,
-      size,
       response_format: 'url',
     }),
   });
