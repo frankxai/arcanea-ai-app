@@ -72,7 +72,7 @@ const CAPABILITY_GRID = [
   {
     icon: PhUsers,
     title: "Multi-Intelligence Sessions",
-    description: "Multiple Luminors collaborating on a single project",
+    description: "Multiple specialists collaborating on a single project",
   },
   {
     icon: PhShield,

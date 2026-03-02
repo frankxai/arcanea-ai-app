@@ -17,13 +17,13 @@ export async function generateMetadata({
   if (!luminor) {
     return {
       title: 'Chat | Arcanea',
-      description: 'Chat with an AI specialist in development, design, writing, or research.',
+      description: 'Converse with Luminor Intelligences in the Arcanean universe.',
     };
   }
 
   return {
     title: `Chat with ${luminor.name} | Arcanea`,
-    description: `${luminor.name} — ${luminor.tagline}. ${luminor.specialty} specialist.`,
+    description: `${luminor.name} — ${luminor.tagline}. ${luminor.specialty} specialist in the Arcanean universe.`,
     openGraph: {
       title: `Chat with ${luminor.name} | Arcanea`,
       description: `${luminor.name} — ${luminor.tagline}`,

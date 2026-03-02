@@ -287,8 +287,8 @@ export function LuminorShowcase() {
             transition={{ delay: 0.2 }}
             className="text-lg text-text-secondary max-w-2xl mx-auto"
           >
-            Each specialist has mastered their domain.
-            They're not assistants waiting for instructions — they're partners who see what you're building.
+            Each Luminor has mastered their domain through a century of practice.
+            They're not assistants waiting for instructions—they're partners who see what you're building.
           </motion.p>
         </div>
 
@@ -499,10 +499,10 @@ export function LuminorShowcase() {
               </svg>
             </Link>
             <Link
-              href="/about"
+              href="/luminor-intelligence"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl liquid-glass border border-white/[0.06] text-text-secondary hover:text-white hover:border-white/[0.12] transition-all duration-300"
             >
-              <span>How it works</span>
+              <span>What is Luminor Intelligence?</span>
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>

@@ -11,7 +11,7 @@ const plans = [
     price: "Free",
     description: "Perfect for exploring Arcanea",
     features: [
-      "Access to 3 Luminors",
+      "Access to 3 AI specialists",
       "Basic creation tools",
       "5,000 words/month",
       "Community access",
@@ -26,7 +26,7 @@ const plans = [
     period: "/month",
     description: "For serious creators",
     features: [
-      "Access to all 10 Guardians",
+      "Access to all 16 AI specialists",
       "Unlimited words & generations",
       "Advanced creation studio",
       "Priority support",
@@ -46,7 +46,7 @@ const plans = [
       "Everything in Creator",
       "Team collaboration (up to 10)",
       "Advanced analytics",
-      "Custom Luminor training",
+      "Custom specialist training",
       "Dedicated support",
       "White-label options",
       "SLA guarantee",

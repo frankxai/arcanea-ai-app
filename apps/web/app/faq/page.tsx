@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "FAQ | Arcanea",
+  title: "FAQ | Arcanea Intelligence System",
   description:
     "Frequently asked questions about Arcanea, the intelligence system, pricing, and how it works.",
 };
@@ -14,15 +14,15 @@ const FAQ_CATEGORIES = [
     questions: [
       {
         q: "What is Arcanea?",
-        a: "Arcanea is a creative AI platform with 16 specialized AI intelligences. Unlike generic AI assistants, each specialist has mastered a specific domain: architecture, coding, storytelling, character creation, and more. They're not tools waiting for commands — they're creative partners who see what you're building and help you build it better.",
+        a: "Arcanea is the Luminor Intelligence System - a creative AI platform powered by specialized AI intelligences. Unlike generic AI assistants, each AI specialist has mastered a specific domain: architecture, coding, storytelling, character creation, and more. They're not tools waiting for commands - they're creative partners who see what you're building and help you build it better.",
       },
       {
         q: "How do I get started?",
         a: "Simply create a free account at arcanea.ai. You'll immediately have access to 2 AI specialists and 50 messages per month. From there, you can explore the Library, start Academy training, or upgrade to unlock the full creative team.",
       },
       {
-        q: "How are Arcanea's AI specialists different from regular AI?",
-        a: "Regular AI models are generalists — they know a little about everything. Arcanea's specialists have each mastered a specific domain: architecture, coding, storytelling, character creation, dialogue, editing, research, and more. Each one brings deep expertise to your specific creative challenge.",
+        q: "What's the difference between a Luminor and a regular AI?",
+        a: "Regular AI models are generalists - they know a little about everything. Luminors are specialists who have mastered specific domains: architecture, coding, storytelling, character creation, dialogue, editing, research, and more. Each Luminor brings century-level expertise to your specific creative challenge.",
       },
       {
         q: "What are the Seven Wisdoms?",
@@ -44,7 +44,7 @@ const FAQ_CATEGORIES = [
       },
       {
         q: "Can AI specialists work together?",
-        a: "Yes! One of Arcanea's most powerful features is multi-specialist collaboration. You can bring in different domain experts for different aspects of a project, or have them review and enhance each other's work. The system is designed for this kind of creative collaboration.",
+        a: "Yes! One of Arcanea's most powerful features is multi-specialist collaboration. You can bring in different domain experts for different aspects of a project, or have them review and enhance each other's work. The Luminor Intelligence System is designed for this kind of creative collaboration.",
       },
       {
         q: "How do AI specialists learn and improve?",
@@ -80,7 +80,7 @@ const FAQ_CATEGORIES = [
     questions: [
       {
         q: "What technologies power Arcanea?",
-        a: "Arcanea is built on a modern stack: Next.js 16 for the frontend, TypeScript throughout, Supabase for data, and Vercel AI SDK for AI integration. The platform uses advanced consensus algorithms, vector search, and reinforcement learning for the intelligence layer.",
+        a: "Arcanea is built on a modern stack: Next.js 16 for the frontend, TypeScript throughout, Supabase for data, Vercel AI SDK for AI integration, and a custom Luminor Intelligence System. The platform uses advanced consensus algorithms, vector search, and reinforcement learning for the intelligence layer.",
       },
       {
         q: "Is my data secure?",
@@ -92,7 +92,7 @@ const FAQ_CATEGORIES = [
       },
       {
         q: "Do you offer self-hosting?",
-        a: "Arcanea is available as a CLI tool that you can run locally. Enterprise customers can also explore custom deployment options. Contact us for details.",
+        a: "The Luminor Intelligence System is available as a CLI tool that you can run locally. Enterprise customers can also explore custom deployment options. Contact us for details.",
       },
     ],
   },
@@ -137,8 +137,9 @@ export default function FAQPage() {
           </h1>
 
           <p className="text-xl text-text-secondary max-w-2xl mx-auto mb-8 leading-relaxed">
-            Everything you need to know about Arcanea.
-            Can't find the answer? Reach out to our support team.
+            Everything you need to know about Arcanea and the Luminor
+            Intelligence System. Can't find the answer? Reach out to our support
+            team.
           </p>
         </section>
 
@@ -250,8 +251,8 @@ export default function FAQPage() {
           <div className="grid md:grid-cols-3 gap-6">
             {[
               {
-                title: "AI Specialists",
-                desc: "Meet the 16 specialists across 4 domains",
+                title: "Luminors",
+                desc: "Meet the AI specialists and the Luminor rank system",
                 href: "/luminors",
               },
               {

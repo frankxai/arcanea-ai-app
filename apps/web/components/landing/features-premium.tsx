@@ -37,7 +37,7 @@ const features = [
     icon: PhChatSquare,
     title: "Natural Conversation",
     description:
-      "Chat with Luminors in plain language. They remember context and adapt to your creative style.",
+      "Chat in plain language. They remember context and adapt to your creative style.",
     gradient: "from-brand-primary to-water-bright",
     borderColor: "border-brand-primary/30",
     hoverGlow: "hover:shadow-glow-brand",
