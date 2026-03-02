@@ -13,7 +13,7 @@ interface CollectionHeaderProps {
 export function CollectionHeader({ collection, onEdit }: CollectionHeaderProps) {
   if (!collection) {
     return (
-      <header className="liquid-glass border-b border-white/[0.06] px-6 py-4">
+      <header className="border-b border-white/[0.06] bg-white/[0.01] px-6 py-4">
         <div>
           <h2 className="text-2xl font-display text-text-primary mb-1">All Prompts</h2>
           <p className="text-sm text-text-secondary font-serif">
@@ -29,7 +29,7 @@ export function CollectionHeader({ collection, onEdit }: CollectionHeaderProps) 
     : null
 
   return (
-    <header className="liquid-glass border-b border-white/[0.06] px-6 py-4">
+    <header className="border-b border-white/[0.06] bg-white/[0.01] px-6 py-4">
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-4">
           {/* Guardian badge */}

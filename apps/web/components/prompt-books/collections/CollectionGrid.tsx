@@ -22,12 +22,12 @@ export function CollectionGrid({
   if (prompts.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
-        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-accent/10 to-brand-primary/10 flex items-center justify-center mb-4 animate-pulse-glow">
-          <span className="text-2xl text-brand-accent">+</span>
+        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-atlantean-teal-aqua/10 to-atlantean-teal-aqua/5 border border-atlantean-teal-aqua/10 flex items-center justify-center mb-5">
+          <span className="text-2xl text-atlantean-teal-aqua/60">+</span>
         </div>
         <h3 className="text-lg font-display text-text-primary mb-2">No prompts yet</h3>
-        <p className="text-sm text-text-secondary font-serif max-w-sm">
-          Create your first prompt or use Cmd+Shift+P for quick capture
+        <p className="text-sm text-text-secondary font-body max-w-sm leading-relaxed">
+          Create your first prompt or press Cmd+Shift+P for quick capture
         </p>
       </div>
     )

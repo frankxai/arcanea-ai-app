@@ -7,9 +7,5 @@ export const metadata: Metadata = {
 }
 
 export default function PromptBooksLayout({ children }: { children: ReactNode }) {
-  return (
-    <div className="-mx-4 -mt-24 -mb-4 min-h-dvh">
-      {children}
-    </div>
-  )
+  return <>{children}</>
 }

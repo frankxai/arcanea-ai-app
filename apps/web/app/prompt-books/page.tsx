@@ -18,6 +18,20 @@ import { PromptSearch } from "@/components/prompt-books/search/PromptSearch";
 import { FilterBar } from "@/components/prompt-books/search/FilterBar";
 import { TemplateGallery } from "@/components/prompt-books/templates/TemplateGallery";
 import { TagManager } from "@/components/prompt-books/tags/TagManager";
+import {
+  PhGridFour,
+  PhList,
+  PhPlus,
+  PhMagnifyingGlass,
+  PhCommand,
+  PhTag,
+  PhSquaresFour,
+  PhBookOpen,
+  PhArrowRight,
+  PhSparkle,
+  PhLightning,
+  PhBooks,
+} from "@/lib/phosphor-icons";
 import * as service from "@/lib/prompt-books/service";
 import type {
   CreateCollectionInput,
@@ -25,167 +39,115 @@ import type {
   UpdateTagInput,
 } from "@/lib/prompt-books/types";
 
-// ─── Inline SVG Icons ───────────────────────────────────────────────────────────
-const Icons = {
-  Grid: () => (
-    <svg
-      className="w-4 h-4"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect x="3" y="3" width="7" height="7" />
-      <rect x="14" y="3" width="7" height="7" />
-      <rect x="14" y="14" width="7" height="7" />
-      <rect x="3" y="14" width="7" height="7" />
-    </svg>
-  ),
-  List: () => (
-    <svg
-      className="w-4 h-4"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <line x1="8" y1="6" x2="21" y2="6" />
-      <line x1="8" y1="12" x2="21" y2="12" />
-      <line x1="8" y1="18" x2="21" y2="18" />
-      <line x1="3" y1="6" x2="3.01" y2="6" />
-      <line x1="3" y1="12" x2="3.01" y2="12" />
-      <line x1="3" y1="18" x2="3.01" y2="18" />
-    </svg>
-  ),
-  Plus: () => (
-    <svg
-      className="w-4 h-4"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <line x1="12" y1="5" x2="12" y2="19" />
-      <line x1="5" y1="12" x2="19" y2="12" />
-    </svg>
-  ),
-  Search: () => (
-    <svg
-      className="w-4 h-4"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="11" cy="11" r="8" />
-      <line x1="21" y1="21" x2="16.65" y2="16.65" />
-    </svg>
-  ),
-  Command: () => (
-    <svg
-      className="w-3 h-3"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z" />
-    </svg>
-  ),
-  LayoutGrid: () => (
-    <svg
-      className="w-4 h-4"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect x="3" y="3" width="7" height="7" />
-      <rect x="14" y="3" width="7" height="7" />
-      <rect x="14" y="14" width="7" height="7" />
-      <rect x="3" y="14" width="7" height="7" />
-    </svg>
-  ),
-  Tag: () => (
-    <svg
-      className="w-4 h-4"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
-      <line x1="7" y1="7" x2="7.01" y2="7" />
-    </svg>
-  ),
-};
-
 // ─── Demo collections for unauthenticated preview ─────────────────────────────
 const DEMO_COLLECTIONS = [
-  { id: "d1", name: "Guardian Invocations", icon: "✦", color: "#7fffd4", promptCount: 12, description: "Prompts for each of the 10 Gates" },
-  { id: "d2", name: "World Building",       icon: "◈", color: "#8b5cf6", promptCount: 8,  description: "Universe creation with Shinkami" },
-  { id: "d3", name: "Creative Rituals",     icon: "◉", color: "#ffd700", promptCount: 17, description: "Daily practice prompts from the Library" },
-  { id: "d4", name: "Vault Imports",        icon: "⬡", color: "#78a6ff", promptCount: 24, description: "Captured from ChatGPT & Claude sessions" },
+  {
+    id: "d1",
+    name: "Creative Writing",
+    icon: PhSparkle,
+    color: "#7fffd4",
+    promptCount: 12,
+    description: "Story prompts, character builders, and narrative frameworks",
+  },
+  {
+    id: "d2",
+    name: "World Building",
+    icon: PhBooks,
+    color: "#8b5cf6",
+    promptCount: 8,
+    description: "Universe creation, lore systems, and setting design",
+  },
+  {
+    id: "d3",
+    name: "Code & Technical",
+    icon: PhLightning,
+    color: "#ffd700",
+    promptCount: 17,
+    description: "Development prompts, debugging helpers, architecture guides",
+  },
+  {
+    id: "d4",
+    name: "Vault Imports",
+    icon: PhBookOpen,
+    color: "#78a6ff",
+    promptCount: 24,
+    description: "Captured from ChatGPT, Claude, and Gemini sessions",
+  },
 ];
 
 function PromptBooksLanding() {
   return (
     <div className="flex-1 overflow-auto">
-      <div className="max-w-4xl mx-auto px-6 py-16 text-center">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-arcane-crystal/30 bg-arcane-crystal/10 mb-8">
-          <span className="text-xs font-mono tracking-widest uppercase text-arcane-crystal">Prompt Books</span>
+      <div className="max-w-3xl mx-auto px-6 sm:px-8 py-16 sm:py-24">
+        {/* Hero */}
+        <div className="text-center mb-14">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-atlantean-teal-aqua/20 bg-atlantean-teal-aqua/5 mb-8">
+            <PhBookOpen className="w-3.5 h-3.5 text-atlantean-teal-aqua" weight="duotone" />
+            <span className="text-xs font-mono tracking-widest uppercase text-atlantean-teal-aqua/80">
+              Prompt Books
+            </span>
+          </div>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-white mb-5 leading-tight">
+            Your AI Prompt Library
+          </h1>
+          <p className="text-base sm:text-lg text-text-secondary font-body leading-relaxed max-w-xl mx-auto">
+            Organize, search, and reuse your best AI prompts across every platform.
+            Import from the Arcanea Vault extension or capture directly.
+          </p>
         </div>
-        <h1 className="text-4xl font-display font-bold text-white mb-4">Your AI Prompt Library</h1>
-        <p className="text-text-secondary font-body leading-relaxed mb-10 max-w-2xl mx-auto">
-          Organize, search, and reuse your best AI prompts across every platform.
-          Import from the Arcanea Vault Chrome extension or capture directly.
-        </p>
 
         {/* Demo grid */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-10 text-left">
-          {DEMO_COLLECTIONS.map((c) => (
-            <div key={c.id} className="liquid-glass rounded-2xl p-5 border border-white/[0.04] opacity-75 select-none">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg"
-                  style={{ background: `${c.color}18`, border: `1px solid ${c.color}30` }}>
-                  {c.icon}
+        <div className="grid sm:grid-cols-2 gap-4 sm:gap-5 mb-14">
+          {DEMO_COLLECTIONS.map((c) => {
+            const Icon = c.icon;
+            return (
+              <div
+                key={c.id}
+                className="group rounded-2xl p-5 sm:p-6 border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.1] transition-all duration-300"
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                    style={{
+                      background: `${c.color}12`,
+                      border: `1px solid ${c.color}25`,
+                    }}
+                  >
+                    <Icon className="w-5 h-5" style={{ color: c.color }} weight="duotone" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="font-display font-semibold text-text-primary text-sm truncate">
+                      {c.name}
+                    </p>
+                    <p className="text-xs text-text-muted">{c.promptCount} prompts</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-display font-semibold text-text-primary text-sm">{c.name}</p>
-                  <p className="text-xs text-text-secondary">{c.promptCount} prompts</p>
-                </div>
+                <p className="text-sm text-text-secondary leading-relaxed">{c.description}</p>
               </div>
-              <p className="text-xs text-text-secondary">{c.description}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
-        <div className="flex flex-wrap justify-center gap-4">
-          <Link href="/auth/login"
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-arcane-crystal text-cosmic-deep font-semibold hover:scale-[1.03] transition-all">
-            Sign In to Access Your Books
+        {/* CTAs */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Link
+            href="/auth/login?next=/prompt-books"
+            className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-aqua/80 text-cosmic-deep font-semibold text-sm hover:shadow-[0_0_30px_rgba(127,255,212,0.25)] hover:scale-[1.02] transition-all duration-300"
+          >
+            Sign In to Access
+            <PhArrowRight className="w-4 h-4" />
           </Link>
-          <Link href="/arcanea-vault"
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-arcane-crystal/30 transition-all text-sm">
-            Get Arcanea Vault →
+          <Link
+            href="/auth/signup?next=/prompt-books"
+            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-white/[0.08] bg-white/[0.03] text-text-primary font-semibold text-sm hover:border-atlantean-teal-aqua/30 hover:bg-white/[0.06] transition-all duration-300"
+          >
+            Create Free Account
           </Link>
         </div>
-        <p className="text-xs text-text-secondary mt-6">
-          Vault = Chrome extension that exports ChatGPT/Claude/Gemini conversations directly into your Prompt Books
+
+        <p className="text-center text-xs text-text-muted mt-8 max-w-md mx-auto leading-relaxed">
+          Vault is a Chrome extension that exports ChatGPT, Claude, and Gemini
+          conversations directly into your Prompt Books.
         </p>
       </div>
     </div>
@@ -218,7 +180,9 @@ export default function PromptBooksPage() {
     const initAuth = async () => {
       try {
         const supabase = createClient();
-        const { data: { user } } = await supabase.auth.getUser();
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
         if (user) {
           await initialize(supabase, user.id);
         }
@@ -229,8 +193,9 @@ export default function PromptBooksPage() {
       }
     };
     initAuth();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const {
     open: captureOpen,
     setOpen: setCaptureOpen,
@@ -246,7 +211,7 @@ export default function PromptBooksPage() {
     ? collections.find((c) => c.id === activeCollectionId) || null
     : null;
 
-  // ── Cmd+K / Ctrl+K keyboard shortcut ────────────────────────────────
+  // Cmd+K / Ctrl+K keyboard shortcut
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
@@ -334,14 +299,14 @@ export default function PromptBooksPage() {
   // Show landing page for unauthenticated users
   if (!userId) {
     return (
-      <div className="flex h-[calc(100dvh-64px)] pt-16">
+      <div className="flex min-h-[calc(100dvh-4rem)]">
         <PromptBooksLanding />
       </div>
     );
   }
 
   return (
-    <div className="flex h-[calc(100dvh-64px)] pt-16">
+    <div className="flex h-[calc(100dvh-4rem)]">
       {/* Sidebar */}
       <PromptBooksSidebar onCreateCollection={() => setDialogOpen(true)} />
 
@@ -354,7 +319,7 @@ export default function PromptBooksPage() {
         />
 
         {/* Toolbar */}
-        <div className="px-6 py-3 border-b border-white/[0.04] flex items-center justify-between">
+        <div className="px-6 py-3 border-b border-white/[0.06] flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Button
               variant="ghost"
@@ -363,20 +328,20 @@ export default function PromptBooksPage() {
               aria-label="Search prompts (Cmd+K)"
               onClick={() => setSearchOpen(true)}
             >
-              <Icons.Search />
+              <PhMagnifyingGlass className="w-4 h-4" />
             </Button>
 
             {/* Cmd+K hint */}
             <button
               onClick={() => setSearchOpen(true)}
               className={cn(
-                "liquid-glass px-2 py-1 rounded-md",
+                "px-2 py-1 rounded-md border border-white/[0.06] bg-white/[0.02]",
                 "flex items-center gap-1",
-                "text-[10px] font-mono text-text-muted/50",
+                "text-[10px] font-mono text-text-muted/60",
                 "hover:text-text-muted hover:bg-white/[0.04] transition-all duration-150",
               )}
             >
-              <Icons.Command />
+              <PhCommand className="w-3 h-3" />
               <span>K</span>
             </button>
 
@@ -387,7 +352,7 @@ export default function PromptBooksPage() {
               aria-label="Template Gallery"
               onClick={() => setTemplateGalleryOpen(true)}
             >
-              <Icons.LayoutGrid />
+              <PhSquaresFour className="w-4 h-4" />
             </Button>
 
             <Button
@@ -397,49 +362,49 @@ export default function PromptBooksPage() {
               aria-label="Manage Tags"
               onClick={() => setTagManagerOpen(true)}
             >
-              <Icons.Tag />
+              <PhTag className="w-4 h-4" />
             </Button>
 
-            <span className="text-xs font-sans text-text-muted">
+            <span className="text-xs font-sans text-text-muted ml-1">
               {prompts.length} prompt{prompts.length !== 1 ? "s" : ""}
             </span>
           </div>
 
           <div className="flex items-center gap-2">
             {/* View mode toggle */}
-            <div className="liquid-glass rounded-lg p-0.5 flex">
+            <div className="rounded-lg p-0.5 flex border border-white/[0.06] bg-white/[0.02]">
               <button
                 onClick={() => setViewMode("grid")}
                 className={cn(
                   "p-1.5 rounded-md transition-all",
                   viewMode === "grid"
-                    ? "card-3d liquid-glass text-text-primary"
+                    ? "bg-white/[0.08] text-text-primary shadow-sm"
                     : "text-text-muted hover:text-text-secondary",
                 )}
                 aria-label="Grid view"
               >
-                <Icons.Grid />
+                <PhGridFour className="w-4 h-4" />
               </button>
               <button
                 onClick={() => setViewMode("list")}
                 className={cn(
                   "p-1.5 rounded-md transition-all",
                   viewMode === "list"
-                    ? "card-3d liquid-glass text-text-primary"
+                    ? "bg-white/[0.08] text-text-primary shadow-sm"
                     : "text-text-muted hover:text-text-secondary",
                 )}
                 aria-label="List view"
               >
-                <Icons.List />
+                <PhList className="w-4 h-4" />
               </button>
             </div>
 
             {/* New Prompt */}
             <Button
               onClick={() => setCaptureOpen(true)}
-              className="card-3d liquid-glass hover:scale-[1.02] transition-transform gap-2"
+              className="bg-atlantean-teal-aqua/10 border border-atlantean-teal-aqua/20 text-atlantean-teal-aqua hover:bg-atlantean-teal-aqua/20 hover:scale-[1.02] transition-all gap-2"
             >
-              <Icons.Plus />
+              <PhPlus className="w-4 h-4" />
               <span className="font-sans font-medium text-sm">New Prompt</span>
             </Button>
           </div>
