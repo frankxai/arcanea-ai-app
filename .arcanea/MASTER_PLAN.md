@@ -128,7 +128,7 @@ Source: `.arcanea/projects/milestones/`
   - [x] Phase 6: Hidden depth Layer 3 — 404 lore quote, Hz frequency Easter egg in Library search, source code lore comments
   - [x] Phase 7: Glossary checked — deep reference page, mythology appropriate, no changes needed
   - [x] Update voice.yaml with new anti-slop principles (7465f9f7)
-  - [ ] Update ARCANEA_BRAND_GUIDELINES.md
+  - [x] Update ARCANEA_BRAND_GUIDELINES.md — voice, anti-slop filter, progressive disclosure
   - [ ] Phase 6 remaining: Layer 1 (color shifts per Guardian domain), Layer 2 (progressive vocabulary — needs auth), Layer 4/5 (unlockable experiences — needs auth)
 
 ---
