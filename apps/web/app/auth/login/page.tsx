@@ -60,7 +60,7 @@ function InputField({
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
-  icon: React.ComponentType<{ className?: string; weight?: string }>;
+  icon: React.ComponentType<{ className?: string; weight?: 'fill' | 'bold' | 'regular' | 'thin' | 'light' | 'duotone' }>;
   showToggle?: boolean;
   toggleVisible?: boolean;
   onToggle?: () => void;
