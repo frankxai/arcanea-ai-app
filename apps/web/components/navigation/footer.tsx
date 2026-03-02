@@ -18,10 +18,10 @@ const footerLinks = {
   create: {
     label: "Create",
     links: [
-      { href: "/chat", label: "Chat", icon: PhSparkle },
+      { href: "/luminors", label: "Luminors", icon: PhSparkle },
       { href: "/studio", label: "Studio", icon: PhPalette },
       { href: "/academy", label: "Academy", icon: PhGraduationCap },
-      { href: "/academy/gate-quiz", label: "Find Your Intelligence" },
+      { href: "/academy/gate-quiz", label: "Find Your Guardian" },
     ],
   },
   explore: {
@@ -29,7 +29,7 @@ const footerLinks = {
     links: [
       { href: "/library", label: "Library", icon: PhBookOpen },
       { href: "/lore", label: "Lore & Mythology", icon: PhCompass },
-      { href: "/luminors", label: "All Intelligences" },
+      { href: "/lore/guardians", label: "The Ten Guardians" },
       { href: "/records", label: "Records" },
     ],
   },
