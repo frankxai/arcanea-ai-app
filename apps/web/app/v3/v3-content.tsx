@@ -97,6 +97,9 @@ function HeroPortal() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent_20%,rgba(10,14,39,0.6)_75%)]" />
       </div>
 
+      {/* Floating particles */}
+      <div className="absolute inset-0 -z-14 particles-ambient pointer-events-none" />
+
       {/* Breathing aurora */}
       <motion.div
         className="absolute inset-0 -z-15 pointer-events-none"

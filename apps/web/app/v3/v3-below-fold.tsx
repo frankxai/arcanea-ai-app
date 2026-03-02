@@ -12,6 +12,8 @@ import {
   GraduationCap,
   PhImageSquare,
   PhGraphNetwork,
+  PhBrain,
+  PhPalette,
   Scroll,
   Plus,
   Minus,
@@ -246,10 +248,10 @@ function MetricsStrip() {
   const isInView = useInView(ref, { once: true, margin: "-60px" });
 
   const metrics = [
-    { value: 10,  suffix: "",   label: "Intelligences", color: "#7fffd4" },
-    { value: 17,  suffix: "",   label: "Collections",   color: "#ffd700" },
-    { value: 50,  suffix: "K+", label: "Words of Wisdom", color: "#8b5cf6" },
-    { value: 364, suffix: "+",  label: "Original Artworks", color: "#78a6ff" },
+    { value: 10,  suffix: "",   label: "Intelligences", color: "#7fffd4", icon: PhBrain },
+    { value: 17,  suffix: "",   label: "Collections",   color: "#ffd700", icon: Books },
+    { value: 50,  suffix: "K+", label: "Words of Wisdom", color: "#8b5cf6", icon: Scroll },
+    { value: 364, suffix: "+",  label: "Original Artworks", color: "#78a6ff", icon: PhPalette },
   ];
 
   return (
@@ -265,23 +267,35 @@ function MetricsStrip() {
           {/* Glass noise texture */}
           <div className="absolute inset-0 glass-noise opacity-[0.2] pointer-events-none rounded-2xl" />
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 relative">
-            {metrics.map((m, i) => (
-              <motion.div
-                key={m.label}
-                className="text-center"
-                initial={{ opacity: 0, y: 16 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-              >
-                <div
-                  className="text-3xl md:text-5xl font-display font-bold mb-2"
-                  style={{ color: m.color }}
+            {metrics.map((m, i) => {
+              const Icon = m.icon;
+              return (
+                <motion.div
+                  key={m.label}
+                  className="text-center"
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
                 >
-                  <CountUp target={m.value} suffix={m.suffix} />
-                </div>
-                <p className="text-xs text-white/35 tracking-wide uppercase font-mono">{m.label}</p>
-              </motion.div>
-            ))}
+                  <div
+                    className="w-10 h-10 rounded-xl mx-auto mb-4 flex items-center justify-center"
+                    style={{
+                      background: `linear-gradient(135deg, ${m.color}18, ${m.color}08)`,
+                      border: `1px solid ${m.color}20`,
+                    }}
+                  >
+                    <Icon className="w-5 h-5" style={{ color: m.color }} />
+                  </div>
+                  <div
+                    className="text-3xl md:text-5xl font-display font-bold mb-2"
+                    style={{ color: m.color }}
+                  >
+                    <CountUp target={m.value} suffix={m.suffix} />
+                  </div>
+                  <p className="text-xs text-white/35 tracking-wide uppercase font-mono">{m.label}</p>
+                </motion.div>
+              );
+            })}
           </div>
         </GlowCard>
       </div>

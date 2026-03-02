@@ -743,3 +743,58 @@ p a, span a, li a {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* ============================================================
+   FLOATING PARTICLES — CSS-only ambient particle system
+   ============================================================ */
+
+@keyframes float-particle {
+  0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  50% { transform: translateY(-120px) translateX(20px); }
+}
+
+@keyframes float-particle-alt {
+  0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: 0.7; }
+  90% { opacity: 0.7; }
+  50% { transform: translateY(-80px) translateX(-15px); }
+}
+
+.particles-ambient::before,
+.particles-ambient::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+}
+
+.particles-ambient::before {
+  width: 3px;
+  height: 3px;
+  top: 60%;
+  left: 20%;
+  background: rgba(127, 255, 212, 0.4);
+  box-shadow:
+    200px -100px 0 rgba(139, 92, 246, 0.3),
+    400px -200px 0 rgba(255, 215, 0, 0.25),
+    600px -50px 0 rgba(127, 255, 212, 0.3),
+    100px -300px 0 rgba(120, 166, 255, 0.3),
+    500px -250px 0 rgba(139, 92, 246, 0.2);
+  animation: float-particle 8s ease-in-out infinite;
+}
+
+.particles-ambient::after {
+  width: 2px;
+  height: 2px;
+  top: 70%;
+  left: 40%;
+  background: rgba(139, 92, 246, 0.3);
+  box-shadow:
+    150px -80px 0 rgba(127, 255, 212, 0.25),
+    350px -180px 0 rgba(255, 215, 0, 0.2),
+    -100px -150px 0 rgba(120, 166, 255, 0.3),
+    250px -280px 0 rgba(139, 92, 246, 0.25);
+  animation: float-particle-alt 10s ease-in-out infinite 2s;
+}
