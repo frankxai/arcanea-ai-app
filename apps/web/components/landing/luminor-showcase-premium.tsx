@@ -293,7 +293,7 @@ export function LuminorShowcasePremium() {
             className="inline-block px-4 py-2 rounded-full glass border border-gold/20 text-gold font-medium text-sm mb-6"
           >
             <PhSparkle className="w-4 h-4 inline mr-2" />
-            Meet the Luminors
+            Meet the Intelligences
           </motion.span>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">

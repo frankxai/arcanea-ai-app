@@ -217,7 +217,7 @@ export function HeroSection({ stats }: HeroSectionProps) {
                 className="group px-8 py-4 rounded-2xl border border-white/[0.12] text-white font-semibold text-lg backdrop-blur-sm hover:bg-white/[0.04] hover:border-atlantean-teal-aqua/50 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/[0.30] focus:ring-offset-2 focus:ring-offset-cosmic-deep"
               >
                 <span className="flex items-center gap-2">
-                  Meet the Luminors
+                  Meet the Intelligences
                   <span className="text-atlantean-teal-aqua opacity-0 group-hover:opacity-100 transition-opacity">✨</span>
                 </span>
               </Link>

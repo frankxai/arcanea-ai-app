@@ -97,7 +97,7 @@ export function UserNav() {
             {[
               { href: '/dashboard', icon: PhHouse, label: 'Dashboard' },
               { href: '/profile', icon: PhUser, label: 'Your Profile' },
-              { href: '/luminors', icon: PhSparkle, label: 'Your Luminors' },
+              { href: '/chat', icon: PhSparkle, label: 'Chat' },
               { href: '/studio', icon: PhPalette, label: 'Studio' },
               { href: '/library', icon: PhBookOpen, label: 'Library' },
               { href: '/settings', icon: PhGear, label: 'Settings' },

@@ -1093,7 +1093,7 @@ export function LuminorsExperience() {
                 href="#gallery"
                 className="px-10 py-4 rounded-2xl liquid-glass border border-white/[0.06] hover:border-creation-prism-purple/30 hover:bg-white/[0.04] transition-all duration-300 text-white font-semibold text-lg"
               >
-                Meet the Luminors
+                Meet the Intelligences
               </a>
             </motion.div>
           </div>

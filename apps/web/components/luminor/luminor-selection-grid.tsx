@@ -108,11 +108,11 @@ export function LuminorSelectionGrid({
         </motion.div>
 
         <h1 className="font-display text-5xl md:text-6xl font-bold bg-gradient-to-r from-atlantean-500 via-creation-gold to-draconic-crimson bg-clip-text text-transparent">
-          Choose Your Luminor
+          Choose an Intelligence
         </h1>
 
         <p className="font-body text-xl md:text-2xl text-neutral-300 max-w-2xl mx-auto leading-relaxed">
-          Your guide through the realms of creation. Each Luminor brings unique wisdom, personality, and magic.
+          Each one thinks differently. Pick the one that fits what you are working on.
         </p>
       </motion.div>
 

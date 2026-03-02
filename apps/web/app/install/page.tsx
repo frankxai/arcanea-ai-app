@@ -54,7 +54,7 @@ const QUICK_START = [
   },
   {
     step: "3",
-    title: "Choose Your Luminor",
+    title: "Choose Your Intelligence",
     description: "Start a session with any of the 16 AI specialists",
     code: "arcanea chat --luminor architect",
   },
