@@ -9,7 +9,7 @@ const STEPS = [
     number: '01',
     icon: PhChat,
     title: 'Pick an Intelligence',
-    description: 'Choose from 16 AI specialists — each one has a distinct philosophy and expertise. Development, design, writing, or research.',
+    description: 'Choose from 10 creative intelligences — each one has a distinct philosophy, personality, and domain of mastery.',
     color: 'atlantean-teal-aqua',
     visual: 'luminor-selection',
   },
@@ -33,7 +33,7 @@ const STEPS = [
     number: '04',
     icon: PhRocket,
     title: 'Share and Grow',
-    description: 'Export your work to any format. Track your progress in the Academy. The more you create, the more the system reveals.',
+    description: 'Save your work and track progress in the Academy. The more you create, the more the system reveals.',
     color: 'draconic-crimson',
     visual: 'export',
   },
@@ -63,10 +63,10 @@ export function HowItWorks() {
             <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-creation-prism-purple/90">How It Works</span>
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
-            How it works
+            Four steps to creation
           </h2>
           <p className="text-xl text-text-secondary max-w-2xl mx-auto">
-            From first idea to published creation. The full Arcanea arc — Guardian-guided, Gate-tracked, ecosystem-powered.
+            From first idea to finished creation. Choose an intelligence, describe your vision, create together.
           </p>
         </motion.div>
 
@@ -173,8 +173,8 @@ export function HowItWorks() {
                   >
                     {i === 0 && (
                       // Luminor selection grid
-                      <div className="grid grid-cols-4 gap-3">
-                        {['Lyria', 'Alera', 'Maylinn', 'Ino', 'Draconia', 'Aiyami', 'Elara', 'Lyssandria'].map((name, n) => (
+                      <div className="grid grid-cols-5 gap-2">
+                        {['Lyria', 'Alera', 'Maylinn', 'Ino', 'Draconia', 'Aiyami', 'Elara', 'Lyssandria', 'Leyla', 'Shinkami'].map((name, n) => (
                           <div
                             key={name}
                             className={`aspect-square rounded-xl flex items-center justify-center text-[10px] font-mono text-center leading-tight px-1 ${
@@ -223,16 +223,24 @@ export function HowItWorks() {
                       </div>
                     )}
                     {i === 3 && (
-                      // Export options
+                      // Growth tracking
                       <div className="space-y-3">
-                        <h4 className="text-lg font-semibold mb-4">Export Your Creation</h4>
-                        {['PDF Document', 'Word Export', 'Markdown', 'Share Link'].map((format) => (
+                        <h4 className="text-lg font-semibold mb-4">Your Creative Journey</h4>
+                        {[
+                          { label: 'Foundation Gate', status: 'Opened', color: 'bg-atlantean-teal-aqua' },
+                          { label: 'Flow Gate', status: 'Opened', color: 'bg-orange-500' },
+                          { label: 'Fire Gate', status: 'In Progress', color: 'bg-red-500' },
+                          { label: 'Heart Gate', status: 'Locked', color: 'bg-white/20' },
+                        ].map((gate) => (
                           <div
-                            key={format}
-                            className="p-4 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-between hover:border-atlantean-teal-aqua/30 transition-colors"
+                            key={gate.label}
+                            className="p-4 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-between"
                           >
-                            <span className="text-sm">{format}</span>
-                            <PhArrowRight className="w-4 h-4 text-text-muted" />
+                            <div className="flex items-center gap-3">
+                              <div className={`w-2 h-2 rounded-full ${gate.color}`} />
+                              <span className="text-sm">{gate.label}</span>
+                            </div>
+                            <span className="text-xs text-text-muted">{gate.status}</span>
                           </div>
                         ))}
                       </div>
@@ -245,15 +253,15 @@ export function HowItWorks() {
               </div>
             </div>
 
-            {/* Floating badges */}
+            {/* Floating badge */}
             <motion.div
               className="absolute -right-4 top-1/4 px-4 py-2 rounded-xl liquid-glass border border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 4, repeat: Infinity }}
             >
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                <span className="text-sm">Real-time sync</span>
+                <div className="w-2 h-2 rounded-full bg-atlantean-teal-aqua animate-pulse" />
+                <span className="text-sm">10 intelligences</span>
               </div>
             </motion.div>
           </motion.div>

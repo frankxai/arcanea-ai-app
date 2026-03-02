@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     default: "Arcanea — Creative Intelligence Platform",
     template: "%s | Arcanea"
   },
-  description: "A creation platform built on original mythology and philosophy. Ten creative intelligences, a library of 34 original texts, and tools that think with you.",
+  description: "10 creative intelligences, an original philosophy library with 34+ texts, and a framework for the creative life. Free to start.",
   keywords: ["AI", "creativity", "creative intelligence", "mythology", "philosophy", "creation platform", "world building", "AI writing", "AI art"],
   authors: [{ name: "Arcanea" }],
   creator: "Arcanea",
@@ -48,13 +48,13 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "/",
     title: "Arcanea — Living Intelligence for Creators",
-    description: "A creative intelligence platform. Ten Guardians, a Library of wisdom, and tools that transform imagination into reality.",
+    description: "10 creative intelligences, a philosophy library, and a framework for the creative life.",
     siteName: "Arcanea",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Arcanea — Creative Intelligence Platform",
-    description: "A creation platform built on original mythology and philosophy. Ten creative intelligences, a library of 34 texts, and tools that think with you.",
+    title: "Arcanea — Living Intelligence for Creators",
+    description: "10 creative intelligences, a philosophy library, and a framework for the creative life.",
   },
   alternates: {
     canonical: "/",
