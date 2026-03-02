@@ -1,6 +1,7 @@
 'use client';
 
 import Link from "next/link";
+import Image from "next/image";
 import {
   PhGithubLogo,
   PhChatCircleDots,
@@ -13,15 +14,16 @@ import {
   PhMusicNotes,
   PhGlobe,
 } from '@/lib/phosphor-icons';
+import navLogo from "@/assets/brand/arcanea-mark.jpg";
 
 const footerLinks = {
   create: {
     label: "Create",
     links: [
-      { href: "/luminors", label: "Luminors", icon: PhSparkle },
+      { href: "/chat", label: "Chat", icon: PhSparkle },
       { href: "/studio", label: "Studio", icon: PhPalette },
       { href: "/academy", label: "Academy", icon: PhGraduationCap },
-      { href: "/academy/gate-quiz", label: "Find Your Guardian" },
+      { href: "/academy/gate-quiz", label: "Find Your Intelligence" },
     ],
   },
   explore: {
@@ -29,7 +31,7 @@ const footerLinks = {
     links: [
       { href: "/library", label: "Library", icon: PhBookOpen },
       { href: "/lore", label: "Lore & Mythology", icon: PhCompass },
-      { href: "/lore/guardians", label: "The Ten Guardians" },
+      { href: "/luminors", label: "All Intelligences" },
       { href: "/records", label: "Records" },
     ],
   },
@@ -115,14 +117,20 @@ export function Footer() {
         {/* Bottom section */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8 border-t border-white/[0.06]">
           {/* Brand */}
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-atlantean-teal-aqua to-creation-prism-purple flex items-center justify-center text-cosmic-deep font-bold text-sm shadow-[0_0_20px_rgba(127,255,212,0.15)]">
-              A
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="w-8 h-8 rounded-xl overflow-hidden ring-1 ring-white/[0.08] group-hover:ring-atlantean-teal-aqua/30 transition-all duration-300 shadow-[0_0_16px_rgba(127,255,212,0.10)]">
+              <Image
+                src={navLogo}
+                alt="Arcanea"
+                width={32}
+                height={32}
+                className="w-full h-full object-cover"
+              />
             </div>
-            <span className="font-display font-bold text-lg text-text-primary">
+            <span className="font-display font-bold text-lg text-text-primary group-hover:text-atlantean-teal-aqua transition-colors duration-300">
               Arcanea
             </span>
-          </div>
+          </Link>
 
           {/* Tagline */}
           <p className="text-xs text-text-muted font-body italic text-center">
