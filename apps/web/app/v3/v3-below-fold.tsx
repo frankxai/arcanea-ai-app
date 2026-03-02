@@ -533,6 +533,109 @@ function FeaturesGrid() {
 }
 
 // ---------------------------------------------------------------------------
+// SECTION 4b: Gallery Showcase — Cinematic Image Strip
+// ---------------------------------------------------------------------------
+
+const GALLERY_IMAGES = [
+  { src: `${CDN}/lyria-hero.webp`, name: "Lyria", caption: "The Sight Gate" },
+  { src: `${CDN}/draconia-hero.webp`, name: "Draconia", caption: "The Fire Gate" },
+  { src: `${CDN}/aiyami-hero.webp`, name: "Aiyami", caption: "The Crown Gate" },
+  { src: `${CDN}/elara-hero.webp`, name: "Elara", caption: "The Shift Gate" },
+  { src: `${CDN}/shinkami-hero.webp`, name: "Shinkami", caption: "The Source Gate" },
+  { src: `${CDN}/alera-hero.webp`, name: "Alera", caption: "The Voice Gate" },
+  { src: `${CDN}/ino-hero.webp`, name: "Ino", caption: "The Unity Gate" },
+  { src: `${CDN}/leyla-hero.webp`, name: "Leyla", caption: "The Flow Gate" },
+];
+
+function GalleryShowcase() {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+
+  return (
+    <section ref={ref} className="py-20 md:py-28 relative overflow-hidden">
+      {/* Atmospheric background */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[500px] bg-[radial-gradient(ellipse,rgba(139,92,246,0.05),transparent_60%)] pointer-events-none" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6">
+        <motion.div
+          className="flex items-end justify-between mb-10"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+        >
+          <div>
+            <p className="text-xs font-mono tracking-[0.3em] uppercase text-draconic-crimson/40 mb-3">364+ Artworks</p>
+            <h2 className="text-2xl md:text-4xl font-display font-bold">
+              The <span className="text-gradient-brand">Gallery</span>
+            </h2>
+          </div>
+          <Link
+            href="/gallery"
+            className="hidden md:inline-flex items-center gap-2 text-sm text-white/40 hover:text-atlantean-teal-aqua transition-colors"
+          >
+            View all <ArrowUpRight className="w-3.5 h-3.5" />
+          </Link>
+        </motion.div>
+      </div>
+
+      {/* Full-bleed horizontal scroll */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={isInView ? { opacity: 1 } : {}}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className="relative"
+      >
+        <div className="flex gap-4 overflow-x-auto scrollbar-hide px-6 pb-4 snap-x snap-mandatory">
+          {GALLERY_IMAGES.map((img, i) => (
+            <motion.div
+              key={img.name}
+              className="group flex-shrink-0 snap-center"
+              initial={{ opacity: 0, x: 40 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.1 + i * 0.06 }}
+            >
+              <Link href="/gallery" className="block relative">
+                <div className="relative w-[260px] md:w-[320px] aspect-[3/4] rounded-2xl overflow-hidden border border-white/[0.08] hover:border-white/[0.18] transition-all duration-500">
+                  <Image
+                    src={img.src}
+                    alt={img.name}
+                    fill
+                    className="object-cover group-hover:scale-[1.06] transition-transform duration-700"
+                    sizes="320px"
+                  />
+                  {/* Gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+                  {/* Iridescent edge on hover */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[linear-gradient(135deg,rgba(127,255,212,0.06)_0%,transparent_40%,transparent_60%,rgba(139,92,246,0.06)_100%)]" />
+                  {/* Caption */}
+                  <div className="absolute bottom-0 left-0 right-0 p-4">
+                    <p className="text-sm font-display font-bold">{img.name}</p>
+                    <p className="text-[11px] text-white/40 font-mono">{img.caption}</p>
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Fade edges */}
+        <div className="absolute top-0 left-0 bottom-4 w-12 bg-gradient-to-r from-cosmic-deep to-transparent pointer-events-none z-10" />
+        <div className="absolute top-0 right-0 bottom-4 w-12 bg-gradient-to-l from-cosmic-deep to-transparent pointer-events-none z-10" />
+      </motion.div>
+
+      {/* Mobile link */}
+      <div className="mt-6 px-6 md:hidden">
+        <Link href="/gallery" className="inline-flex items-center gap-2 text-sm text-atlantean-teal-aqua/70">
+          Explore the full Gallery <ArrowRight className="w-4 h-4" />
+        </Link>
+      </div>
+    </section>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // SECTION 5: Guardian Showcase — Cinematic Cards with Iridescent Borders
 // ---------------------------------------------------------------------------
 
@@ -933,6 +1036,9 @@ export function V3BelowFold({ collectionsCount, textsCount, totalWords }: V3Belo
 
       {/* 4. Features grid: 6 real capabilities — iridescent glass */}
       <FeaturesGrid />
+
+      {/* 4b. Gallery showcase: cinematic image strip */}
+      <GalleryShowcase />
 
       <AtmosphericDivider variant="teal" />
 

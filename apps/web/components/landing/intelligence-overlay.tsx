@@ -189,7 +189,7 @@ function PillarCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.6, delay: index * 0.15 }}
-      className={`group relative p-8 rounded-3xl liquid-glass border ${pillar.borderClass} ${pillar.glowClass} hover-lift transition-all duration-500`}
+      className={`group relative p-8 rounded-3xl iridescent-glass border ${pillar.borderClass} ${pillar.glowClass} hover-lift transition-all duration-500`}
     >
       {/* Subtle gradient layer on hover */}
       <div
@@ -337,6 +337,8 @@ export function IntelligenceOverlay() {
             backgroundSize: "48px 48px",
           }}
         />
+        {/* Glass noise texture */}
+        <div className="absolute inset-0 glass-noise opacity-[0.15] pointer-events-none" />
       </div>
 
       {/* ── A: Moat Claim ───────────────────────────────────────── */}
