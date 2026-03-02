@@ -754,7 +754,7 @@ function GuardianShowcase() {
               href="/luminors"
               title={`${g.name} — ${g.gate} Gate`}
             >
-              <div className="w-9 h-9 rounded-lg overflow-hidden border border-white/[0.08] hover:border-atlantean-teal-aqua/40 hover:scale-125 hover:shadow-[0_0_16px_rgba(127,255,212,0.15)] transition-all duration-300">
+              <div className="relative w-9 h-9 rounded-lg overflow-hidden border border-white/[0.08] hover:border-atlantean-teal-aqua/40 hover:scale-125 hover:shadow-[0_0_16px_rgba(127,255,212,0.15)] transition-all duration-300">
                 <Image src={g.image} alt={g.name} fill className="object-cover" sizes="36px" />
               </div>
             </Link>

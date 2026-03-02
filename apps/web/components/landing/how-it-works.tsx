@@ -87,7 +87,7 @@ export function HowItWorks() {
                   onMouseEnter={() => setActiveStep(i)}
                   className={`group relative p-6 rounded-2xl border cursor-pointer transition-all duration-500 ${
                     isActive
-                      ? `bg-${step.color}/10 border-${step.color}/30`
+                      ? `iridescent-glass border-${step.color}/30`
                       : 'liquid-glass border-white/[0.06] hover:border-white/[0.12]'
                   }`}
                 >
@@ -145,7 +145,9 @@ export function HowItWorks() {
             className="relative"
           >
             {/* Browser mockup */}
-            <div className="relative rounded-2xl liquid-glass-elevated border border-white/[0.08] overflow-hidden shadow-[0_16px_48px_rgba(0,0,0,0.4)]">
+            <div className="relative rounded-2xl iridescent-glass border border-white/[0.10] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+              {/* Glass noise overlay */}
+              <div className="absolute inset-0 glass-noise opacity-[0.15] pointer-events-none z-10 rounded-2xl" />
               {/* Browser header */}
               <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.08] bg-white/[0.03]">
                 <div className="flex gap-2">
@@ -154,7 +156,7 @@ export function HowItWorks() {
                   <div className="w-3 h-3 rounded-full bg-green-500/80" />
                 </div>
                 <div className="flex-1 flex justify-center">
-                  <div className="px-4 py-1 rounded-lg bg-white/[0.04] text-xs text-text-muted">
+                  <div className="px-4 py-1 rounded-lg bg-white/[0.06] text-xs text-text-muted border border-white/[0.06]">
                     arcanea.ai
                   </div>
                 </div>
