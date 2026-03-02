@@ -72,39 +72,42 @@ function HeroPortal() {
       ref={containerRef}
       className="relative min-h-[100svh] flex items-center justify-center overflow-hidden"
     >
-      {/* Background: layered cosmic atmosphere */}
+      {/* Background: deep cosmic layering */}
       <div className="absolute inset-0 -z-20 bg-cosmic-deep">
         {/* Primary teal aurora — top center */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-10%,rgba(127,255,212,0.10),transparent_55%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-10%,rgba(127,255,212,0.12),transparent_55%)]" />
         {/* Purple nebula — bottom right */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_85%_75%,rgba(139,92,246,0.08),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_85%_75%,rgba(139,92,246,0.10),transparent_50%)]" />
         {/* Gold warmth — bottom left */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_15%_80%,rgba(255,215,0,0.04),transparent_50%)]" />
-        {/* Deep center void for depth */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent_30%,rgba(10,14,39,0.4)_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_15%_80%,rgba(255,215,0,0.05),transparent_50%)]" />
+        {/* Deep vignette for depth */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent_25%,rgba(10,14,39,0.5)_75%)]" />
       </div>
 
-      {/* Animated aurora pulse */}
+      {/* Breathing aurora */}
       <motion.div
         className="absolute inset-0 -z-15 pointer-events-none"
         animate={{
           background: [
-            "radial-gradient(ellipse 70% 40% at 30% 20%, rgba(127,255,212,0.06) 0%, transparent 60%)",
-            "radial-gradient(ellipse 70% 40% at 70% 30%, rgba(139,92,246,0.06) 0%, transparent 60%)",
-            "radial-gradient(ellipse 70% 40% at 30% 20%, rgba(127,255,212,0.06) 0%, transparent 60%)",
+            "radial-gradient(ellipse 60% 40% at 25% 20%, rgba(127,255,212,0.07) 0%, transparent 60%), radial-gradient(ellipse 50% 30% at 75% 80%, rgba(139,92,246,0.05) 0%, transparent 60%)",
+            "radial-gradient(ellipse 60% 40% at 75% 30%, rgba(139,92,246,0.07) 0%, transparent 60%), radial-gradient(ellipse 50% 30% at 25% 70%, rgba(255,215,0,0.04) 0%, transparent 60%)",
+            "radial-gradient(ellipse 60% 40% at 25% 20%, rgba(127,255,212,0.07) 0%, transparent 60%), radial-gradient(ellipse 50% 30% at 75% 80%, rgba(139,92,246,0.05) 0%, transparent 60%)",
           ],
         }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      {/* Dot grid overlay */}
+      {/* Dot grid */}
       <div
-        className="absolute inset-0 -z-10 opacity-[0.025]"
+        className="absolute inset-0 -z-10 opacity-[0.02]"
         style={{
           backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 1px)",
           backgroundSize: "32px 32px",
         }}
       />
+
+      {/* Glass noise texture overlay */}
+      <div className="absolute inset-0 -z-5 glass-noise opacity-[0.3] pointer-events-none" />
 
       {/* Content */}
       <motion.div
@@ -112,22 +115,34 @@ function HeroPortal() {
         style={{ y: contentY, opacity: contentOpacity }}
       >
         <div className="flex flex-col items-center text-center">
-          {/* Brand Mark */}
+          {/* Brand Mark with iridescent glass frame */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={isLoaded ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="relative mb-8"
           >
-            {/* Breathing glow ring */}
+            {/* Outer glow ring */}
             <motion.div
-              className="absolute -inset-12 rounded-full"
+              className="absolute -inset-14 rounded-full pointer-events-none"
               style={{
-                background: "radial-gradient(circle, rgba(127,255,212,0.10) 0%, rgba(139,92,246,0.04) 40%, transparent 70%)",
+                background: "radial-gradient(circle, rgba(127,255,212,0.08) 0%, rgba(139,92,246,0.04) 40%, transparent 70%)",
               }}
               animate={{
-                scale: [1, 1.25, 1],
-                opacity: [0.4, 0.7, 0.4],
+                scale: [1, 1.3, 1],
+                opacity: [0.3, 0.6, 0.3],
+              }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            />
+            {/* Inner iridescent shimmer */}
+            <motion.div
+              className="absolute -inset-3 rounded-2xl pointer-events-none"
+              animate={{
+                background: [
+                  "linear-gradient(135deg, rgba(127,255,212,0.15) 0%, rgba(139,92,246,0.10) 50%, rgba(255,215,0,0.05) 100%)",
+                  "linear-gradient(135deg, rgba(255,215,0,0.08) 0%, rgba(127,255,212,0.12) 50%, rgba(139,92,246,0.10) 100%)",
+                  "linear-gradient(135deg, rgba(127,255,212,0.15) 0%, rgba(139,92,246,0.10) 50%, rgba(255,215,0,0.05) 100%)",
+                ],
               }}
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
             />
@@ -136,14 +151,14 @@ function HeroPortal() {
               alt="Arcanea"
               width={88}
               height={88}
-              className="relative z-10 rounded-2xl ring-1 ring-white/[0.12] shadow-2xl shadow-atlantean-teal-aqua/10 w-18 h-18 md:w-22 md:h-22"
+              className="relative z-10 rounded-2xl ring-1 ring-white/[0.15] shadow-[0_8px_40px_rgba(127,255,212,0.12),0_2px_16px_rgba(0,0,0,0.4)] w-18 h-18 md:w-22 md:h-22"
               priority
             />
           </motion.div>
 
           {/* Wordmark */}
           <motion.p
-            className="text-[11px] md:text-xs font-mono tracking-[0.4em] uppercase text-white/30 mb-10 md:mb-14"
+            className="text-[11px] md:text-xs font-mono tracking-[0.5em] uppercase text-white/25 mb-10 md:mb-14"
             initial={{ opacity: 0 }}
             animate={isLoaded ? { opacity: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
@@ -194,14 +209,14 @@ function HeroPortal() {
                 whileHover={{ x: "100%" }}
                 transition={{ duration: 0.5 }}
               />
-              <span className="relative z-10 text-cosmic-deep flex items-center justify-center gap-2">
+              <span className="relative z-10 text-cosmic-deep flex items-center justify-center gap-2 font-bold">
                 Start Creating
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" weight="bold" />
               </span>
             </Link>
             <Link
               href="/library"
-              className="w-full sm:w-auto px-8 py-3.5 rounded-xl border border-white/[0.08] hover:border-white/[0.16] hover:bg-white/[0.04] transition-all duration-300 text-white/70 hover:text-white font-medium text-base text-center"
+              className="w-full sm:w-auto px-8 py-3.5 rounded-xl border border-white/[0.10] hover:border-white/[0.20] hover:bg-white/[0.04] transition-all duration-300 text-white/70 hover:text-white font-medium text-base text-center backdrop-blur-sm"
             >
               Explore the Library
             </Link>
@@ -215,9 +230,9 @@ function HeroPortal() {
             transition={{ duration: 0.6, delay: 0.7 }}
           >
             <span>Free to start</span>
-            <span className="hidden sm:inline text-white/10">|</span>
+            <span className="hidden sm:inline text-white/8">|</span>
             <span>No credit card</span>
-            <span className="hidden sm:inline text-white/10">|</span>
+            <span className="hidden sm:inline text-white/8">|</span>
             <span>34+ original texts</span>
           </motion.div>
         </div>
@@ -238,11 +253,11 @@ function HeroPortal() {
           transition={{ duration: 2.5, repeat: Infinity }}
           onClick={() => window.scrollTo({ top: window.innerHeight, behavior: "smooth" })}
         >
-          <span className="text-[10px] text-white/20 uppercase tracking-[0.3em]">Scroll</span>
-          <div className="w-5 h-8 rounded-full border border-white/[0.10] flex items-start justify-center pt-1.5">
+          <span className="text-[10px] text-white/15 uppercase tracking-[0.3em]">Scroll</span>
+          <div className="w-5 h-8 rounded-full border border-white/[0.08] flex items-start justify-center pt-1.5">
             <motion.div
-              className="w-1 h-1 rounded-full bg-white/30"
-              animate={{ y: [0, 10, 0], opacity: [0.6, 0.1, 0.6] }}
+              className="w-1 h-1 rounded-full bg-white/25"
+              animate={{ y: [0, 10, 0], opacity: [0.5, 0.1, 0.5] }}
               transition={{ duration: 2.5, repeat: Infinity }}
             />
           </div>
