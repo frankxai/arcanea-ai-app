@@ -3,7 +3,9 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { PhArrowRight, PhCheck } from '@/lib/phosphor-icons';
+import navLogo from "@/assets/brand/arcanea-mark.jpg";
 
 const BENEFITS = [
   "Ten creative intelligences, each with a distinct philosophy",
@@ -40,9 +42,11 @@ export function CTASection() {
           {/* Gradient border wrapper */}
           <div className="gradient-border">
             <div className="liquid-glass-elevated rounded-[calc(1.5rem-1px)] p-10 md:p-16 lg:p-20 relative overflow-hidden">
+              {/* Glass noise texture */}
+              <div className="absolute inset-0 glass-noise opacity-[0.25] pointer-events-none rounded-[calc(1.5rem-1px)]" />
               {/* Decorative glow spots */}
-              <div className="absolute top-0 right-0 w-80 h-80 bg-atlantean-teal-aqua/8 rounded-full blur-[120px] pointer-events-none" />
-              <div className="absolute bottom-0 left-0 w-64 h-64 bg-creation-prism-purple/8 rounded-full blur-[100px] pointer-events-none" />
+              <div className="absolute top-0 right-0 w-96 h-96 bg-atlantean-teal-aqua/10 rounded-full blur-[140px] pointer-events-none" />
+              <div className="absolute bottom-0 left-0 w-80 h-80 bg-creation-prism-purple/10 rounded-full blur-[120px] pointer-events-none" />
 
               <div className="relative grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                 {/* Left — Content */}
@@ -157,21 +161,25 @@ export function CTASection() {
                       );
                     })}
 
-                    {/* Center crystal */}
+                    {/* Center brand mark */}
                     <motion.div
-                      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-2xl liquid-glass-elevated flex items-center justify-center"
+                      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-2xl overflow-hidden ring-1 ring-white/[0.15]"
                       animate={{
                         boxShadow: [
-                          "0 0 30px rgba(127,255,212,0.2)",
-                          "0 0 50px rgba(127,255,212,0.4)",
-                          "0 0 30px rgba(127,255,212,0.2)",
+                          "0 0 30px rgba(127,255,212,0.2), 0 0 60px rgba(139,92,246,0.1)",
+                          "0 0 50px rgba(127,255,212,0.4), 0 0 80px rgba(139,92,246,0.2)",
+                          "0 0 30px rgba(127,255,212,0.2), 0 0 60px rgba(139,92,246,0.1)",
                         ],
                       }}
                       transition={{ duration: 4, repeat: Infinity }}
                     >
-                      <span className="text-2xl font-display font-bold bg-gradient-to-br from-atlantean-teal-aqua to-creation-prism-purple bg-clip-text text-transparent">
-                        A
-                      </span>
+                      <Image
+                        src={navLogo}
+                        alt="Arcanea"
+                        width={80}
+                        height={80}
+                        className="w-full h-full object-cover"
+                      />
                     </motion.div>
                   </div>
                 </motion.div>

@@ -21,6 +21,7 @@ import { GlowCard } from "@/components/ui/glow-card";
 import { IntelligenceOverlay } from "@/components/landing/intelligence-overlay";
 import { HowItWorks } from "@/components/landing/how-it-works";
 import { CTASection } from "@/components/landing/cta-section";
+import crystalImage from "@/assets/brand/arcanea-crystal.jpg";
 
 // ---------------------------------------------------------------------------
 // Data
@@ -40,6 +41,15 @@ interface Guardian {
 
 const FEATURED_GUARDIANS: Guardian[] = [
   {
+    name: "Lyssandria",
+    gate: "Foundation",
+    element: "Earth",
+    quote: "Build the foundation first. Everything else is architecture.",
+    image: `${CDN}/lyssandria-hero.webp`,
+    glowColor: "rgba(127, 255, 212, 0.18)",
+    accentHex: "#7fffd4",
+  },
+  {
     name: "Draconia",
     gate: "Fire",
     element: "Fire",
@@ -56,6 +66,15 @@ const FEATURED_GUARDIANS: Guardian[] = [
     image: `${CDN}/lyria-hero.webp`,
     glowColor: "rgba(139, 92, 246, 0.18)",
     accentHex: "#8b5cf6",
+  },
+  {
+    name: "Leyla",
+    gate: "Flow",
+    element: "Water",
+    quote: "The river does not push. It finds the way.",
+    image: `${CDN}/leyla-hero.webp`,
+    glowColor: "rgba(120, 166, 255, 0.18)",
+    accentHex: "#78a6ff",
   },
   {
     name: "Shinkami",
@@ -243,7 +262,9 @@ function MetricsStrip() {
           lift={false}
           className="border border-white/[0.08] p-8 md:p-12"
         >
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+          {/* Glass noise texture */}
+          <div className="absolute inset-0 glass-noise opacity-[0.2] pointer-events-none rounded-2xl" />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 relative">
             {metrics.map((m, i) => (
               <motion.div
                 key={m.label}
@@ -320,14 +341,14 @@ function ThreePillars({
                 glowSize={500}
                 className="h-full border border-white/[0.08] hover:border-atlantean-teal-aqua/30 transition-all duration-500 overflow-hidden relative min-h-[420px]"
               >
-                <div className="absolute inset-0 grid grid-cols-2 grid-rows-2 opacity-30 group-hover:opacity-50 transition-opacity duration-700">
-                  {[ALL_GUARDIANS[0], ALL_GUARDIANS[2], ALL_GUARDIANS[5], ALL_GUARDIANS[9]].map((g) => (
+                <div className="absolute inset-0 grid grid-cols-3 grid-rows-3 opacity-30 group-hover:opacity-50 transition-opacity duration-700">
+                  {ALL_GUARDIANS.slice(0, 9).map((g) => (
                     <div key={g.name} className="relative overflow-hidden">
-                      <Image src={g.image} alt="" fill className="object-cover group-hover:scale-105 transition-transform duration-1000" sizes="300px" />
+                      <Image src={g.image} alt="" fill className="object-cover group-hover:scale-105 transition-transform duration-1000" sizes="200px" />
                     </div>
                   ))}
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-cosmic-deep via-cosmic-deep/70 to-cosmic-deep/30" />
+                <div className="absolute inset-0 bg-gradient-to-t from-cosmic-deep via-cosmic-deep/60 to-cosmic-deep/25" />
                 {/* Iridescent shimmer overlay */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-[linear-gradient(135deg,rgba(127,255,212,0.05)_0%,rgba(139,92,246,0.05)_50%,rgba(255,215,0,0.03)_100%)]" />
                 <div className="relative h-full flex flex-col justify-end p-8 md:p-10 min-h-[420px]">
@@ -361,9 +382,17 @@ function ThreePillars({
                   glowColor="rgba(255, 215, 0, 0.12)"
                   className="p-8 md:p-10 h-full relative overflow-hidden border border-white/[0.08] hover:border-gold-bright/25 transition-all duration-500"
                 >
+                  {/* Crystal texture background */}
+                  <Image
+                    src={crystalImage}
+                    alt=""
+                    fill
+                    className="object-cover opacity-[0.06] mix-blend-luminosity pointer-events-none"
+                    sizes="400px"
+                  />
                   <div
                     className="absolute -top-24 -right-24 w-72 h-72 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-                    style={{ background: "radial-gradient(circle, rgba(255,215,0,0.10), transparent 70%)" }}
+                    style={{ background: "radial-gradient(circle, rgba(255,215,0,0.12), transparent 70%)" }}
                   />
                   <div className="relative">
                     <p className="text-xs font-mono text-gold-bright/70 tracking-wider uppercase mb-3">
@@ -551,47 +580,47 @@ function GuardianShowcase() {
           </Link>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
           {FEATURED_GUARDIANS.map((g, i) => (
             <motion.div
               key={g.name}
               className="group"
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
+              transition={{ duration: 0.6, delay: i * 0.08 }}
             >
               <GlowCard
                 glass="none"
                 glowColor={g.glowColor}
-                glowSize={280}
-                className="border border-white/[0.08] hover:border-white/[0.18] transition-all duration-500"
-                style={{
-                  boxShadow: `0 0 0 0 ${g.accentHex}00`,
-                }}
+                glowSize={320}
+                className="card-3d border border-white/[0.08] hover:border-white/[0.20] transition-all duration-500"
               >
                 <div className="relative aspect-[3/4] overflow-hidden rounded-2xl">
                   <Image
                     src={g.image}
                     alt={g.name}
                     fill
-                    className="object-cover group-hover:scale-[1.04] transition-transform duration-700"
-                    sizes="(max-width: 640px) 50vw, 25vw"
+                    className="object-cover group-hover:scale-[1.05] transition-transform duration-700"
+                    sizes="(max-width: 640px) 50vw, 33vw"
                   />
                   {/* Multi-gradient overlay for depth */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/5" />
+                  {/* Accent color wash on hover */}
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    style={{ background: `linear-gradient(to top, ${g.accentHex}15, transparent 50%)` }}
+                    style={{ background: `linear-gradient(to top, ${g.accentHex}20, transparent 60%)` }}
                   />
+                  {/* Iridescent shimmer on hover */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-[linear-gradient(135deg,rgba(127,255,212,0.04)_0%,rgba(139,92,246,0.04)_50%,rgba(255,215,0,0.02)_100%)]" />
                   {/* Content */}
-                  <div className="absolute bottom-0 left-0 right-0 p-5">
+                  <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6">
                     <p
-                      className="text-[10px] font-mono tracking-wider uppercase mb-1.5 opacity-60"
-                      style={{ color: g.accentHex }}
+                      className="text-[10px] font-mono tracking-wider uppercase mb-1.5"
+                      style={{ color: `${g.accentHex}99` }}
                     >
-                      {g.gate} &middot; {g.element}
+                      {g.gate} Gate &middot; {g.element}
                     </p>
-                    <h3 className="text-lg font-display font-bold mb-2">{g.name}</h3>
+                    <h3 className="text-lg md:text-xl font-display font-bold mb-2">{g.name}</h3>
                     <p className="text-xs text-white/40 leading-relaxed line-clamp-2 group-hover:text-white/65 transition-colors duration-300 font-body italic">
                       &ldquo;{g.quote}&rdquo;
                     </p>

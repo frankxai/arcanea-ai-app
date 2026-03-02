@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
 import { ArrowRight, CircleNotch } from "@/lib/phosphor-icons";
 import navLogo from "@/assets/brand/arcanea-mark.jpg";
+import heroImage from "@/assets/brand/arcanea-hero.jpg";
 import type { V3BelowFoldProps } from "./v3-below-fold";
 
 // ---------------------------------------------------------------------------
@@ -72,16 +73,28 @@ function HeroPortal() {
       ref={containerRef}
       className="relative min-h-[100svh] flex items-center justify-center overflow-hidden"
     >
-      {/* Background: deep cosmic layering */}
+      {/* Background: hero image + cosmic layering */}
       <div className="absolute inset-0 -z-20 bg-cosmic-deep">
+        {/* Full-bleed hero image with parallax feel */}
+        <Image
+          src={heroImage}
+          alt=""
+          fill
+          className="object-cover opacity-[0.18] mix-blend-luminosity"
+          priority
+          sizes="100vw"
+          quality={85}
+        />
+        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-cosmic-deep/60 via-cosmic-deep/40 to-cosmic-deep/80" />
         {/* Primary teal aurora — top center */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-10%,rgba(127,255,212,0.12),transparent_55%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-10%,rgba(127,255,212,0.14),transparent_55%)]" />
         {/* Purple nebula — bottom right */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_85%_75%,rgba(139,92,246,0.10),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_85%_75%,rgba(139,92,246,0.12),transparent_50%)]" />
         {/* Gold warmth — bottom left */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_15%_80%,rgba(255,215,0,0.05),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_15%_80%,rgba(255,215,0,0.06),transparent_50%)]" />
         {/* Deep vignette for depth */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent_25%,rgba(10,14,39,0.5)_75%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent_20%,rgba(10,14,39,0.6)_75%)]" />
       </div>
 
       {/* Breathing aurora */}

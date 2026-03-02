@@ -1,11 +1,16 @@
 import { ImageResponse } from 'next/og'
+import { readFileSync } from 'fs'
+import { join } from 'path'
 
-export const runtime = 'edge'
 export const alt = 'Arcanea — Living Intelligence for Creators'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
-export default async function OGImage() {
+export default function OGImage() {
+  const imageBuffer = readFileSync(join(process.cwd(), 'assets/brand/arcanea-mark.jpg'))
+  const base64 = imageBuffer.toString('base64')
+  const markSrc = `data:image/jpeg;base64,${base64}`
+
   return new ImageResponse(
     (
       <div
@@ -24,75 +29,66 @@ export default async function OGImage() {
         <div
           style={{
             position: 'absolute',
-            top: '20%',
-            left: '30%',
-            width: 400,
-            height: 400,
+            top: '15%',
+            left: '25%',
+            width: 500,
+            height: 500,
             borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(139,92,246,0.15) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(139,92,246,0.18) 0%, transparent 70%)',
           }}
         />
         <div
           style={{
             position: 'absolute',
-            bottom: '20%',
-            right: '25%',
-            width: 350,
-            height: 350,
+            bottom: '15%',
+            right: '20%',
+            width: 450,
+            height: 450,
             borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(127,255,212,0.1) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(127,255,212,0.12) 0%, transparent 70%)',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            top: '40%',
+            right: '35%',
+            width: 300,
+            height: 300,
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(255,215,0,0.06) 0%, transparent 70%)',
           }}
         />
 
-        {/* Brand Mark — Portal A */}
+        {/* Brand Mark */}
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            width: 100,
-            height: 100,
-            borderRadius: 24,
-            background: 'linear-gradient(135deg, rgba(127,255,212,0.12), rgba(139,92,246,0.12))',
-            border: '1px solid rgba(127,255,212,0.2)',
-            marginBottom: 40,
+            width: 120,
+            height: 120,
+            borderRadius: 28,
+            overflow: 'hidden',
+            border: '1px solid rgba(127,255,212,0.25)',
+            boxShadow: '0 8px 40px rgba(127,255,212,0.15), 0 2px 16px rgba(0,0,0,0.4)',
+            marginBottom: 44,
           }}
         >
-          <svg
-            width="56"
-            height="56"
-            viewBox="0 0 40 40"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <defs>
-              <linearGradient id="og" x1="4" y1="4" x2="36" y2="36" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stopColor="#7fffd4" />
-                <stop offset="48%" stopColor="#a78bfa" />
-                <stop offset="100%" stopColor="#9b59ff" />
-              </linearGradient>
-            </defs>
-            <path
-              fillRule="evenodd"
-              d="M 4 37 L 4 18 Q 4 4 20 4 Q 36 4 36 18 L 36 37 L 30 37 L 30 19 Q 30 10 20 10 Q 10 10 10 19 L 10 37 Z"
-              fill="url(#og)"
-            />
-            <rect x="4" y="24" width="32" height="4" rx="2" fill="url(#og)" />
-            <circle cx="20" cy="4" r="2.5" fill="#ffffff" opacity="0.75" />
-          </svg>
+          <img src={markSrc} width={120} height={120} />
         </div>
 
         {/* Title */}
         <div
           style={{
             display: 'flex',
-            fontSize: 64,
+            fontSize: 68,
             fontWeight: 800,
             letterSpacing: '-0.02em',
             background: 'linear-gradient(90deg, #ffd700, #7fffd4, #8b5cf6)',
             backgroundClip: 'text',
             color: 'transparent',
-            marginBottom: 16,
+            marginBottom: 20,
           }}
         >
           Arcanea
@@ -102,9 +98,9 @@ export default async function OGImage() {
         <div
           style={{
             display: 'flex',
-            fontSize: 28,
+            fontSize: 30,
             color: '#b0b0d0',
-            letterSpacing: '0.05em',
+            letterSpacing: '0.06em',
           }}
         >
           Living Intelligence for Creators
@@ -117,9 +113,9 @@ export default async function OGImage() {
             bottom: 40,
             display: 'flex',
             alignItems: 'center',
-            gap: 24,
-            fontSize: 16,
-            color: '#5a5a7a',
+            gap: 28,
+            fontSize: 17,
+            color: '#6a6a8a',
           }}
         >
           <span>arcanea.ai</span>

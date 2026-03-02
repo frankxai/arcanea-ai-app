@@ -682,17 +682,17 @@ p a, span a, li a {
 
 .card-3d {
   transform-style: preserve-3d;
-  perspective: 1000px;
-  transition: transform 500ms cubic-bezier(0.23, 1, 0.32, 1),
-              box-shadow 500ms cubic-bezier(0.23, 1, 0.32, 1);
+  perspective: 800px;
+  transition: transform 600ms cubic-bezier(0.23, 1, 0.32, 1),
+              box-shadow 600ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .card-3d:hover {
-  transform: translateY(-8px) rotateX(2deg) rotateY(-1deg);
+  transform: translateY(-10px) rotateX(3deg) rotateY(-2deg);
   box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(127, 255, 212, 0.12),
-    0 0 40px rgba(127, 255, 212, 0.08);
+    0 24px 70px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(127, 255, 212, 0.15),
+    0 0 50px rgba(127, 255, 212, 0.10);
 }
 
 /* Gradient border wrapper — use as parent around glass cards */
