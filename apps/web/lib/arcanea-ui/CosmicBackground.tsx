@@ -14,8 +14,8 @@ export function CosmicBackground({ className }: Props) {
         className="absolute -top-48 left-1/2 -translate-x-1/2 h-[70vh] w-[140vw] rounded-full opacity-30 blur-[120px]"
         style={{
           background:
-            "radial-gradient(35% 50% at 40% 40%, rgba(127,255,212,0.1), transparent 70%)," +
-            "radial-gradient(40% 60% at 65% 55%, rgba(139,92,246,0.08), transparent 70%)",
+            "radial-gradient(35% 50% at 40% 40%, rgba(0,188,212,0.06), transparent 70%)," +
+            "radial-gradient(40% 60% at 65% 55%, rgba(0,137,123,0.05), transparent 70%)",
         }}
       />
 
@@ -23,7 +23,7 @@ export function CosmicBackground({ className }: Props) {
       <div
         className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[40vh] w-[120vw] rounded-full opacity-20 blur-[100px]"
         style={{
-          background: "radial-gradient(50% 50% at 50% 80%, rgba(120,166,255,0.08), transparent 70%)",
+          background: "radial-gradient(50% 50% at 50% 80%, rgba(13,71,161,0.05), transparent 70%)",
         }}
       />
 
