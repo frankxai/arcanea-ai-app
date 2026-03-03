@@ -27,9 +27,9 @@ const PILLARS = [
     icon: PhScroll,
     headline: "Build your mythology.",
     color: "crystal" as const,
-    colorHex: "#7fffd4",
+    colorHex: "#00bcd4",
     borderClass: "border-crystal/20 hover:border-crystal/50",
-    glowClass: "hover:shadow-[0_0_40px_rgba(127,255,212,0.15)]",
+    glowClass: "hover:shadow-[0_0_40px_rgba(0,188,212,0.15)]",
     iconBgClass: "from-crystal/20 to-crystal/5",
     iconColorClass: "text-crystal",
     description:
@@ -51,9 +51,9 @@ const PILLARS = [
     icon: PhFlame,
     headline: "Deploy your agents.",
     color: "brand-primary" as const,
-    colorHex: "#8b5cf6",
+    colorHex: "#0d47a1",
     borderClass: "border-brand-primary/20 hover:border-brand-primary/50",
-    glowClass: "hover:shadow-[0_0_40px_rgba(139,92,246,0.15)]",
+    glowClass: "hover:shadow-[0_0_40px_rgba(13,71,161,0.15)]",
     iconBgClass: "from-brand-primary/20 to-brand-primary/5",
     iconColorClass: "text-brand-primary",
     description:
