@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "description": "Arcanea Intelligence Gateway provider for the Vercel AI SDK. Curated AI models with intelligent routing.",
   "license": "MIT",
+  "author": "Arcanea <hello@arcanea.ai> (https://arcanea.ai)",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
+  "sideEffects": false,
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -15,13 +17,15 @@
   },
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
     "type-check": "tsc --noEmit",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "ai",
@@ -33,21 +37,30 @@
     "anthropic",
     "groq",
     "cerebras",
+    "gemini",
+    "deepseek",
     "provider",
-    "gateway"
+    "gateway",
+    "ai-gateway",
+    "model-routing"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/frankxai/arcanea"
+    "url": "https://github.com/frankxai/arcanea",
+    "directory": "packages/ai-provider"
   },
-  "homepage": "https://arcanea.ai",
+  "homepage": "https://arcanea.ai/developers/api",
+  "bugs": {
+    "url": "https://github.com/frankxai/arcanea/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "peerDependencies": {
     "ai": ">=6.0.0"
   },
   "dependencies": {
-    "@ai-sdk/openai-compatible": "^0.1.0",
-    "@ai-sdk/provider": "^3.0.0",
-    "@ai-sdk/provider-utils": "^9.0.0"
+    "@ai-sdk/openai-compatible": "^2.0.0"
   },
   "devDependencies": {
     "tsup": "^8.0.0",

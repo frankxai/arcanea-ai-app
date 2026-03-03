@@ -41,7 +41,7 @@ export function Navbar() {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 group">
-              <div className="relative w-9 h-9 rounded-xl overflow-hidden ring-1 ring-white/[0.06] group-hover:ring-atlantean-teal-aqua/30 transition-all duration-300 group-hover:shadow-[0_0_20px_rgba(127,255,212,0.2)]">
+              <div className="relative w-9 h-9 rounded-xl overflow-hidden ring-1 ring-white/[0.06] group-hover:ring-[#00bcd4]/30 transition-all duration-300 group-hover:shadow-[0_0_20px_rgba(0,188,212,0.2)]">
                 <Image
                   src={navLogo}
                   alt="Arcanea"
@@ -51,7 +51,7 @@ export function Navbar() {
                   priority
                 />
               </div>
-              <span className="font-display text-lg font-semibold tracking-wide text-white group-hover:text-atlantean-teal-aqua transition-colors duration-300">
+              <span className="font-display text-lg font-semibold tracking-wide text-white group-hover:text-[#00bcd4] transition-colors duration-300">
                 Arcanea
               </span>
             </Link>
@@ -67,7 +67,7 @@ export function Navbar() {
                     aria-current={isActive ? "page" : undefined}
                     className={`relative px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
                       isActive
-                        ? "text-atlantean-teal-aqua bg-atlantean-teal-aqua/10"
+                        ? "text-[#00bcd4] bg-[#00bcd4]/10"
                         : "text-text-secondary hover:text-white hover:bg-white/[0.04]"
                     }`}
                   >
@@ -75,7 +75,7 @@ export function Navbar() {
                     {isActive && (
                       <motion.div
                         layoutId="nav-indicator"
-                        className="absolute bottom-0 left-3 right-3 h-[2px] bg-gradient-to-r from-atlantean-teal-aqua to-creation-prism-purple rounded-full"
+                        className="absolute bottom-0 left-3 right-3 h-[2px] bg-gradient-to-r from-[#00bcd4] to-[#1a237e] rounded-full"
                         transition={{ type: "spring", stiffness: 380, damping: 30 }}
                       />
                     )}
@@ -87,7 +87,7 @@ export function Navbar() {
 
               <Link
                 href="/chat"
-                className="btn-glow ml-1 px-5 py-2 rounded-xl text-sm font-semibold bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-light text-cosmic-deep hover:shadow-[0_0_30px_rgba(127,255,212,0.3)] transition-all duration-300"
+                className="btn-glow ml-1 px-5 py-2 rounded-xl text-sm font-semibold bg-gradient-to-r from-[#00897b] via-[#1565c0] to-[#00bcd4] text-white hover:shadow-[0_0_30px_rgba(0,188,212,0.3)] transition-all duration-300"
               >
                 Start Creating
               </Link>
@@ -136,7 +136,7 @@ export function Navbar() {
                         onClick={() => setMobileMenuOpen(false)}
                         className={`block px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
                           isActive
-                            ? "text-atlantean-teal-aqua bg-atlantean-teal-aqua/10"
+                            ? "text-[#00bcd4] bg-[#00bcd4]/10"
                             : "text-text-secondary hover:text-white hover:bg-white/[0.04]"
                         }`}
                       >
@@ -150,7 +150,7 @@ export function Navbar() {
                   <Link
                     href="/chat"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block text-center px-4 py-3 rounded-xl text-sm font-semibold bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-light text-cosmic-deep"
+                    className="block text-center px-4 py-3 rounded-xl text-sm font-semibold bg-gradient-to-r from-[#00897b] via-[#1565c0] to-[#00bcd4] text-white"
                   >
                     Start Creating
                   </Link>

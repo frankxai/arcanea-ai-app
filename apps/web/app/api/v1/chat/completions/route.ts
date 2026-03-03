@@ -16,26 +16,14 @@ import { getModelById, CURATED_MODELS } from '@/lib/gateway/models';
 import { routeRequest, classifyTask, selectModel } from '@/lib/gateway/router';
 import { dispatchToProvider, resolveApiKey } from '@/lib/gateway/providers';
 import { generateCompletionId } from '@/lib/gateway/streaming';
+import {
+  checkRateLimit,
+  rateLimitHeaders,
+  recordTokenUsage,
+  resolveTier,
+} from '@/lib/gateway/rate-limiter';
 
 export const runtime = 'edge';
-
-// ─── Rate Limiting (simple in-memory, replace with KV/Redis in prod) ─
-
-const rateLimits = new Map<string, { count: number; resetAt: number }>();
-const RATE_WINDOW = 60_000; // 1 minute
-const MAX_REQUESTS = 60;    // 60 req/min default
-
-function checkRateLimit(key: string): boolean {
-  const now = Date.now();
-  const entry = rateLimits.get(key);
-  if (!entry || now >= entry.resetAt) {
-    rateLimits.set(key, { count: 1, resetAt: now + RATE_WINDOW });
-    return true;
-  }
-  if (entry.count >= MAX_REQUESTS) return false;
-  entry.count++;
-  return true;
-}
 
 // ─── Key Extraction ──────────────────────────────────────────────────
 
@@ -132,12 +120,31 @@ function extractGatewayConfig(req: NextRequest): GatewayConfig {
 
 export async function POST(req: NextRequest) {
   try {
-    // Rate limit by IP
+    // ── Rate Limiting (tiered, sliding window) ──
     const ip = req.headers.get('x-forwarded-for')?.split(',')[0].trim() || 'anon';
-    if (!checkRateLimit(ip)) {
+    const tierHint = req.headers.get('x-arcanea-tier') ?? undefined;
+    const tier = resolveTier(tierHint);
+    const rateLimitKey = `gateway:${ip}`;
+    const rateResult = checkRateLimit(rateLimitKey, tier);
+
+    if (!rateResult.allowed) {
+      const retryAfter = Math.ceil((rateResult.resetAt - Date.now()) / 1000);
       return NextResponse.json(
-        { error: { message: 'Rate limit exceeded. Please try again later.', type: 'rate_limit_error' } },
-        { status: 429 },
+        {
+          error: {
+            message: `Rate limit exceeded for ${tier} tier. Please try again in ${retryAfter}s.`,
+            type: 'rate_limit_error',
+            tier,
+            retryAfter,
+          },
+        },
+        {
+          status: 429,
+          headers: {
+            ...rateLimitHeaders(rateResult),
+            'Retry-After': String(retryAfter),
+          },
+        },
       );
     }
 
@@ -208,8 +215,26 @@ export async function POST(req: NextRequest) {
       streaming,
     );
 
-    // Add gateway metadata headers
-    const finalResponse = new Response(response.body, {
+    // Add gateway metadata headers + rate limit headers
+    const rlHeaders = rateLimitHeaders(rateResult);
+
+    // For non-streaming, read body for token tracking then rebuild response
+    let responseBody: ReadableStream | string | null = response.body;
+
+    if (!streaming) {
+      try {
+        const text = await response.text();
+        const json = JSON.parse(text);
+        if (json?.usage?.total_tokens) {
+          recordTokenUsage(rateLimitKey, json.usage.total_tokens);
+        }
+        responseBody = text;
+      } catch {
+        // Non-critical — token tracking is best-effort
+      }
+    }
+
+    const finalResponse = new Response(responseBody, {
       status: response.status,
       headers: response.headers,
     });
@@ -217,6 +242,10 @@ export async function POST(req: NextRequest) {
     finalResponse.headers.set('X-Arcanea-Model', route.model.id);
     finalResponse.headers.set('X-Arcanea-Provider', route.model.provider);
     finalResponse.headers.set('X-Arcanea-Route-Reason', route.reason);
+
+    for (const [header, value] of Object.entries(rlHeaders)) {
+      finalResponse.headers.set(header, value);
+    }
 
     return finalResponse;
 

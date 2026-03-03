@@ -65,7 +65,7 @@ const TIERS = [
 ];
 
 const COMPARISON = [
-  { feature: "AI Specialists", spark: "2", ascendant: "16", luminor: "16" },
+  { feature: "AI Specialists", spark: "2", ascendant: "10", luminor: "10" },
   {
     feature: "Messages/month",
     spark: "50",

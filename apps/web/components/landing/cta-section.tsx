@@ -8,10 +8,9 @@ import { PhArrowRight, PhCheck } from '@/lib/phosphor-icons';
 import navLogo from "@/assets/brand/arcanea-mark.jpg";
 
 const BENEFITS = [
-  "Ten creative intelligences, each with a distinct philosophy",
-  "A library of 34 original texts — philosophy for makers",
-  "A progression system that deepens the more you create",
-  "No limits on what you build",
+  "10 AI specialists across writing, design, code, and music",
+  "An original philosophy library with 34+ texts",
+  "Free to start — no credit card required",
 ];
 
 export function CTASection() {
@@ -26,7 +25,7 @@ export function CTASection() {
         <motion.div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full"
           style={{
-            background: "radial-gradient(circle, rgba(127,255,212,0.06) 0%, rgba(139,92,246,0.04) 40%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(0,188,212,0.06) 0%, rgba(13,71,161,0.05) 40%, transparent 70%)",
           }}
           animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0.7, 0.4] }}
           transition={{ duration: 10, repeat: Infinity }}
@@ -41,12 +40,12 @@ export function CTASection() {
         >
           {/* Gradient border wrapper */}
           <div className="gradient-border">
-            <div className="liquid-glass-elevated rounded-[calc(1.5rem-1px)] p-10 md:p-16 lg:p-20 relative overflow-hidden">
+            <div className="bg-white/[0.03] backdrop-blur-xl rounded-[calc(1.5rem-1px)] p-10 md:p-16 lg:p-20 relative overflow-hidden">
               {/* Glass noise texture */}
               <div className="absolute inset-0 glass-noise opacity-[0.25] pointer-events-none rounded-[calc(1.5rem-1px)]" />
               {/* Decorative glow spots */}
-              <div className="absolute top-0 right-0 w-96 h-96 bg-atlantean-teal-aqua/10 rounded-full blur-[140px] pointer-events-none" />
-              <div className="absolute bottom-0 left-0 w-80 h-80 bg-creation-prism-purple/10 rounded-full blur-[120px] pointer-events-none" />
+              <div className="absolute top-0 right-0 w-96 h-96 bg-[#00bcd4]/8 rounded-full blur-[140px] pointer-events-none" />
+              <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#1a237e]/12 rounded-full blur-[120px] pointer-events-none" />
 
               <div className="relative grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                 {/* Left — Content */}
@@ -57,15 +56,13 @@ export function CTASection() {
                     transition={{ delay: 0.15 }}
                   >
                     <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold leading-tight mb-6">
-                      Imagine a good future.{" "}
-                      <span className="bg-gradient-to-r from-atlantean-teal-aqua via-creation-prism-purple to-gold-bright bg-clip-text text-transparent">
-                        Build it here.
+                      <span className="text-gradient-cosmic">
+                        Start building.
                       </span>
                     </h2>
 
                     <p className="text-lg text-text-secondary mb-8 leading-relaxed">
-                      Arcanea is free. Start with any intelligence, explore
-                      the Library, create whatever you want.
+                      Arcanea is free. Choose a specialist and start creating.
                     </p>
 
                     <ul className="space-y-3 mb-10">
@@ -77,8 +74,8 @@ export function CTASection() {
                           transition={{ delay: 0.25 + i * 0.08 }}
                           className="flex items-center gap-3"
                         >
-                          <div className="w-5 h-5 rounded-full bg-atlantean-teal-aqua/15 flex items-center justify-center flex-shrink-0">
-                            <PhCheck className="w-3 h-3 text-atlantean-teal-aqua" />
+                          <div className="w-5 h-5 rounded-full bg-[#00bcd4]/15 flex items-center justify-center flex-shrink-0">
+                            <PhCheck className="w-3 h-3 text-[#00bcd4]" />
                           </div>
                           <span className="text-text-secondary text-sm">{benefit}</span>
                         </motion.li>
@@ -90,14 +87,14 @@ export function CTASection() {
                         href="/chat"
                         className="group relative px-8 py-4 rounded-2xl font-semibold text-base overflow-hidden btn-glow"
                       >
-                        <div className="absolute inset-0 bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-light" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-[#00897b] via-[#1565c0] to-[#00bcd4]" />
                         <motion.div
                           className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.15] to-transparent"
                           initial={{ x: "-100%" }}
                           whileHover={{ x: "100%" }}
                           transition={{ duration: 0.5 }}
                         />
-                        <span className="relative z-10 text-cosmic-deep flex items-center gap-2">
+                        <span className="relative z-10 text-white flex items-center gap-2">
                           Start Creating Free
                           <PhArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </span>
@@ -122,7 +119,7 @@ export function CTASection() {
                 >
                   <div className="relative w-full aspect-square max-w-sm mx-auto">
                     {/* Center glow */}
-                    <div className="absolute inset-[20%] bg-gradient-to-br from-atlantean-teal-aqua/15 to-creation-prism-purple/15 rounded-full blur-3xl" />
+                    <div className="absolute inset-[20%] bg-gradient-to-br from-[#00bcd4]/12 to-[#1a237e]/12 rounded-full blur-3xl" />
 
                     {/* Orbiting guardian portraits */}
                     {[
@@ -166,9 +163,9 @@ export function CTASection() {
                       className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-2xl overflow-hidden ring-1 ring-white/[0.15]"
                       animate={{
                         boxShadow: [
-                          "0 0 30px rgba(127,255,212,0.2), 0 0 60px rgba(139,92,246,0.1)",
-                          "0 0 50px rgba(127,255,212,0.4), 0 0 80px rgba(139,92,246,0.2)",
-                          "0 0 30px rgba(127,255,212,0.2), 0 0 60px rgba(139,92,246,0.1)",
+                          "0 0 30px rgba(0,188,212,0.2), 0 0 60px rgba(13,71,161,0.12)",
+                          "0 0 50px rgba(0,188,212,0.35), 0 0 80px rgba(13,71,161,0.2)",
+                          "0 0 30px rgba(0,188,212,0.2), 0 0 60px rgba(13,71,161,0.12)",
                         ],
                       }}
                       transition={{ duration: 4, repeat: Infinity }}

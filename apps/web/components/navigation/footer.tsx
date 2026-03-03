@@ -6,9 +6,8 @@ import {
   PhGithubLogo,
   PhChatCircleDots,
   PhBookOpen,
-  PhGraduationCap,
+  PhCrown,
   PhPalette,
-  PhSparkle,
   PhCompass,
   PhUsers,
   PhMusicNotes,
@@ -20,9 +19,9 @@ const footerLinks = {
   create: {
     label: "Create",
     links: [
-      { href: "/chat", label: "Chat", icon: PhSparkle },
+      { href: "/chat", label: "Chat", icon: PhChatCircleDots },
       { href: "/studio", label: "Studio", icon: PhPalette },
-      { href: "/academy", label: "Academy", icon: PhGraduationCap },
+      { href: "/academy", label: "Academy", icon: PhCrown },
       { href: "/academy/gate-quiz", label: "Find Your Intelligence" },
     ],
   },
@@ -81,7 +80,7 @@ export function Footer() {
       role="contentinfo"
     >
       {/* Subtle top glow line */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-atlantean-teal-aqua/20 to-transparent" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px bg-gradient-to-r from-transparent via-[#00bcd4]/20 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-6 py-16">
         {/* Top section */}
@@ -103,7 +102,7 @@ export function Footer() {
                             "aria-label": `${link.label} (opens in new tab)`,
                           }
                         : {})}
-                      className="text-sm text-text-secondary hover:text-atlantean-teal-aqua transition-colors duration-300"
+                      className="text-sm text-text-secondary hover:text-[#00bcd4] transition-colors duration-300"
                     >
                       {link.label}
                     </Link>
@@ -118,7 +117,7 @@ export function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8 border-t border-white/[0.06]">
           {/* Brand */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-8 h-8 rounded-xl overflow-hidden ring-1 ring-white/[0.08] group-hover:ring-atlantean-teal-aqua/30 transition-all duration-300 shadow-[0_0_16px_rgba(127,255,212,0.10)]">
+            <div className="w-8 h-8 rounded-xl overflow-hidden ring-1 ring-white/[0.08] group-hover:ring-[#00bcd4]/30 transition-all duration-300 shadow-[0_0_16px_rgba(0,188,212,0.10)]">
               <Image
                 src={navLogo}
                 alt="Arcanea"
@@ -127,7 +126,7 @@ export function Footer() {
                 className="w-full h-full object-cover"
               />
             </div>
-            <span className="font-display font-bold text-lg text-text-primary group-hover:text-atlantean-teal-aqua transition-colors duration-300">
+            <span className="font-display font-bold text-lg text-text-primary group-hover:text-[#00bcd4] transition-colors duration-300">
               Arcanea
             </span>
           </Link>
@@ -142,13 +141,13 @@ export function Footer() {
           <div className="flex items-center gap-4 text-xs text-text-muted font-sans">
             <span>&copy; {new Date().getFullYear()} Arcanea</span>
             <span className="text-white/[0.08]">|</span>
-            <Link href="/privacy" className="hover:text-atlantean-teal-aqua transition-colors duration-300">Privacy</Link>
+            <Link href="/privacy" className="hover:text-[#00bcd4] transition-colors duration-300">Privacy</Link>
             <span className="text-white/[0.08]">|</span>
-            <Link href="/terms" className="hover:text-atlantean-teal-aqua transition-colors duration-300">Terms</Link>
+            <Link href="/terms" className="hover:text-[#00bcd4] transition-colors duration-300">Terms</Link>
             <span className="text-white/[0.08]">|</span>
             <Link
               href="https://frankx.ai"
-              className="hover:text-atlantean-teal-aqua transition-colors duration-300"
+              className="hover:text-[#00bcd4] transition-colors duration-300"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="FrankX.ai (opens in new tab)"

@@ -323,7 +323,7 @@ export const PhGitBranch = GitBranch;
 export const PhGithubLogo = GithubLogo;
 export const PhGlobe = Globe;
 export const PhGraduationCap = GraduationCap;
-export const PhGraphNetwork = Globe;
+export const PhGraphNetwork = Tree;
 export const PhGridFour = GridFour;
 export const PhGridNine = GridNine;
 export const PhHeart = Heart;
@@ -463,6 +463,11 @@ export type { IconProps };
 
 // Type alias — some files import `Icon` as a type from this module
 export type Icon = IconProps;
+
+// Additional aliases for mythological icon system
+export const PhSunHorizon = Sun;
+export const PhFaders = SlidersHorizontal;
+export const PhSealCheck = ShieldStar;
 
 // Missing icon aliases — icons referenced but not in Phosphor
 export const TreeStructure = GitBranch;   // Phosphor doesn't have TreeStructure

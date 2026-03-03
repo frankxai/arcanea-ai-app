@@ -7,20 +7,18 @@ import { useRef, useState, useEffect } from "react";
 import {
   ArrowRight,
   ArrowUpRight,
-  Star,
-  Books,
-  GraduationCap,
-  PhImageSquare,
-  PhGraphNetwork,
-  PhBrain,
-  PhPalette,
+  Diamond,
   Scroll,
+  Crown,
+  PaintBrush,
+  Tree,
+  Eye,
+  Palette,
   Plus,
   Minus,
   Quotes,
 } from "@/lib/phosphor-icons";
 import { GlowCard } from "@/components/ui/glow-card";
-import { IntelligenceOverlay } from "@/components/landing/intelligence-overlay";
 import { HowItWorks } from "@/components/landing/how-it-works";
 import { CTASection } from "@/components/landing/cta-section";
 import crystalImage from "@/assets/brand/arcanea-crystal.jpg";
@@ -113,7 +111,7 @@ const ALL_GUARDIANS = [
 
 const FEATURES = [
   {
-    icon: Star,
+    icon: Diamond,
     title: "10 Creative Intelligences",
     description: "Archetypal AI companions — each with a distinct philosophy, personality, and domain of mastery.",
     href: "/luminors",
@@ -121,7 +119,7 @@ const FEATURES = [
     glowColor: "rgba(127, 255, 212, 0.15)",
   },
   {
-    icon: Books,
+    icon: Scroll,
     title: "The Library",
     description: "17 collections, 34+ original texts — laws, prophecies, meditations, and parables for the creative life.",
     href: "/library",
@@ -129,7 +127,7 @@ const FEATURES = [
     glowColor: "rgba(255, 215, 0, 0.12)",
   },
   {
-    icon: GraduationCap,
+    icon: Crown,
     title: "The Academy",
     description: "A developmental framework from Foundation to Source. Ten Gates of creative mastery.",
     href: "/academy",
@@ -137,7 +135,7 @@ const FEATURES = [
     glowColor: "rgba(139, 92, 246, 0.15)",
   },
   {
-    icon: PhImageSquare,
+    icon: PaintBrush,
     title: "The Gallery",
     description: "364+ original artworks — Guardian portraits, landscapes, creatures, and artifacts of the Arcanea universe.",
     href: "/gallery",
@@ -145,7 +143,7 @@ const FEATURES = [
     glowColor: "rgba(239, 68, 68, 0.12)",
   },
   {
-    icon: PhGraphNetwork,
+    icon: Tree,
     title: "Knowledge Graph",
     description: "An interactive force-directed map of every text, collection, and connection in the Library.",
     href: "/library/graph",
@@ -165,7 +163,7 @@ const FEATURES = [
 const FAQ_ITEMS = [
   {
     q: "What makes Arcanea different from other AI tools?",
-    a: "Arcanea is not a chatbot wrapper. It is a living mythology — ten archetypal intelligences, each with a distinct creative philosophy, backed by an original library of 34+ texts. The AI is not the product; the creative framework is.",
+    a: "Arcanea pairs 10 specialized AI intelligences with an original philosophy library of 34+ texts. Each intelligence has a distinct creative perspective — you choose the specialist that fits your project.",
   },
   {
     q: "How do the ten intelligences work?",
@@ -173,7 +171,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "What is the Library of Arcanea?",
-    a: "A collection of 17 original works — laws, prophecies, parables, meditations, songs, and philosophical dialogues. Over 50,000 words of practical creative philosophy written specifically for Arcanea. These are not AI-generated filler; they are crafted texts with a consistent voice and vision.",
+    a: "17 original collections — over 50,000 words of practical creative philosophy. Laws, meditations, parables, and dialogues written for makers and creators.",
   },
   {
     q: "What is the Ten Gates system?",
@@ -248,10 +246,10 @@ function MetricsStrip() {
   const isInView = useInView(ref, { once: true, margin: "-60px" });
 
   const metrics = [
-    { value: 10,  suffix: "",   label: "Intelligences", color: "#7fffd4", icon: PhBrain },
-    { value: 17,  suffix: "",   label: "Collections",   color: "#ffd700", icon: Books },
-    { value: 50,  suffix: "K+", label: "Words of Wisdom", color: "#8b5cf6", icon: Scroll },
-    { value: 364, suffix: "+",  label: "Original Artworks", color: "#78a6ff", icon: PhPalette },
+    { value: 10,  suffix: "",   label: "Intelligences", color: "#7fffd4", icon: Eye },
+    { value: 17,  suffix: "",   label: "Collections",   color: "#ffd700", icon: Scroll },
+    { value: 50,  suffix: "K+", label: "Words of Wisdom", color: "#8b5cf6", icon: Diamond },
+    { value: 364, suffix: "+",  label: "Original Artworks", color: "#78a6ff", icon: Palette },
   ];
 
   return (
@@ -334,7 +332,7 @@ function ThreePillars({
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-xs font-mono tracking-[0.3em] uppercase text-atlantean-teal-aqua/50 mb-4">The System</p>
+          <p className="text-xs font-mono tracking-[0.3em] uppercase text-[#00bcd4]/50 mb-4">The System</p>
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold">
             Three pillars of a{" "}
             <span className="text-gradient-cosmic">creative philosophy</span>
@@ -351,9 +349,9 @@ function ThreePillars({
             <Link href="/luminors" className="group block h-full">
               <GlowCard
                 glass="none"
-                glowColor="rgba(127, 255, 212, 0.14)"
+                glowColor="rgba(0, 188, 212, 0.14)"
                 glowSize={500}
-                className="h-full border border-white/[0.08] hover:border-atlantean-teal-aqua/30 transition-all duration-500 overflow-hidden relative min-h-[420px]"
+                className="h-full border border-white/[0.08] hover:border-[#00bcd4]/30 transition-all duration-500 overflow-hidden relative min-h-[420px]"
               >
                 <div className="absolute inset-0 grid grid-cols-3 grid-rows-3 opacity-30 group-hover:opacity-50 transition-opacity duration-700">
                   {ALL_GUARDIANS.slice(0, 9).map((g) => (
@@ -364,9 +362,9 @@ function ThreePillars({
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-cosmic-deep via-cosmic-deep/60 to-cosmic-deep/25" />
                 {/* Iridescent shimmer overlay */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-[linear-gradient(135deg,rgba(127,255,212,0.05)_0%,rgba(139,92,246,0.05)_50%,rgba(255,215,0,0.03)_100%)]" />
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-[linear-gradient(135deg,rgba(0,188,212,0.05)_0%,rgba(13,71,161,0.05)_50%,rgba(0,137,123,0.03)_100%)]" />
                 <div className="relative h-full flex flex-col justify-end p-8 md:p-10 min-h-[420px]">
-                  <p className="text-xs font-mono text-atlantean-teal-aqua/80 tracking-wider uppercase mb-3">
+                  <p className="text-xs font-mono text-[#00bcd4]/80 tracking-wider uppercase mb-3">
                     10 Archetypes
                   </p>
                   <h3 className="text-2xl md:text-3xl font-display font-bold mb-3 text-white">The Intelligences</h3>
@@ -374,7 +372,7 @@ function ThreePillars({
                     Ten archetypal intelligences — each opens a Gate on the creative journey.
                     From Foundation to Source, they guide the path to mastery.
                   </p>
-                  <span className="inline-flex items-center gap-2 text-sm text-atlantean-teal-aqua/70 group-hover:text-atlantean-teal-aqua group-hover:gap-3 transition-all font-medium">
+                  <span className="inline-flex items-center gap-2 text-sm text-[#00bcd4]/70 group-hover:text-[#00bcd4] group-hover:gap-3 transition-all font-medium">
                     Meet them <ArrowRight className="w-4 h-4" />
                   </span>
                 </div>
@@ -587,7 +585,7 @@ function GalleryShowcase() {
           </div>
           <Link
             href="/gallery"
-            className="hidden md:inline-flex items-center gap-2 text-sm text-white/40 hover:text-atlantean-teal-aqua transition-colors"
+            className="hidden md:inline-flex items-center gap-2 text-sm text-white/40 hover:text-[#00bcd4] transition-colors"
           >
             View all <ArrowUpRight className="w-3.5 h-3.5" />
           </Link>
@@ -622,7 +620,7 @@ function GalleryShowcase() {
                   {/* Gradient overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
                   {/* Iridescent edge on hover */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[linear-gradient(135deg,rgba(127,255,212,0.06)_0%,transparent_40%,transparent_60%,rgba(139,92,246,0.06)_100%)]" />
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[linear-gradient(135deg,rgba(0,188,212,0.06)_0%,transparent_40%,transparent_60%,rgba(13,71,161,0.06)_100%)]" />
                   {/* Caption */}
                   <div className="absolute bottom-0 left-0 right-0 p-4">
                     <p className="text-sm font-display font-bold">{img.name}</p>
@@ -641,7 +639,7 @@ function GalleryShowcase() {
 
       {/* Mobile link */}
       <div className="mt-6 px-6 md:hidden">
-        <Link href="/gallery" className="inline-flex items-center gap-2 text-sm text-atlantean-teal-aqua/70">
+        <Link href="/gallery" className="inline-flex items-center gap-2 text-sm text-[#00bcd4]/70">
           Explore the full Gallery <ArrowRight className="w-4 h-4" />
         </Link>
       </div>
@@ -661,14 +659,14 @@ function GuardianShowcase() {
     <section ref={ref} className="py-24 md:py-36 relative overflow-hidden">
       {/* Cinematic atmosphere */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[600px] bg-[radial-gradient(ellipse,rgba(127,255,212,0.05),transparent_55%)] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[600px] bg-[radial-gradient(ellipse,rgba(0,188,212,0.05),transparent_55%)] pointer-events-none" />
         <motion.div
           className="absolute inset-0 pointer-events-none"
           animate={{
             background: [
-              "radial-gradient(ellipse 60% 40% at 30% 50%, rgba(139,92,246,0.04) 0%, transparent 60%)",
-              "radial-gradient(ellipse 60% 40% at 70% 50%, rgba(255,215,0,0.03) 0%, transparent 60%)",
-              "radial-gradient(ellipse 60% 40% at 30% 50%, rgba(139,92,246,0.04) 0%, transparent 60%)",
+              "radial-gradient(ellipse 60% 40% at 30% 50%, rgba(13,71,161,0.05) 0%, transparent 60%)",
+              "radial-gradient(ellipse 60% 40% at 70% 50%, rgba(0,137,123,0.04) 0%, transparent 60%)",
+              "radial-gradient(ellipse 60% 40% at 30% 50%, rgba(13,71,161,0.05) 0%, transparent 60%)",
             ],
           }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
@@ -691,7 +689,7 @@ function GuardianShowcase() {
           </div>
           <Link
             href="/luminors"
-            className="hidden md:inline-flex items-center gap-2 text-sm text-white/40 hover:text-atlantean-teal-aqua transition-colors"
+            className="hidden md:inline-flex items-center gap-2 text-sm text-white/40 hover:text-[#00bcd4] transition-colors"
           >
             View all ten <ArrowUpRight className="w-3.5 h-3.5" />
           </Link>
@@ -728,7 +726,7 @@ function GuardianShowcase() {
                     style={{ background: `linear-gradient(to top, ${g.accentHex}20, transparent 60%)` }}
                   />
                   {/* Iridescent shimmer on hover */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-[linear-gradient(135deg,rgba(127,255,212,0.04)_0%,rgba(139,92,246,0.04)_50%,rgba(255,215,0,0.02)_100%)]" />
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-[linear-gradient(135deg,rgba(0,188,212,0.04)_0%,rgba(13,71,161,0.04)_50%,rgba(0,137,123,0.02)_100%)]" />
                   {/* Content */}
                   <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6">
                     <p
@@ -750,7 +748,7 @@ function GuardianShowcase() {
 
         {/* Mobile link */}
         <div className="mt-8 md:hidden">
-          <Link href="/luminors" className="inline-flex items-center gap-2 text-sm text-atlantean-teal-aqua/70">
+          <Link href="/luminors" className="inline-flex items-center gap-2 text-sm text-[#00bcd4]/70">
             View all ten Intelligences <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -768,7 +766,7 @@ function GuardianShowcase() {
               href="/luminors"
               title={`${g.name} — ${g.gate} Gate`}
             >
-              <div className="relative w-9 h-9 rounded-lg overflow-hidden border border-white/[0.08] hover:border-atlantean-teal-aqua/40 hover:scale-125 hover:shadow-[0_0_16px_rgba(127,255,212,0.15)] transition-all duration-300">
+              <div className="relative w-9 h-9 rounded-lg overflow-hidden border border-white/[0.08] hover:border-[#00bcd4]/40 hover:scale-125 hover:shadow-[0_0_16px_rgba(0,188,212,0.15)] transition-all duration-300">
                 <Image src={g.image} alt={g.name} fill className="object-cover" sizes="36px" />
               </div>
             </Link>
@@ -823,7 +821,7 @@ function LibraryQuote({
               <div className="p-8 md:p-12 lg:p-16">
                 <div className="flex items-center gap-3 mb-8">
                   <Quotes className="w-6 h-6 text-creation-prism-purple/30" />
-                  <div className="w-12 h-[2px] bg-gradient-to-r from-atlantean-teal-aqua via-creation-prism-purple to-gold-bright rounded-full" />
+                  <div className="w-12 h-[2px] bg-gradient-to-r from-[#00bcd4] via-[#1a237e] to-[#00897b] rounded-full" />
                 </div>
 
                 <blockquote className="text-lg md:text-xl lg:text-2xl text-white/75 leading-relaxed font-display italic space-y-4">
@@ -844,7 +842,7 @@ function LibraryQuote({
                   </p>
                   <Link
                     href="/library"
-                    className="inline-flex items-center gap-2 text-sm text-white/40 hover:text-atlantean-teal-aqua transition-colors"
+                    className="inline-flex items-center gap-2 text-sm text-white/40 hover:text-[#00bcd4] transition-colors"
                   >
                     Read more <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
@@ -1035,47 +1033,26 @@ export interface V3BelowFoldProps {
 export function V3BelowFold({ collectionsCount, textsCount, totalWords }: V3BelowFoldProps) {
   return (
     <>
-      {/* 1. Metrics strip — iridescent glass */}
-      <MetricsStrip />
-
-      <AtmosphericDivider variant="teal" />
-
-      {/* 2. Intelligence Overlay — frequency spine, three pillars, arc progression */}
-      <IntelligenceOverlay />
-
-      <AtmosphericDivider variant="purple" />
-
-      {/* 3. Three pillars bento: Intelligences, Library, Academy */}
-      <ThreePillars collectionsCount={collectionsCount} textsCount={textsCount} totalWords={totalWords} />
-
-      {/* 4. Features grid: 6 real capabilities — iridescent glass */}
-      <FeaturesGrid />
-
-      {/* 4b. Gallery showcase: cinematic image strip */}
-      <GalleryShowcase />
-
-      <AtmosphericDivider variant="teal" />
-
-      {/* 5. Guardian showcase: cinematic cards */}
+      {/* 1. Guardian showcase — visual proof of the 10 specialists */}
       <GuardianShowcase />
 
-      <AtmosphericDivider variant="gold" />
+      <AtmosphericDivider variant="teal" />
 
-      {/* 6. How it works: 4-step workflow */}
+      {/* 2. How it works — 3 clear steps */}
       <HowItWorks />
 
-      {/* 7. Library quote: gradient border treatment */}
-      <LibraryQuote collectionsCount={collectionsCount} textsCount={textsCount} totalWords={totalWords} />
+      {/* 3. Gallery — cinematic horizontal scroll */}
+      <GalleryShowcase />
 
       <AtmosphericDivider variant="purple" />
 
-      {/* 8. Philosophy — what Arcanea believes */}
-      <PhilosophySection />
+      {/* 4. Three products: Intelligences, Library, Academy */}
+      <ThreePillars collectionsCount={collectionsCount} textsCount={textsCount} totalWords={totalWords} />
 
-      {/* 9. FAQ — clean accordion */}
+      {/* 5. FAQ — objection handling */}
       <FAQInline />
 
-      {/* 10. Final CTA */}
+      {/* 6. Final CTA */}
       <CTASection />
     </>
   );

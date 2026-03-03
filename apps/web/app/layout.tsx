@@ -2,15 +2,16 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { CosmicBackground } from "@/lib/arcanea-ui";
 import { ReactNode } from "react";
-import { Playfair_Display, Crimson_Pro, Inter, JetBrains_Mono } from "next/font/google";
+import { Cinzel, Crimson_Pro, Inter, JetBrains_Mono } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { AuthProvider } from "@/lib/auth/context";
 import { Navbar, Footer } from "@/components/navigation";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 
-const playfairDisplay = Playfair_Display({
+const cinzel = Cinzel({
   subsets: ["latin"],
+  weight: ["400", "700", "900"],
   variable: "--font-display",
   display: "swap",
 });
@@ -65,7 +66,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={cn(
-      playfairDisplay.variable,
+      cinzel.variable,
       crimsonPro.variable,
       inter.variable,
       jetbrainsMono.variable

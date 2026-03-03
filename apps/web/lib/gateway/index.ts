@@ -21,6 +21,21 @@ export {
   formatSSEDone,
   sseHeaders,
 } from './streaming';
+export {
+  checkRateLimit,
+  rateLimitHeaders,
+  recordTokenUsage,
+  resolveTier,
+  getTokenBudget,
+  getRateLimiterStats,
+  TIER_CONFIGS,
+} from './rate-limiter';
+export type {
+  RateLimitTier,
+  RateLimitResult,
+  RateLimitHeaders,
+  TierConfig,
+} from './rate-limiter';
 export type {
   CuratedModel,
   ProviderId,

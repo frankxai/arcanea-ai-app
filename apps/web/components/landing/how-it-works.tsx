@@ -2,40 +2,32 @@
 
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
-import { PhChat, PhSparkle, PhMagicWand, PhRocket, PhArrowRight } from '@/lib/phosphor-icons';
+import { PhCompass, PhEye, PhFlame, PhArrowRight } from '@/lib/phosphor-icons';
 
 const STEPS = [
   {
     number: '01',
-    icon: PhChat,
-    title: 'Pick an Intelligence',
-    description: 'Choose from 10 creative intelligences — each one has a distinct philosophy, personality, and domain of mastery.',
+    icon: PhCompass,
+    title: 'Choose a specialist',
+    description: '10 AI specialists — writing, design, code, music, strategy, and more. Pick the one that fits your project.',
     color: 'atlantean-teal-aqua',
     visual: 'luminor-selection',
   },
   {
     number: '02',
-    icon: PhSparkle,
-    title: 'Describe Your Project',
-    description: 'Tell it what you are working on. The intelligence adapts to your level — whether you are exploring ideas or refining something specific.',
+    icon: PhEye,
+    title: 'Describe your project',
+    description: 'Share what you are working on. The specialist adapts to your level and creative direction.',
     color: 'creation-prism-purple',
     visual: 'conversation',
   },
   {
     number: '03',
-    icon: PhMagicWand,
-    title: 'Create Together',
-    description: 'Write, design, compose, or code — with an AI partner that thinks about the craft the way you do.',
+    icon: PhFlame,
+    title: 'Build together',
+    description: 'Write, design, compose, or code — with an AI partner built for your craft.',
     color: 'gold-bright',
     visual: 'creation',
-  },
-  {
-    number: '04',
-    icon: PhRocket,
-    title: 'Share and Grow',
-    description: 'Save your work and track progress in the Academy. The more you create, the more the system reveals.',
-    color: 'draconic-crimson',
-    visual: 'export',
   },
 ];
 
@@ -48,7 +40,7 @@ export function HowItWorks() {
     <section ref={ref} className="py-32 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-atlantean-teal-aqua/5 to-creation-prism-purple/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-[#00bcd4]/5 to-[#1a237e]/5 rounded-full blur-3xl" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6">
@@ -58,15 +50,12 @@ export function HowItWorks() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-20"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass border border-creation-prism-purple/20 mb-6">
-            <PhMagicWand className="w-3.5 h-3.5 text-creation-prism-purple" />
-            <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-creation-prism-purple/90">How It Works</span>
-          </div>
+          <p className="text-xs font-mono tracking-[0.3em] uppercase text-white/30 mb-4">How It Works</p>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
-            Four steps to creation
+            Three steps to creation
           </h2>
           <p className="text-xl text-text-secondary max-w-2xl mx-auto">
-            From first idea to finished creation. Choose an intelligence, describe your vision, create together.
+            Choose a specialist. Describe your project. Build together.
           </p>
         </motion.div>
 
@@ -87,8 +76,8 @@ export function HowItWorks() {
                   onMouseEnter={() => setActiveStep(i)}
                   className={`group relative p-6 rounded-2xl border cursor-pointer transition-all duration-500 ${
                     isActive
-                      ? `iridescent-glass border-${step.color}/30`
-                      : 'liquid-glass border-white/[0.06] hover:border-white/[0.12]'
+                      ? `bg-white/[0.05] border-${step.color}/30`
+                      : 'bg-white/[0.02] border-white/[0.06] hover:border-white/[0.12]'
                   }`}
                 >
                   {/* Step number */}
@@ -145,7 +134,7 @@ export function HowItWorks() {
             className="relative"
           >
             {/* Browser mockup */}
-            <div className="relative rounded-2xl iridescent-glass border border-white/[0.10] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+            <div className="relative rounded-2xl bg-white/[0.03] border border-white/[0.10] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
               {/* Glass noise overlay */}
               <div className="absolute inset-0 glass-noise opacity-[0.15] pointer-events-none z-10 rounded-2xl" />
               {/* Browser header */}
@@ -181,7 +170,7 @@ export function HowItWorks() {
                             key={name}
                             className={`aspect-square rounded-xl flex items-center justify-center text-[10px] font-mono text-center leading-tight px-1 ${
                               n === 0
-                                ? 'bg-atlantean-teal-aqua/20 border-2 border-atlantean-teal-aqua text-atlantean-teal-aqua'
+                                ? 'bg-[#00bcd4]/20 border-2 border-[#00bcd4] text-[#00bcd4]'
                                 : 'bg-white/[0.04] border border-white/[0.06] text-text-muted'
                             }`}
                           >
@@ -194,14 +183,14 @@ export function HowItWorks() {
                       // Conversation interface
                       <div className="space-y-4">
                         <div className="flex justify-end">
-                          <div className="max-w-[80%] p-4 rounded-2xl bg-atlantean-teal-aqua/10 border border-atlantean-teal-aqua/20">
+                          <div className="max-w-[80%] p-4 rounded-2xl bg-[#00bcd4]/10 border border-[#00bcd4]/20">
                             <p className="text-sm">Help me design a world with a Gate-based magic system...</p>
                           </div>
                         </div>
                         <div className="flex">
                           <div className="max-w-[80%] p-4 rounded-2xl bg-white/[0.04] border border-white/[0.06]">
                             <div className="flex items-center gap-2 mb-2">
-                              <span className="text-xs font-mono px-2 py-0.5 rounded bg-atlantean-teal-aqua/15 text-atlantean-teal-aqua">Lyria · Sight Gate</span>
+                              <span className="text-xs font-mono px-2 py-0.5 rounded bg-[#00bcd4]/15 text-[#00bcd4]">Lyria · Sight Gate</span>
                             </div>
                             <p className="text-sm text-text-secondary">I see your vision clearly. The Ten Gates offer a natural progression — each Gate unlocks new creative frequencies. Which element calls to you first?</p>
                           </div>
@@ -214,7 +203,7 @@ export function HowItWorks() {
                         <div className="flex-1 rounded-xl bg-white/[0.04] border border-white/[0.06] p-4">
                           <div className="flex items-center justify-between mb-4">
                             <span className="text-sm font-medium">World Document</span>
-                            <span className="text-xs text-atlantean-teal-aqua">Generating...</span>
+                            <span className="text-xs text-[#00bcd4]">Generating...</span>
                           </div>
                           <div className="space-y-2">
                             <div className="h-3 bg-white/[0.06] rounded w-full animate-pulse" />
@@ -222,29 +211,6 @@ export function HowItWorks() {
                             <div className="h-3 bg-white/[0.06] rounded w-3/5 animate-pulse" />
                           </div>
                         </div>
-                      </div>
-                    )}
-                    {i === 3 && (
-                      // Growth tracking
-                      <div className="space-y-3">
-                        <h4 className="text-lg font-semibold mb-4">Your Creative Journey</h4>
-                        {[
-                          { label: 'Foundation Gate', status: 'Opened', color: 'bg-atlantean-teal-aqua' },
-                          { label: 'Flow Gate', status: 'Opened', color: 'bg-orange-500' },
-                          { label: 'Fire Gate', status: 'In Progress', color: 'bg-red-500' },
-                          { label: 'Heart Gate', status: 'Locked', color: 'bg-white/20' },
-                        ].map((gate) => (
-                          <div
-                            key={gate.label}
-                            className="p-4 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-between"
-                          >
-                            <div className="flex items-center gap-3">
-                              <div className={`w-2 h-2 rounded-full ${gate.color}`} />
-                              <span className="text-sm">{gate.label}</span>
-                            </div>
-                            <span className="text-xs text-text-muted">{gate.status}</span>
-                          </div>
-                        ))}
                       </div>
                     )}
                   </motion.div>
@@ -262,7 +228,7 @@ export function HowItWorks() {
               transition={{ duration: 4, repeat: Infinity }}
             >
               <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-atlantean-teal-aqua animate-pulse" />
+                <div className="w-2 h-2 rounded-full bg-[#00bcd4] animate-pulse" />
                 <span className="text-sm">10 intelligences</span>
               </div>
             </motion.div>
