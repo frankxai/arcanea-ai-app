@@ -94,7 +94,7 @@ function HeroPortal() {
         {/* Deep teal warmth — bottom left */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_15%_80%,rgba(0,137,123,0.08),transparent_50%)]" />
         {/* Deep vignette for depth */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent_20%,rgba(9,9,11,0.7)_75%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent_20%,rgba(10,14,39,0.6)_75%)]" />
       </div>
 
 

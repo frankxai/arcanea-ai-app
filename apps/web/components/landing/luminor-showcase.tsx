@@ -208,7 +208,7 @@ const LUMINORS = [
 ];
 
 const TEAMS = [
-  { id: 'all', name: 'All 10', color: '#00bcd4' },
+  { id: 'all', name: 'All 16', color: '#7fffd4' },
   { id: 'development', name: 'Development', color: '#8b5cf6', icon: '⚡' },
   { id: 'creative', name: 'Creative', color: '#f59e0b', icon: '✨' },
   { id: 'writing', name: 'Writing', color: '#10b981', icon: '✍️' },

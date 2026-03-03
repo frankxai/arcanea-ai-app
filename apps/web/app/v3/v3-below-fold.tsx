@@ -47,7 +47,7 @@ const FEATURED_GUARDIANS: Guardian[] = [
     quote: "Build the foundation first. Everything else is architecture.",
     image: `${CDN}/lyssandria-hero.webp`,
     glowColor: "rgba(127, 255, 212, 0.18)",
-    accentHex: "#00bcd4",
+    accentHex: "#7fffd4",
   },
   {
     name: "Draconia",
@@ -115,7 +115,7 @@ const FEATURES = [
     title: "10 Creative Intelligences",
     description: "Archetypal AI companions — each with a distinct philosophy, personality, and domain of mastery.",
     href: "/luminors",
-    accentHex: "#00bcd4",
+    accentHex: "#7fffd4",
     glowColor: "rgba(127, 255, 212, 0.15)",
   },
   {
@@ -222,8 +222,8 @@ function CountUp({ target, suffix = "" }: { target: number; suffix?: string }) {
 
 function AtmosphericDivider({ variant = "teal" }: { variant?: "teal" | "purple" | "gold" }) {
   const colors = {
-    teal: "rgba(0,188,212,0.06)",
-    purple: "rgba(13,71,161,0.06)",
+    teal: "rgba(127,255,212,0.06)",
+    purple: "rgba(139,92,246,0.06)",
     gold: "rgba(255,215,0,0.04)",
   };
   return (
@@ -246,7 +246,7 @@ function MetricsStrip() {
   const isInView = useInView(ref, { once: true, margin: "-60px" });
 
   const metrics = [
-    { value: 10,  suffix: "",   label: "Intelligences", color: "#00bcd4", icon: Eye },
+    { value: 10,  suffix: "",   label: "Intelligences", color: "#7fffd4", icon: Eye },
     { value: 17,  suffix: "",   label: "Collections",   color: "#ffd700", icon: Scroll },
     { value: 50,  suffix: "K+", label: "Words of Wisdom", color: "#8b5cf6", icon: Diamond },
     { value: 364, suffix: "+",  label: "Original Artworks", color: "#78a6ff", icon: Palette },
@@ -321,8 +321,8 @@ function ThreePillars({
     <section ref={ref} className="py-24 md:py-36 relative">
       {/* Atmospheric background */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 left-1/4 w-[600px] h-[400px] bg-[radial-gradient(ellipse,rgba(0,188,212,0.04),transparent_60%)] pointer-events-none" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[400px] bg-[radial-gradient(ellipse,rgba(13,71,161,0.04),transparent_60%)] pointer-events-none" />
+        <div className="absolute top-0 left-1/4 w-[600px] h-[400px] bg-[radial-gradient(ellipse,rgba(127,255,212,0.04),transparent_60%)] pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[400px] bg-[radial-gradient(ellipse,rgba(139,92,246,0.04),transparent_60%)] pointer-events-none" />
       </div>
 
       <div className="max-w-6xl mx-auto px-6">
@@ -437,7 +437,7 @@ function ThreePillars({
                 >
                   <div
                     className="absolute -top-24 -right-24 w-72 h-72 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-                    style={{ background: "radial-gradient(circle, rgba(13,71,161,0.10), transparent 70%)" }}
+                    style={{ background: "radial-gradient(circle, rgba(139,92,246,0.10), transparent 70%)" }}
                   />
                   <div className="relative">
                     <p className="text-xs font-mono text-creation-prism-purple/70 tracking-wider uppercase mb-3">
@@ -474,8 +474,8 @@ function FeaturesGrid() {
     <section ref={ref} className="py-24 md:py-36 relative overflow-hidden">
       {/* Multi-layer atmospheric background */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(0,188,212,0.04),transparent_60%)] pointer-events-none" />
-        <div className="absolute bottom-1/3 right-0 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(13,71,161,0.04),transparent_60%)] pointer-events-none" />
+        <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(127,255,212,0.04),transparent_60%)] pointer-events-none" />
+        <div className="absolute bottom-1/3 right-0 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(139,92,246,0.04),transparent_60%)] pointer-events-none" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[radial-gradient(ellipse,rgba(255,215,0,0.02),transparent_50%)] pointer-events-none" />
       </div>
 
@@ -567,7 +567,7 @@ function GalleryShowcase() {
     <section ref={ref} className="py-20 md:py-28 relative overflow-hidden">
       {/* Atmospheric background */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[500px] bg-[radial-gradient(ellipse,rgba(13,71,161,0.05),transparent_60%)] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[500px] bg-[radial-gradient(ellipse,rgba(139,92,246,0.05),transparent_60%)] pointer-events-none" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6">
@@ -799,7 +799,7 @@ function LibraryQuote({
       {/* Ambient glow */}
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] pointer-events-none -z-10"
-        style={{ background: "radial-gradient(ellipse, rgba(13,71,161,0.06), transparent 60%)" }}
+        style={{ background: "radial-gradient(ellipse, rgba(139,92,246,0.06), transparent 60%)" }}
       />
 
       <div className="max-w-3xl mx-auto px-6">
@@ -872,7 +872,7 @@ function PhilosophySection() {
     {
       title: "Creation first",
       text: "Every feature exists to help you make something. We do not gamify attention — we serve the creative act.",
-      accentHex: "#00bcd4",
+      accentHex: "#7fffd4",
     },
     {
       title: "Intelligence with personality",
@@ -895,8 +895,8 @@ function PhilosophySection() {
     <section ref={ref} className="py-24 md:py-36 relative">
       {/* Atmospheric */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 right-1/4 w-[600px] h-[400px] bg-[radial-gradient(ellipse,rgba(13,71,161,0.04),transparent_60%)] pointer-events-none" />
-        <div className="absolute bottom-0 left-1/4 w-[500px] h-[400px] bg-[radial-gradient(ellipse,rgba(0,188,212,0.03),transparent_60%)] pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-[600px] h-[400px] bg-[radial-gradient(ellipse,rgba(139,92,246,0.04),transparent_60%)] pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-[500px] h-[400px] bg-[radial-gradient(ellipse,rgba(127,255,212,0.03),transparent_60%)] pointer-events-none" />
       </div>
 
       <div className="max-w-5xl mx-auto px-6">
