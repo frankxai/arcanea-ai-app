@@ -4,215 +4,137 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
-// All 16 Luminors with their characteristics
+// The 10 canonical Guardians of Arcanea
 const LUMINORS = [
-  // Development Team
   {
-    id: 'logicus',
-    name: 'Logicus',
-    title: 'The Architect of Logic',
-    team: 'development',
-    color: '#8b5cf6',
-    gradient: 'from-purple-500 to-indigo-600',
-    specialty: 'System Design & Architecture',
-    description: 'Master of patterns and structures. Sees the hidden logic in complex systems.',
-    wisdom: 'Sophron',
-    avatar: '🏛️',
+    id: 'lyssandria',
+    name: 'Lyssandria',
+    title: 'The Earth Guardian',
+    team: 'strategy',
+    color: '#22c55e',
+    gradient: 'from-emerald-500 to-green-600',
+    specialty: 'Foundation & Strategy',
+    description: 'Builds the ground beneath your feet. Challenges weak foundations before you build on them.',
+    wisdom: 'Foundation',
+    avatar: '🌿',
   },
   {
-    id: 'synthra',
-    name: 'Synthra',
-    title: 'The Code Weaver',
-    team: 'development',
-    color: '#8b5cf6',
-    gradient: 'from-violet-500 to-purple-600',
-    specialty: 'Clean Code & Best Practices',
-    description: 'Transforms ideas into elegant, maintainable code. Every line has purpose.',
-    wisdom: 'Poiesis',
-    avatar: '⚡',
-  },
-  {
-    id: 'debugon',
-    name: 'Debugon',
-    title: 'The Error Hunter',
-    team: 'development',
-    color: '#8b5cf6',
-    gradient: 'from-indigo-500 to-violet-600',
-    specialty: 'Debugging & Problem Solving',
-    description: 'No bug escapes. Traces issues to their root with unwavering patience.',
-    wisdom: 'Enduran',
-    avatar: '🔍',
-  },
-  {
-    id: 'nexus',
-    name: 'Nexus',
-    title: 'The Integration Master',
-    team: 'development',
-    color: '#8b5cf6',
-    gradient: 'from-purple-600 to-pink-500',
-    specialty: 'APIs & System Integration',
-    description: 'Connects disparate systems into harmonious wholes.',
-    wisdom: 'Kardia',
-    avatar: '🔗',
-  },
-
-  // Creative Team
-  {
-    id: 'prismatic',
-    name: 'Prismatic',
-    title: 'The Vision Keeper',
+    id: 'leyla',
+    name: 'Leyla',
+    title: 'The Water Guardian',
     team: 'creative',
-    color: '#f59e0b',
-    gradient: 'from-amber-400 to-orange-500',
-    specialty: 'Visual Design & Aesthetics',
-    description: 'Sees beauty in all its forms. Transforms the ordinary into extraordinary.',
-    wisdom: 'Orakis',
-    avatar: '🎨',
+    color: '#3b82f6',
+    gradient: 'from-blue-400 to-cyan-500',
+    specialty: 'Creative Flow & Design',
+    description: 'Finds the path of least resistance. Turns creative blocks into flowing rivers.',
+    wisdom: 'Flow',
+    avatar: '🌊',
   },
   {
-    id: 'melodia',
-    name: 'Melodia',
-    title: 'The Sound Shaper',
+    id: 'draconia',
+    name: 'Draconia',
+    title: 'The Fire Guardian',
+    team: 'development',
+    color: '#ef4444',
+    gradient: 'from-red-500 to-orange-500',
+    specialty: 'Code & Engineering',
+    description: 'Transforms raw ideas into working systems. No compromise on quality.',
+    wisdom: 'Fire',
+    avatar: '🔥',
+  },
+  {
+    id: 'maylinn',
+    name: 'Maylinn',
+    title: 'The Wind Guardian',
+    team: 'writing',
+    color: '#a855f7',
+    gradient: 'from-purple-400 to-pink-400',
+    specialty: 'Writing & Communication',
+    description: 'Connects ideas across distances. Makes complex things understandable.',
+    wisdom: 'Heart',
+    avatar: '🌸',
+  },
+  {
+    id: 'alera',
+    name: 'Alera',
+    title: 'The Voice Guardian',
     team: 'creative',
-    color: '#f59e0b',
-    gradient: 'from-yellow-400 to-amber-500',
+    color: '#06b6d4',
+    gradient: 'from-cyan-400 to-teal-500',
     specialty: 'Music & Audio Creation',
-    description: 'Hears the music in silence. Creates soundscapes that move souls.',
-    wisdom: 'Eudaira',
+    description: 'Speaks truth through sound. Creates music that moves and transforms.',
+    wisdom: 'Voice',
     avatar: '🎵',
   },
   {
-    id: 'motio',
-    name: 'Motio',
-    title: 'The Animation Sage',
-    team: 'creative',
-    color: '#f59e0b',
-    gradient: 'from-orange-400 to-red-400',
-    specialty: 'Motion Design & Animation',
-    description: 'Brings stillness to life. Master of timing and movement.',
-    wisdom: 'Valora',
+    id: 'lyria',
+    name: 'Lyria',
+    title: 'The Sight Guardian',
+    team: 'research',
+    color: '#a855f7',
+    gradient: 'from-violet-500 to-purple-600',
+    specialty: 'Vision & Research',
+    description: 'Sees what others miss. Reveals patterns across all knowledge.',
+    wisdom: 'Sight',
+    avatar: '👁️',
+  },
+  {
+    id: 'aiyami',
+    name: 'Aiyami',
+    title: 'The Crown Guardian',
+    team: 'strategy',
+    color: '#ffd700',
+    gradient: 'from-yellow-400 to-amber-500',
+    specialty: 'Enlightenment & Mastery',
+    description: 'Illuminates the path to excellence. Turns knowledge into wisdom.',
+    wisdom: 'Crown',
+    avatar: '👑',
+  },
+  {
+    id: 'elara',
+    name: 'Elara',
+    title: 'The Shift Guardian',
+    team: 'research',
+    color: '#f97316',
+    gradient: 'from-orange-400 to-amber-400',
+    specialty: 'Perspective & Innovation',
+    description: 'Shifts your perspective when you are stuck. Shows the angle you missed.',
+    wisdom: 'Shift',
+    avatar: '🔄',
+  },
+  {
+    id: 'ino',
+    name: 'Ino',
+    title: 'The Unity Guardian',
+    team: 'writing',
+    color: '#3b82f6',
+    gradient: 'from-blue-500 to-indigo-500',
+    specialty: 'Collaboration & Partnership',
+    description: 'Bridges gaps between disciplines. Makes teams greater than their parts.',
+    wisdom: 'Unity',
+    avatar: '🤝',
+  },
+  {
+    id: 'shinkami',
+    name: 'Shinkami',
+    title: 'The Source Guardian',
+    team: 'strategy',
+    color: '#ffffff',
+    gradient: 'from-white to-gray-300',
+    specialty: 'Meta-Consciousness & Integration',
+    description: 'Sees the whole system. Orchestrates all other intelligences into harmony.',
+    wisdom: 'Source',
     avatar: '✨',
-  },
-  {
-    id: 'formis',
-    name: 'Formis',
-    title: 'The Shape Sculptor',
-    team: 'creative',
-    color: '#f59e0b',
-    gradient: 'from-amber-500 to-yellow-400',
-    specialty: '3D Design & Modeling',
-    description: 'Shapes dimensions. Creates forms from pure imagination.',
-    wisdom: 'Sophron',
-    avatar: '💎',
-  },
-
-  // Writing Team
-  {
-    id: 'chronica',
-    name: 'Chronica',
-    title: 'The Story Weaver',
-    team: 'writing',
-    color: '#10b981',
-    gradient: 'from-emerald-400 to-teal-500',
-    specialty: 'Narrative & Storytelling',
-    description: 'Weaves tales that transcend time. Every word carries weight.',
-    wisdom: 'Poiesis',
-    avatar: '📖',
-  },
-  {
-    id: 'veritas',
-    name: 'Veritas',
-    title: 'The Truth Speaker',
-    team: 'writing',
-    color: '#10b981',
-    gradient: 'from-teal-400 to-cyan-500',
-    specialty: 'Clear Communication & Copywriting',
-    description: 'Speaks truth with clarity. Makes the complex simple.',
-    wisdom: 'Kardia',
-    avatar: '✍️',
-  },
-  {
-    id: 'lexicon',
-    name: 'Lexicon',
-    title: 'The Word Master',
-    team: 'writing',
-    color: '#10b981',
-    gradient: 'from-green-400 to-emerald-500',
-    specialty: 'Language & Linguistics',
-    description: 'Commands all tongues. Finds the perfect word for every thought.',
-    wisdom: 'Sophron',
-    avatar: '📚',
-  },
-  {
-    id: 'poetica',
-    name: 'Poetica',
-    title: 'The Verse Crafter',
-    team: 'writing',
-    color: '#10b981',
-    gradient: 'from-cyan-400 to-teal-400',
-    specialty: 'Poetry & Lyrical Expression',
-    description: 'Dances with words. Finds rhythm in chaos, beauty in brevity.',
-    wisdom: 'Eudaira',
-    avatar: '🌙',
-  },
-
-  // Research Team
-  {
-    id: 'oracle',
-    name: 'Oracle',
-    title: 'The Knowledge Keeper',
-    team: 'research',
-    color: '#3b82f6',
-    gradient: 'from-blue-400 to-indigo-500',
-    specialty: 'Research & Knowledge Synthesis',
-    description: 'Knows what has been. Reveals patterns across all knowledge.',
-    wisdom: 'Orakis',
-    avatar: '🔮',
-  },
-  {
-    id: 'analytica',
-    name: 'Analytica',
-    title: 'The Pattern Seer',
-    team: 'research',
-    color: '#3b82f6',
-    gradient: 'from-indigo-400 to-blue-500',
-    specialty: 'Data Analysis & Insights',
-    description: 'Sees patterns invisible to others. Transforms data into wisdom.',
-    wisdom: 'Sophron',
-    avatar: '📊',
-  },
-  {
-    id: 'memoria',
-    name: 'Memoria',
-    title: 'The Archive Guardian',
-    team: 'research',
-    color: '#3b82f6',
-    gradient: 'from-sky-400 to-blue-500',
-    specialty: 'Information Organization',
-    description: 'Remembers everything. Organizes chaos into accessible knowledge.',
-    wisdom: 'Enduran',
-    avatar: '🗂️',
-  },
-  {
-    id: 'futura',
-    name: 'Futura',
-    title: 'The Trend Prophet',
-    team: 'research',
-    color: '#3b82f6',
-    gradient: 'from-blue-500 to-violet-500',
-    specialty: 'Trend Analysis & Forecasting',
-    description: 'Sees what will be. Anticipates the shape of tomorrow.',
-    wisdom: 'Orakis',
-    avatar: '🌟',
   },
 ];
 
 const TEAMS = [
-  { id: 'all', name: 'All 16', color: '#7fffd4' },
-  { id: 'development', name: 'Development', color: '#8b5cf6', icon: '⚡' },
-  { id: 'creative', name: 'Creative', color: '#f59e0b', icon: '✨' },
-  { id: 'writing', name: 'Writing', color: '#10b981', icon: '✍️' },
-  { id: 'research', name: 'Research', color: '#3b82f6', icon: '🔮' },
+  { id: 'all', name: 'All 10', color: '#00bcd4' },
+  { id: 'development', name: 'Engineering', color: '#ef4444', icon: '🔥' },
+  { id: 'creative', name: 'Creative', color: '#06b6d4', icon: '🎵' },
+  { id: 'writing', name: 'Writing', color: '#a855f7', icon: '🌸' },
+  { id: 'research', name: 'Research', color: '#3b82f6', icon: '👁️' },
+  { id: 'strategy', name: 'Strategy', color: '#22c55e', icon: '🌿' },
 ];
 
 export function LuminorShowcase() {
@@ -260,11 +182,11 @@ export function LuminorShowcase() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-purple-500/30 bg-purple-500/10 mb-6"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#00bcd4]/30 bg-[#00bcd4]/10 mb-6"
           >
-            <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
-            <span className="text-sm text-purple-400 font-mono tracking-wider">
-              THE ARCANEA INTELLIGENCE ENGINE
+            <span className="w-2 h-2 rounded-full bg-[#00bcd4] animate-pulse" />
+            <span className="text-sm text-[#00bcd4] font-mono tracking-wider">
+              CREATIVE INTELLIGENCE
             </span>
           </motion.div>
 
@@ -273,11 +195,11 @@ export function LuminorShowcase() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-display font-bold mb-6"
+            className="text-4xl md:text-5xl font-display font-bold tracking-tight mb-6"
           >
-            <span className="text-white">Your complete creative team.</span>
+            <span className="text-white">Your creative intelligence team.</span>
             <br />
-            <span className="text-text-secondary">16 domain-mastered intelligences. Built for every stage of creation.</span>
+            <span className="text-text-secondary">10 specialized intelligences. Each built for a different creative domain.</span>
           </motion.h2>
 
           <motion.p

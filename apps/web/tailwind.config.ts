@@ -148,7 +148,7 @@ const config: Config = {
       },
       backgroundImage: {
         'cosmic-grid': 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.06) 1px, transparent 0)',
-        'cosmic-gradient': 'conic-gradient(from 180deg at 50% 50%, rgba(120,166,255,0.25), rgba(127,255,212,0.25), rgba(120,166,255,0.25))',
+        'cosmic-gradient': 'conic-gradient(from 180deg at 50% 50%, rgba(0,137,123,0.2), rgba(0,188,212,0.2), rgba(13,71,161,0.2))',
         'atlantean-gradient': 'linear-gradient(135deg, hsl(var(--atlantean-deep)) 0%, hsl(var(--atlantean-primary)) 50%, hsl(var(--atlantean-teal)) 100%)',
         'draconic-gradient': 'linear-gradient(135deg, hsl(var(--draconic-crimson)) 0%, hsl(var(--draconic-gold)) 50%, hsl(var(--draconic-sky)) 100%)',
         'creation-gradient': 'linear-gradient(135deg, hsl(var(--creation-gold)) 0%, hsl(var(--creation-prism-blue)) 50%, hsl(var(--creation-prism-purple)) 100%)',
@@ -315,10 +315,10 @@ const config: Config = {
         'scale-in': 'scale-in 0.2s ease-out',
       },
       fontFamily: {
-        // Display — Playfair Display for ceremonial headings with gravitas
-        display: ['var(--font-display)', 'Playfair Display', 'Georgia', 'serif'],
-        // Body — Crimson Pro for narrative/long-form content
-        body: ['var(--font-body)', 'Crimson Pro', 'Georgia', 'serif'],
+        // Display — Space Grotesk for bold, modern headings
+        display: ['var(--font-display)', 'Space Grotesk', 'system-ui', 'sans-serif'],
+        // Body — Inter for all body and narrative text
+        body: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
         // Sans — Inter for UI elements, navigation, labels, forms
         sans: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
         // Mono — JetBrains Mono for code and technical data
@@ -345,11 +345,11 @@ const config: Config = {
         xs: '2px',
       },
       boxShadow: {
-        'glow-sm': '0 0 10px rgba(127, 255, 212, 0.15)',
-        'glow-md': '0 0 20px rgba(127, 255, 212, 0.25)',
-        'glow-lg': '0 0 40px rgba(127, 255, 212, 0.35)',
-        'glow-xl': '0 0 60px rgba(127, 255, 212, 0.45)',
-        'glow-brand': '0 0 20px rgba(139, 92, 246, 0.3)',
+        'glow-sm': '0 0 10px rgba(0, 188, 212, 0.15)',
+        'glow-md': '0 0 20px rgba(0, 188, 212, 0.25)',
+        'glow-lg': '0 0 40px rgba(0, 188, 212, 0.35)',
+        'glow-xl': '0 0 60px rgba(0, 188, 212, 0.45)',
+        'glow-brand': '0 0 20px rgba(0, 137, 123, 0.3)',
         'atlantean': '0 0 25px rgba(38, 204, 204, 0.5)',
         'draconic': '0 0 25px rgba(255, 198, 26, 0.5)',
         'creation': '0 0 25px rgba(255, 230, 128, 0.5)',

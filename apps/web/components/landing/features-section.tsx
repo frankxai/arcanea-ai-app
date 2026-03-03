@@ -6,14 +6,14 @@ import Link from "next/link";
 
 const FEATURES = [
   {
-    title: "Luminor Intelligence System",
+    title: "10 AI Specialists",
     description:
-      "16 AI intelligences, each rooted in a Guardian archetype. They will challenge a weak idea before you waste time building it.",
+      "Each specialist has mastered a specific creative domain — from code architecture to narrative storytelling.",
     icon: "PhStar",
     href: "/luminors",
     gradient: "from-purple-500/20 to-blue-500/20",
     borderGradient: "from-purple-500 to-blue-500",
-    stats: "10 Guardians",
+    stats: "10 Specialists",
   },
   {
     title: "The Library of Arcanea",
@@ -84,7 +84,7 @@ const FeatureCard = React.memo(function FeatureCard({
       transition={{ duration: 0.5, delay: index * 0.1 }}
     >
       <Link href={feature.href} className="group block h-full">
-        <div className="relative h-full p-8 rounded-3xl liquid-glass border border-white/[0.06] overflow-hidden transition-all duration-500 hover:border-white/[0.12]">
+        <div className="relative h-full p-8 rounded-3xl bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] overflow-hidden transition-all duration-500 hover:border-white/[0.12] hover:bg-white/[0.05] active:translate-y-[1px]">
           <div
             className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
           />
@@ -104,13 +104,13 @@ const FeatureCard = React.memo(function FeatureCard({
                 {feature.stats}
               </div>
             </div>
-            <h3 className="text-xl font-display font-semibold mb-3 group-hover:text-atlantean-teal-aqua transition-colors duration-300">
+            <h3 className="text-xl font-display font-semibold tracking-tight mb-3 group-hover:text-[#00bcd4] transition-colors duration-300">
               {feature.title}
             </h3>
             <p className="text-text-secondary text-sm leading-relaxed mb-6">
               {feature.description}
             </p>
-            <div className="flex items-center gap-2 text-atlantean-teal-aqua text-sm font-medium opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+            <div className="flex items-center gap-2 text-[#00bcd4] text-sm font-medium opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
               <span>Explore</span>
               <motion.svg
                 className="w-4 h-4"
@@ -148,7 +148,7 @@ export function FeaturesSection() {
     <section ref={ref} className="py-24 relative">
       {/* Background effect */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-atlantean-teal-aqua/5 to-transparent rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-[#00bcd4]/5 to-transparent rounded-full blur-3xl" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6">
@@ -158,10 +158,10 @@ export function FeaturesSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="text-4xl md:text-5xl font-display font-bold mb-6"
+            className="text-4xl md:text-5xl font-display font-bold tracking-tight mb-6"
           >
             A complete system for{" "}
-            <span className="bg-gradient-to-r from-atlantean-teal-aqua to-creation-prism-purple bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#00bcd4] to-[#0d47a1] bg-clip-text text-transparent">
               creative intelligence
             </span>
           </motion.h2>
