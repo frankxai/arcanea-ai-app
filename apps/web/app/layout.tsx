@@ -6,6 +6,7 @@ import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { AuthProvider } from "@/lib/auth/context";
 import { Navbar, Footer } from "@/components/navigation";
+import { GlobalGlowTracker } from "@/components/ui";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 
@@ -111,6 +112,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </a>
           <div className="relative min-h-dvh bg-cosmic-void font-sans text-text-primary selection:bg-atlantean-aqua/30 selection:text-atlantean-aqua">
             <CosmicBackground />
+            <GlobalGlowTracker />
             <Navbar />
             <main id="main-content" className="relative pt-16">
               {children}

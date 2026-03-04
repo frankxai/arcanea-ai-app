@@ -8,6 +8,8 @@ import { useRef, useState, useEffect } from "react";
 import navLogo from "@/assets/brand/arcanea-mark.jpg";
 import heroImage from "@/assets/brand/arcanea-hero.jpg";
 import type { V3BelowFoldProps } from "./v3-below-fold";
+import { HeroChangingWords } from "./hero-changing-words";
+import { HeroMusicPlayer } from "./hero-music-player";
 
 // ---------------------------------------------------------------------------
 // Lazy-load all below-fold sections as a single dynamic chunk.
@@ -113,9 +115,19 @@ function HeroPortal() {
 
       {/* Content */}
       <motion.div
-        className="relative w-full max-w-4xl mx-auto px-6 py-24 md:py-32"
+        className="relative w-full max-w-5xl mx-auto px-6 py-24 md:py-32"
         style={{ y: contentY, opacity: contentOpacity }}
       >
+        {/* Floating Music Player */}
+        <motion.div 
+          className="absolute top-0 right-6 hidden lg:block"
+          initial={{ opacity: 0, x: 20 }}
+          animate={isLoaded ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.5 }}
+        >
+          <HeroMusicPlayer />
+        </motion.div>
+
         <div className="flex flex-col items-center text-center">
           {/* Brand Mark with iridescent glass frame */}
           <motion.div
@@ -171,16 +183,16 @@ function HeroPortal() {
 
           {/* Headline */}
           <motion.h1
-            className="text-[clamp(2.75rem,7vw,6rem)] font-display font-bold tracking-[-0.04em] leading-[0.95] mb-6 md:mb-8"
+            className="text-[clamp(2.75rem,7vw,6.5rem)] font-display font-bold tracking-[-0.04em] leading-[0.9] mb-6 md:mb-8"
             initial={{ opacity: 0, y: 30 }}
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.15 }}
           >
-            <span className="text-white">Build your Realm with</span>
+            <span className="text-white">Build your</span>
             <br />
-            <span className="text-gradient-cosmic">
-              Guardians and Luminors.
-            </span>
+            <HeroChangingWords />
+            <br />
+            <span className="text-white">with Guardians.</span>
           </motion.h1>
 
           {/* Subtitle */}

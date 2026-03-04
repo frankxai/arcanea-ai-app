@@ -2,17 +2,13 @@
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
+import { useMouseStore } from '@/hooks/use-mouse-store';
 
 /**
  * GlowCard — Mouse-tracking cursor light effect.
  *
  * A radial glow follows the cursor across the card surface,
  * illuminating the area under the mouse. Inspired by Doppler.
- *
- * Uses CSS custom properties for zero-JS overhead on the render loop:
- * the mousemove handler only updates two CSS vars, and CSS handles the rest.
- *
- * Glass tier can be applied alongside: `<GlowCard className="liquid-glass">`.
  */
 
 export interface GlowCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -32,6 +28,7 @@ const GlowCard = React.forwardRef<HTMLDivElement, GlowCardProps>(
   ({ className, glowColor, glowSize = 300, lift = true, glass = 'glass', borderGlow = false, children, onMouseMove, onMouseLeave, style, ...props }, ref) => {
     const cardRef = React.useRef<HTMLDivElement | null>(null);
     const glowRef = React.useRef<HTMLDivElement | null>(null);
+    const globalMouse = useMouseStore();
 
     const positionGlow = React.useCallback(
       (clientX: number, clientY: number) => {
@@ -40,44 +37,41 @@ const GlowCard = React.forwardRef<HTMLDivElement, GlowCardProps>(
         const x = clientX - rect.left;
         const y = clientY - rect.top;
         glowRef.current.style.transform = `translate(${x - glowSize / 2}px, ${y - glowSize / 2}px)`;
-        glowRef.current.style.opacity = '1';
+        
+        // Spotlight effect: show glow when mouse is near the card
+        const padding = 150; 
+        if (
+          clientX >= rect.left - padding &&
+          clientX <= rect.right + padding &&
+          clientY >= rect.top - padding &&
+          clientY <= rect.bottom + padding
+        ) {
+          glowRef.current.style.opacity = '1';
+        } else {
+          glowRef.current.style.opacity = '0';
+        }
       },
       [glowSize]
     );
 
-    const hideGlow = React.useCallback(() => {
-      if (glowRef.current) {
-        glowRef.current.style.opacity = '0';
-      }
-    }, []);
+    // Sync with global mouse for site-wide interaction
+    React.useEffect(() => {
+      positionGlow(globalMouse.x, globalMouse.y);
+    }, [globalMouse.x, globalMouse.y, positionGlow]);
 
     const handleMouseMove = React.useCallback(
       (e: React.MouseEvent<HTMLDivElement>) => {
-        positionGlow(e.clientX, e.clientY);
         onMouseMove?.(e);
       },
-      [positionGlow, onMouseMove]
+      [onMouseMove]
     );
 
     const handleMouseLeave = React.useCallback(
       (e: React.MouseEvent<HTMLDivElement>) => {
-        hideGlow();
         onMouseLeave?.(e);
       },
-      [hideGlow, onMouseLeave]
+      [onMouseLeave]
     );
-
-    const handleTouchMove = React.useCallback(
-      (e: React.TouchEvent<HTMLDivElement>) => {
-        const touch = e.touches[0];
-        if (touch) positionGlow(touch.clientX, touch.clientY);
-      },
-      [positionGlow]
-    );
-
-    const handleTouchEnd = React.useCallback(() => {
-      hideGlow();
-    }, [hideGlow]);
 
     const setRefs = React.useCallback(
       (node: HTMLDivElement | null) => {
@@ -104,13 +98,9 @@ const GlowCard = React.forwardRef<HTMLDivElement, GlowCardProps>(
         )}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        onTouchStart={handleTouchMove}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
         style={style}
         {...props}
       >
-        {/* Cursor glow orb */}
         <div
           ref={glowRef}
           aria-hidden
@@ -126,7 +116,6 @@ const GlowCard = React.forwardRef<HTMLDivElement, GlowCardProps>(
             zIndex: 0,
           }}
         />
-        {/* Content sits above the glow */}
         <div className="relative z-10">{children}</div>
       </div>
     );

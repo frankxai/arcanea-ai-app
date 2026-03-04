@@ -27,6 +27,8 @@ export type { GlowEffectProps } from './glow-effect';
 export { GlowCard } from './glow-card';
 export type { GlowCardProps } from './glow-card';
 
+export { GlobalGlowTracker } from './global-glow-tracker';
+
 // Academy Components
 export { AcademyBadge } from './academy-badge';
 export type { AcademyBadgeProps } from './academy-badge';
