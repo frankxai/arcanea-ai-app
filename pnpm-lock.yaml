@@ -224,6 +224,12 @@ importers:
       '@supabase/supabase-js':
         specifier: ^2.76.1
         version: 2.93.3
+      '@types/react':
+        specifier: ^19.0.0
+        version: 19.2.10
+      '@types/react-dom':
+        specifier: ^19.0.0
+        version: 19.2.3(@types/react@19.2.10)
       '@vercel/analytics':
         specifier: ^1.6.1
         version: 1.6.1(next@16.1.1)(react@19.0.0)
@@ -315,12 +321,6 @@ importers:
       '@types/node':
         specifier: ^20.14.12
         version: 20.19.17
-      '@types/react':
-        specifier: ^19.0.0
-        version: 19.2.10
-      '@types/react-dom':
-        specifier: ^19.0.0
-        version: 19.2.3(@types/react@19.2.10)
       '@types/react-syntax-highlighter':
         specifier: ^15.5.13
         version: 15.5.13
