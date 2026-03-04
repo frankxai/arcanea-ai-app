@@ -56,7 +56,7 @@ export const GUARDIAN_THEMES: Record<GuardianId, GuardianTheme> = {
     gate: 'Heart',
     frequency: 417,
     element: 'water',
-    color: '#7fffd4',
+    color: '#00bcd4',
     colorBright: '#99ffe0',
     glow: 'rgba(0, 188, 212, 0.3)',
     borderClass: 'border-brand-accent/40 hover:border-brand-accent/70',
@@ -281,7 +281,7 @@ export const DEFAULT_TAGS: DefaultTag[] = [
 // =====================================================================
 
 export const TAG_CATEGORIES: Record<TagCategory, { label: string; color: string }> = {
-  quality: { label: 'Quality', color: '#7fffd4' },
+  quality: { label: 'Quality', color: '#00bcd4' },
   style: { label: 'Style', color: '#9966ff' },
   negative: { label: 'Negative', color: '#ff6b6b' },
   model: { label: 'Model', color: '#78a6ff' },

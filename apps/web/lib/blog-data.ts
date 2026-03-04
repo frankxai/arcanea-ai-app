@@ -86,7 +86,7 @@ The journey to mastery begins with understanding these foundations.
     date: '2026-02-10',
     readTime: '12 min read',
     featured: true,
-    accent: '#7fffd4',
+    accent: '#00bcd4',
     tags: ['prompts', 'tutorial', 'creative'],
     content: `
 ## What Are Prompt Books?
