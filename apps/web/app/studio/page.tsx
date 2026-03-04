@@ -751,7 +751,7 @@ export default function StudioPage() {
             {/* Mode Tabs */}
             <div className="flex items-center gap-1 p-1 rounded-xl liquid-glass border border-white/[0.06]">
               {MODES.map((mode) => {
-                const ModeIcon = mode.icon;
+                const ModeIcon = mode.icon as React.ComponentType<any>;
                 const isActive = activeMode === mode.id;
                 return (
                   <button

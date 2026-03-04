@@ -12,7 +12,7 @@ interface FilterBarProps {
   resultCount: number
 }
 
-const ELEMENTS: { label: Element; Icon?: React.ElementType; color?: string }[] = [
+const ELEMENTS: { label: Element; Icon?: React.ComponentType<any>; color?: string }[] = [
   { label: 'All' },
   { label: 'Fire', Icon: Fire, color: '#ff6b35' },
   { label: 'Water', Icon: Drop, color: '#4fc3f7' },

@@ -3,7 +3,10 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, Points, PointMaterial } from "@react-three/drei";
 import { type ComponentRef, useMemo, useRef } from "react";
-import * as THREE from "three";
+
+type RotatingObject = {
+  rotation: { x: number; y: number; z: number };
+};
 
 function StarField({ count = 1400 }: { count?: number }) {
   const ref = useRef<ComponentRef<typeof Points>>(null);
@@ -38,8 +41,8 @@ function StarField({ count = 1400 }: { count?: number }) {
 }
 
 function EvolutionCore() {
-  const coreRef = useRef<THREE.Mesh>(null);
-  const haloRef = useRef<THREE.Mesh>(null);
+  const coreRef = useRef<RotatingObject | null>(null);
+  const haloRef = useRef<RotatingObject | null>(null);
 
   useFrame((state, delta) => {
     if (coreRef.current) {

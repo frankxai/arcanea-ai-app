@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   description: '10 competing homepage designs for Arcanea',
 };
 
+export const dynamic = 'force-dynamic';
+
 export default function VariationsPage() {
   return <VariationsShowcase />;
 }

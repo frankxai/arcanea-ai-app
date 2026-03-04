@@ -21,7 +21,7 @@ interface GalleryCardProps {
   onBookmark: (id: string) => void
 }
 
-const TYPE_ICON_MAP: Record<string, React.ElementType> = {
+const TYPE_ICON_MAP: Record<string, React.ComponentType<any>> = {
   Image: ImageIcon,
   Video: Play,
   Music: MusicNote,

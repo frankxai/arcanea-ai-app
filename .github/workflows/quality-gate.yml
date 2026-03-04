@@ -13,6 +13,7 @@ concurrency:
 
 env:
   NODE_VERSION: '20'
+  PNPM_VERSION: '8.15.0'
 
 jobs:
   # ============================================
@@ -31,21 +32,23 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-          cache-dependency-path: 'apps/web/package-lock.json'
+          cache: 'pnpm'
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
 
       - name: Install dependencies
-        working-directory: apps/web
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: TypeScript Check
-        working-directory: apps/web
-        run: npx tsc --noEmit
+        run: pnpm --filter @arcanea/web type-check
         continue-on-error: false
 
       - name: ESLint
-        working-directory: apps/web
-        run: npm run lint
+        run: pnpm --filter @arcanea/web lint
         continue-on-error: true
 
   # ============================================
@@ -90,16 +93,19 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-          cache-dependency-path: 'apps/web/package-lock.json'
+          cache: 'pnpm'
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
 
       - name: Install dependencies
-        working-directory: apps/web
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Build
-        working-directory: apps/web
-        run: npm run build
+        run: pnpm --filter @arcanea/web build
         env:
           # Provide dummy env vars for build
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}

@@ -2,8 +2,8 @@
 
 import { useState, useCallback, type CSSProperties } from 'react';
 import {
-  Heart, ChatCircle, ShareNetwork, Fire, TrendUp,
-  BookOpen, ArrowRight, Code, Quotes, PencilLine, Palette, Users,
+  Heart, ChatCircle, Share, Fire, TrendUp,
+  BookOpen, ArrowRight, Code, Quotes, PencilSimple, Palette, Users,
 } from '@phosphor-icons/react';
 
 const T = {
@@ -26,7 +26,16 @@ const LIB_TEXTS = [
   'Morning Ritual of Clarity \u2014 Book of Rituals',
 ];
 
-const CARDS = [
+const CARDS: Array<{
+  id: string;
+  user: string;
+  init: string;
+  grad: string;
+  time: string;
+  hearts: string;
+  comments: string;
+  tag?: string;
+}> = [
   { id: 'story', user: 'Luna_creates', init: 'LC', grad: `linear-gradient(135deg,${T.violet},${T.teal})`,
     time: '2h ago', tag: 'Made with Draconia', hearts: '234', comments: '18' },
   { id: 'wisdom', user: 'cosmic_writer', init: 'CW', grad: `linear-gradient(135deg,${T.gold},#ff6b6b)`,
@@ -35,7 +44,7 @@ const CARDS = [
     time: '1d ago', tag: 'Built with Gateway API', hearts: '156', comments: '23' },
   { id: 'art', user: 'void_artist', init: 'VA', grad: `linear-gradient(135deg,${T.teal},${T.violet})`,
     time: '3d ago', hearts: '1.2K', comments: '87' },
-] as const;
+];
 
 const CODE_SNIPPET = `import Arcanea from '@arcanea/sdk';
 
@@ -66,7 +75,7 @@ const sideHead: CSSProperties = {
 function CardContent({ id }: { id: string }) {
   if (id === 'story') return (
     <div style={{ fontFamily: T.crimson, fontSize: 17, lineHeight: 1.7, color: T.text, fontStyle: 'italic' }}>
-      <PencilLine size={16} style={{ marginRight: 6, opacity: 0.5, verticalAlign: 'text-bottom' }} />
+      <PencilSimple size={16} style={{ marginRight: 6, opacity: 0.5, verticalAlign: 'text-bottom' }} />
       &ldquo;The dragon spoke in frequencies only the heart could hear. At 396 Hz, its voice was fire
       — not the kind that burns, but the kind that forges. She understood then that every great work
       begins as raw heat, waiting to be shaped.&rdquo;
@@ -221,7 +230,7 @@ export function V8Social() {
                   <Heart size={20} weight={liked[c.id] ? 'fill' : 'regular'} />{c.hearts}
                 </button>
                 <button style={{ ...engBtn, color: T.dim }}><ChatCircle size={20} />{c.comments}</button>
-                <button style={{ ...engBtn, color: T.dim, marginLeft: 'auto' }}><ShareNetwork size={20} />Share</button>
+                <button style={{ ...engBtn, color: T.dim, marginLeft: 'auto' }}><Share size={20} />Share</button>
               </div>
             </article>
           ))}

@@ -3,7 +3,10 @@
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, Points, PointMaterial } from "@react-three/drei";
 import { type ComponentRef, useMemo, useRef } from "react";
-import * as THREE from "three";
+
+type RotatingObject = {
+  rotation: { x: number; y: number; z: number };
+};
 
 function Stars({ count = 1100 }: { count?: number }) {
   const ref = useRef<ComponentRef<typeof Points>>(null);
@@ -38,8 +41,8 @@ function Stars({ count = 1100 }: { count?: number }) {
 }
 
 function CoreCrystal() {
-  const ref = useRef<THREE.Mesh>(null);
-  const ringRef = useRef<THREE.Mesh>(null);
+  const ref = useRef<RotatingObject | null>(null);
+  const ringRef = useRef<RotatingObject | null>(null);
 
   useFrame((state, delta) => {
     if (ref.current) {

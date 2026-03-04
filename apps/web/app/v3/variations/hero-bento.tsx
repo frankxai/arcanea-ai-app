@@ -2,7 +2,7 @@
 
 import { motion, useInView } from 'framer-motion';
 import Image from 'next/image';
-import { useRef } from 'react';
+import { useRef, type CSSProperties } from 'react';
 import {
   PhArrowRight,
   PhBooks,
@@ -28,7 +28,12 @@ const CARD_BASE =
 
 const capabilities: {
   label: string;
-  icon: React.ComponentType<{ size: number; weight: string; className?: string }>;
+  icon: React.ComponentType<{
+    size: number;
+    weight?: 'bold' | 'duotone' | 'fill' | 'light' | 'thin' | 'regular';
+    className?: string;
+    style?: CSSProperties;
+  }>;
   gradient: string;
 }[] = [
   {

@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
-    "@supabase/supabase-js": "^2.39.0",
+    "@supabase/supabase-js": "^2.76.1",
     "@supabase/ssr": "^0.8.0",
     "next": "^16.1.1"
   },
@@ -53,7 +53,7 @@
     "typescript": "^5.5.4"
   },
   "engines": {
-    "node": ">=20.9.0",
+    "node": "20.x",
     "pnpm": ">=8.0.0"
   },
   "packageManager": "pnpm@8.15.0",
@@ -75,7 +75,7 @@
     "email": "frank@arcanea.ai",
     "url": "https://github.com/frankxai"
   },
-  "license": "MIT",
+  "license": "SEE LICENSE IN LICENSE",
   "repository": {
     "type": "git",
     "url": "https://github.com/frankxai/arcanea.git"

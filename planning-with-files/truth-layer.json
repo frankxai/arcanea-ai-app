@@ -1,0 +1,45 @@
+{
+  "version": "1.1.0",
+  "lastUpdatedUtc": "2026-03-04T17:25:00Z",
+  "program": "Arcanea Deployment Stabilization + Agent Quality Enforcement",
+  "activeOwner": "codex",
+  "activePhase": "phase-a-stop-deploy-breaks",
+  "goals": [
+    "Stop recurring Vercel build failures",
+    "Unify CI/runtime parity across local, GitHub Actions, and Vercel",
+    "Eliminate preventable AI slop and enforce standards for all agents",
+    "Create explicit execution plans with owner and verification per item"
+  ],
+  "status": {
+    "deployBlocker3DEvolution": "completed",
+    "splineRuntimeImport": "completed_reverted_to_safe_stub",
+    "supabasePeerMismatch": "completed_dependency_and_lock_update",
+    "ciParityNodeAndPackageManager": "completed_in_workflow_files",
+    "vercelRedeployVerification": "pending",
+    "slopReductionGuards": "pending"
+  },
+  "currentWorkstream": [
+    "Push emergency deploy fixes to production/main",
+    "Align package and lockfile dependency resolution for Supabase",
+    "Standardize Node 20 + pnpm workflows in CI",
+    "Define standards contract in planning-with-files"
+  ],
+  "blockers": [
+    "Vercel redeploy verification is still pending after latest push",
+    "Repository has broad pre-existing type and style debt outside immediate deploy path"
+  ],
+  "nextOwners": {
+    "codex": [
+      "Monitor next Vercel build and patch any next blocking error immediately",
+      "Implement slop lint guardrails and attach to quality gate"
+    ],
+    "claude": [
+      "Refactor legacy inline-style-heavy pages into design-token-compliant components",
+      "Drive docs and handoff discipline for new standards"
+    ],
+    "opencode": [
+      "Create automation checks for PR DoD fields (risk, verification, rollback)",
+      "Build reporting dashboard from truth-layer.json"
+    ]
+  }
+}
