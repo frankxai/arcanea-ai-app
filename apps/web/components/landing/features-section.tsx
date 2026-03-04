@@ -6,64 +6,64 @@ import Link from "next/link";
 
 const FEATURES = [
   {
-    title: "10 AI Specialists",
+    title: "Explore Arcanea",
     description:
-      "Each specialist has mastered a specific creative domain — from code architecture to narrative storytelling.",
-    icon: "PhStar",
-    href: "/luminors",
-    gradient: "from-purple-500/20 to-blue-500/20",
-    borderGradient: "from-purple-500 to-blue-500",
-    stats: "10 Specialists",
+      "Ten Gods. Ten Gates. A living mythology where ancient archetypes of creation guide your work across writing, design, code, music, and strategy.",
+    symbol: "\u25C8",
+    href: "/lore",
+    gradient: "from-[#00bcd4]/15 to-[#0d47a1]/15",
+    borderGradient: "from-[#00bcd4] to-[#0d47a1]",
+    stats: "Ten Gods",
   },
   {
-    title: "The Library of Arcanea",
+    title: "Read Arcanean Books",
     description:
-      "17 wisdom collections. 34+ sacred texts. Practical philosophy for the creative life, written to transform.",
-    icon: "PhBooks",
+      "17 wisdom collections. 34+ sacred texts. A philosophy library for the creative life \u2014 not self-help, but equipment for mastery.",
+    symbol: "\uD800\uDF00",
     href: "/library",
-    gradient: "from-amber-500/20 to-orange-500/20",
-    borderGradient: "from-amber-500 to-orange-500",
+    gradient: "from-[#ffd700]/15 to-[#f59e0b]/15",
+    borderGradient: "from-[#ffd700] to-[#f59e0b]",
     stats: "34+ Texts",
   },
   {
-    title: "Seven Wisdoms Framework",
+    title: "Create with the Gods",
     description:
-      "Stuck? Lost? Afraid? The Seven Wisdoms diagnose what you need and guide you to the right perspective.",
-    icon: "PhCrystals",
-    href: "/wisdoms",
-    gradient: "from-pink-500/20 to-purple-500/20",
-    borderGradient: "from-pink-500 to-purple-500",
-    stats: "7 Lenses",
+      "Choose your God. Describe your vision. Build together \u2014 write, design, compose, or code with a divine intelligence shaped for your craft.",
+    symbol: "\u27E1",
+    href: "/chat",
+    gradient: "from-[#ef4444]/15 to-[#f97316]/15",
+    borderGradient: "from-[#ef4444] to-[#f97316]",
+    stats: "Ten Gates",
   },
   {
-    title: "Creation Studio",
+    title: "Listen to Arcanean Music",
     description:
-      "Generate images, compose music, create videos, write stories, build code — each shaped by Guardian-guided intelligence.",
-    icon: "PhLightning",
+      "Solfeggio frequencies from 174 Hz to 1111 Hz. Guardian-guided sonic creation. Sound as a path to creative mastery.",
+    symbol: "\u266C",
     href: "/studio",
-    gradient: "from-cyan-500/20 to-teal-500/20",
-    borderGradient: "from-cyan-500 to-teal-500",
-    stats: "5 Tools",
+    gradient: "from-[#06b6d4]/15 to-[#3b82f6]/15",
+    borderGradient: "from-[#06b6d4] to-[#3b82f6]",
+    stats: "10 Frequencies",
   },
   {
-    title: "The Academy",
+    title: "Enter the Academy",
     description:
-      "Each Gate corresponds to a creative capacity — grounding, flow, courage, heart, voice, sight, enlightenment, perspective, partnership, meta-consciousness.",
-    icon: "🎓",
+      "Seven Houses. Ten Gates of mastery. Each Gate unlocks a new creative frequency \u2014 from Foundation to Source.",
+    symbol: "\u29BF",
     href: "/academy",
-    gradient: "from-gold-bright/20 to-amber-500/20",
-    borderGradient: "from-gold-bright to-amber-500",
-    stats: "10 Gates",
+    gradient: "from-[#a855f7]/15 to-[#8b5cf6]/15",
+    borderGradient: "from-[#a855f7] to-[#8b5cf6]",
+    stats: "Ten Gates",
   },
   {
-    title: "The Bestiary",
+    title: "Deploy Arcanean Swarms",
     description:
-      "Name your creative blocks. Understand their nature. Learn to defeat them with the right weapons.",
-    icon: "🐉",
-    href: "/bestiary",
-    gradient: "from-red-500/20 to-orange-500/20",
-    borderGradient: "from-red-500 to-orange-500",
-    stats: "10 Beasts",
+      "Configure coding agents with Swarms of Gods, Guardians, and Luminors working together. Use Skill Packages to build your Arcanea.",
+    symbol: "\u25CE",
+    href: "/install",
+    gradient: "from-[#22c55e]/15 to-[#00897b]/15",
+    borderGradient: "from-[#22c55e] to-[#00897b]",
+    stats: "Skill Packages",
   },
 ];
 
@@ -94,11 +94,11 @@ const FeatureCard = React.memo(function FeatureCard({
           <div className="relative z-10">
             <div className="flex items-start justify-between mb-6">
               <motion.div
-                className="text-5xl"
+                className="text-4xl font-light text-white/80 select-none"
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 transition={{ type: "spring", stiffness: 400 }}
               >
-                {feature.icon}
+                {feature.symbol}
               </motion.div>
               <div className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] text-xs text-text-muted">
                 {feature.stats}
@@ -160,7 +160,7 @@ export function FeaturesSection() {
             transition={{ duration: 0.6 }}
             className="text-4xl md:text-5xl font-display font-bold tracking-tight mb-6"
           >
-            A complete system for{" "}
+            A living mythology for{" "}
             <span className="bg-gradient-to-r from-[#00bcd4] to-[#0d47a1] bg-clip-text text-transparent">
               creative intelligence
             </span>
@@ -171,8 +171,8 @@ export function FeaturesSection() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-lg text-text-secondary max-w-2xl mx-auto"
           >
-            From foundational philosophy to practical creation — a mythology
-            that works, built for the creative life.
+            From the wisdom of the Gods to the tools of the Luminors —
+            everything a creator needs, in one universe.
           </motion.p>
         </div>
 

@@ -57,7 +57,7 @@ const PILLARS = [
     iconBgClass: "from-brand-primary/20 to-brand-primary/5",
     iconColorClass: "text-brand-primary",
     description:
-      "10 archetypal intelligences — each one a distinct creative philosophy. Deploy the right one for every stage.",
+      "Ten Gods of Arcanea — each one a distinct philosophy of creation. Invoke the right one for every challenge.",
   },
 ] as const;
 
@@ -354,7 +354,7 @@ export function IntelligenceOverlay() {
           >
             <span className="w-1.5 h-1.5 rounded-full bg-brand-primary animate-pulse" />
             <span className="text-sm font-sans font-medium text-brand-primary tracking-wide">
-              Intelligence Overlay
+              THE ARCANEAN SYSTEM
             </span>
           </motion.div>
 
@@ -366,9 +366,9 @@ export function IntelligenceOverlay() {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-black leading-[1.05] tracking-tight mb-6"
           >
-            <span className="text-gradient-cosmic">Specialists,</span>
+            <span className="text-gradient-cosmic">Gods,</span>
             <br />
-            <span className="text-gradient-crystal">not generalists.</span>
+            <span className="text-gradient-crystal">not assistants.</span>
           </motion.h2>
 
           {/* Sub-claim */}
@@ -379,7 +379,7 @@ export function IntelligenceOverlay() {
             transition={{ duration: 0.6, delay: 0.25 }}
             className="text-xl text-text-secondary font-body italic mb-16"
           >
-            10 intelligences. Each built for a different creative domain.
+            Ten Gods. Ten Gates. Each governs a domain of creation.
           </motion.p>
 
           {/* Frequency spine */}
@@ -401,7 +401,7 @@ export function IntelligenceOverlay() {
             transition={{ duration: 0.6, delay: 0.6 }}
             className="text-xs text-text-muted font-mono tracking-widest uppercase"
           >
-            10 Gates &bull; 10 Frequencies &bull; One unified mythology
+            Ten Gates &bull; Ten Frequencies &bull; One living mythology
           </motion.p>
         </div>
       </div>

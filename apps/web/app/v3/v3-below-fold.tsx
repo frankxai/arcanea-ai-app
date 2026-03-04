@@ -46,8 +46,8 @@ const FEATURED_GUARDIANS: Guardian[] = [
     element: "Earth",
     quote: "Build the foundation first. Everything else is architecture.",
     image: `${CDN}/lyssandria-hero.webp`,
-    glowColor: "rgba(0, 188, 212, 0.18)",
-    accentHex: "#00bcd4",
+    glowColor: "rgba(127, 255, 212, 0.18)",
+    accentHex: "#7fffd4",
   },
   {
     name: "Draconia",
@@ -64,8 +64,8 @@ const FEATURED_GUARDIANS: Guardian[] = [
     element: "Void",
     quote: "Close your eyes. Now tell me what you see.",
     image: `${CDN}/lyria-hero.webp`,
-    glowColor: "rgba(168, 85, 247, 0.18)",
-    accentHex: "#a855f7",
+    glowColor: "rgba(139, 92, 246, 0.18)",
+    accentHex: "#8b5cf6",
   },
   {
     name: "Leyla",
@@ -73,8 +73,8 @@ const FEATURED_GUARDIANS: Guardian[] = [
     element: "Water",
     quote: "The river does not push. It finds the way.",
     image: `${CDN}/leyla-hero.webp`,
-    glowColor: "rgba(59, 130, 246, 0.18)",
-    accentHex: "#3b82f6",
+    glowColor: "rgba(120, 166, 255, 0.18)",
+    accentHex: "#78a6ff",
   },
   {
     name: "Shinkami",
@@ -115,8 +115,8 @@ const FEATURES = [
     title: "10 Creative Intelligences",
     description: "Archetypal AI companions — each with a distinct philosophy, personality, and domain of mastery.",
     href: "/luminors",
-    accentHex: "#00bcd4",
-    glowColor: "rgba(0, 188, 212, 0.15)",
+    accentHex: "#7fffd4",
+    glowColor: "rgba(127, 255, 212, 0.15)",
   },
   {
     icon: Scroll,
@@ -131,8 +131,8 @@ const FEATURES = [
     title: "The Academy",
     description: "A developmental framework from Foundation to Source. Ten Gates of creative mastery.",
     href: "/academy",
-    accentHex: "#0d47a1",
-    glowColor: "rgba(13, 71, 161, 0.15)",
+    accentHex: "#8b5cf6",
+    glowColor: "rgba(139, 92, 246, 0.15)",
   },
   {
     icon: PaintBrush,
@@ -147,8 +147,8 @@ const FEATURES = [
     title: "Knowledge Graph",
     description: "An interactive force-directed map of every text, collection, and connection in the Library.",
     href: "/library/graph",
-    accentHex: "#00897b",
-    glowColor: "rgba(0, 137, 123, 0.15)",
+    accentHex: "#78a6ff",
+    glowColor: "rgba(120, 166, 255, 0.15)",
   },
   {
     icon: Scroll,
@@ -222,8 +222,8 @@ function CountUp({ target, suffix = "" }: { target: number; suffix?: string }) {
 
 function AtmosphericDivider({ variant = "teal" }: { variant?: "teal" | "purple" | "gold" }) {
   const colors = {
-    teal: "rgba(0,188,212,0.06)",
-    purple: "rgba(13,71,161,0.06)",
+    teal: "rgba(127,255,212,0.06)",
+    purple: "rgba(139,92,246,0.06)",
     gold: "rgba(255,215,0,0.04)",
   };
   return (
@@ -246,10 +246,10 @@ function MetricsStrip() {
   const isInView = useInView(ref, { once: true, margin: "-60px" });
 
   const metrics = [
-    { value: 10,  suffix: "",   label: "Intelligences", color: "#00bcd4", icon: Eye },
+    { value: 10,  suffix: "",   label: "Intelligences", color: "#7fffd4", icon: Eye },
     { value: 17,  suffix: "",   label: "Collections",   color: "#ffd700", icon: Scroll },
-    { value: 50,  suffix: "K+", label: "Words of Wisdom", color: "#0d47a1", icon: Diamond },
-    { value: 364, suffix: "+",  label: "Original Artworks", color: "#00897b", icon: Palette },
+    { value: 50,  suffix: "K+", label: "Words of Wisdom", color: "#8b5cf6", icon: Diamond },
+    { value: 364, suffix: "+",  label: "Original Artworks", color: "#78a6ff", icon: Palette },
   ];
 
   return (
@@ -257,7 +257,7 @@ function MetricsStrip() {
       <div className="max-w-5xl mx-auto px-6">
         <GlowCard
           glass="iridescent-glass"
-          glowColor="rgba(0, 188, 212, 0.08)"
+          glowColor="rgba(127, 255, 212, 0.08)"
           glowSize={600}
           lift={false}
           className="border border-white/[0.08] p-8 md:p-12"
@@ -285,7 +285,7 @@ function MetricsStrip() {
                     <Icon className="w-5 h-5" style={{ color: m.color }} />
                   </div>
                   <div
-                    className="text-3xl md:text-5xl font-display font-bold tracking-tight mb-2"
+                    className="text-3xl md:text-5xl font-display font-bold mb-2"
                     style={{ color: m.color }}
                   >
                     <CountUp target={m.value} suffix={m.suffix} />
@@ -321,8 +321,8 @@ function ThreePillars({
     <section ref={ref} className="py-24 md:py-36 relative">
       {/* Atmospheric background */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 left-1/4 w-[600px] h-[400px] bg-[radial-gradient(ellipse,rgba(0,188,212,0.04),transparent_60%)] pointer-events-none" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[400px] bg-[radial-gradient(ellipse,rgba(13,71,161,0.04),transparent_60%)] pointer-events-none" />
+        <div className="absolute top-0 left-1/4 w-[600px] h-[400px] bg-[radial-gradient(ellipse,rgba(127,255,212,0.04),transparent_60%)] pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[400px] bg-[radial-gradient(ellipse,rgba(139,92,246,0.04),transparent_60%)] pointer-events-none" />
       </div>
 
       <div className="max-w-6xl mx-auto px-6">
@@ -333,7 +333,7 @@ function ThreePillars({
           transition={{ duration: 0.6 }}
         >
           <p className="text-xs font-mono tracking-[0.3em] uppercase text-[#00bcd4]/50 mb-4">The System</p>
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight">
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold">
             Three pillars of a{" "}
             <span className="text-gradient-cosmic">creative philosophy</span>
           </h2>
@@ -432,12 +432,12 @@ function ThreePillars({
               <Link href="/academy" className="group block h-full">
                 <GlowCard
                   glass="liquid-glass-elevated"
-                  glowColor="rgba(13, 71, 161, 0.12)"
+                  glowColor="rgba(139, 92, 246, 0.12)"
                   className="p-8 md:p-10 h-full relative overflow-hidden border border-white/[0.08] hover:border-creation-prism-purple/25 transition-all duration-500"
                 >
                   <div
                     className="absolute -top-24 -right-24 w-72 h-72 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-                    style={{ background: "radial-gradient(circle, rgba(13,71,161,0.10), transparent 70%)" }}
+                    style={{ background: "radial-gradient(circle, rgba(139,92,246,0.10), transparent 70%)" }}
                   />
                   <div className="relative">
                     <p className="text-xs font-mono text-creation-prism-purple/70 tracking-wider uppercase mb-3">
@@ -474,8 +474,8 @@ function FeaturesGrid() {
     <section ref={ref} className="py-24 md:py-36 relative overflow-hidden">
       {/* Multi-layer atmospheric background */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(0,188,212,0.04),transparent_60%)] pointer-events-none" />
-        <div className="absolute bottom-1/3 right-0 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(13,71,161,0.04),transparent_60%)] pointer-events-none" />
+        <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(127,255,212,0.04),transparent_60%)] pointer-events-none" />
+        <div className="absolute bottom-1/3 right-0 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(139,92,246,0.04),transparent_60%)] pointer-events-none" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[radial-gradient(ellipse,rgba(255,215,0,0.02),transparent_50%)] pointer-events-none" />
       </div>
 
@@ -487,7 +487,7 @@ function FeaturesGrid() {
           transition={{ duration: 0.6 }}
         >
           <p className="text-xs font-mono tracking-[0.3em] uppercase text-creation-prism-purple/50 mb-4">Explore</p>
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight mb-5">
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold mb-5">
             A universe,{" "}
             <span className="text-gradient-brand">not a tool</span>
           </h2>
@@ -567,7 +567,7 @@ function GalleryShowcase() {
     <section ref={ref} className="py-20 md:py-28 relative overflow-hidden">
       {/* Atmospheric background */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[500px] bg-[radial-gradient(ellipse,rgba(13,71,161,0.05),transparent_60%)] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[500px] bg-[radial-gradient(ellipse,rgba(139,92,246,0.05),transparent_60%)] pointer-events-none" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6">
@@ -682,7 +682,7 @@ function GuardianShowcase() {
         >
           <div>
             <p className="text-xs font-mono tracking-[0.3em] uppercase text-white/30 mb-4">Featured</p>
-            <h2 className="text-3xl md:text-5xl font-display font-bold tracking-tight">
+            <h2 className="text-3xl md:text-5xl font-display font-bold">
               Meet the{" "}
               <span className="text-gradient-crystal">Intelligences</span>
             </h2>
@@ -799,7 +799,7 @@ function LibraryQuote({
       {/* Ambient glow */}
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] pointer-events-none -z-10"
-        style={{ background: "radial-gradient(ellipse, rgba(13,71,161,0.06), transparent 60%)" }}
+        style={{ background: "radial-gradient(ellipse, rgba(139,92,246,0.06), transparent 60%)" }}
       />
 
       <div className="max-w-3xl mx-auto px-6">
@@ -813,7 +813,7 @@ function LibraryQuote({
           <div className="gradient-border">
             <GlowCard
               glass="liquid-glass-elevated"
-              glowColor="rgba(13, 71, 161, 0.08)"
+              glowColor="rgba(139, 92, 246, 0.08)"
               glowSize={500}
               lift={false}
               className="rounded-[calc(1.5rem-1px)]"
@@ -872,12 +872,12 @@ function PhilosophySection() {
     {
       title: "Creation first",
       text: "Every feature exists to help you make something. We do not gamify attention — we serve the creative act.",
-      accentHex: "#00bcd4",
+      accentHex: "#7fffd4",
     },
     {
       title: "Intelligence with personality",
       text: "Not generic chatbots. Each of the ten intelligences has a philosophy, a voice, a domain. Choose the one that sees the world the way you need right now.",
-      accentHex: "#0d47a1",
+      accentHex: "#8b5cf6",
     },
     {
       title: "Mythology as framework",
@@ -887,7 +887,7 @@ function PhilosophySection() {
     {
       title: "Depth you earn",
       text: "The surface is simple. The deeper you go, the more the system reveals. Frequencies, Gates, Elements, Ranks — discovered, never forced.",
-      accentHex: "#00897b",
+      accentHex: "#78a6ff",
     },
   ];
 
@@ -895,8 +895,8 @@ function PhilosophySection() {
     <section ref={ref} className="py-24 md:py-36 relative">
       {/* Atmospheric */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 right-1/4 w-[600px] h-[400px] bg-[radial-gradient(ellipse,rgba(13,71,161,0.04),transparent_60%)] pointer-events-none" />
-        <div className="absolute bottom-0 left-1/4 w-[500px] h-[400px] bg-[radial-gradient(ellipse,rgba(0,188,212,0.03),transparent_60%)] pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-[600px] h-[400px] bg-[radial-gradient(ellipse,rgba(139,92,246,0.04),transparent_60%)] pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-[500px] h-[400px] bg-[radial-gradient(ellipse,rgba(127,255,212,0.03),transparent_60%)] pointer-events-none" />
       </div>
 
       <div className="max-w-5xl mx-auto px-6">
@@ -907,7 +907,7 @@ function PhilosophySection() {
           transition={{ duration: 0.6 }}
         >
           <p className="text-xs font-mono tracking-[0.3em] uppercase text-gold-bright/40 mb-4">Philosophy</p>
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight mb-4">
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold mb-4">
             What we{" "}
             <span className="text-gradient-gold">believe</span>
           </h2>
@@ -1005,7 +1005,7 @@ function FAQInline() {
           transition={{ duration: 0.6 }}
         >
           <p className="text-xs font-mono tracking-[0.3em] uppercase text-white/30 mb-4">Questions</p>
-          <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tight">
+          <h2 className="text-3xl md:text-4xl font-display font-bold">
             Frequently asked
           </h2>
         </motion.div>

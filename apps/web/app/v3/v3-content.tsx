@@ -5,7 +5,6 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
-import { ArrowRight, CircleNotch } from "@/lib/phosphor-icons";
 import navLogo from "@/assets/brand/arcanea-mark.jpg";
 import heroImage from "@/assets/brand/arcanea-hero.jpg";
 import type { V3BelowFoldProps } from "./v3-below-fold";
@@ -44,7 +43,7 @@ export function V3Loading() {
           className="rounded-xl mx-auto mb-6 opacity-40"
           priority
         />
-        <CircleNotch className="w-5 h-5 text-[#00bcd4] animate-spin mx-auto" />
+        <div className="w-5 h-5 mx-auto rounded-full border-2 border-[#00bcd4]/35 border-t-[#00bcd4] animate-spin" />
       </div>
     </div>
   );
@@ -175,10 +174,10 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.15 }}
           >
-            <span className="text-white">Build with intelligence</span>
+            <span className="text-white">Build your Realm with</span>
             <br />
             <span className="text-gradient-cosmic">
-              that understands your craft.
+              Guardians and Luminors.
             </span>
           </motion.h1>
 
@@ -189,8 +188,8 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.3 }}
           >
-            10 specialized AI minds for writing, design, code, music, and strategy
-            — plus a philosophy library built for creators.
+            Orchestrate coding swarms, shape worlds, compose music, and write books
+            through Arcanea's living canon: Primordials, Gods, Guardians, and Luminors.
           </motion.p>
 
           {/* CTAs */}
@@ -212,8 +211,8 @@ function HeroPortal() {
                 transition={{ duration: 0.5 }}
               />
               <span className="relative z-10 text-white flex items-center justify-center gap-2 font-bold">
-                Start Creating
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" weight="bold" />
+                Enter Creation Studio
+                <span className="group-hover:translate-x-0.5 transition-transform">→</span>
               </span>
             </Link>
             <Link
