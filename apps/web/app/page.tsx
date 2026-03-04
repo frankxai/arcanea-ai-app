@@ -1,6 +1,9 @@
 import { Suspense } from "react";
 import { getCollections, getAllTexts } from "@/lib/content";
-import { V3Content as HomeContent, V3Loading as HomeLoading } from "./v3/v3-content";
+import {
+  V3Content as HomeContent,
+  V3Loading as HomeLoading,
+} from "./v3/v3-content";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -10,7 +13,7 @@ const jsonLd = {
       name: "Arcanea",
       url: "https://arcanea.ai",
       description:
-        "A creative intelligence platform with 10 archetypal intelligences, an original philosophy library, and a framework for the creative life.",
+        "A creative ecosystem with Guardians and Luminors, original philosophy texts, and studio workflows for modern creators.",
       potentialAction: {
         "@type": "SearchAction",
         target: "https://arcanea.ai/library?q={search_term_string}",
@@ -24,7 +27,7 @@ const jsonLd = {
       logo: "https://arcanea.ai/icon",
       sameAs: ["https://github.com/frankxai"],
       description:
-        "Living Intelligence for Creators — a platform blending mythology, AI, and creative tools.",
+        "Living intelligence for creators: mythology, AI workflows, and creation systems in one platform.",
     },
   ],
 };

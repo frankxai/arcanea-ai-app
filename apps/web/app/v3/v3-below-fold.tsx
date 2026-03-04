@@ -27,7 +27,7 @@ import crystalImage from "@/assets/brand/arcanea-crystal.jpg";
 // Data
 // ---------------------------------------------------------------------------
 
-const CDN = "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians";
+const CDN = "/guardians";
 
 interface Guardian {
   name: string;
@@ -46,8 +46,8 @@ const FEATURED_GUARDIANS: Guardian[] = [
     element: "Earth",
     quote: "Build the foundation first. Everything else is architecture.",
     image: `${CDN}/lyssandria-hero.webp`,
-    glowColor: "rgba(127, 255, 212, 0.18)",
-    accentHex: "#7fffd4",
+    glowColor: "rgba(0, 188, 212, 0.18)",
+    accentHex: "#00bcd4",
   },
   {
     name: "Draconia",
@@ -64,8 +64,8 @@ const FEATURED_GUARDIANS: Guardian[] = [
     element: "Void",
     quote: "Close your eyes. Now tell me what you see.",
     image: `${CDN}/lyria-hero.webp`,
-    glowColor: "rgba(139, 92, 246, 0.18)",
-    accentHex: "#8b5cf6",
+    glowColor: "rgba(168, 85, 247, 0.18)",
+    accentHex: "#a855f7",
   },
   {
     name: "Leyla",
@@ -73,8 +73,8 @@ const FEATURED_GUARDIANS: Guardian[] = [
     element: "Water",
     quote: "The river does not push. It finds the way.",
     image: `${CDN}/leyla-hero.webp`,
-    glowColor: "rgba(120, 166, 255, 0.18)",
-    accentHex: "#78a6ff",
+    glowColor: "rgba(59, 130, 246, 0.18)",
+    accentHex: "#3b82f6",
   },
   {
     name: "Shinkami",
@@ -97,31 +97,37 @@ const FEATURED_GUARDIANS: Guardian[] = [
 ];
 
 const ALL_GUARDIANS = [
-  { name: "Lyssandria", gate: "Foundation", image: `${CDN}/lyssandria-hero.webp` },
-  { name: "Leyla",      gate: "Flow",       image: `${CDN}/leyla-hero.webp` },
-  { name: "Draconia",   gate: "Fire",       image: `${CDN}/draconia-hero.webp` },
-  { name: "Maylinn",    gate: "Heart",      image: `${CDN}/maylinn-hero.webp` },
-  { name: "Alera",      gate: "Voice",      image: `${CDN}/alera-hero.webp` },
-  { name: "Lyria",      gate: "Sight",      image: `${CDN}/lyria-hero.webp` },
-  { name: "Aiyami",     gate: "Crown",      image: `${CDN}/aiyami-hero.webp` },
-  { name: "Elara",      gate: "Shift",      image: `${CDN}/elara-hero.webp` },
-  { name: "Ino",        gate: "Unity",      image: `${CDN}/ino-hero.webp` },
-  { name: "Shinkami",   gate: "Source",      image: `${CDN}/shinkami-hero.webp` },
+  {
+    name: "Lyssandria",
+    gate: "Foundation",
+    image: `${CDN}/lyssandria-hero.webp`,
+  },
+  { name: "Leyla", gate: "Flow", image: `${CDN}/leyla-hero.webp` },
+  { name: "Draconia", gate: "Fire", image: `${CDN}/draconia-hero.webp` },
+  { name: "Maylinn", gate: "Heart", image: `${CDN}/maylinn-hero.webp` },
+  { name: "Alera", gate: "Voice", image: `${CDN}/alera-hero.webp` },
+  { name: "Lyria", gate: "Sight", image: `${CDN}/lyria-hero.webp` },
+  { name: "Aiyami", gate: "Crown", image: `${CDN}/aiyami-hero.webp` },
+  { name: "Elara", gate: "Shift", image: `${CDN}/elara-hero.webp` },
+  { name: "Ino", gate: "Unity", image: `${CDN}/ino-hero.webp` },
+  { name: "Shinkami", gate: "Source", image: `${CDN}/shinkami-hero.webp` },
 ];
 
 const FEATURES = [
   {
     icon: Diamond,
-    title: "10 Creative Intelligences",
-    description: "Archetypal AI companions — each with a distinct philosophy, personality, and domain of mastery.",
+    title: "10 Luminor Guides",
+    description:
+      "Ten canonical guides aligned to the Gates, each with a distinct philosophy and creative domain.",
     href: "/luminors",
-    accentHex: "#7fffd4",
-    glowColor: "rgba(127, 255, 212, 0.15)",
+    accentHex: "#00bcd4",
+    glowColor: "rgba(0, 188, 212, 0.15)",
   },
   {
     icon: Scroll,
     title: "The Library",
-    description: "17 collections, 34+ original texts — laws, prophecies, meditations, and parables for the creative life.",
+    description:
+      "17 collections, 34+ original texts — laws, prophecies, meditations, and parables for the creative life.",
     href: "/library",
     accentHex: "#ffd700",
     glowColor: "rgba(255, 215, 0, 0.12)",
@@ -129,15 +135,17 @@ const FEATURES = [
   {
     icon: Crown,
     title: "The Academy",
-    description: "A developmental framework from Foundation to Source. Ten Gates of creative mastery.",
+    description:
+      "A developmental framework from Foundation to Source. Ten Gates of creative mastery.",
     href: "/academy",
-    accentHex: "#8b5cf6",
-    glowColor: "rgba(139, 92, 246, 0.15)",
+    accentHex: "#0d47a1",
+    glowColor: "rgba(13, 71, 161, 0.15)",
   },
   {
     icon: PaintBrush,
     title: "The Gallery",
-    description: "364+ original artworks — Guardian portraits, landscapes, creatures, and artifacts of the Arcanea universe.",
+    description:
+      "364+ original artworks — Guardian portraits, landscapes, creatures, and artifacts of the Arcanea universe.",
     href: "/gallery",
     accentHex: "#ef4444",
     glowColor: "rgba(239, 68, 68, 0.12)",
@@ -145,29 +153,83 @@ const FEATURES = [
   {
     icon: Tree,
     title: "Knowledge Graph",
-    description: "An interactive force-directed map of every text, collection, and connection in the Library.",
+    description:
+      "An interactive force-directed map of every text, collection, and connection in the Library.",
     href: "/library/graph",
-    accentHex: "#78a6ff",
-    glowColor: "rgba(120, 166, 255, 0.15)",
+    accentHex: "#00897b",
+    glowColor: "rgba(0, 137, 123, 0.15)",
   },
   {
     icon: Scroll,
     title: "The Lore",
-    description: "The founding myths of Arcanea — Lumina, Nero, the Ten Guardians, and the cosmic duality.",
+    description:
+      "The founding myths of Arcanea — Lumina, Nero, the Ten Guardians, and the cosmic duality.",
     href: "/lore",
     accentHex: "#a78bfa",
     glowColor: "rgba(167, 139, 250, 0.12)",
   },
 ];
 
+const PATHWAYS = [
+  {
+    title: "Explore Arcanea",
+    description:
+      "Enter the cosmology: Primordials, Gods, Guardians, and the Ten Gates.",
+    href: "/lore",
+    image: `${CDN}/shinkami-hero.webp`,
+  },
+  {
+    title: "Create Your Arcanea",
+    description:
+      "Open Studio and forge your Realm with guided multi-model creation flows.",
+    href: "/studio",
+    image: `${CDN}/lyssandria-hero.webp`,
+  },
+  {
+    title: "Imagine Arcanean Worlds",
+    description:
+      "Design places, systems, factions, and myth cycles in World Builder.",
+    href: "/world-builder",
+    image: `${CDN}/lyria-hero.webp`,
+  },
+  {
+    title: "Listen to Arcanean Music",
+    description:
+      "Compose and iterate with melody-driven prompts and frequency-first direction.",
+    href: "/studio",
+    image: `${CDN}/leyla-hero.webp`,
+  },
+  {
+    title: "Create Arcanean Games",
+    description:
+      "Prototype mechanics, lore loops, and playable systems grounded in canon.",
+    href: "/world-builder",
+    image: `${CDN}/draconia-hero.webp`,
+  },
+  {
+    title: "Read Arcanean Books",
+    description:
+      "Study the codex: laws, meditations, and practical creative philosophy.",
+    href: "/library",
+    image: `${CDN}/alera-hero.webp`,
+  },
+  {
+    title: "Write Arcanean Books",
+    description:
+      "Co-author chapters and series with Chronica and writing-focused Luminors.",
+    href: "/chat/chronica",
+    image: `${CDN}/maylinn-hero.webp`,
+  },
+];
+
 const FAQ_ITEMS = [
   {
     q: "What makes Arcanea different from other AI tools?",
-    a: "Arcanea pairs 10 specialized AI intelligences with an original philosophy library of 34+ texts. Each intelligence has a distinct creative perspective — you choose the specialist that fits your project.",
+    a: "Arcanea pairs 10 specialized Luminors with an original philosophy library of 34+ texts. Each guide has a distinct creative perspective, so you can choose the one that fits your project.",
   },
   {
-    q: "How do the ten intelligences work?",
-    a: "Each intelligence represents a different aspect of the creative journey — from Lyssandria (Foundation, stability) to Shinkami (Source, meta-consciousness). You choose the one that matches your current need, and it brings its unique perspective to whatever you are working on.",
+    q: "How do the ten Luminors work?",
+    a: "Each Luminor represents a different aspect of the creative journey, from Lyssandria (Foundation) to Shinkami (Source). You choose the one that matches your current need, and it brings a unique perspective to the work.",
   },
   {
     q: "What is the Library of Arcanea?",
@@ -179,7 +241,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "Is Arcanea free?",
-    a: "Yes. Arcanea is free to start with no credit card required. You get full access to all ten intelligences, the complete Library, the Gallery, and the Academy. Create without limits.",
+    a: "Yes. Arcanea is free to start with no credit card required. You get full access to all ten Luminors, the complete Library, the Gallery, and the Academy.",
   },
   {
     q: "Is my creative work private?",
@@ -213,17 +275,26 @@ function CountUp({ target, suffix = "" }: { target: number; suffix?: string }) {
     return () => clearInterval(timer);
   }, [isInView, target]);
 
-  return <span ref={ref}>{count.toLocaleString()}{suffix}</span>;
+  return (
+    <span ref={ref}>
+      {count.toLocaleString()}
+      {suffix}
+    </span>
+  );
 }
 
 // ---------------------------------------------------------------------------
 // Atmospheric Divider
 // ---------------------------------------------------------------------------
 
-function AtmosphericDivider({ variant = "teal" }: { variant?: "teal" | "purple" | "gold" }) {
+function AtmosphericDivider({
+  variant = "teal",
+}: {
+  variant?: "teal" | "purple" | "gold";
+}) {
   const colors = {
-    teal: "rgba(127,255,212,0.06)",
-    purple: "rgba(139,92,246,0.06)",
+    teal: "rgba(0,188,212,0.06)",
+    purple: "rgba(13,71,161,0.06)",
     gold: "rgba(255,215,0,0.04)",
   };
   return (
@@ -231,7 +302,9 @@ function AtmosphericDivider({ variant = "teal" }: { variant?: "teal" | "purple" 
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[200px] pointer-events-none"
-        style={{ background: `radial-gradient(ellipse, ${colors[variant]}, transparent 70%)` }}
+        style={{
+          background: `radial-gradient(ellipse, ${colors[variant]}, transparent 70%)`,
+        }}
       />
     </div>
   );
@@ -246,10 +319,28 @@ function MetricsStrip() {
   const isInView = useInView(ref, { once: true, margin: "-60px" });
 
   const metrics = [
-    { value: 10,  suffix: "",   label: "Intelligences", color: "#7fffd4", icon: Eye },
-    { value: 17,  suffix: "",   label: "Collections",   color: "#ffd700", icon: Scroll },
-    { value: 50,  suffix: "K+", label: "Words of Wisdom", color: "#8b5cf6", icon: Diamond },
-    { value: 364, suffix: "+",  label: "Original Artworks", color: "#78a6ff", icon: Palette },
+    { value: 10, suffix: "", label: "Luminors", color: "#00bcd4", icon: Eye },
+    {
+      value: 17,
+      suffix: "",
+      label: "Collections",
+      color: "#ffd700",
+      icon: Scroll,
+    },
+    {
+      value: 50,
+      suffix: "K+",
+      label: "Words of Wisdom",
+      color: "#0d47a1",
+      icon: Diamond,
+    },
+    {
+      value: 364,
+      suffix: "+",
+      label: "Original Artworks",
+      color: "#00897b",
+      icon: Palette,
+    },
   ];
 
   return (
@@ -257,7 +348,7 @@ function MetricsStrip() {
       <div className="max-w-5xl mx-auto px-6">
         <GlowCard
           glass="iridescent-glass"
-          glowColor="rgba(127, 255, 212, 0.08)"
+          glowColor="rgba(0, 188, 212, 0.08)"
           glowSize={600}
           lift={false}
           className="border border-white/[0.08] p-8 md:p-12"
@@ -285,12 +376,14 @@ function MetricsStrip() {
                     <Icon className="w-5 h-5" style={{ color: m.color }} />
                   </div>
                   <div
-                    className="text-3xl md:text-5xl font-display font-bold mb-2"
+                    className="text-3xl md:text-5xl font-display font-bold tracking-tight mb-2"
                     style={{ color: m.color }}
                   >
                     <CountUp target={m.value} suffix={m.suffix} />
                   </div>
-                  <p className="text-xs text-white/35 tracking-wide uppercase font-mono">{m.label}</p>
+                  <p className="text-xs text-white/35 tracking-wide uppercase font-mono">
+                    {m.label}
+                  </p>
                 </motion.div>
               );
             })}
@@ -321,8 +414,8 @@ function ThreePillars({
     <section ref={ref} className="py-24 md:py-36 relative">
       {/* Atmospheric background */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 left-1/4 w-[600px] h-[400px] bg-[radial-gradient(ellipse,rgba(127,255,212,0.04),transparent_60%)] pointer-events-none" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[400px] bg-[radial-gradient(ellipse,rgba(139,92,246,0.04),transparent_60%)] pointer-events-none" />
+        <div className="absolute top-0 left-1/4 w-[600px] h-[400px] bg-[radial-gradient(ellipse,rgba(0,188,212,0.04),transparent_60%)] pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[400px] bg-[radial-gradient(ellipse,rgba(13,71,161,0.04),transparent_60%)] pointer-events-none" />
       </div>
 
       <div className="max-w-6xl mx-auto px-6">
@@ -332,8 +425,10 @@ function ThreePillars({
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-xs font-mono tracking-[0.3em] uppercase text-[#00bcd4]/50 mb-4">The System</p>
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold">
+          <p className="text-xs font-mono tracking-[0.3em] uppercase text-[#00bcd4]/50 mb-4">
+            The System
+          </p>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight">
             Three pillars of a{" "}
             <span className="text-gradient-cosmic">creative philosophy</span>
           </h2>
@@ -356,7 +451,13 @@ function ThreePillars({
                 <div className="absolute inset-0 grid grid-cols-3 grid-rows-3 opacity-30 group-hover:opacity-50 transition-opacity duration-700">
                   {ALL_GUARDIANS.slice(0, 9).map((g) => (
                     <div key={g.name} className="relative overflow-hidden">
-                      <Image src={g.image} alt="" fill className="object-cover group-hover:scale-105 transition-transform duration-1000" sizes="200px" />
+                      <Image
+                        src={g.image}
+                        alt=""
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-1000"
+                        sizes="200px"
+                      />
                     </div>
                   ))}
                 </div>
@@ -367,10 +468,12 @@ function ThreePillars({
                   <p className="text-xs font-mono text-[#00bcd4]/80 tracking-wider uppercase mb-3">
                     10 Archetypes
                   </p>
-                  <h3 className="text-2xl md:text-3xl font-display font-bold mb-3 text-white">The Intelligences</h3>
+                  <h3 className="text-2xl md:text-3xl font-display font-bold mb-3 text-white">
+                    Guardians & Luminors
+                  </h3>
                   <p className="text-white/55 text-sm leading-relaxed max-w-sm mb-6 font-body">
-                    Ten archetypal intelligences — each opens a Gate on the creative journey.
-                    From Foundation to Source, they guide the path to mastery.
+                    Ten canonical guides open the Gates of creation. From
+                    Foundation to Source, they guide the path to mastery.
                   </p>
                   <span className="inline-flex items-center gap-2 text-sm text-[#00bcd4]/70 group-hover:text-[#00bcd4] group-hover:gap-3 transition-all font-medium">
                     Meet them <ArrowRight className="w-4 h-4" />
@@ -404,16 +507,22 @@ function ThreePillars({
                   />
                   <div
                     className="absolute -top-24 -right-24 w-72 h-72 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-                    style={{ background: "radial-gradient(circle, rgba(255,215,0,0.12), transparent 70%)" }}
+                    style={{
+                      background:
+                        "radial-gradient(circle, rgba(255,215,0,0.12), transparent 70%)",
+                    }}
                   />
                   <div className="relative">
                     <p className="text-xs font-mono text-gold-bright/70 tracking-wider uppercase mb-3">
                       {collectionsCount} Collections &middot; {textsCount} Texts
                     </p>
-                    <h3 className="text-xl md:text-2xl font-display font-bold mb-3">The Library</h3>
+                    <h3 className="text-xl md:text-2xl font-display font-bold mb-3">
+                      The Library
+                    </h3>
                     <p className="text-white/50 text-sm leading-relaxed max-w-sm mb-5 font-body">
-                      {totalWords.toLocaleString()} words of original philosophy — laws, prophecies,
-                      meditations, and parables for the creative life.
+                      {totalWords.toLocaleString()} words of original philosophy
+                      — laws, prophecies, meditations, and parables for the
+                      creative life.
                     </p>
                     <span className="inline-flex items-center gap-2 text-sm text-gold-bright/60 group-hover:text-gold-bright group-hover:gap-3 transition-all font-medium">
                       Read <ArrowRight className="w-4 h-4" />
@@ -432,21 +541,26 @@ function ThreePillars({
               <Link href="/academy" className="group block h-full">
                 <GlowCard
                   glass="liquid-glass-elevated"
-                  glowColor="rgba(139, 92, 246, 0.12)"
+                  glowColor="rgba(13, 71, 161, 0.12)"
                   className="p-8 md:p-10 h-full relative overflow-hidden border border-white/[0.08] hover:border-creation-prism-purple/25 transition-all duration-500"
                 >
                   <div
                     className="absolute -top-24 -right-24 w-72 h-72 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-                    style={{ background: "radial-gradient(circle, rgba(139,92,246,0.10), transparent 70%)" }}
+                    style={{
+                      background:
+                        "radial-gradient(circle, rgba(13,71,161,0.10), transparent 70%)",
+                    }}
                   />
                   <div className="relative">
                     <p className="text-xs font-mono text-creation-prism-purple/70 tracking-wider uppercase mb-3">
                       Ten Gates of Mastery
                     </p>
-                    <h3 className="text-xl md:text-2xl font-display font-bold mb-3">The Academy</h3>
+                    <h3 className="text-xl md:text-2xl font-display font-bold mb-3">
+                      The Academy
+                    </h3>
                     <p className="text-white/50 text-sm leading-relaxed max-w-sm mb-5 font-body">
-                      A developmental framework from Foundation to Source.
-                      Open all ten Gates to become a Luminor.
+                      A developmental framework from Foundation to Source. Open
+                      all ten Gates to become a Luminor.
                     </p>
                     <span className="inline-flex items-center gap-2 text-sm text-creation-prism-purple/60 group-hover:text-creation-prism-purple group-hover:gap-3 transition-all font-medium">
                       Begin <ArrowRight className="w-4 h-4" />
@@ -456,6 +570,77 @@ function ThreePillars({
               </Link>
             </motion.div>
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PathwaysGrid() {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+
+  return (
+    <section ref={ref} className="py-24 md:py-32 relative overflow-hidden">
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[420px] bg-[radial-gradient(ellipse,rgba(0,188,212,0.05),transparent_60%)] pointer-events-none" />
+      </div>
+
+      <div className="max-w-6xl mx-auto px-6">
+        <motion.div
+          className="text-center mb-12 md:mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+        >
+          <p className="text-xs font-mono tracking-[0.3em] uppercase text-white/32 mb-4">
+            Arcanean Paths
+          </p>
+          <h2 className="text-3xl md:text-5xl font-display font-bold tracking-tight mb-5">
+            Build an ecosystem,{" "}
+            <span className="text-gradient-cosmic">not a landing page</span>
+          </h2>
+        </motion.div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+          {PATHWAYS.map((path, i) => (
+            <motion.div
+              key={path.title}
+              initial={{ opacity: 0, y: 22 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: i * 0.06 }}
+            >
+              <Link href={path.href} className="group block h-full">
+                <GlowCard
+                  glass="none"
+                  glowColor="rgba(0,188,212,0.14)"
+                  className="h-full border border-white/[0.08] hover:border-[#00bcd4]/35 transition-all duration-500 overflow-hidden"
+                >
+                  <div className="relative h-full min-h-[220px]">
+                    <Image
+                      src={path.image}
+                      alt={path.title}
+                      fill
+                      className="object-cover object-top group-hover:scale-[1.04] transition-transform duration-700"
+                      sizes="(max-width: 1024px) 50vw, 33vw"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/55 to-black/10" />
+                    <div className="absolute inset-0 p-5 md:p-6 flex flex-col justify-end">
+                      <h3 className="text-lg md:text-xl font-display font-semibold text-white mb-2">
+                        {path.title}
+                      </h3>
+                      <p className="text-sm text-white/60 leading-relaxed mb-4">
+                        {path.description}
+                      </p>
+                      <span className="inline-flex items-center gap-2 text-sm text-[#00bcd4]/75 group-hover:text-[#00bcd4] transition-colors">
+                        Enter path <ArrowRight className="w-4 h-4" />
+                      </span>
+                    </div>
+                  </div>
+                </GlowCard>
+              </Link>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
@@ -474,8 +659,8 @@ function FeaturesGrid() {
     <section ref={ref} className="py-24 md:py-36 relative overflow-hidden">
       {/* Multi-layer atmospheric background */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(127,255,212,0.04),transparent_60%)] pointer-events-none" />
-        <div className="absolute bottom-1/3 right-0 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(139,92,246,0.04),transparent_60%)] pointer-events-none" />
+        <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(0,188,212,0.04),transparent_60%)] pointer-events-none" />
+        <div className="absolute bottom-1/3 right-0 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(13,71,161,0.04),transparent_60%)] pointer-events-none" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[radial-gradient(ellipse,rgba(255,215,0,0.02),transparent_50%)] pointer-events-none" />
       </div>
 
@@ -486,10 +671,11 @@ function FeaturesGrid() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-xs font-mono tracking-[0.3em] uppercase text-creation-prism-purple/50 mb-4">Explore</p>
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold mb-5">
-            A universe,{" "}
-            <span className="text-gradient-brand">not a tool</span>
+          <p className="text-xs font-mono tracking-[0.3em] uppercase text-creation-prism-purple/50 mb-4">
+            Explore
+          </p>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight mb-5">
+            A universe, <span className="text-gradient-brand">not a tool</span>
           </h2>
           <p className="text-white/40 max-w-2xl mx-auto text-lg font-body">
             Every piece is original. Every feature connects to the mythology.
@@ -522,7 +708,10 @@ function FeaturesGrid() {
                         border: `1px solid ${f.accentHex}25`,
                       }}
                     >
-                      <Icon className="w-5 h-5" style={{ color: f.accentHex }} />
+                      <Icon
+                        className="w-5 h-5"
+                        style={{ color: f.accentHex }}
+                      />
                     </div>
                     <h3 className="text-lg font-display font-bold mb-2 text-white group-hover:text-white transition-colors">
                       {f.title}
@@ -530,7 +719,10 @@ function FeaturesGrid() {
                     <p className="text-sm text-white/40 leading-relaxed group-hover:text-white/55 transition-colors font-body">
                       {f.description}
                     </p>
-                    <div className="mt-5 inline-flex items-center gap-1.5 text-xs font-medium transition-all group-hover:gap-2.5" style={{ color: `${f.accentHex}80` }}>
+                    <div
+                      className="mt-5 inline-flex items-center gap-1.5 text-xs font-medium transition-all group-hover:gap-2.5"
+                      style={{ color: `${f.accentHex}80` }}
+                    >
                       Explore <ArrowRight className="w-3 h-3" />
                     </div>
                   </GlowCard>
@@ -550,10 +742,18 @@ function FeaturesGrid() {
 
 const GALLERY_IMAGES = [
   { src: `${CDN}/lyria-hero.webp`, name: "Lyria", caption: "The Sight Gate" },
-  { src: `${CDN}/draconia-hero.webp`, name: "Draconia", caption: "The Fire Gate" },
+  {
+    src: `${CDN}/draconia-hero.webp`,
+    name: "Draconia",
+    caption: "The Fire Gate",
+  },
   { src: `${CDN}/aiyami-hero.webp`, name: "Aiyami", caption: "The Crown Gate" },
   { src: `${CDN}/elara-hero.webp`, name: "Elara", caption: "The Shift Gate" },
-  { src: `${CDN}/shinkami-hero.webp`, name: "Shinkami", caption: "The Source Gate" },
+  {
+    src: `${CDN}/shinkami-hero.webp`,
+    name: "Shinkami",
+    caption: "The Source Gate",
+  },
   { src: `${CDN}/alera-hero.webp`, name: "Alera", caption: "The Voice Gate" },
   { src: `${CDN}/ino-hero.webp`, name: "Ino", caption: "The Unity Gate" },
   { src: `${CDN}/leyla-hero.webp`, name: "Leyla", caption: "The Flow Gate" },
@@ -567,7 +767,7 @@ function GalleryShowcase() {
     <section ref={ref} className="py-20 md:py-28 relative overflow-hidden">
       {/* Atmospheric background */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[500px] bg-[radial-gradient(ellipse,rgba(139,92,246,0.05),transparent_60%)] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[500px] bg-[radial-gradient(ellipse,rgba(13,71,161,0.05),transparent_60%)] pointer-events-none" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6">
@@ -578,7 +778,9 @@ function GalleryShowcase() {
           transition={{ duration: 0.6 }}
         >
           <div>
-            <p className="text-xs font-mono tracking-[0.3em] uppercase text-draconic-crimson/40 mb-3">364+ Artworks</p>
+            <p className="text-xs font-mono tracking-[0.3em] uppercase text-draconic-crimson/40 mb-3">
+              364+ Artworks
+            </p>
             <h2 className="text-2xl md:text-4xl font-display font-bold">
               The <span className="text-gradient-brand">Gallery</span>
             </h2>
@@ -624,7 +826,9 @@ function GalleryShowcase() {
                   {/* Caption */}
                   <div className="absolute bottom-0 left-0 right-0 p-4">
                     <p className="text-sm font-display font-bold">{img.name}</p>
-                    <p className="text-[11px] text-white/40 font-mono">{img.caption}</p>
+                    <p className="text-[11px] text-white/40 font-mono">
+                      {img.caption}
+                    </p>
                   </div>
                 </div>
               </Link>
@@ -639,7 +843,10 @@ function GalleryShowcase() {
 
       {/* Mobile link */}
       <div className="mt-6 px-6 md:hidden">
-        <Link href="/gallery" className="inline-flex items-center gap-2 text-sm text-[#00bcd4]/70">
+        <Link
+          href="/gallery"
+          className="inline-flex items-center gap-2 text-sm text-[#00bcd4]/70"
+        >
           Explore the full Gallery <ArrowRight className="w-4 h-4" />
         </Link>
       </div>
@@ -681,10 +888,11 @@ function GuardianShowcase() {
           transition={{ duration: 0.6 }}
         >
           <div>
-            <p className="text-xs font-mono tracking-[0.3em] uppercase text-white/30 mb-4">Featured</p>
-            <h2 className="text-3xl md:text-5xl font-display font-bold">
-              Meet the{" "}
-              <span className="text-gradient-crystal">Intelligences</span>
+            <p className="text-xs font-mono tracking-[0.3em] uppercase text-white/30 mb-4">
+              Featured
+            </p>
+            <h2 className="text-3xl md:text-5xl font-display font-bold tracking-tight">
+              Meet the <span className="text-gradient-crystal">Guardians</span>
             </h2>
           </div>
           <Link
@@ -723,7 +931,9 @@ function GuardianShowcase() {
                   {/* Accent color wash on hover */}
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    style={{ background: `linear-gradient(to top, ${g.accentHex}20, transparent 60%)` }}
+                    style={{
+                      background: `linear-gradient(to top, ${g.accentHex}20, transparent 60%)`,
+                    }}
                   />
                   {/* Iridescent shimmer on hover */}
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-[linear-gradient(135deg,rgba(0,188,212,0.04)_0%,rgba(13,71,161,0.04)_50%,rgba(0,137,123,0.02)_100%)]" />
@@ -735,7 +945,9 @@ function GuardianShowcase() {
                     >
                       {g.gate} Gate &middot; {g.element}
                     </p>
-                    <h3 className="text-lg md:text-xl font-display font-bold mb-2">{g.name}</h3>
+                    <h3 className="text-lg md:text-xl font-display font-bold mb-2">
+                      {g.name}
+                    </h3>
                     <p className="text-xs text-white/40 leading-relaxed line-clamp-2 group-hover:text-white/65 transition-colors duration-300 font-body italic">
                       &ldquo;{g.quote}&rdquo;
                     </p>
@@ -748,8 +960,11 @@ function GuardianShowcase() {
 
         {/* Mobile link */}
         <div className="mt-8 md:hidden">
-          <Link href="/luminors" className="inline-flex items-center gap-2 text-sm text-[#00bcd4]/70">
-            View all ten Intelligences <ArrowRight className="w-4 h-4" />
+          <Link
+            href="/luminors"
+            className="inline-flex items-center gap-2 text-sm text-[#00bcd4]/70"
+          >
+            View all ten Guardians <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
@@ -767,11 +982,19 @@ function GuardianShowcase() {
               title={`${g.name} — ${g.gate} Gate`}
             >
               <div className="relative w-9 h-9 rounded-lg overflow-hidden border border-white/[0.08] hover:border-[#00bcd4]/40 hover:scale-125 hover:shadow-[0_0_16px_rgba(0,188,212,0.15)] transition-all duration-300">
-                <Image src={g.image} alt={g.name} fill className="object-cover" sizes="36px" />
+                <Image
+                  src={g.image}
+                  alt={g.name}
+                  fill
+                  className="object-cover"
+                  sizes="36px"
+                />
               </div>
             </Link>
           ))}
-          <span className="text-[10px] text-white/25 ml-3 font-mono tracking-wider">10 gates</span>
+          <span className="text-[10px] text-white/25 ml-3 font-mono tracking-wider">
+            10 gates
+          </span>
         </motion.div>
       </div>
     </section>
@@ -799,7 +1022,10 @@ function LibraryQuote({
       {/* Ambient glow */}
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] pointer-events-none -z-10"
-        style={{ background: "radial-gradient(ellipse, rgba(139,92,246,0.06), transparent 60%)" }}
+        style={{
+          background:
+            "radial-gradient(ellipse, rgba(13,71,161,0.06), transparent 60%)",
+        }}
       />
 
       <div className="max-w-3xl mx-auto px-6">
@@ -813,7 +1039,7 @@ function LibraryQuote({
           <div className="gradient-border">
             <GlowCard
               glass="liquid-glass-elevated"
-              glowColor="rgba(139, 92, 246, 0.08)"
+              glowColor="rgba(13, 71, 161, 0.08)"
               glowSize={500}
               lift={false}
               className="rounded-[calc(1.5rem-1px)]"
@@ -826,13 +1052,13 @@ function LibraryQuote({
 
                 <blockquote className="text-lg md:text-xl lg:text-2xl text-white/75 leading-relaxed font-display italic space-y-4">
                   <p>
-                    &ldquo;Before the first word, there was silence.
-                    Before the first creation, there was intention.
+                    &ldquo;Before the first word, there was silence. Before the
+                    first creation, there was intention.
                   </p>
                   <p>
-                    This is the First Law: What you contemplate at dawn
-                    shapes all that follows. The creative life does not begin
-                    with inspiration — it begins with the decision to create.&rdquo;
+                    This is the First Law: What you contemplate at dawn shapes
+                    all that follows. The creative life does not begin with
+                    inspiration — it begins with the decision to create.&rdquo;
                   </p>
                 </blockquote>
 
@@ -852,7 +1078,8 @@ function LibraryQuote({
           </div>
 
           <p className="text-center mt-8 text-xs text-white/20 font-mono tracking-wider">
-            {collectionsCount} collections &middot; {textsCount} texts &middot; {totalWords.toLocaleString()} words
+            {collectionsCount} collections &middot; {textsCount} texts &middot;{" "}
+            {totalWords.toLocaleString()} words
           </p>
         </motion.div>
       </div>
@@ -872,12 +1099,12 @@ function PhilosophySection() {
     {
       title: "Creation first",
       text: "Every feature exists to help you make something. We do not gamify attention — we serve the creative act.",
-      accentHex: "#7fffd4",
+      accentHex: "#00bcd4",
     },
     {
       title: "Intelligence with personality",
-      text: "Not generic chatbots. Each of the ten intelligences has a philosophy, a voice, a domain. Choose the one that sees the world the way you need right now.",
-      accentHex: "#8b5cf6",
+      text: "Not generic chatbots. Each of the ten Luminors has a philosophy, voice, and domain. Choose the one that sees your challenge clearly.",
+      accentHex: "#0d47a1",
     },
     {
       title: "Mythology as framework",
@@ -887,7 +1114,7 @@ function PhilosophySection() {
     {
       title: "Depth you earn",
       text: "The surface is simple. The deeper you go, the more the system reveals. Frequencies, Gates, Elements, Ranks — discovered, never forced.",
-      accentHex: "#78a6ff",
+      accentHex: "#00897b",
     },
   ];
 
@@ -895,8 +1122,8 @@ function PhilosophySection() {
     <section ref={ref} className="py-24 md:py-36 relative">
       {/* Atmospheric */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 right-1/4 w-[600px] h-[400px] bg-[radial-gradient(ellipse,rgba(139,92,246,0.04),transparent_60%)] pointer-events-none" />
-        <div className="absolute bottom-0 left-1/4 w-[500px] h-[400px] bg-[radial-gradient(ellipse,rgba(127,255,212,0.03),transparent_60%)] pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-[600px] h-[400px] bg-[radial-gradient(ellipse,rgba(13,71,161,0.04),transparent_60%)] pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-[500px] h-[400px] bg-[radial-gradient(ellipse,rgba(0,188,212,0.03),transparent_60%)] pointer-events-none" />
       </div>
 
       <div className="max-w-5xl mx-auto px-6">
@@ -906,10 +1133,11 @@ function PhilosophySection() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-xs font-mono tracking-[0.3em] uppercase text-gold-bright/40 mb-4">Philosophy</p>
-          <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold mb-4">
-            What we{" "}
-            <span className="text-gradient-gold">believe</span>
+          <p className="text-xs font-mono tracking-[0.3em] uppercase text-gold-bright/40 mb-4">
+            Philosophy
+          </p>
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight mb-4">
+            What we <span className="text-gradient-gold">believe</span>
           </h2>
         </motion.div>
 
@@ -929,12 +1157,19 @@ function PhilosophySection() {
               >
                 <div
                   className="w-8 h-[3px] rounded-full mb-5"
-                  style={{ background: `linear-gradient(90deg, ${p.accentHex}, transparent)` }}
+                  style={{
+                    background: `linear-gradient(90deg, ${p.accentHex}, transparent)`,
+                  }}
                 />
-                <h3 className="text-lg font-display font-bold mb-3" style={{ color: `${p.accentHex}dd` }}>
+                <h3
+                  className="text-lg font-display font-bold mb-3"
+                  style={{ color: `${p.accentHex}dd` }}
+                >
                   {p.title}
                 </h3>
-                <p className="text-sm text-white/45 leading-relaxed font-body">{p.text}</p>
+                <p className="text-sm text-white/45 leading-relaxed font-body">
+                  {p.text}
+                </p>
               </GlowCard>
             </motion.div>
           ))}
@@ -948,7 +1183,13 @@ function PhilosophySection() {
 // SECTION 9: FAQ — Clean, Premium Accordion
 // ---------------------------------------------------------------------------
 
-function FAQItem({ item, index }: { item: typeof FAQ_ITEMS[0]; index: number }) {
+function FAQItem({
+  item,
+  index,
+}: {
+  item: (typeof FAQ_ITEMS)[0];
+  index: number;
+}) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -1004,8 +1245,10 @@ function FAQInline() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <p className="text-xs font-mono tracking-[0.3em] uppercase text-white/30 mb-4">Questions</p>
-          <h2 className="text-3xl md:text-4xl font-display font-bold">
+          <p className="text-xs font-mono tracking-[0.3em] uppercase text-white/30 mb-4">
+            Questions
+          </p>
+          <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tight">
             Frequently asked
           </h2>
         </motion.div>
@@ -1030,7 +1273,11 @@ export interface V3BelowFoldProps {
   totalWords: number;
 }
 
-export function V3BelowFold({ collectionsCount, textsCount, totalWords }: V3BelowFoldProps) {
+export function V3BelowFold({
+  collectionsCount,
+  textsCount,
+  totalWords,
+}: V3BelowFoldProps) {
   return (
     <>
       {/* 1. Guardian showcase — visual proof of the 10 specialists */}
@@ -1041,18 +1288,25 @@ export function V3BelowFold({ collectionsCount, textsCount, totalWords }: V3Belo
       {/* 2. How it works — 3 clear steps */}
       <HowItWorks />
 
-      {/* 3. Gallery — cinematic horizontal scroll */}
+      {/* 3. Arcanean pathways */}
+      <PathwaysGrid />
+
+      {/* 4. Gallery — cinematic horizontal scroll */}
       <GalleryShowcase />
 
       <AtmosphericDivider variant="purple" />
 
-      {/* 4. Three products: Intelligences, Library, Academy */}
-      <ThreePillars collectionsCount={collectionsCount} textsCount={textsCount} totalWords={totalWords} />
+      {/* 5. Three products: Luminors, Library, Academy */}
+      <ThreePillars
+        collectionsCount={collectionsCount}
+        textsCount={textsCount}
+        totalWords={totalWords}
+      />
 
-      {/* 5. FAQ — objection handling */}
+      {/* 6. FAQ — objection handling */}
       <FAQInline />
 
-      {/* 6. Final CTA */}
+      {/* 7. Final CTA */}
       <CTASection />
     </>
   );

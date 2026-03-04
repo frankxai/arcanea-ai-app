@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { PhSparkle, PhArrowRight, PhCircleNotch } from '@/lib/phosphor-icons';
+import { PhSparkle, PhArrowRight, PhCircleNotch } from "@/lib/phosphor-icons";
 import { LUMINORS, TEAMS, type Team } from "@/lib/luminors/config";
 const TEAM_ORDER: Team[] = ["development", "creative", "writing", "research"];
 
@@ -47,7 +47,7 @@ export default function ChatLandingPage() {
             <p className="text-text-secondary font-body">
               Opening session with{" "}
               {navigatingId
-                ? LUMINORS[navigatingId]?.name ?? navigatingId
+                ? (LUMINORS[navigatingId]?.name ?? navigatingId)
                 : "Luminor"}
               ...
             </p>
@@ -65,12 +65,12 @@ export default function ChatLandingPage() {
         >
           <h1 className="text-fluid-hero font-display font-bold mb-6 leading-none tracking-tight">
             Choose an
-            <span className="block text-gradient-brand">Intelligence</span>
+            <span className="block text-gradient-brand">Luminor</span>
           </h1>
 
           <p className="text-fluid-lg text-text-secondary leading-relaxed max-w-2xl mx-auto font-body">
-            Each one thinks differently. Pick the one that fits
-            what you are working on.
+            Each guide thinks differently. Pick the one that matches your
+            current creative challenge.
           </p>
         </motion.div>
 
@@ -89,7 +89,7 @@ export default function ChatLandingPage() {
                 : "border-white/[0.06] text-text-muted hover:border-white/[0.12] hover:text-text-secondary"
             }`}
           >
-            All 16
+            All Luminors
           </button>
           {TEAM_ORDER.map((team) => {
             const meta = TEAMS[team];
@@ -241,7 +241,7 @@ export default function ChatLandingPage() {
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl liquid-glass border border-crystal/20 text-crystal text-sm font-semibold hover:bg-crystal/5 hover:border-crystal/40 transition-all btn-glow"
             >
               <PhSparkle className="w-4 h-4" />
-              View all intelligences
+              View all luminors
             </Link>
             <Link
               href="/chat/chronica"

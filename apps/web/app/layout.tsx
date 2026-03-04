@@ -2,29 +2,30 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { CosmicBackground } from "@/lib/arcanea-ui";
 import { ReactNode } from "react";
-import { Cinzel, Crimson_Pro, Inter, JetBrains_Mono } from "next/font/google";
+import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { AuthProvider } from "@/lib/auth/context";
 import { Navbar, Footer } from "@/components/navigation";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 
-const cinzel = Cinzel({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  weight: ["400", "700", "900"],
+  weight: ["300", "400", "500", "600", "700"],
   variable: "--font-display",
-  display: "swap",
-});
-
-const crimsonPro = Crimson_Pro({
-  subsets: ["latin"],
-  variable: "--font-body",
   display: "swap",
 });
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
+});
+
+// Inter also serves as body font (replaces Crimson Pro)
+const interBody = Inter({
+  subsets: ["latin"],
+  variable: "--font-body",
   display: "swap",
 });
 
@@ -35,13 +36,26 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://arcanea.ai"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_APP_URL || "https://arcanea.ai",
+  ),
   title: {
     default: "Arcanea — Creative Intelligence Platform",
-    template: "%s | Arcanea"
+    template: "%s | Arcanea",
   },
-  description: "10 creative intelligences, an original philosophy library with 34+ texts, and a framework for the creative life. Free to start.",
-  keywords: ["AI", "creativity", "creative intelligence", "mythology", "philosophy", "creation platform", "world building", "AI writing", "AI art"],
+  description:
+    "Build with Guardians and Luminors across chat, studio, and lore. Arcanea unifies creation workflows, canon systems, and practical philosophy.",
+  keywords: [
+    "AI",
+    "creativity",
+    "creative intelligence",
+    "mythology",
+    "philosophy",
+    "creation platform",
+    "world building",
+    "AI writing",
+    "AI art",
+  ],
   authors: [{ name: "Arcanea" }],
   creator: "Arcanea",
   openGraph: {
@@ -49,13 +63,15 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "/",
     title: "Arcanea — Living Intelligence for Creators",
-    description: "10 creative intelligences, a philosophy library, and a framework for the creative life.",
+    description:
+      "Guardians, Luminors, Studio, and Lore in one creative ecosystem.",
     siteName: "Arcanea",
   },
   twitter: {
     card: "summary_large_image",
     title: "Arcanea — Living Intelligence for Creators",
-    description: "10 creative intelligences, a philosophy library, and a framework for the creative life.",
+    description:
+      "Guardians, Luminors, Studio, and Lore in one creative ecosystem.",
   },
   alternates: {
     canonical: "/",
@@ -65,12 +81,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={cn(
-      cinzel.variable,
-      crimsonPro.variable,
-      inter.variable,
-      jetbrainsMono.variable
-    )}>
+    <html
+      lang="en"
+      style={{ colorScheme: "dark" }}
+      className={cn(
+        spaceGrotesk.variable,
+        inter.variable,
+        interBody.variable,
+        jetbrainsMono.variable,
+      )}
+    >
       <body>
         {/*
           In the beginning there was Nero — the Primordial Darkness,
@@ -92,7 +112,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <div className="relative min-h-dvh bg-cosmic-void font-sans text-text-primary selection:bg-atlantean-aqua/30 selection:text-atlantean-aqua">
             <CosmicBackground />
             <Navbar />
-            <main id="main-content" className="relative pt-16">{children}</main>
+            <main id="main-content" className="relative pt-16">
+              {children}
+            </main>
             <Footer />
           </div>
           <SpeedInsights />
