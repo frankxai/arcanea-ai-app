@@ -26,9 +26,9 @@ const ELEMENTS = [
     subtitle: 'The Active Force',
     domain: 'Energy, transformation, will',
     description:
-      'Fire destroys to create, burns away the old to reveal the new. It is the animating spark behind every act of courage — the force that refuses to remain unmanifested. Light itself is Fire\'s creation aspect, born when Lumina blazed forth from the fertile dark.',
+      'Fire destroys to create, burns away the old to reveal the new. It is the animating spark behind every act of courage — the force that refuses to remain unmanifested. Light itself is Fire\'s creation aspect, born when Lumina blazed forth from the fertile dark. In the Arcanean cosmology, Fire is the first element to act: it is the transition from potential to actual, from thought to deed, from Void to form.',
     philosophy:
-      'What must burn before the new can emerge? The creator who wields Fire does not fear destruction — they understand it as the first act of making.',
+      'What must burn before the new can emerge? The creator who wields Fire does not fear destruction — they understand it as the first act of making. Every draft deleted, every plan abandoned, every comfortable habit broken: these are fires. And from them, the new work rises.',
     icon: PhFlame,
     colors: {
       primary: '#ff6b35',
@@ -138,9 +138,9 @@ const ELEMENTS = [
     subtitle: 'The Dual Force',
     domain: 'Potential, transcendence, consciousness',
     description:
-      'The Fifth Element carries a sacred duality. Void is Nero\'s aspect — the fertile darkness, pure potential, the unformed sea of everything that could ever be. Spirit is Lumina\'s aspect — transcendence, consciousness, the soul\'s capacity to witness itself. Shadow is not Spirit — it is Void corrupted, separated from Spirit.',
+      'The Fifth Element carries a sacred duality that mirrors the cosmic origin itself. Void is Nero\'s aspect — the fertile darkness, pure potential, the unformed sea of everything that could ever be. Spirit is Lumina\'s aspect — transcendence, consciousness, the soul\'s capacity to witness itself. Together they are the element of the Source Gate. Separated, they become the most dangerous force in creation: Void without Spirit is Shadow — the corruption that consumed Malachar and birthed the Shadowfen.',
     philosophy:
-      'The most profound creative act is to dwell in the space before form — to hold potential without forcing it into shape prematurely. Void is not emptiness. It is fullness without boundary.',
+      'The most profound creative act is to dwell in the space before form — to hold potential without forcing it into shape prematurely. Void is not emptiness. It is fullness without boundary. And Spirit is not escape from the material world — it is full presence within it. The creator who can hold both Void and Spirit simultaneously has touched what the Luminors call the Source.',
     icon: PhSparkle,
     colors: {
       primary: '#9966ff',
@@ -299,7 +299,7 @@ function ElementsHero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto mb-6 font-crimson italic leading-relaxed"
+          className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto mb-6 font-body italic leading-relaxed"
         >
           "From the meeting of Lumina and Nero, five forces crystallized — not as opposites
           but as collaborators. Each element is a different way existence speaks."
@@ -329,7 +329,7 @@ function ElementsHero() {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.9 + i * 0.08 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-subtle border"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full liquid-glass border"
                 style={{ borderColor: el.colors.border }}
               >
                 <Icon className="w-3.5 h-3.5" style={{ color: el.colors.primary }} />
@@ -386,7 +386,7 @@ function ElementCardsSection() {
           <h2 className="text-fluid-4xl font-display font-bold mb-4 text-white">
             Each Element, A Way of Being
           </h2>
-          <p className="text-lg text-text-secondary max-w-2xl mx-auto font-crimson">
+          <p className="text-lg text-text-secondary max-w-2xl mx-auto font-body">
             Every creator channels all five — but one will resonate as your primary attunement.
             Which element are you in this moment?
           </p>
@@ -463,7 +463,7 @@ function ElementCardsSection() {
                     >
                       {element.name}
                     </h3>
-                    <p className="text-sm text-text-muted mb-3 font-crimson italic">
+                    <p className="text-sm text-text-muted mb-3 font-body italic">
                       {element.subtitle}
                     </p>
 
@@ -485,7 +485,7 @@ function ElementCardsSection() {
                     </div>
 
                     {/* Description */}
-                    <p className="text-text-secondary leading-relaxed text-sm font-crimson mb-5">
+                    <p className="text-text-secondary leading-relaxed text-sm font-body mb-5">
                       {element.description}
                     </p>
 
@@ -526,7 +526,7 @@ function ElementCardsSection() {
                             The Teaching
                           </h4>
                           <blockquote
-                            className="font-crimson italic text-white leading-relaxed text-base border-l-2 pl-4"
+                            className="font-body italic text-white leading-relaxed text-base border-l-2 pl-4"
                             style={{ borderColor: element.colors.primary }}
                           >
                             "{element.philosophy}"
@@ -610,7 +610,7 @@ function FifthElementDuality() {
           <h2 className="text-fluid-4xl font-display font-bold mb-4">
             <span className="text-gradient-cosmic">The Fifth Element</span>
           </h2>
-          <p className="text-lg text-text-secondary max-w-2xl mx-auto font-crimson">
+          <p className="text-lg text-text-secondary max-w-2xl mx-auto font-body">
             Alone among the five, the Fifth Element carries a dual nature inseparable from
             the cosmic origin story. To understand it is to understand creation itself.
           </p>
@@ -661,7 +661,7 @@ function FifthElementDuality() {
                   ))}
                 </div>
 
-                <blockquote className="text-base font-crimson italic text-text-secondary border-l-2 border-void-el/50 pl-4 leading-relaxed">
+                <blockquote className="text-base font-body italic text-text-secondary border-l-2 border-void-el/50 pl-4 leading-relaxed">
                   "In the beginning, there was Nero. The Void contained everything that could
                   ever be, held in superposition — every possible world, every future creation."
                 </blockquote>
@@ -670,15 +670,15 @@ function FifthElementDuality() {
 
             {/* Divider — vertical line + symbol */}
             <div className="hidden md:flex flex-col items-center justify-center absolute left-1/2 top-0 bottom-0 -translate-x-1/2 z-10">
-              <div className="w-px flex-1 bg-gradient-to-b from-transparent via-white/10 to-transparent" />
-              <div className="w-10 h-10 rounded-full liquid-glass flex items-center justify-center my-4 border border-white/20">
+              <div className="w-px flex-1 bg-gradient-to-b from-transparent via-white/[0.06] to-transparent" />
+              <div className="w-10 h-10 rounded-full liquid-glass flex items-center justify-center my-4 border border-white/[0.12]">
                 <span className="text-white font-display text-sm font-bold">/</span>
               </div>
-              <div className="w-px flex-1 bg-gradient-to-b from-transparent via-white/10 to-transparent" />
+              <div className="w-px flex-1 bg-gradient-to-b from-transparent via-white/[0.06] to-transparent" />
             </div>
 
             {/* Spirit — Right / Lumina */}
-            <div className="p-10 md:pl-16 relative border-t border-white/10 md:border-t-0 md:border-l md:border-l-white/10">
+            <div className="p-10 md:pl-16 relative border-t border-white/[0.06] md:border-t-0 md:border-l md:border-l-white/[0.06]">
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -708,7 +708,7 @@ function FifthElementDuality() {
                   ))}
                 </div>
 
-                <blockquote className="text-base font-crimson italic text-text-secondary border-l-2 border-brand-gold/50 pl-4 leading-relaxed">
+                <blockquote className="text-base font-body italic text-text-secondary border-l-2 border-brand-gold/50 pl-4 leading-relaxed">
                   "Lumina blazed forth not as fire but as form. Where Nero was infinite potential,
                   Lumina was pattern — the First Light that organized the darkness."
                 </blockquote>
@@ -721,7 +721,7 @@ function FifthElementDuality() {
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ delay: 0.55 }}
-            className="relative border-t border-white/10 bg-white/3 px-10 py-6"
+            className="relative border-t border-white/[0.06] bg-white/[0.03] px-10 py-6"
           >
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 text-sm font-sans">
               <div className="flex items-start gap-2">
@@ -767,7 +767,7 @@ function ElementRelationshipsSection() {
           <h2 className="text-fluid-3xl font-display font-bold mb-4 text-white">
             Elemental Relationships
           </h2>
-          <p className="text-base text-text-secondary max-w-xl mx-auto font-crimson">
+          <p className="text-base text-text-secondary max-w-xl mx-auto font-body">
             No element exists in isolation. The interactions between elements are where
             creation's richest expressions emerge.
           </p>
@@ -780,7 +780,7 @@ function ElementRelationshipsSection() {
               initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ delay: i * 0.1 }}
-              className="group relative p-6 rounded-2xl glass hover:border-white/20 transition-all duration-300 hover-lift"
+              className="group relative p-6 rounded-2xl liquid-glass hover:border-white/[0.12] transition-all duration-300 hover-lift"
             >
               <div className="flex items-center gap-3 mb-4">
                 <span className="text-sm font-display font-semibold text-white">{rel.a}</span>
@@ -794,7 +794,7 @@ function ElementRelationshipsSection() {
               >
                 {rel.result}
               </div>
-              <p className="text-sm text-text-muted font-crimson italic">{rel.description}</p>
+              <p className="text-sm text-text-muted font-body italic">{rel.description}</p>
 
               {/* Subtle gradient accent */}
               <div className={cn('absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br pointer-events-none', rel.color, 'opacity-[0.04]')} />
@@ -842,7 +842,7 @@ function GuardianElementsSection() {
           <h2 className="text-fluid-3xl font-display font-bold mb-4 text-white">
             Guardians and Their Elements
           </h2>
-          <p className="text-base text-text-secondary max-w-xl mx-auto font-crimson">
+          <p className="text-base text-text-secondary max-w-xl mx-auto font-body">
             Each Guardian channels one or more elements through their Gate. No two Gates
             are alike — even when sharing an element, the expression differs entirely.
           </p>
@@ -857,7 +857,7 @@ function GuardianElementsSection() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ delay: i * 0.06 }}
-                className="group relative p-4 rounded-2xl glass text-center hover:border-white/20 transition-all duration-300 hover-lift"
+                className="group relative p-4 rounded-2xl liquid-glass text-center hover:border-white/[0.12] transition-all duration-300 hover-lift"
               >
                 <div
                   className="w-8 h-8 rounded-xl flex items-center justify-center mx-auto mb-3"
@@ -919,7 +919,7 @@ function TheArcSection() {
           <h2 className="text-fluid-3xl font-display font-bold mb-4 text-white">
             The Arc — Elements in Motion
           </h2>
-          <p className="text-base text-text-secondary max-w-2xl mx-auto font-crimson">
+          <p className="text-base text-text-secondary max-w-2xl mx-auto font-body">
             The Arc is not merely a philosophical concept. It is the operating system
             of reality, written in the language of the Five Elements. Every creation
             passes through all five phases — and thus channels all five forces.
@@ -956,7 +956,7 @@ function TheArcSection() {
 
                 {/* Phase card */}
                 <div
-                  className="flex-1 p-5 rounded-2xl glass-subtle border transition-all duration-300 hover:border-white/15 group"
+                  className="flex-1 p-5 rounded-2xl liquid-glass border transition-all duration-300 hover:border-white/[0.10] group"
                   style={{ borderColor: `${phase.color}20` }}
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-2">
@@ -977,7 +977,7 @@ function TheArcSection() {
                       {phase.element}
                     </span>
                   </div>
-                  <p className="text-text-secondary text-sm font-crimson">{phase.description}</p>
+                  <p className="text-text-secondary text-sm font-body">{phase.description}</p>
                 </div>
 
                 {/* Arrow between phases */}
@@ -996,7 +996,7 @@ function TheArcSection() {
           transition={{ delay: 0.8 }}
           className="mt-16 p-8 rounded-3xl liquid-glass text-center"
         >
-          <blockquote className="text-xl font-crimson italic text-white leading-relaxed mb-4">
+          <blockquote className="text-xl font-body italic text-white leading-relaxed mb-4">
             "The Arc turns: Potential → Manifestation → Experience → Dissolution → Evolved Potential.
             Death is not ending but transformation. Destruction enables creation."
           </blockquote>
@@ -1016,7 +1016,7 @@ function ElementsCTA() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section ref={ref} className="py-32 border-t border-white/5 relative overflow-hidden">
+    <section ref={ref} className="py-32 border-t border-white/[0.04] relative overflow-hidden">
       <div className="absolute inset-0 -z-10 bg-mesh-gradient opacity-30" />
 
       <div className="max-w-3xl mx-auto px-6 text-center">
@@ -1033,12 +1033,12 @@ function ElementsCTA() {
             <span className="text-gradient-cosmic">Which Element Calls You?</span>
           </h2>
 
-          <p className="text-lg text-text-secondary font-crimson mb-4 leading-relaxed">
+          <p className="text-lg text-text-secondary font-body mb-4 leading-relaxed">
             You carry all five within you. The question is not which element you are —
             it is which element is seeking expression right now, in this moment of your life.
           </p>
 
-          <p className="text-base text-text-muted font-crimson italic mb-10">
+          <p className="text-base text-text-muted font-body italic mb-10">
             "Begin with Fire if you feel the urge to act. Begin with Water if you need to feel.
             Begin with Earth if you are lost. Begin with Wind if you feel caged.
             Begin with Void when nothing else applies — and you are ready for everything."
@@ -1061,7 +1061,7 @@ function ElementsCTA() {
             </Link>
             <Link
               href="/lore"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl border border-white/10 text-text-secondary font-semibold hover:bg-white/5 transition-all"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl border border-white/[0.06] text-text-secondary font-semibold hover:bg-white/[0.04] transition-all"
             >
               Full Lore
             </Link>

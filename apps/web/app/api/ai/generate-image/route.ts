@@ -5,9 +5,9 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createImagenProvider } from '@/lib/ai-core';
-import { createClient } from '@supabase/supabase-js';
+import { createAdminClient } from '@/lib/supabase/server';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 export const maxDuration = 60; // 60 seconds for image generation
 
 // Rate limiting
@@ -50,10 +50,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!
-    );
+    const supabase = createAdminClient();
 
     const token = authHeader.replace('Bearer ', '');
     const { data: { user }, error: authError } = await supabase.auth.getUser(token);
@@ -205,47 +202,10 @@ export async function POST(req: NextRequest) {
       })
     );
 
-    // Log usage to database
-    const totalCost = images.reduce((sum: number, img: GeneratedImage) => sum + (img.metadata?.cost || 0), 0);
-    await supabase.from('ai_usage').insert({
-      user_id: userId,
-      operation: `image_${operation}`,
-      model: 'imagen-3',
-      cost: totalCost,
-      metadata: {
-        imageCount: images.length,
-        prompt,
-        academyTheme,
-      },
-      created_at: new Date().toISOString(),
-    });
-
-    // Save to essences table
-    for (const img of uploadedImages) {
-      await supabase.from('essences').insert({
-        creator_id: userId,
-        type: 'visual',
-        title: prompt.substring(0, 100),
-        content: {
-          type: 'visual',
-          imageUrl: img.storageUrl || img.url,
-          prompt,
-          style,
-        },
-        metadata: {
-          academy: academyTheme || 'draconic',
-          luminorUsed: 'imagen-3',
-          tags: [style, mood, academyTheme].filter(Boolean),
-          remixable: true,
-        },
-      });
-    }
-
     return NextResponse.json({
       success: true,
       images: uploadedImages,
       count: uploadedImages.length,
-      totalCost,
     });
   } catch (error) {
     console.error('Image generation API error:', error);

@@ -4,8 +4,6 @@ import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { PhBookOpen, PhMagnifyingGlass, PhFunnel, PhArrowRight, PhScroll, PhFeather, PhMusicNotes, PhSparkle, PhShield, PhMapTrifold, PhMoon, PhUsers, PhHeart } from '@/lib/phosphor-icons';
 import Link from 'next/link';
-import { Navbar } from '@/components/navigation';
-
 const COLLECTIONS = [
   {
     id: 'laws-of-arcanea',
@@ -201,12 +199,10 @@ export default function LibraryPage() {
 
   return (
     <div className="relative min-h-screen bg-cosmic-deep">
-      <Navbar />
-
       {/* Hero */}
       <section
         ref={heroRef}
-        className="relative min-h-[50vh] flex items-center justify-center overflow-hidden pt-24"
+        className="relative min-h-[50vh] flex items-center justify-center overflow-hidden pt-8"
       >
         {/* Book spines decoration */}
         <div className="absolute inset-0 flex items-center justify-center opacity-5">
@@ -248,7 +244,7 @@ export default function LibraryPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-xl text-text-secondary max-w-3xl mx-auto font-crimson italic mb-8"
+            className="text-xl text-text-secondary max-w-3xl mx-auto font-body italic mb-8"
           >
             "These books are not entertainment. They are equipment for living. Use them."
           </motion.p>
@@ -277,7 +273,7 @@ export default function LibraryPage() {
       </section>
 
       {/* Filters */}
-      <section className="py-8 border-y border-white/5 sticky top-16 bg-cosmic-deep/95 backdrop-blur-sm z-20">
+      <section className="py-8 border-y border-white/[0.04] sticky top-16 bg-cosmic-deep/95 backdrop-blur-sm z-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
             {/* Search */}
@@ -288,7 +284,7 @@ export default function LibraryPage() {
                 placeholder="Search collections..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 rounded-xl bg-cosmic-surface/50 border border-white/10 text-white placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal-aqua/50"
+                className="w-full pl-10 pr-4 py-2 rounded-xl bg-cosmic-surface/50 border border-white/[0.06] text-white placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal-aqua/50"
               />
             </div>
 
@@ -327,7 +323,7 @@ export default function LibraryPage() {
                 >
                   <Link
                     href={`/lore/library/${collection.id}`}
-                    className="block h-full p-6 rounded-2xl border border-white/10 bg-cosmic-surface/30 backdrop-blur-sm hover:border-white/20 hover:bg-cosmic-surface/50 transition-all group"
+                    className="block h-full p-6 rounded-2xl liquid-glass hover:border-white/[0.12] transition-all group hover-lift"
                   >
                     <div className="flex items-start gap-4 mb-4">
                       <div
@@ -374,7 +370,7 @@ export default function LibraryPage() {
       </section>
 
       {/* Promise */}
-      <section className="py-24 border-t border-white/5">
+      <section className="py-24 border-t border-white/[0.04]">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <PhHeart className="w-12 h-12 mx-auto text-draconic-crimson mb-6" />
           <h2 className="text-2xl md:text-3xl font-display font-bold mb-6">The Library's Promise</h2>

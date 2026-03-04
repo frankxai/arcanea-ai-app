@@ -12,8 +12,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import ReactMarkdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { lazy, Suspense } from "react";
+
+const LazyCodeBlock = lazy(() => import("@/components/chat/code-block"));
 
 interface Message {
   id: string;
@@ -166,9 +167,8 @@ interface GateInvocation {
   element: 'Fire' | 'Water' | 'Earth' | 'Wind' | 'Void';
 }
 
-function invokeGate(invocation: GateInvocation): void {
-  console.log(\`Invoking \${invocation.guardian} at \${invocation.frequency}Hz\`);
-  console.log(\`Opening Gate \${invocation.gate} - Element: \${invocation.element}\`);
+function invokeGate(_invocation: GateInvocation): void {
+  // Gate invocation is visual-only in the current implementation
 }
 
 // Example: Invoke Lyria's Sight Gate
@@ -253,14 +253,14 @@ export function ChatTab() {
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <header className="glass border-b border-white/5 px-6 py-4 space-y-4">
+      <header className="liquid-glass border-b border-white/[0.04] px-6 py-4 space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="relative">
               <Button
                 variant="outline"
                 onClick={() => setShowModelDropdown(!showModelDropdown)}
-                className="glass-subtle border-white/10 text-text-secondary hover:text-text-primary gap-2 animate-pulse-glow"
+                className="liquid-glass border-white/[0.06] text-text-secondary hover:text-text-primary gap-2 animate-pulse-glow"
               >
                 <span className="font-sans text-sm font-medium">
                   {selectedModel.name}
@@ -300,7 +300,7 @@ export function ChatTab() {
           <Button
             variant="outline"
             size="sm"
-            className="glass-subtle border-white/10 text-text-secondary hover:text-text-primary"
+            className="liquid-glass border-white/[0.06] text-text-secondary hover:text-text-primary"
           >
             Share
           </Button>
@@ -397,7 +397,7 @@ export function ChatTab() {
                 <button
                   key={i}
                   onClick={() => handlePromptClick(prompt)}
-                  className="glass-subtle p-4 rounded-xl text-left hover:-translate-y-1 transition-all duration-300 hover:border-brand-accent/30 group"
+                  className="liquid-glass p-4 rounded-xl text-left hover:-translate-y-1 transition-all duration-300 hover:border-brand-accent/30 group"
                   style={{ animationDelay: `${i * 100}ms` }}
                 >
                   <p className="text-sm font-sans text-text-secondary group-hover:text-text-primary transition-colors">
@@ -439,7 +439,7 @@ export function ChatTab() {
               <div
                 className={`group relative ${
                   message.role === "user"
-                    ? "glass-subtle rounded-2xl px-4 py-3 ml-auto"
+                    ? "liquid-glass rounded-2xl px-4 py-3 ml-auto"
                     : "rounded-lg"
                 }`}
               >
@@ -447,7 +447,7 @@ export function ChatTab() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity glass-subtle"
+                    className="absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity liquid-glass"
                   >
                     <PhCopy className="w-4 h-4" />
                   </Button>
@@ -467,19 +467,11 @@ export function ChatTab() {
                         }: any) {
                           const match = /language-(\w+)/.exec(className || "");
                           return !inline && match ? (
-                            <SyntaxHighlighter
-                              style={vscDarkPlus}
-                              language={match[1]}
-                              PreTag="div"
-                              customStyle={{
-                                background: "var(--cosmic-deep)",
-                                borderRadius: "0.5rem",
-                                border: "1px solid rgba(127, 255, 212, 0.12)",
-                              }}
-                              {...props}
-                            >
-                              {String(children).replace(/\n$/, "")}
-                            </SyntaxHighlighter>
+                            <Suspense fallback={<pre className="p-3 rounded bg-cosmic-deep text-sm overflow-x-auto border border-atlantean-teal-aqua/10"><code>{String(children).replace(/\n$/, "")}</code></pre>}>
+                              <LazyCodeBlock language={match[1]}>
+                                {String(children).replace(/\n$/, "")}
+                              </LazyCodeBlock>
+                            </Suspense>
                           ) : (
                             <code
                               className="bg-cosmic-deep px-1.5 py-0.5 rounded text-brand-accent font-mono text-sm"
@@ -568,7 +560,7 @@ export function ChatTab() {
       </div>
 
       {/* Input Area */}
-      <div className="glass-strong border-t border-white/5 px-6 py-4">
+      <div className="glass-strong border-t border-white/[0.04] px-6 py-4">
         <div className="max-w-4xl mx-auto">
           <div className="liquid-glass rounded-2xl p-2 focus-within:border-brand-accent/50 transition-all">
             <div className="flex items-end gap-2">

@@ -82,7 +82,7 @@ export default function PrivacyPage() {
         </header>
 
         {/* Divider */}
-        <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-8" />
+        <div className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent mb-8" />
 
         {/* Content */}
         <article className="font-body">
@@ -97,7 +97,7 @@ export default function PrivacyPage() {
           {/* 1. Information We Collect */}
           <SectionHeading>1. Information We Collect</SectionHeading>
 
-          <h3 className="text-lg font-display font-semibold text-white/90 mt-6 mb-3">
+          <h3 className="text-lg font-display font-semibold text-white/[0.70] mt-6 mb-3">
             Account Information
           </h3>
           <Paragraph>
@@ -113,7 +113,7 @@ export default function PrivacyPage() {
             ]}
           />
 
-          <h3 className="text-lg font-display font-semibold text-white/90 mt-6 mb-3">
+          <h3 className="text-lg font-display font-semibold text-white/[0.70] mt-6 mb-3">
             Creations and Content
           </h3>
           <Paragraph>
@@ -123,7 +123,7 @@ export default function PrivacyPage() {
             association, and tags you apply.
           </Paragraph>
 
-          <h3 className="text-lg font-display font-semibold text-white/90 mt-6 mb-3">
+          <h3 className="text-lg font-display font-semibold text-white/[0.70] mt-6 mb-3">
             Activity and Usage Data
           </h3>
           <Paragraph>
@@ -242,7 +242,7 @@ export default function PrivacyPage() {
           </Paragraph>
 
           <div className="space-y-4 mb-6">
-            <div className="rounded-xl bg-cosmic-surface/30 border border-white/10 p-5">
+            <div className="rounded-xl liquid-glass p-5">
               <h4 className="font-display font-semibold text-white mb-1">
                 Google Gemini
               </h4>
@@ -261,7 +261,7 @@ export default function PrivacyPage() {
               </p>
             </div>
 
-            <div className="rounded-xl bg-cosmic-surface/30 border border-white/10 p-5">
+            <div className="rounded-xl liquid-glass p-5">
               <h4 className="font-display font-semibold text-white mb-1">
                 Anthropic Claude
               </h4>
@@ -279,7 +279,7 @@ export default function PrivacyPage() {
               </p>
             </div>
 
-            <div className="rounded-xl bg-cosmic-surface/30 border border-white/10 p-5">
+            <div className="rounded-xl liquid-glass p-5">
               <h4 className="font-display font-semibold text-white mb-1">
                 Supabase
               </h4>
@@ -297,7 +297,7 @@ export default function PrivacyPage() {
               </p>
             </div>
 
-            <div className="rounded-xl bg-cosmic-surface/30 border border-white/10 p-5">
+            <div className="rounded-xl liquid-glass p-5">
               <h4 className="font-display font-semibold text-white mb-1">
                 Vercel
               </h4>
@@ -359,7 +359,7 @@ export default function PrivacyPage() {
             If you have questions about this Privacy Policy, your data, or your rights,
             reach out to us:
           </Paragraph>
-          <div className="rounded-xl bg-cosmic-surface/30 border border-white/10 p-6 mb-8">
+          <div className="rounded-xl liquid-glass p-6 mb-8">
             <p className="text-text-secondary mb-2">
               <span className="text-white font-semibold">Email:</span>{' '}
               <a
@@ -383,7 +383,7 @@ export default function PrivacyPage() {
         </article>
 
         {/* Footer divider */}
-        <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mt-12 mb-8" />
+        <div className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent mt-12 mb-8" />
 
         <footer className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-text-muted">
           <p>Arcanea &mdash; Build Your Universe</p>

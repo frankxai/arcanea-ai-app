@@ -172,7 +172,7 @@ export function LibraryTab() {
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <header className="glass border-b border-white/5 px-6 py-4">
+      <header className="liquid-glass border-b border-white/[0.04] px-6 py-4">
         <div>
           <h2 className="text-2xl font-display text-text-primary mb-1">
             Knowledge Library
@@ -192,7 +192,7 @@ export function LibraryTab() {
               return (
                 <div
                   key={collection.id}
-                  className="glass rounded-xl p-6 hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 cursor-pointer group animate-fade-in-up relative overflow-hidden"
+                  className="liquid-glass rounded-xl p-6 hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 cursor-pointer group animate-fade-in-up relative overflow-hidden"
                   style={{
                     animationDelay: `${index * 50}ms`,
                     boxShadow: "none",
@@ -216,7 +216,7 @@ export function LibraryTab() {
                       >
                         <Icon className="w-6 h-6 text-text-primary" />
                       </div>
-                      <div className="glass-subtle px-2.5 py-1 rounded-full">
+                      <div className="liquid-glass px-2.5 py-1 rounded-full">
                         <span className="text-xs font-sans font-medium text-brand-accent">
                           {collection.count}
                         </span>

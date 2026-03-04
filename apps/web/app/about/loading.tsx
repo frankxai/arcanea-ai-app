@@ -11,25 +11,6 @@ export default function AboutLoading() {
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_top_left,rgba(127,255,212,0.15),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(245,158,11,0.1),transparent_50%)]" />
       </div>
 
-      {/* Navigation Skeleton */}
-      <nav className="sticky top-0 z-50 border-b border-white/5 bg-cosmic-deep/80 backdrop-blur-xl">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Skeleton variant="rect" className="w-10 h-10 rounded-xl" />
-              <Skeleton variant="text" className="w-24 h-6" />
-            </div>
-            <div className="hidden md:flex items-center gap-8">
-              <Skeleton variant="text" className="w-16 h-4" />
-              <Skeleton variant="text" className="w-16 h-4" />
-              <Skeleton variant="text" className="w-16 h-4" />
-              <Skeleton variant="text" className="w-16 h-4" />
-              <Skeleton variant="rect" className="w-32 h-9 rounded-lg" />
-            </div>
-          </div>
-        </div>
-      </nav>
-
       <main className="max-w-7xl mx-auto px-6">
         {/* Hero Skeleton */}
         <section className="pt-20 pb-16">
@@ -43,13 +24,13 @@ export default function AboutLoading() {
         </section>
 
         {/* Cards Skeleton */}
-        <section className="py-16 border-t border-white/5">
+        <section className="py-16 border-t border-white/[0.04]">
           <Skeleton variant="text" className="w-64 h-8 mb-8" />
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[1, 2, 3, 4].map((i) => (
               <div
                 key={i}
-                className="p-6 rounded-2xl border border-white/10 bg-cosmic-surface/30"
+                className="p-6 rounded-2xl border border-white/[0.06] liquid-glass"
               >
                 <Skeleton variant="text" className="w-24 h-3 mb-3" />
                 <Skeleton variant="text" className="w-full h-6 mb-2" />

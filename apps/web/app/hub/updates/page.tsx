@@ -140,13 +140,13 @@ export default function UpdatesPage() {
 
           {/* Filter buttons */}
           <div className="flex flex-wrap gap-2 mt-6">
-            <button className="px-4 py-2 rounded-lg bg-white/10 text-white text-sm font-medium hover:bg-white/20 transition-colors">
+            <button className="px-4 py-2 rounded-lg bg-white/[0.06] text-white text-sm font-medium hover:bg-white/[0.12] transition-colors">
               All
             </button>
             {Object.entries(TYPE_CONFIG).map(([type, config]) => (
               <button
                 key={type}
-                className="px-4 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/10"
+                className="px-4 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/[0.06]"
                 style={{ color: config.color }}
               >
                 {config.icon} {config.label}
@@ -164,12 +164,12 @@ export default function UpdatesPage() {
                 <div className="text-lg font-display font-semibold text-atlantean-teal-aqua">
                   {formatDate(date)}
                 </div>
-                <div className="flex-1 h-px bg-white/10" />
+                <div className="flex-1 h-px bg-white/[0.06]" />
                 <div className="text-sm text-text-muted font-mono">{date}</div>
               </div>
 
               {/* Updates for this date */}
-              <div className="space-y-4 pl-4 border-l-2 border-white/10">
+              <div className="space-y-4 pl-4 border-l-2 border-white/[0.06]">
                 {updates.map((update) => {
                   const typeConfig = TYPE_CONFIG[update.type as keyof typeof TYPE_CONFIG];
 
@@ -185,7 +185,7 @@ export default function UpdatesPage() {
                       />
 
                       {/* Content card */}
-                      <div className="p-5 rounded-xl border border-white/10 bg-cosmic-surface/30 hover:border-white/20 transition-all">
+                      <div className="p-5 rounded-xl liquid-glass hover:border-white/[0.12] transition-all">
                         {/* Header */}
                         <div className="flex items-start justify-between mb-3">
                           <div className="flex items-center gap-2">
@@ -221,7 +221,7 @@ export default function UpdatesPage() {
                           {update.tags.map((tag) => (
                             <span
                               key={tag}
-                              className="px-2 py-1 rounded-md text-xs bg-white/5 text-text-muted"
+                              className="px-2 py-1 rounded-md text-xs bg-white/[0.04] text-text-muted"
                             >
                               #{tag}
                             </span>
@@ -238,7 +238,7 @@ export default function UpdatesPage() {
 
         {/* Load More */}
         <div className="mt-12 text-center">
-          <button className="px-6 py-3 rounded-xl border border-white/20 text-white hover:bg-white/5 transition-colors">
+          <button className="px-6 py-3 rounded-xl border border-white/[0.12] text-white hover:bg-white/[0.04] transition-colors">
             Load older updates
           </button>
         </div>
@@ -254,7 +254,7 @@ export default function UpdatesPage() {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal-aqua"
+                className="flex-1 px-4 py-3 rounded-xl bg-white/[0.06] border border-white/[0.12] text-white placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal-aqua"
               />
               <button className="px-6 py-3 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep font-semibold hover:shadow-[0_0_20px_rgba(127,255,212,0.4)] transition-all">
                 Subscribe

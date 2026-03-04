@@ -299,7 +299,7 @@ export default function ContactPage() {
                     </Link>
                     <Link
                       href="/community"
-                      className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
+                      className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
                     >
                       Join Community
                       <Icons.ChevronRight />
@@ -332,7 +332,7 @@ export default function ContactPage() {
                       href={method.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group relative glass rounded-2xl p-6 overflow-hidden glow-card hover-lift transition-all"
+                      className="group relative card-3d liquid-glass rounded-2xl p-6 overflow-hidden glow-card hover-lift transition-all"
                     >
                       <div
                         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"
@@ -368,7 +368,7 @@ export default function ContactPage() {
 
             {/* Contact Form */}
             <section id="contact-form" className="mb-16">
-              <div className="glass rounded-2xl p-8">
+              <div className="liquid-glass rounded-2xl p-8">
                 <h2 className="font-display text-2xl font-semibold text-text-primary mb-6 text-center">
                   Send a Message
                 </h2>
@@ -406,7 +406,7 @@ export default function ContactPage() {
                         onChange={(e) =>
                           setFormData({ ...formData, name: e.target.value })
                         }
-                        className="w-full px-4 py-3 rounded-xl bg-cosmic-void/50 border border-white/10 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-brand-primary/50 focus:ring-1 focus:ring-brand-primary/50 transition-all"
+                        className="w-full px-4 py-3 rounded-xl bg-cosmic-void/50 border border-white/[0.06] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-brand-primary/50 focus:ring-1 focus:ring-brand-primary/50 transition-all"
                         placeholder="Your name"
                       />
                     </div>
@@ -425,7 +425,7 @@ export default function ContactPage() {
                         onChange={(e) =>
                           setFormData({ ...formData, email: e.target.value })
                         }
-                        className="w-full px-4 py-3 rounded-xl bg-cosmic-void/50 border border-white/10 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-brand-primary/50 focus:ring-1 focus:ring-brand-primary/50 transition-all"
+                        className="w-full px-4 py-3 rounded-xl bg-cosmic-void/50 border border-white/[0.06] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-brand-primary/50 focus:ring-1 focus:ring-brand-primary/50 transition-all"
                         placeholder="your@email.com"
                       />
                     </div>
@@ -444,7 +444,7 @@ export default function ContactPage() {
                         onChange={(e) =>
                           setFormData({ ...formData, message: e.target.value })
                         }
-                        className="w-full px-4 py-3 rounded-xl bg-cosmic-void/50 border border-white/10 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-brand-primary/50 focus:ring-1 focus:ring-brand-primary/50 transition-all resize-none"
+                        className="w-full px-4 py-3 rounded-xl bg-cosmic-void/50 border border-white/[0.06] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-brand-primary/50 focus:ring-1 focus:ring-brand-primary/50 transition-all resize-none"
                         placeholder="Your message..."
                       />
                     </div>
@@ -462,7 +462,7 @@ export default function ContactPage() {
 
             {/* FAQ */}
             <section className="mb-16">
-              <div className="glass rounded-2xl p-8">
+              <div className="liquid-glass rounded-2xl p-8">
                 <h2 className="font-display text-2xl font-semibold text-text-primary mb-6 text-center">
                   Frequently Asked Questions
                 </h2>
@@ -497,7 +497,7 @@ export default function ContactPage() {
                   </p>
                   <div className="flex flex-wrap justify-center gap-4">
                     <Link
-                      href="/register"
+                      href="/auth/signup"
                       className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200"
                     >
                       <Icons.Sparkles />

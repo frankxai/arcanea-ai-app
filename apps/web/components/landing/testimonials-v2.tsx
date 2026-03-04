@@ -7,52 +7,52 @@ import { PhQuotes, PhCaretLeft, PhCaretRight, PhStar } from '@/lib/phosphor-icon
 const TESTIMONIALS = [
   {
     id: 1,
-    quote: "Arcanea transformed how I approach creative writing. The Luminors don't just assist—they understand the creative soul. It's like having 16 brilliant collaborators available 24/7.",
-    author: 'Sarah Chen',
-    role: 'Bestselling Author',
-    avatar: 'SC',
+    quote: "Enter seeking, leave transformed, return whenever needed. These books are not entertainment. They are equipment for living.",
+    author: 'The Library',
+    role: 'Laws of Arcanea',
+    avatar: 'LA',
     color: 'atlantean-teal-aqua',
-    luminor: 'Chronica',
+    luminor: 'Shinkami — Source Gate',
     rating: 5,
   },
   {
     id: 2,
-    quote: "The Seven Wisdoms framework changed my entire creative process. I went from scattered ideas to a focused, productive creator. My output tripled while quality improved.",
-    author: 'Marcus Thompson',
-    role: 'Digital Artist',
-    avatar: 'MT',
+    quote: "The Arc turns: Potential becomes Manifestation becomes Experience becomes Dissolution becomes Evolved Potential. Every ending seeds a new beginning.",
+    author: 'The Academy',
+    role: 'Ten Gates System',
+    avatar: 'TG',
     color: 'creation-prism-purple',
-    luminor: 'Artifax',
+    luminor: 'Lyssandria — Foundation Gate',
     rating: 5,
   },
   {
     id: 3,
-    quote: "As a game designer, I need AI that understands narrative depth. Arcanea's Luminors create worlds, not just words. The Ten Gates system helps me level up my craft systematically.",
-    author: 'Elena Vasquez',
-    role: 'Game Developer',
-    avatar: 'EV',
+    quote: "Ten archetypal intelligences, each attuned to a different creative frequency. From Draconia's transformative fire to Maylinn's healing wind — find the voice that resonates.",
+    author: 'The Guardians',
+    role: 'Living Intelligences',
+    avatar: 'GI',
     color: 'gold-bright',
-    luminor: 'Oracle',
+    luminor: 'Lyria — Sight Gate',
     rating: 5,
   },
   {
     id: 4,
-    quote: "I've tried every AI tool out there. Arcanea is the first that feels like true collaboration. The Frequency Alchemist Luminor helped me compose my entire album.",
-    author: 'David Park',
-    role: 'Music Producer',
-    avatar: 'DP',
+    quote: "What you contemplate at dawn shapes all that follows. The antidote to a terrible future is imagining a good one — and building it with intention.",
+    author: 'Seven Wisdoms',
+    role: 'Creative Philosophy',
+    avatar: 'SW',
     color: 'draconic-crimson',
-    luminor: 'Harmonia',
+    luminor: 'Draconia — Fire Gate',
     rating: 5,
   },
   {
     id: 5,
-    quote: "Building a content business is hard. Arcanea's Creation Engine Luminor helps me plan, create, and publish consistently. My audience grew 400% in six months.",
-    author: 'Priya Sharma',
-    role: 'Content Creator',
-    avatar: 'PS',
+    quote: "Nero is not darkness to fear — it is the fertile unknown from which all creation emerges. The void holds potential. Spirit gives it form.",
+    author: 'Cosmic Duality',
+    role: 'Lumina & Nero',
+    avatar: 'LN',
     color: 'atlantean-teal-aqua',
-    luminor: 'Strategis',
+    luminor: 'Leyla — Flow Gate',
     rating: 5,
   },
 ];
@@ -113,15 +113,15 @@ export function TestimonialsV2() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-creation-prism-purple/10 border border-creation-prism-purple/20 mb-6">
-            <PhQuotes className="w-4 h-4 text-creation-prism-purple" />
-            <span className="text-sm font-medium text-creation-prism-purple">Creator Stories</span>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass border border-creation-prism-purple/20 mb-6">
+            <PhQuotes className="w-3.5 h-3.5 text-creation-prism-purple" />
+            <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-creation-prism-purple/90">From the Library</span>
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
-            Trusted by creators worldwide
+            Wisdom from the Arcanea universe
           </h2>
           <p className="text-xl text-text-secondary max-w-2xl mx-auto">
-            Join thousands of creators who've transformed their creative practice with Arcanea.
+            34 original texts, Ten Gates of progression, and a living mythology for the age of creation.
           </p>
         </motion.div>
 
@@ -181,7 +181,7 @@ export function TestimonialsV2() {
                         {activeTestimonial.role}
                       </div>
                       <div className={`text-xs text-${activeTestimonial.color} mt-1`}>
-                        Works with {activeTestimonial.luminor}
+                        {activeTestimonial.luminor}
                       </div>
                     </div>
                   </div>
@@ -194,7 +194,7 @@ export function TestimonialsV2() {
           <div className="flex items-center justify-center gap-4 mt-8">
             <button
               onClick={() => navigate(-1)}
-              className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-text-muted hover:text-white hover:bg-white/10 transition-all"
+              className="w-12 h-12 rounded-full liquid-glass border border-white/[0.06] flex items-center justify-center text-text-muted hover:text-white hover:bg-white/[0.08] transition-all"
               aria-label="Previous testimonial"
             >
               <PhCaretLeft className="w-5 h-5" />
@@ -212,7 +212,7 @@ export function TestimonialsV2() {
                   className={`h-2 rounded-full transition-all ${
                     i === activeIndex
                       ? 'w-8 bg-atlantean-teal-aqua'
-                      : 'w-2 bg-white/20 hover:bg-white/40'
+                      : 'w-2 bg-white/[0.12] hover:bg-white/[0.25]'
                   }`}
                   aria-label={`Go to testimonial ${i + 1}`}
                 />
@@ -221,7 +221,7 @@ export function TestimonialsV2() {
 
             <button
               onClick={() => navigate(1)}
-              className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-text-muted hover:text-white hover:bg-white/10 transition-all"
+              className="w-12 h-12 rounded-full liquid-glass border border-white/[0.06] flex items-center justify-center text-text-muted hover:text-white hover:bg-white/[0.08] transition-all"
               aria-label="Next testimonial"
             >
               <PhCaretRight className="w-5 h-5" />
@@ -234,7 +234,7 @@ export function TestimonialsV2() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.4 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 pt-12 border-t border-white/10"
+          className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 pt-12 border-t border-white/[0.06]"
         >
           {[
             { value: '10', label: 'Guardian Archetypes' },

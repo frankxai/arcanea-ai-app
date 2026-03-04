@@ -38,7 +38,7 @@ const ACTION_COLORS: Record<string, string> = {
   like: 'text-pink-400 bg-pink-400/10',
   follow: 'text-cyan-400 bg-cyan-400/10',
   create: 'text-violet-400 bg-violet-400/10',
-  view: 'text-white/60 bg-white/5',
+  view: 'text-white/[0.40] bg-white/[0.04]',
   favorite: 'text-amber-400 bg-amber-400/10',
   default: 'text-violet-400 bg-violet-400/10',
 };
@@ -87,7 +87,7 @@ export default function ActivityPage() {
   useEffect(() => {
     if (authLoading) return;
     if (!user) {
-      setIsLoading(false);
+      router.push('/auth/login?next=/activity');
       return;
     }
 
@@ -127,10 +127,10 @@ export default function ActivityPage() {
   if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
-        <div className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl p-8 text-center max-w-md">
-          <Lightning className="w-12 h-12 text-white/40 mx-auto mb-4" weight="duotone" />
+        <div className="bg-black/40 backdrop-blur-xl border border-white/[0.06] rounded-2xl p-8 text-center max-w-md">
+          <Lightning className="w-12 h-12 text-white/[0.25] mx-auto mb-4" weight="duotone" />
           <h1 className="text-2xl font-display font-bold text-white mb-2">Sign in Required</h1>
-          <p className="text-white/60 font-body mb-6">Sign in to view your activity feed.</p>
+          <p className="text-white/[0.40] font-body mb-6">Sign in to view your activity feed.</p>
           <button
             onClick={() => router.push('/auth/login')}
             className="bg-violet-600 hover:bg-violet-500 text-white rounded-xl px-6 py-3 font-body transition-colors"
@@ -155,7 +155,7 @@ export default function ActivityPage() {
             <Lightning className="w-8 h-8 text-violet-400" weight="duotone" />
             <h1 className="text-3xl font-display font-bold text-white">Activity</h1>
           </div>
-          <p className="text-white/60 font-body">Your recent actions and events.</p>
+          <p className="text-white/[0.40] font-body">Your recent actions and events.</p>
         </motion.div>
 
         {/* Error state */}
@@ -175,11 +175,11 @@ export default function ActivityPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl p-12 text-center"
+            className="bg-black/40 backdrop-blur-xl border border-white/[0.06] rounded-2xl p-12 text-center"
           >
             <Sparkle className="w-16 h-16 text-violet-400/40 mx-auto mb-4" weight="duotone" />
             <h2 className="text-xl font-display font-bold text-white mb-2">Your journey begins here</h2>
-            <p className="text-white/60 font-body mb-6 max-w-sm mx-auto">
+            <p className="text-white/[0.40] font-body mb-6 max-w-sm mx-auto">
               Create something to see your activity. Every creation, like, and follow will appear in your feed.
             </p>
             <button
@@ -205,7 +205,7 @@ export default function ActivityPage() {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.03 }}
-                  className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl p-4 flex items-center gap-4"
+                  className="bg-black/40 backdrop-blur-xl border border-white/[0.06] rounded-2xl p-4 flex items-center gap-4"
                 >
                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${colorClass}`}>
                     <Icon className="w-5 h-5" weight="duotone" />
@@ -216,13 +216,13 @@ export default function ActivityPage() {
                       {getActionDescription(item)}
                     </p>
                     {item.entity_type && (
-                      <p className="text-white/40 font-body text-sm truncate">
+                      <p className="text-white/[0.25] font-body text-sm truncate">
                         {item.entity_type}
                       </p>
                     )}
                   </div>
 
-                  <div className="flex items-center gap-1 text-white/40 flex-shrink-0">
+                  <div className="flex items-center gap-1 text-white/[0.25] flex-shrink-0">
                     <Clock className="w-4 h-4" weight="duotone" />
                     <span className="text-sm font-body whitespace-nowrap">
                       {formatRelativeTime(item.created_at)}

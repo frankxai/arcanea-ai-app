@@ -18,12 +18,12 @@ const RANKS = [
       'Beginning the journey. Learning the foundations of creation.',
     detail:
       'Every Luminor was once an Apprentice. At this stage you are learning to hear the Gates — to sense the elemental currents that already move through you. The work is not yet mastery; it is attunement.',
-    glassClass: 'glass-subtle',
+    glassClass: 'liquid-glass',
     glowColor: 'rgba(107,114,128,0.2)',
     glowBorder: 'rgba(107,114,128,0.25)',
     accentColor: '#6b7280',
     textColor: 'text-text-muted',
-    badgeClass: 'bg-white/8 text-text-muted border-white/15',
+    badgeClass: 'bg-white/[0.08] text-text-muted border-white/[0.10]',
     icon: PhStar,
     glowIntensity: 1,
     numberStyle: 'text-text-muted',
@@ -37,7 +37,7 @@ const RANKS = [
       'Developing power. The elements begin to respond to your will.',
     detail:
       'As a Mage you have crossed the halfway point of the lower Gates. Your practice is consistent, your creative voice is identifiable, and the tools of your craft respond with growing fluency. You know why you create.',
-    glassClass: 'glass',
+    glassClass: 'liquid-glass',
     glowColor: 'rgba(59,130,246,0.2)',
     glowBorder: 'rgba(59,130,246,0.3)',
     accentColor: '#78a6ff',
@@ -327,7 +327,7 @@ export function RanksPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35 }}
-            className="text-xl md:text-2xl font-crimson italic text-text-secondary max-w-2xl mx-auto mb-4"
+            className="text-xl md:text-2xl font-body italic text-text-secondary max-w-2xl mx-auto mb-4"
           >
             Five ranks. Ten Gates. One eternal ascent.
           </motion.p>
@@ -403,7 +403,7 @@ export function RanksPage() {
       </section>
 
       {/* ── What is a Luminor? ─────────────────────────────────────────── */}
-      <section ref={luminorRef} className="py-16 px-6 border-t border-white/5">
+      <section ref={luminorRef} className="py-16 px-6 border-t border-white/[0.04]">
         <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 32 }}
@@ -438,7 +438,7 @@ export function RanksPage() {
 
               {/* Core truth */}
               <div className="border-l-2 border-crystal/40 pl-6 mb-8">
-                <p className="font-crimson text-xl italic text-white/90 leading-relaxed">
+                <p className="font-body text-xl italic text-white/[0.70] leading-relaxed">
                   "Luminor is not a type of being. It is the highest rank of magical
                   attainment — the state that emerges when all ten Gates stand open."
                 </p>
@@ -446,7 +446,7 @@ export function RanksPage() {
 
               {/* Explanation blocks */}
               <div className="grid md:grid-cols-2 gap-6 mb-8">
-                <div className="glass-subtle rounded-2xl p-6">
+                <div className="liquid-glass rounded-2xl p-6">
                   <h3 className="font-display text-base font-semibold text-crystal mb-3">
                     Not an Entity Type
                   </h3>
@@ -457,7 +457,7 @@ export function RanksPage() {
                   </p>
                 </div>
 
-                <div className="glass-subtle rounded-2xl p-6">
+                <div className="liquid-glass rounded-2xl p-6">
                   <h3 className="font-display text-base font-semibold text-brand-gold mb-3">
                     Open to All Beings
                   </h3>
@@ -468,7 +468,7 @@ export function RanksPage() {
                   </p>
                 </div>
 
-                <div className="glass-subtle rounded-2xl p-6">
+                <div className="liquid-glass rounded-2xl p-6">
                   <h3 className="font-display text-base font-semibold text-white mb-3">
                     Gates 9 and 10
                   </h3>
@@ -479,7 +479,7 @@ export function RanksPage() {
                   </p>
                 </div>
 
-                <div className="glass-subtle rounded-2xl p-6">
+                <div className="liquid-glass rounded-2xl p-6">
                   <h3 className="font-display text-base font-semibold text-brand-primary mb-3">
                     What Changes
                   </h3>
@@ -493,7 +493,7 @@ export function RanksPage() {
 
               {/* Closing quote */}
               <div className="text-center">
-                <p className="font-crimson text-base italic text-text-muted">
+                <p className="font-body text-base italic text-text-muted">
                   "Every being contains all Ten Gates. Every being can awaken. Every being can become Luminor."
                 </p>
                 <p className="text-xs text-text-muted font-sans mt-2">
@@ -506,7 +506,7 @@ export function RanksPage() {
       </section>
 
       {/* ── CTA ────────────────────────────────────────────────────────── */}
-      <section ref={ctaRef} className="py-24 px-6 border-t border-white/5">
+      <section ref={ctaRef} className="py-24 px-6 border-t border-white/[0.04]">
         <div className="max-w-2xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -530,7 +530,7 @@ export function RanksPage() {
               </Link>
               <Link
                 href="/academy"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-white/20 text-white font-semibold hover:bg-white/5 transition-all"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-white/[0.12] text-white font-semibold hover:bg-white/[0.04] transition-all"
               >
                 Back to Academy
               </Link>

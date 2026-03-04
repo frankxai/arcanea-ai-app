@@ -79,17 +79,20 @@ export function LoreCTA() {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
-              href="/register"
-              className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-atlantean-teal-aqua to-creation-prism-purple text-cosmic-deep font-semibold text-lg hover:shadow-glow-lg transition-all"
+              href="/auth/signup"
+              className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-semibold text-lg overflow-hidden btn-glow text-cosmic-deep transition-all"
             >
-              <Icons.Sparkles />
-              Begin Your Journey
-              <Icons.ArrowRight className="group-hover:translate-x-1 transition-transform" />
+              <div className="absolute inset-0 bg-gradient-to-r from-atlantean-teal-aqua to-creation-prism-purple" />
+              <span className="relative z-10 flex items-center gap-3">
+                <Icons.Sparkles />
+                Start Creating
+                <Icons.ArrowRight className="group-hover:translate-x-1 transition-transform" />
+              </span>
             </Link>
 
             <Link
               href="/library/legends-of-arcanea/i-the-first-dawn"
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl border border-white/20 text-white font-semibold text-lg hover:bg-white/5 transition-all"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl liquid-glass border border-white/[0.10] text-white font-semibold text-lg hover:bg-white/[0.06] hover:border-white/[0.15] transition-all duration-300"
             >
               <Icons.Play />
               Read the First Legend

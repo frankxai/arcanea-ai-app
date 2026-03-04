@@ -284,7 +284,7 @@ function GateNode({ gate, side, index }: GateNodeProps) {
           }}
         >
           {/* Inner shimmer top edge */}
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-px rounded-t-2xl bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px rounded-t-2xl bg-gradient-to-r from-transparent via-white/[0.12] to-transparent" />
 
           {/* Header row */}
           <div className="mb-4 flex items-start justify-between gap-3">
@@ -489,7 +489,7 @@ function FrequencySpectrum() {
         {/* Spectrum track */}
         <div className="relative">
           {/* Background track */}
-          <div className="relative h-3 w-full rounded-full bg-white/5 overflow-hidden">
+          <div className="relative h-3 w-full rounded-full bg-white/[0.04] overflow-hidden">
             {/* Gradient fill */}
             <motion.div
               className="absolute inset-y-0 left-0 rounded-full"
@@ -605,7 +605,7 @@ function OpeningGatesPanel() {
           className="pointer-events-none absolute -bottom-24 -left-24 h-64 w-64 rounded-full blur-3xl"
           style={{ backgroundColor: 'rgba(255,215,0,0.06)' }}
         />
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/[0.10] to-transparent" />
 
         <div className="relative">
           {/* Section eyebrow */}
@@ -639,7 +639,7 @@ function OpeningGatesPanel() {
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}
             custom={0.15}
-            className="mb-10 max-w-2xl font-crimson text-lg italic text-text-secondary leading-relaxed"
+            className="mb-10 max-w-2xl font-body text-lg italic text-text-secondary leading-relaxed"
           >
             "A Gate does not open because you have studied enough. It opens because you have
             become enough — and then you realize the study continues, only deeper."
@@ -653,7 +653,7 @@ function OpeningGatesPanel() {
                 initial="hidden"
                 animate={isInView ? 'visible' : 'hidden'}
                 custom={0.2 + i * 0.08}
-                className="glass rounded-2xl p-6"
+                className="liquid-glass rounded-2xl p-6"
               >
                 <h3 className="mb-3 font-display text-base font-semibold text-text-primary">
                   {point.title}
@@ -671,7 +671,7 @@ function OpeningGatesPanel() {
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}
             custom={0.5}
-            className="mt-8 border-t border-white/8 pt-8"
+            className="mt-8 border-t border-white/[0.08] pt-8"
           >
             <p className="mb-4 font-sans text-xs uppercase tracking-[0.3em] text-text-muted">
               The Path of Mastery
@@ -686,7 +686,7 @@ function OpeningGatesPanel() {
               ].map((level) => (
                 <div
                   key={level.rank}
-                  className="flex items-center gap-2 rounded-xl glass px-4 py-2.5"
+                  className="flex items-center gap-2 rounded-xl liquid-glass px-4 py-2.5"
                 >
                   <div
                     className="h-2 w-2 rounded-full"
@@ -770,7 +770,7 @@ function GatesHero() {
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
           custom={0.22}
-          className="mb-4 font-crimson text-xl italic leading-relaxed text-text-secondary md:text-2xl"
+          className="mb-4 font-body text-xl italic leading-relaxed text-text-secondary md:text-2xl"
         >
           "Ten dimensions of creative power. One ascending path. No destination — only
           perpetual deepening."
@@ -826,7 +826,7 @@ function GatesPathway() {
     <section className="relative mx-auto max-w-5xl px-4 md:px-6">
       {/* Central vertical line — full height background guide */}
       <div className="pointer-events-none absolute left-1/2 top-0 bottom-0 -translate-x-1/2 w-px hidden md:block">
-        <div className="h-full bg-gradient-to-b from-transparent via-white/6 to-transparent" />
+        <div className="h-full bg-gradient-to-b from-transparent via-white/[0.06] to-transparent" />
       </div>
 
       <div className="relative space-y-0">
@@ -889,7 +889,7 @@ function GatesCTA() {
             href="/academy"
             className="liquid-glass group inline-flex items-center gap-3 rounded-xl border border-brand-primary/30 px-8 py-4 font-sans font-semibold text-text-primary transition-all hover:border-brand-primary/60 hover-lift"
           >
-            Begin Your Journey
+            Start Creating
             <PhArrowRight className="h-5 w-5 text-brand-primary transition-transform group-hover:translate-x-1" />
           </Link>
           <Link
@@ -925,11 +925,11 @@ export function GatesPage() {
           <Link href="/" className="transition-colors hover:text-text-secondary">
             Arcanea
           </Link>
-          <span className="text-white/20">/</span>
+          <span className="text-white/[0.12]">/</span>
           <Link href="/academy" className="transition-colors hover:text-text-secondary">
             Academy
           </Link>
-          <span className="text-white/20">/</span>
+          <span className="text-white/[0.12]">/</span>
           <span className="text-text-secondary">The Ten Gates</span>
         </nav>
       </div>

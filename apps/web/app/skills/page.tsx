@@ -98,7 +98,7 @@ export default function SkillsLandingPage() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 border-y border-white/10">
+      <section className="py-20 border-y border-white/[0.06]">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
@@ -270,7 +270,7 @@ export default function SkillsLandingPage() {
               <span className="text-atlantean-teal">Arcanea gives you transformation.</span>"
             </blockquote>
             <p className="text-text-secondary">
-              Built on mythological wisdom, battle-tested creative frameworks, and the philosophy that the best work emerges from the synthesis of human vision and AI capability.
+              Built on original creative philosophy, battle-tested frameworks, and the principle that the best work emerges from the synthesis of human vision and AI capability.
             </p>
           </TextReveal>
         </div>
@@ -324,12 +324,6 @@ export default function SkillsLandingPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-8 border-t border-white/10">
-        <div className="max-w-6xl mx-auto px-6 text-center text-text-muted text-sm">
-          <p>Made with ✧ by Arcanea • MIT License • <Link href="https://github.com/frankxai/arcanea" className="text-atlantean-teal hover:underline">GitHub</Link></p>
-        </div>
-      </footer>
     </div>
   );
 }

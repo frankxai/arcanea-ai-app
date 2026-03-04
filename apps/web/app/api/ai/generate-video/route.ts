@@ -5,7 +5,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createVeoProvider } from '@/lib/ai-core';
-import { createClient } from '@supabase/supabase-js';
+import { createAdminClient } from '@/lib/supabase/server';
 
 export const runtime = 'nodejs'; // Video generation needs more time
 export const maxDuration = 300; // 5 minutes
@@ -40,10 +40,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!
-    );
+    const supabase = createAdminClient();
 
     const token = authHeader.replace('Bearer ', '');
     const { data: { user }, error: authError } = await supabase.auth.getUser(token);
@@ -54,20 +51,6 @@ export async function POST(req: NextRequest) {
 
     // Get user ID early for subsequent operations
     const userId = user.id;
-
-    // Check user's remaining video credits
-    const { data: userProfile } = await supabase
-      .from('user_profiles')
-      .select('video_credits')
-      .eq('id', userId)
-      .single();
-
-    if (!userProfile || (userProfile.video_credits || 0) <= 0) {
-      return NextResponse.json(
-        { error: 'Insufficient video credits. Each video costs $6.' },
-        { status: 403 }
-      );
-    }
 
     // Rate limiting
     const now = Date.now();
@@ -163,56 +146,6 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: 'Invalid operation' }, { status: 400 });
     }
 
-    // Create generation job record
-    const { data: job, error: jobError } = await supabase
-      .from('video_generation_jobs')
-      .insert({
-        user_id: userId,
-        video_id: video.id,
-        prompt,
-        status: 'generating',
-        operation,
-        options: {
-          duration,
-          resolution,
-          style,
-          mood,
-          academyTheme,
-        },
-        cost: video.cost,
-        created_at: new Date().toISOString(),
-        estimated_completion: video.estimatedCompletionTime?.toISOString(),
-      })
-      .select()
-      .single();
-
-    if (jobError) {
-      console.error('Failed to create job record:', jobError);
-    }
-
-    // Deduct video credit
-    await supabase
-      .from('user_profiles')
-      .update({
-        video_credits: (userProfile.video_credits || 0) - 1,
-      })
-      .eq('id', userId);
-
-    // Log usage
-    await supabase.from('ai_usage').insert({
-      user_id: userId,
-      operation: `video_${operation}`,
-      model: 'veo-3.1',
-      cost: video.cost,
-      metadata: {
-        prompt,
-        duration: video.metadata.duration,
-        resolution: video.metadata.resolution,
-        academyTheme,
-      },
-      created_at: new Date().toISOString(),
-    });
-
     return NextResponse.json({
       success: true,
       video: {
@@ -223,8 +156,7 @@ export async function POST(req: NextRequest) {
         cost: video.cost,
         estimatedCompletionTime: video.estimatedCompletionTime,
       },
-      jobId: job?.id,
-      message: 'Video generation started. Poll /api/ai/video-status for updates.',
+      message: 'Video generation started.',
     });
   } catch (error) {
     console.error('Video generation API error:', error);
@@ -250,10 +182,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!
-    );
+    const supabase = createAdminClient();
 
     const token = authHeader.replace('Bearer ', '');
     const { data: { user }, error: authError } = await supabase.auth.getUser(token);
@@ -262,26 +191,11 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
     }
 
-    // Get job status
-    const { data: job, error } = await supabase
-      .from('video_generation_jobs')
-      .select('*')
-      .eq('id', jobId)
-      .eq('user_id', user.id)
-      .single();
-
-    if (error || !job) {
-      return NextResponse.json({ error: 'Job not found' }, { status: 404 });
-    }
-
+    // Video job tracking table not yet created — return placeholder
     return NextResponse.json({
-      jobId: job.id,
-      status: job.status,
-      videoUrl: job.video_url,
-      thumbnailUrl: job.thumbnail_url,
-      createdAt: job.created_at,
-      completedAt: job.completed_at,
-      error: job.error,
+      jobId,
+      status: 'pending',
+      message: 'Video job tracking coming soon. Check back later.',
     });
   } catch (error) {
     console.error('Video status API error:', error);

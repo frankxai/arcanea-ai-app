@@ -3,7 +3,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
-import { PhBookOpen, PhMusicNote, PhLightning, PhArrowRight } from '@/lib/phosphor-icons';
+import { PhScroll, PhMusicNote, PhFlame, PhArrowRight } from '@/lib/phosphor-icons';
 
 // ─── Frequency orb data ────────────────────────────────────────────────────
 
@@ -24,7 +24,7 @@ const FREQUENCY_ORBS = [
 
 const PILLARS = [
   {
-    icon: PhBookOpen,
+    icon: PhScroll,
     headline: "Build your mythology.",
     color: "crystal" as const,
     colorHex: "#7fffd4",
@@ -48,7 +48,7 @@ const PILLARS = [
       "Solfeggio frequencies. Guardian-guided sonic creation. Sound as a path to mastery.",
   },
   {
-    icon: PhLightning,
+    icon: PhFlame,
     headline: "Deploy your agents.",
     color: "brand-primary" as const,
     colorHex: "#8b5cf6",
@@ -57,7 +57,7 @@ const PILLARS = [
     iconBgClass: "from-brand-primary/20 to-brand-primary/5",
     iconColorClass: "text-brand-primary",
     description:
-      "16 Luminor Intelligences — Development, Creative, Writing, Research. Deploy the right specialist for every stage.",
+      "10 archetypal intelligences — each one a distinct creative philosophy. Deploy the right one for every stage.",
   },
 ] as const;
 
@@ -114,7 +114,7 @@ function FrequencySpine() {
         initial={{ scaleX: 0 }}
         animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
         transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
-        className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
+        className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.12] to-transparent"
         style={{ originX: 0 }}
       />
 
@@ -189,7 +189,7 @@ function PillarCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.6, delay: index * 0.15 }}
-      className={`group relative p-8 rounded-3xl liquid-glass border ${pillar.borderClass} ${pillar.glowClass} hover-lift transition-all duration-500`}
+      className={`group relative p-8 rounded-3xl border ${pillar.borderClass} ${pillar.glowClass} hover-lift transition-all duration-500 bg-white/[0.03]`}
     >
       {/* Subtle gradient layer on hover */}
       <div
@@ -293,7 +293,7 @@ function ArcMilestone({
         <span className="block text-xs text-text-muted mb-2">
           {milestone.gates}
         </span>
-        <span className="block text-xs text-text-secondary leading-snug italic font-crimson">
+        <span className="block text-xs text-text-secondary leading-snug italic font-body">
           {milestone.promise}
         </span>
       </motion.div>
@@ -309,7 +309,7 @@ export function IntelligenceOverlay() {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden border-t border-white/5"
+      className="relative overflow-hidden border-t border-white/[0.04]"
     >
       {/* ── Shared background ────────────────────────────────────── */}
       <div className="absolute inset-0 -z-10">
@@ -321,9 +321,9 @@ export function IntelligenceOverlay() {
           className="absolute inset-0"
           animate={{
             background: [
-              "radial-gradient(ellipse 80% 50% at 20% 30%, rgba(139,92,246,0.06) 0%, transparent 60%), radial-gradient(ellipse 60% 40% at 80% 70%, rgba(127,255,212,0.04) 0%, transparent 60%)",
-              "radial-gradient(ellipse 80% 50% at 40% 60%, rgba(127,255,212,0.06) 0%, transparent 60%), radial-gradient(ellipse 60% 40% at 60% 20%, rgba(255,215,0,0.03) 0%, transparent 60%)",
-              "radial-gradient(ellipse 80% 50% at 20% 30%, rgba(139,92,246,0.06) 0%, transparent 60%), radial-gradient(ellipse 60% 40% at 80% 70%, rgba(127,255,212,0.04) 0%, transparent 60%)",
+              "radial-gradient(ellipse 80% 50% at 20% 30%, rgba(13,71,161,0.07) 0%, transparent 60%), radial-gradient(ellipse 60% 40% at 80% 70%, rgba(0,188,212,0.05) 0%, transparent 60%)",
+              "radial-gradient(ellipse 80% 50% at 40% 60%, rgba(0,188,212,0.06) 0%, transparent 60%), radial-gradient(ellipse 60% 40% at 60% 20%, rgba(0,137,123,0.04) 0%, transparent 60%)",
+              "radial-gradient(ellipse 80% 50% at 20% 30%, rgba(13,71,161,0.07) 0%, transparent 60%), radial-gradient(ellipse 60% 40% at 80% 70%, rgba(0,188,212,0.05) 0%, transparent 60%)",
             ],
           }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
@@ -337,6 +337,8 @@ export function IntelligenceOverlay() {
             backgroundSize: "48px 48px",
           }}
         />
+        {/* Glass noise texture */}
+        <div className="absolute inset-0 glass-noise opacity-[0.15] pointer-events-none" />
       </div>
 
       {/* ── A: Moat Claim ───────────────────────────────────────── */}
@@ -364,9 +366,9 @@ export function IntelligenceOverlay() {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-black leading-[1.05] tracking-tight mb-6"
           >
-            <span className="text-gradient-cosmic">Every AI.</span>
+            <span className="text-gradient-cosmic">Specialists,</span>
             <br />
-            <span className="text-gradient-crystal">One intelligence.</span>
+            <span className="text-gradient-crystal">not generalists.</span>
           </motion.h2>
 
           {/* Sub-claim */}
@@ -375,9 +377,9 @@ export function IntelligenceOverlay() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.25 }}
-            className="text-xl text-text-secondary font-crimson italic mb-16"
+            className="text-xl text-text-secondary font-body italic mb-16"
           >
-            From Foundation to Source.
+            10 intelligences. Each built for a different creative domain.
           </motion.p>
 
           {/* Frequency spine */}
@@ -405,7 +407,7 @@ export function IntelligenceOverlay() {
       </div>
 
       {/* ── B: Scope Statement ──────────────────────────────────── */}
-      <div className="relative py-24 px-6 border-t border-white/5">
+      <div className="relative py-24 px-6 border-t border-white/[0.04]">
         <div className="max-w-6xl mx-auto">
           {/* Section label */}
           <motion.div
@@ -415,7 +417,7 @@ export function IntelligenceOverlay() {
             transition={{ duration: 0.5 }}
             className="text-center mb-16"
           >
-            <p className="text-lg text-text-secondary font-crimson italic">
+            <p className="text-lg text-text-secondary font-body italic">
               Build your mythology. Make your music. Deploy your agents.
             </p>
           </motion.div>
@@ -430,7 +432,7 @@ export function IntelligenceOverlay() {
       </div>
 
       {/* ── C: Arc Progression ──────────────────────────────────── */}
-      <div className="relative py-24 px-6 border-t border-white/5">
+      <div className="relative py-24 px-6 border-t border-white/[0.04]">
         <div className="max-w-6xl mx-auto">
           {/* Section header */}
           <motion.div
@@ -443,7 +445,7 @@ export function IntelligenceOverlay() {
             <h3 className="text-3xl md:text-4xl font-display font-bold mb-3">
               <span className="text-gradient-gold">From Foundation to Source.</span>
             </h3>
-            <p className="text-text-secondary font-crimson italic text-lg">
+            <p className="text-text-secondary font-body italic text-lg">
               A frequency journey through ten gates to creative sovereignty.
             </p>
           </motion.div>
@@ -469,7 +471,7 @@ export function IntelligenceOverlay() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="flex items-start gap-4 p-5 rounded-2xl glass border border-white/5"
+                className="flex items-start gap-4 p-5 rounded-2xl liquid-glass border border-white/[0.04]"
               >
                 {/* Dot */}
                 <div
@@ -496,7 +498,7 @@ export function IntelligenceOverlay() {
                   <span className="block text-xs text-text-muted mb-1.5">
                     {milestone.gates}
                   </span>
-                  <span className="block text-sm text-text-secondary leading-snug italic font-crimson">
+                  <span className="block text-sm text-text-secondary leading-snug italic font-body">
                     {milestone.promise}
                   </span>
                 </div>
@@ -514,7 +516,7 @@ export function IntelligenceOverlay() {
           >
             <Link
               href="/academy/gate-quiz"
-              className="group inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-brand-primary/80 to-crystal/60 hover:from-brand-primary hover:to-crystal text-white font-display font-semibold text-lg transition-all duration-300 shadow-[0_0_30px_rgba(139,92,246,0.3)] hover:shadow-[0_0_50px_rgba(139,92,246,0.5)] hover:-translate-y-1"
+              className="group inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-[#00897b] via-[#1565c0] to-[#00bcd4] hover:from-[#00796b] hover:via-[#0d47a1] hover:to-[#00acc1] text-white font-display font-semibold text-lg transition-all duration-300 shadow-[0_0_30px_rgba(0,188,212,0.25)] hover:shadow-[0_0_50px_rgba(0,188,212,0.4)] hover:-translate-y-1"
             >
               Discover your Gate
               <PhArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

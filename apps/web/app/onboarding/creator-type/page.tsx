@@ -121,7 +121,7 @@ export default function CreatorTypePage() {
           What do you create?
         </h1>
         <p className="font-body text-xl text-text-secondary">
-          Choose the path that calls to you
+          Pick one to get started. You can always change later.
         </p>
       </motion.div>
 
@@ -136,7 +136,7 @@ export default function CreatorTypePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
               onClick={() => handleSelect(type)}
-              className="group relative p-6 rounded-2xl glass hover:glass-heavy transition-all duration-300 hover:scale-105 text-left"
+              className="group relative p-6 rounded-2xl card-3d liquid-glass hover:glass-heavy transition-all duration-300 hover:scale-105 text-left"
             >
               {/* Hover gradient */}
               <div
@@ -170,11 +170,11 @@ export default function CreatorTypePage() {
         transition={{ delay: 0.8 }}
       >
         <Link
-          href="/luminors"
+          href="/lore/guardians"
           className="flex items-center gap-2 text-text-muted hover:text-gold-bright transition-colors font-body"
         >
           <PhSparkle className="w-4 h-4" />
-          Not sure? Explore all Luminors
+          Not sure? Explore all intelligences
         </Link>
       </motion.div>
     </div>

@@ -1,10 +1,11 @@
+'use client';
+
 /**
  * Universe Builder - Create Multi-World Canon
  *
  * A space for building interconnected universes across multiple worlds and stories.
  */
 
-import { Metadata } from "next";
 import Link from "next/link";
 import {
   PhSparkle,
@@ -23,12 +24,6 @@ import {
   PhUsers,
   PhCrown,
 } from '@/lib/phosphor-icons';
-
-export const metadata: Metadata = {
-  title: "Universe Builder | Arcanea",
-  description:
-    "Build interconnected multi-world universes. Connect worlds, characters, and timelines into a cohesive canon.",
-};
 
 const UNIVERSE_TEMPLATES = [
   {
@@ -166,15 +161,15 @@ export default function UniverseBuilderPage() {
 
               <div className="flex flex-wrap gap-4">
                 <Link
-                  href="/universe-builder/new"
+                  href="/universe-builder"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200"
                 >
                   <PhPlus className="w-4 h-4" />
                   New Universe
                 </Link>
                 <Link
-                  href="/universe-builder/templates"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
+                  href="/universe-builder"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
                 >
                   <PhGraphNetwork className="w-4 h-4" />
                   Explore Templates
@@ -185,14 +180,14 @@ export default function UniverseBuilderPage() {
         </section>
 
         {/* Canon Stats */}
-        <section id="stats" className="py-8 border-t border-white/5">
+        <section id="stats" className="py-8 border-t border-white/[0.04]">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {CANON_ELEMENTS.map((element) => {
               const Icon = element.icon;
               return (
                 <div
                   key={element.id}
-                  className="glass rounded-xl p-5 text-center"
+                  className="liquid-glass rounded-xl p-5 text-center"
                 >
                   <Icon
                     className="w-6 h-6 mx-auto mb-2"
@@ -211,7 +206,7 @@ export default function UniverseBuilderPage() {
         </section>
 
         {/* Universe Templates */}
-        <section id="templates" className="py-8 border-t border-white/5">
+        <section id="templates" className="py-8 border-t border-white/[0.04]">
           <div className="mb-6">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-crystal/20 bg-crystal/8 mb-4">
               <PhSparkle className="w-3 h-3 text-crystal" />
@@ -231,7 +226,7 @@ export default function UniverseBuilderPage() {
                 <Link
                   key={template.id}
                   href={`/universe-builder/new?template=${template.id}`}
-                  className="group glass rounded-2xl p-5 hover-lift transition-all"
+                  className="group card-3d liquid-glass rounded-2xl p-5 hover-lift transition-all"
                 >
                   <div
                     className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110"
@@ -255,7 +250,7 @@ export default function UniverseBuilderPage() {
         </section>
 
         {/* Your Universes */}
-        <section id="your-universes" className="py-8 border-t border-white/5 pb-16">
+        <section id="your-universes" className="py-8 border-t border-white/[0.04] pb-16">
           <div className="mb-6">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand-gold/20 bg-brand-gold/8 mb-4">
               <PhCrown className="w-3 h-3 text-brand-gold" />
@@ -273,7 +268,7 @@ export default function UniverseBuilderPage() {
               <Link
                 key={universe.id}
                 href={`/universe-builder/${universe.id}`}
-                className="group glass rounded-2xl p-6 hover-lift transition-all"
+                className="group card-3d liquid-glass rounded-2xl p-6 hover-lift transition-all"
               >
                 <div className="flex items-center justify-between mb-3">
                   <div
@@ -305,7 +300,7 @@ export default function UniverseBuilderPage() {
                   </span>
                 </div>
 
-                <div className="pt-4 border-t border-white/5">
+                <div className="pt-4 border-t border-white/[0.04]">
                   <div className="flex items-center justify-between">
                     <span
                       className="text-xs font-mono"
@@ -323,8 +318,8 @@ export default function UniverseBuilderPage() {
 
             {/* New Universe Card */}
             <Link
-              href="/universe-builder/new"
-              className="group glass rounded-2xl p-6 border-2 border-dashed border-white/20 hover:border-brand-primary/40 hover:bg-brand-primary/5 transition-all flex flex-col items-center justify-center text-center min-h-[220px]"
+              href="/universe-builder"
+              className="group card-3d liquid-glass rounded-2xl p-6 border-2 border-dashed border-white/[0.12] hover:border-brand-primary/40 hover:bg-brand-primary/5 transition-all flex flex-col items-center justify-center text-center min-h-[220px]"
             >
               <PhPlus className="w-8 h-8 text-text-muted group-hover:text-brand-primary transition-colors mb-3" />
               <span className="text-text-muted group-hover:text-brand-primary transition-colors font-sans">

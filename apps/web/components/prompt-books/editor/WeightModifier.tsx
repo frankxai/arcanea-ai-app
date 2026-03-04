@@ -40,7 +40,7 @@ export function WeightModifier({ onApply, className }: WeightModifierProps) {
   return (
     <div className={cn('flex items-center gap-2', className)}>
       {/* Syntax picker */}
-      <div className="flex gap-0.5 glass-subtle rounded-lg p-0.5">
+      <div className="flex gap-0.5 liquid-glass rounded-lg p-0.5">
         {syntaxOptions.map((opt) => (
           <button
             key={opt.value}
@@ -48,7 +48,7 @@ export function WeightModifier({ onApply, className }: WeightModifierProps) {
             className={cn(
               'px-2 py-1 rounded-md text-[10px] font-mono transition-all',
               syntax === opt.value
-                ? 'glass text-text-primary'
+                ? 'liquid-glass text-text-primary'
                 : 'text-text-muted hover:text-text-secondary',
             )}
             title={opt.example}
@@ -60,7 +60,7 @@ export function WeightModifier({ onApply, className }: WeightModifierProps) {
       </div>
 
       {/* Weight control */}
-      <div className="flex items-center gap-1 glass-subtle rounded-lg px-2 py-0.5">
+      <div className="flex items-center gap-1 liquid-glass rounded-lg px-2 py-0.5">
         <button
           onClick={decrement}
           className="text-text-muted hover:text-text-primary p-0.5"
@@ -92,7 +92,7 @@ export function WeightModifier({ onApply, className }: WeightModifierProps) {
         onClick={handleApply}
         className={cn(
           'px-2.5 py-1 rounded-lg text-xs font-sans font-medium',
-          'glass text-text-primary hover:scale-[1.02] transition-transform',
+          'liquid-glass text-text-primary hover:scale-[1.02] transition-transform',
         )}
         type="button"
       >

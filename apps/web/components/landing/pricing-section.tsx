@@ -14,15 +14,15 @@ import Link from "next/link";
 const PLANS = [
   {
     name: "Explorer",
-    description: "Start your creative journey",
+    description: "Get started for free",
     price: { monthly: 0, yearly: 0 },
     featured: false,
     cta: "Start Free",
-    href: "/register",
+    href: "/auth/signup",
     features: [
-      "3 Luminor companions",
+      "3 creative intelligences",
       "10 creations per month",
-      "Basic Seven Wisdoms",
+      "Core Library access",
       "Community access",
       "Export to PDF",
     ],
@@ -34,13 +34,13 @@ const PLANS = [
     price: { monthly: 19, yearly: 190 },
     featured: true,
     cta: "Start Creating",
-    href: "/register?plan=creator",
+    href: "/auth/signup?plan=creator",
     badge: "Most Popular",
     features: [
-      "All 10 Guardians",
+      "All 10 intelligences",
       "Unlimited creations",
-      "Full Seven Wisdoms",
-      "Ten Gates progression",
+      "Full Library access",
+      "Progression system",
       "All export formats",
       "Priority support",
       "Custom prompts",
@@ -54,12 +54,12 @@ const PLANS = [
     price: { monthly: 49, yearly: 490 },
     featured: false,
     cta: "Go Pro",
-    href: "/register?plan=studio",
+    href: "/auth/signup?plan=studio",
     features: [
       "Everything in Creator",
       "Team collaboration (5 seats)",
       "API access",
-      "Custom Luminor training",
+      "Custom intelligence training",
       "White-label exports",
       "Dedicated support",
       "Early access features",
@@ -89,14 +89,14 @@ export function PricingSection() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold-bright/10 border border-gold-bright/20 mb-6">
-            <PhSparkle className="w-4 h-4 text-gold-bright" />
-            <span className="text-sm font-medium text-gold-bright">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass border border-gold-bright/20 mb-6">
+            <PhSparkle className="w-3.5 h-3.5 text-gold-bright" />
+            <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-gold-bright/90">
               Simple Pricing
             </span>
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
-            Choose your creative path
+            Simple, transparent pricing
           </h2>
           <p className="text-xl text-text-secondary max-w-2xl mx-auto mb-10">
             Start free, upgrade when you're ready. All plans include core
@@ -104,7 +104,7 @@ export function PricingSection() {
           </p>
 
           {/* Billing toggle */}
-          <div className="inline-flex items-center gap-4 p-1.5 rounded-full bg-cosmic-surface/50 border border-white/10">
+          <div className="inline-flex items-center gap-4 p-1.5 rounded-full liquid-glass border border-white/[0.06]">
             <button
               onClick={() => setIsYearly(false)}
               className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all ${
@@ -147,7 +147,7 @@ export function PricingSection() {
                 className={`relative rounded-3xl p-8 ${
                   plan.featured
                     ? "bg-gradient-to-b from-atlantean-teal-aqua/20 to-cosmic-surface/50 border-2 border-atlantean-teal-aqua/30 scale-105 lg:scale-110"
-                    : "bg-cosmic-surface/30 border border-white/10"
+                    : "liquid-glass border border-white/[0.06]"
                 }`}
               >
                 {/* Featured badge */}
@@ -161,7 +161,7 @@ export function PricingSection() {
                 <div className="mb-8">
                   <div
                     className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${
-                      plan.featured ? "bg-atlantean-teal-aqua/20" : "bg-white/5"
+                      plan.featured ? "bg-atlantean-teal-aqua/20" : "bg-white/[0.04]"
                     }`}
                   >
                     <Icon
@@ -201,7 +201,7 @@ export function PricingSection() {
                   className={`w-full flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold transition-all mb-8 ${
                     plan.featured
                       ? "bg-atlantean-teal-aqua text-cosmic-deep hover:bg-atlantean-teal-aqua/90"
-                      : "bg-white/10 text-white hover:bg-white/20"
+                      : "bg-white/[0.06] text-white hover:bg-white/[0.12]"
                   }`}
                 >
                   {plan.cta}
@@ -216,7 +216,7 @@ export function PricingSection() {
                         className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
                           plan.featured
                             ? "bg-atlantean-teal-aqua/20 text-atlantean-teal-aqua"
-                            : "bg-white/10 text-white"
+                            : "bg-white/[0.06] text-white"
                         }`}
                       >
                         <PhCheck className="w-3 h-3" />
@@ -231,7 +231,7 @@ export function PricingSection() {
                       key={limit}
                       className="flex items-start gap-3 opacity-50"
                     >
-                      <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 bg-white/5">
+                      <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 bg-white/[0.04]">
                         <span className="w-2 h-0.5 bg-text-muted rounded-full" />
                       </div>
                       <span className="text-sm text-text-muted">{limit}</span>

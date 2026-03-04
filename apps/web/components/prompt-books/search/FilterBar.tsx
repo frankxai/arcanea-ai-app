@@ -205,7 +205,7 @@ export function FilterBar() {
   );
 
   return (
-    <div className="px-6 py-2.5 border-b border-white/5">
+    <div className="px-6 py-2.5 border-b border-white/[0.04]">
       <div className="flex items-center gap-2 flex-wrap">
         {/* Filter icon */}
         <div className="flex items-center gap-1.5 text-text-muted mr-1">
@@ -222,9 +222,9 @@ export function FilterBar() {
           <button
             onClick={() => typeDropdown.setIsOpen(!typeDropdown.isOpen)}
             className={cn(
-              "glass-subtle px-3 py-1.5 rounded-lg text-xs font-sans",
+              "liquid-glass px-3 py-1.5 rounded-lg text-xs font-sans",
               "flex items-center gap-1.5 transition-all duration-150",
-              "hover:bg-white/[0.06] hover:border-white/10",
+              "hover:bg-white/[0.06] hover:border-white/[0.08]",
               "border",
               selectedType
                 ? "border-brand-accent/30 text-brand-accent"
@@ -284,7 +284,7 @@ export function FilterBar() {
                   )}
                 </button>
 
-                <div className="my-1 h-px bg-white/5" role="separator" />
+                <div className="my-1 h-px bg-white/[0.04]" role="separator" />
 
                 {promptTypeEntries.map(([key, config]) => (
                   <button
@@ -319,7 +319,7 @@ export function FilterBar() {
         <button
           onClick={() => setFavoritesOnly(!favoritesOnly)}
           className={cn(
-            "glass-subtle px-3 py-1.5 rounded-lg text-xs font-sans",
+            "liquid-glass px-3 py-1.5 rounded-lg text-xs font-sans",
             "flex items-center gap-1.5 transition-all duration-150",
             "border",
             favoritesOnly
@@ -338,7 +338,7 @@ export function FilterBar() {
           <button
             onClick={() => tagDropdown.setIsOpen(!tagDropdown.isOpen)}
             className={cn(
-              "glass-subtle px-3 py-1.5 rounded-lg text-xs font-sans",
+              "liquid-glass px-3 py-1.5 rounded-lg text-xs font-sans",
               "flex items-center gap-1.5 transition-all duration-150",
               "hover:bg-white/[0.06]",
               "border",
@@ -431,7 +431,7 @@ export function FilterBar() {
           <button
             onClick={() => sortDropdown.setIsOpen(!sortDropdown.isOpen)}
             className={cn(
-              "glass-subtle px-3 py-1.5 rounded-lg text-xs font-sans",
+              "liquid-glass px-3 py-1.5 rounded-lg text-xs font-sans",
               "flex items-center gap-1.5 transition-all duration-150",
               "hover:bg-white/[0.06]",
               "border",

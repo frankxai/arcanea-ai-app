@@ -98,7 +98,7 @@ export function LoreHero() {
           }}
         >
           <div className="absolute inset-0 bg-gradient-radial from-gold-bright/30 via-gold-bright/10 to-transparent rounded-full blur-3xl" />
-          <div className="absolute inset-20 bg-gradient-radial from-white/20 via-gold-bright/5 to-transparent rounded-full blur-2xl animate-pulse" />
+          <div className="absolute inset-20 bg-gradient-radial from-white/[0.12] via-gold-bright/5 to-transparent rounded-full blur-2xl animate-pulse" />
         </motion.div>
 
         {/* Nero - Deep Void (bottom left) */}
@@ -148,7 +148,7 @@ export function LoreHero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold-bright/10 border border-gold-bright/20 mb-8"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full liquid-glass border border-gold-bright/20 mb-8"
         >
           <Icons.Sparkles />
           <span className="text-sm font-medium text-gold-bright">
@@ -173,7 +173,7 @@ export function LoreHero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto mb-8 font-crimson italic"
+          className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto mb-8 font-body italic"
         >
           &quot;Before Lumina spoke, there was only Nero—the Fertile Unknown,
           pregnant with infinite possibility. And when the First Light pierced

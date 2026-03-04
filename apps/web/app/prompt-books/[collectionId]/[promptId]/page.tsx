@@ -242,7 +242,7 @@ export default function PromptEditorPage() {
       />
 
       {/* Prompt Type Tabs */}
-      <div className="border-b border-white/5 px-4">
+      <div className="border-b border-white/[0.04] px-4">
         <PromptTypeTabs
           value={state.promptType}
           onChange={(type) => updateField('promptType', type)}
@@ -285,7 +285,7 @@ export default function PromptEditorPage() {
       {/* Editor + Preview + Context */}
       <div className="flex-1 flex overflow-hidden">
         {/* Editor + Preview */}
-        <div className={cn('flex-1 flex overflow-hidden', editorSplitView && 'divide-x divide-white/5')}>
+        <div className={cn('flex-1 flex overflow-hidden', editorSplitView && 'divide-x divide-white/[0.04]')}>
           {/* Editor pane */}
           <div className={cn('flex-1 overflow-y-auto', editorSplitView ? 'w-1/2' : 'w-full')}>
             <div className="px-6 py-4 space-y-0">

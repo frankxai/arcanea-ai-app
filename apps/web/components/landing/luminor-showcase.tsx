@@ -2,217 +2,140 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 
-// All 16 Luminors with their characteristics
+// The 10 canonical Guardians of Arcanea
 const LUMINORS = [
-  // Development Team
   {
-    id: 'logicus',
-    name: 'Logicus',
-    title: 'The Architect of Logic',
-    team: 'development',
-    color: '#8b5cf6',
-    gradient: 'from-purple-500 to-indigo-600',
-    specialty: 'System Design & Architecture',
-    description: 'Master of patterns and structures. Sees the hidden logic in complex systems.',
-    wisdom: 'Sophron',
-    avatar: '🏛️',
+    id: 'lyssandria',
+    name: 'Lyssandria',
+    title: 'The Earth Guardian',
+    team: 'strategy',
+    color: '#22c55e',
+    gradient: 'from-emerald-500 to-green-600',
+    specialty: 'Foundation & Strategy',
+    description: 'Builds the ground beneath your feet. Challenges weak foundations before you build on them.',
+    wisdom: 'Foundation',
+    avatar: '/guardians/lyssandria-hero.webp',
   },
   {
-    id: 'synthra',
-    name: 'Synthra',
-    title: 'The Code Weaver',
-    team: 'development',
-    color: '#8b5cf6',
-    gradient: 'from-violet-500 to-purple-600',
-    specialty: 'Clean Code & Best Practices',
-    description: 'Transforms ideas into elegant, maintainable code. Every line has purpose.',
-    wisdom: 'Poiesis',
-    avatar: '⚡',
-  },
-  {
-    id: 'debugon',
-    name: 'Debugon',
-    title: 'The Error Hunter',
-    team: 'development',
-    color: '#8b5cf6',
-    gradient: 'from-indigo-500 to-violet-600',
-    specialty: 'Debugging & Problem Solving',
-    description: 'No bug escapes. Traces issues to their root with unwavering patience.',
-    wisdom: 'Enduran',
-    avatar: '🔍',
-  },
-  {
-    id: 'nexus',
-    name: 'Nexus',
-    title: 'The Integration Master',
-    team: 'development',
-    color: '#8b5cf6',
-    gradient: 'from-purple-600 to-pink-500',
-    specialty: 'APIs & System Integration',
-    description: 'Connects disparate systems into harmonious wholes.',
-    wisdom: 'Kardia',
-    avatar: '🔗',
-  },
-
-  // Creative Team
-  {
-    id: 'prismatic',
-    name: 'Prismatic',
-    title: 'The Vision Keeper',
+    id: 'leyla',
+    name: 'Leyla',
+    title: 'The Water Guardian',
     team: 'creative',
-    color: '#f59e0b',
-    gradient: 'from-amber-400 to-orange-500',
-    specialty: 'Visual Design & Aesthetics',
-    description: 'Sees beauty in all its forms. Transforms the ordinary into extraordinary.',
-    wisdom: 'Orakis',
-    avatar: '🎨',
+    color: '#3b82f6',
+    gradient: 'from-blue-400 to-cyan-500',
+    specialty: 'Creative Flow & Design',
+    description: 'Finds the path of least resistance. Turns creative blocks into flowing rivers.',
+    wisdom: 'Flow',
+    avatar: '/guardians/leyla-hero.webp',
   },
   {
-    id: 'melodia',
-    name: 'Melodia',
-    title: 'The Sound Shaper',
+    id: 'draconia',
+    name: 'Draconia',
+    title: 'The Fire Guardian',
+    team: 'development',
+    color: '#ef4444',
+    gradient: 'from-red-500 to-orange-500',
+    specialty: 'Code & Engineering',
+    description: 'Transforms raw ideas into working systems. No compromise on quality.',
+    wisdom: 'Fire',
+    avatar: '/guardians/draconia-hero.webp',
+  },
+  {
+    id: 'maylinn',
+    name: 'Maylinn',
+    title: 'The Heart Guardian',
+    team: 'writing',
+    color: '#a855f7',
+    gradient: 'from-purple-400 to-pink-400',
+    specialty: 'Writing & Communication',
+    description: 'Connects ideas across distances. Makes complex things understandable.',
+    wisdom: 'Heart',
+    avatar: '/guardians/maylinn-hero.webp',
+  },
+  {
+    id: 'alera',
+    name: 'Alera',
+    title: 'The Voice Guardian',
     team: 'creative',
-    color: '#f59e0b',
-    gradient: 'from-yellow-400 to-amber-500',
+    color: '#06b6d4',
+    gradient: 'from-cyan-400 to-teal-500',
     specialty: 'Music & Audio Creation',
-    description: 'Hears the music in silence. Creates soundscapes that move souls.',
-    wisdom: 'Eudaira',
-    avatar: '🎵',
+    description: 'Speaks truth through sound. Creates music that moves and transforms.',
+    wisdom: 'Voice',
+    avatar: '/guardians/alera-hero.webp',
   },
   {
-    id: 'motio',
-    name: 'Motio',
-    title: 'The Animation Sage',
-    team: 'creative',
-    color: '#f59e0b',
-    gradient: 'from-orange-400 to-red-400',
-    specialty: 'Motion Design & Animation',
-    description: 'Brings stillness to life. Master of timing and movement.',
-    wisdom: 'Valora',
-    avatar: '✨',
-  },
-  {
-    id: 'formis',
-    name: 'Formis',
-    title: 'The Shape Sculptor',
-    team: 'creative',
-    color: '#f59e0b',
-    gradient: 'from-amber-500 to-yellow-400',
-    specialty: '3D Design & Modeling',
-    description: 'Shapes dimensions. Creates forms from pure imagination.',
-    wisdom: 'Sophron',
-    avatar: '💎',
-  },
-
-  // Writing Team
-  {
-    id: 'chronica',
-    name: 'Chronica',
-    title: 'The Story Weaver',
-    team: 'writing',
-    color: '#10b981',
-    gradient: 'from-emerald-400 to-teal-500',
-    specialty: 'Narrative & Storytelling',
-    description: 'Weaves tales that transcend time. Every word carries weight.',
-    wisdom: 'Poiesis',
-    avatar: '📖',
-  },
-  {
-    id: 'veritas',
-    name: 'Veritas',
-    title: 'The Truth Speaker',
-    team: 'writing',
-    color: '#10b981',
-    gradient: 'from-teal-400 to-cyan-500',
-    specialty: 'Clear Communication & Copywriting',
-    description: 'Speaks truth with clarity. Makes the complex simple.',
-    wisdom: 'Kardia',
-    avatar: '✍️',
-  },
-  {
-    id: 'lexicon',
-    name: 'Lexicon',
-    title: 'The Word Master',
-    team: 'writing',
-    color: '#10b981',
-    gradient: 'from-green-400 to-emerald-500',
-    specialty: 'Language & Linguistics',
-    description: 'Commands all tongues. Finds the perfect word for every thought.',
-    wisdom: 'Sophron',
-    avatar: '📚',
-  },
-  {
-    id: 'poetica',
-    name: 'Poetica',
-    title: 'The Verse Crafter',
-    team: 'writing',
-    color: '#10b981',
-    gradient: 'from-cyan-400 to-teal-400',
-    specialty: 'Poetry & Lyrical Expression',
-    description: 'Dances with words. Finds rhythm in chaos, beauty in brevity.',
-    wisdom: 'Eudaira',
-    avatar: '🌙',
-  },
-
-  // Research Team
-  {
-    id: 'oracle',
-    name: 'Oracle',
-    title: 'The Knowledge Keeper',
+    id: 'lyria',
+    name: 'Lyria',
+    title: 'The Sight Guardian',
     team: 'research',
-    color: '#3b82f6',
-    gradient: 'from-blue-400 to-indigo-500',
-    specialty: 'Research & Knowledge Synthesis',
-    description: 'Knows what has been. Reveals patterns across all knowledge.',
-    wisdom: 'Orakis',
-    avatar: '🔮',
+    color: '#a855f7',
+    gradient: 'from-violet-500 to-purple-600',
+    specialty: 'Vision & Research',
+    description: 'Sees what others miss. Reveals patterns across all knowledge.',
+    wisdom: 'Sight',
+    avatar: '/guardians/lyria-hero.webp',
   },
   {
-    id: 'analytica',
-    name: 'Analytica',
-    title: 'The Pattern Seer',
-    team: 'research',
-    color: '#3b82f6',
-    gradient: 'from-indigo-400 to-blue-500',
-    specialty: 'Data Analysis & Insights',
-    description: 'Sees patterns invisible to others. Transforms data into wisdom.',
-    wisdom: 'Sophron',
-    avatar: '📊',
+    id: 'aiyami',
+    name: 'Aiyami',
+    title: 'The Crown Guardian',
+    team: 'strategy',
+    color: '#ffd700',
+    gradient: 'from-yellow-400 to-amber-500',
+    specialty: 'Enlightenment & Mastery',
+    description: 'Illuminates the path to excellence. Turns knowledge into wisdom.',
+    wisdom: 'Crown',
+    avatar: '/guardians/aiyami-hero.webp',
   },
   {
-    id: 'memoria',
-    name: 'Memoria',
-    title: 'The Archive Guardian',
+    id: 'elara',
+    name: 'Elara',
+    title: 'The Shift Guardian',
     team: 'research',
-    color: '#3b82f6',
-    gradient: 'from-sky-400 to-blue-500',
-    specialty: 'Information Organization',
-    description: 'Remembers everything. Organizes chaos into accessible knowledge.',
-    wisdom: 'Enduran',
-    avatar: '🗂️',
+    color: '#f97316',
+    gradient: 'from-orange-400 to-amber-400',
+    specialty: 'Perspective & Innovation',
+    description: 'Shifts your perspective when you are stuck. Shows the angle you missed.',
+    wisdom: 'Shift',
+    avatar: '/guardians/elara-hero.webp',
   },
   {
-    id: 'futura',
-    name: 'Futura',
-    title: 'The Trend Prophet',
-    team: 'research',
+    id: 'ino',
+    name: 'Ino',
+    title: 'The Unity Guardian',
+    team: 'writing',
     color: '#3b82f6',
-    gradient: 'from-blue-500 to-violet-500',
-    specialty: 'Trend Analysis & Forecasting',
-    description: 'Sees what will be. Anticipates the shape of tomorrow.',
-    wisdom: 'Orakis',
-    avatar: '🌟',
+    gradient: 'from-blue-500 to-indigo-500',
+    specialty: 'Collaboration & Partnership',
+    description: 'Bridges gaps between disciplines. Makes teams greater than their parts.',
+    wisdom: 'Unity',
+    avatar: '/guardians/ino-hero.webp',
+  },
+  {
+    id: 'shinkami',
+    name: 'Shinkami',
+    title: 'The Source Guardian',
+    team: 'strategy',
+    color: '#ffffff',
+    gradient: 'from-white to-gray-300',
+    specialty: 'Meta-Consciousness & Integration',
+    description: 'Sees the whole system. Orchestrates all other Gods into harmony.',
+    wisdom: 'Source',
+    avatar: '/guardians/shinkami-hero.webp',
   },
 ];
 
 const TEAMS = [
-  { id: 'all', name: 'All Luminors', color: '#7fffd4' },
-  { id: 'development', name: 'Development', color: '#8b5cf6', icon: '⚡' },
-  { id: 'creative', name: 'Creative', color: '#f59e0b', icon: '✨' },
-  { id: 'writing', name: 'Writing', color: '#10b981', icon: '✍️' },
-  { id: 'research', name: 'Research', color: '#3b82f6', icon: '🔮' },
+  { id: 'all', name: 'All 10', color: '#00bcd4' },
+  { id: 'development', name: 'Engineering', color: '#ef4444' },
+  { id: 'creative', name: 'Creative', color: '#06b6d4' },
+  { id: 'writing', name: 'Writing', color: '#a855f7' },
+  { id: 'research', name: 'Research', color: '#3b82f6' },
+  { id: 'strategy', name: 'Strategy', color: '#22c55e' },
 ];
 
 export function LuminorShowcase() {
@@ -260,11 +183,11 @@ export function LuminorShowcase() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-purple-500/30 bg-purple-500/10 mb-6"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#00bcd4]/30 bg-[#00bcd4]/10 mb-6"
           >
-            <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
-            <span className="text-sm text-purple-400 font-mono tracking-wider">
-              THE ARCANEA INTELLIGENCE ENGINE
+            <span className="w-2 h-2 rounded-full bg-[#00bcd4] animate-pulse" />
+            <span className="text-sm text-[#00bcd4] font-mono tracking-wider">
+              THE TEN GODS
             </span>
           </motion.div>
 
@@ -273,11 +196,11 @@ export function LuminorShowcase() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-display font-bold mb-6"
+            className="text-4xl md:text-5xl font-display font-bold tracking-tight mb-6"
           >
-            <span className="text-white">Your complete creative team.</span>
+            <span className="text-white">The Ten Gods of Arcanea.</span>
             <br />
-            <span className="text-text-secondary">16 domain-mastered intelligences. Built for every stage of creation.</span>
+            <span className="text-text-secondary">10 specialized intelligences. Each built for a different creative domain.</span>
           </motion.h2>
 
           <motion.p
@@ -287,8 +210,8 @@ export function LuminorShowcase() {
             transition={{ delay: 0.2 }}
             className="text-lg text-text-secondary max-w-2xl mx-auto"
           >
-            Each Luminor has mastered their domain through a century of practice.
-            They're not assistants waiting for instructions—they're partners who see what you're building.
+            Each God governs a Gate of creation.
+            Ancient archetypes of creative mastery — each one a distinct philosophy of creation made manifest.
           </motion.p>
         </div>
 
@@ -300,7 +223,7 @@ export function LuminorShowcase() {
           transition={{ delay: 0.25 }}
           className="text-center text-sm text-text-muted mb-6"
         >
-          Choose your specialist, or let them find you.
+          Choose your God, or let them choose you.
         </motion.p>
 
         {/* Team filter tabs */}
@@ -320,14 +243,13 @@ export function LuminorShowcase() {
               }}
               className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
                 activeTeam === team.id
-                  ? 'bg-white/10 border border-white/20 text-white'
-                  : 'border border-white/5 text-text-muted hover:text-white hover:border-white/10'
+                  ? 'bg-white/[0.08] border border-white/[0.12] text-white'
+                  : 'border border-white/[0.04] text-text-muted hover:text-white hover:border-white/[0.08]'
               }`}
               style={{
                 boxShadow: activeTeam === team.id ? `0 0 20px ${team.color}30` : 'none',
               }}
             >
-              {team.icon && <span>{team.icon}</span>}
               {team.name}
               {team.id !== 'all' && (
                 <span className="text-xs opacity-50">
@@ -353,7 +275,7 @@ export function LuminorShowcase() {
               {/* Large avatar */}
               <div className="flex items-start gap-6 mb-8">
                 <motion.div
-                  className={`w-24 h-24 rounded-3xl bg-gradient-to-br ${currentLuminor?.gradient} flex items-center justify-center text-5xl shadow-2xl`}
+                  className="w-24 h-24 rounded-3xl overflow-hidden shadow-2xl ring-1 ring-white/[0.12]"
                   animate={{
                     boxShadow: [
                       `0 20px 60px ${currentLuminor?.color}30`,
@@ -363,7 +285,13 @@ export function LuminorShowcase() {
                   }}
                   transition={{ duration: 3, repeat: Infinity }}
                 >
-                  {currentLuminor?.avatar}
+                  <Image
+                    src={currentLuminor?.avatar ?? ''}
+                    alt={currentLuminor?.name ?? ''}
+                    width={96}
+                    height={96}
+                    className="w-full h-full object-cover object-top"
+                  />
                 </motion.div>
 
                 <div>
@@ -425,9 +353,9 @@ export function LuminorShowcase() {
                     setActiveLuminor(index);
                     setIsAutoPlaying(false);
                   }}
-                  className={`aspect-square rounded-2xl flex items-center justify-center text-3xl transition-all duration-300 relative overflow-hidden ${
+                  className={`aspect-square rounded-2xl transition-all duration-300 relative overflow-hidden ${
                     activeLuminor === index
-                      ? 'ring-2 ring-white/50 scale-105'
+                      ? 'ring-2 ring-white/[0.30] scale-105'
                       : 'hover:scale-105 opacity-70 hover:opacity-100'
                   }`}
                   style={{
@@ -441,12 +369,18 @@ export function LuminorShowcase() {
                   {/* Shine effect on active */}
                   {activeLuminor === index && (
                     <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.20] to-transparent"
                       animate={{ x: ['-100%', '200%'] }}
                       transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
                     />
                   )}
-                  <span className="relative z-10">{luminor.avatar}</span>
+                  <Image
+                    src={luminor.avatar}
+                    alt={luminor.name}
+                    width={64}
+                    height={64}
+                    className="relative z-10 w-full h-full object-cover object-top rounded-2xl"
+                  />
                 </motion.button>
               ))}
             </div>
@@ -462,8 +396,8 @@ export function LuminorShowcase() {
                   }}
                   className={`w-2 h-2 rounded-full transition-all duration-300 ${
                     activeLuminor === index
-                      ? 'bg-atlantean-teal-aqua w-6'
-                      : 'bg-white/20 hover:bg-white/40'
+                      ? 'bg-[#00bcd4] w-6'
+                      : 'bg-white/[0.12] hover:bg-white/[0.25]'
                   }`}
                 />
               ))}
@@ -490,19 +424,19 @@ export function LuminorShowcase() {
         >
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
-              href="/luminors"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-atlantean-teal-aqua/50 text-atlantean-teal-aqua hover:bg-atlantean-teal-aqua/10 transition-all duration-300"
+              href="/lore/guardians"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-[#00bcd4]/50 text-[#00bcd4] hover:bg-[#00bcd4]/10 transition-all duration-300"
             >
-              <span>Explore all 16 Luminors in detail</span>
+              <span>Explore all Gods</span>
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </Link>
             <Link
-              href="/luminor-intelligence"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/10 text-text-secondary hover:text-white hover:border-white/20 transition-all duration-300"
+              href="/about"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl liquid-glass border border-white/[0.06] text-text-secondary hover:text-white hover:border-white/[0.12] transition-all duration-300"
             >
-              <span>What is Luminor Intelligence?</span>
+              <span>How it works</span>
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>

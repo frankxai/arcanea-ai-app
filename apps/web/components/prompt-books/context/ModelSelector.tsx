@@ -96,7 +96,7 @@ export function ModelSelector({ value, onChange, className }: ModelSelectorProps
         className={cn(
           'w-full flex items-center justify-between gap-2',
           'px-3 py-2 rounded-lg',
-          'glass-subtle border border-white/5 hover:border-white/10',
+          'liquid-glass border border-white/[0.04] hover:border-white/[0.08]',
           'text-sm font-sans text-text-primary',
           'transition-all duration-150',
           'focus:outline-none focus:ring-1 focus:ring-brand-accent/40',
@@ -125,7 +125,7 @@ export function ModelSelector({ value, onChange, className }: ModelSelectorProps
         <div
           className={cn(
             'absolute z-50 top-full left-0 right-0 mt-1',
-            'glass-subtle border border-white/10 rounded-lg',
+            'liquid-glass border border-white/[0.06] rounded-lg',
             'shadow-xl shadow-black/20',
             'max-h-72 overflow-y-auto scrollbar-thin',
             'py-1',

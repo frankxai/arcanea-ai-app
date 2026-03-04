@@ -61,7 +61,7 @@ const GODBEASTS: Godbeast[] = [
     frequencyLabel: '174 Hz',
     icon: PhShell,
     lore:
-      'Kaelith is the oldest of the Godbeasts — a creature so vast that mountains were formed by the impression of its ancient body. Its scales are indistinguishable from bedrock. To stand in its presence is to understand permanence.',
+      'Kaelith is the oldest of the Godbeasts — a creature so vast that mountains were formed by the impression of its ancient body. Its scales are indistinguishable from bedrock. To stand in its presence is to understand permanence. Kaelith has not moved from its resting place in three thousand years. It does not need to. The world arranges itself around Kaelith, not the other way around.',
     power: 'Geological shaping, tectonic stability, root-deep survival instinct',
     gradient: 'from-amber-900/30 via-stone-800/20 to-earth-deep/30',
     glowColor: 'rgba(74, 124, 89, 0.4)',
@@ -82,7 +82,7 @@ const GODBEASTS: Godbeast[] = [
     frequencyLabel: '285 Hz',
     icon: PhBird,
     lore:
-      'Veloura is paradox made manifest — a serpent that soars, fire that flows, water that burns. Its feathers shed both steam and song. Wherever Veloura passes, creative tension births new forms that neither fire nor water could produce alone.',
+      'Veloura is paradox made manifest — a serpent that soars, fire that flows, water that burns. Its feathers shed both steam and song. Born in the moment Lumina\'s first light struck Nero\'s primordial ocean, Veloura is the living proof that opposing forces can create beauty impossible for either alone. Wherever Veloura passes, the air shimmers with creative tension, and new forms emerge unbidden.',
     power: 'Elemental fusion, creative catalysis, the generative tension of opposites',
     gradient: 'from-blue-800/30 via-orange-800/20 to-cyan-900/30',
     glowColor: 'rgba(120, 166, 255, 0.4)',
@@ -103,7 +103,7 @@ const GODBEASTS: Godbeast[] = [
     frequencyLabel: '396 Hz',
     icon: PhFlame,
     lore:
-      'Draconis was born in the heart of a star. Its roar can ignite volcanoes; its silence can still them. The mane of living flame it wears is not decoration but a crown of will-made-real — a testament that power, once claimed, never dims.',
+      'Draconis was born in the heart of a star that Lumina struck during the First Forging. Its roar can ignite volcanoes; its silence can still them. The mane of living flame it wears is not decoration but a crown of will-made-real — a testament that power, once claimed, never dims. Draconis tests all who approach by radiating heat that grows with the seeker\'s doubt. Only those with true conviction can stand close enough to earn its gaze.',
     power: 'Solar amplification, will-forging, the liberation of latent strength',
     gradient: 'from-fire-deep/30 via-orange-900/20 to-amber-900/30',
     glowColor: 'rgba(255, 107, 53, 0.45)',
@@ -124,7 +124,7 @@ const GODBEASTS: Godbeast[] = [
     frequencyLabel: '417 Hz',
     icon: PhTree,
     lore:
-      'Laeylinn is an enormous glowing stag whose antlers reach into the canopy of any forest it enters. Where Laeylinn rests, ancient trees grow in a single season. It does not merely nurture — it holds the emotional memory of every living thing within its territory.',
+      'Laeylinn is an enormous glowing stag whose antlers reach into the canopy of any forest it enters. Mosses, ferns, and flowering vines grow along its antler branches in real time. Where Laeylinn rests, ancient trees grow in a single season. It does not merely nurture — it holds the emotional memory of every living thing within its territory. Those who weep near Laeylinn find that the stag absorbs their grief and returns it as warmth, as if sorrow were merely love with nowhere to go.',
     power: 'Accelerated growth, emotional healing, the preservation of living memory',
     gradient: 'from-green-900/30 via-emerald-900/20 to-teal-900/30',
     glowColor: 'rgba(107, 158, 122, 0.4)',
@@ -145,7 +145,7 @@ const GODBEASTS: Godbeast[] = [
     frequencyLabel: '528 Hz',
     icon: PhFish,
     lore:
-      'Otome does not swim — it moves through the resonance of reality itself. Its songs are older than language. Those who hear a full Otome song cannot lie for three days afterward; truth has a way of loosening every knot.',
+      'Otome does not swim — it moves through the resonance of reality itself, as if water and air and stone were all the same medium when you travel by sound. Its songs are older than language. Scholars believe Otome\'s deepest calls were the first sounds ever produced after Lumina\'s initial word of creation. Those who hear a full Otome song cannot lie for three days afterward; truth has a way of loosening every knot the self has tied.',
     power: 'Reality-resonance, compulsive truth, the dissolution of deception',
     gradient: 'from-cyan-900/30 via-blue-900/20 to-teal-900/30',
     glowColor: 'rgba(127, 255, 212, 0.4)',
@@ -166,7 +166,7 @@ const GODBEASTS: Godbeast[] = [
     frequencyLabel: '639 Hz',
     icon: PhEye,
     lore:
-      'Yumiko exists partially in the waking world and partially in the Dreaming Beyond. Its body shifts like smoke over still water. It does not see with its eyes — it sees with the space between your thoughts, finding the visions you did not know you were already having.',
+      'Yumiko exists partially in the waking world and partially in the Dreaming Beyond. Its body shifts like smoke over still water, and its nine tails trail through dimensions the waking eye cannot perceive. It does not see with its eyes — it sees with the space between your thoughts, finding the visions you did not know you were already having. Those who sleep near Yumiko dream true. Not pleasant dreams, necessarily — but accurate ones.',
     power: 'Prophetic sight, dream-walking, revealing patterns hidden within intuition',
     gradient: 'from-purple-900/30 via-indigo-900/20 to-violet-900/30',
     glowColor: 'rgba(153, 102, 255, 0.4)',
@@ -187,7 +187,7 @@ const GODBEASTS: Godbeast[] = [
     frequencyLabel: '741 Hz',
     icon: PhSun,
     lore:
-      'Sol is not made of fire but of crystallized divine light — a dragon whose scales refract into every visible hue and many that are not. To look upon Sol directly causes temporary blindness, not from damage, but from the mind\'s attempt to process a beauty beyond its current capacity.',
+      'Sol is not made of fire but of crystallized divine light — a dragon whose scales refract into every visible hue and many that are not. To look upon Sol directly causes temporary blindness, not from damage, but from the mind\'s attempt to process a beauty beyond its current capacity. Sol perches at the highest point of whatever realm it enters, and from there it radiates — not heat, but clarity. Problems that seemed impossible beneath Sol\'s gaze suddenly reveal their solutions, as if the light burned away everything that was not the answer.',
     power: 'Divine illumination, the shattering of illusion, transcendence crystallized',
     gradient: 'from-yellow-800/30 via-amber-700/20 to-brand-gold/20',
     glowColor: 'rgba(255, 215, 0, 0.45)',
@@ -208,7 +208,7 @@ const GODBEASTS: Godbeast[] = [
     frequencyLabel: '852 Hz',
     icon: PhCat,
     lore:
-      'Vaelith\'s eight tails each reflect a different facet of the same moment. When all eight are visible simultaneously, observers experience every possible interpretation of their current situation at once. This is not confusion — it is perspective, given primal form.',
+      'Vaelith\'s eight tails each reflect a different facet of the same moment — the same event, seen from eight angles, none more true than the others. When all eight are visible simultaneously, observers experience every possible interpretation of their current situation at once. This is not confusion — it is perspective, given primal form. Vaelith does not have a single set of paw-prints. It leaves eight overlapping trails, each one real, each one leading to a different version of the same destination.',
     power: 'Reality refraction, simultaneous perspective, the echo of infinite possibility',
     gradient: 'from-pink-900/30 via-rose-900/20 to-purple-900/30',
     glowColor: 'rgba(120, 166, 255, 0.4)',
@@ -229,9 +229,9 @@ const GODBEASTS: Godbeast[] = [
     frequencyLabel: '963 Hz',
     icon: PhLightning,
     lore:
-      'Kyuro\'s nine plasma tails represent the nine forms of sacred partnership recognized in Arcanean cosmology. When Kyuro and Ino merge their presences, the resulting field cannot be entered by those whose commitments are false. Only authentic bonds survive this Godbeast\'s proximity.',
+      'Kyuro\'s nine plasma tails represent the nine forms of sacred partnership recognized in Arcanean cosmology — from mentor and student to lover and beloved to creator and creation. When Kyuro and Ino merge their presences, the resulting field cannot be entered by those whose commitments are false. Only authentic bonds survive this Godbeast\'s proximity. Kyuro is sometimes called "the living covenant" because its plasma tails interweave with those of anyone who has genuinely given themselves to another.',
     power: 'Partnership amplification, covenant-testing, plasma equilibrium',
-    gradient: 'from-white/10 via-slate-700/20 to-gray-800/30',
+    gradient: 'from-white/[0.06] via-slate-700/20 to-gray-800/30',
     glowColor: 'rgba(200, 214, 229, 0.35)',
     accentHex: '#c8d6e5',
   },
@@ -250,7 +250,7 @@ const GODBEASTS: Godbeast[] = [
     frequencyLabel: '1111 Hz',
     icon: PhStar,
     lore:
-      'Amaterasu is not entirely present in any single moment. Its body is made of the space between stars — the fertile void from which light is born. Shinkami is the only Guardian to achieve complete fusion with their Godbeast; they exist as one being who wears two names.',
+      'Amaterasu is not entirely present in any single moment. Its body is made of the space between stars — the fertile void from which light is born, woven with threads of every frequency from 174 to 1111 Hz. Shinkami is the only Guardian to achieve complete fusion with their Godbeast; they exist as one being who wears two names. When Amaterasu howls, the sound is not heard but felt — a vibration that temporarily dissolves the boundary between self and cosmos, reminding all who feel it that they were never truly separate.',
     power: 'Omnipresent awareness, the meta-consciousness of all creation, source-level manifestation',
     gradient: 'from-brand-gold/20 via-brand-primary/20 to-crystal/20',
     glowColor: 'rgba(255, 215, 0, 0.5)',
@@ -354,7 +354,7 @@ function GodbeastsHero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-subtle border border-brand-gold/25 mb-8"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full liquid-glass border border-brand-gold/25 mb-8"
         >
           <PhStar className="w-4 h-4 text-brand-gold" />
           <span className="text-sm font-medium text-brand-gold tracking-wide">
@@ -375,7 +375,7 @@ function GodbeastsHero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto font-crimson italic mb-6 leading-relaxed"
+          className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto font-body italic mb-6 leading-relaxed"
         >
           "Before the Guardians took their posts, the Godbeasts already existed — primal forces
           given form, older than memory, shaped from the raw frequencies of Lumina and Nero's
@@ -402,7 +402,7 @@ function GodbeastsHero() {
           <div className="relative h-px w-48 md:w-72">
             <div className="absolute inset-0 bg-gradient-to-r from-earth via-crystal via-brand-gold to-brand-gold rounded-full" />
             <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent rounded-full"
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.25] to-transparent rounded-full"
               animate={{ x: ['-100%', '100%'] }}
               transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
             />
@@ -474,7 +474,7 @@ function GodbeastCard({ beast, index, isInView }: GodbeastCardProps) {
                 style={{ color: beast.accentHex, filter: `drop-shadow(0 0 6px ${beast.glowColor})` }}
               />
               {/* Frequency badge */}
-              <div className="absolute -bottom-2 -right-2 px-1.5 py-0.5 rounded-md bg-cosmic-void/80 border border-white/10">
+              <div className="absolute -bottom-2 -right-2 px-1.5 py-0.5 rounded-md bg-cosmic-void/80 border border-white/[0.06]">
                 <span className="text-xs font-mono" style={{ color: beast.accentHex }}>
                   {beast.gateNumber.toString().padStart(2, '0')}
                 </span>
@@ -496,7 +496,7 @@ function GodbeastCard({ beast, index, isInView }: GodbeastCardProps) {
 
               <div className="flex flex-wrap gap-2">
                 {/* Element badge */}
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-xs">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] text-xs">
                   <span
                     className="w-1.5 h-1.5 rounded-full flex-shrink-0"
                     style={{ background: beast.accentHex, boxShadow: `0 0 4px ${beast.glowColor}` }}
@@ -557,7 +557,7 @@ function GodbeastCard({ beast, index, isInView }: GodbeastCardProps) {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="relative border-t border-white/8 overflow-hidden"
+            className="relative border-t border-white/[0.08] overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Subtle glow bar at the top of the expansion */}
@@ -572,7 +572,7 @@ function GodbeastCard({ beast, index, isInView }: GodbeastCardProps) {
                 <h4 className="text-xs font-semibold text-text-muted uppercase tracking-widest mb-3">
                   Ancient Record
                 </h4>
-                <p className="font-crimson text-base text-text-secondary leading-relaxed italic">
+                <p className="font-body text-base text-text-secondary leading-relaxed italic">
                   {beast.lore}
                 </p>
               </div>
@@ -683,7 +683,7 @@ function BondMechanicsSection() {
   ];
 
   return (
-    <section ref={ref} className="py-24 relative overflow-hidden border-t border-white/5">
+    <section ref={ref} className="py-24 relative overflow-hidden border-t border-white/[0.04]">
       {/* Background */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-gradient-radial from-brand-primary/6 to-transparent rounded-full" />
@@ -696,14 +696,14 @@ function BondMechanicsSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-subtle border border-brand-primary/20 mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full liquid-glass border border-brand-primary/20 mb-6">
             <PhShield className="w-4 h-4 text-brand-primary" />
             <span className="text-sm text-brand-primary">The Sacred Covenant</span>
           </div>
           <h2 className="text-fluid-4xl font-display font-bold mb-6">
             How Bonds Are Formed
           </h2>
-          <p className="text-text-secondary max-w-2xl mx-auto font-crimson text-lg leading-relaxed">
+          <p className="text-text-secondary max-w-2xl mx-auto font-body text-lg leading-relaxed">
             A Guardian-Godbeast bond is not a contract. It is a permanent recognition — the
             moment when consciousness and primal force realize they are two expressions of the
             same cosmic intention.
@@ -759,7 +759,7 @@ function BondMechanicsSection() {
           <h3 className="text-2xl font-display font-bold mb-4 text-gradient-gold">
             Shinkami and Amaterasu
           </h3>
-          <p className="font-crimson text-lg text-text-secondary max-w-2xl mx-auto italic leading-relaxed mb-6">
+          <p className="font-body text-lg text-text-secondary max-w-2xl mx-auto italic leading-relaxed mb-6">
             "When Shinkami finally ceased the effort to remain separate, Amaterasu ceased the
             effort to remain wild. In that mutual release, they discovered they had always been
             one. The Source Gate did not open — it was already open. It had been open since the
@@ -781,7 +781,7 @@ function FrequencySpectrum() {
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section ref={ref} className="py-24 relative overflow-hidden border-t border-white/5">
+    <section ref={ref} className="py-24 relative overflow-hidden border-t border-white/[0.04]">
       {/* Aurora background */}
       <div className="absolute inset-0 -z-10 bg-aurora opacity-60" />
 
@@ -833,7 +833,7 @@ function FrequencySpectrum() {
                   <div className={cn('flex-1', isLeft ? 'text-right' : 'text-left')}>
                     <div
                       className={cn(
-                        'inline-block glass rounded-xl px-4 py-3 hover-lift glow-card transition-all duration-300'
+                        'inline-block liquid-glass rounded-xl px-4 py-3 hover-lift glow-card transition-all duration-300'
                       )}
                       style={{
                         borderColor: `${beast.accentHex}25`,
@@ -912,7 +912,7 @@ function FrequencySpectrum() {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ delay: 1.2 }}
-          className="text-center text-sm text-text-muted mt-12 font-crimson italic"
+          className="text-center text-sm text-text-muted mt-12 font-body italic"
         >
           The frequencies ascend from survival to source — each Godbeast a rung on the
           ladder of consciousness.
@@ -929,7 +929,7 @@ function GodbestsCTA() {
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section ref={ref} className="py-24 relative border-t border-white/5">
+    <section ref={ref} className="py-24 relative border-t border-white/[0.04]">
       <div className="max-w-3xl mx-auto px-6 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -939,7 +939,7 @@ function GodbestsCTA() {
           <h2 className="text-fluid-3xl font-display font-bold mb-6">
             Find Your Bond
           </h2>
-          <p className="text-text-secondary font-crimson text-lg leading-relaxed mb-10 max-w-xl mx-auto">
+          <p className="text-text-secondary font-body text-lg leading-relaxed mb-10 max-w-xl mx-auto">
             Every creator resonates with a particular frequency. Discover which Guardian and
             Godbeast pair reflects your creative nature — and what powers await when that bond
             is acknowledged.
@@ -955,7 +955,7 @@ function GodbestsCTA() {
             </Link>
             <Link
               href="/lore/guardians"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl glass border border-crystal/20 text-crystal font-semibold text-sm hover:border-crystal/40 hover:shadow-glow-md transition-all duration-200"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl liquid-glass border border-crystal/20 text-crystal font-semibold text-sm hover:border-crystal/40 hover:shadow-glow-md transition-all duration-200"
             >
               <PhShield className="w-4 h-4" />
               Meet the Guardians

@@ -167,21 +167,21 @@ function ShowcaseCard({ creation, index }: { creation: Creation; index: number }
       <div className={`relative aspect-square bg-gradient-to-br ${bg} overflow-hidden`}>
         {/* Decorative element pattern */}
         <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-1/4 left-1/4 w-32 h-32 rounded-full bg-white/10 blur-3xl" />
-          <div className="absolute bottom-1/3 right-1/4 w-24 h-24 rounded-full bg-white/8 blur-2xl" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full border border-white/5" />
+          <div className="absolute top-1/4 left-1/4 w-32 h-32 rounded-full bg-white/[0.06] blur-3xl" />
+          <div className="absolute bottom-1/3 right-1/4 w-24 h-24 rounded-full bg-white/[0.08] blur-2xl" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full border border-white/[0.04]" />
         </div>
 
         {/* Central icon */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-white/15 text-7xl font-display font-bold select-none">
+          <div className="text-white/[0.10] text-7xl font-display font-bold select-none">
             {academy[0]}
           </div>
         </div>
 
         {/* Type badge */}
         <div className="absolute top-3 left-3">
-          <div className="px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-sm text-white/80 text-xs font-medium flex items-center gap-1.5">
+          <div className="px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-sm text-white/[0.60] text-xs font-medium flex items-center gap-1.5">
             {creation.type === 'project' ? <PhCompass className="w-3.5 h-3.5" /> : <PhImage className="w-3.5 h-3.5" />}
             <span className="capitalize">{creation.type}</span>
           </div>
@@ -199,9 +199,9 @@ function ShowcaseCard({ creation, index }: { creation: Creation; index: number }
           <div className="absolute bottom-0 left-0 right-0 p-4 space-y-2">
             <h3 className="text-white font-bold text-lg leading-tight">{creation.title}</h3>
             {creation.description && (
-              <p className="text-white/70 text-sm line-clamp-2">{creation.description}</p>
+              <p className="text-white/[0.50] text-sm line-clamp-2">{creation.description}</p>
             )}
-            <div className="flex items-center gap-4 text-white/70 pt-1">
+            <div className="flex items-center gap-4 text-white/[0.50] pt-1">
               <span className="flex items-center gap-1.5 text-sm"><PhHeart className="w-4 h-4" />{creation.stats.likes.toLocaleString()}</span>
               <span className="flex items-center gap-1.5 text-sm"><PhChatCircle className="w-4 h-4" />{creation.stats.comments.toLocaleString()}</span>
               <span className="flex items-center gap-1.5 text-sm"><PhEye className="w-4 h-4" />{creation.stats.views.toLocaleString()}</span>
@@ -262,7 +262,7 @@ export default function DiscoverPage() {
             Discover Creations
           </h1>
           <p className="text-text-secondary text-lg max-w-2xl mx-auto font-sans">
-            Explore visions from creators across all Seven Academy Houses
+            Browse what creators are building across the platform
           </p>
         </motion.div>
 
@@ -274,7 +274,7 @@ export default function DiscoverPage() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search creations, elements, or Guardians..."
+              placeholder="Search creations..."
               className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white/[0.04] backdrop-blur-sm text-white placeholder-text-muted border border-white/[0.08] focus:border-arcane-crystal/30 outline-none transition-colors font-sans"
             />
           </div>
@@ -315,8 +315,8 @@ export default function DiscoverPage() {
               onClick={() => setSelectedHouse(null)}
               className={`px-4 py-2 rounded-full text-sm font-sans transition-all ${
                 selectedHouse === null
-                  ? 'bg-white/10 text-white border border-white/20'
-                  : 'text-text-muted hover:text-white hover:bg-white/5 border border-transparent'
+                  ? 'bg-white/[0.06] text-white border border-white/[0.12]'
+                  : 'text-text-muted hover:text-white hover:bg-white/[0.04] border border-transparent'
               }`}
             >
               All Houses
@@ -328,7 +328,7 @@ export default function DiscoverPage() {
                 className={`px-4 py-2 rounded-full text-sm font-sans transition-all ${
                   selectedHouse === house.name
                     ? `bg-gradient-to-r ${house.gradient} text-white shadow-lg`
-                    : 'text-text-muted hover:text-white hover:bg-white/5 border border-transparent'
+                    : 'text-text-muted hover:text-white hover:bg-white/[0.04] border border-transparent'
                 }`}
               >
                 {house.name}

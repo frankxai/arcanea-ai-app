@@ -214,9 +214,9 @@ export default function AssessmentPage() {
           </Link>
 
           {/* Results card */}
-          <div className="bg-cosmic-surface/50 backdrop-blur-xl rounded-3xl border border-white/10 overflow-hidden">
+          <div className="liquid-glass rounded-3xl border border-white/[0.06] overflow-hidden">
             {/* Header */}
-            <div className="relative p-8 text-center border-b border-white/10">
+            <div className="relative p-8 text-center border-b border-white/[0.06]">
               <div className="absolute inset-0 bg-gradient-to-b from-gold-bright/10 to-transparent" />
               <motion.div
                 initial={{ scale: 0 }}
@@ -250,7 +250,7 @@ export default function AssessmentPage() {
                     className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
                       answers[i] >= 3
                         ? 'bg-gold-bright text-cosmic-deep'
-                        : 'bg-white/10 text-text-muted'
+                        : 'bg-white/[0.06] text-text-muted'
                     }`}
                     style={answers[i] >= 3 ? { boxShadow: '0 0 10px rgba(255,215,0,0.5)' } : {}}
                   >
@@ -260,7 +260,7 @@ export default function AssessmentPage() {
               </div>
 
               {/* House */}
-              <div className="bg-white/5 rounded-2xl p-6 text-center">
+              <div className="bg-white/[0.04] rounded-2xl p-6 text-center">
                 <p className="text-sm text-text-muted mb-2 uppercase tracking-wider">Your Academy House</p>
                 <div className="flex items-center justify-center gap-3 mb-3">
                   <div
@@ -295,7 +295,7 @@ export default function AssessmentPage() {
                     return (
                       <div key={element} className="flex items-center gap-3">
                         <span className="w-16 text-sm text-text-secondary capitalize">{element}</span>
-                        <div className="flex-1 h-2 bg-white/10 rounded-full overflow-hidden">
+                        <div className="flex-1 h-2 bg-white/[0.06] rounded-full overflow-hidden">
                           <motion.div
                             initial={{ width: 0 }}
                             animate={{ width: `${percentage}%` }}
@@ -314,15 +314,15 @@ export default function AssessmentPage() {
               <div className="flex gap-4">
                 <Link
                   href="/academy"
-                  className="flex-1 py-3 rounded-xl border border-white/20 text-center font-semibold hover:bg-white/5 transition-colors"
+                  className="flex-1 py-3 rounded-xl border border-white/[0.12] text-center font-semibold hover:bg-white/[0.04] transition-colors"
                 >
                   View Academy
                 </Link>
                 <Link
-                  href="/luminors"
+                  href="/lore/guardians"
                   className="flex-1 py-3 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep text-center font-semibold hover:shadow-[0_0_30px_rgba(127,255,212,0.4)] transition-all"
                 >
-                  Meet Your Luminor
+                  Meet Your Intelligence
                 </Link>
               </div>
             </div>
@@ -350,7 +350,7 @@ export default function AssessmentPage() {
             <span className="text-text-secondary">Gate {question.gate}: {question.gateName}</span>
             <span className="text-text-muted">{currentQuestion + 1} of {ASSESSMENT_QUESTIONS.length}</span>
           </div>
-          <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+          <div className="h-2 bg-white/[0.06] rounded-full overflow-hidden">
             <motion.div
               className="h-full bg-gradient-to-r from-atlantean-teal-aqua to-gold-bright rounded-full"
               initial={{ width: 0 }}
@@ -366,7 +366,7 @@ export default function AssessmentPage() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
-            className="bg-cosmic-surface/50 backdrop-blur-xl rounded-3xl border border-white/10 p-8"
+            className="liquid-glass rounded-3xl border border-white/[0.06] p-8"
           >
             <h2 className="text-2xl font-display font-bold mb-8">{question.question}</h2>
 
@@ -378,7 +378,7 @@ export default function AssessmentPage() {
                   className={`w-full p-4 rounded-xl border text-left transition-all ${
                     selectedOption === index
                       ? 'border-atlantean-teal-aqua bg-atlantean-teal-aqua/10'
-                      : 'border-white/10 hover:border-white/30 hover:bg-white/5'
+                      : 'border-white/[0.06] hover:border-white/[0.20] hover:bg-white/[0.04]'
                   }`}
                 >
                   <div className="flex items-center gap-4">
@@ -386,7 +386,7 @@ export default function AssessmentPage() {
                       className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors ${
                         selectedOption === index
                           ? 'border-atlantean-teal-aqua bg-atlantean-teal-aqua'
-                          : 'border-white/30'
+                          : 'border-white/[0.20]'
                       }`}
                     >
                       {selectedOption === index && <PhCheck className="w-4 h-4 text-cosmic-deep" />}
@@ -404,7 +404,7 @@ export default function AssessmentPage() {
               <button
                 onClick={handleBack}
                 disabled={currentQuestion === 0}
-                className="flex items-center gap-2 px-6 py-3 rounded-xl border border-white/20 text-text-secondary hover:text-white hover:bg-white/5 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                className="flex items-center gap-2 px-6 py-3 rounded-xl border border-white/[0.12] text-text-secondary hover:text-white hover:bg-white/[0.04] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
               >
                 <PhArrowLeft className="w-4 h-4" />
                 Back

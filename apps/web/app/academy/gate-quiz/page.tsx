@@ -631,7 +631,7 @@ function ProgressBar({ current, total }: ProgressBarProps) {
           {Math.round(percent)}%
         </span>
       </div>
-      <div className="h-1 w-full rounded-full bg-white/5 overflow-hidden">
+      <div className="h-1 w-full rounded-full bg-white/[0.04] overflow-hidden">
         <motion.div
           className="h-full rounded-full"
           style={{
@@ -665,8 +665,8 @@ function IntroScreen({ onStart }: IntroScreenProps) {
       <div className="relative liquid-glass rounded-3xl p-8 md:p-14 overflow-hidden">
         {/* Inner shimmer accent */}
         <div className="pointer-events-none absolute inset-0 rounded-3xl overflow-hidden">
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/[0.12] to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
         </div>
 
         <div className="relative max-w-2xl">
@@ -744,7 +744,7 @@ function IntroScreen({ onStart }: IntroScreenProps) {
           return (
             <div
               key={g.key}
-              className="flex-shrink-0 flex flex-col items-center gap-1.5 glass rounded-xl p-3 min-w-[72px]"
+              className="flex-shrink-0 flex flex-col items-center gap-1.5 liquid-glass rounded-xl p-3 min-w-[72px]"
             >
               <span style={{ color: g.color }}>
                 <Icon className="h-5 w-5" />
@@ -818,7 +818,7 @@ function QuestionScreen({
                     "group w-full rounded-xl p-5 text-left transition-all duration-300 font-sans",
                     isSelected
                       ? "glass-strong border border-brand-primary/50 shadow-glow-brand"
-                      : "glass border border-white/8 hover:border-crystal/30 hover:bg-white/[0.03]",
+                      : "card-3d liquid-glass border border-white/[0.08] hover:border-crystal/30 hover:bg-white/[0.03]",
                   ].join(" ")}
                 >
                   <div className="flex items-start gap-4">
@@ -828,7 +828,7 @@ function QuestionScreen({
                         "mt-0.5 flex-shrink-0 h-5 w-5 rounded-full border-2 transition-all duration-300 flex items-center justify-center",
                         isSelected
                           ? "border-brand-primary bg-brand-primary"
-                          : "border-white/20 group-hover:border-crystal/50",
+                          : "border-white/[0.12] group-hover:border-crystal/50",
                       ].join(" ")}
                     >
                       {isSelected && (
@@ -872,7 +872,7 @@ function QuestionScreen({
                 "inline-flex items-center gap-2 rounded-xl px-6 py-3 font-semibold transition-all font-sans",
                 selectedChoice !== null
                   ? "bg-brand-primary text-white shadow-glow-brand hover:bg-brand-primary/90 cursor-pointer"
-                  : "bg-white/5 text-text-disabled cursor-not-allowed",
+                  : "bg-white/[0.04] text-text-disabled cursor-not-allowed",
               ].join(" ")}
             >
               {questionNumber === totalQuestions
@@ -935,7 +935,7 @@ function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
               background: `linear-gradient(135deg, ${guardian.glowColor} 0%, transparent 60%)`,
             }}
           >
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/[0.12] to-transparent" />
 
             {/* Icon + gate badge */}
             <div className="mb-6 flex items-start justify-between">
@@ -974,7 +974,7 @@ function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
             </h1>
             <div className="mt-2 flex items-center gap-3 text-sm text-text-secondary font-sans">
               <span>{guardian.element}</span>
-              <span className="text-white/20">·</span>
+              <span className="text-white/[0.12]">·</span>
               <span>Godbeast: {guardian.godbeast}</span>
             </div>
           </div>
@@ -995,7 +995,7 @@ function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.65, duration: 0.5 }}
-              className="glass rounded-2xl p-5"
+              className="liquid-glass rounded-2xl p-5"
             >
               <h3 className="mb-3 text-xs uppercase tracking-[0.3em] text-text-muted font-sans font-semibold">
                 Your Creative Nature
@@ -1012,7 +1012,7 @@ function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
               transition={{ delay: 0.8, duration: 0.5 }}
               className="grid gap-4 md:grid-cols-2"
             >
-              <div className="glass rounded-2xl p-5">
+              <div className="liquid-glass rounded-2xl p-5">
                 <h3
                   className="mb-2 text-xs uppercase tracking-[0.25em] font-semibold font-sans"
                   style={{ color: guardian.color }}
@@ -1023,7 +1023,7 @@ function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
                   {guardian.creativeStrength}
                 </p>
               </div>
-              <div className="glass rounded-2xl p-5">
+              <div className="liquid-glass rounded-2xl p-5">
                 <h3 className="mb-2 text-xs uppercase tracking-[0.25em] text-text-muted font-semibold font-sans">
                   Shadow to Transcend
                 </h3>
@@ -1103,7 +1103,7 @@ function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
                     "flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-sans transition-all hover-lift",
                     isMatch
                       ? "glass-strong border font-semibold"
-                      : "glass border border-white/8 text-text-muted hover:text-text-secondary",
+                      : "card-3d liquid-glass border border-white/[0.08] text-text-muted hover:text-text-secondary",
                   ].join(" ")}
                   style={
                     isMatch
@@ -1204,14 +1204,14 @@ export default function GateQuizPage() {
           >
             Arcanea
           </Link>
-          <span className="text-white/20">/</span>
+          <span className="text-white/[0.12]">/</span>
           <Link
             href="/academy"
             className="hover:text-text-secondary transition-colors"
           >
             Academy
           </Link>
-          <span className="text-white/20">/</span>
+          <span className="text-white/[0.12]">/</span>
           <span className="text-text-secondary">Guardian Quiz</span>
         </motion.div>
 

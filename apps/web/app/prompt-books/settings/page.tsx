@@ -35,7 +35,7 @@ export default function PromptBooksSettingsPage() {
       </div>
 
       {/* Tab navigation */}
-      <div className="flex gap-1 mb-6 glass-subtle rounded-xl p-1 w-fit">
+      <div className="flex gap-1 mb-6 liquid-glass rounded-xl p-1 w-fit">
         {tabs.map((tab) => (
           <button
             key={tab.value}
@@ -43,7 +43,7 @@ export default function PromptBooksSettingsPage() {
             className={cn(
               'flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-sans font-medium transition-all',
               activeTab === tab.value
-                ? 'glass text-text-primary'
+                ? 'liquid-glass text-text-primary'
                 : 'text-text-muted hover:text-text-secondary',
             )}
           >

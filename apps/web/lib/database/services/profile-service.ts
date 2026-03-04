@@ -21,19 +21,28 @@ export async function getProfileStats(
   supabase: SupabaseClient,
   userId: string
 ): Promise<ProfileStats> {
-  const [creations, followers, following, likes] = await Promise.all([
+  const [creations, followers, following, userCreations] = await Promise.all([
     supabase.from('creations').select('id', { count: 'exact', head: true }).eq('user_id', userId),
     supabase.from('follows').select('follower_id', { count: 'exact', head: true }).eq('following_id', userId),
     supabase.from('follows').select('following_id', { count: 'exact', head: true }).eq('follower_id', userId),
-    supabase.from('likes').select('user_id', { count: 'exact', head: true })
-      .in('creation_id', supabase.from('creations').select('id').eq('user_id', userId) as any),
+    supabase.from('creations').select('id').eq('user_id', userId),
   ])
+
+  let likesCount = 0
+  const creationIds = (userCreations.data ?? []).map((c: { id: string }) => c.id)
+  if (creationIds.length > 0) {
+    const likes = await supabase
+      .from('likes')
+      .select('user_id', { count: 'exact', head: true })
+      .in('creation_id', creationIds)
+    likesCount = likes.count ?? 0
+  }
 
   return {
     creationsCount: creations.count ?? 0,
     followersCount: followers.count ?? 0,
     followingCount: following.count ?? 0,
-    likesReceived: likes.count ?? 0,
+    likesReceived: likesCount,
     totalViews: 0,
   }
 }
@@ -50,6 +59,12 @@ export async function updateProfile(
   if (updates.activeGate !== undefined) payload.active_gate = updates.activeGate
   if (updates.guardian !== undefined) payload.guardian = updates.guardian
   if (updates.academyHouse !== undefined) payload.academy_house = updates.academyHouse
+  if (updates.metadata !== undefined) payload.metadata = updates.metadata
+  if (updates.gatesOpen !== undefined) payload.gates_open = updates.gatesOpen
+  if (updates.magicRank !== undefined) payload.magic_rank = updates.magicRank
+  if (updates.streakDays !== undefined) payload.streak_days = updates.streakDays
+  if (updates.xp !== undefined) payload.xp = updates.xp
+  if (updates.level !== undefined) payload.level = updates.level
 
   const { data, error } = await supabase
     .from('profiles')

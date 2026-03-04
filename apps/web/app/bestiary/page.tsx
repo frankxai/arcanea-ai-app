@@ -7,7 +7,6 @@
 
 import { Metadata } from 'next';
 import Link from 'next/link';
-
 export const metadata: Metadata = {
   title: 'Bestiary of Creation | Arcanea',
   description:
@@ -171,9 +170,10 @@ const DANGER_COLORS = {
 
 export default function BestiaryPage() {
   return (
-    <main className="mx-auto max-w-7xl px-6 pb-24 pt-12">
+    <>
+    <main className="mx-auto max-w-7xl px-6 pb-24 pt-8">
       {/* Hero Section */}
-      <section className="relative mb-16 overflow-hidden rounded-3xl border border-cosmic-border bg-gradient-to-br from-cosmic-surface via-cosmic-deep to-cosmic-void p-10">
+      <section className="relative mb-16 overflow-hidden rounded-3xl liquid-glass p-10">
         <div className="pointer-events-none absolute inset-0 opacity-40" aria-hidden="true">
           <div className="absolute -left-24 top-16 h-72 w-72 rounded-full bg-draconic-crimson/30 blur-3xl" />
           <div className="absolute right-[-10%] top-1/3 h-80 w-80 rounded-full bg-cosmic-purple/20 blur-3xl" />
@@ -232,7 +232,7 @@ export default function BestiaryPage() {
       </section>
 
       {/* How to Use */}
-      <section className="rounded-3xl border border-cosmic-border bg-cosmic-surface p-8">
+      <section className="rounded-3xl liquid-glass p-8">
         <h2 className="mb-6 font-display text-2xl font-semibold text-text-primary">
           How to Use the Bestiary
         </h2>
@@ -273,6 +273,7 @@ export default function BestiaryPage() {
         </div>
       </section>
     </main>
+    </>
   );
 }
 
@@ -286,7 +287,7 @@ function CreatureCard({ creature }: CreatureCardProps) {
   return (
     <Link
       href={`/bestiary/${creature.id}`}
-      className="group relative overflow-hidden rounded-2xl border border-cosmic-border bg-gradient-to-br from-cosmic-surface via-cosmic-deep to-cosmic-void p-6 transition-all hover:border-draconic-crimson/50 hover:shadow-[0_0_50px_rgba(220,38,38,0.15)]"
+      className="group relative overflow-hidden rounded-2xl liquid-glass p-6 transition-all hover:border-draconic-crimson/50 hover:shadow-[0_0_50px_rgba(220,38,38,0.15)] hover-lift"
     >
       <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" aria-hidden="true">
         <div

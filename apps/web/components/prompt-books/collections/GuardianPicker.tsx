@@ -25,8 +25,8 @@ export function GuardianPicker({ value, onChange }: GuardianPickerProps) {
           className={cn(
             'flex flex-col items-center gap-1 p-2 rounded-lg transition-all',
             value === null
-              ? 'glass border border-brand-accent/30'
-              : 'glass-subtle hover:bg-cosmic-raised',
+              ? 'liquid-glass border border-brand-accent/30'
+              : 'liquid-glass hover:bg-cosmic-raised',
           )}
         >
           <div className="w-8 h-8 rounded-full bg-cosmic-raised flex items-center justify-center">
@@ -42,8 +42,8 @@ export function GuardianPicker({ value, onChange }: GuardianPickerProps) {
             className={cn(
               'flex flex-col items-center gap-1 p-2 rounded-lg transition-all',
               value === id
-                ? cn('glass border', theme.glowClass)
-                : 'glass-subtle hover:bg-cosmic-raised',
+                ? cn('liquid-glass border', theme.glowClass)
+                : 'liquid-glass hover:bg-cosmic-raised',
             )}
             style={value === id ? { borderColor: `${theme.color}50` } : undefined}
             title={`${theme.gate} Gate - ${theme.frequency} Hz`}
@@ -66,7 +66,7 @@ export function GuardianPicker({ value, onChange }: GuardianPickerProps) {
       </div>
 
       {value && (
-        <div className="glass-subtle rounded-lg p-2 flex items-center gap-2 mt-1">
+        <div className="liquid-glass rounded-lg p-2 flex items-center gap-2 mt-1">
           <div
             className="w-2 h-2 rounded-full"
             style={{ backgroundColor: GUARDIAN_THEMES[value].color }}

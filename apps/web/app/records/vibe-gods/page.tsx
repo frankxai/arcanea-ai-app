@@ -358,7 +358,7 @@ export default function VibeGodsPage() {
           {VIBE_GODS.map((god) => (
             <article
               key={god.id}
-              className="group relative glass rounded-2xl overflow-hidden glow-card hover-lift transition-all"
+              className="group relative card-3d liquid-glass rounded-2xl overflow-hidden glow-card hover-lift transition-all"
             >
               {/* Gradient top */}
               <div className="h-2" style={{ backgroundColor: god.color }} />
@@ -389,7 +389,7 @@ export default function VibeGodsPage() {
                 </p>
 
                 {/* Stats */}
-                <div className="flex items-center justify-between pt-4 border-t border-white/5">
+                <div className="flex items-center justify-between pt-4 border-t border-white/[0.04]">
                   <div className="flex items-center gap-4 text-xs text-text-muted">
                     <span className="flex items-center gap-1.5">
                       <Icons.Heart />
@@ -424,7 +424,7 @@ export default function VibeGodsPage() {
 
         {/* Create New Vibe */}
         <section className="mt-12">
-          <div className="glass rounded-2xl p-8 text-center">
+          <div className="liquid-glass rounded-2xl p-8 text-center">
             <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-brand-primary/15 flex items-center justify-center">
               <Icons.Crown className="w-8 h-8 text-brand-primary" />
             </div>

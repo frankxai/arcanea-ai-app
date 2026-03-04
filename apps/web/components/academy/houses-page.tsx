@@ -153,7 +153,7 @@ const HOUSES = [
       glow: 'rgba(196,181,253,0.22)',
       border: 'rgba(196,181,253,0.35)',
       borderHover: 'rgba(196,181,253,0.65)',
-      badge: 'bg-white/10 text-white border-white/30',
+      badge: 'bg-white/[0.06] text-white border-white/[0.20]',
       title: 'text-gradient-cosmic',
     },
     icon: PhSparkle,
@@ -236,7 +236,7 @@ function HouseCard({ house, index, isInView }: HouseCardProps) {
               </div>
 
               {/* Philosophy */}
-              <blockquote className="font-crimson text-xl italic text-white/90 mb-4 border-l-2 pl-4"
+              <blockquote className="font-body text-xl italic text-white/[0.70] mb-4 border-l-2 pl-4"
                 style={{ borderColor: house.colors.accent }}>
                 "{house.philosophy}"
               </blockquote>
@@ -255,7 +255,7 @@ function HouseCard({ house, index, isInView }: HouseCardProps) {
                   <div className="flex flex-wrap gap-2">
                     {house.traits.map((trait) => (
                       <span key={trait}
-                        className="px-2.5 py-1 rounded-full text-xs border border-white/15 bg-white/5 text-text-secondary">
+                        className="px-2.5 py-1 rounded-full text-xs border border-white/[0.10] bg-white/[0.04] text-text-secondary">
                         {trait}
                       </span>
                     ))}
@@ -319,7 +319,7 @@ function HouseCard({ house, index, isInView }: HouseCardProps) {
 
           {/* Philosophy quote */}
           <blockquote
-            className="font-crimson text-base italic text-white/85 border-l-2 pl-3 leading-relaxed"
+            className="font-body text-base italic text-white/[0.65] border-l-2 pl-3 leading-relaxed"
             style={{ borderColor: house.colors.accent }}
           >
             "{house.philosophy}"
@@ -338,7 +338,7 @@ function HouseCard({ house, index, isInView }: HouseCardProps) {
             <div className="flex flex-wrap gap-1.5">
               {house.traits.map((trait) => (
                 <span key={trait}
-                  className="px-2 py-0.5 rounded-full text-xs border border-white/10 bg-white/5 text-text-muted">
+                  className="px-2 py-0.5 rounded-full text-xs border border-white/[0.06] bg-white/[0.04] text-text-muted">
                   {trait}
                 </span>
               ))}
@@ -346,7 +346,7 @@ function HouseCard({ house, index, isInView }: HouseCardProps) {
           </div>
 
           {/* Affinity */}
-          <div className="pt-0.5 border-t border-white/8">
+          <div className="pt-0.5 border-t border-white/[0.08]">
             <span className="text-xs uppercase tracking-widest text-text-muted font-sans">
               Creative Affinity
             </span>
@@ -414,7 +414,7 @@ export function HousesPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35 }}
-            className="text-xl md:text-2xl font-crimson italic text-text-secondary max-w-2xl mx-auto mb-4"
+            className="text-xl md:text-2xl font-body italic text-text-secondary max-w-2xl mx-auto mb-4"
           >
             Every creator finds their home.
           </motion.p>
@@ -477,7 +477,7 @@ export function HousesPage() {
       </section>
 
       {/* ── Wisdom Note ────────────────────────────────────────────────── */}
-      <section className="py-16 px-6 border-t border-white/5">
+      <section className="py-16 px-6 border-t border-white/[0.04]">
         <div className="max-w-3xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -488,7 +488,7 @@ export function HousesPage() {
             <p className="text-xs uppercase tracking-[0.35em] text-crystal font-sans mb-4">
               A Note on Sorting
             </p>
-            <p className="font-crimson text-lg italic text-text-secondary leading-relaxed mb-3">
+            <p className="font-body text-lg italic text-text-secondary leading-relaxed mb-3">
               "The House does not choose you because of who you are today.
               It chooses you because of who you are becoming."
             </p>
@@ -500,7 +500,7 @@ export function HousesPage() {
       </section>
 
       {/* ── CTA ────────────────────────────────────────────────────────── */}
-      <section ref={ctaRef} className="py-24 px-6 border-t border-white/5">
+      <section ref={ctaRef} className="py-24 px-6 border-t border-white/[0.04]">
         <div className="max-w-2xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -524,7 +524,7 @@ export function HousesPage() {
               </Link>
               <Link
                 href="/academy"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-white/20 text-white font-semibold hover:bg-white/5 transition-all"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-white/[0.12] text-white font-semibold hover:bg-white/[0.04] transition-all"
               >
                 Back to Academy
               </Link>

@@ -40,7 +40,7 @@ export function PromptTypeTabs({ value, onChange }: PromptTypeTabsProps) {
               'flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-sans font-medium',
               'whitespace-nowrap transition-all duration-150',
               isActive
-                ? 'glass text-text-primary'
+                ? 'liquid-glass text-text-primary'
                 : 'text-text-muted hover:text-text-secondary hover:bg-white/[0.03]',
             )}
             title={config.description}

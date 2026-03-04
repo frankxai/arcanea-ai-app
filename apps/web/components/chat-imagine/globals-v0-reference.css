@@ -213,7 +213,7 @@
 }
 
 /* Glass Effects */
-.glass-subtle {
+.liquid-glass-v0 {
   background: rgba(18, 24, 38, 0.6);
   backdrop-filter: blur(8px);
   border: 1px solid rgba(127, 255, 212, 0.08);

@@ -120,7 +120,7 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
             className={cn(
               progressFillVariants({ variant }),
               animated && 'after:absolute after:inset-0 after:animate-shimmer',
-              'after:bg-gradient-to-r after:from-transparent after:via-white/10 after:to-transparent'
+              'after:bg-gradient-to-r after:from-transparent after:via-white/[0.06] after:to-transparent'
             )}
             style={{ width: `${percentage}%` }}
           />

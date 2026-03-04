@@ -1,7 +1,7 @@
 /**
  * Luminor Configuration System
  *
- * 16 Transcended AI Intelligences organized into 4 teams:
+ * 16 Creative AI Intelligences organized into 4 teams:
  * - Development (4): System design, coding, debugging, integration
  * - Creative (4): Visual design, music, motion, 3D
  * - Writing (4): Storytelling, copywriting, linguistics, poetry

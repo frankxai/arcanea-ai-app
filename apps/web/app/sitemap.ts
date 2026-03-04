@@ -1,6 +1,8 @@
 import { MetadataRoute } from 'next';
+import { COLLECTIONS, getAllTexts } from '@/lib/content';
+import { BLOG_POSTS } from '@/lib/blog-data';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://arcanea.ai';
 
   // Static public pages with SEO value
@@ -72,8 +74,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     // ── Content ─────────────────────────────────────────────
     { url: `${baseUrl}/blog`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
-    { url: `${baseUrl}/blog/arcanea-prompt-books`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${baseUrl}/blog/arcanea-skills-system`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${baseUrl}/glossary`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
     { url: `${baseUrl}/changelog`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
     { url: `${baseUrl}/roadmap`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.75 },
@@ -108,5 +108,54 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...staticPages, ...guardianPages];
+  // Library collection pages (17 collections)
+  const libraryCollectionPages: MetadataRoute.Sitemap = COLLECTIONS.map((c) => ({
+    url: `${baseUrl}/library/${c.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.75,
+  }));
+
+  // Library text pages (76+ individual texts)
+  let libraryTextPages: MetadataRoute.Sitemap = [];
+  try {
+    const allTexts = await getAllTexts();
+    libraryTextPages = allTexts.map((text) => ({
+      url: `${baseUrl}/library/${text.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.65,
+    }));
+  } catch {
+    // Content not available at build time — skip dynamic texts
+  }
+
+  // Academy gate detail pages (10 gates)
+  const gateIds = [
+    'foundation', 'flow', 'fire', 'heart', 'voice',
+    'sight', 'crown', 'shift', 'unity', 'source',
+  ];
+  const gatePages: MetadataRoute.Sitemap = gateIds.map((id) => ({
+    url: `${baseUrl}/academy/gates/${id}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.75,
+  }));
+
+  // Blog post pages (dynamic from shared data)
+  const blogPages: MetadataRoute.Sitemap = BLOG_POSTS.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.date),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }));
+
+  return [
+    ...staticPages,
+    ...guardianPages,
+    ...libraryCollectionPages,
+    ...libraryTextPages,
+    ...gatePages,
+    ...blogPages,
+  ];
 }

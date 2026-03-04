@@ -235,7 +235,7 @@ function StatusBadge({ status }: { status: PlatformStatus }) {
     );
   }
   return (
-    <span className="text-xs font-mono px-2.5 py-1 rounded-full bg-white/5 text-text-muted border border-white/10">
+    <span className="text-xs font-mono px-2.5 py-1 rounded-full bg-white/[0.04] text-text-muted border border-white/[0.06]">
       {status}
     </span>
   );
@@ -312,7 +312,7 @@ export default function OverlaysPage() {
                   href="https://github.com/frankxai/arcanea"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/15 bg-white/5 text-text-primary font-semibold hover:bg-white/10 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/[0.10] bg-white/[0.04] text-text-primary font-semibold hover:bg-white/[0.06] transition-all duration-200"
                 >
                   <IconGithubLogo />
                   View on GitHub
@@ -338,7 +338,7 @@ export default function OverlaysPage() {
             {PLATFORMS.map((platform) => (
               <div
                 key={platform.id}
-                className="glass rounded-2xl overflow-hidden hover:border-white/20 transition-all duration-200 group"
+                className="card-3d liquid-glass rounded-2xl overflow-hidden hover:border-white/[0.12] transition-all duration-200 group"
                 style={{
                   borderColor: `rgba(${platform.accentRgb}, 0.18)`,
                 }}
@@ -446,9 +446,9 @@ export default function OverlaysPage() {
                 color: "brand-gold",
               },
             ].map(({ step, title, body, iconEl, color }) => (
-              <div key={step} className="glass rounded-2xl p-7 relative">
+              <div key={step} className="card-3d liquid-glass rounded-2xl p-7 relative">
                 <div
-                  className="absolute top-5 right-5 text-4xl font-display font-bold text-white/5 select-none"
+                  className="absolute top-5 right-5 text-4xl font-display font-bold text-white/[0.04] select-none"
                   aria-hidden="true"
                 >
                   {step}
@@ -471,7 +471,7 @@ export default function OverlaysPage() {
 
         {/* ── 4. Feature highlights ────────────────────────────────────────── */}
         <section>
-          <div className="glass rounded-2xl p-8 sm:p-10">
+          <div className="card-3d liquid-glass rounded-2xl p-8 sm:p-10">
             <div className="grid sm:grid-cols-2 gap-10">
               <div>
                 <h2 className="text-xl sm:text-2xl font-display font-bold mb-3">
@@ -502,7 +502,7 @@ export default function OverlaysPage() {
               </div>
 
               <div className="flex flex-col gap-4">
-                <div className="glass rounded-xl p-5 border border-white/10">
+                <div className="liquid-glass rounded-xl p-5 border border-white/[0.06]">
                   <p className="text-xs font-mono text-text-muted mb-1 uppercase tracking-widest">
                     Package
                   </p>
@@ -533,7 +533,7 @@ export default function OverlaysPage() {
                   </div>
                 </div>
 
-                <div className="glass rounded-xl p-5 border border-white/10">
+                <div className="liquid-glass rounded-xl p-5 border border-white/[0.06]">
                   <p className="text-xs font-mono text-text-muted mb-1 uppercase tracking-widest">
                     Package
                   </p>
@@ -587,7 +587,7 @@ export default function OverlaysPage() {
                 {PLATFORMS.map((platform) => (
                   <div
                     key={platform.id}
-                    className="glass rounded-xl p-4 border transition-all duration-200 hover:border-white/20"
+                    className="liquid-glass rounded-xl p-4 border transition-all duration-200 hover:border-white/[0.12]"
                     style={{
                       borderColor: `rgba(${platform.accentRgb}, 0.15)`,
                     }}
@@ -623,7 +623,7 @@ export default function OverlaysPage() {
                 </Link>
                 <Link
                   href="/install"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/15 bg-white/5 text-text-primary font-semibold hover:bg-white/10 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/[0.10] bg-white/[0.04] text-text-primary font-semibold hover:bg-white/[0.06] transition-all duration-200"
                 >
                   Full install guide
                   <IconArrowRight />

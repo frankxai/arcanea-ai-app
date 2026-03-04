@@ -325,7 +325,7 @@ export default function ArcaneaOSPage() {
                     </Link>
                     <Link
                       href="/developers"
-                      className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
+                      className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
                     >
                       Developer Docs
                       <Icons.ChevronRight />
@@ -346,7 +346,7 @@ export default function ArcaneaOSPage() {
                 ].map((stat) => (
                   <div
                     key={stat.label}
-                    className="glass rounded-2xl p-6 text-center"
+                    className="liquid-glass rounded-2xl p-6 text-center"
                   >
                     <div className="text-3xl font-display font-bold text-brand-primary mb-1">
                       {stat.value}
@@ -379,7 +379,7 @@ export default function ArcaneaOSPage() {
                   return (
                     <div
                       key={feature.title}
-                      className="group relative glass rounded-2xl p-6 overflow-hidden glow-card hover-lift transition-all"
+                      className="group relative card-3d liquid-glass rounded-2xl p-6 overflow-hidden glow-card hover-lift transition-all"
                     >
                       <div
                         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"
@@ -415,7 +415,7 @@ export default function ArcaneaOSPage() {
 
             {/* Capabilities */}
             <section className="mb-16">
-              <div className="glass rounded-2xl p-8">
+              <div className="liquid-glass rounded-2xl p-8">
                 <h2 className="font-display text-2xl font-semibold text-text-primary mb-6 text-center">
                   System Capabilities
                 </h2>
@@ -451,7 +451,7 @@ export default function ArcaneaOSPage() {
 
             {/* Architecture Diagram */}
             <section className="mb-16">
-              <div className="glass rounded-2xl p-8">
+              <div className="liquid-glass rounded-2xl p-8">
                 <h2 className="font-display text-2xl font-semibold text-text-primary mb-6 text-center">
                   System Architecture
                 </h2>
@@ -508,7 +508,7 @@ export default function ArcaneaOSPage() {
                   </p>
                   <div className="flex flex-wrap justify-center gap-4">
                     <Link
-                      href="/register"
+                      href="/auth/signup"
                       className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200"
                     >
                       <Icons.Cpu />

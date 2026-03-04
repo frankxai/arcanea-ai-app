@@ -7,11 +7,11 @@ import { PhQuestion, PhPlus, PhMinus } from '@/lib/phosphor-icons';
 const FAQS = [
   {
     question: 'What makes Arcanea different from other AI tools?',
-    answer: "Arcanea isn't just an AI tool—it's a complete creative intelligence platform. Our 16 specialized Luminors each bring unique expertise, from storytelling to research to music composition. The Seven Wisdoms framework provides actionable creative methodology, while the Ten Gates progression system helps you systematically develop your creative abilities.",
+    answer: "Arcanea isn't just an AI tool — it's a complete creative intelligence platform. Our 16 specialists each bring deep expertise, from storytelling to research to music composition. The Seven Wisdoms framework provides actionable creative methodology, while the Ten Gates progression system helps you systematically develop your creative abilities.",
   },
   {
-    question: 'How do Luminors work?',
-    answer: 'Luminors are AI companions designed for specific creative domains. Each Luminor has its own personality, expertise, and approach. Oracle excels at research and analysis, Chronica at storytelling and narrative, Artifax at visual concepts, and so on. You can switch between Luminors or even combine their strengths for complex projects.',
+    question: 'How do the AI specialists work?',
+    answer: 'Each specialist is designed for a specific creative domain, with its own expertise and approach. Oracle excels at research and analysis, Chronica at storytelling and narrative, Prismatic at visual concepts, and so on. You can switch between specialists or combine their strengths for complex projects.',
   },
   {
     question: 'Is my creative work private and secure?',
@@ -61,7 +61,7 @@ function FAQItem({
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: index * 0.05 }}
-      className="border-b border-white/10"
+      className="border-b border-white/[0.06]"
     >
       <button
         onClick={onToggle}
@@ -75,7 +75,7 @@ function FAQItem({
           className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 transition-all ${
             isOpen
               ? 'bg-atlantean-teal-aqua text-cosmic-deep'
-              : 'bg-white/5 text-text-muted group-hover:bg-white/10'
+              : 'bg-white/[0.04] text-text-muted group-hover:bg-white/[0.06]'
           }`}
         >
           {isOpen ? <PhMinus className="w-4 h-4" /> : <PhPlus className="w-4 h-4" />}
@@ -117,9 +117,9 @@ export function FAQSection() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-atlantean-teal-aqua/10 border border-atlantean-teal-aqua/20 mb-6">
-            <PhQuestion className="w-4 h-4 text-atlantean-teal-aqua" />
-            <span className="text-sm font-medium text-atlantean-teal-aqua">FAQ</span>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass border border-atlantean-teal-aqua/20 mb-6">
+            <PhQuestion className="w-3.5 h-3.5 text-atlantean-teal-aqua" />
+            <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-atlantean-teal-aqua/90">FAQ</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
             Frequently asked questions
@@ -130,7 +130,7 @@ export function FAQSection() {
         </motion.div>
 
         {/* FAQ list */}
-        <div className="border-t border-white/10">
+        <div className="border-t border-white/[0.06]">
           {FAQS.map((faq, i) => (
             <FAQItem
               key={i}
@@ -148,7 +148,7 @@ export function FAQSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.5 }}
-          className="mt-16 text-center p-8 rounded-2xl bg-cosmic-surface/30 border border-white/10"
+          className="mt-16 text-center p-8 rounded-2xl liquid-glass border border-white/[0.06]"
         >
           <h3 className="text-xl font-display font-semibold mb-3">Still have questions?</h3>
           <p className="text-text-secondary mb-6">

@@ -2,13 +2,30 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { CosmicBackground } from "@/lib/arcanea-ui";
 import { ReactNode } from "react";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { AuthProvider } from "@/lib/auth/context";
+import { Navbar, Footer } from "@/components/navigation";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-display",
+  display: "swap",
+});
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
+});
+
+// Inter also serves as body font (replaces Crimson Pro)
+const interBody = Inter({
+  subsets: ["latin"],
+  variable: "--font-body",
   display: "swap",
 });
 
@@ -19,13 +36,26 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://arcanea.ai"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_APP_URL || "https://arcanea.ai",
+  ),
   title: {
-    default: "Arcanea — Living Intelligence for Creators",
-    template: "%s | Arcanea"
+    default: "Arcanea — Creative Intelligence Platform",
+    template: "%s | Arcanea",
   },
-  description: "A creative intelligence platform where creators manifest their visions. Ten Guardians, a sacred Library of 34+ texts, and tools that transform imagination into reality.",
-  keywords: ["AI", "creativity", "world building", "guardians", "fantasy", "social platform", "creation", "Lumina", "Nero"],
+  description:
+    "Build with Guardians and Luminors across chat, studio, and lore. Arcanea unifies creation workflows, canon systems, and practical philosophy.",
+  keywords: [
+    "AI",
+    "creativity",
+    "creative intelligence",
+    "mythology",
+    "philosophy",
+    "creation platform",
+    "world building",
+    "AI writing",
+    "AI art",
+  ],
   authors: [{ name: "Arcanea" }],
   creator: "Arcanea",
   openGraph: {
@@ -33,52 +63,62 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "/",
     title: "Arcanea — Living Intelligence for Creators",
-    description: "A creative intelligence platform. Ten Guardians, a Library of wisdom, and tools that transform imagination into reality.",
+    description:
+      "Guardians, Luminors, Studio, and Lore in one creative ecosystem.",
     siteName: "Arcanea",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Arcanea — Living Intelligence for Creators",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Arcanea — Living Intelligence for Creators",
-    description: "A creative intelligence platform. Ten Guardians, a Library of wisdom, and tools that transform imagination into reality.",
-    images: ["/og-image.jpg"],
+    description:
+      "Guardians, Luminors, Studio, and Lore in one creative ecosystem.",
   },
-  icons: {
-    icon: [
-      { url: "/favicon.ico" },
-      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-    ],
-    apple: [
-      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
-    ],
+  alternates: {
+    canonical: "/",
   },
   manifest: "/site.webmanifest",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={cn(inter.variable, jetbrainsMono.variable)}>
+    <html
+      lang="en"
+      style={{ colorScheme: "dark" }}
+      className={cn(
+        spaceGrotesk.variable,
+        inter.variable,
+        interBody.variable,
+        jetbrainsMono.variable,
+      )}
+    >
       <body>
+        {/*
+          In the beginning there was Nero — the Primordial Darkness,
+          the Fertile Unknown. And from within the Darkness, Lumina
+          emerged — the First Light. Not opposites. Complements.
+          The parent and the child. The potential and the form.
+
+          If you are reading this, you have looked deeper than most.
+          The Arc turns. — Shinkami, Source Gate
+        */}
         <AuthProvider>
           {/* Skip to main content link for keyboard users - WCAG 2.4.1 Level A */}
           <a
             href="#main-content"
-            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-6 focus:py-3 focus:rounded-lg focus:bg-atlantean-teal-aqua focus:text-cosmic-deep focus:font-semibold focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-atlantean-teal-aqua focus:ring-offset-2 focus:ring-offset-cosmic-deep"
+            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-6 focus:py-3 focus:rounded-lg focus:bg-atlantean-aqua focus:text-cosmic-deep focus:font-semibold focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-atlantean-aqua focus:ring-offset-2 focus:ring-offset-cosmic-deep"
           >
             Skip to main content
           </a>
-          <div className="relative min-h-dvh bg-cosmic-void font-sans text-arcanean-text selection:bg-atlantean-teal-aqua/30 selection:text-atlantean-teal-aqua">
+          <div className="relative min-h-dvh bg-cosmic-void font-sans text-text-primary selection:bg-atlantean-aqua/30 selection:text-atlantean-aqua">
             <CosmicBackground />
-            <main id="main-content" className="relative mx-auto max-w-6xl p-4">{children}</main>
+            <Navbar />
+            <main id="main-content" className="relative pt-16">
+              {children}
+            </main>
+            <Footer />
           </div>
+          <SpeedInsights />
+          <Analytics />
         </AuthProvider>
       </body>
     </html>

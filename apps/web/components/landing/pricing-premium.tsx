@@ -11,7 +11,7 @@ const plans = [
     price: "Free",
     description: "Perfect for exploring Arcanea",
     features: [
-      "Access to 3 Luminors",
+      "Access to 3 AI specialists",
       "Basic creation tools",
       "5,000 words/month",
       "Community access",
@@ -26,7 +26,7 @@ const plans = [
     period: "/month",
     description: "For serious creators",
     features: [
-      "Access to all 10 Guardians",
+      "Access to all 16 AI specialists",
       "Unlimited words & generations",
       "Advanced creation studio",
       "Priority support",
@@ -46,7 +46,7 @@ const plans = [
       "Everything in Creator",
       "Team collaboration (up to 10)",
       "Advanced analytics",
-      "Custom Luminor training",
+      "Custom specialist training",
       "Dedicated support",
       "White-label options",
       "SLA guarantee",
@@ -84,8 +84,8 @@ function PricingCard({
       <div
         className={`relative h-full p-8 rounded-3xl border transition-all duration-300 ${
           plan.popular
-            ? "glass border-crystal/30 bg-cosmic-deep/90"
-            : "glass border-white/5 hover:border-white/10"
+            ? "liquid-glass border-crystal/30 bg-cosmic-deep/90"
+            : "liquid-glass border-white/[0.06] hover:border-white/[0.12]"
         }`}
       >
         {/* Popular badge */}
@@ -129,7 +129,7 @@ function PricingCard({
             >
               <div
                 className={`mt-0.5 w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${
-                  plan.popular ? "bg-crystal/20" : "bg-white/5"
+                  plan.popular ? "bg-crystal/20" : "bg-white/[0.04]"
                 }`}
               >
                 <PhCheck
@@ -143,11 +143,11 @@ function PricingCard({
 
         {/* CTA */}
         <Link
-          href={plan.price === "Free" ? "/studio" : "/signup"}
+          href={plan.price === "Free" ? "/studio" : "/auth/signup"}
           className={`block w-full py-4 rounded-2xl text-center font-display font-semibold transition-all ${
             plan.popular
               ? "bg-gradient-to-r from-crystal to-brand-primary text-cosmic-deep hover:shadow-glow-md"
-              : "glass border border-white/10 hover:border-crystal/30 text-text-primary"
+              : "liquid-glass border border-white/[0.06] hover:border-crystal/30 text-text-primary"
           }`}
         >
           {plan.cta}
@@ -212,7 +212,7 @@ export function PricingPremium() {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="inline-block px-4 py-2 rounded-full glass border border-brand-primary/20 text-brand-primary font-medium text-sm mb-6"
+            className="inline-block px-4 py-2 rounded-full liquid-glass border border-brand-primary/20 text-brand-primary font-medium text-sm mb-6"
           >
             Simple Pricing
           </motion.span>

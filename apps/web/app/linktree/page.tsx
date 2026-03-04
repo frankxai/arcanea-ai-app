@@ -278,14 +278,14 @@ const LINKS: LinkItem[] = [
   {
     href: "/studio",
     label: "Creation Studio",
-    description: "Manifest your visions with AI companions",
+    description: "Create text, images, music, and code",
     icon: <Icons.Palette />,
     color: "from-brand-primary to-void-el",
   },
   {
-    href: "/luminors",
-    label: "Meet the Luminors",
-    description: "AI companions for every creative challenge",
+    href: "/lore/guardians",
+    label: "Meet the Intelligences",
+    description: "10 creative intelligences for creative work",
     icon: <Icons.Crown />,
     color: "from-brand-gold to-crystal",
   },
@@ -329,7 +329,7 @@ const LINKS: LinkItem[] = [
     label: "GitHub",
     description: "Open source. MIT License. Star & contribute",
     icon: <Icons.Github />,
-    color: "from-white/20 to-white/5",
+    color: "from-white/[0.12] to-white/[0.04]",
     external: true,
   },
   {
@@ -401,7 +401,7 @@ export default function LinktreePage() {
             className={`group relative flex items-center gap-4 w-full p-4 rounded-2xl transition-all duration-200 hover:scale-[1.02] hover:-translate-y-0.5 ${
               link.featured
                 ? "liquid-glass shadow-glow-brand border border-brand-primary/30"
-                : "glass hover:border-crystal/30"
+                : "liquid-glass hover:border-crystal/30"
             }`}
           >
             {/* Icon */}

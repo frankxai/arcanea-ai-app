@@ -8,14 +8,12 @@ export const metadata: Metadata = {
     title: "Share Your Vision | Arcanea Feedback",
     description:
       "Your feedback shapes the living mythology. Help us build the future of AI-powered creation.",
-    images: ["/og-feedback.png"],
   },
   twitter: {
     card: "summary_large_image",
     title: "Share Your Vision | Arcanea Feedback",
     description:
       "Your feedback shapes the living mythology. Help us build the future of AI-powered creation.",
-    images: ["/og-feedback.png"],
   },
 };
 

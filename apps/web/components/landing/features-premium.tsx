@@ -26,9 +26,9 @@ import {
 const features = [
   {
     icon: PhBrain,
-    title: "16 Luminor Intelligences",
+    title: "16 AI Specialists",
     description:
-      "Specialized AI companions, each embodying a unique wisdom. From creative brainstorming to technical analysis.",
+      "Each specialist has mastered a specific domain — from system architecture to narrative design to deep research.",
     gradient: "from-crystal to-brand-primary",
     borderColor: "border-crystal/30",
     hoverGlow: "hover:shadow-glow-md",
@@ -37,7 +37,7 @@ const features = [
     icon: PhChatSquare,
     title: "Natural Conversation",
     description:
-      "Chat with Luminors in plain language. They remember context and adapt to your creative style.",
+      "Chat in plain language. They remember context and adapt to your creative style.",
     gradient: "from-brand-primary to-water-bright",
     borderColor: "border-brand-primary/30",
     hoverGlow: "hover:shadow-glow-brand",
@@ -217,7 +217,7 @@ export function FeaturesPremium() {
                 {capabilities.slice(0, 4).map((cap) => (
                   <span
                     key={cap}
-                    className="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm font-medium"
+                    className="px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.06] text-sm font-medium"
                   >
                     {cap}
                   </span>
@@ -238,7 +238,7 @@ export function FeaturesPremium() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="p-4 rounded-2xl bg-white/5 border border-white/5"
+                  className="p-4 rounded-2xl liquid-glass border border-white/[0.04]"
                 >
                   <stat.icon className="w-5 h-5 text-crystal mb-2" />
                   <div className="text-2xl font-display font-bold">

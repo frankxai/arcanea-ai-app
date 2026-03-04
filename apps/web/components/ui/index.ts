@@ -24,6 +24,9 @@ export type { CosmicGradientProps } from './cosmic-gradient';
 export { GlowEffect } from './glow-effect';
 export type { GlowEffectProps } from './glow-effect';
 
+export { GlowCard } from './glow-card';
+export type { GlowCardProps } from './glow-card';
+
 // Academy Components
 export { AcademyBadge } from './academy-badge';
 export type { AcademyBadgeProps } from './academy-badge';

@@ -1,10 +1,11 @@
+'use client';
+
 /**
  * World Builder - Create Immersive Worlds
  *
  * A creative tool for building detailed fictional worlds with AI assistance.
  */
 
-import { Metadata } from "next";
 import Link from "next/link";
 import {
   PhSparkle,
@@ -40,12 +41,6 @@ import {
   PhShare,
   PhClock,
 } from '@/lib/phosphor-icons';
-
-export const metadata: Metadata = {
-  title: "World Builder | Arcanea",
-  description:
-    "Create immersive fictional worlds with AI-assisted worldbuilding. Design continents, cultures, magic systems, and histories.",
-};
 
 const WORLD_ELEMENTS = [
   {
@@ -186,15 +181,15 @@ export default function WorldBuilderPage() {
 
               <div className="flex flex-wrap gap-4">
                 <Link
-                  href="/world-builder/new"
+                  href="/world-builder"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200"
                 >
                   <PhPlus className="w-4 h-4" />
                   New World
                 </Link>
                 <Link
-                  href="/world-builder/templates"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
+                  href="/world-builder"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
                 >
                   <PhCompass className="w-4 h-4" />
                   Templates
@@ -205,7 +200,7 @@ export default function WorldBuilderPage() {
         </section>
 
         {/* Templates */}
-        <section className="py-8 border-t border-white/5">
+        <section className="py-8 border-t border-white/[0.04]">
           <div className="mb-6">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-crystal/20 bg-crystal/8 mb-4">
               <PhSparkle className="w-3 h-3 text-crystal" />
@@ -225,7 +220,7 @@ export default function WorldBuilderPage() {
                 <Link
                   key={template.id}
                   href={`/world-builder/new?template=${template.id}`}
-                  className="group glass rounded-2xl p-5 hover-lift transition-all"
+                  className="group card-3d liquid-glass rounded-2xl p-5 hover-lift transition-all"
                 >
                   <div
                     className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110"
@@ -246,7 +241,7 @@ export default function WorldBuilderPage() {
                     {template.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="text-xs px-2 py-0.5 rounded-full bg-white/5 text-text-muted"
+                        className="text-xs px-2 py-0.5 rounded-full bg-white/[0.04] text-text-muted"
                       >
                         {tag}
                       </span>
@@ -259,7 +254,7 @@ export default function WorldBuilderPage() {
         </section>
 
         {/* World Elements */}
-        <section className="py-8 border-t border-white/5">
+        <section className="py-8 border-t border-white/[0.04]">
           <div className="mb-6">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand-gold/20 bg-brand-gold/8 mb-4">
               <PhMapTrifold className="w-3 h-3 text-brand-gold" />
@@ -278,7 +273,7 @@ export default function WorldBuilderPage() {
               return (
                 <div
                   key={element.id}
-                  className="group glass rounded-2xl p-6 hover-lift transition-all cursor-pointer"
+                  className="group card-3d liquid-glass rounded-2xl p-6 hover-lift transition-all cursor-pointer"
                 >
                   <div
                     className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110"
@@ -299,7 +294,7 @@ export default function WorldBuilderPage() {
                     {element.elements.slice(0, 3).map((sub) => (
                       <span
                         key={sub}
-                        className="text-xs px-2 py-0.5 rounded-full bg-white/5 text-text-muted"
+                        className="text-xs px-2 py-0.5 rounded-full bg-white/[0.04] text-text-muted"
                       >
                         {sub}
                       </span>
@@ -317,7 +312,7 @@ export default function WorldBuilderPage() {
         </section>
 
         {/* Recent Worlds */}
-        <section className="py-8 border-t border-white/5 pb-16">
+        <section className="py-8 border-t border-white/[0.04] pb-16">
           <div className="mb-6">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-water/20 bg-water/8 mb-4">
               <PhStar className="w-3 h-3 text-water" />
@@ -335,7 +330,7 @@ export default function WorldBuilderPage() {
               <Link
                 key={world.id}
                 href={`/world-builder/${world.id}`}
-                className="group glass rounded-2xl p-6 hover-lift transition-all relative overflow-hidden"
+                className="group card-3d liquid-glass rounded-2xl p-6 hover-lift transition-all relative overflow-hidden"
               >
                 <div
                   className="h-1 w-full absolute top-0 left-0 right-0 rounded-t-2xl"
@@ -365,7 +360,7 @@ export default function WorldBuilderPage() {
                   {world.preview}
                 </p>
 
-                <div className="flex items-center justify-between pt-4 border-t border-white/5">
+                <div className="flex items-center justify-between pt-4 border-t border-white/[0.04]">
                   <span className="text-xs text-text-muted">
                     {world.elements} elements
                   </span>
@@ -378,8 +373,8 @@ export default function WorldBuilderPage() {
 
             {/* New World Card */}
             <Link
-              href="/world-builder/new"
-              className="group glass rounded-2xl p-6 border-2 border-dashed border-white/20 hover:border-brand-primary/40 hover:bg-brand-primary/5 transition-all flex flex-col items-center justify-center text-center min-h-[200px]"
+              href="/world-builder"
+              className="group card-3d liquid-glass rounded-2xl p-6 border-2 border-dashed border-white/[0.12] hover:border-brand-primary/40 hover:bg-brand-primary/5 transition-all flex flex-col items-center justify-center text-center min-h-[200px]"
             >
               <PhPlus className="w-8 h-8 text-text-muted group-hover:text-brand-primary transition-colors mb-3" />
               <span className="text-text-muted group-hover:text-brand-primary transition-colors font-sans">

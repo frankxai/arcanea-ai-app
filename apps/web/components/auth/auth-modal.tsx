@@ -88,7 +88,11 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
     setIsLoading(true);
     const { error } = await signInWithGoogle();
     if (error) {
-      setError(error.message);
+      if (error.message.includes('provider') || error.message.includes('Unsupported')) {
+        setError('Google sign-in is not available yet. Please use email and password.');
+      } else {
+        setError(error.message);
+      }
       setIsLoading(false);
     }
   };
@@ -97,7 +101,11 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
     setIsLoading(true);
     const { error } = await signInWithGithub();
     if (error) {
-      setError(error.message);
+      if (error.message.includes('provider') || error.message.includes('Unsupported')) {
+        setError('GitHub sign-in is not available yet. Please use email and password.');
+      } else {
+        setError(error.message);
+      }
       setIsLoading(false);
     }
   };
@@ -128,11 +136,11 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="relative w-full max-w-md transform overflow-hidden rounded-3xl bg-cosmic-surface/90 backdrop-blur-xl border border-white/10 shadow-2xl transition-all">
+              <Dialog.Panel className="relative w-full max-w-md transform overflow-hidden rounded-3xl liquid-glass-elevated border border-white/[0.08] shadow-[0_24px_64px_rgba(0,0,0,0.5)] transition-all">
                 {/* Close button */}
                 <button
                   onClick={handleClose}
-                  className="absolute top-4 right-4 p-2 rounded-full text-text-muted hover:text-white hover:bg-white/10 transition-colors z-10"
+                  className="absolute top-4 right-4 p-2 rounded-full text-text-muted hover:text-white hover:bg-white/[0.06] transition-colors z-10"
                 >
                   <PhX className="w-5 h-5" />
                 </button>
@@ -167,12 +175,12 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                           <PhSparkle className="w-7 h-7 text-cosmic-deep" />
                         </div>
                         <Dialog.Title className="text-xl font-display font-bold">
-                          {tab === 'login' ? 'Welcome Back' : 'Begin Your Journey'}
+                          {tab === 'login' ? 'Welcome Back' : 'Create Account'}
                         </Dialog.Title>
                       </div>
 
                       {/* Tabs */}
-                      <div className="flex p-1 bg-white/5 rounded-xl mb-6">
+                      <div className="flex p-1 bg-white/[0.04] rounded-xl mb-6 border border-white/[0.04]">
                         <button
                           onClick={() => handleTabChange('login')}
                           className={`flex-1 py-2 rounded-lg text-sm font-medium transition-all ${
@@ -211,7 +219,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                         <button
                           onClick={handleGoogleSignIn}
                           disabled={isLoading}
-                          className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-white/20 hover:bg-white/5 transition-colors disabled:opacity-50 text-sm"
+                          className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06] hover:border-white/[0.12] transition-all duration-300 disabled:opacity-50 text-sm"
                         >
                           <svg className="w-4 h-4" viewBox="0 0 24 24">
                             <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -224,7 +232,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                         <button
                           onClick={handleGithubSignIn}
                           disabled={isLoading}
-                          className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-white/20 hover:bg-white/5 transition-colors disabled:opacity-50 text-sm"
+                          className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06] hover:border-white/[0.12] transition-all duration-300 disabled:opacity-50 text-sm"
                         >
                           <PhGithubLogo className="w-4 h-4" />
                           GitHub
@@ -233,9 +241,9 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
 
                       {/* Divider */}
                       <div className="flex items-center gap-3 mb-4">
-                        <div className="flex-1 h-px bg-white/10" />
+                        <div className="flex-1 h-px bg-white/[0.06]" />
                         <span className="text-text-muted text-xs">or continue with email</span>
-                        <div className="flex-1 h-px bg-white/10" />
+                        <div className="flex-1 h-px bg-white/[0.06]" />
                       </div>
 
                       {/* Form */}
@@ -260,7 +268,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                                 placeholder="Email address"
                                 required
                                 aria-required="true"
-                                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/10 focus:border-atlantean-teal-aqua focus:outline-none text-sm"
+                                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-atlantean-teal-aqua/50 focus:bg-white/[0.06] focus:outline-none text-sm transition-all duration-300"
                               />
                             </div>
 
@@ -275,7 +283,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                                 placeholder="Password"
                                 required
                                 aria-required="true"
-                                className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/5 border border-white/10 focus:border-atlantean-teal-aqua focus:outline-none text-sm"
+                                className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-atlantean-teal-aqua/50 focus:bg-white/[0.06] focus:outline-none text-sm transition-all duration-300"
                               />
                               <button
                                 type="button"
@@ -305,47 +313,57 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                             className="space-y-4"
                           >
                             <div className="relative">
-                              <PhUser className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
+                              <label htmlFor="signup-username" className="sr-only">Username</label>
+                              <PhUser className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" aria-hidden="true" />
                               <input
+                                id="signup-username"
                                 type="text"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                                 placeholder="Username"
                                 required
+                                aria-required="true"
                                 minLength={3}
-                                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/10 focus:border-atlantean-teal-aqua focus:outline-none text-sm"
+                                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-atlantean-teal-aqua/50 focus:bg-white/[0.06] focus:outline-none text-sm transition-all duration-300"
                               />
                             </div>
 
                             <div className="relative">
-                              <PhEnvelope className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
+                              <label htmlFor="signup-email" className="sr-only">Email address</label>
+                              <PhEnvelope className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" aria-hidden="true" />
                               <input
+                                id="signup-email"
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="Email address"
                                 required
-                                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/10 focus:border-atlantean-teal-aqua focus:outline-none text-sm"
+                                aria-required="true"
+                                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-atlantean-teal-aqua/50 focus:bg-white/[0.06] focus:outline-none text-sm transition-all duration-300"
                               />
                             </div>
 
                             <div>
                               <div className="relative">
-                                <PhLock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
+                                <label htmlFor="signup-password" className="sr-only">Password</label>
+                                <PhLock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" aria-hidden="true" />
                                 <input
+                                  id="signup-password"
                                   type={showPassword ? 'text' : 'password'}
                                   value={password}
                                   onChange={(e) => setPassword(e.target.value)}
                                   placeholder="Password"
                                   required
-                                  className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/5 border border-white/10 focus:border-atlantean-teal-aqua focus:outline-none text-sm"
+                                  aria-required="true"
+                                  className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-atlantean-teal-aqua/50 focus:bg-white/[0.06] focus:outline-none text-sm transition-all duration-300"
                                 />
                                 <button
                                   type="button"
                                   onClick={() => setShowPassword(!showPassword)}
+                                  aria-label={showPassword ? "Hide password" : "Show password"}
                                   className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-white"
                                 >
-                                  {showPassword ? <PhEyeSlash className="w-4 h-4" /> : <PhEye className="w-4 h-4" />}
+                                  {showPassword ? <PhEyeSlash className="w-4 h-4" aria-hidden="true" /> : <PhEye className="w-4 h-4" aria-hidden="true" />}
                                 </button>
                               </div>
                               <div className="flex gap-3 mt-2 text-xs">

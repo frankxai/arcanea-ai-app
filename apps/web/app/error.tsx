@@ -38,7 +38,7 @@ export default function Error({
       </div>
 
       {/* Error Message */}
-      <h1 className="text-3xl md:text-4xl font-cinzel font-bold text-atlantean-teal-aqua mb-4 text-center">
+      <h1 className="text-3xl md:text-4xl font-display font-bold text-atlantean-teal-aqua mb-4 text-center">
         Something Went Wrong
       </h1>
 

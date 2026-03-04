@@ -289,7 +289,7 @@ export default function ArcaneaVaultPage() {
 
                   <div className="flex flex-wrap gap-4">
                     <Link
-                      href="/register"
+                      href="/auth/signup"
                       className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200"
                     >
                       Open Your Vault
@@ -297,7 +297,7 @@ export default function ArcaneaVaultPage() {
                     </Link>
                     <Link
                       href="/studio"
-                      className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
+                      className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
                     >
                       Explore Features
                       <Icons.ChevronRight />
@@ -327,7 +327,7 @@ export default function ArcaneaVaultPage() {
                   return (
                     <div
                       key={feature.title}
-                      className="group relative glass rounded-2xl p-6 overflow-hidden glow-card hover-lift transition-all"
+                      className="group relative card-3d liquid-glass rounded-2xl p-6 overflow-hidden glow-card hover-lift transition-all"
                     >
                       <div
                         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"
@@ -363,7 +363,7 @@ export default function ArcaneaVaultPage() {
 
             {/* Benefits */}
             <section className="mb-16">
-              <div className="glass rounded-2xl p-8">
+              <div className="liquid-glass rounded-2xl p-8">
                 <h2 className="font-display text-2xl font-semibold text-text-primary mb-6 text-center">
                   Vault Benefits
                 </h2>
@@ -372,7 +372,7 @@ export default function ArcaneaVaultPage() {
                   {BENEFITS.map((benefit, idx) => (
                     <div
                       key={idx}
-                      className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors"
+                      className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/[0.04] transition-colors"
                     >
                       <div className="w-8 h-8 rounded-lg bg-brand-primary/20 flex items-center justify-center shrink-0">
                         <Icons.Check className="w-4 h-4 text-brand-primary" />
@@ -402,7 +402,7 @@ export default function ArcaneaVaultPage() {
                   </p>
                   <div className="flex flex-wrap justify-center gap-4">
                     <Link
-                      href="/register"
+                      href="/auth/signup"
                       className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200"
                     >
                       <Icons.Vault />

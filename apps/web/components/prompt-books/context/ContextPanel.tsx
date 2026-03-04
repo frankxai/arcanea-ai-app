@@ -30,7 +30,7 @@ function Section({ title, icon, defaultOpen = true, children }: SectionProps) {
   const [open, setOpen] = useState(defaultOpen)
 
   return (
-    <div className="border-b border-white/5 last:border-b-0">
+    <div className="border-b border-white/[0.04] last:border-b-0">
       <button
         type="button"
         onClick={() => setOpen(!open)}
@@ -106,7 +106,7 @@ export function ContextPanel({
 
   if (collapsed) {
     return (
-      <div className="border-l border-white/5">
+      <div className="border-l border-white/[0.04]">
         <button
           type="button"
           onClick={() => setCollapsed(false)}
@@ -127,12 +127,12 @@ export function ContextPanel({
     <div
       className={cn(
         'w-80 shrink-0 flex flex-col',
-        'glass-strong border-l border-white/5',
+        'glass-strong border-l border-white/[0.04]',
         'overflow-hidden',
       )}
     >
       {/* Panel header */}
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/5">
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/[0.04]">
         <h3 className="text-xs font-display font-semibold text-text-primary uppercase tracking-wider">
           Context
         </h3>

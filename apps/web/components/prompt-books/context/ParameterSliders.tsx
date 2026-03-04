@@ -76,7 +76,7 @@ function NumberRow({ label, value, min, max, onChange }: NumberRowProps) {
           if (!isNaN(v) && v >= min && v <= max) onChange(v)
         }}
         className={cn(
-          'flex-1 bg-white/[0.03] border border-white/5 rounded-md',
+          'flex-1 bg-white/[0.03] border border-white/[0.04] rounded-md',
           'px-2 py-1 text-xs font-mono text-text-primary',
           'focus:outline-none focus:border-brand-accent/30',
           'transition-colors',
@@ -136,7 +136,7 @@ function StopSequencesInput({ value, onChange }: StopSequencesInputProps) {
         onClick={() => inputRef.current?.focus()}
         className={cn(
           'flex flex-wrap gap-1.5 p-2',
-          'bg-white/[0.03] border border-white/5 rounded-md',
+          'bg-white/[0.03] border border-white/[0.04] rounded-md',
           'min-h-[32px] cursor-text',
           'transition-colors focus-within:border-brand-accent/30',
         )}

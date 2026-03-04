@@ -112,10 +112,10 @@ export default function PromptBooksArticle() {
             <p className="text-text-secondary leading-relaxed mb-4">
               Six PostgreSQL tables with Row Level Security, managed through a single
               Supabase migration. The schema includes automatic version tracking via
-              a <code className="text-crystal bg-white/5 rounded px-1.5 py-0.5">pb_auto_version()</code> trigger
+              a <code className="text-crystal bg-white/[0.04] rounded px-1.5 py-0.5">pb_auto_version()</code> trigger
               that snapshots your prompt content before every update. Full-text search
-              runs through a dedicated <code className="text-crystal bg-white/5 rounded px-1.5 py-0.5">pb_search_prompts()</code> RPC
-              function with <code className="text-crystal bg-white/5 rounded px-1.5 py-0.5">ts_rank</code> scoring.
+              runs through a dedicated <code className="text-crystal bg-white/[0.04] rounded px-1.5 py-0.5">pb_search_prompts()</code> RPC
+              function with <code className="text-crystal bg-white/[0.04] rounded px-1.5 py-0.5">ts_rank</code> scoring.
             </p>
 
             <CodeBlock code={`-- Tables
@@ -136,19 +136,19 @@ pb_templates      -- Reusable prompt templates`} />
 
             <h3 className="text-xl font-display text-text-primary mt-8 mb-4">The State Layer</h3>
             <p className="text-text-secondary leading-relaxed mb-4">
-              A Zustand store with <code className="text-crystal bg-white/5 rounded px-1.5 py-0.5">persist</code> middleware.
+              A Zustand store with <code className="text-crystal bg-white/[0.04] rounded px-1.5 py-0.5">persist</code> middleware.
               Only UI preferences go to localStorage. Data lives in Supabase. Three
-              Realtime channels (<code className="text-crystal bg-white/5 rounded px-1.5 py-0.5">pb_collections_sync</code>,{" "}
-              <code className="text-crystal bg-white/5 rounded px-1.5 py-0.5">pb_prompts_sync</code>,{" "}
-              <code className="text-crystal bg-white/5 rounded px-1.5 py-0.5">pb_tags_sync</code>) filtered
-              by <code className="text-crystal bg-white/5 rounded px-1.5 py-0.5">user_id</code> dispatch
+              Realtime channels (<code className="text-crystal bg-white/[0.04] rounded px-1.5 py-0.5">pb_collections_sync</code>,{" "}
+              <code className="text-crystal bg-white/[0.04] rounded px-1.5 py-0.5">pb_prompts_sync</code>,{" "}
+              <code className="text-crystal bg-white/[0.04] rounded px-1.5 py-0.5">pb_tags_sync</code>) filtered
+              by <code className="text-crystal bg-white/[0.04] rounded px-1.5 py-0.5">user_id</code> dispatch
               INSERT/UPDATE/DELETE events directly to store actions.
             </p>
 
             <h3 className="text-xl font-display text-text-primary mt-8 mb-4">The Package</h3>
             <p className="text-text-secondary leading-relaxed mb-4">
               Platform-agnostic logic is extracted into{" "}
-              <code className="text-crystal bg-white/5 rounded px-1.5 py-0.5">@arcanea/prompt-books</code> &mdash;
+              <code className="text-crystal bg-white/[0.04] rounded px-1.5 py-0.5">@arcanea/prompt-books</code> &mdash;
               types, constants, the context engine, markdown parser, and weight syntax
               utilities. This package can be used by the Chrome extension (Arcanea Vault),
               the CLI, or any future surface.
@@ -161,7 +161,7 @@ pb_templates      -- Reusable prompt templates`} />
               {
                 num: "01",
                 title: "Land on /prompt-books",
-                desc: "A glass sidebar on the left shows your collections, each with a Guardian-colored border. The main area shows your prompts in grid or list view. A floating action button glows in the bottom-right for quick capture.",
+                desc: "A liquid-glass sidebar on the left shows your collections, each with a Guardian-colored border. The main area shows your prompts in grid or list view. A floating action button glows in the bottom-right for quick capture.",
               },
               {
                 num: "02",
@@ -239,7 +239,7 @@ pb_templates      -- Reusable prompt templates`} />
             <p className="text-text-secondary leading-relaxed mb-4">
               The context engine compiles your prompt, tags, system prompt, few-shot examples,
               and parameters into a{" "}
-              <code className="text-crystal bg-white/5 rounded px-1.5 py-0.5">ContextPackage</code> &mdash;
+              <code className="text-crystal bg-white/[0.04] rounded px-1.5 py-0.5">ContextPackage</code> &mdash;
               a structured object ready to send to any AI API:
             </p>
 
@@ -327,7 +327,7 @@ pb_templates      -- Reusable prompt templates`} />
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="mt-16 pt-12 border-t border-white/10 text-center"
+            className="mt-16 pt-12 border-t border-white/[0.06] text-center"
           >
             <p className="text-2xl font-display text-text-primary mb-4">
               Your prompts deserve better than a text file.
@@ -340,7 +340,7 @@ pb_templates      -- Reusable prompt templates`} />
             </p>
             <Link
               href="/prompt-books"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl liquid-glass text-text-primary font-display hover:scale-[1.02] transition-transform"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass text-text-primary font-display hover:scale-[1.02] transition-transform"
             >
               Open Prompt Books
             </Link>
@@ -379,7 +379,7 @@ function Section({
 
 function CodeBlock({ code }: { code: string }) {
   return (
-    <pre className="bg-white/[0.03] border border-white/5 rounded-xl p-4 overflow-x-auto my-6">
+    <pre className="bg-white/[0.03] border border-white/[0.04] rounded-xl p-4 overflow-x-auto my-6">
       <code className="text-sm font-mono text-text-secondary leading-relaxed">{code}</code>
     </pre>
   );
@@ -391,7 +391,7 @@ function FeatureGrid({ features }: { features: { title: string; desc: string; ic
       {features.map((f) => (
         <div
           key={f.title}
-          className="glass rounded-xl p-5 border border-white/5 hover:border-white/10 transition-colors"
+          className="card-3d liquid-glass rounded-xl p-5 border border-white/[0.06] hover:border-white/[0.12] transition-colors"
         >
           <h4 className="text-sm font-display text-text-primary mb-2">{f.title}</h4>
           <p className="text-xs font-sans text-text-muted leading-relaxed">{f.desc}</p>
@@ -413,7 +413,7 @@ function Journey({ steps }: { steps: { num: string; title: string; desc: string 
           transition={{ duration: 0.4 }}
           className="flex gap-4"
         >
-          <div className="shrink-0 w-10 h-10 rounded-xl glass flex items-center justify-center">
+          <div className="shrink-0 w-10 h-10 rounded-xl liquid-glass flex items-center justify-center">
             <span className="text-xs font-mono text-crystal">{step.num}</span>
           </div>
           <div className="flex-1 pt-1">
@@ -430,7 +430,7 @@ function StatsGrid({ stats }: { stats: { label: string; value: string }[] }) {
   return (
     <div className="grid grid-cols-3 md:grid-cols-4 gap-3 not-prose">
       {stats.map((s) => (
-        <div key={s.label} className="glass-subtle rounded-xl p-4 text-center">
+        <div key={s.label} className="liquid-glass rounded-xl p-4 text-center">
           <div className="text-xl font-mono font-bold text-crystal mb-1">{s.value}</div>
           <div className="text-[10px] font-sans text-text-muted uppercase tracking-wider">{s.label}</div>
         </div>

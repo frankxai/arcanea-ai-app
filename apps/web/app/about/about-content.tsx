@@ -3,7 +3,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
-import { Navbar } from "@/components/navigation";
+
 import {
   Sparkle,
   MusicNote,
@@ -58,10 +58,8 @@ function AnimatedSection({
 export function AboutContent() {
   return (
     <div className="relative min-h-screen bg-cosmic-deep">
-      <Navbar />
-
       {/* ── Section 1: Hero ───────────────────────────────────────────── */}
-      <section className="relative overflow-hidden pt-32 pb-24">
+      <section className="relative overflow-hidden pt-16 pb-24">
         {/* Cosmic gradient background */}
         <div className="absolute inset-0 -z-10">
           <div className="absolute top-0 left-1/4 w-[700px] h-[700px] bg-gradient-radial from-atlantean-teal-aqua/10 via-transparent to-transparent rounded-full blur-3xl" />
@@ -74,11 +72,11 @@ export function AboutContent() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-gold-bright/30 bg-gold-bright/10 mb-8"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full liquid-glass border border-gold-bright/30 mb-8"
           >
             <Sparkle className="w-4 h-4 text-gold-bright" weight="fill" />
             <span className="text-sm font-medium text-gold-bright tracking-wide">
-              The Living Mythology
+              About Arcanea
             </span>
           </motion.div>
 
@@ -99,7 +97,7 @@ export function AboutContent() {
             transition={{ delay: 0.3 }}
             className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto leading-relaxed"
           >
-            A living mythology for the age of AI-human co-creation.
+            A creation platform built on original mythology and philosophy.
           </motion.p>
 
           <motion.p
@@ -108,9 +106,9 @@ export function AboutContent() {
             transition={{ delay: 0.4 }}
             className="text-base text-text-muted max-w-2xl mx-auto mt-6 leading-relaxed"
           >
-            Arcanea weaves ancient mythological structure with modern creative
-            technology. It is a universe you can inhabit, a system you can
-            master, and a community that grows with every creator who enters.
+            Ten creative intelligences, each grounded in a distinct philosophy.
+            A library of 34 original texts. A progression system that deepens
+            the more you create. No limits on what you build.
           </motion.p>
         </div>
       </section>
@@ -157,7 +155,7 @@ export function AboutContent() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.1 * i }}
-                  className={`relative p-6 rounded-2xl border bg-cosmic-surface/30 backdrop-blur-sm transition-all duration-300 group ${colorMap[card.color]}`}
+                  className={`relative card-3d p-6 rounded-2xl liquid-glass border transition-all duration-300 group ${colorMap[card.color]}`}
                 >
                   <div
                     className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${bgMap[card.color]}`}
@@ -205,7 +203,7 @@ export function AboutContent() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="relative p-8 rounded-3xl border border-gold-bright/20 bg-cosmic-surface/30 backdrop-blur-sm group hover:border-gold-bright/40 transition-all duration-500"
+              className="relative card-3d p-8 rounded-3xl liquid-glass border border-gold-bright/20 group hover:border-gold-bright/40 transition-all duration-500"
             >
               <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-gold-bright/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative">
@@ -233,7 +231,7 @@ export function AboutContent() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="relative p-8 rounded-3xl border border-creation-prism-purple/20 bg-cosmic-surface/30 backdrop-blur-sm group hover:border-creation-prism-purple/40 transition-all duration-500"
+              className="relative card-3d p-8 rounded-3xl liquid-glass border border-creation-prism-purple/20 group hover:border-creation-prism-purple/40 transition-all duration-500"
             >
               <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-creation-prism-purple/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative">
@@ -279,7 +277,7 @@ export function AboutContent() {
                 "Evolved Potential",
               ].map((step, i) => (
                 <span key={step} className="flex items-center gap-3">
-                  <span className="px-4 py-2 rounded-full bg-cosmic-surface/50 border border-white/10 text-text-secondary">
+                  <span className="px-4 py-2 rounded-full liquid-glass border border-white/[0.06] text-text-secondary">
                     {step}
                   </span>
                   {i < 4 && (
@@ -325,7 +323,7 @@ export function AboutContent() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="max-w-3xl mx-auto mb-20 p-6 rounded-2xl border border-purple-500/20 bg-purple-500/5"
+            className="max-w-3xl mx-auto mb-20 p-6 rounded-2xl liquid-glass border border-purple-500/20"
           >
             <p className="text-sm text-text-secondary leading-relaxed text-center">
               <span className="font-semibold text-purple-400">
@@ -356,7 +354,7 @@ export function AboutContent() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.03 * i }}
-                  className={`px-4 py-2 rounded-full border ${g.border} bg-cosmic-surface/30 text-sm`}
+                  className={`px-4 py-2 rounded-full liquid-glass border ${g.border} text-sm`}
                 >
                   <span className={`font-semibold ${g.accent}`}>
                     {g.gate}
@@ -380,7 +378,7 @@ export function AboutContent() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.05 * i }}
-                  className="px-5 py-3 rounded-xl border border-white/10 bg-cosmic-surface/30 text-center"
+                  className="px-5 py-3 rounded-xl liquid-glass border border-white/[0.06] text-center"
                 >
                   <span className={`font-display font-semibold text-sm ${house.color}`}>
                     House {house.name}
@@ -415,7 +413,7 @@ export function AboutContent() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.04 * i }}
-                className={`relative p-5 rounded-2xl border ${guardian.border} bg-gradient-to-br ${guardian.color} backdrop-blur-sm group hover:scale-[1.02] transition-transform duration-300`}
+                className={`relative card-3d p-5 rounded-2xl liquid-glass border ${guardian.border} group hover:scale-[1.02] transition-transform duration-300`}
               >
                 <div className="flex items-center gap-2 mb-3">
                   <MusicNote className={`w-4 h-4 ${guardian.accent}`} />
@@ -430,7 +428,7 @@ export function AboutContent() {
                   {guardian.gate} Gate
                 </p>
                 <p className="text-sm text-text-secondary">{guardian.domain}</p>
-                <div className="mt-3 pt-3 border-t border-white/5">
+                <div className="mt-3 pt-3 border-t border-white/[0.04]">
                   <span className="text-xs text-text-muted">{guardian.element}</span>
                 </div>
               </motion.div>
@@ -466,13 +464,13 @@ export function AboutContent() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.08 * i }}
-                className={`flex items-center gap-6 p-5 rounded-2xl border backdrop-blur-sm ${rank.color}`}
+                className={`flex items-center gap-6 p-5 rounded-2xl liquid-glass border ${rank.color}`}
               >
                 <div className="shrink-0 w-20 text-center">
                   <div className="text-xs font-mono text-text-muted">Gates</div>
                   <div className="text-lg font-bold">{rank.gates}</div>
                 </div>
-                <div className="h-8 w-px bg-white/10" />
+                <div className="h-8 w-px bg-white/[0.06]" />
                 <div className="flex items-center gap-3">
                   <GraduationCap className="w-5 h-5 shrink-0" />
                   <span className="text-lg font-display font-semibold">
@@ -493,7 +491,7 @@ export function AboutContent() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="p-8 rounded-3xl border border-gold-bright/20 bg-cosmic-surface/30 text-center"
+            className="p-8 rounded-3xl liquid-glass-elevated border border-gold-bright/20 text-center"
           >
             <blockquote className="text-xl md:text-2xl font-display italic text-text-secondary mb-4 max-w-2xl mx-auto leading-relaxed">
               &quot;Enter seeking, leave transformed, return whenever
@@ -521,7 +519,7 @@ export function AboutContent() {
         >
           <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">
             <span className="bg-gradient-to-r from-atlantean-teal-aqua to-gold-bright bg-clip-text text-transparent">
-              Begin Your Journey
+              Start Creating
             </span>
           </h2>
           <p className="text-lg text-text-secondary mb-10 max-w-xl mx-auto leading-relaxed">
@@ -531,14 +529,14 @@ export function AboutContent() {
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link
               href="/chat"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep font-semibold text-base hover:shadow-[0_0_30px_rgba(127,255,212,0.4)] transition-all duration-300"
+              className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep font-semibold text-base overflow-hidden btn-glow hover:shadow-[0_0_30px_rgba(127,255,212,0.4)] transition-all duration-300"
             >
               <ChatCircleDots className="w-5 h-5" weight="duotone" />
-              Begin Your Journey
+              Start Creating
             </Link>
             <Link
               href="/library"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-white/20 text-white font-semibold text-base hover:bg-white/5 hover:border-white/30 transition-all duration-300"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl liquid-glass border border-white/[0.10] text-white font-semibold text-base hover:bg-white/[0.06] hover:border-white/[0.15] transition-all duration-300"
             >
               <Books className="w-5 h-5" weight="duotone" />
               Explore the Library

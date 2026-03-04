@@ -14,7 +14,7 @@ export default function EcosystemLoading() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Hero Skeleton */}
         <section className="mb-16">
-          <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl px-8 py-14 sm:px-14 sm:py-20">
+          <div className="rounded-3xl border border-white/[0.06] bg-white/[0.04] backdrop-blur-xl px-8 py-14 sm:px-14 sm:py-20">
             <Skeleton variant="rect" className="w-40 h-8 rounded-full mb-8" />
             <Skeleton variant="text" className="w-72 h-12 mb-3" />
             <Skeleton variant="text" className="w-56 h-12 mb-3" />
@@ -36,7 +36,7 @@ export default function EcosystemLoading() {
             {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => (
               <div
                 key={i}
-                className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-7"
+                className="rounded-2xl border border-white/[0.06] bg-white/[0.04] backdrop-blur-xl p-7"
               >
                 <div className="flex items-start justify-between mb-5">
                   <Skeleton variant="rect" className="w-12 h-12 rounded-xl" />
@@ -60,7 +60,7 @@ export default function EcosystemLoading() {
             {[1, 2, 3].map((i) => (
               <div
                 key={i}
-                className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-7"
+                className="rounded-2xl border border-white/[0.06] bg-white/[0.04] backdrop-blur-xl p-7"
               >
                 <Skeleton variant="rect" className="w-10 h-10 rounded-xl mb-5" />
                 <Skeleton variant="text" className="w-32 h-7 mb-3" />

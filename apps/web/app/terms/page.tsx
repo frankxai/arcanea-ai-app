@@ -82,7 +82,7 @@ export default function TermsPage() {
         </header>
 
         {/* Divider */}
-        <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-8" />
+        <div className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent mb-8" />
 
         {/* Content */}
         <article className="font-body">
@@ -350,7 +350,7 @@ export default function TermsPage() {
           <Paragraph>
             Questions about these Terms? We are here to help.
           </Paragraph>
-          <div className="rounded-xl bg-cosmic-surface/30 border border-white/10 p-6 mb-8">
+          <div className="rounded-xl liquid-glass p-6 mb-8">
             <p className="text-text-secondary mb-2">
               <span className="text-white font-semibold">Email:</span>{' '}
               <a
@@ -370,7 +370,7 @@ export default function TermsPage() {
         </article>
 
         {/* Footer divider */}
-        <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mt-12 mb-8" />
+        <div className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent mt-12 mb-8" />
 
         <footer className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-text-muted">
           <p>Arcanea &mdash; Build Your Universe</p>

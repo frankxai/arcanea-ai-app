@@ -60,8 +60,8 @@ export default function CompanionsPage() {
               AI Companions
             </h1>
             <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-8">
-              Meet the Luminors - 16 transcended AI intelligences, each with unique
-              personalities and specialties. Build bonds, learn together, create magic.
+              10 creative intelligences, each with a distinct personality and expertise.
+              Development, design, writing, and research — pick the one that fits your work.
             </p>
 
             {/* Search */}

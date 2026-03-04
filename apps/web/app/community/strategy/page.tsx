@@ -1,10 +1,11 @@
+'use client';
+
 /**
  * Community Strategy - Planning & Governance
  *
  * A space for community governance, proposals, and strategic planning.
  */
 
-import { Metadata } from "next";
 import Link from "next/link";
 import {
   PhUsers,
@@ -22,12 +23,6 @@ import {
   PhScales,
   PhHeart,
 } from '@/lib/phosphor-icons';
-
-export const metadata: Metadata = {
-  title: "Strategy & Governance | Arcanea Community",
-  description:
-    "Shape the future of Arcanea through proposals, voting, and community governance.",
-};
 
 const ACTIVE_PROPOSALS = [
   {
@@ -176,7 +171,7 @@ export default function CommunityStrategyPage() {
                 </Link>
                 <Link
                   href="#propose"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
                 >
                   <PhLightbulb className="w-4 h-4" />
                   Submit Proposal
@@ -187,14 +182,14 @@ export default function CommunityStrategyPage() {
         </section>
 
         {/* Stats */}
-        <section className="py-8 border-t border-white/5">
+        <section className="py-8 border-t border-white/[0.04]">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {STATS.map((stat) => {
               const Icon = stat.icon;
               return (
                 <div
                   key={stat.label}
-                  className="glass rounded-xl p-4 text-center"
+                  className="liquid-glass rounded-xl p-4 text-center"
                 >
                   <Icon className="w-5 h-5 text-crystal mx-auto mb-2" />
                   <div className="text-2xl font-display font-bold text-text-primary">
@@ -210,7 +205,7 @@ export default function CommunityStrategyPage() {
         </section>
 
         {/* Active Proposals */}
-        <section id="proposals" className="py-12 border-t border-white/5">
+        <section id="proposals" className="py-12 border-t border-white/[0.04]">
           <div className="mb-10">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand-gold/20 bg-brand-gold/8 mb-5">
               <PhChecks className="w-3 h-3 text-brand-gold" />
@@ -233,7 +228,7 @@ export default function CommunityStrategyPage() {
               return (
                 <div
                   key={proposal.id}
-                  className="group relative glass rounded-2xl p-6 overflow-hidden transition-all hover-lift"
+                  className="group relative card-3d liquid-glass rounded-2xl p-6 overflow-hidden transition-all hover-lift"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-brand-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
@@ -277,7 +272,7 @@ export default function CommunityStrategyPage() {
                             Against {againstPercentage}%
                           </span>
                         </div>
-                        <div className="h-2 bg-white/10 rounded-full overflow-hidden flex">
+                        <div className="h-2 bg-white/[0.06] rounded-full overflow-hidden flex">
                           <div
                             className="h-full bg-crystal rounded-full"
                             style={{ width: `${forPercentage}%` }}
@@ -312,7 +307,7 @@ export default function CommunityStrategyPage() {
         </section>
 
         {/* Governance Roles */}
-        <section className="py-12 border-t border-white/5">
+        <section className="py-12 border-t border-white/[0.04]">
           <div className="mb-10">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-crystal/20 bg-crystal/8 mb-5">
               <PhShield className="w-3 h-3 text-crystal" />
@@ -331,7 +326,7 @@ export default function CommunityStrategyPage() {
               return (
                 <div
                   key={role.name}
-                  className="glass rounded-2xl p-6 text-center hover-lift transition-all"
+                  className="card-3d liquid-glass rounded-2xl p-6 text-center hover-lift transition-all"
                 >
                   <div
                     className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
@@ -352,7 +347,7 @@ export default function CommunityStrategyPage() {
         </section>
 
         {/* Past Proposals */}
-        <section className="py-12 border-t border-white/5">
+        <section className="py-12 border-t border-white/[0.04]">
           <div className="mb-10">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-water/20 bg-water/8 mb-5">
               <PhCheckCircle className="w-3 h-3 text-water" />
@@ -365,10 +360,10 @@ export default function CommunityStrategyPage() {
             </h2>
           </div>
 
-          <div className="glass rounded-2xl overflow-hidden">
+          <div className="liquid-glass rounded-2xl overflow-hidden">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-white/10">
+                <tr className="border-b border-white/[0.06]">
                   <th className="text-left text-xs font-mono text-text-muted uppercase tracking-wider px-6 py-4">
                     Proposal
                   </th>
@@ -387,7 +382,7 @@ export default function CommunityStrategyPage() {
                 {PAST_PROPOSALS.map((proposal) => (
                   <tr
                     key={proposal.id}
-                    className="border-b border-white/5 hover:bg-white/[0.03] transition-colors cursor-pointer"
+                    className="border-b border-white/[0.04] hover:bg-white/[0.03] transition-colors cursor-pointer"
                   >
                     <td className="px-6 py-4">
                       <span className="text-text-primary font-sans">
@@ -414,7 +409,7 @@ export default function CommunityStrategyPage() {
         </section>
 
         {/* CTA */}
-        <section id="propose" className="py-16 border-t border-white/5 pb-24">
+        <section id="propose" className="py-16 border-t border-white/[0.04] pb-24">
           <div className="relative liquid-glass rounded-3xl overflow-hidden p-10 sm:p-14">
             <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/10 via-transparent to-crystal/8 pointer-events-none" />
 
@@ -428,7 +423,7 @@ export default function CommunityStrategyPage() {
                 community consideration and gather support for your vision.
               </p>
               <Link
-                href="/community/strategy/propose"
+                href="/community/strategy"
                 className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200"
               >
                 <PhFileText className="w-4 h-4" />

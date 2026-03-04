@@ -3,8 +3,7 @@
 import React, { useState, Fragment } from 'react';
 import Link from 'next/link';
 import { Menu, Transition } from '@headlessui/react';
-import { motion } from 'framer-motion';
-import { PhUser, PhSignOut, PhGear, PhSparkle, PhBookOpen, PhPalette, PhCaretDown } from '@/lib/phosphor-icons';
+import { PhUser, PhSignOut, PhGear, PhSparkle, PhBookOpen, PhPalette, PhCaretDown, PhHouse } from '@/lib/phosphor-icons';
 import { useAuth } from '@/lib/auth/context';
 import { AuthModal } from './auth-modal';
 
@@ -25,23 +24,23 @@ export function UserNav() {
 
   if (isLoading) {
     return (
-      <div className="w-24 h-10 rounded-xl bg-white/5 animate-pulse" />
+      <div className="w-20 h-9 rounded-xl bg-white/[0.04] animate-pulse" />
     );
   }
 
   if (!user) {
     return (
       <>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <button
             onClick={openLogin}
-            className="text-sm text-text-secondary hover:text-white transition-colors"
+            className="text-sm text-text-secondary hover:text-white transition-colors px-3 py-2"
           >
             Sign In
           </button>
           <button
             onClick={openSignup}
-            className="px-5 py-2.5 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep text-sm font-semibold hover:shadow-[0_0_20px_rgba(127,255,212,0.4)] transition-all"
+            className="px-4 py-2 rounded-xl bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-light text-cosmic-deep text-sm font-semibold hover:shadow-[0_0_20px_rgba(127,255,212,0.3)] transition-all duration-300"
           >
             Get Started
           </button>
@@ -62,119 +61,70 @@ export function UserNav() {
 
   return (
     <Menu as="div" className="relative">
-      <Menu.Button className="flex items-center gap-2 p-1.5 pr-3 rounded-full bg-white/5 hover:bg-white/10 transition-colors">
+      <Menu.Button className="flex items-center gap-2 p-1 pr-2.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] hover:border-white/[0.12] transition-all duration-300">
         {avatarUrl ? (
           <img
             src={avatarUrl}
             alt={username}
-            className="w-8 h-8 rounded-full object-cover"
+            className="w-7 h-7 rounded-lg object-cover"
           />
         ) : (
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-atlantean-teal-aqua to-creation-prism-purple flex items-center justify-center text-cosmic-deep font-semibold text-sm">
+          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-atlantean-teal-aqua to-creation-prism-purple flex items-center justify-center text-cosmic-deep font-semibold text-xs">
             {userInitial}
           </div>
         )}
         <span className="text-sm font-medium hidden sm:block">{username}</span>
-        <PhCaretDown className="w-4 h-4 text-text-muted" />
+        <PhCaretDown className="w-3.5 h-3.5 text-text-muted" />
       </Menu.Button>
 
       <Transition
         as={Fragment}
-        enter="transition ease-out duration-100"
-        enterFrom="transform opacity-0 scale-95"
-        enterTo="transform opacity-100 scale-100"
-        leave="transition ease-in duration-75"
+        enter="transition ease-out duration-150"
+        enterFrom="transform opacity-0 scale-95 translate-y-1"
+        enterTo="transform opacity-100 scale-100 translate-y-0"
+        leave="transition ease-in duration-100"
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right rounded-2xl bg-cosmic-surface border border-white/10 shadow-xl focus:outline-none overflow-hidden">
+        <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right rounded-2xl liquid-glass-elevated border border-white/[0.08] shadow-[0_16px_48px_rgba(0,0,0,0.4)] focus:outline-none overflow-hidden">
           {/* User info */}
-          <div className="px-4 py-3 border-b border-white/10">
+          <div className="px-4 py-3 border-b border-white/[0.06]">
             <p className="text-sm font-medium">{username}</p>
             <p className="text-xs text-text-muted truncate">{user.email}</p>
           </div>
 
-          {/* Menu items */}
-          <div className="py-2">
-            <Menu.Item>
-              {({ active }) => (
-                <Link
-                  href="/profile"
-                  className={`flex items-center gap-3 px-4 py-2 text-sm ${
-                    active ? 'bg-white/5 text-white' : 'text-text-secondary'
-                  }`}
-                >
-                  <PhUser className="w-4 h-4" />
-                  Your Profile
-                </Link>
-              )}
-            </Menu.Item>
-
-            <Menu.Item>
-              {({ active }) => (
-                <Link
-                  href="/luminors"
-                  className={`flex items-center gap-3 px-4 py-2 text-sm ${
-                    active ? 'bg-white/5 text-white' : 'text-text-secondary'
-                  }`}
-                >
-                  <PhSparkle className="w-4 h-4" />
-                  Your Luminors
-                </Link>
-              )}
-            </Menu.Item>
-
-            <Menu.Item>
-              {({ active }) => (
-                <Link
-                  href="/studio"
-                  className={`flex items-center gap-3 px-4 py-2 text-sm ${
-                    active ? 'bg-white/5 text-white' : 'text-text-secondary'
-                  }`}
-                >
-                  <PhPalette className="w-4 h-4" />
-                  Studio
-                </Link>
-              )}
-            </Menu.Item>
-
-            <Menu.Item>
-              {({ active }) => (
-                <Link
-                  href="/library"
-                  className={`flex items-center gap-3 px-4 py-2 text-sm ${
-                    active ? 'bg-white/5 text-white' : 'text-text-secondary'
-                  }`}
-                >
-                  <PhBookOpen className="w-4 h-4" />
-                  Library
-                </Link>
-              )}
-            </Menu.Item>
-
-            <Menu.Item>
-              {({ active }) => (
-                <Link
-                  href="/settings"
-                  className={`flex items-center gap-3 px-4 py-2 text-sm ${
-                    active ? 'bg-white/5 text-white' : 'text-text-secondary'
-                  }`}
-                >
-                  <PhGear className="w-4 h-4" />
-                  Settings
-                </Link>
-              )}
-            </Menu.Item>
+          <div className="py-1.5">
+            {[
+              { href: '/dashboard', icon: PhHouse, label: 'Dashboard' },
+              { href: '/profile', icon: PhUser, label: 'Your Profile' },
+              { href: '/chat', icon: PhSparkle, label: 'Chat' },
+              { href: '/studio', icon: PhPalette, label: 'Studio' },
+              { href: '/library', icon: PhBookOpen, label: 'Library' },
+              { href: '/settings', icon: PhGear, label: 'Settings' },
+            ].map((item) => (
+              <Menu.Item key={item.href}>
+                {({ active }) => (
+                  <Link
+                    href={item.href}
+                    className={`flex items-center gap-3 px-4 py-2 text-sm transition-colors ${
+                      active ? 'bg-white/[0.06] text-white' : 'text-text-secondary'
+                    }`}
+                  >
+                    <item.icon className="w-4 h-4" />
+                    {item.label}
+                  </Link>
+                )}
+              </Menu.Item>
+            ))}
           </div>
 
-          {/* Sign out */}
-          <div className="py-2 border-t border-white/10">
+          <div className="py-1.5 border-t border-white/[0.06]">
             <Menu.Item>
               {({ active }) => (
                 <button
                   onClick={() => signOut()}
-                  className={`flex items-center gap-3 px-4 py-2 text-sm w-full ${
-                    active ? 'bg-white/5 text-red-400' : 'text-text-secondary'
+                  className={`flex items-center gap-3 px-4 py-2 text-sm w-full transition-colors ${
+                    active ? 'bg-white/[0.06] text-red-400' : 'text-text-secondary'
                   }`}
                 >
                   <PhSignOut className="w-4 h-4" />

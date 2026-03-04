@@ -51,7 +51,9 @@ interface UseChatReturn {
   streamingEmotionalTone?: EmotionalTone;
   thinkingState: 'idle' | 'thinking' | 'generating' | 'analyzing' | 'creating';
   bondState: BondState;
+  sessionId: string | null;
   sendMessage: (content: string, attachments?: File[]) => void;
+  startNewSession: () => void;
   loadMore: () => void;
   hasMore: boolean;
   isLoadingMore: boolean;
@@ -98,6 +100,7 @@ export function useChat({
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isConnected, setIsConnected] = useState(false);
+  const [sessionId, setSessionId] = useState<string | null>(null);
 
   const abortControllerRef = useRef<AbortController | null>(null);
 
@@ -134,6 +137,9 @@ export function useChat({
       }
       if (data.bondState) {
         setBondState(data.bondState);
+      }
+      if (typeof data.sessionId === 'string') {
+        setSessionId(data.sessionId);
       }
       setHasMore(data.hasMore || false);
       setIsConnected(true);
@@ -188,6 +194,46 @@ export function useChat({
     }
   }, [luminorId, userId, messages, hasMore, isLoadingMore]);
 
+  // Best-effort persistence — never throws, but does update bond state and
+  // sessionId when the server returns them.
+  const persistMessages = useCallback(async (msgs: Message[]) => {
+    if (!msgs.length) return;
+    try {
+      const token = await getAuthToken();
+      const headers: Record<string, string> = { 'content-type': 'application/json' };
+      if (token) headers.authorization = `Bearer ${token}`;
+
+      const res = await fetch('/api/chat/history', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          luminorId,
+          userId,
+          messages: msgs.map((m) => ({
+            id: m.id,
+            role: m.role,
+            content: m.content,
+            timestamp: m.timestamp.toISOString(),
+          })),
+        }),
+      });
+      if (res.ok) {
+        const data = await res.json().catch(() => null);
+        if (data?.bondState) setBondState(data.bondState);
+        if (typeof data?.sessionId === 'string') setSessionId(data.sessionId);
+      }
+    } catch {
+      // Persistence is best-effort
+    }
+  }, [luminorId, userId]);
+
+  // Stable ref so sendMessage closure can read current messages without
+  // being recreated on every render (avoids stale-closure context window).
+  const messagesRef = useRef<Message[]>([]);
+  useEffect(() => {
+    messagesRef.current = messages;
+  }, [messages]);
+
   const sendMessage = useCallback(
     async (content: string, _attachments?: File[]) => {
       if (!content.trim()) return;
@@ -206,7 +252,9 @@ export function useChat({
       setError(null);
 
       // Build the messages payload (last 10 messages for context)
-      const recentMessages = messages.slice(-10).map((msg) => ({
+      // Use the ref so we always have the latest messages even if the
+      // callback was created before new messages were added.
+      const recentMessages = messagesRef.current.slice(-10).map((msg) => ({
         role: msg.role === 'assistant' ? 'assistant' : 'user',
         content: msg.content,
       }));
@@ -312,35 +360,47 @@ export function useChat({
         setThinkingState('idle');
       }
     },
-    [messages, apiEndpoint, systemPrompt]
+    // messagesRef eliminates the dependency on `messages` to avoid stale closure
+    [apiEndpoint, systemPrompt, persistMessages]
   );
 
-  // Fire-and-forget persistence — never throws
-  const persistMessages = useCallback(async (msgs: Message[]) => {
-    if (!msgs.length) return;
+  /** Reset local state and create a fresh Supabase session. */
+  const startNewSession = useCallback(async () => {
+    // Abort any in-flight request
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    setMessages([]);
+    setHasMore(false);
+    setSessionId(null);
+    setIsStreaming(false);
+    setStreamingContent('');
+    setThinkingState('idle');
+    setError(null);
+
+    // Ask the API to create a new session for authenticated users
     try {
       const token = await getAuthToken();
-      const headers: Record<string, string> = { 'content-type': 'application/json' };
-      if (token) headers.authorization = `Bearer ${token}`;
-
-      await fetch('/api/chat/history', {
+      if (!token) return; // anonymous users — nothing to do server-side
+      const headers: Record<string, string> = {
+        'content-type': 'application/json',
+        authorization: `Bearer ${token}`,
+      };
+      const res = await fetch('/api/chat/sessions', {
         method: 'POST',
         headers,
-        body: JSON.stringify({
-          luminorId,
-          userId,
-          messages: msgs.map((m) => ({
-            id: m.id,
-            role: m.role,
-            content: m.content,
-            timestamp: m.timestamp.toISOString(),
-          })),
-        }),
+        body: JSON.stringify({ luminorId }),
       });
+      if (res.ok) {
+        const json = await res.json().catch(() => null);
+        // Support both { data: { id } } (new) and { sessionId } (legacy) response shapes
+        const newSessionId = json?.data?.id ?? json?.sessionId;
+        if (typeof newSessionId === 'string') setSessionId(newSessionId);
+      }
     } catch {
-      // Persistence is best-effort
+      // Best-effort — the next message will create a session via getOrCreateSession
     }
-  }, [luminorId, userId]);
+  }, [luminorId]);
 
   const clearError = useCallback(() => {
     setError(null);
@@ -367,7 +427,9 @@ export function useChat({
     streamingEmotionalTone,
     thinkingState,
     bondState,
+    sessionId,
     sendMessage,
+    startNewSession,
     loadMore,
     hasMore,
     isLoadingMore,

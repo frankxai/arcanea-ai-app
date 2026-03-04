@@ -50,12 +50,37 @@ const SITUATION_TO_COLLECTIONS: Record<Situation, string[]> = {
   scattered: ['meditations-on-elements', 'academy-handbook'],
 };
 
+// Hz frequency → Gate mapping (hidden depth: typing a frequency reveals its Gate)
+const GATE_FREQUENCIES: Record<string, { gate: string; guardian: string; collections: string[] }> = {
+  '174': { gate: 'Foundation', guardian: 'Lyssandria', collections: ['laws-of-arcanea', 'academy-handbook'] },
+  '285': { gate: 'Flow', guardian: 'Leyla', collections: ['meditations-on-elements', 'tales-of-creators'] },
+  '396': { gate: 'Fire', guardian: 'Draconia', collections: ['chronicles-of-luminors', 'bestiary-of-creation'] },
+  '417': { gate: 'Heart', guardian: 'Maylinn', collections: ['songs-and-hymns', 'codex-of-collaboration'] },
+  '528': { gate: 'Voice', guardian: 'Alera', collections: ['poesie-of-freedom', 'dialogues-of-masters'] },
+  '639': { gate: 'Sight', guardian: 'Lyria', collections: ['prophecies', 'wisdom-scrolls'] },
+  '741': { gate: 'Crown', guardian: 'Aiyami', collections: ['wisdom-scrolls', 'book-of-rituals'] },
+  '852': { gate: 'Shift', guardian: 'Elara', collections: ['tales-of-creators', 'atlas-of-territories'] },
+  '963': { gate: 'Unity', guardian: 'Ino', collections: ['codex-of-collaboration', 'legends-of-arcanea'] },
+  '1111': { gate: 'Source', guardian: 'Shinkami', collections: ['legends-of-arcanea', 'book-of-shadows'] },
+};
+
 export function LibraryBrowse({ collections }: LibraryBrowseProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSituation, setSelectedSituation] = useState<Situation | null>(null);
 
+  // Check if search query matches a Gate frequency
+  const activeFrequency = useMemo(() => {
+    const trimmed = searchQuery.trim();
+    return GATE_FREQUENCIES[trimmed] || null;
+  }, [searchQuery]);
+
   const filteredCollections = useMemo(() => {
     let filtered = collections;
+
+    // Hz frequency Easter egg — highlight Gate-associated collections
+    if (activeFrequency) {
+      return filtered.filter((c) => activeFrequency.collections.includes(c.slug));
+    }
 
     // Filter by search
     if (searchQuery) {
@@ -75,7 +100,7 @@ export function LibraryBrowse({ collections }: LibraryBrowseProps) {
     }
 
     return filtered;
-  }, [collections, searchQuery, selectedSituation]);
+  }, [collections, searchQuery, selectedSituation, activeFrequency]);
 
   return (
     <div className="space-y-12">
@@ -175,6 +200,17 @@ export function LibraryBrowse({ collections }: LibraryBrowseProps) {
           </svg>
         </div>
       </section>
+
+      {/* Frequency Easter egg — subtle reveal */}
+      {activeFrequency && (
+        <section className="rounded-xl border border-gold-medium/20 bg-gold-dark/5 p-5">
+          <p className="text-sm text-gold-bright">
+            <span className="font-mono text-xs opacity-60">{searchQuery.trim()} Hz</span>
+            {' '}&mdash;{' '}
+            The {activeFrequency.gate} Gate. {activeFrequency.guardian}&apos;s frequency.
+          </p>
+        </section>
+      )}
 
       {/* Collections Grid */}
       <section>

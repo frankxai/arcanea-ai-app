@@ -1,5 +1,6 @@
+'use client';
+
 import Link from "next/link";
-import type { Metadata } from "next";
 import {
   PhLightning,
   PhSun,
@@ -14,12 +15,6 @@ import {
   PhNotebook,
   PhChatTeardrop,
 } from '@/lib/phosphor-icons';
-
-export const metadata: Metadata = {
-  title: "Arcanea Workflows | Guardian-Powered n8n Automation",
-  description:
-    "Three n8n workflow templates powered by Guardian intelligence. Daily dev cycle, content generation, and evening learning — each aligned to a Gate frequency.",
-};
 
 // ─── Data — extracted from actual .arcanea/n8n/ JSON files ────────────────────
 
@@ -308,7 +303,7 @@ export default function WorkflowsPage() {
                 </a>
                 <Link
                   href="/ecosystem"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-crystal/30 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 transition-all duration-200"
                 >
                   Full Ecosystem
                   <PhArrowRight weight="thin" size={16} />
@@ -339,11 +334,11 @@ export default function WorkflowsPage() {
               return (
                 <article
                   key={wf.id}
-                  className="glass rounded-2xl overflow-hidden flex flex-col"
+                  className="liquid-glass rounded-2xl overflow-hidden flex flex-col"
                 >
                   {/* Card header */}
                   <div
-                    className="px-6 py-5 border-b border-white/5"
+                    className="px-6 py-5 border-b border-white/[0.04]"
                     style={{
                       background: `color-mix(in srgb, ${wf.color === "gold" ? "var(--color-gold-bright)" : wf.color === "teal" ? "var(--color-atlantean-teal-aqua)" : "var(--color-creation-prism-purple)"} 6%, transparent)`,
                     }}
@@ -370,7 +365,7 @@ export default function WorkflowsPage() {
                   </div>
 
                   {/* Description */}
-                  <div className="px-6 py-4 border-b border-white/5">
+                  <div className="px-6 py-4 border-b border-white/[0.04]">
                     <p className="text-sm text-text-secondary font-body leading-relaxed">
                       {wf.description}
                     </p>
@@ -385,7 +380,7 @@ export default function WorkflowsPage() {
                       {wf.nodes.map((node, i) => {
                         const NodeIcon = node.icon;
                         const typeCls =
-                          NODE_TYPE_STYLES[node.type] ?? "bg-white/5 text-text-secondary";
+                          NODE_TYPE_STYLES[node.type] ?? "bg-white/[0.04] text-text-secondary";
                         return (
                           <li key={i} className="flex items-center gap-3">
                             <div
@@ -413,7 +408,7 @@ export default function WorkflowsPage() {
                   </div>
 
                   {/* Use cases */}
-                  <div className="px-6 py-4 border-t border-white/5 bg-white/[0.02]">
+                  <div className="px-6 py-4 border-t border-white/[0.04] bg-white/[0.02]">
                     <ul className="space-y-1.5">
                       {wf.useCases.map((uc, i) => (
                         <li key={i} className="flex items-start gap-2">
@@ -435,7 +430,7 @@ export default function WorkflowsPage() {
 
         {/* ── How to Use ────────────────────────────────────────────────────── */}
         <section className="mb-20" aria-labelledby="howto-heading">
-          <div className="glass rounded-2xl p-8 sm:p-12">
+          <div className="liquid-glass rounded-2xl p-8 sm:p-12">
             <div className="mb-10 text-center">
               <p
                 id="howto-heading"
@@ -461,7 +456,7 @@ export default function WorkflowsPage() {
                   >
                     {step.step}
                   </div>
-                  <div className="glass-subtle rounded-xl p-5 pt-6 h-full">
+                  <div className="liquid-glass rounded-xl p-5 pt-6 h-full">
                     <h3 className="font-semibold text-text-primary mb-3 font-display text-sm">
                       {step.title}
                     </h3>
@@ -512,7 +507,7 @@ export default function WorkflowsPage() {
                 </a>
                 <Link
                   href="/arcanea-code"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-crystal/30 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 transition-all duration-200"
                 >
                   Explore Dev Platform
                   <PhArrowRight weight="thin" size={16} />

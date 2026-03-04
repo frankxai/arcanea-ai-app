@@ -24,14 +24,14 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
           <PhTextT className="w-3.5 h-3.5 text-brand-accent" />
           Editor
         </h3>
-        <div className="glass-subtle rounded-xl p-4 space-y-4">
+        <div className="liquid-glass rounded-xl p-4 space-y-4">
           {/* Split view */}
           <SettingRow label="Split View" description="Show preview alongside editor">
             <button
               onClick={toggleSplitView}
               className={cn(
                 'w-10 h-5 rounded-full transition-colors relative',
-                editorSplitView ? 'bg-brand-accent' : 'bg-white/10',
+                editorSplitView ? 'bg-brand-accent' : 'bg-white/[0.06]',
               )}
             >
               <span
@@ -45,12 +45,12 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
 
           {/* Default view */}
           <SettingRow label="Default View" description="Grid or list layout for prompts">
-            <div className="flex gap-1 glass-subtle rounded-lg p-0.5">
+            <div className="flex gap-1 liquid-glass rounded-lg p-0.5">
               <button
                 onClick={() => setViewMode('grid')}
                 className={cn(
                   'px-2.5 py-1 rounded-md text-[10px] font-sans transition-all',
-                  viewMode === 'grid' ? 'glass text-text-primary' : 'text-text-muted',
+                  viewMode === 'grid' ? 'liquid-glass text-text-primary' : 'text-text-muted',
                 )}
               >
                 Grid
@@ -59,7 +59,7 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
                 onClick={() => setViewMode('list')}
                 className={cn(
                   'px-2.5 py-1 rounded-md text-[10px] font-sans transition-all',
-                  viewMode === 'list' ? 'glass text-text-primary' : 'text-text-muted',
+                  viewMode === 'list' ? 'liquid-glass text-text-primary' : 'text-text-muted',
                 )}
               >
                 List
@@ -87,7 +87,7 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
             <select
               value={autoSaveDelay}
               onChange={(e) => setAutoSaveDelay(Number(e.target.value))}
-              className="bg-white/[0.03] border border-white/10 rounded-lg px-2 py-1 text-[10px] font-mono text-text-secondary focus:outline-none"
+              className="bg-white/[0.03] border border-white/[0.06] rounded-lg px-2 py-1 text-[10px] font-mono text-text-secondary focus:outline-none"
             >
               <option value={1000}>1s</option>
               <option value={2000}>2s</option>
@@ -105,16 +105,16 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
           <PhTextAa className="w-3.5 h-3.5 text-brand-accent" />
           Weight Syntax
         </h3>
-        <div className="glass-subtle rounded-xl p-4">
+        <div className="liquid-glass rounded-xl p-4">
           <SettingRow label="Default Syntax" description="Wrap selected text with this syntax">
-            <div className="flex gap-1 glass-subtle rounded-lg p-0.5">
+            <div className="flex gap-1 liquid-glass rounded-lg p-0.5">
               {(['sd', 'nai', 'emphasis'] as WeightSyntaxType[]).map((s) => (
                 <button
                   key={s}
                   onClick={() => setDefaultSyntax(s)}
                   className={cn(
                     'px-2.5 py-1 rounded-md text-[10px] font-mono transition-all',
-                    defaultSyntax === s ? 'glass text-text-primary' : 'text-text-muted',
+                    defaultSyntax === s ? 'liquid-glass text-text-primary' : 'text-text-muted',
                   )}
                 >
                   {s.toUpperCase()}
@@ -136,7 +136,7 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
           <PhKeyboard className="w-3.5 h-3.5 text-brand-accent" />
           Keyboard Shortcuts
         </h3>
-        <div className="glass-subtle rounded-xl p-4 space-y-2">
+        <div className="liquid-glass rounded-xl p-4 space-y-2">
           <ShortcutRow keys={['Cmd', 'K']} action="Search / Command Palette" />
           <ShortcutRow keys={['Cmd', 'Shift', 'P']} action="Quick Capture" />
           <ShortcutRow keys={['Cmd', 'S']} action="Save Prompt" />

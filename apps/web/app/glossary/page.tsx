@@ -448,7 +448,7 @@ export default function GlossaryPage() {
                 <input
                   type="text"
                   placeholder="Search terms..."
-                  className="w-full pl-12 pr-4 py-3 rounded-xl glass border border-white/10 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-crystal/50 focus:ring-1 focus:ring-crystal/20 transition-all"
+                  className="w-full pl-12 pr-4 py-3 rounded-xl liquid-glass border border-white/[0.06] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-crystal/50 focus:ring-1 focus:ring-crystal/20 transition-all"
                 />
               </div>
             </div>
@@ -463,7 +463,7 @@ export default function GlossaryPage() {
               return (
                 <button
                   key={category.id}
-                  className="flex items-center gap-2 px-4 py-2 rounded-full border transition-all whitespace-nowrap glass border-white/10 text-text-secondary hover:border-crystal/30 hover:text-crystal"
+                  className="flex items-center gap-2 px-4 py-2 rounded-full border transition-all whitespace-nowrap card-3d liquid-glass border-white/[0.06] text-text-secondary hover:border-crystal/30 hover:text-crystal"
                 >
                   <CategoryIcon />
                   <span className="text-sm font-sans">{category.label}</span>
@@ -483,7 +483,7 @@ export default function GlossaryPage() {
             {TERMS.map((item) => (
               <div
                 key={item.term}
-                className="glass rounded-2xl p-6 hover-lift transition-all"
+                className="card-3d liquid-glass rounded-2xl p-6 hover-lift transition-all"
               >
                 <div className="flex items-center gap-2 mb-3">
                   <span className="text-xs font-mono px-2 py-0.5 rounded-full border border-brand-primary/30 bg-brand-primary/10 text-brand-primary">
@@ -508,7 +508,7 @@ export default function GlossaryPage() {
           <div className="grid md:grid-cols-3 gap-6">
             <Link
               href="/lore"
-              className="group glass rounded-2xl p-6 hover-lift transition-all"
+              className="group card-3d liquid-glass rounded-2xl p-6 hover-lift transition-all"
             >
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-display font-semibold text-text-primary">
@@ -524,7 +524,7 @@ export default function GlossaryPage() {
 
             <Link
               href="/library"
-              className="group glass rounded-2xl p-6 hover-lift transition-all"
+              className="group card-3d liquid-glass rounded-2xl p-6 hover-lift transition-all"
             >
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-display font-semibold text-text-primary">
@@ -540,7 +540,7 @@ export default function GlossaryPage() {
 
             <Link
               href="/academy"
-              className="group glass rounded-2xl p-6 hover-lift transition-all"
+              className="group card-3d liquid-glass rounded-2xl p-6 hover-lift transition-all"
             >
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-display font-semibold text-text-primary">

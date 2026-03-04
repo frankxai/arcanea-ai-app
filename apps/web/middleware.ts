@@ -3,10 +3,10 @@ import { updateSession } from '@/lib/supabase/middleware';
 
 export async function middleware(request: NextRequest) {
   return updateSession(request, {
-    protectedPrefixes: ['/chat', '/profile', '/studio', '/onboarding'],
+    protectedPrefixes: ['/chat', '/profile', '/studio', '/onboarding', '/dashboard', '/settings'],
     authPrefixes: ['/auth/login', '/auth/signup'],
     loginPath: '/auth/login',
-    authenticatedRedirectPath: '/chat',
+    authenticatedRedirectPath: '/dashboard',
   });
 }
 

@@ -248,7 +248,7 @@ const PRODUCTS: Product[] = [
     name: "The Library",
     tagline: "Knowledge System",
     description:
-      "17 collections, 34+ sacred texts of timeless creator wisdom. Not entertainment — equipment for living. Enter seeking, leave transformed.",
+      "17 collections, 34+ original texts on creative philosophy and practice. Not entertainment — equipment for living.",
     status: "Live",
     statusVariant: "live",
     href: "/library",
@@ -263,7 +263,7 @@ const STATUS_STYLES: Record<StatusVariant, string> = {
   beta: "bg-gold-bright/15 text-gold-bright border-gold-bright/30",
   oss: "bg-green-500/15 text-green-400 border-green-500/30",
   templates: "bg-cosmic-blue/15 text-cosmic-blue border-cosmic-blue/30",
-  coming: "bg-white/5 text-text-muted border-white/10",
+  coming: "bg-white/[0.04] text-text-muted border-white/[0.06]",
 };
 
 // ─── Connection Pillars ───────────────────────────────────────────────────────
@@ -295,8 +295,18 @@ const PILLARS = [
 // ─── Page ────────────────────────────────────────────────────────────────────
 
 export default function EcosystemPage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Arcanea Ecosystem',
+    description: 'The complete Arcanea creator ecosystem — platform, tools, overlays, on-chain, and automation.',
+    url: 'https://arcanea.ai/ecosystem',
+    isPartOf: { '@type': 'WebSite', name: 'Arcanea', url: 'https://arcanea.ai' },
+  };
+
   return (
     <div className="relative min-h-screen">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {/* Background */}
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-void" />
@@ -304,7 +314,7 @@ export default function EcosystemPage() {
         <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(127,255,212,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(153,102,255,0.08),transparent_55%)]" />
       </div>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12">
         {/* ── Hero ─────────────────────────────────────────────────────── */}
         <section className="mb-16">
           <div className="relative liquid-glass rounded-3xl overflow-hidden px-8 py-14 sm:px-14 sm:py-20">
@@ -350,7 +360,7 @@ export default function EcosystemPage() {
                 </Link>
                 <Link
                   href="/academy"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-atlantean-teal-aqua/30 hover:bg-atlantean-teal-aqua/5 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-atlantean-teal-aqua/30 hover:bg-atlantean-teal-aqua/5 transition-all duration-200"
                 >
                   Begin the Academy
                 </Link>
@@ -361,7 +371,7 @@ export default function EcosystemPage() {
 
         {/* ── Ecosystem Diagram ─────────────────────────────────────────── */}
         <section className="mb-20">
-          <div className="glass rounded-3xl p-8 sm:p-12">
+          <div className="liquid-glass rounded-3xl p-8 sm:p-12">
             <EcosystemDiagram />
           </div>
         </section>
@@ -396,7 +406,7 @@ export default function EcosystemPage() {
                 <Tag
                   key={product.id}
                   {...tagProps}
-                  className="group relative glass rounded-2xl p-7 overflow-hidden transition-all hover:border-white/20 hover:-translate-y-0.5 hover:shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
+                  className="group relative card-3d liquid-glass rounded-2xl p-7 overflow-hidden transition-all hover:border-white/[0.12] hover:-translate-y-0.5 hover:shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
                   aria-label={`${product.name} — ${product.tagline}`}
                 >
                   {/* Hover glow */}
@@ -486,7 +496,7 @@ export default function EcosystemPage() {
             {PILLARS.map((pillar, index) => (
               <div
                 key={pillar.label}
-                className="relative glass rounded-2xl p-7 overflow-hidden"
+                className="relative card-3d liquid-glass rounded-2xl p-7 overflow-hidden"
               >
                 {/* Subtle gradient accent */}
                 <div
@@ -571,7 +581,7 @@ export default function EcosystemPage() {
                 </Link>
                 <Link
                   href="/about"
-                  className="inline-flex items-center gap-2 px-8 py-4 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-atlantean-teal-aqua/30 hover:bg-atlantean-teal-aqua/5 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-8 py-4 rounded-xl liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-atlantean-teal-aqua/30 hover:bg-atlantean-teal-aqua/5 transition-all duration-200"
                 >
                   Learn about Arcanea
                 </Link>

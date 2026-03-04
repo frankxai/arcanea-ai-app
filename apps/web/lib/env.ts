@@ -27,12 +27,18 @@ const envSchema = z.object({
   NEXT_PUBLIC_SUPABASE_ANON_KEY: z
     .string()
     .min(20, 'NEXT_PUBLIC_SUPABASE_ANON_KEY must be at least 20 characters')
-    .startsWith('eyJ', 'NEXT_PUBLIC_SUPABASE_ANON_KEY must be a valid JWT'),
+    .refine(
+      (key) => key.startsWith('eyJ') || key.startsWith('sb_publishable_'),
+      'NEXT_PUBLIC_SUPABASE_ANON_KEY must be a valid JWT or publishable key'
+    ),
 
   SUPABASE_SERVICE_ROLE_KEY: z
     .string()
     .min(20, 'SUPABASE_SERVICE_ROLE_KEY must be at least 20 characters')
-    .startsWith('eyJ', 'SUPABASE_SERVICE_ROLE_KEY must be a valid JWT'),
+    .refine(
+      (key) => key.startsWith('eyJ') || key.startsWith('sb_secret_'),
+      'SUPABASE_SERVICE_ROLE_KEY must be a valid JWT or secret key'
+    ),
 
   // ===========================================
   // AI PROVIDERS

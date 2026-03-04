@@ -1,37 +1,39 @@
 /**
- * Supabase Client Configuration
+ * Supabase Client Configuration — LEGACY COMPATIBILITY SHIM
  *
- * Provides Supabase client instances for both server and client-side usage.
- * Uses environment variables for configuration with proper type safety.
+ * All consumers have been migrated to:
+ *   - Server Components, API Routes: @/lib/supabase/server → createClient(), createAdminClient()
+ *   - Client Components:             @/lib/supabase/client → createClient()
+ *
+ * This file is kept to avoid breaking any remaining indirect consumers.
+ * Do NOT add new imports from this file. Migrate to the above paths instead.
+ *
+ * @deprecated Use @/lib/supabase/server or @/lib/supabase/client
  */
 
-import { createClient } from '@supabase/supabase-js';
+import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 import type { Database } from '@/lib/database/types/supabase';
 
 // Environment variables - use placeholders during build if not set
 // This allows the build to complete; runtime will fail if not properly configured
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-anon-key';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || 'https://placeholder.supabase.co';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY || 'placeholder-anon-key';
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 // Warn during development if env vars are missing
 if (typeof window === 'undefined' && process.env.NODE_ENV === 'development') {
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
-    console.warn('⚠️ NEXT_PUBLIC_SUPABASE_URL is not set - using placeholder');
+    console.warn('[supabase.ts] NEXT_PUBLIC_SUPABASE_URL is not set — using placeholder. Migrate to @/lib/supabase/server.');
   }
   if (!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-    console.warn('⚠️ NEXT_PUBLIC_SUPABASE_ANON_KEY is not set - using placeholder');
+    console.warn('[supabase.ts] NEXT_PUBLIC_SUPABASE_ANON_KEY is not set — using placeholder. Migrate to @/lib/supabase/server.');
   }
 }
 
 /**
- * Public Supabase Client
- *
- * Use this for client-side operations and user-authenticated requests.
- * Respects Row Level Security (RLS) policies.
- * Safe to use in browser and API routes.
+ * @deprecated Use createClient() from @/lib/supabase/client in Client Components
  */
-export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
+export const supabase = createSupabaseClient<Database>(supabaseUrl, supabaseAnonKey, {
   auth: {
     persistSession: true,
     autoRefreshToken: true,
@@ -39,21 +41,14 @@ export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
 });
 
 /**
- * Admin Supabase Client
- *
- * Use this ONLY for server-side operations that require elevated permissions.
- * BYPASSES Row Level Security (RLS) - use with extreme caution!
- * NEVER expose this to the client.
- *
- * @throws {Error} If SUPABASE_SERVICE_ROLE_KEY is not set
+ * @deprecated Use createAdminClient() from @/lib/supabase/server in Server Components / API Routes
  */
 export function getSupabaseAdmin() {
   if (!supabaseServiceKey) {
     throw new Error('SUPABASE_SERVICE_ROLE_KEY is not set. Admin operations require service role key.');
   }
 
-  // supabaseUrl is guaranteed to be defined due to the check at module initialization
-  return createClient<Database>(supabaseUrl!, supabaseServiceKey, {
+  return createSupabaseClient<Database>(supabaseUrl, supabaseServiceKey, {
     auth: {
       persistSession: false,
       autoRefreshToken: false,
@@ -62,12 +57,9 @@ export function getSupabaseAdmin() {
 }
 
 /**
- * Server-side Supabase Client
- *
- * Use this for API routes where you want to respect RLS but make server-side requests.
- * Can be configured with user session for authenticated requests.
+ * @deprecated Use createClient() from @/lib/supabase/server in Server Components / API Routes
  */
-export const supabaseServer = createClient<Database>(supabaseUrl, supabaseAnonKey, {
+export const supabaseServer = createSupabaseClient<Database>(supabaseUrl, supabaseAnonKey, {
   auth: {
     persistSession: false,
     autoRefreshToken: false,
@@ -75,10 +67,7 @@ export const supabaseServer = createClient<Database>(supabaseUrl, supabaseAnonKe
 });
 
 /**
- * Helper to get user session from request
- *
- * @param request - Next.js Request object
- * @returns User ID if authenticated, null otherwise
+ * @deprecated Use createClient() from @/lib/supabase/server and call supabase.auth.getUser()
  */
 export async function getUserFromRequest(request: Request): Promise<string | null> {
   try {

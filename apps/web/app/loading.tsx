@@ -1,3 +1,5 @@
+'use client';
+
 import { PhCircleNotch } from '@/lib/phosphor-icons';
 
 export default function Loading() {
@@ -10,7 +12,7 @@ export default function Loading() {
       </div>
 
       {/* Loading text with shimmer effect */}
-      <p className="text-lg font-cinzel text-neutral-400 animate-pulse">
+      <p className="text-lg font-display text-neutral-400 animate-pulse">
         Weaving cosmic threads...
       </p>
 

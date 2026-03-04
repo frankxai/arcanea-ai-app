@@ -52,7 +52,7 @@ export function TagChipBar({
         className={cn(
           'inline-flex items-center gap-1 px-2 py-0.5 rounded-full',
           'text-[10px] font-sans text-text-muted hover:text-text-secondary',
-          'border border-dashed border-white/[0.08] hover:border-white/15',
+          'border border-dashed border-white/[0.08] hover:border-white/[0.10]',
           'transition-all',
         )}
       >

@@ -55,9 +55,9 @@ export function TagManager({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div className="glass-strong rounded-2xl border border-white/10 w-[520px] max-h-[70vh] flex flex-col shadow-2xl">
+      <div className="glass-strong rounded-2xl border border-white/[0.06] w-[520px] max-h-[70vh] flex flex-col shadow-2xl">
         {/* Header */}
-        <div className="px-5 py-4 border-b border-white/5">
+        <div className="px-5 py-4 border-b border-white/[0.04]">
           <h2 className="text-sm font-display text-text-primary">Manage Tags</h2>
           <p className="text-[10px] font-sans text-text-muted mt-1">
             Edit tag names, categories, weights, and injection text.
@@ -85,14 +85,14 @@ export function TagManager({
                           type="text"
                           value={editName}
                           onChange={(e) => setEditName(e.target.value)}
-                          className="flex-1 bg-white/[0.03] border border-white/10 rounded-lg px-2.5 py-1.5 text-xs font-sans text-text-primary focus:outline-none focus:border-brand-accent/40"
+                          className="flex-1 bg-white/[0.03] border border-white/[0.06] rounded-lg px-2.5 py-1.5 text-xs font-sans text-text-primary focus:outline-none focus:border-brand-accent/40"
                           placeholder="Tag name"
                           autoFocus
                         />
                         <select
                           value={editCategory}
                           onChange={(e) => setEditCategory(e.target.value as TagCategory)}
-                          className="bg-white/[0.03] border border-white/10 rounded-lg px-2 py-1.5 text-xs font-sans text-text-primary focus:outline-none"
+                          className="bg-white/[0.03] border border-white/[0.06] rounded-lg px-2 py-1.5 text-xs font-sans text-text-primary focus:outline-none"
                         >
                           {(Object.keys(TAG_CATEGORIES) as TagCategory[]).map((cat) => (
                             <option key={cat} value={cat}>{TAG_CATEGORIES[cat].label}</option>
@@ -104,14 +104,14 @@ export function TagManager({
                           type="text"
                           value={editInject}
                           onChange={(e) => setEditInject(e.target.value)}
-                          className="flex-1 bg-white/[0.03] border border-white/10 rounded-lg px-2.5 py-1.5 text-xs font-mono text-text-secondary focus:outline-none focus:border-brand-accent/40"
+                          className="flex-1 bg-white/[0.03] border border-white/[0.06] rounded-lg px-2.5 py-1.5 text-xs font-mono text-text-secondary focus:outline-none focus:border-brand-accent/40"
                           placeholder="Inject text (appended to prompt)"
                         />
                         <input
                           type="number"
                           value={editWeight}
                           onChange={(e) => setEditWeight(e.target.value)}
-                          className="w-20 bg-white/[0.03] border border-white/10 rounded-lg px-2.5 py-1.5 text-xs font-mono text-text-secondary focus:outline-none"
+                          className="w-20 bg-white/[0.03] border border-white/[0.06] rounded-lg px-2.5 py-1.5 text-xs font-mono text-text-secondary focus:outline-none"
                           placeholder="Weight"
                           step="0.05"
                           min="0.1"
@@ -192,7 +192,7 @@ export function TagManager({
         </div>
 
         {/* Footer */}
-        <div className="px-5 py-3 border-t border-white/5 flex justify-end">
+        <div className="px-5 py-3 border-t border-white/[0.04] flex justify-end">
           <Button onClick={onClose} className="text-xs liquid-glass">
             Done
           </Button>

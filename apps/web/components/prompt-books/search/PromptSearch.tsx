@@ -294,7 +294,7 @@ export function PromptSearch({ isOpen, onClose, onSelectPrompt }: PromptSearchPr
             )}
           >
             {/* Search Input */}
-            <div className="flex items-center gap-3 px-5 py-4 border-b border-white/5">
+            <div className="flex items-center gap-3 px-5 py-4 border-b border-white/[0.04]">
               <PhMagnifyingGlass className="w-5 h-5 text-text-muted flex-shrink-0" aria-hidden />
               <input
                 ref={inputRef}
@@ -422,7 +422,7 @@ export function PromptSearch({ isOpen, onClose, onSelectPrompt }: PromptSearchPr
                           <div
                             className={cn(
                               'mt-0.5 w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0',
-                              'glass-subtle',
+                              'liquid-glass',
                             )}
                           >
                             <TypeIcon className="w-3.5 h-3.5 text-brand-accent" />
@@ -434,7 +434,7 @@ export function PromptSearch({ isOpen, onClose, onSelectPrompt }: PromptSearchPr
                               <span className="text-sm font-sans font-medium text-text-primary truncate">
                                 {prompt.title}
                               </span>
-                              <span className="glass-subtle px-1.5 py-0.5 rounded text-[10px] font-sans font-medium text-text-muted flex-shrink-0">
+                              <span className="liquid-glass px-1.5 py-0.5 rounded text-[10px] font-sans font-medium text-text-muted flex-shrink-0">
                                 {typeConfig.label}
                               </span>
                             </div>
@@ -465,24 +465,24 @@ export function PromptSearch({ isOpen, onClose, onSelectPrompt }: PromptSearchPr
             </div>
 
             {/* Footer — keyboard hints */}
-            <div className="px-5 py-2.5 border-t border-white/5 flex items-center gap-4">
+            <div className="px-5 py-2.5 border-t border-white/[0.04] flex items-center gap-4">
               <div className="flex items-center gap-1.5 text-[11px] font-sans text-text-muted/60">
-                <kbd className="glass-subtle px-1.5 py-0.5 rounded text-[10px] font-mono">
+                <kbd className="liquid-glass px-1.5 py-0.5 rounded text-[10px] font-mono">
                   <PhArrowUp className="w-3 h-3 inline" />
                 </kbd>
-                <kbd className="glass-subtle px-1.5 py-0.5 rounded text-[10px] font-mono">
+                <kbd className="liquid-glass px-1.5 py-0.5 rounded text-[10px] font-mono">
                   <PhArrowDown className="w-3 h-3 inline" />
                 </kbd>
                 <span>Navigate</span>
               </div>
               <div className="flex items-center gap-1.5 text-[11px] font-sans text-text-muted/60">
-                <kbd className="glass-subtle px-1.5 py-0.5 rounded text-[10px] font-mono">
+                <kbd className="liquid-glass px-1.5 py-0.5 rounded text-[10px] font-mono">
                   <PhCornerDownLeft className="w-3 h-3 inline" />
                 </kbd>
                 <span>Open</span>
               </div>
               <div className="flex items-center gap-1.5 text-[11px] font-sans text-text-muted/60">
-                <kbd className="glass-subtle px-1.5 py-0.5 rounded text-[10px] font-mono text-[10px]">
+                <kbd className="liquid-glass px-1.5 py-0.5 rounded text-[10px] font-mono text-[10px]">
                   esc
                 </kbd>
                 <span>Close</span>

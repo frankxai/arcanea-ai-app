@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     openGraph: {
       title: `${profile.displayName} on Arcanea`,
       description: profile.bio || `Check out ${profile.displayName}'s creations`,
-      images: profile.avatarUrl ? [profile.avatarUrl] : ['/og-image.png'],
+      images: profile.avatarUrl ? [profile.avatarUrl] : undefined,
       type: 'profile',
     },
   }

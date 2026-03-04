@@ -131,7 +131,7 @@ export default function RecordsPage() {
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
             {PORTRAITS.map((g) => (
               <Link key={g.slug} href={`/lore/guardians/${g.slug}`}
-                className="group relative rounded-2xl overflow-hidden glass border border-white/5 hover:border-white/20 transition-all hover-lift glow-card"
+                className="group relative rounded-2xl overflow-hidden card-3d liquid-glass border border-white/[0.04] hover:border-white/[0.12] transition-all hover-lift glow-card"
                 aria-label={`${g.name} — ${g.gate} Gate`}
               >
                 <div className="relative aspect-[3/4] overflow-hidden">
@@ -169,7 +169,7 @@ export default function RecordsPage() {
 
           <div className="grid grid-cols-3 gap-3" style={{ gridTemplateRows: '200px 200px 160px' }}>
             {/* Large feature: Arcanea Cinematic City */}
-            <div className="col-span-2 row-span-2 group relative rounded-2xl overflow-hidden glass border border-white/5 hover:border-white/15 transition-all">
+            <div className="col-span-2 row-span-2 group relative rounded-2xl overflow-hidden card-3d liquid-glass border border-white/[0.04] hover:border-white/[0.10] transition-all">
               <Image src={HERO_IMAGES[0].src} alt={HERO_IMAGES[0].title}
                 fill className="object-cover group-hover:scale-105 transition-transform duration-700"
                 sizes="(max-width: 640px) 100vw, 66vw" priority />
@@ -182,7 +182,7 @@ export default function RecordsPage() {
 
             {/* Right column: Floating Islands + Futuristic Cityscape */}
             {HERO_IMAGES.slice(1, 3).map((img) => (
-              <div key={img.id} className="col-span-1 row-span-1 group relative rounded-2xl overflow-hidden glass border border-white/5 hover:border-white/15 transition-all">
+              <div key={img.id} className="col-span-1 row-span-1 group relative rounded-2xl overflow-hidden card-3d liquid-glass border border-white/[0.04] hover:border-white/[0.10] transition-all">
                 <Image src={img.src} alt={img.title}
                   fill className="object-cover group-hover:scale-110 transition-transform duration-500"
                   sizes="(max-width: 640px) 33vw, 33vw" />
@@ -194,7 +194,7 @@ export default function RecordsPage() {
             ))}
 
             {/* Row 3: Wide banner + 2 small */}
-            <div className="col-span-2 row-span-1 group relative rounded-2xl overflow-hidden glass border border-white/5 hover:border-white/15 transition-all">
+            <div className="col-span-2 row-span-1 group relative rounded-2xl overflow-hidden card-3d liquid-glass border border-white/[0.04] hover:border-white/[0.10] transition-all">
               <Image src={HERO_IMAGES[3].src} alt={HERO_IMAGES[3].title}
                 fill className="object-cover group-hover:scale-105 transition-transform duration-700"
                 sizes="(max-width: 640px) 100vw, 66vw" />
@@ -203,7 +203,7 @@ export default function RecordsPage() {
                 <p className={`text-xs font-sans ${HERO_IMAGES[3].accent}`}>{HERO_IMAGES[3].title}</p>
               </div>
             </div>
-            <div className="col-span-1 row-span-1 group relative rounded-2xl overflow-hidden glass border border-white/5 hover:border-white/15 transition-all">
+            <div className="col-span-1 row-span-1 group relative rounded-2xl overflow-hidden card-3d liquid-glass border border-white/[0.04] hover:border-white/[0.10] transition-all">
               <Image src={HERO_IMAGES[4].src} alt={HERO_IMAGES[4].title}
                 fill className="object-cover group-hover:scale-110 transition-transform duration-500"
                 sizes="(max-width: 640px) 33vw, 33vw" />
@@ -212,7 +212,7 @@ export default function RecordsPage() {
           </div>
 
           {/* Row below: Unified Civilization full-width strip */}
-          <div className="mt-3 group relative h-36 rounded-2xl overflow-hidden glass border border-white/5 hover:border-white/15 transition-all">
+          <div className="mt-3 group relative h-36 rounded-2xl overflow-hidden card-3d liquid-glass border border-white/[0.04] hover:border-white/[0.10] transition-all">
             <Image src={HERO_IMAGES[5].src} alt={HERO_IMAGES[5].title}
               fill className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
               sizes="100vw" />
@@ -220,7 +220,7 @@ export default function RecordsPage() {
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center">
                 <p className={`text-xs font-sans uppercase tracking-widest ${HERO_IMAGES[5].accent} opacity-0 group-hover:opacity-100 transition-opacity`}>{HERO_IMAGES[5].guardianTag}</p>
-                <p className="text-sm font-sans font-medium text-white/80 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">{HERO_IMAGES[5].title}</p>
+                <p className="text-sm font-sans font-medium text-white/[0.60] mt-1 opacity-0 group-hover:opacity-100 transition-opacity">{HERO_IMAGES[5].title}</p>
               </div>
             </div>
           </div>
@@ -237,7 +237,7 @@ export default function RecordsPage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {CHRONICLES.map((ch) => (
               <Link key={ch.id} href={`/lore/guardians/${ch.guardianSlug}`}
-                className="group relative glass rounded-2xl overflow-hidden border border-white/5 hover:border-white/20 transition-all glow-card hover-lift"
+                className="group relative card-3d liquid-glass rounded-2xl overflow-hidden border border-white/[0.04] hover:border-white/[0.12] transition-all glow-card hover-lift"
               >
                 <div className="relative aspect-video overflow-hidden">
                   <div className={`absolute inset-0 bg-gradient-to-br ${ch.gradient}`} aria-hidden="true" />
@@ -247,7 +247,7 @@ export default function RecordsPage() {
                     </div>
                   </div>
                   <div className="absolute top-3 right-3">
-                    <span className="text-xs font-mono px-2.5 py-1 rounded-full bg-cosmic-deep/80 text-text-muted border border-white/10">
+                    <span className="text-xs font-mono px-2.5 py-1 rounded-full bg-cosmic-deep/80 text-text-muted border border-white/[0.06]">
                       Coming Soon
                     </span>
                   </div>
@@ -291,7 +291,7 @@ export default function RecordsPage() {
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link href="/community"
-                  className="inline-flex items-center gap-2 px-6 py-4 rounded-2xl font-sans font-medium text-sm text-text-secondary border border-white/10 hover:border-white/20 hover:text-text-primary glass transition-all"
+                  className="inline-flex items-center gap-2 px-6 py-4 rounded-2xl font-sans font-medium text-sm text-text-secondary border border-white/[0.06] hover:border-white/[0.12] hover:text-text-primary card-3d liquid-glass transition-all"
                 >
                   Browse Community <ArrowRight />
                 </Link>

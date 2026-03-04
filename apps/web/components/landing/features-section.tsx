@@ -84,7 +84,7 @@ const FeatureCard = React.memo(function FeatureCard({
       transition={{ duration: 0.5, delay: index * 0.1 }}
     >
       <Link href={feature.href} className="group block h-full">
-        <div className="relative h-full p-8 rounded-3xl border border-white/10 bg-cosmic-surface/30 backdrop-blur-sm overflow-hidden transition-all duration-500 hover:border-white/20">
+        <div className="relative h-full p-8 rounded-3xl liquid-glass border border-white/[0.06] overflow-hidden transition-all duration-500 hover:border-white/[0.12]">
           <div
             className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
           />
@@ -100,7 +100,7 @@ const FeatureCard = React.memo(function FeatureCard({
               >
                 {feature.icon}
               </motion.div>
-              <div className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-text-muted">
+              <div className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] text-xs text-text-muted">
                 {feature.stats}
               </div>
             </div>

@@ -5,8 +5,6 @@ import { GuardiansPreview } from '@/components/lore/guardians-preview';
 import { GatesPreview } from '@/components/lore/gates-preview';
 import { LibraryPreview } from '@/components/lore/library-preview';
 import { LoreCTA } from '@/components/lore/lore-cta';
-import { Navbar } from '@/components/navigation';
-
 export const metadata: Metadata = {
   title: 'Lore of Arcanea | The Living Mythology',
   description:
@@ -14,15 +12,22 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Lore of Arcanea | The Living Mythology',
     description: 'Explore the cosmic origins and sacred wisdom of Arcanea.',
-    images: ['/og-lore.png'],
   },
 };
 
 export default function LorePage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Lore of Arcanea',
+    description: 'Explore the cosmic origins, Ten Guardians, and sacred wisdom of Arcanea.',
+    url: 'https://arcanea.ai/lore',
+    isPartOf: { '@type': 'WebSite', name: 'Arcanea', url: 'https://arcanea.ai' },
+  };
+
   return (
     <div className="relative min-h-screen bg-cosmic-deep">
-      <Navbar />
-
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <main>
         {/* Hero - Immersive entry point */}
         <LoreHero />
@@ -39,7 +44,7 @@ export default function LorePage() {
         {/* Library Preview - The Wisdom */}
         <LibraryPreview />
 
-        {/* CTA - Begin Your Journey */}
+        {/* CTA */}
         <LoreCTA />
       </main>
     </div>

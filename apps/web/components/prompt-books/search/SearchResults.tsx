@@ -66,7 +66,7 @@ function SearchResultsSkeleton() {
       {Array.from({ length: 4 }).map((_, i) => (
         <div
           key={i}
-          className="glass rounded-lg px-4 py-3 flex items-center gap-3"
+          className="liquid-glass rounded-lg px-4 py-3 flex items-center gap-3"
         >
           <Skeleton variant="rect" className="w-7 h-7 rounded-md flex-shrink-0" />
           <div className="flex-1 space-y-2">
@@ -99,7 +99,7 @@ function ResultRow({ prompt, query, onClick }: ResultRowProps) {
     <button
       onClick={onClick}
       className={cn(
-        'w-full glass rounded-lg px-4 py-3',
+        'w-full liquid-glass rounded-lg px-4 py-3',
         'flex items-start gap-3 text-left',
         'hover:bg-cosmic-raised/50 transition-all duration-150',
         'group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/40 focus-visible:ring-offset-0',
@@ -114,7 +114,7 @@ function ResultRow({ prompt, query, onClick }: ResultRowProps) {
           <h4 className="text-sm font-sans font-medium text-text-primary truncate group-hover:text-brand-accent transition-colors">
             {highlightMatches(prompt.title, query)}
           </h4>
-          <span className="glass-subtle px-1.5 py-0.5 rounded text-[10px] font-sans font-medium text-text-muted flex-shrink-0">
+          <span className="liquid-glass px-1.5 py-0.5 rounded text-[10px] font-sans font-medium text-text-muted flex-shrink-0">
             {typeConfig.label}
           </span>
         </div>
@@ -129,7 +129,7 @@ function ResultRow({ prompt, query, onClick }: ResultRowProps) {
             {prompt.tags!.slice(0, 3).map((tag) => (
               <span
                 key={tag.id}
-                className="glass-subtle px-1.5 py-0.5 rounded text-[9px] font-sans text-text-muted"
+                className="liquid-glass px-1.5 py-0.5 rounded text-[9px] font-sans text-text-muted"
               >
                 {tag.name}
               </span>
@@ -223,11 +223,11 @@ export function SearchResults({ onSelectPrompt, className }: SearchResultsProps)
             <div key={group.collectionId ?? '_uncategorized'}>
               {/* Collection header */}
               <div className="flex items-center gap-2 mb-2">
-                <div className="h-px flex-1 bg-white/5" />
+                <div className="h-px flex-1 bg-white/[0.04]" />
                 <span className="text-[10px] font-sans font-medium text-text-muted/60 uppercase tracking-wider flex-shrink-0">
                   {group.collectionName}
                 </span>
-                <div className="h-px flex-1 bg-white/5" />
+                <div className="h-px flex-1 bg-white/[0.04]" />
               </div>
 
               {/* Result rows */}

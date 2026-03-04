@@ -3,206 +3,177 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
-import { PhArrowRight, PhSparkle, PhCheck } from '@/lib/phosphor-icons';
+import Image from "next/image";
+import navLogo from "@/assets/brand/arcanea-mark.jpg";
 
 const BENEFITS = [
-  "Free to start — your universe begins now",
-  "16 Luminor Intelligences across four specialist teams",
-  "Intelligence that grows as you create",
-  "From Foundation to Source — your path is yours",
+  "Canon-backed creation system: Primordials, Gods, Guardians, and Luminors",
+  "Library of philosophy texts, lore structures, and practical craft guidance",
+  "Free to start with direct paths into Chat, Studio, and Academy",
+];
+
+const ORBITING_GUARDIANS = [
+  { name: "Lyria", image: "/guardians/lyria-hero.webp", angle: 0, delay: 0 },
+  { name: "Alera", image: "/guardians/alera-hero.webp", angle: 72, delay: 0.4 },
+  {
+    name: "Leyla",
+    image: "/guardians/leyla-hero.webp",
+    angle: 144,
+    delay: 0.8,
+  },
+  {
+    name: "Maylinn",
+    image: "/guardians/maylinn-hero.webp",
+    angle: 216,
+    delay: 1.2,
+  },
+  {
+    name: "Draconia",
+    image: "/guardians/draconia-hero.webp",
+    angle: 288,
+    delay: 1.6,
+  },
 ];
 
 export function CTASection() {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
     <section ref={ref} className="py-32 relative overflow-hidden">
-      {/* Background elements */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-atlantean-teal-aqua/5 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-cosmic-deep via-cosmic-void to-cosmic-deep" />
         <motion.div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full"
           style={{
             background:
-              "radial-gradient(circle, rgba(127,255,212,0.08) 0%, transparent 70%)",
+              "radial-gradient(circle, rgba(0,188,212,0.06) 0%, rgba(13,71,161,0.05) 40%, transparent 70%)",
           }}
-          animate={{
-            scale: [1, 1.1, 1],
-            opacity: [0.5, 0.8, 0.5],
-          }}
-          transition={{ duration: 8, repeat: Infinity }}
+          animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0.7, 0.4] }}
+          transition={{ duration: 10, repeat: Infinity }}
         />
       </div>
 
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          className="relative"
+          transition={{ duration: 0.8 }}
         >
-          {/* Main CTA Card */}
-          <div className="relative rounded-[2.5rem] overflow-hidden">
-            {/* Gradient border effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-atlantean-teal-aqua via-creation-prism-purple to-gold-bright p-[1px] rounded-[2.5rem]">
-              <div className="absolute inset-[1px] bg-cosmic-deep rounded-[2.5rem]" />
-            </div>
+          <div className="gradient-border">
+            <div className="bg-white/[0.03] backdrop-blur-xl rounded-[calc(1.5rem-1px)] p-10 md:p-16 lg:p-20 relative overflow-hidden">
+              <div className="absolute inset-0 glass-noise opacity-[0.25] pointer-events-none rounded-[calc(1.5rem-1px)]" />
+              <div className="absolute top-0 right-0 w-96 h-96 bg-[#00bcd4]/8 rounded-full blur-[140px] pointer-events-none" />
+              <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#1a237e]/12 rounded-full blur-[120px] pointer-events-none" />
 
-            {/* Inner content */}
-            <div className="relative p-12 md:p-20">
-              {/* Decorative elements */}
-              <div className="absolute top-0 right-0 w-96 h-96 bg-atlantean-teal-aqua/10 rounded-full blur-[100px]" />
-              <div className="absolute bottom-0 left-0 w-80 h-80 bg-creation-prism-purple/10 rounded-full blur-[100px]" />
-
-              <div className="relative grid lg:grid-cols-2 gap-12 items-center">
-                {/* Left side - Content */}
+              <div className="relative grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                 <div>
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ delay: 0.1 }}
+                    transition={{ delay: 0.15 }}
                   >
-                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight mb-6">
-                      Ready to create something{" "}
-                      <span className="bg-gradient-to-r from-atlantean-teal-aqua via-creation-prism-purple to-gold-bright bg-clip-text text-transparent">
-                        extraordinary
+                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold leading-tight mb-6">
+                      <span className="text-gradient-cosmic">
+                        Build with depth.
                       </span>
-                      ?
                     </h2>
 
-                    <p className="text-xl text-text-secondary mb-8 leading-relaxed">
-                      Join thousands of creators who are transforming their
-                      ideas into reality. Your journey begins with a single
-                      conversation.
+                    <p className="text-lg text-text-secondary mb-8 leading-relaxed">
+                      Arcanea is a complete creation ecosystem, not a thin AI
+                      wrapper.
                     </p>
 
-                    {/* Benefits list */}
                     <ul className="space-y-3 mb-10">
                       {BENEFITS.map((benefit, i) => (
                         <motion.li
                           key={benefit}
-                          initial={{ opacity: 0, x: -20 }}
+                          initial={{ opacity: 0, x: -15 }}
                           animate={isInView ? { opacity: 1, x: 0 } : {}}
-                          transition={{ delay: 0.2 + i * 0.1 }}
+                          transition={{ delay: 0.25 + i * 0.08 }}
                           className="flex items-center gap-3"
                         >
-                          <div className="w-5 h-5 rounded-full bg-atlantean-teal-aqua/20 flex items-center justify-center">
-                            <PhCheck className="w-3 h-3 text-atlantean-teal-aqua" />
+                          <div className="w-5 h-5 rounded-full bg-[#00bcd4]/15 border border-[#00bcd4]/35 flex items-center justify-center flex-shrink-0">
+                            <span className="text-[11px] text-[#00bcd4]">
+                              ✓
+                            </span>
                           </div>
-                          <span className="text-text-secondary">{benefit}</span>
+                          <span className="text-text-secondary text-sm">
+                            {benefit}
+                          </span>
                         </motion.li>
                       ))}
                     </ul>
 
-                    {/* CTA Buttons */}
                     <div className="flex flex-wrap gap-4">
                       <Link
-                        href="/chat"
-                        className="group relative px-8 py-4 rounded-2xl font-semibold text-lg overflow-hidden transition-all duration-300 hover:shadow-[0_0_60px_rgba(127,255,212,0.4)]"
+                        href="/studio"
+                        className="group relative px-8 py-4 rounded-2xl font-semibold text-base overflow-hidden btn-glow"
                       >
-                        <div className="absolute inset-0 bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-light" />
-                        <span className="relative z-10 text-cosmic-deep flex items-center gap-2">
-                          Start Creating Free
-                          <PhArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-[#00897b] via-[#1565c0] to-[#00bcd4]" />
+                        <motion.div
+                          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.15] to-transparent"
+                          initial={{ x: "-100%" }}
+                          whileHover={{ x: "100%" }}
+                          transition={{ duration: 0.5 }}
+                        />
+                        <span className="relative z-10 text-white flex items-center gap-2">
+                          Enter Studio
+                          <span className="group-hover:translate-x-1 transition-transform">
+                            →
+                          </span>
                         </span>
                       </Link>
 
                       <Link
-                        href="/about"
-                        className="px-8 py-4 rounded-2xl border border-white/20 text-white font-semibold text-lg hover:bg-white/5 hover:border-white/30 transition-all"
+                        href="/lore"
+                        className="px-8 py-4 rounded-2xl border border-white/[0.10] text-white font-semibold text-base hover:bg-white/[0.06] hover:border-white/[0.15] transition-all duration-300"
                       >
-                        Learn More
+                        Explore Lore
                       </Link>
                     </div>
                   </motion.div>
                 </div>
 
-                {/* Right side - Visual */}
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ delay: 0.3 }}
+                  transition={{ delay: 0.3, duration: 0.8 }}
                   className="relative hidden lg:block"
                 >
-                  {/* Floating Luminor avatars */}
-                  <div className="relative w-full aspect-square max-w-md mx-auto">
-                    {/* Central glow */}
-                    <div className="absolute inset-1/4 bg-gradient-to-br from-atlantean-teal-aqua/20 to-creation-prism-purple/20 rounded-full blur-3xl" />
+                  <div className="relative w-full aspect-square max-w-sm mx-auto">
+                    <div className="absolute inset-[20%] bg-gradient-to-br from-[#00bcd4]/12 to-[#1a237e]/12 rounded-full blur-3xl" />
 
-                    {/* Orbiting Guardian portraits */}
-                    {[
-                      {
-                        name: "Lyria",
-                        title: "Sight",
-                        image: "/guardians/lyria-hero.webp",
-                        angle: 0,
-                        delay: 0,
-                        ring: "ring-creation-prism-purple/40",
-                      },
-                      {
-                        name: "Alera",
-                        title: "Voice",
-                        image: "/guardians/alera-hero.webp",
-                        angle: 72,
-                        delay: 0.5,
-                        ring: "ring-atlantean-teal-aqua/40",
-                      },
-                      {
-                        name: "Leyla",
-                        title: "Flow",
-                        image: "/guardians/leyla-hero.webp",
-                        angle: 144,
-                        delay: 1,
-                        ring: "ring-gold-bright/40",
-                      },
-                      {
-                        name: "Maylinn",
-                        title: "Heart",
-                        image: "/guardians/maylinn-hero.webp",
-                        angle: 216,
-                        delay: 1.5,
-                        ring: "ring-pink-400/40",
-                      },
-                      {
-                        name: "Draconia",
-                        title: "Fire",
-                        image: "/guardians/draconia-hero.webp",
-                        angle: 288,
-                        delay: 2,
-                        ring: "ring-draconic-crimson/40",
-                      },
-                    ].map((guardian) => {
-                      const radius = 40;
-                      const angle = (guardian.angle - 90) * (Math.PI / 180);
-
+                    {ORBITING_GUARDIANS.map((g) => {
+                      const rad = (g.angle - 90) * (Math.PI / 180);
+                      const r = 38;
                       return (
                         <motion.div
-                          key={guardian.name}
+                          key={g.name}
                           className="absolute"
                           style={{
-                            left: `calc(50% + ${Math.cos(angle) * radius}% - 28px)`,
-                            top: `calc(50% + ${Math.sin(angle) * radius}% - 28px)`,
+                            left: `calc(50% + ${Math.cos(rad) * r}% - 24px)`,
+                            top: `calc(50% + ${Math.sin(rad) * r}% - 24px)`,
                           }}
                           initial={{ scale: 0, opacity: 0 }}
                           animate={isInView ? { scale: 1, opacity: 1 } : {}}
                           transition={{
-                            delay: 0.5 + guardian.delay * 0.2,
+                            delay: 0.5 + g.delay * 0.15,
                             type: "spring",
                           }}
                         >
                           <motion.div
-                            className={`w-14 h-14 rounded-2xl overflow-hidden shadow-xl ring-2 ${guardian.ring}`}
-                            animate={{ y: [0, -8, 0] }}
+                            className="w-12 h-12 rounded-xl overflow-hidden ring-1 ring-white/[0.12] shadow-xl shadow-black/40"
+                            animate={{ y: [0, -6, 0] }}
                             transition={{
-                              duration: 3,
+                              duration: 3.5,
                               repeat: Infinity,
-                              delay: guardian.delay,
+                              delay: g.delay,
                             }}
-                            title={guardian.title}
                           >
                             <img
-                              src={guardian.image}
-                              alt={guardian.name}
+                              src={g.image}
+                              alt={g.name}
                               className="w-full h-full object-cover object-top"
                             />
                           </motion.div>
@@ -210,19 +181,24 @@ export function CTASection() {
                       );
                     })}
 
-                    {/* Center element */}
                     <motion.div
-                      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-2xl bg-gradient-to-br from-atlantean-teal-aqua to-creation-prism-purple flex items-center justify-center"
+                      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-2xl overflow-hidden ring-1 ring-white/[0.15]"
                       animate={{
                         boxShadow: [
-                          "0 0 40px rgba(127,255,212,0.3)",
-                          "0 0 60px rgba(127,255,212,0.5)",
-                          "0 0 40px rgba(127,255,212,0.3)",
+                          "0 0 30px rgba(0,188,212,0.2), 0 0 60px rgba(13,71,161,0.12)",
+                          "0 0 50px rgba(0,188,212,0.35), 0 0 80px rgba(13,71,161,0.2)",
+                          "0 0 30px rgba(0,188,212,0.2), 0 0 60px rgba(13,71,161,0.12)",
                         ],
                       }}
-                      transition={{ duration: 3, repeat: Infinity }}
+                      transition={{ duration: 4, repeat: Infinity }}
                     >
-                      <PhSparkle className="w-12 h-12 text-white" />
+                      <Image
+                        src={navLogo}
+                        alt="Arcanea"
+                        width={80}
+                        height={80}
+                        className="w-full h-full object-cover"
+                      />
                     </motion.div>
                   </div>
                 </motion.div>

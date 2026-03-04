@@ -1,10 +1,11 @@
+'use client';
+
 /**
  * Community Create - Collaborative Creation Space
  *
  * A space where creators gather to collaborate on projects.
  */
 
-import { Metadata } from "next";
 import Link from "next/link";
 import {
   PhUsers,
@@ -29,12 +30,6 @@ import {
   PhImage,
   PhMusicNote,
 } from '@/lib/phosphor-icons';
-
-export const metadata: Metadata = {
-  title: "Create Together | Arcanea Community",
-  description:
-    "Join collaborative creation projects with fellow Arcanea creators. Manifest visions together.",
-};
 
 // Project categories aligned with elements
 const CATEGORIES = [
@@ -141,7 +136,7 @@ const HOW_IT_WORKS = [
   {
     step: "03",
     title: "Create Together",
-    description: "Manifest your contribution and watch the project come alive",
+    description: "Share your contribution and watch the project come alive",
     icon: PhSparkle,
   },
 ];
@@ -195,7 +190,7 @@ export default function CommunityCreatePage() {
                 </Link>
                 <Link
                   href="#browse"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
                 >
                   <PhCompass className="w-4 h-4" />
                   Browse Projects
@@ -206,7 +201,7 @@ export default function CommunityCreatePage() {
         </section>
 
         {/* How It Works */}
-        <section className="py-12 border-t border-white/5">
+        <section className="py-12 border-t border-white/[0.04]">
           <div className="mb-10">
             <h2 className="text-xs font-mono tracking-[0.35em] uppercase text-crystal mb-4">
               How It Works
@@ -219,7 +214,7 @@ export default function CommunityCreatePage() {
               return (
                 <div
                   key={item.step}
-                  className="relative glass rounded-2xl p-6 overflow-hidden group hover-lift transition-all"
+                  className="relative card-3d liquid-glass rounded-2xl p-6 overflow-hidden group hover-lift transition-all"
                 >
                   <div className="absolute top-0 right-0 w-32 h-32 bg-brand-primary/5 rounded-full blur-3xl group-hover:bg-brand-primary/10 transition-all" />
 
@@ -247,7 +242,7 @@ export default function CommunityCreatePage() {
         </section>
 
         {/* Categories */}
-        <section id="browse" className="py-12 border-t border-white/5">
+        <section id="browse" className="py-12 border-t border-white/[0.04]">
           <div className="mb-10">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-crystal/20 bg-crystal/8 mb-5">
               <PhTarget className="w-3 h-3 text-crystal" />
@@ -267,7 +262,7 @@ export default function CommunityCreatePage() {
                 <Link
                   key={cat.id}
                   href={`/community/create?category=${cat.id}`}
-                  className="group glass rounded-2xl p-6 hover-lift transition-all"
+                  className="group card-3d liquid-glass rounded-2xl p-6 hover-lift transition-all"
                 >
                   <div
                     className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110"
@@ -295,7 +290,7 @@ export default function CommunityCreatePage() {
         </section>
 
         {/* Featured Projects */}
-        <section id="projects" className="py-12 border-t border-white/5">
+        <section id="projects" className="py-12 border-t border-white/[0.04]">
           <div className="mb-10">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand-gold/20 bg-brand-gold/8 mb-5">
               <PhTrophy className="w-3 h-3 text-brand-gold" />
@@ -312,7 +307,7 @@ export default function CommunityCreatePage() {
             {FEATURED_PROJECTS.map((project) => (
               <div
                 key={project.id}
-                className={`group relative glass rounded-2xl p-6 overflow-hidden transition-all hover-lift ${
+                className={`group relative card-3d liquid-glass rounded-2xl p-6 overflow-hidden transition-all hover-lift ${
                   project.featured ? "ring-1 ring-brand-gold/30" : ""
                 }`}
               >
@@ -362,7 +357,7 @@ export default function CommunityCreatePage() {
                     {project.description}
                   </p>
 
-                  <div className="flex items-center justify-between pt-4 border-t border-white/5">
+                  <div className="flex items-center justify-between pt-4 border-t border-white/[0.04]">
                     <button className="flex items-center gap-2 text-sm text-crystal opacity-0 group-hover:opacity-100 transition-opacity">
                       <span>Join Project</span>
                       <PhArrowRight className="w-3.5 h-3.5" />
@@ -375,7 +370,7 @@ export default function CommunityCreatePage() {
         </section>
 
         {/* CTA */}
-        <section className="py-16 border-t border-white/5">
+        <section className="py-16 border-t border-white/[0.04]">
           <div className="relative liquid-glass rounded-3xl overflow-hidden p-10 sm:p-14">
             <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/10 via-transparent to-crystal/8 pointer-events-none" />
 

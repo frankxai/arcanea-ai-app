@@ -1,5 +1,6 @@
+'use client';
+
 import Link from "next/link";
-import { Metadata } from "next";
 import {
   PhCode,
   PhTerminal,
@@ -14,17 +15,6 @@ import {
   PhChevronRight,
   PhSparkle,
 } from '@/lib/phosphor-icons';
-
-export const metadata: Metadata = {
-  title: "Arcanea Code | Developer Platform & VS Code Extension",
-  description:
-    "Build with the Arcanea developer platform. TypeScript SDK, MCP tools, Guardian sidebar for VS Code, and 30+ specialized intelligence tools.",
-  openGraph: {
-    title: "Arcanea Code | Developer Platform",
-    description:
-      "Complete developer platform with TypeScript SDK, MCP server, and the Arcanea Guardian VS Code extension.",
-  },
-};
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
@@ -135,7 +125,7 @@ export default function ArcaneaCodePage() {
         />
       </div>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12">
         {/* ── Hero ─────────────────────────────────────────────────────────── */}
         <section className="mb-16">
           <div className="relative liquid-glass rounded-3xl overflow-hidden px-8 py-12 sm:px-12 sm:py-16">
@@ -195,7 +185,7 @@ export default function ArcaneaCodePage() {
                 </Link>
                 <Link
                   href="/docs"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-atlantean-teal-aqua/30 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-atlantean-teal-aqua/30 transition-all duration-200"
                 >
                   Read the Docs
                   <PhChevronRight weight="thin" size={18} />
@@ -207,7 +197,7 @@ export default function ArcaneaCodePage() {
 
         {/* ── Quick Start ──────────────────────────────────────────────────── */}
         <section className="mb-16">
-          <div className="glass rounded-2xl p-8">
+          <div className="liquid-glass rounded-2xl p-8">
             <h2 className="font-display text-2xl font-semibold text-text-primary mb-2 text-center">
               Quick Start
             </h2>
@@ -263,7 +253,7 @@ export default function ArcaneaCodePage() {
             {FEATURES.map((feature) => (
               <div
                 key={feature.title}
-                className="group relative glass rounded-2xl p-6 overflow-hidden hover-lift transition-all"
+                className="group relative card-3d liquid-glass rounded-2xl p-6 overflow-hidden hover-lift transition-all"
               >
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl pointer-events-none"
@@ -356,7 +346,7 @@ export default function ArcaneaCodePage() {
                   </Link>
                   <Link
                     href="/arcanea-vault"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl glass border border-white/10 text-text-primary font-semibold text-sm hover:border-atlantean-teal-aqua/30 transition-all"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl liquid-glass border border-white/[0.06] text-text-primary font-semibold text-sm hover:border-atlantean-teal-aqua/30 transition-all"
                   >
                     Download .vsix
                     <PhChevronRight weight="thin" size={16} />
@@ -385,7 +375,7 @@ export default function ArcaneaCodePage() {
         {/* ── Quality Stats ────────────────────────────────────────────────── */}
         <section className="mb-16">
           <div className="grid md:grid-cols-3 gap-6">
-            <div className="glass rounded-2xl p-6 text-center">
+            <div className="card-3d liquid-glass rounded-2xl p-6 text-center">
               <div
                 className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
                 style={{
@@ -404,7 +394,7 @@ export default function ArcaneaCodePage() {
               </p>
             </div>
 
-            <div className="glass rounded-2xl p-6 text-center">
+            <div className="card-3d liquid-glass rounded-2xl p-6 text-center">
               <div
                 className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
                 style={{
@@ -423,7 +413,7 @@ export default function ArcaneaCodePage() {
               </p>
             </div>
 
-            <div className="glass rounded-2xl p-6 text-center">
+            <div className="card-3d liquid-glass rounded-2xl p-6 text-center">
               <div
                 className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
                 style={{
@@ -481,7 +471,7 @@ export default function ArcaneaCodePage() {
                 </Link>
                 <Link
                   href="/workflows"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-atlantean-teal-aqua/30 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-atlantean-teal-aqua/30 transition-all duration-200"
                 >
                   See Workflow Templates
                   <PhChevronRight weight="thin" size={18} />

@@ -70,32 +70,35 @@ export default function GalleryPage() {
   const [sortBy, setSortBy] = useState<SortOption>("popular");
   const [showFilters, setShowFilters] = useState(false);
   const [liveCreations, setLiveCreations] = useState<Creation[] | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState(false);
 
-  // Try fetching real creations from Supabase; fall back to showcase data
   useEffect(() => {
-    let cancelled = false;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5000);
 
     async function fetchCreations() {
       try {
         const res = await fetch(
-          "/api/creations?visibility=public&status=published&sortBy=popular&limit=50"
+          "/api/creations?visibility=public&status=published&sortBy=popular&limit=50",
+          { signal: controller.signal }
         );
-        if (!res.ok) throw new Error("API unavailable");
+        if (!res.ok) {
+          setFetchError(true);
+          return;
+        }
         const json = await res.json();
-        if (!cancelled && json.success && Array.isArray(json.data) && json.data.length > 0) {
+        if (json.success && Array.isArray(json.data) && json.data.length > 0) {
           setLiveCreations(json.data);
         }
       } catch {
-        // Supabase not configured or no data -- showcase mode
-      } finally {
-        if (!cancelled) setLoading(false);
+        setFetchError(true);
       }
     }
 
     fetchCreations();
     return () => {
-      cancelled = true;
+      clearTimeout(timeout);
+      controller.abort();
     };
   }, []);
 
@@ -167,9 +170,7 @@ export default function GalleryPage() {
 
       {/* Grid */}
       <div className="max-w-7xl mx-auto px-6 py-10">
-        {loading ? (
-          <SkeletonGrid />
-        ) : filtered.length === 0 ? (
+        {filtered.length === 0 ? (
           <EmptyState />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -180,10 +181,10 @@ export default function GalleryPage() {
         )}
 
         {/* Showcase notice */}
-        {isShowcaseMode && !loading && <ShowcaseNotice />}
+        {isShowcaseMode && <ShowcaseNotice />}
 
         {/* Footer CTA */}
-        {!loading && (
+        {(
           <FooterCTA
             shownCount={filtered.length}
             totalCount={allItems.length}
@@ -206,7 +207,7 @@ function HeroSection({
   totalCount: number;
 }) {
   return (
-    <section className="relative overflow-hidden border-b border-white/5">
+    <section className="relative overflow-hidden border-b border-white/[0.04]">
       {/* Background glow orbs */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-violet-500/8 rounded-full blur-[120px]" />
@@ -214,14 +215,14 @@ function HeroSection({
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-amber-400/5 rounded-full blur-[80px]" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-20 pb-16">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-12 pb-16">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-xs font-sans text-white/40 uppercase tracking-widest mb-6">
-          <Link href="/" className="hover:text-white/60 transition-colors">
+        <div className="flex items-center gap-2 text-xs font-sans text-white/[0.25] uppercase tracking-widest mb-6">
+          <Link href="/" className="hover:text-white/[0.40] transition-colors">
             Arcanea
           </Link>
           <span>/</span>
-          <span className="text-white/60">Gallery</span>
+          <span className="text-white/[0.40]">Gallery</span>
         </div>
 
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
@@ -232,7 +233,7 @@ function HeroSection({
                 Creation
               </span>
             </h1>
-            <p className="text-lg text-white/50 max-w-2xl font-sans leading-relaxed">
+            <p className="text-lg text-white/[0.30] max-w-2xl font-sans leading-relaxed">
               {isShowcaseMode
                 ? "Canonical works from across the Ten Gates. Visions channeled through the Five Elements by creators of every rank."
                 : `${totalCount} creations from the Arcanea community, channeled through the Ten Gates and Five Elements.`}
@@ -240,7 +241,7 @@ function HeroSection({
           </div>
 
           {/* Stats strip */}
-          <div className="flex items-center gap-6 text-sm text-white/40 font-sans flex-shrink-0">
+          <div className="flex items-center gap-6 text-sm text-white/[0.25] font-sans flex-shrink-0">
             <div className="flex items-center gap-1.5">
               <PhSparkle size={16} weight="fill" className="text-[#7fffd4]" />
               <span>{totalCount} creations</span>
@@ -284,7 +285,7 @@ function FilterBar({
   onCloseFilters: () => void;
 }) {
   return (
-    <div className="sticky top-0 z-30 bg-cosmic-deep/80 backdrop-blur-2xl border-b border-white/5">
+    <div className="sticky top-16 z-30 liquid-glass border-b border-white/[0.06]">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between py-3 gap-4">
           {/* Type filter tabs */}
@@ -299,7 +300,7 @@ function FilterBar({
                   className={`flex-shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-sans transition-all ${
                     isActive
                       ? "bg-[#7fffd4]/15 text-[#7fffd4] border border-[#7fffd4]/30"
-                      : "text-white/40 hover:text-white/70 hover:bg-white/5 border border-transparent"
+                      : "text-white/[0.25] hover:text-white/[0.50] hover:bg-white/[0.04] border border-transparent"
                   }`}
                 >
                   <Icon size={16} weight={isActive ? "fill" : "regular"} />
@@ -314,7 +315,7 @@ function FilterBar({
           <div className="relative flex-shrink-0">
             <button
               onClick={onToggleFilters}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-sans text-white/40 hover:text-white/70 hover:bg-white/5 border border-white/10 transition-all"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-sans text-white/[0.25] hover:text-white/[0.50] hover:bg-white/[0.04] border border-white/[0.06] transition-all"
             >
               <PhFunnel size={16} />
               <span className="hidden sm:inline">Sort</span>
@@ -323,7 +324,7 @@ function FilterBar({
             {showFilters && (
               <>
                 <div className="fixed inset-0 z-40" onClick={onCloseFilters} />
-                <div className="absolute right-0 top-full mt-2 w-48 rounded-xl bg-[#0d0f1a] border border-white/10 shadow-2xl shadow-black/50 z-50 overflow-hidden">
+                <div className="absolute right-0 top-full mt-2 w-48 rounded-xl liquid-glass-elevated border border-white/[0.08] shadow-[0_16px_48px_rgba(0,0,0,0.4)] z-50 overflow-hidden">
                   {(
                     [
                       { key: "popular", label: "Most Popular", icon: PhHeart },
@@ -340,7 +341,7 @@ function FilterBar({
                       className={`w-full flex items-center gap-2.5 px-4 py-2.5 text-sm font-sans transition-colors ${
                         sortBy === key
                           ? "text-[#7fffd4] bg-[#7fffd4]/10"
-                          : "text-white/50 hover:text-white hover:bg-white/5"
+                          : "text-white/[0.30] hover:text-white hover:bg-white/[0.04]"
                       }`}
                     >
                       <SortIcon
@@ -370,24 +371,24 @@ function CreationCard({ item }: { item: CardItem }) {
   const TypeIcon = TYPE_ICONS[item.type];
 
   return (
-    <div className="group relative rounded-2xl overflow-hidden border border-white/5 hover:border-white/15 bg-white/[0.02] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/20">
+    <div className="group relative rounded-2xl overflow-hidden card-3d liquid-glass border border-white/[0.06] hover:border-white/[0.12] transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/20">
       {/* Gradient thumbnail area */}
       <div
         className={`relative h-44 bg-gradient-to-br ${elementStyle.gradient} flex items-center justify-center overflow-hidden`}
       >
         {/* Decorative pattern overlay */}
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-4 right-4 w-32 h-32 rounded-full border border-white/20" />
-          <div className="absolute bottom-4 left-4 w-20 h-20 rounded-full border border-white/10" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full border border-white/15" />
+          <div className="absolute top-4 right-4 w-32 h-32 rounded-full border border-white/[0.12]" />
+          <div className="absolute bottom-4 left-4 w-20 h-20 rounded-full border border-white/[0.06]" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full border border-white/[0.10]" />
         </div>
 
         {/* Center icon */}
         <div className="relative z-10 flex flex-col items-center gap-2">
-          <div className="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/10 flex items-center justify-center">
-            <TypeIcon size={28} weight="duotone" className="text-white/70" />
+          <div className="w-14 h-14 rounded-2xl bg-white/[0.06] backdrop-blur-sm border border-white/[0.06] flex items-center justify-center">
+            <TypeIcon size={28} weight="duotone" className="text-white/[0.50]" />
           </div>
-          <span className="text-[10px] uppercase tracking-widest text-white/30 font-sans">
+          <span className="text-[10px] uppercase tracking-widest text-white/[0.20] font-sans">
             {TYPE_LABELS[item.type]}
           </span>
         </div>
@@ -410,32 +411,32 @@ function CreationCard({ item }: { item: CardItem }) {
           {item.title}
         </h3>
 
-        <p className="text-xs text-white/35 font-sans line-clamp-2 mb-3 leading-relaxed">
+        <p className="text-xs text-white/[0.22] font-sans line-clamp-2 mb-3 leading-relaxed">
           {item.description}
         </p>
 
         {/* Guardian + Gate badges */}
         <div className="flex items-center gap-2 mb-3">
-          <span className="px-2 py-0.5 rounded-full text-[10px] font-sans bg-white/5 text-white/50 border border-white/5">
+          <span className="px-2 py-0.5 rounded-full text-[10px] font-sans bg-white/[0.04] text-white/[0.30] border border-white/[0.04]">
             {item.guardian}
           </span>
-          <span className="px-2 py-0.5 rounded-full text-[10px] font-sans bg-white/5 text-white/50 border border-white/5">
+          <span className="px-2 py-0.5 rounded-full text-[10px] font-sans bg-white/[0.04] text-white/[0.30] border border-white/[0.04]">
             {item.gate} Gate
           </span>
         </div>
 
         {/* Footer: creator + stats */}
-        <div className="flex items-center justify-between pt-3 border-t border-white/5">
-          <span className="text-xs text-white/30 font-sans truncate max-w-[120px]">
+        <div className="flex items-center justify-between pt-3 border-t border-white/[0.04]">
+          <span className="text-xs text-white/[0.20] font-sans truncate max-w-[120px]">
             {item.creatorName}
           </span>
-          <div className="flex items-center gap-3 text-white/25">
+          <div className="flex items-center gap-3 text-white/[0.15]">
             <span className="flex items-center gap-1 text-xs font-sans">
               <PhHeart size={13} weight="fill" className="text-red-400/60" />
               {formatCount(item.likeCount)}
             </span>
             <span className="flex items-center gap-1 text-xs font-sans">
-              <PhEye size={13} className="text-white/30" />
+              <PhEye size={13} className="text-white/[0.20]" />
               {formatCount(item.viewCount)}
             </span>
           </div>
@@ -449,28 +450,14 @@ function CreationCard({ item }: { item: CardItem }) {
 // Utility sub-components
 // ---------------------------------------------------------------------------
 
-function SkeletonGrid() {
-  return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-      {Array.from({ length: 12 }).map((_, i) => (
-        <div
-          key={i}
-          className="rounded-2xl bg-white/[0.03] border border-white/5 animate-pulse"
-          style={{ height: `${240 + (i % 3) * 40}px` }}
-        />
-      ))}
-    </div>
-  );
-}
-
 function EmptyState() {
   return (
     <div className="text-center py-24">
-      <PhImage size={48} className="mx-auto mb-4 text-white/20" />
-      <p className="text-lg text-white/40 font-sans mb-2">
+      <PhImage size={48} className="mx-auto mb-4 text-white/[0.12]" />
+      <p className="text-lg text-white/[0.25] font-sans mb-2">
         No creations found
       </p>
-      <p className="text-sm text-white/25 font-sans">
+      <p className="text-sm text-white/[0.15] font-sans">
         Try a different filter or check back later.
       </p>
     </div>
@@ -479,16 +466,16 @@ function EmptyState() {
 
 function ShowcaseNotice() {
   return (
-    <div className="mt-12 rounded-2xl border border-white/5 bg-white/[0.02] p-8 text-center">
+    <div className="mt-12 rounded-2xl liquid-glass border border-white/[0.06] p-8 text-center">
       <PhSparkle
         size={32}
         className="mx-auto mb-3 text-[#7fffd4]/60"
         weight="fill"
       />
-      <p className="text-white/50 font-sans text-sm mb-1">
+      <p className="text-white/[0.30] font-sans text-sm mb-1">
         Viewing curated showcase. Sign in to see community creations.
       </p>
-      <p className="text-white/30 font-sans text-xs">
+      <p className="text-white/[0.20] font-sans text-xs">
         Every creator who joins Arcanea adds their visions to this gallery.
       </p>
     </div>
@@ -503,17 +490,17 @@ function FooterCTA({
   totalCount: number;
 }) {
   return (
-    <div className="mt-16 text-center py-12 border-t border-white/5">
-      <p className="text-white/30 font-sans mb-1 text-sm">
+    <div className="mt-16 text-center py-12 border-t border-white/[0.04]">
+      <p className="text-white/[0.20] font-sans mb-1 text-sm">
         Showing {shownCount} of {totalCount} creations
       </p>
-      <p className="text-white/50 font-sans mb-6 max-w-md mx-auto">
+      <p className="text-white/[0.30] font-sans mb-6 max-w-md mx-auto">
         Every vision channels the Elements, resonates through the Gates, and
         becomes part of the living mythology.
       </p>
       <Link
         href="/studio"
-        className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#7fffd4]/10 border border-[#7fffd4]/20 text-[#7fffd4] font-sans text-sm hover:bg-[#7fffd4]/20 transition-all group"
+        className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#7fffd4]/10 border border-[#7fffd4]/20 text-[#7fffd4] font-sans text-sm hover:bg-[#7fffd4]/20 transition-all group btn-glow"
       >
         Create in Studio
         <PhArrowRight

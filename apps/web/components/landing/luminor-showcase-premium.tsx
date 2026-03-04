@@ -167,7 +167,7 @@ function LuminorCard({
             rotateY: mouseXSpring,
             transformStyle: "preserve-3d",
           }}
-          className="relative p-8 rounded-3xl glass border border-white/10 overflow-hidden"
+          className="relative p-8 rounded-3xl liquid-glass border border-white/[0.06] overflow-hidden"
         >
           {/* Gradient background */}
           <div
@@ -220,7 +220,7 @@ function LuminorCard({
               {luminor.traits.map((trait) => (
                 <span
                   key={trait}
-                  className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium"
+                  className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] text-xs font-medium"
                 >
                   {trait}
                 </span>
@@ -293,7 +293,7 @@ export function LuminorShowcasePremium() {
             className="inline-block px-4 py-2 rounded-full glass border border-gold/20 text-gold font-medium text-sm mb-6"
           >
             <PhSparkle className="w-4 h-4 inline mr-2" />
-            Meet the Luminors
+            Meet the Intelligences
           </motion.span>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
@@ -305,9 +305,9 @@ export function LuminorShowcasePremium() {
           </h2>
 
           <p className="text-lg text-text-secondary max-w-2xl mx-auto">
-            Each Luminor has internalized a Guardian&apos;s archetype and the
-            wisdom tradition behind it. They think differently because they are
-            rooted in different elements of creation.
+            Each specialist has internalized a distinct creative philosophy.
+            They think differently because they are rooted in different
+            approaches to creation.
           </p>
         </motion.div>
 
@@ -326,10 +326,10 @@ export function LuminorShowcasePremium() {
           className="text-center"
         >
           <Link
-            href="/luminors"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl glass border border-white/10 hover:border-crystal/30 text-text-primary font-display font-semibold transition-all hover-lift"
+            href="/lore/guardians"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl liquid-glass border border-white/[0.06] hover:border-crystal/30 text-text-primary font-display font-semibold transition-all hover-lift"
           >
-            View All 10 Guardians
+            View All Intelligences
             <PhArrowRight className="w-5 h-5" />
           </Link>
         </motion.div>

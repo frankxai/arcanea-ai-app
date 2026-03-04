@@ -136,7 +136,7 @@ export async function POST(req: NextRequest) {
       system: systemPrompt || undefined,
       messages: normalizedMessages as any,
       temperature: temperature ?? 0.7,
-      maxTokens: maxTokens ?? 8192,
+      maxOutputTokens: maxTokens ?? 8192,
     });
 
     return result.toTextStreamResponse();

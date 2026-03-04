@@ -157,7 +157,7 @@ export function LibraryPreview() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-draconic-crimson/10 border border-draconic-crimson/20 mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full liquid-glass border border-draconic-crimson/20 mb-6">
             <Icons.BookOpen />
             <span className="text-sm font-medium text-draconic-crimson">
               The Library
@@ -166,7 +166,7 @@ export function LibraryPreview() {
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
             17 Collections of Wisdom
           </h2>
-          <p className="text-xl text-text-secondary max-w-3xl mx-auto font-crimson italic">
+          <p className="text-xl text-text-secondary max-w-3xl mx-auto font-body italic">
             &quot;These books are not entertainment. They are equipment for
             living. Use them.&quot;
           </p>
@@ -185,7 +185,7 @@ export function LibraryPreview() {
               >
                 <Link
                   href={collection.href}
-                  className="block h-full p-6 rounded-2xl border border-white/10 bg-cosmic-surface/30 backdrop-blur-sm hover:border-white/20 hover:bg-cosmic-surface/50 transition-all group"
+                  className="block h-full card-3d p-6 rounded-2xl liquid-glass border border-white/[0.06] hover:border-white/[0.12] transition-all duration-300 group"
                 >
                   <div
                     className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${
@@ -230,7 +230,7 @@ export function LibraryPreview() {
             {ALL_COLLECTIONS.map((name, i) => (
               <span
                 key={name}
-                className="px-4 py-2 rounded-full bg-cosmic-surface/30 border border-white/10 text-sm text-text-secondary hover:border-white/20 hover:text-white transition-all cursor-pointer"
+                className="px-4 py-2 rounded-full liquid-glass border border-white/[0.06] text-sm text-text-secondary hover:border-white/[0.12] hover:text-white transition-all duration-300 cursor-pointer"
               >
                 {name}
               </span>
@@ -268,7 +268,7 @@ export function LibraryPreview() {
         >
           <Link
             href="/library"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-draconic-crimson/10 border border-draconic-crimson/30 text-draconic-crimson font-semibold hover:bg-draconic-crimson hover:text-white transition-all"
+            className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold overflow-hidden btn-glow text-draconic-crimson bg-draconic-crimson/10 border border-draconic-crimson/30 hover:bg-draconic-crimson hover:text-white transition-all duration-300"
           >
             Enter the Library
             <Icons.ArrowRight />

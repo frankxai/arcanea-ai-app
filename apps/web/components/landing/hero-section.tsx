@@ -135,7 +135,7 @@ export function HeroSection({ stats }: HeroSectionProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-atlantean-teal-aqua/30 bg-atlantean-teal-aqua/5 backdrop-blur-sm mb-8"
+              className="inline-flex items-center gap-3 px-4 py-2 rounded-full liquid-glass border border-atlantean-teal-aqua/30 mb-8"
             >
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-atlantean-teal-aqua opacity-75" />
@@ -164,7 +164,7 @@ export function HeroSection({ stats }: HeroSectionProps) {
                   transition={{ duration: 3, repeat: Infinity }}
                 />
               </span>
-              <span className="block text-white/90">becomes reality</span>
+              <span className="block text-white/[0.70]">becomes reality</span>
             </motion.h1>
 
             {/* Subheadline */}
@@ -174,8 +174,8 @@ export function HeroSection({ stats }: HeroSectionProps) {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-xl lg:text-2xl text-text-secondary leading-relaxed mb-10"
             >
-              16 transcended AI intelligences. The Seven Wisdoms framework.
-              Everything you need to manifest your creative vision.
+              16 AI specialists across development, design, writing, and research.
+              A philosophy library. Tools that work the way you think.
             </motion.p>
 
             {/* CTA Buttons */}
@@ -198,7 +198,7 @@ export function HeroSection({ stats }: HeroSectionProps) {
                 {/* Glow effect on hover */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-atlantean-teal-aqua blur-xl" />
                 <span className="relative z-10 text-cosmic-deep flex items-center gap-2">
-                  Begin Your Journey
+                  Start Creating
                   <motion.svg
                     className="w-5 h-5"
                     fill="none"
@@ -213,11 +213,11 @@ export function HeroSection({ stats }: HeroSectionProps) {
               </Link>
 
               <Link
-                href="/luminors"
-                className="group px-8 py-4 rounded-2xl border border-white/20 text-white font-semibold text-lg backdrop-blur-sm hover:bg-white/5 hover:border-atlantean-teal-aqua/50 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 focus:ring-offset-cosmic-deep"
+                href="/lore/guardians"
+                className="group px-8 py-4 rounded-2xl border border-white/[0.12] text-white font-semibold text-lg backdrop-blur-sm hover:bg-white/[0.04] hover:border-atlantean-teal-aqua/50 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/[0.30] focus:ring-offset-2 focus:ring-offset-cosmic-deep"
               >
                 <span className="flex items-center gap-2">
-                  Meet the Luminors
+                  Meet the Intelligences
                   <span className="text-atlantean-teal-aqua opacity-0 group-hover:opacity-100 transition-opacity">✨</span>
                 </span>
               </Link>
@@ -228,7 +228,7 @@ export function HeroSection({ stats }: HeroSectionProps) {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="flex flex-wrap gap-8 mt-16 pt-8 border-t border-white/10"
+              className="flex flex-wrap gap-8 mt-16 pt-8 border-t border-white/[0.06]"
             >
               <StatItem value={stats.luminors} label="Luminor Intelligences" color="atlantean-teal-aqua" />
               <StatItem value={stats.wisdoms} label="Wisdoms Framework" color="gold-bright" />
@@ -314,7 +314,7 @@ function LuminorOrbit() {
       {[0, 1, 2].map((ring) => (
         <motion.div
           key={ring}
-          className="absolute rounded-full border border-white/5"
+          className="absolute rounded-full border border-white/[0.04]"
           style={{
             inset: `${ring * 60}px`,
           }}
@@ -342,7 +342,7 @@ function LuminorOrbit() {
 
       {/* Center hub */}
       <motion.div
-        className="absolute inset-[120px] rounded-full bg-gradient-to-br from-cosmic-surface to-cosmic-raised border border-white/10 flex items-center justify-center overflow-hidden"
+        className="absolute inset-[120px] rounded-full bg-gradient-to-br from-cosmic-surface to-cosmic-raised border border-white/[0.06] flex items-center justify-center overflow-hidden"
         animate={{
           boxShadow: [
             '0 0 60px rgba(127,255,212,0.2)',
@@ -412,7 +412,7 @@ function LuminorOrbit() {
             >
               {/* Shine effect */}
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.12] to-transparent"
                 animate={{ x: ['-100%', '200%'] }}
                 transition={{ duration: 3, repeat: Infinity, delay: i * 0.7 }}
               />
@@ -421,7 +421,7 @@ function LuminorOrbit() {
 
             {/* Label on hover */}
             <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
-              <div className="px-2 py-1 rounded bg-cosmic-surface text-xs whitespace-nowrap">
+              <div className="px-2 py-1 rounded bg-white/[0.06] text-xs whitespace-nowrap">
                 {team.name}
               </div>
             </div>

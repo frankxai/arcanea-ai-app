@@ -43,7 +43,7 @@ function StepCard({
   return (
     <div className="relative">
       {/* Step card */}
-      <div className="glass-subtle rounded-lg border border-white/5 p-3 space-y-3">
+      <div className="liquid-glass rounded-lg border border-white/[0.04] p-3 space-y-3">
         {/* Header: step number + remove */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -108,7 +108,7 @@ function StepCard({
               placeholder="Write the prompt for this step..."
               rows={3}
               className={cn(
-                'w-full bg-white/[0.02] border border-white/5 rounded-md',
+                'w-full bg-white/[0.02] border border-white/[0.04] rounded-md',
                 'px-2.5 py-2 text-xs font-mono text-text-primary',
                 'placeholder:text-text-muted/30 focus:outline-none',
                 'focus:border-brand-accent/30',
@@ -123,7 +123,7 @@ function StepCard({
                 onChange({ ...step, promptId: e.target.value || undefined })
               }
               className={cn(
-                'w-full bg-white/[0.02] border border-white/5 rounded-md',
+                'w-full bg-white/[0.02] border border-white/[0.04] rounded-md',
                 'px-2.5 py-2 text-xs font-sans text-text-primary',
                 'focus:outline-none focus:border-brand-accent/30',
                 'transition-colors',
@@ -161,7 +161,7 @@ function StepCard({
                 }
                 placeholder="variableName"
                 className={cn(
-                  'w-full bg-white/[0.02] border border-white/5 rounded-md',
+                  'w-full bg-white/[0.02] border border-white/[0.04] rounded-md',
                   'pl-5 pr-2 py-1.5 text-xs font-mono text-text-primary',
                   'placeholder:text-text-muted/30 focus:outline-none',
                   'focus:border-brand-accent/30',
@@ -184,7 +184,7 @@ function StepCard({
                 })
               }
               className={cn(
-                'w-full bg-white/[0.02] border border-white/5 rounded-md',
+                'w-full bg-white/[0.02] border border-white/[0.04] rounded-md',
                 'px-2 py-1.5 text-xs font-sans text-text-primary',
                 'focus:outline-none focus:border-brand-accent/30',
                 'transition-colors',

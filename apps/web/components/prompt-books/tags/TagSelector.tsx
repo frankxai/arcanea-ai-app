@@ -57,9 +57,9 @@ export function TagSelector({
   if (!open) return null
 
   return (
-    <div className="glass-strong rounded-xl border border-white/10 w-72 overflow-hidden shadow-xl">
+    <div className="glass-strong rounded-xl border border-white/[0.06] w-72 overflow-hidden shadow-xl">
       {/* Header */}
-      <div className="flex items-center justify-between px-3 py-2 border-b border-white/5">
+      <div className="flex items-center justify-between px-3 py-2 border-b border-white/[0.04]">
         <span className="text-xs font-sans font-medium text-text-secondary uppercase tracking-wider">Tags</span>
         <button
           onClick={onClose}
@@ -72,7 +72,7 @@ export function TagSelector({
 
       {/* Search */}
       <div className="px-3 py-2 border-b border-white/[0.04]">
-        <div className="flex items-center gap-2 glass-subtle rounded-lg px-2 py-1.5">
+        <div className="flex items-center gap-2 liquid-glass rounded-lg px-2 py-1.5">
           <PhMagnifyingGlass className="w-3.5 h-3.5 text-text-muted shrink-0" />
           <input
             type="text"
@@ -116,7 +116,7 @@ export function TagSelector({
               disabled={creating}
               className={cn(
                 'inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-sans',
-                'glass text-text-primary hover:scale-[1.02] transition-transform',
+                'liquid-glass text-text-primary hover:scale-[1.02] transition-transform',
               )}
             >
               <PhPlus className="w-3 h-3" />
@@ -162,7 +162,7 @@ function CategoryButton({
       className={cn(
         'px-2 py-1 rounded-md text-[10px] font-sans font-medium whitespace-nowrap transition-all',
         active
-          ? 'glass text-text-primary'
+          ? 'liquid-glass text-text-primary'
           : 'text-text-muted hover:text-text-secondary hover:bg-white/[0.03]',
       )}
       style={active && color ? { borderColor: `${color}44`, boxShadow: `0 0 6px ${color}22` } : undefined}

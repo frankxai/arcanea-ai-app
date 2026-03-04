@@ -1,10 +1,11 @@
+'use client';
+
 /**
  * Vision Board - Personal Creative Goals
  *
  * A personal space for creators to visualize and track their creative goals.
  */
 
-import { Metadata } from "next";
 import Link from "next/link";
 import {
   PhSparkle,
@@ -31,12 +32,6 @@ import {
   PhCode,
   PhVideo,
 } from '@/lib/phosphor-icons';
-
-export const metadata: Metadata = {
-  title: "Vision Board | Arcanea",
-  description:
-    "Visualize your creative journey. Set goals, track progress, and manifest your aspirations.",
-};
 
 const QUICK_GOALS = [
   {
@@ -215,8 +210,8 @@ export default function VisionBoardPage() {
                   Add Goal
                 </button>
                 <Link
-                  href="/vision-board/edit"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
+                  href="/vision-board"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
                 >
                   <PhPalette className="w-4 h-4" />
                   Customize Board
@@ -227,8 +222,8 @@ export default function VisionBoardPage() {
         </section>
 
         {/* Monthly Focus */}
-        <section className="py-8 border-t border-white/5">
-          <div className="relative glass rounded-2xl p-6 overflow-hidden">
+        <section className="py-8 border-t border-white/[0.04]">
+          <div className="relative liquid-glass rounded-2xl p-6 overflow-hidden">
             <div className="absolute top-0 right-0 w-48 h-48 bg-brand-gold/5 rounded-full blur-3xl" />
 
             <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -257,7 +252,7 @@ export default function VisionBoardPage() {
                   <div className="text-xs text-text-muted">Complete</div>
                 </div>
                 <div className="w-24">
-                  <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                  <div className="h-2 bg-white/[0.06] rounded-full overflow-hidden">
                     <div
                       className="h-full bg-brand-gold rounded-full"
                       style={{ width: `${MONTHLY_FOCUS.progress}%` }}
@@ -280,10 +275,10 @@ export default function VisionBoardPage() {
         </section>
 
         {/* Quick Goals & Milestones */}
-        <section className="py-8 border-t border-white/5">
+        <section className="py-8 border-t border-white/[0.04]">
           <div className="grid md:grid-cols-2 gap-6">
             {/* Quick Goals */}
-            <div className="glass rounded-2xl p-6">
+            <div className="liquid-glass rounded-2xl p-6">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="font-display text-lg font-semibold">
                   Active Goals
@@ -305,7 +300,7 @@ export default function VisionBoardPage() {
                         {goal.progress}%
                       </span>
                     </div>
-                    <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                    <div className="h-2 bg-white/[0.06] rounded-full overflow-hidden">
                       <div
                         className="h-full rounded-full transition-all duration-1000 group-hover:opacity-80"
                         style={{
@@ -318,14 +313,14 @@ export default function VisionBoardPage() {
                 ))}
               </div>
 
-              <button className="mt-4 w-full py-2 rounded-lg border border-dashed border-white/20 text-text-muted text-sm hover:border-crystal/30 hover:text-crystal transition-all flex items-center justify-center gap-2">
+              <button className="mt-4 w-full py-2 rounded-lg border border-dashed border-white/[0.12] text-text-muted text-sm hover:border-crystal/30 hover:text-crystal transition-all flex items-center justify-center gap-2">
                 <PhPlus className="w-4 h-4" />
                 Add Goal
               </button>
             </div>
 
             {/* Upcoming Milestones */}
-            <div className="glass rounded-2xl p-6">
+            <div className="liquid-glass rounded-2xl p-6">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="font-display text-lg font-semibold">
                   Upcoming Milestones
@@ -337,7 +332,7 @@ export default function VisionBoardPage() {
                 {UPCOMING_MILESTONES.map((milestone) => (
                   <div
                     key={milestone.id}
-                    className="flex items-center gap-4 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors"
+                    className="flex items-center gap-4 p-3 rounded-xl bg-white/[0.04] hover:bg-white/[0.06] transition-colors"
                   >
                     <div
                       className="w-2 h-2 rounded-full"
@@ -359,7 +354,7 @@ export default function VisionBoardPage() {
         </section>
 
         {/* Creative Areas */}
-        <section className="py-8 border-t border-white/5">
+        <section className="py-8 border-t border-white/[0.04]">
           <div className="mb-6">
             <h2 className="font-display text-lg font-semibold mb-1">
               Creative Areas
@@ -379,7 +374,7 @@ export default function VisionBoardPage() {
               return (
                 <div
                   key={area.id}
-                  className="group glass rounded-2xl p-5 hover-lift transition-all cursor-pointer"
+                  className="group card-3d liquid-glass rounded-2xl p-5 hover-lift transition-all cursor-pointer"
                 >
                   <div className="flex items-center gap-3 mb-4">
                     <div
@@ -405,7 +400,7 @@ export default function VisionBoardPage() {
                         {area.completed}/{area.goals} &mdash; {progressPercent}%
                       </span>
                     </div>
-                    <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+                    <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
                       <div
                         className="h-full rounded-full"
                         style={{
@@ -422,7 +417,7 @@ export default function VisionBoardPage() {
         </section>
 
         {/* Achievements */}
-        <section className="py-8 border-t border-white/5 pb-16">
+        <section className="py-8 border-t border-white/[0.04] pb-16">
           <div className="mb-6">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand-gold/20 bg-brand-gold/8 mb-4">
               <PhTrophy className="w-3 h-3 text-brand-gold" />
@@ -439,7 +434,7 @@ export default function VisionBoardPage() {
               return (
                 <div
                   key={achievement.id}
-                  className={`relative glass rounded-2xl p-5 text-center transition-all ${
+                  className={`relative card-3d liquid-glass rounded-2xl p-5 text-center transition-all ${
                     achievement.unlocked
                       ? "hover-lift cursor-pointer"
                       : "opacity-50"
@@ -447,7 +442,7 @@ export default function VisionBoardPage() {
                 >
                   <div
                     className={`w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3 ${
-                      achievement.unlocked ? "bg-brand-gold/15" : "bg-white/5"
+                      achievement.unlocked ? "bg-brand-gold/15" : "bg-white/[0.04]"
                     }`}
                   >
                     <Icon

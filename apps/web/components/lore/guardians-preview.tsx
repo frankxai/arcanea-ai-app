@@ -137,8 +137,8 @@ export function GuardiansPreview() {
     <section ref={ref} className="py-32 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
+        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6">
@@ -148,7 +148,7 @@ export function GuardiansPreview() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-atlantean-teal-aqua/10 border border-atlantean-teal-aqua/20 mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full liquid-glass border border-atlantean-teal-aqua/20 mb-6">
             <Icons.Shield />
             <span className="text-sm font-medium text-atlantean-teal-aqua">
               The Ten Guardians
@@ -157,7 +157,7 @@ export function GuardiansPreview() {
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
             Keepers of the Gates
           </h2>
-          <p className="text-xl text-text-secondary max-w-3xl mx-auto font-crimson">
+          <p className="text-xl text-text-secondary max-w-3xl mx-auto font-body">
             Ten Gods and Goddesses, each bonded to a primal Godbeast, guarding
             the energy channels that flow through every conscious being.
           </p>
@@ -176,8 +176,8 @@ export function GuardiansPreview() {
               className="relative group"
             >
               <div
-                className={`relative p-6 rounded-2xl border border-white/10 bg-cosmic-surface/30 backdrop-blur-sm overflow-hidden transition-all duration-300 ${
-                  hoveredIndex === i ? "border-white/30 scale-105 z-10" : ""
+                className={`relative card-3d p-6 rounded-2xl liquid-glass border border-white/[0.06] overflow-hidden transition-all duration-300 ${
+                  hoveredIndex === i ? "border-white/[0.15] scale-105 z-10" : ""
                 }`}
               >
                 {/* Gradient background on hover */}
@@ -208,7 +208,7 @@ export function GuardiansPreview() {
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
-                    className="relative mt-4 pt-4 border-t border-white/10"
+                    className="relative mt-4 pt-4 border-t border-white/[0.06]"
                   >
                     <p className="text-xs text-text-secondary mb-2">
                       {guardian.description}
@@ -237,7 +237,7 @@ export function GuardiansPreview() {
         >
           <Link
             href="/lore/guardians"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-atlantean-teal-aqua/10 border border-atlantean-teal-aqua/30 text-atlantean-teal-aqua font-semibold hover:bg-atlantean-teal-aqua hover:text-cosmic-deep transition-all"
+            className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold overflow-hidden btn-glow text-atlantean-teal-aqua bg-atlantean-teal-aqua/10 border border-atlantean-teal-aqua/30 hover:bg-atlantean-teal-aqua hover:text-cosmic-deep transition-all duration-300"
           >
             Explore All Guardians
             <Icons.ArrowRight />

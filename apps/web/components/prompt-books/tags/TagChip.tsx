@@ -34,8 +34,8 @@ export function TagChip({
         'border',
         size === 'sm' ? 'px-2 py-0.5 text-[10px]' : 'px-2.5 py-1 text-xs',
         selected
-          ? 'bg-white/10 border-white/20 text-text-primary'
-          : 'bg-transparent border-white/[0.06] text-text-muted hover:text-text-secondary hover:border-white/10',
+          ? 'bg-white/[0.06] border-white/[0.12] text-text-primary'
+          : 'bg-transparent border-white/[0.06] text-text-muted hover:text-text-secondary hover:border-white/[0.08]',
         onClick && 'cursor-pointer',
         !onClick && 'cursor-default',
       )}

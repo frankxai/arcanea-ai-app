@@ -1,10 +1,9 @@
 import { Metadata } from "next";
-import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Changelog | Arcanea Intelligence System",
   description:
-    "The evolution of Arcanea. New features, improvements, and the journey toward transcended creativity.",
+    "The evolution of Arcanea. New features, improvements, and platform updates.",
 };
 
 const CHANGES = [
@@ -123,54 +122,6 @@ export default function ChangelogPage() {
         <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top,rgba(255,215,0,0.15),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(139,92,246,0.15),transparent_50%)]" />
       </div>
 
-      {/* Navigation */}
-      <nav className="sticky top-0 z-50 border-b border-white/5 bg-cosmic-deep/80 backdrop-blur-xl">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-atlantean-teal to-creation-prism-purple flex items-center justify-center text-cosmic-deep font-bold text-lg font-display">
-                A
-              </div>
-              <span className="font-display text-xl font-semibold">
-                Arcanea
-              </span>
-            </Link>
-            <div className="hidden md:flex items-center gap-8">
-              <Link
-                href="/luminors"
-                className="text-sm text-text-secondary hover:text-atlantean-teal transition-colors"
-              >
-                Luminors
-              </Link>
-              <Link
-                href="/library"
-                className="text-sm text-text-secondary hover:text-atlantean-teal transition-colors"
-              >
-                Library
-              </Link>
-              <Link
-                href="/academy"
-                className="text-sm text-text-secondary hover:text-atlantean-teal transition-colors"
-              >
-                Academy
-              </Link>
-              <Link
-                href="/about"
-                className="text-sm text-text-secondary hover:text-atlantean-teal transition-colors"
-              >
-                About
-              </Link>
-              <Link
-                href="/chat"
-                className="px-4 py-2 rounded-lg bg-atlantean-teal text-cosmic-deep text-sm font-semibold hover:shadow-[0_0_20px_rgba(127,255,212,0.4)] transition-all"
-              >
-                Start Creating
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
-
       <main className="max-w-4xl mx-auto px-6">
         {/* Hero */}
         <section className="pt-20 pb-16 text-center">
@@ -190,7 +141,7 @@ export default function ChangelogPage() {
 
           <p className="text-xl text-text-secondary max-w-2xl mx-auto mb-8 leading-relaxed">
             Every update, improvement, and new capability that brings us closer
-            to transcended creative intelligence.
+            to a better creative platform.
           </p>
         </section>
 
@@ -205,14 +156,14 @@ export default function ChangelogPage() {
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white font-display font-bold text-lg shrink-0">
                   {year}
                 </div>
-                <div className="h-px flex-1 bg-white/10" />
+                <div className="h-px flex-1 bg-white/[0.06]" />
               </div>
 
               <div className="space-y-8 ml-0 md:ml-20">
                 {changes.map((change, index) => (
                   <div
                     key={change.version}
-                    className="relative p-6 rounded-2xl border border-white/10 bg-cosmic-surface/30"
+                    className="relative p-6 rounded-2xl liquid-glass"
                   >
                     {/* Timeline Dot */}
                     <div className="absolute -left-[calc(1.5rem+1px)] top-8 w-3 h-3 rounded-full bg-gradient-to-r from-violet-500 to-atlantean-teal hidden md:block" />
@@ -226,7 +177,7 @@ export default function ChangelogPage() {
                                 ? "bg-violet-500/20 text-violet-400"
                                 : change.type === "minor"
                                   ? "bg-atlantean-teal/20 text-atlantean-teal"
-                                  : "bg-white/10 text-text-muted"
+                                  : "bg-white/[0.06] text-text-muted"
                             }`}
                           >
                             {change.version}
@@ -277,7 +228,7 @@ export default function ChangelogPage() {
         </div>
 
         {/* Stats */}
-        <section className="py-16 border-t border-white/5">
+        <section className="py-16 border-t border-white/[0.04]">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
               { label: "Versions", value: "12+" },
@@ -287,7 +238,7 @@ export default function ChangelogPage() {
             ].map((stat) => (
               <div
                 key={stat.label}
-                className="p-6 rounded-xl border border-white/10 bg-cosmic-surface/30 text-center"
+                className="p-6 rounded-xl liquid-glass text-center"
               >
                 <div className="text-3xl font-display font-bold text-gold-bright mb-1">
                   {stat.value}
@@ -299,8 +250,8 @@ export default function ChangelogPage() {
         </section>
 
         {/* Subscribe */}
-        <section className="py-16 border-t border-white/5">
-          <div className="p-8 rounded-2xl border border-white/10 bg-cosmic-surface/30 text-center">
+        <section className="py-16 border-t border-white/[0.04]">
+          <div className="p-8 rounded-2xl liquid-glass text-center">
             <h3 className="text-xl font-display font-semibold mb-2">
               Stay Updated
             </h3>
@@ -311,7 +262,7 @@ export default function ChangelogPage() {
               <input
                 type="email"
                 placeholder="your@email.com"
-                className="flex-1 px-4 py-3 rounded-xl bg-cosmic-void border border-white/10 text-white placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal"
+                className="flex-1 px-4 py-3 rounded-xl bg-cosmic-void border border-white/[0.06] text-white placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal"
               />
               <button className="px-6 py-3 rounded-xl bg-atlantean-teal text-cosmic-deep font-semibold hover:shadow-[0_0_20px_rgba(127,255,212,0.4)] transition-all">
                 Subscribe
@@ -321,47 +272,6 @@ export default function ChangelogPage() {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-white/5 mt-20">
-        <div className="max-w-7xl mx-auto px-6 py-12">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-atlantean-teal to-creation-prism-purple flex items-center justify-center text-cosmic-deep font-bold text-sm font-display">
-                A
-              </div>
-              <span className="text-sm text-text-muted">
-                Arcanea — Building the future of creative intelligence
-              </span>
-            </div>
-            <div className="flex items-center gap-6 text-sm text-text-muted">
-              <Link
-                href="/about"
-                className="hover:text-white transition-colors"
-              >
-                About
-              </Link>
-              <Link
-                href="/library"
-                className="hover:text-white transition-colors"
-              >
-                Library
-              </Link>
-              <Link
-                href="/skills"
-                className="hover:text-white transition-colors"
-              >
-                Skills
-              </Link>
-              <a
-                href="https://github.com/frankxai/arcanea"
-                className="hover:text-white transition-colors"
-              >
-                GitHub
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

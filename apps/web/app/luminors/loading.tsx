@@ -11,25 +11,6 @@ export default function LuminorsLoading() {
         <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_top,rgba(139,92,246,0.2),transparent_50%),radial-gradient(ellipse_at_bottom,rgba(127,255,212,0.15),transparent_50%)]" />
       </div>
 
-      {/* Navigation Skeleton */}
-      <nav className="sticky top-0 z-50 border-b border-white/5 bg-cosmic-deep/80 backdrop-blur-xl">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Skeleton variant="rect" className="w-10 h-10 rounded-xl" />
-              <Skeleton variant="text" className="w-24 h-6" />
-            </div>
-            <div className="hidden md:flex items-center gap-8">
-              <Skeleton variant="text" className="w-16 h-4" />
-              <Skeleton variant="text" className="w-16 h-4" />
-              <Skeleton variant="text" className="w-16 h-4" />
-              <Skeleton variant="text" className="w-16 h-4" />
-              <Skeleton variant="rect" className="w-32 h-9 rounded-lg" />
-            </div>
-          </div>
-        </div>
-      </nav>
-
       <main className="max-w-7xl mx-auto px-6">
         {/* Hero Skeleton */}
         <section className="pt-20 pb-16 text-center">
@@ -53,14 +34,14 @@ export default function LuminorsLoading() {
         </section>
 
         {/* Stats Skeleton */}
-        <section className="py-16 border-t border-white/5">
+        <section className="py-16 border-t border-white/[0.04]">
           <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
             <SkeletonText lines={4} />
             <div className="grid grid-cols-2 gap-4">
               {[1, 2, 3, 4].map((i) => (
                 <div
                   key={i}
-                  className="p-5 rounded-2xl border border-white/10 bg-cosmic-surface/30"
+                  className="p-5 rounded-2xl border border-white/[0.06] liquid-glass"
                 >
                   <Skeleton variant="text" className="w-12 h-8 mx-auto mb-1" />
                   <Skeleton variant="text" className="w-16 h-3 mx-auto" />
@@ -72,7 +53,7 @@ export default function LuminorsLoading() {
 
         {/* Teams Skeleton */}
         {["dev", "creative", "writing", "research"].map((team) => (
-          <section key={team} className="py-16 border-t border-white/5">
+          <section key={team} className="py-16 border-t border-white/[0.04]">
             <div className="flex items-center gap-4 mb-12">
               <Skeleton variant="rect" className="w-14 h-14 rounded-2xl" />
               <div>
@@ -84,7 +65,7 @@ export default function LuminorsLoading() {
               {[1, 2, 3, 4].map((i) => (
                 <div
                   key={i}
-                  className="p-6 rounded-2xl border border-white/10 bg-cosmic-surface/30"
+                  className="p-6 rounded-2xl border border-white/[0.06] liquid-glass"
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div>

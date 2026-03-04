@@ -42,14 +42,14 @@ export function PromptBooksSidebar({ onCreateCollection }: PromptBooksSidebarPro
   return (
     <aside
       className={cn(
-        'glass-strong flex flex-col border-r border-white/5 transition-all duration-300 h-full',
+        'flex flex-col border-r border-white/[0.06] bg-white/[0.02] transition-all duration-300 h-full',
         sidebarCollapsed ? 'w-16' : 'w-72',
       )}
     >
       {/* Header */}
-      <div className="p-4 border-b border-white/5 flex items-center gap-3">
-        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-accent/20 to-brand-primary/20 flex items-center justify-center">
-          <PhBookOpen className="w-4 h-4 text-brand-accent" />
+      <div className="p-4 border-b border-white/[0.06] flex items-center gap-3">
+        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-atlantean-teal-aqua/15 to-atlantean-teal-aqua/5 flex items-center justify-center">
+          <PhBookOpen className="w-4 h-4 text-atlantean-teal-aqua" weight="duotone" />
         </div>
         {!sidebarCollapsed && (
           <h2 className="text-sm font-display font-bold text-text-primary tracking-wide">
@@ -63,9 +63,9 @@ export function PromptBooksSidebar({ onCreateCollection }: PromptBooksSidebarPro
         <div className="p-3">
           <Button
             onClick={onCreateCollection}
-            className="w-full glass-subtle justify-start gap-2 hover:scale-[1.02] transition-transform"
+            className="w-full liquid-glass justify-start gap-2 hover:scale-[1.02] transition-transform"
           >
-            <PhPlus className="w-4 h-4 text-brand-accent" />
+            <PhPlus className="w-4 h-4 text-atlantean-teal-aqua" />
             <span className="font-sans font-medium text-sm">New Collection</span>
           </Button>
         </div>
@@ -89,7 +89,7 @@ export function PromptBooksSidebar({ onCreateCollection }: PromptBooksSidebarPro
                 className={cn(
                   'w-10 h-10 rounded-lg flex items-center justify-center transition-all',
                   activeCollectionId === c.id
-                    ? 'glass text-brand-accent'
+                    ? 'liquid-glass text-brand-accent'
                     : 'text-text-muted hover:text-text-secondary hover:bg-cosmic-raised',
                 )}
                 title={c.name}
@@ -106,7 +106,7 @@ export function PromptBooksSidebar({ onCreateCollection }: PromptBooksSidebarPro
               className={cn(
                 'w-full flex items-center gap-2 px-3 py-2 rounded-lg transition-all text-sm',
                 activeCollectionId === null
-                  ? 'glass text-text-primary font-medium'
+                  ? 'liquid-glass text-text-primary font-medium'
                   : 'text-text-secondary hover:text-text-primary hover:bg-cosmic-raised',
               )}
             >
@@ -125,7 +125,7 @@ export function PromptBooksSidebar({ onCreateCollection }: PromptBooksSidebarPro
       </div>
 
       {/* Bottom */}
-      <div className="border-t border-white/5 p-3 flex items-center justify-between">
+      <div className="border-t border-white/[0.06] p-3 flex items-center justify-between">
         <SyncStatusIndicator status={syncStatus} lastSyncAt={lastSyncAt} />
         <Button
           variant="ghost"

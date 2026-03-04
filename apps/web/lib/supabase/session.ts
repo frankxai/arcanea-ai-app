@@ -19,11 +19,9 @@ export async function requireUser(options?: { redirectTo?: string; next?: string
   const user = await getCurrentUser();
 
   if (!user) {
-    const loginUrl = new URL(options?.redirectTo ?? '/auth/login', 'http://localhost');
-    if (options?.next) {
-      loginUrl.searchParams.set('next', options.next);
-    }
-    redirect(`${loginUrl.pathname}${loginUrl.search}`);
+    const path = options?.redirectTo ?? '/auth/login';
+    const search = options?.next ? `?next=${encodeURIComponent(options.next)}` : '';
+    redirect(`${path}${search}`);
   }
 
   return user;

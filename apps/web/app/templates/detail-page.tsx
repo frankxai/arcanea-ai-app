@@ -404,7 +404,7 @@ function Sidebar({
     <aside className="space-y-6">
       {/* Author Card */}
       {author && (
-        <CosmicCard className="p-6">
+        <CosmicCard glass="subtle" className="p-6">
           <h3 className="font-display font-semibold text-white mb-4 flex items-center gap-2">
             <PhUser className="w-4 h-4 text-brand-primary" />
             Author
@@ -428,7 +428,7 @@ function Sidebar({
 
       {/* Stats Card */}
       {metadata && (
-        <CosmicCard className="p-6">
+        <CosmicCard glass="subtle" className="p-6">
           <h3 className="font-display font-semibold text-white mb-4">
             Statistics
           </h3>
@@ -484,7 +484,7 @@ function Sidebar({
 
       {/* Tags Card */}
       {tags && tags.length > 0 && (
-        <CosmicCard className="p-6">
+        <CosmicCard glass="subtle" className="p-6">
           <h3 className="font-display font-semibold text-white mb-4 flex items-center gap-2">
             <PhTag className="w-4 h-4 text-brand-primary" />
             Tags
@@ -515,7 +515,7 @@ function RelatedItems({ related }: { related?: DetailPageProps["related"] }) {
   if (!related || related.length === 0) return null;
 
   return (
-    <section className="mt-16 pt-12 border-t border-white/5">
+    <section className="mt-16 pt-12 border-t border-white/[0.04]">
       <h2 className="text-2xl font-display font-bold text-white mb-8">
         Related Items
       </h2>

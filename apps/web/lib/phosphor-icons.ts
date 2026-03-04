@@ -29,7 +29,7 @@ export {
   GameController, Gear, GearSix, GitBranch, GithubLogo, Globe, GraduationCap,
   GridFour, GridNine, Heart, House, Image, ImageSquare, Info, Keyboard,
   Leaf, Lightbulb, Lightning, Link, List, ListDashes, ListNumbers, Lock,
-  MagicWand, MagnifyingGlass, MagnifyingGlassPlus, MapPin, MapTrifold,
+  MagicWand, MagnifyingGlass, MapPin, MapTrifold,
   Microphone, Minus, Moon, Mountains, MusicNote, MusicNotes, Notebook,
   Package, PaintBrush, Palette, PaperPlane, Paperclip, Pen, Pencil,
   PencilSimple, Planet, Play, Plus, PushPin, Question, Quotes, Radio,
@@ -149,7 +149,6 @@ import {
   Lock,
   MagicWand,
   MagnifyingGlass,
-  MagnifyingGlassPlus,
   MapPin,
   MapTrifold,
   Microphone,
@@ -217,7 +216,6 @@ import {
   UserPlus,
   Users,
   VideoCamera,
-  Wand,
   Warning,
   WarningCircle,
   Waves,
@@ -325,7 +323,7 @@ export const PhGitBranch = GitBranch;
 export const PhGithubLogo = GithubLogo;
 export const PhGlobe = Globe;
 export const PhGraduationCap = GraduationCap;
-export const PhGraphNetwork = Globe;
+export const PhGraphNetwork = Tree;
 export const PhGridFour = GridFour;
 export const PhGridNine = GridNine;
 export const PhHeart = Heart;
@@ -347,7 +345,8 @@ export const PhListNumbers = ListNumbers;
 export const PhLock = Lock;
 export const PhMagicWand = MagicWand;
 export const PhMagnifyingGlass = MagnifyingGlass;
-export const PhMagnifyingGlassPlus = MagnifyingGlassPlus;
+export const PhMagnifyingGlassMinus = MagnifyingGlass;
+export const PhMagnifyingGlassPlus = MagnifyingGlass;
 export const PhMapPin = MapPin;
 export const PhMapTrifold = MapTrifold;
 export const PhMicrophone = Microphone;
@@ -464,6 +463,11 @@ export type { IconProps };
 
 // Type alias — some files import `Icon` as a type from this module
 export type Icon = IconProps;
+
+// Additional aliases for mythological icon system
+export const PhSunHorizon = Sun;
+export const PhFaders = SlidersHorizontal;
+export const PhSealCheck = ShieldStar;
 
 // Missing icon aliases — icons referenced but not in Phosphor
 export const TreeStructure = GitBranch;   // Phosphor doesn't have TreeStructure

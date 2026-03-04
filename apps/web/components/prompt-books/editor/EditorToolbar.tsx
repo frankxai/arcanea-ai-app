@@ -57,7 +57,7 @@ export function EditorToolbar({
         : ''
 
   return (
-    <div className="border-b border-white/5">
+    <div className="border-b border-white/[0.04]">
       {/* Top bar */}
       <div className="flex items-center gap-3 px-4 py-2">
         <Button

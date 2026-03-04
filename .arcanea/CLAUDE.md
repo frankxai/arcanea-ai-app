@@ -17,6 +17,29 @@ This directory is the **tool-agnostic brain** of the Arcanea ecosystem. Any AI c
 | `agents/` | Guardian and department agent profiles |
 | `installer/manifest.yaml` | Multi-tool installation registry |
 | `config.json` | Workspace repository registry |
+| `MASTER_PLAN.md` | **Central orchestrator — single source of truth for all pages, milestones, priorities** |
+| `projects/` | Git-native PM system (.arc milestones, sprints, logs) |
+| `projects/milestones/` | M001-M004 task-level tracking |
+| `projects/sprints/` | Weekly sprint capacity and burndown |
+| `projects/log/` | Progress narrative logs |
+| `prompts/` | Session handoff prompts |
+
+## Central Orchestrator
+
+**MASTER_PLAN.md** is the single source of truth for the platform. Every session MUST:
+1. Read `.arcanea/MASTER_PLAN.md` at session start
+2. Check the Priority Queue before choosing work
+3. Update page status after completing work
+4. Update milestone progress in `projects/milestones/`
+
+The Master Plan contains:
+- Current state of all 111 pages (LIVE/PARTIAL/STUB/PLANNED)
+- 4 active milestones with task-level tracking
+- 20-item priority queue (P0-P3)
+- Agent routing table (which specialist for which domain)
+- Cross-cutting concerns (security, design, repo sync)
+
+**Skill**: `.claude/skills/arcanea-orchestrator.md` — auto-activates on architecture decisions
 
 ## Architecture Principle
 

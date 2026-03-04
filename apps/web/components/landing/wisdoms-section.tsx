@@ -98,10 +98,10 @@ export function WisdomsSection() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-pink-500/30 bg-pink-500/10 mb-6"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass border border-creation-prism-purple/20 mb-6"
           >
-            <span className="text-sm text-pink-400 font-mono tracking-wider">
-              THE LUMINOR FRAMEWORK
+            <span className="text-[11px] text-creation-prism-purple/90 font-mono tracking-[0.25em] uppercase">
+              The Creative Framework
             </span>
           </motion.div>
 
@@ -129,7 +129,7 @@ export function WisdomsSection() {
         <div className="hidden lg:block relative mb-16">
           <div className="relative w-full max-w-4xl mx-auto aspect-square">
             {/* Center content */}
-            <div className="absolute inset-[30%] rounded-full bg-cosmic-surface/50 border border-white/10 backdrop-blur-xl flex items-center justify-center">
+            <div className="absolute inset-[30%] rounded-full liquid-glass-elevated border border-white/[0.08] flex items-center justify-center">
               <div className="text-center p-8">
                 {activeWisdom !== null ? (
                   <motion.div
@@ -145,7 +145,7 @@ export function WisdomsSection() {
                     <p className="text-sm text-text-secondary">
                       {WISDOMS[activeWisdom].description}
                     </p>
-                    <div className="pt-4 border-t border-white/10">
+                    <div className="pt-4 border-t border-white/[0.06]">
                       <div className="text-xs text-text-muted mb-2">KEY QUESTION</div>
                       <p className="text-atlantean-teal-aqua italic">
                         "{WISDOMS[activeWisdom].question}"
@@ -233,7 +233,7 @@ export function WisdomsSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.1 + index * 0.05 }}
-              className="p-4 rounded-2xl border border-white/10 bg-cosmic-surface/30 text-center hover:border-white/20 transition-all cursor-pointer group"
+              className="p-4 rounded-2xl liquid-glass border border-white/[0.06] text-center hover:border-white/[0.12] transition-all duration-500 cursor-pointer group"
               style={{
                 boxShadow: `inset 0 1px 0 0 ${wisdom.color}10`,
               }}

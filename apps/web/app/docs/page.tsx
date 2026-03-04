@@ -211,7 +211,7 @@ const DOC_SECTIONS: DocSection[] = [
     id: "the-library",
     title: "The Library",
     description:
-      "17 collections, 34+ sacred texts of timeless creator wisdom. Not entertainment — equipment for living. Enter seeking, leave transformed.",
+      "17 collections, 34+ original texts on creative philosophy and practice. Not entertainment — equipment for living.",
     icon: Icons.Books,
     accent: "#78a6ff",
     links: [
@@ -352,10 +352,10 @@ export default function DocsPage() {
                   type="text"
                   placeholder="Search documentation..."
                   readOnly
-                  className="w-full pl-12 pr-4 py-4 rounded-xl glass border border-white/10 bg-white/5 text-text-primary placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal-aqua/40 focus:shadow-[0_0_24px_rgba(127,255,212,0.15)] transition-all cursor-default"
+                  className="w-full pl-12 pr-4 py-4 rounded-xl liquid-glass border border-white/[0.06] bg-white/[0.04] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal-aqua/40 focus:shadow-[0_0_24px_rgba(127,255,212,0.15)] transition-all cursor-default"
                 />
                 <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
-                  <kbd className="hidden sm:inline-flex items-center gap-1 px-2 py-1 rounded-md border border-white/10 bg-white/5 text-xs text-text-muted font-mono">
+                  <kbd className="hidden sm:inline-flex items-center gap-1 px-2 py-1 rounded-md border border-white/[0.06] bg-white/[0.04] text-xs text-text-muted font-mono">
                     Coming Soon
                   </kbd>
                 </div>
@@ -376,7 +376,7 @@ export default function DocsPage() {
                 <Link
                   key={link.label}
                   href={link.href}
-                  className="group flex items-center gap-3 p-4 rounded-xl border border-white/10 bg-cosmic-surface/20 hover:border-atlantean-teal-aqua/30 hover:bg-atlantean-teal-aqua/5 transition-all"
+                  className="group flex items-center gap-3 p-4 rounded-xl border border-white/[0.06] bg-cosmic-surface/20 hover:border-atlantean-teal-aqua/30 hover:bg-atlantean-teal-aqua/5 transition-all"
                 >
                   <span className="text-atlantean-teal-aqua opacity-70 group-hover:opacity-100 transition-opacity shrink-0">
                     <LinkIcon />
@@ -410,7 +410,7 @@ export default function DocsPage() {
               return (
                 <div
                   key={section.id}
-                  className="group relative glass rounded-2xl p-7 overflow-hidden transition-all hover:border-white/20 hover:shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
+                  className="group relative card-3d liquid-glass rounded-2xl p-7 overflow-hidden transition-all hover:border-white/[0.12] hover:shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
                 >
                   {/* Hover glow */}
                   <div
@@ -449,7 +449,7 @@ export default function DocsPage() {
                           rel={
                             link.external ? "noopener noreferrer" : undefined
                           }
-                          className="group/link flex items-center justify-between gap-3 px-3 py-2.5 -mx-3 rounded-lg hover:bg-white/5 transition-colors"
+                          className="group/link flex items-center justify-between gap-3 px-3 py-2.5 -mx-3 rounded-lg hover:bg-white/[0.04] transition-colors"
                         >
                           <div className="min-w-0">
                             <span
@@ -481,7 +481,7 @@ export default function DocsPage() {
 
         {/* ── Canon Reference ─────────────────────────────────────────── */}
         <section className="mb-16">
-          <div className="relative glass rounded-2xl p-8 sm:p-10 overflow-hidden">
+          <div className="relative liquid-glass rounded-2xl p-8 sm:p-10 overflow-hidden">
             <div className="absolute inset-0 opacity-[0.06] pointer-events-none bg-[radial-gradient(ellipse_at_30%_0%,#9966ff,transparent_70%)]" />
 
             <div className="relative flex flex-col md:flex-row items-start gap-8">
@@ -512,7 +512,7 @@ export default function DocsPage() {
                   </Link>
                   <Link
                     href="/lore/guardians"
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-white/10 text-text-primary text-sm font-medium hover:border-creation-prism-purple/30 hover:bg-creation-prism-purple/5 transition-colors"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-white/[0.06] text-text-primary text-sm font-medium hover:border-creation-prism-purple/30 hover:bg-creation-prism-purple/5 transition-colors"
                   >
                     Meet the Guardians
                   </Link>
@@ -551,7 +551,7 @@ export default function DocsPage() {
                 </Link>
                 <Link
                   href="/studio"
-                  className="inline-flex items-center gap-2 px-8 py-4 rounded-xl glass border border-white/10 text-text-primary font-semibold hover:border-atlantean-teal-aqua/30 hover:bg-atlantean-teal-aqua/5 transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-8 py-4 rounded-xl card-3d liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-atlantean-teal-aqua/30 hover:bg-atlantean-teal-aqua/5 transition-all duration-200"
                 >
                   Open the Studio
                 </Link>

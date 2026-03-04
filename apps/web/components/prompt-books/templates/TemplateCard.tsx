@@ -20,8 +20,8 @@ export function TemplateCard({ template, onUse, onPreview }: TemplateCardProps) 
   return (
     <div
       className={cn(
-        'glass rounded-xl p-4 border border-white/5',
-        'hover:border-white/10 hover:shadow-lg transition-all duration-200',
+        'liquid-glass rounded-xl p-4 border border-white/[0.04]',
+        'hover:border-white/[0.08] hover:shadow-lg transition-all duration-200',
         'cursor-pointer group',
       )}
       onClick={() => onPreview(template)}
@@ -35,7 +35,7 @@ export function TemplateCard({ template, onUse, onPreview }: TemplateCardProps) 
               style={{ backgroundColor: guardian.color }}
             />
           )}
-          <span className="text-[10px] font-sans font-medium px-1.5 py-0.5 rounded glass-subtle text-text-muted">
+          <span className="text-[10px] font-sans font-medium px-1.5 py-0.5 rounded liquid-glass text-text-muted">
             {typeConfig?.label || template.promptType}
           </span>
         </div>

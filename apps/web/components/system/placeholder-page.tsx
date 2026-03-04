@@ -21,7 +21,7 @@ export function PlaceholderPage({
 }: PlaceholderPageProps) {
   return (
     <section className="mx-auto max-w-3xl py-20">
-      <div className="glass rounded-2xl border border-white/10 p-8 md:p-10">
+      <div className="card-3d liquid-glass rounded-2xl border border-white/[0.06] p-8 md:p-10">
         <p className="mb-2 text-xs font-mono uppercase tracking-[0.35em] text-atlantean-teal-aqua">
           {eyebrow}
         </p>
@@ -40,7 +40,7 @@ export function PlaceholderPage({
           </Link>
           <Link
             href={secondaryHref}
-            className="rounded-xl border border-white/15 px-5 py-2.5 text-sm font-semibold text-text-secondary transition hover:border-white/30 hover:text-text-primary"
+            className="rounded-xl border border-white/[0.10] px-5 py-2.5 text-sm font-semibold text-text-secondary transition hover:border-white/[0.20] hover:text-text-primary"
           >
             {secondaryLabel}
           </Link>

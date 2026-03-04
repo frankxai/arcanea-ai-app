@@ -2,25 +2,25 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Pricing | Arcanea Intelligence System",
+  title: "Pricing | Arcanea",
   description:
-    "Choose your path to transcended creativity. Free tier available, premium unlocks full Luminor potential.",
+    "Simple pricing for creative intelligence. Free tier available. Premium unlocks all 10 intelligences and full Library access.",
 };
 
 const TIERS = [
   {
     name: "Spark",
     price: "Free",
-    description: "Perfect for exploring the Luminor Intelligence System",
+    description: "Perfect for exploring Arcanea's AI specialists",
     features: [
-      "Access to 2 Luminors",
+      "Access to 2 AI specialists",
       "50 messages per month",
       "Library browsing",
       "Basic Academy access",
       "Community Discord",
     ],
     cta: "Start Free",
-    href: "/signup",
+    href: "/auth/signup",
     popular: false,
     color: "crystal",
   },
@@ -28,9 +28,9 @@ const TIERS = [
     name: "Ascendant",
     price: "$29",
     period: "/month",
-    description: "For creators ready to transcend their craft",
+    description: "For creators who are serious about their craft",
     features: [
-      "All 16 AI Specialists",
+      "All 10 Creative Intelligences",
       "Unlimited messages",
       "Full Library access",
       "Academy progression",
@@ -39,7 +39,7 @@ const TIERS = [
       "API access",
     ],
     cta: "Start Ascending",
-    href: "/signup?plan=ascendant",
+    href: "/auth/signup?plan=ascendant",
     popular: true,
     color: "violet",
   },
@@ -51,7 +51,7 @@ const TIERS = [
     features: [
       "Everything in Ascendant",
       "Team collaboration",
-      "Custom Luminor deployment",
+      "Custom AI deployment",
       "Dedicated support",
       "SLA guarantee",
       "Custom integrations",
@@ -65,7 +65,7 @@ const TIERS = [
 ];
 
 const COMPARISON = [
-  { feature: "AI Specialists", spark: "2", ascendant: "16", luminor: "16" },
+  { feature: "AI Specialists", spark: "2", ascendant: "10", luminor: "10" },
   {
     feature: "Messages/month",
     spark: "50",
@@ -115,12 +115,12 @@ const FAQs = [
   {
     question: "What happens to my conversations if I downgrade?",
     answer:
-      "Your conversations are always saved. If you downgrade to Spark, you'll still be able to view your history, though you may need to upgrade to continue chatting with Luminors beyond your free limit.",
+      "Your conversations are always saved. If you downgrade to Spark, you'll still be able to view your history, though you may need to upgrade to continue chatting beyond your free limit.",
   },
   {
     question: "Is there a free trial for Ascendant?",
     answer:
-      "Yes! New users get a 7-day Ascendant trial with full access to all 16 AI specialists. No credit card required to start.",
+      "Yes! New users get a 7-day Ascendant trial with full access to all 10 creative intelligences. No credit card required to start.",
   },
   {
     question: "Do you offer discounts for students or educators?",
@@ -135,64 +135,32 @@ const FAQs = [
 ];
 
 export default function PricingPage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Arcanea Pricing',
+    url: 'https://arcanea.ai/pricing',
+    mainEntity: TIERS.map((tier) => ({
+      '@type': 'Product',
+      name: `Arcanea ${tier.name}`,
+      description: tier.description,
+      offers: {
+        '@type': 'Offer',
+        price: tier.price === 'Free' ? '0' : tier.price.replace('$', ''),
+        priceCurrency: 'USD',
+        availability: 'https://schema.org/InStock',
+      },
+    })),
+  };
+
   return (
     <div className="relative min-h-screen">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {/* Background */}
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-deep" />
         <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top,rgba(139,92,246,0.25),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(127,255,212,0.15),transparent_50%)]" />
       </div>
-
-      {/* Navigation */}
-      <nav className="sticky top-0 z-50 border-b border-white/5 bg-cosmic-deep/80 backdrop-blur-xl">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-atlantean-teal to-creation-prism-purple flex items-center justify-center text-cosmic-deep font-bold text-lg font-display">
-                A
-              </div>
-              <span className="font-display text-xl font-semibold">
-                Arcanea
-              </span>
-            </Link>
-            <div className="hidden md:flex items-center gap-8">
-              <Link
-                href="/luminors"
-                className="text-sm text-text-secondary hover:text-atlantean-teal transition-colors"
-              >
-                Luminors
-              </Link>
-              <Link
-                href="/library"
-                className="text-sm text-text-secondary hover:text-atlantean-teal transition-colors"
-              >
-                Library
-              </Link>
-              <Link
-                href="/academy"
-                className="text-sm text-text-secondary hover:text-atlantean-teal transition-colors"
-              >
-                Academy
-              </Link>
-              <Link
-                href="/about"
-                className="text-sm text-text-secondary hover:text-atlantean-teal transition-colors"
-              >
-                About
-              </Link>
-              <Link href="/pricing" className="text-sm text-atlantean-teal">
-                Pricing
-              </Link>
-              <Link
-                href="/chat"
-                className="px-4 py-2 rounded-lg bg-atlantean-teal text-cosmic-deep text-sm font-semibold hover:shadow-[0_0_20px_rgba(127,255,212,0.4)] transition-all"
-              >
-                Start Creating
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
 
       <main className="max-w-7xl mx-auto px-6">
         {/* Hero */}
@@ -200,7 +168,7 @@ export default function PricingPage() {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-violet-500/30 bg-violet-500/10 mb-8">
             <span className="w-2 h-2 rounded-full bg-violet-400 animate-pulse" />
             <span className="text-sm text-violet-400 font-mono tracking-wider">
-              TRANSCEND YOUR CRAFT
+              CREATIVE INTELLIGENCE
             </span>
           </div>
 
@@ -212,9 +180,8 @@ export default function PricingPage() {
           </h1>
 
           <p className="text-xl text-text-secondary max-w-2xl mx-auto mb-8 leading-relaxed">
-            Choose the path that fits your journey. All plans include access to
-            the Luminor Intelligence System and our commitment to your creative
-            growth.
+            Choose the plan that fits your work.
+            All plans include access to AI specialists and our full Library.
           </p>
         </section>
 
@@ -227,7 +194,7 @@ export default function PricingPage() {
                 className={`relative p-8 rounded-2xl border backdrop-blur-xl transition-all hover:scale-[1.02] ${
                   tier.popular
                     ? "border-violet-500/50 bg-violet-500/5 shadow-[0_0_40px_rgba(139,92,246,0.2)]"
-                    : "border-white/10 bg-cosmic-surface/30 hover:border-white/20"
+                    : "liquid-glass hover:border-white/[0.12]"
                 }`}
               >
                 {tier.popular && (
@@ -284,7 +251,7 @@ export default function PricingPage() {
                   className={`block w-full py-3 rounded-xl text-center font-semibold transition-all ${
                     tier.popular
                       ? "bg-gradient-to-r from-violet-500 to-purple-600 text-white hover:shadow-[0_0_30px_rgba(139,92,246,0.5)]"
-                      : "border border-white/20 text-white hover:bg-white/5"
+                      : "border border-white/[0.12] text-white hover:bg-white/[0.04]"
                   }`}
                 >
                   {tier.cta}
@@ -295,7 +262,7 @@ export default function PricingPage() {
         </section>
 
         {/* Comparison Table */}
-        <section className="py-16 border-t border-white/5">
+        <section className="py-16 border-t border-white/[0.04]">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-display font-bold mb-4">
               Compare Plans
@@ -308,7 +275,7 @@ export default function PricingPage() {
           <div className="overflow-x-auto">
             <table className="w-full max-w-4xl mx-auto">
               <thead>
-                <tr className="border-b border-white/10">
+                <tr className="border-b border-white/[0.06]">
                   <th className="text-left py-4 px-4 text-text-muted font-medium">
                     Feature
                   </th>
@@ -325,7 +292,7 @@ export default function PricingPage() {
               </thead>
               <tbody>
                 {COMPARISON.map((row, i) => (
-                  <tr key={row.feature} className="border-b border-white/5">
+                  <tr key={row.feature} className="border-b border-white/[0.04]">
                     <td className="py-4 px-4 text-text-secondary">
                       {row.feature}
                     </td>
@@ -446,7 +413,7 @@ export default function PricingPage() {
         </section>
 
         {/* FAQ */}
-        <section className="py-16 border-t border-white/5">
+        <section className="py-16 border-t border-white/[0.04]">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-display font-bold mb-4">
@@ -459,7 +426,7 @@ export default function PricingPage() {
               {FAQs.map((faq, i) => (
                 <div
                   key={i}
-                  className="p-6 rounded-xl border border-white/10 bg-cosmic-surface/30"
+                  className="p-6 rounded-xl liquid-glass"
                 >
                   <h3 className="font-semibold mb-2">{faq.question}</h3>
                   <p className="text-text-secondary text-sm leading-relaxed">
@@ -472,31 +439,31 @@ export default function PricingPage() {
         </section>
 
         {/* CTA */}
-        <section className="py-20 border-t border-white/5">
+        <section className="py-20 border-t border-white/[0.04]">
           <div className="relative rounded-3xl overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-violet-500/20 via-atlantean-teal/20 to-gold-bright/20" />
-            <div className="absolute inset-0 bg-cosmic-surface/50 backdrop-blur-xl" />
+            <div className="absolute inset-0 liquid-glass" />
 
             <div className="relative p-12 md:p-16 text-center">
               <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
-                Ready to begin your journey?
+                Ready to start creating?
               </h2>
               <p className="text-lg text-text-secondary mb-10 max-w-2xl mx-auto">
-                Join thousands of creators who have discovered the power of the
-                Luminor Intelligence System.
+                10 creative intelligences. A philosophy library. Tools that work
+                the way you think.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Link
-                  href="/signup"
+                  href="/auth/signup"
                   className="px-8 py-4 rounded-xl bg-atlantean-teal text-cosmic-deep font-semibold text-lg hover:shadow-[0_0_40px_rgba(127,255,212,0.5)] transition-all"
                 >
                   Start Free Today
                 </Link>
                 <Link
                   href="/chat"
-                  className="px-8 py-4 rounded-xl border border-white/20 text-white font-semibold text-lg hover:bg-white/5 transition-all"
+                  className="px-8 py-4 rounded-xl border border-white/[0.12] text-white font-semibold text-lg hover:bg-white/[0.04] transition-all"
                 >
-                  Talk to a Luminor
+                  Try the Chat
                 </Link>
               </div>
             </div>
@@ -504,47 +471,6 @@ export default function PricingPage() {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-white/5 mt-20">
-        <div className="max-w-7xl mx-auto px-6 py-12">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-atlantean-teal to-creation-prism-purple flex items-center justify-center text-cosmic-deep font-bold text-sm font-display">
-                A
-              </div>
-              <span className="text-sm text-text-muted">
-                Arcanea — Building the future of creative intelligence
-              </span>
-            </div>
-            <div className="flex items-center gap-6 text-sm text-text-muted">
-              <Link
-                href="/about"
-                className="hover:text-white transition-colors"
-              >
-                About
-              </Link>
-              <Link
-                href="/library"
-                className="hover:text-white transition-colors"
-              >
-                Library
-              </Link>
-              <Link
-                href="/skills"
-                className="hover:text-white transition-colors"
-              >
-                Skills
-              </Link>
-              <a
-                href="https://github.com/frankxai/arcanea"
-                className="hover:text-white transition-colors"
-              >
-                GitHub
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

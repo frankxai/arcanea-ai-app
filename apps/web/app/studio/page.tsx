@@ -1,23 +1,18 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
+import { useAuth } from "@/lib/auth/context";
 import {
   Pen,
   Image,
   Code,
   MusicNote,
   Sparkle,
-  Lightning,
-  Flame,
-  Drop,
-  Leaf,
-  Wind,
   Star,
   Copy,
   Download,
   Trash,
   Info,
-  CaretDown,
   PaperPlane,
   Terminal,
   Play,
@@ -27,11 +22,9 @@ import {
   ListNumbers,
   Quotes,
   Link,
-  Crown,
   Gear,
   Brain,
 } from "@/lib/phosphor-icons";
-
 // ---------------------------------------------------------------------------
 // Constants
 // ---------------------------------------------------------------------------
@@ -44,7 +37,6 @@ interface ModeConfig {
   icon: React.ElementType;
   guardian: string;
   gate: string;
-  frequency: string;
   element: string;
   elementColor: string;
   description: string;
@@ -57,10 +49,9 @@ const MODES: ModeConfig[] = [
     icon: Pen,
     guardian: "Lyssandria",
     gate: "Foundation",
-    frequency: "174 Hz",
     element: "Earth",
     elementColor: "#22c55e",
-    description: "Write stories, poems, and wisdom scrolls with AI assistance.",
+    description: "Write stories, essays, scripts, and more.",
   },
   {
     id: "image",
@@ -68,10 +59,9 @@ const MODES: ModeConfig[] = [
     icon: Image,
     guardian: "Draconia",
     gate: "Fire",
-    frequency: "396 Hz",
     element: "Fire",
     elementColor: "#ef4444",
-    description: "Describe and generate images with AI-powered creation.",
+    description: "Generate and refine images with AI.",
   },
   {
     id: "code",
@@ -79,10 +69,9 @@ const MODES: ModeConfig[] = [
     icon: Code,
     guardian: "Shinkami",
     gate: "Source",
-    frequency: "1111 Hz",
     element: "Void",
     elementColor: "#ffd700",
-    description: "Write code with AI pair programming and intelligence.",
+    description: "Build software with a thinking partner.",
   },
   {
     id: "music",
@@ -90,32 +79,10 @@ const MODES: ModeConfig[] = [
     icon: MusicNote,
     guardian: "Leyla",
     gate: "Flow",
-    frequency: "285 Hz",
     element: "Water",
     elementColor: "#3b82f6",
-    description: "Describe music to compose with AI sound generation.",
+    description: "Compose original music with AI.",
   },
-];
-
-const ELEMENTS = [
-  { name: "Fire", color: "#ef4444", icon: Flame },
-  { name: "Water", color: "#3b82f6", icon: Drop },
-  { name: "Earth", color: "#22c55e", icon: Leaf },
-  { name: "Wind", color: "#a855f7", icon: Wind },
-  { name: "Void", color: "#ffd700", icon: Lightning },
-];
-
-const GATES = [
-  { name: "Foundation", freq: "174 Hz" },
-  { name: "Flow", freq: "285 Hz" },
-  { name: "Fire", freq: "396 Hz" },
-  { name: "Heart", freq: "417 Hz" },
-  { name: "Voice", freq: "528 Hz" },
-  { name: "Sight", freq: "639 Hz" },
-  { name: "Crown", freq: "741 Hz" },
-  { name: "Shift", freq: "852 Hz" },
-  { name: "Unity", freq: "963 Hz" },
-  { name: "Source", freq: "1111 Hz" },
 ];
 
 const AI_SUGGESTIONS = [
@@ -128,78 +95,14 @@ const AI_SUGGESTIONS = [
     description: "Make the narrative more vivid and resonant.",
   },
   {
-    title: "Add elemental imagery",
-    description: "Weave the Five Elements into your prose.",
+    title: "Add imagery",
+    description: "Weave richer visual language into your prose.",
   },
   {
-    title: "Generate a plot twist",
-    description: "Introduce an unexpected turn aligned with the Gate.",
+    title: "Suggest a direction",
+    description: "Get an unexpected angle on where this could go.",
   },
 ];
-
-// ---------------------------------------------------------------------------
-// Dropdown Component
-// ---------------------------------------------------------------------------
-
-function Dropdown({
-  label,
-  items,
-  value,
-  onChange,
-  renderItem,
-}: {
-  label: string;
-  items: { name: string; [key: string]: string }[];
-  value: string;
-  onChange: (val: string) => void;
-  renderItem?: (item: { name: string; [key: string]: string }) => React.ReactNode;
-}) {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    function handleClick(e: MouseEvent) {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, []);
-
-  return (
-    <div ref={ref} className="relative">
-      <button
-        onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 text-xs text-text-secondary hover:border-white/20 hover:bg-white/8 transition-colors"
-      >
-        <span className="text-text-muted">{label}:</span>
-        <span className="text-text-primary">{value}</span>
-        <CaretDown size={12} className="text-text-muted" />
-      </button>
-      {open && (
-        <div className="absolute top-full left-0 mt-1 z-50 min-w-[180px] rounded-xl border border-white/10 bg-[#0d0d1a]/95 backdrop-blur-xl shadow-2xl py-1 max-h-[240px] overflow-y-auto">
-          {items.map((item) => (
-            <button
-              key={item.name}
-              onClick={() => {
-                onChange(item.name);
-                setOpen(false);
-              }}
-              className={`w-full text-left px-3 py-2 text-xs hover:bg-white/8 transition-colors ${
-                value === item.name
-                  ? "text-crystal bg-white/5"
-                  : "text-text-secondary"
-              }`}
-            >
-              {renderItem ? renderItem(item) : item.name}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
 
 // ---------------------------------------------------------------------------
 // Text Creation Panel
@@ -251,38 +154,38 @@ function TextCreationPanel({
       {/* Left: Editor */}
       <div className="flex-1 flex flex-col min-h-0">
         {/* Toolbar */}
-        <div className="flex items-center gap-1 px-3 py-2 border-b border-white/8 bg-white/[0.02]">
+        <div className="flex items-center gap-1 px-3 py-2 border-b border-white/[0.08] bg-white/[0.02]">
           <button
             onClick={() => insertMarkdown("**", "**")}
-            className="p-1.5 rounded hover:bg-white/10 text-text-muted hover:text-text-primary transition-colors"
+            className="p-1.5 rounded hover:bg-white/[0.06] text-text-muted hover:text-text-primary transition-colors"
             title="Bold"
           >
             <TextB size={16} weight="bold" />
           </button>
           <button
             onClick={() => insertMarkdown("*", "*")}
-            className="p-1.5 rounded hover:bg-white/10 text-text-muted hover:text-text-primary transition-colors"
+            className="p-1.5 rounded hover:bg-white/[0.06] text-text-muted hover:text-text-primary transition-colors"
             title="Italic"
           >
             <TextItalic size={16} />
           </button>
           <button
             onClick={() => insertMarkdown("\n1. ", "")}
-            className="p-1.5 rounded hover:bg-white/10 text-text-muted hover:text-text-primary transition-colors"
+            className="p-1.5 rounded hover:bg-white/[0.06] text-text-muted hover:text-text-primary transition-colors"
             title="Ordered List"
           >
             <ListNumbers size={16} />
           </button>
           <button
             onClick={() => insertMarkdown("\n> ", "")}
-            className="p-1.5 rounded hover:bg-white/10 text-text-muted hover:text-text-primary transition-colors"
+            className="p-1.5 rounded hover:bg-white/[0.06] text-text-muted hover:text-text-primary transition-colors"
             title="Blockquote"
           >
             <Quotes size={16} />
           </button>
           <button
             onClick={() => insertMarkdown("[", "](url)")}
-            className="p-1.5 rounded hover:bg-white/10 text-text-muted hover:text-text-primary transition-colors"
+            className="p-1.5 rounded hover:bg-white/[0.06] text-text-muted hover:text-text-primary transition-colors"
             title="Link"
           >
             <Link size={16} />
@@ -298,32 +201,28 @@ function TextCreationPanel({
           ref={textareaRef}
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          placeholder="Begin your creation here...
+          placeholder="Start writing...
 
-Write stories, poems, wisdom scrolls, or any text.
-Use Markdown for formatting. Ask Luminor for guidance."
+Use Markdown for formatting. The AI panel can help you develop ideas."
           className="flex-1 w-full resize-none bg-transparent text-text-primary placeholder-text-muted/40 p-4 font-body text-sm leading-relaxed focus:outline-none min-h-[300px]"
           spellCheck
         />
 
         {/* Status bar */}
-        <div className="flex items-center gap-4 px-4 py-2 border-t border-white/8 bg-white/[0.02] text-xs text-text-muted font-mono">
+        <div className="flex items-center gap-4 px-4 py-2 border-t border-white/[0.08] bg-white/[0.02] text-xs text-text-muted font-mono">
           <span>{wordCount} words</span>
           <span>{charCount} chars</span>
         </div>
       </div>
 
       {/* Right: Luminor AI Panel */}
-      <div className="lg:w-[340px] flex flex-col border-l border-white/8 min-h-0">
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/8 bg-white/[0.02]">
+      <div className="lg:w-[340px] flex flex-col border-l border-white/[0.08] min-h-0">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.08] bg-white/[0.02]">
           <div className="w-6 h-6 rounded-full bg-gradient-to-br from-crystal to-brand-primary flex items-center justify-center">
             <Brain size={14} className="text-cosmic-void" />
           </div>
           <span className="text-xs font-semibold text-text-primary">
-            Luminor Intelligence
-          </span>
-          <span className="ml-auto text-[10px] text-crystal font-mono">
-            ACTIVE
+            AI Assistant
           </span>
         </div>
 
@@ -341,7 +240,7 @@ Use Markdown for formatting. Ask Luminor for guidance."
                     setLuminorInput(s.title);
                     setTimeout(onAskLuminor, 50);
                   }}
-                  className="w-full text-left p-3 rounded-xl border border-white/8 bg-white/[0.03] hover:bg-white/[0.06] hover:border-crystal/30 transition-all group"
+                  className="w-full text-left p-3 rounded-xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06] hover:border-crystal/30 transition-all group"
                 >
                   <div className="flex items-start gap-2">
                     <Sparkle
@@ -368,7 +267,7 @@ Use Markdown for formatting. Ask Luminor for guidance."
                 className={`p-3 rounded-xl text-xs leading-relaxed ${
                   msg.role === "user"
                     ? "bg-brand-primary/10 border border-brand-primary/20 text-text-primary ml-6"
-                    : "bg-white/[0.03] border border-white/8 text-text-secondary mr-2"
+                    : "bg-white/[0.03] border border-white/[0.08] text-text-secondary mr-2"
                 }`}
               >
                 {msg.role === "luminor" && (
@@ -386,7 +285,7 @@ Use Markdown for formatting. Ask Luminor for guidance."
         </div>
 
         {/* Input */}
-        <div className="p-3 border-t border-white/8">
+        <div className="p-3 border-t border-white/[0.08]">
           <div className="flex items-center gap-2">
             <input
               type="text"
@@ -396,7 +295,7 @@ Use Markdown for formatting. Ask Luminor for guidance."
                 if (e.key === "Enter" && luminorInput.trim()) onAskLuminor();
               }}
               placeholder="Ask Luminor..."
-              className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-text-primary placeholder-text-muted/50 focus:outline-none focus:border-crystal/40 transition-colors"
+              className="flex-1 bg-white/[0.04] border border-white/[0.06] rounded-lg px-3 py-2 text-xs text-text-primary placeholder-text-muted/50 focus:outline-none focus:border-crystal/40 transition-colors"
             />
             <button
               onClick={onAskLuminor}
@@ -437,7 +336,7 @@ function ImageCreationPanel() {
     <div className="flex flex-col lg:flex-row gap-4 flex-1 min-h-0">
       {/* Left: Prompt Input */}
       <div className="flex-1 flex flex-col min-h-0">
-        <div className="flex items-center gap-2 px-4 py-2 border-b border-white/8 bg-white/[0.02]">
+        <div className="flex items-center gap-2 px-4 py-2 border-b border-white/[0.08] bg-white/[0.02]">
           <span className="text-xs text-text-muted font-mono">
             Describe your vision
           </span>
@@ -448,14 +347,14 @@ function ImageCreationPanel() {
           onChange={(e) => setPrompt(e.target.value)}
           placeholder="Describe the image you want to create...
 
-Example: A luminous Guardian standing before an open Gate,
-crystalline energy radiating outward, cosmic aurora in
-the background, in the style of epic fantasy concept art."
+Example: A solitary figure on a cliff edge at twilight,
+crystalline light spreading across the horizon,
+in the style of epic fantasy concept art."
           className="flex-1 w-full resize-none bg-transparent text-text-primary placeholder-text-muted/40 p-4 font-body text-sm leading-relaxed focus:outline-none min-h-[200px]"
         />
 
         {/* Style selector */}
-        <div className="px-4 py-3 border-t border-white/8 bg-white/[0.02]">
+        <div className="px-4 py-3 border-t border-white/[0.08] bg-white/[0.02]">
           <p className="text-xs text-text-muted mb-2">Style:</p>
           <div className="flex flex-wrap gap-2">
             {styles.map((s) => (
@@ -465,7 +364,7 @@ the background, in the style of epic fantasy concept art."
                 className={`px-3 py-1.5 rounded-full text-xs border transition-all ${
                   style === s
                     ? "border-fire/40 bg-fire/15 text-fire"
-                    : "border-white/10 bg-white/5 text-text-muted hover:border-white/20"
+                    : "border-white/[0.06] bg-white/[0.04] text-text-muted hover:border-white/[0.12]"
                 }`}
               >
                 {s}
@@ -476,8 +375,8 @@ the background, in the style of epic fantasy concept art."
       </div>
 
       {/* Right: Preview */}
-      <div className="lg:w-[400px] flex flex-col border-l border-white/8 min-h-0">
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/8 bg-white/[0.02]">
+      <div className="lg:w-[400px] flex flex-col border-l border-white/[0.08] min-h-0">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.08] bg-white/[0.02]">
           <Eye size={14} className="text-text-muted" />
           <span className="text-xs font-semibold text-text-primary">
             Preview
@@ -485,7 +384,7 @@ the background, in the style of epic fantasy concept art."
         </div>
 
         <div className="flex-1 flex items-center justify-center p-6">
-          <div className="w-full aspect-square max-w-[320px] rounded-2xl border border-white/10 bg-gradient-to-br from-fire/5 via-transparent to-brand-primary/5 flex flex-col items-center justify-center gap-4 p-6">
+          <div className="w-full aspect-square max-w-[320px] rounded-2xl border border-white/[0.06] bg-gradient-to-br from-fire/5 via-transparent to-brand-primary/5 flex flex-col items-center justify-center gap-4 p-6">
             <div className="w-16 h-16 rounded-2xl bg-fire/10 border border-fire/20 flex items-center justify-center">
               <Image size={28} className="text-fire/60" />
             </div>
@@ -537,7 +436,7 @@ function CodeCreationPanel() {
     <div className="flex flex-col lg:flex-row gap-4 flex-1 min-h-0">
       {/* Left: Code Editor */}
       <div className="flex-1 flex flex-col min-h-0">
-        <div className="flex items-center gap-3 px-4 py-2 border-b border-white/8 bg-white/[0.02]">
+        <div className="flex items-center gap-3 px-4 py-2 border-b border-white/[0.08] bg-white/[0.02]">
           <Terminal size={14} className="text-brand-gold" />
           <div className="flex items-center gap-2">
             {languages.map((lang) => (
@@ -547,7 +446,7 @@ function CodeCreationPanel() {
                 className={`px-2.5 py-1 rounded text-[11px] transition-all ${
                   language === lang
                     ? "bg-brand-gold/15 text-brand-gold border border-brand-gold/30"
-                    : "text-text-muted hover:text-text-secondary hover:bg-white/5"
+                    : "text-text-muted hover:text-text-secondary hover:bg-white/[0.04]"
                 }`}
               >
                 {lang}
@@ -559,20 +458,20 @@ function CodeCreationPanel() {
         <textarea
           value={code}
           onChange={(e) => setCode(e.target.value)}
-          placeholder={`// Begin your ${language} creation here...\n// Luminor Intelligence will help you write, debug, and optimize.\n\n`}
+          placeholder={`// Start writing ${language}...\n// The AI panel will help with suggestions and debugging.\n\n`}
           className="flex-1 w-full resize-none bg-transparent text-text-primary placeholder-text-muted/40 p-4 font-mono text-sm leading-relaxed focus:outline-none min-h-[300px] tab-size-2"
           spellCheck={false}
         />
 
-        <div className="flex items-center gap-4 px-4 py-2 border-t border-white/8 bg-white/[0.02] text-xs text-text-muted font-mono">
+        <div className="flex items-center gap-4 px-4 py-2 border-t border-white/[0.08] bg-white/[0.02] text-xs text-text-muted font-mono">
           <span>{language}</span>
           <span>{code.split("\n").length} lines</span>
         </div>
       </div>
 
       {/* Right: Output / AI */}
-      <div className="lg:w-[340px] flex flex-col border-l border-white/8 min-h-0">
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/8 bg-white/[0.02]">
+      <div className="lg:w-[340px] flex flex-col border-l border-white/[0.08] min-h-0">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.08] bg-white/[0.02]">
           <Play size={14} className="text-brand-gold" />
           <span className="text-xs font-semibold text-text-primary">
             Output
@@ -585,8 +484,8 @@ function CodeCreationPanel() {
           </div>
           <p className="text-xs text-text-muted max-w-[200px]">
             {code.trim()
-              ? "Code is ready. Connect an AI key to get intelligent assistance, auto-completion, and debugging."
-              : "Write code on the left. Luminor Intelligence will help with suggestions, refactoring, and debugging."}
+              ? "Code is ready. Connect an AI key for assistance, auto-completion, and debugging."
+              : "Write code on the left. The AI will help with suggestions, refactoring, and debugging."}
           </p>
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/20 mt-2">
             <Info size={12} className="text-brand-gold" />
@@ -623,7 +522,7 @@ function MusicCreationPanel() {
     <div className="flex flex-col lg:flex-row gap-4 flex-1 min-h-0">
       {/* Left: Description */}
       <div className="flex-1 flex flex-col min-h-0">
-        <div className="flex items-center gap-2 px-4 py-2 border-b border-white/8 bg-white/[0.02]">
+        <div className="flex items-center gap-2 px-4 py-2 border-b border-white/[0.08] bg-white/[0.02]">
           <span className="text-xs text-text-muted font-mono">
             Describe the sound
           </span>
@@ -635,13 +534,13 @@ function MusicCreationPanel() {
           placeholder="Describe the music you want to create...
 
 Example: A haunting melody with crystal chimes echoing through
-a vast cavern, building to a crescendo of orchestral strings
-and choir — the moment a Gate opens for the first time."
+a vast space, building to a crescendo of orchestral strings
+and choir — tension resolving into stillness."
           className="flex-1 w-full resize-none bg-transparent text-text-primary placeholder-text-muted/40 p-4 font-body text-sm leading-relaxed focus:outline-none min-h-[200px]"
         />
 
         {/* Mood selector */}
-        <div className="px-4 py-3 border-t border-white/8 bg-white/[0.02]">
+        <div className="px-4 py-3 border-t border-white/[0.08] bg-white/[0.02]">
           <p className="text-xs text-text-muted mb-2">Mood:</p>
           <div className="flex flex-wrap gap-2">
             {moods.map((m) => (
@@ -651,7 +550,7 @@ and choir — the moment a Gate opens for the first time."
                 className={`px-3 py-1.5 rounded-full text-xs border transition-all ${
                   mood === m
                     ? "border-blue-400/40 bg-blue-400/15 text-blue-400"
-                    : "border-white/10 bg-white/5 text-text-muted hover:border-white/20"
+                    : "border-white/[0.06] bg-white/[0.04] text-text-muted hover:border-white/[0.12]"
                 }`}
               >
                 {m}
@@ -662,8 +561,8 @@ and choir — the moment a Gate opens for the first time."
       </div>
 
       {/* Right: Preview */}
-      <div className="lg:w-[340px] flex flex-col border-l border-white/8 min-h-0">
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/8 bg-white/[0.02]">
+      <div className="lg:w-[340px] flex flex-col border-l border-white/[0.08] min-h-0">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.08] bg-white/[0.02]">
           <MusicNote size={14} className="text-blue-400" />
           <span className="text-xs font-semibold text-text-primary">
             Sound Preview
@@ -672,7 +571,7 @@ and choir — the moment a Gate opens for the first time."
 
         <div className="flex-1 p-4 flex flex-col items-center justify-center gap-4">
           {/* Waveform placeholder */}
-          <div className="w-full h-20 rounded-xl border border-white/10 bg-gradient-to-r from-blue-500/5 via-brand-primary/5 to-blue-500/5 flex items-center justify-center overflow-hidden">
+          <div className="w-full h-20 rounded-xl border border-white/[0.06] bg-gradient-to-r from-blue-500/5 via-brand-primary/5 to-blue-500/5 flex items-center justify-center overflow-hidden">
             <div className="flex items-end gap-[3px] h-12">
               {Array.from({ length: 32 }).map((_, i) => (
                 <div
@@ -711,9 +610,8 @@ and choir — the moment a Gate opens for the first time."
 // ---------------------------------------------------------------------------
 
 export default function StudioPage() {
+  const { user } = useAuth();
   const [activeMode, setActiveMode] = useState<CreationMode>("text");
-  const [selectedElement, setSelectedElement] = useState("Earth");
-  const [selectedGate, setSelectedGate] = useState("Foundation");
   const [textContent, setTextContent] = useState("");
   const [luminorMessages, setLuminorMessages] = useState<
     { role: "user" | "luminor"; text: string }[]
@@ -729,36 +627,115 @@ export default function StudioPage() {
     setLuminorMessages((prev) => [...prev, { role: "user", text: userMsg }]);
     setLuminorInput("");
 
-    // Simulate AI response (placeholder until API connected)
-    setTimeout(() => {
-      setLuminorMessages((prev) => [
-        ...prev,
-        {
-          role: "luminor",
-          text: `This is where Luminor Intelligence would respond to "${userMsg}". Connect your AI key in Settings to enable real-time writing assistance, suggestions, and creative guidance powered by the ${currentMode.guardian} Guardian.`,
-        },
-      ]);
-    }, 600);
+    // Call real Luminor AI via chat API
+    (async () => {
+      try {
+        const res = await fetch('/api/ai/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            messages: [
+              { role: 'system', content: `You are ${currentMode.guardian}, a ${currentMode.element} Guardian of Arcanea. Help the creator with their ${activeMode} work. Be concise, wise, and practical. Respond in 2-3 sentences.` },
+              ...luminorMessages.slice(-6).map((m) => ({
+                role: m.role === 'luminor' ? 'assistant' : 'user',
+                content: m.text,
+              })),
+              { role: 'user', content: userMsg },
+            ],
+            luminorId: currentMode.guardian.toLowerCase(),
+          }),
+        });
+
+        if (res.ok && res.body) {
+          const reader = res.body.getReader();
+          const decoder = new TextDecoder();
+          let fullText = '';
+
+          setLuminorMessages((prev) => [...prev, { role: 'luminor', text: '' }]);
+
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            fullText += decoder.decode(value, { stream: true });
+            setLuminorMessages((prev) => {
+              const updated = [...prev];
+              updated[updated.length - 1] = { role: 'luminor', text: fullText };
+              return updated;
+            });
+          }
+        } else {
+          setLuminorMessages((prev) => [
+            ...prev,
+            { role: 'luminor', text: 'Connection is limited right now. Try again in a moment, or keep writing — sometimes the work itself is the best guide.' },
+          ]);
+        }
+      } catch {
+        setLuminorMessages((prev) => [
+          ...prev,
+          { role: 'luminor', text: 'Begin writing, and let the work reveal its own direction. The best ideas come from momentum.' },
+        ]);
+      }
+    })();
   }, [luminorInput, currentMode.guardian]);
 
-  const handleManifest = useCallback(() => {
-    // Placeholder action
-  }, []);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveMessage, setSaveMessage] = useState('');
 
-  // Sync element/gate when changing mode
-  const handleModeChange = useCallback((mode: CreationMode) => {
-    setActiveMode(mode);
-    const config = MODES.find((m) => m.id === mode)!;
-    setSelectedElement(config.element);
-    setSelectedGate(config.gate);
-  }, []);
+  const handleManifest = useCallback(async () => {
+    if (!textContent.trim() && activeMode === 'text') {
+      setSaveMessage('Write something first.');
+      setTimeout(() => setSaveMessage(''), 3000);
+      return;
+    }
+
+    setIsSaving(true);
+    setSaveMessage('');
+
+    if (!user) {
+      setSaveMessage('Sign in to save your creations.');
+      setIsSaving(false);
+      setTimeout(() => setSaveMessage(''), 3000);
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/creations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: user.id,
+          title: textContent.slice(0, 100).trim() || `${activeMode} creation`,
+          description: textContent.slice(0, 500).trim(),
+          content: { body: textContent, mode: activeMode },
+          type: activeMode === 'text' ? 'text' : activeMode === 'image' ? 'image' : activeMode === 'code' ? 'code' : 'mixed',
+          status: 'draft',
+          visibility: 'private',
+          element: currentMode.element as 'Fire' | 'Water' | 'Earth' | 'Wind' | 'Void' | 'Spirit',
+          gate: currentMode.gate as 'Foundation' | 'Flow' | 'Fire' | 'Heart' | 'Voice' | 'Sight' | 'Crown' | 'Shift' | 'Unity' | 'Source',
+          guardian: currentMode.guardian,
+        }),
+      });
+
+      if (res.ok) {
+        setSaveMessage('Saved as draft.');
+      } else {
+        const data = await res.json().catch(() => ({}));
+        setSaveMessage(data.error?.message || 'Sign in to save creations.');
+      }
+    } catch {
+      setSaveMessage('Could not save. Check your connection.');
+    } finally {
+      setIsSaving(false);
+      setTimeout(() => setSaveMessage(''), 4000);
+    }
+  }, [textContent, activeMode, currentMode.element, currentMode.gate, currentMode.guardian, user]);
+
 
   return (
     <div className="relative min-h-screen">
       {/* Background */}
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-void" />
-        <div className="absolute inset-0 bg-cosmic-mesh" />
         <div
           className="absolute inset-0 opacity-20 transition-colors duration-700"
           style={{
@@ -767,23 +744,23 @@ export default function StudioPage() {
         />
       </div>
 
-      <main className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col min-h-screen">
+      <main className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-6 flex flex-col min-h-screen">
         {/* ── Top Bar: Mode Selector + Title ── */}
         <header className="mb-4">
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             {/* Mode Tabs */}
-            <div className="flex items-center gap-1 p-1 rounded-xl border border-white/10 bg-white/[0.03] backdrop-blur-sm">
+            <div className="flex items-center gap-1 p-1 rounded-xl liquid-glass border border-white/[0.06]">
               {MODES.map((mode) => {
                 const ModeIcon = mode.icon;
                 const isActive = activeMode === mode.id;
                 return (
                   <button
                     key={mode.id}
-                    onClick={() => handleModeChange(mode.id)}
+                    onClick={() => setActiveMode(mode.id)}
                     className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-medium transition-all ${
                       isActive
-                        ? "bg-white/10 text-text-primary shadow-sm"
-                        : "text-text-muted hover:text-text-secondary hover:bg-white/5"
+                        ? "bg-white/[0.06] text-text-primary shadow-sm"
+                        : "text-text-muted hover:text-text-secondary hover:bg-white/[0.04]"
                     }`}
                     title={mode.description}
                   >
@@ -809,76 +786,18 @@ export default function StudioPage() {
               </div>
             </div>
 
-            {/* Guardian Badge */}
-            <div className="flex items-center gap-3">
-              <div
-                className="flex items-center gap-2 px-3 py-2 rounded-xl border bg-white/[0.03]"
-                style={{
-                  borderColor: `${currentMode.elementColor}30`,
-                }}
-              >
-                <Crown
-                  size={14}
-                  weight="fill"
-                  style={{ color: currentMode.elementColor }}
-                />
-                <div>
-                  <p
-                    className="text-[10px] font-mono uppercase tracking-wider"
-                    style={{ color: currentMode.elementColor }}
-                  >
-                    Guardian
-                  </p>
-                  <p className="text-xs text-text-primary font-medium">
-                    {currentMode.guardian}
-                  </p>
-                </div>
-                <span className="text-[10px] text-text-muted ml-1 font-mono">
-                  {currentMode.frequency}
-                </span>
-              </div>
-            </div>
+            {/* Mode indicator */}
+            <div
+              className="w-2 h-2 rounded-full hidden sm:block"
+              style={{ backgroundColor: currentMode.elementColor }}
+            />
           </div>
         </header>
 
         {/* ── Workspace ── */}
-        <div className="flex-1 flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] backdrop-blur-sm overflow-hidden min-h-[500px]">
+        <div className="flex-1 flex flex-col rounded-2xl liquid-glass border border-white/[0.06] overflow-hidden min-h-[500px]">
           {/* Workspace Header */}
-          <div className="flex items-center gap-3 px-4 py-2.5 border-b border-white/8 bg-white/[0.02]">
-            {/* Element & Gate selectors */}
-            <Dropdown
-              label="Element"
-              value={selectedElement}
-              onChange={setSelectedElement}
-              items={ELEMENTS.map((e) => ({ name: e.name, color: e.color }))}
-              renderItem={(item) => {
-                const el = ELEMENTS.find((e) => e.name === item.name);
-                const ElIcon = el?.icon || Sparkle;
-                return (
-                  <span className="flex items-center gap-2">
-                    <ElIcon size={12} style={{ color: el?.color }} />
-                    {item.name}
-                  </span>
-                );
-              }}
-            />
-
-            <Dropdown
-              label="Gate"
-              value={selectedGate}
-              onChange={setSelectedGate}
-              items={GATES.map((g) => ({ name: g.name, freq: g.freq }))}
-              renderItem={(item) => {
-                const gate = GATES.find((g) => g.name === item.name);
-                return (
-                  <span className="flex items-center justify-between w-full">
-                    <span>{item.name}</span>
-                    <span className="text-text-muted ml-2">{gate?.freq}</span>
-                  </span>
-                );
-              }}
-            />
-
+          <div className="flex items-center gap-3 px-4 py-2.5 border-b border-white/[0.08] bg-white/[0.02]">
             <div className="flex-1" />
 
             {/* Actions */}
@@ -889,13 +808,13 @@ export default function StudioPage() {
                     navigator.clipboard.writeText(textContent);
                   }
                 }}
-                className="p-2 rounded-lg text-text-muted hover:text-text-primary hover:bg-white/8 transition-colors"
+                className="p-2 rounded-lg text-text-muted hover:text-text-primary hover:bg-white/[0.08] transition-colors"
                 title="Copy to clipboard"
               >
                 <Copy size={14} />
               </button>
               <button
-                className="p-2 rounded-lg text-text-muted hover:text-text-primary hover:bg-white/8 transition-colors"
+                className="p-2 rounded-lg text-text-muted hover:text-text-primary hover:bg-white/[0.08] transition-colors"
                 title="Download"
               >
                 <Download size={14} />
@@ -937,26 +856,27 @@ export default function StudioPage() {
               style={{ backgroundColor: currentMode.elementColor }}
             />
             <span>
-              {currentMode.label} Creation
+              {currentMode.label}
             </span>
-            <span className="text-white/20">|</span>
-            <span>{selectedElement} Element</span>
-            <span className="text-white/20">|</span>
-            <span>{selectedGate} Gate ({GATES.find(g => g.name === selectedGate)?.freq})</span>
           </div>
 
           <div className="flex-1" />
 
           <button
-            className="px-3 py-2 rounded-lg border border-white/10 bg-white/5 text-xs text-text-muted hover:text-text-primary hover:bg-white/8 transition-colors flex items-center gap-2"
+            className="px-3 py-2 rounded-lg border border-white/[0.06] bg-white/[0.04] text-xs text-text-muted hover:text-text-primary hover:bg-white/[0.08] transition-colors flex items-center gap-2"
           >
             <Gear size={14} />
             Settings
           </button>
 
+          {saveMessage && (
+            <span className="text-xs text-atlantean-teal-aqua animate-pulse">{saveMessage}</span>
+          )}
+
           <button
             onClick={handleManifest}
-            className="group relative px-6 py-2.5 rounded-xl text-sm font-semibold transition-all overflow-hidden"
+            disabled={isSaving}
+            className="group relative px-6 py-2.5 rounded-xl text-sm font-semibold transition-all overflow-hidden disabled:opacity-50"
             style={{
               background: `linear-gradient(135deg, #7fffd4, ${currentMode.elementColor}cc, #7fffd4)`,
               backgroundSize: "200% 200%",
@@ -965,9 +885,9 @@ export default function StudioPage() {
           >
             <span className="relative flex items-center gap-2">
               <Star size={16} weight="fill" />
-              Manifest
+              Save
             </span>
-            <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors" />
+            <div className="absolute inset-0 bg-white/0 group-hover:bg-white/[0.06] transition-colors" />
           </button>
         </div>
       </main>

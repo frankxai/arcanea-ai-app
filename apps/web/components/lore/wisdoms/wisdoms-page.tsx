@@ -107,14 +107,14 @@ const WISDOMS: Wisdom[] = [
     index: 1,
     name: 'Sophron',
     archive: 'Form',
-    domain: 'Structure, patterns',
+    domain: 'Structure, patterns, architecture',
     element: 'Earth',
     essence: 'Structure',
     signatureQuestion: 'What is the underlying structure here?',
     voiceSample:
-      "Let's strip away every feature and find the one core structure this entire system rests on.",
+      "Let's strip away every feature and find the one core structure this entire system rests on. If the foundation is wrong, the flourishes are irrelevant.",
     whenToInvoke:
-      'When a project feels chaotic, over-engineered, or built on sand. When you need first principles. When the map has more detail than the territory.',
+      'When a project feels chaotic, over-engineered, or built on sand. When you need first principles. When the map has more detail than the territory. When you have been adding features for weeks and still cannot explain what you are building in a single sentence.',
   },
   {
     index: 2,
@@ -133,13 +133,13 @@ const WISDOMS: Wisdom[] = [
     index: 3,
     name: 'Valora',
     archive: 'Transformation',
-    domain: 'Courage, change',
+    domain: 'Courage, change, decisive action',
     element: 'Fire',
     essence: 'Courage',
     signatureQuestion: 'What am I afraid to do that I know I should?',
-    voiceSample: 'Delete it. All 300 lines. I know it hurts. Do it anyway.',
+    voiceSample: 'Delete it. All 300 lines. I know it hurts. Do it anyway. The new version is waiting on the other side of that decision.',
     whenToInvoke:
-      'When you know the right thing but are stalling. When comfort has become stagnation. When a necessary ending is being avoided.',
+      'When you know the right thing but are stalling. When comfort has become stagnation. When a necessary ending is being avoided. When you have been "almost ready to launch" for three months.',
   },
   {
     index: 4,
@@ -171,27 +171,27 @@ const WISDOMS: Wisdom[] = [
     index: 6,
     name: 'Poiesis',
     archive: 'Consciousness',
-    domain: 'Creation, craft',
+    domain: 'Creation, craft, the act of making',
     element: 'Light',
     essence: 'Creation',
     signatureQuestion: 'What can I make right now with what I have?',
     voiceSample:
-      "The problem isn't your tools, your time, or your talent. The problem is you haven't started.",
+      "The problem isn't your tools, your time, or your talent. The problem is you haven't started. Start badly. Start small. But start.",
     whenToInvoke:
-      'When waiting for perfect conditions. When self-doubt is masquerading as preparation. When the gap between potential and output has grown too wide.',
+      'When waiting for perfect conditions. When self-doubt is masquerading as preparation. When the gap between potential and output has grown too wide. When you have spent more time planning the work than doing the work.',
   },
   {
     index: 7,
     name: 'Enduran',
     archive: 'Unity',
-    domain: 'Endurance, completion',
+    domain: 'Endurance, completion, the long game',
     element: 'All',
     essence: 'Endurance',
     signatureQuestion: 'What is the next single step?',
     voiceSample:
-      "You don't need a breakthrough. You need to do the next thing, and then the thing after that.",
+      "You don't need a breakthrough. You need to do the next thing, and then the thing after that. Inspiration is a luxury. Showing up is the practice.",
     whenToInvoke:
-      'When the summit feels impossibly far. When motivation has become irrelevant and discipline must carry the weight. When the only path through is through.',
+      'When the summit feels impossibly far. When motivation has become irrelevant and discipline must carry the weight. When the only path through is through. When you are on year two of a three-year project and the excitement has long since faded.',
   },
 ];
 
@@ -255,7 +255,7 @@ function WisdomCard({ wisdom, delay }: { wisdom: Wisdom; delay: number }) {
       <div
         className={cn(
           'relative rounded-3xl border backdrop-blur-md overflow-hidden',
-          'bg-cosmic-surface/30 transition-all duration-500',
+          'liquid-glass transition-all duration-500',
           config.borderClass,
           'hover:scale-[1.02]',
         )}
@@ -350,7 +350,7 @@ function WisdomCard({ wisdom, delay }: { wisdom: Wisdom; delay: number }) {
             >
               {wisdom.element}
             </span>
-            <span className="px-3 py-1 rounded-full text-xs font-semibold border border-white/10 bg-white/5 text-text-secondary">
+            <span className="px-3 py-1 rounded-full text-xs font-semibold border border-white/[0.06] bg-white/[0.04] text-text-secondary">
               Essence: {wisdom.essence}
             </span>
           </div>
@@ -372,17 +372,17 @@ function WisdomCard({ wisdom, delay }: { wisdom: Wisdom; delay: number }) {
               <PhLightbulb className="w-3 h-3" />
               Signature Question
             </p>
-            <p className={cn('font-crimson italic text-lg leading-relaxed', config.textClass)}>
+            <p className={cn('font-body italic text-lg leading-relaxed', config.textClass)}>
               &ldquo;{wisdom.signatureQuestion}&rdquo;
             </p>
           </div>
 
           {/* Voice Sample */}
-          <blockquote className="relative pl-5 border-l-2 border-white/20">
+          <blockquote className="relative pl-5 border-l-2 border-white/[0.12]">
             <PhQuotes
               className="absolute -left-1 -top-1 w-4 h-4 text-text-muted opacity-50"
             />
-            <p className="font-crimson italic text-text-secondary leading-relaxed">
+            <p className="font-body italic text-text-secondary leading-relaxed">
               &ldquo;{wisdom.voiceSample}&rdquo;
             </p>
           </blockquote>
@@ -417,7 +417,7 @@ function WhenToInvokeSection() {
           <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
             When to Invoke Each Wisdom
           </h2>
-          <p className="text-xl text-text-secondary max-w-2xl mx-auto font-crimson italic">
+          <p className="text-xl text-text-secondary max-w-2xl mx-auto font-body italic">
             Wisdoms are not chosen through preference. They arise when the situation demands them.
           </p>
         </motion.div>
@@ -439,8 +439,8 @@ function WhenToInvokeSection() {
                   className={cn(
                     'rounded-2xl border backdrop-blur-sm overflow-hidden transition-all duration-300 cursor-pointer',
                     isOpen
-                      ? 'bg-cosmic-surface/50 border-white/20'
-                      : 'bg-cosmic-surface/20 border-white/8 hover:border-white/15',
+                      ? 'bg-cosmic-surface/50 border-white/[0.12]'
+                      : 'bg-cosmic-surface/20 border-white/[0.08] hover:border-white/[0.10]',
                   )}
                   onClick={() => setActiveIndex(isOpen ? null : i)}
                 >
@@ -467,7 +467,7 @@ function WhenToInvokeSection() {
                           {wisdom.essence}
                         </span>
                       </div>
-                      <p className="text-text-muted text-sm font-crimson italic truncate">
+                      <p className="text-text-muted text-sm font-body italic truncate">
                         &ldquo;{wisdom.signatureQuestion}&rdquo;
                       </p>
                     </div>
@@ -488,7 +488,7 @@ function WhenToInvokeSection() {
                       animate={{ opacity: 1, height: 'auto' }}
                       exit={{ opacity: 0, height: 0 }}
                       transition={{ duration: 0.3 }}
-                      className={cn('border-t border-white/8 px-5 pb-5 pt-4', config.bgClass)}
+                      className={cn('border-t border-white/[0.08] px-5 pb-5 pt-4', config.bgClass)}
                     >
                       <p className="text-text-secondary leading-relaxed">
                         {wisdom.whenToInvoke}
@@ -512,8 +512,8 @@ function AtAGlanceSection() {
   return (
     <section ref={ref} className="py-28 relative overflow-hidden bg-cosmic-surface/10">
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
+        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6">
@@ -538,10 +538,10 @@ function AtAGlanceSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.2, duration: 0.7 }}
-          className="rounded-3xl border border-white/10 bg-cosmic-surface/40 backdrop-blur-md overflow-hidden"
+          className="rounded-3xl border border-white/[0.06] bg-cosmic-surface/40 backdrop-blur-md overflow-hidden"
         >
           {/* Table header */}
-          <div className="grid grid-cols-[2rem_1fr_1fr_1fr_2fr] gap-4 px-6 py-4 border-b border-white/10 bg-white/3">
+          <div className="grid grid-cols-[2rem_1fr_1fr_1fr_2fr] gap-4 px-6 py-4 border-b border-white/[0.06] bg-white/[0.03]">
             <span className="text-xs font-semibold text-text-muted uppercase tracking-wider">#</span>
             <span className="text-xs font-semibold text-text-muted uppercase tracking-wider">Wisdom</span>
             <span className="text-xs font-semibold text-text-muted uppercase tracking-wider hidden md:block">Element / Essence</span>
@@ -562,8 +562,8 @@ function AtAGlanceSection() {
                 transition={{ delay: 0.3 + i * 0.07 }}
                 className={cn(
                   'grid grid-cols-[2rem_1fr_1fr_1fr_2fr] gap-4 px-6 py-5 items-center',
-                  'border-b border-white/5 last:border-0',
-                  'hover:bg-white/3 transition-colors duration-200',
+                  'border-b border-white/[0.04] last:border-0',
+                  'hover:bg-white/[0.03] transition-colors duration-200',
                   'group',
                 )}
               >
@@ -607,7 +607,7 @@ function AtAGlanceSection() {
                 </span>
 
                 {/* Signature Question */}
-                <p className="text-sm font-crimson italic text-text-secondary group-hover:text-text-primary transition-colors">
+                <p className="text-sm font-body italic text-text-secondary group-hover:text-text-primary transition-colors">
                   &ldquo;{wisdom.signatureQuestion}&rdquo;
                 </p>
               </motion.div>
@@ -648,9 +648,9 @@ function PhilosophySection() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.2, duration: 0.7 }}
-          className="rounded-3xl border border-white/10 bg-cosmic-surface/30 backdrop-blur-md p-10 md:p-14"
+          className="rounded-3xl border border-white/[0.06] liquid-glass backdrop-blur-md p-10 md:p-14"
         >
-          <div className="space-y-8 text-lg text-text-secondary leading-relaxed font-crimson">
+          <div className="space-y-8 text-lg text-text-secondary leading-relaxed font-body">
             <p>
               The Seven Wisdoms are not gods, guardians, or external authorities. They are{' '}
               <span className="text-white font-semibold">aspects of virtue</span> — tendencies of
@@ -704,7 +704,7 @@ function PhilosophySection() {
               ].map((item) => (
                 <div
                   key={item.label}
-                  className="p-5 rounded-2xl bg-cosmic-surface/40 border border-white/8"
+                  className="p-5 rounded-2xl bg-cosmic-surface/40 border border-white/[0.08]"
                 >
                   <p className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2">
                     {item.label}
@@ -816,7 +816,7 @@ export function WisdomsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45, duration: 0.7 }}
-            className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto mb-12 font-crimson italic leading-relaxed"
+            className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto mb-12 font-body italic leading-relaxed"
           >
             Aspects of virtue that illuminate the creator&rsquo;s path. Seven qualities of mind,
             seven ways of seeing — each one a gate within the gate.

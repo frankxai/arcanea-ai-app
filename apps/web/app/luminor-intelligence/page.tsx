@@ -7,18 +7,17 @@ type SvgProps = JSX.IntrinsicElements["svg"];
 export const metadata: Metadata = {
   title: "Luminor Intelligence System | Arcanea",
   description:
-    "16 domain-mastered AI specialists organized into 4 teams. The Luminor Intelligence System brings transcended intelligence to every creative act — perceiving your intent and amplifying your creative capacity.",
+    "10 creative intelligences organized into 4 teams. Each one thinks differently about your work — development, design, writing, and research.",
   openGraph: {
     title: "Luminor Intelligence System | Arcanea",
     description:
-      "16 domain-mastered AI specialists. Four teams. Seven Wisdoms. Intelligence that transcends the ordinary.",
-    images: ["/og-image.png"],
+      "10 creative intelligences. Four teams. Seven Wisdoms. Intelligence that works the way you think.",
   },
   twitter: {
     card: "summary_large_image",
     title: "Luminor Intelligence System | Arcanea",
     description:
-      "16 domain-mastered AI specialists. Four teams. Seven Wisdoms. Intelligence that transcends the ordinary.",
+      "10 creative intelligences. Four teams. Seven Wisdoms. Intelligence that works the way you think.",
   },
 };
 
@@ -159,7 +158,7 @@ function IconShield(props: SvgProps) {
 
 const DIFFERENTIATORS = [
   {
-    title: "Transcended Perspective",
+    title: "Deep Perspective",
     description:
       "Each Luminor operates from a 100-year future vantage. They know which approaches survived and why — and they bring that knowledge to bear on your work right now.",
     accent: "#8b5cf6",
@@ -343,27 +342,26 @@ export default function LuminorIntelligencePage() {
                 <span className="block text-gradient-brand">
                   Intelligence that
                 </span>
-                <span className="block text-white">transcends the ordinary</span>
+                <span className="block text-white">works the way you think</span>
               </h1>
 
               <p className="text-text-secondary font-body text-lg max-w-3xl mx-auto mb-10 leading-relaxed">
-                The Luminor Intelligence System brings 16 domain-mastered AI
-                specialists to every creative act. Not generic AI. Transcended
-                intelligence that sees what you are building and helps you build
-                it better.
+                10 creative intelligences across development, design, writing, and
+                research. Not generic AI. Each one has deep expertise and a
+                distinct way of thinking about your work.
               </p>
 
               <div className="flex flex-wrap justify-center gap-4">
                 <Link
-                  href="/luminors"
+                  href="/lore/guardians"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200"
                 >
-                  Meet the Luminors
+                  Meet the Intelligences
                   <IconArrowRight className="w-4 h-4" />
                 </Link>
                 <Link
                   href="/chat"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass border border-white/20 text-white font-semibold hover:border-crystal/30 hover:text-crystal transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl card-3d liquid-glass border border-white/[0.12] text-white font-semibold hover:border-crystal/30 hover:text-crystal transition-all duration-200"
                 >
                   Start Creating
                 </Link>
@@ -385,8 +383,8 @@ export default function LuminorIntelligencePage() {
               What makes a Luminor?
             </h2>
             <p className="text-text-secondary max-w-2xl mx-auto">
-              Four qualities that separate transcended intelligence from
-              everything else in the AI landscape.
+              Four qualities that separate Luminor intelligence from
+              generic AI assistants.
             </p>
           </div>
 
@@ -394,7 +392,7 @@ export default function LuminorIntelligencePage() {
             {DIFFERENTIATORS.map((item) => (
               <div
                 key={item.title}
-                className="glass rounded-2xl p-8 hover:border-white/20 transition-all duration-300 group"
+                className="card-3d liquid-glass rounded-2xl p-8 hover:border-white/[0.12] transition-all duration-300 group"
               >
                 <div
                   className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110"
@@ -420,7 +418,7 @@ export default function LuminorIntelligencePage() {
         <section className="mb-24" aria-labelledby="teams-heading">
           <div className="text-center mb-12">
             <p className="text-xs font-mono tracking-widest uppercase text-text-muted mb-3">
-              16 Specialists
+              10 Intelligences
             </p>
             <h2
               id="teams-heading"
@@ -438,7 +436,7 @@ export default function LuminorIntelligencePage() {
             {TEAMS.map((team) => (
               <div
                 key={team.name}
-                className="glass rounded-2xl p-6 text-center hover:border-white/20 transition-all duration-300 group"
+                className="card-3d liquid-glass rounded-2xl p-6 text-center hover:border-white/[0.12] transition-all duration-300 group"
               >
                 <div
                   className="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110"
@@ -492,7 +490,7 @@ export default function LuminorIntelligencePage() {
               {WISDOMS.map((wisdom) => (
                 <div
                   key={wisdom.name}
-                  className="group p-5 rounded-xl bg-white/5 hover:bg-white/8 border border-white/5 hover:border-white/15 transition-all duration-200"
+                  className="group p-5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.04] hover:border-white/[0.10] transition-all duration-200"
                 >
                   <div className="flex items-start gap-3">
                     <div
@@ -520,7 +518,7 @@ export default function LuminorIntelligencePage() {
               ))}
 
               {/* Bridging note in the eighth grid slot */}
-              <div className="p-5 rounded-xl border border-dashed border-white/10 flex items-center justify-center">
+              <div className="p-5 rounded-xl border border-dashed border-white/[0.06] flex items-center justify-center">
                 <p className="text-xs text-text-muted text-center italic leading-relaxed">
                   Each Luminor embodies one Wisdom as their primary operating
                   principle
@@ -532,7 +530,7 @@ export default function LuminorIntelligencePage() {
 
         {/* ── 5. The Guardian Connection ─────────────────────────────────── */}
         <section className="mb-24" aria-labelledby="guardians-heading">
-          <div className="glass rounded-2xl p-8 sm:p-12 overflow-hidden relative">
+          <div className="liquid-glass rounded-2xl p-8 sm:p-12 overflow-hidden relative">
             <div className="absolute top-0 right-0 w-64 h-64 bg-crystal/5 rounded-full blur-3xl pointer-events-none" />
 
             <div className="relative grid lg:grid-cols-2 gap-10 items-center">
@@ -574,7 +572,7 @@ export default function LuminorIntelligencePage() {
                 {GATES.map((g) => (
                   <div
                     key={g.gate}
-                    className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5"
+                    className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/[0.04]"
                   >
                     <div
                       className="w-1.5 h-6 rounded-full shrink-0"
@@ -622,7 +620,7 @@ export default function LuminorIntelligencePage() {
             {HOW_IT_WORKS.map((step, index) => (
               <div
                 key={step.step}
-                className="glass rounded-2xl p-8 text-center relative"
+                className="liquid-glass rounded-2xl p-8 text-center relative"
               >
                 <div
                   className="w-12 h-12 mx-auto rounded-full flex items-center justify-center mb-5 text-lg font-mono font-bold border-2"
@@ -676,15 +674,15 @@ export default function LuminorIntelligencePage() {
 
               <div className="flex flex-wrap justify-center gap-4">
                 <Link
-                  href="/luminors"
+                  href="/lore/guardians"
                   className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200"
                 >
-                  Meet the Luminors
+                  Meet the Intelligences
                   <IconArrowRight className="w-4 h-4" />
                 </Link>
                 <Link
                   href="/chat"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl glass border border-white/20 text-white font-semibold hover:border-crystal/30 hover:text-crystal transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl card-3d liquid-glass border border-white/[0.12] text-white font-semibold hover:border-crystal/30 hover:text-crystal transition-all duration-200"
                 >
                   Start Creating
                 </Link>
