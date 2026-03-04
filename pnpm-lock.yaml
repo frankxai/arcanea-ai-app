@@ -224,12 +224,18 @@ importers:
       '@supabase/supabase-js':
         specifier: ^2.76.1
         version: 2.93.3
+      '@types/node':
+        specifier: ^20.14.12
+        version: 20.19.17
       '@types/react':
         specifier: ^19.0.0
         version: 19.2.10
       '@types/react-dom':
         specifier: ^19.0.0
         version: 19.2.3(@types/react@19.2.10)
+      '@types/react-syntax-highlighter':
+        specifier: ^15.5.13
+        version: 15.5.13
       '@vercel/analytics':
         specifier: ^1.6.1
         version: 1.6.1(next@16.1.1)(react@19.0.0)
@@ -318,12 +324,6 @@ importers:
         specifier: ^5.0.10
         version: 5.0.10(@types/react@19.2.10)(react@19.0.0)(use-sync-external-store@1.5.0)
     devDependencies:
-      '@types/node':
-        specifier: ^20.14.12
-        version: 20.19.17
-      '@types/react-syntax-highlighter':
-        specifier: ^15.5.13
-        version: 15.5.13
       eslint:
         specifier: ^9.39.2
         version: 9.39.2
@@ -5321,7 +5321,7 @@ packages:
     resolution: {integrity: sha512-uLGJ87j6Sz8UaBAooU0T6lWJ0dBmjZgN1PZTrj05TNql2/XpC6+4HhMT5syIdFUUt+FASfCeLLv4kBygNU+8qA==}
     dependencies:
       '@types/react': 19.2.10
-    dev: true
+    dev: false
 
   /@types/react@19.2.10:
     resolution: {integrity: sha512-WPigyYuGhgZ/cTPRXB2EwUw+XvsRA3GqHlsP4qteqrnnjDrApbS7MxcGr/hke5iUoeB7E/gQtrs9I37zAJ0Vjw==}
