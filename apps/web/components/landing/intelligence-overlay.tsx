@@ -27,9 +27,9 @@ const PILLARS = [
     icon: PhScroll,
     headline: "Build your mythology.",
     color: "crystal" as const,
-    colorHex: "#00bcd4",
+    colorHex: "#7fffd4",
     borderClass: "border-crystal/20 hover:border-crystal/50",
-    glowClass: "hover:shadow-[0_0_40px_rgba(0,188,212,0.15)]",
+    glowClass: "hover:shadow-[0_0_40px_rgba(127,255,212,0.15)]",
     iconBgClass: "from-crystal/20 to-crystal/5",
     iconColorClass: "text-crystal",
     description:
@@ -51,13 +51,13 @@ const PILLARS = [
     icon: PhFlame,
     headline: "Deploy your agents.",
     color: "brand-primary" as const,
-    colorHex: "#0d47a1",
+    colorHex: "#8b5cf6",
     borderClass: "border-brand-primary/20 hover:border-brand-primary/50",
-    glowClass: "hover:shadow-[0_0_40px_rgba(13,71,161,0.15)]",
+    glowClass: "hover:shadow-[0_0_40px_rgba(139,92,246,0.15)]",
     iconBgClass: "from-brand-primary/20 to-brand-primary/5",
     iconColorClass: "text-brand-primary",
     description:
-      "Ten Gods of Arcanea — each one a distinct philosophy of creation. Invoke the right one for every challenge.",
+      "10 archetypal intelligences — each one a distinct creative philosophy. Deploy the right one for every stage.",
   },
 ] as const;
 
@@ -354,7 +354,7 @@ export function IntelligenceOverlay() {
           >
             <span className="w-1.5 h-1.5 rounded-full bg-brand-primary animate-pulse" />
             <span className="text-sm font-sans font-medium text-brand-primary tracking-wide">
-              THE ARCANEAN SYSTEM
+              Intelligence Overlay
             </span>
           </motion.div>
 
@@ -366,9 +366,9 @@ export function IntelligenceOverlay() {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-black leading-[1.05] tracking-tight mb-6"
           >
-            <span className="text-gradient-cosmic">Gods,</span>
+            <span className="text-gradient-cosmic">Specialists,</span>
             <br />
-            <span className="text-gradient-crystal">not assistants.</span>
+            <span className="text-gradient-crystal">not generalists.</span>
           </motion.h2>
 
           {/* Sub-claim */}
@@ -379,7 +379,7 @@ export function IntelligenceOverlay() {
             transition={{ duration: 0.6, delay: 0.25 }}
             className="text-xl text-text-secondary font-body italic mb-16"
           >
-            Ten Gods. Ten Gates. Each governs a domain of creation.
+            10 intelligences. Each built for a different creative domain.
           </motion.p>
 
           {/* Frequency spine */}
@@ -401,7 +401,7 @@ export function IntelligenceOverlay() {
             transition={{ duration: 0.6, delay: 0.6 }}
             className="text-xs text-text-muted font-mono tracking-widest uppercase"
           >
-            Ten Gates &bull; Ten Frequencies &bull; One living mythology
+            10 Gates &bull; 10 Frequencies &bull; One unified mythology
           </motion.p>
         </div>
       </div>

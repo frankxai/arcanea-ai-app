@@ -5,6 +5,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
+import { ArrowRight, CircleNotch } from "@/lib/phosphor-icons";
 import navLogo from "@/assets/brand/arcanea-mark.jpg";
 import heroImage from "@/assets/brand/arcanea-hero.jpg";
 import type { V3BelowFoldProps } from "./v3-below-fold";
@@ -43,7 +44,7 @@ export function V3Loading() {
           className="rounded-xl mx-auto mb-6 opacity-40"
           priority
         />
-        <div className="w-5 h-5 mx-auto rounded-full border-2 border-[#00bcd4]/35 border-t-[#00bcd4] animate-spin" />
+        <CircleNotch className="w-5 h-5 text-[#00bcd4] animate-spin mx-auto" />
       </div>
     </div>
   );
@@ -87,13 +88,13 @@ function HeroPortal() {
         {/* Dark overlay for text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-cosmic-deep/60 via-cosmic-deep/40 to-cosmic-deep/80" />
         {/* Peacock aurora — top center */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-10%,rgba(0,188,212,0.15),transparent_55%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-10%,rgba(0,188,212,0.12),transparent_55%)]" />
         {/* Ultramarine nebula — bottom right */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_85%_75%,rgba(13,71,161,0.10),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_85%_75%,rgba(13,71,161,0.14),transparent_50%)]" />
         {/* Deep teal warmth — bottom left */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_15%_80%,rgba(0,137,123,0.08),transparent_50%)]" />
         {/* Deep vignette for depth */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent_20%,rgba(9,9,11,0.7)_75%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent_20%,rgba(10,14,39,0.6)_75%)]" />
       </div>
 
 
@@ -150,9 +151,9 @@ function HeroPortal() {
             <Image
               src={navLogo}
               alt="Arcanea"
-              width={96}
-              height={96}
-              className="relative z-10 rounded-2xl ring-1 ring-white/[0.15] shadow-[0_8px_40px_rgba(0,188,212,0.15),0_2px_16px_rgba(0,0,0,0.4)] w-20 h-20 md:w-24 md:h-24"
+              width={88}
+              height={88}
+              className="relative z-10 rounded-2xl ring-1 ring-white/[0.15] shadow-[0_8px_40px_rgba(0,188,212,0.15),0_2px_16px_rgba(0,0,0,0.4)] w-18 h-18 md:w-22 md:h-22"
               priority
             />
           </motion.div>
@@ -169,27 +170,27 @@ function HeroPortal() {
 
           {/* Headline */}
           <motion.h1
-            className="text-[clamp(2.75rem,7vw,6rem)] font-display font-bold tracking-[-0.04em] leading-[0.95] mb-6 md:mb-8"
+            className="text-[clamp(2.4rem,6.5vw,5.5rem)] font-display font-bold tracking-tight leading-[1.05] mb-6 md:mb-8"
             initial={{ opacity: 0, y: 30 }}
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.15 }}
           >
-            <span className="text-white">Build your Realm with</span>
+            <span className="text-white">Creative intelligence,</span>
             <br />
             <span className="text-gradient-cosmic">
-              Guardians and Luminors.
+              specialized.
             </span>
           </motion.h1>
 
           {/* Subtitle */}
           <motion.p
-            className="max-w-xl mx-auto text-base sm:text-lg md:text-xl text-white/50 leading-relaxed mb-12 md:mb-16 font-body"
+            className="max-w-xl mx-auto text-base sm:text-lg md:text-xl text-white/45 leading-relaxed mb-12 md:mb-16 font-body"
             initial={{ opacity: 0, y: 20 }}
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.3 }}
           >
-            Orchestrate coding swarms, shape worlds, compose music, and write books
-            through Arcanea's living canon: Primordials, Gods, Guardians, and Luminors.
+            10 AI specialists for writing, design, code, music, and research.
+            Backed by an original philosophy library.
           </motion.p>
 
           {/* CTAs */}
@@ -201,7 +202,7 @@ function HeroPortal() {
           >
             <Link
               href="/chat"
-              className="group relative w-full sm:w-auto px-10 py-4 rounded-xl font-semibold text-base overflow-hidden btn-glow transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(0,188,212,0.25)] active:translate-y-[1px] active:scale-[0.98]"
+              className="group relative w-full sm:w-auto px-8 py-3.5 rounded-xl font-semibold text-base overflow-hidden btn-glow"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-[#00897b] via-[#1565c0] to-[#00bcd4]" />
               <motion.div
@@ -211,13 +212,13 @@ function HeroPortal() {
                 transition={{ duration: 0.5 }}
               />
               <span className="relative z-10 text-white flex items-center justify-center gap-2 font-bold">
-                Enter Creation Studio
-                <span className="group-hover:translate-x-0.5 transition-transform">→</span>
+                Start Creating
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" weight="bold" />
               </span>
             </Link>
             <Link
               href="/library"
-              className="w-full sm:w-auto px-8 py-3.5 rounded-xl border border-white/[0.10] hover:border-white/[0.20] hover:bg-white/[0.04] transition-all duration-300 text-white/70 hover:text-white font-medium text-base text-center backdrop-blur-sm active:translate-y-[1px] active:scale-[0.98]"
+              className="w-full sm:w-auto px-8 py-3.5 rounded-xl border border-white/[0.10] hover:border-white/[0.20] hover:bg-white/[0.04] transition-all duration-300 text-white/70 hover:text-white font-medium text-base text-center backdrop-blur-sm"
             >
               Explore the Library
             </Link>
@@ -234,24 +235,7 @@ function HeroPortal() {
             <span className="hidden sm:inline text-white/8">|</span>
             <span>No credit card</span>
             <span className="hidden sm:inline text-white/8">|</span>
-            <span>34+ texts of practical wisdom</span>
-          </motion.div>
-
-          {/* Scroll indicator */}
-          <motion.div
-            className="mt-16 md:mt-24"
-            initial={{ opacity: 0 }}
-            animate={isLoaded ? { opacity: 1 } : {}}
-            transition={{ duration: 0.6, delay: 1.2 }}
-          >
-            <motion.div
-              className="flex flex-col items-center gap-2"
-              animate={{ y: [0, 6, 0] }}
-              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <span className="text-[10px] text-white/15 uppercase tracking-[0.3em] font-mono">Scroll</span>
-              <div className="w-px h-8 bg-gradient-to-b from-white/15 to-transparent" />
-            </motion.div>
+            <span>34+ original texts</span>
           </motion.div>
         </div>
       </motion.div>
