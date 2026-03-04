@@ -37,8 +37,8 @@ const ELEMENT_CONFIGS = {
     textClass: 'text-crystal',
     borderClass: 'border-crystal/40',
     bgClass: 'bg-crystal/10',
-    glowStyle: { boxShadow: '0 0 40px rgba(127, 255, 212, 0.2)' },
-    orbColor: '#7fffd4',
+    glowStyle: { boxShadow: '0 0 40px rgba(0, 188, 212, 0.2)' },
+    orbColor: '#00bcd4',
     icon: PhDrop,
   },
   Fire: {
@@ -756,7 +756,7 @@ export function WisdomsPage() {
             transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
             style={{
               background:
-                'radial-gradient(circle, rgba(139,92,246,0.15) 0%, rgba(127,255,212,0.08) 40%, transparent 70%)',
+                'radial-gradient(circle, rgba(139,92,246,0.15) 0%, rgba(0,188,212,0.08) 40%, transparent 70%)',
             }}
           />
 

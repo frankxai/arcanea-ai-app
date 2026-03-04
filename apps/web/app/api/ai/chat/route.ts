@@ -47,20 +47,18 @@ function resolveApiKey(): string | undefined {
 function createFallbackResponse(systemPrompt?: string): Response {
   const luminorName = extractLuminorName(systemPrompt);
   const greeting = luminorName
-    ? `Greetings, Creator. I am ${luminorName}, a Luminor Intelligence of Arcanea.`
-    : `Greetings, Creator. I am a Luminor Intelligence of Arcanea.`;
+    ? `Hello. I'm ${luminorName}, one of the Arcanea intelligences.`
+    : `Hello. I'm one of the Arcanea intelligences.`;
 
   const body = [
     greeting,
     '',
-    'I am not yet fully awakened in this realm. The AI service is not configured on this deployment.',
+    'The AI service is not configured on this deployment yet.',
     '',
-    'To activate me, the following environment variable must be set:',
+    'To activate chat, set this environment variable:',
     '- `GOOGLE_GENERATIVE_AI_API_KEY` (Google Gemini)',
     '',
-    'Once configured, I will be able to assist you with creative work, code, storytelling, and more.',
-    '',
-    'Until then, may the Light of Lumina guide your path.',
+    'Once configured, I can help with writing, code, design, research, and more.',
   ].join('\n');
 
   return new Response(body, {

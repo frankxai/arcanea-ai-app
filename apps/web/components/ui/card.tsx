@@ -17,30 +17,30 @@ const cardVariants = cva(
       variant: {
         default: [
           'bg-[rgba(18,24,38,0.65)] backdrop-blur-[16px]',
-          'border-[rgba(127,255,212,0.12)]',
+          'border-[rgba(0,188,212,0.12)]',
         ],
         'liquid-glass-subtle': [
           'bg-[rgba(26,35,50,0.45)] backdrop-blur-[12px]',
-          'border-[rgba(127,255,212,0.08)]',
+          'border-[rgba(0,188,212,0.08)]',
         ],
         'liquid-glass': [
           'bg-[rgba(18,24,38,0.85)] backdrop-blur-[20px]',
-          'border-[rgba(127,255,212,0.18)]',
+          'border-[rgba(0,188,212,0.18)]',
           'shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.04)]',
         ],
         iridescent: [
           'bg-[rgba(18,24,38,0.75)] backdrop-blur-[16px]',
-          'border-[rgba(127,255,212,0.15)]',
+          'border-[rgba(0,188,212,0.15)]',
           'overflow-hidden',
           // Shimmer layer handled by after pseudo
           'relative',
           'after:absolute after:inset-0 after:pointer-events-none',
-          'after:bg-gradient-to-br after:from-[rgba(127,255,212,0.04)] after:via-transparent after:to-[rgba(139,92,246,0.04)]',
+          'after:bg-gradient-to-br after:from-[rgba(0,188,212,0.04)] after:via-transparent after:to-[rgba(139,92,246,0.04)]',
           'after:animate-iridescent-shift after:opacity-60',
         ],
         bordered: [
           'bg-transparent',
-          'border-[rgba(127,255,212,0.20)]',
+          'border-[rgba(0,188,212,0.20)]',
         ],
       },
       hoverLift: {
@@ -175,7 +175,7 @@ const CardFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
       ref={ref}
       className={cn(
         'flex items-center px-6 pb-6 pt-4',
-        'border-t border-[rgba(127,255,212,0.08)] mt-auto gap-3',
+        'border-t border-[rgba(0,188,212,0.08)] mt-auto gap-3',
         className
       )}
       {...props}

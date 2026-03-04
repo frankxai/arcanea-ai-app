@@ -36,7 +36,7 @@ export function HeroSection({ stats }: HeroSectionProps) {
         <motion.div
           className="absolute top-0 left-1/4 w-[800px] h-[800px] rounded-full"
           style={{
-            background: 'radial-gradient(circle, rgba(127,255,212,0.15) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(0,188,212,0.15) 0%, transparent 70%)',
             filter: 'blur(60px)',
           }}
           animate={{
@@ -54,7 +54,7 @@ export function HeroSection({ stats }: HeroSectionProps) {
         <motion.div
           className="absolute bottom-0 right-1/4 w-[600px] h-[600px] rounded-full"
           style={{
-            background: 'radial-gradient(circle, rgba(139,92,246,0.12) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(13,71,161,0.12) 0%, transparent 70%)',
             filter: 'blur(60px)',
           }}
           animate={{
@@ -93,8 +93,8 @@ export function HeroSection({ stats }: HeroSectionProps) {
           className="absolute inset-0 opacity-[0.03]"
           style={{
             backgroundImage: `
-              linear-gradient(rgba(127,255,212,0.3) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(127,255,212,0.3) 1px, transparent 1px)
+              linear-gradient(rgba(0,188,212,0.3) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(0,188,212,0.3) 1px, transparent 1px)
             `,
             backgroundSize: '100px 100px',
           }}
@@ -142,7 +142,7 @@ export function HeroSection({ stats }: HeroSectionProps) {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-atlantean-teal-aqua" />
               </span>
               <span className="text-sm text-atlantean-teal-aqua font-mono tracking-wider">
-                ARCANEAN CREATOR OS v2.0
+                LIVING INTELLIGENCE
               </span>
             </motion.div>
 
@@ -151,7 +151,7 @@ export function HeroSection({ stats }: HeroSectionProps) {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-5xl sm:text-6xl lg:text-7xl font-display font-bold leading-[1.05] mb-8"
+              className="text-5xl sm:text-6xl lg:text-7xl font-display font-bold leading-[1.05] tracking-[-0.04em] mb-8"
             >
               <span className="block">Where</span>
               <span className="relative inline-block">
@@ -174,7 +174,7 @@ export function HeroSection({ stats }: HeroSectionProps) {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-xl lg:text-2xl text-text-secondary leading-relaxed mb-10"
             >
-              16 AI specialists across development, design, writing, and research.
+              10 AI specialists across writing, design, code, music, and strategy.
               A philosophy library. Tools that work the way you think.
             </motion.p>
 
@@ -230,7 +230,7 @@ export function HeroSection({ stats }: HeroSectionProps) {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="flex flex-wrap gap-8 mt-16 pt-8 border-t border-white/[0.06]"
             >
-              <StatItem value={stats.luminors} label="Luminor Intelligences" color="atlantean-teal-aqua" />
+              <StatItem value={stats.luminors} label="AI Specialists" color="atlantean-teal-aqua" />
               <StatItem value={stats.wisdoms} label="Wisdoms Framework" color="gold-bright" />
               <StatItem value={stats.collections} label="Wisdom Collections" color="creation-prism-purple" />
               <StatItem value={`${Math.round(stats.words / 1000)}k+`} label="Words of Wisdom" color="draconic-crimson" />
@@ -299,7 +299,7 @@ function StatItem({ value, label, color }: { value: number | string; label: stri
 
 function LuminorOrbit() {
   const teams = [
-    { id: 'dev', name: 'Development', color: '#8b5cf6', icon: '⚡', position: 0 },
+    { id: 'dev', name: 'Development', color: '#0d47a1', icon: '⚡', position: 0 },
     { id: 'creative', name: 'Creative', color: '#f59e0b', icon: '✨', position: 90 },
     { id: 'writing', name: 'Writing', color: '#10b981', icon: '✍️', position: 180 },
     { id: 'research', name: 'Research', color: '#3b82f6', icon: '🔮', position: 270 },
@@ -345,9 +345,9 @@ function LuminorOrbit() {
         className="absolute inset-[120px] rounded-full bg-gradient-to-br from-cosmic-surface to-cosmic-raised border border-white/[0.06] flex items-center justify-center overflow-hidden"
         animate={{
           boxShadow: [
-            '0 0 60px rgba(127,255,212,0.2)',
-            '0 0 80px rgba(127,255,212,0.3)',
-            '0 0 60px rgba(127,255,212,0.2)',
+            '0 0 60px rgba(0,188,212,0.2)',
+            '0 0 80px rgba(0,188,212,0.3)',
+            '0 0 60px rgba(0,188,212,0.2)',
           ],
         }}
         transition={{ duration: 4, repeat: Infinity }}
@@ -360,13 +360,13 @@ function LuminorOrbit() {
           <motion.div
             className="text-5xl font-display font-bold"
             animate={{
-              color: ['#7fffd4', '#8b5cf6', '#ffd700', '#7fffd4'],
+              color: ['#00bcd4', '#0d47a1', '#ffd700', '#00bcd4'],
             }}
             transition={{ duration: 8, repeat: Infinity }}
           >
-            16
+            10
           </motion.div>
-          <div className="text-sm text-text-muted mt-1">Luminors</div>
+          <div className="text-sm text-text-muted mt-1">Specialists</div>
         </div>
 
         {/* Pulsing ring */}
@@ -455,8 +455,8 @@ function LuminorOrbit() {
         })}
         <defs>
           <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="rgba(127,255,212,0.3)" />
-            <stop offset="100%" stopColor="rgba(139,92,246,0.3)" />
+            <stop offset="0%" stopColor="rgba(0,188,212,0.3)" />
+            <stop offset="100%" stopColor="rgba(13,71,161,0.3)" />
           </linearGradient>
         </defs>
       </svg>

@@ -16,11 +16,11 @@ const badgeVariants = cva(
       variant: {
         default: [
           'bg-[rgba(18,24,38,0.65)] backdrop-blur-[16px]',
-          'border-[rgba(127,255,212,0.12)] text-text-secondary',
+          'border-[rgba(0,188,212,0.12)] text-text-secondary',
         ],
         crystal: [
           'bg-crystal/10 border-crystal/30 text-crystal',
-          'shadow-[0_0_8px_rgba(127,255,212,0.15)]',
+          'shadow-[0_0_8px_rgba(0,188,212,0.15)]',
         ],
         fire: [
           'bg-fire/10 border-fire/30 text-fire-bright',

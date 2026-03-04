@@ -51,8 +51,8 @@ export const GUARDIANS: Guardian[] = [
     element: 'water',
     tagline: 'Oracle of Depths & Hidden Truths',
     avatarInitials: 'SE',
-    color: '#7fffd4',
-    glowColor: '#7fffd4',
+    color: '#00bcd4',
+    glowColor: '#00bcd4',
     greetingMessage:
       "Still waters run deep, seeker. I am Sevi, and I see what others cannot — the currents beneath your story, the tides of character and consequence. Share your vision, and I shall reveal what lies beneath.",
     conversationStarters: [

@@ -176,8 +176,8 @@ export function CodeTab({ generationState }: CodeTabProps) {
           >
             {copied ? (
               <>
-                <Check size={12} className="text-[#7fffd4]" />
-                <span className="text-[#7fffd4]">Copied</span>
+                <Check size={12} className="text-[#00bcd4]" />
+                <span className="text-[#00bcd4]">Copied</span>
               </>
             ) : (
               <>

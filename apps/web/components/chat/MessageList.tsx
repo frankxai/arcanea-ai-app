@@ -74,7 +74,7 @@ export function MessageBubble({ message, guardian }: MessageBubbleProps) {
           >
             {copied ? (
               <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-                <path d="M2 7l3.5 3.5 5.5-7" stroke="#7fffd4" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M2 7l3.5 3.5 5.5-7" stroke="#00bcd4" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             ) : (
               <CopyIcon />
@@ -148,7 +148,7 @@ export function MessageBubble({ message, guardian }: MessageBubbleProps) {
           >
             {copied ? (
               <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                <path d="M1.5 6l2.5 2.5 5-6" stroke="#7fffd4" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M1.5 6l2.5 2.5 5-6" stroke="#00bcd4" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             ) : (
               <CopyIcon />

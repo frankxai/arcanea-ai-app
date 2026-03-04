@@ -276,7 +276,7 @@ export default async function TextPage({ params }: Props) {
               {prevText ? (
                 <Link
                   href={`/library/${prevText.slug}`}
-                  className="group flex-1 rounded-xl border border-cosmic-border bg-cosmic-surface p-6 transition-all hover:border-atlantean-teal/50 hover:shadow-[0_0_30px_rgba(127,255,212,0.1)]"
+                  className="group flex-1 rounded-xl border border-cosmic-border bg-cosmic-surface p-6 transition-all hover:border-atlantean-teal/50 hover:shadow-[0_0_30px_rgba(0,188,212,0.1)]"
                 >
                   <p className="text-xs uppercase tracking-[0.2em] text-text-muted mb-2">Previous</p>
                   <p className="font-display font-semibold text-text-primary group-hover:text-atlantean-teal transition-colors">
@@ -290,7 +290,7 @@ export default async function TextPage({ params }: Props) {
               {nextText ? (
                 <Link
                   href={`/library/${nextText.slug}`}
-                  className="group flex-1 rounded-xl border border-cosmic-border bg-cosmic-surface p-6 text-right transition-all hover:border-atlantean-teal/50 hover:shadow-[0_0_30px_rgba(127,255,212,0.1)]"
+                  className="group flex-1 rounded-xl border border-cosmic-border bg-cosmic-surface p-6 text-right transition-all hover:border-atlantean-teal/50 hover:shadow-[0_0_30px_rgba(0,188,212,0.1)]"
                 >
                   <p className="text-xs uppercase tracking-[0.2em] text-text-muted mb-2">Next</p>
                   <p className="font-display font-semibold text-text-primary group-hover:text-atlantean-teal transition-colors">

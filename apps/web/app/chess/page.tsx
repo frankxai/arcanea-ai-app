@@ -301,7 +301,7 @@ const GUARDIANS = [
     frequency: "639 Hz",
     style: "Intuitive & Deep",
     description: "Sees moves ahead through pure intuition.",
-    accent: "#8b5cf6",
+    accent: "#0d47a1",
     difficulty: "Expert",
     winRate: "67%",
     gamesPlayed: 324,
@@ -354,7 +354,7 @@ export default function ChessPage() {
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-void" />
         <div className="absolute inset-0 bg-cosmic-mesh" />
-        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(139,92,246,0.12),transparent_55%),radial_gradient(ellipse_at_bottom_left,rgba(127,255,212,0.08),transparent_55%)]" />
+        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(13,71,161,0.12),transparent_55%),radial_gradient(ellipse_at_bottom_left,rgba(0,188,212,0.08),transparent_55%)]" />
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

@@ -89,7 +89,7 @@ const ELEMENTS = [
   {
     name: "Water",
     domain: "Flow, healing, memory",
-    dotColor: "#7fffd4",
+    dotColor: "#00bcd4",
   },
   {
     name: "Earth",

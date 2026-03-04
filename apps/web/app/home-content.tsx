@@ -57,7 +57,7 @@ export function HomeContent({
       stat: "10 Creative Partners",
       description: "Each one thinks differently — grounded in a distinct philosophical framework. Create with the one that matches how your mind works.",
       accentColor: "atlantean-teal-aqua",
-      glowColor: "rgba(127,255,212,0.15)",
+      glowColor: "rgba(0,188,212,0.15)",
     },
     {
       href: "/library",
@@ -75,7 +75,7 @@ export function HomeContent({
       stat: "Ten Stages of Mastery",
       description: "A ten-stage progression through creative mastery. The deeper you go, the more the system reveals.",
       accentColor: "creation-prism-purple",
-      glowColor: "rgba(139,92,246,0.12)",
+      glowColor: "rgba(13,71,161,0.12)",
     },
   ];
 

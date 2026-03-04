@@ -148,8 +148,8 @@ const GODBEASTS: Godbeast[] = [
       'Otome does not swim — it moves through the resonance of reality itself, as if water and air and stone were all the same medium when you travel by sound. Its songs are older than language. Scholars believe Otome\'s deepest calls were the first sounds ever produced after Lumina\'s initial word of creation. Those who hear a full Otome song cannot lie for three days afterward; truth has a way of loosening every knot the self has tied.',
     power: 'Reality-resonance, compulsive truth, the dissolution of deception',
     gradient: 'from-cyan-900/30 via-blue-900/20 to-teal-900/30',
-    glowColor: 'rgba(127, 255, 212, 0.4)',
-    accentHex: '#7fffd4',
+    glowColor: 'rgba(0, 188, 212, 0.4)',
+    accentHex: '#00bcd4',
   },
   {
     id: 'yumiko',
@@ -655,7 +655,7 @@ function BondMechanicsSection() {
     {
       icon: PhEye,
       color: 'crystal',
-      hex: '#7fffd4',
+      hex: '#00bcd4',
       title: 'First Recognition',
       body: 'A Godbeast does not choose its Guardian. The Guardian must demonstrate resonance with the frequency the Godbeast embodies — not through proof, but through being.',
     },
@@ -810,7 +810,7 @@ function FrequencySpectrum() {
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
             className="absolute left-1/2 -translate-x-px top-0 bottom-0 w-px origin-top"
             style={{
-              background: 'linear-gradient(to bottom, rgba(74,124,89,0.6), rgba(127,255,212,0.6), rgba(255,215,0,0.8))',
+              background: 'linear-gradient(to bottom, rgba(74,124,89,0.6), rgba(0,188,212,0.6), rgba(255,215,0,0.8))',
             }}
           />
 

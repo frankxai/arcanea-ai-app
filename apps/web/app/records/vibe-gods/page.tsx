@@ -228,7 +228,7 @@ const VIBE_GODS = [
     title: "The Wind Dancer",
     description:
       "Freedom, change, and ideas that blow through like a gentle breeze.",
-    color: "#7fffd4",
+    color: "#00bcd4",
     icon: "wind",
     followers: 756,
     works: 45,

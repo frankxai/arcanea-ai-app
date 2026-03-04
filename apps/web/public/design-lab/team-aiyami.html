@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arcanea — Create</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* ─── Root Variables ─────────────────────────────────── */
+    :root {
+      --black:   #000000;
+      --surface: #111111;
+      --gold:    #c9a96e;
+      --paper:   #e8e6e1;
+      --muted:   #666666;
+      --rule:    1px solid #c9a96e;
+    }
+
+    /* ─── Global Reset ───────────────────────────────────── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      background: #000000;
+      color: #e8e6e1;
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #000000;
+      overflow-x: hidden;
+    }
+
+    /* ─── Typography ─────────────────────────────────────── */
+    .font-display {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .font-body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ─── Layout Constraint ──────────────────────────────── */
+    .constrain {
+      max-width: 960px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+
+    /* ─── Gold Rule ──────────────────────────────────────── */
+    .rule {
+      border: none;
+      border-top: var(--rule);
+      width: 100%;
+    }
+
+    /* ─── Navigation ─────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: #000000;
+      border-bottom: var(--rule);
+    }
+
+    .nav-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 28px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      color: #c9a96e;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 48px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #666666;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: #c9a96e;
+    }
+
+    /* ─── Hero ───────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      background: #000000;
+      display: flex;
+      align-items: center;
+      padding-top: 100px;
+    }
+
+    .hero-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 120px 40px 140px;
+      width: 100%;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #c9a96e;
+      margin-bottom: 48px;
+    }
+
+    .hero-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(120px, 18vw, 220px);
+      font-weight: 300;
+      line-height: 0.88;
+      letter-spacing: -0.02em;
+      color: #e8e6e1;
+      margin-bottom: 64px;
+    }
+
+    .hero-subhead {
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: #666666;
+      max-width: 460px;
+      margin-bottom: 72px;
+      letter-spacing: 0.01em;
+    }
+
+    /* ─── Input System ───────────────────────────────────── */
+    .input-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 0;
+      max-width: 560px;
+      border-bottom: var(--rule);
+      padding-bottom: 16px;
+    }
+
+    .creation-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 300;
+      color: #e8e6e1;
+      placeholder-color: #444444;
+      caret-color: #c9a96e;
+      padding: 0;
+    }
+
+    .creation-input::placeholder {
+      color: #333333;
+      font-style: italic;
+    }
+
+    .begin-btn {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #c9a96e;
+      padding: 0 0 0 32px;
+      transition: opacity 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .begin-btn:hover {
+      opacity: 0.6;
+    }
+
+    /* ─── Section Spacing ────────────────────────────────── */
+    .section {
+      padding-top: 140px;
+      padding-bottom: 140px;
+    }
+
+    .section-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+
+    /* ─── Manifesto ──────────────────────────────────────── */
+    .manifesto-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(26px, 3.5vw, 42px);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.5;
+      color: #e8e6e1;
+      letter-spacing: 0.01em;
+      padding: 72px 0;
+    }
+
+    /* ─── Capabilities ───────────────────────────────────── */
+    .capabilities-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #c9a96e;
+      margin-bottom: 72px;
+    }
+
+    .capability-item {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 32px;
+      padding: 44px 0;
+      border-bottom: 1px solid #1a1a1a;
+      align-items: start;
+      transition: border-color 0.3s ease;
+    }
+
+    .capability-item:first-of-type {
+      border-top: 1px solid #1a1a1a;
+    }
+
+    .capability-item:hover {
+      border-bottom-color: #2a2a2a;
+    }
+
+    .capability-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      font-weight: 400;
+      color: #c9a96e;
+      letter-spacing: 0.1em;
+      padding-top: 3px;
+    }
+
+    .capability-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 400;
+      color: #e8e6e1;
+      margin-bottom: 12px;
+      letter-spacing: 0.01em;
+    }
+
+    .capability-desc {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      color: #666666;
+      line-height: 1.7;
+      letter-spacing: 0.01em;
+    }
+
+    /* ─── Featured Creation ──────────────────────────────── */
+    .featured-section {
+      padding-top: 140px;
+      padding-bottom: 0;
+    }
+
+    .featured-label {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .featured-label-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #666666;
+      margin-bottom: 48px;
+    }
+
+    .featured-canvas {
+      width: 100%;
+      height: clamp(380px, 55vw, 620px);
+      background: #111111;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Gradient placeholder — the ONLY visual element beyond black and gold */
+    .featured-canvas::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 70% at 30% 50%, rgba(201, 169, 110, 0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 50% at 75% 30%, rgba(201, 169, 110, 0.04) 0%, transparent 60%);
+    }
+
+    .featured-canvas::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 1px;
+      height: 60%;
+      background: rgba(201, 169, 110, 0.12);
+    }
+
+    .featured-caption {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .featured-rule {
+      border: none;
+      border-top: var(--rule);
+    }
+
+    .featured-meta {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 32px 0;
+    }
+
+    .featured-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 300;
+      color: #e8e6e1;
+      letter-spacing: 0.01em;
+    }
+
+    .featured-author {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #666666;
+      white-space: nowrap;
+      margin-left: 40px;
+    }
+
+    /* ─── CTA Section ────────────────────────────────────── */
+    .cta-section {
+      padding-top: 180px;
+      padding-bottom: 180px;
+    }
+
+    .cta-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .cta-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 5.5vw, 72px);
+      font-weight: 300;
+      font-style: italic;
+      color: #c9a96e;
+      line-height: 1.2;
+      letter-spacing: 0.01em;
+      margin-bottom: 64px;
+    }
+
+    .cta-input-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 0;
+      max-width: 520px;
+      border-bottom: var(--rule);
+      padding-bottom: 16px;
+    }
+
+    .cta-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 300;
+      color: #e8e6e1;
+      caret-color: #c9a96e;
+      padding: 0;
+    }
+
+    .cta-input::placeholder {
+      color: #333333;
+      font-style: italic;
+    }
+
+    .cta-btn {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #c9a96e;
+      padding: 0 0 0 32px;
+      transition: opacity 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .cta-btn:hover {
+      opacity: 0.6;
+    }
+
+    /* ─── Footer ─────────────────────────────────────────── */
+    footer {
+      border-top: var(--rule);
+      padding: 56px 0 56px;
+    }
+
+    .footer-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+    .footer-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #c9a96e;
+      margin-bottom: 16px;
+    }
+
+    .footer-copy {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 300;
+      color: #444444;
+      letter-spacing: 0.05em;
+      line-height: 1.8;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      text-align: right;
+    }
+
+    .footer-links a {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #444444;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: #c9a96e;
+    }
+
+    /* ─── Responsive ─────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .nav-inner {
+        padding: 22px 24px;
+      }
+
+      .nav-links {
+        gap: 28px;
+      }
+
+      .hero-inner {
+        padding: 100px 24px 100px;
+      }
+
+      .hero-headline {
+        font-size: clamp(80px, 22vw, 140px);
+      }
+
+      .section-inner,
+      .featured-label,
+      .featured-caption,
+      .cta-inner,
+      .footer-inner {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+      .featured-meta {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .featured-author {
+        margin-left: 0;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        gap: 40px;
+      }
+
+      .footer-links {
+        text-align: left;
+      }
+
+      .input-row,
+      .cta-input-row {
+        max-width: 100%;
+      }
+
+      .manifesto-text {
+        padding: 52px 0;
+      }
+
+      .section {
+        padding-top: 100px;
+        padding-bottom: 100px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ─── Navigation ─────────────────────────────────────── -->
+  <nav>
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">Arcanea</a>
+      <ul class="nav-links">
+        <li><a href="#capabilities">Platform</a></li>
+        <li><a href="#featured">Gallery</a></li>
+        <li><a href="#cta">Begin</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ─── Hero ───────────────────────────────────────────── -->
+  <section class="hero" id="hero">
+    <div class="hero-inner">
+      <p class="hero-eyebrow">The Platform for Creators</p>
+      <h1 class="hero-headline">Create.</h1>
+      <p class="hero-subhead">
+        One idea. One sentence. Arcanea transforms intention into reality — music, story, image, code, world. What do you want to make?
+      </p>
+      <div class="input-row">
+        <input
+          class="creation-input"
+          type="text"
+          placeholder="Describe what you want to create…"
+          aria-label="Creation prompt"
+        />
+        <button class="begin-btn" type="button">Begin</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Manifesto ──────────────────────────────────────── -->
+  <section class="section" id="manifesto">
+    <div class="section-inner">
+      <hr class="rule" />
+      <p class="manifesto-text">
+        We believe the distance between imagination and existence should be zero. Every creator — painter, poet, architect, musician, builder — deserves a platform equal to the scale of their vision. Arcanea is not a tool. It is a collaborator, a canvas, a universe that grows with you.
+      </p>
+      <hr class="rule" />
+    </div>
+  </section>
+
+  <!-- ─── Capabilities ───────────────────────────────────── -->
+  <section class="section" id="capabilities">
+    <div class="section-inner">
+      <p class="capabilities-label">What Arcanea Does</p>
+
+      <div class="capability-item">
+        <span class="capability-num">01</span>
+        <div>
+          <h3 class="capability-title">Story & Narrative</h3>
+          <p class="capability-desc">Author novels, scripts, and mythologies with an AI that understands character, arc, and consequence — collaborating at every level of depth.</p>
+        </div>
+      </div>
+
+      <div class="capability-item">
+        <span class="capability-num">02</span>
+        <div>
+          <h3 class="capability-title">Sound & Music</h3>
+          <p class="capability-desc">Compose original scores, produce tracks, and build sonic worlds from a single descriptive phrase — genre, mood, or emotion.</p>
+        </div>
+      </div>
+
+      <div class="capability-item">
+        <span class="capability-num">03</span>
+        <div>
+          <h3 class="capability-title">Visual & Image</h3>
+          <p class="capability-desc">Generate artwork, concept imagery, and visual identities that hold the weight of your aesthetic vision without compromise.</p>
+        </div>
+      </div>
+
+      <div class="capability-item">
+        <span class="capability-num">04</span>
+        <div>
+          <h3 class="capability-title">Build & Code</h3>
+          <p class="capability-desc">Translate ideas into working software — applications, interactive experiences, and tools that extend your creative reach into functional reality.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── Featured Creation ──────────────────────────────── -->
+  <section class="featured-section" id="featured">
+    <div class="featured-label">
+      <p class="featured-label-text">Featured Creation</p>
+    </div>
+
+    <div class="featured-canvas" role="img" aria-label="Featured creation: The Cartography of Silence"></div>
+
+    <div class="featured-caption">
+      <hr class="featured-rule" />
+      <div class="featured-meta">
+        <h2 class="featured-title">The Cartography of Silence</h2>
+        <span class="featured-author">By E. Valmont &nbsp;·&nbsp; Visual Work</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CTA Section ────────────────────────────────────── -->
+  <section class="cta-section" id="cta">
+    <div class="cta-inner">
+      <hr class="rule" style="margin-bottom: 72px;" />
+      <h2 class="cta-headline">Your universe<br/>is waiting.</h2>
+      <div class="cta-input-row">
+        <input
+          class="cta-input"
+          type="text"
+          placeholder="What will you create?"
+          aria-label="Creation prompt"
+        />
+        <button class="cta-btn" type="button">Begin</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Footer ─────────────────────────────────────────── -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <p class="footer-brand">Arcanea</p>
+        <p class="footer-copy">
+          &copy; 2026 Arcanea, Inc.<br />
+          arcanea.ai
+        </p>
+      </div>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="#">Platform</a>
+        <a href="#">Gallery</a>
+        <a href="#">Creators</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </nav>
+    </div>
+  </footer>
+
+</body>
+</html>

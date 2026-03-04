@@ -57,7 +57,7 @@ export default function HubPage() {
     <div className="min-h-screen bg-cosmic-deep">
       {/* Background Effects */}
       <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(139,92,246,0.15),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(16,185,129,0.1),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(13,71,161,0.15),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(16,185,129,0.1),transparent_50%)]" />
       </div>
 
       <main className="max-w-7xl mx-auto px-6 py-20">
@@ -83,7 +83,7 @@ export default function HubPage() {
             <Link
               key={section.id}
               href={section.href}
-              className="group relative p-8 rounded-2xl liquid-glass overflow-hidden transition-all hover:border-white/[0.12] hover:shadow-[0_0_40px_rgba(139,92,246,0.15)]"
+              className="group relative p-8 rounded-2xl liquid-glass overflow-hidden transition-all hover:border-white/[0.12] hover:shadow-[0_0_40px_rgba(13,71,161,0.15)]"
             >
               {/* Gradient overlay on hover */}
               <div

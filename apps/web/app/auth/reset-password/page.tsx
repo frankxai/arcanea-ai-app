@@ -197,7 +197,7 @@ export default function ResetPasswordPage() {
             <button
               type="submit"
               disabled={isLoading || hasRecoverySession === false}
-              className="w-full flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-aqua/80 text-cosmic-deep font-semibold text-sm hover:shadow-[0_0_30px_rgba(127,255,212,0.25)] transition-all duration-300 disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-aqua/80 text-cosmic-deep font-semibold text-sm hover:shadow-[0_0_30px_rgba(0,188,212,0.25)] transition-all duration-300 disabled:opacity-50"
             >
               {isLoading ? (
                 <div className="flex items-center gap-3">

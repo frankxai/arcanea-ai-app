@@ -126,7 +126,7 @@ export function StudioTab() {
                           'text-element-fire': '#ff6b35',
                           'text-element-void': '#9966ff',
                         }
-                        const color = colorMap[tool.elementColor] || '#7fffd4'
+                        const color = colorMap[tool.elementColor] || '#00bcd4'
                         e.currentTarget.style.boxShadow = `0 0 32px ${color}60`
                       }}
                       onMouseLeave={(e) => {

@@ -37,7 +37,7 @@ function SliderRow({ label, value, min, max, step, onChange }: SliderRowProps) {
           onChange={(e) => onChange(parseFloat(e.target.value))}
           className="parameter-slider w-full"
           style={{
-            background: `linear-gradient(to right, rgba(127,255,212,0.5) 0%, rgba(127,255,212,0.5) ${pct}%, rgba(255,255,255,0.06) ${pct}%, rgba(255,255,255,0.06) 100%)`,
+            background: `linear-gradient(to right, rgba(0,188,212,0.5) 0%, rgba(0,188,212,0.5) ${pct}%, rgba(255,255,255,0.06) ${pct}%, rgba(255,255,255,0.06) 100%)`,
           }}
         />
       </div>
@@ -266,19 +266,19 @@ export function ParameterSliders({ config, onChange, className }: ParameterSlide
           width: 14px;
           height: 14px;
           border-radius: 50%;
-          background: #7fffd4;
+          background: #00bcd4;
           border: 2px solid rgba(0, 0, 0, 0.3);
           cursor: pointer;
           transition: box-shadow 0.15s;
         }
         .parameter-slider::-webkit-slider-thumb:hover {
-          box-shadow: 0 0 8px rgba(127, 255, 212, 0.4);
+          box-shadow: 0 0 8px rgba(0, 188, 212, 0.4);
         }
         .parameter-slider::-moz-range-thumb {
           width: 14px;
           height: 14px;
           border-radius: 50%;
-          background: #7fffd4;
+          background: #00bcd4;
           border: 2px solid rgba(0, 0, 0, 0.3);
           cursor: pointer;
         }

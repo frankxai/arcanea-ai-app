@@ -224,14 +224,14 @@ const FEATURES = [
     title: "Neural Processing",
     description:
       "Advanced neural networks enable natural conversation, emotional intelligence, and adaptive learning.",
-    accent: "#8b5cf6",
+    accent: "#0d47a1",
   },
   {
     icon: Icons.Database,
     title: "Persistent Memory",
     description:
       "Long-term memory systems that remember context, preferences, and shared experiences across sessions.",
-    accent: "#7fffd4",
+    accent: "#00bcd4",
   },
   {
     icon: Icons.GitBranch,
@@ -280,12 +280,12 @@ const ARCHITECTURE_LAYERS = [
   {
     name: "Perception Layer",
     description: "Input processing, speech recognition, vision",
-    color: "#8b5cf6",
+    color: "#0d47a1",
   },
   {
     name: "Cognition Layer",
     description: "Reasoning, planning, decision making",
-    color: "#7fffd4",
+    color: "#00bcd4",
   },
   {
     name: "Memory Layer",
@@ -311,7 +311,7 @@ export default function AcosPage() {
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-void" />
         <div className="absolute inset-0 bg-cosmic-mesh" />
-        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(139,92,246,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(127,255,212,0.08),transparent_55%)]" />
+        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(13,71,161,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(0,188,212,0.08),transparent_55%)]" />
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

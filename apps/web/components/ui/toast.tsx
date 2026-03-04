@@ -119,7 +119,7 @@ function ToastCard({
       className={cn(
         'pointer-events-auto relative flex w-full max-w-sm overflow-hidden rounded-xl',
         'bg-[rgba(18,24,38,0.92)] backdrop-blur-[16px]',
-        'border border-[rgba(127,255,212,0.12)]',
+        'border border-[rgba(0,188,212,0.12)]',
         'shadow-[0_8px_32px_rgba(0,0,0,0.4)]',
         'border-l-4',
         borderColor,

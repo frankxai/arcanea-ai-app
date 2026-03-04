@@ -60,7 +60,7 @@ const ELEMENTS = [
     icon: PhDrop,
     colors: {
       primary: '#78a6ff',
-      secondary: '#7fffd4',
+      secondary: '#00bcd4',
       glow: 'rgba(120, 166, 255, 0.35)',
       border: 'rgba(120, 166, 255, 0.25)',
       bg: 'rgba(120, 166, 255, 0.06)',
@@ -242,7 +242,7 @@ function ElementsHero() {
           <polygon
             points="50,15 80,40 68,78 32,78 20,40"
             fill="none"
-            stroke="rgba(127,255,212,0.5)"
+            stroke="rgba(0,188,212,0.5)"
             strokeWidth="0.2"
             vectorEffect="non-scaling-stroke"
           />

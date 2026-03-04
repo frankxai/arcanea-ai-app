@@ -130,7 +130,7 @@ const HOUSES = {
 function getRank(gatesOpened: number): { rank: string; color: string } {
   if (gatesOpened >= 9) return { rank: 'Luminor', color: '#ffd700' };
   if (gatesOpened >= 7) return { rank: 'Archmage', color: '#f59e0b' };
-  if (gatesOpened >= 5) return { rank: 'Master', color: '#8b5cf6' };
+  if (gatesOpened >= 5) return { rank: 'Master', color: '#0d47a1' };
   if (gatesOpened >= 3) return { rank: 'Mage', color: '#3b82f6' };
   return { rank: 'Apprentice', color: '#6b7280' };
 }
@@ -320,7 +320,7 @@ export default function AssessmentPage() {
                 </Link>
                 <Link
                   href="/lore/guardians"
-                  className="flex-1 py-3 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep text-center font-semibold hover:shadow-[0_0_30px_rgba(127,255,212,0.4)] transition-all"
+                  className="flex-1 py-3 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep text-center font-semibold hover:shadow-[0_0_30px_rgba(0,188,212,0.4)] transition-all"
                 >
                   Meet Your Intelligence
                 </Link>
@@ -412,7 +412,7 @@ export default function AssessmentPage() {
               <button
                 onClick={handleNext}
                 disabled={selectedOption === null}
-                className="flex items-center gap-2 px-6 py-3 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep font-semibold hover:shadow-[0_0_20px_rgba(127,255,212,0.4)] transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                className="flex items-center gap-2 px-6 py-3 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep font-semibold hover:shadow-[0_0_20px_rgba(0,188,212,0.4)] transition-all disabled:opacity-30 disabled:cursor-not-allowed"
               >
                 {currentQuestion === ASSESSMENT_QUESTIONS.length - 1 ? 'Complete' : 'Next'}
                 <PhArrowRight className="w-4 h-4" />

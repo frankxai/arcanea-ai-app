@@ -108,7 +108,7 @@ const ModalHeader = React.forwardRef<HTMLDivElement, ModalHeaderProps>(
   ({ className, title, description, onClose, showCloseButton = true, children, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn('flex items-start justify-between gap-4 pb-4 border-b border-[rgba(127,255,212,0.08)]', className)}
+      className={cn('flex items-start justify-between gap-4 pb-4 border-b border-[rgba(0,188,212,0.08)]', className)}
       {...props}
     >
       <div className="flex-1 min-w-0">
@@ -161,7 +161,7 @@ const ModalFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDi
     <div
       ref={ref}
       className={cn(
-        'flex items-center justify-end gap-3 pt-4 border-t border-[rgba(127,255,212,0.08)]',
+        'flex items-center justify-end gap-3 pt-4 border-t border-[rgba(0,188,212,0.08)]',
         className
       )}
       {...props}
@@ -269,7 +269,7 @@ function Modal({
             className={cn(
               'relative z-10 w-full rounded-2xl',
               'bg-[rgba(18,24,38,0.92)] backdrop-blur-[24px]',
-              'border border-[rgba(127,255,212,0.15)]',
+              'border border-[rgba(0,188,212,0.15)]',
               'shadow-[0_8px_32px_rgba(0,0,0,0.4),0_0_1px_rgba(255,255,255,0.08)]',
               'p-6',
               sizeClasses[size],

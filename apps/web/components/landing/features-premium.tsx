@@ -150,7 +150,7 @@ export function FeaturesPremium() {
         <div
           className="absolute inset-0 opacity-[0.02]"
           style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, rgba(127,255,212,0.5) 1px, transparent 0)`,
+            backgroundImage: `radial-gradient(circle at 2px 2px, rgba(0,188,212,0.5) 1px, transparent 0)`,
             backgroundSize: "40px 40px",
           }}
         />

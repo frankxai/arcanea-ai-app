@@ -133,7 +133,7 @@ export default function ArcanealOnboarding() {
         <CosmicParticles count={40} />
         {/* Static ambient orbs */}
         <div className="absolute top-1/3 left-1/5 w-96 h-96 rounded-full bg-[#8b5cf6]/5 blur-[120px]" />
-        <div className="absolute bottom-1/3 right-1/5 w-80 h-80 rounded-full bg-[#7fffd4]/4 blur-[100px]" />
+        <div className="absolute bottom-1/3 right-1/5 w-80 h-80 rounded-full bg-[#00bcd4]/4 blur-[100px]" />
         <div className="absolute top-2/3 left-1/2 w-64 h-64 rounded-full bg-[#ffd700]/3 blur-[90px]" />
       </div>
 
@@ -217,7 +217,7 @@ export default function ArcanealOnboarding() {
           </div>
 
           {/* Bottom edge shimmer */}
-          <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#7fffd4]/20 to-transparent" />
+          <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#00bcd4]/20 to-transparent" />
         </div>
 
         {/* Step counter below card */}

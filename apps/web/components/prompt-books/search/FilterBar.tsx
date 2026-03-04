@@ -257,7 +257,7 @@ export function FilterBar() {
                   "absolute top-full left-0 mt-1.5 z-50 min-w-[180px]",
                   "rounded-xl p-1.5",
                   "bg-[rgba(12,16,28,0.96)] backdrop-blur-[20px]",
-                  "border border-[rgba(127,255,212,0.12)]",
+                  "border border-[rgba(0,188,212,0.12)]",
                   "shadow-[0_8px_32px_rgba(0,0,0,0.5)]",
                 )}
               >
@@ -377,7 +377,7 @@ export function FilterBar() {
                   "absolute top-full left-0 mt-1.5 z-50 min-w-[200px] max-w-[280px]",
                   "rounded-xl p-1.5",
                   "bg-[rgba(12,16,28,0.96)] backdrop-blur-[20px]",
-                  "border border-[rgba(127,255,212,0.12)]",
+                  "border border-[rgba(0,188,212,0.12)]",
                   "shadow-[0_8px_32px_rgba(0,0,0,0.5)]",
                 )}
               >
@@ -465,7 +465,7 @@ export function FilterBar() {
                   "absolute top-full right-0 mt-1.5 z-50 min-w-[170px]",
                   "rounded-xl p-1.5",
                   "bg-[rgba(12,16,28,0.96)] backdrop-blur-[20px]",
-                  "border border-[rgba(127,255,212,0.12)]",
+                  "border border-[rgba(0,188,212,0.12)]",
                   "shadow-[0_8px_32px_rgba(0,0,0,0.5)]",
                 )}
               >

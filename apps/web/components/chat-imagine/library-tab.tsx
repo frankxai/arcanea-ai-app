@@ -198,7 +198,7 @@ export function LibraryTab() {
                     boxShadow: "none",
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.boxShadow = `0 20px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(127, 255, 212, 0.2)`;
+                    e.currentTarget.style.boxShadow = `0 20px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 188, 212, 0.2)`;
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.boxShadow = "none";

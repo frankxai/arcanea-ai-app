@@ -32,7 +32,7 @@ export function CosmicParticles({ className = "" }: { className?: string }) {
     window.addEventListener("resize", resizeCanvas);
 
     const colors = [
-      "rgba(127, 255, 212, 0.6)", // Atlantean teal
+      "rgba(0, 188, 212, 0.6)", // Atlantean teal
       "rgba(120, 166, 255, 0.6)", // Cosmic blue
       "rgba(255, 215, 0, 0.5)",   // Gold
       "rgba(255, 255, 255, 0.4)", // White
@@ -79,7 +79,7 @@ export function CosmicParticles({ className = "" }: { className?: string }) {
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(127, 255, 212, ${0.1 * (1 - distance / 120)})`;
+            ctx.strokeStyle = `rgba(0, 188, 212, ${0.1 * (1 - distance / 120)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }

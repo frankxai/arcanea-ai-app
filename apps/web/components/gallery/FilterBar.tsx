@@ -107,9 +107,9 @@ export function FilterBar({
                     style={
                       isActive
                         ? {
-                            background: 'rgba(127,255,212,0.15)',
-                            borderColor: '#7fffd4',
-                            color: '#7fffd4',
+                            background: 'rgba(0,188,212,0.15)',
+                            borderColor: '#00bcd4',
+                            color: '#00bcd4',
                           }
                         : {
                             background: 'rgba(255,255,255,0.03)',

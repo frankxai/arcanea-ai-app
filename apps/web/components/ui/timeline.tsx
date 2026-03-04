@@ -57,7 +57,7 @@ const itemVariants: Variants = {
 
 const statusStyles = {
   completed: {
-    dot: "bg-crystal shadow-[0_0_8px_rgba(127,255,212,0.5)]",
+    dot: "bg-crystal shadow-[0_0_8px_rgba(0,188,212,0.5)]",
     line: "bg-gradient-to-b from-crystal/40 to-transparent",
     icon: "text-crystal",
   },
@@ -91,7 +91,7 @@ const Timeline = React.forwardRef<HTMLDivElement, TimelineProps>(
     const lineClasses = cn(
       "absolute top-0 bottom-0 w-px",
       orientation === "center" ? "hidden sm:block" : "",
-      "bg-gradient-to-b from-crystal/30 via-[rgba(127,255,212,0.1)] to-transparent",
+      "bg-gradient-to-b from-crystal/30 via-[rgba(0,188,212,0.1)] to-transparent",
     );
 
     const showLine = orientation !== "center";
@@ -159,8 +159,8 @@ const Timeline = React.forwardRef<HTMLDivElement, TimelineProps>(
                         className={cn(
                           "p-4 sm:p-5",
                           "bg-[rgba(18,24,38,0.65)] backdrop-blur-[16px]",
-                          "border border-[rgba(127,255,212,0.12)]",
-                          "hover:border-[rgba(127,255,212,0.25)] transition-colors",
+                          "border border-[rgba(0,188,212,0.12)]",
+                          "hover:border-[rgba(0,188,212,0.25)] transition-colors",
                         )}
                       >
                         {event.category && (
@@ -258,8 +258,8 @@ const Timeline = React.forwardRef<HTMLDivElement, TimelineProps>(
                       className={cn(
                         "p-4 sm:p-5",
                         "bg-[rgba(18,24,38,0.65)] backdrop-blur-[16px]",
-                        "border border-[rgba(127,255,212,0.12)]",
-                        "hover:border-[rgba(127,255,212,0.25)] transition-colors",
+                        "border border-[rgba(0,188,212,0.12)]",
+                        "hover:border-[rgba(0,188,212,0.25)] transition-colors",
                       )}
                     >
                       {event.category && (

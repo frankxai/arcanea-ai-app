@@ -46,7 +46,7 @@ const DEMO_COLLECTIONS = [
     id: "d1",
     name: "Creative Writing",
     icon: PhSparkle,
-    color: "#7fffd4",
+    color: "#00bcd4",
     promptCount: 12,
     description: "Story prompts, character builders, and narrative frameworks",
   },
@@ -54,7 +54,7 @@ const DEMO_COLLECTIONS = [
     id: "d2",
     name: "World Building",
     icon: PhBooks,
-    color: "#8b5cf6",
+    color: "#0d47a1",
     promptCount: 8,
     description: "Universe creation, lore systems, and setting design",
   },
@@ -134,7 +134,7 @@ function PromptBooksLanding() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link
             href="/auth/login?next=/prompt-books"
-            className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-aqua/80 text-cosmic-deep font-semibold text-sm hover:shadow-[0_0_30px_rgba(127,255,212,0.25)] hover:scale-[1.02] transition-all duration-300"
+            className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-aqua/80 text-cosmic-deep font-semibold text-sm hover:shadow-[0_0_30px_rgba(0,188,212,0.25)] hover:scale-[1.02] transition-all duration-300"
           >
             Sign In to Access
             <PhArrowRight className="w-4 h-4" />

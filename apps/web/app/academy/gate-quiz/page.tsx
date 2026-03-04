@@ -185,7 +185,7 @@ const GUARDIANS: Record<GuardianKey, GuardianData> = {
     frequency: "639 Hz",
     element: "Void",
     godbeast: "Yumiko",
-    color: "#8b5cf6",
+    color: "#0d47a1",
     glowColor: "rgba(139, 92, 246, 0.4)",
     description:
       "Guardian of Sight and visionary perception, Lyria sees what others cannot — the hidden patterns, the emerging forms, the deep currents beneath the surface of things. Her creations are portals to previously unseen dimensions.",
@@ -635,7 +635,7 @@ function ProgressBar({ current, total }: ProgressBarProps) {
         <motion.div
           className="h-full rounded-full"
           style={{
-            background: "linear-gradient(90deg, #8b5cf6, #7fffd4)",
+            background: "linear-gradient(90deg, #0d47a1, #00bcd4)",
           }}
           initial={{ width: 0 }}
           animate={{ width: `${percent}%` }}
@@ -660,7 +660,7 @@ interface IntroScreenProps {
 function IntroScreen({ onStart }: IntroScreenProps) {
   return (
     <motion.div {...fadeUp} className="relative">
-      <AmbientOrbs color="#8b5cf6" />
+      <AmbientOrbs color="#0d47a1" />
 
       <div className="relative liquid-glass rounded-3xl p-8 md:p-14 overflow-hidden">
         {/* Inner shimmer accent */}
@@ -786,7 +786,7 @@ function QuestionScreen({
       <ProgressBar current={questionNumber} total={totalQuestions} />
 
       <div className="relative liquid-glass rounded-3xl overflow-hidden">
-        <AmbientOrbs color="#8b5cf6" />
+        <AmbientOrbs color="#0d47a1" />
 
         <div className="relative p-8 md:p-10">
           {/* Question header */}

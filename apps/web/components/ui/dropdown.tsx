@@ -147,7 +147,7 @@ function DropdownDivider() {
   return (
     <div
       role="separator"
-      className="my-1 h-px bg-[rgba(127,255,212,0.08)]"
+      className="my-1 h-px bg-[rgba(0,188,212,0.08)]"
     />
   );
 }
@@ -300,7 +300,7 @@ const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
                 'absolute top-full mt-1.5 z-50',
                 'rounded-xl p-1.5',
                 'bg-[rgba(18,24,38,0.95)] backdrop-blur-[20px]',
-                'border border-[rgba(127,255,212,0.14)]',
+                'border border-[rgba(0,188,212,0.14)]',
                 'shadow-[0_8px_32px_rgba(0,0,0,0.45),0_0_1px_rgba(255,255,255,0.06)]',
                 alignClasses[align],
                 contentClassName

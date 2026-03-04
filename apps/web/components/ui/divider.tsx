@@ -7,8 +7,8 @@ import { cn } from '@/lib/utils';
 const dividerVariants = cva('', {
   variants: {
     variant: {
-      solid: 'bg-[rgba(127,255,212,0.10)]',
-      gradient: 'bg-gradient-to-r from-transparent via-[rgba(127,255,212,0.20)] to-transparent',
+      solid: 'bg-[rgba(0,188,212,0.10)]',
+      gradient: 'bg-gradient-to-r from-transparent via-[rgba(0,188,212,0.20)] to-transparent',
       dotted: '',
     },
     orientation: {
@@ -57,7 +57,7 @@ const Divider = React.forwardRef<HTMLDivElement, DividerProps>(
             role="separator"
             aria-orientation="vertical"
             className={cn(
-              'w-px border-l border-dotted border-[rgba(127,255,212,0.15)] h-full',
+              'w-px border-l border-dotted border-[rgba(0,188,212,0.15)] h-full',
               className
             )}
             {...props}
@@ -71,13 +71,13 @@ const Divider = React.forwardRef<HTMLDivElement, DividerProps>(
           className={cn('flex items-center gap-3 w-full', className)}
           {...props}
         >
-          <div className="flex-1 border-t border-dotted border-[rgba(127,255,212,0.15)]" aria-hidden="true" />
+          <div className="flex-1 border-t border-dotted border-[rgba(0,188,212,0.15)]" aria-hidden="true" />
           {label && (
             <span className={cn('shrink-0 text-xs text-text-muted font-sans select-none', labelClassName)}>
               {label}
             </span>
           )}
-          {label && <div className="flex-1 border-t border-dotted border-[rgba(127,255,212,0.15)]" aria-hidden="true" />}
+          {label && <div className="flex-1 border-t border-dotted border-[rgba(0,188,212,0.15)]" aria-hidden="true" />}
         </div>
       );
     }

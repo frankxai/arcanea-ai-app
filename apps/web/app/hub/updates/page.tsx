@@ -112,7 +112,7 @@ export default function UpdatesPage() {
     <div className="min-h-screen bg-cosmic-deep">
       {/* Background Effects */}
       <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(139,92,246,0.15),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(13,71,161,0.15),transparent_50%)]" />
       </div>
 
       <main className="max-w-4xl mx-auto px-6 py-20">
@@ -256,7 +256,7 @@ export default function UpdatesPage() {
                 placeholder="Enter your email"
                 className="flex-1 px-4 py-3 rounded-xl bg-white/[0.06] border border-white/[0.12] text-white placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal-aqua"
               />
-              <button className="px-6 py-3 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep font-semibold hover:shadow-[0_0_20px_rgba(127,255,212,0.4)] transition-all">
+              <button className="px-6 py-3 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep font-semibold hover:shadow-[0_0_20px_rgba(0,188,212,0.4)] transition-all">
                 Subscribe
               </button>
             </div>

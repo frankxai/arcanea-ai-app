@@ -34,7 +34,7 @@ export default function OGImage() {
             width: 500,
             height: 500,
             borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(139,92,246,0.18) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(13,71,161,0.18) 0%, transparent 70%)',
           }}
         />
         <div
@@ -45,7 +45,7 @@ export default function OGImage() {
             width: 450,
             height: 450,
             borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(127,255,212,0.12) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(0,188,212,0.12) 0%, transparent 70%)',
           }}
         />
         <div
@@ -70,8 +70,8 @@ export default function OGImage() {
             height: 120,
             borderRadius: 28,
             overflow: 'hidden',
-            border: '1px solid rgba(127,255,212,0.25)',
-            boxShadow: '0 8px 40px rgba(127,255,212,0.15), 0 2px 16px rgba(0,0,0,0.4)',
+            border: '1px solid rgba(0,188,212,0.25)',
+            boxShadow: '0 8px 40px rgba(0,188,212,0.15), 0 2px 16px rgba(0,0,0,0.4)',
             marginBottom: 44,
           }}
         >
@@ -85,7 +85,7 @@ export default function OGImage() {
             fontSize: 68,
             fontWeight: 800,
             letterSpacing: '-0.02em',
-            background: 'linear-gradient(90deg, #ffd700, #7fffd4, #8b5cf6)',
+            background: 'linear-gradient(90deg, #ffd700, #00bcd4, #0d47a1)',
             backgroundClip: 'text',
             color: 'transparent',
             marginBottom: 20,

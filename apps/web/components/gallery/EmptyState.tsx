@@ -37,8 +37,8 @@ export function EmptyState({ hasSearch, query }: EmptyStateProps) {
             style={{
               top: `calc(50% + ${Math.sin((deg * Math.PI) / 180) * 52}px - 3px)`,
               left: `calc(50% + ${Math.cos((deg * Math.PI) / 180) * 52}px - 3px)`,
-              background: deg % 120 === 0 ? '#8b5cf6' : deg % 60 === 0 ? '#7fffd4' : 'rgba(139,92,246,0.3)',
-              boxShadow: deg % 120 === 0 ? '0 0 6px rgba(139,92,246,0.8)' : deg % 60 === 0 ? '0 0 6px rgba(127,255,212,0.6)' : 'none',
+              background: deg % 120 === 0 ? '#8b5cf6' : deg % 60 === 0 ? '#00bcd4' : 'rgba(139,92,246,0.3)',
+              boxShadow: deg % 120 === 0 ? '0 0 6px rgba(139,92,246,0.8)' : deg % 60 === 0 ? '0 0 6px rgba(0,188,212,0.6)' : 'none',
             }}
           />
         ))}

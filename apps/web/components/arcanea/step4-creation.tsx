@@ -297,10 +297,10 @@ export default function Step4Creation({ guardian, onCreationSaved, onNext, onBac
               disabled={saved}
               className="w-full py-2.5 rounded-xl text-xs font-sans font-semibold transition-all duration-300 flex items-center justify-center gap-2 hover:scale-[1.01]"
               style={{
-                background: saved ? 'rgba(127,255,212,0.08)' : 'rgba(255,215,0,0.08)',
-                border: `1px solid ${saved ? 'rgba(127,255,212,0.3)' : 'rgba(255,215,0,0.25)'}`,
-                color: saved ? '#7fffd4' : '#ffd700',
-                boxShadow: saved ? '0 0 12px rgba(127,255,212,0.15)' : '0 0 12px rgba(255,215,0,0.1)',
+                background: saved ? 'rgba(0,188,212,0.08)' : 'rgba(255,215,0,0.08)',
+                border: `1px solid ${saved ? 'rgba(0,188,212,0.3)' : 'rgba(255,215,0,0.25)'}`,
+                color: saved ? '#00bcd4' : '#ffd700',
+                boxShadow: saved ? '0 0 12px rgba(0,188,212,0.15)' : '0 0 12px rgba(255,215,0,0.1)',
               }}
             >
               {saved ? (

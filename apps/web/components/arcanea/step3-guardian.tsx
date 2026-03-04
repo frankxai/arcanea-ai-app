@@ -88,7 +88,7 @@ const QUESTIONS = [
     options: [
       { label: 'Stories', sublabel: 'Myths, legends, and lore', value: 'myths', color: '#ffd700', glow: 'rgba(255,215,0,0.2)', icon: <StoriesIcon /> },
       { label: 'Beauty', sublabel: 'Aesthetics and the sublime', value: 'nature', color: '#f472b6', glow: 'rgba(244,114,182,0.2)', icon: <BeautyIcon /> },
-      { label: 'Innovation', sublabel: 'The unknown and the future', value: 'future', color: '#7fffd4', glow: 'rgba(127,255,212,0.2)', icon: <InnovationIcon /> },
+      { label: 'Innovation', sublabel: 'The unknown and the future', value: 'future', color: '#00bcd4', glow: 'rgba(0,188,212,0.2)', icon: <InnovationIcon /> },
       { label: 'Connection', sublabel: 'Human emotion and empathy', value: 'emotion', color: '#a78bfa', glow: 'rgba(167,139,250,0.2)', icon: <ConnectionIcon /> },
     ],
   },

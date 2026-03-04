@@ -125,8 +125,8 @@ const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
           aria-label={ariaLabel}
           className={cn(
             variant === 'underline'
-              ? 'flex gap-0 border-b border-[rgba(127,255,212,0.12)]'
-              : 'flex gap-1 p-1 rounded-xl bg-[rgba(18,24,38,0.65)] backdrop-blur-[16px] border border-[rgba(127,255,212,0.10)] w-fit',
+              ? 'flex gap-0 border-b border-[rgba(0,188,212,0.12)]'
+              : 'flex gap-1 p-1 rounded-xl bg-[rgba(18,24,38,0.65)] backdrop-blur-[16px] border border-[rgba(0,188,212,0.10)] w-fit',
             tabsClassName
           )}
         >

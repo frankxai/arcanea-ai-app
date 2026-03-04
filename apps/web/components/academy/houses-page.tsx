@@ -86,10 +86,10 @@ const HOUSES = [
     name: 'House Aqualis',
     element: 'Water & Flow',
     colors: {
-      accent: '#7fffd4',
-      glow: 'rgba(127,255,212,0.18)',
-      border: 'rgba(127,255,212,0.28)',
-      borderHover: 'rgba(127,255,212,0.55)',
+      accent: '#00bcd4',
+      glow: 'rgba(0,188,212,0.18)',
+      border: 'rgba(0,188,212,0.28)',
+      borderHover: 'rgba(0,188,212,0.55)',
       badge: 'bg-crystal/15 text-crystal border-crystal/30',
       title: 'text-crystal',
     },
@@ -196,23 +196,23 @@ function HouseCard({ house, index, isInView }: HouseCardProps) {
           {/* Prismatic animated border shimmer */}
           <div className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"
             style={{
-              background: 'linear-gradient(135deg, rgba(255,215,0,0.08), rgba(127,255,212,0.08), rgba(139,92,246,0.08), rgba(249,115,22,0.08))',
+              background: 'linear-gradient(135deg, rgba(255,215,0,0.08), rgba(0,188,212,0.08), rgba(139,92,246,0.08), rgba(249,115,22,0.08))',
             }}
           />
 
           {/* Background orbs */}
           <div className="pointer-events-none absolute -top-20 -right-20 w-64 h-64 rounded-full blur-3xl opacity-20"
-            style={{ background: 'conic-gradient(from 0deg, #ffd700, #7fffd4, #8b5cf6, #f97316, #ffd700)' }}
+            style={{ background: 'conic-gradient(from 0deg, #ffd700, #00bcd4, #8b5cf6, #f97316, #ffd700)' }}
           />
           <div className="pointer-events-none absolute -bottom-12 -left-12 w-48 h-48 rounded-full blur-2xl opacity-15"
-            style={{ background: 'conic-gradient(from 180deg, #4ade80, #e2e8f0, #7fffd4, #ffd700, #4ade80)' }}
+            style={{ background: 'conic-gradient(from 180deg, #4ade80, #e2e8f0, #00bcd4, #ffd700, #4ade80)' }}
           />
 
           <div className="relative flex flex-col md:flex-row md:items-start gap-8">
             {/* Icon */}
             <div className="flex-shrink-0">
               <div className="relative w-20 h-20 rounded-2xl flex items-center justify-center"
-                style={{ background: 'linear-gradient(135deg, rgba(196,181,253,0.25), rgba(127,255,212,0.15))' }}
+                style={{ background: 'linear-gradient(135deg, rgba(196,181,253,0.25), rgba(0,188,212,0.15))' }}
               >
                 <Icon className="w-10 h-10" style={{ color: house.colors.accent }} />
                 <div className="absolute inset-0 rounded-2xl animate-glow-pulse opacity-40"

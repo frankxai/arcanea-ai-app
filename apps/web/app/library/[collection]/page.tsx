@@ -137,7 +137,7 @@ export default async function CollectionPage({ params }: Props) {
             <Link
               key={text.slug}
               href={`/library/${text.slug}`}
-              className="group block rounded-2xl border border-cosmic-border bg-cosmic-surface p-6 transition-all hover:border-atlantean-teal/50 hover:shadow-[0_0_40px_rgba(127,255,212,0.15)]"
+              className="group block rounded-2xl border border-cosmic-border bg-cosmic-surface p-6 transition-all hover:border-atlantean-teal/50 hover:shadow-[0_0_40px_rgba(0,188,212,0.15)]"
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1">

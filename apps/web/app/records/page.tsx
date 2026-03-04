@@ -89,7 +89,7 @@ export default function RecordsPage() {
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-void" />
         <div className="absolute inset-0 bg-cosmic-mesh" />
-        <div className="absolute inset-0 opacity-25 bg-[radial-gradient(ellipse_at_top_left,rgba(153,102,255,0.15),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(127,255,212,0.1),transparent_50%)]" />
+        <div className="absolute inset-0 opacity-25 bg-[radial-gradient(ellipse_at_top_left,rgba(153,102,255,0.15),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(0,188,212,0.1),transparent_50%)]" />
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

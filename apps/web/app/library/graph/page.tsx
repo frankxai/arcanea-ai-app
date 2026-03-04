@@ -54,7 +54,7 @@ export default async function GraphPage() {
             className="absolute top-[20%] left-[15%] w-[500px] h-[500px] rounded-full"
             style={{
               background:
-                "radial-gradient(circle, rgba(139,92,246,0.08) 0%, transparent 70%)",
+                "radial-gradient(circle, rgba(13,71,161,0.08) 0%, transparent 70%)",
               filter: "blur(80px)",
             }}
           />
@@ -62,7 +62,7 @@ export default async function GraphPage() {
             className="absolute bottom-[10%] right-[10%] w-[400px] h-[400px] rounded-full"
             style={{
               background:
-                "radial-gradient(circle, rgba(127,255,212,0.06) 0%, transparent 70%)",
+                "radial-gradient(circle, rgba(0,188,212,0.06) 0%, transparent 70%)",
               filter: "blur(80px)",
             }}
           />
@@ -92,7 +92,7 @@ export default async function GraphPage() {
               {
                 value: String(graph.nodes.length),
                 label: "Texts",
-                color: "#7fffd4",
+                color: "#00bcd4",
               },
               {
                 value: String(collections.length),
@@ -102,7 +102,7 @@ export default async function GraphPage() {
               {
                 value: String(graph.edges.length),
                 label: "Connections",
-                color: "#8b5cf6",
+                color: "#0d47a1",
               },
               {
                 value: avgConnections,
@@ -142,7 +142,7 @@ export default async function GraphPage() {
           </h2>
           <div className="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
             {[
-              { type: "Related", color: "#7fffd4", dash: false },
+              { type: "Related", color: "#00bcd4", dash: false },
               { type: "Prerequisite", color: "#ffd700", dash: false },
               { type: "Next Reading", color: "#ef4444", dash: false },
               { type: "Shared Tag", color: "#a78bfa", dash: true },

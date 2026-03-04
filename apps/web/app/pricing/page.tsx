@@ -159,7 +159,7 @@ export default function PricingPage() {
       {/* Background */}
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-deep" />
-        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top,rgba(139,92,246,0.25),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(127,255,212,0.15),transparent_50%)]" />
+        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top,rgba(13,71,161,0.25),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(0,188,212,0.15),transparent_50%)]" />
       </div>
 
       <main className="max-w-7xl mx-auto px-6">
@@ -193,7 +193,7 @@ export default function PricingPage() {
                 key={tier.name}
                 className={`relative p-8 rounded-2xl border backdrop-blur-xl transition-all hover:scale-[1.02] ${
                   tier.popular
-                    ? "border-violet-500/50 bg-violet-500/5 shadow-[0_0_40px_rgba(139,92,246,0.2)]"
+                    ? "border-violet-500/50 bg-violet-500/5 shadow-[0_0_40px_rgba(13,71,161,0.2)]"
                     : "liquid-glass hover:border-white/[0.12]"
                 }`}
               >
@@ -250,7 +250,7 @@ export default function PricingPage() {
                   href={tier.href}
                   className={`block w-full py-3 rounded-xl text-center font-semibold transition-all ${
                     tier.popular
-                      ? "bg-gradient-to-r from-violet-500 to-purple-600 text-white hover:shadow-[0_0_30px_rgba(139,92,246,0.5)]"
+                      ? "bg-gradient-to-r from-violet-500 to-purple-600 text-white hover:shadow-[0_0_30px_rgba(13,71,161,0.5)]"
                       : "border border-white/[0.12] text-white hover:bg-white/[0.04]"
                   }`}
                 >
@@ -455,7 +455,7 @@ export default function PricingPage() {
               <div className="flex flex-wrap justify-center gap-4">
                 <Link
                   href="/auth/signup"
-                  className="px-8 py-4 rounded-xl bg-atlantean-teal text-cosmic-deep font-semibold text-lg hover:shadow-[0_0_40px_rgba(127,255,212,0.5)] transition-all"
+                  className="px-8 py-4 rounded-xl bg-atlantean-teal text-cosmic-deep font-semibold text-lg hover:shadow-[0_0_40px_rgba(0,188,212,0.5)] transition-all"
                 >
                   Start Free Today
                 </Link>

@@ -28,7 +28,7 @@ export default async function TwitterImage() {
             width: 300,
             height: 300,
             borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(139,92,246,0.12) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(13,71,161,0.12) 0%, transparent 70%)',
           }}
         />
         <div
@@ -39,7 +39,7 @@ export default async function TwitterImage() {
             width: 72,
             height: 72,
             borderRadius: 18,
-            background: 'linear-gradient(135deg, rgba(255,215,0,0.2), rgba(127,255,212,0.2))',
+            background: 'linear-gradient(135deg, rgba(255,215,0,0.2), rgba(0,188,212,0.2))',
             border: '1px solid rgba(255,215,0,0.3)',
             marginBottom: 28,
             fontSize: 36,
@@ -53,7 +53,7 @@ export default async function TwitterImage() {
             fontSize: 56,
             fontWeight: 800,
             letterSpacing: '-0.02em',
-            background: 'linear-gradient(90deg, #ffd700, #7fffd4, #8b5cf6)',
+            background: 'linear-gradient(90deg, #ffd700, #00bcd4, #0d47a1)',
             backgroundClip: 'text',
             color: 'transparent',
             marginBottom: 14,

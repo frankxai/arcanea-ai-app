@@ -125,8 +125,8 @@ const PricingCard = React.forwardRef<HTMLDivElement, PricingCardProps>(
       "transition-all duration-300",
       isPopular
         ? "bg-[rgba(18,24,38,0.85)] backdrop-blur-[20px] border-2 border-brand-gold/50 shadow-[0_8px_40px_rgba(255,215,0,0.15)]"
-        : "bg-[rgba(18,24,38,0.65)] backdrop-blur-[16px] border border-[rgba(127,255,212,0.12)]",
-      "hover:border-[rgba(127,255,212,0.25)]",
+        : "bg-[rgba(18,24,38,0.65)] backdrop-blur-[16px] border border-[rgba(0,188,212,0.12)]",
+      "hover:border-[rgba(0,188,212,0.25)]",
       isPopular && "hover:shadow-[0_12px_50px_rgba(255,215,0,0.2)]",
       className,
     );
@@ -206,7 +206,7 @@ const PricingCard = React.forwardRef<HTMLDivElement, PricingCardProps>(
         )}
 
         {/* Divider */}
-        <div className="h-px bg-gradient-to-r from-transparent via-[rgba(127,255,212,0.15)] to-transparent mb-6" />
+        <div className="h-px bg-gradient-to-r from-transparent via-[rgba(0,188,212,0.15)] to-transparent mb-6" />
 
         {/* Features */}
         <FeatureList features={tier.features} />

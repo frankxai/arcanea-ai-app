@@ -126,7 +126,7 @@ export default function InstallPage() {
       {/* Background */}
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-deep" />
-        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(0,255,136,0.15),transparent_50%),radial-gradient(ellipse_at_bottom_left,rgba(139,92,246,0.15),transparent_50%)]" />
+        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(0,255,136,0.15),transparent_50%),radial-gradient(ellipse_at_bottom_left,rgba(13,71,161,0.15),transparent_50%)]" />
       </div>
 
       <main className="max-w-7xl mx-auto px-6">

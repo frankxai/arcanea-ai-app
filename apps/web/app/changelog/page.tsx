@@ -119,7 +119,7 @@ export default function ChangelogPage() {
       {/* Background */}
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-deep" />
-        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top,rgba(255,215,0,0.15),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(139,92,246,0.15),transparent_50%)]" />
+        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top,rgba(255,215,0,0.15),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(13,71,161,0.15),transparent_50%)]" />
       </div>
 
       <main className="max-w-4xl mx-auto px-6">
@@ -264,7 +264,7 @@ export default function ChangelogPage() {
                 placeholder="your@email.com"
                 className="flex-1 px-4 py-3 rounded-xl bg-cosmic-void border border-white/[0.06] text-white placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal"
               />
-              <button className="px-6 py-3 rounded-xl bg-atlantean-teal text-cosmic-deep font-semibold hover:shadow-[0_0_20px_rgba(127,255,212,0.4)] transition-all">
+              <button className="px-6 py-3 rounded-xl bg-atlantean-teal text-cosmic-deep font-semibold hover:shadow-[0_0_20px_rgba(0,188,212,0.4)] transition-all">
                 Subscribe
               </button>
             </div>

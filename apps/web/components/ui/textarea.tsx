@@ -11,7 +11,7 @@ const textareaVariants = cva(
     'border transition-all duration-150 resize-none',
     'focus:outline-none focus:ring-2 focus:ring-crystal/40 focus:ring-offset-0 focus:border-crystal/60',
     'disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed',
-    'bg-[rgba(18,24,38,0.65)] backdrop-blur-[16px] border-[rgba(127,255,212,0.12)]',
+    'bg-[rgba(18,24,38,0.65)] backdrop-blur-[16px] border-[rgba(0,188,212,0.12)]',
     'hover:border-crystal/25',
     'scrollbar-thin',
   ],

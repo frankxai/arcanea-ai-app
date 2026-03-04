@@ -48,7 +48,7 @@ const COMMUNITY_SPACES = [
     icon: PhChatCircle,
     accentClass: "from-brand-primary/20 to-brand-primary/5",
     borderHoverClass: "hover:border-brand-primary/40",
-    glowColor: "rgba(139,92,246,0.15)",
+    glowColor: "rgba(13,71,161,0.15)",
     iconColor: "text-brand-primary",
     badgeBg: "bg-brand-primary/20 text-brand-primary border-brand-primary/30",
   },
@@ -70,7 +70,7 @@ const COMMUNITY_SPACES = [
     icon: PhGithubLogo,
     accentClass: "from-crystal/20 to-crystal/5",
     borderHoverClass: "hover:border-crystal/40",
-    glowColor: "rgba(127,255,212,0.12)",
+    glowColor: "rgba(0,188,212,0.12)",
     iconColor: "text-crystal",
     badgeBg: "bg-crystal/20 text-crystal border-crystal/30",
   },
@@ -130,7 +130,7 @@ const EVENTS = [
     icon: PhSparkle,
     formatIcon: PhGlobe,
     accent: "crystal",
-    accentHex: "#7fffd4",
+    accentHex: "#00bcd4",
     badgeText: "Monthly",
   },
   {
@@ -180,7 +180,7 @@ const SPOTLIGHTS = [
     type: "Written Work",
     description:
       "A guided meditation descended from the Voice Gate, combining Alera's teachings with personal creative practice into an immersive ritual text.",
-    accent: "#7fffd4",
+    accent: "#00bcd4",
     gateColor: "text-crystal",
   },
   {
@@ -212,7 +212,7 @@ const CONTRIBUTIONS = [
       "Expand the 17 collections with your own wisdom. The Library is a living document—your voice belongs in it.",
     icon: PhBookOpen,
     color: "crystal",
-    hex: "#7fffd4",
+    hex: "#00bcd4",
   },
   {
     title: "Create Arcanea Skills",
@@ -220,7 +220,7 @@ const CONTRIBUTIONS = [
       "Build procedural skills that equip creators and developers. Published skills become part of the intelligence layer.",
     icon: PhCpu,
     color: "brand-primary",
-    hex: "#8b5cf6",
+    hex: "#0d47a1",
   },
   {
     title: "Design Guardian Art",
@@ -265,7 +265,7 @@ export default function CommunityPage() {
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-void" />
         <div className="absolute inset-0 bg-cosmic-mesh" />
-        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(139,92,246,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(127,255,212,0.08),transparent_55%)]" />
+        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(13,71,161,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(0,188,212,0.08),transparent_55%)]" />
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -370,7 +370,7 @@ export default function LinktreePage() {
     <div className="min-h-screen flex flex-col items-center py-16 px-4">
       {/* Background effects */}
       <div className="fixed inset-0 -z-10" aria-hidden="true">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(139,92,246,0.15),transparent_50%),radial-gradient(ellipse_at_bottom,rgba(127,255,212,0.1),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(13,71,161,0.15),transparent_50%),radial-gradient(ellipse_at_bottom,rgba(0,188,212,0.1),transparent_50%)]" />
       </div>
 
       {/* Profile Header */}

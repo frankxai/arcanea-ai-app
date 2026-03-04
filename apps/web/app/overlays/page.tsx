@@ -229,7 +229,7 @@ type PlatformStatus = (typeof PLATFORMS)[number]["status"];
 function StatusBadge({ status }: { status: PlatformStatus }) {
   if (status === "Beta") {
     return (
-      <span className="text-xs font-mono px-2.5 py-1 rounded-full bg-[rgba(127,255,212,0.12)] text-crystal border border-crystal/20">
+      <span className="text-xs font-mono px-2.5 py-1 rounded-full bg-[rgba(0,188,212,0.12)] text-crystal border border-crystal/20">
         Beta
       </span>
     );
@@ -267,7 +267,7 @@ export default function OverlaysPage() {
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-void" />
         <div className="absolute inset-0 bg-cosmic-mesh" />
-        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(139,92,246,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(127,255,212,0.08),transparent_55%)]" />
+        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(139,92,246,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(0,188,212,0.08),transparent_55%)]" />
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-20">

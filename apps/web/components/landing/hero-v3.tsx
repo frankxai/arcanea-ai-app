@@ -172,7 +172,7 @@ export function HeroV3() {
         className="absolute inset-0 -z-10 pointer-events-none hidden md:block"
         style={{ x: springX, y: springY }}
       >
-        <AmbientOrb size={500} color="rgba(127,255,212,0.12)" position="top-[15%] left-[10%]" delay={0} />
+        <AmbientOrb size={500} color="rgba(0,188,212,0.12)" position="top-[15%] left-[10%]" delay={0} />
         <AmbientOrb size={400} color="rgba(139,92,246,0.10)" position="bottom-[20%] right-[15%]" delay={3} />
         <AmbientOrb size={300} color="rgba(255,215,0,0.06)" position="top-[60%] right-[30%]" delay={6} />
       </motion.div>
@@ -257,7 +257,7 @@ export function HeroV3() {
 
             <Link
               href="/library"
-              className="w-full sm:w-auto px-10 py-4 rounded-2xl liquid-glass border border-white/[0.06] hover:border-atlantean-teal-aqua/30 hover:bg-white/[0.06] transition-all duration-300 text-white font-semibold text-lg hover:shadow-[0_0_30px_rgba(127,255,212,0.1)] text-center"
+              className="w-full sm:w-auto px-10 py-4 rounded-2xl liquid-glass border border-white/[0.06] hover:border-atlantean-teal-aqua/30 hover:bg-white/[0.06] transition-all duration-300 text-white font-semibold text-lg hover:shadow-[0_0_30px_rgba(0,188,212,0.1)] text-center"
             >
               Explore the Library
             </Link>

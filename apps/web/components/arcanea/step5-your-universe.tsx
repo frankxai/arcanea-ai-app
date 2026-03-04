@@ -27,7 +27,7 @@ const CREATOR_LABELS: Record<string, string> = {
 
 const CREATOR_COLORS: Record<string, string> = {
   writer: '#a78bfa',
-  'visual-artist': '#7fffd4',
+  'visual-artist': '#00bcd4',
   musician: '#ffd700',
   developer: '#60a5fa',
   storyteller: '#f472b6',
@@ -89,7 +89,7 @@ export default function Step5YourUniverse({
     const cy = canvas.height * 0.55
     const colors = [
       '#ffd700', '#ff9500', '#8b5cf6', '#a78bfa',
-      '#7fffd4', '#22d3ee', '#f472b6', '#ffffff',
+      '#00bcd4', '#22d3ee', '#f472b6', '#ffffff',
     ]
 
     for (let i = 0; i < 120; i++) {

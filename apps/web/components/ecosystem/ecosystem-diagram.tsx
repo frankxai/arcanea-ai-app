@@ -27,10 +27,10 @@ interface Node {
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
 const HUB_NODES: Node[] = [
-  { id: "chat", label: "Chat", Icon: PhChatTeardrop, color: "#7fffd4" },
-  { id: "imagine", label: "Imagine", Icon: PhPaintBrush, color: "#7fffd4" },
-  { id: "studio", label: "Studio", Icon: PhPlanetX, color: "#7fffd4" },
-  { id: "records", label: "Records", Icon: PhDatabase, color: "#7fffd4" },
+  { id: "chat", label: "Chat", Icon: PhChatTeardrop, color: "#00bcd4" },
+  { id: "imagine", label: "Imagine", Icon: PhPaintBrush, color: "#00bcd4" },
+  { id: "studio", label: "Studio", Icon: PhPlanetX, color: "#00bcd4" },
+  { id: "records", label: "Records", Icon: PhDatabase, color: "#00bcd4" },
 ];
 
 const INNER_TOOLS: (Node & { angle: number; description: string })[] = [
@@ -40,7 +40,7 @@ const INNER_TOOLS: (Node & { angle: number; description: string })[] = [
     sublabel: "Chrome Extension",
     description: "Export AI conversations from ChatGPT, Claude, Gemini",
     Icon: PhDatabase,
-    color: "#7fffd4",
+    color: "#00bcd4",
     angle: 0,
   },
   {
@@ -297,7 +297,7 @@ export function EcosystemDiagram() {
             cy={cy}
             r={innerRadius}
             fill="none"
-            stroke="rgba(127,255,212,0.06)"
+            stroke="rgba(0,188,212,0.06)"
             strokeWidth={1}
             strokeDasharray="3 6"
           />
@@ -326,7 +326,7 @@ export function EcosystemDiagram() {
             cx={cx}
             cy={cy}
             r={60}
-            fill="rgba(127,255,212,0.04)"
+            fill="rgba(0,188,212,0.04)"
             style={{ filter: "blur(12px)" }}
           />
 
@@ -336,7 +336,7 @@ export function EcosystemDiagram() {
             cy={cy}
             r={52}
             fill="rgba(10,10,20,0.92)"
-            stroke="rgba(127,255,212,0.25)"
+            stroke="rgba(0,188,212,0.25)"
             strokeWidth={1}
           />
 
@@ -345,7 +345,7 @@ export function EcosystemDiagram() {
             x={cx}
             y={cy - 12}
             textAnchor="middle"
-            fill="#7fffd4"
+            fill="#00bcd4"
             fontSize={10}
             fontFamily="Cinzel, serif"
             fontWeight={600}

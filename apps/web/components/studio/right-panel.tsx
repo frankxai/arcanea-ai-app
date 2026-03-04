@@ -46,7 +46,7 @@ const history = [
 ]
 
 const stylePresets = [
-  { name: "Atlantean", color: "#7fffd4", active: true },
+  { name: "Atlantean", color: "#00bcd4", active: true },
   { name: "Draconic", color: "#ef4444", active: false },
   { name: "Ethereal", color: "#c4b5fd", active: false },
   { name: "Celestial", color: "#fbbf24", active: false },
@@ -249,7 +249,7 @@ export function RightPanel({ generationState, activeTab }: RightPanelProps) {
                   Rate this creation
                 </p>
                 <div className="flex gap-2">
-                  <button className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg border border-[rgba(127,255,212,0.2)] text-[#7fffd4] hover:bg-[rgba(127,255,212,0.08)] text-xs transition-colors">
+                  <button className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg border border-[rgba(0,188,212,0.2)] text-[#00bcd4] hover:bg-[rgba(0,188,212,0.08)] text-xs transition-colors">
                     <ThumbsUp size={13} /> Arcane
                   </button>
                   <button className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg border border-[rgba(255,255,255,0.08)] text-muted-foreground hover:bg-[rgba(255,255,255,0.04)] text-xs transition-colors">
@@ -299,8 +299,8 @@ export function RightPanel({ generationState, activeTab }: RightPanelProps) {
             <span className="text-[10px] text-muted-foreground">API Status</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <div className="w-1.5 h-1.5 rounded-full bg-[#7fffd4] animate-pulse" />
-            <span className="text-[10px] text-[#7fffd4] font-mono">Nominal</span>
+            <div className="w-1.5 h-1.5 rounded-full bg-[#00bcd4] animate-pulse" />
+            <span className="text-[10px] text-[#00bcd4] font-mono">Nominal</span>
           </div>
         </div>
         <div className="mt-2 flex items-center justify-between">
@@ -312,7 +312,7 @@ export function RightPanel({ generationState, activeTab }: RightPanelProps) {
         </div>
         <div className="mt-1.5 h-1 bg-[rgba(255,255,255,0.06)] rounded-full overflow-hidden">
           <div
-            className="h-full rounded-full bg-gradient-to-r from-[#8b5cf6] to-[#7fffd4]"
+            className="h-full rounded-full bg-gradient-to-r from-[#8b5cf6] to-[#00bcd4]"
             style={{ width: "71%" }}
           />
         </div>

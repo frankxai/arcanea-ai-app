@@ -80,8 +80,8 @@ export function BottomBar({
         )}
         {generationState === "complete" && (
           <div className="flex items-center gap-1.5">
-            <div className="w-1.5 h-1.5 rounded-full bg-[#7fffd4]" />
-            <span className="text-[11px] text-[#7fffd4] font-mono">Ready</span>
+            <div className="w-1.5 h-1.5 rounded-full bg-[#00bcd4]" />
+            <span className="text-[11px] text-[#00bcd4] font-mono">Ready</span>
           </div>
         )}
         {generationState === "error" && (
@@ -109,7 +109,7 @@ export function BottomBar({
         </button>
         <button
           onClick={onPublish}
-          className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold bg-gradient-to-r from-[#7fffd4]/20 to-[#7fffd4]/10 text-[#7fffd4] border border-[rgba(127,255,212,0.3)] hover:from-[#7fffd4]/30 hover:to-[#7fffd4]/20 hover:border-[rgba(127,255,212,0.5)] transition-all duration-200"
+          className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold bg-gradient-to-r from-[#00bcd4]/20 to-[#00bcd4]/10 text-[#00bcd4] border border-[rgba(0,188,212,0.3)] hover:from-[#00bcd4]/30 hover:to-[#00bcd4]/20 hover:border-[rgba(0,188,212,0.5)] transition-all duration-200"
         >
           <Share size={13} />
           Publish

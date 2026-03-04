@@ -7,7 +7,7 @@ export default function FAQLoading() {
     <div className="relative min-h-screen">
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-deep" />
-        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_left,rgba(127,255,212,0.15),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(139,92,246,0.15),transparent_50%)]" />
+        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_left,rgba(0,188,212,0.15),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(13,71,161,0.15),transparent_50%)]" />
       </div>
 
       <main className="max-w-4xl mx-auto px-6">

@@ -146,9 +146,9 @@ const StatCard = React.forwardRef<HTMLDivElement, StatCardProps>(
         className={cn(
           "relative rounded-2xl overflow-hidden",
           "bg-[rgba(18,24,38,0.65)] backdrop-blur-[16px]",
-          "border border-[rgba(127,255,212,0.12)]",
+          "border border-[rgba(0,188,212,0.12)]",
           "transition-all duration-200",
-          "hover:border-[rgba(127,255,212,0.25)] hover:shadow-glow-sm",
+          "hover:border-[rgba(0,188,212,0.25)] hover:shadow-glow-sm",
           sizes.container,
           className,
         )}
@@ -224,7 +224,7 @@ const StatCard = React.forwardRef<HTMLDivElement, StatCardProps>(
           className={cn(
             "rounded-2xl overflow-hidden",
             "bg-[rgba(18,24,38,0.65)] backdrop-blur-[16px]",
-            "border border-[rgba(127,255,212,0.12)]",
+            "border border-[rgba(0,188,212,0.12)]",
             "animate-pulse",
             sizes.container,
             className,

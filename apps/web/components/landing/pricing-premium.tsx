@@ -173,7 +173,7 @@ export function PricingPremium() {
           className="absolute w-[600px] h-[600px] rounded-full blur-[120px]"
           style={{
             background:
-              "radial-gradient(circle, rgba(127,255,212,0.1) 0%, transparent 70%)",
+              "radial-gradient(circle, rgba(0,188,212,0.1) 0%, transparent 70%)",
             left: "10%",
             top: "20%",
           }}

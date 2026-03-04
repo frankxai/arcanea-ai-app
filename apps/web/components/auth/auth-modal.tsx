@@ -298,7 +298,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                             <button
                               type="submit"
                               disabled={isLoading}
-                              className="w-full py-2.5 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep font-semibold hover:shadow-[0_0_20px_rgba(127,255,212,0.4)] transition-all disabled:opacity-50 text-sm"
+                              className="w-full py-2.5 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep font-semibold hover:shadow-[0_0_20px_rgba(0,188,212,0.4)] transition-all disabled:opacity-50 text-sm"
                             >
                               {isLoading ? 'Signing in...' : 'Sign In'}
                             </button>
@@ -376,7 +376,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                             <button
                               type="submit"
                               disabled={isLoading}
-                              className="w-full py-2.5 rounded-xl bg-gradient-to-r from-atlantean-teal-aqua to-creation-prism-purple text-cosmic-deep font-semibold hover:shadow-[0_0_20px_rgba(127,255,212,0.4)] transition-all disabled:opacity-50 text-sm"
+                              className="w-full py-2.5 rounded-xl bg-gradient-to-r from-atlantean-teal-aqua to-creation-prism-purple text-cosmic-deep font-semibold hover:shadow-[0_0_20px_rgba(0,188,212,0.4)] transition-all disabled:opacity-50 text-sm"
                             >
                               {isLoading ? 'Creating...' : 'Create Account'}
                             </button>

@@ -58,9 +58,9 @@ export const GUARDIAN_THEMES: Record<GuardianId, GuardianTheme> = {
     element: 'water',
     color: '#7fffd4',
     colorBright: '#99ffe0',
-    glow: 'rgba(127, 255, 212, 0.3)',
+    glow: 'rgba(0, 188, 212, 0.3)',
     borderClass: 'border-brand-accent/40 hover:border-brand-accent/70',
-    glowClass: 'shadow-[0_0_20px_rgba(127,255,212,0.3)]',
+    glowClass: 'shadow-[0_0_20px_rgba(0,188,212,0.3)]',
     icon: 'Heart',
   },
   alera: {

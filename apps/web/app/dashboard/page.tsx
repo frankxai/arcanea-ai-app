@@ -29,8 +29,8 @@ const ACTIVITY_ICON_MAP: Record<string, { icon: typeof PencilSimple; color: stri
   create: { icon: PencilSimple, color: 'text-violet-400' },
   read: { icon: Book, color: 'text-amber-400' },
   like: { icon: Star, color: 'text-[#ffd700]' },
-  follow: { icon: Lightning, color: 'text-[#7fffd4]' },
-  gate_open: { icon: Lightning, color: 'text-[#7fffd4]' },
+  follow: { icon: Lightning, color: 'text-[#00bcd4]' },
+  gate_open: { icon: Lightning, color: 'text-[#00bcd4]' },
   rank_up: { icon: Star, color: 'text-[#ffd700]' },
   login: { icon: Sparkle, color: 'text-violet-400' },
 }
@@ -81,7 +81,7 @@ function SignInPrompt() {
         </Link>
         <p className="text-sm text-white/30 font-sans">
           No account?{' '}
-          <Link href="/auth/signup" className="text-[#7fffd4] hover:underline">
+          <Link href="/auth/signup" className="text-[#00bcd4] hover:underline">
             Create one free
           </Link>
         </p>
@@ -171,7 +171,7 @@ export default function DashboardPage() {
 
   const statCards = [
     { label: 'Creations', value: `${creationsCount} work${creationsCount !== 1 ? 's' : ''}`, icon: Palette, color: 'text-violet-400', bg: 'bg-violet-500/10' },
-    { label: 'Progress', value: `${gatesOpen} of 10`, icon: Lightning, color: 'text-[#7fffd4]', bg: 'bg-emerald-500/10' },
+    { label: 'Progress', value: `${gatesOpen} of 10`, icon: Lightning, color: 'text-[#00bcd4]', bg: 'bg-emerald-500/10' },
     { label: 'Library', value: `${libraryCount} texts`, icon: Book, color: 'text-amber-400', bg: 'bg-amber-500/10' },
     { label: 'Streak', value: `${streakDays} day${streakDays !== 1 ? 's' : ''}`, icon: Flame, color: 'text-orange-400', bg: 'bg-orange-500/10' },
   ];
@@ -231,7 +231,7 @@ export default function DashboardPage() {
               </Link>
               <Link
                 href="/chat"
-                className="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-[#7fffd4]/30 text-[#7fffd4] font-sans font-medium transition-all hover:bg-[#7fffd4]/5 hover:-translate-y-0.5"
+                className="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-[#00bcd4]/30 text-[#00bcd4] font-sans font-medium transition-all hover:bg-[#00bcd4]/5 hover:-translate-y-0.5"
               >
                 <ChatCircleDots size={18} weight="duotone" />
                 Chat with an Intelligence
@@ -301,8 +301,8 @@ export default function DashboardPage() {
           {/* ── Guardian Companion Card ────────────────────────────── */}
           <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md p-6 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-500/20 to-[#7fffd4]/20 flex items-center justify-center">
-                <Shield size={24} weight="duotone" className="text-[#7fffd4]" />
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-500/20 to-[#00bcd4]/20 flex items-center justify-center">
+                <Shield size={24} weight="duotone" className="text-[#00bcd4]" />
               </div>
               <div>
                 <h3 className="font-display text-base text-white">
@@ -314,7 +314,7 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            <div className="w-full aspect-square rounded-xl bg-gradient-to-br from-violet-500/5 via-transparent to-[#7fffd4]/5 border border-white/[0.04] flex items-center justify-center">
+            <div className="w-full aspect-square rounded-xl bg-gradient-to-br from-violet-500/5 via-transparent to-[#00bcd4]/5 border border-white/[0.04] flex items-center justify-center">
               <Sparkle size={40} weight="duotone" className="text-white/10" />
             </div>
 
@@ -346,7 +346,7 @@ export default function DashboardPage() {
                 </div>
                 <div className="w-full h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-[#7fffd4] to-[#7fffd4]/60 transition-all duration-500"
+                    className="h-full rounded-full bg-gradient-to-r from-[#00bcd4] to-[#00bcd4]/60 transition-all duration-500"
                     style={{ width: `${(gatesOpen / 10) * 100}%` }}
                   />
                 </div>

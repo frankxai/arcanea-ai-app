@@ -46,7 +46,7 @@ export function CollectionItem({
           borderLeft: isActive && guardianColor
             ? `2px solid ${guardianColor}`
             : isActive
-              ? '2px solid rgba(127, 255, 212, 0.5)'
+              ? '2px solid rgba(0, 188, 212, 0.5)'
               : '2px solid transparent',
         }}
       >

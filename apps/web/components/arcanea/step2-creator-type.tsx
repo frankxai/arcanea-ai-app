@@ -25,8 +25,8 @@ const CREATOR_TYPES: CreatorType[] = [
     label: 'Visual Artist',
     description: 'Design visuals, illustrations, and concepts',
     icon: <PaletteIcon />,
-    color: '#7fffd4',
-    glowColor: 'rgba(127,255,212,0.3)',
+    color: '#00bcd4',
+    glowColor: 'rgba(0,188,212,0.3)',
   },
   {
     id: 'musician',
@@ -152,7 +152,7 @@ export default function Step2CreatorType({ selected, onSelect, onNext, onBack }:
                 <div
                   className="absolute inset-0 rounded-2xl pointer-events-none"
                   style={{
-                    boxShadow: `inset 0 0 0 1.5px #7fffd460`,
+                    boxShadow: `inset 0 0 0 1.5px #00bcd460`,
                   }}
                 />
               )}
@@ -161,7 +161,7 @@ export default function Step2CreatorType({ selected, onSelect, onNext, onBack }:
               {isSelected && (
                 <div
                   className="absolute top-2.5 right-2.5 w-5 h-5 rounded-full flex items-center justify-center"
-                  style={{ background: '#7fffd4', boxShadow: '0 0 10px rgba(127,255,212,0.5)' }}
+                  style={{ background: '#00bcd4', boxShadow: '0 0 10px rgba(0,188,212,0.5)' }}
                 >
                   <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
                     <path d="M2 5l2.5 2.5 4-4" stroke="#0a0a0f" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -201,7 +201,7 @@ export default function Step2CreatorType({ selected, onSelect, onNext, onBack }:
         {selected.length > 0 && (
           <span
             className="text-xs font-sans tracking-wider transition-all duration-300"
-            style={{ color: '#7fffd4' }}
+            style={{ color: '#00bcd4' }}
           >
             {selected.length} {selected.length === 1 ? 'identity' : 'identities'} chosen
           </span>

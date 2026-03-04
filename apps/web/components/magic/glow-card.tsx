@@ -9,7 +9,7 @@ interface GlowCardProps {
   glowColor?: string;
 }
 
-export function GlowCard({ children, className = "", glowColor = "rgba(127, 255, 212, 0.3)" }: GlowCardProps) {
+export function GlowCard({ children, className = "", glowColor = "rgba(0, 188, 212, 0.3)" }: GlowCardProps) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
 

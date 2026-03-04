@@ -40,38 +40,38 @@ import {
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
 const ELEMENT_COLORS: Record<ElementVariant, string> = {
-  crystal: 'text-[#7fffd4]',
+  crystal: 'text-[#00bcd4]',
   fire: 'text-[#ff6b35]',
   water: 'text-[#78a6ff]',
   void: 'text-[#9966ff]',
   gold: 'text-[#ffd700]',
-  brand: 'text-[#8b5cf6]',
+  brand: 'text-[#0d47a1]',
 };
 
 const ELEMENT_BG: Record<ElementVariant, string> = {
-  crystal: 'bg-[#7fffd4]/10 border-[#7fffd4]/20',
+  crystal: 'bg-[#00bcd4]/10 border-[#00bcd4]/20',
   fire: 'bg-[#ff6b35]/10 border-[#ff6b35]/20',
   water: 'bg-[#78a6ff]/10 border-[#78a6ff]/20',
   void: 'bg-[#9966ff]/10 border-[#9966ff]/20',
   gold: 'bg-[#ffd700]/10 border-[#ffd700]/20',
-  brand: 'bg-[#8b5cf6]/10 border-[#8b5cf6]/20',
+  brand: 'bg-[#0d47a1]/10 border-[#0d47a1]/20',
 };
 
 const STATUS_BADGE: Record<PackageStatus, { label: string; className: string }> = {
-  published: { label: 'Published', className: 'bg-[#7fffd4]/15 text-[#7fffd4] border-[#7fffd4]/30' },
+  published: { label: 'Published', className: 'bg-[#00bcd4]/15 text-[#00bcd4] border-[#00bcd4]/30' },
   private: { label: 'Private', className: 'bg-white/[0.04] text-text-muted border-white/[0.06]' },
   alpha: { label: 'Alpha', className: 'bg-[#ffd700]/15 text-[#ffd700] border-[#ffd700]/30' },
   stale: { label: 'Stale', className: 'bg-[#ff6b35]/15 text-[#ff6b35] border-[#ff6b35]/30' },
 };
 
 const HEALTH_ICON: Record<PackageHealth, { icon: typeof CheckCircle; className: string }> = {
-  good: { icon: CheckCircle, className: 'text-[#7fffd4]' },
+  good: { icon: CheckCircle, className: 'text-[#00bcd4]' },
   warning: { icon: Warning, className: 'text-[#ffd700]' },
   stale: { icon: Circle, className: 'text-[#ff6b35]' },
 };
 
 const ACTIVITY_ICONS: Record<ActivityEntry['category'], { icon: typeof Rocket; className: string }> = {
-  feature: { icon: Rocket, className: 'text-[#7fffd4]' },
+  feature: { icon: Rocket, className: 'text-[#00bcd4]' },
   build: { icon: Package, className: 'text-[#78a6ff]' },
   deploy: { icon: Lightning, className: 'text-[#ffd700]' },
   milestone: { icon: Target, className: 'text-[#9966ff]' },
@@ -126,7 +126,7 @@ function MilestoneCard({ milestone }: { milestone: Milestone }) {
           <div className="flex items-center gap-2 mb-1">
             <span className="text-xs font-mono text-text-muted">{milestone.id}</span>
             {milestone.status === 'active' && (
-              <span className="px-2 py-0.5 text-[10px] font-mono uppercase rounded-full bg-[#7fffd4]/15 text-[#7fffd4]">
+              <span className="px-2 py-0.5 text-[10px] font-mono uppercase rounded-full bg-[#00bcd4]/15 text-[#00bcd4]">
                 Active
               </span>
             )}
@@ -241,7 +241,7 @@ export default function CommandCenterPage() {
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-void" />
         <div className="absolute inset-0 bg-cosmic-mesh" />
-        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(139,92,246,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(127,255,212,0.08),transparent_55%)]" />
+        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(13,71,161,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(0,188,212,0.08),transparent_55%)]" />
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -275,9 +275,9 @@ export default function CommandCenterPage() {
                 </p>
 
                 {dataSource === 'live' && (
-                  <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#7fffd4]/10 border border-[#7fffd4]/20">
-                    <div className="w-2 h-2 rounded-full bg-[#7fffd4] animate-pulse" />
-                    <span className="text-xs font-mono text-[#7fffd4]">Live from .arc files</span>
+                  <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#00bcd4]/10 border border-[#00bcd4]/20">
+                    <div className="w-2 h-2 rounded-full bg-[#00bcd4] animate-pulse" />
+                    <span className="text-xs font-mono text-[#00bcd4]">Live from .arc files</span>
                   </div>
                 )}
               </div>
@@ -285,7 +285,7 @@ export default function CommandCenterPage() {
 
             {/* Stats Strip */}
             <motion.div variants={stagger} className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <StatCard icon={Package} label="Workspace Packages" value={ECOSYSTEM_STATS.workspacePackages} accent="bg-[#7fffd4]/10 text-[#7fffd4]" />
+              <StatCard icon={Package} label="Workspace Packages" value={ECOSYSTEM_STATS.workspacePackages} accent="bg-[#00bcd4]/10 text-[#00bcd4]" />
               <StatCard icon={Eye} label="Pages Live" value={ECOSYSTEM_STATS.pagesLive} accent="bg-[#78a6ff]/10 text-[#78a6ff]" />
               <StatCard icon={Rocket} label="Published to npm" value={ECOSYSTEM_STATS.publishedNpm} accent="bg-[#9966ff]/10 text-[#9966ff]" />
               <StatCard icon={Target} label="Active Milestones" value={ECOSYSTEM_STATS.activeMilestones} accent="bg-[#ffd700]/10 text-[#ffd700]" />
@@ -309,7 +309,7 @@ export default function CommandCenterPage() {
           {/* ── Section C: Package Registry ────────────────────────── */}
           <section className="mb-12">
             <motion.div variants={fadeUp} className="flex items-center gap-3 mb-6">
-              <Package weight="duotone" className="w-6 h-6 text-[#7fffd4]" />
+              <Package weight="duotone" className="w-6 h-6 text-[#00bcd4]" />
               <h2 className="text-xl font-display font-semibold text-text-primary">Package Registry</h2>
             </motion.div>
 
@@ -370,7 +370,7 @@ export default function CommandCenterPage() {
                     <h3 className="font-semibold text-text-primary">{CURRENT_SPRINT.id}: {CURRENT_SPRINT.name}</h3>
                     <p className="text-xs text-text-muted mt-1">{CURRENT_SPRINT.arc} &middot; {CURRENT_SPRINT.startDate} to {CURRENT_SPRINT.endDate}</p>
                   </div>
-                  <span className="text-2xl font-bold text-[#7fffd4] tabular-nums">{sprintPercent}%</span>
+                  <span className="text-2xl font-bold text-[#00bcd4] tabular-nums">{sprintPercent}%</span>
                 </div>
 
                 <Progress
@@ -409,7 +409,7 @@ export default function CommandCenterPage() {
                       <p className="text-[10px] font-mono uppercase text-text-muted mt-1">Lore Texts</p>
                     </div>
                     <div className="text-center">
-                      <span className="text-sm font-bold text-[#7fffd4] tabular-nums">{ECOSYSTEM_STATS.totalTests}+</span>
+                      <span className="text-sm font-bold text-[#00bcd4] tabular-nums">{ECOSYSTEM_STATS.totalTests}+</span>
                       <p className="text-[10px] font-mono uppercase text-text-muted mt-1">Tests</p>
                     </div>
                   </div>

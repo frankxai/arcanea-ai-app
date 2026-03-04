@@ -63,7 +63,7 @@ export function VideoTab({ generationState }: VideoTabProps) {
             <label className="text-[10px] uppercase tracking-widest font-mono text-muted-foreground">
               Duration
             </label>
-            <span className="text-xs font-bold text-[#7fffd4] font-mono">{duration}s</span>
+            <span className="text-xs font-bold text-[#00bcd4] font-mono">{duration}s</span>
           </div>
           <input
             type="range"
@@ -183,7 +183,7 @@ export function VideoTab({ generationState }: VideoTabProps) {
                 <span>47%</span>
               </div>
               <div className="h-1.5 rounded-full bg-[rgba(139,92,246,0.1)] overflow-hidden">
-                <div className="h-full w-[47%] rounded-full bg-gradient-to-r from-[#8b5cf6] to-[#7fffd4] shimmer" />
+                <div className="h-full w-[47%] rounded-full bg-gradient-to-r from-[#8b5cf6] to-[#00bcd4] shimmer" />
               </div>
             </div>
           </div>

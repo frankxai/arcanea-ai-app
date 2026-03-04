@@ -19,7 +19,7 @@ export default function PromptBooksArticle() {
       {/* Hero */}
       <header className="relative py-24 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-brand-primary/10 via-transparent to-transparent" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(127,255,212,0.06),transparent_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(0,188,212,0.06),transparent_70%)]" />
         <div className="max-w-3xl mx-auto px-6 relative z-10">
           <motion.div {...fadeUp}>
             <p className="text-crystal font-mono text-sm tracking-widest mb-4">

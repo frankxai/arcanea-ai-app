@@ -44,13 +44,13 @@ interface Props {
 
 // ── Collection Colors ──────────────────────────────────────────────────────
 const COLLECTION_COLORS: Record<string, string> = {
-  'laws-of-arcanea': '#8b5cf6',
+  'laws-of-arcanea': '#0d47a1',
   'poesie-of-freedom': '#f472b6',
   'wisdom-scrolls': '#fbbf24',
   'legends-of-arcanea': '#ef4444',
   'chronicles-of-luminors': '#f97316',
   'parables-of-creation': '#22c55e',
-  'tales-of-creators': '#7fffd4',
+  'tales-of-creators': '#00bcd4',
   'book-of-rituals': '#6366f1',
   'dialogues-of-masters': '#3b82f6',
   'prophecies': '#a78bfa',
@@ -68,7 +68,7 @@ const EDGE_STYLES: Record<
   string,
   { color: string; width: number; dash: number[]; opacity: number; hiOpacity: number }
 > = {
-  related: { color: '#7fffd4', width: 1, dash: [], opacity: 0.1, hiOpacity: 0.5 },
+  related: { color: '#00bcd4', width: 1, dash: [], opacity: 0.1, hiOpacity: 0.5 },
   prerequisite: { color: '#ffd700', width: 1.5, dash: [], opacity: 0.12, hiOpacity: 0.6 },
   next: { color: '#ef4444', width: 1.5, dash: [], opacity: 0.12, hiOpacity: 0.6 },
   'shared-tag': { color: '#a78bfa', width: 0.5, dash: [4, 4], opacity: 0.04, hiOpacity: 0.25 },

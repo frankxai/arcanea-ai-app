@@ -55,7 +55,7 @@ export function HeroV2({ stats }: HeroV2Props) {
       {/* Premium Gradient Background */}
       <div className="absolute inset-0 -z-10">
         {/* Base gradient */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(127,255,212,0.15),rgba(255,255,255,0))]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(0,188,212,0.15),rgba(255,255,255,0))]" />
 
         {/* Mesh gradient overlay */}
         <motion.div
@@ -168,7 +168,7 @@ export function HeroV2({ stats }: HeroV2Props) {
           >
             <Link
               href="/chat"
-              className="group relative px-8 py-4 rounded-2xl font-semibold text-lg overflow-hidden transition-all duration-300 hover:shadow-[0_0_50px_rgba(127,255,212,0.4)]"
+              className="group relative px-8 py-4 rounded-2xl font-semibold text-lg overflow-hidden transition-all duration-300 hover:shadow-[0_0_50px_rgba(0,188,212,0.4)]"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-light" />
               <div className="absolute inset-0 bg-gradient-to-r from-atlantean-teal-aqua via-white/[0.12] to-atlantean-teal-aqua bg-[length:200%_100%] opacity-0 group-hover:opacity-100 transition-opacity animate-shimmer" />

@@ -161,7 +161,7 @@ export default function StatusPage() {
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-void" />
         <div className="absolute inset-0 bg-cosmic-mesh" />
-        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_top,rgba(127,255,212,0.08),transparent_60%)]" />
+        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_top,rgba(0,188,212,0.08),transparent_60%)]" />
       </div>
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -338,7 +338,7 @@ export default function StatusPage() {
             <div className="flex flex-wrap justify-center gap-4">
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep font-semibold hover:shadow-[0_0_24px_rgba(127,255,212,0.4)] transition-all duration-200 text-sm"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep font-semibold hover:shadow-[0_0_24px_rgba(0,188,212,0.4)] transition-all duration-200 text-sm"
               >
                 Contact us
                 <Icons.ArrowRight />

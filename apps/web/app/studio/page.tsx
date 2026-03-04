@@ -739,7 +739,7 @@ export default function StudioPage() {
         <div
           className="absolute inset-0 opacity-20 transition-colors duration-700"
           style={{
-            background: `radial-gradient(ellipse at top right, ${currentMode.elementColor}12, transparent 55%), radial-gradient(ellipse at bottom left, rgba(127,255,212,0.06), transparent 55%)`,
+            background: `radial-gradient(ellipse at top right, ${currentMode.elementColor}12, transparent 55%), radial-gradient(ellipse at bottom left, rgba(0,188,212,0.06), transparent 55%)`,
           }}
         />
       </div>
@@ -878,7 +878,7 @@ export default function StudioPage() {
             disabled={isSaving}
             className="group relative px-6 py-2.5 rounded-xl text-sm font-semibold transition-all overflow-hidden disabled:opacity-50"
             style={{
-              background: `linear-gradient(135deg, #7fffd4, ${currentMode.elementColor}cc, #7fffd4)`,
+              background: `linear-gradient(135deg, #00bcd4, ${currentMode.elementColor}cc, #00bcd4)`,
               backgroundSize: "200% 200%",
               color: "#0a0a1a",
             }}

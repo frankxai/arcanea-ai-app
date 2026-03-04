@@ -102,11 +102,11 @@ function ArcaneaLogo() {
   return (
     <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
       <polygon points="20,4 36,32 4,32" fill="none" stroke="#8b5cf6" strokeWidth="1.5" />
-      <polygon points="20,10 30,28 10,28" fill="none" stroke="#7fffd4" strokeWidth="0.8" opacity="0.6" />
+      <polygon points="20,10 30,28 10,28" fill="none" stroke="#00bcd4" strokeWidth="0.8" opacity="0.6" />
       <circle cx="20" cy="20" r="4" fill="#ffd700" opacity="0.9" />
       <circle cx="20" cy="4" r="2" fill="#ffd700" />
       <circle cx="36" cy="32" r="2" fill="#8b5cf6" />
-      <circle cx="4" cy="32" r="2" fill="#7fffd4" />
+      <circle cx="4" cy="32" r="2" fill="#00bcd4" />
     </svg>
   );
 }

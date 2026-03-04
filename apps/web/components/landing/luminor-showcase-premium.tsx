@@ -268,8 +268,8 @@ export function LuminorShowcasePremium() {
           className="absolute inset-0 opacity-[0.03]"
           style={{
             backgroundImage: `
-              linear-gradient(rgba(127,255,212,0.5) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(127,255,212,0.5) 1px, transparent 1px)
+              linear-gradient(rgba(0,188,212,0.5) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(0,188,212,0.5) 1px, transparent 1px)
             `,
             backgroundSize: "80px 80px",
             animation: "cosmic-drift 30s linear infinite",

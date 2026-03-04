@@ -8,7 +8,7 @@ export default function manifest(): MetadataRoute.Manifest {
     start_url: '/prompt-books',
     display: 'standalone',
     background_color: '#0a0e1a',
-    theme_color: '#7fffd4',
+    theme_color: '#00bcd4',
     orientation: 'any',
     categories: ['productivity', 'utilities'],
     icons: [

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 const FRONTIER_MODELS = [
   { id: "arcanea-opus", name: "Opus", provider: "Anthropic", model: "Claude Opus 4.6", ctx: "200K", speed: "~70 tok/s", price: "$5 / $25", note: "#1 coding (80.8% SWE-bench). #1 human preference (1606 Elo).", color: "#a855f7" },
-  { id: "arcanea-sonnet", name: "Sonnet", provider: "Anthropic", model: "Claude Sonnet 4.6", ctx: "200K", speed: "~120 tok/s", price: "$3 / $15", note: "79.6% SWE-bench. Best value frontier model.", color: "#8b5cf6" },
+  { id: "arcanea-sonnet", name: "Sonnet", provider: "Anthropic", model: "Claude Sonnet 4.6", ctx: "200K", speed: "~120 tok/s", price: "$3 / $15", note: "79.6% SWE-bench. Best value frontier model.", color: "#0d47a1" },
   { id: "arcanea-gpt5", name: "GPT-5", provider: "OpenAI", model: "GPT-5.2 Pro", ctx: "400K", speed: "~85 tok/s", price: "$1.75 / $14", note: "100% AIME 2025 (no tools). 80% SWE-bench. #1 math.", color: "#10b981" },
   { id: "arcanea-gemini-pro", name: "Gemini Pro", provider: "Google", model: "Gemini 3.1 Pro Preview", ctx: "1M", speed: "~90 tok/s", price: "$2 / $12", note: "77.1% ARC-AGI-2 — leads 13 of 16 benchmarks. #1 raw reasoning.", color: "#3b82f6" },
   { id: "arcanea-grok", name: "Grok", provider: "xAI", model: "Grok 4.20", ctx: "256K", speed: "TBD", price: "$3 / $15", note: "500B params, 4-agent system. Real-time X knowledge. Wild card.", color: "#ef4444" },
@@ -29,8 +29,8 @@ const PERFORMANCE_MODELS = [
 
 const SPEED_MODELS = [
   { id: "arcanea-bolt", name: "Bolt", provider: "Cerebras", model: "Llama 3.1 8B", ctx: "128K", speed: "2,200+ tok/s", price: "$0.10", note: "Fastest model in the world. Cerebras CS-3.", color: "#f59e0b" },
-  { id: "arcanea-thunder", name: "Thunder", provider: "Cerebras", model: "Llama 3.3 70B", ctx: "128K", speed: "450 tok/s", price: "$0.60", note: "70B intelligence at impossible speed.", color: "#8b5cf6" },
-  { id: "arcanea-lightning", name: "Lightning", provider: "Groq", model: "Llama 3.1 8B", ctx: "128K", speed: "750 tok/s", price: "$0.05", note: "Lowest time-to-first-token. $0.05/M input.", color: "#7fffd4" },
+  { id: "arcanea-thunder", name: "Thunder", provider: "Cerebras", model: "Llama 3.3 70B", ctx: "128K", speed: "450 tok/s", price: "$0.60", note: "70B intelligence at impossible speed.", color: "#0d47a1" },
+  { id: "arcanea-lightning", name: "Lightning", provider: "Groq", model: "Llama 3.1 8B", ctx: "128K", speed: "750 tok/s", price: "$0.05", note: "Lowest time-to-first-token. $0.05/M input.", color: "#00bcd4" },
   { id: "arcanea-qwen", name: "Qwen", provider: "Cerebras", model: "Qwen 3 235B", ctx: "131K", speed: "1,400 tok/s", price: "$0.60 / $1.20", note: "235B params at 1,400 tok/s. Enterprise reasoning at speed.", color: "#ec4899" },
 ];
 
@@ -57,8 +57,8 @@ const PROVIDERS_LIST = [
   { name: "Cerebras", models: "CS-3 ultra-fast inference", color: "#f59e0b" },
   { name: "SambaNova", models: "RDU fast inference", color: "#06b6d4" },
   { name: "Replicate", models: "Flux 2, Kling, Recraft", color: "#ec4899" },
-  { name: "Together AI", models: "Open-source models", color: "#8b5cf6" },
-  { name: "DeepSeek", models: "DeepSeek R1/V3.2", color: "#7fffd4" },
+  { name: "Together AI", models: "Open-source models", color: "#0d47a1" },
+  { name: "DeepSeek", models: "DeepSeek R1/V3.2", color: "#00bcd4" },
   { name: "Moonshot", models: "Kimi K2.5 (1T MoE)", color: "#ffd700" },
   { name: "Mistral", models: "Mistral Large (EU)", color: "#f43f5e" },
   { name: "OpenRouter", models: "500+ model fallback", color: "#a3a3a3" },
@@ -154,7 +154,7 @@ export default function ApiDocsPage() {
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-void" />
         <div className="absolute inset-0 bg-cosmic-mesh" />
-        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(139,92,246,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(127,255,212,0.08),transparent_55%)]" />
+        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(13,71,161,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(0,188,212,0.08),transparent_55%)]" />
       </div>
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
@@ -220,8 +220,8 @@ export default function ApiDocsPage() {
 
           <div className="grid md:grid-cols-3 gap-5 mb-6">
             {[
-              { title: "Curated, Not Aggregated", desc: "26 hand-picked models. Each is #1 at something specific. We benchmark, verify, and update monthly. No filler, no mediocre models.", color: "#8b5cf6" },
-              { title: "Smart Routing", desc: "Use \"arcanea-auto\" — our task classifier detects reasoning, code, creative, vision, image/video gen and routes to the optimal model automatically.", color: "#7fffd4" },
+              { title: "Curated, Not Aggregated", desc: "26 hand-picked models. Each is #1 at something specific. We benchmark, verify, and update monthly. No filler, no mediocre models.", color: "#0d47a1" },
+              { title: "Smart Routing", desc: "Use \"arcanea-auto\" — our task classifier detects reasoning, code, creative, vision, image/video gen and routes to the optimal model automatically.", color: "#00bcd4" },
               { title: "BYOK — Zero Markup", desc: "Bring Your Own Keys. You pay providers directly at their prices. Arcanea adds routing intelligence, not cost. Your keys, your data, your control.", color: "#ffd700" },
             ].map((item) => (
               <div key={item.title} className="liquid-glass rounded-2xl p-6">
@@ -535,8 +535,8 @@ export default function ApiDocsPage() {
 
           <div className="grid sm:grid-cols-3 gap-5">
             {[
-              { tier: "Seeker", price: "Free", features: ["100K tokens/day", "All 26 models (BYOK)", "10 req/min", "Smart routing", "Community support"], color: "#7fffd4", cta: "Start Free" },
-              { tier: "Creator", price: "$19/mo", features: ["5M tokens/day", "Priority routing", "60 req/min", "Semantic caching (60-85% savings)", "Usage analytics dashboard"], color: "#8b5cf6", cta: "Coming Soon" },
+              { tier: "Seeker", price: "Free", features: ["100K tokens/day", "All 26 models (BYOK)", "10 req/min", "Smart routing", "Community support"], color: "#00bcd4", cta: "Start Free" },
+              { tier: "Creator", price: "$19/mo", features: ["5M tokens/day", "Priority routing", "60 req/min", "Semantic caching (60-85% savings)", "Usage analytics dashboard"], color: "#0d47a1", cta: "Coming Soon" },
               { tier: "Studio", price: "$49/mo", features: ["Unlimited tokens", "Fallback chains", "300 req/min", "API key management", "Team access + SSO", "Dedicated support"], color: "#ffd700", cta: "Coming Soon" },
             ].map((t) => (
               <div key={t.tier} className="liquid-glass rounded-2xl p-6 relative overflow-hidden">

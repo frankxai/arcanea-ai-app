@@ -155,7 +155,7 @@ function HeroSection({
       {/* Background effects */}
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-void" />
-        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top,rgba(139,92,246,0.15),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(127,255,212,0.1),transparent_50%)]" />
+        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top,rgba(139,92,246,0.15),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(0,188,212,0.1),transparent_50%)]" />
       </div>
 
       <div className="max-w-6xl mx-auto">
@@ -396,7 +396,7 @@ function PricingSection({
   return (
     <section className="py-24 px-6 border-t border-white/[0.04] relative">
       <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_bottom,rgba(127,255,212,0.1),transparent_50%)]" />
+        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_bottom,rgba(0,188,212,0.1),transparent_50%)]" />
       </div>
 
       <div className="max-w-6xl mx-auto">

@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 const progressTrackVariants = cva(
   [
     'relative w-full overflow-hidden rounded-full',
-    'bg-cosmic-raised border border-[rgba(127,255,212,0.08)]',
+    'bg-cosmic-raised border border-[rgba(0,188,212,0.08)]',
   ],
   {
     variants: {
@@ -33,7 +33,7 @@ const progressFillVariants = cva(
       variant: {
         crystal: [
           'bg-gradient-to-r from-crystal-deep via-crystal to-crystal-bright',
-          'shadow-[0_0_8px_rgba(127,255,212,0.5)]',
+          'shadow-[0_0_8px_rgba(0,188,212,0.5)]',
         ],
         fire: [
           'bg-gradient-to-r from-fire-deep via-fire to-fire-bright',

@@ -13,7 +13,7 @@ import {
 /* ------------------------------------------------------------------ */
 
 const GATES = [
-  { n: 1, name: 'Foundation', hz: '174 Hz', god: 'Lyssandria', beast: 'Kaelith', domain: 'Earth & Survival', color: '#7fffd4', icon: Leaf },
+  { n: 1, name: 'Foundation', hz: '174 Hz', god: 'Lyssandria', beast: 'Kaelith', domain: 'Earth & Survival', color: '#00bcd4', icon: Leaf },
   { n: 2, name: 'Flow', hz: '285 Hz', god: 'Leyla', beast: 'Veloura', domain: 'Creativity & Emotion', color: '#78a6ff', icon: Drop },
   { n: 3, name: 'Fire', hz: '396 Hz', god: 'Draconia', beast: 'Draconis', domain: 'Power & Will', color: '#ff6b35', icon: Flame },
   { n: 4, name: 'Heart', hz: '417 Hz', god: 'Maylinn', beast: 'Laeylinn', domain: 'Love & Healing', color: '#f472b6', icon: Heart },
@@ -32,7 +32,7 @@ const HOUSES = [
   { name: 'Aqualis', element: 'Water', color: '#60a5fa', icon: Drop, desc: 'Flow, healing, and the wisdom of memory.' },
   { name: 'Terra', element: 'Earth', color: '#34d399', icon: Leaf, desc: 'Stability, growth, and enduring strength.' },
   { name: 'Ventus', element: 'Wind', color: '#c4b5fd', icon: Wind, desc: 'Freedom, speed, and the breath of change.' },
-  { name: 'Synthesis', element: 'All', color: '#7fffd4', icon: Sparkle, desc: 'Unity of all elements into transcendence.' },
+  { name: 'Synthesis', element: 'All', color: '#00bcd4', icon: Sparkle, desc: 'Unity of all elements into transcendence.' },
 ];
 
 const RANKS = [
@@ -57,8 +57,8 @@ export default function AcademyPage() {
       <section className="relative flex min-h-[85vh] items-center justify-center overflow-hidden px-6">
         {/* Ambient orbs */}
         <div className="pointer-events-none absolute inset-0 -z-0" aria-hidden="true">
-          <div className="absolute left-1/4 top-[15%] h-[420px] w-[420px] rounded-full bg-[#8b5cf6]/20 blur-[140px]" />
-          <div className="absolute right-[10%] top-[40%] h-[360px] w-[360px] rounded-full bg-[#7fffd4]/12 blur-[120px]" />
+          <div className="absolute left-1/4 top-[15%] h-[420px] w-[420px] rounded-full bg-[#0d47a1]/20 blur-[140px]" />
+          <div className="absolute right-[10%] top-[40%] h-[360px] w-[360px] rounded-full bg-[#00bcd4]/12 blur-[120px]" />
           <div className="absolute bottom-[10%] left-[10%] h-[300px] w-[300px] rounded-full bg-[#ffd700]/10 blur-[100px]" />
           <div className="absolute right-1/3 top-[10%] h-[200px] w-[200px] rounded-full bg-[#ff6b35]/8 blur-[80px]" />
         </div>
@@ -85,7 +85,7 @@ export default function AcademyPage() {
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/onboarding"
-              className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-2xl bg-gradient-to-r from-[#8b5cf6] to-[#7fffd4] px-8 py-4 font-semibold text-[#0a0a0f] shadow-[0_0_40px_rgba(139,92,246,0.3)] transition-all duration-300 hover:shadow-[0_0_60px_rgba(139,92,246,0.5)] hover:scale-[1.02]"
+              className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-2xl bg-gradient-to-r from-[#0d47a1] to-[#00bcd4] px-8 py-4 font-semibold text-[#0a0a0f] shadow-[0_0_40px_rgba(13,71,161,0.3)] transition-all duration-300 hover:shadow-[0_0_60px_rgba(13,71,161,0.5)] hover:scale-[1.02]"
             >
               <Sparkle className="h-5 w-5" weight="fill" />
               Start Creating
@@ -205,13 +205,13 @@ export default function AcademyPage() {
       {/* ============ SEVEN HOUSES ============ */}
       <section className="relative px-6 py-24">
         <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
-          <div className="absolute left-[50%] top-[30%] h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-[#8b5cf6]/8 blur-[160px]" />
+          <div className="absolute left-[50%] top-[30%] h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-[#0d47a1]/8 blur-[160px]" />
         </div>
 
         <div className="mx-auto max-w-6xl">
           <div className="mb-12 text-center">
             <h2 className="font-display text-3xl font-bold md:text-4xl">
-              <span className="bg-gradient-to-r from-[#7fffd4] to-[#78a6ff] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#00bcd4] to-[#78a6ff] bg-clip-text text-transparent">
                 The Seven Houses
               </span>
             </h2>
@@ -261,7 +261,7 @@ export default function AcademyPage() {
         <div className="mx-auto max-w-5xl">
           <div className="mb-14 text-center">
             <h2 className="font-display text-3xl font-bold md:text-4xl">
-              <span className="bg-gradient-to-r from-[#8b5cf6] via-[#a78bfa] to-[#ffd700] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#0d47a1] via-[#a78bfa] to-[#ffd700] bg-clip-text text-transparent">
                 The Path of Mastery
               </span>
             </h2>
@@ -335,14 +335,14 @@ export default function AcademyPage() {
       <section className="relative px-6 py-32">
         <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
           <div className="absolute left-1/3 top-[20%] h-[400px] w-[400px] rounded-full bg-[#ffd700]/8 blur-[140px]" />
-          <div className="absolute right-1/4 bottom-[10%] h-[350px] w-[350px] rounded-full bg-[#8b5cf6]/10 blur-[120px]" />
+          <div className="absolute right-1/4 bottom-[10%] h-[350px] w-[350px] rounded-full bg-[#0d47a1]/10 blur-[120px]" />
         </div>
 
         <div className="mx-auto max-w-3xl text-center">
           <Scroll className="mx-auto mb-6 h-10 w-10 text-[#ffd700]/60" weight="fill" />
 
           <h2 className="font-display text-4xl font-bold md:text-5xl">
-            <span className="bg-gradient-to-r from-[#ffd700] via-[#7fffd4] to-[#8b5cf6] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#ffd700] via-[#00bcd4] to-[#0d47a1] bg-clip-text text-transparent">
               Your Journey Awaits
             </span>
           </h2>

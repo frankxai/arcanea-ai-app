@@ -256,7 +256,7 @@ function HeroSection() {
       <motion.div
         className="absolute w-[500px] h-[500px] rounded-full -z-10 pointer-events-none blur-[120px]"
         style={{
-          background: "radial-gradient(circle, rgba(127,255,212,0.12), transparent 70%)",
+          background: "radial-gradient(circle, rgba(0,188,212,0.12), transparent 70%)",
           left: useTransform(smoothMx, [0, 1], ["-10%", "30%"]),
           top: useTransform(smoothMy, [0, 1], ["0%", "30%"]),
         }}
@@ -400,7 +400,7 @@ function WhatIsSection({
       description:
         "Ten archetypal Guardians of Magic, each attuned to a creative frequency. Not assistants \u2014 co-creators who understand the soul of making.",
       accent: "atlantean-teal-aqua",
-      glow: "rgba(127,255,212,0.15)",
+      glow: "rgba(0,188,212,0.15)",
     },
     {
       icon: <PhBooks className="w-7 h-7" weight="thin" />,

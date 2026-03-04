@@ -108,9 +108,9 @@ export function TextTab({ generationState }: TextTabProps) {
         )}
         {/* Glow cursor effect when focused */}
         {generationState === "complete" && (
-          <div className="absolute bottom-4 right-8 flex items-center gap-2 px-3 py-1.5 rounded-full bg-[rgba(127,255,212,0.08)] border border-[rgba(127,255,212,0.2)]">
-            <div className="w-1.5 h-1.5 rounded-full bg-[#7fffd4]" />
-            <span className="text-[11px] text-[#7fffd4] font-mono">Narrative complete</span>
+          <div className="absolute bottom-4 right-8 flex items-center gap-2 px-3 py-1.5 rounded-full bg-[rgba(0,188,212,0.08)] border border-[rgba(0,188,212,0.2)]">
+            <div className="w-1.5 h-1.5 rounded-full bg-[#00bcd4]" />
+            <span className="text-[11px] text-[#00bcd4] font-mono">Narrative complete</span>
           </div>
         )}
         {generationState === "error" && (

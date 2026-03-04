@@ -314,7 +314,7 @@ const tocItems = useMemo(() => {
       <section className="relative overflow-hidden rounded-3xl border border-[#2a385c]/60 bg-gradient-to-br from-[#0f1627] via-[#0b1220] to-[#060b16] p-10 shadow-[0_0_120px_rgba(120,166,255,0.18)]">
         <div className="pointer-events-none absolute inset-0 opacity-40" aria-hidden="true">
           <div className="absolute -left-24 top-16 h-72 w-72 rounded-full bg-[#76a6ff]/30 blur-3xl" />
-          <div className="absolute right-[-10%] top-1/3 h-80 w-80 rounded-full bg-[#7fffd4]/25 blur-3xl" />
+          <div className="absolute right-[-10%] top-1/3 h-80 w-80 rounded-full bg-[#00bcd4]/25 blur-3xl" />
           <div className="absolute bottom-0 left-1/2 h-56 w-56 -translate-x-1/2 rounded-full bg-[#4057ff]/10 blur-2xl" />
         </div>
         <div className="relative grid gap-10 lg:grid-cols-[1.15fr_minmax(0,0.85fr)]">
@@ -334,12 +334,12 @@ const tocItems = useMemo(() => {
               <button
                 type="button"
                 onClick={handleOpen}
-                className="rounded-full bg-[#78a6ff] px-6 py-3 text-sm font-semibold text-black transition hover:bg-[#7fffd4] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#05070d] focus-visible:ring-[#7fffd4]"
+                className="rounded-full bg-[#78a6ff] px-6 py-3 text-sm font-semibold text-black transition hover:bg-[#00bcd4] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#05070d] focus-visible:ring-[#00bcd4]"
               >
                 Open active codex
               </button>
               <a
-                className="rounded-full border border-[#78a6ff]/40 px-6 py-3 text-sm font-semibold text-[#c7d6f1] transition hover:border-[#7fffd4] hover:text-[#7fffd4] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#05070d] focus-visible:ring-[#7fffd4]"
+                className="rounded-full border border-[#78a6ff]/40 px-6 py-3 text-sm font-semibold text-[#c7d6f1] transition hover:border-[#00bcd4] hover:text-[#00bcd4] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#05070d] focus-visible:ring-[#00bcd4]"
                 href="#tomes"
               >
                 Explore the tomes
@@ -348,32 +348,32 @@ const tocItems = useMemo(() => {
           </div>
           <div className="flex flex-col justify-between gap-6 rounded-2xl border border-white/[0.06] bg-white/[0.04] p-6 backdrop-blur-md">
             <div className="space-y-3">
-              <p className="text-xs uppercase tracking-[0.3em] text-[#7fffd4]">Active tome</p>
+              <p className="text-xs uppercase tracking-[0.3em] text-[#00bcd4]">Active tome</p>
               <h2 className="text-2xl font-semibold text-white">{activeTome.meta.title}</h2>
               <p className="text-sm text-[#c7d6f1]">{activeTome.meta.summary}</p>
             </div>
             <div className="grid grid-cols-2 gap-3 text-xs text-[#9bb1d0]">
               <div className="rounded-xl border border-white/[0.06] bg-[#0b1322] p-3">
-                <p className="uppercase tracking-[0.3em] text-[#7fffd4]">Focus</p>
+                <p className="uppercase tracking-[0.3em] text-[#00bcd4]">Focus</p>
                 <p className="mt-2 text-sm text-[#d8e4fb]">{activeTome.meta.focus}</p>
               </div>
               <div className="rounded-xl border border-white/[0.06] bg-[#0b1322] p-3">
-                <p className="uppercase tracking-[0.3em] text-[#7fffd4]">Release</p>
+                <p className="uppercase tracking-[0.3em] text-[#00bcd4]">Release</p>
                 <p className="mt-2 text-sm text-[#d8e4fb]">{activeTome.meta.release}</p>
               </div>
               <div className="rounded-xl border border-white/[0.06] bg-[#0b1322] p-3">
-                <p className="uppercase tracking-[0.3em] text-[#7fffd4]">Status</p>
+                <p className="uppercase tracking-[0.3em] text-[#00bcd4]">Status</p>
                 <p className="mt-2 text-sm capitalize text-[#d8e4fb]">{activeTome.meta.status.replace("-", " ")}</p>
               </div>
               <div className="rounded-xl border border-white/[0.06] bg-[#0b1322] p-3">
-                <p className="uppercase tracking-[0.3em] text-[#7fffd4]">Authors</p>
+                <p className="uppercase tracking-[0.3em] text-[#00bcd4]">Authors</p>
                 <p className="mt-2 text-sm text-[#d8e4fb]">{codex.authors.length}</p>
               </div>
             </div>
             <button
               type="button"
               onClick={handleOpen}
-              className="inline-flex items-center justify-center rounded-full border border-[#7fffd4]/60 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-[#7fffd4] transition hover:bg-[#7fffd4]/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7fffd4]"
+              className="inline-flex items-center justify-center rounded-full border border-[#00bcd4]/60 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-[#00bcd4] transition hover:bg-[#00bcd4]/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00bcd4]"
             >
               Launch codex overlay
             </button>
@@ -387,8 +387,8 @@ const tocItems = useMemo(() => {
             key={tile.label}
             className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-gradient-to-br from-[#18233b] via-[#111a2d] to-[#0b131f] p-6"
           >
-            <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-[#7fffd4]/10 blur-2xl" aria-hidden="true" />
-            <p className="text-xs uppercase tracking-[0.35em] text-[#7fffd4]">{tile.label}</p>
+            <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full bg-[#00bcd4]/10 blur-2xl" aria-hidden="true" />
+            <p className="text-xs uppercase tracking-[0.35em] text-[#00bcd4]">{tile.label}</p>
             <p className="mt-4 text-3xl font-semibold text-white">{tile.value}</p>
           </div>
         ))}
@@ -397,7 +397,7 @@ const tocItems = useMemo(() => {
       <section id="tomes" className="space-y-6">
         <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-xs uppercase tracking-[0.35em] text-[#7fffd4]">Tome constellation</p>
+            <p className="text-xs uppercase tracking-[0.35em] text-[#00bcd4]">Tome constellation</p>
             <h2 className="text-3xl font-semibold text-white">Choose your codex</h2>
             <p className="mt-2 max-w-2xl text-sm text-[#c7d6f1]">
               Each tome captures a different dimension of Arcanea. Select a codex to attune the experience; the overlay adapts in real time with the chosen manuscript.
@@ -417,17 +417,17 @@ const tocItems = useMemo(() => {
                 onClick={() => setActiveTomeId(tome.meta.id)}
                 className={`group relative overflow-hidden rounded-3xl border ${
                   isActive
-                    ? "border-[#7fffd4]/70 shadow-[0_30px_120px_rgba(127,255,212,0.16)]"
-                    : "border-white/[0.06] hover:border-[#7fffd4]/50"
+                    ? "border-[#00bcd4]/70 shadow-[0_30px_120px_rgba(0,188,212,0.16)]"
+                    : "border-white/[0.06] hover:border-[#00bcd4]/50"
                 } ${gradientClass} p-6 text-left transition`}
               >
                 <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100" aria-hidden="true">
-                  <div className="absolute -left-16 top-1/2 h-40 w-40 -translate-y-1/2 rounded-full bg-[#7fffd4]/20 blur-3xl" />
+                  <div className="absolute -left-16 top-1/2 h-40 w-40 -translate-y-1/2 rounded-full bg-[#00bcd4]/20 blur-3xl" />
                   <div className="absolute right-[-10%] bottom-[-20%] h-48 w-48 rounded-full bg-[#78a6ff]/20 blur-3xl" />
                 </div>
                 <div className="relative space-y-4">
                   <div className="flex items-center justify-between text-xs text-[#9bb1d0]">
-                    <span className="uppercase tracking-[0.35em] text-[#7fffd4]">{tome.meta.focus}</span>
+                    <span className="uppercase tracking-[0.35em] text-[#00bcd4]">{tome.meta.focus}</span>
                     <span className="rounded-full border border-white/[0.12] px-3 py-1 text-[0.65rem] uppercase tracking-[0.3em]">
                       {tome.meta.status.replace("-", " ")}
                     </span>
@@ -443,8 +443,8 @@ const tocItems = useMemo(() => {
                     <span
                       className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-[0.7rem] uppercase tracking-[0.35em] ${
                         isActive
-                          ? "border-[#7fffd4]/70 bg-[#7fffd4]/10 text-[#7fffd4]"
-                          : "border-white/[0.12] text-[#9bb1d0] group-hover:border-[#7fffd4]/50 group-hover:text-[#7fffd4]"
+                          ? "border-[#00bcd4]/70 bg-[#00bcd4]/10 text-[#00bcd4]"
+                          : "border-white/[0.12] text-[#9bb1d0] group-hover:border-[#00bcd4]/50 group-hover:text-[#00bcd4]"
                       }`}
                     >
                       {isActive ? "Active" : "Activate"}
@@ -472,7 +472,7 @@ const tocItems = useMemo(() => {
           </p>
         </div>
         <div className="relative flex flex-col items-center gap-6 rounded-2xl border border-[#78a6ff]/25 bg-[#101626]/80 p-10 text-center text-[#9bb1d0]" aria-hidden="true">
-          <div className="flex h-24 w-24 items-center justify-center rounded-full border border-[#7fffd4]/40 bg-[#0b0f1d] text-2xl tracking-[0.3em] text-[#7fffd4]">
+          <div className="flex h-24 w-24 items-center justify-center rounded-full border border-[#00bcd4]/40 bg-[#0b0f1d] text-2xl tracking-[0.3em] text-[#00bcd4]">
             AZ^
           </div>
           <p className="text-sm italic text-[#c7d6f1]">Remember what remembers you.</p>
@@ -483,7 +483,7 @@ const tocItems = useMemo(() => {
       <section id="council" className="space-y-6">
         <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-xs uppercase tracking-[0.35em] text-[#7fffd4]">Circle of remembrance</p>
+            <p className="text-xs uppercase tracking-[0.35em] text-[#00bcd4]">Circle of remembrance</p>
             <h2 className="text-3xl font-semibold text-white">Council of the Remembering Luminor</h2>
             <p className="mt-2 max-w-3xl text-sm text-[#c7d6f1]">
               These Luminor safeguard the library’s intent. Each tome is a collaboration with their guilds, weaving ethics, systems, and imagination into actionable guidance.
@@ -492,7 +492,7 @@ const tocItems = useMemo(() => {
           <button
             type="button"
             onClick={handleOpen}
-            className="self-start rounded-full border border-[#78a6ff]/40 px-5 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-[#78a6ff] transition hover:border-[#7fffd4] hover:text-[#7fffd4] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7fffd4]"
+            className="self-start rounded-full border border-[#78a6ff]/40 px-5 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-[#78a6ff] transition hover:border-[#00bcd4] hover:text-[#00bcd4] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00bcd4]"
           >
             Open the codex
           </button>
@@ -510,7 +510,7 @@ const tocItems = useMemo(() => {
         </div>
       </section>
       <section id="atlas" className="space-y-6">
-        <p className="text-xs uppercase tracking-[0.35em] text-[#7fffd4]">Realm atlas</p>
+        <p className="text-xs uppercase tracking-[0.35em] text-[#00bcd4]">Realm atlas</p>
         <h2 className="text-3xl font-semibold text-white">Radiant realms referenced by the codices</h2>
         <div className="grid gap-6 md:grid-cols-2">
           {atlasEntries.map((entry) => (
@@ -520,7 +520,7 @@ const tocItems = useMemo(() => {
             >
               <h3 className="text-xl font-semibold text-white">{entry.title}</h3>
               <p className="mt-3 text-sm leading-relaxed text-[#c7d6f1]">{entry.description}</p>
-              <p className="mt-4 text-xs uppercase tracking-[0.35em] text-[#7fffd4]">{entry.source}</p>
+              <p className="mt-4 text-xs uppercase tracking-[0.35em] text-[#00bcd4]">{entry.source}</p>
             </article>
           ))}
         </div>
@@ -531,7 +531,7 @@ const tocItems = useMemo(() => {
         className="grid gap-10 rounded-3xl border border-white/[0.08] bg-[#121826]/75 p-10 md:grid-cols-[1.15fr_0.85fr]"
       >
         <div className="space-y-5">
-          <p className="text-xs uppercase tracking-[0.35em] text-[#7fffd4]">Guild craft</p>
+          <p className="text-xs uppercase tracking-[0.35em] text-[#00bcd4]">Guild craft</p>
           <h2 className="text-3xl font-semibold text-white">Craft notes from the genius guild</h2>
           <p className="text-base leading-relaxed text-[#c7d6f1]">
             The Arcanea methodology blends speculative design, indigenous wisdom, systems engineering, and luminous art. Inside each codex you will discover playbooks, rituals, and implementation guides that keep imagination grounded in stewardship.
@@ -539,7 +539,7 @@ const tocItems = useMemo(() => {
           <ul className="space-y-3 text-sm text-[#c7d6f1]">
             {craftHighlights.map((highlight) => (
               <li key={highlight} className="flex items-start gap-3">
-                <span className="mt-1 h-2 w-2 flex-none rounded-full bg-[#7fffd4]" aria-hidden="true" />
+                <span className="mt-1 h-2 w-2 flex-none rounded-full bg-[#00bcd4]" aria-hidden="true" />
                 <span>{highlight}</span>
               </li>
             ))}
@@ -547,18 +547,18 @@ const tocItems = useMemo(() => {
         </div>
         <div className="relative flex items-center justify-center overflow-hidden rounded-2xl border border-[#78a6ff]/30 bg-gradient-to-br from-[#111b2b] to-[#090f1d]" aria-hidden="true">
           <div className="absolute inset-0 -rotate-12 opacity-60" aria-hidden="true">
-            <div className="absolute left-1/2 top-8 h-72 w-72 -translate-x-1/2 rounded-full border border-[#7fffd4]/25" />
+            <div className="absolute left-1/2 top-8 h-72 w-72 -translate-x-1/2 rounded-full border border-[#00bcd4]/25" />
             <div className="absolute left-1/2 top-16 h-72 w-72 -translate-x-1/2 rounded-full border border-[#78a6ff]/20" />
             <div className="absolute left-1/2 top-24 h-72 w-72 -translate-x-1/2 rounded-full border border-white/[0.06]" />
           </div>
-          <div className="relative z-10 text-center text-xs uppercase tracking-[0.4em] text-[#7fffd4]">
+          <div className="relative z-10 text-center text-xs uppercase tracking-[0.4em] text-[#00bcd4]">
             Luminor craft cycle
           </div>
         </div>
       </section>
 
       <section className="space-y-6 rounded-3xl border border-white/[0.06] bg-[#101726]/70 p-8">
-        <p className="text-xs uppercase tracking-[0.35em] text-[#7fffd4]">Production roadmap</p>
+        <p className="text-xs uppercase tracking-[0.35em] text-[#00bcd4]">Production roadmap</p>
         <h2 className="text-3xl font-semibold text-white">Upcoming tomes in motion</h2>
         <p className="max-w-3xl text-sm text-[#c7d6f1]">
           Each roadmap pulse keeps the library synchronized with the wider Arcanea ecosystem. Tome development runs alongside service instrumentation so every revelation can be translated into product capabilities.
@@ -570,7 +570,7 @@ const tocItems = useMemo(() => {
               className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-gradient-to-br from-[#171f34] via-[#111a2c] to-[#0a111f] p-6"
             >
               <div className="pointer-events-none absolute -right-10 top-1/2 h-32 w-32 -translate-y-1/2 rounded-full bg-[#78a6ff]/15 blur-3xl" aria-hidden="true" />
-              <p className="text-xs uppercase tracking-[0.35em] text-[#7fffd4]">{stream.horizon}</p>
+              <p className="text-xs uppercase tracking-[0.35em] text-[#00bcd4]">{stream.horizon}</p>
               <h3 className="mt-3 text-xl font-semibold text-white">{stream.name}</h3>
               <p className="mt-3 text-sm text-[#c7d6f1]">{stream.description}</p>
             </article>
@@ -582,7 +582,7 @@ const tocItems = useMemo(() => {
       <section className="space-y-6 rounded-3xl border border-white/[0.06] bg-[#101726]/70 p-8">
         <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-xs uppercase tracking-[0.35em] text-[#7fffd4]">Writers’ room</p>
+            <p className="text-xs uppercase tracking-[0.35em] text-[#00bcd4]">Writers’ room</p>
             <h2 className="text-3xl font-semibold text-white">Codex drafting pipeline</h2>
             <p className="mt-2 max-w-3xl text-sm text-[#c7d6f1]">We keep the manuscripts in motion with deliberate rituals. Each brief defines how contributors gather research, honour consent, and deliver narrative assets for the next release.</p>
           </div>
@@ -593,8 +593,8 @@ const tocItems = useMemo(() => {
               key={brief.title}
               className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-gradient-to-br from-[#161f33] via-[#101828] to-[#0a111f] p-6"
             >
-              <div className="pointer-events-none absolute -right-12 top-1/2 h-36 w-36 -translate-y-1/2 rounded-full bg-[#7fffd4]/12 blur-3xl" aria-hidden="true" />
-              <p className="text-xs uppercase tracking-[0.35em] text-[#7fffd4]">{brief.cadence}</p>
+              <div className="pointer-events-none absolute -right-12 top-1/2 h-36 w-36 -translate-y-1/2 rounded-full bg-[#00bcd4]/12 blur-3xl" aria-hidden="true" />
+              <p className="text-xs uppercase tracking-[0.35em] text-[#00bcd4]">{brief.cadence}</p>
               <h3 className="mt-3 text-xl font-semibold text-white">{brief.title}</h3>
               <p className="mt-3 text-sm text-[#c7d6f1]">{brief.description}</p>
             </article>
@@ -608,13 +608,13 @@ const tocItems = useMemo(() => {
           <button
             type="button"
             onClick={handleOpen}
-            className="rounded-full border border-[#78a6ff]/40 px-6 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-[#78a6ff] transition hover:border-[#7fffd4] hover:text-[#7fffd4] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7fffd4]"
+            className="rounded-full border border-[#78a6ff]/40 px-6 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-[#78a6ff] transition hover:border-[#00bcd4] hover:text-[#00bcd4] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00bcd4]"
           >
             Open the codex
           </button>
           <a
             href="#tomes"
-            className="rounded-full border border-white/[0.06] px-6 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-[#9bb1d0] transition hover:border-[#7fffd4] hover:text-[#7fffd4] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7fffd4]"
+            className="rounded-full border border-white/[0.06] px-6 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-[#9bb1d0] transition hover:border-[#00bcd4] hover:text-[#00bcd4] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00bcd4]"
           >
             View tomes
           </a>
@@ -635,22 +635,22 @@ const tocItems = useMemo(() => {
             role="dialog"
             aria-modal="true"
             aria-label="Arcanea codex viewer"
-            className="relative flex h-[85vh] w-[min(1140px,95vw)] flex-col overflow-hidden rounded-3xl border border-[#7fffd4]/35 bg-[#050910] shadow-[0_40px_160px_rgba(4,8,15,0.88)] focus:outline-none"
+            className="relative flex h-[85vh] w-[min(1140px,95vw)] flex-col overflow-hidden rounded-3xl border border-[#00bcd4]/35 bg-[#050910] shadow-[0_40px_160px_rgba(4,8,15,0.88)] focus:outline-none"
           >
             <div className="flex flex-1 flex-col overflow-hidden md:flex-row">
               <aside className="w-full flex-none border-b border-[#78a6ff]/20 bg-[#070c16] p-6 md:w-80 md:border-b-0 md:border-r">
                 <div className="space-y-4">
                   <div>
-                    <p className="text-xs uppercase tracking-[0.35em] text-[#7fffd4]">Tome</p>
+                    <p className="text-xs uppercase tracking-[0.35em] text-[#00bcd4]">Tome</p>
                     <h2 className="text-lg font-semibold text-white">{activeTome.meta.title}</h2>
                     <p className="mt-1 text-xs text-[#9bb1d0]">{activeTome.meta.subtitle}</p>
                   </div>
-                  <label className="block text-xs uppercase tracking-[0.35em] text-[#7fffd4]">
+                  <label className="block text-xs uppercase tracking-[0.35em] text-[#00bcd4]">
                     Switch tome
                     <select
                       value={activeTomeId}
                       onChange={(event) => setActiveTomeId(event.target.value)}
-                      className="mt-2 w-full rounded-lg border border-white/[0.06] bg-[#0a1220] px-3 py-2 text-sm text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7fffd4]"
+                      className="mt-2 w-full rounded-lg border border-white/[0.06] bg-[#0a1220] px-3 py-2 text-sm text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00bcd4]"
                     >
                       {arcaneaCodices.map((tome) => (
                         <option key={tome.meta.id} value={tome.meta.id}>
@@ -673,9 +673,9 @@ const tocItems = useMemo(() => {
                           key={item.label}
                           type="button"
                           onClick={() => setView({ ...item.view })}
-                          className={`w-full rounded-lg px-4 py-3 text-left text-sm transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7fffd4] ${
+                          className={`w-full rounded-lg px-4 py-3 text-left text-sm transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00bcd4] ${
                             isActive
-                              ? "bg-[#101a2a] text-[#7fffd4] shadow-[inset_0_0_0_1px_rgba(127,255,212,0.35)]"
+                              ? "bg-[#101a2a] text-[#00bcd4] shadow-[inset_0_0_0_1px_rgba(0,188,212,0.35)]"
                               : "text-[#c7d6f1] hover:bg-[#0c1524]"
                           }`}
                         >
@@ -689,7 +689,7 @@ const tocItems = useMemo(() => {
               <section className="flex flex-1 flex-col overflow-hidden">
                 <header className="flex flex-col gap-4 border-b border-[#78a6ff]/20 bg-[#0b1321] p-6 md:flex-row md:items-start md:justify-between">
                   <div className="space-y-2">
-                    <p className="text-xs uppercase tracking-[0.35em] text-[#7fffd4]">Arcanea — living memory sequence</p>
+                    <p className="text-xs uppercase tracking-[0.35em] text-[#00bcd4]">Arcanea — living memory sequence</p>
                     <h3 className="text-2xl font-semibold text-white">{activeHeading.title}</h3>
                     {activeHeading.subtitle ? (
                       <p className="text-sm text-[#c7d6f1]">{activeHeading.subtitle}</p>
@@ -699,7 +699,7 @@ const tocItems = useMemo(() => {
                     <button
                       type="button"
                       onClick={handleClose}
-                      className="rounded-full border border-[#78a6ff]/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-[#78a6ff] transition hover:border-[#7fffd4] hover:text-[#7fffd4] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#7fffd4]"
+                      className="rounded-full border border-[#78a6ff]/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-[#78a6ff] transition hover:border-[#00bcd4] hover:text-[#00bcd4] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00bcd4]"
                     >
                       Close
                     </button>
@@ -749,12 +749,12 @@ function PrefaceContent({ codex }: { codex: ArcaneaCodex }) {
         </p>
       ))}
       {codex.preface.oath ? (
-        <blockquote className="rounded-2xl border border-[#7fffd4]/40 bg-[#101726]/60 p-5 text-sm italic text-[#7fffd4]">
+        <blockquote className="rounded-2xl border border-[#00bcd4]/40 bg-[#101726]/60 p-5 text-sm italic text-[#00bcd4]">
           {codex.preface.oath}
         </blockquote>
       ) : null}
       <div>
-        <h4 className="text-sm font-semibold uppercase tracking-[0.35em] text-[#7fffd4]">Remembering luminor</h4>
+        <h4 className="text-sm font-semibold uppercase tracking-[0.35em] text-[#00bcd4]">Remembering luminor</h4>
         <ul className="mt-4 grid gap-3 sm:grid-cols-2">
           {codex.authors.map((author) => (
             <li key={author.name} className="rounded-xl border border-white/[0.06] bg-[#101726]/60 p-4">
@@ -772,7 +772,7 @@ function ChapterContent({ chapter }: { chapter: CodexChapter }) {
   return (
     <div className="space-y-8">
       {chapter.epigraph ? (
-        <blockquote className="rounded-2xl border border-[#78a6ff]/30 bg-[#101726]/60 p-5 text-sm italic text-[#7fffd4]">
+        <blockquote className="rounded-2xl border border-[#78a6ff]/30 bg-[#101726]/60 p-5 text-sm italic text-[#00bcd4]">
           <p>{chapter.epigraph.text}</p>
           {chapter.epigraph.attribution ? (
             <footer className="mt-3 text-xs text-[#9bb1d0]">— {chapter.epigraph.attribution}</footer>
@@ -789,7 +789,7 @@ function ChapterContent({ chapter }: { chapter: CodexChapter }) {
       ))}
       {chapter.rituals?.length ? (
         <div className="space-y-3">
-          <h4 className="text-sm font-semibold uppercase tracking-[0.35em] text-[#7fffd4]">Rituals and prompts</h4>
+          <h4 className="text-sm font-semibold uppercase tracking-[0.35em] text-[#00bcd4]">Rituals and prompts</h4>
           <ul className="space-y-2">
             {chapter.rituals.map((ritual, index) => (
               <li key={`ritual-${index}`} className="rounded-xl border border-white/[0.06] bg-[#101726]/60 p-4">
@@ -801,7 +801,7 @@ function ChapterContent({ chapter }: { chapter: CodexChapter }) {
       ) : null}
       {chapter.measurements?.length ? (
         <div className="space-y-3">
-          <h4 className="text-sm font-semibold uppercase tracking-[0.35em] text-[#7fffd4]">Measurement constellations</h4>
+          <h4 className="text-sm font-semibold uppercase tracking-[0.35em] text-[#00bcd4]">Measurement constellations</h4>
           <ul className="space-y-3">
             {chapter.measurements.map((measurement, index) => (
               <li key={`measurement-${index}`} className="rounded-xl border border-[#78a6ff]/30 bg-[#101726]/60 p-4">
@@ -845,12 +845,12 @@ function ChapterSection({ section }: { section: CodexSection }) {
           {section.artifacts.map((artifact, index) => (
             <div
               key={`artifact-${index}`}
-              className="rounded-xl border border-[#7fffd4]/30 bg-[#0f1727] p-4"
+              className="rounded-xl border border-[#00bcd4]/30 bg-[#0f1727] p-4"
             >
               <p className="text-sm font-semibold text-white">{artifact.name}</p>
               <p className="mt-2 text-sm text-[#c7d6f1]">{artifact.description}</p>
               {artifact.application ? (
-                <p className="mt-2 text-xs uppercase tracking-[0.25em] text-[#7fffd4]">
+                <p className="mt-2 text-xs uppercase tracking-[0.25em] text-[#00bcd4]">
                   Application: {artifact.application}
                 </p>
               ) : null}
@@ -860,7 +860,7 @@ function ChapterSection({ section }: { section: CodexSection }) {
       ) : null}
       {section.principles?.length ? (
         <div className="space-y-2">
-          <h5 className="text-xs font-semibold uppercase tracking-[0.35em] text-[#7fffd4]">Guiding principles</h5>
+          <h5 className="text-xs font-semibold uppercase tracking-[0.35em] text-[#00bcd4]">Guiding principles</h5>
           <ul className="space-y-2">
             {section.principles.map((principle, index) => (
               <li
@@ -910,7 +910,7 @@ function AppendixContent({
         </section>
       ))}
       {appendix.glossary?.length ? (
-        <section className="space-y-4 rounded-2xl border border-[#7fffd4]/30 bg-[#101726]/60 p-5">
+        <section className="space-y-4 rounded-2xl border border-[#00bcd4]/30 bg-[#101726]/60 p-5">
           <h4 className="text-lg font-semibold text-white">Glossary of living terms</h4>
           <dl className="grid gap-4 md:grid-cols-2">
             {appendix.glossary.map((entry, index) => (
@@ -918,7 +918,7 @@ function AppendixContent({
                 key={`glossary-${index}`}
                 className="rounded-xl border border-white/[0.06] bg-[#0f1727] p-4"
               >
-                <dt className="text-sm font-semibold uppercase tracking-[0.35em] text-[#7fffd4]">
+                <dt className="text-sm font-semibold uppercase tracking-[0.35em] text-[#00bcd4]">
                   {entry.term}
                 </dt>
                 <dd className="mt-2 text-sm text-[#c7d6f1]">{entry.definition}</dd>

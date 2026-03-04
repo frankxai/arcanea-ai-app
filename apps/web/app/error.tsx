@@ -68,7 +68,7 @@ export default function Error({
       <div className="flex flex-col sm:flex-row gap-4 mt-8">
         <button
           onClick={reset}
-          className="group flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-atlantean-teal-aqua/20 to-atlantean-teal-deep/20 hover:from-atlantean-teal-aqua/30 hover:to-atlantean-teal-deep/30 border border-atlantean-teal-aqua/50 rounded-lg text-atlantean-teal-aqua font-semibold transition-all duration-300 hover:shadow-[0_0_20px_rgba(127,255,212,0.3)]"
+          className="group flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-atlantean-teal-aqua/20 to-atlantean-teal-deep/20 hover:from-atlantean-teal-aqua/30 hover:to-atlantean-teal-deep/30 border border-atlantean-teal-aqua/50 rounded-lg text-atlantean-teal-aqua font-semibold transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,188,212,0.3)]"
         >
           <svg
             className="w-5 h-5 group-hover:rotate-180 transition-transform duration-500"

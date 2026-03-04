@@ -28,7 +28,7 @@ export function HeroBanner({ onSearch, totalCount }: HeroBannerProps) {
         className="absolute inset-0 z-0"
         style={{
           background:
-            'radial-gradient(ellipse 80% 60% at 50% -10%, rgba(139,92,246,0.28) 0%, transparent 65%), radial-gradient(ellipse 60% 40% at 80% 50%, rgba(127,255,212,0.08) 0%, transparent 55%), #0a0a0f',
+            'radial-gradient(ellipse 80% 60% at 50% -10%, rgba(139,92,246,0.28) 0%, transparent 65%), radial-gradient(ellipse 60% 40% at 80% 50%, rgba(0,188,212,0.08) 0%, transparent 55%), #0a0a0f',
         }}
       />
 
@@ -83,7 +83,7 @@ export function HeroBanner({ onSearch, totalCount }: HeroBannerProps) {
           className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-4 text-balance"
           style={{
             fontFamily: "'Playfair Display', serif",
-            background: 'linear-gradient(135deg, #ffffff 0%, #c4b5fd 40%, #7fffd4 80%, #ffd700 100%)',
+            background: 'linear-gradient(135deg, #ffffff 0%, #c4b5fd 40%, #00bcd4 80%, #ffd700 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',

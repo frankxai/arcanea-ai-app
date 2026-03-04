@@ -229,7 +229,7 @@ function HeroSection({
           <div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-4 leading-tight">
               Gallery of{" "}
-              <span className="bg-gradient-to-r from-[#7fffd4] via-[#78a6ff] to-[#ffd700] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#00bcd4] via-[#78a6ff] to-[#ffd700] bg-clip-text text-transparent">
                 Creation
               </span>
             </h1>
@@ -243,7 +243,7 @@ function HeroSection({
           {/* Stats strip */}
           <div className="flex items-center gap-6 text-sm text-white/[0.25] font-sans flex-shrink-0">
             <div className="flex items-center gap-1.5">
-              <PhSparkle size={16} weight="fill" className="text-[#7fffd4]" />
+              <PhSparkle size={16} weight="fill" className="text-[#00bcd4]" />
               <span>{totalCount} creations</span>
             </div>
             <div className="flex items-center gap-1.5">
@@ -299,7 +299,7 @@ function FilterBar({
                   onClick={() => onFilterChange(key)}
                   className={`flex-shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-sans transition-all ${
                     isActive
-                      ? "bg-[#7fffd4]/15 text-[#7fffd4] border border-[#7fffd4]/30"
+                      ? "bg-[#00bcd4]/15 text-[#00bcd4] border border-[#00bcd4]/30"
                       : "text-white/[0.25] hover:text-white/[0.50] hover:bg-white/[0.04] border border-transparent"
                   }`}
                 >
@@ -340,7 +340,7 @@ function FilterBar({
                       }}
                       className={`w-full flex items-center gap-2.5 px-4 py-2.5 text-sm font-sans transition-colors ${
                         sortBy === key
-                          ? "text-[#7fffd4] bg-[#7fffd4]/10"
+                          ? "text-[#00bcd4] bg-[#00bcd4]/10"
                           : "text-white/[0.30] hover:text-white hover:bg-white/[0.04]"
                       }`}
                     >
@@ -407,7 +407,7 @@ function CreationCard({ item }: { item: CardItem }) {
 
       {/* Content */}
       <div className="p-4">
-        <h3 className="text-sm font-sans font-semibold text-white mb-1.5 line-clamp-2 group-hover:text-[#7fffd4] transition-colors">
+        <h3 className="text-sm font-sans font-semibold text-white mb-1.5 line-clamp-2 group-hover:text-[#00bcd4] transition-colors">
           {item.title}
         </h3>
 
@@ -469,7 +469,7 @@ function ShowcaseNotice() {
     <div className="mt-12 rounded-2xl liquid-glass border border-white/[0.06] p-8 text-center">
       <PhSparkle
         size={32}
-        className="mx-auto mb-3 text-[#7fffd4]/60"
+        className="mx-auto mb-3 text-[#00bcd4]/60"
         weight="fill"
       />
       <p className="text-white/[0.30] font-sans text-sm mb-1">
@@ -500,7 +500,7 @@ function FooterCTA({
       </p>
       <Link
         href="/studio"
-        className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#7fffd4]/10 border border-[#7fffd4]/20 text-[#7fffd4] font-sans text-sm hover:bg-[#7fffd4]/20 transition-all group btn-glow"
+        className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#00bcd4]/10 border border-[#00bcd4]/20 text-[#00bcd4] font-sans text-sm hover:bg-[#00bcd4]/20 transition-all group btn-glow"
       >
         Create in Studio
         <PhArrowRight

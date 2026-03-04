@@ -26,7 +26,7 @@ const statusColors = {
 type StatusType = keyof typeof statusColors;
 
 const elementRings = {
-  crystal: 'ring-2 ring-crystal/60 shadow-[0_0_10px_rgba(127,255,212,0.3)]',
+  crystal: 'ring-2 ring-crystal/60 shadow-[0_0_10px_rgba(0,188,212,0.3)]',
   fire: 'ring-2 ring-fire/60 shadow-[0_0_10px_rgba(255,107,53,0.3)]',
   water: 'ring-2 ring-water/60 shadow-[0_0_10px_rgba(120,166,255,0.3)]',
   void: 'ring-2 ring-[#9966ff]/60 shadow-[0_0_10px_rgba(153,102,255,0.3)]',
@@ -88,7 +88,7 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
         <div
           className={cn(
             'rounded-full overflow-hidden flex items-center justify-center',
-            'bg-cosmic-surface border border-[rgba(127,255,212,0.12)]',
+            'bg-cosmic-surface border border-[rgba(0,188,212,0.12)]',
             'font-sans font-semibold text-text-secondary',
             'transition-all duration-200',
             container,

@@ -150,7 +150,7 @@ const PRODUCTS: Product[] = [
     href: "/chat",
     external: false,
     icon: Icons.Planet,
-    accent: "#7fffd4",
+    accent: "#00bcd4",
   },
   {
     id: "vault",
@@ -163,7 +163,7 @@ const PRODUCTS: Product[] = [
     href: "https://github.com/frankxai/arcanea-vault",
     external: true,
     icon: Icons.Vault,
-    accent: "#7fffd4",
+    accent: "#00bcd4",
   },
   {
     id: "flow",
@@ -241,7 +241,7 @@ const PRODUCTS: Product[] = [
     href: "/academy",
     external: false,
     icon: Icons.GraduationCap,
-    accent: "#7fffd4",
+    accent: "#00bcd4",
   },
   {
     id: "library",
@@ -254,7 +254,7 @@ const PRODUCTS: Product[] = [
     href: "/library",
     external: false,
     icon: Icons.Books,
-    accent: "#7fffd4",
+    accent: "#00bcd4",
   },
 ];
 
@@ -274,7 +274,7 @@ const PILLARS = [
     description:
       "Platform Hub and Vault form the creative core — where ideas are generated and captured.",
     products: ["arcanea.ai", "Arcanea Vault"],
-    accent: "#7fffd4",
+    accent: "#00bcd4",
   },
   {
     label: "Automate",
@@ -311,7 +311,7 @@ export default function EcosystemPage() {
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-void" />
         <div className="absolute inset-0 bg-cosmic-mesh" />
-        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(127,255,212,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(153,102,255,0.08),transparent_55%)]" />
+        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(0,188,212,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(13,71,161,0.08),transparent_55%)]" />
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12">
@@ -353,7 +353,7 @@ export default function EcosystemPage() {
               <div className="flex flex-wrap gap-4">
                 <Link
                   href="/chat"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep font-semibold hover:shadow-[0_0_24px_rgba(127,255,212,0.4)] transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep font-semibold hover:shadow-[0_0_24px_rgba(0,188,212,0.4)] transition-all duration-200"
                 >
                   Start building your universe
                   <Icons.ArrowRight />
@@ -574,7 +574,7 @@ export default function EcosystemPage() {
               <div className="flex flex-wrap justify-center gap-4">
                 <Link
                   href="/chat"
-                  className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep font-semibold shadow-[0_0_24px_rgba(127,255,212,0.25)] hover:shadow-[0_0_36px_rgba(127,255,212,0.4)] hover:scale-[1.02] transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep font-semibold shadow-[0_0_24px_rgba(0,188,212,0.25)] hover:shadow-[0_0_36px_rgba(0,188,212,0.4)] hover:scale-[1.02] transition-all duration-200"
                 >
                   Open the platform
                   <Icons.ArrowRight />

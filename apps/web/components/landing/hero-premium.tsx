@@ -103,7 +103,7 @@ function MagneticButton({
  */
 function GlowingOrb({
   size = 300,
-  color = "#7fffd4",
+  color = "#00bcd4",
   delay = 0,
 }: {
   size?: number;
@@ -297,7 +297,7 @@ export function HeroPremium({ stats }: HeroPremiumProps) {
 
   const backgroundGradient = useMotionTemplate`
     radial-gradient(ellipse 100% 100% at 50% -30%,
-      rgba(127,255,212,0.2) 0%,
+      rgba(0,188,212,0.2) 0%,
       rgba(139,92,246,0.15) 40%,
       rgba(255,215,0,0.1) 70%,
       transparent 100%)
@@ -355,15 +355,15 @@ export function HeroPremium({ stats }: HeroPremiumProps) {
           className="absolute inset-0 opacity-[0.03]"
           style={{
             backgroundImage: `
-              linear-gradient(rgba(127,255,212,0.5) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(127,255,212,0.5) 1px, transparent 1px)
+              linear-gradient(rgba(0,188,212,0.5) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(0,188,212,0.5) 1px, transparent 1px)
             `,
             backgroundSize: "60px 60px",
           }}
         />
 
         {/* Glowing colour orbs */}
-        <GlowingOrb size={400} color="#7fffd4" delay={0} />
+        <GlowingOrb size={400} color="#00bcd4" delay={0} />
         <GlowingOrb size={300} color="#8b5cf6" delay={2} />
         <GlowingOrb size={250} color="#ffd700" delay={4} />
         <GlowingOrb size={200} color="#78a6ff" delay={6} />
@@ -531,7 +531,7 @@ export function HeroPremium({ stats }: HeroPremiumProps) {
         className="fixed w-96 h-96 rounded-full pointer-events-none -z-10 blur-3xl"
         style={{
           background:
-            "radial-gradient(circle, rgba(127,255,212,0.15) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(0,188,212,0.15) 0%, transparent 70%)",
           x: mouseX,
           y: mouseY,
         }}

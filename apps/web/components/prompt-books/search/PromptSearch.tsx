@@ -289,7 +289,7 @@ export function PromptSearch({ isOpen, onClose, onSelectPrompt }: PromptSearchPr
               'relative z-10 w-full max-w-2xl mx-4',
               'rounded-2xl overflow-hidden',
               'bg-[rgba(12,16,28,0.96)] backdrop-blur-[24px]',
-              'border border-[rgba(127,255,212,0.12)]',
+              'border border-[rgba(0,188,212,0.12)]',
               'shadow-[0_16px_64px_rgba(0,0,0,0.6),0_0_1px_rgba(255,255,255,0.06)]',
             )}
           >

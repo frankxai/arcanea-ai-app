@@ -12,7 +12,7 @@ const skeletonVariants = cva(
     'bg-cosmic-raised',
     'before:absolute before:inset-0',
     'before:bg-gradient-to-r',
-    'before:from-transparent before:via-[rgba(127,255,212,0.06)] before:to-transparent',
+    'before:from-transparent before:via-[rgba(0,188,212,0.06)] before:to-transparent',
     'before:translate-x-[-100%]',
     'before:animate-[shimmer_1.8s_ease-in-out_infinite]',
   ],
@@ -84,7 +84,7 @@ export function SkeletonCard({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'rounded-xl border border-[rgba(127,255,212,0.08)] overflow-hidden',
+        'rounded-xl border border-[rgba(0,188,212,0.08)] overflow-hidden',
         className
       )}
       aria-hidden="true"

@@ -280,7 +280,7 @@ const PACKAGES = [
     name: "@arcanea/council",
     description: "Byzantine/Raft/Gossip/Gate Quorum consensus algorithms",
     tags: ["Consensus", "Byzantine", "Raft", "Multi-agent"],
-    color: "#8b5cf6",
+    color: "#0d47a1",
     stars: "2.4K",
     href: "https://github.com/frankxai/arcanea/tree/main/packages/council",
   },
@@ -296,7 +296,7 @@ const PACKAGES = [
     name: "@arcanea/guardian-memory",
     description: "HNSW vector search with Guardian-namespaced vaults",
     tags: ["Vector", "HNSW", "Memory", "Search"],
-    color: "#7fffd4",
+    color: "#00bcd4",
     stars: "1.5K",
     href: "https://github.com/frankxai/arcanea/tree/main/packages/guardian-memory",
   },
@@ -338,7 +338,7 @@ const TOOLS = [
       },
       { name: "Event Bus", description: "Intelligent routing and feedback" },
     ],
-    color: "#8b5cf6",
+    color: "#0d47a1",
   },
   {
     category: "Creative",
@@ -361,7 +361,7 @@ const TOOLS = [
       { name: "Token Optimizer", description: "Context window management" },
       { name: "MCP Server", description: "30+ tools with skill-rules" },
     ],
-    color: "#7fffd4",
+    color: "#00bcd4",
   },
 ];
 
@@ -371,14 +371,14 @@ const QUICK_STARTS = [
     description: "Build a procedural skill that equips creators",
     href: "/skills",
     icon: Icons.Zap,
-    color: "#8b5cf6",
+    color: "#0d47a1",
   },
   {
     title: "Use the MCP Server",
     description: "Integrate Arcanea tools into your workflow",
     href: "/docs/mcp",
     icon: Icons.Terminal,
-    color: "#7fffd4",
+    color: "#00bcd4",
   },
   {
     title: "Contribute to Packages",
@@ -403,7 +403,7 @@ export default function DevelopersPage() {
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-void" />
         <div className="absolute inset-0 bg-cosmic-mesh" />
-        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(139,92,246,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(127,255,212,0.08),transparent_55%)]" />
+        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(13,71,161,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(0,188,212,0.08),transparent_55%)]" />
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12">
@@ -653,13 +653,13 @@ export default function DevelopersPage() {
                 {
                   layer: "Intelligence",
                   icon: Icons.Brain,
-                  color: "#8b5cf6",
+                  color: "#0d47a1",
                   items: ["Guardian Evolution", "ReasoningBank", "Skill-Rules"],
                 },
                 {
                   layer: "Orchestration",
                   icon: Icons.Cpu,
-                  color: "#7fffd4",
+                  color: "#00bcd4",
                   items: ["Swarm Coordinator", "Rituals", "Event Bus"],
                 },
                 {

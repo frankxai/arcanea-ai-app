@@ -40,7 +40,7 @@ export function UserNav() {
           </button>
           <button
             onClick={openSignup}
-            className="px-4 py-2 rounded-xl bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-light text-cosmic-deep text-sm font-semibold hover:shadow-[0_0_20px_rgba(127,255,212,0.3)] transition-all duration-300"
+            className="px-4 py-2 rounded-xl bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-light text-cosmic-deep text-sm font-semibold hover:shadow-[0_0_20px_rgba(0,188,212,0.3)] transition-all duration-300"
           >
             Get Started
           </button>

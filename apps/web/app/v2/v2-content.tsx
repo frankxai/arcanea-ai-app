@@ -302,7 +302,7 @@ function HeroSection() {
           className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[800px] h-[800px] rounded-full opacity-30"
           style={{
             background:
-              "radial-gradient(circle, rgba(127,255,212,0.08) 0%, rgba(139,92,246,0.04) 50%, transparent 70%)",
+              "radial-gradient(circle, rgba(0,188,212,0.08) 0%, rgba(139,92,246,0.04) 50%, transparent 70%)",
           }}
         />
       </div>
@@ -687,7 +687,7 @@ function GuardianShowcase() {
                 onClick={() => setActive(i)}
                 className={`w-full flex items-center gap-4 p-3 rounded-xl text-left transition-all duration-300 ${
                   active === i
-                    ? "bg-atlantean-teal-aqua/10 border border-atlantean-teal-aqua/30 shadow-[0_0_20px_rgba(127,255,212,0.08)]"
+                    ? "bg-atlantean-teal-aqua/10 border border-atlantean-teal-aqua/30 shadow-[0_0_20px_rgba(0,188,212,0.08)]"
                     : "border border-transparent hover:bg-white/[0.04]"
                 }`}
               >
@@ -1037,7 +1037,7 @@ function FrequencyVisualization() {
               x2="100%"
               y2="0%"
             >
-              <stop offset="0%" stopColor="rgba(127,255,212,0.2)" />
+              <stop offset="0%" stopColor="rgba(0,188,212,0.2)" />
               <stop offset="50%" stopColor="rgba(139,92,246,0.2)" />
               <stop offset="100%" stopColor="rgba(255,215,0,0.2)" />
             </linearGradient>

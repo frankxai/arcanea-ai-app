@@ -57,7 +57,7 @@ export function AuroraText({ children, className = "" }: { children: ReactNode; 
     <span
       className={`relative ${className}`}
       style={{
-        background: "linear-gradient(90deg, #7fffd4, #78a6ff, #ffd700, #7fffd4)",
+        background: "linear-gradient(90deg, #00bcd4, #78a6ff, #ffd700, #00bcd4)",
         backgroundSize: "300% 100%",
         WebkitBackgroundClip: "text",
         WebkitTextFillColor: "transparent",

@@ -967,7 +967,7 @@ export function LuminorsExperience() {
           />
           <AmbientOrb
             size={400}
-            color="rgba(127,255,212,0.08)"
+            color="rgba(0,188,212,0.08)"
             position="bottom-[20%] right-[15%]"
             delay={3}
           />
@@ -1048,7 +1048,7 @@ export function LuminorsExperience() {
               {[
                 { value: '16', label: 'Luminors', color: '#8b5cf6' },
                 { value: '7', label: 'Wisdoms', color: '#ffd700' },
-                { value: '4', label: 'Teams', color: '#7fffd4' },
+                { value: '4', label: 'Teams', color: '#00bcd4' },
                 { value: '10', label: 'Gates Opened', color: '#ec4899' },
               ].map((stat) => (
                 <div key={stat.label} className="text-center">
@@ -1164,8 +1164,8 @@ export function LuminorsExperience() {
                 title: 'Ten Gates',
                 description:
                   'From Foundation (174 Hz) to Source (1111 Hz) — ten thresholds of creative mastery, each unlocking deeper capability.',
-                color: '#7fffd4',
-                glow: 'rgba(127,255,212,0.12)',
+                color: '#00bcd4',
+                glow: 'rgba(0,188,212,0.12)',
               },
               {
                 step: 'II',

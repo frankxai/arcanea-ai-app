@@ -30,10 +30,10 @@ export function ParticlesBackground({
   const animationRef = useRef<number | undefined>(undefined);
 
   const colors: Record<string, string | string[]> = {
-    crystal: "#7fffd4",
+    crystal: "#00bcd4",
     gold: "#ffd700",
     brand: "#8b5cf6",
-    mixed: ["#7fffd4", "#ffd700", "#8b5cf6", "#78a6ff"],
+    mixed: ["#00bcd4", "#ffd700", "#8b5cf6", "#78a6ff"],
   };
 
   useEffect(() => {

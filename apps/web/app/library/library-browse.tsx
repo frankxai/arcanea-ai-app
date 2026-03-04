@@ -290,7 +290,7 @@ function CollectionCard({ collection }: { collection: Collection }) {
   return (
     <Link
       href={`/library/${collection.slug}`}
-      className="group relative overflow-hidden rounded-2xl border border-cosmic-border bg-gradient-to-br from-cosmic-surface via-cosmic-deep to-cosmic-void p-6 transition-all hover:border-atlantean-teal/50 hover:shadow-[0_0_50px_rgba(127,255,212,0.15)]"
+      className="group relative overflow-hidden rounded-2xl border border-cosmic-border bg-gradient-to-br from-cosmic-surface via-cosmic-deep to-cosmic-void p-6 transition-all hover:border-atlantean-teal/50 hover:shadow-[0_0_50px_rgba(0,188,212,0.15)]"
     >
       <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" aria-hidden="true">
         <div className="absolute -left-16 top-1/2 h-40 w-40 -translate-y-1/2 rounded-full bg-atlantean-teal/15 blur-3xl" />

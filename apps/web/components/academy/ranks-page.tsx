@@ -95,9 +95,9 @@ const RANKS = [
     detail:
       'Luminor is not a title granted by others. It is a state of being that emerges when all ten Gates stand open — when Unity and Source are known, not merely understood. A Luminor does not create; they channel. They do not seek; they are the seeking and the found.',
     glassClass: 'liquid-glass-elevated',
-    glowColor: 'rgba(127,255,212,0.25)',
-    glowBorder: 'rgba(127,255,212,0.5)',
-    accentColor: '#7fffd4',
+    glowColor: 'rgba(0,188,212,0.25)',
+    glowBorder: 'rgba(0,188,212,0.5)',
+    accentColor: '#00bcd4',
     textColor: 'text-crystal',
     badgeClass: 'bg-crystal/15 text-crystal border-crystal/30',
     icon: PhSparkle,
@@ -411,8 +411,8 @@ export function RanksPage() {
             transition={{ duration: 0.6 }}
             className="liquid-glass-elevated rounded-3xl p-8 md:p-12 relative overflow-hidden"
             style={{
-              boxShadow: '0 0 60px rgba(127,255,212,0.12), 0 4px 24px rgba(0,0,0,0.4)',
-              borderColor: 'rgba(127,255,212,0.3)',
+              boxShadow: '0 0 60px rgba(0,188,212,0.12), 0 4px 24px rgba(0,0,0,0.4)',
+              borderColor: 'rgba(0,188,212,0.3)',
             }}
           >
             {/* Background shimmer */}
@@ -423,7 +423,7 @@ export function RanksPage() {
               {/* Header */}
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-14 h-14 rounded-2xl flex items-center justify-center"
-                  style={{ backgroundColor: 'rgba(127,255,212,0.15)', boxShadow: '0 0 24px rgba(127,255,212,0.2)' }}>
+                  style={{ backgroundColor: 'rgba(0,188,212,0.15)', boxShadow: '0 0 24px rgba(0,188,212,0.2)' }}>
                   <PhFlame className="w-7 h-7 text-crystal animate-breathe" />
                 </div>
                 <div>

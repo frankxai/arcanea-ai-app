@@ -39,7 +39,7 @@ const variantConfig = {
 const alertVariants = cva(
   [
     'relative flex gap-3 rounded-xl p-4',
-    'border border-[rgba(127,255,212,0.10)]',
+    'border border-[rgba(0,188,212,0.10)]',
     'backdrop-blur-[16px]',
     'border-l-4',
   ],

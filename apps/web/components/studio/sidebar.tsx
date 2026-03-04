@@ -79,7 +79,7 @@ const typeIconMap: Record<string, React.ReactNode> = {
 
 const typeColorMap: Record<string, string> = {
   text: "text-[#8b5cf6]",
-  image: "text-[#7fffd4]",
+  image: "text-[#00bcd4]",
   video: "text-rose-400",
   music: "text-amber-400",
   code: "text-sky-400",
@@ -230,7 +230,7 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
       {/* User Profile */}
       <div className="px-4 py-3 border-t border-[rgba(139,92,246,0.12)]">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#8b5cf6] to-[#7fffd4] flex items-center justify-center text-xs font-bold text-white shrink-0">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#8b5cf6] to-[#00bcd4] flex items-center justify-center text-xs font-bold text-white shrink-0">
             A
           </div>
           <div className="flex-1 min-w-0">
@@ -242,7 +242,7 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
           </div>
           <div className="text-right">
             <p className="text-[10px] text-muted-foreground font-mono">Credits</p>
-            <p className="text-xs font-bold text-[#7fffd4] font-mono">2,847</p>
+            <p className="text-xs font-bold text-[#00bcd4] font-mono">2,847</p>
           </div>
         </div>
       </div>

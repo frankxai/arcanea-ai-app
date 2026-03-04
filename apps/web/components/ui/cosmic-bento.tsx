@@ -96,9 +96,9 @@ const CosmicBento = React.forwardRef<HTMLDivElement, CosmicBentoProps>(
               className={cn(
                 "relative rounded-2xl overflow-hidden",
                 "bg-[rgba(18,24,38,0.65)] backdrop-blur-[16px]",
-                "border border-[rgba(127,255,212,0.12)]",
+                "border border-[rgba(0,188,212,0.12)]",
                 "transition-all duration-200",
-                "hover:border-[rgba(127,255,212,0.25)] hover:shadow-glow-sm",
+                "hover:border-[rgba(0,188,212,0.25)] hover:shadow-glow-sm",
                 colSpanClasses[item.colSpan ?? 1],
                 rowSpanClasses[item.rowSpan ?? 1],
                 item.className,
@@ -120,9 +120,9 @@ const CosmicBento = React.forwardRef<HTMLDivElement, CosmicBentoProps>(
             className={cn(
               "relative rounded-2xl overflow-hidden",
               "bg-[rgba(18,24,38,0.65)] backdrop-blur-[16px]",
-              "border border-[rgba(127,255,212,0.12)]",
+              "border border-[rgba(0,188,212,0.12)]",
               "transition-all duration-200",
-              "hover:border-[rgba(127,255,212,0.25)] hover:shadow-glow-sm",
+              "hover:border-[rgba(0,188,212,0.25)] hover:shadow-glow-sm",
               colSpanClasses[item.colSpan ?? 1],
               rowSpanClasses[item.rowSpan ?? 1],
               item.className,
@@ -153,10 +153,10 @@ const BentoItem = React.forwardRef<HTMLDivElement, BentoItemComponentProps>(
       className={cn(
         "relative rounded-2xl overflow-hidden h-full",
         "bg-[rgba(18,24,38,0.65)] backdrop-blur-[16px]",
-        "border border-[rgba(127,255,212,0.12)]",
+        "border border-[rgba(0,188,212,0.12)]",
         "transition-all duration-200",
         glowOnHover &&
-          "hover:border-[rgba(127,255,212,0.25)] hover:shadow-glow-sm",
+          "hover:border-[rgba(0,188,212,0.25)] hover:shadow-glow-sm",
         className,
       )}
     >
@@ -199,13 +199,13 @@ const BentoSkeleton: React.FC<BentoSkeletonProps> = ({
           className={cn(
             "relative rounded-2xl overflow-hidden",
             "bg-[rgba(18,24,38,0.65)] backdrop-blur-[16px]",
-            "border border-[rgba(127,255,212,0.12)]",
+            "border border-[rgba(0,188,212,0.12)]",
             "animate-pulse",
             colSpanClasses[1],
             rowSpanClasses[1],
           )}
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[rgba(127,255,212,0.05)] to-transparent animate-shimmer" />
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[rgba(0,188,212,0.05)] to-transparent animate-shimmer" />
         </div>
       ))}
     </div>

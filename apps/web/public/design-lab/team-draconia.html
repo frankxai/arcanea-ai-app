@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arcanea — Forge Your Vision</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            obsidian: '#0c0a09',
+            'obsidian-80': 'rgba(12,10,9,0.8)',
+            gold: '#d97706',
+            'gold-light': '#f59e0b',
+            'gold-bright': '#fbbf24',
+            ember: '#ef4444',
+            'ember-dim': '#dc2626',
+            'warm-gray': '#78716c',
+            'warm-gray-light': '#a8a29e',
+            'hot-white': '#fef3c7',
+            'surface': 'rgba(28,22,18,0.7)',
+          },
+          fontFamily: {
+            display: ['Plus Jakarta Sans', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+          },
+          backgroundImage: {
+            'metallic': 'linear-gradient(135deg, #d97706 0%, #b45309 35%, #7c2d12 65%, #ef4444 100%)',
+            'metallic-text': 'linear-gradient(135deg, #fbbf24 0%, #d97706 40%, #f59e0b 60%, #fde68a 100%)',
+            'obsidian-vein': 'radial-gradient(ellipse at 30% 50%, rgba(217,119,6,0.08) 0%, transparent 60%), radial-gradient(ellipse at 70% 20%, rgba(239,68,68,0.06) 0%, transparent 50%), radial-gradient(ellipse at 50% 80%, rgba(217,119,6,0.05) 0%, transparent 40%)',
+          },
+          animation: {
+            'ember-float': 'emberFloat 6s ease-in-out infinite',
+            'ember-pulse': 'emberPulse 3s ease-in-out infinite',
+            'glow-breathe': 'glowBreathe 4s ease-in-out infinite',
+            'vein-shift': 'veinShift 12s ease-in-out infinite alternate',
+            'shimmer': 'shimmer 3s linear infinite',
+            'rise': 'rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            'gold-flow': 'goldFlow 8s linear infinite',
+          },
+          keyframes: {
+            emberFloat: {
+              '0%, 100%': { transform: 'translateY(0px) scale(1)', opacity: '0.6' },
+              '50%': { transform: 'translateY(-12px) scale(1.1)', opacity: '1' },
+            },
+            emberPulse: {
+              '0%, 100%': { opacity: '0.3', transform: 'scale(0.95)' },
+              '50%': { opacity: '0.8', transform: 'scale(1.05)' },
+            },
+            glowBreathe: {
+              '0%, 100%': { boxShadow: '0 0 20px rgba(217,119,6,0.3), 0 0 60px rgba(217,119,6,0.1)' },
+              '50%': { boxShadow: '0 0 40px rgba(217,119,6,0.5), 0 0 100px rgba(217,119,6,0.2)' },
+            },
+            veinShift: {
+              '0%': { backgroundPosition: '0% 50%' },
+              '100%': { backgroundPosition: '100% 50%' },
+            },
+            shimmer: {
+              '0%': { transform: 'translateX(-100%)' },
+              '100%': { transform: 'translateX(400%)' },
+            },
+            rise: {
+              '0%': { opacity: '0', transform: 'translateY(24px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            goldFlow: {
+              '0%': { backgroundPosition: '0% 50%' },
+              '100%': { backgroundPosition: '300% 50%' },
+            },
+          },
+          backdropBlur: {
+            'glass': '20px',
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    /* ── Base ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: #0c0a09;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0c0a09;
+      color: #fef3c7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* ── Metallic Text ────────────────────────────── */
+    .text-metallic {
+      background: linear-gradient(135deg, #fbbf24 0%, #d97706 30%, #f59e0b 55%, #fde68a 75%, #d97706 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: goldFlow 8s linear infinite;
+    }
+
+    .text-metallic-static {
+      background: linear-gradient(135deg, #fbbf24 0%, #d97706 40%, #fde68a 70%, #b45309 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Glass Surfaces ──────────────────────────── */
+    .glass-obsidian {
+      background: rgba(12, 10, 9, 0.75);
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      border: 1px solid rgba(217, 119, 6, 0.15);
+      position: relative;
+    }
+
+    .glass-obsidian::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 20% 10%, rgba(217,119,6,0.06) 0%, transparent 50%),
+                  radial-gradient(ellipse at 80% 90%, rgba(239,68,68,0.04) 0%, transparent 50%);
+      pointer-events: none;
+      border-radius: inherit;
+    }
+
+    /* Bubble-shine top-left reflection */
+    .glass-shine::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 60%;
+      height: 40%;
+      background: radial-gradient(ellipse at 20% 20%, rgba(255,255,255,0.06) 0%, transparent 70%);
+      pointer-events: none;
+      border-radius: inherit;
+    }
+
+    /* ── Nav ──────────────────────────────────────── */
+    .nav-glass {
+      background: rgba(12, 10, 9, 0.85);
+      backdrop-filter: blur(24px) saturate(1.6);
+      -webkit-backdrop-filter: blur(24px) saturate(1.6);
+      border-bottom: 1px solid rgba(217, 119, 6, 0.12);
+    }
+
+    .nav-link {
+      position: relative;
+      color: #a8a29e;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: color 0.2s ease;
+      text-decoration: none;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: linear-gradient(90deg, #d97706, #f59e0b);
+      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nav-link:hover {
+      color: #fef3c7;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    /* ── Hero Background ─────────────────────────── */
+    .hero-bg {
+      background:
+        radial-gradient(ellipse at 15% 60%, rgba(217,119,6,0.12) 0%, transparent 45%),
+        radial-gradient(ellipse at 85% 30%, rgba(239,68,68,0.08) 0%, transparent 40%),
+        radial-gradient(ellipse at 50% 90%, rgba(217,119,6,0.07) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 0%, rgba(120,83,20,0.15) 0%, transparent 60%),
+        #0c0a09;
+    }
+
+    /* Molten vein lines */
+    .hero-veins {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .hero-veins::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image:
+        repeating-linear-gradient(
+          -45deg,
+          transparent,
+          transparent 120px,
+          rgba(217,119,6,0.025) 121px,
+          rgba(217,119,6,0.025) 122px
+        ),
+        repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 200px,
+          rgba(239,68,68,0.015) 201px,
+          rgba(239,68,68,0.015) 202px
+        );
+    }
+
+    /* Ember particle clusters (pure CSS) */
+    .ember-field {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .ember {
+      position: absolute;
+      border-radius: 50%;
+      animation: emberFloat var(--dur, 6s) ease-in-out infinite;
+      animation-delay: var(--delay, 0s);
+    }
+
+    /* ── Hero Input ──────────────────────────────── */
+    .forge-input-wrapper {
+      position: relative;
+      background: rgba(28, 22, 18, 0.8);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 16px;
+      border: 1px solid rgba(217, 119, 6, 0.3);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      animation: glowBreathe 4s ease-in-out infinite;
+    }
+
+    .forge-input-wrapper:focus-within {
+      border-color: rgba(217, 119, 6, 0.7);
+      box-shadow:
+        0 0 0 1px rgba(217,119,6,0.15),
+        0 0 40px rgba(217,119,6,0.25),
+        0 0 80px rgba(217,119,6,0.1),
+        inset 0 1px 0 rgba(255,255,255,0.05);
+      animation: none;
+    }
+
+    .forge-input-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 17px;
+      background: linear-gradient(135deg, rgba(217,119,6,0.4), transparent 40%, transparent 60%, rgba(239,68,68,0.2));
+      z-index: -1;
+    }
+
+    /* Top reflection */
+    .forge-input-wrapper::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 12px;
+      right: 12px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+      pointer-events: none;
+    }
+
+    .forge-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #fef3c7;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.125rem;
+      font-weight: 400;
+      line-height: 1.6;
+      resize: none;
+      caret-color: #d97706;
+    }
+
+    .forge-input::placeholder {
+      color: rgba(120, 113, 108, 0.7);
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    /* ── Gold Button ─────────────────────────────── */
+    .btn-forge {
+      position: relative;
+      background: linear-gradient(135deg, #d97706 0%, #b45309 40%, #d97706 70%, #ef4444 100%);
+      background-size: 200% auto;
+      color: #0c0a09;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 0.9375rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 24px rgba(217,119,6,0.4), 0 1px 0 rgba(255,255,255,0.2) inset;
+    }
+
+    .btn-forge::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      transition: transform 0.5s ease;
+    }
+
+    .btn-forge:hover::before {
+      transform: translateX(500%);
+    }
+
+    .btn-forge:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 40px rgba(217,119,6,0.6), 0 2px 0 rgba(255,255,255,0.3) inset;
+      background-position: right center;
+    }
+
+    .btn-forge:active {
+      transform: translateY(0);
+    }
+
+    .btn-forge:focus-visible {
+      outline: 2px solid #fbbf24;
+      outline-offset: 3px;
+    }
+
+    /* Secondary button */
+    .btn-ghost {
+      position: relative;
+      background: rgba(217,119,6,0.08);
+      color: #d97706;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.875rem;
+      letter-spacing: 0.04em;
+      border: 1px solid rgba(217,119,6,0.25);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(217,119,6,0.15);
+      border-color: rgba(217,119,6,0.5);
+      color: #fbbf24;
+    }
+
+    .btn-ghost:focus-visible {
+      outline: 2px solid #d97706;
+      outline-offset: 3px;
+    }
+
+    /* ── Feature Cards ───────────────────────────── */
+    .feature-card {
+      position: relative;
+      background: rgba(20, 16, 12, 0.8);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(120,83,20,0.2);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.3s ease,
+                  box-shadow 0.3s ease;
+      cursor: default;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(217,119,6,0.4) 50%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .feature-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(217,119,6,0.08) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(217,119,6,0.4);
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.5),
+        0 0 40px rgba(217,119,6,0.1),
+        inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    .feature-card:hover::before,
+    .feature-card:hover::after {
+      opacity: 1;
+    }
+
+    /* Bubble-shine on cards */
+    .feature-card .shine {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 70%;
+      height: 50%;
+      background: radial-gradient(ellipse at 15% 15%, rgba(255,255,255,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Icon ember glow */
+    .icon-forge {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: rgba(217,119,6,0.1);
+      border: 1px solid rgba(217,119,6,0.2);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .feature-card:hover .icon-forge {
+      background: rgba(217,119,6,0.18);
+      box-shadow: 0 0 20px rgba(217,119,6,0.25);
+    }
+
+    /* ── Gallery Grid ────────────────────────────── */
+    .gallery-item {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid rgba(120,83,20,0.15);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 0.3s ease,
+                  border-color 0.3s ease;
+      aspect-ratio: 4/3;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.02) translateY(-2px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 30px rgba(217,119,6,0.15);
+      border-color: rgba(217,119,6,0.35);
+    }
+
+    .gallery-item .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(12,10,9,0.9) 0%, rgba(12,10,9,0.4) 50%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .gallery-item:hover .overlay {
+      opacity: 1;
+    }
+
+    .gallery-item .meta {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 16px;
+      transform: translateY(8px);
+      opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .gallery-item:hover .meta {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Gallery placeholder gradients */
+    .gal-1 { background: linear-gradient(135deg, #1c0a00 0%, #7c2d12 40%, #d97706 80%, #fbbf24 100%); }
+    .gal-2 { background: linear-gradient(135deg, #0f0a14 0%, #3b0764 50%, #7c3aed 80%, #c4b5fd 100%); }
+    .gal-3 { background: linear-gradient(135deg, #042f2e 0%, #0f766e 50%, #2dd4bf 80%, #99f6e4 100%); }
+    .gal-4 { background: linear-gradient(135deg, #1c0000 0%, #7f1d1d 50%, #ef4444 80%, #fca5a5 100%); }
+    .gal-5 { background: linear-gradient(135deg, #052e16 0%, #14532d 50%, #22c55e 80%, #86efac 100%); }
+    .gal-6 { background: linear-gradient(135deg, #0c0a09 0%, #44403c 40%, #d97706 70%, #fef3c7 100%); }
+
+    /* Gallery texture overlays */
+    .gallery-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+      opacity: 0.4;
+      z-index: 1;
+    }
+
+    /* ── Testimonial Cards ───────────────────────── */
+    .testimonial-card {
+      position: relative;
+      background: rgba(20, 16, 12, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(120,83,20,0.2);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .testimonial-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 40%;
+      background: radial-gradient(ellipse at 20% 20%, rgba(255,255,255,0.04) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .testimonial-card:hover {
+      border-color: rgba(217,119,6,0.3);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.4), 0 0 24px rgba(217,119,6,0.08);
+    }
+
+    .quote-mark {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 4rem;
+      line-height: 1;
+      color: rgba(217,119,6,0.25);
+      font-weight: 800;
+      margin-bottom: -16px;
+    }
+
+    /* ── CTA Section ─────────────────────────────── */
+    .cta-bg {
+      position: relative;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(217,119,6,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 100%, rgba(239,68,68,0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 100%, rgba(217,119,6,0.08) 0%, transparent 50%),
+        #0c0a09;
+      border-top: 1px solid rgba(217,119,6,0.1);
+      border-bottom: 1px solid rgba(217,119,6,0.1);
+    }
+
+    .cta-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          -60deg,
+          transparent,
+          transparent 80px,
+          rgba(217,119,6,0.02) 81px,
+          rgba(217,119,6,0.02) 82px
+        );
+      pointer-events: none;
+    }
+
+    /* ── Divider ─────────────────────────────────── */
+    .gold-divider {
+      height: 1px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(217,119,6,0.1) 15%,
+        rgba(217,119,6,0.4) 50%,
+        rgba(217,119,6,0.1) 85%,
+        transparent 100%
+      );
+    }
+
+    /* ── Scroll indicator ────────────────────────── */
+    .scroll-indicator {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .scroll-indicator span {
+      display: block;
+      width: 1px;
+      background: linear-gradient(to bottom, rgba(217,119,6,0.8), transparent);
+      animation: scrollDrop 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollDrop {
+      0% { height: 0; opacity: 1; }
+      80% { height: 40px; opacity: 0.5; }
+      100% { height: 40px; opacity: 0; }
+    }
+
+    /* ── Stat/badge chip ─────────────────────────── */
+    .forge-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(217,119,6,0.08);
+      border: 1px solid rgba(217,119,6,0.2);
+      border-radius: 100px;
+      padding: 4px 14px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #d97706;
+      letter-spacing: 0.04em;
+    }
+
+    .forge-chip .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #d97706;
+      box-shadow: 0 0 6px rgba(217,119,6,0.8);
+      animation: emberPulse 2s ease-in-out infinite;
+    }
+
+    /* ── Section label ───────────────────────────── */
+    .section-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #d97706;
+      opacity: 0.7;
+    }
+
+    /* ── Footer ──────────────────────────────────── */
+    .footer-glass {
+      background: rgba(8, 6, 5, 0.95);
+      border-top: 1px solid rgba(120,83,20,0.15);
+    }
+
+    .footer-link {
+      color: #78716c;
+      font-size: 0.875rem;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-link:hover {
+      color: #d97706;
+    }
+
+    .social-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid rgba(120,83,20,0.25);
+      background: rgba(20,16,12,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #78716c;
+      cursor: pointer;
+      transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+    }
+
+    .social-icon:hover {
+      border-color: rgba(217,119,6,0.4);
+      color: #d97706;
+      background: rgba(217,119,6,0.08);
+    }
+
+    /* ── Logo mark ───────────────────────────────── */
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      background: linear-gradient(135deg, #d97706 0%, #b45309 50%, #ef4444 100%);
+      box-shadow: 0 0 12px rgba(217,119,6,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* ── Forge number ────────────────────────────── */
+    .forge-stat-num {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    /* ── Input type selector row ─────────────────── */
+    .type-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      border: 1px solid rgba(120,83,20,0.3);
+      background: rgba(20,16,12,0.5);
+      color: #78716c;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .type-pill:hover {
+      border-color: rgba(217,119,6,0.4);
+      color: #d97706;
+      background: rgba(217,119,6,0.06);
+    }
+
+    .type-pill.active {
+      border-color: rgba(217,119,6,0.5);
+      color: #fbbf24;
+      background: rgba(217,119,6,0.12);
+    }
+
+    /* ── Avatar ring ─────────────────────────────── */
+    .avatar-ring {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid rgba(217,119,6,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .avatar-ring::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      border: 1px solid rgba(217,119,6,0.1);
+    }
+
+    /* ── Animated border on hero input (keyframe) ── */
+    @keyframes borderRotate {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    /* ── Stagger reveal utility ─────────────────── */
+    .stagger-1 { animation-delay: 0.1s; }
+    .stagger-2 { animation-delay: 0.2s; }
+    .stagger-3 { animation-delay: 0.3s; }
+    .stagger-4 { animation-delay: 0.4s; }
+    .stagger-5 { animation-delay: 0.5s; }
+
+    /* ── Horizontal scroll on mobile ─────────────── */
+    .type-pills-row {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 2px;
+    }
+    .type-pills-row::-webkit-scrollbar { display: none; }
+
+    /* ── Glow lines ──────────────────────────────── */
+    .glow-line-h {
+      height: 1px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(217,119,6,0.5) 50%,
+        transparent 100%
+      );
+    }
+
+    /* ── Responsive tweaks ────────────────────────── */
+    @media (max-width: 640px) {
+      .hero-headline { font-size: 2.5rem !important; }
+    }
+    @media (min-width: 641px) and (max-width: 1024px) {
+      .hero-headline { font-size: 3.5rem !important; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       EMBER PARTICLE FIELD (background layer)
+  ═══════════════════════════════════════════ -->
+  <div class="ember-field" style="z-index:0; pointer-events:none; position:fixed; top:0; left:0; width:100%; height:100%;" aria-hidden="true">
+    <!-- Ember cluster 1 - bottom left -->
+    <div class="ember" style="left:8%;bottom:20%;width:3px;height:3px;background:radial-gradient(circle,#d97706,transparent);--dur:7s;--delay:0s;opacity:0.5;"></div>
+    <div class="ember" style="left:12%;bottom:28%;width:2px;height:2px;background:radial-gradient(circle,#f59e0b,transparent);--dur:5.5s;--delay:0.8s;opacity:0.4;"></div>
+    <div class="ember" style="left:6%;bottom:35%;width:4px;height:4px;background:radial-gradient(circle,#ef4444 30%,transparent);--dur:8s;--delay:1.5s;opacity:0.3;"></div>
+    <div class="ember" style="left:18%;bottom:15%;width:2px;height:2px;background:radial-gradient(circle,#d97706,transparent);--dur:6s;--delay:2s;opacity:0.6;"></div>
+    <div class="ember" style="left:3%;bottom:42%;width:3px;height:3px;background:radial-gradient(circle,#fbbf24,transparent);--dur:9s;--delay:0.3s;opacity:0.35;"></div>
+    <!-- Ember cluster 2 - bottom right -->
+    <div class="ember" style="right:10%;bottom:25%;width:3px;height:3px;background:radial-gradient(circle,#d97706,transparent);--dur:6.5s;--delay:1s;opacity:0.5;"></div>
+    <div class="ember" style="right:6%;bottom:38%;width:2px;height:2px;background:radial-gradient(circle,#ef4444,transparent);--dur:7.5s;--delay:0.5s;opacity:0.4;"></div>
+    <div class="ember" style="right:15%;bottom:18%;width:4px;height:4px;background:radial-gradient(circle,#f59e0b,transparent);--dur:5s;--delay:2.2s;opacity:0.45;"></div>
+    <div class="ember" style="right:20%;bottom:45%;width:2px;height:2px;background:radial-gradient(circle,#d97706,transparent);--dur:8.5s;--delay:1.7s;opacity:0.3;"></div>
+    <!-- Ember cluster 3 - mid -->
+    <div class="ember" style="left:45%;bottom:10%;width:3px;height:3px;background:radial-gradient(circle,#fbbf24,transparent);--dur:7s;--delay:3s;opacity:0.4;"></div>
+    <div class="ember" style="left:52%;bottom:20%;width:2px;height:2px;background:radial-gradient(circle,#d97706,transparent);--dur:6s;--delay:1.2s;opacity:0.5;"></div>
+    <!-- Upper subtle embers -->
+    <div class="ember" style="left:25%;top:40%;width:2px;height:2px;background:radial-gradient(circle,#d97706,transparent);--dur:10s;--delay:4s;opacity:0.2;"></div>
+    <div class="ember" style="right:30%;top:55%;width:2px;height:2px;background:radial-gradient(circle,#ef4444,transparent);--dur:11s;--delay:2.5s;opacity:0.15;"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       NAV
+  ═══════════════════════════════════════════ -->
+  <header class="nav-glass fixed top-0 left-0 right-0 z-50" role="banner">
+    <nav class="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between" role="navigation" aria-label="Main navigation">
+
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-2.5 no-underline" aria-label="Arcanea Home">
+        <div class="logo-mark" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 1L14 13H2L8 1Z" fill="rgba(12,10,9,0.9)" stroke="rgba(12,10,9,0.5)" stroke-width="0.5"/>
+            <path d="M8 4L12 12H4L8 4Z" fill="rgba(254,243,199,0.8)"/>
+          </svg>
+        </div>
+        <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:1.125rem; font-weight:700; letter-spacing:-0.01em; color:#fef3c7;">Arcanea</span>
+      </a>
+
+      <!-- Nav links — hidden on mobile -->
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#create" class="nav-link">Create</a>
+        <a href="#explore" class="nav-link">Explore</a>
+        <a href="#library" class="nav-link">Library</a>
+      </div>
+
+      <!-- Right side -->
+      <div class="flex items-center gap-3">
+        <a href="#" class="nav-link hidden md:block" style="font-size:0.875rem;">Sign In</a>
+        <a href="#create" class="btn-forge px-4 py-2 text-sm" style="border-radius:8px;">Start Forging</a>
+      </div>
+
+    </nav>
+  </header>
+
+  <!-- ═══════════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════════ -->
+  <section class="hero-bg relative min-h-screen flex flex-col items-center justify-center pt-16 overflow-hidden" id="hero" aria-labelledby="hero-headline">
+
+    <!-- Vein texture -->
+    <div class="hero-veins" aria-hidden="true"></div>
+
+    <!-- Bottom gradient fade -->
+    <div class="absolute bottom-0 left-0 right-0 h-32 pointer-events-none" style="background:linear-gradient(to bottom, transparent, #0c0a09);" aria-hidden="true"></div>
+
+    <!-- Content -->
+    <div class="relative z-10 w-full max-w-5xl mx-auto px-6 lg:px-8 flex flex-col items-center text-center">
+
+      <!-- Badge -->
+      <div class="forge-chip mb-8" style="opacity:0; animation: rise 0.6s cubic-bezier(0.16,1,0.3,1) 0.2s forwards;">
+        <span class="dot" aria-hidden="true"></span>
+        AI Creation Platform
+      </div>
+
+      <!-- Headline -->
+      <h1 id="hero-headline" class="hero-headline text-metallic font-display font-extrabold leading-none tracking-tight mb-6"
+          style="font-size:5rem; opacity:0; animation: rise 0.7s cubic-bezier(0.16,1,0.3,1) 0.35s forwards;">
+        Forge Your Vision
+      </h1>
+
+      <!-- Subhead -->
+      <p class="font-body text-lg md:text-xl leading-relaxed mb-12 max-w-xl"
+         style="color:rgba(254,243,199,0.55); font-weight:300; opacity:0; animation: rise 0.7s cubic-bezier(0.16,1,0.3,1) 0.5s forwards;">
+        One platform. Every creative form. Music, stories, art, code, and worlds — forged from nothing but intention.
+      </p>
+
+      <!-- ── CREATION INPUT ── -->
+      <div class="w-full max-w-3xl" style="opacity:0; animation: rise 0.8s cubic-bezier(0.16,1,0.3,1) 0.65s forwards;" id="create">
+
+        <!-- Type selector pills -->
+        <div class="type-pills-row mb-4 justify-center" role="group" aria-label="Creation type">
+          <button class="type-pill active" onclick="setActive(this)" type="button">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><path d="M6 1l1.5 3h3l-2.5 2 1 3L6 7.5 3 9l1-3L1.5 4h3z"/></svg>
+            All
+          </button>
+          <button class="type-pill" onclick="setActive(this)" type="button">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="4"/><path d="M4 6 Q5 4 6 6 Q7 8 8 6"/></svg>
+            Music
+          </button>
+          <button class="type-pill" onclick="setActive(this)" type="button">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1.5" y="1.5" width="9" height="9" rx="1"/><path d="M4 5h4M4 7h3"/></svg>
+            Story
+          </button>
+          <button class="type-pill" onclick="setActive(this)" type="button">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 9l3-3 2 2 2-3 1 4H2z"/><circle cx="8.5" cy="3.5" r="1.5"/></svg>
+            Art
+          </button>
+          <button class="type-pill" onclick="setActive(this)" type="button">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 2l-2 4 2 4M8 2l2 4-2 4M5 6h2"/></svg>
+            Code
+          </button>
+          <button class="type-pill" onclick="setActive(this)" type="button">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 1l1 4h4l-3 2 1 4L6 9l-3 2 1-4L1 5h4z"/></svg>
+            World
+          </button>
+        </div>
+
+        <!-- Input surface -->
+        <div class="forge-input-wrapper glass-shine p-4 md:p-5">
+          <textarea
+            class="forge-input"
+            rows="3"
+            placeholder="Describe what you want to create… an epic fantasy score, a short story about a time-traveling botanist, a logo for a lunar café…"
+            aria-label="Creation prompt"
+            id="main-input"
+          ></textarea>
+
+          <!-- Bottom row: hint + button -->
+          <div class="flex items-center justify-between mt-3 pt-3 border-t" style="border-color: rgba(120,83,20,0.2);">
+            <span style="font-size:0.75rem; color:rgba(120,113,108,0.6); font-style:italic;">
+              Press <kbd style="font-style:normal; font-family:inherit; background:rgba(217,119,6,0.1); border:1px solid rgba(217,119,6,0.2); border-radius:4px; padding:1px 5px; font-size:0.7rem; color:#d97706;">⌘ Enter</kbd> to forge
+            </span>
+            <button class="btn-forge px-6 py-2.5 flex items-center gap-2" type="button" aria-label="Create your vision">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M8 1L9.5 6H14.5L10.5 9L12 14L8 11L4 14L5.5 9L1.5 6H6.5L8 1Z" fill="currentColor"/>
+              </svg>
+              Forge
+            </button>
+          </div>
+        </div>
+
+        <!-- Trust nudge -->
+        <p style="font-size:0.75rem; color:rgba(120,113,108,0.5); margin-top:12px; letter-spacing:0.02em;">
+          2.4M creations forged &nbsp;&middot;&nbsp; No credit card required &nbsp;&middot;&nbsp; First 3 free
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-indicator" aria-hidden="true">
+      <span style="height:0;"></span>
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       STATS BAR
+  ═══════════════════════════════════════════ -->
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-16">
+    <div class="glass-obsidian glass-shine rounded-2xl px-8 py-8 md:py-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 divide-x" style="--tw-divide-opacity:1; border-color:rgba(120,83,20,0.2);">
+        <div class="text-center md:col-start-1">
+          <div class="forge-stat-num text-metallic-static">2.4M</div>
+          <div style="font-size:0.8125rem; color:#78716c; margin-top:4px; font-weight:400;">Creations forged</div>
+        </div>
+        <div class="text-center pl-8">
+          <div class="forge-stat-num text-metallic-static">180K</div>
+          <div style="font-size:0.8125rem; color:#78716c; margin-top:4px; font-weight:400;">Active creators</div>
+        </div>
+        <div class="text-center pl-8">
+          <div class="forge-stat-num text-metallic-static">6</div>
+          <div style="font-size:0.8125rem; color:#78716c; margin-top:4px; font-weight:400;">Creation types</div>
+        </div>
+        <div class="text-center pl-8">
+          <div class="forge-stat-num text-metallic-static">&lt;3s</div>
+          <div style="font-size:0.8125rem; color:#78716c; margin-top:4px; font-weight:400;">Average forge time</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       FEATURES
+  ═══════════════════════════════════════════ -->
+  <section class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pb-24" id="explore" aria-labelledby="features-headline">
+
+    <div class="text-center mb-16">
+      <div class="section-label mb-4">What You Can Make</div>
+      <h2 id="features-headline" class="font-display font-bold text-4xl md:text-5xl leading-tight"
+          style="color:#fef3c7; letter-spacing:-0.02em;">
+        Every Creative Form.<br/>
+        <span class="text-metallic-static">One Forge.</span>
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+      <!-- Card: Music -->
+      <div class="feature-card p-6">
+        <div class="shine" aria-hidden="true"></div>
+        <div class="icon-forge mb-5" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="11" cy="11" r="9" stroke="#d97706" stroke-width="1.5"/>
+            <path d="M8 8.5Q11 6 14 8.5Q11 11 8 13.5Q11 11 8 8.5Z" fill="#d97706" opacity="0.4"/>
+            <path d="M8 8.5 Q9.5 8 11 9.5 Q12.5 11 11 13 Q9.5 11 8 13.5" stroke="#fbbf24" stroke-width="1.2" fill="none"/>
+          </svg>
+        </div>
+        <h3 class="font-display font-bold text-lg mb-2" style="color:#fef3c7;">AI Music</h3>
+        <p style="font-size:0.875rem; color:#78716c; line-height:1.6;">Compose full tracks, ambient scores, or sonic identities from a single idea.</p>
+        <div class="mt-5 flex items-center gap-1.5" style="color:#d97706; font-size:0.8125rem; font-weight:500;">
+          Try it
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+
+      <!-- Card: Story -->
+      <div class="feature-card p-6">
+        <div class="shine" aria-hidden="true"></div>
+        <div class="icon-forge mb-5" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="3" width="14" height="16" rx="2" stroke="#d97706" stroke-width="1.5"/>
+            <path d="M7 7h8M7 10h8M7 13h5" stroke="#fbbf24" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="font-display font-bold text-lg mb-2" style="color:#fef3c7;">AI Stories</h3>
+        <p style="font-size:0.875rem; color:#78716c; line-height:1.6;">Short fiction, screenplays, epic novels — co-written with intelligence that understands narrative.</p>
+        <div class="mt-5 flex items-center gap-1.5" style="color:#d97706; font-size:0.8125rem; font-weight:500;">
+          Try it
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+
+      <!-- Card: Art -->
+      <div class="feature-card p-6">
+        <div class="shine" aria-hidden="true"></div>
+        <div class="icon-forge mb-5" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="11" cy="11" r="8" stroke="#d97706" stroke-width="1.5"/>
+            <circle cx="8.5" cy="9" r="1.5" fill="#d97706" opacity="0.5"/>
+            <path d="M7 15 Q10 10 15 13" stroke="#fbbf24" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+            <circle cx="15" cy="8" r="2" fill="rgba(239,68,68,0.4)" stroke="#ef4444" stroke-width="1"/>
+          </svg>
+        </div>
+        <h3 class="font-display font-bold text-lg mb-2" style="color:#fef3c7;">AI Art</h3>
+        <p style="font-size:0.875rem; color:#78716c; line-height:1.6;">Generate paintings, illustrations, brand visuals, and concept art that look hand-crafted.</p>
+        <div class="mt-5 flex items-center gap-1.5" style="color:#d97706; font-size:0.8125rem; font-weight:500;">
+          Try it
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+
+      <!-- Card: Code -->
+      <div class="feature-card p-6">
+        <div class="shine" aria-hidden="true"></div>
+        <div class="icon-forge mb-5" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 11l4-4-4 4 4 4M18 11l-4-4 4 4-4 4" stroke="#d97706" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M13 6l-4 10" stroke="#fbbf24" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="font-display font-bold text-lg mb-2" style="color:#fef3c7;">AI Code</h3>
+        <p style="font-size:0.875rem; color:#78716c; line-height:1.6;">Ship apps, APIs, components, and scripts from plain language. Build without limits.</p>
+        <div class="mt-5 flex items-center gap-1.5" style="color:#d97706; font-size:0.8125rem; font-weight:500;">
+          Try it
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       SHOWCASE GALLERY
+  ═══════════════════════════════════════════ -->
+  <section class="relative z-10 pb-24" id="library" aria-labelledby="showcase-headline">
+
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <div>
+        <div class="section-label mb-4">From The Forge</div>
+        <h2 id="showcase-headline" class="font-display font-bold text-4xl md:text-5xl leading-tight"
+            style="color:#fef3c7; letter-spacing:-0.02em;">
+          What Creators Made
+        </h2>
+      </div>
+      <a href="#" class="btn-ghost px-5 py-2.5 self-start md:self-auto flex-shrink-0">
+        Browse all creations
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="ml-2"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </a>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-2 md:grid-cols-3 gap-4">
+
+      <!-- Gallery item 1 -->
+      <div class="gallery-item gal-1" tabindex="0" role="article" aria-label="Creation: Sunstone Overture by Aelion V.">
+        <div class="overlay" aria-hidden="true"></div>
+        <!-- Subtle inner grid texture -->
+        <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 24px,rgba(0,0,0,0.08) 25px),repeating-linear-gradient(90deg,transparent,transparent 24px,rgba(0,0,0,0.08) 25px);z-index:2;pointer-events:none;" aria-hidden="true"></div>
+        <!-- Type badge -->
+        <div style="position:absolute;top:12px;left:12px;z-index:4;background:rgba(12,10,9,0.7);backdrop-filter:blur(8px);border:1px solid rgba(217,119,6,0.3);border-radius:100px;padding:3px 10px;font-size:0.7rem;font-weight:600;color:#d97706;letter-spacing:0.08em;">MUSIC</div>
+        <div class="meta" style="z-index:4;">
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.9375rem;color:#fef3c7;margin-bottom:2px;">Sunstone Overture</div>
+          <div style="font-size:0.75rem;color:rgba(254,243,199,0.5);">by Aelion V.</div>
+        </div>
+      </div>
+
+      <!-- Gallery item 2 -->
+      <div class="gallery-item gal-2" tabindex="0" role="article" aria-label="Creation: The Hollowed Crown by Sera N.">
+        <div class="overlay" aria-hidden="true"></div>
+        <div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(255,255,255,0.02) 41px,rgba(255,255,255,0.02) 42px);z-index:2;pointer-events:none;" aria-hidden="true"></div>
+        <div style="position:absolute;top:12px;left:12px;z-index:4;background:rgba(12,10,9,0.7);backdrop-filter:blur(8px);border:1px solid rgba(124,58,237,0.4);border-radius:100px;padding:3px 10px;font-size:0.7rem;font-weight:600;color:#a78bfa;letter-spacing:0.08em;">STORY</div>
+        <div class="meta" style="z-index:4;">
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.9375rem;color:#fef3c7;margin-bottom:2px;">The Hollowed Crown</div>
+          <div style="font-size:0.75rem;color:rgba(254,243,199,0.5);">by Sera N.</div>
+        </div>
+      </div>
+
+      <!-- Gallery item 3 -->
+      <div class="gallery-item gal-3" tabindex="0" role="article" aria-label="Creation: Abyssal Forms by Miran K.">
+        <div class="overlay" aria-hidden="true"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(255,255,255,0.04),transparent 70%);z-index:2;pointer-events:none;" aria-hidden="true"></div>
+        <div style="position:absolute;top:12px;left:12px;z-index:4;background:rgba(12,10,9,0.7);backdrop-filter:blur(8px);border:1px solid rgba(45,212,191,0.4);border-radius:100px;padding:3px 10px;font-size:0.7rem;font-weight:600;color:#2dd4bf;letter-spacing:0.08em;">ART</div>
+        <div class="meta" style="z-index:4;">
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.9375rem;color:#fef3c7;margin-bottom:2px;">Abyssal Forms</div>
+          <div style="font-size:0.75rem;color:rgba(254,243,199,0.5);">by Miran K.</div>
+        </div>
+      </div>
+
+      <!-- Gallery item 4 -->
+      <div class="gallery-item gal-4" tabindex="0" role="article" aria-label="Creation: Cinder Protocol by Dev A.">
+        <div class="overlay" aria-hidden="true"></div>
+        <div style="position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(0,0,0,0.06) 61px);z-index:2;pointer-events:none;" aria-hidden="true"></div>
+        <div style="position:absolute;top:12px;left:12px;z-index:4;background:rgba(12,10,9,0.7);backdrop-filter:blur(8px);border:1px solid rgba(239,68,68,0.4);border-radius:100px;padding:3px 10px;font-size:0.7rem;font-weight:600;color:#f87171;letter-spacing:0.08em;">CODE</div>
+        <div class="meta" style="z-index:4;">
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.9375rem;color:#fef3c7;margin-bottom:2px;">Cinder Protocol</div>
+          <div style="font-size:0.75rem;color:rgba(254,243,199,0.5);">by Dev A.</div>
+        </div>
+      </div>
+
+      <!-- Gallery item 5 -->
+      <div class="gallery-item gal-5" tabindex="0" role="article" aria-label="Creation: Verdant Isles by Luma T.">
+        <div class="overlay" aria-hidden="true"></div>
+        <div style="position:absolute;inset:0;background:repeating-linear-gradient(-45deg,transparent,transparent 30px,rgba(0,0,0,0.05) 31px);z-index:2;pointer-events:none;" aria-hidden="true"></div>
+        <div style="position:absolute;top:12px;left:12px;z-index:4;background:rgba(12,10,9,0.7);backdrop-filter:blur(8px);border:1px solid rgba(34,197,94,0.4);border-radius:100px;padding:3px 10px;font-size:0.7rem;font-weight:600;color:#4ade80;letter-spacing:0.08em;">WORLD</div>
+        <div class="meta" style="z-index:4;">
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.9375rem;color:#fef3c7;margin-bottom:2px;">Verdant Isles</div>
+          <div style="font-size:0.75rem;color:rgba(254,243,199,0.5);">by Luma T.</div>
+        </div>
+      </div>
+
+      <!-- Gallery item 6 -->
+      <div class="gallery-item gal-6" tabindex="0" role="article" aria-label="Creation: Obsidian Hymn by Forge Collective">
+        <div class="overlay" aria-hidden="true"></div>
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 70%,rgba(217,119,6,0.15),transparent 60%),radial-gradient(ellipse at 70% 30%,rgba(239,68,68,0.1),transparent 50%);z-index:2;pointer-events:none;" aria-hidden="true"></div>
+        <div style="position:absolute;top:12px;left:12px;z-index:4;background:rgba(12,10,9,0.7);backdrop-filter:blur(8px);border:1px solid rgba(217,119,6,0.4);border-radius:100px;padding:3px 10px;font-size:0.7rem;font-weight:600;color:#d97706;letter-spacing:0.08em;">MUSIC</div>
+        <div class="meta" style="z-index:4;">
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.9375rem;color:#fef3c7;margin-bottom:2px;">Obsidian Hymn</div>
+          <div style="font-size:0.75rem;color:rgba(254,243,199,0.5);">by Forge Collective</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       TESTIMONIALS
+  ═══════════════════════════════════════════ -->
+  <section class="relative z-10 pb-28" aria-labelledby="testimonials-headline">
+
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 mb-12">
+      <div class="section-label mb-4 text-center">Forged By Real Creators</div>
+      <h2 id="testimonials-headline" class="font-display font-bold text-4xl md:text-5xl leading-tight text-center"
+          style="color:#fef3c7; letter-spacing:-0.02em;">
+        What They're Saying
+      </h2>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-5">
+
+      <!-- Testimonial 1 -->
+      <blockquote class="testimonial-card p-8">
+        <div class="quote-mark" aria-hidden="true">"</div>
+        <p style="font-size:1rem; color:rgba(254,243,199,0.8); line-height:1.7; font-weight:300; font-style:italic; margin-bottom:24px;">
+          I had a melody in my head for six years. Arcanea helped me pull it out in forty minutes. Now it has 80,000 streams.
+        </p>
+        <footer class="flex items-center gap-3">
+          <div class="avatar-ring" style="background:linear-gradient(135deg,#7c2d12,#d97706);" aria-hidden="true">
+            <span style="font-size:0.875rem; color:#fef3c7;">EV</span>
+          </div>
+          <div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:600; font-size:0.9375rem; color:#fef3c7;">Elara Vasquez</div>
+            <div style="font-size:0.75rem; color:#78716c; margin-top:1px;">Independent Composer, Berlin</div>
+          </div>
+        </footer>
+      </blockquote>
+
+      <!-- Testimonial 2 -->
+      <blockquote class="testimonial-card p-8">
+        <div class="quote-mark" aria-hidden="true">"</div>
+        <p style="font-size:1rem; color:rgba(254,243,199,0.8); line-height:1.7; font-weight:300; font-style:italic; margin-bottom:24px;">
+          Every tool I'd tried felt like driving with the handbrake on. Arcanea feels like the handbrake doesn't exist.
+        </p>
+        <footer class="flex items-center gap-3">
+          <div class="avatar-ring" style="background:linear-gradient(135deg,#1e3a5f,#3b82f6);" aria-hidden="true">
+            <span style="font-size:0.875rem; color:#fef3c7;">KR</span>
+          </div>
+          <div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:600; font-size:0.9375rem; color:#fef3c7;">Kiran Rao</div>
+            <div style="font-size:0.75rem; color:#78716c; margin-top:1px;">Game Designer & World Builder</div>
+          </div>
+        </footer>
+      </blockquote>
+
+      <!-- Testimonial 3 -->
+      <blockquote class="testimonial-card p-8">
+        <div class="quote-mark" aria-hidden="true">"</div>
+        <p style="font-size:1rem; color:rgba(254,243,199,0.8); line-height:1.7; font-weight:300; font-style:italic; margin-bottom:24px;">
+          I used to spend three weeks on a short story. Now I spend three days and I'm actually proud of every line.
+        </p>
+        <footer class="flex items-center gap-3">
+          <div class="avatar-ring" style="background:linear-gradient(135deg,#14532d,#22c55e);" aria-hidden="true">
+            <span style="font-size:0.875rem; color:#fef3c7;">SO</span>
+          </div>
+          <div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:600; font-size:0.9375rem; color:#fef3c7;">Simone Osei</div>
+            <div style="font-size:0.75rem; color:#78716c; margin-top:1px;">Novelist & Short Story Author</div>
+          </div>
+        </footer>
+      </blockquote>
+
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       CTA SECTION
+  ═══════════════════════════════════════════ -->
+  <section class="cta-bg relative z-10 py-28" aria-labelledby="cta-headline">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8 flex flex-col items-center text-center">
+
+      <!-- Headline -->
+      <div class="section-label mb-6">The forge awaits</div>
+      <h2 id="cta-headline" class="font-display font-extrabold text-5xl md:text-6xl leading-none mb-6 tracking-tight"
+          style="color:#fef3c7; letter-spacing:-0.03em;">
+        Your vision,<br/>
+        <span class="text-metallic">made real.</span>
+      </h2>
+      <p class="text-lg mb-12 max-w-lg" style="color:rgba(254,243,199,0.5); font-weight:300; line-height:1.7;">
+        Stop planning. Stop hesitating. The moment you describe it, the forge begins. What will you create today?
+      </p>
+
+      <!-- Repeated input -->
+      <div class="w-full max-w-2xl">
+        <div class="forge-input-wrapper glass-shine p-5">
+          <textarea
+            class="forge-input"
+            rows="2"
+            placeholder="Describe your next creation…"
+            aria-label="Creation prompt in CTA section"
+          ></textarea>
+          <div class="flex items-center justify-end mt-3 pt-3 border-t" style="border-color:rgba(120,83,20,0.2);">
+            <button class="btn-forge px-8 py-3 flex items-center gap-2 text-base" type="button" aria-label="Begin forging your creation">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M9 1.5L10.8 7H16.5L12 10.2L13.8 16L9 12.9L4.2 16L6 10.2L1.5 7H7.2L9 1.5Z" fill="currentColor"/>
+              </svg>
+              Begin Forging
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sign up nudge -->
+      <p style="font-size:0.8125rem; color:rgba(120,113,108,0.6); margin-top:16px;">
+        Free to start &nbsp;&middot;&nbsp; No account required &nbsp;&middot;&nbsp;
+        <a href="#" style="color:#d97706; text-decoration:none;">Sign up for unlimited →</a>
+      </p>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════ -->
+  <footer class="footer-glass relative z-10" role="contentinfo">
+
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 py-14">
+
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-10 mb-12">
+
+        <!-- Brand col -->
+        <div class="col-span-2 md:col-span-2">
+          <div class="flex items-center gap-2.5 mb-4">
+            <div class="logo-mark" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M8 1L14 13H2L8 1Z" fill="rgba(12,10,9,0.9)"/>
+                <path d="M8 4L12 12H4L8 4Z" fill="rgba(254,243,199,0.8)"/>
+              </svg>
+            </div>
+            <span style="font-family:'Plus Jakarta Sans',sans-serif; font-size:1.125rem; font-weight:700; color:#fef3c7;">Arcanea</span>
+          </div>
+          <p style="font-size:0.875rem; color:#78716c; line-height:1.6; max-width:260px;">
+            The creation platform for the age of AI-human co-creation. Every form. One forge.
+          </p>
+
+          <!-- Social icons -->
+          <div class="flex items-center gap-2 mt-6">
+            <!-- X/Twitter -->
+            <button class="social-icon" aria-label="Follow us on X" type="button">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M12.6 1.5h2.3L9.8 7.2l6.1 7.8h-4.7L7.4 10l-4.3 5H.8l5.5-6.1L.3 1.5h4.8l3.4 4.4 4.1-4.4zM11.8 13.5h1.3L4.3 2.8H2.9l8.9 10.7z"/></svg>
+            </button>
+            <!-- Discord -->
+            <button class="social-icon" aria-label="Join our Discord" type="button">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M13.5 2.8A13 13 0 0 0 10.2 2a9 9 0 0 0-.4.9 12 12 0 0 0-3.6 0A9 9 0 0 0 5.8 2a13 13 0 0 0-3.3.8C.8 6 .4 9.1 1 12a13.2 13.2 0 0 0 4 2 10 10 0 0 0 .9-1.4 8.5 8.5 0 0 1-1.3-.6l.3-.2a9.4 9.4 0 0 0 8.2 0l.3.2a8.5 8.5 0 0 1-1.4.6 10 10 0 0 0 .9 1.4 13.2 13.2 0 0 0 4-2c.7-3.2.1-6.3-1.3-9.2zM5.5 10.3c-.8 0-1.4-.7-1.4-1.6s.6-1.6 1.4-1.6c.8 0 1.4.7 1.4 1.6s-.6 1.6-1.4 1.6zm5 0c-.8 0-1.4-.7-1.4-1.6s.6-1.6 1.4-1.6c.8 0 1.4.7 1.4 1.6s-.6 1.6-1.4 1.6z"/></svg>
+            </button>
+            <!-- Instagram -->
+            <button class="social-icon" aria-label="Follow us on Instagram" type="button">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.5c1.9 0 2.1 0 2.8.1 2.1.1 3 1 3.1 3.1C14 5.4 14 5.6 14 8s0 2.6-.1 2.8c-.1 2-.9 3-3.1 3.1C10.1 14 9.9 14 8 14s-2.1 0-2.8-.1c-2-.1-3-1-3.1-3.1C2 10.1 2 9.9 2 8s0-2.1.1-2.8C2.2 3 3.1 1.7 5.2 1.6 5.9 1.5 6.1 1.5 8 1.5zm0-1.3C6.1.2 5.8.2 5.1.2 2.1.2.2 2.1.2 5.1.1 5.8.1 6.1.1 8c0 1.9 0 2.2.1 2.9.1 3 2 4.9 4.9 5 .7.1 1 .1 2.9.1 1.9 0 2.2 0 2.9-.1 3-.1 4.9-2 5-4.9.1-.7.1-1 .1-2.9 0-1.9 0-2.2-.1-2.9-.1-3-2-4.9-5-5C10.2.2 9.9.2 8 .2zm0 3.4a4.4 4.4 0 1 0 0 8.8A4.4 4.4 0 0 0 8 3.6zm0 7.2a2.8 2.8 0 1 1 0-5.6 2.8 2.8 0 0 1 0 5.6zm4.6-8.4a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Product -->
+        <div>
+          <div style="font-family:'Plus Jakarta Sans',sans-serif; font-size:0.8rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:rgba(254,243,199,0.3); margin-bottom:16px;">Product</div>
+          <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px;">
+            <li><a href="#" class="footer-link">Create</a></li>
+            <li><a href="#" class="footer-link">Explore</a></li>
+            <li><a href="#" class="footer-link">Library</a></li>
+            <li><a href="#" class="footer-link">Pricing</a></li>
+            <li><a href="#" class="footer-link">Changelog</a></li>
+          </ul>
+        </div>
+
+        <!-- Company -->
+        <div>
+          <div style="font-family:'Plus Jakarta Sans',sans-serif; font-size:0.8rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:rgba(254,243,199,0.3); margin-bottom:16px;">Company</div>
+          <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px;">
+            <li><a href="#" class="footer-link">About</a></li>
+            <li><a href="#" class="footer-link">Blog</a></li>
+            <li><a href="#" class="footer-link">Careers</a></li>
+            <li><a href="#" class="footer-link">Press</a></li>
+          </ul>
+        </div>
+
+        <!-- Legal -->
+        <div>
+          <div style="font-family:'Plus Jakarta Sans',sans-serif; font-size:0.8rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:rgba(254,243,199,0.3); margin-bottom:16px;">Legal</div>
+          <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px;">
+            <li><a href="#" class="footer-link">Privacy</a></li>
+            <li><a href="#" class="footer-link">Terms</a></li>
+            <li><a href="#" class="footer-link">Cookies</a></li>
+            <li><a href="#" class="footer-link">Licenses</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="gold-divider mb-8"></div>
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <p style="font-size:0.8125rem; color:rgba(120,113,108,0.6);">
+          &copy; 2026 Arcanea. All rights reserved.
+        </p>
+        <div class="flex items-center gap-2">
+          <div style="width:6px;height:6px;border-radius:50%;background:#d97706;box-shadow:0 0 8px rgba(217,119,6,0.8);animation:emberPulse 2s ease-in-out infinite;" aria-hidden="true"></div>
+          <span style="font-size:0.8125rem; color:rgba(120,113,108,0.6);">All systems operational</span>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════
+       MINIMAL SCRIPT: type pill toggle only
+  ═══════════════════════════════════════════ -->
+  <script>
+    function setActive(el) {
+      const pills = el.closest('.type-pills-row').querySelectorAll('.type-pill');
+      pills.forEach(function(p) { p.classList.remove('active'); });
+      el.classList.add('active');
+    }
+
+    // Keyboard shortcut: Cmd/Ctrl+Enter to trigger forge
+    document.addEventListener('keydown', function(e) {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+        const active = document.activeElement;
+        if (active && active.classList.contains('forge-input')) {
+          const btn = active.closest('.forge-input-wrapper').querySelector('.btn-forge');
+          if (btn) {
+            btn.style.transform = 'scale(0.97)';
+            setTimeout(function() { btn.style.transform = ''; }, 150);
+          }
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>

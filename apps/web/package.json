@@ -2,6 +2,7 @@
   "name": "@arcanea/web",
   "version": "0.1.0",
   "private": true,
+  "license": "SEE LICENSE IN LICENSE",
   "scripts": {
     "dev": "next dev -p 3001",
     "build": "TMPDIR=/tmp next build",
@@ -38,6 +39,9 @@
     "@radix-ui/react-tabs": "^1.1.1",
     "@radix-ui/react-toast": "^1.2.3",
     "@radix-ui/react-tooltip": "^1.1.6",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.5.0",
+    "@splinetool/react-spline": "^4.1.0",
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.39.0",
     "@vercel/analytics": "^1.6.1",
@@ -65,6 +69,7 @@
     "tailwind-merge": "^2.6.0",
     "tailwindcss": "^3.4.9",
     "tailwindcss-animate": "^1.0.7",
+    "three": "^0.183.2",
     "typescript": "^5.5.4",
     "zod": "^3.25.76",
     "zustand": "^5.0.10"

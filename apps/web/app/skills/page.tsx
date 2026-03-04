@@ -161,7 +161,7 @@ export default function SkillsLandingPage() {
           <div className="grid md:grid-cols-2 gap-8">
             {/* Creative Skills */}
             <FloatingCard delay={0.1}>
-              <GlowCard glowColor="rgba(127, 255, 212, 0.3)">
+              <GlowCard glowColor="rgba(0, 188, 212, 0.3)">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-12 h-12 rounded-xl bg-atlantean-teal/20 flex items-center justify-center text-2xl">✨</div>
                   <div>

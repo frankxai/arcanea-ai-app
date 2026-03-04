@@ -128,7 +128,7 @@ const DOC_SECTIONS: DocSection[] = [
     description:
       "Begin your journey into the Arcanea universe. Installation, orientation, and your first steps through the Academy.",
     icon: Icons.Rocket,
-    accent: "#7fffd4",
+    accent: "#00bcd4",
     links: [
       {
         label: "Install Arcanea",
@@ -311,7 +311,7 @@ export default function DocsPage() {
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-void" />
         <div className="absolute inset-0 bg-cosmic-mesh" />
-        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_left,rgba(127,255,212,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_right,rgba(153,102,255,0.08),transparent_55%)]" />
+        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_left,rgba(0,188,212,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_right,rgba(13,71,161,0.08),transparent_55%)]" />
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -352,7 +352,7 @@ export default function DocsPage() {
                   type="text"
                   placeholder="Search documentation..."
                   readOnly
-                  className="w-full pl-12 pr-4 py-4 rounded-xl liquid-glass border border-white/[0.06] bg-white/[0.04] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal-aqua/40 focus:shadow-[0_0_24px_rgba(127,255,212,0.15)] transition-all cursor-default"
+                  className="w-full pl-12 pr-4 py-4 rounded-xl liquid-glass border border-white/[0.06] bg-white/[0.04] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal-aqua/40 focus:shadow-[0_0_24px_rgba(0,188,212,0.15)] transition-all cursor-default"
                 />
                 <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
                   <kbd className="hidden sm:inline-flex items-center gap-1 px-2 py-1 rounded-md border border-white/[0.06] bg-white/[0.04] text-xs text-text-muted font-mono">
@@ -544,7 +544,7 @@ export default function DocsPage() {
               <div className="flex flex-wrap justify-center gap-4">
                 <Link
                   href="/academy"
-                  className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep font-semibold shadow-[0_0_24px_rgba(127,255,212,0.25)] hover:shadow-[0_0_36px_rgba(127,255,212,0.4)] hover:scale-[1.02] transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep font-semibold shadow-[0_0_24px_rgba(0,188,212,0.25)] hover:shadow-[0_0_36px_rgba(0,188,212,0.4)] hover:scale-[1.02] transition-all duration-200"
                 >
                   Enter the Academy
                   <Icons.ArrowRight />

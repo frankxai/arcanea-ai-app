@@ -289,9 +289,9 @@ export function DetailModal({
                 key={tag}
                 className="px-2.5 py-1 rounded-lg text-xs"
                 style={{
-                  background: 'rgba(127,255,212,0.06)',
-                  border: '1px solid rgba(127,255,212,0.12)',
-                  color: '#7fffd4',
+                  background: 'rgba(0,188,212,0.06)',
+                  border: '1px solid rgba(0,188,212,0.12)',
+                  color: '#00bcd4',
                 }}
               >
                 #{tag}
@@ -343,9 +343,9 @@ export function DetailModal({
               aria-label="Copy link to share"
               className="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200 hover:opacity-90 active:scale-95"
               style={{
-                background: copied ? 'rgba(127,255,212,0.1)' : 'rgba(255,255,255,0.05)',
-                border: copied ? '1px solid rgba(127,255,212,0.4)' : '1px solid rgba(255,255,255,0.1)',
-                color: copied ? '#7fffd4' : '#9b8ec4',
+                background: copied ? 'rgba(0,188,212,0.1)' : 'rgba(255,255,255,0.05)',
+                border: copied ? '1px solid rgba(0,188,212,0.4)' : '1px solid rgba(255,255,255,0.1)',
+                color: copied ? '#00bcd4' : '#9b8ec4',
               }}
             >
               <Share size={16} />

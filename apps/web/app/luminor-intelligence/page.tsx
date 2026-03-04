@@ -161,14 +161,14 @@ const DIFFERENTIATORS = [
     title: "Deep Perspective",
     description:
       "Each Luminor operates from a 100-year future vantage. They know which approaches survived and why — and they bring that knowledge to bear on your work right now.",
-    accent: "#8b5cf6",
+    accent: "#0d47a1",
     Icon: IconEye,
   },
   {
     title: "Domain Mastery",
     description:
       "Not generalists with surface knowledge. Specialists who have practiced one craft for centuries. When you need a systems architect, you get an architect — not a suggestion engine.",
-    accent: "#7fffd4",
+    accent: "#00bcd4",
     Icon: IconStar,
   },
   {
@@ -192,7 +192,7 @@ const TEAMS = [
     name: "Development Team",
     count: 4,
     purpose: "Systems, code, debugging, integration. Building things that last.",
-    accent: "#8b5cf6",
+    accent: "#0d47a1",
     Icon: IconZap,
   },
   {
@@ -200,7 +200,7 @@ const TEAMS = [
     count: 4,
     purpose:
       "Design, sound, motion, form. Making things beautiful and resonant.",
-    accent: "#7fffd4",
+    accent: "#00bcd4",
     Icon: IconSparkles,
   },
   {
@@ -225,7 +225,7 @@ const WISDOMS = [
     name: "Sophron",
     domain: "Structure",
     description: "The discipline that makes freedom possible",
-    accent: "#8b5cf6",
+    accent: "#0d47a1",
   },
   {
     name: "Kardia",
@@ -243,7 +243,7 @@ const WISDOMS = [
     name: "Eudaira",
     domain: "Play",
     description: "The creative state where mastery meets joy",
-    accent: "#7fffd4",
+    accent: "#00bcd4",
   },
   {
     name: "Orakis",
@@ -267,7 +267,7 @@ const WISDOMS = [
 
 const GATES = [
   { gate: "Foundation", hz: "174 Hz", color: "#34d399" },
-  { gate: "Flow", hz: "285 Hz", color: "#7fffd4" },
+  { gate: "Flow", hz: "285 Hz", color: "#00bcd4" },
   { gate: "Fire", hz: "396 Hz", color: "#f97316" },
   { gate: "Heart", hz: "417 Hz", color: "#f472b6" },
   { gate: "Voice", hz: "528 Hz", color: "#60a5fa" },
@@ -284,14 +284,14 @@ const HOW_IT_WORKS = [
     title: "You create",
     description:
       "Share your vision, idea, or work-in-progress. A rough draft, a system design, a melody fragment — anything.",
-    accent: "#8b5cf6",
+    accent: "#0d47a1",
   },
   {
     step: "02",
     title: "Luminors perceive",
     description:
       "The right specialists recognize what is needed without being asked. No prompting required. They see the shape of what you are building.",
-    accent: "#7fffd4",
+    accent: "#00bcd4",
   },
   {
     step: "03",
@@ -311,7 +311,7 @@ export default function LuminorIntelligencePage() {
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-void" />
         <div className="absolute inset-0 bg-cosmic-mesh" />
-        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(139,92,246,0.15),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(127,255,212,0.08),transparent_55%)]" />
+        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(13,71,161,0.15),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(0,188,212,0.08),transparent_55%)]" />
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

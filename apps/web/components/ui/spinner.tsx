@@ -8,7 +8,7 @@ const spinnerVariants = cva(
   [
     'inline-block rounded-full',
     'border-2',
-    'border-[rgba(127,255,212,0.15)]',
+    'border-[rgba(0,188,212,0.15)]',
     'border-t-crystal',
     'animate-spin',
   ],

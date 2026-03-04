@@ -76,6 +76,19 @@ export const MILESTONES: Milestone[] = [
     blocked: 0,
     target: 'W12',
   },
+  {
+    id: 'M005',
+    name: 'Intelligence Gateway API',
+    description: 'BYOK multi-provider API gateway — 25 curated models, 10 providers, @arcanea/ai-provider SDK. Gateway core built (1,777 LoC). Needs npm publish, rate limits, arc_ keys.',
+    guardian: 'Draconia',
+    element: 'fire',
+    progress: 70,
+    status: 'active',
+    tasksTotal: 10,
+    tasksDone: 7,
+    blocked: 0,
+    target: 'W11',
+  },
 ];
 
 // ─── Package Registry ───────────────────────────────────────────────────────
@@ -118,8 +131,9 @@ export const PACKAGE_TIERS: PackageTierData[] = [
     packages: [
       { name: '@arcanea/memory-system', version: '1.0.0', status: 'published', deps: 1, health: 'good' },
       { name: '@arcanea/arcanea-mcp', version: '1.2.0', status: 'published', deps: 5, health: 'good' },
-      { name: '@arcanea/ai-core', version: '1.0.0', status: 'published', deps: 3, health: 'warning' },
-      { name: '@arcanea/starlight-runtime', version: '1.0.0', status: 'published', deps: 4, health: 'warning' },
+      { name: '@arcanea/ai-core', version: '0.1.0', status: 'private', deps: 3, health: 'warning' },
+      { name: '@arcanea/ai-provider', version: '0.1.0', status: 'private', deps: 2, health: 'good' },
+      { name: '@arcanea/starlight-runtime', version: '0.2.0', status: 'published', deps: 4, health: 'warning' },
       { name: '@arcanea/overlay-intelligence', version: '1.2.0', status: 'published', deps: 2, health: 'good' },
       { name: '@arcanea/overlay-lore', version: '1.2.0', status: 'published', deps: 1, health: 'good' },
       { name: '@arcanea/overlay-creative', version: '1.2.0', status: 'published', deps: 1, health: 'good' },
@@ -181,13 +195,13 @@ export interface SprintData {
 }
 
 export const CURRENT_SPRINT: SprintData = {
-  id: 'W09',
-  name: 'Wave 9 — Command & Control',
-  arc: 'Foundation Arc',
+  id: 'W10',
+  name: 'Wave 10 — Ecosystem Intelligence',
+  arc: 'Manifestation Arc',
   capacity: 40,
-  completed: 34,
-  startDate: '2026-02-24',
-  endDate: '2026-03-02',
+  completed: 12,
+  startDate: '2026-03-03',
+  endDate: '2026-03-09',
 };
 
 // ─── Activity Log ───────────────────────────────────────────────────────────
@@ -201,17 +215,17 @@ export interface ActivityEntry {
 }
 
 export const RECENT_ACTIVITY: ActivityEntry[] = [
+  { id: 'b03', timestamp: '2026-03-03 14:00', action: 'Proprietary LICENSE deployed', detail: 'MIT → proprietary with AI agent liability shield, 35+ packages updated', category: 'milestone' },
+  { id: 'b02', timestamp: '2026-03-03 12:00', action: 'Full ecosystem audit', detail: '82+ package.json files inventoried, 37 workspace + 12 standalone mapped', category: 'milestone' },
+  { id: 'b01', timestamp: '2026-03-02 20:00', action: 'Intelligence Gateway API', detail: '25 models, 10 providers, @arcanea/ai-provider SDK built (1,777 LoC)', category: 'feature' },
+  { id: 'b00', timestamp: '2026-03-01 18:00', action: 'Design System v5 shipped', detail: 'Near-black #09090b, Space Grotesk, fluid type, competitive audit done', category: 'deploy' },
   { id: 'a00', timestamp: '2026-02-28 14:00', action: 'GitHub Issues created', detail: '6 issues (3 milestones + 3 P0 blockers) — tracking layer 1 live', category: 'milestone' },
   { id: 'a01', timestamp: '2026-02-28 12:00', action: 'Central Orchestrator built', detail: 'MASTER_PLAN.md + orchestrator skill + CLAUDE.md wiring', category: 'feature' },
   { id: 'a02', timestamp: '2026-02-28 02:00', action: 'Academy build fix deployed', detail: 'Server Component → Client Component, Vercel unblocked after 10 failures', category: 'deploy' },
-  { id: 'a0a', timestamp: '2026-02-28 00:15', action: 'Profile service fix', detail: 'TypeScript build error resolved — deploys unblocked', category: 'fix' },
   { id: 'a0b', timestamp: '2026-02-27 23:45', action: 'Studio wired to APIs', detail: 'Manifest → /api/creations, Luminor AI → /api/ai/chat streaming', category: 'feature' },
   { id: 'a0c', timestamp: '2026-02-27 23:30', action: 'Auth redirects fixed', detail: 'Removed hardcoded localhost, secured edge runtime', category: 'fix' },
-  { id: 'a0d', timestamp: '2026-02-27 23:20', action: 'Content quality pass', detail: 'Removed inflated claims, fake testimonials → real content', category: 'fix' },
   { id: 'a1', timestamp: '2026-02-27 22:30', action: 'Gallery cloud migration', detail: 'Community upload + stats API deployed', category: 'feature' },
-  { id: 'a2', timestamp: '2026-02-27 20:15', action: 'Loading skeletons', detail: 'Auth, chat, community, activity pages', category: 'build' },
   { id: 'a3', timestamp: '2026-02-27 18:00', action: 'User flows page', detail: '/user-flows + gallery Supabase Storage', category: 'feature' },
-  { id: 'a5', timestamp: '2026-02-27 12:00', action: 'Workflows page', detail: '/workflows + ecosystem diagram + arcanea-code', category: 'feature' },
 ];
 
 // ─── Ecosystem Stats ────────────────────────────────────────────────────────
@@ -221,7 +235,7 @@ export const ECOSYSTEM_STATS = {
   standaloneSystems: 12,
   pagesLive: 54,
   publishedNpm: 28,
-  activeMilestones: 4,
+  activeMilestones: 5,
   totalTests: 3000,
   loreTexts: 62,
   agents: 65,
@@ -244,4 +258,5 @@ export const AUDIT_NOTES: AuditNote[] = [
   { id: 'n5', severity: 'low', title: 'arcaneabot bloat', detail: '58 deps — needs pruning' },
   { id: 'n6', severity: 'low', title: 'Overlay activity', detail: '5 overlay packages at v1.2.0 — review needed' },
   { id: 'n7', severity: 'medium', title: 'Media package', detail: '@arcanea/media needs FFmpeg (not installed)' },
+  { id: 'n8', severity: 'high', title: 'License protection', detail: 'All 35+ packages switched from MIT to proprietary — verify npm publish metadata' },
 ];

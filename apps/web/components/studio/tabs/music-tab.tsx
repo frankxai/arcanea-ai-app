@@ -21,7 +21,7 @@ const moods = [
   { id: "epic", label: "Epic", color: "#ffd700" },
   { id: "mystical", label: "Mystical", color: "#8b5cf6" },
   { id: "melancholic", label: "Melancholic", color: "#60a5fa" },
-  { id: "triumphant", label: "Triumphant", color: "#7fffd4" },
+  { id: "triumphant", label: "Triumphant", color: "#00bcd4" },
   { id: "ominous", label: "Ominous", color: "#ef4444" },
   { id: "serene", label: "Serene", color: "#c4b5fd" },
 ]
@@ -167,7 +167,7 @@ export function MusicTab({ generationState }: MusicTabProps) {
                 className={cn(
                   "flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] border transition-all duration-200",
                   selectedInstruments.includes(inst)
-                    ? "bg-[rgba(127,255,212,0.1)] border-[rgba(127,255,212,0.3)] text-[#7fffd4]"
+                    ? "bg-[rgba(0,188,212,0.1)] border-[rgba(0,188,212,0.3)] text-[#00bcd4]"
                     : "border-[rgba(255,255,255,0.08)] text-muted-foreground hover:text-foreground"
                 )}
               >
@@ -187,7 +187,7 @@ export function MusicTab({ generationState }: MusicTabProps) {
               <Metronome size={11} />
               BPM
             </label>
-            <span className="text-sm font-bold text-[#7fffd4] font-mono">{bpm}</span>
+            <span className="text-sm font-bold text-[#00bcd4] font-mono">{bpm}</span>
           </div>
           <input
             type="range"
@@ -196,7 +196,7 @@ export function MusicTab({ generationState }: MusicTabProps) {
             value={bpm}
             onChange={(e) => setBpm(parseInt(e.target.value))}
             className="w-full h-1.5 rounded-full appearance-none cursor-pointer"
-            style={{ accentColor: "#7fffd4" }}
+            style={{ accentColor: "#00bcd4" }}
           />
           <div className="flex justify-between mt-1 text-[10px] text-muted-foreground font-mono">
             <span>Adagio 60</span>
@@ -210,7 +210,7 @@ export function MusicTab({ generationState }: MusicTabProps) {
             <label className="text-[10px] uppercase tracking-widest font-mono text-muted-foreground">
               Duration
             </label>
-            <span className="text-xs font-bold text-[#7fffd4] font-mono">{duration}s</span>
+            <span className="text-xs font-bold text-[#00bcd4] font-mono">{duration}s</span>
           </div>
           <input
             type="range"
@@ -219,7 +219,7 @@ export function MusicTab({ generationState }: MusicTabProps) {
             value={duration}
             onChange={(e) => setDuration(parseInt(e.target.value))}
             className="w-full h-1.5 rounded-full appearance-none cursor-pointer"
-            style={{ accentColor: "#7fffd4" }}
+            style={{ accentColor: "#00bcd4" }}
           />
         </div>
       </div>
@@ -327,7 +327,7 @@ export function MusicTab({ generationState }: MusicTabProps) {
                     className="h-full rounded-full"
                     style={{
                       width: `${playProgress}%`,
-                      background: `linear-gradient(90deg, #8b5cf6, ${currentMood?.color ?? "#7fffd4"})`,
+                      background: `linear-gradient(90deg, #8b5cf6, ${currentMood?.color ?? "#00bcd4"})`,
                     }}
                   />
                 </div>

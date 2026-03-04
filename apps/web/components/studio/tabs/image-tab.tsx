@@ -25,7 +25,7 @@ const aspectRatios = [
 ]
 
 const stylePresets = [
-  { name: "Atlantean", desc: "Aquatic baroque splendor", color: "#7fffd4" },
+  { name: "Atlantean", desc: "Aquatic baroque splendor", color: "#00bcd4" },
   { name: "Draconic", desc: "Primal fire and scale", color: "#ef4444" },
   { name: "Ethereal", desc: "Soft astral luminance", color: "#c4b5fd" },
   { name: "Abyssal", desc: "Void-touched darkness", color: "#60a5fa" },
@@ -251,7 +251,7 @@ export function ImageTab({ generationState }: ImageTabProps) {
                 </button>
               </div>
               <div className="absolute top-3 left-3">
-                <span className="px-2 py-1 rounded-full bg-[rgba(10,10,15,0.8)] border border-[rgba(127,255,212,0.3)] text-[10px] text-[#7fffd4] font-mono">
+                <span className="px-2 py-1 rounded-full bg-[rgba(10,10,15,0.8)] border border-[rgba(0,188,212,0.3)] text-[10px] text-[#00bcd4] font-mono">
                   Atlantean · 16:9
                 </span>
               </div>

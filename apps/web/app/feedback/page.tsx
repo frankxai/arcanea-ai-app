@@ -106,7 +106,7 @@ export default function FeedbackPage() {
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-deep" />
         <div className="absolute inset-0 bg-cosmic-mesh" />
-        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(127,255,212,0.10),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(139,92,246,0.08),transparent_55%)]" />
+        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(0,188,212,0.10),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(13,71,161,0.08),transparent_55%)]" />
       </div>
 
       <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
@@ -186,7 +186,7 @@ export default function FeedbackPage() {
                         relative p-4 rounded-xl text-left transition-all duration-200
                         ${
                           isSelected
-                            ? "card-3d liquid-glass border-2 border-crystal/50 bg-crystal/8 shadow-[0_0_20px_rgba(127,255,212,0.08)]"
+                            ? "card-3d liquid-glass border-2 border-crystal/50 bg-crystal/8 shadow-[0_0_20px_rgba(0,188,212,0.08)]"
                             : "liquid-glass border border-white/[0.06] hover:border-white/[0.12] hover:bg-white/[0.03]"
                         }
                       `}
@@ -303,7 +303,7 @@ export default function FeedbackPage() {
                   font-semibold text-base transition-all duration-200
                   ${
                     canSubmit
-                      ? "bg-crystal text-cosmic-deep shadow-[0_0_24px_rgba(127,255,212,0.2)] hover:shadow-[0_0_32px_rgba(127,255,212,0.3)] hover:scale-[1.02] active:scale-[0.98]"
+                      ? "bg-crystal text-cosmic-deep shadow-[0_0_24px_rgba(0,188,212,0.2)] hover:shadow-[0_0_32px_rgba(0,188,212,0.3)] hover:scale-[1.02] active:scale-[0.98]"
                       : "bg-white/[0.04] text-text-muted border border-white/[0.06] cursor-not-allowed"
                   }
                 `}

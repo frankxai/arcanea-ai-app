@@ -223,7 +223,7 @@ export default function GuidesPage() {
           <p className="text-text-secondary mb-4">Can't find what you're looking for?</p>
           <Link
             href="/chat"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep font-semibold hover:shadow-[0_0_20px_rgba(127,255,212,0.4)] transition-all"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep font-semibold hover:shadow-[0_0_20px_rgba(0,188,212,0.4)] transition-all"
           >
             Ask a Luminor
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
