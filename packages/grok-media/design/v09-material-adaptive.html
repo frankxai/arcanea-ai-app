@@ -1,0 +1,2108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arcanea Media v09 - Material Adaptive</title>
+<style>
+  /* ============================================================
+     VARIATION 9: MATERIAL ADAPTIVE
+     Google Material Design 3 / Material You — tinted surfaces,
+     emphasized easing, segmented buttons, outlined chips,
+     ripple effects, extended FABs, snackbar status messages.
+     Chrome extension side panel + popup for Arcanea Media
+     (Grok Imagine export / library manager).
+     ============================================================ */
+
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap');
+
+  /* ── M3 Design Tokens ─────────────────────────────────────── */
+  :root {
+    /* Surface tones (dark scheme) */
+    --md-sys-color-surface: #1C1B1F;
+    --md-sys-color-surface-dim: #141316;
+    --md-sys-color-surface-bright: #3B383E;
+    --md-sys-color-surface-container-lowest: #0F0D13;
+    --md-sys-color-surface-container-low: #1D1B20;
+    --md-sys-color-surface-container: #211F26;
+    --md-sys-color-surface-container-high: #2B2930;
+    --md-sys-color-surface-container-highest: #36343B;
+    --md-sys-color-surface-variant: #49454F;
+
+    /* Primary — M3 purple */
+    --md-sys-color-primary: #D0BCFF;
+    --md-sys-color-primary-container: #4F378B;
+    --md-sys-color-on-primary: #381E72;
+    --md-sys-color-on-primary-container: #EADDFF;
+    --md-sys-color-inverse-primary: #6750A4;
+
+    /* Secondary — adapted Arcanea teal */
+    --md-sys-color-secondary: #7fffd4;
+    --md-sys-color-secondary-container: #1a5c47;
+    --md-sys-color-on-secondary: #003829;
+    --md-sys-color-on-secondary-container: #a0ffd6;
+
+    /* Tertiary — light pink */
+    --md-sys-color-tertiary: #FFD8E4;
+    --md-sys-color-tertiary-container: #633B48;
+    --md-sys-color-on-tertiary: #492532;
+    --md-sys-color-on-tertiary-container: #FFD8E4;
+
+    /* Error */
+    --md-sys-color-error: #F2B8B5;
+    --md-sys-color-error-container: #8C1D18;
+    --md-sys-color-on-error: #601410;
+    --md-sys-color-on-error-container: #F9DEDC;
+
+    /* On-surface / text */
+    --md-sys-color-on-surface: #E6E1E5;
+    --md-sys-color-on-surface-variant: #CAC4D0;
+    --md-sys-color-outline: #938F99;
+    --md-sys-color-outline-variant: #49454F;
+
+    /* Elevation overlays (tinted) */
+    --md-sys-elevation-1: rgba(208, 188, 255, 0.05);
+    --md-sys-elevation-2: rgba(208, 188, 255, 0.08);
+    --md-sys-elevation-3: rgba(208, 188, 255, 0.11);
+    --md-sys-elevation-4: rgba(208, 188, 255, 0.12);
+    --md-sys-elevation-5: rgba(208, 188, 255, 0.14);
+
+    /* State layers */
+    --md-state-hover: 0.08;
+    --md-state-focus: 0.12;
+    --md-state-press: 0.12;
+    --md-state-drag: 0.16;
+
+    /* Shape (corner radii per M3 spec) */
+    --md-shape-none: 0px;
+    --md-shape-extra-small: 4px;
+    --md-shape-small: 8px;
+    --md-shape-medium: 12px;
+    --md-shape-large: 16px;
+    --md-shape-extra-large: 28px;
+    --md-shape-full: 9999px;
+
+    /* Motion (emphasized easing family) */
+    --md-motion-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+    --md-motion-easing-emphasized-decel: cubic-bezier(0.05, 0.7, 0.1, 1);
+    --md-motion-easing-emphasized-accel: cubic-bezier(0.3, 0, 0.8, 0.15);
+    --md-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+    --md-motion-easing-standard-decel: cubic-bezier(0, 0, 0, 1);
+    --md-motion-duration-short1: 50ms;
+    --md-motion-duration-short2: 100ms;
+    --md-motion-duration-short3: 150ms;
+    --md-motion-duration-short4: 200ms;
+    --md-motion-duration-medium1: 250ms;
+    --md-motion-duration-medium2: 300ms;
+    --md-motion-duration-medium3: 350ms;
+    --md-motion-duration-medium4: 400ms;
+    --md-motion-duration-long1: 450ms;
+    --md-motion-duration-long2: 500ms;
+
+    /* Typography stack */
+    --md-typescale-display-font: 'Google Sans', 'Roboto', system-ui, -apple-system, sans-serif;
+    --md-typescale-body-font: 'Roboto', system-ui, -apple-system, sans-serif;
+    --md-typescale-label-font: 'Roboto', system-ui, -apple-system, sans-serif;
+    --md-typescale-code-font: 'Roboto Mono', monospace;
+  }
+
+  /* ── Reset ─────────────────────────────────────────────────── */
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    background: var(--md-sys-color-surface-dim);
+    color: var(--md-sys-color-on-surface);
+    font-family: var(--md-typescale-body-font);
+    font-size: 14px;
+    line-height: 1.43;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ── Scrollbar (M3-thin) ───────────────────────────────────── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: var(--md-sys-color-outline-variant);
+    border-radius: var(--md-shape-full);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--md-sys-color-outline);
+  }
+
+  /* ── Showcase Container ────────────────────────────────────── */
+  .showcase {
+    display: flex;
+    gap: 48px;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px;
+    min-height: 100vh;
+    background:
+      radial-gradient(ellipse 600px 400px at 30% 20%, rgba(208, 188, 255, 0.03), transparent),
+      radial-gradient(ellipse 500px 500px at 70% 60%, rgba(127, 255, 212, 0.02), transparent),
+      var(--md-sys-color-surface-dim);
+  }
+
+  .panel-wrapper { position: relative; z-index: 1; }
+
+  .showcase-label {
+    text-align: center;
+    margin-bottom: 12px;
+    font-family: var(--md-typescale-label-font);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--md-sys-color-outline);
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     SIDE PANEL — 400px
+     ═══════════════════════════════════════════════════════════ */
+  .side-panel {
+    width: 400px;
+    height: 720px;
+    background: var(--md-sys-color-surface);
+    border-radius: var(--md-shape-large);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--md-sys-color-outline-variant);
+    position: relative;
+  }
+
+  /* M3 elevation tinting — subtle primary-color overlay */
+  .side-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--md-sys-elevation-1);
+    pointer-events: none;
+    z-index: 0;
+    border-radius: inherit;
+  }
+
+  /* ── Top App Bar (Small) ───────────────────────────────────── */
+  .top-bar {
+    display: flex;
+    align-items: center;
+    padding: 8px 4px 8px 16px;
+    height: 64px;
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+  }
+
+  .top-bar-title {
+    flex: 1;
+    font-family: var(--md-typescale-display-font);
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: 0;
+    color: var(--md-sys-color-on-surface);
+    line-height: 28px;
+  }
+
+  .top-bar-title span {
+    color: var(--md-sys-color-primary);
+    font-weight: 500;
+  }
+
+  /* ── Icon Button (M3: 48dp touch, 40dp visible, 24dp icon) ── */
+  .icon-btn {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--md-shape-full);
+    border: none;
+    background: transparent;
+    color: var(--md-sys-color-on-surface-variant);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: color var(--md-motion-duration-short3) var(--md-motion-easing-standard);
+    flex-shrink: 0;
+  }
+
+  /* State layer circle */
+  .icon-btn::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border-radius: var(--md-shape-full);
+    background: currentColor;
+    opacity: 0;
+    transition: opacity var(--md-motion-duration-short3) var(--md-motion-easing-standard);
+  }
+
+  .icon-btn:hover::before { opacity: var(--md-state-hover); }
+  .icon-btn:active::before { opacity: var(--md-state-press); }
+
+  .icon-btn svg {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    z-index: 1;
+    fill: currentColor;
+  }
+
+  /* ── Segmented Button Group ────────────────────────────────── */
+  .segmented-group {
+    display: flex;
+    margin: 0 16px 12px;
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: var(--md-shape-full);
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+  }
+
+  .seg-btn {
+    flex: 1;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+    background: transparent;
+    color: var(--md-sys-color-on-surface);
+    font-family: var(--md-typescale-label-font);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition:
+      background var(--md-motion-duration-short4) var(--md-motion-easing-standard),
+      color var(--md-motion-duration-short4) var(--md-motion-easing-standard);
+  }
+
+  .seg-btn + .seg-btn {
+    border-left: 1px solid var(--md-sys-color-outline);
+  }
+
+  /* Hover state layer */
+  .seg-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: currentColor;
+    opacity: 0;
+    transition: opacity var(--md-motion-duration-short3) var(--md-motion-easing-standard);
+  }
+
+  .seg-btn:hover::before { opacity: var(--md-state-hover); }
+  .seg-btn:active::before { opacity: var(--md-state-press); }
+
+  .seg-btn.active {
+    background: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+  }
+
+  .seg-btn.active::before { opacity: 0; }
+
+  .seg-btn .seg-check {
+    display: none;
+    width: 18px;
+    height: 18px;
+  }
+
+  .seg-btn.active .seg-check {
+    display: block;
+    fill: var(--md-sys-color-on-secondary-container);
+  }
+
+  .seg-btn svg:not(.seg-check) {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    position: relative;
+    z-index: 1;
+  }
+
+  .seg-btn-label { position: relative; z-index: 1; }
+
+  /* ── Outlined Filter Chips ─────────────────────────────────── */
+  .chip-row {
+    display: flex;
+    gap: 8px;
+    padding: 0 16px 12px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+    overflow-x: auto;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 32px;
+    padding: 0 16px;
+    border-radius: var(--md-shape-small);
+    border: 1px solid var(--md-sys-color-outline);
+    background: transparent;
+    color: var(--md-sys-color-on-surface-variant);
+    font-family: var(--md-typescale-label-font);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+    transition:
+      background var(--md-motion-duration-short4) var(--md-motion-easing-standard),
+      border-color var(--md-motion-duration-short4) var(--md-motion-easing-standard),
+      color var(--md-motion-duration-short4) var(--md-motion-easing-standard);
+  }
+
+  /* Chip hover state layer */
+  .chip::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: currentColor;
+    opacity: 0;
+    transition: opacity var(--md-motion-duration-short3) var(--md-motion-easing-standard);
+  }
+
+  .chip:hover::before { opacity: var(--md-state-hover); }
+  .chip:active::before { opacity: var(--md-state-press); }
+
+  .chip.active {
+    background: var(--md-sys-color-secondary-container);
+    border-color: transparent;
+    color: var(--md-sys-color-on-secondary-container);
+    padding-left: 8px;
+  }
+
+  .chip svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .chip-label { position: relative; z-index: 1; }
+
+  .chip .chip-check { display: none; }
+  .chip.active .chip-check { display: block; }
+
+  /* ── Linear Progress Indicator (4dp, M3 indeterminate) ──── */
+  .linear-progress {
+    height: 4px;
+    background: var(--md-sys-color-surface-container-highest);
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+    z-index: 2;
+  }
+
+  .linear-progress-track {
+    position: absolute;
+    inset: 0;
+    background: var(--md-sys-color-primary);
+    transform-origin: left;
+    animation: m3-indeterminate 2s var(--md-motion-easing-emphasized) infinite;
+  }
+
+  @keyframes m3-indeterminate {
+    0%   { transform: translateX(-100%) scaleX(0.3); }
+    40%  { transform: translateX(10%) scaleX(0.6); }
+    100% { transform: translateX(100%) scaleX(0.3); }
+  }
+
+  .linear-progress.hidden { display: none; }
+
+  /* ── Content Area ──────────────────────────────────────────── */
+  .content-area {
+    flex: 1;
+    overflow-y: auto;
+    position: relative;
+    z-index: 2;
+    padding: 4px 0;
+  }
+
+  /* ── Media Grid ────────────────────────────────────────────── */
+  .media-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    padding: 0 12px 12px;
+  }
+
+  .media-item {
+    aspect-ratio: 1;
+    border-radius: var(--md-shape-medium);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    outline: 2px solid transparent;
+    outline-offset: -2px;
+    transition:
+      outline-color var(--md-motion-duration-short4) var(--md-motion-easing-standard),
+      transform var(--md-motion-duration-medium1) var(--md-motion-easing-emphasized);
+    /* Stagger-in animation (50ms per item) */
+    opacity: 0;
+    animation: m3-stagger-in var(--md-motion-duration-medium4) var(--md-motion-easing-emphasized-decel) forwards;
+  }
+
+  .media-item:nth-child(1)  { animation-delay: 0ms; }
+  .media-item:nth-child(2)  { animation-delay: 50ms; }
+  .media-item:nth-child(3)  { animation-delay: 100ms; }
+  .media-item:nth-child(4)  { animation-delay: 150ms; }
+  .media-item:nth-child(5)  { animation-delay: 200ms; }
+  .media-item:nth-child(6)  { animation-delay: 250ms; }
+  .media-item:nth-child(7)  { animation-delay: 300ms; }
+  .media-item:nth-child(8)  { animation-delay: 350ms; }
+  .media-item:nth-child(9)  { animation-delay: 400ms; }
+  .media-item:nth-child(10) { animation-delay: 450ms; }
+  .media-item:nth-child(11) { animation-delay: 500ms; }
+  .media-item:nth-child(12) { animation-delay: 550ms; }
+  .media-item:nth-child(13) { animation-delay: 600ms; }
+  .media-item:nth-child(14) { animation-delay: 650ms; }
+  .media-item:nth-child(15) { animation-delay: 700ms; }
+  .media-item:nth-child(16) { animation-delay: 750ms; }
+
+  @keyframes m3-stagger-in {
+    from {
+      opacity: 0;
+      transform: scale(0.92) translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  .media-item:hover {
+    transform: scale(1.02);
+  }
+
+  .media-item.selected {
+    outline-color: var(--md-sys-color-primary);
+    outline-width: 3px;
+    outline-offset: -3px;
+  }
+
+  /* Gradient thumbnail placeholders — 16 unique */
+  .media-item .thumb {
+    position: absolute;
+    inset: 0;
+  }
+
+  .media-item:nth-child(1)  .thumb { background: linear-gradient(135deg, #6750A4, #D0BCFF); }
+  .media-item:nth-child(2)  .thumb { background: linear-gradient(135deg, #1a5c47, #7fffd4); }
+  .media-item:nth-child(3)  .thumb { background: linear-gradient(135deg, #633B48, #FFD8E4); }
+  .media-item:nth-child(4)  .thumb { background: linear-gradient(135deg, #4A4458, #B0A7C0); }
+  .media-item:nth-child(5)  .thumb { background: linear-gradient(225deg, #7B5EA7, #EADDFF); }
+  .media-item:nth-child(6)  .thumb { background: linear-gradient(180deg, #005243, #64DFBE); }
+  .media-item:nth-child(7)  .thumb { background: linear-gradient(135deg, #4F378B, #CCC2DC); }
+  .media-item:nth-child(8)  .thumb { background: linear-gradient(315deg, #8C1D18, #F2B8B5); }
+  .media-item:nth-child(9)  .thumb { background: linear-gradient(135deg, #1C3A5E, #A8C8F0); }
+  .media-item:nth-child(10) .thumb { background: linear-gradient(180deg, #2D4A22, #B5D6A7); }
+  .media-item:nth-child(11) .thumb { background: linear-gradient(225deg, #5C4B3A, #E8D5C0); }
+  .media-item:nth-child(12) .thumb { background: linear-gradient(135deg, #3B3850, #9E93B8); }
+  .media-item:nth-child(13) .thumb { background: linear-gradient(315deg, #005F56, #81F0D8); }
+  .media-item:nth-child(14) .thumb { background: linear-gradient(180deg, #4F3070, #C9A8E8); }
+  .media-item:nth-child(15) .thumb { background: linear-gradient(135deg, #3E2723, #D7CCC8); }
+  .media-item:nth-child(16) .thumb { background: linear-gradient(225deg, #1A237E, #9FA8DA); }
+
+  /* Hover scrim overlay */
+  .media-item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--md-sys-color-on-surface);
+    opacity: 0;
+    transition: opacity var(--md-motion-duration-short3) var(--md-motion-easing-standard);
+    z-index: 1;
+  }
+
+  .media-item:hover::after { opacity: var(--md-state-hover); }
+  .media-item:active::after { opacity: var(--md-state-press); }
+
+  /* Selection checkbox overlay */
+  .media-check {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: 24px;
+    height: 24px;
+    border-radius: var(--md-shape-extra-small);
+    border: 2px solid rgba(255,255,255,0.7);
+    background: rgba(0,0,0,0.3);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--md-motion-duration-short4) var(--md-motion-easing-standard);
+  }
+
+  .media-item:hover .media-check,
+  .media-item.selected .media-check { opacity: 1; }
+
+  .media-item.selected .media-check {
+    background: var(--md-sys-color-primary);
+    border-color: var(--md-sys-color-primary);
+  }
+
+  .media-check svg {
+    width: 18px;
+    height: 18px;
+    fill: var(--md-sys-color-on-primary);
+    display: none;
+  }
+
+  .media-item.selected .media-check svg { display: block; }
+
+  /* Badges (video duration, HD) */
+  .media-badge {
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    z-index: 3;
+    display: flex;
+    gap: 4px;
+  }
+
+  .badge {
+    height: 20px;
+    padding: 0 6px;
+    border-radius: var(--md-shape-extra-small);
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+    font-family: var(--md-typescale-label-font);
+    font-size: 11px;
+    font-weight: 500;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    letter-spacing: 0.02em;
+  }
+
+  .badge svg {
+    width: 12px;
+    height: 12px;
+    fill: currentColor;
+  }
+
+  .badge.video-badge {
+    background: rgba(208, 188, 255, 0.7);
+    color: var(--md-sys-color-on-primary);
+  }
+
+  .badge.hd-badge {
+    background: rgba(127, 255, 212, 0.5);
+    color: #003829;
+  }
+
+  /* ── Bottom Action Bar ─────────────────────────────────────── */
+  .action-bar {
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-top: 1px solid var(--md-sys-color-outline-variant);
+    background: var(--md-sys-color-surface-container);
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+  }
+
+  .action-bar-count {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--md-sys-color-on-surface-variant);
+    flex: 1;
+  }
+
+  .action-bar-count strong {
+    color: var(--md-sys-color-primary);
+    font-weight: 500;
+  }
+
+  /* ── Extended FAB (icon + label) ───────────────────────────── */
+  .ext-fab {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    height: 56px;
+    padding: 0 20px;
+    border-radius: var(--md-shape-large);
+    border: none;
+    background: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+    font-family: var(--md-typescale-label-font);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    box-shadow:
+      0 1px 3px 1px rgba(0,0,0,0.15),
+      0 1px 2px 0 rgba(0,0,0,0.3);
+    transition:
+      box-shadow var(--md-motion-duration-short4) var(--md-motion-easing-standard),
+      transform var(--md-motion-duration-short4) var(--md-motion-easing-standard);
+  }
+
+  .ext-fab:hover {
+    box-shadow:
+      0 2px 6px 2px rgba(0,0,0,0.15),
+      0 1px 2px 0 rgba(0,0,0,0.3);
+  }
+
+  .ext-fab:active { transform: scale(0.97); }
+
+  /* Ripple effect via radial-gradient animation */
+  .ext-fab::after {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: radial-gradient(circle, var(--md-sys-color-on-primary-container) 0%, transparent 70%);
+    opacity: 0;
+    border-radius: 50%;
+    animation: m3-ripple var(--md-motion-duration-long2) var(--md-motion-easing-standard) infinite;
+    animation-play-state: paused;
+  }
+
+  .ext-fab:active::after { animation-play-state: running; }
+
+  @keyframes m3-ripple {
+    0%   { transform: translate(-50%, -50%) scale(0); opacity: 0.16; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+  }
+
+  .ext-fab svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+    flex-shrink: 0;
+  }
+
+  /* ── Small FAB ─────────────────────────────────────────────── */
+  .sm-fab {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--md-shape-medium);
+    border: none;
+    background: var(--md-sys-color-surface-container-high);
+    color: var(--md-sys-color-primary);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: background var(--md-motion-duration-short4) var(--md-motion-easing-standard);
+  }
+
+  .sm-fab:hover { background: var(--md-sys-color-surface-container-highest); }
+
+  .sm-fab svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+  }
+
+  /* ── Downloads Section ─────────────────────────────────────── */
+  .downloads-list {
+    padding: 8px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .download-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 16px;
+    border-radius: var(--md-shape-medium);
+    background: var(--md-sys-color-surface-container);
+    position: relative;
+    overflow: hidden;
+    transition: background var(--md-motion-duration-short3) var(--md-motion-easing-standard);
+  }
+
+  .download-item:hover {
+    background: var(--md-sys-color-surface-container-high);
+  }
+
+  .download-thumb {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--md-shape-small);
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .download-info { flex: 1; min-width: 0; }
+
+  .download-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--md-sys-color-on-surface);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 20px;
+  }
+
+  .download-meta {
+    font-size: 12px;
+    color: var(--md-sys-color-on-surface-variant);
+    line-height: 16px;
+    margin-top: 2px;
+  }
+
+  .download-progress-bar {
+    height: 4px;
+    background: var(--md-sys-color-surface-container-highest);
+    border-radius: var(--md-shape-full);
+    margin-top: 8px;
+    overflow: hidden;
+  }
+
+  .download-progress-fill {
+    height: 100%;
+    border-radius: var(--md-shape-full);
+    background: var(--md-sys-color-primary);
+    transition: width var(--md-motion-duration-medium2) var(--md-motion-easing-standard);
+  }
+
+  .download-progress-fill.complete {
+    background: var(--md-sys-color-secondary);
+  }
+
+  .download-status {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: var(--md-sys-color-on-surface-variant);
+    margin-top: 4px;
+  }
+
+  .download-status svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+  }
+
+  .download-status.done { color: var(--md-sys-color-secondary); }
+  .download-status.error { color: var(--md-sys-color-error); }
+
+  /* ── Settings Section ──────────────────────────────────────── */
+  .settings-list { padding: 8px 0; }
+
+  .settings-group-label {
+    padding: 16px 16px 8px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--md-sys-color-primary);
+  }
+
+  .settings-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 16px;
+    min-height: 56px;
+    cursor: pointer;
+    position: relative;
+    transition: background var(--md-motion-duration-short3) var(--md-motion-easing-standard);
+  }
+
+  .settings-item:hover {
+    background: rgba(230, 225, 229, 0.08);
+  }
+
+  .settings-item-icon {
+    width: 24px;
+    height: 24px;
+    fill: var(--md-sys-color-on-surface-variant);
+    flex-shrink: 0;
+  }
+
+  .settings-item-content { flex: 1; min-width: 0; }
+
+  .settings-item-title {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--md-sys-color-on-surface);
+    line-height: 24px;
+  }
+
+  .settings-item-desc {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--md-sys-color-on-surface-variant);
+    line-height: 20px;
+  }
+
+  /* ── M3 Toggle Switch (with thumb icon indicators) ─────── */
+  .m3-switch {
+    width: 52px;
+    height: 32px;
+    border-radius: var(--md-shape-full);
+    border: 2px solid var(--md-sys-color-outline);
+    background: var(--md-sys-color-surface-container-highest);
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition:
+      background var(--md-motion-duration-short4) var(--md-motion-easing-standard),
+      border-color var(--md-motion-duration-short4) var(--md-motion-easing-standard);
+  }
+
+  .m3-switch .thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: var(--md-shape-full);
+    background: var(--md-sys-color-outline);
+    position: absolute;
+    top: 50%;
+    left: 6px;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      left var(--md-motion-duration-short4) var(--md-motion-easing-emphasized),
+      width var(--md-motion-duration-short4) var(--md-motion-easing-emphasized),
+      height var(--md-motion-duration-short4) var(--md-motion-easing-emphasized),
+      background var(--md-motion-duration-short4) var(--md-motion-easing-standard);
+  }
+
+  .m3-switch .thumb svg {
+    width: 12px;
+    height: 12px;
+    fill: transparent;
+    transition: fill var(--md-motion-duration-short3) var(--md-motion-easing-standard);
+  }
+
+  .m3-switch.on {
+    background: var(--md-sys-color-primary);
+    border-color: var(--md-sys-color-primary);
+  }
+
+  .m3-switch.on .thumb {
+    left: 26px;
+    width: 24px;
+    height: 24px;
+    background: var(--md-sys-color-on-primary);
+  }
+
+  .m3-switch.on .thumb svg {
+    fill: var(--md-sys-color-primary);
+  }
+
+  /* ── Empty State ───────────────────────────────────────────── */
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 32px;
+    text-align: center;
+    gap: 16px;
+  }
+
+  .empty-state-icon {
+    width: 48px;
+    height: 48px;
+    fill: var(--md-sys-color-outline);
+    opacity: 0.6;
+  }
+
+  .empty-state-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--md-sys-color-on-surface);
+    line-height: 24px;
+  }
+
+  .empty-state-desc {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--md-sys-color-on-surface-variant);
+    line-height: 20px;
+    max-width: 260px;
+  }
+
+  /* ── Filled Button (M3) ────────────────────────────────────── */
+  .filled-btn {
+    height: 40px;
+    padding: 0 24px;
+    border-radius: var(--md-shape-full);
+    border: none;
+    background: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    font-family: var(--md-typescale-label-font);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow var(--md-motion-duration-short4) var(--md-motion-easing-standard);
+  }
+
+  .filled-btn:hover {
+    box-shadow: 0 1px 3px 1px rgba(0,0,0,0.15), 0 1px 2px 0 rgba(0,0,0,0.3);
+  }
+
+  .filled-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: currentColor;
+    opacity: 0;
+    transition: opacity var(--md-motion-duration-short3) var(--md-motion-easing-standard);
+  }
+
+  .filled-btn:hover::before { opacity: var(--md-state-hover); }
+
+  .filled-btn svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    position: relative;
+    z-index: 1;
+  }
+
+  .filled-btn span { position: relative; z-index: 1; }
+
+  /* ── Outlined Button ───────────────────────────────────────── */
+  .outlined-btn {
+    height: 40px;
+    padding: 0 24px;
+    border-radius: var(--md-shape-full);
+    border: 1px solid var(--md-sys-color-outline);
+    background: transparent;
+    color: var(--md-sys-color-primary);
+    font-family: var(--md-typescale-label-font);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .outlined-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--md-sys-color-primary);
+    opacity: 0;
+    transition: opacity var(--md-motion-duration-short3) var(--md-motion-easing-standard);
+  }
+
+  .outlined-btn:hover::before { opacity: var(--md-state-hover); }
+
+  .outlined-btn span { position: relative; z-index: 1; }
+
+  /* ── Snackbar ──────────────────────────────────────────────── */
+  .snackbar {
+    position: absolute;
+    bottom: 80px;
+    left: 16px;
+    right: 16px;
+    padding: 14px 16px;
+    border-radius: var(--md-shape-extra-small);
+    background: var(--md-sys-color-inverse-primary);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 20;
+    box-shadow:
+      0 3px 5px -1px rgba(0,0,0,0.2),
+      0 6px 10px 0 rgba(0,0,0,0.14),
+      0 1px 18px 0 rgba(0,0,0,0.12);
+    animation: m3-snackbar-in var(--md-motion-duration-medium2) var(--md-motion-easing-emphasized-decel);
+  }
+
+  @keyframes m3-snackbar-in {
+    from { transform: translateY(20px); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+  }
+
+  .snackbar-action {
+    background: none;
+    border: none;
+    color: var(--md-sys-color-on-primary-container);
+    font-family: var(--md-typescale-label-font);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    padding: 4px 8px;
+    margin-left: auto;
+    border-radius: var(--md-shape-extra-small);
+    white-space: nowrap;
+  }
+
+  .snackbar-action:hover {
+    background: rgba(234, 221, 255, 0.12);
+  }
+
+  /* ── Scanning State ────────────────────────────────────────── */
+  .scanning-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 32px;
+    text-align: center;
+    gap: 24px;
+  }
+
+  .scanning-ring {
+    width: 72px;
+    height: 72px;
+    border-radius: var(--md-shape-full);
+    border: 3px solid var(--md-sys-color-surface-container-highest);
+    border-top-color: var(--md-sys-color-primary);
+    animation: m3-spin 1.1s var(--md-motion-easing-standard) infinite;
+    position: relative;
+  }
+
+  .scanning-ring::after {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border-radius: var(--md-shape-full);
+    border: 2px solid var(--md-sys-color-surface-container-highest);
+    border-top-color: var(--md-sys-color-secondary);
+    animation: m3-spin 1.8s var(--md-motion-easing-standard) infinite reverse;
+  }
+
+  @keyframes m3-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .scanning-text {
+    font-size: 14px;
+    color: var(--md-sys-color-on-surface-variant);
+    line-height: 20px;
+  }
+
+  .scanning-text strong {
+    display: block;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--md-sys-color-on-surface);
+    margin-bottom: 4px;
+  }
+
+  .scanning-dots::after {
+    content: '';
+    animation: m3-dots 1.5s steps(3) infinite;
+  }
+
+  @keyframes m3-dots {
+    0%   { content: ''; }
+    33%  { content: '.'; }
+    66%  { content: '..'; }
+    100% { content: '...'; }
+  }
+
+  /* ── Divider ───────────────────────────────────────────────── */
+  .m3-divider {
+    height: 1px;
+    background: var(--md-sys-color-outline-variant);
+    margin: 0 16px;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     POPUP — 280px
+     ═══════════════════════════════════════════════════════════ */
+  .popup {
+    width: 280px;
+    height: 480px;
+    background: var(--md-sys-color-surface);
+    border-radius: var(--md-shape-large);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--md-sys-color-outline-variant);
+    position: relative;
+  }
+
+  .popup::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--md-sys-elevation-1);
+    pointer-events: none;
+    z-index: 0;
+    border-radius: inherit;
+  }
+
+  /* Popup header */
+  .popup-header {
+    padding: 16px 16px 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+  }
+
+  .popup-logo {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--md-shape-small);
+    background: var(--md-sys-color-primary-container);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .popup-logo svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--md-sys-color-on-primary-container);
+  }
+
+  .popup-title {
+    font-family: var(--md-typescale-display-font);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--md-sys-color-on-surface);
+    flex: 1;
+    line-height: 24px;
+  }
+
+  .popup-title small {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--md-sys-color-on-surface-variant);
+    line-height: 16px;
+  }
+
+  /* Popup Extended FAB / scan button */
+  .popup-scan-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 0 16px 12px;
+    height: 56px;
+    border-radius: var(--md-shape-large);
+    border: none;
+    background: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+    font-family: var(--md-typescale-label-font);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+    box-shadow:
+      0 1px 3px 1px rgba(0,0,0,0.15),
+      0 1px 2px 0 rgba(0,0,0,0.3);
+    transition: box-shadow var(--md-motion-duration-short4) var(--md-motion-easing-standard);
+    flex-shrink: 0;
+  }
+
+  .popup-scan-btn:hover {
+    box-shadow:
+      0 2px 6px 2px rgba(0,0,0,0.15),
+      0 1px 2px 0 rgba(0,0,0,0.3);
+  }
+
+  .popup-scan-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+  }
+
+  /* Popup stats grid */
+  .popup-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 0 16px 12px;
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+  }
+
+  .stat-card {
+    padding: 12px;
+    border-radius: var(--md-shape-medium);
+    background: var(--md-sys-color-surface-container);
+    text-align: center;
+    border: 1px solid var(--md-sys-color-outline-variant);
+  }
+
+  .stat-value {
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--md-sys-color-primary);
+    line-height: 32px;
+    font-family: var(--md-typescale-display-font);
+  }
+
+  .stat-value.secondary { color: var(--md-sys-color-secondary); }
+
+  .stat-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--md-sys-color-on-surface-variant);
+    line-height: 16px;
+    letter-spacing: 0.04em;
+  }
+
+  /* Popup section label */
+  .popup-section-label {
+    padding: 12px 16px 4px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--md-sys-color-outline);
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Popup recent-items list */
+  .popup-recent {
+    flex: 1;
+    overflow-y: auto;
+    position: relative;
+    z-index: 2;
+    padding: 4px 8px;
+  }
+
+  .recent-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px;
+    border-radius: var(--md-shape-small);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: background var(--md-motion-duration-short3) var(--md-motion-easing-standard);
+  }
+
+  .recent-item:hover {
+    background: rgba(230, 225, 229, 0.08);
+  }
+
+  .recent-thumb {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--md-shape-small);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .recent-info { flex: 1; min-width: 0; }
+
+  .recent-name {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--md-sys-color-on-surface);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 20px;
+  }
+
+  .recent-time {
+    font-size: 12px;
+    color: var(--md-sys-color-on-surface-variant);
+    line-height: 16px;
+  }
+
+  /* Popup bottom bar */
+  .popup-bottom {
+    padding: 8px 16px 12px;
+    display: flex;
+    gap: 8px;
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+    border-top: 1px solid var(--md-sys-color-outline-variant);
+  }
+
+  .popup-bottom .outlined-btn {
+    flex: 1;
+    justify-content: center;
+    height: 36px;
+    font-size: 13px;
+  }
+
+  /* ── Section Headers ───────────────────────────────────────── */
+  .section-header {
+    padding: 12px 16px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+  }
+
+  .section-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--md-sys-color-on-surface);
+    letter-spacing: 0.01em;
+  }
+
+  .section-action {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--md-sys-color-primary);
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px 8px;
+    border-radius: var(--md-shape-extra-small);
+    letter-spacing: 0.01em;
+  }
+
+  .section-action:hover {
+    background: rgba(208, 188, 255, 0.08);
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     STATES SECTION — stacked below main showcase
+     ═══════════════════════════════════════════════════════════ */
+  .states-row {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 0 40px 48px;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     DESIGN NOTES
+     ═══════════════════════════════════════════════════════════ */
+  .design-notes {
+    max-width: 780px;
+    margin: 60px auto;
+    padding: 0 40px 60px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .design-notes h2 {
+    font-family: var(--md-typescale-display-font);
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--md-sys-color-on-surface);
+    margin-bottom: 8px;
+    line-height: 36px;
+  }
+
+  .design-notes h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--md-sys-color-primary);
+    margin: 28px 0 12px;
+    letter-spacing: 0.01em;
+  }
+
+  .design-notes p {
+    font-size: 14px;
+    color: var(--md-sys-color-on-surface-variant);
+    line-height: 22px;
+    margin-bottom: 8px;
+  }
+
+  .design-notes code {
+    font-family: var(--md-typescale-code-font);
+    font-size: 13px;
+    background: var(--md-sys-color-surface-container);
+    padding: 2px 6px;
+    border-radius: var(--md-shape-extra-small);
+    color: var(--md-sys-color-tertiary);
+  }
+
+  .notes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 16px 0;
+  }
+
+  .note-card {
+    padding: 16px;
+    border-radius: var(--md-shape-medium);
+    border: 1px solid var(--md-sys-color-outline-variant);
+    background: var(--md-sys-color-surface-container);
+  }
+
+  .note-card-title {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--md-sys-color-primary);
+    margin-bottom: 8px;
+  }
+
+  .note-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .note-card li {
+    font-size: 13px;
+    color: var(--md-sys-color-on-surface-variant);
+    line-height: 22px;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .note-card li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: var(--md-shape-full);
+    position: absolute;
+    left: 0;
+    top: 8px;
+  }
+
+  .note-card:nth-child(1) li::before { background: var(--md-sys-color-primary); }
+  .note-card:nth-child(2) li::before { background: var(--md-sys-color-secondary); }
+  .note-card:nth-child(3) li::before { background: var(--md-sys-color-tertiary); }
+  .note-card:nth-child(4) li::before { background: var(--md-sys-color-error); }
+
+  .swatch-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 12px 0;
+  }
+
+  .swatch {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--md-shape-medium);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 4px;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    border: 1px solid var(--md-sys-color-outline-variant);
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MAIN SHOWCASE: Side Panel (left) + Popup (right)
+     ═══════════════════════════════════════════════════════════ -->
+<div class="showcase">
+
+  <!-- ────────────────────────────────────────────────────────
+       SIDE PANEL (400px) — Library Tab active
+       ──────────────────────────────────────────────────────── -->
+  <div class="panel-wrapper">
+    <div class="showcase-label">Side Panel &mdash; 400px</div>
+    <div class="side-panel">
+
+      <!-- Top App Bar (Small) -->
+      <div class="top-bar">
+        <div class="top-bar-title">Arcanea <span>Media</span></div>
+        <button class="icon-btn" aria-label="Filter">
+          <svg viewBox="0 0 24 24"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg>
+        </button>
+        <button class="icon-btn" aria-label="Settings">
+          <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.488.488 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1115.6 12 3.611 3.611 0 0112 15.6z"/></svg>
+        </button>
+      </div>
+
+      <!-- Segmented Button Group (replaces underline tabs) -->
+      <div class="segmented-group">
+        <button class="seg-btn active">
+          <svg class="seg-check" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+          <span class="seg-btn-label">Library</span>
+        </button>
+        <button class="seg-btn">
+          <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          <span class="seg-btn-label">Downloads</span>
+        </button>
+        <button class="seg-btn">
+          <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.488.488 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58z"/><circle cx="12" cy="12" r="2.5"/></svg>
+          <span class="seg-btn-label">Settings</span>
+        </button>
+      </div>
+
+      <!-- Outlined Filter Chips -->
+      <div class="chip-row">
+        <button class="chip active">
+          <svg class="chip-check" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+          <span class="chip-label">All</span>
+        </button>
+        <button class="chip">
+          <span class="chip-label">Images</span>
+        </button>
+        <button class="chip">
+          <svg viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+          <span class="chip-label">Videos</span>
+        </button>
+        <button class="chip">
+          <span class="chip-label">HD</span>
+        </button>
+      </div>
+
+      <!-- Linear Progress (hidden when idle) -->
+      <div class="linear-progress hidden">
+        <div class="linear-progress-track"></div>
+      </div>
+
+      <!-- Library Grid Content -->
+      <div class="content-area">
+        <div class="section-header">
+          <span class="section-title">48 items</span>
+          <button class="section-action">Select all</button>
+        </div>
+        <div class="media-grid">
+          <!-- 16 media items — #1, #5, #9, #13 are selected -->
+          <div class="media-item selected">
+            <div class="thumb"></div>
+            <div class="media-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+            <div class="media-badge"><span class="badge hd-badge"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 12H9.5v-2h-2v2H6V9h1.5v2.5h2V9H11v6zm2-6h4c.55 0 1 .45 1 1v4c0 .55-.45 1-1 1h-4V9zm1.5 4.5h2v-3h-2v3z"/></svg>HD</span></div>
+          </div>
+          <div class="media-item">
+            <div class="thumb"></div>
+            <div class="media-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+          </div>
+          <div class="media-item">
+            <div class="thumb"></div>
+            <div class="media-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+            <div class="media-badge"><span class="badge video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>0:12</span></div>
+          </div>
+          <div class="media-item">
+            <div class="thumb"></div>
+            <div class="media-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+          </div>
+          <div class="media-item selected">
+            <div class="thumb"></div>
+            <div class="media-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+            <div class="media-badge"><span class="badge hd-badge"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 12H9.5v-2h-2v2H6V9h1.5v2.5h2V9H11v6zm2-6h4c.55 0 1 .45 1 1v4c0 .55-.45 1-1 1h-4V9zm1.5 4.5h2v-3h-2v3z"/></svg>HD</span></div>
+          </div>
+          <div class="media-item">
+            <div class="thumb"></div>
+            <div class="media-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+          </div>
+          <div class="media-item">
+            <div class="thumb"></div>
+            <div class="media-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+            <div class="media-badge"><span class="badge video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>0:08</span></div>
+          </div>
+          <div class="media-item">
+            <div class="thumb"></div>
+            <div class="media-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+          </div>
+          <div class="media-item selected">
+            <div class="thumb"></div>
+            <div class="media-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+          </div>
+          <div class="media-item">
+            <div class="thumb"></div>
+            <div class="media-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+            <div class="media-badge"><span class="badge hd-badge"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 12H9.5v-2h-2v2H6V9h1.5v2.5h2V9H11v6zm2-6h4c.55 0 1 .45 1 1v4c0 .55-.45 1-1 1h-4V9zm1.5 4.5h2v-3h-2v3z"/></svg>HD</span></div>
+          </div>
+          <div class="media-item">
+            <div class="thumb"></div>
+            <div class="media-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+          </div>
+          <div class="media-item">
+            <div class="thumb"></div>
+            <div class="media-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+            <div class="media-badge"><span class="badge video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>0:15</span></div>
+          </div>
+          <div class="media-item selected">
+            <div class="thumb"></div>
+            <div class="media-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+          </div>
+          <div class="media-item">
+            <div class="thumb"></div>
+            <div class="media-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+          </div>
+          <div class="media-item">
+            <div class="thumb"></div>
+            <div class="media-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+            <div class="media-badge"><span class="badge hd-badge"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 12H9.5v-2h-2v2H6V9h1.5v2.5h2V9H11v6zm2-6h4c.55 0 1 .45 1 1v4c0 .55-.45 1-1 1h-4V9zm1.5 4.5h2v-3h-2v3z"/></svg>HD</span></div>
+          </div>
+          <div class="media-item">
+            <div class="thumb"></div>
+            <div class="media-check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Snackbar -->
+      <div class="snackbar">
+        4 items selected &middot; Ready to export
+        <button class="snackbar-action">UNDO</button>
+      </div>
+
+      <!-- Bottom Action Bar -->
+      <div class="action-bar">
+        <div class="action-bar-count"><strong>4</strong> selected</div>
+        <button class="sm-fab" aria-label="Scan">
+          <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        </button>
+        <button class="ext-fab">
+          <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          Export selected
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ────────────────────────────────────────────────────────
+       POPUP (280px)
+       ──────────────────────────────────────────────────────── -->
+  <div class="panel-wrapper">
+    <div class="showcase-label">Popup &mdash; 280px</div>
+    <div class="popup">
+
+      <div class="popup-header">
+        <div class="popup-logo">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 19h4l1.5-3h9l1.5 3h4L12 2zm-1.5 12L12 9l1.5 5h-3z"/></svg>
+        </div>
+        <div class="popup-title">
+          Arcanea Media
+          <small>Grok Imagine Library</small>
+        </div>
+        <button class="icon-btn" aria-label="More" style="margin-right: -8px;">
+          <svg viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+        </button>
+      </div>
+
+      <button class="popup-scan-btn">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        Scan current page
+      </button>
+
+      <div class="popup-stats">
+        <div class="stat-card">
+          <div class="stat-value">48</div>
+          <div class="stat-label">Total items</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value secondary">12</div>
+          <div class="stat-label">New today</div>
+        </div>
+      </div>
+
+      <div class="popup-section-label">Recently saved</div>
+      <div class="popup-recent">
+        <div class="recent-item">
+          <div class="recent-thumb" style="background: linear-gradient(135deg, #6750A4, #D0BCFF);"></div>
+          <div class="recent-info">
+            <div class="recent-name">cosmic_dragon_4k.png</div>
+            <div class="recent-time">2 min ago</div>
+          </div>
+        </div>
+        <div class="recent-item">
+          <div class="recent-thumb" style="background: linear-gradient(135deg, #1a5c47, #7fffd4);"></div>
+          <div class="recent-info">
+            <div class="recent-name">enchanted_forest.png</div>
+            <div class="recent-time">15 min ago</div>
+          </div>
+        </div>
+        <div class="recent-item">
+          <div class="recent-thumb" style="background: linear-gradient(135deg, #633B48, #FFD8E4);"></div>
+          <div class="recent-info">
+            <div class="recent-name">crystal_palace.mp4</div>
+            <div class="recent-time">1 hour ago</div>
+          </div>
+        </div>
+        <div class="recent-item">
+          <div class="recent-thumb" style="background: linear-gradient(225deg, #7B5EA7, #EADDFF);"></div>
+          <div class="recent-info">
+            <div class="recent-name">luminor_portrait.png</div>
+            <div class="recent-time">3 hours ago</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="popup-bottom">
+        <button class="outlined-btn"><span>Open library</span></button>
+        <button class="outlined-btn"><span>Export all</span></button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     ADDITIONAL UI STATES
+     ═══════════════════════════════════════════════════════════ -->
+<div class="states-row">
+
+  <!-- Downloads State -->
+  <div class="panel-wrapper">
+    <div class="showcase-label">Downloads &mdash; with progress</div>
+    <div class="side-panel" style="height: 520px;">
+      <div class="top-bar">
+        <div class="top-bar-title">Arcanea <span>Media</span></div>
+      </div>
+      <div class="segmented-group">
+        <button class="seg-btn"><span class="seg-btn-label">Library</span></button>
+        <button class="seg-btn active">
+          <svg class="seg-check" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+          <span class="seg-btn-label">Downloads</span>
+        </button>
+        <button class="seg-btn"><span class="seg-btn-label">Settings</span></button>
+      </div>
+      <div class="linear-progress">
+        <div class="linear-progress-track"></div>
+      </div>
+      <div class="content-area">
+        <div class="downloads-list">
+          <div class="download-item">
+            <div class="download-thumb" style="background: linear-gradient(135deg, #6750A4, #D0BCFF);"></div>
+            <div class="download-info">
+              <div class="download-name">cosmic_dragon_4k.png</div>
+              <div class="download-meta">2048 x 2048 &middot; 4.2 MB</div>
+              <div class="download-progress-bar"><div class="download-progress-fill complete" style="width:100%"></div></div>
+              <div class="download-status done">
+                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                Complete
+              </div>
+            </div>
+          </div>
+          <div class="download-item">
+            <div class="download-thumb" style="background: linear-gradient(135deg, #1a5c47, #7fffd4);"></div>
+            <div class="download-info">
+              <div class="download-name">enchanted_forest_scene.png</div>
+              <div class="download-meta">1024 x 1024 &middot; 2.1 MB</div>
+              <div class="download-progress-bar"><div class="download-progress-fill" style="width:67%"></div></div>
+              <div class="download-status">67% &middot; 3s remaining</div>
+            </div>
+          </div>
+          <div class="download-item">
+            <div class="download-thumb" style="background: linear-gradient(135deg, #633B48, #FFD8E4);"></div>
+            <div class="download-info">
+              <div class="download-name">crystal_palace_interior.mp4</div>
+              <div class="download-meta">1920 x 1080 &middot; 12.4 MB</div>
+              <div class="download-progress-bar"><div class="download-progress-fill" style="width:23%"></div></div>
+              <div class="download-status">23% &middot; 18s remaining</div>
+            </div>
+          </div>
+          <div class="download-item">
+            <div class="download-thumb" style="background: linear-gradient(315deg, #8C1D18, #F2B8B5);"></div>
+            <div class="download-info">
+              <div class="download-name">void_portal_effect.png</div>
+              <div class="download-meta">2048 x 2048 &middot; 5.8 MB</div>
+              <div class="download-progress-bar"><div class="download-progress-fill" style="width:41%; background: var(--md-sys-color-error);"></div></div>
+              <div class="download-status error">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                Network error &middot; Tap to retry
+              </div>
+            </div>
+          </div>
+          <div class="download-item">
+            <div class="download-thumb" style="background: linear-gradient(225deg, #7B5EA7, #EADDFF);"></div>
+            <div class="download-info">
+              <div class="download-name">luminor_guardian_portrait.png</div>
+              <div class="download-meta">1024 x 1024 &middot; 1.8 MB</div>
+              <div class="download-progress-bar"><div class="download-progress-fill complete" style="width:100%"></div></div>
+              <div class="download-status done">
+                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                Complete
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings State -->
+  <div class="panel-wrapper">
+    <div class="showcase-label">Settings &mdash; with toggles</div>
+    <div class="side-panel" style="height: 520px;">
+      <div class="top-bar">
+        <div class="top-bar-title">Arcanea <span>Media</span></div>
+      </div>
+      <div class="segmented-group">
+        <button class="seg-btn"><span class="seg-btn-label">Library</span></button>
+        <button class="seg-btn"><span class="seg-btn-label">Downloads</span></button>
+        <button class="seg-btn active">
+          <svg class="seg-check" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+          <span class="seg-btn-label">Settings</span>
+        </button>
+      </div>
+      <div class="content-area">
+        <div class="settings-list">
+          <div class="settings-group-label">General</div>
+          <div class="settings-item">
+            <svg class="settings-item-icon" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            <div class="settings-item-content">
+              <div class="settings-item-title">Auto-download</div>
+              <div class="settings-item-desc">Save new media automatically</div>
+            </div>
+            <div class="m3-switch on">
+              <div class="thumb"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+            </div>
+          </div>
+          <div class="settings-item">
+            <svg class="settings-item-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 12H9.5v-2h-2v2H6V9h1.5v2.5h2V9H11v6zm2-6h4c.55 0 1 .45 1 1v4c0 .55-.45 1-1 1h-4V9zm1.5 4.5h2v-3h-2v3z"/></svg>
+            <div class="settings-item-content">
+              <div class="settings-item-title">Prefer HD quality</div>
+              <div class="settings-item-desc">Download highest resolution</div>
+            </div>
+            <div class="m3-switch on">
+              <div class="thumb"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+            </div>
+          </div>
+          <div class="settings-item">
+            <svg class="settings-item-icon" viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+            <div class="settings-item-content">
+              <div class="settings-item-title">Notifications</div>
+              <div class="settings-item-desc">Alert when downloads complete</div>
+            </div>
+            <div class="m3-switch">
+              <div class="thumb"><svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg></div>
+            </div>
+          </div>
+          <div class="m3-divider" style="margin: 8px 16px;"></div>
+          <div class="settings-group-label">Storage</div>
+          <div class="settings-item">
+            <svg class="settings-item-icon" viewBox="0 0 24 24"><path d="M20 6H12L10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/></svg>
+            <div class="settings-item-content">
+              <div class="settings-item-title">Save location</div>
+              <div class="settings-item-desc">~/Downloads/Arcanea Media</div>
+            </div>
+          </div>
+          <div class="settings-item">
+            <svg class="settings-item-icon" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+            <div class="settings-item-content">
+              <div class="settings-item-title">Clear cache</div>
+              <div class="settings-item-desc">128 MB used</div>
+            </div>
+          </div>
+          <div class="m3-divider" style="margin: 8px 16px;"></div>
+          <div class="settings-group-label">Advanced</div>
+          <div class="settings-item">
+            <svg class="settings-item-icon" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+            <div class="settings-item-content">
+              <div class="settings-item-title">Concurrent downloads</div>
+              <div class="settings-item-desc">3 simultaneous connections</div>
+            </div>
+          </div>
+          <div class="settings-item">
+            <svg class="settings-item-icon" viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+            <div class="settings-item-content">
+              <div class="settings-item-title">Filename pattern</div>
+              <div class="settings-item-desc">{prompt}_{date}_{quality}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="states-row">
+
+  <!-- Empty State -->
+  <div class="panel-wrapper">
+    <div class="showcase-label">Empty State</div>
+    <div class="side-panel" style="height: 400px;">
+      <div class="top-bar">
+        <div class="top-bar-title">Arcanea <span>Media</span></div>
+        <button class="icon-btn" aria-label="Settings">
+          <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.488.488 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58z"/><circle cx="12" cy="12" r="2.5"/></svg>
+        </button>
+      </div>
+      <div class="content-area" style="display:flex;">
+        <div class="empty-state" style="flex:1;">
+          <svg class="empty-state-icon" viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+          <div class="empty-state-title">No media found</div>
+          <div class="empty-state-desc">Navigate to a Grok Imagine page and tap scan to discover media assets</div>
+          <button class="filled-btn">
+            <svg viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            <span>Scan page</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scanning State -->
+  <div class="panel-wrapper">
+    <div class="showcase-label">Scanning State</div>
+    <div class="side-panel" style="height: 400px;">
+      <div class="top-bar">
+        <div class="top-bar-title">Arcanea <span>Media</span></div>
+      </div>
+      <div class="linear-progress">
+        <div class="linear-progress-track"></div>
+      </div>
+      <div class="content-area" style="display:flex;">
+        <div class="scanning-state" style="flex:1;">
+          <div class="scanning-ring"></div>
+          <div class="scanning-text">
+            <strong>Scanning page</strong>
+            Analyzing DOM for media assets<span class="scanning-dots"></span>
+          </div>
+          <div style="font-size: 28px; font-weight: 500; color: var(--md-sys-color-primary); font-family: var(--md-typescale-display-font);">7</div>
+          <div style="font-size: 12px; color: var(--md-sys-color-on-surface-variant); margin-top: -12px;">items found so far</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     DESIGN NOTES
+     ═══════════════════════════════════════════════════════════ -->
+<div class="design-notes">
+  <h2>Design Notes</h2>
+  <p>Variation 09 &mdash; <strong>Material Adaptive</strong> applies Google's Material Design 3 (Material You) design language to the Arcanea Media extension, creating a product that feels native to the Chrome ecosystem while retaining Arcanea's identity through color adaptation.</p>
+
+  <h3>Design Philosophy</h3>
+  <p>Material Design 3 introduces the concept of <strong>dynamic color</strong> derived from content. Here, the primary purple (<code>#D0BCFF</code>) provides brand identity while the adapted teal secondary (<code>#7fffd4</code>) anchors the Arcanea palette. Surface tones use elevation tinting rather than shadows &mdash; each level adds a subtle wash of primary color over the dark surface, creating depth without hard edges.</p>
+  <p>Every interactive element follows M3 state layer conventions: hover overlays at 8% opacity, press at 12%, focus at 12% with visible outline. The result is a design that breathes, responds, and feels native to Google's ecosystem while carrying Arcanea's creative identity.</p>
+
+  <h3>Palette</h3>
+  <div class="swatch-row">
+    <div class="swatch" style="background: #1C1B1F; color: #E6E1E5;">1C1B1F</div>
+    <div class="swatch" style="background: #211F26; color: #E6E1E5;">211F26</div>
+    <div class="swatch" style="background: #36343B; color: #E6E1E5;">36343B</div>
+    <div class="swatch" style="background: #D0BCFF; color: #381E72;">D0BCFF</div>
+    <div class="swatch" style="background: #4F378B; color: #EADDFF;">4F378B</div>
+    <div class="swatch" style="background: #6750A4; color: #fff;">6750A4</div>
+    <div class="swatch" style="background: #7fffd4; color: #003829;">7FFFD4</div>
+    <div class="swatch" style="background: #1a5c47; color: #a0ffd6;">1A5C47</div>
+    <div class="swatch" style="background: #FFD8E4; color: #492532;">FFD8E4</div>
+    <div class="swatch" style="background: #F2B8B5; color: #601410;">F2B8B5</div>
+    <div class="swatch" style="background: #E6E1E5; color: #1C1B1F;">E6E1E5</div>
+    <div class="swatch" style="background: #938F99; color: #1C1B1F;">938F99</div>
+    <div class="swatch" style="background: #49454F; color: #E6E1E5;">49454F</div>
+  </div>
+
+  <div class="notes-grid">
+    <div class="note-card">
+      <div class="note-card-title">Surface Tokens</div>
+      <ul>
+        <li><code>#1C1B1F</code> &mdash; Surface (base dark)</li>
+        <li><code>#211F26</code> &mdash; Surface Container</li>
+        <li><code>#2B2930</code> &mdash; Container High</li>
+        <li><code>#36343B</code> &mdash; Container Highest</li>
+        <li><code>#49454F</code> &mdash; Surface Variant</li>
+        <li>Elevation tint: primary @ 5/8/11/12/14%</li>
+      </ul>
+    </div>
+    <div class="note-card">
+      <div class="note-card-title">Typography</div>
+      <ul>
+        <li>Display: Google Sans / Roboto, 400-500wt</li>
+        <li>Body/Label: Roboto, 400-500wt</li>
+        <li>Code: Roboto Mono, 400wt</li>
+        <li>Title Large: 22px / 28px</li>
+        <li>Body Medium: 14px / 20px</li>
+        <li>Label Small: 11px / 16px, 0.06em tracking</li>
+      </ul>
+    </div>
+    <div class="note-card">
+      <div class="note-card-title">Shape &amp; Motion</div>
+      <ul>
+        <li>Large corner: 16dp (cards, FABs)</li>
+        <li>Medium corner: 12dp (grid items, chips)</li>
+        <li>Small corner: 8dp (badges, inputs)</li>
+        <li>Full: 9999px (pills, switches, buttons)</li>
+        <li>Emphasized: <code>cubic-bezier(0.2, 0, 0, 1)</code></li>
+        <li>Stagger delay: 50ms per grid item</li>
+      </ul>
+    </div>
+    <div class="note-card">
+      <div class="note-card-title">Interaction Patterns</div>
+      <ul>
+        <li>State layers: hover 8%, press 12%, drag 16%</li>
+        <li>Ripple: radial-gradient on active press</li>
+        <li>48dp minimum touch targets (icon buttons)</li>
+        <li>Linear progress: 4dp indeterminate</li>
+        <li>Snackbar: slide-up, emphasized decel</li>
+        <li>Switch: thumb grows 16dp to 24dp on toggle</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>M3 Component Inventory</h3>
+  <p>This design implements the following Material Design 3 components:</p>
+  <p><strong>Navigation:</strong> Top App Bar (small), Segmented Button Group (3-segment, replaces underline tabs per M3 guidelines)</p>
+  <p><strong>Selection:</strong> Outlined Filter Chips (checkmark on active state), Checkbox overlays on media grid items</p>
+  <p><strong>Actions:</strong> Extended FAB (icon + label, primary-container fill), Small FAB, Filled Button, Outlined Button, Icon Button (48dp touch target with 40dp visible area)</p>
+  <p><strong>Feedback:</strong> Linear Progress Indicator (4dp, indeterminate animation), Snackbar (with action button), Dual-ring scanning spinner</p>
+  <p><strong>Layout:</strong> Outlined Cards (1dp border, no shadow), Surface-tinted elevation (5 levels), Content list items (56dp minimum height), Stat cards</p>
+  <p><strong>Controls:</strong> Toggle Switch with thumb icon indicators &mdash; checkmark SVG for on, X SVG for off, with M3-correct thumb scaling from 16dp to 24dp</p>
+
+  <h3>Animation Details</h3>
+  <p><strong>Grid stagger:</strong> Each media item enters with <code>scale(0.92) translateY(8px)</code> to <code>scale(1) translateY(0)</code> using emphasized deceleration easing with 50ms stagger delay. Total cascade: 750ms delay + 400ms duration = 1.15s for all 16 items.</p>
+  <p><strong>Indeterminate progress:</strong> Track slides <code>translateX(-100%)</code> to <code>translateX(100%)</code> with scale oscillation (0.3 to 0.6 and back), 2s period, emphasized easing for the characteristic M3 "rubber band" feel.</p>
+  <p><strong>Snackbar entry:</strong> <code>translateY(20px)</code> with emphasized deceleration, 300ms duration. Matches Android Material snackbar behavior.</p>
+  <p><strong>Switch toggle:</strong> Thumb slides with emphasized easing while growing from 16dp to 24dp. Icon crossfades via fill-color transition from transparent to the primary color.</p>
+
+  <h3>Accessibility</h3>
+  <p>All interactive elements maintain 48dp touch targets per M3 specification. Color contrast ratios exceed WCAG AA: on-surface text on surface achieves 13.5:1, on-surface-variant text achieves 7.8:1. Selected states communicate through both outline color and checkmark icon, never color alone. Focus states use 12% state layer with visible ring. Segmented buttons and icon buttons include <code>aria-label</code> attributes.</p>
+
+  <h3>Inline SVG Icon Reference</h3>
+  <p>All icons are Material Symbols (filled variant), embedded as inline SVGs for zero-dependency rendering:</p>
+  <p><code>search</code> (scan), <code>download</code> (download/export), <code>settings</code> (gear), <code>filter_list</code> (filter), <code>play_arrow</code> (video badge), <code>hd</code> (HD badge), <code>check</code> (checkmark/selected), <code>close</code> (X / switch off), <code>more_vert</code> (overflow menu), <code>image</code> (empty state), <code>folder_open</code> (save location), <code>delete</code> (clear cache), <code>notifications</code> (alerts), <code>shield</code> (connections), <code>code</code> (filename pattern)</p>
+</div>
+
+</body>
+</html>

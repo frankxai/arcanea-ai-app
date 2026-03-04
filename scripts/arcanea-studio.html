@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arcanea Content Studio</title>
+<style>
+:root {
+  --bg:       #0a0a12;
+  --surface:  #12121e;
+  --panel:    #18182a;
+  --border:   #2a2a42;
+  --violet:   #8b5cf6;
+  --teal:     #7fffd4;
+  --gold:     #ffd700;
+  --text:     #e2e2f0;
+  --muted:    #6b6b8a;
+  --approved: #22c55e;
+  --review:   #f59e0b;
+  --archived: #64748b;
+  --dupe:     #ef4444;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);height:100vh;display:flex;flex-direction:column;overflow:hidden}
+
+/* ── Top Bar ── */
+#topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;gap:12px;flex-shrink:0}
+#topbar h1{font-size:14px;font-weight:700;color:var(--teal);letter-spacing:.05em;white-space:nowrap}
+#topbar h1 span{color:var(--violet)}
+#btn-open{background:var(--violet);color:#fff;border:none;padding:7px 14px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;white-space:nowrap}
+#btn-open:hover{background:#7c3aed}
+#search{flex:1;min-width:120px;background:var(--panel);border:1px solid var(--border);color:var(--text);padding:7px 12px;border-radius:8px;font-size:13px}
+#search:focus{outline:none;border-color:var(--violet)}
+#stats{font-size:11px;color:var(--muted);white-space:nowrap}
+.btn-sm{background:var(--panel);border:1px solid var(--border);color:var(--text);padding:6px 12px;border-radius:7px;cursor:pointer;font-size:12px}
+.btn-sm:hover{border-color:var(--violet);color:var(--violet)}
+.btn-sm.active{background:var(--violet);border-color:var(--violet);color:#fff}
+#btn-export{background:var(--gold);color:#000;border:none;padding:7px 12px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:700}
+
+/* ── Layout ── */
+#main{display:flex;flex:1;overflow:hidden}
+
+/* ── Sidebar ── */
+#sidebar{width:200px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);overflow-y:auto;padding:12px 0}
+.sidebar-section{padding:0 12px;margin-bottom:16px}
+.sidebar-section h3{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:8px}
+.filter-btn{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;color:var(--text);padding:5px 8px;border-radius:6px;cursor:pointer;font-size:12px;text-align:left}
+.filter-btn:hover{background:var(--panel)}
+.filter-btn.active{background:var(--violet);color:#fff}
+.filter-btn .count{font-size:10px;color:var(--muted);background:var(--panel);padding:1px 6px;border-radius:10px}
+.filter-btn.active .count{background:rgba(255,255,255,.2);color:#fff}
+.guardian-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-right:6px}
+
+/* ── Grid ── */
+#grid-wrap{flex:1;overflow-y:auto;padding:16px}
+#grid{columns:5 180px;column-gap:12px}
+.card{break-inside:avoid;margin-bottom:12px;border-radius:10px;overflow:hidden;background:var(--surface);border:2px solid transparent;cursor:pointer;position:relative;transition:.15s}
+.card:hover{border-color:var(--violet);transform:translateY(-2px)}
+.card.selected{border-color:var(--teal)}
+.card img,.card video{width:100%;display:block;border-radius:8px 8px 0 0;object-fit:cover}
+.card-meta{padding:6px 8px}
+.card-name{font-size:10px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:4px}
+.card-tags{display:flex;flex-wrap:wrap;gap:3px}
+.tag{font-size:9px;padding:1px 5px;border-radius:4px;background:var(--panel);color:var(--muted)}
+.tag.guardian{background:rgba(139,92,246,.2);color:var(--violet)}
+.tag.gate{background:rgba(127,255,212,.15);color:var(--teal)}
+.status-badge{position:absolute;top:6px;right:6px;font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;text-transform:uppercase;letter-spacing:.06em}
+.status-approved{background:rgba(34,197,94,.25);color:var(--approved)}
+.status-review{background:rgba(245,158,11,.25);color:var(--review)}
+.status-archived{background:rgba(100,116,139,.25);color:var(--archived)}
+.dupe-badge{position:absolute;top:6px;left:6px;background:rgba(239,68,68,.3);color:var(--dupe);font-size:9px;padding:2px 5px;border-radius:4px;font-weight:700}
+
+/* ── Detail Panel ── */
+#detail{width:280px;flex-shrink:0;background:var(--surface);border-left:1px solid var(--border);overflow-y:auto;display:none;padding:16px}
+#detail.open{display:block}
+#detail h2{font-size:13px;font-weight:700;margin-bottom:12px;color:var(--teal)}
+#detail img,#detail video{width:100%;border-radius:8px;margin-bottom:12px;max-height:200px;object-fit:contain;background:#000}
+.detail-field{margin-bottom:10px}
+.detail-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.detail-value{font-size:12px}
+.detail-value.editable{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:5px 8px;width:100%;color:var(--text);font-size:12px;font-family:inherit}
+.detail-value.editable:focus{outline:none;border-color:var(--violet)}
+.status-btns{display:flex;gap:6px;margin-bottom:12px}
+.status-btn{flex:1;padding:6px;border-radius:7px;border:1px solid var(--border);background:var(--panel);color:var(--text);cursor:pointer;font-size:11px;font-weight:600}
+.status-btn[data-s="approved"]:hover,.status-btn[data-s="approved"].active{background:rgba(34,197,94,.2);border-color:var(--approved);color:var(--approved)}
+.status-btn[data-s="review"]:hover,.status-btn[data-s="review"].active{background:rgba(245,158,11,.2);border-color:var(--review);color:var(--review)}
+.status-btn[data-s="archived"]:hover,.status-btn[data-s="archived"].active{background:rgba(100,116,139,.2);border-color:var(--archived);color:var(--archived)}
+.tier-btns{display:flex;gap:4px;margin-bottom:12px}
+.tier-btn{flex:1;padding:5px;border-radius:6px;border:1px solid var(--border);background:var(--panel);color:var(--muted);cursor:pointer;font-size:10px;font-weight:700}
+.tier-btn.active{background:rgba(255,215,0,.15);border-color:var(--gold);color:var(--gold)}
+textarea#notes{height:70px;resize:vertical;font-family:inherit}
+#btn-close-detail{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px}
+
+/* ── Empty state ── */
+#empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;color:var(--muted)}
+#empty h2{font-size:22px;color:var(--violet)}
+#empty p{font-size:14px;text-align:center;max-width:420px;line-height:1.6}
+#empty kbd{background:var(--panel);border:1px solid var(--border);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:12px}
+
+/* ── Loading ── */
+#loading{display:none;flex:1;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:var(--muted)}
+.spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--violet);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── Gate Map ── */
+#gatemap{display:none;flex:1;position:relative;overflow:hidden;align-items:center;justify-content:center}
+#gatemap.visible{display:flex}
+.gate-node{position:absolute;transform:translate(-50%,-50%);cursor:pointer;text-align:center}
+.gate-circle{width:64px;height:64px;border-radius:50%;border:2px solid;display:flex;align-items:center;justify-content:center;margin:0 auto 4px;font-size:10px;font-weight:700;transition:.2s}
+.gate-circle:hover{transform:scale(1.15)}
+.gate-label{font-size:9px;color:var(--muted);white-space:nowrap}
+.gate-count{font-size:11px;font-weight:700}
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <h1>Arcanea <span>Content Studio</span></h1>
+  <button id="btn-open">Open Folder</button>
+  <input id="search" type="text" placeholder="Search images, Guardians, tags...">
+  <button class="btn-sm active" id="btn-grid-view">Grid</button>
+  <button class="btn-sm" id="btn-gate-view">Gate Map</button>
+  <select id="filter-type" class="btn-sm" style="cursor:pointer">
+    <option value="">All types</option>
+    <option value="image">Images</option>
+    <option value="video">Videos</option>
+  </select>
+  <select id="filter-status" class="btn-sm" style="cursor:pointer">
+    <option value="">All status</option>
+    <option value="review">Review</option>
+    <option value="approved">Approved</option>
+    <option value="archived">Archived</option>
+  </select>
+  <button class="btn-sm" id="btn-hide-dupes">Hide dupes</button>
+  <span id="stats">No folder open</span>
+  <button id="btn-export">Export JSON</button>
+</div>
+
+<div id="main">
+  <div id="sidebar">
+    <div class="sidebar-section">
+      <h3>Guardian</h3>
+      <button class="filter-btn active" data-guardian="">
+        <span>All</span><span class="count" id="cnt-all">0</span>
+      </button>
+      <!-- generated by JS -->
+      <div id="guardian-filters"></div>
+    </div>
+    <div class="sidebar-section">
+      <h3>Actions</h3>
+      <button class="filter-btn" id="btn-approve-all-visible">Approve visible</button>
+      <button class="filter-btn" id="btn-archive-dupes">Archive dupes</button>
+    </div>
+    <div class="sidebar-section" style="margin-top:auto">
+      <h3>Keys</h3>
+      <div style="font-size:10px;color:var(--muted);line-height:1.8">
+        <kbd style="background:var(--panel);padding:1px 4px;border-radius:3px">A</kbd> Approve<br>
+        <kbd style="background:var(--panel);padding:1px 4px;border-radius:3px">X</kbd> Archive<br>
+        <kbd style="background:var(--panel);padding:1px 4px;border-radius:3px">R</kbd> Review<br>
+        <kbd style="background:var(--panel);padding:1px 4px;border-radius:3px">1-3</kbd> Quality tier<br>
+        <kbd style="background:var(--panel);padding:1px 4px;border-radius:3px">Esc</kbd> Close
+      </div>
+    </div>
+  </div>
+
+  <div id="empty">
+    <h2>Content Studio</h2>
+    <p>Open your <strong style="color:var(--teal)">G:\My Drive\Arcanea</strong> folder to browse, curate and tag your 969+ Arcanea media files.</p>
+    <p>First run <kbd>media-catalog.py</kbd> to generate <code>arcanea-manifest.json</code>, then open the folder here.</p>
+    <button id="btn-open2" style="background:var(--violet);color:#fff;border:none;padding:10px 24px;border-radius:10px;cursor:pointer;font-size:14px;font-weight:700">Open Arcanea Folder</button>
+  </div>
+  <div id="loading"><div class="spinner"></div><span id="loading-text">Scanning...</span></div>
+  <div id="grid-wrap" style="display:none"><div id="grid"></div></div>
+  <div id="gatemap"></div>
+
+  <div id="detail" style="position:relative">
+    <button id="btn-close-detail">×</button>
+    <h2 id="detail-title">Select an image</h2>
+    <img id="detail-img" src="" alt="" style="display:none">
+    <video id="detail-vid" controls style="display:none"></video>
+    <div class="status-btns">
+      <button class="status-btn" data-s="review">Review</button>
+      <button class="status-btn" data-s="approved">Approve</button>
+      <button class="status-btn" data-s="archived">Archive</button>
+    </div>
+    <div class="detail-field">
+      <div class="detail-label">Quality Tier</div>
+      <div class="tier-btns">
+        <button class="tier-btn" data-t="1">1 Hero</button>
+        <button class="tier-btn" data-t="2">2 Gallery</button>
+        <button class="tier-btn" data-t="3">3 Archive</button>
+      </div>
+    </div>
+    <div class="detail-field">
+      <div class="detail-label">Suggested name</div>
+      <div class="detail-value" id="detail-suggested" style="font-family:monospace;font-size:11px;color:var(--teal);word-break:break-all"></div>
+    </div>
+    <div class="detail-field">
+      <div class="detail-label">Original</div>
+      <div class="detail-value" id="detail-original" style="font-family:monospace;font-size:10px;color:var(--muted);word-break:break-all"></div>
+    </div>
+    <div class="detail-field">
+      <div class="detail-label">Tags</div>
+      <div id="detail-tags" class="card-tags" style="margin-bottom:6px"></div>
+      <input class="detail-value editable" id="tag-input" placeholder="Add tag, press Enter">
+    </div>
+    <div class="detail-field">
+      <div class="detail-label">Notes</div>
+      <textarea class="detail-value editable" id="notes" placeholder="Notes..."></textarea>
+    </div>
+    <div class="detail-field" style="font-size:11px;color:var(--muted)">
+      <span id="detail-size"></span> · <span id="detail-guardian" style="color:var(--violet)"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── State ─────────────────────────────────────────────────────────────────────
+const DB_KEY = 'arcanea-studio-meta';
+let dirHandle = null;
+let allMedia  = [];   // { handle, name, url, entry }
+let meta      = {};   // id -> {status, quality_tier, tags, notes}
+let selected  = null; // current media item
+let filterGuardian = '';
+let filterType     = '';
+let filterStatus   = '';
+let hideDupes      = false;
+let viewMode       = 'grid'; // grid | gatemap
+
+const GUARDIAN_COLORS = {
+  Lyssandria: '#8B6914', Leyla: '#4169E1', Draconia: '#FF4500',
+  Maylinn: '#FF69B4',    Alera: '#87CEEB', Lyria:   '#9370DB',
+  Aiyami:  '#FFD700',    Elara: '#50C878', Ino:     '#40E0D0',
+  Shinkami:'#C0C0C0',
+};
+const GATES = [
+  {name:'Foundation',hz:174, guardian:'Lyssandria', angle:270},
+  {name:'Flow',      hz:285, guardian:'Leyla',       angle:306},
+  {name:'Fire',      hz:396, guardian:'Draconia',    angle:342},
+  {name:'Heart',     hz:417, guardian:'Maylinn',     angle:18 },
+  {name:'Voice',     hz:528, guardian:'Alera',       angle:54 },
+  {name:'Sight',     hz:639, guardian:'Lyria',       angle:90 },
+  {name:'Crown',     hz:741, guardian:'Aiyami',      angle:126},
+  {name:'Shift',     hz:852, guardian:'Elara',       angle:162},
+  {name:'Unity',     hz:963, guardian:'Ino',          angle:198},
+  {name:'Source',    hz:1111,guardian:'Shinkami',    angle:234},
+];
+
+// ── Persistence ───────────────────────────────────────────────────────────────
+function loadMeta(){try{return JSON.parse(localStorage.getItem(DB_KEY)||'{}')}catch{return{}}}
+function saveMeta(){localStorage.setItem(DB_KEY,JSON.stringify(meta))}
+
+// ── File System Access ────────────────────────────────────────────────────────
+async function openFolder(){
+  try{
+    dirHandle = await window.showDirectoryPicker({mode:'read'});
+    meta = loadMeta();
+    await scanFolder();
+  }catch(e){if(e.name!=='AbortError')alert('Error: '+e.message)}
+}
+
+async function scanFolder(){
+  showLoading(true);
+  allMedia = [];
+  let manifest = null;
+
+  // Try to load manifest.json
+  try{
+    const mh = await dirHandle.getFileHandle('arcanea-manifest.json');
+    const mf = await mh.getFile();
+    const mt = await mf.text();
+    manifest = JSON.parse(mt);
+    console.log(`Loaded manifest: ${manifest.total_files} entries`);
+  }catch(e){ console.log('No manifest found, scanning raw files'); }
+
+  if(manifest){
+    await loadFromManifest(manifest);
+  } else {
+    await scanRaw(dirHandle, '');
+  }
+
+  buildGuardianFilters();
+  buildGateMap();
+  showLoading(false);
+  renderGrid();
+}
+
+async function loadFromManifest(manifest){
+  setLoadingText(`Loading ${manifest.total_files} entries from manifest...`);
+  // We use manifest as our source of truth for metadata, then load file handles lazily
+  for(const entry of manifest.media){
+    if(!meta[entry.id]){
+      meta[entry.id] = {
+        status:       entry.status || 'review',
+        quality_tier: entry.quality_tier || null,
+        tags:         entry.tags || [],
+        notes:        entry.notes || '',
+      };
+    }
+    allMedia.push({
+      id:       entry.id,
+      name:     entry.suggested_name || entry.original_name,
+      origName: entry.original_name,
+      type:     entry.type,
+      sizeMB:   entry.size_mb,
+      guardian: entry.guardian,
+      gate:     entry.gate,
+      scene:    entry.scene,
+      source:   entry.source,
+      dupOf:    entry.duplicate_of,
+      url:      null, // loaded on demand via File System Access
+      handle:   null,
+    });
+  }
+  saveMeta();
+}
+
+async function scanRaw(dh, prefix){
+  for await(const [name, handle] of dh.entries()){
+    if(handle.kind === 'file'){
+      const ext = name.split('.').pop().toLowerCase();
+      const isImg = ['png','jpg','jpeg','webp','gif'].includes(ext);
+      const isVid = ['mp4','mov','webm','avi'].includes(ext);
+      if(!isImg && !isVid) continue;
+      const id = prefix + name;
+      if(!meta[id]) meta[id] = {status:'review',quality_tier:null,tags:[],notes:''};
+      allMedia.push({id, name, origName:name, type:isImg?'image':'video',
+        sizeMB:0, guardian:detectGuardian(name+' '+prefix),
+        gate:null, scene:name, source:'unknown', dupOf:null,
+        url:null, handle });
+      if(allMedia.length % 50 === 0) setLoadingText(`Found ${allMedia.length} files...`);
+    } else if(handle.kind === 'directory'){
+      await scanRaw(handle, prefix+name+'/');
+    }
+  }
+  saveMeta();
+}
+
+function detectGuardian(text){
+  const t = text.toLowerCase();
+  const gs = ['Lyssandria','Leyla','Draconia','Maylinn','Alera','Lyria','Aiyami','Elara','Ino','Shinkami'];
+  return gs.find(g => t.includes(g.toLowerCase())) || null;
+}
+
+// ── URLs (lazy load) ──────────────────────────────────────────────────────────
+async function getUrl(item){
+  if(item.url) return item.url;
+  if(!item.handle) return null;
+  try{
+    const f = await item.handle.getFile();
+    item.url = URL.createObjectURL(f);
+    return item.url;
+  }catch{ return null; }
+}
+
+// ── Filtering ─────────────────────────────────────────────────────────────────
+function getVisible(){
+  return allMedia.filter(item => {
+    const m = meta[item.id] || {};
+    if(filterGuardian && item.guardian !== filterGuardian) return false;
+    if(filterType     && item.type     !== filterType)     return false;
+    if(filterStatus   && (m.status||'review') !== filterStatus) return false;
+    if(hideDupes && item.dupOf) return false;
+    const q = document.getElementById('search').value.toLowerCase();
+    if(q && !item.name.toLowerCase().includes(q) &&
+           !(item.guardian||'').toLowerCase().includes(q) &&
+           !(item.scene||'').toLowerCase().includes(q)) return false;
+    return true;
+  });
+}
+
+// ── Render Grid ───────────────────────────────────────────────────────────────
+function renderGrid(){
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  const visible = getVisible();
+  updateStats(visible.length);
+
+  visible.forEach(item => {
+    const m   = meta[item.id] || {};
+    const st  = m.status || 'review';
+    const div = document.createElement('div');
+    div.className = 'card' + (selected===item?' selected':'');
+    div.dataset.id = item.id;
+
+    const media = item.type==='image'
+      ? `<img loading="lazy" src="" data-src-id="${item.id}" alt="${item.name}" style="min-height:80px;background:var(--panel)">`
+      : `<video muted loop style="max-height:160px"><source data-src-id="${item.id}"></video>`;
+
+    const guardianTags = item.guardian
+      ? `<span class="tag guardian">${item.guardian}</span>`
+        + (item.gate ? `<span class="tag gate">${item.gate}</span>` : '')
+      : '';
+
+    const dupeBadge = item.dupOf ? '<div class="dupe-badge">DUPE</div>' : '';
+
+    div.innerHTML = `
+      ${media}
+      <div class="card-meta">
+        <div class="card-name">${item.name}</div>
+        <div class="card-tags">${guardianTags}</div>
+      </div>
+      <div class="status-badge status-${st}">${st}</div>
+      ${dupeBadge}`;
+
+    div.addEventListener('click', () => selectItem(item));
+    grid.appendChild(div);
+  });
+
+  // Lazy load images
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(async e => {
+      if(!e.isIntersecting) return;
+      const el  = e.target;
+      const id  = el.dataset.srcId;
+      const itm = allMedia.find(x => x.id===id);
+      if(!itm || el.src) return;
+      const url = await getUrl(itm);
+      if(url){ el.src = url; if(el.tagName==='SOURCE'){ el.parentElement.src=url; } }
+      io.unobserve(el);
+    });
+  },{rootMargin:'400px'});
+
+  grid.querySelectorAll('img[data-src-id],source[data-src-id]').forEach(el => io.observe(el));
+}
+
+// ── Detail Panel ──────────────────────────────────────────────────────────────
+async function selectItem(item){
+  selected = item;
+  document.querySelectorAll('.card').forEach(c =>
+    c.classList.toggle('selected', c.dataset.id===item.id));
+
+  const m = meta[item.id] || {};
+  const detail = document.getElementById('detail');
+  detail.classList.add('open');
+
+  document.getElementById('detail-title').textContent = item.name.slice(0,40);
+  document.getElementById('detail-suggested').textContent = item.name;
+  document.getElementById('detail-original').textContent = item.origName;
+  document.getElementById('detail-size').textContent = `${item.sizeMB} MB · ${item.type}`;
+  document.getElementById('detail-guardian').textContent = item.guardian || 'Unassigned';
+  document.getElementById('notes').value = m.notes||'';
+
+  // Media preview
+  const img = document.getElementById('detail-img');
+  const vid = document.getElementById('detail-vid');
+  img.style.display = vid.style.display = 'none';
+  const url = await getUrl(item);
+  if(url){
+    if(item.type==='image'){ img.src=url; img.style.display='block'; }
+    else { vid.src=url; vid.style.display='block'; }
+  }
+
+  // Status buttons
+  document.querySelectorAll('.status-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.s===(m.status||'review')));
+
+  // Tier buttons
+  document.querySelectorAll('.tier-btn').forEach(b =>
+    b.classList.toggle('active', String(b.dataset.t)===String(m.quality_tier)));
+
+  // Tags
+  renderDetailTags(m.tags||[]);
+}
+
+function renderDetailTags(tags){
+  const wrap = document.getElementById('detail-tags');
+  wrap.innerHTML = tags.map(t =>
+    `<span class="tag" style="cursor:pointer" title="Click to remove" data-tag="${t}">${t}</span>`
+  ).join('');
+  wrap.querySelectorAll('.tag').forEach(el =>
+    el.addEventListener('click', () => removeTag(el.dataset.tag)));
+}
+
+function setStatus(s){
+  if(!selected) return;
+  if(!meta[selected.id]) meta[selected.id]={status:'review',quality_tier:null,tags:[],notes:''};
+  meta[selected.id].status = s;
+  saveMeta();
+  document.querySelectorAll('.status-btn').forEach(b => b.classList.toggle('active',b.dataset.s===s));
+  // Update card badge
+  const card = document.querySelector(`.card[data-id="${selected.id}"] .status-badge`);
+  if(card){ card.className=`status-badge status-${s}`; card.textContent=s; }
+}
+function setTier(t){
+  if(!selected) return;
+  if(!meta[selected.id]) meta[selected.id]={status:'review',quality_tier:null,tags:[],notes:''};
+  meta[selected.id].quality_tier = Number(t);
+  saveMeta();
+  document.querySelectorAll('.tier-btn').forEach(b => b.classList.toggle('active',b.dataset.t===t));
+}
+function removeTag(tag){
+  if(!selected) return;
+  const m = meta[selected.id];
+  if(!m) return;
+  m.tags = m.tags.filter(t=>t!==tag);
+  saveMeta(); renderDetailTags(m.tags);
+}
+
+// ── Guardian Filters ──────────────────────────────────────────────────────────
+function buildGuardianFilters(){
+  const counts = {};
+  allMedia.forEach(item => {
+    const g = item.guardian || '__none__';
+    counts[g] = (counts[g]||0)+1;
+  });
+  const wrap = document.getElementById('guardian-filters');
+  wrap.innerHTML = '';
+  const order = ['Lyssandria','Leyla','Draconia','Maylinn','Alera','Lyria','Aiyami','Elara','Ino','Shinkami'];
+  order.filter(g=>counts[g]).forEach(g => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn';
+    btn.dataset.guardian = g;
+    btn.innerHTML = `<span><span class="guardian-dot" style="background:${GUARDIAN_COLORS[g]||'#666'}"></span>${g}</span>
+      <span class="count">${counts[g]}</span>`;
+    btn.addEventListener('click', () => setGuardianFilter(g, btn));
+    wrap.appendChild(btn);
+  });
+  if(counts['__none__']){
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn';
+    btn.dataset.guardian = '__none__';
+    btn.innerHTML = `<span>Unassigned</span><span class="count">${counts['__none__']}</span>`;
+    btn.addEventListener('click', () => setGuardianFilter('__none__', btn));
+    wrap.appendChild(btn);
+  }
+  document.getElementById('cnt-all').textContent = allMedia.length;
+}
+
+function setGuardianFilter(g, btn){
+  filterGuardian = filterGuardian===g ? '' : g;
+  document.querySelectorAll('#sidebar .filter-btn').forEach(b => b.classList.remove('active'));
+  if(filterGuardian){
+    btn.classList.add('active');
+  } else {
+    document.querySelector('[data-guardian=""]').classList.add('active');
+  }
+  renderGrid();
+}
+
+// ── Gate Map ──────────────────────────────────────────────────────────────────
+function buildGateMap(){
+  const gm = document.getElementById('gatemap');
+  gm.innerHTML = '';
+  const counts = {};
+  allMedia.forEach(item => { if(item.guardian) counts[item.guardian]=(counts[item.guardian]||0)+1; });
+  const R = Math.min(window.innerWidth*.3, window.innerHeight*.35);
+  GATES.forEach(gate => {
+    const rad = gate.angle * Math.PI / 180;
+    const x = 50 + (R/window.innerWidth*100) * Math.cos(rad);
+    const y = 50 + (R/window.innerHeight*100) * Math.sin(rad);
+    const node = document.createElement('div');
+    node.className = 'gate-node';
+    node.style.left = x+'%';
+    node.style.top  = y+'%';
+    const col = GUARDIAN_COLORS[gate.guardian] || '#666';
+    const cnt = counts[gate.guardian] || 0;
+    node.innerHTML = `<div class="gate-circle" style="border-color:${col};background:${col}22;color:${col}">
+      <div><div class="gate-count">${cnt}</div><div style="font-size:8px">${gate.hz}Hz</div></div>
+    </div>
+    <div class="gate-label">${gate.name}<br><span style="color:${col}">${gate.guardian}</span></div>`;
+    node.addEventListener('click', () => {
+      filterGuardian = gate.guardian;
+      document.getElementById('btn-grid-view').click();
+    });
+    gm.appendChild(node);
+  });
+  // Center label
+  const center = document.createElement('div');
+  center.style.cssText = 'position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center';
+  center.innerHTML = `<div style="font-size:20px;font-weight:700;color:var(--teal)">ARCANEA</div>
+    <div style="font-size:11px;color:var(--muted)">${allMedia.length} assets</div>`;
+  gm.appendChild(center);
+}
+
+// ── Export ────────────────────────────────────────────────────────────────────
+function exportManifest(){
+  const data = allMedia.map(item => ({
+    id:            item.id,
+    original_name: item.origName,
+    suggested_name:item.name,
+    type:          item.type,
+    size_mb:       item.sizeMB,
+    guardian:      item.guardian,
+    gate:          item.gate,
+    scene:         item.scene,
+    source:        item.source,
+    duplicate_of:  item.dupOf,
+    ...( meta[item.id] || {status:'review',quality_tier:null,tags:[],notes:''}),
+  }));
+  const stats = {
+    approved: data.filter(d=>d.status==='approved').length,
+    archived: data.filter(d=>d.status==='archived').length,
+    review:   data.filter(d=>d.status==='review').length,
+    hero:     data.filter(d=>d.quality_tier===1).length,
+  };
+  const blob = new Blob([JSON.stringify({generated:new Date().toISOString(),stats,media:data},null,2)],{type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `arcanea-curated-${Date.now()}.json`;
+  a.click();
+}
+
+// ── Keyboard Shortcuts ────────────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if(['INPUT','TEXTAREA'].includes(e.target.tagName)) return;
+  if(!selected) return;
+  if(e.key==='a'||e.key==='A') setStatus('approved');
+  if(e.key==='x'||e.key==='X') setStatus('archived');
+  if(e.key==='r'||e.key==='R') setStatus('review');
+  if(e.key==='1') setTier('1');
+  if(e.key==='2') setTier('2');
+  if(e.key==='3') setTier('3');
+  if(e.key==='Escape'){ selected=null; document.getElementById('detail').classList.remove('open'); }
+});
+
+// ── UI Helpers ────────────────────────────────────────────────────────────────
+function showLoading(v){
+  document.getElementById('loading').style.display = v?'flex':'none';
+  document.getElementById('empty').style.display   = v||allMedia.length?'none':'flex';
+  document.getElementById('grid-wrap').style.display = !v&&allMedia.length&&viewMode==='grid' ? 'block':'none';
+}
+function setLoadingText(t){ document.getElementById('loading-text').textContent=t; }
+function updateStats(n){
+  const m = meta;
+  const app = Object.values(m).filter(x=>x.status==='approved').length;
+  document.getElementById('stats').textContent = `${n} shown · ${allMedia.length} total · ${app} approved`;
+}
+
+// ── Wire Events ───────────────────────────────────────────────────────────────
+document.getElementById('btn-open').addEventListener('click', openFolder);
+document.getElementById('btn-open2').addEventListener('click', openFolder);
+document.getElementById('btn-export').addEventListener('click', exportManifest);
+document.getElementById('search').addEventListener('input', renderGrid);
+document.getElementById('filter-type').addEventListener('change', e=>{ filterType=e.target.value; renderGrid(); });
+document.getElementById('filter-status').addEventListener('change', e=>{ filterStatus=e.target.value; renderGrid(); });
+document.getElementById('btn-hide-dupes').addEventListener('click', function(){
+  hideDupes=!hideDupes; this.classList.toggle('active',hideDupes); renderGrid();
+});
+document.querySelectorAll('.status-btn').forEach(b => b.addEventListener('click', ()=>setStatus(b.dataset.s)));
+document.querySelectorAll('.tier-btn').forEach(b => b.addEventListener('click', ()=>setTier(b.dataset.t)));
+document.getElementById('btn-close-detail').addEventListener('click', ()=>{
+  selected=null; document.getElementById('detail').classList.remove('open');
+});
+document.getElementById('notes').addEventListener('input', e=>{
+  if(!selected) return;
+  if(!meta[selected.id]) meta[selected.id]={status:'review',quality_tier:null,tags:[],notes:''};
+  meta[selected.id].notes = e.target.value;
+  saveMeta();
+});
+document.getElementById('tag-input').addEventListener('keydown', e=>{
+  if(e.key!=='Enter' || !selected || !e.target.value.trim()) return;
+  const tag = e.target.value.trim().toLowerCase();
+  if(!meta[selected.id]) meta[selected.id]={status:'review',quality_tier:null,tags:[],notes:''};
+  if(!meta[selected.id].tags.includes(tag)) meta[selected.id].tags.push(tag);
+  saveMeta(); renderDetailTags(meta[selected.id].tags);
+  e.target.value = '';
+});
+
+document.getElementById('btn-grid-view').addEventListener('click', function(){
+  viewMode='grid';
+  this.classList.add('active');
+  document.getElementById('btn-gate-view').classList.remove('active');
+  document.getElementById('grid-wrap').style.display = allMedia.length?'block':'none';
+  document.getElementById('gatemap').classList.remove('visible');
+});
+document.getElementById('btn-gate-view').addEventListener('click', function(){
+  viewMode='gatemap';
+  this.classList.add('active');
+  document.getElementById('btn-grid-view').classList.remove('active');
+  document.getElementById('grid-wrap').style.display = 'none';
+  document.getElementById('gatemap').classList.add('visible');
+  buildGateMap();
+});
+
+document.getElementById('btn-approve-all-visible').addEventListener('click', ()=>{
+  getVisible().forEach(item=>{
+    if(!meta[item.id]) meta[item.id]={status:'review',quality_tier:null,tags:[],notes:''};
+    meta[item.id].status='approved';
+  });
+  saveMeta(); renderGrid();
+});
+document.getElementById('btn-archive-dupes').addEventListener('click', ()=>{
+  allMedia.filter(i=>i.dupOf).forEach(item=>{
+    if(!meta[item.id]) meta[item.id]={status:'review',quality_tier:null,tags:[],notes:''};
+    meta[item.id].status='archived';
+  });
+  saveMeta(); renderGrid();
+});
+</script>
+</body>
+</html>

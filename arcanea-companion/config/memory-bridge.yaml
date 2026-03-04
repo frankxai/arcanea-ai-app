@@ -1,0 +1,35 @@
+# Arcanea Companion — Starlight Memory Bridge Configuration
+# Connects OpenClaw's memory system to Arcanea's Starlight Vaults
+
+bridge:
+  enabled: true
+  mode: bidirectional  # read + write to vaults
+
+  # Starlight Vault locations
+  vaults:
+    episodic: ~/.arcanea/vaults/episodic/     # Conversations, decisions, milestones
+    semantic: ~/.arcanea/vaults/semantic/      # Knowledge, patterns, insights
+    procedural: ~/.arcanea/vaults/procedural/  # How-tos, workflows, habits
+    creative: ~/.arcanea/vaults/creative/      # Ideas, inspiration, fragments
+    relational: ~/.arcanea/vaults/relational/  # People, projects, connections
+    temporal: ~/.arcanea/vaults/temporal/       # Timelines, schedules, rhythms
+
+  # What to remember from messaging conversations
+  auto_capture:
+    decisions: true        # Major decisions made in conversation
+    insights: true         # Key insights surfaced by Guardians
+    action_items: true     # Committed next steps
+    creative_sparks: true  # Ideas worth preserving
+    emotional_state: false # Privacy-first: disabled by default
+
+  # Cross-platform sync
+  sync:
+    arcanea_web: true      # Sync with arcanea.ai user profile
+    supabase_ref: hcfhyssdzphudaqatxbk
+    sync_interval: 300     # seconds (5 min)
+
+  # Format: ArcaneMD (compatible with @arcanea/memory-system)
+  format: arcane-md
+  metadata:
+    source: companion
+    channel: auto  # auto-detect: telegram, whatsapp, discord, etc.

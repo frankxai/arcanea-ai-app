@@ -1,0 +1,61 @@
+{
+  "manifest_version": 3,
+  "name": "Arcanea Media — Grok Export & Library",
+  "version": "0.1.0",
+  "description": "Export, organize, and manage your Grok Imagine media library. Batch download images & videos, HD upgrade, video generation queue, project folders, and Arcanea pipeline integration.",
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage",
+    "downloads",
+    "scripting",
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "https://grok.com/*",
+    "https://*.grok.com/*",
+    "https://assets.grok.com/*",
+    "https://imagine-public.x.ai/*",
+    "https://assets.grokusercontent.com/*"
+  ],
+  "background": {
+    "service_worker": "dist/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://grok.com/*"],
+      "js": ["dist/content.js"],
+      "css": ["dist/content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "dist/popup.html",
+    "default_icon": {
+      "16": "assets/icons/icon-16.png",
+      "32": "assets/icons/icon-32.png",
+      "48": "assets/icons/icon-48.png",
+      "128": "assets/icons/icon-128.png"
+    }
+  },
+  "side_panel": {
+    "default_path": "dist/sidepanel.html"
+  },
+  "icons": {
+    "16": "assets/icons/icon-16.png",
+    "32": "assets/icons/icon-32.png",
+    "48": "assets/icons/icon-48.png",
+    "128": "assets/icons/icon-128.png"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+G",
+        "mac": "Command+Shift+G"
+      },
+      "description": "Open Arcanea Media panel"
+    }
+  },
+  "minimum_chrome_version": "114"
+}
