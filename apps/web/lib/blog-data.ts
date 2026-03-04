@@ -23,7 +23,7 @@ export const BLOG_POSTS: BlogPost[] = [
     date: '2026-02-15',
     readTime: '8 min read',
     featured: true,
-    accent: '#8b5cf6',
+    accent: '#00bcd4',
     tags: ['skills', 'platform', 'tutorial'],
     content: `
 ## Introduction

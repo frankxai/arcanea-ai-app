@@ -215,7 +215,7 @@ function fetchFromFilesystem(): GalleryImage[] {
     if (!slug) continue;
     const meta = GUARDIAN_META[slug];
     images.push({
-      src: `/guardians/${file}`,
+      src: `https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/${file}`,
       guardian: titleCase(slug), slug,
       label: `${titleCase(slug)} — ${meta.gate} Guardian`,
       tier: "hero", accent: meta.accent, element: meta.element, gate: meta.gate,
@@ -229,7 +229,7 @@ function fetchFromFilesystem(): GalleryImage[] {
       if (!slug) continue;
       const meta = GUARDIAN_META[slug];
       images.push({
-        src: `/guardians/gallery/${file}`,
+        src: `https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/${file}`,
         guardian: titleCase(slug), slug,
         label: labelFromFilename(file),
         tier: "gallery", accent: meta.accent, element: meta.element, gate: meta.gate,

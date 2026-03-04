@@ -163,7 +163,7 @@ export function MalacharPage() {
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
         {/* Shinkami dark cosmic entity — the abyss that claimed Malachar */}
         <img
-          src="/guardians/gallery/shinkami-gallery-3.webp"
+          src="https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/shinkami-gallery-3.webp"
           alt=""
           aria-hidden="true"
           className="absolute inset-0 w-full h-full object-cover opacity-[0.09] pointer-events-none"

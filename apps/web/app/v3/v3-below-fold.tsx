@@ -27,7 +27,7 @@ import crystalImage from "@/assets/brand/arcanea-crystal.jpg";
 // Data
 // ---------------------------------------------------------------------------
 
-const CDN = "/guardians";
+const CDN = "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians";
 
 interface Guardian {
   name: string;

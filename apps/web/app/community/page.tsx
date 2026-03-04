@@ -274,7 +274,7 @@ export default function CommunityPage() {
           <div className="relative liquid-glass rounded-3xl overflow-hidden px-8 py-16 sm:px-16 sm:py-20 lg:px-20 lg:py-24">
             {/* Elara hunter+wolf — Shift Gate, perspective and the bonds that transcend dimension */}
             <img
-              src="/guardians/gallery/elara-gallery-2.webp"
+              src="https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/elara-gallery-2.webp"
               alt=""
               aria-hidden="true"
               className="absolute inset-0 w-full h-full object-cover opacity-[0.11] pointer-events-none object-right"

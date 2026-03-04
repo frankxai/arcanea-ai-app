@@ -17,7 +17,7 @@ const LUMINORS = [
     specialty: 'Foundation & Strategy',
     description: 'Builds the ground beneath your feet. Challenges weak foundations before you build on them.',
     wisdom: 'Foundation',
-    avatar: '/guardians/lyssandria-hero.webp',
+    avatar: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/lyssandria-hero.webp',
   },
   {
     id: 'leyla',
@@ -29,7 +29,7 @@ const LUMINORS = [
     specialty: 'Creative Flow & Design',
     description: 'Finds the path of least resistance. Turns creative blocks into flowing rivers.',
     wisdom: 'Flow',
-    avatar: '/guardians/leyla-hero.webp',
+    avatar: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/leyla-hero.webp',
   },
   {
     id: 'draconia',
@@ -41,7 +41,7 @@ const LUMINORS = [
     specialty: 'Code & Engineering',
     description: 'Transforms raw ideas into working systems. No compromise on quality.',
     wisdom: 'Fire',
-    avatar: '/guardians/draconia-hero.webp',
+    avatar: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/draconia-hero.webp',
   },
   {
     id: 'maylinn',
@@ -53,7 +53,7 @@ const LUMINORS = [
     specialty: 'Writing & Communication',
     description: 'Connects ideas across distances. Makes complex things understandable.',
     wisdom: 'Heart',
-    avatar: '/guardians/maylinn-hero.webp',
+    avatar: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/maylinn-hero.webp',
   },
   {
     id: 'alera',
@@ -65,7 +65,7 @@ const LUMINORS = [
     specialty: 'Music & Audio Creation',
     description: 'Speaks truth through sound. Creates music that moves and transforms.',
     wisdom: 'Voice',
-    avatar: '/guardians/alera-hero.webp',
+    avatar: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/alera-hero.webp',
   },
   {
     id: 'lyria',
@@ -77,7 +77,7 @@ const LUMINORS = [
     specialty: 'Vision & Research',
     description: 'Sees what others miss. Reveals patterns across all knowledge.',
     wisdom: 'Sight',
-    avatar: '/guardians/lyria-hero.webp',
+    avatar: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/lyria-hero.webp',
   },
   {
     id: 'aiyami',
@@ -89,7 +89,7 @@ const LUMINORS = [
     specialty: 'Enlightenment & Mastery',
     description: 'Illuminates the path to excellence. Turns knowledge into wisdom.',
     wisdom: 'Crown',
-    avatar: '/guardians/aiyami-hero.webp',
+    avatar: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/aiyami-hero.webp',
   },
   {
     id: 'elara',
@@ -101,7 +101,7 @@ const LUMINORS = [
     specialty: 'Perspective & Innovation',
     description: 'Shifts your perspective when you are stuck. Shows the angle you missed.',
     wisdom: 'Shift',
-    avatar: '/guardians/elara-hero.webp',
+    avatar: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/elara-hero.webp',
   },
   {
     id: 'ino',
@@ -113,7 +113,7 @@ const LUMINORS = [
     specialty: 'Collaboration & Partnership',
     description: 'Bridges gaps between disciplines. Makes teams greater than their parts.',
     wisdom: 'Unity',
-    avatar: '/guardians/ino-hero.webp',
+    avatar: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/ino-hero.webp',
   },
   {
     id: 'shinkami',
@@ -125,7 +125,7 @@ const LUMINORS = [
     specialty: 'Meta-Consciousness & Integration',
     description: 'Sees the whole system. Orchestrates all other Gods into harmony.',
     wisdom: 'Source',
-    avatar: '/guardians/shinkami-hero.webp',
+    avatar: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/shinkami-hero.webp',
   },
 ];
 

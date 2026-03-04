@@ -57,7 +57,7 @@ export const GUARDIAN_THEMES: Record<GuardianId, GuardianTheme> = {
     frequency: 417,
     element: 'water',
     color: '#00bcd4',
-    colorBright: '#99ffe0',
+    colorBright: '#00e5ff',
     glow: 'rgba(0, 188, 212, 0.3)',
     borderClass: 'border-brand-accent/40 hover:border-brand-accent/70',
     glowClass: 'shadow-[0_0_20px_rgba(0,188,212,0.3)]',

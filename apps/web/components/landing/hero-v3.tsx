@@ -173,7 +173,7 @@ export function HeroV3() {
         style={{ x: springX, y: springY }}
       >
         <AmbientOrb size={500} color="rgba(0,188,212,0.12)" position="top-[15%] left-[10%]" delay={0} />
-        <AmbientOrb size={400} color="rgba(139,92,246,0.10)" position="bottom-[20%] right-[15%]" delay={3} />
+        <AmbientOrb size={400} color="rgba(13,71,161,0.10)" position="bottom-[20%] right-[15%]" delay={3} />
         <AmbientOrb size={300} color="rgba(255,215,0,0.06)" position="top-[60%] right-[30%]" delay={6} />
       </motion.div>
 

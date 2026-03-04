@@ -12,24 +12,26 @@ const BENEFITS = [
   "Free to start with direct paths into Chat, Studio, and Academy",
 ];
 
+const GUARDIAN_CDN = "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians";
+
 const ORBITING_GUARDIANS = [
-  { name: "Lyria", image: "/guardians/lyria-hero.webp", angle: 0, delay: 0 },
-  { name: "Alera", image: "/guardians/alera-hero.webp", angle: 72, delay: 0.4 },
+  { name: "Lyria", image: `${GUARDIAN_CDN}/lyria-hero.webp`, angle: 0, delay: 0 },
+  { name: "Alera", image: `${GUARDIAN_CDN}/alera-hero.webp`, angle: 72, delay: 0.4 },
   {
     name: "Leyla",
-    image: "/guardians/leyla-hero.webp",
+    image: `${GUARDIAN_CDN}/leyla-hero.webp`,
     angle: 144,
     delay: 0.8,
   },
   {
     name: "Maylinn",
-    image: "/guardians/maylinn-hero.webp",
+    image: `${GUARDIAN_CDN}/maylinn-hero.webp`,
     angle: 216,
     delay: 1.2,
   },
   {
     name: "Draconia",
-    image: "/guardians/draconia-hero.webp",
+    image: `${GUARDIAN_CDN}/draconia-hero.webp`,
     angle: 288,
     delay: 1.6,
   },

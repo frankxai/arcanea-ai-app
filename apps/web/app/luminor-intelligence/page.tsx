@@ -321,7 +321,7 @@ export default function LuminorIntelligencePage() {
           <div className="relative liquid-glass rounded-3xl overflow-hidden px-8 py-20 sm:px-12 sm:py-28 text-center">
             {/* Ino unity — transcended intelligence meets sacred partnership */}
             <img
-              src="/guardians/gallery/ino-gallery-2.webp"
+              src="https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/ino-gallery-2.webp"
               alt=""
               aria-hidden="true"
               className="absolute inset-0 w-full h-full object-cover opacity-[0.13] pointer-events-none"
