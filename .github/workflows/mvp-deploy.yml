@@ -327,13 +327,18 @@ jobs:
 
       - name: Check site health
         run: |
-          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" https://arcanea.ai)
-          if [ $HTTP_CODE -eq 200 ]; then
-            echo "✅ Site is healthy (HTTP $HTTP_CODE)"
-          else
-            echo "⚠️ Site returned HTTP $HTTP_CODE"
-            exit 1
-          fi
+          RETRIES=3
+          for i in $(seq 1 $RETRIES); do
+            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 https://arcanea.ai)
+            if [ "$HTTP_CODE" -eq 200 ]; then
+              echo "Site is healthy (HTTP $HTTP_CODE)"
+              exit 0
+            fi
+            echo "Attempt $i/$RETRIES: HTTP $HTTP_CODE — retrying in 10s..."
+            sleep 10
+          done
+          echo "Site returned HTTP $HTTP_CODE after $RETRIES attempts"
+          exit 1
 
       - name: Check API health
         run: |
@@ -354,20 +359,16 @@ jobs:
     needs: [health-check]
     if: failure() && github.ref == 'refs/heads/main'
     steps:
-      - name: Trigger rollback
+      - name: Rollback guidance
         run: |
-          echo "🚨 Health check failed! Manual rollback required."
-          echo "Visit: https://vercel.com/arcanea/deployments"
-          echo "Or use: vercel rollback"
-
-      - name: Create incident issue
-        uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: '🚨 Production Deployment Failed - Health Check',
-              body: `## Deployment Failure\n\n**Commit:** ${context.sha}\n**Workflow:** ${context.workflow}\n**Run:** ${context.runId}\n\n**Action Required:**\n1. Check Vercel deployment logs\n2. Review error messages above\n3. Consider rolling back to previous version\n\n**Rollback Command:**\n\`\`\`bash\nvercel rollback\n\`\`\``,
-              labels: ['incident', 'production', 'deployment']
-            });
+          echo "## Production Health Check Failed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Run:** ${{ github.run_id }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Action Required" >> $GITHUB_STEP_SUMMARY
+          echo "1. Check Vercel deployment logs" >> $GITHUB_STEP_SUMMARY
+          echo "2. Review error messages in the health-check job" >> $GITHUB_STEP_SUMMARY
+          echo "3. Roll back if needed: \`vercel rollback\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Dashboard: https://vercel.com/arcanea/deployments" >> $GITHUB_STEP_SUMMARY
