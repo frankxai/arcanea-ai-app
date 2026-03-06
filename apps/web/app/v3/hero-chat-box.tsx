@@ -14,16 +14,10 @@ import {
 } from "@/lib/phosphor-icons";
 
 // ---------------------------------------------------------------------------
-// Suggested prompts — world-building & creation focused
+// Suggested prompts
 // ---------------------------------------------------------------------------
 
-interface SuggestedPrompt {
-  icon: React.ComponentType<{ className?: string }>;
-  label: string;
-  prompt: string;
-}
-
-const SUGGESTED_PROMPTS: SuggestedPrompt[] = [
+const SUGGESTED_PROMPTS = [
   {
     icon: PhSparkle,
     label: "Build a world",
@@ -51,7 +45,7 @@ const SUGGESTED_PROMPTS: SuggestedPrompt[] = [
 ];
 
 // ---------------------------------------------------------------------------
-// Inline streaming response
+// State
 // ---------------------------------------------------------------------------
 
 interface StreamState {
@@ -61,7 +55,7 @@ interface StreamState {
 }
 
 // ---------------------------------------------------------------------------
-// HeroChatBox
+// Component
 // ---------------------------------------------------------------------------
 
 export function HeroChatBox() {
@@ -76,7 +70,6 @@ export function HeroChatBox() {
   });
   const abortRef = useRef<AbortController | null>(null);
 
-  // Auto-resize textarea
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
@@ -84,7 +77,6 @@ export function HeroChatBox() {
     }
   }, [message]);
 
-  // Stream a single response inline on the hero
   const handleSubmit = useCallback(
     async (text: string) => {
       const trimmed = text.trim();
@@ -101,13 +93,12 @@ export function HeroChatBox() {
           body: JSON.stringify({
             messages: [{ role: "user", content: trimmed }],
             systemPrompt:
-              "You are Arcanea, a creative world-building intelligence. Give a short, inspiring response (2-3 sentences max) that sparks imagination. Be warm and inviting.",
+              "You are Arcanea, a creative intelligence for world-builders. Give a short, inspiring response (2-3 sentences max) that sparks imagination. Be warm, specific, and visionary.",
           }),
           signal: abortRef.current.signal,
         });
 
         if (!res.ok) {
-          // Fallback — redirect to chat
           router.push(`/chat/chronica?prompt=${encodeURIComponent(trimmed)}`);
           return;
         }
@@ -131,7 +122,6 @@ export function HeroChatBox() {
         setStream({ isStreaming: false, content: full, isComplete: true });
       } catch (err: unknown) {
         if (err instanceof Error && err.name === "AbortError") return;
-        // On error, redirect to chat with the prompt
         router.push(`/chat/chronica?prompt=${encodeURIComponent(trimmed)}`);
       }
     },
@@ -151,8 +141,6 @@ export function HeroChatBox() {
   };
 
   const handleContinue = () => {
-    // Don't pass ?prompt= since the user already got an inline response.
-    // The chat page would duplicate-send it. Just navigate to start fresh.
     router.push("/chat/chronica");
   };
 
@@ -164,6 +152,7 @@ export function HeroChatBox() {
   };
 
   const showInput = !stream.isStreaming && !stream.isComplete;
+  const hasText = message.trim().length > 0;
 
   return (
     <div className="w-full max-w-2xl mx-auto">
@@ -171,34 +160,23 @@ export function HeroChatBox() {
         {showInput ? (
           <motion.div
             key="input"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.4 }}
+            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+            transition={{ duration: 0.35 }}
           >
-            {/* Chat input card */}
+            {/* Input container */}
             <div
-              className={`relative rounded-2xl overflow-hidden transition-all duration-300 ${
+              className={`relative rounded-2xl transition-all duration-300 ${
                 isFocused
-                  ? "ring-1 ring-[#00bcd4]/40 shadow-[0_0_40px_rgba(0,188,212,0.12)]"
-                  : "ring-1 ring-white/[0.08] shadow-[0_4px_24px_rgba(0,0,0,0.3)]"
+                  ? "shadow-[0_0_0_1px_rgba(0,188,212,0.25),0_8px_40px_rgba(0,0,0,0.4),0_0_60px_rgba(0,188,212,0.06)]"
+                  : "shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_4px_24px_rgba(0,0,0,0.4)]"
               }`}
             >
-              {/* Glass background */}
-              <div className="absolute inset-0 bg-white/[0.03] backdrop-blur-xl" />
+              {/* Glass fill */}
+              <div className="absolute inset-0 rounded-2xl bg-white/[0.025] backdrop-blur-2xl" />
 
-              {/* Subtle gradient border glow */}
-              <div
-                className={`absolute inset-0 rounded-2xl transition-opacity duration-300 pointer-events-none ${
-                  isFocused ? "opacity-100" : "opacity-0"
-                }`}
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgba(0,188,212,0.06) 0%, rgba(13,71,161,0.04) 50%, rgba(0,137,123,0.03) 100%)",
-                }}
-              />
-
-              <div className="relative">
+              <div className="relative flex items-end">
                 <textarea
                   ref={textareaRef}
                   value={message}
@@ -206,40 +184,38 @@ export function HeroChatBox() {
                   onKeyDown={handleKeyDown}
                   onFocus={() => setIsFocused(true)}
                   onBlur={() => setIsFocused(false)}
-                  placeholder="What world will you create today?"
+                  placeholder="Describe what you want to create..."
                   rows={1}
-                  className="w-full px-5 py-4 pr-14 bg-transparent text-white/90 placeholder-white/25 resize-none focus:outline-none font-body text-base leading-relaxed"
+                  className="flex-1 px-5 py-4 bg-transparent text-white/90 placeholder-white/20 resize-none focus:outline-none font-body text-[15px] leading-relaxed"
                   style={{ minHeight: "56px", maxHeight: "120px" }}
                 />
 
-                {/* Send button */}
-                <button
-                  onClick={() => handleSubmit(message)}
-                  disabled={!message.trim()}
-                  className="absolute right-3 bottom-3 p-2.5 rounded-xl transition-all duration-200 disabled:opacity-20 disabled:cursor-default"
-                  style={{
-                    backgroundColor: message.trim()
-                      ? "#00bcd4"
-                      : "transparent",
-                    boxShadow: message.trim()
-                      ? "0 0 20px rgba(0,188,212,0.3)"
-                      : "none",
-                  }}
-                  aria-label="Send message"
-                >
-                  <PhPaperPlane
-                    className={`w-4 h-4 ${message.trim() ? "text-white" : "text-white/20"}`}
-                  />
-                </button>
+                {/* Send */}
+                <div className="p-2.5 pr-3">
+                  <button
+                    onClick={() => handleSubmit(message)}
+                    disabled={!hasText}
+                    className={`p-2 rounded-lg transition-all duration-200 ${
+                      hasText
+                        ? "bg-[#00bcd4] shadow-[0_2px_12px_rgba(0,188,212,0.3)] hover:shadow-[0_4px_20px_rgba(0,188,212,0.4)] hover:scale-105 active:scale-95"
+                        : "bg-white/[0.04] cursor-default"
+                    }`}
+                    aria-label="Send"
+                  >
+                    <PhPaperPlane
+                      className={`w-4 h-4 transition-colors ${hasText ? "text-white" : "text-white/15"}`}
+                    />
+                  </button>
+                </div>
               </div>
             </div>
 
             {/* Suggested prompts */}
             <motion.div
-              className="mt-4 flex flex-wrap justify-center gap-2"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
+              className="mt-5 flex flex-wrap justify-center gap-2"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.4 }}
             >
               {SUGGESTED_PROMPTS.map((sp) => {
                 const Icon = sp.icon;
@@ -247,85 +223,79 @@ export function HeroChatBox() {
                   <button
                     key={sp.label}
                     onClick={() => handlePromptClick(sp.prompt)}
-                    className="group flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-medium text-white/40 hover:text-white/70 border border-white/[0.06] hover:border-white/[0.14] hover:bg-white/[0.04] transition-all duration-200"
+                    className="group flex items-center gap-2 px-4 py-2.5 rounded-full text-[13px] text-white/30 hover:text-white/60 bg-white/[0.02] hover:bg-white/[0.05] border border-white/[0.04] hover:border-white/[0.10] transition-all duration-200"
                   >
-                    <Icon className="w-3.5 h-3.5 text-[#00bcd4]/50 group-hover:text-[#00bcd4]/80 transition-colors" />
+                    <Icon className="w-3.5 h-3.5 text-white/20 group-hover:text-[#00bcd4]/70 transition-colors" />
                     {sp.label}
                   </button>
                 );
               })}
             </motion.div>
-
-            {/* Keyboard hint */}
-            <motion.p
-              className="mt-3 text-center text-[10px] text-white/15 font-mono"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-            >
-              Press Enter to send
-            </motion.p>
           </motion.div>
         ) : (
           <motion.div
             key="response"
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="space-y-4"
+            transition={{ duration: 0.35 }}
           >
-            {/* User message */}
-            <div className="flex justify-end">
-              <div className="max-w-[80%] px-4 py-3 rounded-2xl rounded-br-md bg-[#00bcd4]/15 border border-[#00bcd4]/20 text-white/80 text-sm font-body leading-relaxed">
-                {message}
-              </div>
-            </div>
+            {/* Conversation card */}
+            <div className="rounded-2xl shadow-[0_0_0_1px_rgba(255,255,255,0.05),0_8px_40px_rgba(0,0,0,0.4)] overflow-hidden">
+              <div className="bg-white/[0.02] backdrop-blur-2xl p-5 space-y-4">
+                {/* User message */}
+                <div className="flex justify-end">
+                  <div className="max-w-[85%] px-4 py-2.5 rounded-2xl rounded-br-sm bg-[#00bcd4]/10 border border-[#00bcd4]/15 text-white/75 text-[14px] font-body leading-relaxed">
+                    {message}
+                  </div>
+                </div>
 
-            {/* AI response */}
-            <div className="flex justify-start">
-              <div className="max-w-[85%] px-4 py-3 rounded-2xl rounded-bl-md bg-white/[0.04] border border-white/[0.06] text-white/70 text-sm font-body leading-relaxed">
-                {stream.content || (
-                  <span className="flex items-center gap-2 text-white/30">
-                    <PhCircleNotch className="w-4 h-4 animate-spin" />
-                    Thinking...
-                  </span>
-                )}
-                {stream.isStreaming && (
-                  <motion.span
-                    className="inline-block w-0.5 h-4 bg-[#00bcd4] ml-0.5 align-middle"
-                    animate={{ opacity: [1, 0] }}
-                    transition={{ duration: 0.8, repeat: Infinity }}
-                  />
-                )}
+                {/* AI response */}
+                <div className="flex gap-3">
+                  <div className="w-6 h-6 rounded-md bg-gradient-to-br from-[#00bcd4]/20 to-[#00897b]/20 border border-white/[0.06] flex items-center justify-center shrink-0 mt-0.5">
+                    <PhSparkle className="w-3 h-3 text-[#00bcd4]/70" />
+                  </div>
+                  <div className="text-white/60 text-[14px] font-body leading-relaxed">
+                    {stream.content || (
+                      <span className="flex items-center gap-2 text-white/25">
+                        <PhCircleNotch className="w-3.5 h-3.5 animate-spin" />
+                        <span className="text-[13px]">Thinking...</span>
+                      </span>
+                    )}
+                    {stream.isStreaming && stream.content && (
+                      <motion.span
+                        className="inline-block w-[2px] h-[14px] bg-[#00bcd4]/60 ml-0.5 align-middle rounded-full"
+                        animate={{ opacity: [1, 0.2] }}
+                        transition={{ duration: 0.6, repeat: Infinity }}
+                      />
+                    )}
+                  </div>
+                </div>
               </div>
-            </div>
 
-            {/* Action buttons */}
-            {stream.isComplete && (
-              <motion.div
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.4 }}
-                className="flex items-center justify-center gap-3 pt-2"
-              >
-                <button
-                  onClick={handleContinue}
-                  className="group flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white overflow-hidden relative transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(0,188,212,0.25)]"
+              {/* Action bar */}
+              {stream.isComplete && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.2, duration: 0.3 }}
+                  className="border-t border-white/[0.04] bg-white/[0.015] px-5 py-3 flex items-center justify-between"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#00897b] via-[#1565c0] to-[#00bcd4]" />
-                  <span className="relative z-10 flex items-center gap-2">
-                    Continue creating
-                    <PhArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                  </span>
-                </button>
-                <button
-                  onClick={handleReset}
-                  className="px-5 py-3 rounded-xl border border-white/[0.08] hover:border-white/[0.16] hover:bg-white/[0.04] text-white/50 hover:text-white/70 text-sm font-medium transition-all duration-200"
-                >
-                  New prompt
-                </button>
-              </motion.div>
-            )}
+                  <button
+                    onClick={handleReset}
+                    className="text-[13px] text-white/25 hover:text-white/50 transition-colors font-body"
+                  >
+                    Start over
+                  </button>
+                  <button
+                    onClick={handleContinue}
+                    className="group flex items-center gap-1.5 text-[13px] font-semibold text-[#00bcd4]/80 hover:text-[#00bcd4] transition-colors"
+                  >
+                    Continue in studio
+                    <PhArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                  </button>
+                </motion.div>
+              )}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

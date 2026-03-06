@@ -5,15 +5,12 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { useRef, useState, useEffect } from "react";
 import navLogo from "@/assets/brand/arcanea-mark.jpg";
-import heroImage from "@/assets/brand/arcanea-hero.jpg";
 import type { V3BelowFoldProps } from "./v3-below-fold";
 import { HeroChangingWords } from "./hero-changing-words";
-import { HeroMusicPlayer } from "./hero-music-player";
 import { HeroChatBox } from "./hero-chat-box";
 
 // ---------------------------------------------------------------------------
 // Lazy-load all below-fold sections as a single dynamic chunk.
-// The hero stays in the eager bundle for optimal LCP.
 // ---------------------------------------------------------------------------
 
 const V3BelowFold = dynamic(
@@ -52,7 +49,7 @@ export function V3Loading() {
 }
 
 // ---------------------------------------------------------------------------
-// HERO — Full-Impact Brand Introduction
+// HERO — Minimal, Chat-First, Premium
 // ---------------------------------------------------------------------------
 
 function HeroPortal() {
@@ -64,8 +61,8 @@ function HeroPortal() {
     offset: ["start start", "end start"],
   });
 
-  const contentY = useTransform(scrollYProgress, [0, 1], [0, 120]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const contentY = useTransform(scrollYProgress, [0, 1], [0, 80]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
   useEffect(() => {
     setIsLoaded(true);
@@ -76,184 +73,104 @@ function HeroPortal() {
       ref={containerRef}
       className="relative min-h-[100svh] flex items-center justify-center overflow-hidden"
     >
-      {/* Background: hero image + cosmic layering */}
-      <div className="absolute inset-0 -z-20 bg-cosmic-deep">
-        {/* Full-bleed hero image with parallax feel */}
-        <Image
-          src={heroImage}
-          alt=""
-          fill
-          className="object-cover opacity-[0.35] mix-blend-soft-light brightness-75"
-          priority
-          sizes="100vw"
-          quality={85}
+      {/* Background: pure dark with subtle aurora — no hero image */}
+      <div className="absolute inset-0 -z-20 bg-[#09090b]">
+        {/* Single soft aurora bloom — top center */}
+        <motion.div
+          className="absolute inset-0"
+          animate={{
+            background: [
+              "radial-gradient(ellipse 80% 40% at 50% 0%, rgba(0,188,212,0.07) 0%, transparent 60%)",
+              "radial-gradient(ellipse 80% 40% at 50% 0%, rgba(0,137,123,0.06) 0%, transparent 60%)",
+              "radial-gradient(ellipse 80% 40% at 50% 0%, rgba(13,71,161,0.05) 0%, transparent 60%)",
+              "radial-gradient(ellipse 80% 40% at 50% 0%, rgba(0,188,212,0.07) 0%, transparent 60%)",
+            ],
+          }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
         />
-        {/* Dark overlay for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-cosmic-deep/60 via-cosmic-deep/40 to-cosmic-deep/80" />
-        {/* Peacock aurora — top center */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-10%,rgba(0,188,212,0.15),transparent_55%)]" />
-        {/* Ultramarine nebula — bottom right */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_85%_75%,rgba(13,71,161,0.10),transparent_50%)]" />
-        {/* Deep teal warmth — bottom left */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_15%_80%,rgba(0,137,123,0.08),transparent_50%)]" />
-        {/* Deep vignette for depth */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent_20%,rgba(9,9,11,0.7)_75%)]" />
+        {/* Subtle bottom warmth */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_30%_at_50%_100%,rgba(0,188,212,0.03),transparent_60%)]" />
       </div>
 
-      {/* Dot grid */}
+      {/* Fine grid — barely visible texture */}
       <div
-        className="absolute inset-0 -z-10 opacity-[0.02]"
+        className="absolute inset-0 -z-10 opacity-[0.015]"
         style={{
           backgroundImage:
-            "radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 1px)",
-          backgroundSize: "32px 32px",
+            "linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px)",
+          backgroundSize: "80px 80px",
         }}
       />
 
-      {/* Glass noise texture overlay */}
-      <div className="absolute inset-0 -z-5 glass-noise opacity-[0.3] pointer-events-none" />
-
       {/* Content */}
       <motion.div
-        className="relative w-full max-w-5xl mx-auto px-6 py-24 md:py-32"
+        className="relative w-full max-w-3xl mx-auto px-6"
         style={{ y: contentY, opacity: contentOpacity }}
       >
-        {/* Floating Music Player */}
-        <motion.div 
-          className="absolute top-0 right-6 hidden lg:block"
-          initial={{ opacity: 0, x: 20 }}
-          animate={isLoaded ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.5 }}
-        >
-          <HeroMusicPlayer />
-        </motion.div>
-
         <div className="flex flex-col items-center text-center">
-          {/* Brand Mark with iridescent glass frame */}
+          {/* Brand mark — small, elegant, no glow rings */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={isLoaded ? { opacity: 1, scale: 1 } : {}}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="relative mb-8"
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="mb-10 md:mb-14"
           >
-            {/* Outer glow ring */}
-            <motion.div
-              className="absolute -inset-14 rounded-full pointer-events-none"
-              style={{
-                background:
-                  "radial-gradient(circle, rgba(0,188,212,0.08) 0%, rgba(13,71,161,0.06) 40%, transparent 70%)",
-              }}
-              animate={{
-                scale: [1, 1.3, 1],
-                opacity: [0.3, 0.6, 0.3],
-              }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            />
-            {/* Inner iridescent shimmer */}
-            <motion.div
-              className="absolute -inset-3 rounded-2xl pointer-events-none"
-              animate={{
-                background: [
-                  "linear-gradient(135deg, rgba(0,188,212,0.12) 0%, rgba(13,71,161,0.10) 50%, rgba(0,137,123,0.06) 100%)",
-                  "linear-gradient(135deg, rgba(0,137,123,0.08) 0%, rgba(0,188,212,0.12) 50%, rgba(13,71,161,0.10) 100%)",
-                  "linear-gradient(135deg, rgba(0,188,212,0.12) 0%, rgba(13,71,161,0.10) 50%, rgba(0,137,123,0.06) 100%)",
-                ],
-              }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            />
             <Image
               src={navLogo}
               alt="Arcanea"
-              width={96}
-              height={96}
-              className="relative z-10 rounded-2xl ring-1 ring-white/[0.15] shadow-[0_8px_40px_rgba(0,188,212,0.15),0_2px_16px_rgba(0,0,0,0.4)] w-20 h-20 md:w-24 md:h-24"
+              width={56}
+              height={56}
+              className="rounded-xl ring-1 ring-white/[0.08] shadow-[0_4px_20px_rgba(0,0,0,0.4)]"
               priority
             />
           </motion.div>
 
-          {/* Wordmark */}
-          <motion.p
-            className="text-[11px] md:text-xs font-mono tracking-[0.5em] uppercase text-white/25 mb-10 md:mb-14"
-            initial={{ opacity: 0 }}
-            animate={isLoaded ? { opacity: 1 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            Arcanea
-          </motion.p>
-
-          {/* Headline */}
+          {/* Headline — clean, large, confident */}
           <motion.h1
-            className="text-[clamp(2.75rem,7vw,6.5rem)] font-display font-bold tracking-[-0.04em] leading-[0.9] mb-6 md:mb-8"
-            initial={{ opacity: 0, y: 30 }}
+            className="text-[clamp(2.5rem,6vw,5rem)] font-display font-bold tracking-[-0.035em] leading-[1.05] mb-4 md:mb-5"
+            initial={{ opacity: 0, y: 24 }}
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.15 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
           >
-            <span className="text-white">Create your</span>
-            <br />
+            <span className="text-white">Create your </span>
             <HeroChangingWords />
-
           </motion.h1>
 
-          {/* Subtitle */}
+          {/* Subtitle — one line, restrained */}
           <motion.p
-            className="max-w-xl mx-auto text-base sm:text-lg md:text-xl text-white/50 leading-relaxed mb-10 md:mb-12 font-body"
-            initial={{ opacity: 0, y: 20 }}
+            className="max-w-lg mx-auto text-base md:text-lg text-white/40 leading-relaxed mb-12 md:mb-14 font-body"
+            initial={{ opacity: 0, y: 16 }}
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Describe your vision. Arcanea&apos;s AI specialists will help you
-            build worlds, write stories, design characters, and shape your
-            creative universe.
+            Tell Arcanea what you want to build. AI specialists will help you
+            shape it.
           </motion.p>
 
-          {/* Chat-first Hero Input */}
+          {/* Chat box — THE hero element */}
           <motion.div
             className="w-full"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.45 }}
+            transition={{ duration: 0.6, delay: 0.35 }}
           >
             <HeroChatBox />
           </motion.div>
 
-          {/* Trust strip */}
-          <motion.div
-            className="mt-14 md:mt-20 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] text-white/20 uppercase tracking-wider font-mono"
+          {/* Minimal trust line */}
+          <motion.p
+            className="mt-10 md:mt-14 text-[11px] text-white/15 font-mono tracking-wider"
             initial={{ opacity: 0 }}
             animate={isLoaded ? { opacity: 1 } : {}}
-            transition={{ duration: 0.6, delay: 0.7 }}
+            transition={{ duration: 0.5, delay: 0.7 }}
           >
-            <span>Free to start</span>
-            <span className="hidden sm:inline text-white/8">|</span>
-            <span>No credit card</span>
-            <span className="hidden sm:inline text-white/8">|</span>
-            <span>34+ texts of practical wisdom</span>
-          </motion.div>
-
-          {/* Scroll indicator */}
-          <motion.div
-            className="mt-16 md:mt-24"
-            initial={{ opacity: 0 }}
-            animate={isLoaded ? { opacity: 1 } : {}}
-            transition={{ duration: 0.6, delay: 1.2 }}
-          >
-            <motion.div
-              className="flex flex-col items-center gap-2"
-              animate={{ y: [0, 6, 0] }}
-              transition={{
-                duration: 2.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              <span className="text-[10px] text-white/15 uppercase tracking-[0.3em] font-mono">
-                Scroll
-              </span>
-              <div className="w-px h-8 bg-gradient-to-b from-white/15 to-transparent" />
-            </motion.div>
-          </motion.div>
+            Free to use &middot; No signup required
+          </motion.p>
         </div>
       </motion.div>
+
+      {/* Scroll fade — bottom edge dissolves into below-fold */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#09090b] to-transparent pointer-events-none" />
     </section>
   );
 }
