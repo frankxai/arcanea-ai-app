@@ -188,11 +188,10 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.15 }}
           >
-            <span className="text-white">Build your</span>
+            <span className="text-white">Create your</span>
             <br />
             <HeroChangingWords />
-            <br />
-            <span className="text-white">with Guardians.</span>
+
           </motion.h1>
 
           {/* Subtitle */}

@@ -44,9 +44,9 @@ const SUGGESTED_PROMPTS: SuggestedPrompt[] = [
   },
   {
     icon: PhCompass,
-    label: "Explore lore",
+    label: "Map a quest",
     prompt:
-      "Tell me about the Arcanea universe — the Guardians, the Gates, and the Elements",
+      "Help me design an adventure with meaningful choices and surprising twists",
   },
 ];
 
