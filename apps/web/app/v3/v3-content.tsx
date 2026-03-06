@@ -3,13 +3,13 @@
 import dynamic from "next/dynamic";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
 import navLogo from "@/assets/brand/arcanea-mark.jpg";
 import heroImage from "@/assets/brand/arcanea-hero.jpg";
 import type { V3BelowFoldProps } from "./v3-below-fold";
 import { HeroChangingWords } from "./hero-changing-words";
 import { HeroMusicPlayer } from "./hero-music-player";
+import { HeroChatBox } from "./hero-chat-box";
 
 // ---------------------------------------------------------------------------
 // Lazy-load all below-fold sections as a single dynamic chunk.
@@ -197,47 +197,24 @@ function HeroPortal() {
 
           {/* Subtitle */}
           <motion.p
-            className="max-w-xl mx-auto text-base sm:text-lg md:text-xl text-white/50 leading-relaxed mb-12 md:mb-16 font-body"
+            className="max-w-xl mx-auto text-base sm:text-lg md:text-xl text-white/50 leading-relaxed mb-10 md:mb-12 font-body"
             initial={{ opacity: 0, y: 20 }}
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.3 }}
           >
-            Orchestrate coding swarms, shape worlds, compose music, and write
-            books through Arcanea's living canon: Primordials, Gods, Guardians,
-            and Luminors.
+            Describe your vision. Arcanea&apos;s AI specialists will help you
+            build worlds, write stories, design characters, and shape your
+            creative universe.
           </motion.p>
 
-          {/* CTAs */}
+          {/* Chat-first Hero Input */}
           <motion.div
-            className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
+            className="w-full"
             initial={{ opacity: 0, y: 20 }}
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.45 }}
           >
-            <Link
-              href="/chat"
-              className="group relative w-full sm:w-auto px-10 py-4 rounded-xl font-semibold text-base overflow-hidden btn-glow transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(0,188,212,0.25)] active:translate-y-[1px] active:scale-[0.98]"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-[#00897b] via-[#1565c0] to-[#00bcd4]" />
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.15] to-transparent"
-                initial={{ x: "-100%" }}
-                whileHover={{ x: "100%" }}
-                transition={{ duration: 0.5 }}
-              />
-              <span className="relative z-10 text-white flex items-center justify-center gap-2 font-bold">
-                Enter Creation Studio
-                <span className="group-hover:translate-x-0.5 transition-transform">
-                  →
-                </span>
-              </span>
-            </Link>
-            <Link
-              href="/library"
-              className="w-full sm:w-auto px-8 py-3.5 rounded-xl border border-white/[0.10] hover:border-white/[0.20] hover:bg-white/[0.04] transition-all duration-300 text-white/70 hover:text-white font-medium text-base text-center backdrop-blur-sm active:translate-y-[1px] active:scale-[0.98]"
-            >
-              Explore the Library
-            </Link>
+            <HeroChatBox />
           </motion.div>
 
           {/* Trust strip */}

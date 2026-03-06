@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import {
   PhList,
   PhX,
@@ -204,7 +204,9 @@ function SessionsSidebar({
 export default function ChatPage() {
   const params = useParams();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const luminorId = params.luminorId as string;
+  const initialPrompt = searchParams.get('prompt');
 
   // Resolve auth state — never crashes if Supabase is not configured
   const [userId, setUserId] = useState<string>('');
@@ -278,6 +280,16 @@ export default function ChatPage() {
     userId,
     systemPrompt: luminorConfig?.systemPrompt,
   });
+
+  // Auto-send initial prompt from hero chat box (via ?prompt= query param)
+  const [initialPromptSent, setInitialPromptSent] = useState(false);
+  useEffect(() => {
+    if (initialPrompt && !initialPromptSent && authReady && messages.length === 0) {
+      sendMessage(initialPrompt);
+      setInitialPromptSent(true);
+      setShowQuickActions(false);
+    }
+  }, [initialPrompt, initialPromptSent, authReady, messages.length, sendMessage]);
 
   // Hide quick actions after first message
   useEffect(() => {
