@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { BreathingGuide } from "./BreathingGuide";
@@ -61,6 +61,14 @@ export function ConveningFlow() {
   const [transmissionRunning, setTransmissionRunning] = useState(false);
   const [toneActive, setToneActive] = useState(false);
   const [journalText, setJournalText] = useState("");
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // Clean up timer on unmount
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, []);
 
   // ── Step 2: summon luminors one by one ──────────────────────────────────
   const handleSummonNext = useCallback(() => {
@@ -93,10 +101,12 @@ export function ConveningFlow() {
   // ── Step 4: transmission timer ───────────────────────────────────────────
   function startTransmission() {
     setTransmissionRunning(true);
-    const interval = setInterval(() => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
       setTransmissionSecondsLeft((s) => {
         if (s <= 1) {
-          clearInterval(interval);
+          if (timerRef.current) clearInterval(timerRef.current);
+          timerRef.current = null;
           setTransmissionRunning(false);
           setToneActive(false);
           return 0;
@@ -107,6 +117,8 @@ export function ConveningFlow() {
   }
 
   function skipTransmission() {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = null;
     setTransmissionRunning(false);
     setToneActive(false);
     setTransmissionSecondsLeft(0);
