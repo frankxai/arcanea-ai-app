@@ -113,14 +113,35 @@ export function ConveningFlow() {
     setStep(5);
   }
 
-  function handleJournalSave(text: string) {
-    // Save to local storage as placeholder (replace with API call)
+  async function handleJournalSave(text: string) {
+    const imprints: Record<string, string> = {};
+    imprintData.forEach((e) => {
+      if (e.seeking.trim()) imprints[e.luminorName] = e.seeking;
+    });
+
     try {
-      const entries = JSON.parse(localStorage.getItem("arcanea_council_journal") || "[]");
-      entries.push({ date: new Date().toISOString(), text, imprints: imprintData });
-      localStorage.setItem("arcanea_council_journal", JSON.stringify(entries));
+      await fetch("/api/council/convenings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          seats_addressed: imprintData.filter((e) => e.seeking.trim()).map((e) => e.luminorName),
+          imprint_notes: imprints,
+          depth_rating: Math.min(10, imprintData.filter((e) => e.seeking.trim()).length),
+          journal_entry: text,
+          duration_minutes: Math.round((TRANSMISSION_SECONDS - transmissionSecondsLeft) / 60) + 2,
+          started_at: new Date(Date.now() - (TRANSMISSION_SECONDS * 1000)).toISOString(),
+          completed_at: new Date().toISOString(),
+        }),
+      });
     } catch {
-      // localStorage may be unavailable
+      // Graceful fallback — save locally if API fails
+      try {
+        const entries = JSON.parse(localStorage.getItem("arcanea_council_journal") || "[]");
+        entries.push({ date: new Date().toISOString(), text, imprints });
+        localStorage.setItem("arcanea_council_journal", JSON.stringify(entries));
+      } catch {
+        // localStorage may be unavailable
+      }
     }
   }
 
@@ -452,7 +473,7 @@ export function ConveningFlow() {
             <div className="w-full max-w-xs h-1 rounded-full bg-white/[0.06] overflow-hidden">
               <motion.div
                 className="h-full rounded-full"
-                style={{ background: "linear-gradient(90deg, #00bcd4, #6366f1)" }}
+                style={{ background: "linear-gradient(90deg, #00bcd4, #0d47a1)" }}
                 animate={{ width: `${transmissionPercent * 100}%` }}
                 transition={{ duration: 0.8, ease: "linear" }}
               />
