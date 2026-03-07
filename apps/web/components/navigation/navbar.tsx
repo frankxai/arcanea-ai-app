@@ -7,11 +7,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { UserNav } from "@/components/auth";
 
 const navLinks = [
-  { href: "/lore", label: "Explore Arcanea" },
-  { href: "/studio", label: "Create Your Arcanea" },
-  { href: "/chat", label: "Convene Luminors" },
-  { href: "/library", label: "Read Arcanean Books" },
-  { href: "/academy", label: "Train at the Academy" },
+  { href: "/lore", label: "Explore" },
+  { href: "/studio", label: "Create" },
+  { href: "/chat", label: "Chat" },
+  { href: "/library", label: "Library" },
+  { href: "/academy", label: "Academy" },
+  { href: "/council", label: "Council" },
 ];
 
 export function Navbar() {
@@ -40,7 +41,7 @@ export function Navbar() {
               href="/"
               className="hidden md:block text-[10px] tracking-[0.26em] uppercase text-white/40 hover:text-[#00bcd4] transition-colors"
             >
-              Kingdom of Light
+              Arcanea
             </Link>
 
             <div className="md:hidden text-[10px] tracking-[0.26em] uppercase text-white/40">
