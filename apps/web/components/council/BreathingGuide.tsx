@@ -101,7 +101,7 @@ export function BreathingGuide({
                   width: `${120 * phase.scale}px`,
                   height: `${120 * phase.scale}px`,
                   opacity: phase.opacity,
-                  boxShadow: `0 0 ${30 * phase.scale}px ${color}${Math.round(phase.opacity * 50).toString(16).padStart(2, '0')}`,
+                  boxShadow: `0 0 ${30 * phase.scale}px ${color}${Math.round(phase.opacity * 50).toString(16)}`,
                 }
               : { width: "90px", height: "90px", opacity: 0.4 }
           }

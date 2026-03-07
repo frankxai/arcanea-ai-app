@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { BreathingGuide } from "./BreathingGuide";
@@ -61,14 +61,6 @@ export function ConveningFlow() {
   const [transmissionRunning, setTransmissionRunning] = useState(false);
   const [toneActive, setToneActive] = useState(false);
   const [journalText, setJournalText] = useState("");
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  // Clean up timer on unmount
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, []);
 
   // ── Step 2: summon luminors one by one ──────────────────────────────────
   const handleSummonNext = useCallback(() => {
@@ -101,12 +93,10 @@ export function ConveningFlow() {
   // ── Step 4: transmission timer ───────────────────────────────────────────
   function startTransmission() {
     setTransmissionRunning(true);
-    if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = setInterval(() => {
+    const interval = setInterval(() => {
       setTransmissionSecondsLeft((s) => {
         if (s <= 1) {
-          if (timerRef.current) clearInterval(timerRef.current);
-          timerRef.current = null;
+          clearInterval(interval);
           setTransmissionRunning(false);
           setToneActive(false);
           return 0;
@@ -117,43 +107,20 @@ export function ConveningFlow() {
   }
 
   function skipTransmission() {
-    if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = null;
     setTransmissionRunning(false);
     setToneActive(false);
     setTransmissionSecondsLeft(0);
     setStep(5);
   }
 
-  async function handleJournalSave(text: string) {
-    const imprints: Record<string, string> = {};
-    imprintData.forEach((e) => {
-      if (e.seeking.trim()) imprints[e.luminorName] = e.seeking;
-    });
-
+  function handleJournalSave(text: string) {
+    // Save to local storage as placeholder (replace with API call)
     try {
-      await fetch("/api/council/convenings", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          seats_addressed: imprintData.filter((e) => e.seeking.trim()).map((e) => e.luminorName),
-          imprint_notes: imprints,
-          depth_rating: Math.min(10, imprintData.filter((e) => e.seeking.trim()).length),
-          journal_entry: text,
-          duration_minutes: Math.round((TRANSMISSION_SECONDS - transmissionSecondsLeft) / 60) + 2,
-          started_at: new Date(Date.now() - (TRANSMISSION_SECONDS * 1000)).toISOString(),
-          completed_at: new Date().toISOString(),
-        }),
-      });
+      const entries = JSON.parse(localStorage.getItem("arcanea_council_journal") || "[]");
+      entries.push({ date: new Date().toISOString(), text, imprints: imprintData });
+      localStorage.setItem("arcanea_council_journal", JSON.stringify(entries));
     } catch {
-      // Graceful fallback — save locally if API fails
-      try {
-        const entries = JSON.parse(localStorage.getItem("arcanea_council_journal") || "[]");
-        entries.push({ date: new Date().toISOString(), text, imprints });
-        localStorage.setItem("arcanea_council_journal", JSON.stringify(entries));
-      } catch {
-        // localStorage may be unavailable
-      }
+      // localStorage may be unavailable
     }
   }
 
@@ -485,7 +452,7 @@ export function ConveningFlow() {
             <div className="w-full max-w-xs h-1 rounded-full bg-white/[0.06] overflow-hidden">
               <motion.div
                 className="h-full rounded-full"
-                style={{ background: "linear-gradient(90deg, #00bcd4, #0d47a1)" }}
+                style={{ background: "linear-gradient(90deg, #00bcd4, #6366f1)" }}
                 animate={{ width: `${transmissionPercent * 100}%` }}
                 transition={{ duration: 0.8, ease: "linear" }}
               />

@@ -98,7 +98,7 @@ async function createCouncilWithSeats(userId: string) {
     .from('luminor_councils')
     .insert({
       user_id: userId,
-      council_depth_level: 0,
+      council_depth_level: 1,
       current_streak: 0,
       longest_streak: 0,
       total_convenings: 0,
