@@ -26,10 +26,10 @@ export function useReadingProgress(userId: string | null) {
       .from('reading_progress')
       .select('text_slug, collection_slug, completed_at, progress_percent')
       .eq('user_id', userId)
-      .then(({ data }: { data: ReadingProgress[] | null }) => {
+      .then(({ data }) => {
         if (data) {
           const map: Record<string, ReadingProgress> = {};
-          data.forEach((item: ReadingProgress) => {
+          data.forEach((item) => {
             map[item.text_slug] = item;
           });
           setProgress(map);
@@ -43,7 +43,7 @@ export function useReadingProgress(userId: string | null) {
       if (!userId) return;
       const supabase = createClient();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any -- table not yet in generated types
-      const { error }: { error: Error | null } = await (supabase as any)
+      const { error } = await (supabase as any)
         .from('reading_progress')
         .upsert(
           {
