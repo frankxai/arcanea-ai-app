@@ -21,7 +21,8 @@ export function useReadingProgress(userId: string | null) {
     }
 
     const supabase = createClient();
-    supabase
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- table not yet in generated types
+    (supabase as any)
       .from('reading_progress')
       .select('text_slug, collection_slug, completed_at, progress_percent')
       .eq('user_id', userId)
@@ -41,7 +42,8 @@ export function useReadingProgress(userId: string | null) {
     async (textSlug: string, collectionSlug: string) => {
       if (!userId) return;
       const supabase = createClient();
-      const { error } = await supabase
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- table not yet in generated types
+      const { error } = await (supabase as any)
         .from('reading_progress')
         .upsert(
           {
