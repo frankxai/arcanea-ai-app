@@ -452,7 +452,7 @@ export function ConveningFlow() {
             <div className="w-full max-w-xs h-1 rounded-full bg-white/[0.06] overflow-hidden">
               <motion.div
                 className="h-full rounded-full"
-                style={{ background: "linear-gradient(90deg, #00bcd4, #6366f1)" }}
+                style={{ background: "linear-gradient(90deg, #00bcd4, #0d47a1)" }}
                 animate={{ width: `${transmissionPercent * 100}%` }}
                 transition={{ duration: 0.8, ease: "linear" }}
               />

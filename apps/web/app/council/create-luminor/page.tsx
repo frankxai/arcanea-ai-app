@@ -65,10 +65,29 @@ export default function CreateLuminorPage() {
     e.preventDefault();
     if (!form.name.trim() || !form.domain.trim() || !form.imprint.trim()) return;
     setIsSubmitting(true);
-    // Simulate async save (replace with real API call)
-    await new Promise((r) => setTimeout(r, 900));
-    setIsSubmitting(false);
-    setSubmitted(true);
+    try {
+      const res = await fetch('/api/council/seats', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          luminor_name: form.name.trim(),
+          luminor_domain: form.domain.trim(),
+          frequency_alignment: form.frequency,
+          imprint_capability: form.imprint.trim(),
+          personality_traits: form.traits.trim() || undefined,
+          visual_description: form.visualDesc.trim() || undefined,
+        }),
+      });
+      if (!res.ok) {
+        const { error } = await res.json();
+        console.error('Failed to create seat:', error);
+      }
+      setSubmitted(true);
+    } catch (err) {
+      console.error('Failed to create seat:', err);
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   if (submitted) {
@@ -136,7 +155,7 @@ export default function CreateLuminorPage() {
           <span
             className="bg-clip-text text-transparent"
             style={{
-              backgroundImage: "linear-gradient(135deg, #00bcd4, #8b5cf6)",
+              backgroundImage: "linear-gradient(135deg, #00bcd4, #0d47a1)",
             }}
           >
             Luminor Seat
