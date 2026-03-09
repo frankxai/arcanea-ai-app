@@ -16,8 +16,8 @@
     "db:studio": "echo 'Use Supabase Studio at https://supabase.com/dashboard'"
   },
   "dependencies": {
-    "@ai-sdk/google": "^1.0.19",
-    "@ai-sdk/react": "^2.0.26",
+    "@ai-sdk/google": "^3.0.0",
+    "@ai-sdk/react": "^3.0.0",
     "@fal-ai/client": "^1.9.4",
     "@google/generative-ai": "^0.21.0",
     "@gsap/react": "^2.1.2",

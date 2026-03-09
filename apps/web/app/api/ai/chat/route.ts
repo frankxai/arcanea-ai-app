@@ -127,12 +127,10 @@ export async function POST(req: NextRequest) {
     }));
 
     // --- Stream response ---
-    // Cast model to any: @ai-sdk/google returns LanguageModelV1 but
-    // ai@6 streamText expects LanguageModelV2/V3. Runtime compat is fine.
     const result = streamText({
-      model: model as any,
+      model,
       system: systemPrompt || undefined,
-      messages: normalizedMessages as any,
+      messages: normalizedMessages as Array<{ role: 'user' | 'assistant'; content: string }>,
       temperature: temperature ?? 0.7,
       maxOutputTokens: maxTokens ?? 8192,
     });
