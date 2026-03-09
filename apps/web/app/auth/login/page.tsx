@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { MotionProvider, m } from "@/lib/motion";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -31,7 +31,7 @@ function LoadingSpinner({ text }: { text: string }) {
 
 function ErrorMessage({ message }: { message: string }) {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: -8 }}
       animate={{ opacity: 1, y: 0 }}
       className="flex items-start gap-2.5 rounded-xl border border-red-500/20 bg-red-500/5 px-4 py-3"
@@ -39,7 +39,7 @@ function ErrorMessage({ message }: { message: string }) {
     >
       <PhWarningCircle className="w-4 h-4 text-red-400 mt-0.5 shrink-0" />
       <p className="text-red-400 text-sm font-body leading-relaxed">{message}</p>
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -182,6 +182,38 @@ export default function LoginPage() {
         return;
       }
 
+      // If the caller already specified a next path (e.g. middleware redirect),
+      // honour it. Otherwise check the profile to decide where to send the user.
+      if (nextPath !== '/dashboard') {
+        router.push(nextPath);
+        router.refresh();
+        return;
+      }
+
+      try {
+        const { data: { user: signedInUser } } = await supabase.auth.getUser();
+        if (signedInUser) {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('gates_open, metadata')
+            .eq('id', signedInUser.id)
+            .single();
+
+          const onboardingComplete =
+            profile &&
+            (
+              (profile.gates_open ?? 0) >= 1 ||
+              (profile.metadata as Record<string, unknown> | null)?.onboardingComplete === true
+            );
+
+          router.push(onboardingComplete ? '/dashboard' : '/onboarding');
+          router.refresh();
+          return;
+        }
+      } catch {
+        // Profile fetch failed — fall through to default
+      }
+
       router.push(nextPath);
       router.refresh();
     } catch {
@@ -238,8 +270,9 @@ export default function LoginPage() {
   };
 
   return (
+    <MotionProvider>
     <div className="flex items-center justify-center min-h-[calc(100dvh-4rem)] px-4 py-12">
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -267,13 +300,13 @@ export default function LoginPage() {
         {/* Login card */}
         <GlowCard glass="none" className="rounded-2xl sm:rounded-3xl border border-white/[0.08] bg-white/[0.02] p-6 sm:p-8">
           {authMessage === "check_email" && (
-            <motion.p
+            <m.p
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
               className="mb-5 rounded-xl border border-atlantean-teal-aqua/20 bg-atlantean-teal-aqua/5 px-4 py-3 text-sm font-body text-text-primary"
             >
               Check your email for the confirmation link to complete sign-up.
-            </motion.p>
+            </m.p>
           )}
 
           {callbackErrorMessage && (
@@ -393,7 +426,8 @@ export default function LoginPage() {
             Create an account
           </Link>
         </p>
-      </motion.div>
+      </m.div>
     </div>
+    </MotionProvider>
   );
 }

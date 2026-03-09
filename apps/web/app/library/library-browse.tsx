@@ -16,6 +16,8 @@
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import type { Collection, Situation } from '../../lib/content/types';
+import { useAuth } from '../../lib/auth/context';
+import { getLabel } from '../../lib/vocabulary';
 
 interface LibraryBrowseProps {
   collections: Collection[];
@@ -68,6 +70,13 @@ export function LibraryBrowse({ collections }: LibraryBrowseProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSituation, setSelectedSituation] = useState<Situation | null>(null);
 
+  // Vocabulary tier: newcomers see "Library", adepts see "Library of Arcanea", luminors see "The Archives"
+  const { user } = useAuth();
+  // gates_open lives on the user's profile; default to 0 until profile data is wired
+  const gatesOpen: number = (user as { user_metadata?: { gates_open?: number } } | null)
+    ?.user_metadata?.gates_open ?? 0;
+  const libraryLabel = getLabel('library', gatesOpen);
+
   // Check if search query matches a Gate frequency
   const activeFrequency = useMemo(() => {
     const trimmed = searchQuery.trim();
@@ -114,7 +123,7 @@ export function LibraryBrowse({ collections }: LibraryBrowseProps) {
 
         <div className="relative max-w-3xl">
           <div className="mb-4 flex items-center gap-3 text-xs uppercase tracking-[0.4em] text-atlantean-teal">
-            <span>The Library of Arcanea</span>
+            <span>{libraryLabel}</span>
             <span className="hidden h-px flex-1 bg-cosmic-border sm:block" aria-hidden="true" />
           </div>
 
