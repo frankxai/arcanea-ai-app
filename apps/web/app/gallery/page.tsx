@@ -229,7 +229,7 @@ function HeroSection({
           <div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-4 leading-tight">
               Gallery of{" "}
-              <span className="bg-gradient-to-r from-[#00bcd4] via-[#78a6ff] to-[#ffd700] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#00bcd4] via-[#00bcd4] to-[#ffd700] bg-clip-text text-transparent">
                 Creation
               </span>
             </h1>
@@ -238,6 +238,13 @@ function HeroSection({
                 ? "Canonical works from across the Ten Gates. Visions channeled through the Five Elements by creators of every rank."
                 : `${totalCount} creations from the Arcanea community, channeled through the Ten Gates and Five Elements.`}
             </p>
+            <Link
+              href="/gallery/forge"
+              className="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-lg bg-cyan-500/10 text-cyan-400 text-sm font-medium border border-cyan-500/20 hover:bg-cyan-500/20 transition-colors"
+            >
+              The Forge — Vessel Gallery
+              <PhArrowRight size={14} />
+            </Link>
           </div>
 
           {/* Stats strip */}
@@ -251,7 +258,7 @@ function HeroSection({
               <span>10 Gates</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <PhStack size={16} weight="fill" className="text-[#78a6ff]" />
+              <PhStack size={16} weight="fill" className="text-[#00bcd4]" />
               <span>5 Elements</span>
             </div>
           </div>
