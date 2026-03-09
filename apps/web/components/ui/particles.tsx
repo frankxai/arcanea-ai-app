@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { LazyMotion, domAnimation, m } from "framer-motion";
 
 interface Particle {
   id: number;
@@ -32,8 +32,8 @@ export function ParticlesBackground({
   const colors: Record<string, string | string[]> = {
     crystal: "#00bcd4",
     gold: "#ffd700",
-    brand: "#8b5cf6",
-    mixed: ["#00bcd4", "#ffd700", "#8b5cf6", "#78a6ff"],
+    brand: "#0d47a1",
+    mixed: ["#00bcd4", "#ffd700", "#0d47a1", "#00897b"],
   };
 
   useEffect(() => {
@@ -147,11 +147,12 @@ export function StarField({
   count?: number;
 }) {
   return (
+    <LazyMotion features={domAnimation}>
     <div
       className={`absolute inset-0 overflow-hidden pointer-events-none ${className}`}
     >
       {Array.from({ length: count }).map((_, i) => (
-        <motion.div
+        <m.div
           key={i}
           className="absolute w-1 h-1 rounded-full bg-crystal"
           style={{
@@ -170,5 +171,6 @@ export function StarField({
         />
       ))}
     </div>
+    </LazyMotion>
   );
 }

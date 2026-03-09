@@ -70,7 +70,7 @@ const DEMO_COLLECTIONS = [
     id: "d4",
     name: "Vault Imports",
     icon: PhBookOpen,
-    color: "#78a6ff",
+    color: "#00bcd4",
     promptCount: 24,
     description: "Captured from ChatGPT, Claude, and Gemini sessions",
   },

@@ -274,7 +274,7 @@ const CHARACTERS = [
     description:
       "A young mage discovering her powers in the wake of an ancient prophecy.",
     storyCount: 12,
-    accent: "#78a6ff",
+    accent: "#00bcd4",
   },
   {
     id: "2",
@@ -317,7 +317,7 @@ const ELEMENT_ICONS: Record<string, React.ReactNode> = {
 
 const ELEMENT_COLORS: Record<string, string> = {
   Fire: "#ff6b35",
-  Water: "#78a6ff",
+  Water: "#00bcd4",
   Earth: "#4a7c59",
   Wind: "#00bcd4",
 };

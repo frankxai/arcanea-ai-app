@@ -20,7 +20,7 @@ export default function Page() {
       <div className="panel rounded-xl p-5">
         <h2 className="font-semibold mb-3">Luminor Avatar</h2>
         <div className="flex items-center gap-6">
-          <LuminorAvatar name="Lumina" color="#78a6ff" />
+          <LuminorAvatar name="Lumina" color="#00bcd4" />
           <LuminorAvatar name="Kinetix" color="#00bcd4" size="lg" />
           <LuminorAvatar name="Harmonix" color="#ff6b6b" size="xl" />
         </div>

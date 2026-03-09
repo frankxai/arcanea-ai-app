@@ -84,7 +84,7 @@ const GlowCard = React.forwardRef<HTMLDivElement, GlowCardProps>(
 
     const glowBg = glowColor
       ? `radial-gradient(circle, ${glowColor} 0%, transparent 70%)`
-      : 'radial-gradient(circle, rgba(0, 188, 212, 0.15) 0%, rgba(139, 92, 246, 0.08) 40%, transparent 70%)';
+      : 'radial-gradient(circle, rgba(0, 188, 212, 0.15) 0%, rgba(13, 71, 161, 0.08) 40%, transparent 70%)';
 
     return (
       <div

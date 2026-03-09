@@ -229,7 +229,7 @@ function HeroSection({
           <div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-4 leading-tight">
               Gallery of{" "}
-              <span className="bg-gradient-to-r from-[#00bcd4] via-[#78a6ff] to-[#ffd700] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#00bcd4] via-[#00bcd4] to-[#ffd700] bg-clip-text text-transparent">
                 Creation
               </span>
             </h1>
@@ -251,7 +251,7 @@ function HeroSection({
               <span>10 Gates</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <PhStack size={16} weight="fill" className="text-[#78a6ff]" />
+              <PhStack size={16} weight="fill" className="text-[#00bcd4]" />
               <span>5 Elements</span>
             </div>
           </div>

@@ -120,7 +120,7 @@ export function StudioTab() {
                       }}
                       onMouseEnter={(e) => {
                         const colorMap: { [key: string]: string } = {
-                          'text-element-water': '#78a6ff',
+                          'text-element-water': '#00bcd4',
                           'text-element-earth': '#8b7355',
                           'text-brand-primary': '#9966ff',
                           'text-element-fire': '#ff6b35',

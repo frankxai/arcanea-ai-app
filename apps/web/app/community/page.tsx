@@ -190,7 +190,7 @@ const SPOTLIGHTS = [
     type: "Visual Series",
     description:
       "An ongoing visual series mapping the forms and territories of the Ten Godbeasts, rendered through AI image generation guided by the Bestiary.",
-    accent: "#78a6ff",
+    accent: "#00bcd4",
     gateColor: "text-water",
   },
   {
@@ -236,7 +236,7 @@ const CONTRIBUTIONS = [
       "The platform is open source. Pick an issue, build something real, and ship features that serve creators everywhere.",
     icon: PhCode,
     color: "water",
-    hex: "#78a6ff",
+    hex: "#00bcd4",
   },
   {
     title: "Write Narrative Content",
