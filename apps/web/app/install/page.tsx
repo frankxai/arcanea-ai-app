@@ -60,9 +60,9 @@ const QUICK_START = [
   },
   {
     step: "4",
-    title: "Create Something Amazing",
-    description: "Work with AI that truly understands your craft",
-    code: "Help me build a cathedral-level system",
+    title: "Start Creating",
+    description: "Work with a creative partner that has depth",
+    code: "Help me design a world with unique magic systems",
   },
 ];
 

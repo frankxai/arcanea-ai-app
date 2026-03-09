@@ -88,7 +88,7 @@ export default function Step5YourUniverse({
     const cx = canvas.width / 2
     const cy = canvas.height * 0.55
     const colors = [
-      '#ffd700', '#ff9500', '#8b5cf6', '#a78bfa',
+      '#ffd700', '#ff9500', '#0d47a1', '#a78bfa',
       '#00bcd4', '#22d3ee', '#f472b6', '#ffffff',
     ]
 
@@ -167,8 +167,8 @@ export default function Step5YourUniverse({
     }, 1400)
   }
 
-  const guardianColor = guardian?.color || '#8b5cf6'
-  const guardianGlow = guardian?.glowColor || 'rgba(139,92,246,0.3)'
+  const guardianColor = guardian?.color || '#0d47a1'
+  const guardianGlow = guardian?.glowColor || 'rgba(13,71,161,0.3)'
 
   // Gate ring math — 10 gates around a circle
   const RING_R = 88
@@ -196,7 +196,7 @@ export default function Step5YourUniverse({
         className="text-center mb-6 transition-all duration-700"
         style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(18px)' }}
       >
-        <div className="text-xs tracking-[0.3em] uppercase text-[#8b5cf6] font-semibold mb-3 font-sans">
+        <div className="text-xs tracking-[0.3em] uppercase text-[#0d47a1] font-semibold mb-3 font-sans">
           Step 5 of 5
         </div>
         <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-2">
@@ -315,9 +315,9 @@ export default function Step5YourUniverse({
                       key={id}
                       className="px-2 py-0.5 rounded-full text-[11px] font-semibold font-sans"
                       style={{
-                        background: (CREATOR_COLORS[id] || '#8b5cf6') + '18',
-                        border: `1px solid ${(CREATOR_COLORS[id] || '#8b5cf6')}35`,
-                        color: CREATOR_COLORS[id] || '#8b5cf6',
+                        background: (CREATOR_COLORS[id] || '#0d47a1') + '18',
+                        border: `1px solid ${(CREATOR_COLORS[id] || '#0d47a1')}35`,
+                        color: CREATOR_COLORS[id] || '#0d47a1',
                       }}
                     >
                       {CREATOR_LABELS[id] || id}
@@ -422,10 +422,10 @@ export default function Step5YourUniverse({
           style={{
             background: entered
               ? 'linear-gradient(135deg, #ffd700, #ff9500)'
-              : 'linear-gradient(135deg, #8b5cf6, #6d28d9)',
+              : 'linear-gradient(135deg, #0d47a1, #6d28d9)',
             boxShadow: burstActive
-              ? '0 0 60px rgba(255,215,0,0.6), 0 0 120px rgba(139,92,246,0.3)'
-              : '0 0 28px rgba(139,92,246,0.45)',
+              ? '0 0 60px rgba(255,215,0,0.6), 0 0 120px rgba(13,71,161,0.3)'
+              : '0 0 28px rgba(13,71,161,0.45)',
             transform: burstActive ? 'scale(0.97)' : 'scale(1)',
           }}
         >

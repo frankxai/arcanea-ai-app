@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { LazyMotion, domMax, m, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { PhArrowLeft, PhArrowRight, PhSparkle, PhCheck, PhFlame, PhDrop, PhWind, PhMountains, PhStar } from '@/lib/phosphor-icons';
 
@@ -198,8 +198,9 @@ export default function AssessmentPage() {
 
   if (isComplete) {
     return (
+      <LazyMotion features={domMax}>
       <div className="min-h-screen py-12 px-6">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           className="max-w-2xl mx-auto"
@@ -218,7 +219,7 @@ export default function AssessmentPage() {
             {/* Header */}
             <div className="relative p-8 text-center border-b border-white/[0.06]">
               <div className="absolute inset-0 bg-gradient-to-b from-gold-bright/10 to-transparent" />
-              <motion.div
+              <m.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.2, type: 'spring' }}
@@ -226,7 +227,7 @@ export default function AssessmentPage() {
                 style={{ backgroundColor: `${rankColor}20`, boxShadow: `0 0 40px ${rankColor}40` }}
               >
                 <PhSparkle className="w-12 h-12" style={{ color: rankColor }} />
-              </motion.div>
+              </m.div>
               <h1 className="text-3xl font-display font-bold mb-2">Assessment Complete</h1>
               <p className="text-text-secondary">Your creative path has been revealed</p>
             </div>
@@ -296,7 +297,7 @@ export default function AssessmentPage() {
                       <div key={element} className="flex items-center gap-3">
                         <span className="w-16 text-sm text-text-secondary capitalize">{element}</span>
                         <div className="flex-1 h-2 bg-white/[0.06] rounded-full overflow-hidden">
-                          <motion.div
+                          <m.div
                             initial={{ width: 0 }}
                             animate={{ width: `${percentage}%` }}
                             transition={{ delay: 0.3, duration: 0.5 }}
@@ -327,12 +328,14 @@ export default function AssessmentPage() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </m.div>
       </div>
+      </LazyMotion>
     );
   }
 
   return (
+    <LazyMotion features={domMax}>
     <div className="min-h-screen py-12 px-6">
       <div className="max-w-2xl mx-auto">
         {/* Back link */}
@@ -351,7 +354,7 @@ export default function AssessmentPage() {
             <span className="text-text-muted">{currentQuestion + 1} of {ASSESSMENT_QUESTIONS.length}</span>
           </div>
           <div className="h-2 bg-white/[0.06] rounded-full overflow-hidden">
-            <motion.div
+            <m.div
               className="h-full bg-gradient-to-r from-atlantean-teal-aqua to-gold-bright rounded-full"
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}
@@ -361,7 +364,7 @@ export default function AssessmentPage() {
 
         {/* Question card */}
         <AnimatePresence mode="wait">
-          <motion.div
+          <m.div
             key={currentQuestion}
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -418,9 +421,10 @@ export default function AssessmentPage() {
                 <PhArrowRight className="w-4 h-4" />
               </button>
             </div>
-          </motion.div>
+          </m.div>
         </AnimatePresence>
       </div>
     </div>
+    </LazyMotion>
   );
 }

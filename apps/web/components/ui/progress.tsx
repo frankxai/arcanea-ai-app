@@ -53,7 +53,7 @@ const progressFillVariants = cva(
         ],
         brand: [
           'bg-gradient-to-r from-[#7c3aed] via-brand-primary to-[#a78bfa]',
-          'shadow-[0_0_8px_rgba(139,92,246,0.5)]',
+          'shadow-[0_0_8px_rgba(13,71,161,0.5)]',
         ],
       },
     },

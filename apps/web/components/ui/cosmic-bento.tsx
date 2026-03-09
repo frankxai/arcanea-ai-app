@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { motion, Variants } from "framer-motion";
+import { m, Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { staggerContainer } from "@/lib/animations";
 
@@ -82,7 +82,7 @@ const CosmicBento = React.forwardRef<HTMLDivElement, CosmicBentoProps>(
 
     if (animated) {
       return (
-        <motion.div
+        <m.div
           ref={ref}
           className={gridClasses}
           variants={staggerContainer}
@@ -90,7 +90,7 @@ const CosmicBento = React.forwardRef<HTMLDivElement, CosmicBentoProps>(
           animate="visible"
         >
           {items.map((item, index) => (
-            <motion.div
+            <m.div
               key={item.id}
               variants={bentoItemVariants}
               className={cn(
@@ -106,9 +106,9 @@ const CosmicBento = React.forwardRef<HTMLDivElement, CosmicBentoProps>(
               style={{ animationDelay: `${index * 50}ms` }}
             >
               {item.content}
-            </motion.div>
+            </m.div>
           ))}
-        </motion.div>
+        </m.div>
       );
     }
 

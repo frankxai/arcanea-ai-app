@@ -44,7 +44,7 @@ export default function OnboardingWelcome({ onNext }: OnboardingWelcomeProps) {
         className={`relative mb-6 transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
         style={{ transitionDelay: '0.1s' }}
       >
-        <div className="w-20 h-20 mx-auto rounded-2xl glass flex items-center justify-center shadow-[0_0_30px_rgba(139,92,246,0.3)]">
+        <div className="w-20 h-20 mx-auto rounded-2xl glass flex items-center justify-center shadow-[0_0_30px_rgba(13,71,161,0.3)]">
           <ArcaneaLogo />
         </div>
       </div>
@@ -101,11 +101,11 @@ export default function OnboardingWelcome({ onNext }: OnboardingWelcomeProps) {
 function ArcaneaLogo() {
   return (
     <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-      <polygon points="20,4 36,32 4,32" fill="none" stroke="#8b5cf6" strokeWidth="1.5" />
+      <polygon points="20,4 36,32 4,32" fill="none" stroke="#0d47a1" strokeWidth="1.5" />
       <polygon points="20,10 30,28 10,28" fill="none" stroke="#00bcd4" strokeWidth="0.8" opacity="0.6" />
       <circle cx="20" cy="20" r="4" fill="#ffd700" opacity="0.9" />
       <circle cx="20" cy="4" r="2" fill="#ffd700" />
-      <circle cx="36" cy="32" r="2" fill="#8b5cf6" />
+      <circle cx="36" cy="32" r="2" fill="#0d47a1" />
       <circle cx="4" cy="32" r="2" fill="#00bcd4" />
     </svg>
   );

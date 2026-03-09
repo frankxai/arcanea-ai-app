@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence, LazyMotion, domMax } from 'framer-motion';
 import { PromptInput } from '@/components/imagine/PromptInput';
 import { ImageCard } from '@/components/imagine/ImageCard';
 import { getFavorites, removeFavorite, getFavoriteCount, type FavoriteImage } from '@/lib/imagine-favorites';
@@ -239,32 +239,33 @@ export default function ImaginePage() {
   const hasResults = rows.length > 0;
 
   return (
+    <LazyMotion features={domMax}>
     <div className="min-h-screen bg-cosmic-deep">
       {/* Hero — only visible when no results */}
       <AnimatePresence>
         {!hasResults && (
-          <motion.div
+          <m.div
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, y: -40 }}
             className="pt-20 pb-6 px-6 text-center"
           >
-            <motion.h1
+            <m.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               className="text-5xl md:text-7xl font-display font-bold bg-gradient-to-r from-violet-400 via-fuchsia-300 to-violet-400 bg-clip-text text-transparent"
             >
               Imagine
-            </motion.h1>
-            <motion.p
+            </m.h1>
+            <m.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
               className="mt-3 text-lg text-text-secondary font-body"
             >
               Describe your vision. Watch it materialize.
-            </motion.p>
-          </motion.div>
+            </m.p>
+          </m.div>
         )}
       </AnimatePresence>
 
@@ -342,7 +343,7 @@ export default function ImaginePage() {
       {/* Error display */}
       <AnimatePresence>
         {error && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
@@ -357,7 +358,7 @@ export default function ImaginePage() {
                 </svg>
               </button>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
 
@@ -459,7 +460,7 @@ export default function ImaginePage() {
         {showFavorites && (
           <>
             {/* Backdrop */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -468,7 +469,7 @@ export default function ImaginePage() {
             />
 
             {/* Drawer */}
-            <motion.div
+            <m.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
@@ -516,7 +517,7 @@ export default function ImaginePage() {
                 ) : (
                   <div className="grid grid-cols-2 gap-3">
                     {favorites.map((fav) => (
-                      <motion.div
+                      <m.div
                         key={fav.id}
                         layout
                         initial={{ opacity: 0, scale: 0.9 }}
@@ -566,15 +567,16 @@ export default function ImaginePage() {
                         <div className="absolute top-2 right-2 px-1.5 py-0.5 rounded text-[9px] text-white/50 bg-black/40 backdrop-blur-sm">
                           {new Date(fav.savedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
                         </div>
-                      </motion.div>
+                      </m.div>
                     ))}
                   </div>
                 )}
               </div>
-            </motion.div>
+            </m.div>
           </>
         )}
       </AnimatePresence>
     </div>
+    </LazyMotion>
   );
 }

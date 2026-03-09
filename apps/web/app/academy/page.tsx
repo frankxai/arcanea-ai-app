@@ -14,7 +14,7 @@ import {
 
 const GATES = [
   { n: 1, name: 'Foundation', hz: '174 Hz', god: 'Lyssandria', beast: 'Kaelith', domain: 'Earth & Survival', color: '#00bcd4', icon: Leaf },
-  { n: 2, name: 'Flow', hz: '285 Hz', god: 'Leyla', beast: 'Veloura', domain: 'Creativity & Emotion', color: '#78a6ff', icon: Drop },
+  { n: 2, name: 'Flow', hz: '285 Hz', god: 'Leyla', beast: 'Veloura', domain: 'Creativity & Emotion', color: '#00bcd4', icon: Drop },
   { n: 3, name: 'Fire', hz: '396 Hz', god: 'Draconia', beast: 'Draconis', domain: 'Power & Will', color: '#ff6b35', icon: Flame },
   { n: 4, name: 'Heart', hz: '417 Hz', god: 'Maylinn', beast: 'Laeylinn', domain: 'Love & Healing', color: '#f472b6', icon: Heart },
   { n: 5, name: 'Voice', hz: '528 Hz', god: 'Alera', beast: 'Otome', domain: 'Truth & Expression', color: '#06b6d4', icon: Compass },
@@ -211,7 +211,7 @@ export default function AcademyPage() {
         <div className="mx-auto max-w-6xl">
           <div className="mb-12 text-center">
             <h2 className="font-display text-3xl font-bold md:text-4xl">
-              <span className="bg-gradient-to-r from-[#00bcd4] to-[#78a6ff] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#00bcd4] to-[#0d47a1] bg-clip-text text-transparent">
                 The Seven Houses
               </span>
             </h2>
@@ -343,13 +343,13 @@ export default function AcademyPage() {
 
           <h2 className="font-display text-4xl font-bold md:text-5xl">
             <span className="bg-gradient-to-r from-[#ffd700] via-[#00bcd4] to-[#0d47a1] bg-clip-text text-transparent">
-              Your Journey Awaits
+              Start Here
             </span>
           </h2>
 
           <p className="mx-auto mt-5 max-w-lg font-body text-lg leading-relaxed text-white/50">
-            The Academy gates stand open. Step through and discover
-            the creator you were always meant to become.
+            The Academy is open. Begin with a single question
+            and build from there.
           </p>
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">

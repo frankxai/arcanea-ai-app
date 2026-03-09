@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { LazyMotion, domMax, m, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { PhCheck, PhSparkle, PhArrowRight } from '@/lib/phosphor-icons';
 import Link from "next/link";
@@ -67,7 +67,7 @@ function PricingCard({
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -90,14 +90,14 @@ function PricingCard({
       >
         {/* Popular badge */}
         {plan.popular && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-crystal to-brand-primary text-cosmic-deep font-bold text-sm"
           >
             <PhSparkle className="w-4 h-4 inline mr-1" />
             Most Popular
-          </motion.div>
+          </m.div>
         )}
 
         {/* Header */}
@@ -119,7 +119,7 @@ function PricingCard({
         {/* Features */}
         <ul className="space-y-4 mb-8">
           {plan.features.map((feature, i) => (
-            <motion.li
+            <m.li
               key={feature}
               initial={{ opacity: 0, x: -10 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -137,7 +137,7 @@ function PricingCard({
                 />
               </div>
               <span className="text-sm text-text-secondary">{feature}</span>
-            </motion.li>
+            </m.li>
           ))}
         </ul>
 
@@ -154,7 +154,7 @@ function PricingCard({
           <PhArrowRight className="inline ml-2 w-4 h-4" />
         </Link>
       </div>
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -163,13 +163,14 @@ export function PricingPremium() {
   const isInView = useInView(containerRef, { once: true });
 
   return (
+    <LazyMotion features={domMax}>
     <section className="relative py-32 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-deep" />
 
         {/* Animated gradient orbs */}
-        <motion.div
+        <m.div
           className="absolute w-[600px] h-[600px] rounded-full blur-[120px]"
           style={{
             background:
@@ -183,11 +184,11 @@ export function PricingPremium() {
           }}
           transition={{ duration: 20, repeat: Infinity }}
         />
-        <motion.div
+        <m.div
           className="absolute w-[500px] h-[500px] rounded-full blur-[120px]"
           style={{
             background:
-              "radial-gradient(circle, rgba(139,92,246,0.1) 0%, transparent 70%)",
+              "radial-gradient(circle, rgba(13,71,161,0.1) 0%, transparent 70%)",
             right: "10%",
             bottom: "20%",
           }}
@@ -201,21 +202,21 @@ export function PricingPremium() {
 
       <div ref={containerRef} className="max-w-7xl mx-auto px-6">
         {/* Header */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="text-center mb-20"
         >
-          <motion.span
+          <m.span
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             className="inline-block px-4 py-2 rounded-full liquid-glass border border-brand-primary/20 text-brand-primary font-medium text-sm mb-6"
           >
             Simple Pricing
-          </motion.span>
+          </m.span>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
             Start Free, Create
@@ -227,7 +228,7 @@ export function PricingPremium() {
             Choose the plan that fits your creative journey. Upgrade anytime as
             your needs grow.
           </p>
-        </motion.div>
+        </m.div>
 
         {/* Pricing Cards */}
         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -237,7 +238,7 @@ export function PricingPremium() {
         </div>
 
         {/* Bottom note */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -253,8 +254,9 @@ export function PricingPremium() {
               Contact us
             </a>
           </p>
-        </motion.div>
+        </m.div>
       </div>
     </section>
+    </LazyMotion>
   );
 }

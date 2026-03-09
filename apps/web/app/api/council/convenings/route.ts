@@ -20,7 +20,11 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { createClient as _createClient } from '@/lib/supabase/server';
+
+// Council tables not yet in generated Supabase types — cast to bypass strict checking
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const createClient = async () => (await _createClient()) as any;
 
 export const runtime = 'nodejs';
 
@@ -105,7 +109,7 @@ function computeStreakUpdate(
 
 interface LogConveningBody {
   seats_addressed: string[];
-  imprint_notes: string;
+  imprint_notes: Record<string, string>;
   depth_rating: number;
   journal_entry?: string;
   duration_minutes?: number;
@@ -129,11 +133,8 @@ function validateLogConveningBody(
     return { valid: false, error: 'seats_addressed must be an array of strings' };
   }
 
-  if (!b.imprint_notes || typeof b.imprint_notes !== 'string' || !b.imprint_notes.trim()) {
-    return { valid: false, error: 'imprint_notes is required and must be a non-empty string' };
-  }
-  if (b.imprint_notes.length > 5000) {
-    return { valid: false, error: 'imprint_notes must be 5000 characters or fewer' };
+  if (!b.imprint_notes || typeof b.imprint_notes !== 'object' || Array.isArray(b.imprint_notes)) {
+    return { valid: false, error: 'imprint_notes must be a JSON object (e.g. { "Lumira": "received clarity" })' };
   }
 
   const depth = Number(b.depth_rating);
@@ -164,7 +165,7 @@ function validateLogConveningBody(
     valid: true,
     data: {
       seats_addressed: b.seats_addressed as string[],
-      imprint_notes: b.imprint_notes.trim(),
+      imprint_notes: b.imprint_notes as Record<string, string>,
       depth_rating: Math.round(depth),
       journal_entry,
       duration_minutes,

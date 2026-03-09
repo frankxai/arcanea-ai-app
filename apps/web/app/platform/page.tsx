@@ -408,8 +408,8 @@ export default function PlatformPage() {
               <p className="text-text-secondary font-body text-lg leading-relaxed mb-8 max-w-2xl">
                 Arcanea is a creative intelligence platform combining AI
                 companions, powerful creation tools, and a living mythology.
-                Build with Guardians, unlock your creative potential, and join a
-                community of creators.
+                Build with AI companions, grow as a creator, and join a
+                community of builders.
               </p>
 
               <div className="flex flex-wrap gap-4">

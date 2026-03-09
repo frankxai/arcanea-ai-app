@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { motion, type HTMLMotionProps } from 'framer-motion';
+import { m, type HTMLMotionProps } from 'framer-motion';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
@@ -35,7 +35,7 @@ const cardVariants = cva(
           // Shimmer layer handled by after pseudo
           'relative',
           'after:absolute after:inset-0 after:pointer-events-none',
-          'after:bg-gradient-to-br after:from-[rgba(0,188,212,0.04)] after:via-transparent after:to-[rgba(139,92,246,0.04)]',
+          'after:bg-gradient-to-br after:from-[rgba(0,188,212,0.04)] after:via-transparent after:to-[rgba(13,71,161,0.04)]',
           'after:animate-iridescent-shift after:opacity-60',
         ],
         bordered: [
@@ -88,7 +88,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
 
     if (animated) {
       return (
-        <motion.div
+        <m.div
           ref={ref}
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
@@ -102,7 +102,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
           {...props}
         >
           {children}
-        </motion.div>
+        </m.div>
       );
     }
 

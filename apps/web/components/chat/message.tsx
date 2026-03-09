@@ -58,7 +58,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
   timestamp,
   emotionalTone,
   luminorName,
-  luminorColor = '#8b5cf6',
+  luminorColor = '#0d47a1',
   luminorAvatar,
   isStreaming = false,
   media,

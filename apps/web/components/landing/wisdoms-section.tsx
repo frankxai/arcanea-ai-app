@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
+import { LazyMotion, domMax, m, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import Link from 'next/link';
 
@@ -44,7 +44,7 @@ const WISDOMS = [
   {
     name: 'Orakis',
     essence: 'Vision',
-    color: '#8b5cf6',
+    color: '#0d47a1',
     icon: '🔮',
     question: 'How does this look in a year?',
     description: 'The wisdom of foresight and strategy. Orakis sees the long game, plans the journey.',
@@ -76,12 +76,13 @@ export function WisdomsSection() {
   const [activeWisdom, setActiveWisdom] = useState<number | null>(null);
 
   return (
+    <LazyMotion features={domMax}>
     <section ref={ref} className="py-24 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cosmic-surface/50 to-transparent" />
         {activeWisdom !== null && (
-          <motion.div
+          <m.div
             className="absolute inset-0"
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.1 }}
@@ -95,7 +96,7 @@ export function WisdomsSection() {
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-16">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full liquid-glass border border-creation-prism-purple/20 mb-6"
@@ -103,18 +104,18 @@ export function WisdomsSection() {
             <span className="text-[11px] text-creation-prism-purple/90 font-mono tracking-[0.25em] uppercase">
               The Creative Framework
             </span>
-          </motion.div>
+          </m.div>
 
-          <motion.h2
+          <m.h2
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.1 }}
             className="text-4xl md:text-5xl font-display font-bold mb-6"
           >
             The Seven Wisdoms
-          </motion.h2>
+          </m.h2>
 
-          <motion.p
+          <m.p
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.2 }}
@@ -122,7 +123,7 @@ export function WisdomsSection() {
           >
             Practical lenses for creative work. Each wisdom represents a different
             way of seeing and solving problems.
-          </motion.p>
+          </m.p>
         </div>
 
         {/* Wisdoms circular layout for desktop */}
@@ -132,7 +133,7 @@ export function WisdomsSection() {
             <div className="absolute inset-[30%] rounded-full liquid-glass-elevated border border-white/[0.08] flex items-center justify-center">
               <div className="text-center p-8">
                 {activeWisdom !== null ? (
-                  <motion.div
+                  <m.div
                     key={activeWisdom}
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -151,7 +152,7 @@ export function WisdomsSection() {
                         "{WISDOMS[activeWisdom].question}"
                       </p>
                     </div>
-                  </motion.div>
+                  </m.div>
                 ) : (
                   <div className="space-y-4">
                     <div className="text-4xl">🔮</div>
@@ -172,7 +173,7 @@ export function WisdomsSection() {
               const radius = 42;
 
               return (
-                <motion.button
+                <m.button
                   key={wisdom.name}
                   className="absolute w-20 h-20 -ml-10 -mt-10 rounded-2xl flex flex-col items-center justify-center gap-1 transition-all duration-300"
                   style={{
@@ -195,7 +196,7 @@ export function WisdomsSection() {
                   <span className="text-xs font-medium" style={{ color: wisdom.color }}>
                     {wisdom.essence}
                   </span>
-                </motion.button>
+                </m.button>
               );
             })}
 
@@ -228,7 +229,7 @@ export function WisdomsSection() {
         {/* Mobile/tablet grid */}
         <div className="lg:hidden grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
           {WISDOMS.map((wisdom, index) => (
-            <motion.div
+            <m.div
               key={wisdom.name}
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -248,12 +249,12 @@ export function WisdomsSection() {
                 {wisdom.name}
               </div>
               <div className="text-xs text-text-muted">{wisdom.essence}</div>
-            </motion.div>
+            </m.div>
           ))}
         </div>
 
         {/* CTA */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.5 }}
@@ -267,7 +268,7 @@ export function WisdomsSection() {
             className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl border border-atlantean-teal-aqua/50 text-atlantean-teal-aqua hover:bg-atlantean-teal-aqua/10 transition-all duration-300 group"
           >
             <span className="font-semibold">What brings you here?</span>
-            <motion.svg
+            <m.svg
               className="w-5 h-5"
               fill="none"
               stroke="currentColor"
@@ -276,10 +277,11 @@ export function WisdomsSection() {
               transition={{ duration: 1.5, repeat: Infinity }}
             >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </motion.svg>
+            </m.svg>
           </Link>
-        </motion.div>
+        </m.div>
       </div>
     </section>
+    </LazyMotion>
   );
 }

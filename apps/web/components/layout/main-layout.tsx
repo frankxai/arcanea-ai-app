@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { motion } from 'framer-motion';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { CosmicGradient } from '@/components/ui/cosmic-gradient';
 import { type Academy } from '@/lib/theme-utils';
@@ -22,58 +22,60 @@ export function MainLayout({
   showGrid = true,
 }: MainLayoutProps) {
   return (
-    <div className="relative min-h-screen bg-cosmic-deep text-text-primary overflow-x-hidden">
-      {/* Cosmic Background Effects */}
-      {showGradient && (
-        <CosmicGradient variant={academy} animated opacity={0.12} />
-      )}
+    <LazyMotion features={domAnimation}>
+      <div className="relative min-h-screen bg-cosmic-deep text-text-primary overflow-x-hidden">
+        {/* Cosmic Background Effects */}
+        {showGradient && (
+          <CosmicGradient variant={academy} animated opacity={0.12} />
+        )}
 
-      {/* Cosmic Grid Pattern */}
-      {showGrid && (
-        <div
-          className="absolute inset-0 -z-10 opacity-30"
-          style={{
-            backgroundImage:
-              'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.06) 1px, transparent 0)',
-            backgroundSize: '40px 40px',
-          }}
-        />
-      )}
-
-      {/* Animated Particles (Optional - can be added with more components) */}
-      <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 rounded-full bg-gold-bright/20"
+        {/* Cosmic Grid Pattern */}
+        {showGrid && (
+          <div
+            className="absolute inset-0 -z-10 opacity-30"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -100, 0],
-              opacity: [0, 0.6, 0],
-            }}
-            transition={{
-              duration: 3 + Math.random() * 2,
-              repeat: Infinity,
-              delay: Math.random() * 3,
-              ease: 'easeInOut',
+              backgroundImage:
+                'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.06) 1px, transparent 0)',
+              backgroundSize: '40px 40px',
             }}
           />
-        ))}
-      </div>
+        )}
 
-      {/* Main Content */}
-      <motion.main
-        className={cn('relative z-10', className)}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        {children}
-      </motion.main>
-    </div>
+        {/* Animated Particles (Optional - can be added with more components) */}
+        <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+          {[...Array(20)].map((_, i) => (
+            <m.div
+              key={i}
+              className="absolute w-1 h-1 rounded-full bg-gold-bright/20"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, -100, 0],
+                opacity: [0, 0.6, 0],
+              }}
+              transition={{
+                duration: 3 + Math.random() * 2,
+                repeat: Infinity,
+                delay: Math.random() * 3,
+                ease: 'easeInOut',
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Main Content */}
+        <m.main
+          className={cn('relative z-10', className)}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          {children}
+        </m.main>
+      </div>
+    </LazyMotion>
   );
 }
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 interface LuminorAvatarProps {
   name: string;
@@ -29,7 +29,7 @@ export function LuminorAvatar({
   const initial = name.slice(0, 1).toUpperCase();
 
   return (
-    <motion.div
+    <m.div
       className={`relative flex items-center justify-center ${outer} ${className}`}
       animate={
         isActive
@@ -45,7 +45,7 @@ export function LuminorAvatar({
       transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
     >
       {/* Outer glow ring */}
-      <motion.div
+      <m.div
         className={`absolute inset-0 rounded-full`}
         style={{
           background: `conic-gradient(from 0deg, ${color}80, ${color}20, ${color}80)`,
@@ -78,6 +78,6 @@ export function LuminorAvatar({
           {frequency}
         </div>
       )}
-    </motion.div>
+    </m.div>
   );
 }

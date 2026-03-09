@@ -204,9 +204,9 @@ const FAQS: FaqItem[] = [
       "Absolutely. Our developer platform includes SDKs, MCP tools, and comprehensive documentation for building with Arcanea.",
   },
   {
-    question: "How do I become a Luminor?",
+    question: "How does the progression system work?",
     answer:
-      "Open all Ten Gates by completing challenges and demonstrating mastery in each domain. It's a journey of continuous growth.",
+      "The Academy has a progression system from Apprentice to Master. Advance by creating, learning, and demonstrating mastery across domains. Progress is earned through work, not purchases.",
   },
 ];
 

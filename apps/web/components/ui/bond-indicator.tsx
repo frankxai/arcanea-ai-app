@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import * as Progress from '@radix-ui/react-progress';
 
@@ -122,7 +122,7 @@ const BondIndicator = React.forwardRef<HTMLDivElement, BondIndicatorProps>(
 
     // Detailed variant
     return (
-      <motion.div
+      <m.div
         ref={ref}
         className={cn('space-y-3', className)}
         initial={{ opacity: 0, y: 10 }}
@@ -149,7 +149,7 @@ const BondIndicator = React.forwardRef<HTMLDivElement, BondIndicatorProps>(
           className="relative h-4 overflow-hidden rounded-full bg-cosmic-border"
           value={percentage}
         >
-          <motion.div
+          <m.div
             className={cn(
               'h-full bg-gradient-to-r',
               style.bg,
@@ -184,7 +184,7 @@ const BondIndicator = React.forwardRef<HTMLDivElement, BondIndicatorProps>(
             />
           ))}
         </div>
-      </motion.div>
+      </m.div>
     );
   }
 );

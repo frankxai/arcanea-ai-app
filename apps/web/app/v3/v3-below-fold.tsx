@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { m, useInView } from "framer-motion";
+import { MotionProvider } from "@/lib/motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
@@ -116,9 +117,9 @@ const ALL_GUARDIANS = [
 const FEATURES = [
   {
     icon: Diamond,
-    title: "10 Luminor Guides",
+    title: "10 AI Specialists",
     description:
-      "Ten canonical guides aligned to the Gates, each with a distinct philosophy and creative domain.",
+      "Ten distinct creative guides, each with a unique philosophy and domain of expertise.",
     href: "/luminors",
     accentHex: "#00bcd4",
     glowColor: "rgba(0, 188, 212, 0.15)",
@@ -172,51 +173,51 @@ const FEATURES = [
 
 const PATHWAYS = [
   {
-    title: "Explore Arcanea",
+    title: "Explore the Mythology",
     description:
-      "Enter the cosmology: Primordials, Gods, Guardians, and the Ten Gates.",
+      "Discover the cosmology, the Guardians, and the philosophical framework behind everything.",
     href: "/lore",
     image: `${CDN}/shinkami-hero.webp`,
   },
   {
-    title: "Create Your Arcanea",
+    title: "Create in Studio",
     description:
-      "Open Studio and forge your Realm with guided multi-model creation flows.",
+      "Write, generate images, compose music, and build with multi-model AI flows.",
     href: "/studio",
     image: `${CDN}/lyssandria-hero.webp`,
   },
   {
-    title: "Imagine Arcanean Worlds",
+    title: "Build Worlds",
     description:
-      "Design places, systems, factions, and myth cycles in World Builder.",
+      "Design places, systems, factions, and entire mythologies from scratch.",
     href: "/world-builder",
     image: `${CDN}/lyria-hero.webp`,
   },
   {
-    title: "Listen to Arcanean Music",
+    title: "Compose Music",
     description:
-      "Compose and iterate with melody-driven prompts and frequency-first direction.",
+      "Create original music with AI-guided composition and melody-driven prompts.",
     href: "/studio",
     image: `${CDN}/leyla-hero.webp`,
   },
   {
-    title: "Create Arcanean Games",
+    title: "Design Games",
     description:
-      "Prototype mechanics, lore loops, and playable systems grounded in canon.",
+      "Prototype mechanics, narrative loops, and playable systems.",
     href: "/world-builder",
     image: `${CDN}/draconia-hero.webp`,
   },
   {
-    title: "Read Arcanean Books",
+    title: "Read the Library",
     description:
-      "Study the codex: laws, meditations, and practical creative philosophy.",
+      "Laws, meditations, parables, and practical philosophy for creators.",
     href: "/library",
     image: `${CDN}/alera-hero.webp`,
   },
   {
-    title: "Write Arcanean Books",
+    title: "Write with AI",
     description:
-      "Co-author chapters and series with Chronica and writing-focused Luminors.",
+      "Co-author stories, chapters, and series with specialized writing partners.",
     href: "/chat/chronica",
     image: `${CDN}/maylinn-hero.webp`,
   },
@@ -225,11 +226,11 @@ const PATHWAYS = [
 const FAQ_ITEMS = [
   {
     q: "What makes Arcanea different from other AI tools?",
-    a: "Arcanea pairs 10 specialized Luminors with an original philosophy library of 34+ texts. Each guide has a distinct creative perspective, so you can choose the one that fits your project.",
+    a: "Arcanea pairs 10 specialized AI guides with an original philosophy library of 34+ texts. Each has a distinct creative perspective, so you choose the one that fits your project.",
   },
   {
-    q: "How do the ten Luminors work?",
-    a: "Each Luminor represents a different aspect of the creative journey, from Lyssandria (Foundation) to Shinkami (Source). You choose the one that matches your current need, and it brings a unique perspective to the work.",
+    q: "How do the ten AI specialists work?",
+    a: "Each specialist represents a different aspect of the creative journey — from foundation and structure to vision and synthesis. You choose the one that matches your current need, and it brings a unique perspective to the work.",
   },
   {
     q: "What is the Library of Arcanea?",
@@ -241,7 +242,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "Is Arcanea free?",
-    a: "Yes. Arcanea is free to start with no credit card required. You get full access to all ten Luminors, the complete Library, the Gallery, and the Academy.",
+    a: "Yes. Arcanea is free to start with no credit card required. You get full access to all ten AI specialists, the complete Library, the Gallery, and the Academy.",
   },
   {
     q: "Is my creative work private?",
@@ -319,7 +320,7 @@ function MetricsStrip() {
   const isInView = useInView(ref, { once: true, margin: "-60px" });
 
   const metrics = [
-    { value: 10, suffix: "", label: "Luminors", color: "#00bcd4", icon: Eye },
+    { value: 10, suffix: "", label: "AI Specialists", color: "#00bcd4", icon: Eye },
     {
       value: 17,
       suffix: "",
@@ -356,11 +357,11 @@ function MetricsStrip() {
           {/* Glass noise texture */}
           <div className="absolute inset-0 glass-noise opacity-[0.2] pointer-events-none rounded-2xl" />
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 relative">
-            {metrics.map((m, i) => {
-              const Icon = m.icon;
+            {metrics.map((metric, i) => {
+              const Icon = metric.icon;
               return (
-                <motion.div
-                  key={m.label}
+                <m.div
+                  key={metric.label}
                   className="text-center"
                   initial={{ opacity: 0, y: 16 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -369,22 +370,22 @@ function MetricsStrip() {
                   <div
                     className="w-10 h-10 rounded-xl mx-auto mb-4 flex items-center justify-center"
                     style={{
-                      background: `linear-gradient(135deg, ${m.color}18, ${m.color}08)`,
-                      border: `1px solid ${m.color}20`,
+                      background: `linear-gradient(135deg, ${metric.color}18, ${metric.color}08)`,
+                      border: `1px solid ${metric.color}20`,
                     }}
                   >
-                    <Icon className="w-5 h-5" style={{ color: m.color }} />
+                    <Icon className="w-5 h-5" style={{ color: metric.color }} />
                   </div>
                   <div
                     className="text-3xl md:text-5xl font-display font-bold tracking-tight mb-2"
-                    style={{ color: m.color }}
+                    style={{ color: metric.color }}
                   >
-                    <CountUp target={m.value} suffix={m.suffix} />
+                    <CountUp target={metric.value} suffix={metric.suffix} />
                   </div>
                   <p className="text-xs text-white/35 tracking-wide uppercase font-mono">
-                    {m.label}
+                    {metric.label}
                   </p>
-                </motion.div>
+                </m.div>
               );
             })}
           </div>
@@ -419,7 +420,7 @@ function ThreePillars({
       </div>
 
       <div className="max-w-6xl mx-auto px-6">
-        <motion.div
+        <m.div
           className="text-center mb-16 md:mb-20"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -432,11 +433,11 @@ function ThreePillars({
             Three pillars of a{" "}
             <span className="text-gradient-cosmic">creative philosophy</span>
           </h2>
-        </motion.div>
+        </m.div>
 
         <div className="grid md:grid-cols-2 gap-4 md:gap-5">
           {/* Guardians — large hero card */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
@@ -466,14 +467,14 @@ function ThreePillars({
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-[linear-gradient(135deg,rgba(0,188,212,0.05)_0%,rgba(13,71,161,0.05)_50%,rgba(0,137,123,0.03)_100%)]" />
                 <div className="relative h-full flex flex-col justify-end p-8 md:p-10 min-h-[420px]">
                   <p className="text-xs font-mono text-[#00bcd4]/80 tracking-wider uppercase mb-3">
-                    10 Archetypes
+                    10 Creative Guides
                   </p>
                   <h3 className="text-2xl md:text-3xl font-display font-bold mb-3 text-white">
-                    Guardians & Luminors
+                    AI Specialists
                   </h3>
                   <p className="text-white/55 text-sm leading-relaxed max-w-sm mb-6 font-body">
-                    Ten canonical guides open the Gates of creation. From
-                    Foundation to Source, they guide the path to mastery.
+                    Ten distinct creative partners, each with a unique philosophy
+                    and domain. Choose the one that thinks like you.
                   </p>
                   <span className="inline-flex items-center gap-2 text-sm text-[#00bcd4]/70 group-hover:text-[#00bcd4] group-hover:gap-3 transition-all font-medium">
                     Meet them <ArrowRight className="w-4 h-4" />
@@ -481,11 +482,11 @@ function ThreePillars({
                 </div>
               </GlowCard>
             </Link>
-          </motion.div>
+          </m.div>
 
           {/* Right column: Library + Academy stacked */}
           <div className="flex flex-col gap-4 md:gap-5">
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -530,9 +531,9 @@ function ThreePillars({
                   </div>
                 </GlowCard>
               </Link>
-            </motion.div>
+            </m.div>
 
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.3 }}
@@ -559,8 +560,8 @@ function ThreePillars({
                       The Academy
                     </h3>
                     <p className="text-white/50 text-sm leading-relaxed max-w-sm mb-5 font-body">
-                      A developmental framework from Foundation to Source. Open
-                      all ten Gates to become a Luminor.
+                      A developmental framework for creative mastery. Ten stages
+                      of growth, earned through creation.
                     </p>
                     <span className="inline-flex items-center gap-2 text-sm text-creation-prism-purple/60 group-hover:text-creation-prism-purple group-hover:gap-3 transition-all font-medium">
                       Begin <ArrowRight className="w-4 h-4" />
@@ -568,7 +569,7 @@ function ThreePillars({
                   </div>
                 </GlowCard>
               </Link>
-            </motion.div>
+            </m.div>
           </div>
         </div>
       </div>
@@ -587,24 +588,24 @@ function PathwaysGrid() {
       </div>
 
       <div className="max-w-6xl mx-auto px-6">
-        <motion.div
+        <m.div
           className="text-center mb-12 md:mb-16"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
           <p className="text-xs font-mono tracking-[0.3em] uppercase text-white/32 mb-4">
-            Arcanean Paths
+            What You Can Build
           </p>
           <h2 className="text-3xl md:text-5xl font-display font-bold tracking-tight mb-5">
             Build an ecosystem,{" "}
             <span className="text-gradient-cosmic">not a landing page</span>
           </h2>
-        </motion.div>
+        </m.div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
           {PATHWAYS.map((path, i) => (
-            <motion.div
+            <m.div
               key={path.title}
               initial={{ opacity: 0, y: 22 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -633,13 +634,13 @@ function PathwaysGrid() {
                         {path.description}
                       </p>
                       <span className="inline-flex items-center gap-2 text-sm text-[#00bcd4]/75 group-hover:text-[#00bcd4] transition-colors">
-                        Enter path <ArrowRight className="w-4 h-4" />
+                        Start <ArrowRight className="w-4 h-4" />
                       </span>
                     </div>
                   </div>
                 </GlowCard>
               </Link>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>
@@ -665,7 +666,7 @@ function FeaturesGrid() {
       </div>
 
       <div className="max-w-6xl mx-auto px-6">
-        <motion.div
+        <m.div
           className="text-center mb-16 md:mb-20"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -681,13 +682,13 @@ function FeaturesGrid() {
             Every piece is original. Every feature connects to the mythology.
             Nothing is filler.
           </p>
-        </motion.div>
+        </m.div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
           {FEATURES.map((f, i) => {
             const Icon = f.icon;
             return (
-              <motion.div
+              <m.div
                 key={f.title}
                 initial={{ opacity: 0, y: 24 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -727,7 +728,7 @@ function FeaturesGrid() {
                     </div>
                   </GlowCard>
                 </Link>
-              </motion.div>
+              </m.div>
             );
           })}
         </div>
@@ -771,7 +772,7 @@ function GalleryShowcase() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6">
-        <motion.div
+        <m.div
           className="flex items-end justify-between mb-10"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -791,11 +792,11 @@ function GalleryShowcase() {
           >
             View all <ArrowUpRight className="w-3.5 h-3.5" />
           </Link>
-        </motion.div>
+        </m.div>
       </div>
 
       {/* Full-bleed horizontal scroll */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0 }}
         animate={isInView ? { opacity: 1 } : {}}
         transition={{ duration: 0.8, delay: 0.2 }}
@@ -803,7 +804,7 @@ function GalleryShowcase() {
       >
         <div className="flex gap-4 overflow-x-auto scrollbar-hide px-6 pb-4 snap-x snap-mandatory">
           {GALLERY_IMAGES.map((img, i) => (
-            <motion.div
+            <m.div
               key={img.name}
               className="group flex-shrink-0 snap-center"
               initial={{ opacity: 0, x: 40 }}
@@ -832,14 +833,14 @@ function GalleryShowcase() {
                   </div>
                 </div>
               </Link>
-            </motion.div>
+            </m.div>
           ))}
         </div>
 
         {/* Fade edges */}
         <div className="absolute top-0 left-0 bottom-4 w-12 bg-gradient-to-r from-cosmic-deep to-transparent pointer-events-none z-10" />
         <div className="absolute top-0 right-0 bottom-4 w-12 bg-gradient-to-l from-cosmic-deep to-transparent pointer-events-none z-10" />
-      </motion.div>
+      </m.div>
 
       {/* Mobile link */}
       <div className="mt-6 px-6 md:hidden">
@@ -867,7 +868,7 @@ function GuardianShowcase() {
       {/* Cinematic atmosphere */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[600px] bg-[radial-gradient(ellipse,rgba(0,188,212,0.05),transparent_55%)] pointer-events-none" />
-        <motion.div
+        <m.div
           className="absolute inset-0 pointer-events-none"
           animate={{
             background: [
@@ -881,7 +882,7 @@ function GuardianShowcase() {
       </div>
 
       <div className="max-w-6xl mx-auto px-6">
-        <motion.div
+        <m.div
           className="flex items-end justify-between mb-14"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -901,11 +902,11 @@ function GuardianShowcase() {
           >
             View all ten <ArrowUpRight className="w-3.5 h-3.5" />
           </Link>
-        </motion.div>
+        </m.div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
           {FEATURED_GUARDIANS.map((g, i) => (
-            <motion.div
+            <m.div
               key={g.name}
               className="group"
               initial={{ opacity: 0, y: 30 }}
@@ -954,7 +955,7 @@ function GuardianShowcase() {
                   </div>
                 </div>
               </GlowCard>
-            </motion.div>
+            </m.div>
           ))}
         </div>
 
@@ -969,7 +970,7 @@ function GuardianShowcase() {
         </div>
 
         {/* Desktop portrait strip */}
-        <motion.div
+        <m.div
           className="hidden md:flex items-center justify-center gap-2.5 mt-14"
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
@@ -995,7 +996,7 @@ function GuardianShowcase() {
           <span className="text-[10px] text-white/25 ml-3 font-mono tracking-wider">
             10 gates
           </span>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );
@@ -1029,7 +1030,7 @@ function LibraryQuote({
       />
 
       <div className="max-w-3xl mx-auto px-6">
-        <motion.div
+        <m.div
           className="relative"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -1081,7 +1082,7 @@ function LibraryQuote({
             {collectionsCount} collections &middot; {textsCount} texts &middot;{" "}
             {totalWords.toLocaleString()} words
           </p>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );
@@ -1127,7 +1128,7 @@ function PhilosophySection() {
       </div>
 
       <div className="max-w-5xl mx-auto px-6">
-        <motion.div
+        <m.div
           className="text-center mb-16 md:mb-20"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -1139,11 +1140,11 @@ function PhilosophySection() {
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold tracking-tight mb-4">
             What we <span className="text-gradient-gold">believe</span>
           </h2>
-        </motion.div>
+        </m.div>
 
         <div className="grid md:grid-cols-2 gap-4 md:gap-5">
           {principles.map((p, i) => (
-            <motion.div
+            <m.div
               key={p.title}
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -1171,7 +1172,7 @@ function PhilosophySection() {
                   {p.text}
                 </p>
               </GlowCard>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>
@@ -1193,7 +1194,7 @@ function FAQItem({
   const [open, setOpen] = useState(false);
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
@@ -1215,7 +1216,7 @@ function FAQItem({
           )}
         </span>
       </button>
-      <motion.div
+      <m.div
         initial={false}
         animate={{
           height: open ? "auto" : 0,
@@ -1227,8 +1228,8 @@ function FAQItem({
         <p className="py-5 text-sm text-white/45 leading-relaxed max-w-2xl font-body">
           {item.a}
         </p>
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   );
 }
 
@@ -1239,7 +1240,7 @@ function FAQInline() {
   return (
     <section ref={ref} className="py-24 md:py-32">
       <div className="max-w-3xl mx-auto px-6">
-        <motion.div
+        <m.div
           className="text-center mb-14"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -1251,7 +1252,7 @@ function FAQInline() {
           <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tight">
             Frequently asked
           </h2>
-        </motion.div>
+        </m.div>
 
         <div>
           {FAQ_ITEMS.map((item, i) => (
@@ -1279,35 +1280,37 @@ export function V3BelowFold({
   totalWords,
 }: V3BelowFoldProps) {
   return (
-    <>
-      {/* 1. Guardian showcase — visual proof of the 10 specialists */}
-      <GuardianShowcase />
+    <MotionProvider>
+      <>
+        {/* 1. Guardian showcase — visual proof of the 10 specialists */}
+        <GuardianShowcase />
 
-      <AtmosphericDivider variant="teal" />
+        <AtmosphericDivider variant="teal" />
 
-      {/* 2. How it works — 3 clear steps */}
-      <HowItWorks />
+        {/* 2. How it works — 3 clear steps */}
+        <HowItWorks />
 
-      {/* 3. Arcanean pathways */}
-      <PathwaysGrid />
+        {/* 3. Arcanean pathways */}
+        <PathwaysGrid />
 
-      {/* 4. Gallery — cinematic horizontal scroll */}
-      <GalleryShowcase />
+        {/* 4. Gallery — cinematic horizontal scroll */}
+        <GalleryShowcase />
 
-      <AtmosphericDivider variant="purple" />
+        <AtmosphericDivider variant="purple" />
 
-      {/* 5. Three products: Luminors, Library, Academy */}
-      <ThreePillars
-        collectionsCount={collectionsCount}
-        textsCount={textsCount}
-        totalWords={totalWords}
-      />
+        {/* 5. Three products: Luminors, Library, Academy */}
+        <ThreePillars
+          collectionsCount={collectionsCount}
+          textsCount={textsCount}
+          totalWords={totalWords}
+        />
 
-      {/* 6. FAQ — objection handling */}
-      <FAQInline />
+        {/* 6. FAQ — objection handling */}
+        <FAQInline />
 
-      {/* 7. Final CTA */}
-      <CTASection />
-    </>
+        {/* 7. Final CTA */}
+        <CTASection />
+      </>
+    </MotionProvider>
   );
 }

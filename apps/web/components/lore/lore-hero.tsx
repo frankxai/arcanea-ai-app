@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { m, useScroll, useTransform } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 
 // ─── Inline SVG Icons ───────────────────────────────────────────────────────────
@@ -68,7 +68,7 @@ export function LoreHero() {
         {/* Stars */}
         <div className="absolute inset-0">
           {[...Array(100)].map((_, i) => (
-            <motion.div
+            <m.div
               key={i}
               className="absolute w-1 h-1 bg-white rounded-full"
               style={{
@@ -90,7 +90,7 @@ export function LoreHero() {
         </div>
 
         {/* Lumina - Golden Light (top right) */}
-        <motion.div
+        <m.div
           className="absolute top-20 right-20 w-[600px] h-[600px]"
           style={{
             x: mousePosition.x * 30 - 15,
@@ -99,10 +99,10 @@ export function LoreHero() {
         >
           <div className="absolute inset-0 bg-gradient-radial from-gold-bright/30 via-gold-bright/10 to-transparent rounded-full blur-3xl" />
           <div className="absolute inset-20 bg-gradient-radial from-white/[0.12] via-gold-bright/5 to-transparent rounded-full blur-2xl animate-pulse" />
-        </motion.div>
+        </m.div>
 
         {/* Nero - Deep Void (bottom left) */}
-        <motion.div
+        <m.div
           className="absolute bottom-20 left-20 w-[600px] h-[600px]"
           style={{
             x: -mousePosition.x * 30 + 15,
@@ -111,7 +111,7 @@ export function LoreHero() {
         >
           <div className="absolute inset-0 bg-gradient-radial from-creation-prism-purple/30 via-cosmic-void/50 to-transparent rounded-full blur-3xl" />
           <div className="absolute inset-20 bg-gradient-radial from-creation-prism-purple/10 to-transparent rounded-full blur-2xl" />
-        </motion.div>
+        </m.div>
 
         {/* World Tree silhouette */}
         <div className="absolute inset-0 flex items-center justify-center opacity-5">
@@ -139,12 +139,12 @@ export function LoreHero() {
       </div>
 
       {/* Content */}
-      <motion.div
+      <m.div
         style={{ opacity, scale, y }}
         className="relative z-10 text-center px-6 max-w-5xl mx-auto"
       >
         {/* Badge */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
@@ -154,10 +154,10 @@ export function LoreHero() {
           <span className="text-sm font-medium text-gold-bright">
             The Living Mythology
           </span>
-        </motion.div>
+        </m.div>
 
         {/* Title */}
-        <motion.h1
+        <m.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
@@ -166,10 +166,10 @@ export function LoreHero() {
           <span className="bg-gradient-to-r from-gold-bright via-white to-creation-prism-purple bg-clip-text text-transparent">
             Lore of Arcanea
           </span>
-        </motion.h1>
+        </m.h1>
 
         {/* Subtitle */}
-        <motion.p
+        <m.p
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
@@ -178,20 +178,20 @@ export function LoreHero() {
           &quot;Before Lumina spoke, there was only Nero—the Fertile Unknown,
           pregnant with infinite possibility. And when the First Light pierced
           the darkness, neither was diminished.&quot;
-        </motion.p>
+        </m.p>
 
         {/* Quote attribution */}
-        <motion.p
+        <m.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
           className="text-sm text-text-muted font-mono tracking-wider mb-12"
         >
           — Archive of Unity, Founding Texts
-        </motion.p>
+        </m.p>
 
         {/* Quick stats */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
@@ -210,24 +210,24 @@ export function LoreHero() {
               <div className="text-sm text-text-muted">{stat.label}</div>
             </div>
           ))}
-        </motion.div>
+        </m.div>
 
         {/* Scroll indicator */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
           className="flex flex-col items-center gap-2"
         >
           <span className="text-sm text-text-muted">Descend into the lore</span>
-          <motion.div
+          <m.div
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
             <Icons.ChevronDown className="w-6 h-6 text-text-muted" />
-          </motion.div>
-        </motion.div>
-      </motion.div>
+          </m.div>
+        </m.div>
+      </m.div>
     </section>
   );
 }

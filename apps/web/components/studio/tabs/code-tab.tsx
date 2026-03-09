@@ -130,25 +130,25 @@ export function CodeTab({ generationState }: CodeTabProps) {
   return (
     <div className="flex flex-col h-full">
       {/* Editor Toolbar */}
-      <div className="flex items-center gap-2 px-4 py-2.5 border-b border-[rgba(139,92,246,0.1)] bg-[rgba(10,10,15,0.5)]">
+      <div className="flex items-center gap-2 px-4 py-2.5 border-b border-[rgba(13,71,161,0.1)] bg-[rgba(10,10,15,0.5)]">
         {/* Language selector */}
         <div className="relative">
           <button
             onClick={() => setShowLangDropdown(!showLangDropdown)}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[rgba(139,92,246,0.1)] border border-[rgba(139,92,246,0.2)] text-xs text-[#a78bfa] hover:bg-[rgba(139,92,246,0.15)] transition-colors"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[rgba(13,71,161,0.1)] border border-[rgba(13,71,161,0.2)] text-xs text-[#a78bfa] hover:bg-[rgba(13,71,161,0.15)] transition-colors"
           >
             {selectedLang}
             <CaretDown size={11} />
           </button>
           {showLangDropdown && (
-            <div className="absolute top-full left-0 mt-1 w-40 rounded-xl border border-[rgba(139,92,246,0.2)] bg-[#13131c] shadow-2xl shadow-black/50 z-50 overflow-hidden">
+            <div className="absolute top-full left-0 mt-1 w-40 rounded-xl border border-[rgba(13,71,161,0.2)] bg-[#13131c] shadow-2xl shadow-black/50 z-50 overflow-hidden">
               {languages.map((lang) => (
                 <button
                   key={lang}
                   onClick={() => { setSelectedLang(lang); setShowLangDropdown(false) }}
                   className={cn(
-                    "w-full text-left px-3 py-2 text-xs transition-colors hover:bg-[rgba(139,92,246,0.1)]",
-                    selectedLang === lang ? "text-[#a78bfa] bg-[rgba(139,92,246,0.08)]" : "text-foreground"
+                    "w-full text-left px-3 py-2 text-xs transition-colors hover:bg-[rgba(13,71,161,0.1)]",
+                    selectedLang === lang ? "text-[#a78bfa] bg-[rgba(13,71,161,0.08)]" : "text-foreground"
                   )}
                 >
                   {lang}
@@ -165,14 +165,14 @@ export function CodeTab({ generationState }: CodeTabProps) {
         <div className="ml-auto flex items-center gap-2">
           {/* AI inline completion indicator */}
           {generationState === "generating" && (
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[rgba(139,92,246,0.1)] border border-[rgba(139,92,246,0.2)]">
-              <Sparkle size={10} className="text-[#8b5cf6] animate-spin" style={{ animationDuration: "1.5s" }} />
-              <span className="text-[10px] text-[#8b5cf6] font-mono">AI completing…</span>
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[rgba(13,71,161,0.1)] border border-[rgba(13,71,161,0.2)]">
+              <Sparkle size={10} className="text-[#0d47a1] animate-spin" style={{ animationDuration: "1.5s" }} />
+              <span className="text-[10px] text-[#0d47a1] font-mono">AI completing…</span>
             </div>
           )}
           <button
             onClick={handleCopy}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.08)] text-xs text-muted-foreground hover:text-foreground hover:border-[rgba(139,92,246,0.2)] transition-all"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.08)] text-xs text-muted-foreground hover:text-foreground hover:border-[rgba(13,71,161,0.2)] transition-all"
           >
             {copied ? (
               <>
@@ -211,7 +211,7 @@ export function CodeTab({ generationState }: CodeTabProps) {
             {/* Cursor blink at end */}
             <div className="flex gap-4 items-center">
               <span className="text-[rgba(255,255,255,0.15)] font-mono text-xs w-7 text-right shrink-0">36</span>
-              <div className="w-2 h-4 bg-[#8b5cf6] animate-pulse rounded-sm" />
+              <div className="w-2 h-4 bg-[#0d47a1] animate-pulse rounded-sm" />
             </div>
           </div>
         ) : (
@@ -221,11 +221,11 @@ export function CodeTab({ generationState }: CodeTabProps) {
           </div>
         )}
         {/* Syntax glow overlay */}
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_0%_0%,rgba(139,92,246,0.03)_0%,transparent_60%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_0%_0%,rgba(13,71,161,0.03)_0%,transparent_60%)]" />
       </div>
 
       {/* AI Completion Bar */}
-      <div className="px-5 py-3 border-t border-[rgba(139,92,246,0.1)] bg-[rgba(10,10,15,0.3)]">
+      <div className="px-5 py-3 border-t border-[rgba(13,71,161,0.1)] bg-[rgba(10,10,15,0.3)]">
         <div className="flex items-center gap-2 flex-wrap">
           <div className="flex items-center gap-1.5 text-[10px] text-[#ffd700] font-mono shrink-0">
             <Lightning size={11} weight="fill" />
@@ -238,8 +238,8 @@ export function CodeTab({ generationState }: CodeTabProps) {
               className={cn(
                 "px-2.5 py-1 rounded-full text-[11px] border transition-all duration-200",
                 selectedPrompt === c
-                  ? "bg-[rgba(139,92,246,0.2)] border-[rgba(139,92,246,0.4)] text-[#a78bfa]"
-                  : "bg-[rgba(255,255,255,0.03)] border-[rgba(255,255,255,0.08)] text-muted-foreground hover:text-foreground hover:border-[rgba(139,92,246,0.2)]"
+                  ? "bg-[rgba(13,71,161,0.2)] border-[rgba(13,71,161,0.4)] text-[#a78bfa]"
+                  : "bg-[rgba(255,255,255,0.03)] border-[rgba(255,255,255,0.08)] text-muted-foreground hover:text-foreground hover:border-[rgba(13,71,161,0.2)]"
               )}
             >
               {c}

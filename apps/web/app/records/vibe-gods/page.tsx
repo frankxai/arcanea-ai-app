@@ -217,7 +217,7 @@ const VIBE_GODS = [
     title: "The Flow Whisperer",
     description:
       "Emotional depth, intuition, and the ability to go with the creative current.",
-    color: "#78a6ff",
+    color: "#00bcd4",
     icon: "droplets",
     followers: 982,
     works: 67,

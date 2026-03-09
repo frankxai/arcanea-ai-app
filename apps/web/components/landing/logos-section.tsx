@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
+import { m, useInView, LazyMotion, domMax } from 'framer-motion';
 import { useRef } from 'react';
 
 const ECOSYSTEM_ITEMS = [
@@ -19,15 +19,16 @@ export function LogosSection() {
   const isInView = useInView(ref, { once: true, margin: '-50px' });
 
   return (
+    <LazyMotion features={domMax}>
     <section ref={ref} className="py-16 border-y border-white/[0.04] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
-        <motion.p
+        <m.p
           initial={{ opacity: 0, y: 10 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center text-sm text-text-muted uppercase tracking-wider mb-10"
         >
           Built with modern intelligence infrastructure
-        </motion.p>
+        </m.p>
 
         {/* Animated ecosystem strip */}
         <div className="relative">
@@ -36,7 +37,7 @@ export function LogosSection() {
           <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-cosmic-deep to-transparent z-10" />
 
           {/* Scrolling items */}
-          <motion.div
+          <m.div
             className="flex gap-16 items-center"
             animate={{ x: ['0%', '-50%'] }}
             transition={{
@@ -47,7 +48,7 @@ export function LogosSection() {
           >
             {/* Double for seamless loop */}
             {[...ECOSYSTEM_ITEMS, ...ECOSYSTEM_ITEMS].map((item, i) => (
-              <motion.div
+              <m.div
                 key={`${item.name}-${i}`}
                 initial={{ opacity: 0 }}
                 animate={isInView ? { opacity: 0.5 } : {}}
@@ -61,11 +62,12 @@ export function LogosSection() {
                 <div className="text-xs text-text-muted mt-1 uppercase tracking-wider">
                   {item.label}
                 </div>
-              </motion.div>
+              </m.div>
             ))}
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </section>
+    </LazyMotion>
   );
 }

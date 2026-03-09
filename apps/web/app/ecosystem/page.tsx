@@ -215,7 +215,7 @@ const PRODUCTS: Product[] = [
     href: "/install",
     external: false,
     icon: Icons.Gear,
-    accent: "#78a6ff",
+    accent: "#00bcd4",
   },
   {
     id: "onchain",

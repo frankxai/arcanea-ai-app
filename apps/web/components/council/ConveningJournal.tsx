@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 interface ConveningJournalProps {
   value: string;
@@ -92,14 +92,14 @@ export function ConveningJournal({
       </div>
 
       {saved && (
-        <motion.p
+        <m.p
           initial={{ opacity: 0, y: 4 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
           className="font-body text-xs text-[#10b981] text-center"
         >
           Entry sealed in your Council journal.
-        </motion.p>
+        </m.p>
       )}
     </div>
   );

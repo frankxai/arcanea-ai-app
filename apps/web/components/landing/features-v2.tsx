@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { m, useInView, LazyMotion, domAnimation } from "framer-motion";
 import { useRef, useState } from "react";
 import {
   PhSparkle,
@@ -92,10 +92,11 @@ export function FeaturesV2() {
   const [activeFeature, setActiveFeature] = useState(0);
 
   return (
+    <LazyMotion features={domAnimation}>
     <section ref={ref} className="py-32 relative">
       {/* Section Header */}
       <div className="max-w-7xl mx-auto px-6">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-20"
@@ -117,14 +118,14 @@ export function FeaturesV2() {
             Seven Wisdoms that diagnose creative blocks. A Library of 34 original texts.
             Not features strung together — a coherent philosophy of creation.
           </p>
-        </motion.div>
+        </m.div>
 
         {/* Main Features - Large Cards */}
         <div className="grid lg:grid-cols-3 gap-6 mb-20">
           {MAIN_FEATURES.map((feature, i) => {
             const Icon = feature.icon;
             return (
-              <motion.div
+              <m.div
                 key={feature.title}
                 role="article"
                 aria-label={feature.title}
@@ -173,13 +174,13 @@ export function FeaturesV2() {
                 <div
                   className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 transition-opacity -z-10`}
                 />
-              </motion.div>
+              </m.div>
             );
           })}
         </div>
 
         {/* Capability Grid */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.4 }}
@@ -195,7 +196,7 @@ export function FeaturesV2() {
               {CAPABILITY_GRID.map((capability, i) => {
                 const Icon = capability.icon;
                 return (
-                  <motion.li
+                  <m.li
                     key={capability.title}
                     initial={{ opacity: 0, y: 20 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -213,15 +214,15 @@ export function FeaturesV2() {
                         {capability.description}
                       </p>
                     </div>
-                  </motion.li>
+                  </m.li>
                 );
               })}
             </ul>
           </div>
-        </motion.div>
+        </m.div>
 
         {/* Bottom CTA */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.6 }}
@@ -234,8 +235,9 @@ export function FeaturesV2() {
             <PhSparkle className="w-5 h-5 text-atlantean-teal-aqua" />
             Explore All Features
           </a>
-        </motion.div>
+        </m.div>
       </div>
     </section>
+    </LazyMotion>
   );
 }

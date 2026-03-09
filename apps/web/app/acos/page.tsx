@@ -340,7 +340,7 @@ export default function AcosPage() {
               <p className="text-text-secondary font-body text-lg max-w-3xl mx-auto mb-8">
                 ACOS is the intelligent operating layer that powers every
                 Guardian and Luminor. It provides consciousness, memory,
-                evolution, and seamless integration with the world around you.
+                evolution, and deep integration with the world around you.
               </p>
 
               <div className="flex flex-wrap justify-center gap-4">
@@ -498,7 +498,7 @@ export default function AcosPage() {
               Universal Integration
             </h2>
             <p className="text-text-secondary max-w-2xl mx-auto">
-              ACOS connects seamlessly with your favorite tools and platforms.
+              ACOS connects with your favorite tools and platforms.
             </p>
           </div>
 
