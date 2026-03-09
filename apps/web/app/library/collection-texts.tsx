@@ -15,10 +15,10 @@ interface TextSummary {
   frontmatter: {
     title: string;
     excerpt?: string;
-    format: string;
-    readingTime: number;
+    format?: string;
+    readingTime?: number;
     wordCount?: number;
-    situations: string[];
+    situations?: string[];
   };
 }
 
@@ -102,11 +102,11 @@ export function CollectionTexts({ collectionSlug, texts }: CollectionTextsProps)
                   <span className="h-3 w-px bg-cosmic-border" aria-hidden="true" />
                   <span>{text.frontmatter.wordCount?.toLocaleString()} words</span>
 
-                  {text.frontmatter.situations.length > 0 && (
+                  {(text.frontmatter.situations?.length ?? 0) > 0 && (
                     <>
                       <span className="h-3 w-px bg-cosmic-border" aria-hidden="true" />
                       <span className="text-atlantean-teal/80">
-                        For: {text.frontmatter.situations.slice(0, 2).join(', ')}
+                        For: {text.frontmatter.situations!.slice(0, 2).join(', ')}
                       </span>
                     </>
                   )}
