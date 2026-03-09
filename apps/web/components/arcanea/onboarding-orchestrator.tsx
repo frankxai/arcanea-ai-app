@@ -50,14 +50,15 @@ export default function ArcanealOnboarding() {
     }
 
     const supabase = createClient()
-    supabase
-      .from('profiles')
-      .select('gates_open, metadata')
-      .eq('id', user.id)
-      .single()
+    Promise.resolve(
+      supabase
+        .from('profiles')
+        .select('gates_open, metadata')
+        .eq('id', user.id)
+        .single()
+    )
       .then(({ data }) => {
         if (!data) {
-          // Profile not found yet — proceed with onboarding
           setOnboardingNeeded(true)
           return
         }
