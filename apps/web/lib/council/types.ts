@@ -68,6 +68,7 @@ export interface AddSeatInput {
   luminor_domain: string;
   frequency_alignment: FrequencyHz;
   imprint_capability: string;
+  seat_order?: number;
   personality_traits?: string;
   visual_description?: string;
 }
@@ -113,6 +114,8 @@ export interface BaseLuminorDefinition {
   frequency_alignment: FrequencyHz;
   imprint_capability: string;
   seat_order: number;
+  personality_traits?: string;
+  visual_description?: string;
 }
 
 export const BASE_LUMINORS: BaseLuminorDefinition[] = [
