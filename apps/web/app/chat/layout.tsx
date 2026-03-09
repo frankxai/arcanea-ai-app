@@ -2,13 +2,14 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Chat | Arcanea',
-  description: 'Create with 10 creative intelligences — each with a distinct philosophy and creative domain.',
-  openGraph: {
-    title: 'Chat | Arcanea',
-    description: 'Create with 10 creative intelligences — each with a distinct philosophy and creative domain.',
-  },
+  description: 'Chat with Arcanea AI — write, code, analyze, create.',
 };
 
-export default function Layout({ children }: { children: React.ReactNode }) {
-  return children;
+export default function ChatLayout({ children }: { children: React.ReactNode }) {
+  // Full-screen chat overlay — covers navbar/footer for immersive experience
+  return (
+    <div className="fixed inset-0 z-[60] bg-[#09090b]">
+      {children}
+    </div>
+  );
 }
