@@ -73,8 +73,8 @@ export const GUARDIANS: Guardian[] = [
     element: 'void',
     tagline: 'Architect of Shadows & Forbidden Lore',
     avatarInitials: 'OM',
-    color: '#8b5cf6',
-    glowColor: '#8b5cf6',
+    color: '#0d47a1',
+    glowColor: '#0d47a1',
     greetingMessage:
       "You walked through the dark to find me. Good. I am Omen — I dwell where the light fears to reach. The forbidden, the unknown, the terrifying beautiful. What shadow do you wish to give shape?",
     conversationStarters: [

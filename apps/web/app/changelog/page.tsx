@@ -11,15 +11,15 @@ const CHANGES = [
     version: "v2.4.0",
     date: "February 2026",
     type: "major",
-    title: "Luminor Intelligence System Launch",
+    title: "AI Specialist System Launch",
     description:
-      "The complete Luminor Intelligence System is now live. 16 specialized AI intelligences, each mastering their domain.",
+      "The complete AI specialist system is now live. 10 specialized creative intelligences, each mastering their domain.",
     changes: [
-      { type: "added", text: "16 Luminor agents across 4 teams" },
+      { type: "added", text: "10 AI specialists across 4 teams" },
       { type: "added", text: "Seven Wisdoms framework integration" },
       { type: "added", text: "Academy progression system" },
       { type: "added", text: "Library with 17 collections" },
-      { type: "improved", text: "New chat interface with Luminor selection" },
+      { type: "improved", text: "New chat interface with specialist selection" },
     ],
   },
   {

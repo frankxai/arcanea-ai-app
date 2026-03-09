@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { LazyMotion, domAnimation, m } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -316,7 +316,7 @@ function StatsCards({ cards }: { cards?: DashboardProps["cards"] }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
       {cards.map((card, index) => (
-        <motion.div
+        <m.div
           key={card.id}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -366,7 +366,7 @@ function StatsCards({ cards }: { cards?: DashboardProps["cards"] }) {
               </div>
             </CosmicCard>
           </Link>
-        </motion.div>
+        </m.div>
       ))}
     </div>
   );
@@ -388,7 +388,7 @@ function ActivityFeed({ activity }: { activity?: DashboardProps["activity"] }) {
       <CosmicCardContent>
         <div className="space-y-4">
           {activity.map((item, index) => (
-            <motion.div
+            <m.div
               key={item.id}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -413,7 +413,7 @@ function ActivityFeed({ activity }: { activity?: DashboardProps["activity"] }) {
                 <p className="text-xs text-text-muted mt-1">{item.time}</p>
               </div>
               <PhCaretRight className="w-4 h-4 text-text-muted shrink-0" />
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </CosmicCardContent>
@@ -445,7 +445,7 @@ function RecentItems({ recent }: { recent?: DashboardProps["recent"] }) {
       <CosmicCardContent>
         <div className="space-y-3">
           {recent.map((item, index) => (
-            <motion.div
+            <m.div
               key={item.id}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -474,7 +474,7 @@ function RecentItems({ recent }: { recent?: DashboardProps["recent"] }) {
                   </div>
                 )}
               </Link>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </CosmicCardContent>
@@ -560,6 +560,7 @@ export function DashboardPage({
   }
 
   return (
+    <LazyMotion features={domAnimation}>
     <div className={cn("min-h-screen flex", className)}>
       <Sidebar config={config} navigation={navigation} />
 
@@ -581,6 +582,7 @@ export function DashboardPage({
         </main>
       </div>
     </div>
+    </LazyMotion>
   );
 }
 

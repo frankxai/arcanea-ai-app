@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { PhHeart, PhChatCircle, PhEye, PhPlay, PhImage } from '@/lib/phosphor-icons';
 import { Creation } from '@/lib/types/profile';
 
@@ -67,134 +67,136 @@ export const CreationCard = React.memo(function CreationCard({ creation, onClick
   const handleImageLoad = React.useCallback(() => setImageLoaded(true), []);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.05 }}
-      whileHover={{ y: -8 }}
-      onHoverStart={handleHoverStart}
-      onHoverEnd={handleHoverEnd}
-      onClick={onClick}
-      className="group relative cursor-pointer rounded-2xl overflow-hidden bg-slate-900/50 backdrop-blur-sm border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-purple-500/20"
-    >
-      {/* Image/Thumbnail */}
-      <div className="relative aspect-square overflow-hidden bg-slate-800">
-        {!imageLoaded && (
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-blue-900/20 animate-pulse" />
-        )}
+    <LazyMotion features={domAnimation} strict>
+      <m.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: index * 0.05 }}
+        whileHover={{ y: -8 }}
+        onHoverStart={handleHoverStart}
+        onHoverEnd={handleHoverEnd}
+        onClick={onClick}
+        className="group relative cursor-pointer rounded-2xl overflow-hidden bg-slate-900/50 backdrop-blur-sm border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-purple-500/20"
+      >
+        {/* Image/Thumbnail */}
+        <div className="relative aspect-square overflow-hidden bg-slate-800">
+          {!imageLoaded && (
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-blue-900/20 animate-pulse" />
+          )}
 
-        <img
-          src={creation.thumbnail_url || creation.media_url}
-          alt={creation.title}
-          className={`w-full h-full object-cover transition-all duration-500 ${
-            isHovered ? 'scale-110' : 'scale-100'
-          } ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-          onLoad={handleImageLoad}
-        />
+          <img
+            src={creation.thumbnail_url || creation.media_url}
+            alt={creation.title}
+            className={`w-full h-full object-cover transition-all duration-500 ${
+              isHovered ? 'scale-110' : 'scale-100'
+            } ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+            onLoad={handleImageLoad}
+          />
 
-        {/* Type Badge */}
-        <div className="absolute top-3 left-3">
-          <motion.div
-            whileHover={{ scale: 1.1 }}
-            className={`px-3 py-1.5 rounded-full bg-gradient-to-r ${typeColor} text-white text-xs font-semibold flex items-center gap-1.5 shadow-lg backdrop-blur-sm`}
-          >
-            {getTypeIcon()}
-            <span className="capitalize">{creation.type}</span>
-          </motion.div>
-        </div>
-
-        {/* Academy Badge */}
-        {creation.academy && (
-          <div className="absolute top-3 right-3">
-            <motion.div
+          {/* Type Badge */}
+          <div className="absolute top-3 left-3">
+            <m.div
               whileHover={{ scale: 1.1 }}
-              className={`px-3 py-1.5 rounded-full bg-gradient-to-r ${academyColor} text-white text-xs font-semibold shadow-lg backdrop-blur-sm`}
+              className={`px-3 py-1.5 rounded-full bg-gradient-to-r ${typeColor} text-white text-xs font-semibold flex items-center gap-1.5 shadow-lg backdrop-blur-sm`}
             >
-              {creation.academy}
-            </motion.div>
+              {getTypeIcon()}
+              <span className="capitalize">{creation.type}</span>
+            </m.div>
           </div>
-        )}
 
-        {/* Video Play Overlay */}
-        {creation.type === 'video' && (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <motion.div
-              whileHover={{ scale: 1.2 }}
-              className="w-16 h-16 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center border-2 border-white/[0.20]"
-            >
-              <PhPlay className="w-8 h-8 text-white ml-1" />
-            </motion.div>
-          </div>
-        )}
+          {/* Academy Badge */}
+          {creation.academy && (
+            <div className="absolute top-3 right-3">
+              <m.div
+                whileHover={{ scale: 1.1 }}
+                className={`px-3 py-1.5 rounded-full bg-gradient-to-r ${academyColor} text-white text-xs font-semibold shadow-lg backdrop-blur-sm`}
+              >
+                {creation.academy}
+              </m.div>
+            </div>
+          )}
 
-        {/* Hover Overlay */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isHovered ? 1 : 0 }}
-          transition={{ duration: 0.3 }}
-          className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"
-        >
-          <div className="absolute bottom-0 left-0 right-0 p-4 space-y-3">
-            {/* Title */}
-            <h3 className="text-white font-bold text-lg line-clamp-2">
-              {creation.title}
-            </h3>
+          {/* Video Play Overlay */}
+          {creation.type === 'video' && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <m.div
+                whileHover={{ scale: 1.2 }}
+                className="w-16 h-16 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center border-2 border-white/[0.20]"
+              >
+                <PhPlay className="w-8 h-8 text-white ml-1" />
+              </m.div>
+            </div>
+          )}
 
-            {/* Description */}
-            {creation.description && (
-              <p className="text-slate-300 text-sm line-clamp-2">
-                {creation.description}
-              </p>
-            )}
+          {/* Hover Overlay */}
+          <m.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isHovered ? 1 : 0 }}
+            transition={{ duration: 0.3 }}
+            className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"
+          >
+            <div className="absolute bottom-0 left-0 right-0 p-4 space-y-3">
+              {/* Title */}
+              <h3 className="text-white font-bold text-lg line-clamp-2">
+                {creation.title}
+              </h3>
 
-            {/* Stats */}
-            <div className="flex items-center gap-4 text-white/[0.60]">
-              <div className="flex items-center gap-1.5 text-sm">
-                <PhHeart className="w-4 h-4" />
-                <span>{creation.stats.likes.toLocaleString()}</span>
-              </div>
-              <div className="flex items-center gap-1.5 text-sm">
-                <PhChatCircle className="w-4 h-4" />
-                <span>{creation.stats.comments.toLocaleString()}</span>
-              </div>
-              <div className="flex items-center gap-1.5 text-sm">
-                <PhEye className="w-4 h-4" />
-                <span>{creation.stats.views.toLocaleString()}</span>
+              {/* Description */}
+              {creation.description && (
+                <p className="text-slate-300 text-sm line-clamp-2">
+                  {creation.description}
+                </p>
+              )}
+
+              {/* Stats */}
+              <div className="flex items-center gap-4 text-white/[0.60]">
+                <div className="flex items-center gap-1.5 text-sm">
+                  <PhHeart className="w-4 h-4" />
+                  <span>{creation.stats.likes.toLocaleString()}</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-sm">
+                  <PhChatCircle className="w-4 h-4" />
+                  <span>{creation.stats.comments.toLocaleString()}</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-sm">
+                  <PhEye className="w-4 h-4" />
+                  <span>{creation.stats.views.toLocaleString()}</span>
+                </div>
               </div>
             </div>
-          </div>
-        </motion.div>
-      </div>
+          </m.div>
+        </div>
 
-      {/* Bottom Info Bar (visible on mobile) */}
-      <div className="md:hidden p-3 bg-slate-900/90 backdrop-blur-sm">
-        <h3 className="text-white font-semibold text-sm line-clamp-1 mb-2">
-          {creation.title}
-        </h3>
-        <div className="flex items-center gap-3 text-slate-400 text-xs">
-          <div className="flex items-center gap-1">
-            <PhHeart className="w-3 h-3" />
-            <span>{creation.stats.likes}</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <PhChatCircle className="w-3 h-3" />
-            <span>{creation.stats.comments}</span>
+        {/* Bottom Info Bar (visible on mobile) */}
+        <div className="md:hidden p-3 bg-slate-900/90 backdrop-blur-sm">
+          <h3 className="text-white font-semibold text-sm line-clamp-1 mb-2">
+            {creation.title}
+          </h3>
+          <div className="flex items-center gap-3 text-slate-400 text-xs">
+            <div className="flex items-center gap-1">
+              <PhHeart className="w-3 h-3" />
+              <span>{creation.stats.likes}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <PhChatCircle className="w-3 h-3" />
+              <span>{creation.stats.comments}</span>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Luminor Badge (if present) */}
-      {creation.luminor_id && (
-        <div className="absolute bottom-3 right-3 hidden md:block">
-          <motion.div
-            whileHover={{ scale: 1.1 }}
-            className="px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-sm border border-purple-500/30 text-purple-300 text-xs font-medium"
-          >
-            With {creation.luminor_id}
-          </motion.div>
-        </div>
-      )}
-    </motion.div>
+        {/* Luminor Badge (if present) */}
+        {creation.luminor_id && (
+          <div className="absolute bottom-3 right-3 hidden md:block">
+            <m.div
+              whileHover={{ scale: 1.1 }}
+              className="px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-sm border border-purple-500/30 text-purple-300 text-xs font-medium"
+            >
+              With {creation.luminor_id}
+            </m.div>
+          </div>
+        )}
+      </m.div>
+    </LazyMotion>
   );
 });
 

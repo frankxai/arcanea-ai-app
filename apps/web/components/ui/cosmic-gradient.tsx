@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { type Academy } from '@/lib/theme-utils';
 
@@ -44,7 +44,7 @@ const CosmicGradient = React.forwardRef<HTMLDivElement, CosmicGradientProps>(
 
     if (animated) {
       return (
-        <motion.div
+        <m.div
           ref={ref}
           className={baseClassName}
           style={{ opacity }}

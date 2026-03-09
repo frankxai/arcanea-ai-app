@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { motion, useInView, Variants } from "framer-motion";
+import { m, useInView, Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
@@ -246,7 +246,7 @@ const StatCard = React.forwardRef<HTMLDivElement, StatCardProps>(
 
     if (animate) {
       return (
-        <motion.div
+        <m.div
           ref={ref}
           variants={cardVariants}
           initial="hidden"
@@ -254,7 +254,7 @@ const StatCard = React.forwardRef<HTMLDivElement, StatCardProps>(
           custom={delay}
         >
           {cardContent}
-        </motion.div>
+        </m.div>
       );
     }
 

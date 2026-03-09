@@ -38,7 +38,7 @@ export default async function GraphPage() {
             href="/library/codex"
             className="rounded-full border border-white/[0.06] px-4 py-2 text-sm text-text-muted hover:border-atlantean-teal-aqua/30 hover:text-atlantean-teal-aqua transition-all duration-300"
           >
-            Luminor Codex
+            Codex
           </Link>
           <span className="rounded-full bg-atlantean-teal-aqua px-4 py-2 text-sm font-semibold text-cosmic-deep">
             Relationship Graph

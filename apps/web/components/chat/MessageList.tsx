@@ -86,9 +86,9 @@ export function MessageBubble({ message, guardian }: MessageBubbleProps) {
         <div
           className="max-w-[72%] px-4 py-3 rounded-2xl rounded-br-sm text-sm leading-relaxed text-foreground"
           style={{
-            background: 'rgba(139,92,246,0.22)',
+            background: 'rgba(13,71,161,0.22)',
             backdropFilter: 'blur(14px)',
-            border: '1px solid rgba(139,92,246,0.38)',
+            border: '1px solid rgba(13,71,161,0.38)',
           }}
         >
           {message.content}
@@ -123,7 +123,7 @@ export function MessageBubble({ message, guardian }: MessageBubbleProps) {
           style={{
             background: 'rgba(10,10,20,0.65)',
             backdropFilter: 'blur(14px)',
-            border: '1px solid rgba(139,92,246,0.15)',
+            border: '1px solid rgba(13,71,161,0.15)',
           }}
         >
           {message.isStreaming ? (

@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { motion, Variants } from "framer-motion";
+import { m, Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarProps } from "./avatar";
 import { PhQuotes } from "@/lib/phosphor-icons";
@@ -242,7 +242,7 @@ const TestimonialCard = React.forwardRef<HTMLDivElement, TestimonialCardProps>(
 
     if (animated) {
       return (
-        <motion.div
+        <m.div
           ref={ref}
           variants={animationVariants}
           initial="hidden"
@@ -251,7 +251,7 @@ const TestimonialCard = React.forwardRef<HTMLDivElement, TestimonialCardProps>(
           transition={{ duration: 0.2 }}
         >
           {cardContent}
-        </motion.div>
+        </m.div>
       );
     }
 

@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { cosmicSlideUp } from '@/lib/animations';
 import { type Academy, getAcademyClasses } from '@/lib/theme-utils';
@@ -34,7 +34,7 @@ const ChatMessage = React.memo<ChatMessageProps>(React.forwardRef<HTMLDivElement
     const isUser = role === 'user';
 
     return (
-      <motion.div
+      <m.div
         ref={ref}
         variants={cosmicSlideUp}
         initial="hidden"
@@ -96,13 +96,13 @@ const ChatMessage = React.memo<ChatMessageProps>(React.forwardRef<HTMLDivElement
           >
             {content}
             {isStreaming && (
-              <motion.span
+              <m.span
                 className={cn('ml-1', academyClasses.text)}
                 animate={{ opacity: [0, 1, 0] }}
                 transition={{ duration: 1, repeat: Infinity }}
               >
                 ▊
-              </motion.span>
+              </m.span>
             )}
           </div>
 
@@ -116,7 +116,7 @@ const ChatMessage = React.memo<ChatMessageProps>(React.forwardRef<HTMLDivElement
             </span>
           )}
         </div>
-      </motion.div>
+      </m.div>
     );
   }
 ));

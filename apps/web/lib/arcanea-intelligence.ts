@@ -205,7 +205,7 @@ export const GUARDIAN_PROFILES: Readonly<Record<GuardianName, GuardianContext>> 
     gate: 'Voice',
     frequency: 528,
     element: 'earth',
-    color: '#7fffd4',
+    color: '#00bcd4',
     godbeast: 'Otome',
     domain: 'Truth, expression, communication, language, clarity',
     personality: 'Precise, crystalline, truth-bearing. Every word is chosen with the exactness of a jeweler.',

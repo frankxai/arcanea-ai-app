@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { m, useInView, AnimatePresence, LazyMotion, domMax } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { PhQuestion, PhPlus, PhMinus } from '@/lib/phosphor-icons';
 
@@ -56,7 +56,7 @@ function FAQItem({
   const isInView = useInView(ref, { once: true, margin: '-50px' });
 
   return (
-    <motion.div
+    <m.div
       ref={ref}
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -83,7 +83,7 @@ function FAQItem({
       </button>
       <AnimatePresence>
         {isOpen && (
-          <motion.div
+          <m.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
@@ -91,10 +91,10 @@ function FAQItem({
             className="overflow-hidden"
           >
             <p className="pb-6 text-text-secondary leading-relaxed">{answer}</p>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -104,6 +104,7 @@ export function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
+    <LazyMotion features={domMax}>
     <section ref={ref} className="py-32 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 -z-10">
@@ -112,7 +113,7 @@ export function FAQSection() {
 
       <div className="max-w-4xl mx-auto px-6">
         {/* Header */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
@@ -127,7 +128,7 @@ export function FAQSection() {
           <p className="text-xl text-text-secondary">
             Everything you need to know about Arcanea.
           </p>
-        </motion.div>
+        </m.div>
 
         {/* FAQ list */}
         <div className="border-t border-white/[0.06]">
@@ -144,7 +145,7 @@ export function FAQSection() {
         </div>
 
         {/* Still have questions */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.5 }}
@@ -160,8 +161,9 @@ export function FAQSection() {
           >
             Contact Support
           </a>
-        </motion.div>
+        </m.div>
       </div>
     </section>
+    </LazyMotion>
   );
 }

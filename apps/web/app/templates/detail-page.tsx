@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { LazyMotion, domAnimation, m } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -521,7 +521,7 @@ function RelatedItems({ related }: { related?: DetailPageProps["related"] }) {
       </h2>
       <div className="grid md:grid-cols-3 gap-6">
         {related.map((item, index) => (
-          <motion.div
+          <m.div
             key={item.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -549,7 +549,7 @@ function RelatedItems({ related }: { related?: DetailPageProps["related"] }) {
                 </CosmicCardContent>
               </CosmicCard>
             </Link>
-          </motion.div>
+          </m.div>
         ))}
       </div>
     </section>
@@ -609,6 +609,7 @@ export function DetailPage({
   }
 
   return (
+    <LazyMotion features={domAnimation}>
     <div className={cn("min-h-screen py-8 px-6", className)}>
       <div className="max-w-6xl mx-auto">
         {/* Header */}
@@ -656,6 +657,7 @@ export function DetailPage({
         <RelatedItems related={related} />
       </div>
     </div>
+    </LazyMotion>
   );
 }
 

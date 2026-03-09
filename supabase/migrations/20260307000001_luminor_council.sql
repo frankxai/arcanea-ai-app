@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS public.council_convenings (
   started_at        timestamptz NOT NULL DEFAULT now(),
   completed_at      timestamptz,
   duration_minutes  int         CHECK (duration_minutes IS NULL OR duration_minutes >= 0),
-  seats_addressed   uuid[]      DEFAULT '{}',
+  seats_addressed   text[]      DEFAULT '{}',
   imprint_notes     jsonb       NOT NULL DEFAULT '{}',
   depth_rating      int         CHECK (depth_rating BETWEEN 1 AND 10),
   journal_entry     text,
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS public.council_convenings (
 COMMENT ON TABLE public.council_convenings IS
   'Immutable log of each nightly council session. completed_at NULL means session is in progress.';
 COMMENT ON COLUMN public.council_convenings.seats_addressed IS
-  'Array of council_seat ids addressed during this convening.';
+  'Array of luminor names addressed during this convening.';
 COMMENT ON COLUMN public.council_convenings.imprint_notes IS
   'Keyed by seat id or luminor_name; freeform notes per Luminor addressed.';
 

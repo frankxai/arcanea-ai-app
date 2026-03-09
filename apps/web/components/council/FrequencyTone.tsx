@@ -11,6 +11,8 @@ interface FrequencyToneProps {
   onToggle?: (playing: boolean) => void;
 }
 
+const PULSE_KEYFRAMES = `@keyframes pulse { 0% { transform: scaleY(0.6); } 100% { transform: scaleY(1); } }`;
+
 export function FrequencyTone({
   frequency,
   isPlaying,
@@ -89,6 +91,8 @@ export function FrequencyTone({
   if (!showControls) return null;
 
   return (
+    <>
+    {isPlaying && <style dangerouslySetInnerHTML={{ __html: PULSE_KEYFRAMES }} />}
     <button
       onClick={() => onToggle?.(!isPlaying)}
       className="flex items-center gap-2.5 px-4 py-2 rounded-xl border transition-all hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2"
@@ -139,5 +143,6 @@ export function FrequencyTone({
         </span>
       )}
     </button>
+    </>
   );
 }

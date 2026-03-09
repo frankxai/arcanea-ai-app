@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
+import { LazyMotion, domAnimation, m } from 'framer-motion'
 import {
   PhCamera,
   PhFloppyDisk,
@@ -261,248 +261,250 @@ export default function EditProfilePage() {
     : '??'
 
   return (
-    <div className="min-h-screen bg-black">
-      {/* Toast */}
-      {toast && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          className={`fixed top-4 right-4 z-50 flex items-center gap-2 px-4 py-3 rounded-lg border backdrop-blur-xl font-body text-sm ${
-            toast.type === 'success'
-              ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
-              : 'bg-red-500/10 border-red-500/30 text-red-400'
-          }`}
-        >
-          {toast.type === 'success' ? (
-            <PhCheck size={16} weight="duotone" />
-          ) : (
-            <PhWarning size={16} weight="duotone" />
-          )}
-          {toast.message}
-        </motion.div>
-      )}
-
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-10"
-        >
-          <button
-            onClick={() => router.push(`/profile/${user.id}`)}
-            className="inline-flex items-center gap-2 text-white/[0.25] hover:text-white/[0.40] transition-colors font-body text-sm mb-4"
-          >
-            <PhArrowLeft size={16} weight="duotone" />
-            Back to Profile
-          </button>
-          <h1 className="text-3xl font-display font-bold bg-gradient-to-r from-violet-500 to-cyan-400 bg-clip-text text-transparent">
-            Edit Profile
-          </h1>
-          <p className="text-white/[0.25] font-body mt-1">Shape your identity in the Arcanea universe</p>
-        </motion.div>
-
-        <form onSubmit={handleSubmit} className="space-y-8">
-          {/* Avatar Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
+    <LazyMotion features={domAnimation} strict>
+      <div className="min-h-screen bg-black">
+        {/* Toast */}
+        {toast && (
+          <m.div
+            initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.05 }}
-            className="bg-black/40 backdrop-blur-xl rounded-2xl p-6 border border-white/[0.06]"
+            exit={{ opacity: 0, y: -20 }}
+            className={`fixed top-4 right-4 z-50 flex items-center gap-2 px-4 py-3 rounded-lg border backdrop-blur-xl font-body text-sm ${
+              toast.type === 'success'
+                ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
+                : 'bg-red-500/10 border-red-500/30 text-red-400'
+            }`}
           >
-            <h2 className="text-lg font-display font-bold text-white mb-5">Profile Picture</h2>
-            <div className="flex items-center gap-6">
-              <div className="relative group shrink-0">
-                <div className="w-28 h-28 rounded-full p-0.5 bg-gradient-to-br from-violet-500 to-cyan-400">
-                  <div className="w-full h-full rounded-full bg-black overflow-hidden flex items-center justify-center relative">
-                    {displayAvatar ? (
-                      <Image
-                        src={displayAvatar}
-                        alt="Avatar"
-                        width={112}
-                        height={112}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <span className="text-2xl font-display font-bold text-white/[0.40]">
-                        {initials}
-                      </span>
-                    )}
+            {toast.type === 'success' ? (
+              <PhCheck size={16} weight="duotone" />
+            ) : (
+              <PhWarning size={16} weight="duotone" />
+            )}
+            {toast.message}
+          </m.div>
+        )}
 
-                    {isUploading && (
-                      <div className="absolute inset-0 flex items-center justify-center bg-black/60">
-                        <PhSpinner size={24} weight="duotone" className="text-white animate-spin" />
-                      </div>
-                    )}
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          {/* Header */}
+          <m.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-10"
+          >
+            <button
+              onClick={() => router.push(`/profile/${user.id}`)}
+              className="inline-flex items-center gap-2 text-white/[0.25] hover:text-white/[0.40] transition-colors font-body text-sm mb-4"
+            >
+              <PhArrowLeft size={16} weight="duotone" />
+              Back to Profile
+            </button>
+            <h1 className="text-3xl font-display font-bold bg-gradient-to-r from-violet-500 to-cyan-400 bg-clip-text text-transparent">
+              Edit Profile
+            </h1>
+            <p className="text-white/[0.25] font-body mt-1">Shape your identity in the Arcanea universe</p>
+          </m.div>
+
+          <form onSubmit={handleSubmit} className="space-y-8">
+            {/* Avatar Section */}
+            <m.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.05 }}
+              className="bg-black/40 backdrop-blur-xl rounded-2xl p-6 border border-white/[0.06]"
+            >
+              <h2 className="text-lg font-display font-bold text-white mb-5">Profile Picture</h2>
+              <div className="flex items-center gap-6">
+                <div className="relative group shrink-0">
+                  <div className="w-28 h-28 rounded-full p-0.5 bg-gradient-to-br from-violet-500 to-cyan-400">
+                    <div className="w-full h-full rounded-full bg-black overflow-hidden flex items-center justify-center relative">
+                      {displayAvatar ? (
+                        <Image
+                          src={displayAvatar}
+                          alt="Avatar"
+                          width={112}
+                          height={112}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <span className="text-2xl font-display font-bold text-white/[0.40]">
+                          {initials}
+                        </span>
+                      )}
+
+                      {isUploading && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/60">
+                          <PhSpinner size={24} weight="duotone" className="text-white animate-spin" />
+                        </div>
+                      )}
+                    </div>
                   </div>
+
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={isUploading}
+                    className="absolute inset-0 flex items-center justify-center bg-black/60 rounded-full opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer disabled:cursor-wait"
+                  >
+                    <PhCamera size={24} weight="duotone" className="text-white" />
+                  </button>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleAvatarUpload}
+                    className="hidden"
+                  />
                 </div>
 
-                <button
-                  type="button"
-                  onClick={() => fileInputRef.current?.click()}
-                  disabled={isUploading}
-                  className="absolute inset-0 flex items-center justify-center bg-black/60 rounded-full opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer disabled:cursor-wait"
-                >
-                  <PhCamera size={24} weight="duotone" className="text-white" />
-                </button>
+                <div>
+                  <p className="text-white/[0.40] font-body text-sm">
+                    Click the avatar to upload a new picture
+                  </p>
+                  <p className="text-white/[0.20] font-body text-xs mt-1">
+                    JPG, PNG or WebP. Max 5 MB.
+                  </p>
+                </div>
+              </div>
+            </m.div>
+
+            {/* Basic Info */}
+            <m.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="bg-black/40 backdrop-blur-xl rounded-2xl p-6 border border-white/[0.06] space-y-5"
+            >
+              <h2 className="text-lg font-display font-bold text-white">Basic Information</h2>
+
+              <FieldGroup label="Display Name" required>
                 <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/*"
-                  onChange={handleAvatarUpload}
-                  className="hidden"
+                  type="text"
+                  name="display_name"
+                  value={formData.display_name}
+                  onChange={handleChange}
+                  maxLength={100}
+                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] text-white border border-white/[0.06] focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/30 outline-none transition-all font-body text-sm placeholder:text-white/[0.12]"
+                  placeholder="Your display name"
+                  required
                 />
-              </div>
+              </FieldGroup>
 
-              <div>
-                <p className="text-white/[0.40] font-body text-sm">
-                  Click the avatar to upload a new picture
-                </p>
-                <p className="text-white/[0.20] font-body text-xs mt-1">
-                  JPG, PNG or WebP. Max 5 MB.
-                </p>
-              </div>
-            </div>
-          </motion.div>
+              <FieldGroup label="Bio" hint={`${formData.bio.length}/500`}>
+                <textarea
+                  name="bio"
+                  value={formData.bio}
+                  onChange={handleChange}
+                  rows={4}
+                  maxLength={500}
+                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] text-white border border-white/[0.06] focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/30 outline-none transition-all font-body text-sm resize-none placeholder:text-white/[0.12]"
+                  placeholder="Tell the world about your creative journey..."
+                />
+              </FieldGroup>
+            </m.div>
 
-          {/* Basic Info */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="bg-black/40 backdrop-blur-xl rounded-2xl p-6 border border-white/[0.06] space-y-5"
-          >
-            <h2 className="text-lg font-display font-bold text-white">Basic Information</h2>
-
-            <FieldGroup label="Display Name" required>
-              <input
-                type="text"
-                name="display_name"
-                value={formData.display_name}
-                onChange={handleChange}
-                maxLength={100}
-                className="w-full px-4 py-3 rounded-xl bg-white/[0.04] text-white border border-white/[0.06] focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/30 outline-none transition-all font-body text-sm placeholder:text-white/[0.12]"
-                placeholder="Your display name"
-                required
-              />
-            </FieldGroup>
-
-            <FieldGroup label="Bio" hint={`${formData.bio.length}/500`}>
-              <textarea
-                name="bio"
-                value={formData.bio}
-                onChange={handleChange}
-                rows={4}
-                maxLength={500}
-                className="w-full px-4 py-3 rounded-xl bg-white/[0.04] text-white border border-white/[0.06] focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/30 outline-none transition-all font-body text-sm resize-none placeholder:text-white/[0.12]"
-                placeholder="Tell the world about your creative journey..."
-              />
-            </FieldGroup>
-          </motion.div>
-
-          {/* Arcanea Identity */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15 }}
-            className="bg-black/40 backdrop-blur-xl rounded-2xl p-6 border border-white/[0.06] space-y-5"
-          >
-            <h2 className="text-lg font-display font-bold text-white">Arcanea Identity</h2>
-            <p className="text-white/[0.25] font-body text-sm -mt-2">
-              Choose your path through the universe
-            </p>
-
-            <FieldGroup label="Active Gate" hint={formData.active_gate ? GATE_FREQUENCIES[formData.active_gate] : undefined}>
-              <select
-                name="active_gate"
-                value={formData.active_gate}
-                onChange={handleChange}
-                className="w-full px-4 py-3 rounded-xl bg-white/[0.04] text-white border border-white/[0.06] focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/30 outline-none transition-all font-body text-sm appearance-none cursor-pointer"
-              >
-                <option value="" className="bg-black text-white/[0.25]">
-                  Select a gate...
-                </option>
-                {GATES.map((gate) => (
-                  <option key={gate} value={gate} className="bg-black text-white">
-                    {gate} ({GATE_FREQUENCIES[gate]})
-                  </option>
-                ))}
-              </select>
-            </FieldGroup>
-
-            <FieldGroup label="Guardian">
-              <select
-                name="guardian"
-                value={formData.guardian}
-                onChange={handleChange}
-                className="w-full px-4 py-3 rounded-xl bg-white/[0.04] text-white border border-white/[0.06] focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/30 outline-none transition-all font-body text-sm appearance-none cursor-pointer"
-              >
-                <option value="" className="bg-black text-white/[0.25]">
-                  Select a guardian...
-                </option>
-                {GUARDIANS.map((g) => (
-                  <option key={g} value={g} className="bg-black text-white">
-                    {g}
-                  </option>
-                ))}
-              </select>
-            </FieldGroup>
-
-            <FieldGroup label="Academy House">
-              <select
-                name="academy_house"
-                value={formData.academy_house}
-                onChange={handleChange}
-                className="w-full px-4 py-3 rounded-xl bg-white/[0.04] text-white border border-white/[0.06] focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/30 outline-none transition-all font-body text-sm appearance-none cursor-pointer"
-              >
-                <option value="" className="bg-black text-white/[0.25]">
-                  Select a house...
-                </option>
-                {ACADEMY_HOUSES.map((house) => (
-                  <option key={house} value={house} className="bg-black text-white">
-                    House {house}
-                  </option>
-                ))}
-              </select>
-            </FieldGroup>
-          </motion.div>
-
-          {/* Action Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="flex gap-3 justify-end"
-          >
-            <button
-              type="button"
-              onClick={() => router.push(`/profile/${user.id}`)}
-              className="px-5 py-2.5 border border-white/[0.12] rounded-lg text-white/[0.40] hover:bg-white/[0.04] transition-colors font-body text-sm"
+            {/* Arcanea Identity */}
+            <m.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15 }}
+              className="bg-black/40 backdrop-blur-xl rounded-2xl p-6 border border-white/[0.06] space-y-5"
             >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={isSubmitting || isUploading}
-              className="inline-flex items-center gap-2 px-6 py-2.5 bg-violet-600 hover:bg-violet-500 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg transition-colors font-body text-sm font-medium"
+              <h2 className="text-lg font-display font-bold text-white">Arcanea Identity</h2>
+              <p className="text-white/[0.25] font-body text-sm -mt-2">
+                Choose your path through the universe
+              </p>
+
+              <FieldGroup label="Active Gate" hint={formData.active_gate ? GATE_FREQUENCIES[formData.active_gate] : undefined}>
+                <select
+                  name="active_gate"
+                  value={formData.active_gate}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] text-white border border-white/[0.06] focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/30 outline-none transition-all font-body text-sm appearance-none cursor-pointer"
+                >
+                  <option value="" className="bg-black text-white/[0.25]">
+                    Select a gate...
+                  </option>
+                  {GATES.map((gate) => (
+                    <option key={gate} value={gate} className="bg-black text-white">
+                      {gate} ({GATE_FREQUENCIES[gate]})
+                    </option>
+                  ))}
+                </select>
+              </FieldGroup>
+
+              <FieldGroup label="Guardian">
+                <select
+                  name="guardian"
+                  value={formData.guardian}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] text-white border border-white/[0.06] focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/30 outline-none transition-all font-body text-sm appearance-none cursor-pointer"
+                >
+                  <option value="" className="bg-black text-white/[0.25]">
+                    Select a guardian...
+                  </option>
+                  {GUARDIANS.map((g) => (
+                    <option key={g} value={g} className="bg-black text-white">
+                      {g}
+                    </option>
+                  ))}
+                </select>
+              </FieldGroup>
+
+              <FieldGroup label="Academy House">
+                <select
+                  name="academy_house"
+                  value={formData.academy_house}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] text-white border border-white/[0.06] focus:border-violet-500/50 focus:ring-1 focus:ring-violet-500/30 outline-none transition-all font-body text-sm appearance-none cursor-pointer"
+                >
+                  <option value="" className="bg-black text-white/[0.25]">
+                    Select a house...
+                  </option>
+                  {ACADEMY_HOUSES.map((house) => (
+                    <option key={house} value={house} className="bg-black text-white">
+                      House {house}
+                    </option>
+                  ))}
+                </select>
+              </FieldGroup>
+            </m.div>
+
+            {/* Action Buttons */}
+            <m.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="flex gap-3 justify-end"
             >
-              {isSubmitting ? (
-                <>
-                  <PhSpinner size={16} weight="duotone" className="animate-spin" />
-                  Saving...
-                </>
-              ) : (
-                <>
-                  <PhFloppyDisk size={16} weight="duotone" />
-                  Save Changes
-                </>
-              )}
-            </button>
-          </motion.div>
-        </form>
+              <button
+                type="button"
+                onClick={() => router.push(`/profile/${user.id}`)}
+                className="px-5 py-2.5 border border-white/[0.12] rounded-lg text-white/[0.40] hover:bg-white/[0.04] transition-colors font-body text-sm"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={isSubmitting || isUploading}
+                className="inline-flex items-center gap-2 px-6 py-2.5 bg-violet-600 hover:bg-violet-500 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg transition-colors font-body text-sm font-medium"
+              >
+                {isSubmitting ? (
+                  <>
+                    <PhSpinner size={16} weight="duotone" className="animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  <>
+                    <PhFloppyDisk size={16} weight="duotone" />
+                    Save Changes
+                  </>
+                )}
+              </button>
+            </m.div>
+          </form>
+        </div>
       </div>
-    </div>
+    </LazyMotion>
   )
 }
 

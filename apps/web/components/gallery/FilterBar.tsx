@@ -35,7 +35,7 @@ export function FilterBar({
       className="sticky top-0 z-40 w-full border-b"
       style={{
         background: 'rgba(10,10,15,0.85)',
-        borderColor: 'rgba(139,92,246,0.12)',
+        borderColor: 'rgba(13,71,161,0.12)',
         backdropFilter: 'blur(20px)',
       }}
     >
@@ -62,14 +62,14 @@ export function FilterBar({
                       ? {
                           background: color
                             ? `rgba(${hexToRgb(color)}, 0.2)`
-                            : 'rgba(139,92,246,0.2)',
-                          borderColor: color || '#8b5cf6',
-                          color: color || '#c4b5fd',
-                          boxShadow: `0 0 12px ${color ? `rgba(${hexToRgb(color)}, 0.25)` : 'rgba(139,92,246,0.25)'}`,
+                            : 'rgba(13,71,161,0.2)',
+                          borderColor: color || '#0d47a1',
+                          color: color || '#00bcd4',
+                          boxShadow: `0 0 12px ${color ? `rgba(${hexToRgb(color)}, 0.25)` : 'rgba(13,71,161,0.25)'}`,
                         }
                       : {
                           background: 'rgba(255,255,255,0.04)',
-                          borderColor: 'rgba(139,92,246,0.15)',
+                          borderColor: 'rgba(13,71,161,0.15)',
                           color: '#7c6fa0',
                         }
                   }
@@ -113,7 +113,7 @@ export function FilterBar({
                           }
                         : {
                             background: 'rgba(255,255,255,0.03)',
-                            borderColor: 'rgba(139,92,246,0.1)',
+                            borderColor: 'rgba(13,71,161,0.1)',
                             color: '#7c6fa0',
                           }
                     }
@@ -125,7 +125,7 @@ export function FilterBar({
             </div>
             <span
               className="text-xs font-mono shrink-0"
-              style={{ color: 'rgba(139,92,246,0.6)' }}
+              style={{ color: 'rgba(13,71,161,0.6)' }}
               aria-live="polite"
               aria-label={`${resultCount} results`}
             >
@@ -141,6 +141,6 @@ export function FilterBar({
 // Helper
 function hexToRgb(hex: string): string {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
-  if (!result) return '139,92,246'
+  if (!result) return '13,71,161'
   return `${parseInt(result[1], 16)},${parseInt(result[2], 16)},${parseInt(result[3], 16)}`
 }

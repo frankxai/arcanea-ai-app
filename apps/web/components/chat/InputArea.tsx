@@ -42,7 +42,7 @@ export function InputArea({ value, onChange, onSubmit, guardian, disabled }: Inp
     <div
       className="px-4 md:px-8 py-4 border-t shrink-0"
       style={{
-        borderColor: 'rgba(139,92,246,0.15)',
+        borderColor: 'rgba(13,71,161,0.15)',
         background: 'rgba(10,10,20,0.85)',
         backdropFilter: 'blur(20px)',
       }}
@@ -58,7 +58,7 @@ export function InputArea({ value, onChange, onSubmit, guardian, disabled }: Inp
         className="relative flex items-end gap-2 rounded-xl mt-2"
         style={{
           background: 'rgba(255,255,255,0.04)',
-          border: `1px solid ${canSend ? `${guardian.glowColor}50` : 'rgba(139,92,246,0.2)'}`,
+          border: `1px solid ${canSend ? `${guardian.glowColor}50` : 'rgba(13,71,161,0.2)'}`,
           transition: 'border-color 0.2s',
         }}
       >
@@ -119,7 +119,7 @@ export function InputArea({ value, onChange, onSubmit, guardian, disabled }: Inp
             style={
               canSend
                 ? {
-                    background: `linear-gradient(135deg, #8b5cf6, ${guardian.glowColor}cc)`,
+                    background: `linear-gradient(135deg, #0d47a1, ${guardian.glowColor}cc)`,
                     boxShadow: `0 0 16px ${guardian.glowColor}40`,
                   }
                 : { background: 'rgba(255,255,255,0.05)' }
@@ -155,15 +155,15 @@ function SuggestedPrompts({
           className="flex-shrink-0 px-3 py-1.5 rounded-full text-xs text-muted-foreground/80 hover:text-foreground transition-all duration-200 hover:scale-105"
           style={{
             background: 'rgba(255,255,255,0.04)',
-            border: '1px solid rgba(139,92,246,0.2)',
+            border: '1px solid rgba(13,71,161,0.2)',
             backdropFilter: 'blur(8px)',
           }}
           onMouseEnter={(e) => {
-            ;(e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(139,92,246,0.45)'
-            ;(e.currentTarget as HTMLButtonElement).style.background = 'rgba(139,92,246,0.1)'
+            ;(e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(13,71,161,0.45)'
+            ;(e.currentTarget as HTMLButtonElement).style.background = 'rgba(13,71,161,0.1)'
           }}
           onMouseLeave={(e) => {
-            ;(e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(139,92,246,0.2)'
+            ;(e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(13,71,161,0.2)'
             ;(e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.04)'
           }}
           role="listitem"

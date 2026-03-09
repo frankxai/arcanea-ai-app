@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { m, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import Link from "next/link";
 
@@ -143,7 +143,7 @@ export function GuardiansPreview() {
 
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
@@ -161,12 +161,12 @@ export function GuardiansPreview() {
             Ten Gods and Goddesses, each bonded to a primal Godbeast, guarding
             the energy channels that flow through every conscious being.
           </p>
-        </motion.div>
+        </m.div>
 
         {/* Guardian Grid */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-12">
           {GUARDIANS.map((guardian, i) => (
-            <motion.div
+            <m.div
               key={guardian.name}
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -205,7 +205,7 @@ export function GuardiansPreview() {
 
                 {/* Expanded info on hover */}
                 {hoveredIndex === i && (
-                  <motion.div
+                  <m.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
                     className="relative mt-4 pt-4 border-t border-white/[0.06]"
@@ -221,15 +221,15 @@ export function GuardiansPreview() {
                       <span className="text-text-muted">Element:</span>
                       <span className="text-white">{guardian.element}</span>
                     </div>
-                  </motion.div>
+                  </m.div>
                 )}
               </div>
-            </motion.div>
+            </m.div>
           ))}
         </div>
 
         {/* CTA */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.6 }}
@@ -242,7 +242,7 @@ export function GuardiansPreview() {
             Explore All Guardians
             <Icons.ArrowRight />
           </Link>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

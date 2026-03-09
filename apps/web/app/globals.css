@@ -913,3 +913,20 @@ p a, span a, li a {
     250px -280px 0 rgba(13, 71, 161, 0.25);
   animation: float-particle-alt 10s ease-in-out infinite 2s;
 }
+
+/* ============================================================
+   GUARDIAN COLOR SHIFTS — M010 Layer 1
+   Pages in different Guardian domains subtly shift accent colors.
+   Apply via data-guardian attribute on a wrapper element.
+   ============================================================ */
+
+[data-guardian="lyssandria"] { --guardian-accent: 142 71% 45%; } /* Earth green — Foundation 174 Hz */
+[data-guardian="leyla"]      { --guardian-accent: 210 80% 65%; } /* Water blue — Flow 285 Hz */
+[data-guardian="draconia"]   { --guardian-accent: 15 90% 55%; }  /* Fire orange — Fire 396 Hz */
+[data-guardian="maylinn"]    { --guardian-accent: 340 65% 60%; } /* Heart rose — Heart 417 Hz */
+[data-guardian="alera"]      { --guardian-accent: 45 100% 50%; } /* Voice gold — Voice 528 Hz */
+[data-guardian="lyria"]      { --guardian-accent: 270 60% 55%; } /* Sight indigo — Sight 639 Hz */
+[data-guardian="aiyami"]     { --guardian-accent: 45 80% 75%; }  /* Crown white-gold — Crown 741 Hz */
+[data-guardian="elara"]      { --guardian-accent: 220 30% 70%; } /* Shift silver — Shift 852 Hz */
+[data-guardian="ino"]        { --guardian-accent: 174 70% 45%; } /* Unity teal — Unity 963 Hz */
+[data-guardian="shinkami"]   { --guardian-accent: 270 50% 40%; } /* Source purple — Source 1111 Hz */

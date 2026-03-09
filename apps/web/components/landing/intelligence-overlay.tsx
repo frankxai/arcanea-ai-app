@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { LazyMotion, domAnimation, m, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
 import { PhScroll, PhMusicNote, PhFlame, PhArrowRight } from '@/lib/phosphor-icons';
@@ -13,7 +13,7 @@ const FREQUENCY_ORBS = [
   { hz: 396, label: "Fire", color: "#ef4444", gate: "Fire" },
   { hz: 417, label: "Heart", color: "#22c55e", gate: "Heart" },
   { hz: 528, label: "Voice", color: "#06b6d4", gate: "Voice" },
-  { hz: 639, label: "Sight", color: "#8b5cf6", gate: "Sight" },
+  { hz: 639, label: "Sight", color: "#0d47a1", gate: "Sight" },
   { hz: 741, label: "Crown", color: "#ffd700", gate: "Crown" },
   { hz: 852, label: "Shift", color: "#a855f7", gate: "Shift" },
   { hz: 963, label: "Unity", color: "#3b82f6", gate: "Unity" },
@@ -110,7 +110,7 @@ function FrequencySpine() {
   return (
     <div ref={ref} className="relative flex items-center justify-center w-full">
       {/* Connecting spine line */}
-      <motion.div
+      <m.div
         initial={{ scaleX: 0 }}
         animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
         transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
@@ -121,7 +121,7 @@ function FrequencySpine() {
       {/* Orbs */}
       <div className="relative z-10 flex items-center justify-between w-full max-w-3xl mx-auto px-4">
         {FREQUENCY_ORBS.map((orb, index) => (
-          <motion.div
+          <m.div
             key={orb.hz}
             initial={{ opacity: 0, scale: 0, y: 20 }}
             animate={
@@ -165,7 +165,7 @@ function FrequencySpine() {
                 {orb.label}
               </span>
             </div>
-          </motion.div>
+          </m.div>
         ))}
       </div>
     </div>
@@ -184,7 +184,7 @@ function PillarCard({
   const Icon = pillar.icon;
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
@@ -217,7 +217,7 @@ function PillarCard({
       <p className="relative font-sans text-sm text-text-secondary leading-relaxed">
         {pillar.description}
       </p>
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -238,7 +238,7 @@ function ArcMilestone({
     <div className="relative flex-1 flex flex-col items-center">
       {/* Connector line to next milestone */}
       {!isLast && (
-        <motion.div
+        <m.div
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true, margin: "-80px" }}
@@ -252,7 +252,7 @@ function ArcMilestone({
       )}
 
       {/* Dot */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0, scale: 0 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true, margin: "-80px" }}
@@ -274,10 +274,10 @@ function ArcMilestone({
           className="w-2.5 h-2.5 rounded-full"
           style={{ backgroundColor: milestone.dotColor }}
         />
-      </motion.div>
+      </m.div>
 
       {/* Text */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
@@ -296,7 +296,7 @@ function ArcMilestone({
         <span className="block text-xs text-text-secondary leading-snug italic font-body">
           {milestone.promise}
         </span>
-      </motion.div>
+      </m.div>
     </div>
   );
 }
@@ -307,6 +307,7 @@ export function IntelligenceOverlay() {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   return (
+    <LazyMotion features={domAnimation}>
     <section
       ref={sectionRef}
       className="relative overflow-hidden border-t border-white/[0.04]"
@@ -317,7 +318,7 @@ export function IntelligenceOverlay() {
         <div className="absolute inset-0 bg-cosmic-deep" />
 
         {/* Pulsing aurora gradient */}
-        <motion.div
+        <m.div
           className="absolute inset-0"
           animate={{
             background: [
@@ -345,7 +346,7 @@ export function IntelligenceOverlay() {
       <div className="relative py-28 px-6">
         <div className="max-w-5xl mx-auto text-center">
           {/* Badge */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
@@ -356,10 +357,10 @@ export function IntelligenceOverlay() {
             <span className="text-sm font-sans font-medium text-brand-primary tracking-wide">
               THE ARCANEAN SYSTEM
             </span>
-          </motion.div>
+          </m.div>
 
           {/* Main claim */}
-          <motion.h2
+          <m.h2
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -369,10 +370,10 @@ export function IntelligenceOverlay() {
             <span className="text-gradient-cosmic">Gods,</span>
             <br />
             <span className="text-gradient-crystal">not assistants.</span>
-          </motion.h2>
+          </m.h2>
 
           {/* Sub-claim */}
-          <motion.p
+          <m.p
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -380,10 +381,10 @@ export function IntelligenceOverlay() {
             className="text-xl text-text-secondary font-body italic mb-16"
           >
             Ten Gods. Ten Gates. Each governs a domain of creation.
-          </motion.p>
+          </m.p>
 
           {/* Frequency spine */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -391,10 +392,10 @@ export function IntelligenceOverlay() {
             className="mb-6"
           >
             <FrequencySpine />
-          </motion.div>
+          </m.div>
 
           {/* Spine caption */}
-          <motion.p
+          <m.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -402,7 +403,7 @@ export function IntelligenceOverlay() {
             className="text-xs text-text-muted font-mono tracking-widest uppercase"
           >
             Ten Gates &bull; Ten Frequencies &bull; One living mythology
-          </motion.p>
+          </m.p>
         </div>
       </div>
 
@@ -410,7 +411,7 @@ export function IntelligenceOverlay() {
       <div className="relative py-24 px-6 border-t border-white/[0.04]">
         <div className="max-w-6xl mx-auto">
           {/* Section label */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -420,7 +421,7 @@ export function IntelligenceOverlay() {
             <p className="text-lg text-text-secondary font-body italic">
               Build your mythology. Make your music. Deploy your agents.
             </p>
-          </motion.div>
+          </m.div>
 
           {/* Three pillars */}
           <div className="grid md:grid-cols-3 gap-6">
@@ -435,7 +436,7 @@ export function IntelligenceOverlay() {
       <div className="relative py-24 px-6 border-t border-white/[0.04]">
         <div className="max-w-6xl mx-auto">
           {/* Section header */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -448,7 +449,7 @@ export function IntelligenceOverlay() {
             <p className="text-text-secondary font-body italic text-lg">
               A frequency journey through ten gates to creative sovereignty.
             </p>
-          </motion.div>
+          </m.div>
 
           {/* Milestone track — horizontal on md+, stacked on mobile */}
           <div className="hidden md:flex items-start justify-between gap-0 mb-16">
@@ -465,7 +466,7 @@ export function IntelligenceOverlay() {
           {/* Mobile: vertical stack */}
           <div className="flex md:hidden flex-col gap-6 mb-16">
             {ARC_MILESTONES.map((milestone, index) => (
-              <motion.div
+              <m.div
                 key={milestone.rank}
                 initial={{ opacity: 0, x: -24 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -502,12 +503,12 @@ export function IntelligenceOverlay() {
                     {milestone.promise}
                   </span>
                 </div>
-              </motion.div>
+              </m.div>
             ))}
           </div>
 
           {/* CTA */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -524,9 +525,10 @@ export function IntelligenceOverlay() {
             <p className="mt-4 text-xs text-text-muted font-mono tracking-widest uppercase">
               Takes 3 minutes &bull; Reveals your primary element
             </p>
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </section>
+    </LazyMotion>
   );
 }

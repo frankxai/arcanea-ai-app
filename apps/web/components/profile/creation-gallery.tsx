@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { LazyMotion, domMax, m, AnimatePresence } from 'framer-motion';
 import { PhSquaresFour, PhGridFour, PhFunnel, PhSortAscending } from '@/lib/phosphor-icons';
 import { Creation, FilterType, SortOption } from '@/lib/types/profile';
 import { CreationCard } from './creation-card';
@@ -115,129 +115,131 @@ export function CreationGallery({
   ];
 
   return (
-    <div className="space-y-6">
-      {/* Controls Bar */}
-      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-        {/* Filter Buttons */}
-        <div className="flex flex-wrap gap-2">
-          {filterOptions.map((option) => (
-            <Button
-              key={option.value}
-              onClick={() => setFilter(option.value)}
-              className={`px-4 py-2 rounded-xl font-medium transition-all duration-300 ${
-                filter === option.value
-                  ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg shadow-purple-500/30'
-                  : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-              }`}
-            >
-              {option.label}
-            </Button>
-          ))}
-        </div>
-
-        {/* Sort and Layout Controls */}
-        <div className="flex gap-2">
-          {/* Sort Dropdown */}
-          <select
-            value={sort}
-            onChange={(e) => setSort(e.target.value as SortOption)}
-            className="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 border border-purple-500/20 focus:border-purple-500/40 outline-none cursor-pointer"
-          >
-            {sortOptions.map((option) => (
-              <option key={option.value} value={option.value}>
+    <LazyMotion features={domMax} strict>
+      <div className="space-y-6">
+        {/* Controls Bar */}
+        <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+          {/* Filter Buttons */}
+          <div className="flex flex-wrap gap-2">
+            {filterOptions.map((option) => (
+              <Button
+                key={option.value}
+                onClick={() => setFilter(option.value)}
+                className={`px-4 py-2 rounded-xl font-medium transition-all duration-300 ${
+                  filter === option.value
+                    ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg shadow-purple-500/30'
+                    : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                }`}
+              >
                 {option.label}
-              </option>
+              </Button>
             ))}
-          </select>
+          </div>
 
-          {/* Layout Toggle */}
-          <div className="flex gap-1 p-1 rounded-xl bg-slate-800">
-            <Button
-              onClick={() => setLayout('masonry')}
-              className={`p-2 rounded-lg transition-all duration-300 ${
-                layout === 'masonry'
-                  ? 'bg-purple-600 text-white'
-                  : 'text-slate-400 hover:text-white'
-              }`}
+          {/* Sort and Layout Controls */}
+          <div className="flex gap-2">
+            {/* Sort Dropdown */}
+            <select
+              value={sort}
+              onChange={(e) => setSort(e.target.value as SortOption)}
+              className="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 border border-purple-500/20 focus:border-purple-500/40 outline-none cursor-pointer"
             >
-              <PhGridFour className="w-5 h-5" />
-            </Button>
-            <Button
-              onClick={() => setLayout('grid')}
-              className={`p-2 rounded-lg transition-all duration-300 ${
-                layout === 'grid'
-                  ? 'bg-purple-600 text-white'
-                  : 'text-slate-400 hover:text-white'
-              }`}
-            >
-              <PhSquaresFour className="w-5 h-5" />
-            </Button>
+              {sortOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+
+            {/* Layout Toggle */}
+            <div className="flex gap-1 p-1 rounded-xl bg-slate-800">
+              <Button
+                onClick={() => setLayout('masonry')}
+                className={`p-2 rounded-lg transition-all duration-300 ${
+                  layout === 'masonry'
+                    ? 'bg-purple-600 text-white'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                <PhGridFour className="w-5 h-5" />
+              </Button>
+              <Button
+                onClick={() => setLayout('grid')}
+                className={`p-2 rounded-lg transition-all duration-300 ${
+                  layout === 'grid'
+                    ? 'bg-purple-600 text-white'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                <PhSquaresFour className="w-5 h-5" />
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Results Count */}
-      <div className="text-slate-400 text-sm">
-        Showing {filteredCreations.length} {filter === 'all' ? 'creations' : filter + 's'}
-      </div>
-
-      {/* Gallery Grid */}
-      {filteredCreations.length > 0 ? (
-        <motion.div
-          layout
-          className={`grid gap-4 ${
-            layout === 'masonry'
-              ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
-              : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
-          }`}
-        >
-          <AnimatePresence>
-            {filteredCreations.map((creation, index) => (
-              <motion.div
-                key={creation.id}
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3 }}
-              >
-                <CreationCard
-                  creation={creation}
-                  onClick={() => handleCreationClick(creation)}
-                  index={index}
-                />
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
-      ) : (
-        <div className="text-center py-20">
-          <div className="text-slate-400 text-lg">No creations found</div>
-          <p className="text-slate-500 mt-2">Try adjusting your filters</p>
+        {/* Results Count */}
+        <div className="text-slate-400 text-sm">
+          Showing {filteredCreations.length} {filter === 'all' ? 'creations' : filter + 's'}
         </div>
-      )}
 
-      {/* Loading Indicator */}
-      {isLoading && (
-        <div className="flex justify-center py-8">
-          <div className="animate-spin rounded-full h-12 w-12 border-4 border-purple-500 border-t-transparent" />
-        </div>
-      )}
-
-      {/* Load More Trigger */}
-      {hasMore && <div ref={loadMoreRef} className="h-10" />}
-
-      {/* Creation Modal */}
-      <AnimatePresence>
-        {selectedCreation && (
-          <CreationModal
-            creation={selectedCreation}
-            onClose={handleCloseModal}
-            onNext={handleNext}
-            onPrevious={handlePrevious}
-          />
+        {/* Gallery Grid */}
+        {filteredCreations.length > 0 ? (
+          <m.div
+            layout
+            className={`grid gap-4 ${
+              layout === 'masonry'
+                ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
+                : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
+            }`}
+          >
+            <AnimatePresence>
+              {filteredCreations.map((creation, index) => (
+                <m.div
+                  key={creation.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <CreationCard
+                    creation={creation}
+                    onClick={() => handleCreationClick(creation)}
+                    index={index}
+                  />
+                </m.div>
+              ))}
+            </AnimatePresence>
+          </m.div>
+        ) : (
+          <div className="text-center py-20">
+            <div className="text-slate-400 text-lg">No creations found</div>
+            <p className="text-slate-500 mt-2">Try adjusting your filters</p>
+          </div>
         )}
-      </AnimatePresence>
-    </div>
+
+        {/* Loading Indicator */}
+        {isLoading && (
+          <div className="flex justify-center py-8">
+            <div className="animate-spin rounded-full h-12 w-12 border-4 border-purple-500 border-t-transparent" />
+          </div>
+        )}
+
+        {/* Load More Trigger */}
+        {hasMore && <div ref={loadMoreRef} className="h-10" />}
+
+        {/* Creation Modal */}
+        <AnimatePresence>
+          {selectedCreation && (
+            <CreationModal
+              creation={selectedCreation}
+              onClose={handleCloseModal}
+              onNext={handleNext}
+              onPrevious={handlePrevious}
+            />
+          )}
+        </AnimatePresence>
+      </div>
+    </LazyMotion>
   );
 }

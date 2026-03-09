@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
+import { MotionProvider } from "@/lib/motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { PhSparkle, PhArrowRight, PhCircleNotch } from "@/lib/phosphor-icons";
@@ -27,6 +28,7 @@ export default function ChatLandingPage() {
   };
 
   return (
+    <MotionProvider>
     <div className="relative min-h-screen">
       {/* Background */}
       <div className="fixed inset-0 -z-10">
@@ -37,7 +39,7 @@ export default function ChatLandingPage() {
 
       {/* Navigation overlay */}
       {isNavigating && (
-        <motion.div
+        <m.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           className="fixed inset-0 bg-cosmic-void/80 backdrop-blur-sm z-50 flex items-center justify-center"
@@ -48,34 +50,34 @@ export default function ChatLandingPage() {
               Opening session with{" "}
               {navigatingId
                 ? (LUMINORS[navigatingId]?.name ?? navigatingId)
-                : "Luminor"}
+                : "specialist"}
               ...
             </p>
           </div>
-        </motion.div>
+        </m.div>
       )}
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12">
         {/* Header */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
           <h1 className="text-fluid-hero font-display font-bold mb-6 leading-none tracking-tight">
-            Choose an
-            <span className="block text-gradient-brand">Luminor</span>
+            Choose a
+            <span className="block text-gradient-brand">specialist</span>
           </h1>
 
           <p className="text-fluid-lg text-text-secondary leading-relaxed max-w-2xl mx-auto font-body">
             Each guide thinks differently. Pick the one that matches your
             current creative challenge.
           </p>
-        </motion.div>
+        </m.div>
 
         {/* Team filter tabs */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.4 }}
@@ -89,7 +91,7 @@ export default function ChatLandingPage() {
                 : "border-white/[0.06] text-text-muted hover:border-white/[0.12] hover:text-text-secondary"
             }`}
           >
-            All Luminors
+            All
           </button>
           {TEAM_ORDER.map((team) => {
             const meta = TEAMS[team];
@@ -116,7 +118,7 @@ export default function ChatLandingPage() {
               </button>
             );
           })}
-        </motion.div>
+        </m.div>
 
         {/* Luminor grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-14">
@@ -124,7 +126,7 @@ export default function ChatLandingPage() {
             const teamMeta = TEAMS[luminor.team];
             const isThisNavigating = navigatingId === luminor.id;
             return (
-              <motion.div
+              <m.div
                 key={luminor.id}
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -202,7 +204,7 @@ export default function ChatLandingPage() {
                         <span className="font-body text-xs text-text-muted">
                           Chat with {luminor.name}
                         </span>
-                        <motion.div
+                        <m.div
                           animate={
                             isThisNavigating ? { rotate: 90 } : { x: [0, 4, 0] }
                           }
@@ -218,18 +220,18 @@ export default function ChatLandingPage() {
                           ) : (
                             <PhArrowRight className="w-4 h-4" />
                           )}
-                        </motion.div>
+                        </m.div>
                       </div>
                     </div>
                   </div>
                 </button>
-              </motion.div>
+              </m.div>
             );
           })}
         </div>
 
         {/* Footer links */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
@@ -241,7 +243,7 @@ export default function ChatLandingPage() {
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl liquid-glass border border-crystal/20 text-crystal text-sm font-semibold hover:bg-crystal/5 hover:border-crystal/40 transition-all btn-glow"
             >
               <PhSparkle className="w-4 h-4" />
-              View all luminors
+              View all specialists
             </Link>
             <Link
               href="/chat/chronica"
@@ -251,8 +253,9 @@ export default function ChatLandingPage() {
               Start with Chronica
             </Link>
           </div>
-        </motion.div>
+        </m.div>
       </main>
     </div>
+    </MotionProvider>
   );
 }

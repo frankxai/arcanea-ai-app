@@ -13,7 +13,7 @@ const jsonLd = {
       name: "Arcanea",
       url: "https://arcanea.ai",
       description:
-        "A creative ecosystem with Guardians and Luminors, original philosophy texts, and studio workflows for modern creators.",
+        "A creative intelligence platform with AI specialists, an original philosophy library, and studio workflows for modern creators.",
       potentialAction: {
         "@type": "SearchAction",
         target: "https://arcanea.ai/library?q={search_term_string}",
@@ -27,7 +27,7 @@ const jsonLd = {
       logo: "https://arcanea.ai/icon",
       sameAs: ["https://github.com/frankxai"],
       description:
-        "Living intelligence for creators: mythology, AI workflows, and creation systems in one platform.",
+        "Creative intelligence for builders: AI specialists, a philosophy library, and creation tools in one platform.",
     },
   ],
 };

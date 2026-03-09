@@ -132,7 +132,7 @@ export default function ArcanealOnboarding() {
       <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 0 }}>
         <CosmicParticles count={40} />
         {/* Static ambient orbs */}
-        <div className="absolute top-1/3 left-1/5 w-96 h-96 rounded-full bg-[#8b5cf6]/5 blur-[120px]" />
+        <div className="absolute top-1/3 left-1/5 w-96 h-96 rounded-full bg-[#0d47a1]/5 blur-[120px]" />
         <div className="absolute bottom-1/3 right-1/5 w-80 h-80 rounded-full bg-[#00bcd4]/4 blur-[100px]" />
         <div className="absolute top-2/3 left-1/2 w-64 h-64 rounded-full bg-[#ffd700]/3 blur-[90px]" />
       </div>
@@ -155,14 +155,14 @@ export default function ArcanealOnboarding() {
           className="relative rounded-3xl overflow-hidden transition-all duration-300"
           style={{
             background: 'rgba(11,11,20,0.72)',
-            border: '1px solid rgba(139,92,246,0.2)',
+            border: '1px solid rgba(13,71,161,0.2)',
             backdropFilter: 'blur(24px) saturate(1.5)',
             boxShadow:
-              '0 0 0 1px rgba(255,255,255,0.04) inset, 0 32px 80px rgba(0,0,0,0.6), 0 0 60px rgba(139,92,246,0.08)',
+              '0 0 0 1px rgba(255,255,255,0.04) inset, 0 32px 80px rgba(0,0,0,0.6), 0 0 60px rgba(13,71,161,0.08)',
           }}
         >
           {/* Top edge shimmer */}
-          <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#8b5cf6]/40 to-transparent" />
+          <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#0d47a1]/40 to-transparent" />
 
           {/* Step content with cross-fade */}
           <div
@@ -174,7 +174,7 @@ export default function ArcanealOnboarding() {
           >
             {step === 1 && <Step1Welcome onNext={next} />}
 
-            <Suspense fallback={<div className="flex items-center justify-center py-16"><div className="w-8 h-8 border-2 border-[#8b5cf6]/40 border-t-[#8b5cf6] rounded-full animate-spin" /></div>}>
+            <Suspense fallback={<div className="flex items-center justify-center py-16"><div className="w-8 h-8 border-2 border-[#0d47a1]/40 border-t-[#0d47a1] rounded-full animate-spin" /></div>}>
               {step === 2 && (
                 <Step2CreatorType
                   selected={selectedCreatorTypes}

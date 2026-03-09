@@ -38,7 +38,7 @@ const TIERS = [
       "Custom specialist training",
       "API access",
     ],
-    cta: "Start Ascending",
+    cta: "Get Started",
     href: "/auth/signup?plan=ascendant",
     popular: true,
     color: "violet",

@@ -200,7 +200,7 @@ const FEATURES: OSFeature[] = [
   },
   {
     title: "Multi-Model Support",
-    description: "Seamlessly switch between different AI models and providers.",
+    description: "Switch between different AI models and providers.",
     icon: "Layers",
     color: "#3b82f6",
   },

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { isFavorited, addFavorite, removeFavorite } from '@/lib/imagine-favorites';
 
 const ASPECT_CLASSES: Record<string, string> = {
@@ -116,7 +116,7 @@ export function ImageCard({
 
   return (
     <>
-      <motion.div
+      <m.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4, delay: index * 0.08 }}
@@ -248,7 +248,7 @@ export function ImageCard({
             </div>
           </div>
         )}
-      </motion.div>
+      </m.div>
 
       {/* Lightbox */}
       {isExpanded && (
@@ -256,7 +256,7 @@ export function ImageCard({
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-xl p-4"
           onClick={() => setIsExpanded(false)}
         >
-          <motion.div
+          <m.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.3 }}
@@ -336,7 +336,7 @@ export function ImageCard({
                 <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
             </button>
-          </motion.div>
+          </m.div>
         </div>
       )}
     </>

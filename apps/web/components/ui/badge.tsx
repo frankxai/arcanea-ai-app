@@ -44,7 +44,7 @@ const badgeVariants = cva(
         ],
         brand: [
           'bg-brand-primary/10 border-brand-primary/30 text-[#a78bfa]',
-          'shadow-[0_0_8px_rgba(139,92,246,0.15)]',
+          'shadow-[0_0_8px_rgba(13,71,161,0.15)]',
         ],
       },
       size: {
