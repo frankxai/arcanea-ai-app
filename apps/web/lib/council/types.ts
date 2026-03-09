@@ -60,7 +60,6 @@ export interface CouncilConvening {
 // -----------------------------------------------------------------------
 
 export interface CreateCouncilInput {
-  user_id: string;
   name?: string;
 }
 
