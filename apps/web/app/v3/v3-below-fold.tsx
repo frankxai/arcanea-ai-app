@@ -357,11 +357,11 @@ function MetricsStrip() {
           {/* Glass noise texture */}
           <div className="absolute inset-0 glass-noise opacity-[0.2] pointer-events-none rounded-2xl" />
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 relative">
-            {metrics.map((m, i) => {
-              const Icon = m.icon;
+            {metrics.map((metric, i) => {
+              const Icon = metric.icon;
               return (
                 <m.div
-                  key={m.label}
+                  key={metric.label}
                   className="text-center"
                   initial={{ opacity: 0, y: 16 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -370,20 +370,20 @@ function MetricsStrip() {
                   <div
                     className="w-10 h-10 rounded-xl mx-auto mb-4 flex items-center justify-center"
                     style={{
-                      background: `linear-gradient(135deg, ${m.color}18, ${m.color}08)`,
-                      border: `1px solid ${m.color}20`,
+                      background: `linear-gradient(135deg, ${metric.color}18, ${metric.color}08)`,
+                      border: `1px solid ${metric.color}20`,
                     }}
                   >
-                    <Icon className="w-5 h-5" style={{ color: m.color }} />
+                    <Icon className="w-5 h-5" style={{ color: metric.color }} />
                   </div>
                   <div
                     className="text-3xl md:text-5xl font-display font-bold tracking-tight mb-2"
-                    style={{ color: m.color }}
+                    style={{ color: metric.color }}
                   >
-                    <CountUp target={m.value} suffix={m.suffix} />
+                    <CountUp target={metric.value} suffix={metric.suffix} />
                   </div>
                   <p className="text-xs text-white/35 tracking-wide uppercase font-mono">
-                    {m.label}
+                    {metric.label}
                   </p>
                 </m.div>
               );
