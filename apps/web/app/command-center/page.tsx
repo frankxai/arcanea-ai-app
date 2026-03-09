@@ -302,8 +302,8 @@ export default function CommandCenterPage() {
             </m.div>
 
             <m.div variants={stagger} className="grid md:grid-cols-2 gap-6">
-              {milestones.map((m) => (
-                <MilestoneCard key={m.id} milestone={m} />
+              {milestones.map((ms) => (
+                <MilestoneCard key={ms.id} milestone={ms} />
               ))}
             </m.div>
           </section>
