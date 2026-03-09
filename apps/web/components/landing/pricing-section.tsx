@@ -1,6 +1,6 @@
 "use client";
 
-import { m, useInView, LazyMotion, domAnimation } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import {
   PhCheck,
@@ -75,7 +75,6 @@ export function PricingSection() {
   const [isYearly, setIsYearly] = useState(true);
 
   return (
-    <LazyMotion features={domAnimation}>
     <section ref={ref} id="pricing" className="py-32 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 -z-10">
@@ -85,7 +84,7 @@ export function PricingSection() {
 
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
@@ -130,7 +129,7 @@ export function PricingSection() {
               </span>
             </button>
           </div>
-        </m.div>
+        </motion.div>
 
         {/* Pricing cards */}
         <div className="grid lg:grid-cols-3 gap-8">
@@ -140,7 +139,7 @@ export function PricingSection() {
             const period = isYearly ? "/year" : "/month";
 
             return (
-              <m.div
+              <motion.div
                 key={plan.name}
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -239,13 +238,13 @@ export function PricingSection() {
                     </div>
                   ))}
                 </div>
-              </m.div>
+              </motion.div>
             );
           })}
         </div>
 
         {/* Enterprise CTA */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.5 }}
@@ -261,9 +260,8 @@ export function PricingSection() {
             Contact Sales
             <PhArrowRight className="w-4 h-4" />
           </Link>
-        </m.div>
+        </motion.div>
       </div>
     </section>
-    </LazyMotion>
   );
 }

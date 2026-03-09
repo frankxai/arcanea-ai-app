@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { m, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import {
   PhPaperPlane,
@@ -141,7 +141,7 @@ export function HeroChatBox() {
   };
 
   const handleContinue = () => {
-    router.push(`/chat/chronica${message ? `?prompt=${encodeURIComponent(message.trim())}` : ""}`);
+    router.push("/chat/chronica");
   };
 
   const handleReset = () => {
@@ -158,7 +158,7 @@ export function HeroChatBox() {
     <div className="w-full max-w-2xl mx-auto">
       <AnimatePresence mode="wait">
         {showInput ? (
-          <m.div
+          <motion.div
             key="input"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -211,7 +211,7 @@ export function HeroChatBox() {
             </div>
 
             {/* Suggested prompts */}
-            <m.div
+            <motion.div
               className="mt-5 flex flex-wrap justify-center gap-2"
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
@@ -230,10 +230,10 @@ export function HeroChatBox() {
                   </button>
                 );
               })}
-            </m.div>
-          </m.div>
+            </motion.div>
+          </motion.div>
         ) : (
-          <m.div
+          <motion.div
             key="response"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -262,7 +262,7 @@ export function HeroChatBox() {
                       </span>
                     )}
                     {stream.isStreaming && stream.content && (
-                      <m.span
+                      <motion.span
                         className="inline-block w-[2px] h-[14px] bg-[#00bcd4]/60 ml-0.5 align-middle rounded-full"
                         animate={{ opacity: [1, 0.2] }}
                         transition={{ duration: 0.6, repeat: Infinity }}
@@ -274,7 +274,7 @@ export function HeroChatBox() {
 
               {/* Action bar */}
               {stream.isComplete && (
-                <m.div
+                <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.2, duration: 0.3 }}
@@ -290,13 +290,13 @@ export function HeroChatBox() {
                     onClick={handleContinue}
                     className="group flex items-center gap-1.5 text-[13px] font-semibold text-[#00bcd4]/80 hover:text-[#00bcd4] transition-colors"
                   >
-                    Continue in chat
+                    Continue in studio
                     <PhArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                   </button>
-                </m.div>
+                </motion.div>
               )}
             </div>
-          </m.div>
+          </motion.div>
         )}
       </AnimatePresence>
     </div>

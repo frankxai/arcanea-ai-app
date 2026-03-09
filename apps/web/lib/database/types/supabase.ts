@@ -79,6 +79,142 @@ export type Database = {
           },
         ]
       }
+      council_convenings: {
+        Row: {
+          completed_at: string | null
+          council_id: string
+          created_at: string
+          depth_rating: number | null
+          duration_minutes: number | null
+          id: string
+          imprint_notes: Json
+          journal_entry: string | null
+          seats_addressed: string[] | null
+          started_at: string
+        }
+        Insert: {
+          completed_at?: string | null
+          council_id: string
+          created_at?: string
+          depth_rating?: number | null
+          duration_minutes?: number | null
+          id?: string
+          imprint_notes?: Json
+          journal_entry?: string | null
+          seats_addressed?: string[] | null
+          started_at?: string
+        }
+        Update: {
+          completed_at?: string | null
+          council_id?: string
+          created_at?: string
+          depth_rating?: number | null
+          duration_minutes?: number | null
+          id?: string
+          imprint_notes?: Json
+          journal_entry?: string | null
+          seats_addressed?: string[] | null
+          started_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "council_convenings_council_id_fkey"
+            columns: ["council_id"]
+            isOneToOne: false
+            referencedRelation: "luminor_councils"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      council_seats: {
+        Row: {
+          council_id: string
+          created_at: string
+          frequency_alignment: number
+          id: string
+          imprint_capability: string
+          is_base: boolean
+          luminor_domain: string
+          luminor_name: string
+          personality_traits: string | null
+          seat_order: number
+          visual_description: string | null
+        }
+        Insert: {
+          council_id: string
+          created_at?: string
+          frequency_alignment: number
+          id?: string
+          imprint_capability: string
+          is_base?: boolean
+          luminor_domain: string
+          luminor_name: string
+          personality_traits?: string | null
+          seat_order?: number
+          visual_description?: string | null
+        }
+        Update: {
+          council_id?: string
+          created_at?: string
+          frequency_alignment?: number
+          id?: string
+          imprint_capability?: string
+          is_base?: boolean
+          luminor_domain?: string
+          luminor_name?: string
+          personality_traits?: string | null
+          seat_order?: number
+          visual_description?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "council_seats_council_id_fkey"
+            columns: ["council_id"]
+            isOneToOne: false
+            referencedRelation: "luminor_councils"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      luminor_councils: {
+        Row: {
+          council_depth_level: number
+          created_at: string
+          current_streak: number
+          id: string
+          last_convening_at: string | null
+          longest_streak: number
+          name: string
+          total_convenings: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          council_depth_level?: number
+          created_at?: string
+          current_streak?: number
+          id?: string
+          last_convening_at?: string | null
+          longest_streak?: number
+          name?: string
+          total_convenings?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          council_depth_level?: number
+          created_at?: string
+          current_streak?: number
+          id?: string
+          last_convening_at?: string | null
+          longest_streak?: number
+          name?: string
+          total_convenings?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       activity_log: {
         Row: {
           action: string
@@ -408,7 +544,17 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      count_messages_per_session: {
+        Args: { session_ids: string[] }
+        Returns: {
+          message_count: number
+          session_id: string
+        }[]
+      }
+      increment_view_count: {
+        Args: { creation_id: string }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never

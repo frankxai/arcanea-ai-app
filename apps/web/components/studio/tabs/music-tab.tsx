@@ -19,7 +19,7 @@ interface MusicTabProps {
 
 const moods = [
   { id: "epic", label: "Epic", color: "#ffd700" },
-  { id: "mystical", label: "Mystical", color: "#0d47a1" },
+  { id: "mystical", label: "Mystical", color: "#8b5cf6" },
   { id: "melancholic", label: "Melancholic", color: "#60a5fa" },
   { id: "triumphant", label: "Triumphant", color: "#00bcd4" },
   { id: "ominous", label: "Ominous", color: "#ef4444" },
@@ -30,7 +30,7 @@ const genres = ["Orchestral", "Ambient", "Folk", "Electronic", "Choral", "Percus
 
 const instruments = ["Strings", "Brass", "Choir", "Piano", "Drums", "Synthesizer", "Lute", "Harp"]
 
-function WaveformBars({ isPlaying, color = "#0d47a1" }: { isPlaying: boolean; color?: string }) {
+function WaveformBars({ isPlaying, color = "#8b5cf6" }: { isPlaying: boolean; color?: string }) {
   const barCount = 48
   return (
     <div className="flex items-end gap-0.5 h-16" aria-hidden="true">
@@ -84,7 +84,7 @@ export function MusicTab({ generationState }: MusicTabProps) {
   return (
     <div className="flex h-full overflow-hidden">
       {/* Controls */}
-      <div className="w-80 shrink-0 border-r border-[rgba(13,71,161,0.1)] overflow-y-auto p-5 space-y-5 bg-[rgba(10,10,15,0.3)]">
+      <div className="w-80 shrink-0 border-r border-[rgba(139,92,246,0.1)] overflow-y-auto p-5 space-y-5 bg-[rgba(10,10,15,0.3)]">
         {/* Prompt */}
         <div>
           <label className="text-[10px] uppercase tracking-widest font-mono text-muted-foreground mb-2 block">
@@ -94,7 +94,7 @@ export function MusicTab({ generationState }: MusicTabProps) {
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             rows={3}
-            className="w-full text-xs bg-[#16161f] border border-[rgba(13,71,161,0.15)] rounded-xl p-3 text-foreground placeholder:text-muted-foreground outline-none focus:border-[#0d47a1] transition-colors resize-none leading-relaxed"
+            className="w-full text-xs bg-[#16161f] border border-[rgba(139,92,246,0.15)] rounded-xl p-3 text-foreground placeholder:text-muted-foreground outline-none focus:border-[#8b5cf6] transition-colors resize-none leading-relaxed"
             placeholder="Describe the emotion, scene, and musical texture…"
           />
         </div>
@@ -112,8 +112,8 @@ export function MusicTab({ generationState }: MusicTabProps) {
                 className={cn(
                   "flex flex-col items-center py-2 px-1.5 rounded-lg text-[11px] border transition-all duration-200",
                   selectedMood === mood.id
-                    ? "border-[rgba(13,71,161,0.4)] bg-[rgba(13,71,161,0.12)]"
-                    : "border-[rgba(255,255,255,0.06)] hover:border-[rgba(13,71,161,0.2)]"
+                    ? "border-[rgba(139,92,246,0.4)] bg-[rgba(139,92,246,0.12)]"
+                    : "border-[rgba(255,255,255,0.06)] hover:border-[rgba(139,92,246,0.2)]"
                 )}
               >
                 <span
@@ -144,8 +144,8 @@ export function MusicTab({ generationState }: MusicTabProps) {
                 className={cn(
                   "px-2.5 py-1 rounded-full text-[11px] border transition-all duration-200",
                   selectedGenre === genre
-                    ? "bg-[rgba(13,71,161,0.2)] border-[rgba(13,71,161,0.4)] text-[#a78bfa]"
-                    : "border-[rgba(255,255,255,0.08)] text-muted-foreground hover:text-foreground hover:border-[rgba(13,71,161,0.2)]"
+                    ? "bg-[rgba(139,92,246,0.2)] border-[rgba(139,92,246,0.4)] text-[#a78bfa]"
+                    : "border-[rgba(255,255,255,0.08)] text-muted-foreground hover:text-foreground hover:border-[rgba(139,92,246,0.2)]"
                 )}
               >
                 {genre}
@@ -229,10 +229,10 @@ export function MusicTab({ generationState }: MusicTabProps) {
         {generationState === "idle" ? (
           <div className="flex-1 flex flex-col items-center justify-center gap-6 p-10">
             <div className="relative">
-              <div className="w-32 h-32 rounded-full border-2 border-dashed border-[rgba(13,71,161,0.25)] flex items-center justify-center bg-[rgba(13,71,161,0.04)]">
-                <MusicNote size={44} className="text-[rgba(13,71,161,0.3)]" weight="fill" />
+              <div className="w-32 h-32 rounded-full border-2 border-dashed border-[rgba(139,92,246,0.25)] flex items-center justify-center bg-[rgba(139,92,246,0.04)]">
+                <MusicNote size={44} className="text-[rgba(139,92,246,0.3)]" weight="fill" />
               </div>
-              <div className="absolute -inset-8 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(13,71,161,0.05)_0%,transparent_70%)]" />
+              <div className="absolute -inset-8 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(139,92,246,0.05)_0%,transparent_70%)]" />
             </div>
             <div className="text-center max-w-sm">
               <h3 className="font-serif text-xl text-foreground mb-2">Compose the Unheard</h3>
@@ -284,9 +284,9 @@ export function MusicTab({ generationState }: MusicTabProps) {
             </div>
 
             {/* Player */}
-            <div className="rounded-2xl border border-[rgba(13,71,161,0.2)] bg-[rgba(13,71,161,0.04)] p-6">
+            <div className="rounded-2xl border border-[rgba(139,92,246,0.2)] bg-[rgba(139,92,246,0.04)] p-6">
               <div className="flex items-center gap-4 mb-5">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#0d47a1] to-[#6d28d9] flex items-center justify-center glow-violet shrink-0">
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#8b5cf6] to-[#6d28d9] flex items-center justify-center glow-violet shrink-0">
                   <MusicNote size={24} weight="fill" className="text-white" />
                 </div>
                 <div>
@@ -297,7 +297,7 @@ export function MusicTab({ generationState }: MusicTabProps) {
                 </div>
                 <button
                   onClick={() => setIsPlaying(!isPlaying)}
-                  className="ml-auto w-11 h-11 rounded-full bg-gradient-to-br from-[#0d47a1] to-[#6d28d9] flex items-center justify-center hover:from-[#9d70f8] hover:to-[#0d47a1] transition-all glow-violet shrink-0"
+                  className="ml-auto w-11 h-11 rounded-full bg-gradient-to-br from-[#8b5cf6] to-[#6d28d9] flex items-center justify-center hover:from-[#9d70f8] hover:to-[#8b5cf6] transition-all glow-violet shrink-0"
                 >
                   {isPlaying ? (
                     <Pause size={18} weight="fill" className="text-white" />
@@ -309,7 +309,7 @@ export function MusicTab({ generationState }: MusicTabProps) {
 
               {/* Waveform */}
               <div className="relative mb-3">
-                <WaveformBars isPlaying={isPlaying} color={currentMood?.color ?? "#0d47a1"} />
+                <WaveformBars isPlaying={isPlaying} color={currentMood?.color ?? "#8b5cf6"} />
                 {/* Progress overlay */}
                 <div
                   className="absolute inset-0 bg-gradient-to-r from-transparent to-[rgba(10,10,15,0.7)]"
@@ -322,12 +322,12 @@ export function MusicTab({ generationState }: MusicTabProps) {
                 <span className="text-[10px] text-muted-foreground font-mono w-8 shrink-0 text-right">
                   {Math.floor((playProgress / 100) * duration)}s
                 </span>
-                <div className="flex-1 h-1 bg-[rgba(13,71,161,0.15)] rounded-full overflow-hidden cursor-pointer">
+                <div className="flex-1 h-1 bg-[rgba(139,92,246,0.15)] rounded-full overflow-hidden cursor-pointer">
                   <div
                     className="h-full rounded-full"
                     style={{
                       width: `${playProgress}%`,
-                      background: `linear-gradient(90deg, #0d47a1, ${currentMood?.color ?? "#00bcd4"})`,
+                      background: `linear-gradient(90deg, #8b5cf6, ${currentMood?.color ?? "#00bcd4"})`,
                     }}
                   />
                 </div>
@@ -345,7 +345,7 @@ export function MusicTab({ generationState }: MusicTabProps) {
               {[selectedMood, selectedGenre, `${bpm} BPM`, ...selectedInstruments.slice(0, 3)].map((tag) => (
                 <span
                   key={tag}
-                  className="px-2.5 py-1 rounded-full text-[11px] bg-[rgba(13,71,161,0.08)] border border-[rgba(13,71,161,0.15)] text-muted-foreground capitalize"
+                  className="px-2.5 py-1 rounded-full text-[11px] bg-[rgba(139,92,246,0.08)] border border-[rgba(139,92,246,0.15)] text-muted-foreground capitalize"
                 >
                   {tag}
                 </span>
@@ -361,10 +361,10 @@ export function MusicTab({ generationState }: MusicTabProps) {
                 {["Softer Mix", "Extended", "Percussion Heavy"].map((v, i) => (
                   <button
                     key={v}
-                    className="p-2.5 rounded-xl border border-[rgba(13,71,161,0.1)] bg-[rgba(13,71,161,0.04)] hover:border-[rgba(13,71,161,0.25)] transition-all text-left group"
+                    className="p-2.5 rounded-xl border border-[rgba(139,92,246,0.1)] bg-[rgba(139,92,246,0.04)] hover:border-[rgba(139,92,246,0.25)] transition-all text-left group"
                   >
-                    <div className="w-7 h-7 rounded-lg bg-[rgba(13,71,161,0.15)] flex items-center justify-center mb-2 group-hover:bg-[rgba(13,71,161,0.25)] transition-colors">
-                      <Play size={12} weight="fill" className="text-[#0d47a1] ml-0.5" />
+                    <div className="w-7 h-7 rounded-lg bg-[rgba(139,92,246,0.15)] flex items-center justify-center mb-2 group-hover:bg-[rgba(139,92,246,0.25)] transition-colors">
+                      <Play size={12} weight="fill" className="text-[#8b5cf6] ml-0.5" />
                     </div>
                     <p className="text-[11px] text-foreground">{v}</p>
                   </button>

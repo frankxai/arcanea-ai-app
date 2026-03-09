@@ -166,7 +166,7 @@ const getActionsForLuminor = (
 export const QuickActions: React.FC<QuickActionsProps> = ({
   luminorName,
   luminorSlug,
-  luminorColor = '#0d47a1',
+  luminorColor = '#8b5cf6',
   onActionClick,
 }) => {
   const actions = getActionsForLuminor(luminorSlug, luminorColor);

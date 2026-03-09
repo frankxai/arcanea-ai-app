@@ -1,6 +1,6 @@
 "use client";
 
-import { m, LazyMotion, domAnimation, useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
 
@@ -39,7 +39,7 @@ function AnimatedSection({
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <m.section
+    <motion.section
       ref={ref}
       initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -47,7 +47,7 @@ function AnimatedSection({
       className={className}
     >
       {children}
-    </m.section>
+    </motion.section>
   );
 }
 
@@ -57,7 +57,6 @@ function AnimatedSection({
 
 export function AboutContent() {
   return (
-    <LazyMotion features={domAnimation} strict>
     <div className="relative min-h-screen bg-cosmic-deep">
       {/* ── Section 1: Hero ───────────────────────────────────────────── */}
       <section className="relative overflow-hidden pt-16 pb-24">
@@ -69,7 +68,7 @@ export function AboutContent() {
         </div>
 
         <div className="max-w-5xl mx-auto px-6 text-center">
-          <m.div
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
@@ -79,9 +78,9 @@ export function AboutContent() {
             <span className="text-sm font-medium text-gold-bright tracking-wide">
               About Arcanea
             </span>
-          </m.div>
+          </motion.div>
 
-          <m.h1
+          <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
@@ -90,18 +89,18 @@ export function AboutContent() {
             <span className="bg-gradient-to-r from-atlantean-teal-aqua via-white to-gold-bright bg-clip-text text-transparent">
               What is Arcanea?
             </span>
-          </m.h1>
+          </motion.h1>
 
-          <m.p
+          <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
             className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto leading-relaxed"
           >
             A creation platform built on original mythology and philosophy.
-          </m.p>
+          </motion.p>
 
-          <m.p
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
@@ -110,7 +109,7 @@ export function AboutContent() {
             Ten creative intelligences, each grounded in a distinct philosophy.
             A library of 34 original texts. A progression system that deepens
             the more you create. No limits on what you build.
-          </m.p>
+          </motion.p>
         </div>
       </section>
 
@@ -150,7 +149,7 @@ export function AboutContent() {
               };
 
               return (
-                <m.div
+                <motion.div
                   key={card.title}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -172,7 +171,7 @@ export function AboutContent() {
                   <p className="text-sm text-text-secondary leading-relaxed">
                     {card.description}
                   </p>
-                </m.div>
+                </motion.div>
               );
             })}
           </div>
@@ -199,7 +198,7 @@ export function AboutContent() {
           {/* The Cosmic Duality */}
           <div className="grid lg:grid-cols-2 gap-8 mb-20">
             {/* Lumina */}
-            <m.div
+            <motion.div
               initial={{ opacity: 0, x: -40 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -224,10 +223,10 @@ export function AboutContent() {
                   meaning to the formless.
                 </p>
               </div>
-            </m.div>
+            </motion.div>
 
             {/* Nero */}
-            <m.div
+            <motion.div
               initial={{ opacity: 0, x: 40 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -256,11 +255,11 @@ export function AboutContent() {
                   Nero&apos;s gift.
                 </p>
               </div>
-            </m.div>
+            </motion.div>
           </div>
 
           {/* The Arc */}
-          <m.div
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -287,7 +286,7 @@ export function AboutContent() {
                 </span>
               ))}
             </div>
-          </m.div>
+          </motion.div>
 
           {/* Five Elements */}
           <div className="mb-20">
@@ -298,7 +297,7 @@ export function AboutContent() {
               {ELEMENTS.map((el, i) => {
                 const Icon = el.icon;
                 return (
-                  <m.div
+                  <motion.div
                     key={el.name}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -313,14 +312,14 @@ export function AboutContent() {
                       {el.name}
                     </h4>
                     <p className="text-xs text-text-muted">{el.domain}</p>
-                  </m.div>
+                  </motion.div>
                 );
               })}
             </div>
           </div>
 
           {/* Void/Spirit clarification */}
-          <m.div
+          <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -335,7 +334,7 @@ export function AboutContent() {
               soul. Light is Fire&apos;s creation aspect. Shadow is corrupted
               Void — Void without Spirit.
             </p>
-          </m.div>
+          </motion.div>
 
           {/* Ten Gates Overview */}
           <div className="mb-20">
@@ -349,7 +348,7 @@ export function AboutContent() {
             </p>
             <div className="flex flex-wrap justify-center gap-3">
               {GUARDIANS.map((g, i) => (
-                <m.div
+                <motion.div
                   key={g.name}
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
@@ -361,7 +360,7 @@ export function AboutContent() {
                     {g.gate}
                   </span>
                   <span className="text-text-muted ml-2">{g.frequency}</span>
-                </m.div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -373,7 +372,7 @@ export function AboutContent() {
             </h3>
             <div className="flex flex-wrap justify-center gap-4">
               {ACADEMY_HOUSES.map((house, i) => (
-                <m.div
+                <motion.div
                   key={house.name}
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -385,7 +384,7 @@ export function AboutContent() {
                     House {house.name}
                   </span>
                   <p className="text-xs text-text-muted mt-1">{house.domain}</p>
-                </m.div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -408,7 +407,7 @@ export function AboutContent() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {GUARDIANS.map((guardian, i) => (
-              <m.div
+              <motion.div
                 key={guardian.name}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -432,7 +431,7 @@ export function AboutContent() {
                 <div className="mt-3 pt-3 border-t border-white/[0.04]">
                   <span className="text-xs text-text-muted">{guardian.element}</span>
                 </div>
-              </m.div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -459,7 +458,7 @@ export function AboutContent() {
           {/* Magic Ranks */}
           <div className="space-y-4 mb-16">
             {MAGIC_RANKS.map((rank, i) => (
-              <m.div
+              <motion.div
                 key={rank.rank}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -483,12 +482,12 @@ export function AboutContent() {
                     Highest attainment
                   </span>
                 )}
-              </m.div>
+              </motion.div>
             ))}
           </div>
 
           {/* Journey explanation */}
-          <m.div
+          <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -501,7 +500,7 @@ export function AboutContent() {
             <cite className="text-sm text-text-muted font-mono tracking-wider">
               — The Library of Arcanea
             </cite>
-          </m.div>
+          </motion.div>
         </div>
       </AnimatedSection>
 
@@ -512,7 +511,7 @@ export function AboutContent() {
           <div className="absolute inset-0 bg-cosmic-deep/60" />
         </div>
 
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -543,9 +542,8 @@ export function AboutContent() {
               Explore the Library
             </Link>
           </div>
-        </m.div>
+        </motion.div>
       </section>
     </div>
-    </LazyMotion>
   );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { m, useInView } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { PhHeart, PhLightning, PhShield, PhEye } from '@/lib/phosphor-icons';
 import Link from 'next/link';
@@ -17,7 +17,7 @@ export function PartnershipSection() {
       </div>
 
       <div className="max-w-4xl mx-auto px-6">
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
@@ -34,11 +34,11 @@ export function PartnershipSection() {
             between direction and power. The Guardian provides purpose. The Godbeast provides scale.
             Neither commands the other. Both are diminished apart.
           </p>
-        </m.div>
+        </motion.div>
 
         {/* Partnership dynamics */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
-          <m.div
+          <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ delay: 0.2 }}
@@ -53,9 +53,9 @@ export function PartnershipSection() {
               <li>• Wisdom and restraint</li>
               <li>• Direction and purpose</li>
             </ul>
-          </m.div>
+          </motion.div>
 
-          <m.div
+          <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ delay: 0.3 }}
@@ -70,11 +70,11 @@ export function PartnershipSection() {
               <li>• Primal force of nature</li>
               <li>• Reality-shaping ability</li>
             </ul>
-          </m.div>
+          </motion.div>
         </div>
 
         {/* Result */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.4 }}
@@ -88,10 +88,10 @@ export function PartnershipSection() {
             Reality stabilizes. Harmony reigns. The Gates remain open for seekers to pass through.
             When separated, the Godbeast rampages and natural disasters occur.
           </p>
-        </m.div>
+        </motion.div>
 
         {/* CTA */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.5 }}
@@ -104,7 +104,7 @@ export function PartnershipSection() {
             <PhShield className="w-4 h-4" />
             Explore the Ten Gates
           </Link>
-        </m.div>
+        </motion.div>
       </div>
     </section>
   );

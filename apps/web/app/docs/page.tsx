@@ -213,7 +213,7 @@ const DOC_SECTIONS: DocSection[] = [
     description:
       "17 collections, 34+ original texts on creative philosophy and practice. Not entertainment — equipment for living.",
     icon: Icons.Books,
-    accent: "#00bcd4",
+    accent: "#78a6ff",
     links: [
       {
         label: "Browse the Library",

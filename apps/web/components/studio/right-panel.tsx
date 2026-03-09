@@ -65,9 +65,9 @@ export function RightPanel({ generationState, activeTab }: RightPanelProps) {
   const [aiMessage, setAiMessage] = useState("")
 
   return (
-    <aside className="flex flex-col h-full w-72 shrink-0 border-l border-[rgba(13,71,161,0.15)] bg-[#0d0d15]">
+    <aside className="flex flex-col h-full w-72 shrink-0 border-l border-[rgba(139,92,246,0.15)] bg-[#0d0d15]">
       {/* Panel Header Tabs */}
-      <div className="flex border-b border-[rgba(13,71,161,0.12)]">
+      <div className="flex border-b border-[rgba(139,92,246,0.12)]">
         {(["assistant", "history"] as const).map((section) => (
           <button
             key={section}
@@ -75,7 +75,7 @@ export function RightPanel({ generationState, activeTab }: RightPanelProps) {
             className={cn(
               "flex-1 flex items-center justify-center gap-1.5 py-3 text-xs font-medium transition-all duration-200",
               activeSection === section
-                ? "text-[#0d47a1] border-b-2 border-[#0d47a1]"
+                ? "text-[#8b5cf6] border-b-2 border-[#8b5cf6]"
                 : "text-muted-foreground hover:text-foreground border-b-2 border-transparent"
             )}
           >
@@ -104,12 +104,12 @@ export function RightPanel({ generationState, activeTab }: RightPanelProps) {
                   className={cn(
                     "w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5",
                     generationState === "generating"
-                      ? "bg-[rgba(13,71,161,0.2)] pulse-glow"
-                      : "bg-gradient-to-br from-[#0d47a1] to-[#6d28d9]"
+                      ? "bg-[rgba(139,92,246,0.2)] pulse-glow"
+                      : "bg-gradient-to-br from-[#8b5cf6] to-[#6d28d9]"
                   )}
                 >
                   {generationState === "generating" ? (
-                    <Waveform size={14} className="text-[#0d47a1] animate-pulse" />
+                    <Waveform size={14} className="text-[#8b5cf6] animate-pulse" />
                   ) : (
                     <Sparkle size={14} weight="fill" className="text-white" />
                   )}
@@ -136,7 +136,7 @@ export function RightPanel({ generationState, activeTab }: RightPanelProps) {
                 </div>
               </div>
               {generationState === "generating" && (
-                <div className="mt-3 rounded-lg overflow-hidden h-1.5 bg-[rgba(13,71,161,0.1)]">
+                <div className="mt-3 rounded-lg overflow-hidden h-1.5 bg-[rgba(139,92,246,0.1)]">
                   <div className="h-full shimmer rounded-lg" />
                 </div>
               )}
@@ -152,9 +152,9 @@ export function RightPanel({ generationState, activeTab }: RightPanelProps) {
                   value={aiMessage}
                   onChange={(e) => setAiMessage(e.target.value)}
                   placeholder="Refine, remix, or ask…"
-                  className="flex-1 text-xs bg-[#16161f] border border-[rgba(13,71,161,0.15)] rounded-lg px-3 py-2 text-foreground placeholder:text-muted-foreground outline-none focus:border-[#0d47a1] transition-colors"
+                  className="flex-1 text-xs bg-[#16161f] border border-[rgba(139,92,246,0.15)] rounded-lg px-3 py-2 text-foreground placeholder:text-muted-foreground outline-none focus:border-[#8b5cf6] transition-colors"
                 />
-                <button className="p-2 rounded-lg bg-[rgba(13,71,161,0.15)] text-[#0d47a1] hover:bg-[rgba(13,71,161,0.25)] transition-colors">
+                <button className="p-2 rounded-lg bg-[rgba(139,92,246,0.15)] text-[#8b5cf6] hover:bg-[rgba(139,92,246,0.25)] transition-colors">
                   <ArrowRight size={14} weight="bold" />
                 </button>
               </div>
@@ -176,8 +176,8 @@ export function RightPanel({ generationState, activeTab }: RightPanelProps) {
                     className={cn(
                       "px-2 py-1.5 rounded-lg text-[11px] font-medium transition-all duration-200 border",
                       selectedStyle === preset.name
-                        ? "border-[rgba(13,71,161,0.5)] bg-[rgba(13,71,161,0.15)] text-foreground"
-                        : "border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] text-muted-foreground hover:text-foreground hover:border-[rgba(13,71,161,0.25)]"
+                        ? "border-[rgba(139,92,246,0.5)] bg-[rgba(139,92,246,0.15)] text-foreground"
+                        : "border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)] text-muted-foreground hover:text-foreground hover:border-[rgba(139,92,246,0.25)]"
                     )}
                   >
                     <span
@@ -202,7 +202,7 @@ export function RightPanel({ generationState, activeTab }: RightPanelProps) {
                 {suggestions.map((s) => (
                   <button
                     key={s.id}
-                    className="w-full text-left p-2.5 rounded-lg border border-[rgba(13,71,161,0.12)] bg-[rgba(13,71,161,0.05)] hover:border-[rgba(13,71,161,0.3)] hover:bg-[rgba(13,71,161,0.1)] transition-all duration-200 group"
+                    className="w-full text-left p-2.5 rounded-lg border border-[rgba(139,92,246,0.12)] bg-[rgba(139,92,246,0.05)] hover:border-[rgba(139,92,246,0.3)] hover:bg-[rgba(139,92,246,0.1)] transition-all duration-200 group"
                   >
                     <div className="flex items-center justify-between mb-0.5">
                       <span className="text-[11px] font-semibold text-[#a78bfa] group-hover:text-[#c4b5fd] transition-colors">
@@ -210,7 +210,7 @@ export function RightPanel({ generationState, activeTab }: RightPanelProps) {
                       </span>
                       <ArrowRight
                         size={11}
-                        className="text-muted-foreground group-hover:text-[#0d47a1] transition-colors"
+                        className="text-muted-foreground group-hover:text-[#8b5cf6] transition-colors"
                       />
                     </div>
                     <p className="text-[10px] text-muted-foreground leading-relaxed">{s.description}</p>
@@ -268,10 +268,10 @@ export function RightPanel({ generationState, activeTab }: RightPanelProps) {
             {history.map((item) => (
               <div
                 key={item.id}
-                className="p-3 rounded-xl border border-[rgba(13,71,161,0.1)] bg-[rgba(13,71,161,0.04)] hover:border-[rgba(13,71,161,0.25)] transition-all duration-200 cursor-pointer group"
+                className="p-3 rounded-xl border border-[rgba(139,92,246,0.1)] bg-[rgba(139,92,246,0.04)] hover:border-[rgba(139,92,246,0.25)] transition-all duration-200 cursor-pointer group"
               >
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-[rgba(13,71,161,0.15)] text-[#a78bfa] font-mono capitalize">
+                  <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-[rgba(139,92,246,0.15)] text-[#a78bfa] font-mono capitalize">
                     {item.type}
                   </span>
                   <div className="flex items-center gap-1.5">
@@ -284,7 +284,7 @@ export function RightPanel({ generationState, activeTab }: RightPanelProps) {
                 <p className="text-xs text-foreground/80 leading-relaxed line-clamp-2">{item.prompt}</p>
               </div>
             ))}
-            <button className="w-full py-2.5 text-xs text-[#0d47a1] hover:text-[#a78bfa] border border-[rgba(13,71,161,0.15)] hover:border-[rgba(13,71,161,0.3)] rounded-lg transition-all duration-200">
+            <button className="w-full py-2.5 text-xs text-[#8b5cf6] hover:text-[#a78bfa] border border-[rgba(139,92,246,0.15)] hover:border-[rgba(139,92,246,0.3)] rounded-lg transition-all duration-200">
               Load more history
             </button>
           </div>
@@ -292,7 +292,7 @@ export function RightPanel({ generationState, activeTab }: RightPanelProps) {
       </div>
 
       {/* Credits Footer */}
-      <div className="px-4 py-3 border-t border-[rgba(13,71,161,0.12)]">
+      <div className="px-4 py-3 border-t border-[rgba(139,92,246,0.12)]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5">
             <Globe size={12} className="text-muted-foreground" />
@@ -312,7 +312,7 @@ export function RightPanel({ generationState, activeTab }: RightPanelProps) {
         </div>
         <div className="mt-1.5 h-1 bg-[rgba(255,255,255,0.06)] rounded-full overflow-hidden">
           <div
-            className="h-full rounded-full bg-gradient-to-r from-[#0d47a1] to-[#00bcd4]"
+            className="h-full rounded-full bg-gradient-to-r from-[#8b5cf6] to-[#00bcd4]"
             style={{ width: "71%" }}
           />
         </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { LazyMotion, domMax, m, useInView, useScroll, useTransform } from 'framer-motion';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { useRef, useState } from 'react';
 import {
   PhFlame,
@@ -213,7 +213,7 @@ function ElementsHero() {
       {/* Elemental orbs floating in pentagram formation */}
       <div className="absolute inset-0 pointer-events-none">
         {ORB_POSITIONS.map((orb, i) => (
-          <m.div
+          <motion.div
             key={i}
             className={cn('absolute rounded-full', orb.size)}
             style={{
@@ -250,7 +250,7 @@ function ElementsHero() {
 
         {/* Stars */}
         {[...Array(60)].map((_, i) => (
-          <m.div
+          <motion.div
             key={`star-${i}`}
             className="absolute w-px h-px bg-white rounded-full"
             style={{
@@ -268,11 +268,11 @@ function ElementsHero() {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-cosmic-deep pointer-events-none" />
 
       {/* Content */}
-      <m.div
+      <motion.div
         style={{ opacity, scale, y }}
         className="relative z-10 text-center px-6 max-w-5xl mx-auto"
       >
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
@@ -282,9 +282,9 @@ function ElementsHero() {
           <span className="text-sm font-medium text-brand-primary font-sans">
             The Foundations of All Creation
           </span>
-        </m.div>
+        </motion.div>
 
-        <m.h1
+        <motion.h1
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.35 }}
@@ -293,9 +293,9 @@ function ElementsHero() {
           <span className="text-gradient-cosmic">The Five</span>
           <br />
           <span className="text-white">Elements</span>
-        </m.h1>
+        </motion.h1>
 
-        <m.p
+        <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
@@ -303,19 +303,19 @@ function ElementsHero() {
         >
           "From the meeting of Lumina and Nero, five forces crystallized — not as opposites
           but as collaborators. Each element is a different way existence speaks."
-        </m.p>
+        </motion.p>
 
-        <m.p
+        <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.65 }}
           className="text-sm text-text-muted font-mono tracking-wider mb-14"
         >
           — Meditations on Elements, Vol. I
-        </m.p>
+        </motion.p>
 
         {/* Element preview pills */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
@@ -324,7 +324,7 @@ function ElementsHero() {
           {ELEMENTS.map((el, i) => {
             const Icon = el.icon;
             return (
-              <m.div
+              <motion.div
                 key={el.id}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -336,24 +336,24 @@ function ElementsHero() {
                 <span className="text-sm font-display font-medium" style={{ color: el.colors.primary }}>
                   {el.name}
                 </span>
-              </m.div>
+              </motion.div>
             );
           })}
-        </m.div>
+        </motion.div>
 
         {/* Scroll indicator */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2 }}
           className="flex flex-col items-center gap-2"
         >
           <span className="text-sm text-text-muted font-sans">Descend into the elements</span>
-          <m.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity }}>
+          <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity }}>
             <PhCaretDown className="w-6 h-6 text-text-muted" />
-          </m.div>
-        </m.div>
-      </m.div>
+          </motion.div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
@@ -374,7 +374,7 @@ function ElementCardsSection() {
 
       <div className="max-w-7xl mx-auto px-6">
         {/* Section header */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-20"
@@ -390,7 +390,7 @@ function ElementCardsSection() {
             Every creator channels all five — but one will resonate as your primary attunement.
             Which element are you in this moment?
           </p>
-        </m.div>
+        </motion.div>
 
         {/* Element cards — staggered grid */}
         <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -401,7 +401,7 @@ function ElementCardsSection() {
             const isLast = i === ELEMENTS.length - 1;
 
             return (
-              <m.div
+              <motion.div
                 key={element.id}
                 initial={{ opacity: 0, y: 40 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -494,7 +494,7 @@ function ElementCardsSection() {
                       <span className="text-xs text-text-muted font-sans">
                         {isExpanded ? 'Close' : 'Explore deeper'}
                       </span>
-                      <m.div
+                      <motion.div
                         animate={{ rotate: isExpanded ? 180 : 0 }}
                         transition={{ duration: 0.3 }}
                       >
@@ -502,13 +502,13 @@ function ElementCardsSection() {
                           className="w-4 h-4"
                           style={{ color: element.colors.primary }}
                         />
-                      </m.div>
+                      </motion.div>
                     </div>
                   </div>
 
                   {/* Expanded content */}
                   {isExpanded && (
-                    <m.div
+                    <motion.div
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: 'auto' }}
                       exit={{ opacity: 0, height: 0 }}
@@ -561,11 +561,11 @@ function ElementCardsSection() {
                           </div>
                         </div>
                       </div>
-                    </m.div>
+                    </motion.div>
                   )}
 
                   {/* Animated corner accent */}
-                  <m.div
+                  <motion.div
                     className="absolute top-0 right-0 w-20 h-20 opacity-20 pointer-events-none"
                     style={{
                       background: `radial-gradient(circle at 100% 0%, ${element.colors.primary} 0%, transparent 70%)`,
@@ -574,7 +574,7 @@ function ElementCardsSection() {
                     transition={{ duration: 3 + i, repeat: Infinity, ease: 'easeInOut' }}
                   />
                 </div>
-              </m.div>
+              </motion.div>
             );
           })}
         </div>
@@ -598,7 +598,7 @@ function FifthElementDuality() {
 
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
@@ -614,10 +614,10 @@ function FifthElementDuality() {
             Alone among the five, the Fifth Element carries a dual nature inseparable from
             the cosmic origin story. To understand it is to understand creation itself.
           </p>
-        </m.div>
+        </motion.div>
 
         {/* Split duality card */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.2 }}
@@ -632,7 +632,7 @@ function FifthElementDuality() {
           <div className="relative grid md:grid-cols-2">
             {/* Void — Left / Nero */}
             <div className="p-10 md:pr-16 relative">
-              <m.div
+              <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ delay: 0.35 }}
@@ -665,7 +665,7 @@ function FifthElementDuality() {
                   "In the beginning, there was Nero. The Void contained everything that could
                   ever be, held in superposition — every possible world, every future creation."
                 </blockquote>
-              </m.div>
+              </motion.div>
             </div>
 
             {/* Divider — vertical line + symbol */}
@@ -679,7 +679,7 @@ function FifthElementDuality() {
 
             {/* Spirit — Right / Lumina */}
             <div className="p-10 md:pl-16 relative border-t border-white/[0.06] md:border-t-0 md:border-l md:border-l-white/[0.06]">
-              <m.div
+              <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ delay: 0.4 }}
@@ -712,12 +712,12 @@ function FifthElementDuality() {
                   "Lumina blazed forth not as fire but as form. Where Nero was infinite potential,
                   Lumina was pattern — the First Light that organized the darkness."
                 </blockquote>
-              </m.div>
+              </motion.div>
             </div>
           </div>
 
           {/* Canon truth footer */}
-          <m.div
+          <motion.div
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ delay: 0.55 }}
@@ -737,8 +737,8 @@ function FifthElementDuality() {
                 </span>
               </div>
             </div>
-          </m.div>
-        </m.div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
@@ -755,7 +755,7 @@ function ElementRelationshipsSection() {
       <hr className="section-divider mx-8 mb-24" />
 
       <div className="max-w-5xl mx-auto px-6">
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
@@ -771,11 +771,11 @@ function ElementRelationshipsSection() {
             No element exists in isolation. The interactions between elements are where
             creation's richest expressions emerge.
           </p>
-        </m.div>
+        </motion.div>
 
         <div className="grid md:grid-cols-2 gap-4">
           {ELEMENT_RELATIONS.map((rel, i) => (
-            <m.div
+            <motion.div
               key={`${rel.a}-${rel.b}`}
               initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -798,7 +798,7 @@ function ElementRelationshipsSection() {
 
               {/* Subtle gradient accent */}
               <div className={cn('absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br pointer-events-none', rel.color, 'opacity-[0.04]')} />
-            </m.div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -830,7 +830,7 @@ function GuardianElementsSection() {
       <hr className="section-divider mx-8 mb-24" />
 
       <div className="max-w-6xl mx-auto px-6">
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
@@ -846,13 +846,13 @@ function GuardianElementsSection() {
             Each Guardian channels one or more elements through their Gate. No two Gates
             are alike — even when sharing an element, the expression differs entirely.
           </p>
-        </m.div>
+        </motion.div>
 
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
           {GUARDIAN_ELEMENTS.map((g, i) => {
             const Icon = g.icon;
             return (
-              <m.div
+              <motion.div
                 key={g.guardian}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
@@ -869,12 +869,12 @@ function GuardianElementsSection() {
                 <div className="text-sm font-display font-bold text-white mb-1">{g.guardian}</div>
                 <div className="text-xs" style={{ color: g.color }}>{g.element}</div>
                 <div className="text-xs text-text-muted font-mono mt-1">{g.freq}</div>
-              </m.div>
+              </motion.div>
             );
           })}
         </div>
 
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.8 }}
@@ -887,7 +887,7 @@ function GuardianElementsSection() {
             Full Guardian Profiles
             <PhArrowRight className="w-4 h-4" />
           </Link>
-        </m.div>
+        </motion.div>
       </div>
     </section>
   );
@@ -907,7 +907,7 @@ function TheArcSection() {
       </div>
 
       <div className="max-w-5xl mx-auto px-6">
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
@@ -924,7 +924,7 @@ function TheArcSection() {
             of reality, written in the language of the Five Elements. Every creation
             passes through all five phases — and thus channels all five forces.
           </p>
-        </m.div>
+        </motion.div>
 
         {/* Arc phases with elements */}
         <div className="relative">
@@ -933,7 +933,7 @@ function TheArcSection() {
 
           <div className="space-y-6">
             {ARC_PHASES.map((phase, i) => (
-              <m.div
+              <motion.div
                 key={phase.phase}
                 initial={{ opacity: 0, x: -30 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -984,13 +984,13 @@ function TheArcSection() {
                 {i < ARC_PHASES.length - 1 && (
                   <div className="hidden md:block absolute left-[26px] mt-12 text-text-muted" />
                 )}
-              </m.div>
+              </motion.div>
             ))}
           </div>
         </div>
 
         {/* Arc quote */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.8 }}
@@ -1003,7 +1003,7 @@ function TheArcSection() {
           <p className="text-sm text-text-muted font-mono tracking-wider">
             — Laws of Arcanea, First Principle
           </p>
-        </m.div>
+        </motion.div>
       </div>
     </section>
   );
@@ -1020,7 +1020,7 @@ function ElementsCTA() {
       <div className="absolute inset-0 -z-10 bg-mesh-gradient opacity-30" />
 
       <div className="max-w-3xl mx-auto px-6 text-center">
-        <m.div
+        <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={isInView ? { opacity: 1, scale: 1 } : {}}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
@@ -1066,7 +1066,7 @@ function ElementsCTA() {
               Full Lore
             </Link>
           </div>
-        </m.div>
+        </motion.div>
       </div>
     </section>
   );
@@ -1076,16 +1076,14 @@ function ElementsCTA() {
 
 export function ElementsPage() {
   return (
-    <LazyMotion features={domMax}>
-      <div className="bg-cosmic-deep">
-        <ElementsHero />
-        <ElementCardsSection />
-        <FifthElementDuality />
-        <ElementRelationshipsSection />
-        <GuardianElementsSection />
-        <TheArcSection />
-        <ElementsCTA />
-      </div>
-    </LazyMotion>
+    <div className="bg-cosmic-deep">
+      <ElementsHero />
+      <ElementCardsSection />
+      <FifthElementDuality />
+      <ElementRelationshipsSection />
+      <GuardianElementsSection />
+      <TheArcSection />
+      <ElementsCTA />
+    </div>
   );
 }

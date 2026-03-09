@@ -20,11 +20,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient as _createClient } from '@/lib/supabase/server';
-
-// Council tables not yet in generated Supabase types — cast to bypass strict checking
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const createClient = async () => (await _createClient()) as any;
+import { createClient } from '@/lib/supabase/server';
 
 export const runtime = 'nodejs';
 

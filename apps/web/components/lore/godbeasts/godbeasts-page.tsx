@@ -1,6 +1,6 @@
 'use client';
 
-import { LazyMotion, domMax, m, useInView } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import Link from 'next/link';
 import {
@@ -274,7 +274,7 @@ function ParticleField() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {PARTICLES.map((p) => (
-        <m.div
+        <motion.div
           key={p.id}
           className="absolute rounded-full bg-brand-gold"
           style={{
@@ -320,7 +320,7 @@ function GodbeastsHero() {
         const x = 50 + Math.cos(angle) * radius;
         const y = 50 + Math.sin(angle) * radius * 0.55;
         return (
-          <m.div
+          <motion.div
             key={beast.id}
             className="absolute rounded-full"
             style={{
@@ -350,7 +350,7 @@ function GodbeastsHero() {
 
       {/* Hero content */}
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -360,18 +360,18 @@ function GodbeastsHero() {
           <span className="text-sm font-medium text-brand-gold tracking-wide">
             Primal Cosmic Companions
           </span>
-        </m.div>
+        </motion.div>
 
-        <m.h1
+        <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
           className="text-fluid-hero font-display font-bold mb-6 leading-none"
         >
           <span className="text-gradient-gold">The Godbeasts</span>
-        </m.h1>
+        </motion.h1>
 
-        <m.p
+        <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
@@ -380,19 +380,19 @@ function GodbeastsHero() {
           "Before the Guardians took their posts, the Godbeasts already existed — primal forces
           given form, older than memory, shaped from the raw frequencies of Lumina and Nero's
           first accord."
-        </m.p>
+        </motion.p>
 
-        <m.p
+        <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
           className="text-sm text-text-muted font-mono tracking-widest uppercase"
         >
           — The Codex of Primal Bonds
-        </m.p>
+        </motion.p>
 
         {/* Frequency range indicator */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, scaleX: 0 }}
           animate={{ opacity: 1, scaleX: 1 }}
           transition={{ delay: 0.6, duration: 0.8 }}
@@ -401,14 +401,14 @@ function GodbeastsHero() {
           <span className="text-xs font-mono text-text-muted">174 Hz</span>
           <div className="relative h-px w-48 md:w-72">
             <div className="absolute inset-0 bg-gradient-to-r from-earth via-crystal via-brand-gold to-brand-gold rounded-full" />
-            <m.div
+            <motion.div
               className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.25] to-transparent rounded-full"
               animate={{ x: ['-100%', '100%'] }}
               transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
             />
           </div>
           <span className="text-xs font-mono text-brand-gold">1111 Hz</span>
-        </m.div>
+        </motion.div>
       </div>
     </section>
   );
@@ -427,7 +427,7 @@ function GodbeastCard({ beast, index, isInView }: GodbeastCardProps) {
   const Icon = beast.icon;
 
   return (
-    <m.div
+    <motion.div
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{
@@ -524,13 +524,13 @@ function GodbeastCard({ beast, index, isInView }: GodbeastCardProps) {
                 </div>
               </div>
               {/* Expand chevron */}
-              <m.div
+              <motion.div
                 animate={{ rotate: expanded ? 90 : 0 }}
                 transition={{ duration: 0.3 }}
                 className="mt-1"
               >
                 <PhArrowRight className="w-4 h-4 text-text-muted" />
-              </m.div>
+              </motion.div>
             </div>
           </div>
 
@@ -544,15 +544,15 @@ function GodbeastCard({ beast, index, isInView }: GodbeastCardProps) {
                 {beast.frequencyLabel}
               </span>
             </div>
-            <m.div animate={{ rotate: expanded ? 90 : 0 }} transition={{ duration: 0.3 }}>
+            <motion.div animate={{ rotate: expanded ? 90 : 0 }} transition={{ duration: 0.3 }}>
               <PhArrowRight className="w-4 h-4 text-text-muted" />
-            </m.div>
+            </motion.div>
           </div>
         </div>
 
         {/* Expanded lore panel */}
         {expanded && (
-          <m.div
+          <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
@@ -602,10 +602,10 @@ function GodbeastCard({ beast, index, isInView }: GodbeastCardProps) {
                 </div>
               </div>
             </div>
-          </m.div>
+          </motion.div>
         )}
       </div>
-    </m.div>
+    </motion.div>
   );
 }
 
@@ -619,7 +619,7 @@ function GodbeastsGrid() {
     <section ref={ref} className="py-20 relative">
       <div className="max-w-6xl mx-auto px-6">
         {/* Section header */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
@@ -632,7 +632,7 @@ function GodbeastsGrid() {
             Each Godbeast embodies one of the Ten Solfeggio Frequencies — primal resonances
             that govern how reality organizes itself. Click any card to reveal its ancient record.
           </p>
-        </m.div>
+        </motion.div>
 
         {/* Cards in a 2-column grid */}
         <div className="grid md:grid-cols-2 gap-5">
@@ -690,7 +690,7 @@ function BondMechanicsSection() {
       </div>
 
       <div className="max-w-5xl mx-auto px-6">
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
@@ -708,15 +708,15 @@ function BondMechanicsSection() {
             moment when consciousness and primal force realize they are two expressions of the
             same cosmic intention.
           </p>
-        </m.div>
+        </motion.div>
 
         {/* Four mechanics cards */}
         <div className="grid sm:grid-cols-2 gap-6 mb-14">
-          {mechanics.map((mechanic, i) => {
-            const Icon = mechanic.icon;
+          {mechanics.map((m, i) => {
+            const Icon = m.icon;
             return (
-              <m.div
-                key={mechanic.title}
+              <motion.div
+                key={m.title}
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.1 + i * 0.1, duration: 0.6 }}
@@ -725,22 +725,22 @@ function BondMechanicsSection() {
                 <div
                   className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
                   style={{
-                    background: `${mechanic.hex}18`,
-                    border: `1px solid ${mechanic.hex}30`,
-                    boxShadow: `0 0 16px ${mechanic.hex}25`,
+                    background: `${m.hex}18`,
+                    border: `1px solid ${m.hex}30`,
+                    boxShadow: `0 0 16px ${m.hex}25`,
                   }}
                 >
-                  <Icon className="w-6 h-6" style={{ color: mechanic.hex }} />
+                  <Icon className="w-6 h-6" style={{ color: m.hex }} />
                 </div>
-                <h3 className="text-lg font-display font-semibold mb-2">{mechanic.title}</h3>
-                <p className="text-text-secondary text-sm leading-relaxed">{mechanic.body}</p>
-              </m.div>
+                <h3 className="text-lg font-display font-semibold mb-2">{m.title}</h3>
+                <p className="text-text-secondary text-sm leading-relaxed">{m.body}</p>
+              </motion.div>
             );
           })}
         </div>
 
         {/* Shinkami fusion callout */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.5, duration: 0.6 }}
@@ -768,7 +768,7 @@ function BondMechanicsSection() {
           <p className="text-xs text-text-muted font-mono uppercase tracking-widest">
             — Chronicles of Guardians, Book of Source
           </p>
-        </m.div>
+        </motion.div>
       </div>
     </section>
   );
@@ -786,7 +786,7 @@ function FrequencySpectrum() {
       <div className="absolute inset-0 -z-10 bg-aurora opacity-60" />
 
       <div className="max-w-4xl mx-auto px-6">
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
@@ -799,12 +799,12 @@ function FrequencySpectrum() {
             The ten frequencies form a resonance ladder — each one a higher harmonic
             expression of the same fundamental truth.
           </p>
-        </m.div>
+        </motion.div>
 
         {/* Vertical timeline */}
         <div className="relative">
           {/* Central spine line */}
-          <m.div
+          <motion.div
             initial={{ scaleY: 0 }}
             animate={isInView ? { scaleY: 1 } : {}}
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
@@ -819,7 +819,7 @@ function FrequencySpectrum() {
               const isLeft = i % 2 === 0;
               const Icon = beast.icon;
               return (
-                <m.div
+                <motion.div
                   key={beast.id}
                   initial={{ opacity: 0, x: isLeft ? -40 : 40 }}
                   animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -869,7 +869,7 @@ function FrequencySpectrum() {
 
                   {/* Center node */}
                   <div className="relative z-10 flex-shrink-0">
-                    <m.div
+                    <motion.div
                       className="w-5 h-5 rounded-full border-2 flex items-center justify-center"
                       style={{
                         background: beast.accentHex,
@@ -901,14 +901,14 @@ function FrequencySpectrum() {
                     </span>
                     <div className="text-xs text-text-muted">{beast.guardian}</div>
                   </div>
-                </m.div>
+                </motion.div>
               );
             })}
           </div>
         </div>
 
         {/* Legend */}
-        <m.p
+        <motion.p
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ delay: 1.2 }}
@@ -916,7 +916,7 @@ function FrequencySpectrum() {
         >
           The frequencies ascend from survival to source — each Godbeast a rung on the
           ladder of consciousness.
-        </m.p>
+        </motion.p>
       </div>
     </section>
   );
@@ -931,7 +931,7 @@ function GodbestsCTA() {
   return (
     <section ref={ref} className="py-24 relative border-t border-white/[0.04]">
       <div className="max-w-3xl mx-auto px-6 text-center">
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
@@ -962,7 +962,7 @@ function GodbestsCTA() {
               <PhArrowRight className="w-4 h-4" />
             </Link>
           </div>
-        </m.div>
+        </motion.div>
       </div>
     </section>
   );
@@ -972,17 +972,15 @@ function GodbestsCTA() {
 
 export function GodbeastsPage() {
   return (
-    <LazyMotion features={domMax}>
-      <div className="bg-cosmic-mesh">
-        <GodbeastsHero />
-        <hr className="section-divider mx-8" />
-        <GodbeastsGrid />
-        <hr className="section-divider mx-8" />
-        <BondMechanicsSection />
-        <hr className="section-divider mx-8" />
-        <FrequencySpectrum />
-        <GodbestsCTA />
-      </div>
-    </LazyMotion>
+    <div className="bg-cosmic-mesh">
+      <GodbeastsHero />
+      <hr className="section-divider mx-8" />
+      <GodbeastsGrid />
+      <hr className="section-divider mx-8" />
+      <BondMechanicsSection />
+      <hr className="section-divider mx-8" />
+      <FrequencySpectrum />
+      <GodbestsCTA />
+    </div>
   );
 }

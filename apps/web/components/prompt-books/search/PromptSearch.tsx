@@ -5,7 +5,7 @@
 
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { createPortal } from 'react-dom'
-import { LazyMotion, domMax, m, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
   PhMagnifyingGlass, PhX, PhArrowUp, PhArrowDown, PhCornerDownLeft, PhCommand,
   PhChatSquare, PhImage, PhImageSquare, PhChats, PhLink,
@@ -256,248 +256,246 @@ export function PromptSearch({ isOpen, onClose, onSelectPrompt }: PromptSearchPr
   if (!mounted) return null
 
   return createPortal(
-    <LazyMotion features={domMax}>
-      <AnimatePresence>
-        {isOpen && (
-          <div
-            className="fixed inset-0 z-50 flex items-start justify-center pt-[12vh]"
-            role="presentation"
-            onKeyDown={handleKeyDown}
+    <AnimatePresence>
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-start justify-center pt-[12vh]"
+          role="presentation"
+          onKeyDown={handleKeyDown}
+        >
+          {/* Backdrop */}
+          <motion.div
+            key="search-backdrop"
+            variants={backdropVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            onClick={onClose}
+            aria-hidden
+          />
+
+          {/* Palette */}
+          <motion.div
+            key="search-palette"
+            variants={paletteVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Search prompts"
+            className={cn(
+              'relative z-10 w-full max-w-2xl mx-4',
+              'rounded-2xl overflow-hidden',
+              'bg-[rgba(12,16,28,0.96)] backdrop-blur-[24px]',
+              'border border-[rgba(0,188,212,0.12)]',
+              'shadow-[0_16px_64px_rgba(0,0,0,0.6),0_0_1px_rgba(255,255,255,0.06)]',
+            )}
           >
-            {/* Backdrop */}
-            <m.div
-              key="search-backdrop"
-              variants={backdropVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-              onClick={onClose}
-              aria-hidden
-            />
-
-            {/* Palette */}
-            <m.div
-              key="search-palette"
-              variants={paletteVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              role="dialog"
-              aria-modal="true"
-              aria-label="Search prompts"
-              className={cn(
-                'relative z-10 w-full max-w-2xl mx-4',
-                'rounded-2xl overflow-hidden',
-                'bg-[rgba(12,16,28,0.96)] backdrop-blur-[24px]',
-                'border border-[rgba(0,188,212,0.12)]',
-                'shadow-[0_16px_64px_rgba(0,0,0,0.6),0_0_1px_rgba(255,255,255,0.06)]',
+            {/* Search Input */}
+            <div className="flex items-center gap-3 px-5 py-4 border-b border-white/[0.04]">
+              <PhMagnifyingGlass className="w-5 h-5 text-text-muted flex-shrink-0" aria-hidden />
+              <input
+                ref={inputRef}
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search prompts..."
+                className={cn(
+                  'flex-1 bg-transparent text-base font-sans text-text-primary',
+                  'placeholder:text-text-muted',
+                  'focus:outline-none',
+                )}
+                aria-label="Search prompts"
+                aria-autocomplete="list"
+                aria-controls="search-results-list"
+                aria-activedescendant={
+                  flatResults[selectedIndex]
+                    ? `search-result-${flatResults[selectedIndex].id}`
+                    : undefined
+                }
+              />
+              {query && (
+                <button
+                  onClick={() => { setQuery(''); clearSearch() }}
+                  className="p-1 rounded-md text-text-muted hover:text-text-primary hover:bg-white/[0.04] transition-all duration-150"
+                  aria-label="Clear search"
+                >
+                  <PhX className="w-4 h-4" />
+                </button>
               )}
+            </div>
+
+            {/* Results */}
+            <div
+              ref={listRef}
+              id="search-results-list"
+              role="listbox"
+              aria-label="Search results"
+              className="max-h-[50vh] overflow-y-auto overscroll-contain"
             >
-              {/* Search Input */}
-              <div className="flex items-center gap-3 px-5 py-4 border-b border-white/[0.04]">
-                <PhMagnifyingGlass className="w-5 h-5 text-text-muted flex-shrink-0" aria-hidden />
-                <input
-                  ref={inputRef}
-                  type="text"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search prompts..."
-                  className={cn(
-                    'flex-1 bg-transparent text-base font-sans text-text-primary',
-                    'placeholder:text-text-muted',
-                    'focus:outline-none',
-                  )}
-                  aria-label="Search prompts"
-                  aria-autocomplete="list"
-                  aria-controls="search-results-list"
-                  aria-activedescendant={
-                    flatResults[selectedIndex]
-                      ? `search-result-${flatResults[selectedIndex].id}`
-                      : undefined
-                  }
-                />
-                {query && (
-                  <button
-                    onClick={() => { setQuery(''); clearSearch() }}
-                    className="p-1 rounded-md text-text-muted hover:text-text-primary hover:bg-white/[0.04] transition-all duration-150"
-                    aria-label="Clear search"
-                  >
-                    <PhX className="w-4 h-4" />
-                  </button>
-                )}
-              </div>
+              {/* Loading state */}
+              {isSearching && (
+                <div className="px-5 py-8 flex items-center justify-center">
+                  <div className="flex items-center gap-3 text-text-muted text-sm font-sans">
+                    <div className="w-4 h-4 border-2 border-brand-accent/30 border-t-brand-accent rounded-full animate-spin" />
+                    <span>Searching...</span>
+                  </div>
+                </div>
+              )}
 
-              {/* Results */}
-              <div
-                ref={listRef}
-                id="search-results-list"
-                role="listbox"
-                aria-label="Search results"
-                className="max-h-[50vh] overflow-y-auto overscroll-contain"
-              >
-                {/* Loading state */}
-                {isSearching && (
-                  <div className="px-5 py-8 flex items-center justify-center">
-                    <div className="flex items-center gap-3 text-text-muted text-sm font-sans">
-                      <div className="w-4 h-4 border-2 border-brand-accent/30 border-t-brand-accent rounded-full animate-spin" />
-                      <span>Searching...</span>
+              {/* Empty state with query */}
+              {!isSearching && query.trim() && flatResults.length === 0 && (
+                <div className="px-5 py-10 text-center">
+                  <PhMagnifyingGlass className="w-8 h-8 text-text-muted/50 mx-auto mb-3" />
+                  <p className="text-sm font-sans text-text-muted">
+                    No results for &ldquo;{query}&rdquo;
+                  </p>
+                  <p className="text-xs font-sans text-text-muted/60 mt-1">
+                    Try a different search term
+                  </p>
+                </div>
+              )}
+
+              {/* Empty state without query and no recents */}
+              {!isSearching && !query.trim() && flatResults.length === 0 && (
+                <div className="px-5 py-10 text-center">
+                  <PhClock className="w-8 h-8 text-text-muted/50 mx-auto mb-3" />
+                  <p className="text-sm font-sans text-text-muted">
+                    No recent prompts
+                  </p>
+                  <p className="text-xs font-sans text-text-muted/60 mt-1">
+                    Create your first prompt to get started
+                  </p>
+                </div>
+              )}
+
+              {/* Section header: Recent or Results */}
+              {!isSearching && flatResults.length > 0 && (
+                <div className="px-5 pt-3 pb-1">
+                  <span className="text-[11px] font-sans font-semibold text-text-muted uppercase tracking-widest">
+                    {query.trim() ? 'Results' : 'Recent'}
+                  </span>
+                </div>
+              )}
+
+              {/* Grouped results */}
+              {!isSearching &&
+                groupedResults.map((group) => (
+                  <div key={group.collectionId ?? '_uncategorized'}>
+                    {/* Collection group header */}
+                    <div className="px-5 pt-2 pb-1">
+                      <span className="text-[10px] font-sans font-medium text-text-muted/70 uppercase tracking-wider">
+                        In {group.collectionName}
+                      </span>
                     </div>
-                  </div>
-                )}
 
-                {/* Empty state with query */}
-                {!isSearching && query.trim() && flatResults.length === 0 && (
-                  <div className="px-5 py-10 text-center">
-                    <PhMagnifyingGlass className="w-8 h-8 text-text-muted/50 mx-auto mb-3" />
-                    <p className="text-sm font-sans text-text-muted">
-                      No results for &ldquo;{query}&rdquo;
-                    </p>
-                    <p className="text-xs font-sans text-text-muted/60 mt-1">
-                      Try a different search term
-                    </p>
-                  </div>
-                )}
+                    {/* Items */}
+                    {group.prompts.map((prompt) => {
+                      const flatIdx = getFlatIndex(prompt)
+                      const isSelected = flatIdx === selectedIndex
+                      const TypeIcon = getTypeIcon(prompt.promptType)
+                      const typeConfig = PROMPT_TYPES[prompt.promptType]
+                      const preview = prompt.content.slice(0, 80)
+                      const tagCount = prompt.tags?.length ?? 0
 
-                {/* Empty state without query and no recents */}
-                {!isSearching && !query.trim() && flatResults.length === 0 && (
-                  <div className="px-5 py-10 text-center">
-                    <PhClock className="w-8 h-8 text-text-muted/50 mx-auto mb-3" />
-                    <p className="text-sm font-sans text-text-muted">
-                      No recent prompts
-                    </p>
-                    <p className="text-xs font-sans text-text-muted/60 mt-1">
-                      Create your first prompt to get started
-                    </p>
-                  </div>
-                )}
-
-                {/* Section header: Recent or Results */}
-                {!isSearching && flatResults.length > 0 && (
-                  <div className="px-5 pt-3 pb-1">
-                    <span className="text-[11px] font-sans font-semibold text-text-muted uppercase tracking-widest">
-                      {query.trim() ? 'Results' : 'Recent'}
-                    </span>
-                  </div>
-                )}
-
-                {/* Grouped results */}
-                {!isSearching &&
-                  groupedResults.map((group) => (
-                    <div key={group.collectionId ?? '_uncategorized'}>
-                      {/* Collection group header */}
-                      <div className="px-5 pt-2 pb-1">
-                        <span className="text-[10px] font-sans font-medium text-text-muted/70 uppercase tracking-wider">
-                          In {group.collectionName}
-                        </span>
-                      </div>
-
-                      {/* Items */}
-                      {group.prompts.map((prompt) => {
-                        const flatIdx = getFlatIndex(prompt)
-                        const isSelected = flatIdx === selectedIndex
-                        const TypeIcon = getTypeIcon(prompt.promptType)
-                        const typeConfig = PROMPT_TYPES[prompt.promptType]
-                        const preview = prompt.content.slice(0, 80)
-                        const tagCount = prompt.tags?.length ?? 0
-
-                        return (
+                      return (
+                        <div
+                          key={prompt.id}
+                          id={`search-result-${prompt.id}`}
+                          role="option"
+                          aria-selected={isSelected}
+                          data-index={flatIdx}
+                          onClick={() => handleSelect(prompt.id)}
+                          onMouseEnter={() => setSelectedIndex(flatIdx)}
+                          className={cn(
+                            'mx-2 px-3 py-2.5 rounded-lg cursor-pointer',
+                            'flex items-start gap-3',
+                            'transition-all duration-100',
+                            isSelected
+                              ? 'bg-white/[0.06] border border-white/[0.08]'
+                              : 'border border-transparent hover:bg-white/[0.04]',
+                          )}
+                        >
+                          {/* Type icon */}
                           <div
-                            key={prompt.id}
-                            id={`search-result-${prompt.id}`}
-                            role="option"
-                            aria-selected={isSelected}
-                            data-index={flatIdx}
-                            onClick={() => handleSelect(prompt.id)}
-                            onMouseEnter={() => setSelectedIndex(flatIdx)}
                             className={cn(
-                              'mx-2 px-3 py-2.5 rounded-lg cursor-pointer',
-                              'flex items-start gap-3',
-                              'transition-all duration-100',
-                              isSelected
-                                ? 'bg-white/[0.06] border border-white/[0.08]'
-                                : 'border border-transparent hover:bg-white/[0.04]',
+                              'mt-0.5 w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0',
+                              'liquid-glass',
                             )}
                           >
-                            {/* Type icon */}
-                            <div
-                              className={cn(
-                                'mt-0.5 w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0',
-                                'liquid-glass',
-                              )}
-                            >
-                              <TypeIcon className="w-3.5 h-3.5 text-brand-accent" />
-                            </div>
+                            <TypeIcon className="w-3.5 h-3.5 text-brand-accent" />
+                          </div>
 
-                            {/* Content */}
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-2">
-                                <span className="text-sm font-sans font-medium text-text-primary truncate">
-                                  {prompt.title}
-                                </span>
-                                <span className="liquid-glass px-1.5 py-0.5 rounded text-[10px] font-sans font-medium text-text-muted flex-shrink-0">
-                                  {typeConfig.label}
-                                </span>
-                              </div>
-                              <p className="text-xs font-sans text-text-muted truncate mt-0.5">
-                                {preview}{prompt.content.length > 80 ? '...' : ''}
-                              </p>
-                              {tagCount > 0 && (
-                                <div className="flex items-center gap-1 mt-1">
-                                  <PhTag className="w-3 h-3 text-text-muted/60" />
-                                  <span className="text-[10px] font-sans text-text-muted/60">
-                                    {tagCount} tag{tagCount !== 1 ? 's' : ''}
-                                  </span>
-                                </div>
-                              )}
+                          {/* Content */}
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2">
+                              <span className="text-sm font-sans font-medium text-text-primary truncate">
+                                {prompt.title}
+                              </span>
+                              <span className="liquid-glass px-1.5 py-0.5 rounded text-[10px] font-sans font-medium text-text-muted flex-shrink-0">
+                                {typeConfig.label}
+                              </span>
                             </div>
-
-                            {/* Selected indicator */}
-                            {isSelected && (
-                              <div className="flex-shrink-0 mt-1">
-                                <PhCornerDownLeft className="w-3.5 h-3.5 text-text-muted/50" />
+                            <p className="text-xs font-sans text-text-muted truncate mt-0.5">
+                              {preview}{prompt.content.length > 80 ? '...' : ''}
+                            </p>
+                            {tagCount > 0 && (
+                              <div className="flex items-center gap-1 mt-1">
+                                <PhTag className="w-3 h-3 text-text-muted/60" />
+                                <span className="text-[10px] font-sans text-text-muted/60">
+                                  {tagCount} tag{tagCount !== 1 ? 's' : ''}
+                                </span>
                               </div>
                             )}
                           </div>
-                        )
-                      })}
-                    </div>
-                  ))}
-              </div>
 
-              {/* Footer — keyboard hints */}
-              <div className="px-5 py-2.5 border-t border-white/[0.04] flex items-center gap-4">
-                <div className="flex items-center gap-1.5 text-[11px] font-sans text-text-muted/60">
-                  <kbd className="liquid-glass px-1.5 py-0.5 rounded text-[10px] font-mono">
-                    <PhArrowUp className="w-3 h-3 inline" />
-                  </kbd>
-                  <kbd className="liquid-glass px-1.5 py-0.5 rounded text-[10px] font-mono">
-                    <PhArrowDown className="w-3 h-3 inline" />
-                  </kbd>
-                  <span>Navigate</span>
-                </div>
-                <div className="flex items-center gap-1.5 text-[11px] font-sans text-text-muted/60">
-                  <kbd className="liquid-glass px-1.5 py-0.5 rounded text-[10px] font-mono">
-                    <PhCornerDownLeft className="w-3 h-3 inline" />
-                  </kbd>
-                  <span>Open</span>
-                </div>
-                <div className="flex items-center gap-1.5 text-[11px] font-sans text-text-muted/60">
-                  <kbd className="liquid-glass px-1.5 py-0.5 rounded text-[10px] font-mono text-[10px]">
-                    esc
-                  </kbd>
-                  <span>Close</span>
-                </div>
-                <div className="ml-auto flex items-center gap-1.5 text-[11px] font-sans text-text-muted/40">
-                  <PhCommand className="w-3 h-3" />
-                  <span>K</span>
-                </div>
+                          {/* Selected indicator */}
+                          {isSelected && (
+                            <div className="flex-shrink-0 mt-1">
+                              <PhCornerDownLeft className="w-3.5 h-3.5 text-text-muted/50" />
+                            </div>
+                          )}
+                        </div>
+                      )
+                    })}
+                  </div>
+                ))}
+            </div>
+
+            {/* Footer — keyboard hints */}
+            <div className="px-5 py-2.5 border-t border-white/[0.04] flex items-center gap-4">
+              <div className="flex items-center gap-1.5 text-[11px] font-sans text-text-muted/60">
+                <kbd className="liquid-glass px-1.5 py-0.5 rounded text-[10px] font-mono">
+                  <PhArrowUp className="w-3 h-3 inline" />
+                </kbd>
+                <kbd className="liquid-glass px-1.5 py-0.5 rounded text-[10px] font-mono">
+                  <PhArrowDown className="w-3 h-3 inline" />
+                </kbd>
+                <span>Navigate</span>
               </div>
-            </m.div>
-          </div>
-        )}
-      </AnimatePresence>
-    </LazyMotion>,
+              <div className="flex items-center gap-1.5 text-[11px] font-sans text-text-muted/60">
+                <kbd className="liquid-glass px-1.5 py-0.5 rounded text-[10px] font-mono">
+                  <PhCornerDownLeft className="w-3 h-3 inline" />
+                </kbd>
+                <span>Open</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-[11px] font-sans text-text-muted/60">
+                <kbd className="liquid-glass px-1.5 py-0.5 rounded text-[10px] font-mono text-[10px]">
+                  esc
+                </kbd>
+                <span>Close</span>
+              </div>
+              <div className="ml-auto flex items-center gap-1.5 text-[11px] font-sans text-text-muted/40">
+                <PhCommand className="w-3 h-3" />
+                <span>K</span>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>,
     document.body,
   )
 }

@@ -3,14 +3,14 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Guides | Arcanea Hub",
-  description: "Step-by-step tutorials for mastering Arcanea. Learn to use AI specialists, explore the Library, and grow as a creator.",
+  description: "Step-by-step tutorials for mastering Arcanea. Learn to use Luminors, explore the Library, and unlock your creative potential.",
 };
 
 const GUIDES = [
   {
     id: "getting-started",
     title: "Getting Started with Arcanea",
-    description: "Your first steps into the creative intelligence platform. Set up your profile, meet your first AI specialist, and start creating.",
+    description: "Your first steps into the creative intelligence platform. Set up your profile, meet your first Luminor, and begin your journey.",
     duration: "5 min read",
     difficulty: "Beginner",
     icon: "🚀",
@@ -19,13 +19,13 @@ const GUIDES = [
   },
   {
     id: "luminors-guide",
-    title: "Working with AI Specialists",
-    description: "A guide to the 16 AI specialists. Learn their strengths, how to activate them, and when to use each one.",
+    title: "Working with Luminors",
+    description: "Deep dive into the 16 Luminor intelligences. Learn their specialties, how to activate them, and when to use each one.",
     duration: "15 min read",
     difficulty: "Intermediate",
     icon: "🌟",
-    color: "#0d47a1",
-    tags: ["specialists", "ai", "collaboration"],
+    color: "#8B5CF6",
+    tags: ["luminors", "ai", "collaboration"],
   },
   {
     id: "library-tour",
@@ -225,7 +225,7 @@ export default function GuidesPage() {
             href="/chat"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep font-semibold hover:shadow-[0_0_20px_rgba(0,188,212,0.4)] transition-all"
           >
-            Ask an AI Specialist
+            Ask a Luminor
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
             </svg>

@@ -1,6 +1,6 @@
 "use client";
 
-import { LazyMotion, domMax, m, useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import {
   PhBrain,
@@ -99,7 +99,7 @@ function FeatureCard({
   index: number;
 }) {
   return (
-    <m.div
+    <motion.div
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
@@ -127,14 +127,14 @@ function FeatureCard({
       </p>
 
       {/* Arrow indicator */}
-      <m.div
+      <motion.div
         className="absolute bottom-8 right-8 opacity-0 group-hover:opacity-100 transition-opacity"
         initial={{ x: -10 }}
         whileHover={{ x: 0 }}
       >
         <PhArrowRight className="w-5 h-5 text-crystal" />
-      </m.div>
-    </m.div>
+      </motion.div>
+    </motion.div>
   );
 }
 
@@ -143,7 +143,6 @@ export function FeaturesPremium() {
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
   return (
-    <LazyMotion features={domMax}>
     <section className="relative py-32 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 -z-10">
@@ -159,21 +158,21 @@ export function FeaturesPremium() {
 
       <div ref={containerRef} className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="text-center mb-20"
         >
-          <m.span
+          <motion.span
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             className="inline-block px-4 py-2 rounded-full glass border border-crystal/20 text-crystal font-medium text-sm mb-6"
           >
             Powerful Features
-          </m.span>
+          </motion.span>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
             Everything You Need to
@@ -185,7 +184,7 @@ export function FeaturesPremium() {
             A complete creative ecosystem. From ideation to execution, Arcanea
             provides the tools, knowledge, and companions you need.
           </p>
-        </m.div>
+        </motion.div>
 
         {/* Features Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-24">
@@ -195,7 +194,7 @@ export function FeaturesPremium() {
         </div>
 
         {/* Capabilities Section */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -233,7 +232,7 @@ export function FeaturesPremium() {
                 { icon: PhGlobe, label: "Global CDN", value: "40+" },
                 { icon: PhDatabase, label: "Uptime", value: "99.9%" },
               ].map((stat, index) => (
-                <m.div
+                <motion.div
                   key={stat.label}
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
@@ -246,13 +245,12 @@ export function FeaturesPremium() {
                     {stat.value}
                   </div>
                   <div className="text-xs text-text-muted">{stat.label}</div>
-                </m.div>
+                </motion.div>
               ))}
             </div>
           </div>
-        </m.div>
+        </motion.div>
       </div>
     </section>
-    </LazyMotion>
   );
 }

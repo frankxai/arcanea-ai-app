@@ -28,7 +28,7 @@ export function HeroBanner({ onSearch, totalCount }: HeroBannerProps) {
         className="absolute inset-0 z-0"
         style={{
           background:
-            'radial-gradient(ellipse 80% 60% at 50% -10%, rgba(13,71,161,0.28) 0%, transparent 65%), radial-gradient(ellipse 60% 40% at 80% 50%, rgba(0,188,212,0.08) 0%, transparent 55%), #0a0a0f',
+            'radial-gradient(ellipse 80% 60% at 50% -10%, rgba(139,92,246,0.28) 0%, transparent 65%), radial-gradient(ellipse 60% 40% at 80% 50%, rgba(0,188,212,0.08) 0%, transparent 55%), #0a0a0f',
         }}
       />
 
@@ -55,7 +55,7 @@ export function HeroBanner({ onSearch, totalCount }: HeroBannerProps) {
       <div
         className="absolute -top-32 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full pointer-events-none z-0"
         style={{
-          background: 'radial-gradient(circle, rgba(13,71,161,0.18) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(139,92,246,0.18) 0%, transparent 70%)',
           animation: 'glow-pulse 4s ease-in-out infinite',
         }}
         aria-hidden="true"
@@ -67,8 +67,8 @@ export function HeroBanner({ onSearch, totalCount }: HeroBannerProps) {
         <div
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 border text-sm font-medium tracking-widest uppercase"
           style={{
-            background: 'rgba(13,71,161,0.12)',
-            borderColor: 'rgba(13,71,161,0.35)',
+            background: 'rgba(139,92,246,0.12)',
+            borderColor: 'rgba(139,92,246,0.35)',
             color: '#c4b5fd',
             backdropFilter: 'blur(8px)',
           }}
@@ -99,7 +99,7 @@ export function HeroBanner({ onSearch, totalCount }: HeroBannerProps) {
           Original artwork created by the Arcanea community.
         </p>
 
-        <p className="text-sm mb-10" style={{ color: 'rgba(13,71,161,0.7)' }}>
+        <p className="text-sm mb-10" style={{ color: 'rgba(139,92,246,0.7)' }}>
           {totalCount.toLocaleString()} creations and growing
         </p>
 
@@ -110,10 +110,10 @@ export function HeroBanner({ onSearch, totalCount }: HeroBannerProps) {
           role="search"
         >
           <div
-            className="flex items-center gap-3 rounded-2xl px-5 py-4 border transition-all duration-300 focus-within:border-primary/70 focus-within:shadow-[0_0_0_3px_rgba(13,71,161,0.15)]"
+            className="flex items-center gap-3 rounded-2xl px-5 py-4 border transition-all duration-300 focus-within:border-primary/70 focus-within:shadow-[0_0_0_3px_rgba(139,92,246,0.15)]"
             style={{
               background: 'rgba(15,15,24,0.75)',
-              borderColor: 'rgba(13,71,161,0.25)',
+              borderColor: 'rgba(139,92,246,0.25)',
               backdropFilter: 'blur(20px)',
             }}
           >
@@ -131,9 +131,9 @@ export function HeroBanner({ onSearch, totalCount }: HeroBannerProps) {
               type="submit"
               className="px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 hover:opacity-90 active:scale-95"
               style={{
-                background: 'linear-gradient(135deg, #0d47a1, #0a3780)',
+                background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
                 color: '#fff',
-                boxShadow: '0 0 16px rgba(13,71,161,0.4)',
+                boxShadow: '0 0 16px rgba(139,92,246,0.4)',
               }}
             >
               Search
@@ -143,7 +143,7 @@ export function HeroBanner({ onSearch, totalCount }: HeroBannerProps) {
 
         {/* Scroll hint */}
         <div className="mt-12 flex flex-col items-center gap-2 opacity-40" aria-hidden="true">
-          <div className="w-px h-10" style={{ background: 'linear-gradient(to bottom, rgba(13,71,161,0.6), transparent)' }} />
+          <div className="w-px h-10" style={{ background: 'linear-gradient(to bottom, rgba(139,92,246,0.6), transparent)' }} />
           <p className="text-xs tracking-[0.2em] uppercase" style={{ color: '#7c6fa0' }}>Scroll to explore</p>
         </div>
       </div>

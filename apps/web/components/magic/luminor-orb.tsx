@@ -1,6 +1,6 @@
 "use client";
 
-import { m } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface LuminorOrbProps {
   name: string;
@@ -19,12 +19,12 @@ const sizes = {
 
 export function LuminorOrb({ name, domain, color, glowColor, description, size = "md" }: LuminorOrbProps) {
   return (
-    <m.div
+    <motion.div
       className="group flex flex-col items-center text-center"
       whileHover={{ scale: 1.1 }}
       transition={{ type: "spring", stiffness: 400, damping: 17 }}
     >
-      <m.div
+      <motion.div
         className={`${sizes[size]} rounded-full relative cursor-pointer`}
         style={{ background: `radial-gradient(circle at 30% 30%, ${color}, ${glowColor})` }}
         animate={{
@@ -41,22 +41,22 @@ export function LuminorOrb({ name, domain, color, glowColor, description, size =
           className="absolute inset-2 rounded-full opacity-50"
           style={{ background: `radial-gradient(circle at 40% 40%, white, transparent)` }}
         />
-      </m.div>
+      </motion.div>
 
-      <m.div
+      <motion.div
         className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         initial={false}
       >
         <h3 className="font-display font-bold text-lg" style={{ color }}>{name}</h3>
         <p className="text-sm text-text-secondary">{domain}</p>
-      </m.div>
+      </motion.div>
 
-      <m.p
+      <motion.p
         className="mt-2 text-xs text-text-muted max-w-[150px] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
       >
         {description}
-      </m.p>
-    </m.div>
+      </motion.p>
+    </motion.div>
   );
 }
 
@@ -74,7 +74,7 @@ export function LuminorCouncil() {
   return (
     <div className="flex flex-wrap justify-center gap-8 md:gap-12">
       {luminors.map((luminor, i) => (
-        <m.div
+        <motion.div
           key={luminor.name}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -82,7 +82,7 @@ export function LuminorCouncil() {
           transition={{ delay: i * 0.1 }}
         >
           <LuminorOrb {...luminor} />
-        </m.div>
+        </motion.div>
       ))}
     </div>
   );

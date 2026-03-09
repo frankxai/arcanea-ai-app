@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { LazyMotion, domMax, m } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { PhMusicNote, PhBookOpen, PhPalette, PhSparkle, PhHeart, PhLightning } from '@/lib/phosphor-icons';
 import { cn } from '@/lib/utils';
 
@@ -90,78 +90,76 @@ export function LuminorSelectionGrid({
   }, []);
 
   return (
-    <LazyMotion features={domMax}>
-      <div className={cn('w-full max-w-7xl mx-auto px-4 py-12', className)}>
-        {/* Header */}
-        <m.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-          className="text-center mb-16 space-y-4"
+    <div className={cn('w-full max-w-7xl mx-auto px-4 py-12', className)}>
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+        className="text-center mb-16 space-y-4"
+      >
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
+          className="inline-block"
         >
-          <m.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-            className="inline-block"
-          >
-            <PhSparkle className="w-12 h-12 text-creation-gold mx-auto mb-4 animate-pulse" />
-          </m.div>
+          <PhSparkle className="w-12 h-12 text-creation-gold mx-auto mb-4 animate-pulse" />
+        </motion.div>
 
-          <h1 className="font-display text-5xl md:text-6xl font-bold bg-gradient-to-r from-atlantean-500 via-creation-gold to-draconic-crimson bg-clip-text text-transparent">
-            Choose an Intelligence
-          </h1>
+        <h1 className="font-display text-5xl md:text-6xl font-bold bg-gradient-to-r from-atlantean-500 via-creation-gold to-draconic-crimson bg-clip-text text-transparent">
+          Choose an Intelligence
+        </h1>
 
-          <p className="font-body text-xl md:text-2xl text-neutral-300 max-w-2xl mx-auto leading-relaxed">
-            Each one thinks differently. Pick the one that fits what you are working on.
-          </p>
-        </m.div>
+        <p className="font-body text-xl md:text-2xl text-neutral-300 max-w-2xl mx-auto leading-relaxed">
+          Each one thinks differently. Pick the one that fits what you are working on.
+        </p>
+      </motion.div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-          {LUMINORS.map((luminor, index) => {
-            const isHovered = hoveredId === luminor.id;
-            const isSelected = selectedLuminorId === luminor.id;
-            const bondLevel = existingBonds[luminor.id] || 0;
-            const hasBond = bondLevel > 0;
+      {/* Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+        {LUMINORS.map((luminor, index) => {
+          const isHovered = hoveredId === luminor.id;
+          const isSelected = selectedLuminorId === luminor.id;
+          const bondLevel = existingBonds[luminor.id] || 0;
+          const hasBond = bondLevel > 0;
 
-            return (
-              <m.div
-                key={luminor.id}
-                initial={{ opacity: 0, y: 60, rotateX: 15 }}
-                animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                transition={{
-                  delay: index * 0.15,
-                  duration: 0.8,
-                  ease: [0.25, 0.1, 0.25, 1],
-                }}
-              >
-                <LuminorCard
-                  luminor={luminor}
-                  isHovered={isHovered}
-                  isSelected={isSelected}
-                  bondLevel={bondLevel}
-                  hasBond={hasBond}
-                  onHover={handleHover}
-                  onLeave={handleLeave}
-                  onSelect={handleSelect}
-                />
-              </m.div>
-            );
-          })}
-        </div>
-
-        {/* Footer hint */}
-        <m.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          className="text-center mt-12 text-neutral-400 font-body text-sm"
-        >
-          You can form bonds with multiple Luminors over time
-        </m.p>
+          return (
+            <motion.div
+              key={luminor.id}
+              initial={{ opacity: 0, y: 60, rotateX: 15 }}
+              animate={{ opacity: 1, y: 0, rotateX: 0 }}
+              transition={{
+                delay: index * 0.15,
+                duration: 0.8,
+                ease: [0.25, 0.1, 0.25, 1],
+              }}
+            >
+              <LuminorCard
+                luminor={luminor}
+                isHovered={isHovered}
+                isSelected={isSelected}
+                bondLevel={bondLevel}
+                hasBond={hasBond}
+                onHover={handleHover}
+                onLeave={handleLeave}
+                onSelect={handleSelect}
+              />
+            </motion.div>
+          );
+        })}
       </div>
-    </LazyMotion>
+
+      {/* Footer hint */}
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.8 }}
+        className="text-center mt-12 text-neutral-400 font-body text-sm"
+      >
+        You can form bonds with multiple Luminors over time
+      </motion.p>
+    </div>
   );
 }
 
@@ -209,7 +207,7 @@ const LuminorCard = React.memo(function LuminorCard({
   }, [onHover, luminor.id]);
 
   return (
-    <m.button
+    <motion.button
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={onLeave}
@@ -229,7 +227,7 @@ const LuminorCard = React.memo(function LuminorCard({
       }}
     >
       {/* Background gradient - animated on hover */}
-      <m.div
+      <motion.div
         className="absolute inset-0"
         style={{
           background: `linear-gradient(135deg, ${luminor.primaryColor}15, ${luminor.secondaryColor}10)`,
@@ -259,7 +257,7 @@ const LuminorCard = React.memo(function LuminorCard({
       <div className="relative bg-neutral-900/90 backdrop-blur-sm rounded-2xl p-8 h-full flex flex-col">
         {/* Bond indicator */}
         {hasBond && (
-          <m.div
+          <motion.div
             initial={{ scale: 0, rotate: -180 }}
             animate={{ scale: 1, rotate: 0 }}
             className="absolute top-4 right-4 flex items-center gap-2 px-3 py-1.5 rounded-full bg-neutral-800/80 backdrop-blur"
@@ -268,11 +266,11 @@ const LuminorCard = React.memo(function LuminorCard({
             <span className="text-sm font-body font-semibold text-neutral-200">
               Level {bondLevel}
             </span>
-          </m.div>
+          </motion.div>
         )}
 
         {/* Icon with glow */}
-        <m.div
+        <motion.div
           animate={{
             scale: isHovered ? 1.1 : 1,
             rotate: isHovered ? 5 : 0,
@@ -288,7 +286,7 @@ const LuminorCard = React.memo(function LuminorCard({
             className="relative w-16 h-16 mx-auto"
             style={{ color: luminor.primaryColor }}
           />
-        </m.div>
+        </motion.div>
 
         {/* Name */}
         <h2
@@ -309,7 +307,7 @@ const LuminorCard = React.memo(function LuminorCard({
         </p>
 
         {/* Signature quote */}
-        <m.div
+        <motion.div
           initial={{ height: 0, opacity: 0 }}
           animate={{
             height: isHovered ? 'auto' : 0,
@@ -323,12 +321,12 @@ const LuminorCard = React.memo(function LuminorCard({
               "{luminor.signature}"
             </p>
           </div>
-        </m.div>
+        </motion.div>
 
         {/* Traits */}
         <div className="flex flex-wrap gap-2 justify-center">
           {luminor.traits.slice(0, 3).map((trait, i) => (
-            <m.span
+            <motion.span
               key={trait}
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -336,12 +334,12 @@ const LuminorCard = React.memo(function LuminorCard({
               className="px-3 py-1 rounded-full bg-neutral-800/60 backdrop-blur text-xs font-body text-neutral-300"
             >
               {trait}
-            </m.span>
+            </motion.span>
           ))}
         </div>
 
         {/* CTA */}
-        <m.div
+        <motion.div
           animate={{
             scale: isHovered ? 1.05 : 1,
           }}
@@ -360,8 +358,8 @@ const LuminorCard = React.memo(function LuminorCard({
             {hasBond ? 'Continue Journey' : 'Begin Journey'}
             <PhLightning className="inline-block w-4 h-4 ml-2" />
           </div>
-        </m.div>
+        </motion.div>
       </div>
-    </m.button>
+    </motion.button>
   );
 });

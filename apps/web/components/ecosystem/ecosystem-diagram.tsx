@@ -49,7 +49,7 @@ const INNER_TOOLS: (Node & { angle: number; description: string })[] = [
     sublabel: "VS Code Extension",
     description: "Guardian AI sidebar inside your editor",
     Icon: PhCode,
-    color: "#0d47a1",
+    color: "#8b5cf6",
     angle: 120,
   },
   {

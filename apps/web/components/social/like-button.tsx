@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { LazyMotion, domMax, m } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { PhHeart } from '@/lib/phosphor-icons';
 
 interface LikeButtonProps {
@@ -54,45 +54,43 @@ export function LikeButton({
   };
 
   return (
-    <LazyMotion features={domMax}>
-      <m.button
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        onClick={handleLike}
-        aria-label={isLiked ? `Unlike creation. Currently ${likes} likes` : `Like creation. Currently ${likes} likes`}
-        aria-pressed={isLiked}
-        className={`flex items-center gap-2 transition-colors duration-300 ${
-          isLiked ? 'text-pink-500' : 'text-slate-400 hover:text-pink-500'
-        }`}
+    <motion.button
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.9 }}
+      onClick={handleLike}
+      aria-label={isLiked ? `Unlike creation. Currently ${likes} likes` : `Like creation. Currently ${likes} likes`}
+      aria-pressed={isLiked}
+      className={`flex items-center gap-2 transition-colors duration-300 ${
+        isLiked ? 'text-pink-500' : 'text-slate-400 hover:text-pink-500'
+      }`}
+    >
+      <motion.div
+        animate={
+          isAnimating
+            ? {
+                scale: [1, 1.3, 1],
+                rotate: [0, -10, 10, 0],
+              }
+            : {}
+        }
+        transition={{ duration: 0.3 }}
       >
-        <m.div
-          animate={
-            isAnimating
-              ? {
-                  scale: [1, 1.3, 1],
-                  rotate: [0, -10, 10, 0],
-                }
-              : {}
-          }
-          transition={{ duration: 0.3 }}
-        >
-          <PhHeart
-            className={`${sizeClasses[size]} ${isLiked ? 'fill-current' : ''}`}
-            aria-hidden="true"
-          />
-        </m.div>
+        <PhHeart
+          className={`${sizeClasses[size]} ${isLiked ? 'fill-current' : ''}`}
+          aria-hidden="true"
+        />
+      </motion.div>
 
-        {showCount && (
-          <m.span
-            key={likes}
-            initial={{ scale: 1.2, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="font-medium text-sm"
-          >
-            {likes.toLocaleString()}
-          </m.span>
-        )}
-      </m.button>
-    </LazyMotion>
+      {showCount && (
+        <motion.span
+          key={likes}
+          initial={{ scale: 1.2, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          className="font-medium text-sm"
+        >
+          {likes.toLocaleString()}
+        </motion.span>
+      )}
+    </motion.button>
   );
 }

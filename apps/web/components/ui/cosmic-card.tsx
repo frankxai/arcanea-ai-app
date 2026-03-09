@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { m } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { cosmicFadeIn } from '@/lib/animations';
 
@@ -34,7 +34,7 @@ const CosmicCard = React.forwardRef<HTMLDivElement, CosmicCardProps>(
     const resolvedGlass = glass === true ? 'glass' : glass ? glassClasses[glass] : undefined;
 
     return (
-      <m.div
+      <motion.div
         ref={ref}
         initial="hidden"
         animate="visible"
@@ -52,7 +52,7 @@ const CosmicCard = React.forwardRef<HTMLDivElement, CosmicCardProps>(
         )}
       >
         {children}
-      </m.div>
+      </motion.div>
     );
   }
 );

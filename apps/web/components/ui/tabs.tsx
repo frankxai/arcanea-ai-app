@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { m, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -52,7 +52,7 @@ const TabPanel = React.forwardRef<HTMLDivElement, TabPanelProps>(
       >
         <AnimatePresence mode="wait" initial={false}>
           {isActive && (
-            <m.div
+            <motion.div
               key={value}
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
@@ -60,7 +60,7 @@ const TabPanel = React.forwardRef<HTMLDivElement, TabPanelProps>(
               transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
             >
               {children}
-            </m.div>
+            </motion.div>
           )}
         </AnimatePresence>
       </div>
@@ -165,7 +165,7 @@ const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
               >
                 {/* Pill active background */}
                 {variant === 'pill' && isActive && (
-                  <m.span
+                  <motion.span
                     layoutId="pill-bg"
                     className="absolute inset-0 rounded-lg bg-crystal"
                     transition={{
@@ -201,7 +201,7 @@ const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
 
                 {/* Underline active indicator */}
                 {variant === 'underline' && isActive && (
-                  <m.span
+                  <motion.span
                     layoutId="underline-indicator"
                     className="absolute inset-x-0 -bottom-px h-0.5 bg-crystal rounded-full"
                     transition={{

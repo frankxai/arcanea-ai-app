@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { m, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const words = [
   "Universe",
@@ -25,7 +25,7 @@ export function HeroChangingWords() {
   return (
     <span className="relative inline-flex justify-start min-w-[3ch] overflow-hidden align-baseline">
       <AnimatePresence mode="wait">
-        <m.span
+        <motion.span
           key={words[index]}
           initial={{ y: "110%", opacity: 0, filter: "blur(4px)" }}
           animate={{ y: "0%", opacity: 1, filter: "blur(0px)" }}
@@ -34,7 +34,7 @@ export function HeroChangingWords() {
           className="inline-block bg-gradient-to-r from-[#00bcd4] via-[#4dd0e1] to-[#00897b] bg-clip-text text-transparent"
         >
           {words[index]}
-        </m.span>
+        </motion.span>
       </AnimatePresence>
     </span>
   );

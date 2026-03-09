@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LazyMotion, domMax, m, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { UserNav } from "@/components/auth";
 
 const navLinks = [
@@ -27,7 +27,7 @@ export function Navbar() {
   }, []);
 
   return (
-    <LazyMotion features={domMax}>
+    <>
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
@@ -66,7 +66,7 @@ export function Navbar() {
                   >
                     {link.label}
                     {isActive && (
-                      <m.div
+                      <motion.div
                         layoutId="nav-indicator"
                         className="absolute bottom-0 left-3 right-3 h-[2px] bg-gradient-to-r from-[#00bcd4] to-[#1a237e] rounded-full"
                         transition={{
@@ -111,7 +111,7 @@ export function Navbar() {
 
       <AnimatePresence>
         {mobileMenuOpen && (
-          <m.div
+          <motion.div
             id="mobile-nav-menu"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -160,13 +160,13 @@ export function Navbar() {
                 </div>
               </div>
             </nav>
-          </m.div>
+          </motion.div>
         )}
       </AnimatePresence>
 
       <AnimatePresence>
         {mobileMenuOpen && (
-          <m.div
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -175,6 +175,6 @@ export function Navbar() {
           />
         )}
       </AnimatePresence>
-    </LazyMotion>
+    </>
   );
 }

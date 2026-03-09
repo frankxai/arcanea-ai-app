@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { LazyMotion, domMax, m } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { PhUserPlus, PhUserCheck } from '@/lib/phosphor-icons';
 import { Button } from '@/lib/arcanea-ui';
 
@@ -49,32 +49,30 @@ export function FollowButton({
   };
 
   return (
-    <LazyMotion features={domMax}>
-      <m.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-        <Button
-          onClick={handleFollow}
-          disabled={isLoading}
-          className={`${sizeClasses[size]} rounded-xl font-semibold transition-all duration-300 ${
-            isFollowing
-              ? 'bg-slate-700 hover:bg-slate-600 text-white'
-              : 'bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white shadow-lg hover:shadow-purple-500/50'
-          } disabled:opacity-50 disabled:cursor-not-allowed`}
-        >
-          <div className="flex items-center gap-2">
-            {isFollowing ? (
-              <>
-                <PhUserCheck className="w-4 h-4" />
-                <span>Following</span>
-              </>
-            ) : (
-              <>
-                <PhUserPlus className="w-4 h-4" />
-                <span>Follow</span>
-              </>
-            )}
-          </div>
-        </Button>
-      </m.div>
-    </LazyMotion>
+    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+      <Button
+        onClick={handleFollow}
+        disabled={isLoading}
+        className={`${sizeClasses[size]} rounded-xl font-semibold transition-all duration-300 ${
+          isFollowing
+            ? 'bg-slate-700 hover:bg-slate-600 text-white'
+            : 'bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white shadow-lg hover:shadow-purple-500/50'
+        } disabled:opacity-50 disabled:cursor-not-allowed`}
+      >
+        <div className="flex items-center gap-2">
+          {isFollowing ? (
+            <>
+              <PhUserCheck className="w-4 h-4" />
+              <span>Following</span>
+            </>
+          ) : (
+            <>
+              <PhUserPlus className="w-4 h-4" />
+              <span>Follow</span>
+            </>
+          )}
+        </div>
+      </Button>
+    </motion.div>
   );
 }

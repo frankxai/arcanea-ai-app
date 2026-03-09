@@ -46,7 +46,7 @@ export function SettingsSidebar({ active, onChange }: SidebarProps) {
       {/* Logo */}
       <div className="mb-8 px-3">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-gradient-to-br from-violet-500 to-violet-700 shadow-[0_0_20px_rgba(13,71,161,0.4)]">
+          <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-gradient-to-br from-violet-500 to-violet-700 shadow-[0_0_20px_rgba(139,92,246,0.4)]">
             <Lightning size={20} weight="fill" className="text-white" />
           </div>
           <div>
@@ -74,7 +74,7 @@ export function SettingsSidebar({ active, onChange }: SidebarProps) {
               )}
             >
               {isActive && (
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 rounded-full bg-violet-500 shadow-[0_0_8px_#0d47a1]" />
+                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 rounded-full bg-violet-500 shadow-[0_0_8px_#8b5cf6]" />
               )}
               <item.Icon
                 size={18}
@@ -103,7 +103,7 @@ export function SettingsSidebar({ active, onChange }: SidebarProps) {
         </p>
         <div className="mt-3 h-1.5 rounded-full overflow-hidden bg-white/5">
           <div
-            className="h-full rounded-full bg-gradient-to-r from-violet-500 to-atlantean-aqua shadow-[0_0_8px_rgba(13,71,161,0.5)]"
+            className="h-full rounded-full bg-gradient-to-r from-violet-500 to-atlantean-aqua shadow-[0_0_8px_rgba(139,92,246,0.5)]"
             style={{ width: '78%' }}
           />
         </div>

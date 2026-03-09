@@ -1,6 +1,6 @@
 'use client';
 
-import { LazyMotion, domMax, m, useInView, AnimatePresence } from 'framer-motion';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { PhStack, PhArrowRight, PhSparkle, PhCaretDown } from '@/lib/phosphor-icons';
 import Link from 'next/link';
@@ -192,7 +192,6 @@ export default function GatesPage() {
   const [expandedGate, setExpandedGate] = useState<number | null>(null);
 
   return (
-    <LazyMotion features={domMax}>
     <div className="relative min-h-screen bg-cosmic-deep">
       {/* Hero */}
       <section
@@ -211,7 +210,7 @@ export default function GatesPage() {
 
         {/* Gate markers */}
         {[...Array(10)].map((_, i) => (
-          <m.div
+          <motion.div
             key={i}
             className="absolute left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-gold-bright/30 border border-gold-bright/50"
             style={{ top: `${30 + i * 4}%` }}
@@ -228,16 +227,16 @@ export default function GatesPage() {
         ))}
 
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-          <m.div
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold-bright/10 border border-gold-bright/20 mb-6"
           >
             <PhStack className="w-4 h-4 text-gold-bright" />
             <span className="text-sm font-medium text-gold-bright">The Journey of Awakening</span>
-          </m.div>
+          </motion.div>
 
-          <m.h1
+          <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
@@ -246,9 +245,9 @@ export default function GatesPage() {
             <span className="bg-gradient-to-r from-gold-bright via-white to-atlantean-teal-aqua bg-clip-text text-transparent">
               The Ten Gates
             </span>
-          </m.h1>
+          </motion.h1>
 
-          <m.p
+          <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
@@ -256,15 +255,15 @@ export default function GatesPage() {
           >
             &ldquo;The Gates are not locked doors. They are sleeping frequencies within you,
             waiting for the moment you are ready to hear them sing.&rdquo;
-          </m.p>
-          <m.p
+          </motion.p>
+          <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.35 }}
             className="text-sm text-text-muted font-mono mt-4 tracking-wider"
           >
             — The Academy Handbook, Chapter I
-          </m.p>
+          </motion.p>
         </div>
       </section>
 
@@ -328,7 +327,7 @@ export default function GatesPage() {
 
             <div className="space-y-6">
               {GATES.map((gate, i) => (
-                <m.div
+                <motion.div
                   key={gate.number}
                   initial={{ opacity: 0, x: -30 }}
                   animate={isGatesInView ? { opacity: 1, x: 0 } : {}}
@@ -389,7 +388,7 @@ export default function GatesPage() {
                     {/* Expanded content */}
                     <AnimatePresence>
                     {expandedGate === gate.number && (
-                      <m.div
+                      <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
@@ -456,11 +455,11 @@ export default function GatesPage() {
                             </p>
                           </div>
                         </div>
-                      </m.div>
+                      </motion.div>
                     )}
                     </AnimatePresence>
                   </div>
-                </m.div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -499,6 +498,5 @@ export default function GatesPage() {
         </div>
       </section>
     </div>
-    </LazyMotion>
   );
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { m } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { type Academy } from '@/lib/theme-utils';
 
@@ -47,7 +47,7 @@ const GlowEffect = React.forwardRef<HTMLDivElement, GlowEffectProps>(
 
     if (animated) {
       return (
-        <m.div
+        <motion.div
           ref={ref}
           className={cn('relative', className)}
           style={style}
@@ -66,7 +66,7 @@ const GlowEffect = React.forwardRef<HTMLDivElement, GlowEffectProps>(
           }}
         >
           {children}
-        </m.div>
+        </motion.div>
       );
     }
 

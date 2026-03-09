@@ -111,17 +111,17 @@ const AI_SUGGESTIONS = [
 function TextCreationPanel({
   content,
   setContent,
-  aiMessages,
-  onAskAI,
-  aiInput,
-  setAiInput,
+  luminorMessages,
+  onAskLuminor,
+  luminorInput,
+  setLuminorInput,
 }: {
   content: string;
   setContent: (val: string) => void;
-  aiMessages: { role: "user" | "luminor"; text: string }[];
-  onAskAI: () => void;
-  aiInput: string;
-  setAiInput: (val: string) => void;
+  luminorMessages: { role: "user" | "luminor"; text: string }[];
+  onAskLuminor: () => void;
+  luminorInput: string;
+  setLuminorInput: (val: string) => void;
 }) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const wordCount = content.trim() ? content.trim().split(/\s+/).length : 0;
@@ -215,7 +215,7 @@ Use Markdown for formatting. The AI panel can help you develop ideas."
         </div>
       </div>
 
-      {/* Right: AI Panel */}
+      {/* Right: Luminor AI Panel */}
       <div className="lg:w-[340px] flex flex-col border-l border-white/[0.08] min-h-0">
         <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.08] bg-white/[0.02]">
           <div className="w-6 h-6 rounded-full bg-gradient-to-br from-crystal to-brand-primary flex items-center justify-center">
@@ -228,7 +228,7 @@ Use Markdown for formatting. The AI panel can help you develop ideas."
 
         {/* Suggestions */}
         <div className="flex-1 overflow-y-auto p-3 space-y-2">
-          {aiMessages.length === 0 ? (
+          {luminorMessages.length === 0 ? (
             <>
               <p className="text-xs text-text-muted mb-3 px-1">
                 Suggestions to enhance your creation:
@@ -237,8 +237,8 @@ Use Markdown for formatting. The AI panel can help you develop ideas."
                 <button
                   key={s.title}
                   onClick={() => {
-                    setAiInput(s.title);
-                    setTimeout(onAskAI, 50);
+                    setLuminorInput(s.title);
+                    setTimeout(onAskLuminor, 50);
                   }}
                   className="w-full text-left p-3 rounded-xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06] hover:border-crystal/30 transition-all group"
                 >
@@ -261,7 +261,7 @@ Use Markdown for formatting. The AI panel can help you develop ideas."
               ))}
             </>
           ) : (
-            aiMessages.map((msg, i) => (
+            luminorMessages.map((msg, i) => (
               <div
                 key={i}
                 className={`p-3 rounded-xl text-xs leading-relaxed ${
@@ -274,7 +274,7 @@ Use Markdown for formatting. The AI panel can help you develop ideas."
                   <div className="flex items-center gap-1.5 mb-1.5 text-crystal">
                     <Sparkle size={10} weight="fill" />
                     <span className="font-semibold text-[10px] uppercase tracking-wider">
-                      AI
+                      Luminor
                     </span>
                   </div>
                 )}
@@ -289,17 +289,17 @@ Use Markdown for formatting. The AI panel can help you develop ideas."
           <div className="flex items-center gap-2">
             <input
               type="text"
-              value={aiInput}
-              onChange={(e) => setAiInput(e.target.value)}
+              value={luminorInput}
+              onChange={(e) => setLuminorInput(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter" && aiInput.trim()) onAskAI();
+                if (e.key === "Enter" && luminorInput.trim()) onAskLuminor();
               }}
-              placeholder="Ask AI..."
+              placeholder="Ask Luminor..."
               className="flex-1 bg-white/[0.04] border border-white/[0.06] rounded-lg px-3 py-2 text-xs text-text-primary placeholder-text-muted/50 focus:outline-none focus:border-crystal/40 transition-colors"
             />
             <button
-              onClick={onAskAI}
-              disabled={!aiInput.trim()}
+              onClick={onAskLuminor}
+              disabled={!luminorInput.trim()}
               className="p-2 rounded-lg bg-gradient-to-r from-crystal to-brand-primary text-cosmic-void hover:opacity-90 transition-opacity disabled:opacity-30 disabled:cursor-not-allowed"
             >
               <PaperPlane size={14} weight="fill" />
@@ -613,21 +613,21 @@ export default function StudioPage() {
   const { user } = useAuth();
   const [activeMode, setActiveMode] = useState<CreationMode>("text");
   const [textContent, setTextContent] = useState("");
-  const [aiMessages, setAiMessages] = useState<
+  const [luminorMessages, setLuminorMessages] = useState<
     { role: "user" | "luminor"; text: string }[]
   >([]);
-  const [aiInput, setAiInput] = useState("");
+  const [luminorInput, setLuminorInput] = useState("");
 
   const currentMode = MODES.find((m) => m.id === activeMode)!;
 
-  const handleAskAI = useCallback(() => {
-    if (!aiInput.trim()) return;
+  const handleAskLuminor = useCallback(() => {
+    if (!luminorInput.trim()) return;
 
-    const userMsg = aiInput.trim();
-    setAiMessages((prev) => [...prev, { role: "user", text: userMsg }]);
-    setAiInput("");
+    const userMsg = luminorInput.trim();
+    setLuminorMessages((prev) => [...prev, { role: "user", text: userMsg }]);
+    setLuminorInput("");
 
-    // Call AI via chat API
+    // Call real Luminor AI via chat API
     (async () => {
       try {
         const res = await fetch('/api/ai/chat', {
@@ -636,7 +636,7 @@ export default function StudioPage() {
           body: JSON.stringify({
             messages: [
               { role: 'system', content: `You are ${currentMode.guardian}, a ${currentMode.element} Guardian of Arcanea. Help the creator with their ${activeMode} work. Be concise, wise, and practical. Respond in 2-3 sentences.` },
-              ...aiMessages.slice(-6).map((m) => ({
+              ...luminorMessages.slice(-6).map((m) => ({
                 role: m.role === 'luminor' ? 'assistant' : 'user',
                 content: m.text,
               })),
@@ -651,32 +651,32 @@ export default function StudioPage() {
           const decoder = new TextDecoder();
           let fullText = '';
 
-          setAiMessages((prev) => [...prev, { role: 'luminor', text: '' }]);
+          setLuminorMessages((prev) => [...prev, { role: 'luminor', text: '' }]);
 
           while (true) {
             const { done, value } = await reader.read();
             if (done) break;
             fullText += decoder.decode(value, { stream: true });
-            setAiMessages((prev) => {
+            setLuminorMessages((prev) => {
               const updated = [...prev];
               updated[updated.length - 1] = { role: 'luminor', text: fullText };
               return updated;
             });
           }
         } else {
-          setAiMessages((prev) => [
+          setLuminorMessages((prev) => [
             ...prev,
             { role: 'luminor', text: 'Connection is limited right now. Try again in a moment, or keep writing — sometimes the work itself is the best guide.' },
           ]);
         }
       } catch {
-        setAiMessages((prev) => [
+        setLuminorMessages((prev) => [
           ...prev,
           { role: 'luminor', text: 'Begin writing, and let the work reveal its own direction. The best ideas come from momentum.' },
         ]);
       }
     })();
-  }, [aiInput, currentMode.guardian]);
+  }, [luminorInput, currentMode.guardian]);
 
   const [isSaving, setIsSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
@@ -822,7 +822,7 @@ export default function StudioPage() {
               <button
                 onClick={() => {
                   setTextContent("");
-                  setAiMessages([]);
+                  setLuminorMessages([]);
                 }}
                 className="p-2 rounded-lg text-text-muted hover:text-red-400 hover:bg-red-400/10 transition-colors"
                 title="Clear"
@@ -837,10 +837,10 @@ export default function StudioPage() {
             <TextCreationPanel
               content={textContent}
               setContent={setTextContent}
-              aiMessages={aiMessages}
-              onAskAI={handleAskAI}
-              aiInput={aiInput}
-              setAiInput={setAiInput}
+              luminorMessages={luminorMessages}
+              onAskLuminor={handleAskLuminor}
+              luminorInput={luminorInput}
+              setLuminorInput={setLuminorInput}
             />
           )}
           {activeMode === "image" && <ImageCreationPanel />}

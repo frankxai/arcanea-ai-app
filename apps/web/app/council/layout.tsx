@@ -1,5 +1,4 @@
-import type { ReactNode } from "react";
-import type { Metadata } from "next";
+import type { Metadata, ReactNode } from "next";
 
 export const metadata: Metadata = {
   title: "Luminor Council | Arcanea",

@@ -26,7 +26,7 @@ export default function ProgressStepper({
               <div
                 className={`relative w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all duration-500 ${
                   isCompleted
-                    ? 'bg-violet-500 text-white shadow-[0_0_16px_rgba(13,71,161,0.6)]'
+                    ? 'bg-violet-500 text-white shadow-[0_0_16px_rgba(139,92,246,0.6)]'
                     : isCurrent
                       ? 'bg-transparent text-[#ffd700] border-2 border-[#ffd700] shadow-[0_0_20px_rgba(255,215,0,0.5)]'
                       : 'bg-transparent text-[#4a4a6a] border border-white/10'

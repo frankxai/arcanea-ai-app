@@ -165,7 +165,7 @@ export default function GalleryPage() {
                 <div className="flex flex-col items-center gap-2 py-12 text-center">
                   <div
                     className="w-16 h-px"
-                    style={{ background: 'linear-gradient(to right, transparent, rgba(13,71,161,0.4), transparent)' }}
+                    style={{ background: 'linear-gradient(to right, transparent, rgba(139,92,246,0.4), transparent)' }}
                     aria-hidden="true"
                   />
                   <p className="text-sm" style={{ color: '#4a3f64' }}>

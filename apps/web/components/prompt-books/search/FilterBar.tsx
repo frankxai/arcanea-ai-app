@@ -4,7 +4,7 @@
 // Horizontal bar with prompt type, favorites, tags, and sort controls
 
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { LazyMotion, domMax, m, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   PhCaretDown,
   PhStar,
@@ -205,366 +205,364 @@ export function FilterBar() {
   );
 
   return (
-    <LazyMotion features={domMax}>
-      <div className="px-6 py-2.5 border-b border-white/[0.04]">
-        <div className="flex items-center gap-2 flex-wrap">
-          {/* Filter icon */}
-          <div className="flex items-center gap-1.5 text-text-muted mr-1">
-            <PhSlidersHorizontal className="w-3.5 h-3.5" />
-            {activeFilterCount > 0 && (
-              <span className="text-[10px] font-sans font-semibold bg-brand-accent/20 text-brand-accent px-1.5 py-0.5 rounded-full">
-                {activeFilterCount}
-              </span>
+    <div className="px-6 py-2.5 border-b border-white/[0.04]">
+      <div className="flex items-center gap-2 flex-wrap">
+        {/* Filter icon */}
+        <div className="flex items-center gap-1.5 text-text-muted mr-1">
+          <PhSlidersHorizontal className="w-3.5 h-3.5" />
+          {activeFilterCount > 0 && (
+            <span className="text-[10px] font-sans font-semibold bg-brand-accent/20 text-brand-accent px-1.5 py-0.5 rounded-full">
+              {activeFilterCount}
+            </span>
+          )}
+        </div>
+
+        {/* ── Prompt Type Dropdown ──────────────────────────────────── */}
+        <div ref={typeDropdown.ref} className="relative">
+          <button
+            onClick={() => typeDropdown.setIsOpen(!typeDropdown.isOpen)}
+            className={cn(
+              "liquid-glass px-3 py-1.5 rounded-lg text-xs font-sans",
+              "flex items-center gap-1.5 transition-all duration-150",
+              "hover:bg-white/[0.06] hover:border-white/[0.08]",
+              "border",
+              selectedType
+                ? "border-brand-accent/30 text-brand-accent"
+                : "border-transparent text-text-muted hover:text-text-secondary",
             )}
-          </div>
-
-          {/* ── Prompt Type Dropdown ──────────────────────────────────── */}
-          <div ref={typeDropdown.ref} className="relative">
-            <button
-              onClick={() => typeDropdown.setIsOpen(!typeDropdown.isOpen)}
+            aria-haspopup="listbox"
+            aria-expanded={typeDropdown.isOpen}
+          >
+            <span>
+              {selectedType ? PROMPT_TYPES[selectedType].label : "Type"}
+            </span>
+            <PhCaretDown
               className={cn(
-                "liquid-glass px-3 py-1.5 rounded-lg text-xs font-sans",
-                "flex items-center gap-1.5 transition-all duration-150",
-                "hover:bg-white/[0.06] hover:border-white/[0.08]",
-                "border",
-                selectedType
-                  ? "border-brand-accent/30 text-brand-accent"
-                  : "border-transparent text-text-muted hover:text-text-secondary",
+                "w-3 h-3 transition-transform duration-200",
+                typeDropdown.isOpen && "rotate-180",
               )}
-              aria-haspopup="listbox"
-              aria-expanded={typeDropdown.isOpen}
-            >
-              <span>
-                {selectedType ? PROMPT_TYPES[selectedType].label : "Type"}
-              </span>
-              <PhCaretDown
-                className={cn(
-                  "w-3 h-3 transition-transform duration-200",
-                  typeDropdown.isOpen && "rotate-180",
-                )}
-              />
-            </button>
+            />
+          </button>
 
-            <AnimatePresence>
-              {typeDropdown.isOpen && (
-                <m.div
-                  variants={dropdownVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  role="listbox"
-                  aria-label="Prompt type filter"
+          <AnimatePresence>
+            {typeDropdown.isOpen && (
+              <motion.div
+                variants={dropdownVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                role="listbox"
+                aria-label="Prompt type filter"
+                className={cn(
+                  "absolute top-full left-0 mt-1.5 z-50 min-w-[180px]",
+                  "rounded-xl p-1.5",
+                  "bg-[rgba(12,16,28,0.96)] backdrop-blur-[20px]",
+                  "border border-[rgba(0,188,212,0.12)]",
+                  "shadow-[0_8px_32px_rgba(0,0,0,0.5)]",
+                )}
+              >
+                {/* All types option */}
+                <button
+                  role="option"
+                  aria-selected={!selectedType}
+                  onClick={() => {
+                    setSelectedType(null);
+                    typeDropdown.setIsOpen(false);
+                  }}
                   className={cn(
-                    "absolute top-full left-0 mt-1.5 z-50 min-w-[180px]",
-                    "rounded-xl p-1.5",
-                    "bg-[rgba(12,16,28,0.96)] backdrop-blur-[20px]",
-                    "border border-[rgba(0,188,212,0.12)]",
-                    "shadow-[0_8px_32px_rgba(0,0,0,0.5)]",
+                    "w-full px-2.5 py-2 rounded-md text-left text-xs font-sans",
+                    "flex items-center justify-between gap-2",
+                    "transition-colors duration-100",
+                    !selectedType
+                      ? "bg-white/[0.06] text-text-primary"
+                      : "text-text-secondary hover:bg-white/[0.04] hover:text-text-primary",
                   )}
                 >
-                  {/* All types option */}
+                  <span>All Types</span>
+                  {!selectedType && (
+                    <PhCheck className="w-3 h-3 text-brand-accent" />
+                  )}
+                </button>
+
+                <div className="my-1 h-px bg-white/[0.04]" role="separator" />
+
+                {promptTypeEntries.map(([key, config]) => (
                   <button
+                    key={key}
                     role="option"
-                    aria-selected={!selectedType}
+                    aria-selected={selectedType === key}
                     onClick={() => {
-                      setSelectedType(null);
+                      setSelectedType(key);
                       typeDropdown.setIsOpen(false);
                     }}
                     className={cn(
                       "w-full px-2.5 py-2 rounded-md text-left text-xs font-sans",
                       "flex items-center justify-between gap-2",
                       "transition-colors duration-100",
-                      !selectedType
+                      selectedType === key
                         ? "bg-white/[0.06] text-text-primary"
                         : "text-text-secondary hover:bg-white/[0.04] hover:text-text-primary",
                     )}
                   >
-                    <span>All Types</span>
-                    {!selectedType && (
+                    <span>{config.label}</span>
+                    {selectedType === key && (
                       <PhCheck className="w-3 h-3 text-brand-accent" />
                     )}
                   </button>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
 
-                  <div className="my-1 h-px bg-white/[0.04]" role="separator" />
+        {/* ── Favorites Toggle ─────────────────────────────────────── */}
+        <button
+          onClick={() => setFavoritesOnly(!favoritesOnly)}
+          className={cn(
+            "liquid-glass px-3 py-1.5 rounded-lg text-xs font-sans",
+            "flex items-center gap-1.5 transition-all duration-150",
+            "border",
+            favoritesOnly
+              ? "border-brand-gold/30 text-brand-gold"
+              : "border-transparent text-text-muted hover:text-text-secondary hover:bg-white/[0.06]",
+          )}
+          aria-pressed={favoritesOnly}
+          aria-label="Filter favorites"
+        >
+          <PhStar className={cn("w-3 h-3", favoritesOnly && "fill-brand-gold")} />
+          <span>Favorites</span>
+        </button>
 
-                  {promptTypeEntries.map(([key, config]) => (
+        {/* ── Tags Dropdown ────────────────────────────────────────── */}
+        <div ref={tagDropdown.ref} className="relative">
+          <button
+            onClick={() => tagDropdown.setIsOpen(!tagDropdown.isOpen)}
+            className={cn(
+              "liquid-glass px-3 py-1.5 rounded-lg text-xs font-sans",
+              "flex items-center gap-1.5 transition-all duration-150",
+              "hover:bg-white/[0.06]",
+              "border",
+              selectedTagIds.length > 0
+                ? "border-brand-primary/30 text-brand-primary"
+                : "border-transparent text-text-muted hover:text-text-secondary",
+            )}
+            aria-haspopup="listbox"
+            aria-expanded={tagDropdown.isOpen}
+          >
+            <PhTag className="w-3 h-3" />
+            <span>
+              {selectedTagIds.length > 0
+                ? `${selectedTagIds.length} tag${selectedTagIds.length !== 1 ? "s" : ""}`
+                : "Tags"}
+            </span>
+            <PhCaretDown
+              className={cn(
+                "w-3 h-3 transition-transform duration-200",
+                tagDropdown.isOpen && "rotate-180",
+              )}
+            />
+          </button>
+
+          <AnimatePresence>
+            {tagDropdown.isOpen && (
+              <motion.div
+                variants={dropdownVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                role="listbox"
+                aria-label="Tags filter"
+                aria-multiselectable="true"
+                className={cn(
+                  "absolute top-full left-0 mt-1.5 z-50 min-w-[200px] max-w-[280px]",
+                  "rounded-xl p-1.5",
+                  "bg-[rgba(12,16,28,0.96)] backdrop-blur-[20px]",
+                  "border border-[rgba(0,188,212,0.12)]",
+                  "shadow-[0_8px_32px_rgba(0,0,0,0.5)]",
+                )}
+              >
+                {allTags.length === 0 ? (
+                  <div className="px-3 py-4 text-center text-xs font-sans text-text-muted">
+                    No tags available
+                  </div>
+                ) : (
+                  <div className="max-h-[240px] overflow-y-auto overscroll-contain">
+                    {allTags.map((tag) => {
+                      const isSelected = selectedTagIds.includes(tag.id);
+                      return (
+                        <button
+                          key={tag.id}
+                          role="option"
+                          aria-selected={isSelected}
+                          onClick={() => toggleTag(tag.id)}
+                          className={cn(
+                            "w-full px-2.5 py-2 rounded-md text-left text-xs font-sans",
+                            "flex items-center justify-between gap-2",
+                            "transition-colors duration-100",
+                            isSelected
+                              ? "bg-white/[0.06] text-text-primary"
+                              : "text-text-secondary hover:bg-white/[0.04] hover:text-text-primary",
+                          )}
+                        >
+                          <div className="flex items-center gap-2 min-w-0">
+                            {tag.color && (
+                              <div
+                                className="w-2 h-2 rounded-full flex-shrink-0"
+                                style={{ backgroundColor: tag.color }}
+                              />
+                            )}
+                            <span className="truncate">{tag.name}</span>
+                          </div>
+                          {isSelected && (
+                            <PhCheck className="w-3 h-3 text-brand-accent flex-shrink-0" />
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* ── Sort Dropdown ────────────────────────────────────────── */}
+        <div ref={sortDropdown.ref} className="relative ml-auto">
+          <button
+            onClick={() => sortDropdown.setIsOpen(!sortDropdown.isOpen)}
+            className={cn(
+              "liquid-glass px-3 py-1.5 rounded-lg text-xs font-sans",
+              "flex items-center gap-1.5 transition-all duration-150",
+              "hover:bg-white/[0.06]",
+              "border",
+              sortBy !== "newest"
+                ? "border-brand-accent/30 text-brand-accent"
+                : "border-transparent text-text-muted hover:text-text-secondary",
+            )}
+            aria-haspopup="listbox"
+            aria-expanded={sortDropdown.isOpen}
+          >
+            <PhArrowsDownUp className="w-3 h-3" />
+            <span>{SORT_OPTIONS[sortBy].label}</span>
+            <PhCaretDown
+              className={cn(
+                "w-3 h-3 transition-transform duration-200",
+                sortDropdown.isOpen && "rotate-180",
+              )}
+            />
+          </button>
+
+          <AnimatePresence>
+            {sortDropdown.isOpen && (
+              <motion.div
+                variants={dropdownVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                role="listbox"
+                aria-label="Sort order"
+                className={cn(
+                  "absolute top-full right-0 mt-1.5 z-50 min-w-[170px]",
+                  "rounded-xl p-1.5",
+                  "bg-[rgba(12,16,28,0.96)] backdrop-blur-[20px]",
+                  "border border-[rgba(0,188,212,0.12)]",
+                  "shadow-[0_8px_32px_rgba(0,0,0,0.5)]",
+                )}
+              >
+                {(
+                  Object.entries(SORT_OPTIONS) as [SortOption, SortConfig][]
+                ).map(([key, config]) => {
+                  const SortIcon = config.icon;
+                  const isActive = sortBy === key;
+                  return (
                     <button
                       key={key}
                       role="option"
-                      aria-selected={selectedType === key}
+                      aria-selected={isActive}
                       onClick={() => {
-                        setSelectedType(key);
-                        typeDropdown.setIsOpen(false);
+                        setSortBy(key);
+                        sortDropdown.setIsOpen(false);
                       }}
                       className={cn(
                         "w-full px-2.5 py-2 rounded-md text-left text-xs font-sans",
-                        "flex items-center justify-between gap-2",
+                        "flex items-center gap-2",
                         "transition-colors duration-100",
-                        selectedType === key
+                        isActive
                           ? "bg-white/[0.06] text-text-primary"
                           : "text-text-secondary hover:bg-white/[0.04] hover:text-text-primary",
                       )}
                     >
-                      <span>{config.label}</span>
-                      {selectedType === key && (
+                      <SortIcon className="w-3.5 h-3.5 text-text-muted" />
+                      <span className="flex-1">{config.label}</span>
+                      {isActive && (
                         <PhCheck className="w-3 h-3 text-brand-accent" />
                       )}
                     </button>
-                  ))}
-                </m.div>
-              )}
-            </AnimatePresence>
-          </div>
-
-          {/* ── Favorites Toggle ─────────────────────────────────────── */}
-          <button
-            onClick={() => setFavoritesOnly(!favoritesOnly)}
-            className={cn(
-              "liquid-glass px-3 py-1.5 rounded-lg text-xs font-sans",
-              "flex items-center gap-1.5 transition-all duration-150",
-              "border",
-              favoritesOnly
-                ? "border-brand-gold/30 text-brand-gold"
-                : "border-transparent text-text-muted hover:text-text-secondary hover:bg-white/[0.06]",
+                  );
+                })}
+              </motion.div>
             )}
-            aria-pressed={favoritesOnly}
-            aria-label="Filter favorites"
-          >
-            <PhStar className={cn("w-3 h-3", favoritesOnly && "fill-brand-gold")} />
-            <span>Favorites</span>
-          </button>
-
-          {/* ── Tags Dropdown ────────────────────────────────────────── */}
-          <div ref={tagDropdown.ref} className="relative">
-            <button
-              onClick={() => tagDropdown.setIsOpen(!tagDropdown.isOpen)}
-              className={cn(
-                "liquid-glass px-3 py-1.5 rounded-lg text-xs font-sans",
-                "flex items-center gap-1.5 transition-all duration-150",
-                "hover:bg-white/[0.06]",
-                "border",
-                selectedTagIds.length > 0
-                  ? "border-brand-primary/30 text-brand-primary"
-                  : "border-transparent text-text-muted hover:text-text-secondary",
-              )}
-              aria-haspopup="listbox"
-              aria-expanded={tagDropdown.isOpen}
-            >
-              <PhTag className="w-3 h-3" />
-              <span>
-                {selectedTagIds.length > 0
-                  ? `${selectedTagIds.length} tag${selectedTagIds.length !== 1 ? "s" : ""}`
-                  : "Tags"}
-              </span>
-              <PhCaretDown
-                className={cn(
-                  "w-3 h-3 transition-transform duration-200",
-                  tagDropdown.isOpen && "rotate-180",
-                )}
-              />
-            </button>
-
-            <AnimatePresence>
-              {tagDropdown.isOpen && (
-                <m.div
-                  variants={dropdownVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  role="listbox"
-                  aria-label="Tags filter"
-                  aria-multiselectable="true"
-                  className={cn(
-                    "absolute top-full left-0 mt-1.5 z-50 min-w-[200px] max-w-[280px]",
-                    "rounded-xl p-1.5",
-                    "bg-[rgba(12,16,28,0.96)] backdrop-blur-[20px]",
-                    "border border-[rgba(0,188,212,0.12)]",
-                    "shadow-[0_8px_32px_rgba(0,0,0,0.5)]",
-                  )}
-                >
-                  {allTags.length === 0 ? (
-                    <div className="px-3 py-4 text-center text-xs font-sans text-text-muted">
-                      No tags available
-                    </div>
-                  ) : (
-                    <div className="max-h-[240px] overflow-y-auto overscroll-contain">
-                      {allTags.map((tag) => {
-                        const isSelected = selectedTagIds.includes(tag.id);
-                        return (
-                          <button
-                            key={tag.id}
-                            role="option"
-                            aria-selected={isSelected}
-                            onClick={() => toggleTag(tag.id)}
-                            className={cn(
-                              "w-full px-2.5 py-2 rounded-md text-left text-xs font-sans",
-                              "flex items-center justify-between gap-2",
-                              "transition-colors duration-100",
-                              isSelected
-                                ? "bg-white/[0.06] text-text-primary"
-                                : "text-text-secondary hover:bg-white/[0.04] hover:text-text-primary",
-                            )}
-                          >
-                            <div className="flex items-center gap-2 min-w-0">
-                              {tag.color && (
-                                <div
-                                  className="w-2 h-2 rounded-full flex-shrink-0"
-                                  style={{ backgroundColor: tag.color }}
-                                />
-                              )}
-                              <span className="truncate">{tag.name}</span>
-                            </div>
-                            {isSelected && (
-                              <PhCheck className="w-3 h-3 text-brand-accent flex-shrink-0" />
-                            )}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  )}
-                </m.div>
-              )}
-            </AnimatePresence>
-          </div>
-
-          {/* ── Sort Dropdown ────────────────────────────────────────── */}
-          <div ref={sortDropdown.ref} className="relative ml-auto">
-            <button
-              onClick={() => sortDropdown.setIsOpen(!sortDropdown.isOpen)}
-              className={cn(
-                "liquid-glass px-3 py-1.5 rounded-lg text-xs font-sans",
-                "flex items-center gap-1.5 transition-all duration-150",
-                "hover:bg-white/[0.06]",
-                "border",
-                sortBy !== "newest"
-                  ? "border-brand-accent/30 text-brand-accent"
-                  : "border-transparent text-text-muted hover:text-text-secondary",
-              )}
-              aria-haspopup="listbox"
-              aria-expanded={sortDropdown.isOpen}
-            >
-              <PhArrowsDownUp className="w-3 h-3" />
-              <span>{SORT_OPTIONS[sortBy].label}</span>
-              <PhCaretDown
-                className={cn(
-                  "w-3 h-3 transition-transform duration-200",
-                  sortDropdown.isOpen && "rotate-180",
-                )}
-              />
-            </button>
-
-            <AnimatePresence>
-              {sortDropdown.isOpen && (
-                <m.div
-                  variants={dropdownVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  role="listbox"
-                  aria-label="Sort order"
-                  className={cn(
-                    "absolute top-full right-0 mt-1.5 z-50 min-w-[170px]",
-                    "rounded-xl p-1.5",
-                    "bg-[rgba(12,16,28,0.96)] backdrop-blur-[20px]",
-                    "border border-[rgba(0,188,212,0.12)]",
-                    "shadow-[0_8px_32px_rgba(0,0,0,0.5)]",
-                  )}
-                >
-                  {(
-                    Object.entries(SORT_OPTIONS) as [SortOption, SortConfig][]
-                  ).map(([key, config]) => {
-                    const SortIcon = config.icon;
-                    const isActive = sortBy === key;
-                    return (
-                      <button
-                        key={key}
-                        role="option"
-                        aria-selected={isActive}
-                        onClick={() => {
-                          setSortBy(key);
-                          sortDropdown.setIsOpen(false);
-                        }}
-                        className={cn(
-                          "w-full px-2.5 py-2 rounded-md text-left text-xs font-sans",
-                          "flex items-center gap-2",
-                          "transition-colors duration-100",
-                          isActive
-                            ? "bg-white/[0.06] text-text-primary"
-                            : "text-text-secondary hover:bg-white/[0.04] hover:text-text-primary",
-                        )}
-                      >
-                        <SortIcon className="w-3.5 h-3.5 text-text-muted" />
-                        <span className="flex-1">{config.label}</span>
-                        {isActive && (
-                          <PhCheck className="w-3 h-3 text-brand-accent" />
-                        )}
-                      </button>
-                    );
-                  })}
-                </m.div>
-              )}
-            </AnimatePresence>
-          </div>
+          </AnimatePresence>
         </div>
-
-        {/* ── Active Filter Chips ──────────────────────────────────────── */}
-        {activeFilterCount > 0 && (
-          <div className="flex items-center gap-2 mt-2 flex-wrap">
-            {selectedType && (
-              <Badge
-                variant="crystal"
-                size="sm"
-                onDismiss={() => setSelectedType(null)}
-                dismissLabel={`Remove ${PROMPT_TYPES[selectedType].label} filter`}
-              >
-                {PROMPT_TYPES[selectedType].label}
-              </Badge>
-            )}
-
-            {favoritesOnly && (
-              <Badge
-                variant="gold"
-                size="sm"
-                icon={<PhStar className="w-3 h-3 fill-current" />}
-                onDismiss={() => setFavoritesOnly(false)}
-                dismissLabel="Remove favorites filter"
-              >
-                Favorites
-              </Badge>
-            )}
-
-            {selectedTagNames.map((name, i) => (
-              <Badge
-                key={selectedTagIds[i]}
-                variant="brand"
-                size="sm"
-                onDismiss={() => toggleTag(selectedTagIds[i])}
-                dismissLabel={`Remove ${name} filter`}
-              >
-                {name}
-              </Badge>
-            ))}
-
-            {sortBy !== "newest" && (
-              <Badge
-                variant="default"
-                size="sm"
-                onDismiss={() => setSortBy("newest")}
-                dismissLabel="Reset sort order"
-              >
-                Sort: {SORT_OPTIONS[sortBy].label}
-              </Badge>
-            )}
-
-            <button
-              onClick={clearAll}
-              className="text-[11px] font-sans text-text-muted hover:text-brand-accent transition-colors duration-150 ml-1"
-            >
-              Clear all
-            </button>
-          </div>
-        )}
       </div>
-    </LazyMotion>
+
+      {/* ── Active Filter Chips ──────────────────────────────────────── */}
+      {activeFilterCount > 0 && (
+        <div className="flex items-center gap-2 mt-2 flex-wrap">
+          {selectedType && (
+            <Badge
+              variant="crystal"
+              size="sm"
+              onDismiss={() => setSelectedType(null)}
+              dismissLabel={`Remove ${PROMPT_TYPES[selectedType].label} filter`}
+            >
+              {PROMPT_TYPES[selectedType].label}
+            </Badge>
+          )}
+
+          {favoritesOnly && (
+            <Badge
+              variant="gold"
+              size="sm"
+              icon={<PhStar className="w-3 h-3 fill-current" />}
+              onDismiss={() => setFavoritesOnly(false)}
+              dismissLabel="Remove favorites filter"
+            >
+              Favorites
+            </Badge>
+          )}
+
+          {selectedTagNames.map((name, i) => (
+            <Badge
+              key={selectedTagIds[i]}
+              variant="brand"
+              size="sm"
+              onDismiss={() => toggleTag(selectedTagIds[i])}
+              dismissLabel={`Remove ${name} filter`}
+            >
+              {name}
+            </Badge>
+          ))}
+
+          {sortBy !== "newest" && (
+            <Badge
+              variant="default"
+              size="sm"
+              onDismiss={() => setSortBy("newest")}
+              dismissLabel="Reset sort order"
+            >
+              Sort: {SORT_OPTIONS[sortBy].label}
+            </Badge>
+          )}
+
+          <button
+            onClick={clearAll}
+            className="text-[11px] font-sans text-text-muted hover:text-brand-accent transition-colors duration-150 ml-1"
+          >
+            Clear all
+          </button>
+        </div>
+      )}
+    </div>
   );
 }
