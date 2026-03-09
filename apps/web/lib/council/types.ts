@@ -88,11 +88,13 @@ export interface LogConveningInput {
 // -----------------------------------------------------------------------
 
 export interface CouncilStats {
+  council_id: string;
   current_streak: number;
   longest_streak: number;
   total_convenings: number;
   council_depth_level: number;
-  last_convening_at: string | null;
+  convenings_last_7_days: number;
+  convenings_last_30_days: number;
   avg_depth_rating: number | null;
   most_active_seat_id: string | null;
 }
