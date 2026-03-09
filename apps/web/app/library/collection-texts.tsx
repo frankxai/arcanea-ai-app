@@ -14,7 +14,7 @@ interface TextSummary {
   slug: string;
   frontmatter: {
     title: string;
-    excerpt: string;
+    excerpt?: string;
     format: string;
     readingTime: number;
     wordCount?: number;
