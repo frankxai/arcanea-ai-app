@@ -12,11 +12,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient as _createClient } from '@/lib/supabase/server';
-
-// Council tables not yet in generated Supabase types — cast to bypass strict checking
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const createClient = async (): Promise<any> => (await _createClient()) as any;
+import { createClient } from '@/lib/supabase/server';
 
 export const runtime = 'nodejs';
 
@@ -102,7 +98,7 @@ async function createCouncilWithSeats(userId: string) {
     .from('luminor_councils')
     .insert({
       user_id: userId,
-      council_depth_level: 1,
+      council_depth_level: 0,
       current_streak: 0,
       longest_streak: 0,
       total_convenings: 0,
