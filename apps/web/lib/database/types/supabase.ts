@@ -7,32 +7,87 @@ export type Json =
   | Json[]
 
 export type Database = {
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "14.1"
   }
   public: {
     Tables: {
-      chat_messages: {
+      activity_log: {
         Row: {
-          id: string
-          session_id: string
-          role: string
-          content: string
+          action: string
           created_at: string
+          entity_id: string | null
+          entity_type: string
+          id: string
+          metadata: Json | null
+          user_id: string
         }
         Insert: {
-          id?: string
-          session_id: string
-          role: string
-          content: string
+          action: string
           created_at?: string
+          entity_id?: string | null
+          entity_type: string
+          id?: string
+          metadata?: Json | null
+          user_id: string
         }
         Update: {
+          action?: string
+          created_at?: string
+          entity_id?: string | null
+          entity_type?: string
           id?: string
-          session_id?: string
-          role?: string
+          metadata?: Json | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "activity_log_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      arcanea: {
+        Row: {
+          created_at: string
+          id: number
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+        }
+        Update: {
+          created_at?: string
+          id?: number
+        }
+        Relationships: []
+      }
+      chat_messages: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          role: string
+          session_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          role: string
+          session_id: string
+        }
+        Update: {
           content?: string
           created_at?: string
+          id?: string
+          role?: string
+          session_id?: string
         }
         Relationships: [
           {
@@ -46,35 +101,113 @@ export type Database = {
       }
       chat_sessions: {
         Row: {
+          created_at: string
           id: string
-          user_id: string
           luminor_id: string
           title: string | null
-          created_at: string
           updated_at: string
+          user_id: string
         }
         Insert: {
+          created_at?: string
           id?: string
-          user_id: string
           luminor_id: string
           title?: string | null
-          created_at?: string
           updated_at?: string
+          user_id: string
         }
         Update: {
+          created_at?: string
           id?: string
-          user_id?: string
           luminor_id?: string
           title?: string | null
-          created_at?: string
           updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      collection_items: {
+        Row: {
+          added_at: string
+          collection_id: string
+          creation_id: string
+          id: string
+          sort_order: number
+        }
+        Insert: {
+          added_at?: string
+          collection_id: string
+          creation_id: string
+          id?: string
+          sort_order?: number
+        }
+        Update: {
+          added_at?: string
+          collection_id?: string
+          creation_id?: string
+          id?: string
+          sort_order?: number
         }
         Relationships: [
           {
-            foreignKeyName: "chat_sessions_user_id_fkey"
+            foreignKeyName: "collection_items_collection_id_fkey"
+            columns: ["collection_id"]
+            isOneToOne: false
+            referencedRelation: "collections"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "collection_items_creation_id_fkey"
+            columns: ["creation_id"]
+            isOneToOne: false
+            referencedRelation: "creations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      collections: {
+        Row: {
+          cover_url: string | null
+          created_at: string
+          description: string | null
+          id: string
+          metadata: Json | null
+          sort_order: number
+          title: string
+          updated_at: string
+          user_id: string
+          visibility: string
+        }
+        Insert: {
+          cover_url?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          metadata?: Json | null
+          sort_order?: number
+          title: string
+          updated_at?: string
+          user_id: string
+          visibility?: string
+        }
+        Update: {
+          cover_url?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          metadata?: Json | null
+          sort_order?: number
+          title?: string
+          updated_at?: string
+          user_id?: string
+          visibility?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "collections_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
-            referencedRelation: "users"
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -176,169 +309,6 @@ export type Database = {
           },
         ]
       }
-      luminor_councils: {
-        Row: {
-          council_depth_level: number
-          created_at: string
-          current_streak: number
-          id: string
-          last_convening_at: string | null
-          longest_streak: number
-          name: string
-          total_convenings: number
-          updated_at: string
-          user_id: string
-        }
-        Insert: {
-          council_depth_level?: number
-          created_at?: string
-          current_streak?: number
-          id?: string
-          last_convening_at?: string | null
-          longest_streak?: number
-          name?: string
-          total_convenings?: number
-          updated_at?: string
-          user_id: string
-        }
-        Update: {
-          council_depth_level?: number
-          created_at?: string
-          current_streak?: number
-          id?: string
-          last_convening_at?: string | null
-          longest_streak?: number
-          name?: string
-          total_convenings?: number
-          updated_at?: string
-          user_id?: string
-        }
-        Relationships: []
-      }
-      activity_log: {
-        Row: {
-          action: string
-          created_at: string
-          entity_id: string | null
-          entity_type: string
-          id: string
-          metadata: Json | null
-          user_id: string
-        }
-        Insert: {
-          action: string
-          created_at?: string
-          entity_id?: string | null
-          entity_type: string
-          id?: string
-          metadata?: Json | null
-          user_id: string
-        }
-        Update: {
-          action?: string
-          created_at?: string
-          entity_id?: string | null
-          entity_type?: string
-          id?: string
-          metadata?: Json | null
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "activity_log_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      collection_items: {
-        Row: {
-          added_at: string
-          collection_id: string
-          creation_id: string
-          id: string
-          sort_order: number
-        }
-        Insert: {
-          added_at?: string
-          collection_id: string
-          creation_id: string
-          id?: string
-          sort_order?: number
-        }
-        Update: {
-          added_at?: string
-          collection_id?: string
-          creation_id?: string
-          id?: string
-          sort_order?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "collection_items_collection_id_fkey"
-            columns: ["collection_id"]
-            isOneToOne: false
-            referencedRelation: "collections"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "collection_items_creation_id_fkey"
-            columns: ["creation_id"]
-            isOneToOne: false
-            referencedRelation: "creations"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      collections: {
-        Row: {
-          cover_url: string | null
-          created_at: string
-          description: string | null
-          id: string
-          metadata: Json | null
-          sort_order: number
-          title: string
-          updated_at: string
-          user_id: string
-          visibility: string
-        }
-        Insert: {
-          cover_url?: string | null
-          created_at?: string
-          description?: string | null
-          id?: string
-          metadata?: Json | null
-          sort_order?: number
-          title: string
-          updated_at?: string
-          user_id: string
-          visibility?: string
-        }
-        Update: {
-          cover_url?: string | null
-          created_at?: string
-          description?: string | null
-          id?: string
-          metadata?: Json | null
-          sort_order?: number
-          title?: string
-          updated_at?: string
-          user_id?: string
-          visibility?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "collections_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       creations: {
         Row: {
           ai_model: string | null
@@ -416,6 +386,33 @@ export type Database = {
           },
         ]
       }
+      feedback: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: string
+          message: string
+          type: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          message: string
+          type?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          message?: string
+          type?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       follows: {
         Row: {
           created_at: string
@@ -481,6 +478,123 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      luminor_councils: {
+        Row: {
+          council_depth_level: number
+          created_at: string
+          current_streak: number
+          id: string
+          last_convening_at: string | null
+          longest_streak: number
+          name: string
+          total_convenings: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          council_depth_level?: number
+          created_at?: string
+          current_streak?: number
+          id?: string
+          last_convening_at?: string | null
+          longest_streak?: number
+          name?: string
+          total_convenings?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          council_depth_level?: number
+          created_at?: string
+          current_streak?: number
+          id?: string
+          last_convening_at?: string | null
+          longest_streak?: number
+          name?: string
+          total_convenings?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      media_catalog: {
+        Row: {
+          analyzed_by: string | null
+          bucket: string
+          created_at: string | null
+          element: string | null
+          filename: string
+          frequency_hz: number | null
+          gate: string | null
+          godbeast: string | null
+          guardian: string | null
+          height: number | null
+          id: string
+          media_type: string | null
+          public_url: string | null
+          quality_tier: number | null
+          scene: string | null
+          size_bytes: number | null
+          source: string | null
+          status: string | null
+          storage_path: string
+          tags: string[] | null
+          taste_score: Json | null
+          updated_at: string | null
+          width: number | null
+        }
+        Insert: {
+          analyzed_by?: string | null
+          bucket?: string
+          created_at?: string | null
+          element?: string | null
+          filename: string
+          frequency_hz?: number | null
+          gate?: string | null
+          godbeast?: string | null
+          guardian?: string | null
+          height?: number | null
+          id?: string
+          media_type?: string | null
+          public_url?: string | null
+          quality_tier?: number | null
+          scene?: string | null
+          size_bytes?: number | null
+          source?: string | null
+          status?: string | null
+          storage_path: string
+          tags?: string[] | null
+          taste_score?: Json | null
+          updated_at?: string | null
+          width?: number | null
+        }
+        Update: {
+          analyzed_by?: string | null
+          bucket?: string
+          created_at?: string | null
+          element?: string | null
+          filename?: string
+          frequency_hz?: number | null
+          gate?: string | null
+          godbeast?: string | null
+          guardian?: string | null
+          height?: number | null
+          id?: string
+          media_type?: string | null
+          public_url?: string | null
+          quality_tier?: number | null
+          scene?: string | null
+          size_bytes?: number | null
+          source?: string | null
+          status?: string | null
+          storage_path?: string
+          tags?: string[] | null
+          taste_score?: Json | null
+          updated_at?: string | null
+          width?: number | null
+        }
+        Relationships: []
       }
       profiles: {
         Row: {
@@ -664,3 +778,26 @@ export type Enums<
   : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
     ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
     : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof DefaultSchema["CompositeTypes"]
+    | { schema: keyof DatabaseWithoutInternals },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
+    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
+    : never
+
+export const Constants = {
+  public: {
+    Enums: {},
+  },
+} as const
