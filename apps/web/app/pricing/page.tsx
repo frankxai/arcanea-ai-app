@@ -178,7 +178,7 @@ export default function PricingPage() {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#00bcd4]/30 bg-[#00bcd4]/10 mb-8">
             <span className="w-2 h-2 rounded-full bg-[#00bcd4] animate-pulse" />
             <span className="text-sm text-[#00bcd4] font-mono tracking-wider">
-              CREATIVE INTELLIGENCE
+              CREATIVE COMPANIONS
             </span>
           </div>
 

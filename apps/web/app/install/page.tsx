@@ -54,8 +54,8 @@ const QUICK_START = [
   },
   {
     step: "3",
-    title: "Choose Your Intelligence",
-    description: "Start a session with any of the 16 creative intelligences",
+    title: "Choose Your Companion",
+    description: "Start a session with any of the 16 companions",
     code: "arcanea chat --luminor architect",
   },
   {
@@ -99,7 +99,7 @@ const INTEGRATIONS = [
 
 const FEATURES = [
   {
-    title: "16 Creative Intelligences",
+    title: "16 Companions",
     description: "Access AI masters trained in specific creative domains",
     icon: "🌟",
   },

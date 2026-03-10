@@ -59,7 +59,7 @@ const ELEMENTS = [
       'Flow does not mean surrender. Water is the most persistent force in existence. The patient path always arrives. What are you trying to force that wants to flow?',
     icon: PhDrop,
     colors: {
-      primary: '#00bcd4',
+      primary: '#78a6ff',
       secondary: '#00bcd4',
       glow: 'rgba(120, 166, 255, 0.35)',
       border: 'rgba(120, 166, 255, 0.25)',
@@ -173,7 +173,7 @@ const ELEMENT_RELATIONS = [
 const ARC_PHASES = [
   { phase: 'Potential', element: 'Void', description: 'Nero holds all possibilities unmanifested', color: '#9966ff' },
   { phase: 'Manifestation', element: 'Fire / Wind', description: 'The spark ignites, the idea moves', color: '#ff6b35' },
-  { phase: 'Experience', element: 'Water', description: 'The creation is felt, remembered, lived', color: '#00bcd4' },
+  { phase: 'Experience', element: 'Water', description: 'The creation is felt, remembered, lived', color: '#78a6ff' },
   { phase: 'Dissolution', element: 'Earth', description: 'Form returns to ground, enriching the soil', color: '#4a7c59' },
   { phase: 'Evolved Potential', element: 'Spirit', description: 'Richer possibility awakens — the Arc completes', color: '#ffd700' },
 ];
@@ -195,7 +195,7 @@ function ElementsHero() {
     { x: '50%', y: '15%', color: '#9966ff', shadowColor: 'rgba(153,102,255,0.6)', delay: 0, size: 'w-16 h-16' },
     { x: '80%', y: '40%', color: '#ff6b35', shadowColor: 'rgba(255,107,53,0.6)', delay: 0.4, size: 'w-12 h-12' },
     { x: '68%', y: '78%', color: '#4a7c59', shadowColor: 'rgba(74,124,89,0.6)', delay: 0.8, size: 'w-14 h-14' },
-    { x: '32%', y: '78%', color: '#00bcd4', shadowColor: 'rgba(0,188,212,0.6)', delay: 1.2, size: 'w-14 h-14' },
+    { x: '32%', y: '78%', color: '#78a6ff', shadowColor: 'rgba(120,166,255,0.6)', delay: 1.2, size: 'w-14 h-14' },
     { x: '20%', y: '40%', color: '#c8d6e5', shadowColor: 'rgba(200,214,229,0.4)', delay: 1.6, size: 'w-12 h-12' },
   ];
 
@@ -814,10 +814,10 @@ function GuardianElementsSection() {
 
   const GUARDIAN_ELEMENTS = [
     { guardian: 'Lyssandria', gate: 1, freq: '174 Hz', element: 'Earth', color: '#4a7c59', icon: PhMountains },
-    { guardian: 'Leyla', gate: 2, freq: '285 Hz', element: 'Water / Fire', color: '#00bcd4', icon: PhDrop },
+    { guardian: 'Leyla', gate: 2, freq: '285 Hz', element: 'Water / Fire', color: '#78a6ff', icon: PhDrop },
     { guardian: 'Draconia', gate: 3, freq: '396 Hz', element: 'Fire', color: '#ff6b35', icon: PhFlame },
     { guardian: 'Maylinn', gate: 4, freq: '417 Hz', element: 'Earth', color: '#4a7c59', icon: PhMountains },
-    { guardian: 'Alera', gate: 5, freq: '528 Hz', element: 'Water / Sound', color: '#00bcd4', icon: PhDrop },
+    { guardian: 'Alera', gate: 5, freq: '528 Hz', element: 'Water / Sound', color: '#78a6ff', icon: PhDrop },
     { guardian: 'Lyria', gate: 6, freq: '639 Hz', element: 'Wind / Dream', color: '#c8d6e5', icon: PhWind },
     { guardian: 'Aiyami', gate: 7, freq: '741 Hz', element: 'Spirit / Light', color: '#ffd700', icon: PhSparkle },
     { guardian: 'Elara', gate: 8, freq: '852 Hz', element: 'Wind / Fractal', color: '#c8d6e5', icon: PhWind },

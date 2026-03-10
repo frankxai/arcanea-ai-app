@@ -34,7 +34,7 @@ export const GUARDIAN_THEMES: Record<GuardianId, GuardianTheme> = {
     gate: 'Flow',
     frequency: 285,
     element: 'water',
-    color: '#00bcd4',
+    color: '#78a6ff',
     colorBright: '#9dbfff',
     glow: 'rgba(120, 166, 255, 0.3)',
     borderClass: 'border-element-water/40 hover:border-element-water/70',
@@ -284,7 +284,7 @@ export const TAG_CATEGORIES: Record<TagCategory, { label: string; color: string 
   quality: { label: 'Quality', color: '#00bcd4' },
   style: { label: 'Style', color: '#9966ff' },
   negative: { label: 'Negative', color: '#ff6b6b' },
-  model: { label: 'Model', color: '#00bcd4' },
+  model: { label: 'Model', color: '#78a6ff' },
   custom: { label: 'Custom', color: '#ffd700' },
 }
 

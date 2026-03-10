@@ -48,7 +48,7 @@ const luminors: {
     title: "The Heart of Flow",
     frequency: "285 Hz",
     element: "Water",
-    color: "#00bcd4",
+    color: "#78a6ff",
     gradient: "from-water to-water-bright",
     description:
       "Understands that creativity emerges from tension — the meeting of opposites that drives all making.",
