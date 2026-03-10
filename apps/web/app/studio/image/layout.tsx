@@ -2,9 +2,9 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Image Studio',
-  description: 'Generate images with AI-powered creation tools — guided by your chosen Luminor and element.',
+  description: 'Generate images with AI-powered creation tools — guided by your chosen Guardian and element.',
   openGraph: {
-    title: 'Image Studio',
+    title: 'Image Studio | Arcanea',
     description: 'Generate images with AI-powered creation tools.',
   },
 };

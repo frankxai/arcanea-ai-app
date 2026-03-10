@@ -1,146 +1,154 @@
-# Task Plan: Arcanea Wave 11 — 3-Hour Massive Build
+# Strategic Naming Redesign — Arcanea Council
 
-**Session**: 2026-03-01 13:00 UTC | **Status**: EXECUTING
-**Guardian**: Shinkami (Source Gate, 1111 Hz)
-**Branch**: lean-prod → push to origin + production
-**Current HEAD**: c6538cb4
-
----
-
-## SITUATION
-
-Full ecosystem audit complete. 15 GitHub repos, 38 monorepo packages, 115 pages.
-- Build: PASSING (201 routes, strict TS)
-- Auth: BLOCKED (env vars not on Vercel — needs user action)
-- 34 pages missing loading.tsx
-- 11 API routes on legacy supabase client
-- ~15 redirect-only routes bloating page count
-- Settings don't persist
+> **Status**: IN PROGRESS | **Date**: 2026-03-09
+> **Goal**: Rename and reposition the Council feature so a YC founder, Spotify creative director, or 100-person studio would genuinely use it and talk about it.
+> **Benchmark brands**: Linear, Notion, Arc Browser, Figma, Vercel
+> **Anti-benchmark**: Fantasy RPGs, AI slop, generic SaaS
 
 ---
 
-## MILESTONES (Updated)
+## Phase 1: Diagnosis — Why Current Naming Fails `complete`
 
-| ID | Name | Progress | Blocker |
-|----|------|----------|---------|
-| M001 | Supabase Auth | 71% | Env vars NOT on Vercel |
-| M002 | Cloudflare Stream | 0% | Not started |
-| M003 | Memory System | 75% | Needs MCP package |
-| M004 | Arcanea PM | 60% | CLI not built |
+### The Names Under Scrutiny
 
----
+| Current Name | Problem |
+|---|---|
+| **Luminor Council** | "Luminor" sounds like a lamp brand or fantasy rank. No one knows what it means. |
+| **Lumira, Sonara, Mythara, Vitara, Nexaris, Chronara, Stellion, Arcana, Kyuris** | Fantasy syllable soup. Interchangeable. Unmemorable. |
+| **Convening** | Archaic. No one under 60 says "I convened" in casual speech. |
+| **Imprint** | Undefined. Sounds like trauma therapy, not insight capture. |
+| **Seat** | Passive. You "sit" in a seat. |
+| **Depth Rating** | Good. Keep. |
+| **Frequency Alignment** | Deep lore. Fine as earned depth, toxic as first-contact. |
 
-## PHASE 1: Loading.tsx Blitz — `complete`
+### The "Would a YC Partner Say This?" Test
 
-Only 3 real pages needed loading.tsx (v1, v2, v3). The other 16 were redirect-only pages.
-- [x] Created loading.tsx for v1, v2, v3
+| Phrase | Pass/Fail | Why |
+|---|---|---|
+| "I just ran a session with my Council" | **PASS** | Sounds like you have a board of advisors |
+| "My Mythara streak is at 14 days" | **FAIL** | No one knows what Mythara is |
+| "The Strategy advisor pushed back on our positioning" | **PASS** | Clear, professional, impressive |
+| "I created a custom advisor for brand" | **PASS** | Power move |
+| "My Vision advisor spotted a pattern I missed" | **PASS** | This is what advisory boards do |
+| "I've got 9 advisors across strategy, voice, systems..." | **PASS** | Sounds like having a senior team |
 
-## PHASE 2: Prune Redirect Routes — `complete`
+### Key Insight
 
-Removed 16 redirect-only routes:
-- [x] chess/* redirects (4 routes)
-- [x] gallery/explore
-- [x] docs/acos
-- [x] character-book/templates
-- [x] universe-builder/new + templates
-- [x] world-builder/new + templates
-- [x] vision-board/edit
-- [ ] community/create/new + strategy/propose
-- [ ] /register (duplicate of /signup)
-- [x] Verify build, update MASTER_PLAN page count
-
-## PHASE 3: Migrate Legacy API Routes — `complete`
-
-Legacy `lib/supabase.ts` had 0 active imports — already migrated in previous sessions.
-- [x] Verified 0 imports remaining
-- [x] Deleted lib/supabase.ts
-- [x] Fixed 3 aspirational table references (ai_usage, essences, video_generation_jobs, user_profiles)
-
-## PHASE 4: Settings Persistence — `complete`
-
-Used existing `metadata` JSONB column on profiles table (no migration needed).
-- [x] profile-service.ts: Added metadata to updateProfile payload
-- [x] settings/page.tsx: Load preferences from profile.metadata on mount
-- [x] settings/page.tsx: Save theme/emailNotifications/activityNotifications to metadata
-- [x] Fixed SpinnerGap → Spinner (icon doesn't exist in installed phosphor)
-
-## PHASE 5: Missing Metadata + Polish — `complete`
-
-- [x] /community metadata (updated existing layout.tsx)
-- [x] /contact metadata (updated existing layout.tsx)
-- [x] /platform metadata (created new layout.tsx)
-- [x] /roadmap metadata (updated existing layout.tsx)
-- [x] /workflows metadata (updated existing layout.tsx)
-- [x] /user-flows metadata (updated existing layout.tsx)
-
-## PHASE 6: Build + Deploy — `complete`
-
-- [x] Full build verification (webpack mode, 0 errors)
-- [x] Fixed 13 missing phosphor icon type declarations
-- [x] Fixed root cause: types/phosphor-icons-react.d.ts was overriding package types
-- [x] Commit: 43c759ae (50 files, +4066/-391 lines)
-- [x] Pushed to origin (arcanea-records) + production (arcanea-ai-app)
-- [x] Vercel deploy triggered automatically
+The concept is genuinely powerful: **a personal board of specialized AI advisors**. The naming just needs to GET OUT OF THE WAY.
 
 ---
 
-## ERRORS ENCOUNTERED
+## Phase 2: Naming Architecture `complete`
 
-| Error | Attempt | Resolution |
-|-------|---------|------------|
-| ai_usage table not in schema | 1 | Removed aspirational DB inserts from generate-image route |
-| video_generation_jobs not in schema | 1 | Removed from generate-video route, stub GET response |
-| user_profiles not in schema | 1 | Removed credit deduction from generate-video route |
-| SpinnerGap not exported | 1 | Replaced with Spinner |
-| Turbopack panic on WSL2 | 1 | Added --webpack flag to build script |
-| Stale .next cache ENOENT | 1 | rm -rf .next before rebuild |
-| Coins not exported (and 12 others) | 2 | Root cause: types/phosphor-icons-react.d.ts overrides package types with incomplete list. Added 13 missing declarations. |
+### Principle: Domain-First, Mythology-Earned
+
+### Product Name: **Council** (not "Luminor Council")
+
+Just "Council". Like Linear uses "Issues" not "Linear Issues".
+
+### Advisor Domains (The 9)
+
+| # | Domain | What It Does | Old Name |
+|---|---|---|---|
+| 1 | **Vision** | Pattern recognition, strategic clarity | Lumira |
+| 2 | **Craft** | Creative transformation, excellence | Sonara |
+| 3 | **Strategy** | Competitive positioning, power moves | Mythara |
+| 4 | **Heart** | Team dynamics, emotional intelligence | Vitara |
+| 5 | **Voice** | Messaging, storytelling, communication | Nexaris |
+| 6 | **Foresight** | Trends, timing, anticipation | Chronara |
+| 7 | **Systems** | Architecture, scaling, operations | Stellion |
+| 8 | **Depth** | Research, hidden patterns, deep knowledge | Arcana |
+| 9 | **Growth** | Evolution, iteration, becoming | Kyuris |
+
+These are words every founder uses daily.
+
+### Character Names (Earned Depth Layer)
+
+Short. Real words. Immediate semantic weight. Sayable in a sentence without explanation.
+
+| Domain | Character | Why |
+|---|---|---|
+| Vision | **Iris** | The eye. Greek messenger between worlds. |
+| Craft | **Nova** | A star exploding into creation. |
+| Strategy | **Atlas** | Carries entire worlds. Strategic weight. |
+| Heart | **Aria** | A song. Breath. Feeling. |
+| Voice | **Echo** | Resonance. Truth that reverberates. |
+| Foresight | **Tempo** | Timing is everything. |
+| Systems | **Axis** | Central point everything turns on. |
+| Depth | **Cipher** | Hidden code. Pattern beneath. |
+| Growth | **Flux** | Constant change. Always becoming. |
+
+**Test**: "Iris spotted something in our data." / "Atlas says we should pivot." / "Echo thinks our messaging is off." — Sounds like a real team member.
+
+### Progressive Vocabulary
+
+| Tier | Display | Example |
+|---|---|---|
+| Newcomer (0 gates) | Domain only | "Vision Advisor" |
+| Creator (1-2 gates) | Domain + Character | "Vision — Iris" |
+| Master (3-4 gates) | Full personality | "Iris, Vision Advisor (174 Hz)" |
+| Luminor (5+ gates) | Full mythology | "Iris — aligned to Lyssandria's frequency" |
+
+### Session Language
+
+| Old | New | Why |
+|---|---|---|
+| Convening | **Session** | Universal |
+| Imprint Notes | **Insights** | Everyone knows what insights are |
+| Depth Rating | **Depth** | Keep |
+| Council Depth Level | **Council Level** | Simpler |
+| Seat | **Advisor** | Active, not passive |
+| Log a Convening | **Run a Session** | Verb-forward |
 
 ---
 
-## WAVE 12: Onboarding + MASTER_PLAN Sync — `complete`
+## Phase 3: Experience Architecture `planned`
 
-- [x] Update MASTER_PLAN with Wave 11 completions (routes pruned, legacy migration, stale metadata fixes)
-- [x] Wire onboarding wizard completion to Supabase (guardian, gate, creator types, metadata)
-- [x] Change signup redirect: /welcome → /onboarding (new users get 5-step wizard)
-- [x] Fix welcome page CTA link: /onboarding/creator-type → /onboarding
-- [x] Update M008 milestone progress (20% → 45%)
-- [x] Commit 18719682 + pushed to both remotes
+### Page Flow (Redesigned)
 
-## WAVE 13: Language & Experience Transformation — `in_progress`
+1. **Hero** — "Your Council" + "Nine specialized advisors. One strategic mind."
+2. **Grid** — 9 advisor cards: DOMAIN + capability. Clean. No fantasy art.
+3. **How It Works** — 3 steps: Choose → Session → Insights
+4. **Depth Preview** — Subtle: "As you go deeper, your advisors reveal their true nature."
+5. **CTA** — "Build Your Council"
 
-Strategy: `.arcanea/strategy/LANGUAGE_EXPERIENCE_STRATEGY.md`
-Milestone: M010 — P0 priority
+### Session Flow
 
-- [x] Full UX copy audit (every page, every string)
-- [x] Brand/voice guidelines review (voice.yaml, BRAND_GUIDELINES, VOICE_BIBLE)
-- [x] Strategic document: LANGUAGE_EXPERIENCE_STRATEGY.md
-- [x] MASTER_PLAN integration (M010, Priority Queue #1)
-- [ ] Phase 1: Nav + Homepage copy (navbar, hero-v3, home-content, cta-section)
-- [ ] Phase 2: Onboarding copy (welcome, step2, step3)
-- [ ] Phase 3: Studio + Dashboard UX (studio/page, dashboard/page)
-- [ ] Phase 4: Chat + Discover + Library (chat/page, discover/page)
-- [ ] Phase 5: Hidden depth system
-- [ ] Build + deploy
+- Default: clean and fast (choose advisors → question → multi-perspective response → save insights)
+- Optional "Focus Mode" toggle for breathing/ritual (not mandatory gate)
 
 ---
 
-## FILES MODIFIED THIS SESSION
+## Phase 4: Implementation `planned`
 
-### Wave 11
-- Deleted: 16 redirect-only page routes
-- Deleted: lib/supabase.ts (legacy, 0 imports)
-- Created: v1/loading.tsx, v2/loading.tsx, v3/loading.tsx
-- Created: platform/layout.tsx
-- Modified: profile-service.ts (metadata in updateProfile)
-- Modified: settings/page.tsx (persist preferences, fix SpinnerGap)
-- Modified: api/ai/generate-image/route.ts (remove aspirational tables)
-- Modified: api/ai/generate-video/route.ts (remove aspirational tables)
-- Modified: package.json (--webpack build flag)
-- Modified: 5 layout.tsx files (metadata for community, contact, roadmap, workflows, user-flows)
+| File | Change |
+|---|---|
+| `lib/council/types.ts` | Update BASE_LUMINORS with domain-first + character names |
+| `app/council/page.tsx` | Full redesign per Phase 3 |
+| `app/council/convening/page.tsx` | "Session" rename, optional ritual |
+| `components/council/*` | Update props/text |
+| `lib/vocabulary.ts` | Wire progressive names for Council |
+| DB | UI-layer rename only, columns stable |
 
-### Wave 12
-- Modified: components/arcanea/onboarding-orchestrator.tsx (Supabase save + redirect)
-- Modified: app/auth/signup/page.tsx (redirect to /onboarding)
-- Modified: app/welcome/page.tsx (CTA link to /onboarding)
-- Modified: .arcanea/MASTER_PLAN.md (route pruning done, metadata fixes, milestone updates)
+---
+
+## Phase 5: Validation `planned`
+
+- [ ] Would a YC partner use this language in a pitch?
+- [ ] Would a Spotify creative director share this with their team?
+- [ ] Would a 100-person studio adopt this daily?
+- [ ] Every term passes "say it out loud in a meeting" test?
+- [ ] Mythology invisible to newcomers, rewarding to discover?
+
+---
+
+## Decisions Log
+
+| Decision | Rationale |
+|---|---|
+| Keep "Council" | Real word. Advisory councils exist. Founders have them. |
+| Domain-first naming | Zero explanation needed. Business language. |
+| Character names = real words | Iris, Atlas, Echo — semantic weight, not fantasy syllables |
+| Progressive disclosure | M010: creation first, mythology earned |
+| Session not Convening | Universal language |
+| Breathing guide → optional Focus Mode | Don't gate behind ritual |

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 interface ConveningJournalProps {
   value: string;
@@ -15,7 +15,7 @@ export function ConveningJournal({
   value,
   onChange,
   onSave,
-  placeholder = "Record what you received. What shifted? What arrived? What was sealed?",
+  placeholder = "What surfaced? What surprised you? What will you do differently?",
   color = "#00bcd4",
 }: ConveningJournalProps) {
   const [isSaving, setIsSaving] = useState(false);
@@ -36,7 +36,7 @@ export function ConveningJournal({
   return (
     <div className="space-y-3">
       <label className="block font-mono text-xs text-white/40 uppercase tracking-widest">
-        Council Journal
+        Session Journal
       </label>
 
       <textarea
@@ -83,23 +83,23 @@ export function ConveningJournal({
                   strokeLinejoin="round"
                 />
               </svg>
-              Sealed
+              Saved
             </>
           ) : (
-            "Seal Entry"
+            "Save Entry"
           )}
         </button>
       </div>
 
       {saved && (
-        <motion.p
+        <m.p
           initial={{ opacity: 0, y: 4 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
           className="font-body text-xs text-[#10b981] text-center"
         >
-          Entry sealed in your Council journal.
-        </motion.p>
+          Entry saved to your session journal.
+        </m.p>
       )}
     </div>
   );
