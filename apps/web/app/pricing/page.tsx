@@ -2,9 +2,14 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Pricing | Arcanea",
+  title: "Pricing",
   description:
-    "Simple pricing for creative intelligence. Free tier available. Premium unlocks all 10 intelligences and full Library access.",
+    "Simple pricing for creative intelligence. Free tier available. Premium unlocks all 10 AI specialists and full Library access.",
+  openGraph: {
+    title: "Pricing | Arcanea",
+    description: "Simple pricing for creative intelligence. Free tier, premium, and enterprise plans.",
+    type: "website",
+  },
 };
 
 const TIERS = [

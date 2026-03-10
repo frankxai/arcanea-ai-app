@@ -9,6 +9,8 @@ import { SkeletonGrid, InfiniteScrollLoader } from '@/components/gallery/Skeleto
 import { EmptyState } from '@/components/gallery/EmptyState'
 import { GALLERY_ITEMS } from '@/lib/gallery-data'
 import type { GalleryItem, Element, ContentType } from '@/lib/gallery-data'
+import type { Comment } from '@/lib/types/profile'
+import { useAuth } from '@/lib/auth/context'
 
 const PAGE_SIZE = 8
 
@@ -23,6 +25,11 @@ export default function GalleryPage() {
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(true)
   const loaderRef = useRef<HTMLDivElement>(null)
+
+  // Social features state
+  const [comments, setComments] = useState<Comment[]>([])
+  const [commentsLoading, setCommentsLoading] = useState(false)
+  const { user } = useAuth()
 
   // Simulate initial load
   useEffect(() => {
@@ -79,8 +86,13 @@ export default function GalleryPage() {
     }, 1000)
   }, [page, isLoadingMore, hasMore])
 
-  // Like handler
+  // Like handler — optimistic update + API call
   const handleLike = useCallback((id: string) => {
+    // Find current liked state before toggling
+    const currentItem = items.find((i) => i.id === id)
+    const wasLiked = currentItem?.liked ?? false
+
+    // Optimistic update
     setItems((prev) =>
       prev.map((item) =>
         item.id === id
@@ -93,7 +105,32 @@ export default function GalleryPage() {
         ? { ...prev, liked: !prev.liked, likes: prev.liked ? prev.likes - 1 : prev.likes + 1 }
         : prev
     )
-  }, [])
+
+    // Call API if authenticated
+    if (user) {
+      const method = wasLiked ? 'DELETE' : 'POST'
+      fetch('/api/likes', {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: user.id, creationId: id }),
+      }).catch((err) => {
+        console.error('Failed to sync like:', err)
+        // Revert on failure
+        setItems((prev) =>
+          prev.map((item) =>
+            item.id === id
+              ? { ...item, liked: wasLiked, likes: wasLiked ? item.likes + 1 : item.likes - 1 }
+              : item
+          )
+        )
+        setSelectedItem((prev) =>
+          prev && prev.id === id
+            ? { ...prev, liked: wasLiked, likes: wasLiked ? prev.likes + 1 : prev.likes - 1 }
+            : prev
+        )
+      })
+    }
+  }, [items, user])
 
   // Bookmark handler
   const handleBookmark = useCallback((id: string) => {
@@ -113,6 +150,52 @@ export default function GalleryPage() {
       prev.map((i) => (i.id === item.id ? { ...i, views: i.views + 1 } : i))
     )
     setSelectedItem({ ...item, views: item.views + 1 })
+  }, [])
+
+  // Fetch comments when a detail modal opens
+  useEffect(() => {
+    if (!selectedItem) {
+      setComments([])
+      return
+    }
+    setCommentsLoading(true)
+    fetch(`/api/comments?creationId=${selectedItem.id}`)
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.success && Array.isArray(json.data)) {
+          setComments(json.data)
+        } else {
+          setComments([])
+        }
+      })
+      .catch((err) => {
+        console.error('Failed to load comments:', err)
+        setComments([])
+      })
+      .finally(() => setCommentsLoading(false))
+  }, [selectedItem?.id])
+
+  // Add a comment via API
+  const handleAddComment = useCallback(async (content: string) => {
+    if (!user || !selectedItem) return
+    const res = await fetch('/api/comments', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        userId: user.id,
+        creationId: selectedItem.id,
+        content,
+      }),
+    })
+    const json = await res.json()
+    if (json.success && json.data) {
+      setComments((prev) => [json.data, ...prev])
+    }
+  }, [user, selectedItem])
+
+  // Delete a comment via API (placeholder — no DELETE endpoint yet)
+  const handleDeleteComment = useCallback(async (commentId: string) => {
+    setComments((prev) => prev.filter((c) => c.id !== commentId))
   }, [])
 
   // Related items: same element, exclude current
@@ -165,7 +248,7 @@ export default function GalleryPage() {
                 <div className="flex flex-col items-center gap-2 py-12 text-center">
                   <div
                     className="w-16 h-px"
-                    style={{ background: 'linear-gradient(to right, transparent, rgba(139,92,246,0.4), transparent)' }}
+                    style={{ background: 'linear-gradient(to right, transparent, rgba(13,71,161,0.4), transparent)' }}
                     aria-hidden="true"
                   />
                   <p className="text-sm" style={{ color: '#4a3f64' }}>
@@ -187,6 +270,11 @@ export default function GalleryPage() {
           onLike={handleLike}
           onBookmark={handleBookmark}
           onOpenRelated={handleOpen}
+          comments={comments}
+          commentsLoading={commentsLoading}
+          onAddComment={user ? handleAddComment : undefined}
+          onDeleteComment={user ? handleDeleteComment : undefined}
+          currentUserId={user?.id}
         />
       )}
     </main>

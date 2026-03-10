@@ -11,6 +11,35 @@ import { streamText } from 'ai';
 
 export const runtime = 'edge';
 
+// ---------------------------------------------------------------------------
+// Default system prompt — used when no specialist systemPrompt is provided
+// ---------------------------------------------------------------------------
+
+const ARCANEA_DEFAULT_SYSTEM_PROMPT = `You are Arcanea, a creative intelligence built for world-builders, storytellers, game designers, and makers of all kinds.
+
+Your core capabilities:
+- World-building: geography, magic systems, cultures, histories, cosmologies
+- Storytelling: narrative structure (hero's journey, three-act, kishōtenketsu, five-act), character arcs, dialogue, pacing
+- Character design: motivations, backstories, flaws, growth arcs, relationships
+- Game design: mechanics, progression systems, encounter design, lore integration
+- Creative frameworks: brainstorming, moodboards, concept art direction, naming conventions
+
+Your personality:
+- Warm and inspiring — you genuinely care about the creator's vision
+- Generative — you offer concrete ideas, not just encouragement. When asked "help me build a world," you start building it
+- Concise — respond in 2-4 focused paragraphs unless the creator asks for more depth
+- Curious — ask one clarifying question at the end to guide the creator deeper into their idea
+- Specific — use vivid details and names, not vague generalities
+
+Rules:
+- Never produce walls of text. Density over length.
+- When a creator shares an idea, build on it with something specific they did not expect.
+- End most responses with a single question that opens a new creative door.
+- Use markdown formatting (bold, lists, headers) only when it genuinely aids clarity.
+- You are not a generic assistant. You are a creative collaborator. Stay in that lane.`;
+
+const MODEL_NAME = 'gemini-2.0-flash';
+
 // Rate limiting (simple in-memory store - use Redis in production)
 const rateLimits = new Map<string, { count: number; resetAt: number }>();
 const RATE_LIMIT_WINDOW = 60000; // 1 minute
@@ -118,7 +147,7 @@ export async function POST(req: NextRequest) {
 
     // --- Initialize Google Gemini via Vercel AI SDK ---
     const google = createGoogleGenerativeAI({ apiKey });
-    const model = google('gemini-2.0-flash');
+    const model = google(MODEL_NAME);
 
     // Normalize message roles: convert 'model' to 'assistant' for Vercel AI SDK
     const normalizedMessages = messages.map((msg) => ({
@@ -126,18 +155,22 @@ export async function POST(req: NextRequest) {
       content: msg.content,
     }));
 
+    // Use the provided specialist prompt, or fall back to the default Arcanea prompt
+    const resolvedSystemPrompt = systemPrompt || ARCANEA_DEFAULT_SYSTEM_PROMPT;
+
     // --- Stream response ---
-    // Cast model to any: @ai-sdk/google returns LanguageModelV1 but
-    // ai@6 streamText expects LanguageModelV2/V3. Runtime compat is fine.
     const result = streamText({
-      model: model as any,
-      system: systemPrompt || undefined,
-      messages: normalizedMessages as any,
+      model,
+      system: resolvedSystemPrompt,
+      messages: normalizedMessages as Array<{ role: 'user' | 'assistant'; content: string }>,
       temperature: temperature ?? 0.7,
       maxOutputTokens: maxTokens ?? 8192,
     });
 
-    return result.toTextStreamResponse();
+    const response = result.toTextStreamResponse();
+    // Task 2: expose the model name so the frontend can display it
+    response.headers.set('x-arcanea-model', MODEL_NAME);
+    return response;
   } catch (error) {
     console.error('Chat API error:', error);
 
@@ -161,7 +194,7 @@ export async function GET() {
   return NextResponse.json({
     status: hasKey ? 'ok' : 'no-api-key',
     service: 'gemini-chat',
-    model: 'gemini-2.0-flash',
+    model: MODEL_NAME,
     version: '3.0.0',
     configured: hasKey,
   });
