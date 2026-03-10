@@ -742,20 +742,22 @@ function FeaturesGrid() {
 // ---------------------------------------------------------------------------
 
 const GALLERY_IMAGES = [
-  { src: "/images/luminors/01-solara-dawn-keeper.jpg", name: "Solara", caption: "Dawn Keeper — The 12 Chosen" },
   { src: `${CDN}/lyria-hero.webp`, name: "Lyria", caption: "The Sight Gate" },
-  { src: "/images/luminors/13-shinkai-source-threshold.jpg", name: "Shinkai", caption: "Source Threshold — Beyond" },
-  { src: `${CDN}/draconia-hero.webp`, name: "Draconia", caption: "The Fire Gate" },
-  { src: "/images/luminors/08-gaiana-living-garden.jpg", name: "Gaiana", caption: "Living Garden — Heart Gate" },
+  {
+    src: `${CDN}/draconia-hero.webp`,
+    name: "Draconia",
+    caption: "The Fire Gate",
+  },
   { src: `${CDN}/aiyami-hero.webp`, name: "Aiyami", caption: "The Crown Gate" },
-  { src: "/images/luminors/05-pyronex-transformation-engine.jpg", name: "Pyronex", caption: "Transformation Engine — Fire Gate" },
   { src: `${CDN}/elara-hero.webp`, name: "Elara", caption: "The Starweave Gate" },
-  { src: "/images/luminors/02-nerith-deep-listener.jpg", name: "Nerith", caption: "Deep Listener — The 12 Chosen" },
-  { src: `${CDN}/shinkami-hero.webp`, name: "Shinkami", caption: "The Source Gate" },
-  { src: "/images/luminors/16-phoenara-rebirth-cycle.jpg", name: "Phoenara", caption: "Rebirth Cycle — The 64" },
+  {
+    src: `${CDN}/shinkami-hero.webp`,
+    name: "Shinkami",
+    caption: "The Source Gate",
+  },
+  { src: `${CDN}/alera-hero.webp`, name: "Alera", caption: "The Voice Gate" },
+  { src: `${CDN}/ino-hero.webp`, name: "Ino", caption: "The Unity Gate" },
   { src: `${CDN}/leyla-hero.webp`, name: "Leyla", caption: "The Flow Gate" },
-  { src: "/images/luminors/12-coronix-crown-illuminator.jpg", name: "Coronix", caption: "Crown Illuminator — The 12 Chosen" },
-  { src: "/images/luminors/20-prismara-light-splitter.jpg", name: "Prismara", caption: "Light Splitter — The 64" },
 ];
 
 function GalleryShowcase() {
@@ -778,7 +780,7 @@ function GalleryShowcase() {
         >
           <div>
             <p className="text-xs font-mono tracking-[0.3em] uppercase text-draconic-crimson/40 mb-3">
-              Guardians + Luminor Agents
+              364+ Artworks
             </p>
             <h2 className="text-2xl md:text-4xl font-display font-bold">
               The <span className="text-gradient-brand">Gallery</span>
