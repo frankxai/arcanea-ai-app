@@ -262,7 +262,7 @@ export function MusicContent() {
 
           <p className="mt-6 text-lg text-white/55 leading-relaxed max-w-xl mx-auto">
             Original music composed with AI, drawing from the frequencies of
-            the Ten Gates. Each track channels a Luminor's element — sound as
+            the Ten Gates. Each track channels a Guardian's element — sound as
             a portal to creation.
           </p>
 

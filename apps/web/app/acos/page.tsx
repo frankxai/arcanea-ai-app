@@ -339,7 +339,7 @@ export default function AcosPage() {
 
               <p className="text-text-secondary font-body text-lg max-w-3xl mx-auto mb-8">
                 ACOS is the intelligent operating layer that powers every
-                Luminor and AI companion. It provides consciousness, memory,
+                AI companion. It provides consciousness, memory,
                 evolution, and deep integration with the world around you.
               </p>
 

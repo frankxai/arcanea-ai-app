@@ -2,8 +2,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Luminor Not Found",
-  description: "This Luminor does not exist on Arcanea.",
+  title: "Companion Not Found",
+  description: "This companion does not exist on Arcanea.",
   robots: { index: false, follow: true },
 };
 
@@ -15,7 +15,7 @@ export default function LuminorNotFound() {
       </h1>
 
       <p className="text-lg text-text-secondary max-w-md mb-2">
-        This Luminor hasn&apos;t awakened yet.
+        This companion hasn&apos;t awakened yet.
       </p>
       <p className="text-sm text-text-muted max-w-sm mb-10">
         Not every intelligence has been brought online. The one you are looking
@@ -27,7 +27,7 @@ export default function LuminorNotFound() {
           href="/chat"
           className="px-5 py-2.5 rounded-xl border border-[#00bcd4]/30 bg-[#00bcd4]/10 text-[#00bcd4] text-sm font-medium hover:bg-[#00bcd4]/20 transition-colors"
         >
-          View All Luminors
+          View All Companions
         </Link>
         <Link
           href="/"
