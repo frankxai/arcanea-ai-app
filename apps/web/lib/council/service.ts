@@ -358,15 +358,15 @@ export async function getCouncilStats(councilId: string): Promise<CouncilStats> 
   const sevenDaysAgo = new Date(now - 7 * 86_400_000).toISOString();
   const thirtyDaysAgo = new Date(now - 30 * 86_400_000).toISOString();
 
-  const rows = convenings ?? [];
+  const rows: any[] = convenings ?? [];
 
-  const last7 = rows.filter((r) => r.created_at >= sevenDaysAgo).length;
-  const last30 = rows.filter((r) => r.created_at >= thirtyDaysAgo).length;
+  const last7 = rows.filter((r: any) => r.created_at >= sevenDaysAgo).length;
+  const last30 = rows.filter((r: any) => r.created_at >= thirtyDaysAgo).length;
 
-  const ratingsWithValue = rows.filter((r) => r.depth_rating !== null);
+  const ratingsWithValue = rows.filter((r: any) => r.depth_rating !== null);
   const avgDepth =
     ratingsWithValue.length > 0
-      ? ratingsWithValue.reduce((sum, r) => sum + (r.depth_rating ?? 0), 0) /
+      ? ratingsWithValue.reduce((sum: number, r: any) => sum + (r.depth_rating ?? 0), 0) /
         ratingsWithValue.length
       : null;
 
