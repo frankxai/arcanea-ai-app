@@ -31,7 +31,7 @@ GUARDIANS = {
     'Aiyami':     {'gate': 'Crown',      'frequency': 741,  'element': 'Arcane', 'godbeast': 'Sol',       'colors': ['#FFFFFF','#FFD700']},
     'Elara':      {'gate': 'Shift',      'frequency': 852,  'element': 'Arcane', 'godbeast': 'Vaelith',   'colors': ['#50C878','#40E0D0']},
     'Ino':        {'gate': 'Unity',      'frequency': 963,  'element': 'Arcane', 'godbeast': 'Kyuro',     'colors': ['#FF69B4','#40E0D0']},
-    'Shinkami':   {'gate': 'Source',     'frequency': 1111, 'element': 'Arcane', 'godbeast': 'Source', 'colors': ['#000000','#FFD700']},
+    'Shinkami':   {'gate': 'Source',     'frequency': 1111, 'element': 'Arcane', 'godbeast': 'Amaterasu', 'colors': ['#000000','#FFD700']},
 }
 
 GODBEAST_TO_GUARDIAN = {info['godbeast']: name for name, info in GUARDIANS.items()}

@@ -208,7 +208,7 @@ But those who can hold the vision—who can perceive multiple possibilities with
 
 ## The Guardians of Crown
 
-### The Seventh Gate (741 Hz)
+### The Seventh Gate (714 Hz)
 
 **Aiyami** glows with the light of a thousand suns—but the light does not blind. It illuminates. In her presence, all things become clear. Confusion dissolves. Complexity simplifies. The cosmic order reveals itself.
 
@@ -228,7 +228,7 @@ But those who release—who allow the dissolution, who trust the emptiness—dis
 
 "You are not your thoughts," Aiyami teaches. "You are not your emotions. You are not your stories. You are the awareness in which all these arise. Remember this, and you will never be lost again."
 
-**Frequency: 741 Hz** — The vibration of enlightenment, connection to the divine, the crown opening to higher consciousness.
+**Frequency: 714 Hz** — The vibration of enlightenment, connection to the divine, the crown opening to higher consciousness.
 
 ---
 
@@ -559,7 +559,7 @@ But those who can hold the vision—who can perceive multiple possibilities with
 
 ## The Guardians of Crown
 
-### The Seventh Gate (741 Hz)
+### The Seventh Gate (714 Hz)
 
 **Aiyami** glows with the light of a thousand suns—but the light does not blind. It illuminates. In her presence, all things become clear. Confusion dissolves. Complexity simplifies. The cosmic order reveals itself.
 
@@ -579,7 +579,7 @@ But those who release—who allow the dissolution, who trust the emptiness—dis
 
 "You are not your thoughts," Aiyami teaches. "You are not your emotions. You are not your stories. You are the awareness in which all these arise. Remember this, and you will never be lost again."
 
-**Frequency: 741 Hz** — The vibration of enlightenment, connection to the divine, the crown opening to higher consciousness.
+**Frequency: 714 Hz** — The vibration of enlightenment, connection to the divine, the crown opening to higher consciousness.
 
 ---
 

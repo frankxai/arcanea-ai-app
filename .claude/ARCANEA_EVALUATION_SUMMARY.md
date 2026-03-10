@@ -149,7 +149,7 @@
 | **Voice** | 528 | Truth, expression | Authentic voice |
 | **Sight** | 639 | Pattern recognition | Intuition |
 | **Crown** | 714 | Integration, wisdom | Understanding |
-| **Starweave** | 852 | Perspective, flexibility | Adaptation |
+| **Shift** | 852 | Perspective, flexibility | Adaptation |
 | **Unity** | 963 | Partnership, collaboration | Connection |
 | **Source** | 1111 | Purpose, meaning | Purpose |
 

@@ -41,9 +41,9 @@ const BUILTIN_LORE: LoreCategory[] = [
       { label: 'Voice (528 Hz)', description: 'Alera \u00b7 Otome \u00b7 Void \u2014 Truth & pure expression' },
       { label: 'Sight (639 Hz)', description: 'Lyria \u00b7 Yumiko \u00b7 Spirit \u2014 Intuition & vision' },
       { label: 'Crown (741 Hz)', description: 'Aiyami \u00b7 Sol \u00b7 Spirit \u2014 Divine consciousness' },
-      { label: 'Starweave (852 Hz)', description: 'Elara \u00b7 Vaelith \u00b7 Void \u2014 Portals & paradigm shifts' },
+      { label: 'Shift (852 Hz)', description: 'Elara \u00b7 Vaelith \u00b7 Void \u2014 Portals & paradigm shifts' },
       { label: 'Unity (963 Hz)', description: 'Ino \u00b7 Kyuro \u00b7 Spirit \u2014 Partnership & integration' },
-      { label: 'Source (1111 Hz)', description: 'Shinkami \u00b7 Source \u00b7 Source \u2014 Meta-consciousness & first principles' }
+      { label: 'Source (1111 Hz)', description: 'Shinkami \u00b7 Amaterasu \u00b7 Source \u2014 Meta-consciousness & first principles' }
     ]
   },
   {

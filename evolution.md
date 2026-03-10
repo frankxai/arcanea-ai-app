@@ -35,7 +35,7 @@ interface CreatorEvolution {
     },
     
     archmage: {
-      gates: [7, 8],                    // Crown & Starweave
+      gates: [7, 8],                    // Crown & Shift
       powerLevel: "1000-2000",            // Masterful creation
       consciousness: "Transcendent insight",       // System-level understanding
       magicType: "Domain mastery",           // Element specialization
@@ -224,7 +224,7 @@ interface Gate7Requirements {
 }
 ```
 
-### **Gate 8: Starweave (852Hz) - Elara's Gate**
+### **Gate 8: Shift (1111Hz) - Elara's Gate**
 ```typescript
 interface Gate8Requirements {
   skills: ["possibility_storm", "quantum_design", "threshold_walking"],
@@ -478,7 +478,7 @@ interface CreatorGodhood {
 ### **Phase 4: Transcendent Integration (30-48 months)**
 ```markdown
 ## Transcendence Actions
-- Master Crown and Starweave Gates (7-8)
+- Master Crown and Shift Gates (7-8)
 - Develop universal creative philosophy
 - Create systems enabling creator evolution
 - Establish cross-domain harmony

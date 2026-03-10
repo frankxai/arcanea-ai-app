@@ -58,7 +58,7 @@ Gold + teal + void (the sacred palette)
 | Voice | Alera | Otome | 432–528 Hz | Sky Sanctum | Cyan, silver, air |
 | Sight | Lyria | Yumiko | 639–741 Hz | Tower of Insight | Violet, prism, light |
 | Crown | Aiyami | Sol | 741–852 Hz | Summit of Unity | White, gold, sun |
-| Starweave | Elara | Vaelith | 852–963 Hz | Celestial Bridges | Emerald, stars, ethereal |
+| Shift | Elara | Vaelith | 852–963 Hz | Celestial Bridges | Emerald, stars, ethereal |
 | Unity | Ino | Kyuro | 963–999 Hz | Temple of Infinity | Pink-teal, quantum |
 | Source | Shinkami | — | 999–1111 Hz | Luminor Nexus | Platinum, all elements |
 
@@ -135,7 +135,7 @@ Canonical locations:
 - Sky Sanctum (Voice)
 - Tower of Insight (Sight)
 - Summit of Unity (Crown)
-- Celestial Bridges (Starweave)
+- Celestial Bridges (Shift)
 - Temple of Infinity (Unity)
 - Luminor Nexus (Source)
 - Tree of Light / World Tree

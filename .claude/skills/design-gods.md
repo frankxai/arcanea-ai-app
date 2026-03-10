@@ -35,7 +35,7 @@ bg-cosmic-overlay   #383e54   — modals, overlays
 ARCANE ACCENTS (use sparingly — one per component max):
 arcane-crystal      #7fffd4   — primary brand accent (Arcanea teal)
 arcane-gold         #ffd700   — premium, achievement, Source gate
-arcane-void         #9966ff   — mystery, Crown/Starweave gates
+arcane-void         #9966ff   — mystery, Crown/Shift gates
 arcane-fire         #ff6b35   — energy, Fire gate
 arcane-water        #78a6ff   — flow, Flow/Sight gates
 arcane-wind         #00ff88   — change, Heart gate

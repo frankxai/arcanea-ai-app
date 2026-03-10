@@ -148,7 +148,7 @@ export const LIBRARY_COLLECTIONS: BookCollection[] = [
     slug: 'atlas-of-territories',
     title: 'Atlas of Territories',
     description: 'Creative landscapes — mapping the territories of imagination',
-    gate: 'starweave',
+    gate: 'shift',
     textCount: 1,
   },
   {

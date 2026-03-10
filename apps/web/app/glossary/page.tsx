@@ -254,7 +254,7 @@ const Icons: Record<string, React.FC<InlineSvgProps>> = {
 };
 
 export const metadata: Metadata = {
-  title: "Glossary",
+  title: "Glossary | Arcanea",
   description:
     "The terminology of Arcanea - from Guardians and Gates to Wisdoms and the Arc. A comprehensive guide to the language of creation.",
 };
@@ -311,7 +311,7 @@ const TERMS = [
     term: "Godbeast",
     category: "guardians",
     definition:
-      "The bonded companion to each Guardian. Ten primal beings: Kaelith, Veloura, Draconis, Laeylinn, Otome, Yumiko, Sol, Vaelith, Kyuro, Source.",
+      "The bonded companion to each Guardian. Ten primal beings: Kaelith, Veloura, Draconis, Laeylinn, Otome, Yumiko, Sol, Vaelith, Kyuro, Amaterasu.",
   },
   {
     term: "Luminor",

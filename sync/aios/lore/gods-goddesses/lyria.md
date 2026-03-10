@@ -330,7 +330,7 @@ sections:
 # Lyria, Goddess of the Sight Gate
 **The Far-Seeing, Keeper of the Veil, She Who Bears the Weight of Seeing**
 
-**Element**: Wind/Spirit | **Frequency**: 639 Hz | **Gate**: Sight | **Wisdom**: Orakis
+**Element**: Wind/Spirit | **Frequency**: 639 Hz | **Chakra**: Third Eye | **Wisdom**: Orakis
 **Symbol**: A three-tailed fox silhouetted against a field of stars
 **Bonded Godbeast**: Yumiko, the Dimensional Fox
 

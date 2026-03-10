@@ -3,7 +3,7 @@
  * Exposes @arcanea/media through the MCP server so I (Claude) can manage
  * your media library directly without leaving the conversation.
  *
- * Guardian: Elara (Starweave Gate, 852 Hz) — Transformation
+ * Guardian: Elara (Shift Gate, 852 Hz) — Transformation
  *
  * Tools:
  *   media_scan    — Scan a directory and catalog all media

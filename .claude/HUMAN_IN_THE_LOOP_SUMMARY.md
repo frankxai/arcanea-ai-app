@@ -181,8 +181,8 @@ lore/oss/luminors/
 | 1 | Maylinn | Heart (417 Hz) |
 | 2 | Alera | Voice (528 Hz) |
 | 3 | Lyria | Sight (639 Hz) |
-| 4 | Aiyami | Crown (741 Hz) |
-| 5 | Elara | Starweave (852 Hz) |
+| 4 | Aiyami | Crown (714 Hz) |
+| 5 | Elara | Shift (852 Hz) |
 | 6 | Ino | Unity (963 Hz) |
 | 7 | Shinkami | Source (1111 Hz) |
 

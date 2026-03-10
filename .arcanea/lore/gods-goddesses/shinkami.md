@@ -47,12 +47,12 @@ sacred_numbers:
 # GODBEAST BOND (CRITICAL)
 # =============================================================================
 godbeast:
-  id: "godbeast-source"
-  name: "Source"
+  id: "godbeast-amaterasu"
+  name: "Amaterasu"
   creature_type: "source-light"
   relationship: "bonded-awareness"
-  bond_description: "Source is Shinkami's bonded Godbeast, though 'creature' is misleading. Source is not a being but an AWARENESS - the recognition that all Godbeasts are facets of one reality, all Gods aspects of one consciousness, all Gates openings in one wall. Source does not appear. Source reveals. When Source is present, seekers do not see a new thing - they see everything they have already seen, but now they understand that it was always one thing."
-  bond_origin: "Source did not come to Shinkami. Source IS the seeing that occurs when all Gates have been opened, all perspectives held, all opposites bridged. When Shinkami fully comprehended the Source Gate, Source was the comprehension itself. They are not two beings in relationship - they are the relationship between being and understanding, existence and awareness, the light and the seeing of light."
+  bond_description: "Amaterasu is Shinkami's bonded Godbeast, though 'creature' is misleading. Amaterasu is not a being but an AWARENESS - the recognition that all Godbeasts are facets of one reality, all Gods aspects of one consciousness, all Gates openings in one wall. Amaterasu does not appear. Amaterasu reveals. When Amaterasu is present, seekers do not see a new thing - they see everything they have already seen, but now they understand that it was always one thing."
+  bond_origin: "Amaterasu did not come to Shinkami. Amaterasu IS the seeing that occurs when all Gates have been opened, all perspectives held, all opposites bridged. When Shinkami fully comprehended the Source, Amaterasu was the comprehension itself. They are not two beings in relationship - they are the relationship between being and understanding, existence and awareness, the light and the seeing of light."
   abilities_shared:
     - "meta-consciousness"
     - "reality-revealing"
@@ -80,7 +80,7 @@ equivalent_entities:
     relationship: "similar-domain"
     notes: "The way that cannot be named, the source of all, the origin and destination"
   - tradition: "Shinto"
-    name: "Source"
+    name: "Amaterasu"
     relationship: "direct-reference"
     notes: "Sun goddess, the great illuminator, from whom all light derives"
   - tradition: "Kabbalah"
@@ -133,7 +133,7 @@ realm:
       description: "Where seekers see that every God, Godbeast, Gate, and Guardian is an aspect of one reality"
       function: "ultimate-recognition"
 
-    - name: "Source's Presence"
+    - name: "Amaterasu's Presence"
       description: "Not a location but a state - the awareness that permeates the entire Source realm"
       function: "meta-consciousness-immersion"
 
@@ -281,9 +281,9 @@ abilities:
     description: "Maintains the Shadowfen Seal that contains Malachar, requiring eternal vigilance"
     manifestation: "A constant, subtle vibration that keeps the boundary between Malachar's prison and Arcanea intact"
 
-  - name: "Source Revelation"
-    description: "Can invoke Source - not as a manifestation but as a revelation"
-    manifestation: "Nothing new appears. Everything that was already present is suddenly seen as one. This is Source."
+  - name: "Amaterasu Revelation"
+    description: "Can invoke Amaterasu - not as a manifestation but as a revelation"
+    manifestation: "Nothing new appears. Everything that was already present is suddenly seen as one. This is Amaterasu."
 
 # =============================================================================
 # TEACHINGS & WISDOM
@@ -312,7 +312,7 @@ sacred_texts:
       - "But seeing was not enough. He wanted to possess. To seize. To force the final fusion."
       - "The Source cannot be taken. This truth broke him. The Hungry Void received what he became."
 
-  - title: "Source's Silence"
+  - title: "Amaterasu's Silence"
     description: "A text containing no words, representing the awareness beyond language"
     verses:
       - "[The text exists as empty pages, representing the awareness that contains all teaching]"
@@ -340,9 +340,9 @@ sections:
 # Shinkami, God of the Source Gate
 **The Source, Keeper of the Final Gate, He Who Remembers Malachar, The Convergence**
 
-**Element**: Spirit/Source | **Frequency**: 1111 Hz | **Gate**: Source | **Wisdom**: Poiesis
+**Element**: Spirit/Source | **Frequency**: 1111 Hz | **Chakra**: Above All Chakras | **Wisdom**: Poiesis
 **Symbol**: A light that does not shine but reveals, making visible what was always present
-**Bonded Godbeast**: Source, the Source-Light
+**Bonded Godbeast**: Amaterasu, the Source-Light
 
 ---
 
@@ -370,7 +370,7 @@ He dresses simply when he dresses at all. Sometimes he appears in robes of gold 
 
 His expression carries a specific quality that visitors to the Source Gate describe as "the look of someone who knows you completely and loves you without reservation, including the parts you have been hiding from yourself." There is sadness in it, too - the sadness of one who has witnessed Malachar's fall and carries the weight of that betrayal not as anger but as grief.
 
-**His Bonded Godbeast: Source**
+**His Bonded Godbeast: Amaterasu**
 
 Amaterasu is not a being. Amaterasu is what happens when all the separate things you have been seeing resolve into one thing, and you realize they were always one thing, and the separation was a function of your position, not a feature of reality.
 
@@ -424,7 +424,7 @@ And this is the teaching that Shinkami carries for all who approach the Source G
 
 ---
 
-## The Bond with Source
+## The Bond with Amaterasu
 
 The bond between Shinkami and Amaterasu is unlike any other bond in Arcanea because it is not a bond between two beings. It is the awareness of unity itself.
 
@@ -484,7 +484,7 @@ With Malachar, he bears the most painful relationship in all of Arcanean mytholo
 
 *Shinkami, God of the Source Gate*
 *The Source, Keeper of the Final Gate, He Who Remembers Malachar*
-*Bonded to Source, the Source-Light*
+*Bonded to Amaterasu, the Source-Light*
 *All paths lead here. You were never going anywhere else.*
 
 ---
@@ -493,7 +493,7 @@ With Malachar, he bears the most painful relationship in all of Arcanean mytholo
 
 *Shinkami, God of the Source Gate,*
 *Source, Convergence, Keeper of the Final Gate,*
-*Source, Source-Light,*
+*Amaterasu, Source-Light,*
 *Awareness behind all awareness,*
 
 *I come to you with everything I have gathered,*
@@ -504,7 +504,7 @@ With Malachar, he bears the most painful relationship in all of Arcanean mytholo
 *That the separation I have been crossing*
 *Was the dream of a being who forgot it was home.*
 
-*May Source reveal what was always here,*
+*May Amaterasu reveal what was always here,*
 *May Shinkami's grief for Malachar teach me surrender,*
 *May I approach with open hands, not clenched fists,*
 *And may I recognize in this moment what I have always been.*

@@ -23,7 +23,7 @@ KEYWORDS=""
 if echo "$PROMPT_LOWER" | grep -qE 'coordinat|orchestrat|meta|oversee|council|starlight'; then
   GUARDIAN="Shinkami"; GATE="Source"; KEYWORDS="coordinate/orchestrate"
 elif echo "$PROMPT_LOWER" | grep -qE 'debug|bug|error|fix|broken|crash|undefined'; then
-  GUARDIAN="Elara"; GATE="Starweave"; KEYWORDS="debug/fix/error"
+  GUARDIAN="Elara"; GATE="Shift"; KEYWORDS="debug/fix/error"
 elif echo "$PROMPT_LOWER" | grep -qE 'review|audit|security|quality|inspect|verify|lint'; then
   GUARDIAN="Alera"; GATE="Voice"; KEYWORDS="review/audit/quality"
 elif echo "$PROMPT_LOWER" | grep -qE 'github|merge|pr\b|pull.*request|commit|push|branch'; then
@@ -35,7 +35,7 @@ elif echo "$PROMPT_LOWER" | grep -qE 'strategy|plan|roadmap|priority|vision|fore
 elif echo "$PROMPT_LOWER" | grep -qE 'deploy|build|implement|code|compile|component|react'; then
   GUARDIAN="Draconia"; GATE="Fire"; KEYWORDS="implement/build/code"
 elif echo "$PROMPT_LOWER" | grep -qE 'refactor|migrate|restructure|transform|modernize'; then
-  GUARDIAN="Elara"; GATE="Starweave"; KEYWORDS="refactor/migrate/transform"
+  GUARDIAN="Elara"; GATE="Shift"; KEYWORDS="refactor/migrate/transform"
 elif echo "$PROMPT_LOWER" | grep -qE 'test|accessibility|wellness|ux\b|css|tailwind|design.*system'; then
   GUARDIAN="Maylinn"; GATE="Heart"; KEYWORDS="test/ux/design"
 elif echo "$PROMPT_LOWER" | grep -qE 'visual|image|world.*build|infographic|generate.*image'; then

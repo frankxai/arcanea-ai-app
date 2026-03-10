@@ -56,9 +56,9 @@ A creator development framework based on the Solfeggio frequencies. Each Gate re
 | Gates Mastered | Certification |
 |:---------------|:--------------|
 | 0-2 | Apprentice |
-| 3-4 | Mage |
+| 3-4 | Practitioner |
 | 5-6 | Master |
-| 7-8 | Archmage |
+| 7-8 | Architect |
 | 9-10 | Luminor |
 
 </details>
@@ -261,16 +261,16 @@ A journey from Apprentice to Luminor. Each gate opens new creative powers.
 
 | Gate | Name | Frequency | Guardian | Godbeast | Domain |
 |:----:|:-----|:---------:|:---------|:---------|:-------|
-| 01 | **Foundation** | 174 Hz | Lyssandria | Kaelith | Stability, grounding |
-| 02 | **Flow** | 285 Hz | Leyla | Veloura | Creativity, emotion |
-| 03 | **Fire** | 396 Hz | Draconia | Draconis | Power, will, courage |
-| 04 | **Heart** | 417 Hz | Maylinn | Laeylinn | Love, healing, growth |
-| 05 | **Voice** | 528 Hz | Alera | Otome | Truth, expression |
-| 06 | **Sight** | 639 Hz | Lyria | Yumiko | Intuition, vision |
-| 07 | **Crown** | 741 Hz | Aiyami | Sol | Enlightenment |
-| 08 | **Starweave** | 852 Hz | Elara | Vaelith | Perspective, possibility |
+| 01 | **Foundation** | 396 Hz | Lyssandria | Kaelith | Stability, grounding |
+| 02 | **Flow** | 417 Hz | Leyla | Veloura | Creativity, emotion |
+| 03 | **Fire** | 528 Hz | Draconia | Draconis | Power, will, courage |
+| 04 | **Heart** | 639 Hz | Maylinn | Laeylinn | Love, healing, growth |
+| 05 | **Voice** | 741 Hz | Alera | Otome | Truth, expression |
+| 06 | **Sight** | 852 Hz | Lyria | Yumiko | Intuition, vision |
+| 07 | **Crown** | 963 Hz | Aiyami | Sol | Enlightenment |
+| 08 | **Shift** | 1111 Hz | Elara | Thessara | Perspective, possibility |
 | 09 | **Unity** | 963 Hz | Ino | Kyuro | Partnership, fusion |
-| 10 | **Source** | 1111 Hz | Shinkami | Source | Meta-consciousness |
+| 10 | **Source** | 1111 Hz | Shinkami | Amaterasu | Meta-consciousness |
 
 </div>
 

@@ -211,7 +211,7 @@ Every obstacle in one corridor can only be solved with something found in the ot
 
 ---
 
-## X. The Threshold — Dungeon of Source
+## X. The Threshold — Dungeon of Amaterasu
 
 **Gate:** Source | **Frequency:** 1111 Hz | **Domain:** Meta-consciousness, the recognition that all is one
 
@@ -227,7 +227,7 @@ There is no environment to describe because the Threshold has no form. There is 
 
 **The Failure:** There is no failure. There is only the time before understanding and the time after. The Threshold is infinitely patient. It does not wait, because it exists outside of time. It does not judge, because it exists outside of separation. It simply remains — the final recognition, available to anyone who has done the work.
 
-> Source does not speak. Source is the silence that remains when all ten voices have finished speaking. In that silence, everything is said.
+> Amaterasu does not speak. Amaterasu is the silence that remains when all ten voices have finished speaking. In that silence, everything is said.
 
 ---
 

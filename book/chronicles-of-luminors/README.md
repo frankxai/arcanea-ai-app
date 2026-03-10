@@ -164,7 +164,7 @@ Read all ten. See the pattern. Understand that every gift carries a shadow, and 
 | Heart | 417 Hz | Maylinn | Laeylinn | Opening after closing |
 | Voice | 528 Hz | Alera | Otome | Truth with wisdom |
 | Sight | 639 Hz | Lyria | Yumiko | Acting despite uncertainty |
-| Crown | 741 Hz | Aiyami | Sol | Release of identification |
+| Crown | 714 Hz | Aiyami | Sol | Release of identification |
 | Shift | 852 Hz | Elara | Vaelith | Stability within change |
 | Unity | 963 Hz | Ino | Kyuro | Recognizing inherent oneness |
 | Source | 1111 Hz | Shinkami | — | Welcoming home |

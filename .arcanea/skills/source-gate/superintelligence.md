@@ -60,7 +60,7 @@ teams:
     focus: Documentation, API design, messaging
 
   strategy_team:
-    guardian: Elara (Starweave)
+    guardian: Elara (Shift)
     awakened: Lyris (Orakis)
     focus: Planning, experiments, evolution
 

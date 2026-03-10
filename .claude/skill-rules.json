@@ -401,7 +401,7 @@
       "skill": "arcanea-build",
       "skillPath": ".claude/commands/arcanea-build.md",
       "guardian": "Elara",
-      "gate": "Starweave",
+      "gate": "Shift",
       "frequency": "852 Hz",
       "priority": "high",
       "description": "Build diagnostics, error resolution, and configuration shifts. Elara sees problems from angles others miss — perspective is her power.",
@@ -417,23 +417,23 @@
       "skill": "refactor",
       "skillPath": ".claude/skills/development/refactoring-ritual",
       "guardian": "Elara",
-      "gate": "Starweave",
+      "gate": "Shift",
       "frequency": "852 Hz",
       "priority": "medium",
-      "description": "Code transformation, migration, and structural refactoring. Elara's Starweave Gate transforms what exists into what must be — without breaking the chain.",
+      "description": "Code transformation, migration, and structural refactoring. Elara's Shift Gate transforms what exists into what must be — without breaking the chain.",
       "triggers": {
         "keywords": ["refactor", "migrate", "upgrade", "transform", "restructure", "modernize", "extract", "consolidate", "rename", "decompose"],
         "filePatterns": [],
         "commands": ["/refactor"]
       },
-      "activationMessage": "Elara initiates the Starweave. Code transforms."
+      "activationMessage": "Elara initiates the Shift. Code transforms."
     },
     {
       "id": "rule-027",
       "skill": "systematic-debug",
       "skillPath": ".claude/skills/development/systematic-debug",
       "guardian": "Elara",
-      "gate": "Starweave",
+      "gate": "Shift",
       "frequency": "852 Hz",
       "priority": "high",
       "description": "Systematic debugging and root cause analysis. Elara's perspective shift cuts through symptoms to find the true origin of failure.",
@@ -577,7 +577,7 @@
     "Shinkami": {
       "gate": "Source",
       "frequency": "1111 Hz",
-      "godbeast": "Source",
+      "godbeast": "Amaterasu",
       "domain": "Meta-consciousness, orchestration, universal truth",
       "rules": ["rule-001", "rule-002", "rule-003"]
     },
@@ -631,7 +631,7 @@
       "rules": ["rule-022", "rule-023", "rule-024"]
     },
     "Elara": {
-      "gate": "Starweave",
+      "gate": "Shift",
       "frequency": "852 Hz",
       "godbeast": "Vaelith",
       "domain": "Build diagnostics, refactoring, debugging, transformation",

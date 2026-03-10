@@ -21,7 +21,7 @@ interface DiagnosisResult {
 
 const gateNames = [
   "Foundation", "Flow", "Fire", "Heart", "Voice",
-  "Sight", "Crown", "Starweave", "Unity", "Source"
+  "Sight", "Crown", "Shift", "Unity", "Source"
 ];
 
 // Keywords for each creature

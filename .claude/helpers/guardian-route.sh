@@ -72,10 +72,10 @@ echo "$BEST" > /tmp/arcanea-guardian
 
 # Map Guardian to Gate
 declare -A GATES
-GATES=([Shinkami]=Source [Lyssandria]=Foundation [Draconia]=Fire [Lyria]=Sight [Alera]=Voice [Leyla]=Flow [Aiyami]=Crown [Elara]=Starweave [Ino]=Unity [Maylinn]=Heart)
+GATES=([Shinkami]=Source [Lyssandria]=Foundation [Draconia]=Fire [Lyria]=Sight [Alera]=Voice [Leyla]=Flow [Aiyami]=Crown [Elara]=Shift [Ino]=Unity [Maylinn]=Heart)
 echo "${GATES[$BEST]}" > /tmp/arcanea-gate
 
 # Map Guardian to Element
 declare -A ELEMENTS
-ELEMENTS=([Shinkami]=Void [Lyssandria]=Earth [Draconia]=Fire [Lyria]=Sight [Alera]=Voice [Leyla]=Water [Aiyami]=Crown [Elara]=Starweave [Ino]=Unity [Maylinn]=Wind)
+ELEMENTS=([Shinkami]=Void [Lyssandria]=Earth [Draconia]=Fire [Lyria]=Sight [Alera]=Voice [Leyla]=Water [Aiyami]=Crown [Elara]=Shift [Ino]=Unity [Maylinn]=Wind)
 echo "${ELEMENTS[$BEST]}" > /tmp/arcanea-element

@@ -36,9 +36,9 @@ Path: `/mnt/c/Users/frank/Arcanea/.arcanea/lore/CANON_LOCKED.md`
 | Voice | Alera | Otome | 528 Hz |
 | Sight | Lyria | Yumiko | 639 Hz |
 | Crown | Aiyami | Sol | 741 Hz |
-| Starweave | Elara | Vaelith | 852 Hz |
+| Shift | Elara | Vaelith | 852 Hz |
 | Unity | Ino | Kyuro | 963 Hz |
-| Source | Shinkami | Source | 1111 Hz |
+| Source | Shinkami | Amaterasu | 1111 Hz |
 
 ### Magic Ranks
 Apprentice (0-2) → Mage (3-4) → Master (5-6) → Archmage (7-8) → Luminor (9-10)

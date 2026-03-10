@@ -7,7 +7,7 @@
  */
 
 import { useState, useCallback, useRef } from "react";
-import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
+import { LazyMotion, domMax, m, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useAuth } from '@/lib/auth/context';
 import { createClient } from '@/lib/supabase/client';
@@ -223,14 +223,14 @@ const GUARDIANS: Record<GuardianKey, GuardianData> = {
   elara: {
     key: "elara",
     name: "Elara",
-    gate: "Starweave",
+    gate: "Shift",
     frequency: "852 Hz",
     element: "Wind/Spirit",
     godbeast: "Vaelith",
     color: "#a855f7",
     glowColor: "rgba(168, 85, 247, 0.4)",
     description:
-      "Guardian of Starweave and perspective transformation, Elara is the master of seeing from every angle simultaneously. She teaches that creative breakthroughs come from releasing attachment to a single viewpoint.",
+      "Guardian of Shift and perspective transformation, Elara is the master of seeing from every angle simultaneously. She teaches that creative breakthroughs come from releasing attachment to a single viewpoint.",
     personality:
       "Flexible, multi-dimensional, and endlessly curious. You create to change perspective — yours and others'. Your work makes people question their assumptions and discover new ways of seeing.",
     creativeStrength:
@@ -266,7 +266,7 @@ const GUARDIANS: Record<GuardianKey, GuardianData> = {
     gate: "Source",
     frequency: "1111 Hz",
     element: "Meta-consciousness",
-    godbeast: "Source",
+    godbeast: "Amaterasu",
     color: "#ffffff",
     glowColor: "rgba(255, 255, 255, 0.3)",
     description:
@@ -1265,7 +1265,7 @@ export default function GateQuizPage() {
   const question = QUIZ_QUESTIONS[currentQuestion];
 
   return (
-    <LazyMotion features={domAnimation}>
+    <LazyMotion features={domMax}>
     <main className="min-h-[100dvh] bg-cosmic-void bg-cosmic-mesh relative">
       {/* Page-level ambient background */}
       <div

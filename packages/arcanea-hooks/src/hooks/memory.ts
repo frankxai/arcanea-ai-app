@@ -4,7 +4,7 @@
  * Lifecycle hooks for memory operations: pre-store, post-store,
  * pre-retrieve, post-retrieve, sync, and evict.
  *
- * Guardian affinity: Elara (Starweave, perspective — memory transformation)
+ * Guardian affinity: Elara (Shift, perspective — memory transformation)
  *                    Lyssandria (Foundation — stable storage)
  */
 

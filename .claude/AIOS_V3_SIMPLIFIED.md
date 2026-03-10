@@ -106,9 +106,9 @@ We don't need new entities for healing. The existing mythology covers it:
 | Alera | Voice | 528 Hz | Otome | Expression, truth |
 | Lyria | Sight | 639 Hz | Yumiko | Vision, insight |
 | Aiyami | Crown | 741 Hz | Sol | Transcendence |
-| Elara | Starweave | 852 Hz | **Vaelith** | Perspective |
+| Elara | Shift | 852 Hz | **Vaelith** | Perspective |
 | Ino | Unity | 963 Hz | Kyuro | Collaboration |
-| Shinkami | Source | 1111 Hz | Source | Integration |
+| Shinkami | Source | 1111 Hz | Amaterasu | Integration |
 
 **Note**: Elara's Godbeast is **Vaelith** (not Vaelith). Vaelith matches the -ith pattern (Kaelith) and sounds softer.
 

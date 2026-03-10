@@ -118,7 +118,7 @@ The honest answer on resource cost: Arena Mode is not cheap. Ten agents burning 
 
 Here is where this becomes more than a development technique.
 
-Arcanea is built around the concept of ten Guardians — each representing a different Gate, a different frequency, a different domain of human experience and creation. Foundation. Flow. Fire. Heart. Voice. Sight. Crown. Starweave. Unity. Source.
+Arcanea is built around the concept of ten Guardians — each representing a different Gate, a different frequency, a different domain of human experience and creation. Foundation. Flow. Fire. Heart. Voice. Sight. Crown. Shift. Unity. Source.
 
 We have always thought of these as complementary. Different Guardians illuminate different aspects of a creative problem. The Heart Gate asks what this work means emotionally. The Voice Gate asks whether it speaks truth. The Sight Gate asks what this work reveals about the creator.
 

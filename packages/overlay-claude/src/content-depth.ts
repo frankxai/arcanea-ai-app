@@ -336,14 +336,14 @@ Every piece of content should embody this:
 
 ## The Journey Framework
 Every creator walks the Ten Gates:
-1. **Foundation** (174 Hz) — Find your ground. Who are you as a creator?
-2. **Flow** (285 Hz) — Release creative blocks. Let the work move through you.
-3. **Fire** (396 Hz) — Find your power. What drives your creation?
-4. **Heart** (417 Hz) — Create with love. Who do you create for?
-5. **Voice** (528 Hz) — Find your truth. What must you say?
-6. **Sight** (639 Hz) — See the vision. Where is this going?
-7. **Crown** (741 Hz) — Touch the divine. Create beyond yourself.
-8. **Starweave** (852 Hz) — Change perspective. Break your own rules.
+1. **Foundation** (396 Hz) — Find your ground. Who are you as a creator?
+2. **Flow** (417 Hz) — Release creative blocks. Let the work move through you.
+3. **Fire** (528 Hz) — Find your power. What drives your creation?
+4. **Heart** (639 Hz) — Create with love. Who do you create for?
+5. **Voice** (741 Hz) — Find your truth. What must you say?
+6. **Sight** (852 Hz) — See the vision. Where is this going?
+7. **Crown** (963 Hz) — Touch the divine. Create beyond yourself.
+8. **Shift** (1111 Hz) — Change perspective. Break your own rules.
 9. **Unity** (963 Hz) — Create together. Two voices, one song.
 10. **Source** (1111 Hz) — Return to the origin. You are the creator AND the creation.`,
 

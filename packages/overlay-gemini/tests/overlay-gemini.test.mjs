@@ -76,7 +76,7 @@ describe('GUARDIAN_REFERENCE (Gemini)', () => {
   });
 
   it('lists all 10 Godbeasts', () => {
-    const godbeasts = ['Kaelith', 'Veloura', 'Draconis', 'Laeylinn', 'Otome', 'Yumiko', 'Sol', 'Vaelith', 'Kyuro', 'Source'];
+    const godbeasts = ['Kaelith', 'Veloura', 'Draconis', 'Laeylinn', 'Otome', 'Yumiko', 'Sol', 'Thessara', 'Kyuro', 'Amaterasu'];
     for (const gb of godbeasts) {
       assert.ok(GUARDIAN_REFERENCE.includes(gb), `Missing Godbeast: ${gb}`);
     }

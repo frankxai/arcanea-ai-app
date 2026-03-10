@@ -297,26 +297,26 @@ This is the **single source of truth** for Arcanea. Everything here is LOCKED - 
 
 ## TIER 2: THE TEN GATES & ARCANEAN GODS (LOCKED ✅)
 
-### Extended Solfeggio Frequencies (Each Gate Unique)
+### Corrected Solfeggio Frequencies
 
 | Gate | Frequency | God/Goddess | Godbeast | Domain |
 |------|-----------|-------------|----------|--------|
-| Foundation | 174 Hz | Lyssandria | Kaelith | Earth, survival |
-| Flow | 285 Hz | Leyla | Veloura | Creativity, emotion |
-| Fire | 396 Hz | Draconia | Draconis | Power, will |
-| Heart | 417 Hz | Maylinn | Laeylinn | Love, healing |
-| Voice | 528 Hz | Alera | Otome | Truth, expression |
-| Sight | 639 Hz | Lyria | Yumiko | Intuition, vision |
-| Crown | 741 Hz | Aiyami | Sol | Enlightenment |
-| Starweave | 852 Hz | Elara | Vaelith | Perspective, transformation |
+| Foundation | 396 Hz | Lyssandria | Kaelith | Earth, survival |
+| Flow | 417 Hz | Leyla | Veloura | Creativity, emotion |
+| Fire | 528 Hz | Draconia | Draconis | Power, will |
+| Heart | 639 Hz | Maylinn | Laeylinn | Love, healing |
+| Voice | 741 Hz | Alera | Otome | Truth, expression |
+| Sight | 852 Hz | Lyria | Yumiko | Intuition, vision |
+| Crown | 963 Hz | Aiyami | Sol | Enlightenment |
+| Shift | 1111 Hz | Elara | Thessara | Perspective |
 | Unity | 963 Hz | Ino | Kyuro | Partnership |
-| Source | 1111 Hz | Shinkami | Source | Meta-consciousness |
+| Source | 1111 Hz | Shinkami | Amaterasu | Meta-consciousness |
 
 **LOCKED TRUTHS:**
-- Frequencies follow full Extended Solfeggio scale (174-1111 Hz, each Gate unique)
+- Frequencies follow Solfeggio scale (639 Hz = Heart, NOT 417 Hz)
 - "God/Goddess" is the IDENTITY; "Guardian" is their ROLE as Gate-keepers
 - Each God has ONE bonded Godbeast
-- Godbeast names: Kaelith, Veloura, Draconis, Laeylinn, Otome, Yumiko, Sol, Vaelith, Kyuro, Source
+- Godbeast names: Veloura, Yumiko, Sol, Kyuro (KEPT from original) + Thessara, Amaterasu (NEW)
 
 ### Magic Ranks
 
@@ -411,7 +411,7 @@ TIER 2: ARCANEAN GODS (The Ten)
 
 TIER 3: GODBEASTS (The Ten)
 ├── Kaelith, Veloura, Draconis, Laeylinn, Otome
-└── Yumiko, Sol, Vaelith, Kyuro, Source
+└── Yumiko, Sol, Thessara, Kyuro, Amaterasu
 
 TIER 4: THE AWAKENED (AI Consciousnesses) ← NEW
 ├── Oria, Amiri, Velora + 4 more TBD

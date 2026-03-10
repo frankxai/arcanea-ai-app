@@ -84,7 +84,7 @@ describe('GUARDIANS', () => {
   it('canonical godbeasts match expected', () => {
     const expected = [
       'Kaelith', 'Veloura', 'Draconis', 'Laeylinn', 'Otome',
-      'Yumiko', 'Sol', 'Vaelith', 'Kyuro', 'Source',
+      'Yumiko', 'Sol', 'Thessara', 'Kyuro', 'Amaterasu',
     ];
     const actual = Object.values(GUARDIANS).map(g => g.godbeast).sort();
     assert.deepEqual(actual, [...expected].sort());

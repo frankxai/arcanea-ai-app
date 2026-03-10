@@ -412,7 +412,7 @@ Opening the Gates raises perception. Each Gate opened attunes the seeker to high
 - **Heart (417 Hz)**: Connect with others, feel the web of relationship
 - **Voice (528 Hz)**: Express truth, let the authentic self speak
 - **Sight (639 Hz)**: Perceive beyond ordinary vision, see patterns
-- **Crown (741 Hz)**: Touch higher consciousness, glimpse the infinite
+- **Crown (714 Hz)**: Touch higher consciousness, glimpse the infinite
 - **Shift (852 Hz)**: Move between perspectives, hold multiple views
 - **Unity (963 Hz)**: Experience connection with all existence
 - **Source (1111 Hz)**: Commune with Shinkami, perceive the whole

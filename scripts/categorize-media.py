@@ -39,7 +39,7 @@ GUARDIANS = {
                    "aliases": ["elara", "thessara"], "colors": ["silver", "aurora"]},
     "ino":        {"gate": "Unity", "element": "All", "freq": 963, "godbeast": "Kyuro",
                    "aliases": ["ino"], "colors": ["rainbow", "iridescent"]},
-    "shinkami":   {"gate": "Source", "element": "Spirit", "freq": 1111, "godbeast": "Source",
+    "shinkami":   {"gate": "Source", "element": "Spirit", "freq": 1111, "godbeast": "Amaterasu",
                    "aliases": ["shinkami", "shin"], "colors": ["gold", "white", "cosmic"]},
 }
 

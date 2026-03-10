@@ -338,7 +338,7 @@ sections:
 # Draconia, Goddess of the Fire Gate
 **The Flame Keeper, She Who Transforms, Dragon Mother, Wielder of Sacred Fire**
 
-**Element**: Fire | **Frequency**: 396 Hz | **Gate**: Fire | **Wisdom**: Transformation
+**Element**: Fire | **Frequency**: 396 Hz | **Chakra**: Solar Plexus | **Wisdom**: Transformation
 **Symbol**: A dragon coiled around the sun, crowned with flames
 **Bonded Godbeast**: Draconis, the Primordial Dragon
 
