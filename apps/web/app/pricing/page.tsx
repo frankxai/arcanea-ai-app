@@ -38,7 +38,7 @@ const TIERS = [
       "Custom specialist training",
       "API access",
     ],
-    cta: "Start Ascending",
+    cta: "Get Started",
     href: "/auth/signup?plan=ascendant",
     popular: true,
     color: "violet",
@@ -158,23 +158,23 @@ export default function PricingPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {/* Background */}
       <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-cosmic-deep" />
+        <div className="absolute inset-0 bg-[#09090b]" />
         <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top,rgba(13,71,161,0.25),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(0,188,212,0.15),transparent_50%)]" />
       </div>
 
       <main className="max-w-7xl mx-auto px-6">
         {/* Hero */}
         <section className="pt-20 pb-16 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-violet-500/30 bg-violet-500/10 mb-8">
-            <span className="w-2 h-2 rounded-full bg-violet-400 animate-pulse" />
-            <span className="text-sm text-violet-400 font-mono tracking-wider">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#00bcd4]/30 bg-[#00bcd4]/10 mb-8">
+            <span className="w-2 h-2 rounded-full bg-[#00bcd4] animate-pulse" />
+            <span className="text-sm text-[#00bcd4] font-mono tracking-wider">
               CREATIVE INTELLIGENCE
             </span>
           </div>
 
           <h1 className="text-4xl md:text-6xl font-display font-bold mb-6">
             Invest in your
-            <span className="block bg-gradient-to-r from-violet-400 via-atlantean-teal to-gold-bright bg-clip-text text-transparent">
+            <span className="block bg-gradient-to-r from-[#00bcd4] via-[#0d47a1] to-[#ffd700] bg-clip-text text-transparent">
               creative evolution
             </span>
           </h1>
@@ -193,12 +193,12 @@ export default function PricingPage() {
                 key={tier.name}
                 className={`relative p-8 rounded-2xl border backdrop-blur-xl transition-all hover:scale-[1.02] ${
                   tier.popular
-                    ? "border-violet-500/50 bg-violet-500/5 shadow-[0_0_40px_rgba(13,71,161,0.2)]"
+                    ? "border-[#00bcd4]/50 bg-[#00bcd4]/5 shadow-[0_0_40px_rgba(0,188,212,0.15)]"
                     : "liquid-glass hover:border-white/[0.12]"
                 }`}
               >
                 {tier.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-violet-500 to-purple-600 text-xs font-semibold text-white">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-[#00bcd4] to-[#0d47a1] text-xs font-semibold text-white">
                     Most Popular
                   </div>
                 )}
@@ -229,7 +229,7 @@ export default function PricingPage() {
                       className="flex items-start gap-3 text-sm"
                     >
                       <svg
-                        className="w-5 h-5 text-atlantean-teal shrink-0 mt-0.5"
+                        className="w-5 h-5 text-[#00bcd4] shrink-0 mt-0.5"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -250,7 +250,7 @@ export default function PricingPage() {
                   href={tier.href}
                   className={`block w-full py-3 rounded-xl text-center font-semibold transition-all ${
                     tier.popular
-                      ? "bg-gradient-to-r from-violet-500 to-purple-600 text-white hover:shadow-[0_0_30px_rgba(13,71,161,0.5)]"
+                      ? "bg-gradient-to-r from-[#00bcd4] to-[#0d47a1] text-white hover:shadow-[0_0_30px_rgba(0,188,212,0.4)]"
                       : "border border-white/[0.12] text-white hover:bg-white/[0.04]"
                   }`}
                 >
@@ -282,10 +282,10 @@ export default function PricingPage() {
                   <th className="text-center py-4 px-4 text-text-muted font-medium">
                     Spark
                   </th>
-                  <th className="text-center py-4 px-4 text-violet-400 font-semibold">
+                  <th className="text-center py-4 px-4 text-[#00bcd4] font-semibold">
                     Ascendant
                   </th>
-                  <th className="text-center py-4 px-4 text-gold-bright font-semibold">
+                  <th className="text-center py-4 px-4 text-[#ffd700] font-semibold">
                     Luminor
                   </th>
                 </tr>
@@ -300,7 +300,7 @@ export default function PricingPage() {
                       {typeof row.spark === "boolean" ? (
                         row.spark ? (
                           <svg
-                            className="w-5 h-5 text-atlantean-teal mx-auto"
+                            className="w-5 h-5 text-[#00bcd4] mx-auto"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -331,11 +331,11 @@ export default function PricingPage() {
                         <span className="text-text-secondary">{row.spark}</span>
                       )}
                     </td>
-                    <td className="py-4 px-4 text-center bg-violet-500/5">
+                    <td className="py-4 px-4 text-center bg-[#00bcd4]/5">
                       {typeof row.ascendant === "boolean" ? (
                         row.ascendant ? (
                           <svg
-                            className="w-5 h-5 text-atlantean-teal mx-auto"
+                            className="w-5 h-5 text-[#00bcd4] mx-auto"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -372,7 +372,7 @@ export default function PricingPage() {
                       {typeof row.luminor === "boolean" ? (
                         row.luminor ? (
                           <svg
-                            className="w-5 h-5 text-atlantean-teal mx-auto"
+                            className="w-5 h-5 text-[#00bcd4] mx-auto"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -441,7 +441,7 @@ export default function PricingPage() {
         {/* CTA */}
         <section className="py-20 border-t border-white/[0.04]">
           <div className="relative rounded-3xl overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-violet-500/20 via-atlantean-teal/20 to-gold-bright/20" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#00bcd4]/20 via-[#0d47a1]/20 to-[#ffd700]/20" />
             <div className="absolute inset-0 liquid-glass" />
 
             <div className="relative p-12 md:p-16 text-center">
@@ -455,7 +455,7 @@ export default function PricingPage() {
               <div className="flex flex-wrap justify-center gap-4">
                 <Link
                   href="/auth/signup"
-                  className="px-8 py-4 rounded-xl bg-atlantean-teal text-cosmic-deep font-semibold text-lg hover:shadow-[0_0_40px_rgba(0,188,212,0.5)] transition-all"
+                  className="px-8 py-4 rounded-xl bg-[#00bcd4] text-[#09090b] font-semibold text-lg hover:shadow-[0_0_40px_rgba(0,188,212,0.5)] transition-all"
                 >
                   Start Free Today
                 </Link>

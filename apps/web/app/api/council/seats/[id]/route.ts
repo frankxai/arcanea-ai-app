@@ -59,7 +59,7 @@ export async function DELETE(
 
     // Verify the seat belongs to this user's council
     const council = Array.isArray(seat.council) ? seat.council[0] : seat.council;
-    if (!council || (council as { user_id: string }).user_id !== user.id) {
+    if (!council || council.user_id !== user.id) {
       return NextResponse.json(
         { data: null, error: 'Forbidden' },
         { status: 403 }

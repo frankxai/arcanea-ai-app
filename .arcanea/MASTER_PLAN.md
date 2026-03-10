@@ -1,7 +1,7 @@
 # Arcanea Master Plan — Central Orchestrator
 
-> **Last Updated**: 2026-03-01
-> **Version**: 1.1.0
+> **Last Updated**: 2026-03-07
+> **Version**: 1.5.0
 > **Guardian**: Shinkami (Source Gate, 1111 Hz)
 > **Status**: Active
 
@@ -16,9 +16,9 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
 | Total Pages | ~185 (routes, 16 redirect-only pruned) | 80 (prune stubs) |
 | Pages with Metadata | ~77 (+12) | 100% |
 | Pages with loading.tsx | ~81 (+32) | 100% of dynamic pages |
-| Milestones Active | 10 (M001-M010) | M010 (Language) → M001 (Auth) → M008 → M005 |
+| Milestones Active | 10 (M001-M010) | M010 (100%) → M001 (Auth) → M009 (Polish) → M005 |
 | Vercel Build | PASSING | Maintain green |
-| Last Deploy | 2026-03-02 | cba5c4f2 |
+| Last Deploy | 2026-03-10 | dpl_8EuASqZbA7fwriGwk5egLqGZB1FY |
 | Live URL | arcanea.ai | arcanea.ai |
 
 ---
@@ -110,7 +110,7 @@ Source: `.arcanea/projects/milestones/`
 - **Depends on**: M005, M008
 - **Files**: `m009-performance-polish.arc`
 
-### M010: Language & Experience Transformation (90%) — P0
+### M010: Language & Experience Transformation (100%) — COMPLETE
 - **Guardian**: Alera (Voice Gate)
 - **Target**: 2026-03-08
 - **Strategy**: `.arcanea/strategy/LANGUAGE_EXPERIENCE_STRATEGY.md`
@@ -129,6 +129,12 @@ Source: `.arcanea/projects/milestones/`
   - [x] Phase 7: Glossary checked — deep reference page, mythology appropriate, no changes needed
   - [x] Update voice.yaml with new anti-slop principles (7465f9f7)
   - [x] Update ARCANEA_BRAND_GUIDELINES.md — voice, anti-slop filter, progressive disclosure
+  - [x] Phase 8: Deep M010 sweep (2026-03-07) — navbar simplified (5 clean labels), footer restructured (4 columns, no lore dump), root metadata cleaned, below-fold: PATHWAYS/FEATURES/FAQ cleaned (Luminor→specialist), HowItWorks/CTA cleaned, chat page "Choose a specialist", FAQ 16→10 count fixed, contact/changelog/hub/updates all cleaned, zero AI slop remaining (grep verified), 14 legacy color files purged
+  - [x] Phase 9: Design System v5 color purge (2026-03-07) — 251 legacy color occurrences (#8b5cf6→#0d47a1, rgba(139,92,246)→rgba(13,71,161)) replaced across 46 active files: studio (7), chat (10), gallery (5), imagine (1), arcanea/onboarding (9), academy (3), landing (4), ecosystem (1), community (1), hub (3), glow-card, global-glow-tracker, luminors/config. Active render path fully clean. Only archived (v1/v2/v3-variations) and deep-lore pages retain old colors intentionally.
+  - [x] Phase 9b: Studio Luminor→AI rename (2026-03-07) — all user-facing "Luminor" labels in Studio AI panel → "AI", variable names cleaned (luminorMessages→aiMessages, luminorInput→aiInput, onAskLuminor→onAskAI)
+  - [x] Phase 9c: Anti-slop pass 2 (2026-03-07) — "Your Journey Awaits"→"Start Here", "seamlessly switch"→"switch", "seamlessly connects"→"connects" on academy and arcanea-os pages
+  - [x] Phase 9d: Missing loading.tsx — added v4/loading.tsx (last missing top-level page)
+  - [x] Phase 10: Deep color + Luminor + slop sweep (2026-03-07) — #78a6ff→#00bcd4 across library-experience (15+), gallery, chat-imagine (3), particles, character-book, ecosystem, docs, community, components, command-center, prompt-books, records, academy gates. #8B5CF6→#0d47a1 on hub pages. Hub "Luminor Chat"→"AI Chat", "Luminor Guide"→"AI Specialist Guide", guides "Working with Luminors"→"Working with AI Specialists". Onboarding meet-luminor metadata cleaned. Dashboard metadata cleaned. FAQ/platform/acos slop phrases removed.
   - [ ] Phase 6 remaining: Layer 1 (color shifts per Guardian domain), Layer 2 (progressive vocabulary — needs auth), Layer 4/5 (unlockable experiences — needs auth)
 
 ---
@@ -617,6 +623,23 @@ When an agent starts work, consult this table for the right specialist:
 ---
 
 ## Changelog
+
+### v1.3.0 (2026-03-07) — Deep M010 Quality Sprint
+- M010 Language Transformation: 90% → 98% — comprehensive anti-slop sweep
+- Navbar: 5 labels simplified from lore-heavy to clean (Explore, Create, Chat, Library, Academy)
+- Footer: 4 columns restructured, removed duplicate links, "Kingdom of Light" → "Creative Intelligence"
+- Root layout: metadata cleaned (no Guardians/Luminors on first-contact SEO)
+- Homepage below-fold: PATHWAYS/FEATURES/FAQ all cleaned, "10 Luminor Guides" → "10 AI Specialists"
+- HowItWorks + CTA: "Canon-backed" → professional copy, Benefits list rewritten
+- Chat page: "Choose an Luminor" → "Choose a specialist" (grammar + M010)
+- FAQ page: fixed 16→10 count inconsistency, 4 Luminor→specialist replacements
+- Contact/Changelog/Hub: all first-contact Luminor references cleaned
+- Hero chat box: "Continue in studio" → "Continue in chat" with prompt passthrough
+- Pricing: "Start Ascending" → "Get Started"
+- Install: "Create Something Amazing" → "Start Creating"
+- 2 new loading.tsx files (design-lab, imagine)
+- 14 legacy color files flagged for purge (#7fffd4, #8b5cf6)
+- Zero AI slop remaining (grep-verified across entire app directory)
 
 ### v1.2.0 (2026-03-01) — v0 Premium UI + Milestones Sprint
 - 5 new milestones created: M005 (Premium UI v0), M006 (Creator Backend), M007 (Community), M008 (Onboarding), M009 (Performance)

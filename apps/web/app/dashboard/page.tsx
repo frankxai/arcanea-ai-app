@@ -26,13 +26,13 @@ import {
 // ─── Activity Icon Map ──────────────────────────────────────────────────────
 
 const ACTIVITY_ICON_MAP: Record<string, { icon: typeof PencilSimple; color: string }> = {
-  create: { icon: PencilSimple, color: 'text-violet-400' },
+  create: { icon: PencilSimple, color: 'text-[#00bcd4]' },
   read: { icon: Book, color: 'text-amber-400' },
   like: { icon: Star, color: 'text-[#ffd700]' },
   follow: { icon: Lightning, color: 'text-[#00bcd4]' },
   gate_open: { icon: Lightning, color: 'text-[#00bcd4]' },
   rank_up: { icon: Star, color: 'text-[#ffd700]' },
-  login: { icon: Sparkle, color: 'text-violet-400' },
+  login: { icon: Sparkle, color: 'text-[#00bcd4]' },
 }
 
 const DEFAULT_ICON = { icon: Sparkle, color: 'text-white/50' }
@@ -62,8 +62,8 @@ function SignInPrompt() {
   return (
     <div className="min-h-[70vh] flex items-center justify-center px-4">
       <div className="max-w-md w-full text-center space-y-6">
-        <div className="mx-auto w-16 h-16 rounded-2xl bg-violet-500/10 flex items-center justify-center">
-          <Lock size={32} weight="duotone" className="text-violet-400" />
+        <div className="mx-auto w-16 h-16 rounded-2xl bg-[#00bcd4]/10 flex items-center justify-center">
+          <Lock size={32} weight="duotone" className="text-[#00bcd4]" />
         </div>
         <h1 className="font-display text-3xl text-white">
           Sign in to continue
@@ -74,7 +74,7 @@ function SignInPrompt() {
         </p>
         <Link
           href="/auth/login"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-violet-600 to-violet-500 text-white font-sans font-medium transition-all hover:shadow-lg hover:shadow-violet-500/25 hover:-translate-y-0.5"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#00bcd4] to-[#0d47a1] text-white font-sans font-medium transition-all hover:shadow-lg hover:shadow-[#00bcd4]/25 hover:-translate-y-0.5"
         >
           Sign In
           <ArrowRight size={18} weight="bold" />
@@ -156,7 +156,7 @@ export default function DashboardPage() {
   if (authLoading) {
     return (
       <div className="min-h-[70vh] flex items-center justify-center">
-        <Spinner size={32} className="text-violet-400 animate-spin" />
+        <Spinner size={32} className="text-[#00bcd4] animate-spin" />
       </div>
     );
   }
@@ -170,7 +170,7 @@ export default function DashboardPage() {
   const libraryCount = 34; // Fixed: Library has 34 texts
 
   const statCards = [
-    { label: 'Creations', value: `${creationsCount} work${creationsCount !== 1 ? 's' : ''}`, icon: Palette, color: 'text-violet-400', bg: 'bg-violet-500/10' },
+    { label: 'Creations', value: `${creationsCount} work${creationsCount !== 1 ? 's' : ''}`, icon: Palette, color: 'text-[#00bcd4]', bg: 'bg-[#00bcd4]/10' },
     { label: 'Progress', value: `${gatesOpen} of 10`, icon: Lightning, color: 'text-[#00bcd4]', bg: 'bg-emerald-500/10' },
     { label: 'Library', value: `${libraryCount} texts`, icon: Book, color: 'text-amber-400', bg: 'bg-amber-500/10' },
     { label: 'Streak', value: `${streakDays} day${streakDays !== 1 ? 's' : ''}`, icon: Flame, color: 'text-orange-400', bg: 'bg-orange-500/10' },
@@ -224,7 +224,7 @@ export default function DashboardPage() {
             <div className="flex flex-col sm:flex-row gap-3">
               <Link
                 href="/studio"
-                className="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-violet-600 to-violet-500 text-white font-sans font-medium transition-all hover:shadow-lg hover:shadow-violet-500/25 hover:-translate-y-0.5"
+                className="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#00bcd4] to-[#0d47a1] text-white font-sans font-medium transition-all hover:shadow-lg hover:shadow-[#00bcd4]/25 hover:-translate-y-0.5"
               >
                 <Sparkle size={18} weight="fill" />
                 Create Something New
@@ -285,7 +285,7 @@ export default function DashboardPage() {
                   <p className="font-sans text-sm text-white/30">No activity yet. Start creating to see your journey unfold.</p>
                   <Link
                     href="/studio"
-                    className="inline-flex items-center gap-1 mt-3 text-sm text-violet-400 hover:text-violet-300 transition-colors font-sans"
+                    className="inline-flex items-center gap-1 mt-3 text-sm text-[#00bcd4] hover:text-[#00bcd4] transition-colors font-sans"
                   >
                     Create your first work <ArrowRight size={14} />
                   </Link>
@@ -301,7 +301,7 @@ export default function DashboardPage() {
           {/* ── Guardian Companion Card ────────────────────────────── */}
           <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md p-6 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-500/20 to-[#00bcd4]/20 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#00bcd4]/20 to-[#00bcd4]/20 flex items-center justify-center">
                 <Shield size={24} weight="duotone" className="text-[#00bcd4]" />
               </div>
               <div>
@@ -314,7 +314,7 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            <div className="w-full aspect-square rounded-xl bg-gradient-to-br from-violet-500/5 via-transparent to-[#00bcd4]/5 border border-white/[0.04] flex items-center justify-center">
+            <div className="w-full aspect-square rounded-xl bg-gradient-to-br from-[#00bcd4]/5 via-transparent to-[#00bcd4]/5 border border-white/[0.04] flex items-center justify-center">
               <Sparkle size={40} weight="duotone" className="text-white/10" />
             </div>
 
