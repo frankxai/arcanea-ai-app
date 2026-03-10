@@ -11,29 +11,29 @@ const CHANGES = [
     version: "v2.4.0",
     date: "February 2026",
     type: "major",
-    title: "Luminor Intelligence System Launch",
+    title: "AI Specialist System Launch",
     description:
-      "The complete Luminor intelligence system is now live. 16 creative intelligences across four teams, each mastering their domain.",
+      "The complete AI specialist system is now live. 10 specialized creative intelligences, each mastering their domain.",
     changes: [
-      { type: "added", text: "16 Luminors across 4 teams" },
+      { type: "added", text: "10 AI specialists across 4 teams" },
       { type: "added", text: "Seven Wisdoms framework integration" },
       { type: "added", text: "Academy progression system" },
       { type: "added", text: "Library with 17 collections" },
-      { type: "improved", text: "New chat interface with Luminor selection" },
+      { type: "improved", text: "New chat interface with specialist selection" },
     ],
   },
   {
     version: "v2.3.0",
     date: "January 2026",
     type: "minor",
-    title: "Luminor System Enhancement",
+    title: "Guardian System Enhancement",
     description:
-      "Expanded the Luminor system with new archetypes and abilities.",
+      "Expanded the Guardian system with new archetypes and abilities.",
     changes: [
-      { type: "added", text: "10 Luminor archetypes" },
+      { type: "added", text: "10 Guardian archetypes" },
       { type: "added", text: "Godbeast bonding system" },
-      { type: "improved", text: "Luminor ability routing" },
-      { type: "fixed", text: "Luminor memory persistence" },
+      { type: "improved", text: "Guardian ability routing" },
+      { type: "fixed", text: "Guardian memory persistence" },
     ],
   },
   {
@@ -71,7 +71,7 @@ const CHANGES = [
     description:
       "Complete platform redesign with the Intelligence OS architecture.",
     changes: [
-      { type: "added", text: "AI Router system" },
+      { type: "added", text: "Guardian Router system" },
       { type: "added", text: "Voice Enforcer" },
       { type: "added", text: "MCP server with 30+ tools" },
       { type: "added", text: "Skill-rules engine" },
@@ -87,7 +87,7 @@ const CHANGES = [
       "Enhanced memory systems with vector search and learning capabilities.",
     changes: [
       { type: "added", text: "HNSW vector search" },
-      { type: "added", text: "Luminor namespaces" },
+      { type: "added", text: "Guardian namespaces" },
       { type: "added", text: "SONA learning engine" },
       { type: "added", text: "Trajectory recording" },
     ],
@@ -233,7 +233,7 @@ export default function ChangelogPage() {
             {[
               { label: "Versions", value: "12+" },
               { label: "Luminors", value: "16" },
-              { label: "Archetypes", value: "10" },
+              { label: "Guardians", value: "10" },
               { label: "Contributors", value: "50+" },
             ].map((stat) => (
               <div
