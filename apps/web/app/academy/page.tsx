@@ -14,7 +14,7 @@ import {
 
 const GATES = [
   { n: 1, name: 'Foundation', hz: '174 Hz', god: 'Lyssandria', beast: 'Kaelith', domain: 'Earth & Survival', color: '#00bcd4', icon: Leaf },
-  { n: 2, name: 'Flow', hz: '285 Hz', god: 'Leyla', beast: 'Veloura', domain: 'Creativity & Emotion', color: '#00bcd4', icon: Drop },
+  { n: 2, name: 'Flow', hz: '285 Hz', god: 'Leyla', beast: 'Veloura', domain: 'Creativity & Emotion', color: '#78a6ff', icon: Drop },
   { n: 3, name: 'Fire', hz: '396 Hz', god: 'Draconia', beast: 'Draconis', domain: 'Power & Will', color: '#ff6b35', icon: Flame },
   { n: 4, name: 'Heart', hz: '417 Hz', god: 'Maylinn', beast: 'Laeylinn', domain: 'Love & Healing', color: '#f472b6', icon: Heart },
   { n: 5, name: 'Voice', hz: '528 Hz', god: 'Alera', beast: 'Otome', domain: 'Truth & Expression', color: '#06b6d4', icon: Compass },
@@ -32,7 +32,7 @@ const HOUSES = [
   { name: 'Aqualis', element: 'Water', color: '#60a5fa', icon: Drop, desc: 'Flow, healing, and the wisdom of memory.' },
   { name: 'Terra', element: 'Earth', color: '#34d399', icon: Leaf, desc: 'Stability, growth, and enduring strength.' },
   { name: 'Ventus', element: 'Wind', color: '#c4b5fd', icon: Wind, desc: 'Freedom, speed, and the breath of change.' },
-  { name: 'Synthesis', element: 'All', color: '#00bcd4', icon: Sparkle, desc: 'Unity of all elements into mastery.' },
+  { name: 'Synthesis', element: 'All', color: '#00bcd4', icon: Sparkle, desc: 'Unity of all elements into transcendence.' },
 ];
 
 const RANKS = [
@@ -136,12 +136,11 @@ export default function AcademyPage() {
               const Icon = gate.icon;
               const isHovered = hoveredGate === gate.n;
               return (
-                <Link
+                <div
                   key={gate.n}
-                  href={`/academy/gates/${gate.name.toLowerCase()}`}
                   onMouseEnter={() => setHoveredGate(gate.n)}
                   onMouseLeave={() => setHoveredGate(null)}
-                  className="group relative rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5 backdrop-blur-md transition-all duration-500 hover:border-white/[0.15] hover:bg-white/[0.05]"
+                  className="group relative cursor-pointer rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5 backdrop-blur-md transition-all duration-500 hover:border-white/[0.15] hover:bg-white/[0.05]"
                   style={{
                     boxShadow: isHovered ? `0 0 40px ${gate.color}20, inset 0 1px 0 ${gate.color}15` : 'none',
                   }}
@@ -187,7 +186,7 @@ export default function AcademyPage() {
                   <div className="border-t border-white/[0.05] pt-3">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-[10px] text-white/30">Intelligence</p>
+                        <p className="text-[10px] text-white/30">Guardian</p>
                         <p className="text-xs font-medium text-white/70">{gate.god}</p>
                       </div>
                       <div className="text-right">
@@ -196,7 +195,7 @@ export default function AcademyPage() {
                       </div>
                     </div>
                   </div>
-                </Link>
+                </div>
               );
             })}
           </div>
@@ -212,7 +211,7 @@ export default function AcademyPage() {
         <div className="mx-auto max-w-6xl">
           <div className="mb-12 text-center">
             <h2 className="font-display text-3xl font-bold md:text-4xl">
-              <span className="bg-gradient-to-r from-[#00bcd4] to-[#0d47a1] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#00bcd4] to-[#78a6ff] bg-clip-text text-transparent">
                 The Seven Houses
               </span>
             </h2>
@@ -344,13 +343,13 @@ export default function AcademyPage() {
 
           <h2 className="font-display text-4xl font-bold md:text-5xl">
             <span className="bg-gradient-to-r from-[#ffd700] via-[#00bcd4] to-[#0d47a1] bg-clip-text text-transparent">
-              Start Here
+              Your Journey Awaits
             </span>
           </h2>
 
           <p className="mx-auto mt-5 max-w-lg font-body text-lg leading-relaxed text-white/50">
-            The Academy is open. Begin with a single question
-            and build from there.
+            The Academy gates stand open. Step through and discover
+            the creator you were always meant to become.
           </p>
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">

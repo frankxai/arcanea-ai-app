@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { m, useInView, LazyMotion, domAnimation } from "framer-motion";
 import Link from "next/link";
 
 const FEATURES = [
@@ -51,8 +51,8 @@ const FEATURES = [
       "Seven Houses. Ten Gates of mastery. Each Gate unlocks a new creative frequency \u2014 from Foundation to Source.",
     symbol: "\u29BF",
     href: "/academy",
-    gradient: "from-[#a855f7]/15 to-[#8b5cf6]/15",
-    borderGradient: "from-[#a855f7] to-[#8b5cf6]",
+    gradient: "from-[#a855f7]/15 to-[#0d47a1]/15",
+    borderGradient: "from-[#a855f7] to-[#0d47a1]",
     stats: "Ten Gates",
   },
   {
@@ -77,7 +77,7 @@ const FeatureCard = React.memo(function FeatureCard({
   isInView: boolean;
 }) {
   return (
-    <motion.div
+    <m.div
       key={feature.title}
       initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -93,13 +93,13 @@ const FeatureCard = React.memo(function FeatureCard({
           />
           <div className="relative z-10">
             <div className="flex items-start justify-between mb-6">
-              <motion.div
+              <m.div
                 className="text-4xl font-light text-white/80 select-none"
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 transition={{ type: "spring", stiffness: 400 }}
               >
                 {feature.symbol}
-              </motion.div>
+              </m.div>
               <div className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] text-xs text-text-muted">
                 {feature.stats}
               </div>
@@ -112,7 +112,7 @@ const FeatureCard = React.memo(function FeatureCard({
             </p>
             <div className="flex items-center gap-2 text-[#00bcd4] text-sm font-medium opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
               <span>Explore</span>
-              <motion.svg
+              <m.svg
                 className="w-4 h-4"
                 fill="none"
                 stroke="currentColor"
@@ -126,7 +126,7 @@ const FeatureCard = React.memo(function FeatureCard({
                   strokeWidth={2}
                   d="M17 8l4 4m0 0l-4 4m4-4H3"
                 />
-              </motion.svg>
+              </m.svg>
             </div>
           </div>
           <div className="absolute bottom-0 right-0 w-32 h-32 opacity-5 group-hover:opacity-10 transition-opacity">
@@ -136,7 +136,7 @@ const FeatureCard = React.memo(function FeatureCard({
           </div>
         </div>
       </Link>
-    </motion.div>
+    </m.div>
   );
 });
 
@@ -145,6 +145,7 @@ export function FeaturesSection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
+    <LazyMotion features={domAnimation}>
     <section ref={ref} className="py-24 relative">
       {/* Background effect */}
       <div className="absolute inset-0 -z-10">
@@ -154,7 +155,7 @@ export function FeaturesSection() {
       <div className="max-w-7xl mx-auto px-6">
         {/* Section header */}
         <div className="text-center mb-16">
-          <motion.h2
+          <m.h2
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
@@ -164,8 +165,8 @@ export function FeaturesSection() {
             <span className="bg-gradient-to-r from-[#00bcd4] to-[#0d47a1] bg-clip-text text-transparent">
               creative intelligence
             </span>
-          </motion.h2>
-          <motion.p
+          </m.h2>
+          <m.p
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
@@ -173,7 +174,7 @@ export function FeaturesSection() {
           >
             From the wisdom of the Gods to the tools of the Luminors —
             everything a creator needs, in one universe.
-          </motion.p>
+          </m.p>
         </div>
 
         {/* Features grid */}
@@ -189,5 +190,6 @@ export function FeaturesSection() {
         </div>
       </div>
     </section>
+    </LazyMotion>
   );
 }
