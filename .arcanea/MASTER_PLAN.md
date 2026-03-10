@@ -16,9 +16,9 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
 | Total Pages | ~185 (routes, 16 redirect-only pruned) | 80 (prune stubs) |
 | Pages with Metadata | ~77 (+12) | 100% |
 | Pages with loading.tsx | ~81 (+32) | 100% of dynamic pages |
-| Milestones Active | 11 (M001-M010 + M006) | M001 (Auth) → M008 (Onboarding) → M006 (Creator Tools) → M009 (Polish) |
+| Milestones Active | 10 (M001-M010) | M010 (100%) → M001 (Auth) → M009 (Polish) → M005 |
 | Vercel Build | PASSING | Maintain green |
-| Last Deploy | 2026-03-10 | dpl_EaZdiYpPAmsH4Ft24uCdPesU16NY (a560a8ff) -- GREEN |
+| Last Deploy | 2026-03-10 | dpl_8EuASqZbA7fwriGwk5egLqGZB1FY |
 | Live URL | arcanea.ai | arcanea.ai |
 
 ---
@@ -27,16 +27,16 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
 
 Source: `.arcanea/projects/milestones/`
 
-### M001: Supabase Auth & Storage (78%) — P0
+### M001: Supabase Auth & Storage (71%) — P0
 - **Guardian**: Lyssandria (Foundation Gate)
 - **GitHub**: [#1](https://github.com/frankxai/arcanea-ai-app/issues/1), [#4](https://github.com/frankxai/arcanea-ai-app/issues/4), [#6](https://github.com/frankxai/arcanea-ai-app/issues/6)
-- **Tasks**: 13/17 done, 3 pending, 0 blocked
+- **Tasks**: 12/17 done, 4 pending, 1 blocked
 - **Remaining**:
-  - [x] ~~Set 3 env vars on Vercel project `arcanea-ai-appx`~~ — DONE (confirmed set on Vercel, 2026-03-10)
+  - [ ] Set 3 env vars on Vercel project `arcanea-ai-appx` (#4)
   - [ ] Sync repos — arcanea-records → arcanea-ai-app (#6)
   - [ ] Configure Supabase Dashboard: Site URL → `https://arcanea.ai`, OAuth providers
   - [x] ~~Migrate legacy API routes~~ — DONE (lib/supabase.ts deleted, 0 imports remain)
-  - [ ] E2E auth test
+  - [ ] E2E auth test (blocked on env vars)
 - **Files**: `m001-supabase-auth.arc`
 
 ### M002: Cloudflare Stream (0%) — P2
@@ -82,19 +82,11 @@ Source: `.arcanea/projects/milestones/`
 - **Mar 1 Session 2**: Academy rewritten (376 lines, Ten Gates grid, Houses, Ranks), pricing reviewed (509 lines, already complete)
 - **Files**: `m005-premium-ui-v0.arc`
 
-### M006: Creator Tools Backend (15%) — P1
+### M006: Creator Tools Backend (0%) — P1
 - **Guardian**: Draconia (Fire Gate)
 - **Target**: 2026-03-22
 - **Scope**: Creation pipeline, AI generation APIs, Prompt Books persistence, Reading progress, Course system, Gallery social
 - **Depends on**: M001, M005
-- **Progress**:
-  - [x] Gallery social wired (like/comment components connected)
-  - [x] Studio image generation wired (AI generation API)
-  - [x] Code AI wired (code tab with AI assistance)
-  - [ ] Save creations to Supabase
-  - [ ] Prompt Books persistence
-  - [ ] Reading progress tracking
-  - [ ] Course system
 - **Files**: `m006-creator-tools-backend.arc`
 
 ### M007: Community & Social (0%) — P2
@@ -104,39 +96,27 @@ Source: `.arcanea/projects/milestones/`
 - **Depends on**: M001, M006
 - **Files**: `m007-community-social.arc`
 
-### M008: Onboarding & Conversion (85%) — P0
+### M008: Onboarding & Conversion (75%) — P0
 - **Guardian**: Maylinn (Heart Gate)
 - **Target**: 2026-03-10
 - **Scope**: Onboarding wizard integration, welcome dashboard, activation loops, analytics, auth UX
 - **Depends on**: M005
-- **Progress**:
-  - [x] Auth guard wired
-  - [x] Orchestrator working (5-step wizard flow)
-  - [ ] Wire creation step to real AI generation (currently mock)
-  - [ ] Activation loop analytics
 - **Files**: `m008-onboarding-conversion.arc`
 
-### M009: Performance & Production Polish (60%) — P1
+### M009: Performance & Production Polish (45%) — P1
 - **Guardian**: Elara (Shift Gate)
 - **Target**: 2026-03-22
 - **Scope**: Core Web Vitals, SEO, accessibility, error handling, production hardening, cleanup
 - **Depends on**: M005, M008
-- **Progress**:
-  - [x] Error boundaries added (error.tsx on key routes)
-  - [x] LazyMotion implementation (~77% of heavy pages)
-  - [x] `as any` casts removed from council service (proper typed Supabase)
-  - [ ] Core Web Vitals audit
-  - [ ] WCAG 2.2 accessibility audit
-  - [ ] Remaining LazyMotion pages
 - **Files**: `m009-performance-polish.arc`
 
 ### M010: Language & Experience Transformation (100%) — COMPLETE
 - **Guardian**: Alera (Voice Gate)
-- **Target**: 2026-03-08 — COMPLETED 2026-03-10
+- **Target**: 2026-03-08
 - **Strategy**: `.arcanea/strategy/LANGUAGE_EXPERIENCE_STRATEGY.md`
-- **Principle**: Creation first. Mythology as earned discovery. Luminor as brand vocabulary.
-- **Scope**: Rewrite all user-facing copy across the platform. Replace jargon-first, lore-dump UX with progressive disclosure that respects viewer intelligence. Implement hidden depth system (color shifts, progressive vocabulary, Easter eggs). Final piece: specialist/intelligence → Luminor rename across all surfaces.
-- **Depends on**: Nothing — COMPLETE
+- **Principle**: Creation first. Mythology as earned discovery.
+- **Scope**: Rewrite all user-facing copy across the platform. Replace jargon-first, lore-dump UX with progressive disclosure that respects viewer intelligence. Implement hidden depth system (color shifts, progressive vocabulary, Easter eggs).
+- **Depends on**: Nothing — this is THE priority
 - **Phases**:
   - [x] Phase 1: Nav + Homepage copy transformation (34890534, 986703aa)
   - [x] Phase 2: Onboarding copy transformation (7f4763c9)
@@ -507,8 +487,8 @@ packages/              → 37 workspace packages
 ## Priority Queue (Next Actions)
 
 ### P0 — Deploy Blockers & Core Experience
-1. ~~**Language & Experience Transformation (M010)**~~ — COMPLETE (2026-03-10). specialist/intelligence → Luminor rename finalized.
-2. ~~Set Supabase env vars on Vercel~~ — DONE (confirmed 2026-03-10)
+1. **Language & Experience Transformation (M010)** — Rewrite nav, homepage, onboarding, studio, dashboard copy. Kill jargon-first UX. Progressive disclosure. Hidden depth system. See `.arcanea/strategy/LANGUAGE_EXPERIENCE_STRATEGY.md`
+2. Set Supabase env vars on Vercel (M001 blocker)
 3. Configure Supabase Dashboard Site URL + Redirect URLs
 3. ~~Add metadata to `/academy`~~ — DONE (2026-03-01, layout.tsx with generateMetadata)
 4. ~~Build `/academy/gates/[id]` dynamic route~~ — DONE (2026-03-01, 10 gates pre-rendered)

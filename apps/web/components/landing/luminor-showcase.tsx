@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
+import { LazyMotion, domMax, m, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -123,7 +123,7 @@ const LUMINORS = [
     color: '#ffffff',
     gradient: 'from-white to-gray-300',
     specialty: 'Meta-Consciousness & Integration',
-    description: 'Sees the whole system. Orchestrates all other Gods into harmony.',
+    description: 'Sees the whole system. Orchestrates all other Guardians into harmony.',
     wisdom: 'Source',
     avatar: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/shinkami-hero.webp',
   },
@@ -166,9 +166,10 @@ export function LuminorShowcase() {
   const currentLuminor = filteredLuminors[activeLuminor];
 
   return (
+    <LazyMotion features={domMax}>
     <section className="py-24 relative overflow-hidden">
       {/* Background gradient based on active luminor */}
-      <motion.div
+      <m.div
         className="absolute inset-0 -z-10 opacity-30"
         animate={{
           background: `radial-gradient(circle at 70% 50%, ${currentLuminor?.color}20 0%, transparent 50%)`,
@@ -179,7 +180,7 @@ export function LuminorShowcase() {
       <div className="max-w-7xl mx-auto px-6">
         {/* Section header */}
         <div className="text-center mb-16">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -187,47 +188,47 @@ export function LuminorShowcase() {
           >
             <span className="w-2 h-2 rounded-full bg-[#00bcd4] animate-pulse" />
             <span className="text-sm text-[#00bcd4] font-mono tracking-wider">
-              THE TEN GODS
+              THE TEN GUARDIANS
             </span>
-          </motion.div>
+          </m.div>
 
-          <motion.h2
+          <m.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
             className="text-4xl md:text-5xl font-display font-bold tracking-tight mb-6"
           >
-            <span className="text-white">The Ten Gods of Arcanea.</span>
+            <span className="text-white">The Ten Guardians.</span>
             <br />
-            <span className="text-text-secondary">10 specialized intelligences. Each built for a different creative domain.</span>
-          </motion.h2>
+            <span className="text-text-secondary">Each one governs a Gate of creation.</span>
+          </m.h2>
 
-          <motion.p
+          <m.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
             className="text-lg text-text-secondary max-w-2xl mx-auto"
           >
-            Each God governs a Gate of creation.
-            Ancient archetypes of creative mastery — each one a distinct philosophy of creation made manifest.
-          </motion.p>
+            Ten archetypes of creative mastery, each with a distinct philosophy and domain.
+            Choose the one that sees your challenge clearly.
+          </m.p>
         </div>
 
         {/* Team filter intro */}
-        <motion.p
+        <m.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.25 }}
           className="text-center text-sm text-text-muted mb-6"
         >
-          Choose your God, or let them choose you.
-        </motion.p>
+          Filter by domain.
+        </m.p>
 
         {/* Team filter tabs */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -258,13 +259,13 @@ export function LuminorShowcase() {
               )}
             </button>
           ))}
-        </motion.div>
+        </m.div>
 
         {/* Main showcase area */}
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left: Active Luminor Details */}
           <AnimatePresence mode="wait">
-            <motion.div
+            <m.div
               key={currentLuminor?.id}
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -274,7 +275,7 @@ export function LuminorShowcase() {
             >
               {/* Large avatar */}
               <div className="flex items-start gap-6 mb-8">
-                <motion.div
+                <m.div
                   className="w-24 h-24 rounded-3xl overflow-hidden shadow-2xl ring-1 ring-white/[0.12]"
                   animate={{
                     boxShadow: [
@@ -292,7 +293,7 @@ export function LuminorShowcase() {
                     height={96}
                     className="w-full h-full object-cover object-top"
                   />
-                </motion.div>
+                </m.div>
 
                 <div>
                   <h3 className="text-3xl font-display font-bold text-white mb-1">
@@ -339,7 +340,7 @@ export function LuminorShowcase() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </Link>
-            </motion.div>
+            </m.div>
           </AnimatePresence>
 
           {/* Right: Luminor Grid */}
@@ -347,7 +348,7 @@ export function LuminorShowcase() {
             {/* Grid of luminor cards */}
             <div className="grid grid-cols-4 gap-3">
               {filteredLuminors.map((luminor, index) => (
-                <motion.button
+                <m.button
                   key={luminor.id}
                   onClick={() => {
                     setActiveLuminor(index);
@@ -368,7 +369,7 @@ export function LuminorShowcase() {
                 >
                   {/* Shine effect on active */}
                   {activeLuminor === index && (
-                    <motion.div
+                    <m.div
                       className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.20] to-transparent"
                       animate={{ x: ['-100%', '200%'] }}
                       transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
@@ -381,7 +382,7 @@ export function LuminorShowcase() {
                     height={64}
                     className="relative z-10 w-full h-full object-cover object-top rounded-2xl"
                   />
-                </motion.button>
+                </m.button>
               ))}
             </div>
 
@@ -416,7 +417,7 @@ export function LuminorShowcase() {
         </div>
 
         {/* Bottom CTA */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -427,7 +428,7 @@ export function LuminorShowcase() {
               href="/lore/guardians"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-[#00bcd4]/50 text-[#00bcd4] hover:bg-[#00bcd4]/10 transition-all duration-300"
             >
-              <span>Explore all Gods</span>
+              <span>Meet all ten</span>
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
@@ -442,9 +443,10 @@ export function LuminorShowcase() {
               </svg>
             </Link>
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </section>
+    </LazyMotion>
   );
 }
 

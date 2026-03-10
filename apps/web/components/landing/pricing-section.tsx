@@ -1,6 +1,6 @@
 "use client";
 
-import { m, useInView, LazyMotion, domAnimation } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import {
   PhCheck,
@@ -13,56 +13,57 @@ import Link from "next/link";
 
 const PLANS = [
   {
-    name: "Spark",
-    description: "A real starting point, not a demo",
+    name: "Explorer",
+    description: "Get started for free",
     price: { monthly: 0, yearly: 0 },
     featured: false,
     cta: "Start Free",
     href: "/auth/signup",
     features: [
-      "3 Luminors — writing, research, brainstorming",
-      "100 messages per month",
-      "Browse the full Library (17 collections)",
-      "Academy access through Gate 2",
+      "3 creative intelligences",
+      "10 creations per month",
+      "Core Library access",
+      "Community access",
       "Export to PDF",
     ],
-    limits: ["Studio tools not included", "No custom prompts"],
+    limits: ["Limited AI models", "No custom prompts"],
   },
   {
     name: "Creator",
-    description: "The full creative toolkit",
+    description: "For serious creative work",
     price: { monthly: 19, yearly: 190 },
     featured: true,
-    cta: "Upgrade",
+    cta: "Start Creating",
     href: "/auth/signup?plan=creator",
     badge: "Most Popular",
     features: [
-      "All 10 Luminors — writing, code, design, music, research",
-      "5,000 messages per month",
-      "Full Library with reading progress",
-      "Academy progression through all 10 Gates",
-      "The Studio — image, music, and code generation",
-      "Custom prompt templates",
-      "Direct support within 24 hours",
+      "All 10 intelligences",
+      "Unlimited creations",
+      "Full Library access",
+      "Progression system",
       "All export formats",
+      "Priority support",
+      "Custom prompts",
+      "Version history",
     ],
     limits: [],
   },
   {
     name: "Studio",
-    description: "For teams and professional workflows",
+    description: "Professional creative suite",
     price: { monthly: 49, yearly: 490 },
     featured: false,
-    cta: "Contact Us",
-    href: "/contact",
+    cta: "Go Pro",
+    href: "/auth/signup?plan=studio",
     features: [
       "Everything in Creator",
-      "5 team seats with shared workspace",
-      "API access (REST + streaming)",
-      "Train custom Luminors on your content",
-      "Direct support within 4 hours",
-      "Export without Arcanea branding",
-      "Usage analytics dashboard",
+      "Team collaboration (5 seats)",
+      "API access",
+      "Custom intelligence training",
+      "White-label exports",
+      "Dedicated support",
+      "Early access features",
+      "Advanced analytics",
     ],
     limits: [],
   },
@@ -74,7 +75,6 @@ export function PricingSection() {
   const [isYearly, setIsYearly] = useState(true);
 
   return (
-    <LazyMotion features={domAnimation}>
     <section ref={ref} id="pricing" className="py-32 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 -z-10">
@@ -84,7 +84,7 @@ export function PricingSection() {
 
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
@@ -129,7 +129,7 @@ export function PricingSection() {
               </span>
             </button>
           </div>
-        </m.div>
+        </motion.div>
 
         {/* Pricing cards */}
         <div className="grid lg:grid-cols-3 gap-8">
@@ -139,7 +139,7 @@ export function PricingSection() {
             const period = isYearly ? "/year" : "/month";
 
             return (
-              <m.div
+              <motion.div
                 key={plan.name}
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -238,31 +238,30 @@ export function PricingSection() {
                     </div>
                   ))}
                 </div>
-              </m.div>
+              </motion.div>
             );
           })}
         </div>
 
         {/* Enterprise CTA */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.5 }}
           className="mt-16 text-center"
         >
           <p className="text-text-muted mb-4">
-            Need more than 5 seats or custom integrations?
+            Need custom solutions for your team or enterprise?
           </p>
           <Link
             href="/contact"
             className="inline-flex items-center gap-2 text-atlantean-teal-aqua hover:underline"
           >
-            Contact Us
+            Contact Sales
             <PhArrowRight className="w-4 h-4" />
           </Link>
-        </m.div>
+        </motion.div>
       </div>
     </section>
-    </LazyMotion>
   );
 }

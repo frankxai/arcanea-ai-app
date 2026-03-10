@@ -1,14 +1,14 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { LazyMotion, domMax, m, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 
 const STEPS = [
   {
     number: "01",
-    title: "Choose your guide",
+    title: "Choose your Luminor",
     description:
-      "Pick a Guardian or Luminor aligned to the Gate you need right now.",
+      "Pick the creative intelligence aligned to the kind of work you need right now.",
     accent: "#00bcd4",
   },
   {
@@ -33,13 +33,14 @@ export function HowItWorks() {
   const [activeStep, setActiveStep] = useState(0);
 
   return (
+    <LazyMotion features={domMax}>
     <section ref={ref} className="py-32 relative overflow-hidden">
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-[#00bcd4]/5 to-[#1a237e]/5 rounded-full blur-3xl" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-20"
@@ -51,9 +52,9 @@ export function HowItWorks() {
             A stronger creation loop
           </h2>
           <p className="text-xl text-text-secondary max-w-2xl mx-auto">
-            Pick the right guide, define the work, and ship with discipline.
+            Pick the right Luminor, define the work, and ship with discipline.
           </p>
-        </motion.div>
+        </m.div>
 
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div className="space-y-6">
@@ -61,7 +62,7 @@ export function HowItWorks() {
               const isActive = activeStep === i;
 
               return (
-                <motion.div
+                <m.div
                   key={step.number}
                   initial={{ opacity: 0, x: -30 }}
                   animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -109,18 +110,18 @@ export function HowItWorks() {
                   </div>
 
                   {isActive && (
-                    <motion.div
+                    <m.div
                       layoutId="activeStep"
                       className="absolute left-0 top-0 bottom-0 w-1 rounded-full"
                       style={{ backgroundColor: step.accent }}
                     />
                   )}
-                </motion.div>
+                </m.div>
               );
             })}
           </div>
 
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ delay: 0.3 }}
@@ -142,7 +143,7 @@ export function HowItWorks() {
               </div>
 
               <div className="aspect-[4/3] p-8 relative">
-                <motion.div
+                <m.div
                   className="absolute inset-8 rounded-xl border border-white/[0.08] bg-black/20 p-5"
                   key={activeStep}
                   initial={{ opacity: 0, y: 10 }}
@@ -161,24 +162,25 @@ export function HowItWorks() {
                   <p className="text-sm text-white/65 leading-relaxed">
                     {STEPS[activeStep].description}
                   </p>
-                </motion.div>
+                </m.div>
                 <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-cosmic-surface/80 to-transparent pointer-events-none" />
               </div>
             </div>
 
-            <motion.div
+            <m.div
               className="absolute -right-4 top-1/4 px-4 py-2 rounded-xl liquid-glass border border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
               animate={{ y: [0, -8, 0] }}
               transition={{ duration: 4, repeat: Infinity }}
             >
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-[#00bcd4] animate-pulse" />
-                <span className="text-sm">Canon-aligned workflow</span>
+                <span className="text-sm">Guided workflow</span>
               </div>
-            </motion.div>
-          </motion.div>
+            </m.div>
+          </m.div>
         </div>
       </div>
     </section>
+    </LazyMotion>
   );
 }

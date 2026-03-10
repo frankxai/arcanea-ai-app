@@ -1,57 +1,58 @@
 "use client";
 
-import { LazyMotion, domMax, m, useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { PhCheck, PhSparkle, PhArrowRight } from '@/lib/phosphor-icons';
 import Link from "next/link";
 
 const plans = [
   {
-    name: "Spark",
+    name: "Starter",
     price: "Free",
-    description: "A real starting point, not a demo",
+    description: "Perfect for exploring Arcanea",
     features: [
-      "3 Luminors — writing, research, brainstorming",
-      "100 messages per month",
-      "Browse the full Library (17 collections)",
-      "Academy access through Gate 2",
-      "Community Discord",
+      "Access to 3 AI specialists",
+      "Basic creation tools",
+      "5,000 words/month",
+      "Community access",
+      "Basic tutorials",
     ],
-    cta: "Start Free",
+    cta: "Get Started",
     popular: false,
   },
   {
     name: "Creator",
     price: "$19",
     period: "/month",
-    description: "The full creative toolkit",
+    description: "For serious creators",
     features: [
-      "All 10 Luminors — writing, code, design, music, research",
-      "5,000 messages per month",
-      "Full Library with reading progress",
-      "The Studio — image, music, and code generation",
-      "Custom prompt templates",
-      "Academy progression through all 10 Gates",
-      "Direct support within 24 hours",
+      "Access to all 16 AI specialists",
+      "Unlimited words & generations",
+      "Advanced creation studio",
+      "Priority support",
+      "Custom prompts & templates",
+      "API access",
+      "Collaborative workspaces",
     ],
-    cta: "Upgrade",
+    cta: "Start Creating",
     popular: true,
   },
   {
     name: "Studio",
     price: "$49",
     period: "/month",
-    description: "For teams and professional workflows",
+    description: "For teams & professionals",
     features: [
       "Everything in Creator",
-      "5 team seats with shared workspace",
-      "API access (REST + streaming)",
-      "Train custom Luminors on your content",
-      "Direct support within 4 hours",
-      "Export without Arcanea branding",
-      "Usage analytics dashboard",
+      "Team collaboration (up to 10)",
+      "Advanced analytics",
+      "Custom specialist training",
+      "Dedicated support",
+      "White-label options",
+      "SLA guarantee",
+      "Custom integrations",
     ],
-    cta: "Contact Us",
+    cta: "Contact Sales",
     popular: false,
   },
 ];
@@ -66,7 +67,7 @@ function PricingCard({
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <m.div
+    <motion.div
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -89,14 +90,14 @@ function PricingCard({
       >
         {/* Popular badge */}
         {plan.popular && (
-          <m.div
+          <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-crystal to-brand-primary text-cosmic-deep font-bold text-sm"
           >
             <PhSparkle className="w-4 h-4 inline mr-1" />
             Most Popular
-          </m.div>
+          </motion.div>
         )}
 
         {/* Header */}
@@ -118,7 +119,7 @@ function PricingCard({
         {/* Features */}
         <ul className="space-y-4 mb-8">
           {plan.features.map((feature, i) => (
-            <m.li
+            <motion.li
               key={feature}
               initial={{ opacity: 0, x: -10 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -136,13 +137,13 @@ function PricingCard({
                 />
               </div>
               <span className="text-sm text-text-secondary">{feature}</span>
-            </m.li>
+            </motion.li>
           ))}
         </ul>
 
         {/* CTA */}
         <Link
-          href={plan.price === "Free" ? "/auth/signup" : plan.popular ? "/auth/signup?plan=creator" : "/contact"}
+          href={plan.price === "Free" ? "/studio" : "/auth/signup"}
           className={`block w-full py-4 rounded-2xl text-center font-display font-semibold transition-all ${
             plan.popular
               ? "bg-gradient-to-r from-crystal to-brand-primary text-cosmic-deep hover:shadow-glow-md"
@@ -153,7 +154,7 @@ function PricingCard({
           <PhArrowRight className="inline ml-2 w-4 h-4" />
         </Link>
       </div>
-    </m.div>
+    </motion.div>
   );
 }
 
@@ -162,14 +163,13 @@ export function PricingPremium() {
   const isInView = useInView(containerRef, { once: true });
 
   return (
-    <LazyMotion features={domMax}>
     <section className="relative py-32 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-deep" />
 
         {/* Animated gradient orbs */}
-        <m.div
+        <motion.div
           className="absolute w-[600px] h-[600px] rounded-full blur-[120px]"
           style={{
             background:
@@ -183,11 +183,11 @@ export function PricingPremium() {
           }}
           transition={{ duration: 20, repeat: Infinity }}
         />
-        <m.div
+        <motion.div
           className="absolute w-[500px] h-[500px] rounded-full blur-[120px]"
           style={{
             background:
-              "radial-gradient(circle, rgba(13,71,161,0.1) 0%, transparent 70%)",
+              "radial-gradient(circle, rgba(139,92,246,0.1) 0%, transparent 70%)",
             right: "10%",
             bottom: "20%",
           }}
@@ -201,33 +201,33 @@ export function PricingPremium() {
 
       <div ref={containerRef} className="max-w-7xl mx-auto px-6">
         {/* Header */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="text-center mb-20"
         >
-          <m.span
+          <motion.span
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             className="inline-block px-4 py-2 rounded-full liquid-glass border border-brand-primary/20 text-brand-primary font-medium text-sm mb-6"
           >
             Simple Pricing
-          </m.span>
+          </motion.span>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
-            Start Free, Upgrade
+            Start Free, Create
             <br />
-            <span className="text-gradient-brand">When You're Ready</span>
+            <span className="text-gradient-brand">Without Limits</span>
           </h2>
 
           <p className="text-lg text-text-secondary max-w-2xl mx-auto">
             Choose the plan that fits your creative journey. Upgrade anytime as
             your needs grow.
           </p>
-        </m.div>
+        </motion.div>
 
         {/* Pricing Cards */}
         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -237,15 +237,15 @@ export function PricingPremium() {
         </div>
 
         {/* Bottom note */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           className="text-center mt-12 text-text-muted"
         >
-          <p>Start free. Upgrade when you need more. No credit card required.</p>
+          <p>All plans include a 14-day free trial. No credit card required.</p>
           <p className="mt-2">
-            Need more than 5 seats or custom integrations?{" "}
+            Need a custom enterprise solution?{" "}
             <a
               href="mailto:enterprise@arcanea.ai"
               className="text-crystal hover:underline"
@@ -253,9 +253,8 @@ export function PricingPremium() {
               Contact us
             </a>
           </p>
-        </m.div>
+        </motion.div>
       </div>
     </section>
-    </LazyMotion>
   );
 }
