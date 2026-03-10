@@ -369,7 +369,7 @@ export function ConveningFlow() {
                   onChange={(e) => setCurrentQuestion(e.target.value)}
                   rows={3}
                   placeholder={`Ask about ${activeAdvisor.domain.toLowerCase()}...`}
-                  className="w-full rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 font-body text-sm text-white placeholder:text-white/20 focus:outline-none transition-all resize-none leading-relaxed focus:border-white/[0.15]"
+                  className="w-full rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 font-body text-sm text-white placeholder:text-white/20 focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20 transition-all resize-none leading-relaxed focus:border-white/[0.15]"
                   style={{ caretColor: activeAdvisor.color }}
                   autoFocus
                 />

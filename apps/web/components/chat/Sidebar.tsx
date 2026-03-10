@@ -182,7 +182,7 @@ export function Sidebar({
                 'w-full pl-8 pr-3 py-2 rounded-lg text-xs',
                 'bg-[rgba(255,255,255,0.04)] border border-[rgba(13,71,161,0.15)]',
                 'text-foreground placeholder:text-muted-foreground',
-                'focus:outline-none focus:border-primary/40 focus:bg-[rgba(13,71,161,0.06)]',
+                'focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20 focus:border-primary/40 focus:bg-[rgba(13,71,161,0.06)]',
                 'transition-colors',
               )}
             />

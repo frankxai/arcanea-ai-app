@@ -75,7 +75,7 @@ export function InputArea({ value, onChange, onSubmit, guardian, disabled }: Inp
           disabled={disabled}
           className={cn(
             'flex-1 bg-transparent resize-none px-4 pt-3.5 pb-3.5 text-sm text-foreground',
-            'placeholder:text-muted-foreground/50 focus:outline-none leading-relaxed',
+            'placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20 leading-relaxed',
             'disabled:opacity-50',
           )}
           aria-label="Message input"

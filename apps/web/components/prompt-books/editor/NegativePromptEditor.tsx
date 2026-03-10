@@ -44,7 +44,7 @@ export function NegativePromptEditor({ value, onChange }: NegativePromptEditorPr
           rows={3}
           className={cn(
             'w-full bg-transparent text-sm font-mono text-error/80',
-            'placeholder:text-error/30 focus:outline-none',
+            'placeholder:text-error/30 focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20',
             'resize-none leading-relaxed px-1 pb-3',
             'scrollbar-thin',
           )}

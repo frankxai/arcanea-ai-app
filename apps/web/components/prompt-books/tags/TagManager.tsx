@@ -85,7 +85,7 @@ export function TagManager({
                           type="text"
                           value={editName}
                           onChange={(e) => setEditName(e.target.value)}
-                          className="flex-1 bg-white/[0.03] border border-white/[0.06] rounded-lg px-2.5 py-1.5 text-xs font-sans text-text-primary focus:outline-none focus:border-brand-accent/40"
+                          className="flex-1 bg-white/[0.03] border border-white/[0.06] rounded-lg px-2.5 py-1.5 text-xs font-sans text-text-primary focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20 focus:border-brand-accent/40"
                           placeholder="Tag name"
                           autoFocus
                         />
@@ -104,7 +104,7 @@ export function TagManager({
                           type="text"
                           value={editInject}
                           onChange={(e) => setEditInject(e.target.value)}
-                          className="flex-1 bg-white/[0.03] border border-white/[0.06] rounded-lg px-2.5 py-1.5 text-xs font-mono text-text-secondary focus:outline-none focus:border-brand-accent/40"
+                          className="flex-1 bg-white/[0.03] border border-white/[0.06] rounded-lg px-2.5 py-1.5 text-xs font-mono text-text-secondary focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20 focus:border-brand-accent/40"
                           placeholder="Inject text (appended to prompt)"
                         />
                         <input

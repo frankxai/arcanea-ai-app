@@ -78,7 +78,7 @@ function NumberRow({ label, value, min, max, onChange }: NumberRowProps) {
         className={cn(
           'flex-1 bg-white/[0.03] border border-white/[0.04] rounded-md',
           'px-2 py-1 text-xs font-mono text-text-primary',
-          'focus:outline-none focus:border-brand-accent/30',
+          'focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20 focus:border-brand-accent/30',
           'transition-colors',
         )}
       />
@@ -173,7 +173,7 @@ function StopSequencesInput({ value, onChange }: StopSequencesInputProps) {
             'flex-1 min-w-[80px] bg-transparent',
             'text-xs font-mono text-text-primary',
             'placeholder:text-text-muted/40',
-            'focus:outline-none',
+            'focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20',
           )}
         />
       </div>

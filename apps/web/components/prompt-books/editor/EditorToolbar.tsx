@@ -78,7 +78,7 @@ export function EditorToolbar({
           placeholder="Untitled Prompt"
           className={cn(
             'flex-1 bg-transparent text-lg font-display text-text-primary',
-            'placeholder:text-text-muted/50 focus:outline-none',
+            'placeholder:text-text-muted/50 focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20',
             'border-none p-0',
           )}
         />

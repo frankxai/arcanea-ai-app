@@ -306,7 +306,7 @@ export function PromptSearch({ isOpen, onClose, onSelectPrompt }: PromptSearchPr
                   className={cn(
                     'flex-1 bg-transparent text-base font-sans text-text-primary',
                     'placeholder:text-text-muted',
-                    'focus:outline-none',
+                    'focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20',
                   )}
                   aria-label="Search prompts"
                   aria-autocomplete="list"

@@ -286,7 +286,7 @@ function Header({ config }: { config: DashboardProps["config"] }) {
             <input
               type="text"
               placeholder="Search..."
-              className="w-64 pl-10 pr-4 py-2 rounded-lg bg-cosmic-raised border border-cosmic-border text-white placeholder:text-text-muted focus:outline-none focus:border-brand-primary/50 transition-colors"
+              className="w-64 pl-10 pr-4 py-2 rounded-lg bg-cosmic-raised border border-cosmic-border text-white placeholder:text-text-muted focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20 focus:border-brand-primary/50 transition-colors"
             />
           </div>
 

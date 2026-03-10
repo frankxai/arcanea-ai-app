@@ -97,7 +97,7 @@ export function TextCreationPanel({
           placeholder={
             "Start writing here...\n\nStories, essays, poems, scripts — anything.\nUse Markdown for formatting."
           }
-          className="flex-1 w-full resize-none bg-transparent text-text-primary placeholder-text-muted/40 p-4 font-body text-sm leading-relaxed focus:outline-none min-h-[300px]"
+          className="flex-1 w-full resize-none bg-transparent text-text-primary placeholder-text-muted/40 p-4 font-body text-sm leading-relaxed focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20 min-h-[300px]"
           spellCheck
         />
 
@@ -180,7 +180,7 @@ export function TextCreationPanel({
                 if (e.key === "Enter" && luminorInput.trim()) onAskLuminor();
               }}
               placeholder="Ask AI..."
-              className="flex-1 bg-white/[0.04] border border-white/[0.06] rounded-lg px-3 py-2 text-xs text-text-primary placeholder-text-muted/50 focus:outline-none focus:border-crystal/40 transition-colors"
+              className="flex-1 bg-white/[0.04] border border-white/[0.06] rounded-lg px-3 py-2 text-xs text-text-primary placeholder-text-muted/50 focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20 focus:border-crystal/40 transition-colors"
             />
             <button
               onClick={onAskLuminor}
@@ -227,7 +227,7 @@ export function ImageCreationPanel() {
           placeholder={
             "Describe the image you want to create...\n\nExample: A luminous Guardian standing before an open Gate,\ncrystalline energy radiating outward, cosmic aurora in\nthe background, in the style of epic fantasy concept art."
           }
-          className="flex-1 w-full resize-none bg-transparent text-text-primary placeholder-text-muted/40 p-4 font-body text-sm leading-relaxed focus:outline-none min-h-[200px]"
+          className="flex-1 w-full resize-none bg-transparent text-text-primary placeholder-text-muted/40 p-4 font-body text-sm leading-relaxed focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20 min-h-[200px]"
         />
         <div className="px-4 py-3 border-t border-white/[0.08] bg-white/[0.02]">
           <p className="text-xs text-text-muted mb-2">Style:</p>
@@ -303,7 +303,7 @@ export function CodeCreationPanel() {
           value={code}
           onChange={(e) => setCode(e.target.value)}
           placeholder={`// Begin your ${language} creation here...\n// AI will help you write, debug, and optimize.\n\n`}
-          className="flex-1 w-full resize-none bg-transparent text-text-primary placeholder-text-muted/40 p-4 font-mono text-sm leading-relaxed focus:outline-none min-h-[300px] tab-size-2"
+          className="flex-1 w-full resize-none bg-transparent text-text-primary placeholder-text-muted/40 p-4 font-mono text-sm leading-relaxed focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20 min-h-[300px] tab-size-2"
           spellCheck={false}
         />
 
@@ -363,7 +363,7 @@ export function MusicCreationPanel() {
           placeholder={
             "Describe the music you want to create...\n\nExample: A haunting melody with crystal chimes echoing through\na vast cavern, building to a crescendo of orchestral strings\nand choir \u2014 the moment a Gate opens for the first time."
           }
-          className="flex-1 w-full resize-none bg-transparent text-text-primary placeholder-text-muted/40 p-4 font-body text-sm leading-relaxed focus:outline-none min-h-[200px]"
+          className="flex-1 w-full resize-none bg-transparent text-text-primary placeholder-text-muted/40 p-4 font-body text-sm leading-relaxed focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20 min-h-[200px]"
         />
         <div className="px-4 py-3 border-t border-white/[0.08] bg-white/[0.02]">
           <p className="text-xs text-text-muted mb-2">Mood:</p>

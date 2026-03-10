@@ -207,7 +207,7 @@ export function HeroChatBox() {
                   onBlur={() => setIsFocused(false)}
                   placeholder="Describe what you want to create..."
                   rows={1}
-                  className="flex-1 px-5 py-4 bg-transparent text-white/90 placeholder-white/20 resize-none focus:outline-none font-body text-[15px] leading-relaxed"
+                  className="flex-1 px-5 py-4 bg-transparent text-white/90 placeholder-white/20 resize-none focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20 font-body text-[15px] leading-relaxed"
                   style={{ minHeight: "56px", maxHeight: "120px" }}
                 />
 

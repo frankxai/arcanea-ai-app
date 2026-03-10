@@ -110,7 +110,7 @@ function ExamplePair({
         rows={2}
         className={cn(
           'w-full bg-transparent text-xs font-mono text-text-primary',
-          'placeholder:text-text-muted/30 focus:outline-none',
+          'placeholder:text-text-muted/30 focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20',
           'resize-none leading-relaxed',
           'min-h-[48px] max-h-[96px]',
         )}

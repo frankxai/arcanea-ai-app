@@ -87,7 +87,7 @@ export function SaveAsTemplateDialog({
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-xs font-sans text-text-primary focus:outline-none focus:border-brand-accent/40"
+              className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-xs font-sans text-text-primary focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20 focus:border-brand-accent/40"
             />
           </div>
 
@@ -101,7 +101,7 @@ export function SaveAsTemplateDialog({
               onChange={(e) => setDescription(e.target.value)}
               rows={2}
               placeholder="What is this template for?"
-              className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-xs font-sans text-text-primary placeholder:text-text-muted/40 focus:outline-none focus:border-brand-accent/40 resize-none"
+              className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-xs font-sans text-text-primary placeholder:text-text-muted/40 focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20 focus:border-brand-accent/40 resize-none"
             />
           </div>
 
@@ -157,7 +157,7 @@ export function SaveAsTemplateDialog({
                         type="text"
                         value={v.label}
                         onChange={(e) => updateVariable(i, 'label', e.target.value)}
-                        className="flex-1 bg-transparent text-xs font-sans text-text-primary focus:outline-none border-b border-transparent focus:border-white/[0.06]"
+                        className="flex-1 bg-transparent text-xs font-sans text-text-primary focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20 border-b border-transparent focus:border-white/[0.06]"
                         placeholder="Label"
                       />
                     </div>

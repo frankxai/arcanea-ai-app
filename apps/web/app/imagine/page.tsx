@@ -449,7 +449,7 @@ export default function ImaginePage() {
                 <polyline points="21 15 16 10 5 21" />
               </svg>
             </div>
-            <p className="text-text-secondary font-body text-lg mb-1">Your imagination awaits</p>
+            <p className="text-text-secondary font-body text-lg mb-1">Start creating</p>
             <p className="text-text-muted text-sm">Enter a prompt above to begin creating</p>
           </div>
         </div>

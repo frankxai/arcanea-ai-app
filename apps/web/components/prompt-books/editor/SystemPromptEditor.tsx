@@ -44,7 +44,7 @@ export function SystemPromptEditor({ value, onChange }: SystemPromptEditorProps)
           rows={4}
           className={cn(
             'w-full bg-transparent text-sm font-mono text-text-primary',
-            'placeholder:text-text-muted/40 focus:outline-none',
+            'placeholder:text-text-muted/40 focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20',
             'resize-none leading-relaxed px-1 pb-3',
             'scrollbar-thin',
           )}
