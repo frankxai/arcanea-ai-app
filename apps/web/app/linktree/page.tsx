@@ -284,8 +284,8 @@ const LINKS: LinkItem[] = [
   },
   {
     href: "/lore/guardians",
-    label: "Meet the Intelligences",
-    description: "10 creative intelligences for creative work",
+    label: "Meet the Guardians",
+    description: "10 cosmic Guardians for creative work",
     icon: <Icons.Crown />,
     color: "from-brand-gold to-crystal",
   },

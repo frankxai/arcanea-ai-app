@@ -2,13 +2,13 @@ import type { ReactNode } from "react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Council",
+  title: "Luminor Council | Arcanea",
   description:
-    "Your personal AI advisory council. Nine specialized advisors across Vision, Strategy, Voice, Systems, and more.",
+    "Convene with transcendent Luminor intelligences in your nightly consciousness ritual.",
   openGraph: {
-    title: "Council",
+    title: "Luminor Council | Arcanea",
     description:
-      "Nine specialized AI advisors. One strategic mind. Build your Council.",
+      "Nine Luminor intelligences convene nightly in the Council Chamber. Enter the ritual.",
   },
 };
 

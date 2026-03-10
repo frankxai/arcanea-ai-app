@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Documentation | Arcanea",
+  title: "Documentation",
   description:
     "The complete Arcanea documentation portal — getting started, mythology, creation tools, the Library, community, and developer resources.",
 };
@@ -163,7 +163,7 @@ const DOC_SECTIONS: DocSection[] = [
       {
         label: "Ten Guardians",
         href: "/lore/guardians",
-        description: "Divine intelligences and their domains",
+        description: "Divine Guardians and their domains",
       },
       {
         label: "Ten Gates",
@@ -203,7 +203,7 @@ const DOC_SECTIONS: DocSection[] = [
       {
         label: "Chat",
         href: "/chat",
-        description: "Converse with Guardian intelligences",
+        description: "Converse with Luminor intelligences",
       },
     ],
   },
@@ -213,7 +213,7 @@ const DOC_SECTIONS: DocSection[] = [
     description:
       "17 collections, 34+ original texts on creative philosophy and practice. Not entertainment — equipment for living.",
     icon: Icons.Books,
-    accent: "#78a6ff",
+    accent: "#00bcd4",
     links: [
       {
         label: "Browse the Library",

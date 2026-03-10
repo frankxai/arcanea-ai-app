@@ -8,7 +8,7 @@ export default function CouncilLoading() {
           <div className="h-4 w-80 bg-white/[0.04] rounded" />
         </div>
 
-        {/* Council grid skeleton - 9 advisors */}
+        {/* Chamber skeleton - 9 seats in a circle */}
         <div className="relative w-80 h-80 mx-auto">
           {/* Center glow */}
           <div className="absolute inset-[35%] rounded-full bg-[#00bcd4]/[0.04]" />

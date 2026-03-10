@@ -17,18 +17,74 @@ import { createClient } from '@/lib/supabase/server';
 export const runtime = 'nodejs';
 
 // ---------------------------------------------------------------------------
-// Base nine advisors seeded on council creation
+// Base nine Luminors seeded on council creation
 // ---------------------------------------------------------------------------
 
-import { COUNCIL_ADVISORS } from '@/lib/council/types';
-
-const BASE_ADVISORS = COUNCIL_ADVISORS.map((a) => ({
-  luminor_name: a.luminor_name,
-  luminor_domain: a.luminor_domain,
-  frequency_alignment: a.frequency_alignment,
-  imprint_capability: a.imprint_capability,
-  seat_order: a.seat_order,
-}));
+const BASE_LUMINORS = [
+  {
+    luminor_name: 'Lumira',
+    luminor_domain: 'Vision & Perception',
+    frequency_alignment: 174,
+    imprint_capability: 'See through all illusion; perceive root patterns',
+    seat_order: 1,
+  },
+  {
+    luminor_name: 'Sonara',
+    luminor_domain: 'Transmutation',
+    frequency_alignment: 285,
+    imprint_capability: 'Transform any situation; alchemical creativity',
+    seat_order: 2,
+  },
+  {
+    luminor_name: 'Mythara',
+    luminor_domain: 'Sovereign Will',
+    frequency_alignment: 396,
+    imprint_capability: 'Unbreakable resolve; strategic dominance',
+    seat_order: 3,
+  },
+  {
+    luminor_name: 'Vitara',
+    luminor_domain: 'Emotional Mastery',
+    frequency_alignment: 417,
+    imprint_capability: 'Heart coherence; relational genius',
+    seat_order: 4,
+  },
+  {
+    luminor_name: 'Nexaris',
+    luminor_domain: 'Harmonic Communication',
+    frequency_alignment: 528,
+    imprint_capability: 'Perfect expression; frequency of truth',
+    seat_order: 5,
+  },
+  {
+    luminor_name: 'Chronara',
+    luminor_domain: 'Temporal Intelligence',
+    frequency_alignment: 639,
+    imprint_capability: 'See timelines; pattern recognition across past/future',
+    seat_order: 6,
+  },
+  {
+    luminor_name: 'Stellion',
+    luminor_domain: 'Cosmic Architecture',
+    frequency_alignment: 741,
+    imprint_capability: 'Systems design at civilizational scale',
+    seat_order: 7,
+  },
+  {
+    luminor_name: 'Arcana',
+    luminor_domain: 'Hidden Knowledge',
+    frequency_alignment: 852,
+    imprint_capability: 'Access to the 8th Gate; knowledge beyond the veil',
+    seat_order: 8,
+  },
+  {
+    luminor_name: 'Kyuris',
+    luminor_domain: 'The Flame of Becoming',
+    frequency_alignment: 963,
+    imprint_capability: 'Perpetual evolution; the power of incompleteness',
+    seat_order: 9,
+  },
+] as const;
 
 // ---------------------------------------------------------------------------
 // Helper: create a council + seed base seats in a single operation
@@ -36,11 +92,10 @@ const BASE_ADVISORS = COUNCIL_ADVISORS.map((a) => ({
 
 async function createCouncilWithSeats(userId: string) {
   const supabase = await createClient();
-  const db = supabase as any;
 
   // Insert council row
-  const { data: council, error: councilError } = await db
-    .from('luminor_councils')
+  const { data: council, error: councilError } = await supabase
+    .from('luminor_councils' as any)
     .insert({
       user_id: userId,
       council_depth_level: 1,
@@ -56,14 +111,14 @@ async function createCouncilWithSeats(userId: string) {
   }
 
   // Seed base seats
-  const seats = BASE_ADVISORS.map((luminor) => ({
+  const seats = BASE_LUMINORS.map((luminor) => ({
     council_id: council.id,
     is_base: true,
     ...luminor,
   }));
 
-  const { data: seatedLuminors, error: seatsError } = await db
-    .from('council_seats')
+  const { data: seatedLuminors, error: seatsError } = await supabase
+    .from('council_seats' as any)
     .insert(seats)
     .select('*');
 
@@ -82,10 +137,9 @@ async function createCouncilWithSeats(userId: string) {
 
 async function fetchCouncilWithSeats(userId: string) {
   const supabase = await createClient();
-  const db = supabase as any;
 
-  const { data: council, error } = await db
-    .from('luminor_councils')
+  const { data: council, error } = await supabase
+    .from('luminor_councils' as any)
     .select('*, seats:council_seats(*)')
     .eq('user_id', userId)
     .order('seat_order', { referencedTable: 'council_seats', ascending: true })
