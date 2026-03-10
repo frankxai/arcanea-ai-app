@@ -39,12 +39,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/academy/ranks`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/academy/gate-quiz`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.75 },
     { url: `${baseUrl}/academy/assessment`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.75 },
-    { url: `${baseUrl}/academy/courses`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.85 },
-    { url: `${baseUrl}/academy/courses/foundations-of-creation`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${baseUrl}/academy/courses/creative-flow`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${baseUrl}/academy/courses/the-fire-within`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${baseUrl}/academy/courses/voice-and-truth`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${baseUrl}/academy/courses/creative-vision`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
 
     // ── Lore ────────────────────────────────────────────────
     { url: `${baseUrl}/lore`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
