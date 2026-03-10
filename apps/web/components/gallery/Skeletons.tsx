@@ -6,7 +6,7 @@ export function SkeletonCard({ height = 280 }: { height?: number }) {
       className="rounded-2xl overflow-hidden"
       style={{
         background: 'rgba(15,15,24,0.7)',
-        border: '1px solid rgba(13,71,161,0.1)',
+        border: '1px solid rgba(139,92,246,0.1)',
       }}
       aria-hidden="true"
     >
@@ -19,16 +19,16 @@ export function SkeletonCard({ height = 280 }: { height?: number }) {
       <div className="px-4 py-3 flex items-center gap-3">
         <div
           className="w-7 h-7 rounded-full skeleton-shimmer shrink-0"
-          style={{ background: 'rgba(13,71,161,0.1)' }}
+          style={{ background: 'rgba(139,92,246,0.1)' }}
         />
         <div className="flex-1 flex flex-col gap-1.5">
           <div
             className="h-3.5 rounded skeleton-shimmer"
-            style={{ width: '65%', background: 'rgba(13,71,161,0.08)' }}
+            style={{ width: '65%', background: 'rgba(139,92,246,0.08)' }}
           />
           <div
             className="h-2.5 rounded skeleton-shimmer"
-            style={{ width: '40%', background: 'rgba(13,71,161,0.06)' }}
+            style={{ width: '40%', background: 'rgba(139,92,246,0.06)' }}
           />
         </div>
       </div>
@@ -95,7 +95,7 @@ export function InfiniteScrollLoader() {
         <div
           className="w-12 h-12 rounded-full"
           style={{
-            background: 'radial-gradient(circle, rgba(13,71,161,0.4) 0%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(139,92,246,0.4) 0%, transparent 70%)',
             animation: 'glow-pulse 1.5s ease-in-out infinite',
           }}
           aria-hidden="true"
@@ -103,8 +103,8 @@ export function InfiniteScrollLoader() {
         <div
           className="absolute inset-2 rounded-full border-2 border-transparent"
           style={{
-            borderTopColor: '#0d47a1',
-            borderRightColor: 'rgba(13,71,161,0.3)',
+            borderTopColor: '#8b5cf6',
+            borderRightColor: 'rgba(139,92,246,0.3)',
             animation: 'spin 1s linear infinite',
           }}
           aria-hidden="true"
@@ -120,7 +120,7 @@ export function InfiniteScrollLoader() {
           <div
             key={i}
             className="h-2 rounded-full skeleton-shimmer"
-            style={{ width: `${w}px`, background: 'rgba(13,71,161,0.08)' }}
+            style={{ width: `${w}px`, background: 'rgba(139,92,246,0.08)' }}
             aria-hidden="true"
           />
         ))}

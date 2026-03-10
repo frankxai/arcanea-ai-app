@@ -53,13 +53,13 @@ export function TextTab({ generationState }: TextTabProps) {
   return (
     <div className="flex flex-col h-full">
       {/* Toolbar */}
-      <div className="flex items-center gap-1 px-5 py-2.5 border-b border-[rgba(13,71,161,0.1)] bg-[rgba(10,10,15,0.5)]">
+      <div className="flex items-center gap-1 px-5 py-2.5 border-b border-[rgba(139,92,246,0.1)] bg-[rgba(10,10,15,0.5)]">
         <div className="flex items-center gap-0.5 pr-3 border-r border-[rgba(255,255,255,0.08)]">
           {formatActions.map((action) => (
             <button
               key={action.label}
               title={action.label}
-              className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-[rgba(13,71,161,0.1)] transition-all duration-150"
+              className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-[rgba(139,92,246,0.1)] transition-all duration-150"
             >
               {action.icon}
             </button>
@@ -77,8 +77,8 @@ export function TextTab({ generationState }: TextTabProps) {
       <div className="flex-1 relative overflow-hidden">
         {generationState === "generating" ? (
           <div className="h-full flex flex-col items-center justify-center gap-5 px-10">
-            <div className="w-16 h-16 rounded-full bg-[rgba(13,71,161,0.1)] border border-[rgba(13,71,161,0.3)] flex items-center justify-center pulse-glow">
-              <Sparkle size={28} className="text-[#0d47a1] animate-spin" style={{ animationDuration: "3s" }} />
+            <div className="w-16 h-16 rounded-full bg-[rgba(139,92,246,0.1)] border border-[rgba(139,92,246,0.3)] flex items-center justify-center pulse-glow">
+              <Sparkle size={28} className="text-[#8b5cf6] animate-spin" style={{ animationDuration: "3s" }} />
             </div>
             <div className="text-center">
               <p className="font-serif text-lg text-foreground mb-1">Weaving narrative threads…</p>
@@ -122,7 +122,7 @@ export function TextTab({ generationState }: TextTabProps) {
       </div>
 
       {/* AI Assist Bar */}
-      <div className="px-5 py-3 border-t border-[rgba(13,71,161,0.1)] bg-[rgba(10,10,15,0.3)]">
+      <div className="px-5 py-3 border-t border-[rgba(139,92,246,0.1)] bg-[rgba(10,10,15,0.3)]">
         <div className="flex items-center gap-2 flex-wrap">
           <div className="flex items-center gap-1.5 text-[10px] text-[#ffd700] font-mono shrink-0">
             <Lightning size={11} weight="fill" />
@@ -135,8 +135,8 @@ export function TextTab({ generationState }: TextTabProps) {
               className={cn(
                 "px-2.5 py-1 rounded-full text-[11px] border transition-all duration-200",
                 selectedPrompt === prompt
-                  ? "bg-[rgba(13,71,161,0.2)] border-[rgba(13,71,161,0.4)] text-[#a78bfa]"
-                  : "bg-[rgba(255,255,255,0.03)] border-[rgba(255,255,255,0.08)] text-muted-foreground hover:text-foreground hover:border-[rgba(13,71,161,0.2)]"
+                  ? "bg-[rgba(139,92,246,0.2)] border-[rgba(139,92,246,0.4)] text-[#a78bfa]"
+                  : "bg-[rgba(255,255,255,0.03)] border-[rgba(255,255,255,0.08)] text-muted-foreground hover:text-foreground hover:border-[rgba(139,92,246,0.2)]"
               )}
             >
               {prompt}

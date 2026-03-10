@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: 'Arcanea Vault',
   description: 'Your personal creative vault — save, organize, and protect your most precious creations.',
   openGraph: {
-    title: 'Arcanea Vault',
+    title: 'Arcanea Vault | Arcanea',
     description: 'Your personal creative vault — save, organize, and protect your most precious creations.',
   },
 };

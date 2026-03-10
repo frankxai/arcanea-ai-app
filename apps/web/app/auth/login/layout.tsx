@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: 'Sign In',
   description: 'Sign in to your Arcanea account and continue your creative journey.',
   openGraph: {
-    title: 'Sign In',
+    title: 'Sign In | Arcanea',
     description: 'Sign in to your Arcanea account and continue your creative journey.',
   },
 };

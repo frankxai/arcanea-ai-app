@@ -164,7 +164,7 @@ const TEN_GATES: GateData[] = [
   },
   {
     number: 8,
-    name: 'Starweave',
+    name: 'Shift',
     frequency: '852 Hz',
     hz: 852,
     guardian: 'Elara',
@@ -175,7 +175,7 @@ const TEN_GATES: GateData[] = [
     color: '#a855f7',
     glowColor: 'rgba(168,85,247,0.35)',
     description:
-      'Elara is the master of seeing from every angle simultaneously. The Starweave Gate teaches that creative breakthroughs come from releasing attachment to a single viewpoint — every assumption released opens a new dimension.',
+      'Elara is the master of seeing from every angle simultaneously. The Shift Gate teaches that creative breakthroughs come from releasing attachment to a single viewpoint — every assumption released opens a new dimension.',
     icon: PhLightning,
   },
   {
@@ -200,7 +200,7 @@ const TEN_GATES: GateData[] = [
     frequency: '1111 Hz',
     hz: 1111,
     guardian: 'Shinkami',
-    godbeast: 'Source',
+    godbeast: 'Amaterasu',
     element: 'All / None',
     domain: 'Meta-consciousness, infinite potential',
     domainTags: ['Meta-Consciousness', 'Infinite', 'Origin'],

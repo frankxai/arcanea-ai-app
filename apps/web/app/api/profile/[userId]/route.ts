@@ -71,7 +71,7 @@ export async function PATCH(
       displayName: z.string().min(VALIDATION_RULES.displayName.minLength).max(VALIDATION_RULES.displayName.maxLength).optional(),
       bio: z.string().max(VALIDATION_RULES.bio.maxLength).optional(),
       avatarUrl: z.string().url().optional().or(z.literal('')),
-      activeGate: z.enum(['Foundation', 'Flow', 'Fire', 'Heart', 'Voice', 'Sight', 'Crown', 'Starweave', 'Unity', 'Source']).optional(),
+      activeGate: z.enum(['Foundation', 'Flow', 'Fire', 'Heart', 'Voice', 'Sight', 'Crown', 'Shift', 'Unity', 'Source']).optional(),
       guardian: z.enum(['Lyssandria', 'Leyla', 'Draconia', 'Maylinn', 'Alera', 'Lyria', 'Aiyami', 'Elara', 'Ino', 'Shinkami']).optional(),
       academyHouse: z.enum(['Lumina', 'Nero', 'Pyros', 'Aqualis', 'Terra', 'Ventus', 'Synthesis']).optional(),
     });

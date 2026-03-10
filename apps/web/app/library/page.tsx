@@ -3,7 +3,7 @@ import Link from "next/link";
 import { LibraryBrowse } from "./library-browse";
 import { getCollections } from "../../lib/content";
 export const metadata: Metadata = {
-  title: "Library — 34 Original Texts on Creative Philosophy",
+  title: "Library | Arcanea — 34 Original Texts on Creative Philosophy",
   description:
     "Browse the Library of Arcanea — 17 collections of original philosophy, practice, and storytelling for creators.",
   openGraph: {

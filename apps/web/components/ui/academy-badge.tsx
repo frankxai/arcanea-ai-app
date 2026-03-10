@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { m } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { type Academy, getAcademyTheme } from '@/lib/theme-utils';
 
@@ -74,7 +74,7 @@ const AcademyBadge = React.forwardRef<HTMLDivElement, AcademyBadgeProps>(
 
     if (animated) {
       return (
-        <m.div
+        <motion.div
           ref={ref}
           className={baseClassName}
           whileHover={{ scale: 1.05 }}
@@ -82,7 +82,7 @@ const AcademyBadge = React.forwardRef<HTMLDivElement, AcademyBadgeProps>(
         >
           <span className="text-lg leading-none">{theme.icon}</span>
           <span>{theme.displayName}</span>
-        </m.div>
+        </motion.div>
       );
     }
 

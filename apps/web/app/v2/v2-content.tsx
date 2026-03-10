@@ -99,7 +99,7 @@ const GUARDIANS = [
   },
   {
     name: "Elara",
-    gate: "Starweave",
+    gate: "Shift",
     freq: "852 Hz",
     element: "Wind",
     quote:

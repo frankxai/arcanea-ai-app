@@ -4,11 +4,11 @@ import { buildContentGraph, getCollections } from "../../../lib/content";
 import { GraphLoader } from "./graph-loader";
 
 export const metadata: Metadata = {
-  title: "The Web of Wisdom | Library",
+  title: "The Web of Wisdom | Arcanea Library",
   description:
     "Explore the interconnected knowledge graph of the Library of Arcanea. See how texts relate through shared themes, situations, and reading paths.",
   openGraph: {
-    title: "The Web of Wisdom | Library",
+    title: "The Web of Wisdom | Arcanea Library",
     description:
       "An interactive force-directed graph of the Library of Arcanea — 17 collections, hundreds of connections.",
   },
@@ -38,7 +38,7 @@ export default async function GraphPage() {
             href="/library/codex"
             className="rounded-full border border-white/[0.06] px-4 py-2 text-sm text-text-muted hover:border-atlantean-teal-aqua/30 hover:text-atlantean-teal-aqua transition-all duration-300"
           >
-            Codex
+            Luminor Codex
           </Link>
           <span className="rounded-full bg-atlantean-teal-aqua px-4 py-2 text-sm font-semibold text-cosmic-deep">
             Relationship Graph

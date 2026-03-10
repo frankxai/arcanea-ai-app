@@ -165,7 +165,7 @@ export class GuardianPanelProvider implements vscode.WebviewViewProvider {
     <div class="hero-gate">${active?.gate ?? 'Source'} Gate</div>
     <span class="hero-frequency">${active?.frequency ?? '1111 Hz'}</span>
     <div class="hero-element">${active?.element ?? 'Source'}</div>
-    <div class="hero-godbeast">Godbeast: ${active?.godbeast ?? 'Amaterasu'}</div>
+    <div class="hero-godbeast">Godbeast: ${active?.godbeast ?? 'Source'}</div>
     <div class="hero-domain">${active?.domain ?? 'Meta-architecture, orchestration, first principles'}</div>
   </div>
 

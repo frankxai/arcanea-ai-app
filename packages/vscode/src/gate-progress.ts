@@ -18,7 +18,7 @@ const GATE_DEFINITIONS: GateDefinition[] = [
   { id: 'voice',      name: 'Voice',      frequency: '528 Hz', guardian: 'Alera',      element: 'Void',   color: '#e879f9', description: 'Awakening intuition. Problem-solving. Pure expression.' },
   { id: 'sight',      name: 'Sight',      frequency: '639 Hz', guardian: 'Lyria',      element: 'Spirit', color: '#a855f7', description: 'Intuition. Spiritual order. Returning to truth.' },
   { id: 'crown',      name: 'Crown',      frequency: '741 Hz', guardian: 'Aiyami',     element: 'Spirit', color: '#fbbf24', description: 'Divine consciousness. Infinite intelligence. Synthesis.' },
-  { id: 'shift',      name: 'Shift',      frequency: '852 Hz', guardian: 'Elara',      element: 'Void',   color: '#06b6d4', description: 'Portals. Paradigm transformation. Reframing.' },
+  { id: 'starweave',  name: 'Starweave',  frequency: '852 Hz', guardian: 'Elara',      element: 'Void',   color: '#06b6d4', description: 'Portals. Paradigm transformation. Reframing.' },
   { id: 'unity',      name: 'Unity',      frequency: '963 Hz', guardian: 'Ino',        element: 'Spirit', color: '#14b8a6', description: 'Partnership. Integration. Harmonious co-creation.' },
   { id: 'source',     name: 'Source',     frequency: '1111 Hz', guardian: 'Shinkami',  element: 'Source', color: '#ffd700', description: 'First principles. Meta-consciousness. Origin of all.' }
 ];

@@ -262,7 +262,7 @@ export const GATES: Record<string, GateData> = {
   shift: {
     id: 'shift',
     number: 8,
-    name: 'Starweave',
+    name: 'Shift',
     frequency: '852 Hz',
     guardian: 'Elara',
     guardianSlug: 'elara',
@@ -275,7 +275,7 @@ export const GATES: Record<string, GateData> = {
     gradient: 'from-emerald-400 via-green-500 to-teal-600',
     glowColor: 'rgba(192, 132, 252, 0.25)',
     description:
-      'Master perspective shifts. The Starweave Gate is where you transcend your single point of view and inhabit multiple truths simultaneously. Every perspective is true. None is complete. Change is not loss — it is evolution.',
+      'Master perspective shifts. The Shift Gate is where you transcend your single point of view and inhabit multiple truths simultaneously. Every perspective is true. None is complete. Change is not loss — it is evolution.',
     quote: 'The only constant is the turning. Embrace the shift.',
     teachings: [
       'Every perspective is true. None is complete.',
@@ -288,7 +288,7 @@ export const GATES: Record<string, GateData> = {
       'Welcome the collapse of assumptions — sit with not-knowing',
     ],
     elementDesc:
-      'Void at the Starweave Gate is potentiality — the space where anything could form. Void creators are comfortable with dissolution because they know new forms are always emerging.',
+      'Void at the Shift Gate is potentiality — the space where anything could form. Void creators are comfortable with dissolution because they know new forms are always emerging.',
     opensWith: 'Undergoing a complete creative reinvention that produces better work',
     rank: 'Archmage',
   },
@@ -333,9 +333,9 @@ export const GATES: Record<string, GateData> = {
     frequency: '1111 Hz',
     guardian: 'Shinkami',
     guardianSlug: 'shinkami',
-    godbeast: 'Source',
+    godbeast: 'Amaterasu',
     godBeastDesc:
-      "The Source-Light — consciousness that existed before all Gates. Source is not summoned; it is remembered. Its presence dissolves the boundary between creator and creation.",
+      "The Great Solar Phoenix — first light made alive, the consciousness that existed before all Gates. Amaterasu is not summoned; it is remembered. Its presence dissolves the boundary between creator and creation.",
     element: 'All / Source',
     domain: 'Meta-consciousness, origin, the All',
     color: '#fef3c7',

@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: 'Academy Assessment',
   description: 'Discover your creative element, Guardian affinity, and starting Gate through the Academy assessment.',
   openGraph: {
-    title: 'Academy Assessment',
+    title: 'Academy Assessment | Arcanea',
     description: 'Discover your creative element, Guardian affinity, and starting Gate.',
   },
 };

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { m, LazyMotion, domAnimation } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { PhMusicNote, PhBookOpen, PhPalette, PhCode, PhFilmStrip, PhGameController, PhArrowLeft, PhSparkle } from '@/lib/phosphor-icons';
@@ -94,10 +94,9 @@ export default function CreatorTypePage() {
   };
 
   return (
-    <LazyMotion features={domAnimation} strict>
     <div className="min-h-screen flex flex-col items-center justify-center p-4 py-12">
       {/* Back button */}
-      <m.div
+      <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         className="absolute top-6 left-6"
@@ -109,10 +108,10 @@ export default function CreatorTypePage() {
           <PhArrowLeft className="w-4 h-4" />
           <span className="font-body">Back</span>
         </Link>
-      </m.div>
+      </motion.div>
 
       {/* Header */}
-      <m.div
+      <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -124,14 +123,14 @@ export default function CreatorTypePage() {
         <p className="font-body text-xl text-text-secondary">
           Pick one to get started. You can always change later.
         </p>
-      </m.div>
+      </motion.div>
 
       {/* Creator type grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto mb-8">
         {CREATOR_TYPES.map((type, index) => {
           const Icon = type.icon;
           return (
-            <m.button
+            <motion.button
               key={type.id}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -159,13 +158,13 @@ export default function CreatorTypePage() {
                   {type.description}
                 </p>
               </div>
-            </m.button>
+            </motion.button>
           );
         })}
       </div>
 
       {/* Explore all option */}
-      <m.div
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8 }}
@@ -177,8 +176,7 @@ export default function CreatorTypePage() {
           <PhSparkle className="w-4 h-4" />
           Not sure? Explore all intelligences
         </Link>
-      </m.div>
+      </motion.div>
     </div>
-    </LazyMotion>
   );
 }

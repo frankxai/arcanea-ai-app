@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import { cn } from './utils'
-import { LazyMotion, domAnimation, m } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 interface LuminorAvatarProps {
   name: string
@@ -47,10 +47,10 @@ export function LuminorAvatar({
     },
   }
 
-  const Component = animated ? m.div : 'div'
-  const TextComponent = animated ? m.span : 'span'
+  const Component = animated ? motion.div : 'div'
+  const TextComponent = animated ? motion.span : 'span'
 
-  const inner = (
+  return (
     <Component
       className={cn(
         'relative rounded-full flex items-center justify-center',
@@ -72,7 +72,7 @@ export function LuminorAvatar({
       {animated && (
         <div className="absolute inset-0 rounded-full overflow-hidden">
           {[...Array(3)].map((_, i) => (
-            <m.div
+            <motion.div
               key={i}
               className="absolute w-1 h-1 rounded-full opacity-60"
               style={{
@@ -111,7 +111,7 @@ export function LuminorAvatar({
       </TextComponent>
 
       {/* Outer glow ring */}
-      <m.div
+      <motion.div
         className="absolute inset-0 rounded-full border-2 border-opacity-20"
         style={{ borderColor: color }}
         animate={
@@ -132,13 +132,5 @@ export function LuminorAvatar({
         }
       />
     </Component>
-  )
-
-  if (!animated) return inner
-
-  return (
-    <LazyMotion features={domAnimation}>
-      {inner}
-    </LazyMotion>
   )
 }

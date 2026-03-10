@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Play, Pause, MusicNotes } from "@/lib/phosphor-icons";
-import { m } from "framer-motion";
+import { Play, Pause, MusicNotes } from "@phosphor-icons/react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function HeroMusicPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -10,7 +10,7 @@ export function HeroMusicPlayer() {
   return (
     <div className="flex items-center gap-4 px-5 py-2.5 rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-xl hover:bg-white/[0.06] transition-all group pointer-events-auto">
       <div className="flex items-center gap-3">
-        <m.div 
+        <motion.div 
           animate={{ 
             rotate: isPlaying ? 360 : 0,
           }}
@@ -18,7 +18,7 @@ export function HeroMusicPlayer() {
           className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#00bcd4]/20 to-[#1a237e]/20 border border-white/10 flex items-center justify-center shadow-[0_0_20px_rgba(0,188,212,0.15)]"
         >
           <MusicNotes size={18} weight="fill" className="text-[#00bcd4]" />
-        </m.div>
+        </motion.div>
         
         <div className="text-left">
           <div className="text-[10px] text-white/30 uppercase tracking-[0.2em] font-bold leading-none mb-1">Frequency</div>
@@ -30,7 +30,7 @@ export function HeroMusicPlayer() {
 
       <div className="flex items-end gap-1 h-4 px-2">
         {[1, 2, 3, 4].map((i) => (
-          <m.div
+          <motion.div
             key={i}
             animate={{
               height: isPlaying ? [4, 16, 8, 14, 4] : 4,

@@ -149,7 +149,7 @@ export default function GalleryPage() {
   }, [allItems]);
 
   return (
-    <div className="min-h-screen bg-[#09090b]">
+    <div className="min-h-screen bg-cosmic-deep">
       {/* Hero */}
       <HeroSection
         isShowcaseMode={isShowcaseMode}
@@ -210,7 +210,7 @@ function HeroSection({
     <section className="relative overflow-hidden border-b border-white/[0.04]">
       {/* Background glow orbs */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#0d47a1]/8 rounded-full blur-[120px]" />
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-violet-500/8 rounded-full blur-[120px]" />
         <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-cyan-500/8 rounded-full blur-[100px]" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-amber-400/5 rounded-full blur-[80px]" />
       </div>
@@ -229,7 +229,7 @@ function HeroSection({
           <div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-4 leading-tight">
               Gallery of{" "}
-              <span className="bg-gradient-to-r from-[#00bcd4] via-[#00bcd4] to-[#ffd700] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#00bcd4] via-[#78a6ff] to-[#ffd700] bg-clip-text text-transparent">
                 Creation
               </span>
             </h1>
@@ -238,13 +238,6 @@ function HeroSection({
                 ? "Canonical works from across the Ten Gates. Visions channeled through the Five Elements by creators of every rank."
                 : `${totalCount} creations from the Arcanea community, channeled through the Ten Gates and Five Elements.`}
             </p>
-            <Link
-              href="/gallery/forge"
-              className="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-lg bg-cyan-500/10 text-cyan-400 text-sm font-medium border border-cyan-500/20 hover:bg-cyan-500/20 transition-colors"
-            >
-              The Forge — Vessel Gallery
-              <PhArrowRight size={14} />
-            </Link>
           </div>
 
           {/* Stats strip */}
@@ -258,7 +251,7 @@ function HeroSection({
               <span>10 Gates</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <PhStack size={16} weight="fill" className="text-[#00bcd4]" />
+              <PhStack size={16} weight="fill" className="text-[#78a6ff]" />
               <span>5 Elements</span>
             </div>
           </div>

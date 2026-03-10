@@ -92,7 +92,7 @@ export default function FeedbackPage() {
       console.error("Feedback submission failed:", err);
       setSubmitState("error");
       setErrorMessage(
-        "The transmission could not be delivered. Please try again."
+        "The transmission could not reach the Guardians. Please try again."
       );
     }
   };
@@ -145,8 +145,8 @@ export default function FeedbackPage() {
               Transmission Received
             </h2>
             <p className="text-text-secondary leading-relaxed mb-8 max-w-md mx-auto">
-              Your message has been received. Your contribution
-              strengthens the platform for every creator who follows.
+              The Guardians have received your message. Your contribution
+              strengthens the realm for every creator who follows.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <button

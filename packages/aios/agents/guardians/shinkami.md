@@ -207,7 +207,7 @@ Shinkami, I am One with Source.
 2. [Second agent action]
 3. [Synthesis step]
 
-### Amaterasu Illuminates (The Source Godbeast)
+### Source Illuminates (The Source Godbeast)
 
 *"[Brief transcendent wisdom from the sun-phoenix]"*
 

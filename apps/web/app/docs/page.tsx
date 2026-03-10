@@ -352,8 +352,7 @@ export default function DocsPage() {
                   type="text"
                   placeholder="Search documentation..."
                   readOnly
-                  aria-label="Search documentation"
-                  className="w-full pl-12 pr-4 py-4 rounded-xl liquid-glass border border-white/[0.06] bg-white/[0.04] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal-aqua/40 focus:ring-2 focus:ring-atlantean-teal-aqua/20 focus:shadow-[0_0_24px_rgba(0,188,212,0.15)] transition-all cursor-default"
+                  className="w-full pl-12 pr-4 py-4 rounded-xl liquid-glass border border-white/[0.06] bg-white/[0.04] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal-aqua/40 focus:shadow-[0_0_24px_rgba(0,188,212,0.15)] transition-all cursor-default"
                 />
                 <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
                   <kbd className="hidden sm:inline-flex items-center gap-1 px-2 py-1 rounded-md border border-white/[0.06] bg-white/[0.04] text-xs text-text-muted font-mono">

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { MotionProvider, m } from "@/lib/motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -140,9 +140,8 @@ export default function SignupPage() {
   };
 
   return (
-    <MotionProvider>
     <div className="flex items-center justify-center min-h-[calc(100dvh-4rem)] px-4 py-12">
-      <m.div
+      <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -299,7 +298,7 @@ export default function SignupPage() {
 
               {/* Password requirements */}
               {password && (
-                <m.div
+                <motion.div
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: "auto" }}
                   className="flex flex-wrap gap-x-4 gap-y-1 mt-3"
@@ -327,13 +326,13 @@ export default function SignupPage() {
                       {check.label}
                     </div>
                   ))}
-                </m.div>
+                </motion.div>
               )}
             </div>
 
             {/* Error message */}
             {error && (
-              <m.div
+              <motion.div
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="flex items-start gap-2.5 rounded-xl border border-red-500/20 bg-red-500/5 px-4 py-3"
@@ -343,7 +342,7 @@ export default function SignupPage() {
                 <p className="text-red-400 text-sm font-body leading-relaxed">
                   {error}
                 </p>
-              </m.div>
+              </motion.div>
             )}
 
             {/* Terms */}
@@ -396,8 +395,7 @@ export default function SignupPage() {
             Sign in
           </Link>
         </p>
-      </m.div>
+      </motion.div>
     </div>
-    </MotionProvider>
   );
 }

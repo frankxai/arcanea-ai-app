@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { MotionProvider, m } from "@/lib/motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -59,9 +59,8 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <MotionProvider>
     <div className="flex items-center justify-center min-h-[calc(100dvh-4rem)] px-4 py-12">
-      <m.div
+      <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -136,8 +135,7 @@ export default function ForgotPasswordPage() {
             Back to sign in
           </Link>
         </GlowCard>
-      </m.div>
+      </motion.div>
     </div>
-    </MotionProvider>
   );
 }

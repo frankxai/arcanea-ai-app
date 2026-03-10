@@ -1,7 +1,21 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 // ─── Icons ─────────────────────────────────────────────────────────────────────
 const Icons = {
+  Sparkles: () => (
+    <svg
+      className="w-5 h-5"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+    >
+      <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z" />
+    </svg>
+  ),
   Vault: () => (
     <svg
       className="w-6 h-6"
@@ -161,8 +175,8 @@ const FEATURES: VaultFeature[] = [
     color: "#0d47a1",
   },
   {
-    title: "Luminor Protection",
-    description: "Luminor intelligence protects your vault with vigilant care.",
+    title: "Guardian Protection",
+    description: "AI Guardians watch over your vault with vigilant care.",
     icon: "Shield",
     color: "#00bcd4",
   },
@@ -174,7 +188,7 @@ const FEATURES: VaultFeature[] = [
   },
   {
     title: "Cloud Sync",
-    description: "Access your vault from anywhere, on any device.",
+    description: "Access your vault from anywhere in the realm.",
     icon: "Cloud",
     color: "#ef4444",
   },
@@ -185,8 +199,8 @@ const FEATURES: VaultFeature[] = [
     color: "#3b82f6",
   },
   {
-    title: "Premium Quality",
-    description: "Your creative work stored with the care it deserves.",
+    title: "Gem Quality",
+    description: "Your treasures are precious gems in the Arcanean crown.",
     icon: "Gem",
     color: "#ec4899",
   },
@@ -194,7 +208,7 @@ const FEATURES: VaultFeature[] = [
 
 const BENEFITS = [
   "End-to-end encryption for all assets",
-  "AI-backed security protocols",
+  "Guardian-backed security protocols",
   "Automatic versioning and backup",
   "Cross-device synchronization",
   "Advanced search with vector embeddings",
@@ -203,8 +217,34 @@ const BENEFITS = [
   "Early access to new features",
 ];
 
+// ─── Loading Component ──────────────────────────────────────────────────────
+function LoadingState() {
+  return (
+    <div className="flex items-center justify-center min-h-[60vh]">
+      <div className="relative">
+        <div className="w-16 h-16 border-4 border-brand-primary/20 rounded-full" />
+        <div className="absolute top-0 left-0 w-16 h-16 border-4 border-brand-primary border-t-transparent rounded-full animate-spin" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <Icons.Sparkles />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── Main Component ──────────────────────────────────────────────────────────
 export default function ArcaneaVaultPage() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const timer = setTimeout(() => setIsLoading(false), 800);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
     <div className="relative min-h-screen">
       {/* Background */}
@@ -215,6 +255,10 @@ export default function ArcaneaVaultPage() {
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {isLoading ? (
+          <LoadingState />
+        ) : (
+          <>
             {/* Hero Section */}
             <section className="mb-16">
               <div className="relative liquid-glass rounded-3xl overflow-hidden px-8 py-12 sm:px-12 sm:py-16">
@@ -239,7 +283,7 @@ export default function ArcaneaVaultPage() {
 
                   <p className="text-text-secondary font-body text-lg leading-relaxed mb-8 max-w-2xl">
                     A sanctuary for your most precious creative assets.
-                    AI-protected, encrypted with advanced security, and
+                    Protected by Guardians, encrypted with ancient magic, and
                     synced across all your devices.
                   </p>
 
@@ -273,7 +317,7 @@ export default function ArcaneaVaultPage() {
                   Vault Features
                 </h2>
                 <h3 className="text-fluid-2xl font-display font-bold">
-                  Built for Security
+                  Protected by Ancient Magic
                 </h3>
               </div>
 
@@ -354,7 +398,7 @@ export default function ArcaneaVaultPage() {
                   </h2>
                   <p className="text-text-secondary font-body leading-relaxed mb-8">
                     Your creative assets deserve the best protection. Open your
-                    Arcanea Vault today and let the Luminors keep watch.
+                    Arcanea Vault today and let the Guardians keep watch.
                   </p>
                   <div className="flex flex-wrap justify-center gap-4">
                     <Link
@@ -368,6 +412,8 @@ export default function ArcaneaVaultPage() {
                 </div>
               </div>
             </section>
+          </>
+        )}
       </main>
     </div>
   );

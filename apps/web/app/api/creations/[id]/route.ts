@@ -87,7 +87,7 @@ export async function PATCH(
       status: z.enum(['draft', 'published', 'archived']).optional(),
       visibility: z.enum(['public', 'private', 'unlisted']).optional(),
       element: z.enum(['Fire', 'Water', 'Earth', 'Wind', 'Void', 'Spirit']).optional(),
-      gate: z.enum(['Foundation', 'Flow', 'Fire', 'Heart', 'Voice', 'Sight', 'Crown', 'Starweave', 'Unity', 'Source']).optional(),
+      gate: z.enum(['Foundation', 'Flow', 'Fire', 'Heart', 'Voice', 'Sight', 'Crown', 'Shift', 'Unity', 'Source']).optional(),
       guardian: z.enum(['Lyssandria', 'Leyla', 'Draconia', 'Maylinn', 'Alera', 'Lyria', 'Aiyami', 'Elara', 'Ino', 'Shinkami']).optional(),
       tags: z.array(z.string().max(VALIDATION_RULES.tags.maxLength)).max(VALIDATION_RULES.tags.maxCount).optional(),
     });

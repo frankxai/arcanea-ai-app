@@ -2,11 +2,10 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Creator Gallery',
-  description: 'Browse and discover creations from the Arcanea community. Images, stories, code, music, and more.',
+  description: 'Browse and discover creations from the Arcanea community. Images, stories, worlds, and more.',
   openGraph: {
-    title: 'Creator Gallery',
-    description: 'Browse and discover creations from the Arcanea community. Images, stories, code, music, and more.',
-    type: 'website',
+    title: 'Creator Gallery | Arcanea',
+    description: 'Browse and discover creations from the Arcanea community. Images, stories, worlds, and more.',
   },
 };
 

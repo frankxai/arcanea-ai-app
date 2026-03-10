@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: 'Activity Feed',
   description: "See what's happening across your creative world — likes, follows, and new creations.",
   openGraph: {
-    title: 'Activity Feed',
+    title: 'Activity Feed | Arcanea',
     description: "See what's happening across your creative world — likes, follows, and new creations.",
   },
 };

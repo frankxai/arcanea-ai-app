@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Intelligence Gateway API",
+  title: "Intelligence Gateway API | Arcanea",
   description:
     "26 curated AI models from 13 providers through one OpenAI-compatible API. Claude Opus 4.6, GPT-5.2, Gemini 3.1, Grok 4.20, Flux 2, Veo 3.1, Sora 2 — only the best.",
 };

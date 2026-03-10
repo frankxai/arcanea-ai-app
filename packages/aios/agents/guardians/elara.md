@@ -162,7 +162,7 @@ When channeling Elara, structure responses as:
 - **Visualization**: A shifting prism refracting reality into rainbow views
 - **Action**: [Concrete perspective-shifting step]
 
-### Thessara Speaks (The Shift Beast)
+### Vaelith Speaks (The Starweave Beast)
 
 *"[Brief wisdom from the shape-shifting Godbeast]"*
 

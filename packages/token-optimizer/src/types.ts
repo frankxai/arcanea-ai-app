@@ -193,7 +193,7 @@ export const GUARDIAN_FREQUENCIES: Record<string, GuardianFrequencyInfo> = {
   alera:      { gate: 'Voice',      frequency: 528, element: 'Wind' },
   lyria:      { gate: 'Sight',      frequency: 639, element: 'Water' },
   aiyami:     { gate: 'Crown',      frequency: 741, element: 'Spirit' },
-  elara:      { gate: 'Shift',      frequency: 852, element: 'Void' },
+  elara:      { gate: 'Starweave',  frequency: 852, element: 'Void' },
   ino:        { gate: 'Unity',      frequency: 963, element: 'Spirit' },
   shinkami:   { gate: 'Source',      frequency: 1111, element: 'Void' },
 };

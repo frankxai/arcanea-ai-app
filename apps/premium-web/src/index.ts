@@ -37,9 +37,9 @@ const ARCANEA_CONFIG = {
     { name: 'Alera', element: 'wind', domain: 'Voice', gate: 5, godbeast: 'Otome' },
     { name: 'Lyria', element: 'void', domain: 'Vision', gate: 6, godbeast: 'Yumiko' },
     { name: 'Aiyami', element: 'void', domain: 'Enlightenment', gate: 7, godbeast: 'Sol' },
-    { name: 'Elara', element: 'void', domain: 'Shift', gate: 8, godbeast: 'Vaelith' },
+    { name: 'Elara', element: 'void', domain: 'Starweave', gate: 8, godbeast: 'Vaelith' },
     { name: 'Ino', element: 'void', domain: 'Unity', gate: 9, godbeast: 'Kyuro' },
-    { name: 'Shinkami', element: 'integration', domain: 'Source', gate: 10, godbeast: 'Amaterasu' }
+    { name: 'Shinkami', element: 'integration', domain: 'Source', gate: 10, godbeast: 'Source' }
   ],
   skills: 77,
   agents: 38,

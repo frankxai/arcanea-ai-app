@@ -23,7 +23,7 @@ const GUARDIANS = [
   { name: 'Alera', hz: '528 Hz', domain: 'Voice' },
   { name: 'Lyria', hz: '639 Hz', domain: 'Sight' },
   { name: 'Aiyami', hz: '741 Hz', domain: 'Crown' },
-  { name: 'Elara', hz: '852 Hz', domain: 'Starweave' },
+  { name: 'Elara', hz: '852 Hz', domain: 'Shift' },
   { name: 'Ino', hz: '963 Hz', domain: 'Unity' },
   { name: 'Shinkami', hz: '1111 Hz', domain: 'Source' },
 ];
@@ -69,7 +69,7 @@ const CONSTELLATIONS: [number, number][] = [
 
 const RING_1 = ['Fire', 'Water', 'Earth'];
 const RING_2 = ['Wind', 'Void', 'Heart', 'Voice'];
-const RING_3 = ['Sight', 'Crown', 'Starweave', 'Unity'];
+const RING_3 = ['Sight', 'Crown', 'Shift', 'Unity'];
 
 export function V9Particles() {
   const particles = useMemo(() =>
@@ -163,7 +163,7 @@ export function V9Particles() {
           fontWeight: 400, lineHeight: 1.15, maxWidth: 800, margin: '0 0 28px',
         }}>The Universe That Creates With You</h1>
         <p style={{ fontSize: 18, opacity: 0.55, maxWidth: 540, margin: '0 0 44px', lineHeight: 1.6 }}>
-          16 intelligences. 62 texts. 26 models. Infinite creation.
+          10 intelligences. 62 texts. 26 models. Infinite creation.
         </p>
         <a href="/discover" className="glass-btn">Enter the Universe</a>
       </section>

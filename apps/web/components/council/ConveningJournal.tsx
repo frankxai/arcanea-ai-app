@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { m } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface ConveningJournalProps {
   value: string;
@@ -15,7 +15,7 @@ export function ConveningJournal({
   value,
   onChange,
   onSave,
-  placeholder = "What surfaced? What surprised you? What will you do differently?",
+  placeholder = "Record what you received. What shifted? What arrived? What was sealed?",
   color = "#00bcd4",
 }: ConveningJournalProps) {
   const [isSaving, setIsSaving] = useState(false);
@@ -36,7 +36,7 @@ export function ConveningJournal({
   return (
     <div className="space-y-3">
       <label className="block font-mono text-xs text-white/40 uppercase tracking-widest">
-        Session Journal
+        Council Journal
       </label>
 
       <textarea
@@ -44,7 +44,7 @@ export function ConveningJournal({
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         rows={5}
-        className="w-full rounded-xl border border-white/[0.08] bg-white/[0.02] px-4 py-3 font-body text-sm text-white/80 placeholder:text-white/20 focus:outline-none focus:border-[#00bcd4]/30 focus:ring-2 focus:ring-[#00bcd4]/15 focus:bg-white/[0.04] transition-all resize-none leading-relaxed"
+        className="w-full rounded-xl border border-white/[0.08] bg-white/[0.02] px-4 py-3 font-body text-sm text-white/80 placeholder:text-white/20 focus:outline-none focus:border-[#00bcd4]/30 focus:bg-white/[0.04] transition-all resize-none leading-relaxed"
         style={{ caretColor: color }}
       />
 
@@ -83,23 +83,23 @@ export function ConveningJournal({
                   strokeLinejoin="round"
                 />
               </svg>
-              Saved
+              Sealed
             </>
           ) : (
-            "Save Entry"
+            "Seal Entry"
           )}
         </button>
       </div>
 
       {saved && (
-        <m.p
+        <motion.p
           initial={{ opacity: 0, y: 4 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
           className="font-body text-xs text-[#10b981] text-center"
         >
-          Entry saved to your session journal.
-        </m.p>
+          Entry sealed in your Council journal.
+        </motion.p>
       )}
     </div>
   );

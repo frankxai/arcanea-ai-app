@@ -116,7 +116,7 @@ export const GATES: GateConfig[] = [
   { name: "Voice", freq: "528 Hz" },
   { name: "Sight", freq: "639 Hz" },
   { name: "Crown", freq: "741 Hz" },
-  { name: "Starweave", freq: "852 Hz" },
+  { name: "Shift", freq: "852 Hz" },
   { name: "Unity", freq: "963 Hz" },
   { name: "Source", freq: "1111 Hz" },
 ];

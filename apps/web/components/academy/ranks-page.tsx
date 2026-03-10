@@ -74,7 +74,7 @@ const RANKS = [
     description:
       'Near the peak. Multiple elements bend to your mastery.',
     detail:
-      'Archmages are rare. They have crossed the threshold of Crown and Starweave — experiencing true enlightenment and the ability to perceive and shift between realities. Their creative works transcend categories and traditions.',
+      'Archmages are rare. They have crossed the threshold of Crown and Shift — experiencing true enlightenment and the ability to perceive and shift between realities. Their creative works transcend categories and traditions.',
     glassClass: 'liquid-glass',
     glowColor: 'rgba(255,215,0,0.22)',
     glowBorder: 'rgba(255,215,0,0.38)',

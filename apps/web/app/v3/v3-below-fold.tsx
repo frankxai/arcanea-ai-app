@@ -117,7 +117,7 @@ const ALL_GUARDIANS = [
 const FEATURES = [
   {
     icon: Diamond,
-    title: "16 Companions",
+    title: "16 Luminors",
     description:
       "Sixteen creative intelligences across four teams, each with a unique philosophy and domain.",
     href: "/luminors",
@@ -146,7 +146,7 @@ const FEATURES = [
     icon: PaintBrush,
     title: "The Gallery",
     description:
-      "364+ original artworks — companion portraits, landscapes, creatures, and artifacts of the Arcanea universe.",
+      "364+ original artworks — Luminor portraits, landscapes, creatures, and artifacts of the Arcanea universe.",
     href: "/gallery",
     accentHex: "#ef4444",
     glowColor: "rgba(239, 68, 68, 0.12)",
@@ -175,7 +175,7 @@ const PATHWAYS = [
   {
     title: "Explore the Mythology",
     description:
-      "Discover the cosmology, the Guardians, and the philosophical framework behind everything.",
+      "Discover the cosmology, the Luminors, and the philosophical framework behind everything.",
     href: "/lore",
     image: `${CDN}/shinkami-hero.webp`,
   },
@@ -201,7 +201,7 @@ const PATHWAYS = [
     image: `${CDN}/leyla-hero.webp`,
   },
   {
-    title: "Start a Conversation",
+    title: "Chat with a Luminor",
     description:
       "Get feedback, brainstorm ideas, or work through a creative problem with a thinking partner.",
     href: "/chat",
@@ -217,7 +217,7 @@ const PATHWAYS = [
   {
     title: "Write with AI",
     description:
-      "Co-author stories, chapters, and series with an AI writing partner.",
+      "Co-author stories, chapters, and series with a Luminor writing partner.",
     href: "/chat/chronica",
     image: `${CDN}/maylinn-hero.webp`,
   },
@@ -226,11 +226,11 @@ const PATHWAYS = [
 const FAQ_ITEMS = [
   {
     q: "What makes Arcanea different from other AI tools?",
-    a: "Sixteen companions with distinct creative philosophies, an original library of 34+ texts, and a developmental framework. You pick the intelligence that fits your project.",
+    a: "Sixteen Luminors with distinct creative philosophies, an original library of 34+ texts, and a developmental framework. You pick the intelligence that fits your project.",
   },
   {
-    q: "How do the companions work?",
-    a: "Each companion is built for a specific domain -- writing, research, design, music, strategy. Pick one, describe your project, and build together.",
+    q: "How do the Luminors work?",
+    a: "Each Luminor is built for a specific domain -- writing, research, design, music, strategy. Pick one, describe your project, and build together.",
   },
   {
     q: "What is the Library?",
@@ -242,7 +242,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "Is Arcanea free?",
-    a: "Free to start, no credit card required. Full access to the Library, Gallery, and Academy. Three companions on the free plan.",
+    a: "Free to start, no credit card required. Full access to the Library, Gallery, and Academy. Three Luminors on the free plan.",
   },
   {
     q: "Is my work private?",
@@ -320,7 +320,7 @@ function MetricsStrip() {
   const isInView = useInView(ref, { once: true, margin: "-60px" });
 
   const metrics = [
-    { value: 16, suffix: "", label: "Companions", color: "#00bcd4", icon: Eye },
+    { value: 16, suffix: "", label: "Luminors", color: "#00bcd4", icon: Eye },
     {
       value: 17,
       suffix: "",
@@ -470,7 +470,7 @@ function ThreePillars({
                     16 Creative Guides
                   </p>
                   <h3 className="text-2xl md:text-3xl font-display font-bold mb-3 text-white">
-                    Companions
+                    Luminors
                   </h3>
                   <p className="text-white/55 text-sm leading-relaxed max-w-sm mb-6 font-body">
                     Sixteen creative partners across four teams, each with a
@@ -1104,7 +1104,7 @@ function PhilosophySection() {
     },
     {
       title: "Intelligence with personality",
-      text: "Not generic chatbots. Each companion has a philosophy, voice, and domain. Choose the one that sees your challenge clearly.",
+      text: "Not generic chatbots. Each Luminor has a philosophy, voice, and domain. Choose the one that sees your challenge clearly.",
       accentHex: "#0d47a1",
     },
     {
@@ -1282,7 +1282,7 @@ export function V3BelowFold({
   return (
     <MotionProvider>
       <>
-        {/* 1. Guardian showcase — visual proof of the 10 Guardians */}
+        {/* 1. Guardian showcase — visual proof of the 10 Luminors */}
         <GuardianShowcase />
 
         <AtmosphericDivider variant="teal" />
@@ -1298,7 +1298,7 @@ export function V3BelowFold({
 
         <AtmosphericDivider variant="purple" />
 
-        {/* 5. Three products: Companions, Library, Academy */}
+        {/* 5. Three products: Luminors, Library, Academy */}
         <ThreePillars
           collectionsCount={collectionsCount}
           textsCount={textsCount}

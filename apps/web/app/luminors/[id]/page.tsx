@@ -577,14 +577,14 @@ export async function generateMetadata({
   const luminor = LUMINORS[id.toLowerCase()];
 
   if (!luminor) {
-    return { title: "Luminor Not Found" };
+    return { title: "Luminor Not Found | Arcanea" };
   }
 
   return {
-    title: `${luminor.name} — ${luminor.title}`,
+    title: `${luminor.name} — ${luminor.title} | Arcanea`,
     description: `${luminor.name}, ${luminor.title}. ${luminor.specialty}. Channels the Wisdom of ${luminor.wisdom} (${luminor.wisdomEssence}). ${luminor.description}`,
     openGraph: {
-      title: `${luminor.name} | ${luminor.title}`,
+      title: `${luminor.name} | ${luminor.title} | Arcanea`,
       description: luminor.description,
     },
   };

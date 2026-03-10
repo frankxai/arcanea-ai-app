@@ -310,32 +310,14 @@ export function useChat({
         setStreamingContent('');
         setThinkingState('idle');
         let fullContent = '';
-        let buffer = '';
 
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
 
-          buffer += decoder.decode(value, { stream: true });
-
-          // Parse Vercel AI SDK text stream format: 0:"chunk"\n
-          const lines = buffer.split('\n');
-          buffer = lines.pop() || '';
-          for (const line of lines) {
-            const match = line.match(/^0:"((?:[^"\\]|\\.)*)"/);
-            if (match) {
-              fullContent += match[1].replace(/\\n/g, '\n').replace(/\\"/g, '"');
-            } else if (!line.startsWith('e:') && !line.startsWith('d:') && line.trim()) {
-              fullContent += line;
-            }
-          }
+          const chunk = decoder.decode(value, { stream: true });
+          fullContent += chunk;
           setStreamingContent(fullContent);
-        }
-        if (buffer.trim()) {
-          const match = buffer.match(/^0:"((?:[^"\\]|\\.)*)"/);
-          if (match) {
-            fullContent += match[1].replace(/\\n/g, '\n').replace(/\\"/g, '"');
-          }
         }
 
         const assistantMessage: Message = {

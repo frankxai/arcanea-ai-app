@@ -78,7 +78,7 @@ const typeIconMap: Record<string, React.ReactNode> = {
 }
 
 const typeColorMap: Record<string, string> = {
-  text: "text-[#0d47a1]",
+  text: "text-[#8b5cf6]",
   image: "text-[#00bcd4]",
   video: "text-rose-400",
   music: "text-amber-400",
@@ -99,11 +99,11 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
   )
 
   return (
-    <aside className="flex flex-col h-full w-64 shrink-0 border-r border-[rgba(13,71,161,0.15)] bg-[#0d0d15]">
+    <aside className="flex flex-col h-full w-64 shrink-0 border-r border-[rgba(139,92,246,0.15)] bg-[#0d0d15]">
       {/* Logo */}
-      <div className="px-5 py-4 border-b border-[rgba(13,71,161,0.12)]">
+      <div className="px-5 py-4 border-b border-[rgba(139,92,246,0.12)]">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#0d47a1] to-[#6d28d9] flex items-center justify-center glow-violet">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#8b5cf6] to-[#6d28d9] flex items-center justify-center glow-violet">
             <Sparkle size={16} weight="fill" className="text-white" />
           </div>
           <div>
@@ -121,11 +121,11 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
       <div className="px-4 py-3">
         <button
           className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg
-            bg-gradient-to-r from-[#0d47a1] to-[#7c3aed]
+            bg-gradient-to-r from-[#8b5cf6] to-[#7c3aed]
             text-white text-sm font-medium
-            hover:from-[#9d70f8] hover:to-[#0d47a1]
+            hover:from-[#9d70f8] hover:to-[#8b5cf6]
             transition-all duration-200 glow-violet
-            shadow-lg shadow-[rgba(13,71,161,0.25)]"
+            shadow-lg shadow-[rgba(139,92,246,0.25)]"
         >
           <Plus size={16} weight="bold" />
           New Creation
@@ -134,7 +134,7 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
 
       {/* Search */}
       <div className="px-4 pb-3">
-        <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-[#16161f] border border-[rgba(13,71,161,0.12)]">
+        <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-[#16161f] border border-[rgba(139,92,246,0.12)]">
           <MagnifyingGlass size={13} className="text-muted-foreground shrink-0" />
           <input
             type="text"
@@ -156,7 +156,7 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
               <Clock size={10} />
               Recent
             </div>
-            <span className="text-[10px] text-[#0d47a1] cursor-pointer hover:text-[#a78bfa] transition-colors">
+            <span className="text-[10px] text-[#8b5cf6] cursor-pointer hover:text-[#a78bfa] transition-colors">
               View all
             </span>
           </div>
@@ -169,14 +169,14 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
                 className={cn(
                   "group flex items-center gap-2.5 px-2.5 py-2 rounded-lg cursor-pointer transition-all duration-150",
                   hoveredItem === item.id
-                    ? "bg-[rgba(13,71,161,0.1)] border border-[rgba(13,71,161,0.2)]"
+                    ? "bg-[rgba(139,92,246,0.1)] border border-[rgba(139,92,246,0.2)]"
                     : "hover:bg-[rgba(255,255,255,0.03)] border border-transparent"
                 )}
               >
                 <div
                   className={cn(
                     "w-6 h-6 rounded-md flex items-center justify-center shrink-0",
-                    "bg-[rgba(13,71,161,0.1)]",
+                    "bg-[rgba(139,92,246,0.1)]",
                     typeColorMap[item.type]
                   )}
                 >
@@ -203,7 +203,7 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
               <FolderSimple size={10} />
               Collections
             </div>
-            <button className="text-[10px] text-[#0d47a1] cursor-pointer hover:text-[#a78bfa] transition-colors">
+            <button className="text-[10px] text-[#8b5cf6] cursor-pointer hover:text-[#a78bfa] transition-colors">
               <Plus size={11} weight="bold" />
             </button>
           </div>
@@ -228,9 +228,9 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
       </div>
 
       {/* User Profile */}
-      <div className="px-4 py-3 border-t border-[rgba(13,71,161,0.12)]">
+      <div className="px-4 py-3 border-t border-[rgba(139,92,246,0.12)]">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#0d47a1] to-[#00bcd4] flex items-center justify-center text-xs font-bold text-white shrink-0">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#8b5cf6] to-[#00bcd4] flex items-center justify-center text-xs font-bold text-white shrink-0">
             A
           </div>
           <div className="flex-1 min-w-0">

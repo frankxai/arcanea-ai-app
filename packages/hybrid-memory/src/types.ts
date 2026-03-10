@@ -201,7 +201,7 @@ export const GUARDIAN_MEMORY_CONFIGS: Record<string, GuardianMemoryConfig> = {
   elara: {
     guardianId: 'elara',
     guardianName: 'Elara',
-    gate: 'Shift',
+    gate: 'Starweave',
     frequency: 852,
     element: 'Void',
     namespace: 'guardian:elara',

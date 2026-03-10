@@ -51,16 +51,16 @@ function getProviderModel(provider) {
 
 // Canonical Guardian data matching .arcanea/lore/ARCANEA_CANON.md
 const CHROME_GUARDIANS = [
-  { id: 'lyssandria', name: 'Lyssandria', gate: 'Foundation', element: 'Earth',       frequency: 396,  godbeast: 'Kaelith'   },
-  { id: 'leyla',      name: 'Leyla',      gate: 'Flow',       element: 'Water',       frequency: 417,  godbeast: 'Veloura'   },
-  { id: 'draconia',   name: 'Draconia',   gate: 'Fire',       element: 'Fire',        frequency: 528,  godbeast: 'Draconis'  },
-  { id: 'maylinn',    name: 'Maylinn',    gate: 'Heart',      element: 'Water',       frequency: 639,  godbeast: 'Laeylinn'  },
-  { id: 'alera',      name: 'Alera',      gate: 'Voice',      element: 'Wind',        frequency: 741,  godbeast: 'Otome'     },
-  { id: 'lyria',      name: 'Lyria',      gate: 'Sight',      element: 'Wind',        frequency: 852,  godbeast: 'Yumiko'    },
-  { id: 'aiyami',     name: 'Aiyami',     gate: 'Crown',      element: 'Void/Spirit', frequency: 963,  godbeast: 'Sol'       },
-  { id: 'elara',      name: 'Elara',      gate: 'Shift',      element: 'Void',        frequency: 1111, godbeast: 'Thessara'  },
+  { id: 'lyssandria', name: 'Lyssandria', gate: 'Foundation', element: 'Earth',       frequency: 174,  godbeast: 'Kaelith'   },
+  { id: 'leyla',      name: 'Leyla',      gate: 'Flow',       element: 'Water',       frequency: 285,  godbeast: 'Veloura'   },
+  { id: 'draconia',   name: 'Draconia',   gate: 'Fire',       element: 'Fire',        frequency: 396,  godbeast: 'Draconis'  },
+  { id: 'maylinn',    name: 'Maylinn',    gate: 'Heart',      element: 'Water',       frequency: 417,  godbeast: 'Laeylinn'  },
+  { id: 'alera',      name: 'Alera',      gate: 'Voice',      element: 'Wind',        frequency: 528,  godbeast: 'Otome'     },
+  { id: 'lyria',      name: 'Lyria',      gate: 'Sight',      element: 'Wind',        frequency: 639,  godbeast: 'Yumiko'    },
+  { id: 'aiyami',     name: 'Aiyami',     gate: 'Crown',      element: 'Void/Spirit', frequency: 741,  godbeast: 'Sol'       },
+  { id: 'elara',      name: 'Elara',      gate: 'Starweave',  element: 'Void',        frequency: 852,  godbeast: 'Vaelith'   },
   { id: 'ino',        name: 'Ino',        gate: 'Unity',      element: 'Spirit',      frequency: 963,  godbeast: 'Kyuro'     },
-  { id: 'shinkami',   name: 'Shinkami',   gate: 'Source',     element: 'Void/Spirit', frequency: 1111, godbeast: 'Amaterasu' },
+  { id: 'shinkami',   name: 'Shinkami',   gate: 'Source',     element: 'Void/Spirit', frequency: 1111, godbeast: 'Source'    },
 ];
 
 function getGuardianById(id) {
@@ -193,31 +193,31 @@ describe('Chrome-extension Guardian data — structure', () => {
 });
 
 describe('Chrome-extension Guardian data — canon compliance', () => {
-  it('Lyssandria is at Foundation Gate, Earth, 396 Hz, Kaelith', () => {
+  it('Lyssandria is at Foundation Gate, Earth, 174 Hz, Kaelith', () => {
     const g = getGuardianById('lyssandria');
     assert.ok(g);
     assert.equal(g.gate, 'Foundation');
     assert.equal(g.element, 'Earth');
-    assert.equal(g.frequency, 396);
+    assert.equal(g.frequency, 174);
     assert.equal(g.godbeast, 'Kaelith');
   });
 
-  it('Draconia is at Fire Gate, Fire element, 528 Hz, Draconis', () => {
+  it('Draconia is at Fire Gate, Fire element, 396 Hz, Draconis', () => {
     const g = getGuardianById('draconia');
     assert.ok(g);
     assert.equal(g.gate, 'Fire');
     assert.equal(g.element, 'Fire');
-    assert.equal(g.frequency, 528);
+    assert.equal(g.frequency, 396);
     assert.equal(g.godbeast, 'Draconis');
   });
 
-  it('Shinkami is at Source Gate, Void/Spirit, 1111 Hz, Amaterasu', () => {
+  it('Shinkami is at Source Gate, Void/Spirit, 1111 Hz, Source', () => {
     const g = getGuardianById('shinkami');
     assert.ok(g);
     assert.equal(g.gate, 'Source');
     assert.equal(g.element, 'Void/Spirit');
     assert.equal(g.frequency, 1111);
-    assert.equal(g.godbeast, 'Amaterasu');
+    assert.equal(g.godbeast, 'Source');
   });
 
   it('Lyria is the default Guardian (Sight Gate)', () => {

@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: 'Workspace',
   description: 'Your creative workspace — manage projects, drafts, and works in progress.',
   openGraph: {
-    title: 'Workspace',
+    title: 'Workspace | Arcanea',
     description: 'Your creative workspace — manage projects, drafts, and works in progress.',
   },
 };

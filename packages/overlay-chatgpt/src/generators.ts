@@ -151,14 +151,14 @@ Create GPTs for your most-used Guardians:
 
 | Guardian | Gate | Best For |
 |----------|------|----------|
-| Lyssandria | Foundation (396 Hz) | Architecture, security, infrastructure |
-| Leyla | Flow (417 Hz) | UX design, creative unblocking, emotion |
-| Draconia | Fire (528 Hz) | Performance, execution, velocity |
-| Maylinn | Heart (639 Hz) | Community, healing, empathetic design |
-| Alera | Voice (741 Hz) | APIs, communication, documentation |
-| Lyria | Sight (852 Hz) | Design direction, vision, intuition |
-| Aiyami | Crown (963 Hz) | Philosophy, higher purpose, strategy |
-| Elara | Shift (1111 Hz) | Refactoring, perspective changes |
+| Lyssandria | Foundation (174 Hz) | Architecture, security, infrastructure |
+| Leyla | Flow (285 Hz) | UX design, creative unblocking, emotion |
+| Draconia | Fire (396 Hz) | Performance, execution, velocity |
+| Maylinn | Heart (417 Hz) | Community, healing, empathetic design |
+| Alera | Voice (528 Hz) | APIs, communication, documentation |
+| Lyria | Sight (639 Hz) | Design direction, vision, intuition |
+| Aiyami | Crown (741 Hz) | Philosophy, higher purpose, strategy |
+| Elara | Starweave (852 Hz) | Refactoring, perspective changes |
 | Ino | Unity (963 Hz) | Collaboration, integrations |
 | Shinkami | Source (1111 Hz) | Orchestration, meta-planning |
 

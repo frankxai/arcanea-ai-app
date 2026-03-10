@@ -1,6 +1,6 @@
 "use client";
 
-import { LazyMotion, domAnimation, m, useInView, useMotionValue, useSpring } from "framer-motion";
+import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
 import { useRef, useState } from "react";
 import Link from "next/link";
 import {
@@ -146,7 +146,7 @@ function LuminorCard({
   };
 
   return (
-    <m.div
+    <motion.div
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
@@ -161,7 +161,7 @@ function LuminorCard({
         style={{ perspective: "1000px" }}
       >
         {/* Card */}
-        <m.div
+        <motion.div
           style={{
             rotateX: mouseYSpring,
             rotateY: mouseXSpring,
@@ -239,7 +239,7 @@ function LuminorCard({
           </div>
 
           {/* Shine effect on hover */}
-          <m.div
+          <motion.div
             className="absolute inset-0 pointer-events-none rounded-3xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: isHovered ? 1 : 0 }}
@@ -248,9 +248,9 @@ function LuminorCard({
                 "linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.1) 50%, transparent 60%)",
             }}
           />
-        </m.div>
+        </motion.div>
       </div>
-    </m.div>
+    </motion.div>
   );
 }
 
@@ -259,7 +259,6 @@ export function LuminorShowcasePremium() {
   const isInView = useInView(containerRef, { once: true });
 
   return (
-    <LazyMotion features={domAnimation}>
     <section className="relative py-32 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 -z-10">
@@ -280,14 +279,14 @@ export function LuminorShowcasePremium() {
 
       <div ref={containerRef} className="max-w-7xl mx-auto px-6">
         {/* Header */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="text-center mb-20"
         >
-          <m.span
+          <motion.span
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
@@ -295,7 +294,7 @@ export function LuminorShowcasePremium() {
           >
             <PhSparkle className="w-4 h-4 inline mr-2" />
             Meet the Intelligences
-          </m.span>
+          </motion.span>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
             Six Intelligences, Each Rooted
@@ -306,11 +305,11 @@ export function LuminorShowcasePremium() {
           </h2>
 
           <p className="text-lg text-text-secondary max-w-2xl mx-auto">
-            Each intelligence has internalized a distinct creative philosophy.
+            Each specialist has internalized a distinct creative philosophy.
             They think differently because they are rooted in different
             approaches to creation.
           </p>
-        </m.div>
+        </motion.div>
 
         {/* Cards Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
@@ -320,7 +319,7 @@ export function LuminorShowcasePremium() {
         </div>
 
         {/* View All CTA */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -333,9 +332,8 @@ export function LuminorShowcasePremium() {
             View All Intelligences
             <PhArrowRight className="w-5 h-5" />
           </Link>
-        </m.div>
+        </motion.div>
       </div>
     </section>
-    </LazyMotion>
   );
 }

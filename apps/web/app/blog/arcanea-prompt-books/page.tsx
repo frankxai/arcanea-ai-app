@@ -1,6 +1,6 @@
 "use client";
 
-import { LazyMotion, domAnimation, m } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 
 const fadeUp = {
@@ -15,14 +15,13 @@ const stagger = {
 
 export default function PromptBooksArticle() {
   return (
-    <LazyMotion features={domAnimation}>
     <article className="min-h-screen bg-cosmic-void text-text-primary">
       {/* Hero */}
       <header className="relative py-24 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-brand-primary/10 via-transparent to-transparent" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(0,188,212,0.06),transparent_70%)]" />
         <div className="max-w-3xl mx-auto px-6 relative z-10">
-          <m.div {...fadeUp}>
+          <motion.div {...fadeUp}>
             <p className="text-crystal font-mono text-sm tracking-widest mb-4">
               FEBRUARY 2026 &bull; 12 MIN READ
             </p>
@@ -32,9 +31,9 @@ export default function PromptBooksArticle() {
             <p className="text-xl text-text-secondary leading-relaxed">
               79 files. 11,579 lines. 10 phases built overnight. A complete cross-device
               prompt management system with context engineering, real-time sync,
-              and the full power of the Luminors.
+              and the full power of the Ten Guardians.
             </p>
-          </m.div>
+          </motion.div>
         </div>
       </header>
 
@@ -95,8 +94,8 @@ export default function PromptBooksArticle() {
                 icon: "file",
               },
               {
-                title: "Luminor Themes",
-                desc: "Collections align with the Luminors. Lyssandria's earth tones for foundational prompts. Draconia's fire for transformation. Your choice.",
+                title: "Guardian Themes",
+                desc: "Collections align with the Ten Guardians. Lyssandria's earth tones for foundational prompts. Draconia's fire for transformation. Your choice.",
                 icon: "shield",
               },
             ]} />
@@ -120,7 +119,7 @@ export default function PromptBooksArticle() {
             </p>
 
             <CodeBlock code={`-- Tables
-pb_collections    -- Folders with Luminor themes
+pb_collections    -- Folders with Guardian themes
 pb_prompts        -- The prompts themselves
 pb_tags           -- Injectable, weighted tokens
 pb_prompt_tags    -- Many-to-many junction
@@ -162,12 +161,12 @@ pb_templates      -- Reusable prompt templates`} />
               {
                 num: "01",
                 title: "Land on /prompt-books",
-                desc: "A liquid-glass sidebar on the left shows your collections, each with a Luminor-colored border. The main area shows your prompts in grid or list view. A floating action button glows in the bottom-right for quick capture.",
+                desc: "A liquid-glass sidebar on the left shows your collections, each with a Guardian-colored border. The main area shows your prompts in grid or list view. A floating action button glows in the bottom-right for quick capture.",
               },
               {
                 num: "02",
                 title: "Create a Collection",
-                desc: "Click 'New Collection'. Name it, pick a Luminor to theme it (Lyria for image prompts, Draconia for transformation workflows). Set visibility to private, shared, or public. The Luminor's color flows through every prompt card in this collection.",
+                desc: "Click 'New Collection'. Name it, pick a Guardian to theme it (Lyria for image prompts, Draconia for transformation workflows). Set visibility to private, shared, or public. The Guardian's color flows through every prompt card in this collection.",
               },
               {
                 num: "03",
@@ -285,8 +284,8 @@ pb_templates      -- Reusable prompt templates`} />
                 <span>Shared package with types, constants, and engines. Used by the web app, the extension, and the CLI. Write once, run everywhere.</span>
               </li>
               <li className="flex gap-3">
-                <span className="text-crystal font-bold shrink-0">Luminors</span>
-                <span>Each collection can be themed by a Luminor. Lyssandria (Earth/Foundation), Leyla (Water/Flow), Draconia (Fire/Power) &mdash; the mythology enriches the organizational metaphor.</span>
+                <span className="text-crystal font-bold shrink-0">Ten Guardians</span>
+                <span>Each collection can be themed by a Guardian. Lyssandria (Earth/Foundation), Leyla (Water/Flow), Draconia (Fire/Power) &mdash; the mythology enriches the organizational metaphor.</span>
               </li>
             </ul>
           </Section>
@@ -300,7 +299,7 @@ pb_templates      -- Reusable prompt templates`} />
               { label: "Components", value: "40" },
               { label: "Service Functions", value: "29" },
               { label: "Prompt Types", value: "9" },
-              { label: "Luminor Themes", value: "10" },
+              { label: "Guardian Themes", value: "10" },
               { label: "Default Tags", value: "26" },
               { label: "Database Tables", value: "6" },
               { label: "Supabase Channels", value: "3" },
@@ -318,13 +317,13 @@ pb_templates      -- Reusable prompt templates`} />
               <li><strong className="text-text-primary">Vault Integration</strong> &mdash; Direct sync between the Chrome extension and Prompt Books</li>
               <li><strong className="text-text-primary">Studio Mode</strong> &mdash; Visual prompt composition with drag-and-drop blocks</li>
               <li><strong className="text-text-primary">Community Templates</strong> &mdash; Share and discover prompts from other creators</li>
-              <li><strong className="text-text-primary">AI-Assisted Refinement</strong> &mdash; Let the Luminors help you improve your prompts</li>
+              <li><strong className="text-text-primary">AI-Assisted Refinement</strong> &mdash; Let the Guardians help you improve your prompts</li>
               <li><strong className="text-text-primary">Analytics</strong> &mdash; Track which prompts produce the best results</li>
             </ul>
           </Section>
 
           {/* CTA */}
-          <m.div
+          <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -345,12 +344,11 @@ pb_templates      -- Reusable prompt templates`} />
             >
               Open Prompt Books
             </Link>
-          </m.div>
+          </motion.div>
 
         </div>
       </div>
     </article>
-    </LazyMotion>
   );
 }
 
@@ -366,7 +364,7 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <m.section
+    <motion.section
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
@@ -375,7 +373,7 @@ function Section({
     >
       <h2 className="text-2xl font-display font-bold text-crystal mb-6">{title}</h2>
       {children}
-    </m.section>
+    </motion.section>
   );
 }
 
@@ -407,7 +405,7 @@ function Journey({ steps }: { steps: { num: string; title: string; desc: string 
   return (
     <div className="space-y-6 not-prose">
       {steps.map((step) => (
-        <m.div
+        <motion.div
           key={step.num}
           initial={{ opacity: 0, x: -12 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -422,7 +420,7 @@ function Journey({ steps }: { steps: { num: string; title: string; desc: string 
             <h4 className="text-sm font-display text-text-primary mb-1">{step.title}</h4>
             <p className="text-xs font-sans text-text-muted leading-relaxed">{step.desc}</p>
           </div>
-        </m.div>
+        </motion.div>
       ))}
     </div>
   );

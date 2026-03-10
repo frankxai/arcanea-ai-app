@@ -2,11 +2,11 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Terms of Service',
+  title: 'Terms of Service | Arcanea',
   description:
     'Terms governing your use of the Arcanea creative intelligence platform. You own what you create.',
   openGraph: {
-    title: 'Terms of Service',
+    title: 'Terms of Service | Arcanea',
     description:
       'Terms governing your use of the Arcanea creative intelligence platform. You own what you create.',
   },

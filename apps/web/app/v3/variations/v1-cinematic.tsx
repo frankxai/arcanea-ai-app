@@ -11,7 +11,7 @@ const GUARDIANS = [
   { name: 'Alera', element: 'Voice', hz: 528, icon: Wind },
   { name: 'Lyria', element: 'Sight', hz: 639, icon: Spiral },
   { name: 'Aiyami', element: 'Crown', hz: 741, icon: Lightning },
-  { name: 'Elara', element: 'Starweave', hz: 852, icon: Wind },
+  { name: 'Elara', element: 'Shift', hz: 852, icon: Wind },
   { name: 'Ino', element: 'Unity', hz: 963, icon: Drop },
   { name: 'Shinkami', element: 'Source', hz: 1111, icon: Spiral },
 ];

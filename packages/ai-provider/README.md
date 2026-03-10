@@ -1,7 +1,7 @@
 # @arcanea/ai-provider
 
 [![npm version](https://img.shields.io/npm/v/@arcanea/ai-provider.svg)](https://www.npmjs.com/package/@arcanea/ai-provider)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![License](https://img.shields.io/badge/License-Proprietary-red.svg)](./LICENSE)
 
 Vercel AI SDK provider for the [Arcanea Intelligence Gateway](https://arcanea.ai). One interface, 26 curated AI models across text, image, video, and audio.
 
@@ -206,4 +206,4 @@ Full API documentation and guides: [arcanea.ai/developers/api](https://arcanea.a
 
 ## License
 
-MIT
+Arcanea Proprietary License v1.0 — see [LICENSE](./LICENSE) for details.

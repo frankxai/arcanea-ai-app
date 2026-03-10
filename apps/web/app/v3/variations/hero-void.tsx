@@ -57,7 +57,7 @@ export function HeroVoid() {
           animate="visible"
           variants={fadeUp}
         >
-          16 Luminors for writing, design, code, music, and research.
+          10 AI specialists for writing, design, code, music, and research.
         </motion.p>
 
         {/* CTA */}

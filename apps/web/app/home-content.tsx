@@ -53,8 +53,8 @@ export function HomeContent({
     {
       href: "/lore/guardians",
       icon: <PhShieldStar className="w-7 h-7" weight="thin" />,
-      title: "Sixteen Intelligences",
-      stat: "16 Creative Partners",
+      title: "Ten Intelligences",
+      stat: "10 Creative Partners",
       description: "Each one thinks differently — grounded in a distinct philosophical framework. Create with the one that matches how your mind works.",
       accentColor: "atlantean-teal-aqua",
       glowColor: "rgba(0,188,212,0.15)",

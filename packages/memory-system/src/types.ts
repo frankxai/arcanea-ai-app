@@ -41,7 +41,7 @@ export type GuardianName =
 /** The ten Gate names */
 export type GateName =
   | 'Foundation' | 'Flow' | 'Fire' | 'Heart' | 'Voice'
-  | 'Sight' | 'Crown' | 'Shift' | 'Unity' | 'Source';
+  | 'Sight' | 'Crown' | 'Starweave' | 'Unity' | 'Source';
 
 // ── Core Entry Types ────────────────────────────────────
 

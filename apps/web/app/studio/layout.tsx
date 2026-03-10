@@ -1,13 +1,12 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Creation Studio",
+  title: "Creation Studio | Arcanea",
   description:
-    "Write, design, compose, and code in one workspace. Text, images, music, and code — all with intelligent creative tools.",
+    "Create text, images, music, and code with AI-assisted tools. Write, design, compose, and build.",
   openGraph: {
-    title: "Creation Studio",
-    description: "Write, design, compose, and code in one workspace.",
-    type: "website",
+    title: "Creation Studio | Arcanea",
+    description: "Create text, images, music, and code with AI-assisted tools.",
   },
 };
 

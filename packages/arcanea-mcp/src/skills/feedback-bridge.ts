@@ -67,7 +67,7 @@ const GUARDIAN_DOMAIN_MAP: Record<string, Trajectory["domain"]> = {
   Alera: "code",          // Voice — security, verification, review
   Lyria: "reasoning",     // Sight — strategy, research, prompts
   Aiyami: "creative",     // Crown — visuals, world-building
-  Elara: "code",          // Shift — refactoring, architecture shifts
+  Elara: "code",          // Starweave — refactoring, architecture shifts
   Ino: "code",            // Unity — collaboration, GitHub, MCP
   Shinkami: "reasoning",  // Source — orchestration, meta-consciousness
 };

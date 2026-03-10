@@ -121,14 +121,14 @@ Each file in \`guardian-prompts/\` is a pre-configured system instruction for a 
 
 | Guardian | Gate | Best For |
 |----------|------|----------|
-| Lyssandria | Foundation (396 Hz) | Architecture, security, infrastructure |
-| Leyla | Flow (417 Hz) | UX, emotion, creative unblocking |
-| Draconia | Fire (528 Hz) | Performance, execution, velocity |
-| Maylinn | Heart (639 Hz) | Community, healing, empathetic design |
-| Alera | Voice (741 Hz) | APIs, documentation, communication |
-| Lyria | Sight (852 Hz) | Design direction, vision |
-| Aiyami | Crown (963 Hz) | Philosophy, strategy |
-| Elara | Shift (1111 Hz) | Refactoring, perspective |
+| Lyssandria | Foundation (174 Hz) | Architecture, security, infrastructure |
+| Leyla | Flow (285 Hz) | UX, emotion, creative unblocking |
+| Draconia | Fire (396 Hz) | Performance, execution, velocity |
+| Maylinn | Heart (417 Hz) | Community, healing, empathetic design |
+| Alera | Voice (528 Hz) | APIs, documentation, communication |
+| Lyria | Sight (639 Hz) | Design direction, vision |
+| Aiyami | Crown (741 Hz) | Philosophy, strategy |
+| Elara | Starweave (852 Hz) | Refactoring, perspective |
 | Ino | Unity (963 Hz) | Collaboration, integrations |
 | Shinkami | Source (1111 Hz) | Orchestration, meta-planning |
 

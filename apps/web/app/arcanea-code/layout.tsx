@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Arcanea Code',
+  title: 'Arcanea Code | Arcanea',
   description: 'AI-powered development tools built for creators — code smarter with Arcanea Code, the intelligent coding companion.',
   openGraph: {
     title: 'Arcanea Code | AI-Powered Development',

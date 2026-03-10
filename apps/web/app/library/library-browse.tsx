@@ -16,8 +16,6 @@
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import type { Collection, Situation } from '../../lib/content/types';
-import { useAuth } from '../../lib/auth/context';
-import { getLabel } from '../../lib/vocabulary';
 
 interface LibraryBrowseProps {
   collections: Collection[];
@@ -61,7 +59,7 @@ const GATE_FREQUENCIES: Record<string, { gate: string; guardian: string; collect
   '528': { gate: 'Voice', guardian: 'Alera', collections: ['poesie-of-freedom', 'dialogues-of-masters'] },
   '639': { gate: 'Sight', guardian: 'Lyria', collections: ['prophecies', 'wisdom-scrolls'] },
   '741': { gate: 'Crown', guardian: 'Aiyami', collections: ['wisdom-scrolls', 'book-of-rituals'] },
-  '852': { gate: 'Starweave', guardian: 'Elara', collections: ['tales-of-creators', 'atlas-of-territories'] },
+  '852': { gate: 'Shift', guardian: 'Elara', collections: ['tales-of-creators', 'atlas-of-territories'] },
   '963': { gate: 'Unity', guardian: 'Ino', collections: ['codex-of-collaboration', 'legends-of-arcanea'] },
   '1111': { gate: 'Source', guardian: 'Shinkami', collections: ['legends-of-arcanea', 'book-of-shadows'] },
 };
@@ -69,13 +67,6 @@ const GATE_FREQUENCIES: Record<string, { gate: string; guardian: string; collect
 export function LibraryBrowse({ collections }: LibraryBrowseProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSituation, setSelectedSituation] = useState<Situation | null>(null);
-
-  // Vocabulary tier: newcomers see "Library", adepts see "Library of Arcanea", luminors see "The Archives"
-  const { user } = useAuth();
-  // gates_open lives on the user's profile; default to 0 until profile data is wired
-  const gatesOpen: number = (user as { user_metadata?: { gates_open?: number } } | null)
-    ?.user_metadata?.gates_open ?? 0;
-  const libraryLabel = getLabel('library', gatesOpen);
 
   // Check if search query matches a Gate frequency
   const activeFrequency = useMemo(() => {
@@ -123,7 +114,7 @@ export function LibraryBrowse({ collections }: LibraryBrowseProps) {
 
         <div className="relative max-w-3xl">
           <div className="mb-4 flex items-center gap-3 text-xs uppercase tracking-[0.4em] text-atlantean-teal">
-            <span>{libraryLabel}</span>
+            <span>The Library of Arcanea</span>
             <span className="hidden h-px flex-1 bg-cosmic-border sm:block" aria-hidden="true" />
           </div>
 

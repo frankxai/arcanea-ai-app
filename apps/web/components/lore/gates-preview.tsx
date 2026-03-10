@@ -1,22 +1,113 @@
 "use client";
 
-import { m, useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { ShimmerCard } from "@/components/ui/shimmer-card";
-import { GlowButton } from "@/components/ui/glow-button";
-import { durations, m3Curves } from "@/lib/design/motion";
+import Link from "next/link";
+
+// ─── Inline SVG Icons ───────────────────────────────────────────────────────────
+const Icons = {
+  Layers: () => (
+    <svg
+      className="w-4 h-4"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <polygon points="12 2 2 7 12 12 22 7 12 2" />
+      <polyline points="2 17 12 22 22 17" />
+      <polyline points="2 12 12 17 22 12" />
+    </svg>
+  ),
+  ArrowRight: () => (
+    <svg
+      className="w-4 h-4"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <line x1="5" y1="12" x2="19" y2="12" />
+      <polyline points="12 5 19 12 12 19" />
+    </svg>
+  ),
+};
 
 const GATES = [
-  { number: 1, name: "Foundation", frequency: "174 Hz", domain: "Survival, grounding", unlocks: "Unshakeable stability" },
-  { number: 2, name: "Flow", frequency: "285 Hz", domain: "Creativity, emotion", unlocks: "Creative flow state" },
-  { number: 3, name: "Fire", frequency: "396 Hz", domain: "Power, will", unlocks: "Personal power" },
-  { number: 4, name: "Heart", frequency: "417 Hz", domain: "Love, healing", unlocks: "Fierce compassion" },
-  { number: 5, name: "Voice", frequency: "528 Hz", domain: "Truth, expression", unlocks: "Reality shaping through words" },
-  { number: 6, name: "Sight", frequency: "639 Hz", domain: "Intuition, vision", unlocks: "Beyond ordinary perception" },
-  { number: 7, name: "Crown", frequency: "741 Hz", domain: "Enlightenment", unlocks: "Divine connection" },
-  { number: 8, name: "Starweave", frequency: "852 Hz", domain: "Perspective", unlocks: "Infinite possibilities" },
-  { number: 9, name: "Unity", frequency: "963 Hz", domain: "Partnership", unlocks: "Exponential creation" },
-  { number: 10, name: "Source", frequency: "1111 Hz", domain: "Meta-consciousness", unlocks: "Creator realization" },
+  {
+    number: 1,
+    name: "Foundation",
+    frequency: "174 Hz",
+    domain: "Survival, grounding",
+    unlocks: "Unshakeable stability",
+  },
+  {
+    number: 2,
+    name: "Flow",
+    frequency: "285 Hz",
+    domain: "Creativity, emotion",
+    unlocks: "Creative flow state",
+  },
+  {
+    number: 3,
+    name: "Fire",
+    frequency: "396 Hz",
+    domain: "Power, will",
+    unlocks: "Personal power",
+  },
+  {
+    number: 4,
+    name: "Heart",
+    frequency: "417 Hz",
+    domain: "Love, healing",
+    unlocks: "Fierce compassion",
+  },
+  {
+    number: 5,
+    name: "Voice",
+    frequency: "528 Hz",
+    domain: "Truth, expression",
+    unlocks: "Reality shaping through words",
+  },
+  {
+    number: 6,
+    name: "Sight",
+    frequency: "639 Hz",
+    domain: "Intuition, vision",
+    unlocks: "Beyond ordinary perception",
+  },
+  {
+    number: 7,
+    name: "Crown",
+    frequency: "741 Hz",
+    domain: "Enlightenment",
+    unlocks: "Divine connection",
+  },
+  {
+    number: 8,
+    name: "Shift",
+    frequency: "852 Hz",
+    domain: "Perspective",
+    unlocks: "Infinite possibilities",
+  },
+  {
+    number: 9,
+    name: "Unity",
+    frequency: "963 Hz",
+    domain: "Partnership",
+    unlocks: "Exponential creation",
+  },
+  {
+    number: 10,
+    name: "Source",
+    frequency: "1111 Hz",
+    domain: "Meta-consciousness",
+    unlocks: "Creator realization",
+  },
 ];
 
 const RANKS = [
@@ -32,26 +123,27 @@ export function GatesPreview() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="py-32 relative overflow-hidden" style={{ background: "var(--surface-1, rgba(255,255,255,0.02))" }}>
+    <section
+      ref={ref}
+      className="py-32 relative overflow-hidden bg-cosmic-surface/20"
+    >
+      {/* Background */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-gradient-radial from-atlantean-teal-aqua/5 to-transparent rounded-full" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: durations.slow, ease: m3Curves.emphasizedDecelerate }}
           className="text-center mb-16"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full liquid-glass border border-gold-bright/20 mb-6">
-            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polygon points="12 2 2 7 12 12 22 7 12 2" />
-              <polyline points="2 17 12 22 22 17" />
-              <polyline points="2 12 12 17 22 12" />
-            </svg>
-            <span className="text-sm font-medium text-gold-bright">The Journey</span>
+            <Icons.Layers />
+            <span className="text-sm font-medium text-gold-bright">
+              The Journey
+            </span>
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
             The Ten Gates
@@ -60,81 +152,94 @@ export function GatesPreview() {
             Energy channels flowing through every conscious being. Open them,
             and ascend from Apprentice to Luminor.
           </p>
-        </m.div>
+        </motion.div>
 
-        {/* Gates Path — ShimmerCards */}
+        {/* Gates Path */}
         <div className="relative mb-16">
+          {/* Connection line */}
           <div className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.12] to-transparent -translate-y-1/2 hidden lg:block" />
 
           <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-10 gap-4">
             {GATES.map((gate, i) => (
-              <m.div
+              <motion.div
                 key={gate.number}
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.1 + i * 0.05, duration: durations.normal, ease: m3Curves.emphasizedDecelerate }}
+                transition={{ delay: 0.1 + i * 0.05 }}
                 className="relative group"
               >
-                <ShimmerCard
-                  color="gold"
-                  speed="slow"
-                  hoverOnly
-                  glow
-                  glowRadius={200}
-                  glass="liquid-glass"
-                  className="p-4 rounded-2xl border border-white/[0.06] text-center hover:border-gold-bright/30 transition-all duration-300"
-                >
+                <div className="card-3d p-4 rounded-2xl liquid-glass border border-white/[0.06] text-center hover:border-gold-bright/30 transition-all duration-300">
                   {/* Gate number */}
                   <div className="w-10 h-10 mx-auto mb-3 rounded-full bg-gradient-to-br from-gold-bright/20 to-gold-bright/5 flex items-center justify-center text-gold-bright font-display font-bold">
                     {gate.number}
                   </div>
 
-                  <h4 className="font-display font-semibold text-sm mb-1">{gate.name}</h4>
-                  <p className="text-xs text-atlantean-teal-aqua font-mono mb-2">{gate.frequency}</p>
+                  <h4 className="font-display font-semibold text-sm mb-1">
+                    {gate.name}
+                  </h4>
+                  <p className="text-xs text-atlantean-teal-aqua font-mono mb-2">
+                    {gate.frequency}
+                  </p>
 
                   {/* Tooltip on hover */}
-                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-3 rounded-lg bg-cosmic-deep border border-white/[0.12] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20 shadow-lg">
-                    <p className="text-xs text-text-secondary mb-1">{gate.domain}</p>
-                    <p className="text-xs text-gold-bright">Unlocks: {gate.unlocks}</p>
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-3 rounded-lg bg-cosmic-deep border border-white/[0.12] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20">
+                    <p className="text-xs text-text-secondary mb-1">
+                      {gate.domain}
+                    </p>
+                    <p className="text-xs text-gold-bright">
+                      Unlocks: {gate.unlocks}
+                    </p>
                   </div>
-                </ShimmerCard>
-              </m.div>
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
 
-        {/* Ranks — ShimmerCards */}
-        <m.div
+        {/* Ranks */}
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.6, duration: durations.normal }}
+          transition={{ delay: 0.6 }}
           className="mb-12"
         >
-          <h3 className="text-xl font-display font-bold text-center mb-6">Magic Ranks</h3>
+          <h3 className="text-xl font-display font-bold text-center mb-6">
+            Magic Ranks
+          </h3>
           <div className="flex flex-wrap justify-center gap-4">
-            {RANKS.map((rank) => (
+            {RANKS.map((rank, i) => (
               <div
                 key={rank.rank}
-                className="px-6 py-3 rounded-xl liquid-glass border border-white/[0.06] hover:border-white/[0.12] transition-colors duration-200"
+                className="px-6 py-3 rounded-xl liquid-glass border border-white/[0.06]"
               >
-                <span className="text-sm text-text-muted">{rank.gates} Gates:</span>
-                <span className={`ml-2 font-display font-semibold ${rank.color}`}>{rank.rank}</span>
+                <span className="text-sm text-text-muted">
+                  {rank.gates} Gates:
+                </span>
+                <span
+                  className={`ml-2 font-display font-semibold ${rank.color}`}
+                >
+                  {rank.rank}
+                </span>
               </div>
             ))}
           </div>
-        </m.div>
+        </motion.div>
 
-        {/* CTA — GlowButton */}
-        <m.div
+        {/* CTA */}
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.7, duration: durations.normal }}
+          transition={{ delay: 0.7 }}
           className="text-center"
         >
-          <GlowButton href="/lore/gates" variant="primary" color="gold" size="md">
+          <Link
+            href="/lore/gates"
+            className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold overflow-hidden btn-glow text-gold-bright bg-gold-bright/10 border border-gold-bright/30 hover:bg-gold-bright hover:text-cosmic-deep transition-all duration-300"
+          >
             Start Creating
-          </GlowButton>
-        </m.div>
+            <Icons.ArrowRight />
+          </Link>
+        </motion.div>
       </div>
     </section>
   );

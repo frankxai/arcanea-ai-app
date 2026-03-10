@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: 'Welcome',
   description: 'Welcome to Arcanea — your journey through the Ten Gates begins here.',
   openGraph: {
-    title: 'Welcome',
+    title: 'Welcome | Arcanea',
     description: 'Welcome to Arcanea — your journey through the Ten Gates begins here.',
   },
 };

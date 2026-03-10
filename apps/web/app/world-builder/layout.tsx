@@ -1,11 +1,11 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "World Builder | Create Immersive Worlds",
+  title: "World Builder | Create Immersive Worlds | Arcanea",
   description:
     "Design and build immersive creative worlds with AI assistance. Define geography, cultures, magic systems, and lore for your stories and games.",
   openGraph: {
-    title: "World Builder",
+    title: "World Builder | Arcanea",
     description:
       "Design immersive creative worlds with AI. Geography, cultures, magic systems, and lore — all in one builder.",
   },

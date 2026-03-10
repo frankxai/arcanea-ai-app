@@ -1,6 +1,6 @@
 'use client';
 
-import { m } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { PhShield, PhSparkle } from '@/lib/phosphor-icons';
 
 export function GuardiansHero() {
@@ -19,7 +19,7 @@ export function GuardiansHero() {
           const y = Math.sin(angle) * radius + 50;
 
           return (
-            <m.div
+            <motion.div
               key={i}
               className="absolute w-4 h-4 rounded-full"
               style={{
@@ -44,16 +44,16 @@ export function GuardiansHero() {
 
       {/* Content */}
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-atlantean-teal-aqua/10 border border-atlantean-teal-aqua/20 mb-6"
         >
           <PhShield className="w-4 h-4 text-atlantean-teal-aqua" />
           <span className="text-sm font-medium text-atlantean-teal-aqua">Keepers of the Gates</span>
-        </m.div>
+        </motion.div>
 
-        <m.h1
+        <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
@@ -62,9 +62,9 @@ export function GuardiansHero() {
           <span className="bg-gradient-to-r from-atlantean-teal-aqua via-white to-gold-bright bg-clip-text text-transparent">
             The Ten Guardians
           </span>
-        </m.h1>
+        </motion.h1>
 
-        <m.p
+        <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
@@ -72,18 +72,18 @@ export function GuardiansHero() {
         >
           &ldquo;They are not merely powerful. They are the Ten who chose to stand between
           creation and dissolution — each one an axis upon which existence turns.&rdquo;
-        </m.p>
+        </motion.p>
 
-        <m.p
+        <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
           className="text-sm text-text-muted font-mono tracking-wider mb-8"
         >
           — Legends of Arcanea, Book III
-        </m.p>
+        </motion.p>
 
-        <m.p
+        <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
@@ -94,7 +94,7 @@ export function GuardiansHero() {
           those who pass through have earned the passage. Each carries a unique
           teaching, a bonded Godbeast, and a frequency that resonates through all
           of creation.
-        </m.p>
+        </motion.p>
       </div>
     </section>
   );

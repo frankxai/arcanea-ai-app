@@ -130,7 +130,7 @@ function validateLogConveningBody(
   }
 
   if (!b.imprint_notes || typeof b.imprint_notes !== 'object' || Array.isArray(b.imprint_notes)) {
-    return { valid: false, error: 'imprint_notes must be a JSON object (e.g. { "Iris": "pattern spotted in data" })' };
+    return { valid: false, error: 'imprint_notes must be a JSON object (e.g. { "Lumira": "received clarity" })' };
   }
 
   const depth = Number(b.depth_rating);
@@ -178,8 +178,6 @@ function validateLogConveningBody(
 export async function POST(request: NextRequest) {
   try {
     const supabase = await createClient();
-    // Cast to any for council tables not yet in generated types
-    const db = supabase as any;
     const {
       data: { user },
     } = await supabase.auth.getUser();
@@ -214,8 +212,8 @@ export async function POST(request: NextRequest) {
     const input = validation.data;
 
     // Fetch council
-    const { data: council, error: councilError } = await db
-      .from('luminor_councils')
+    const { data: council, error: councilError } = await supabase
+      .from('luminor_councils' as any)
       .select('id, current_streak, longest_streak, total_convenings, last_convening_at')
       .eq('user_id', user.id)
       .single();
@@ -241,8 +239,8 @@ export async function POST(request: NextRequest) {
     );
 
     // Insert convening record
-    const { data: convening, error: conveningError } = await db
-      .from('council_convenings')
+    const { data: convening, error: conveningError } = await supabase
+      .from('council_convenings' as any)
       .insert({
         council_id: council.id,
         seats_addressed: input.seats_addressed,
@@ -266,8 +264,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Update council stats
-    const { error: updateError } = await db
-      .from('luminor_councils')
+    const { error: updateError } = await supabase
+      .from('luminor_councils' as any)
       .update(streakUpdate)
       .eq('id', council.id);
 
@@ -300,7 +298,6 @@ export async function POST(request: NextRequest) {
 export async function GET(request: NextRequest) {
   try {
     const supabase = await createClient();
-    const db = supabase as any;
     const {
       data: { user },
     } = await supabase.auth.getUser();
@@ -321,8 +318,8 @@ export async function GET(request: NextRequest) {
     const offset = Math.max(0, parseInt(rawOffset ?? '0', 10) || 0);
 
     // Resolve council
-    const { data: council, error: councilError } = await db
-      .from('luminor_councils')
+    const { data: council, error: councilError } = await supabase
+      .from('luminor_councils' as any)
       .select('id')
       .eq('user_id', user.id)
       .single();
@@ -335,8 +332,8 @@ export async function GET(request: NextRequest) {
     }
 
     // Fetch convenings
-    const { data: convenings, error: fetchError, count } = await db
-      .from('council_convenings')
+    const { data: convenings, error: fetchError, count } = await supabase
+      .from('council_convenings' as any)
       .select('*', { count: 'exact' })
       .eq('council_id', council.id)
       .order('created_at', { ascending: false })

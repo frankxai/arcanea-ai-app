@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { LazyMotion, domAnimation, m } from "framer-motion";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { CosmicCard, CosmicCardContent } from "@/components/ui/cosmic-card";
@@ -300,8 +300,7 @@ function ItemCard({
   const isList = viewMode === "list";
 
   return (
-    <LazyMotion features={domAnimation}>
-    <m.div
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
@@ -394,8 +393,7 @@ function ItemCard({
           </CosmicCardContent>
         </CosmicCard>
       </Link>
-    </m.div>
-    </LazyMotion>
+    </motion.div>
   );
 }
 

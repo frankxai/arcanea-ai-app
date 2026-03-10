@@ -1,16 +1,11 @@
+'use client';
+
 import {
   PhHouse,
   PhMagnifyingGlass,
   PhBookOpen,
 } from "@/lib/phosphor-icons";
 import Link from "next/link";
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Page Not Found",
-  description: "This page does not exist. Find your way back to Arcanea.",
-  robots: { index: false, follow: true },
-};
 
 export default function NotFound() {
   return (

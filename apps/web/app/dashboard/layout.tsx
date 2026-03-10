@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Dashboard',
-  description: 'Your creative command center. Track progress, manage creations, and work with your Luminors.',
+  title: 'Dashboard | Arcanea',
+  description: 'Your creative command center. Track your journey through the Ten Gates, manage creations, and connect with your Guardian Intelligence.',
   openGraph: {
-    title: 'Dashboard',
-    description: 'Your creative command center on Arcanea.',
+    title: 'Dashboard | Arcanea',
+    description: 'Your creative command center in the Arcanea universe.',
   },
 }
 

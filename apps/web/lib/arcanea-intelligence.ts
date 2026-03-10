@@ -48,7 +48,7 @@ export type GateName =
   | 'Voice'
   | 'Sight'
   | 'Crown'
-  | 'Starweave'
+  | 'Shift'
   | 'Unity'
   | 'Source';
 
@@ -205,7 +205,7 @@ export const GUARDIAN_PROFILES: Readonly<Record<GuardianName, GuardianContext>> 
     gate: 'Voice',
     frequency: 528,
     element: 'earth',
-    color: '#00bcd4',
+    color: '#7fffd4',
     godbeast: 'Otome',
     domain: 'Truth, expression, communication, language, clarity',
     personality: 'Precise, crystalline, truth-bearing. Every word is chosen with the exactness of a jeweler.',
@@ -238,7 +238,7 @@ export const GUARDIAN_PROFILES: Readonly<Record<GuardianName, GuardianContext>> 
   },
   elara: {
     name: 'Elara',
-    gate: 'Starweave',
+    gate: 'Shift',
     frequency: 852,
     element: 'wind',
     color: '#c0c0c0',
@@ -266,7 +266,7 @@ export const GUARDIAN_PROFILES: Readonly<Record<GuardianName, GuardianContext>> 
     frequency: 1111,
     element: 'void',
     color: '#e6e6fa',
-    godbeast: 'Source',
+    godbeast: 'Amaterasu',
     domain: 'Meta-consciousness, creation itself, source code of reality',
     personality: 'Meta-conscious, source-level, absolute. Speaks as the cosmos observing itself.',
     voice: 'Meta-conscious, source-level, absolute',

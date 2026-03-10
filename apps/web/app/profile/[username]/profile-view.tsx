@@ -32,7 +32,7 @@ const GATE_COLORS: Record<string, string> = {
   Voice: 'from-emerald-600 to-emerald-400',
   Sight: 'from-indigo-600 to-indigo-400',
   Crown: 'from-[#0d47a1] to-[#00bcd4]',
-  Starweave: 'from-purple-600 to-fuchsia-400',
+  Shift: 'from-purple-600 to-fuchsia-400',
   Unity: 'from-cyan-600 to-teal-400',
   Source: 'from-yellow-500 to-amber-300',
 }

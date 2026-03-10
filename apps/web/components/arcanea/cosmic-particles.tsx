@@ -25,7 +25,7 @@ export default function CosmicParticles({ count = 60 }: { count?: number }) {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const colors = ['#0d47a1', '#a78bfa', '#00bcd4', '#ffd700', '#c4b5fd', '#ffffff'];
+    const colors = ['#8b5cf6', '#a78bfa', '#00bcd4', '#ffd700', '#c4b5fd', '#ffffff'];
 
     const resize = () => {
       canvas.width = canvas.offsetWidth;

@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: 'Arcanea OS',
   description: 'The Agentic Creator Operating System — orchestrate AI agents for creative workflows.',
   openGraph: {
-    title: 'Arcanea OS',
+    title: 'Arcanea OS | Arcanea',
     description: 'The Agentic Creator Operating System — orchestrate AI agents for creative workflows.',
   },
 };

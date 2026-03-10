@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { m, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { PhPaperPlane, PhHeart, PhArrowBendUpLeft, PhDotsThreeVertical } from '@/lib/phosphor-icons';
 import { Comment } from '@/lib/types/profile';
 import { Button } from '@/lib/arcanea-ui';
@@ -83,7 +83,7 @@ export function CommentSection({
             className="flex-1 px-4 py-2 rounded-xl bg-slate-800 text-white placeholder-slate-500 border border-slate-700 focus:border-purple-500 outline-none disabled:opacity-50 transition-colors"
           />
 
-          <m.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             <Button
               onClick={handleSubmit}
               disabled={!newComment.trim() || isSubmitting}
@@ -91,7 +91,7 @@ export function CommentSection({
             >
               <PhPaperPlane className="w-4 h-4" />
             </Button>
-          </m.div>
+          </motion.div>
         </div>
       </div>
 
@@ -99,7 +99,7 @@ export function CommentSection({
       <div className="space-y-4">
         <AnimatePresence>
           {comments.map((comment, index) => (
-            <m.div
+            <motion.div
               key={comment.id}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -134,7 +134,7 @@ export function CommentSection({
 
                 {/* Actions */}
                 <div className="flex items-center gap-4 px-2">
-                  <m.button
+                  <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={() => onLikeComment && onLikeComment(comment.id)}
@@ -144,9 +144,9 @@ export function CommentSection({
                     {comment.likes > 0 && (
                       <span className="font-medium">{comment.likes}</span>
                     )}
-                  </m.button>
+                  </motion.button>
 
-                  <m.button
+                  <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={() => setReplyingTo(comment.id)}
@@ -154,21 +154,21 @@ export function CommentSection({
                   >
                     <PhArrowBendUpLeft className="w-3 h-3" />
                     <span>Reply</span>
-                  </m.button>
+                  </motion.button>
 
                   {currentUserId === comment.user_id && onDeleteComment && (
-                    <m.button
+                    <motion.button
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
                       onClick={() => onDeleteComment(comment.id)}
                       className="ml-auto text-slate-500 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100"
                     >
                       <PhDotsThreeVertical className="w-4 h-4" />
-                    </m.button>
+                    </motion.button>
                   )}
                 </div>
               </div>
-            </m.div>
+            </motion.div>
           ))}
         </AnimatePresence>
 

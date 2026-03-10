@@ -1,10 +1,10 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Strategy | Community',
+  title: 'Strategy | Arcanea Community',
   description: 'Explore community growth strategies and contribution guidelines for the Arcanea creator collective.',
   openGraph: {
-    title: 'Strategy | Community',
+    title: 'Strategy | Arcanea Community',
     description: 'Explore community growth strategies and contribution guidelines for the Arcanea creator collective.',
   },
 };

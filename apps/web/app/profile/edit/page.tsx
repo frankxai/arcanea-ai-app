@@ -22,7 +22,7 @@ import type {
 
 const GATES: GateName[] = [
   'Foundation', 'Flow', 'Fire', 'Heart', 'Voice',
-  'Sight', 'Crown', 'Starweave', 'Unity', 'Source',
+  'Sight', 'Crown', 'Shift', 'Unity', 'Source',
 ]
 
 const GUARDIANS: GuardianName[] = [
@@ -42,7 +42,7 @@ const GATE_FREQUENCIES: Record<string, string> = {
   Voice: '528 Hz',
   Sight: '639 Hz',
   Crown: '741 Hz',
-  Starweave: '852 Hz',
+  Shift: '852 Hz',
   Unity: '963 Hz',
   Source: '1111 Hz',
 }

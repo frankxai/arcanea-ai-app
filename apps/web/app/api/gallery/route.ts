@@ -21,7 +21,7 @@ const GUARDIAN_META: Record<string, { element: string; accent: string; gate: str
   aiyami:     { element: "Void",   accent: "text-amber-300",   gate: "Crown" },
   alera:      { element: "Fire",   accent: "text-sky-300",     gate: "Voice" },
   draconia:   { element: "Fire",   accent: "text-orange-400",  gate: "Fire" },
-  elara:      { element: "Wind",   accent: "text-emerald-300", gate: "Starweave" },
+  elara:      { element: "Wind",   accent: "text-emerald-300", gate: "Shift" },
   ino:        { element: "Earth",  accent: "text-fuchsia-300", gate: "Unity" },
   leyla:      { element: "Water",  accent: "text-cyan-300",    gate: "Flow" },
   lyria:      { element: "Void",   accent: "text-violet-300",  gate: "Sight" },

@@ -95,13 +95,13 @@ export function Sidebar({
     <aside
       className={cn(
         'flex flex-col h-full transition-all duration-300 ease-in-out select-none',
-        'border-r border-[rgba(13,71,161,0.15)]',
+        'border-r border-[rgba(139,92,246,0.15)]',
         'bg-[#0d0d18]',
         collapsed ? 'w-14' : 'w-[280px]',
       )}
     >
       {/* Header */}
-      <div className="flex items-center justify-between px-3 py-4 border-b border-[rgba(13,71,161,0.12)]">
+      <div className="flex items-center justify-between px-3 py-4 border-b border-[rgba(139,92,246,0.12)]">
         {!collapsed && (
           <div className="flex items-center gap-2">
             {/* Arcanea wordmark */}
@@ -109,7 +109,7 @@ export function Sidebar({
               <polygon
                 points="11,2 20,18 2,18"
                 fill="none"
-                stroke="#0d47a1"
+                stroke="#8b5cf6"
                 strokeWidth="1.5"
                 strokeLinejoin="round"
               />
@@ -122,7 +122,7 @@ export function Sidebar({
         )}
         <button
           onClick={onToggleCollapse}
-          className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-[rgba(13,71,161,0.1)] transition-colors"
+          className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-[rgba(139,92,246,0.1)] transition-colors"
           aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
           {collapsed ? (
@@ -143,8 +143,8 @@ export function Sidebar({
           onClick={onNewChat}
           className={cn(
             'w-full flex items-center gap-2 rounded-lg text-sm font-medium transition-all duration-200',
-            'bg-[rgba(13,71,161,0.15)] hover:bg-[rgba(13,71,161,0.25)]',
-            'border border-[rgba(13,71,161,0.3)] hover:border-[rgba(13,71,161,0.5)]',
+            'bg-[rgba(139,92,246,0.15)] hover:bg-[rgba(139,92,246,0.25)]',
+            'border border-[rgba(139,92,246,0.3)] hover:border-[rgba(139,92,246,0.5)]',
             'text-primary hover:text-white',
             collapsed ? 'justify-center p-2' : 'px-3 py-2.5',
           )}
@@ -180,9 +180,9 @@ export function Sidebar({
               aria-label="Search conversations"
               className={cn(
                 'w-full pl-8 pr-3 py-2 rounded-lg text-xs',
-                'bg-[rgba(255,255,255,0.04)] border border-[rgba(13,71,161,0.15)]',
+                'bg-[rgba(255,255,255,0.04)] border border-[rgba(139,92,246,0.15)]',
                 'text-foreground placeholder:text-muted-foreground',
-                'focus:outline-none focus:border-primary/40 focus:bg-[rgba(13,71,161,0.06)]',
+                'focus:outline-none focus:border-primary/40 focus:bg-[rgba(139,92,246,0.06)]',
                 'transition-colors',
               )}
             />
@@ -217,7 +217,7 @@ export function Sidebar({
                 className={cn(
                   'w-full flex justify-center p-2 rounded-lg transition-colors',
                   session.id === activeSessionId
-                    ? 'bg-[rgba(13,71,161,0.2)]'
+                    ? 'bg-[rgba(139,92,246,0.2)]'
                     : 'hover:bg-[rgba(255,255,255,0.05)]',
                 )}
                 aria-label={session.title}
@@ -248,7 +248,7 @@ function SessionItem({
         'w-full text-left flex items-start gap-2.5 px-3 py-2.5 mx-1 rounded-lg transition-all duration-150 group',
         'hover:bg-[rgba(255,255,255,0.04)]',
         isActive
-          ? 'bg-[rgba(13,71,161,0.12)] border-l-2 border-primary pl-2.5'
+          ? 'bg-[rgba(139,92,246,0.12)] border-l-2 border-primary pl-2.5'
           : 'border-l-2 border-transparent',
       )}
       style={{ width: 'calc(100% - 8px)' }}

@@ -55,7 +55,7 @@ const WORLD_ELEMENTS = [
     id: "cultures",
     name: "Cultures",
     icon: PhUsers,
-    color: "#0d47a1",
+    color: "#8b5cf6",
     description: "Societies, traditions, and belief systems",
     elements: ["Nations", "Languages", "Religions", "Customs", "Art"],
   },
@@ -85,7 +85,7 @@ const RECENT_WORLDS = [
     created: "2 days ago",
     elements: 4,
     preview: "A world where magic flows from the stars...",
-    color: "#0d47a1",
+    color: "#8b5cf6",
   },
   {
     id: "2",
@@ -149,7 +149,7 @@ export default function WorldBuilderPage() {
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-void" />
         <div className="absolute inset-0 bg-cosmic-mesh" />
-        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(13,71,161,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(0,188,212,0.08),transparent_55%)]" />
+        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(139,92,246,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(0,188,212,0.08),transparent_55%)]" />
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -181,7 +181,7 @@ export default function WorldBuilderPage() {
 
               <div className="flex flex-wrap gap-4">
                 <Link
-                  href="/studio"
+                  href="/world-builder"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200"
                 >
                   <PhPlus className="w-4 h-4" />
@@ -219,7 +219,7 @@ export default function WorldBuilderPage() {
               return (
                 <Link
                   key={template.id}
-                  href={`/studio?template=${template.id}`}
+                  href={`/world-builder/new?template=${template.id}`}
                   className="group card-3d liquid-glass rounded-2xl p-5 hover-lift transition-all"
                 >
                   <div
@@ -327,10 +327,10 @@ export default function WorldBuilderPage() {
 
           <div className="grid md:grid-cols-3 gap-6">
             {RECENT_WORLDS.map((world) => (
-              <div
+              <Link
                 key={world.id}
+                href={`/world-builder/${world.id}`}
                 className="group card-3d liquid-glass rounded-2xl p-6 hover-lift transition-all relative overflow-hidden"
-                title="Coming Soon"
               >
                 <div
                   className="h-1 w-full absolute top-0 left-0 right-0 rounded-t-2xl"
@@ -364,16 +364,16 @@ export default function WorldBuilderPage() {
                   <span className="text-xs text-text-muted">
                     {world.elements} elements
                   </span>
-                  <span className="text-xs text-text-muted/60 italic">
-                    Coming Soon
+                  <span className="text-sm text-crystal opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
+                    Open <PhArrowRight className="w-3.5 h-3.5" />
                   </span>
                 </div>
-              </div>
+              </Link>
             ))}
 
             {/* New World Card */}
             <Link
-              href="/studio"
+              href="/world-builder"
               className="group card-3d liquid-glass rounded-2xl p-6 border-2 border-dashed border-white/[0.12] hover:border-brand-primary/40 hover:bg-brand-primary/5 transition-all flex flex-col items-center justify-center text-center min-h-[200px]"
             >
               <PhPlus className="w-8 h-8 text-text-muted group-hover:text-brand-primary transition-colors mb-3" />

@@ -26,9 +26,9 @@ const CANON = [
   { id: 'alera',      name: 'Alera',      gate: 'Voice',      godbeast: 'Otome',     frequency: 528 },
   { id: 'lyria',      name: 'Lyria',      gate: 'Sight',      godbeast: 'Yumiko',    frequency: 639 },
   { id: 'aiyami',     name: 'Aiyami',     gate: 'Crown',      godbeast: 'Sol',       frequency: 741 },
-  { id: 'elara',      name: 'Elara',      gate: 'Shift',      godbeast: 'Thessara',  frequency: 852 },
+  { id: 'elara',      name: 'Elara',      gate: 'Starweave',  godbeast: 'Vaelith',   frequency: 852 },
   { id: 'ino',        name: 'Ino',        gate: 'Unity',      godbeast: 'Kyuro',     frequency: 963 },
-  { id: 'shinkami',   name: 'Shinkami',   gate: 'Source',     godbeast: 'Amaterasu', frequency: 1111 },
+  { id: 'shinkami',   name: 'Shinkami',   gate: 'Source',     godbeast: 'Source',    frequency: 1111 },
 ];
 
 // ============================================
@@ -115,7 +115,7 @@ describe('getGuardianById', () => {
   it('returns the correct Guardian for "shinkami"', () => {
     const g = getGuardianById('shinkami');
     assert.ok(g, 'should find shinkami');
-    assert.equal(g.godbeast, 'Amaterasu');
+    assert.equal(g.godbeast, 'Source');
   });
 
   it('returns undefined for an unknown id', () => {

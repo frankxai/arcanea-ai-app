@@ -51,7 +51,7 @@ export function ImageTab({ generationState }: ImageTabProps) {
   return (
     <div className="flex h-full overflow-hidden">
       {/* Left — Controls */}
-      <div className="w-72 shrink-0 border-r border-[rgba(13,71,161,0.1)] overflow-y-auto p-5 space-y-5 bg-[rgba(10,10,15,0.3)]">
+      <div className="w-72 shrink-0 border-r border-[rgba(139,92,246,0.1)] overflow-y-auto p-5 space-y-5 bg-[rgba(10,10,15,0.3)]">
         {/* Prompt */}
         <div>
           <label className="text-[10px] uppercase tracking-widest font-mono text-muted-foreground mb-2 block">
@@ -61,12 +61,12 @@ export function ImageTab({ generationState }: ImageTabProps) {
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             rows={4}
-            className="w-full text-xs bg-[#16161f] border border-[rgba(13,71,161,0.15)] rounded-xl p-3 text-foreground placeholder:text-muted-foreground outline-none focus:border-[#0d47a1] transition-colors resize-none leading-relaxed"
+            className="w-full text-xs bg-[#16161f] border border-[rgba(139,92,246,0.15)] rounded-xl p-3 text-foreground placeholder:text-muted-foreground outline-none focus:border-[#8b5cf6] transition-colors resize-none leading-relaxed"
             placeholder="Describe what you want to create in detail…"
           />
           <div className="flex items-center justify-between mt-1.5">
             <span className="text-[10px] text-muted-foreground font-mono">{prompt.length}/1000</span>
-            <button className="flex items-center gap-1 text-[10px] text-[#0d47a1] hover:text-[#a78bfa] transition-colors">
+            <button className="flex items-center gap-1 text-[10px] text-[#8b5cf6] hover:text-[#a78bfa] transition-colors">
               <Shuffle size={10} />
               Inspire
             </button>
@@ -86,8 +86,8 @@ export function ImageTab({ generationState }: ImageTabProps) {
                 className={cn(
                   "flex-1 py-2 rounded-lg text-[11px] font-mono transition-all duration-200 border",
                   selectedRatio === ratio.value
-                    ? "bg-[rgba(13,71,161,0.2)] border-[rgba(13,71,161,0.4)] text-[#a78bfa]"
-                    : "border-[rgba(255,255,255,0.08)] text-muted-foreground hover:text-foreground hover:border-[rgba(13,71,161,0.2)]"
+                    ? "bg-[rgba(139,92,246,0.2)] border-[rgba(139,92,246,0.4)] text-[#a78bfa]"
+                    : "border-[rgba(255,255,255,0.08)] text-muted-foreground hover:text-foreground hover:border-[rgba(139,92,246,0.2)]"
                 )}
               >
                 {ratio.label}
@@ -109,8 +109,8 @@ export function ImageTab({ generationState }: ImageTabProps) {
                 className={cn(
                   "w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-left transition-all duration-200 border",
                   selectedStyle === style.name
-                    ? "border-[rgba(13,71,161,0.35)] bg-[rgba(13,71,161,0.1)]"
-                    : "border-transparent hover:border-[rgba(13,71,161,0.15)] hover:bg-[rgba(13,71,161,0.04)]"
+                    ? "border-[rgba(139,92,246,0.35)] bg-[rgba(139,92,246,0.1)]"
+                    : "border-transparent hover:border-[rgba(139,92,246,0.15)] hover:bg-[rgba(139,92,246,0.04)]"
                 )}
               >
                 <span
@@ -122,7 +122,7 @@ export function ImageTab({ generationState }: ImageTabProps) {
                   <p className="text-[10px] text-muted-foreground">{style.desc}</p>
                 </div>
                 {selectedStyle === style.name && (
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#0d47a1]" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#8b5cf6]" />
                 )}
               </button>
             ))}
@@ -158,10 +158,10 @@ export function ImageTab({ generationState }: ImageTabProps) {
           /* Empty State */
           <div className="flex-1 flex flex-col items-center justify-center gap-6 p-10">
             <div className="relative">
-              <div className="w-32 h-32 rounded-2xl border-2 border-dashed border-[rgba(13,71,161,0.25)] flex items-center justify-center bg-[rgba(13,71,161,0.04)]">
-                <Sparkle size={40} className="text-[rgba(13,71,161,0.3)]" />
+              <div className="w-32 h-32 rounded-2xl border-2 border-dashed border-[rgba(139,92,246,0.25)] flex items-center justify-center bg-[rgba(139,92,246,0.04)]">
+                <Sparkle size={40} className="text-[rgba(139,92,246,0.3)]" />
               </div>
-              <div className="absolute -inset-4 rounded-3xl bg-[radial-gradient(ellipse_at_center,rgba(13,71,161,0.06)_0%,transparent_70%)]" />
+              <div className="absolute -inset-4 rounded-3xl bg-[radial-gradient(ellipse_at_center,rgba(139,92,246,0.06)_0%,transparent_70%)]" />
             </div>
             <div className="text-center max-w-sm">
               <h3 className="font-serif text-xl text-foreground mb-2">Summon Your Vision</h3>
@@ -178,12 +178,12 @@ export function ImageTab({ generationState }: ImageTabProps) {
           /* Generating State */
           <div className="flex-1 flex flex-col items-center justify-center gap-6 p-10">
             <div className="relative">
-              <div className="w-64 h-40 rounded-2xl border border-[rgba(13,71,161,0.3)] overflow-hidden shimmer">
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(13,71,161,0.2)_0%,transparent_70%)]" />
+              <div className="w-64 h-40 rounded-2xl border border-[rgba(139,92,246,0.3)] overflow-hidden shimmer">
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(139,92,246,0.2)_0%,transparent_70%)]" />
               </div>
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-12 h-12 rounded-full bg-[rgba(13,71,161,0.15)] border border-[rgba(13,71,161,0.4)] flex items-center justify-center pulse-glow">
-                  <Sparkle size={20} className="text-[#0d47a1]" style={{ animation: "spin 3s linear infinite" }} />
+                <div className="w-12 h-12 rounded-full bg-[rgba(139,92,246,0.15)] border border-[rgba(139,92,246,0.4)] flex items-center justify-center pulse-glow">
+                  <Sparkle size={20} className="text-[#8b5cf6]" style={{ animation: "spin 3s linear infinite" }} />
                 </div>
               </div>
             </div>
@@ -195,7 +195,7 @@ export function ImageTab({ generationState }: ImageTabProps) {
               {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
                 <div
                   key={i}
-                  className="w-1.5 h-1.5 rounded-full bg-[#0d47a1]"
+                  className="w-1.5 h-1.5 rounded-full bg-[#8b5cf6]"
                   style={{ animation: `wave 1.2s ease-in-out ${i * 0.15}s infinite` }}
                 />
               ))}
@@ -224,18 +224,18 @@ export function ImageTab({ generationState }: ImageTabProps) {
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-serif text-base text-foreground">Generated Variations</h3>
               <div className="flex gap-2">
-                <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs border border-[rgba(255,255,255,0.08)] text-muted-foreground hover:text-foreground hover:border-[rgba(13,71,161,0.2)] transition-all">
+                <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs border border-[rgba(255,255,255,0.08)] text-muted-foreground hover:text-foreground hover:border-[rgba(139,92,246,0.2)] transition-all">
                   <ArrowsClockwise size={12} />
                   Regenerate
                 </button>
-                <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs bg-[rgba(13,71,161,0.15)] border border-[rgba(13,71,161,0.3)] text-[#a78bfa] hover:bg-[rgba(13,71,161,0.25)] transition-all">
+                <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs bg-[rgba(139,92,246,0.15)] border border-[rgba(139,92,246,0.3)] text-[#a78bfa] hover:bg-[rgba(139,92,246,0.25)] transition-all">
                   <Download size={12} />
                   Export All
                 </button>
               </div>
             </div>
             {/* Main selected image */}
-            <div className="relative mb-4 rounded-2xl overflow-hidden border border-[rgba(13,71,161,0.2)] group">
+            <div className="relative mb-4 rounded-2xl overflow-hidden border border-[rgba(139,92,246,0.2)] group">
               <img
                 src="/placeholder.svg?height=360&width=640"
                 alt="Generated artwork"
@@ -243,10 +243,10 @@ export function ImageTab({ generationState }: ImageTabProps) {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[rgba(10,10,15,0.6)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="absolute bottom-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                <button className="p-2 rounded-lg bg-[rgba(10,10,15,0.8)] border border-[rgba(13,71,161,0.3)] text-foreground hover:text-[#a78bfa] transition-colors">
+                <button className="p-2 rounded-lg bg-[rgba(10,10,15,0.8)] border border-[rgba(139,92,246,0.3)] text-foreground hover:text-[#a78bfa] transition-colors">
                   <MagnifyingGlassPlus size={14} />
                 </button>
-                <button className="p-2 rounded-lg bg-[rgba(10,10,15,0.8)] border border-[rgba(13,71,161,0.3)] text-foreground hover:text-[#a78bfa] transition-colors">
+                <button className="p-2 rounded-lg bg-[rgba(10,10,15,0.8)] border border-[rgba(139,92,246,0.3)] text-foreground hover:text-[#a78bfa] transition-colors">
                   <Download size={14} />
                 </button>
               </div>
@@ -265,8 +265,8 @@ export function ImageTab({ generationState }: ImageTabProps) {
                   className={cn(
                     "relative aspect-square rounded-xl overflow-hidden border transition-all duration-200",
                     selectedImage === img.id
-                      ? "border-[#0d47a1] ring-1 ring-[rgba(13,71,161,0.3)]"
-                      : "border-[rgba(255,255,255,0.08)] hover:border-[rgba(13,71,161,0.3)]"
+                      ? "border-[#8b5cf6] ring-1 ring-[rgba(139,92,246,0.3)]"
+                      : "border-[rgba(255,255,255,0.08)] hover:border-[rgba(139,92,246,0.3)]"
                   )}
                 >
                   <img
@@ -275,7 +275,7 @@ export function ImageTab({ generationState }: ImageTabProps) {
                     className="w-full h-full object-cover"
                   />
                   {selectedImage === img.id && (
-                    <div className="absolute inset-0 bg-[rgba(13,71,161,0.15)]" />
+                    <div className="absolute inset-0 bg-[rgba(139,92,246,0.15)]" />
                   )}
                 </button>
               ))}

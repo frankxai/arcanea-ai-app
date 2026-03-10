@@ -57,7 +57,7 @@ export function GuardianInfoBar({ guardian }: GuardianInfoBarProps) {
     <header
       className="flex items-center gap-3 px-5 py-3 border-b shrink-0"
       style={{
-        borderColor: 'rgba(13,71,161,0.15)',
+        borderColor: 'rgba(139,92,246,0.15)',
         background: 'rgba(13,13,24,0.8)',
         backdropFilter: 'blur(16px)',
       }}
@@ -159,7 +159,7 @@ export function TypingIndicator({ guardian }: { guardian: Guardian }) {
         style={{
           background: 'rgba(10,10,20,0.6)',
           backdropFilter: 'blur(12px)',
-          border: '1px solid rgba(13,71,161,0.18)',
+          border: '1px solid rgba(139,92,246,0.18)',
         }}
         role="status"
         aria-label={`${guardian.name} is typing`}

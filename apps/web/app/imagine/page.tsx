@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { m, AnimatePresence, LazyMotion, domAnimation } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { PromptInput } from '@/components/imagine/PromptInput';
 import { ImageCard } from '@/components/imagine/ImageCard';
 import { getFavorites, removeFavorite, getFavoriteCount, type FavoriteImage } from '@/lib/imagine-favorites';
@@ -239,33 +239,32 @@ export default function ImaginePage() {
   const hasResults = rows.length > 0;
 
   return (
-    <LazyMotion features={domAnimation}>
-    <div className="min-h-screen bg-[#09090b]">
+    <div className="min-h-screen bg-cosmic-deep">
       {/* Hero — only visible when no results */}
       <AnimatePresence>
         {!hasResults && (
-          <m.div
+          <motion.div
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, y: -40 }}
             className="pt-20 pb-6 px-6 text-center"
           >
-            <m.h1
+            <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="text-5xl md:text-7xl font-display font-bold bg-gradient-to-r from-[#00bcd4] via-[#0d47a1] to-[#00bcd4] bg-clip-text text-transparent"
+              className="text-5xl md:text-7xl font-display font-bold bg-gradient-to-r from-violet-400 via-fuchsia-300 to-violet-400 bg-clip-text text-transparent"
             >
               Imagine
-            </m.h1>
-            <m.p
+            </motion.h1>
+            <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
               className="mt-3 text-lg text-text-secondary font-body"
             >
               Describe your vision. Watch it materialize.
-            </m.p>
-          </m.div>
+            </motion.p>
+          </motion.div>
         )}
       </AnimatePresence>
 
@@ -291,7 +290,7 @@ export default function ImaginePage() {
               {!autoScrollEnabled && currentPrompt && (
                 <button
                   onClick={() => setAutoScrollEnabled(true)}
-                  className="text-xs text-[#00bcd4] hover:text-[#00acc1] px-3 py-1.5 rounded-lg hover:bg-[#00bcd4]/10 transition-all"
+                  className="text-xs text-violet-400 hover:text-violet-300 px-3 py-1.5 rounded-lg hover:bg-violet-500/10 transition-all"
                 >
                   Resume infinite scroll
                 </button>
@@ -343,7 +342,7 @@ export default function ImaginePage() {
       {/* Error display */}
       <AnimatePresence>
         {error && (
-          <m.div
+          <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
@@ -358,7 +357,7 @@ export default function ImaginePage() {
                 </svg>
               </button>
             </div>
-          </m.div>
+          </motion.div>
         )}
       </AnimatePresence>
 
@@ -385,8 +384,8 @@ export default function ImaginePage() {
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="flex flex-col items-center gap-2.5">
                         <div className="relative w-10 h-10">
-                          <div className="absolute inset-0 border-2 border-[#00bcd4]/20 rounded-full" />
-                          <div className="absolute inset-0 border-2 border-transparent border-t-[#00bcd4] rounded-full animate-spin" />
+                          <div className="absolute inset-0 border-2 border-violet-500/20 rounded-full" />
+                          <div className="absolute inset-0 border-2 border-transparent border-t-violet-500 rounded-full animate-spin" />
                         </div>
                         <span className="text-[11px] text-text-muted/70 font-body">Creating...</span>
                       </div>
@@ -442,7 +441,7 @@ export default function ImaginePage() {
       {!hasResults && !isGenerating && (
         <div className="text-center py-12 px-6">
           <div className="max-w-md mx-auto">
-            <div className="w-20 h-20 rounded-3xl bg-[#00bcd4]/10 flex items-center justify-center mx-auto mb-6">
+            <div className="w-20 h-20 rounded-3xl bg-violet-600/10 flex items-center justify-center mx-auto mb-6">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="hsl(262, 83%, 66%)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="opacity-60">
                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
                 <circle cx="8.5" cy="8.5" r="1.5" />
@@ -460,7 +459,7 @@ export default function ImaginePage() {
         {showFavorites && (
           <>
             {/* Backdrop */}
-            <m.div
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -469,7 +468,7 @@ export default function ImaginePage() {
             />
 
             {/* Drawer */}
-            <m.div
+            <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
@@ -517,7 +516,7 @@ export default function ImaginePage() {
                 ) : (
                   <div className="grid grid-cols-2 gap-3">
                     {favorites.map((fav) => (
-                      <m.div
+                      <motion.div
                         key={fav.id}
                         layout
                         initial={{ opacity: 0, scale: 0.9 }}
@@ -567,16 +566,15 @@ export default function ImaginePage() {
                         <div className="absolute top-2 right-2 px-1.5 py-0.5 rounded text-[9px] text-white/50 bg-black/40 backdrop-blur-sm">
                           {new Date(fav.savedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
                         </div>
-                      </m.div>
+                      </motion.div>
                     ))}
                   </div>
                 )}
               </div>
-            </m.div>
+            </motion.div>
           </>
         )}
       </AnimatePresence>
     </div>
-    </LazyMotion>
   );
 }

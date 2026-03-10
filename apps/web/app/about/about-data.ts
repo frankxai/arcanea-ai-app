@@ -207,7 +207,7 @@ export const GUARDIANS: Guardian[] = [
   },
   {
     name: "Elara",
-    gate: "Starweave",
+    gate: "Shift",
     frequency: "852 Hz",
     domain: "Perspective",
     element: "Spirit",

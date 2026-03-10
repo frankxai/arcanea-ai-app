@@ -48,7 +48,7 @@ const GUARDIANS = [
   { name: "Alera", gate: "Voice", frequency: "528 Hz", element: "Void" },
   { name: "Lyria", gate: "Sight", frequency: "639 Hz", element: "Spirit" },
   { name: "Aiyami", gate: "Crown", frequency: "741 Hz", element: "Light" },
-  { name: "Elara", gate: "Starweave", frequency: "852 Hz", element: "Void" },
+  { name: "Elara", gate: "Shift", frequency: "852 Hz", element: "Void" },
   { name: "Ino", gate: "Unity", frequency: "963 Hz", element: "Spirit" },
   { name: "Shinkami", gate: "Source", frequency: "1111 Hz", element: "Arcane" },
 ];

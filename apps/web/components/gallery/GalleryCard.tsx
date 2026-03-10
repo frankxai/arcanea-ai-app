@@ -32,7 +32,7 @@ export function GalleryCard({ item, onOpen, onLike, onBookmark }: GalleryCardPro
   const [imgLoaded, setImgLoaded] = useState(false)
   const [likeAnimating, setLikeAnimating] = useState(false)
 
-  const elementColor = ELEMENT_COLORS[item.element] || '#0d47a1'
+  const elementColor = ELEMENT_COLORS[item.element] || '#8b5cf6'
   const TypeIcon = TYPE_ICON_MAP[item.type] || ImageIcon
 
   const handleLike = useCallback(
@@ -58,7 +58,7 @@ export function GalleryCard({ item, onOpen, onLike, onBookmark }: GalleryCardPro
       className="relative rounded-2xl overflow-hidden cursor-pointer group"
       style={{
         background: 'rgba(15,15,24,0.7)',
-        border: '1px solid rgba(13,71,161,0.15)',
+        border: '1px solid rgba(139,92,246,0.15)',
         backdropFilter: 'blur(12px)',
         transition: 'transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease',
       }}
@@ -66,14 +66,14 @@ export function GalleryCard({ item, onOpen, onLike, onBookmark }: GalleryCardPro
       onMouseEnter={(e) => {
         const el = e.currentTarget as HTMLElement
         el.style.transform = 'translateY(-4px)'
-        el.style.boxShadow = `0 20px 60px rgba(13,71,161,0.2), 0 0 0 1px rgba(13,71,161,0.25)`
-        el.style.borderColor = 'rgba(13,71,161,0.35)'
+        el.style.boxShadow = `0 20px 60px rgba(139,92,246,0.2), 0 0 0 1px rgba(139,92,246,0.25)`
+        el.style.borderColor = 'rgba(139,92,246,0.35)'
       }}
       onMouseLeave={(e) => {
         const el = e.currentTarget as HTMLElement
         el.style.transform = 'translateY(0)'
         el.style.boxShadow = 'none'
-        el.style.borderColor = 'rgba(13,71,161,0.15)'
+        el.style.borderColor = 'rgba(139,92,246,0.15)'
       }}
       role="button"
       tabIndex={0}
@@ -149,7 +149,7 @@ export function GalleryCard({ item, onOpen, onLike, onBookmark }: GalleryCardPro
               src={item.creator.avatar}
               alt={item.creator.name}
               className="w-6 h-6 rounded-full border"
-              style={{ borderColor: 'rgba(13,71,161,0.4)' }}
+              style={{ borderColor: 'rgba(139,92,246,0.4)' }}
             />
             <span className="text-xs" style={{ color: '#9b8ec4' }}>
               {item.creator.name}
@@ -177,7 +177,7 @@ export function GalleryCard({ item, onOpen, onLike, onBookmark }: GalleryCardPro
             src={item.creator.avatar}
             alt={item.creator.name}
             className="w-7 h-7 rounded-full border shrink-0"
-            style={{ borderColor: 'rgba(13,71,161,0.3)' }}
+            style={{ borderColor: 'rgba(139,92,246,0.3)' }}
           />
           <div className="min-w-0">
             <p
@@ -227,6 +227,6 @@ function formatCount(n: number): string {
 
 function hexToRgb(hex: string): string {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
-  if (!result) return '13,71,161'
+  if (!result) return '139,92,246'
   return `${parseInt(result[1], 16)},${parseInt(result[2], 16)},${parseInt(result[3], 16)}`
 }

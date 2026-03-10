@@ -61,7 +61,7 @@ export const GenerationIndicator: React.FC<GenerationIndicatorProps> = ({
   result,
   onView,
   onSave,
-  luminorColor = '#0d47a1',
+  luminorColor = '#8b5cf6',
 }) => {
   const [elapsedTime, setElapsedTime] = useState(0);
   const Icon = generationIcons[type];

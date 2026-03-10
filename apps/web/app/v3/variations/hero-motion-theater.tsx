@@ -25,7 +25,7 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 const HEADLINE = 'Creative intelligence, specialized.';
 
 const STATS: { value: string; label: string }[] = [
-  { value: '10', label: 'Luminors' },
+  { value: '10', label: 'Specialists' },
   { value: '34+', label: 'Texts' },
   { value: 'Free', label: 'To Start' },
 ];
