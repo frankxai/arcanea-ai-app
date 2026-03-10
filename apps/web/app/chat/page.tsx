@@ -551,7 +551,7 @@ export default function ChatPage() {
                   aria-label="Message input"
                   disabled={isStreaming}
                   rows={1}
-                  className="w-full px-4 py-3 pr-14 bg-transparent text-white/90 placeholder-white/25 resize-none focus:outline-none disabled:opacity-40 text-[15px]"
+                  className="w-full px-4 py-3 pr-14 bg-transparent text-white/90 placeholder-white/25 resize-none focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/30 focus:rounded-lg disabled:opacity-40 text-[15px]"
                   style={{ minHeight: '52px', maxHeight: '200px' }}
                 />
 

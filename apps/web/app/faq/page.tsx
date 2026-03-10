@@ -148,13 +148,15 @@ export default function FAQPage() {
             <input
               type="text"
               placeholder="Search questions..."
-              className="w-full px-6 py-4 rounded-2xl bg-cosmic-surface border border-white/[0.06] text-white placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal text-lg"
+              aria-label="Search frequently asked questions"
+              className="w-full px-6 py-4 rounded-2xl bg-cosmic-surface border border-white/[0.06] text-white placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal focus:ring-2 focus:ring-atlantean-teal/40 text-lg"
             />
             <svg
               className="absolute right-6 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
+              aria-hidden="true"
             >
               <path
                 strokeLinecap="round"

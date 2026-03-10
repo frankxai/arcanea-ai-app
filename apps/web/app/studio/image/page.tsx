@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { LazyMotion, domAnimation, m, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import {
   PhArrowLeft,
@@ -125,6 +125,7 @@ export default function ImageForgePage() {
   };
 
   return (
+    <LazyMotion features={domAnimation}>
     <div className="min-h-screen bg-cosmic-deep">
       {/* Header */}
       <header className="border-b border-white/[0.06] liquid-glass sticky top-0 z-40">
@@ -169,7 +170,7 @@ export default function ImageForgePage() {
             >
               <AnimatePresence mode="wait">
                 {isGenerating ? (
-                  <motion.div
+                  <m.div
                     key="generating"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -181,10 +182,10 @@ export default function ImageForgePage() {
                       <PhMagicWand className="w-8 h-8 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-draconic-crimson" />
                     </div>
                     <p className="mt-6 text-text-secondary">Channeling creative fire...</p>
-                    <p className="text-sm text-text-muted mt-2">Guardian Draconia is crafting your vision</p>
-                  </motion.div>
+                    <p className="text-sm text-text-muted mt-2">Draconia is crafting your vision</p>
+                  </m.div>
                 ) : selectedImage ? (
-                  <motion.div
+                  <m.div
                     key={selectedImage.id}
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -232,9 +233,9 @@ export default function ImageForgePage() {
                         </div>
                       </div>
                     </div>
-                  </motion.div>
+                  </m.div>
                 ) : (
-                  <motion.div
+                  <m.div
                     key="empty"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -248,9 +249,9 @@ export default function ImageForgePage() {
                       Ready to Create
                     </h3>
                     <p className="text-text-secondary max-w-sm">
-                      Describe your vision below and let Guardian Draconia bring it to life
+                      Describe your vision below and let Draconia bring it to life
                     </p>
-                  </motion.div>
+                  </m.div>
                 )}
               </AnimatePresence>
             </div>
@@ -385,7 +386,7 @@ export default function ImageForgePage() {
             {/* Advanced settings dropdown */}
             <AnimatePresence>
               {showSettings && (
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
@@ -428,14 +429,14 @@ export default function ImageForgePage() {
                       />
                     </div>
                   </div>
-                </motion.div>
+                </m.div>
               )}
             </AnimatePresence>
 
             {/* Tips */}
             <div className="bg-draconic-crimson/5 border border-draconic-crimson/20 rounded-2xl p-4">
               <h4 className="text-sm font-medium text-draconic-crimson mb-2">
-                Tips from Guardian Draconia
+                Tips from Draconia
               </h4>
               <ul className="text-xs text-text-secondary space-y-2">
                 <li>• Be specific about lighting, mood, and atmosphere</li>
@@ -448,5 +449,6 @@ export default function ImageForgePage() {
         </div>
       </div>
     </div>
+    </LazyMotion>
   );
 }

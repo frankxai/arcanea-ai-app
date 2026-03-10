@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Character Book | Arcanea",
+  title: "Character Book",
   description:
     "Create and manage your character profiles. Build detailed personas for your stories, games, and creative projects.",
 };
@@ -274,7 +274,7 @@ const CHARACTERS = [
     description:
       "A young mage discovering her powers in the wake of an ancient prophecy.",
     storyCount: 12,
-    accent: "#78a6ff",
+    accent: "#00bcd4",
   },
   {
     id: "2",
@@ -317,7 +317,7 @@ const ELEMENT_ICONS: Record<string, React.ReactNode> = {
 
 const ELEMENT_COLORS: Record<string, string> = {
   Fire: "#ff6b35",
-  Water: "#78a6ff",
+  Water: "#00bcd4",
   Earth: "#4a7c59",
   Wind: "#00bcd4",
 };
@@ -386,7 +386,7 @@ export default function CharacterBookPage() {
             <input
               type="text"
               placeholder="Search characters..."
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl liquid-glass border border-white/[0.06] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-crystal/50 transition-all"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl liquid-glass border border-white/[0.06] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-crystal/50 focus:ring-2 focus:ring-crystal/20 transition-all"
             />
           </div>
 
