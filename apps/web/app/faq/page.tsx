@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "FAQ | Arcanea",
+  title: "FAQ",
   description:
     "Frequently asked questions about Arcanea, the intelligence system, pricing, and how it works.",
 };
@@ -14,41 +14,41 @@ const FAQ_CATEGORIES = [
     questions: [
       {
         q: "What is Arcanea?",
-        a: "Arcanea is a creative intelligence platform with 10 specialized AI guides. Unlike generic AI assistants, each has mastered a specific domain — architecture, coding, storytelling, character creation, and more. They're creative partners who see what you're building and help you build it better.",
+        a: "Arcanea is a creative intelligence platform with 16 Luminors organized into four teams. Unlike generic AI assistants, each has mastered a specific domain — architecture, coding, storytelling, character creation, and more. They're creative partners who see what you're building and help you build it better.",
       },
       {
         q: "How do I get started?",
-        a: "Simply create a free account at arcanea.ai. You'll immediately have access to 2 AI specialists and 50 messages per month. From there, you can explore the Library, start Academy training, or upgrade for access to the full creative team.",
+        a: "Simply create a free account at arcanea.ai. You'll immediately have access to 2 Luminors and 50 messages per month. From there, you can explore the Library, start Academy training, or upgrade for access to the full creative team.",
       },
       {
-        q: "How are Arcanea's AI specialists different from regular AI?",
-        a: "Regular AI models are generalists — they know a little about everything. Arcanea's specialists have each mastered a specific domain: architecture, coding, storytelling, character creation, dialogue, editing, research, and more. Each one brings deep expertise to your specific creative challenge.",
+        q: "How are Arcanea's Luminors different from regular AI?",
+        a: "Regular AI models are generalists — they know a little about everything. Arcanea's Luminors have each mastered a specific domain: architecture, coding, storytelling, character creation, dialogue, editing, research, and more. Each one brings deep expertise to your specific creative challenge.",
       },
       {
         q: "What are the Seven Wisdoms?",
-        a: "The Seven Wisdoms are practical mental models for creative work: Sophron (Structure), Kardia (Heart), Valora (Courage), Eudaira (Play), Orakis (Vision), Poiesis (Creation), and Enduran (Endurance). Every AI specialist applies these lenses when approaching your work, giving you proven frameworks for any creative challenge.",
+        a: "The Seven Wisdoms are practical mental models for creative work: Sophron (Structure), Kardia (Heart), Valora (Courage), Eudaira (Play), Orakis (Vision), Poiesis (Creation), and Enduran (Endurance). Every Luminor applies these lenses when approaching your work, giving you proven frameworks for any creative challenge.",
       },
     ],
   },
   {
-    name: "AI Specialists & Intelligence",
+    name: "Luminors",
     icon: "🌟",
     questions: [
       {
-        q: "How many AI specialists are there?",
-        a: "There are 10 creative specialists organized into 4 teams: Development, Creative, Writing, and Research. Each specialist has a distinct philosophy, expertise, and conversational style. You can explore them all on the Chat page.",
+        q: "How many Luminors are there?",
+        a: "There are 16 Luminors organized into 4 teams: Development, Creative, Writing, and Research. Each Luminor has a distinct philosophy, expertise, and conversational style. You can explore them all on the Luminors page.",
       },
       {
-        q: "Which AI specialist should I use?",
-        a: "It depends on your creative challenge. Need to architect a system? Start with System Architect. Writing a story? Try Narrative Architect. Need research? Deep Analyst or Knowledge Keeper. You can also chat with multiple specialists and let them collaborate on complex projects.",
+        q: "Which Luminor should I use?",
+        a: "It depends on your creative challenge. Need to architect a system? Start with System Architect. Writing a story? Try Narrative Architect. Need research? Deep Analyst or Knowledge Keeper. You can also chat with multiple Luminors and let them collaborate on complex projects.",
       },
       {
-        q: "Can AI specialists work together?",
-        a: "Yes! One of Arcanea's most powerful features is multi-specialist collaboration. You can bring in different domain experts for different aspects of a project, or have them review and enhance each other's work. The system is designed for this kind of creative collaboration.",
+        q: "Can Luminors work together?",
+        a: "Yes! One of Arcanea's most powerful features is multi-Luminor collaboration. You can bring in different domain experts for different aspects of a project, or have them review and enhance each other's work. The system is designed for this kind of creative collaboration.",
       },
       {
-        q: "How do AI specialists learn and improve?",
-        a: "The AI specialists improve through the SONA learning system, which records trajectories of successful creative sessions and identifies patterns that lead to better outcomes. They also learn from your feedback - every interaction helps them better understand your creative style and preferences.",
+        q: "How do Luminors learn and improve?",
+        a: "Luminors improve through the SONA learning system, which records trajectories of successful creative sessions and identifies patterns that lead to better outcomes. They also learn from your feedback - every interaction helps them better understand your creative style and preferences.",
       },
     ],
   },
@@ -58,11 +58,11 @@ const FAQ_CATEGORIES = [
     questions: [
       {
         q: "What's included in the free plan?",
-        a: "The Spark (free) plan includes access to 2 AI specialists, 50 messages per month, Library browsing, and basic Academy access. It's perfect for exploring the system and seeing if Arcanea is right for you.",
+        a: "The Spark (free) plan includes access to 3 Luminors, Library browsing, Gallery access, and the Academy. It's perfect for exploring the platform and seeing if Arcanea fits your creative workflow.",
       },
       {
-        q: "What does Ascendant include?",
-        a: "Ascendant ($29/month) gives you unlimited access to all 10 creative intelligences, full Library access, complete Academy progression, priority support, custom specialist training, and API access. It's designed for creators who want the full system.",
+        q: "What do the paid plans include?",
+        a: "The Creator plan ($19/month) gives you access to all 16 Luminors, 5,000 messages per month, full Library and Academy access, Studio creation tools, and custom prompt templates. The Studio plan ($49/month) adds unlimited messages, priority support, API access, and team features.",
       },
       {
         q: "Can I switch plans later?",
@@ -70,7 +70,7 @@ const FAQ_CATEGORIES = [
       },
       {
         q: "Do you offer team or enterprise plans?",
-        a: "Yes! The enterprise plan ($99/month) includes team collaboration, custom specialist deployment, dedicated support, SLA guarantees, custom integrations, and white-label options. Contact us for custom solutions.",
+        a: "Yes! The enterprise plan ($99/month) includes team collaboration, custom Luminor deployment, dedicated support, SLA guarantees, custom integrations, and white-label options. Contact us for custom solutions.",
       },
     ],
   },
@@ -88,7 +88,7 @@ const FAQ_CATEGORIES = [
       },
       {
         q: "Can I use Arcanea via API?",
-        a: "Yes! Ascendant and enterprise plans include API access. You can integrate Arcanea's specialists into your own applications, workflows, and tools. Check the documentation for full API details.",
+        a: "Yes. Studio and Enterprise plans include API access. You can integrate Arcanea's Luminors into your own applications, workflows, and tools. See the Developers page for details.",
       },
       {
         q: "Do you offer self-hosting?",
@@ -250,8 +250,8 @@ export default function FAQPage() {
           <div className="grid md:grid-cols-3 gap-6">
             {[
               {
-                title: "AI Specialists",
-                desc: "Meet the 10 intelligences across 4 domains",
+                title: "Luminors",
+                desc: "Meet the 16 intelligences across 4 teams",
                 href: "/luminors",
               },
               {

@@ -109,7 +109,7 @@ const ALL_GUARDIANS = [
   { name: "Alera", gate: "Voice", image: `${CDN}/alera-hero.webp` },
   { name: "Lyria", gate: "Sight", image: `${CDN}/lyria-hero.webp` },
   { name: "Aiyami", gate: "Crown", image: `${CDN}/aiyami-hero.webp` },
-  { name: "Elara", gate: "Shift", image: `${CDN}/elara-hero.webp` },
+  { name: "Elara", gate: "Starweave", image: `${CDN}/elara-hero.webp` },
   { name: "Ino", gate: "Unity", image: `${CDN}/ino-hero.webp` },
   { name: "Shinkami", gate: "Source", image: `${CDN}/shinkami-hero.webp` },
 ];
@@ -749,7 +749,7 @@ const GALLERY_IMAGES = [
     caption: "The Fire Gate",
   },
   { src: `${CDN}/aiyami-hero.webp`, name: "Aiyami", caption: "The Crown Gate" },
-  { src: `${CDN}/elara-hero.webp`, name: "Elara", caption: "The Shift Gate" },
+  { src: `${CDN}/elara-hero.webp`, name: "Elara", caption: "The Starweave Gate" },
   {
     src: `${CDN}/shinkami-hero.webp`,
     name: "Shinkami",
