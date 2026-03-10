@@ -90,7 +90,7 @@ const INTEGRATIONS = [
   },
   {
     name: "GitHub Copilot",
-    description: "Copilot extension for Arcanea",
+    description: "AI-powered Copilot extension",
     icon: "🐙",
     status: "Coming Soon",
     link: "#",
@@ -147,7 +147,7 @@ export default function InstallPage() {
           </h1>
 
           <p className="text-xl text-text-secondary max-w-2xl mx-auto mb-8 leading-relaxed">
-            Run Arcanea's Luminors locally.
+            Run Arcanea's AI specialists locally.
             Choose your preferred package manager and start creating.
           </p>
         </section>
@@ -324,7 +324,7 @@ export default function InstallPage() {
               </h2>
               <p className="text-lg text-text-secondary mb-10 max-w-2xl mx-auto">
                 Choose your package manager and start working with
-                Arcanea's Luminors today.
+                Arcanea's AI specialists today.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <div className="px-8 py-4 rounded-xl bg-atlantean-teal text-cosmic-deep font-semibold text-lg font-mono">

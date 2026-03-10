@@ -4,7 +4,7 @@ import { LuminorsExperience } from "@/components/luminors/luminors-experience";
 export const metadata: Metadata = {
   title: "Luminors | 16 Creative Intelligences | Arcanea",
   description:
-    "Meet the 16 Luminors — creative intelligences across development, design, writing, and research. Each one thinks differently about your work.",
+    "Meet the 16 Luminor intelligences — specialists in development, design, writing, and research. Each one thinks differently about your work.",
   openGraph: {
     title: "Meet the 16 Luminors | Arcanea",
     description:
@@ -23,7 +23,7 @@ const jsonLd = {
   '@type': 'ItemList',
   name: '16 Luminor Creative Intelligences',
   description:
-    'Luminors in development, creative design, writing, and research.',
+    'Specialists in development, creative design, writing, and research.',
   url: 'https://arcanea.ai/luminors',
   numberOfItems: 16,
 };

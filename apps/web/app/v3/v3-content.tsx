@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { LazyMotion, domMax, m, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { useRef, useState, useEffect } from "react";
 import navLogo from "@/assets/brand/arcanea-mark.jpg";
@@ -69,6 +69,7 @@ function HeroPortal() {
   }, []);
 
   return (
+    <LazyMotion features={domMax}>
     <section
       ref={containerRef}
       className="relative min-h-[100svh] flex items-center justify-center overflow-hidden"
@@ -76,7 +77,7 @@ function HeroPortal() {
       {/* Background: pure dark with subtle aurora — no hero image */}
       <div className="absolute inset-0 -z-20 bg-[#09090b]">
         {/* Single soft aurora bloom — top center */}
-        <motion.div
+        <m.div
           className="absolute inset-0"
           animate={{
             background: [
@@ -103,13 +104,13 @@ function HeroPortal() {
       />
 
       {/* Content */}
-      <motion.div
+      <m.div
         className="relative w-full max-w-3xl mx-auto px-6"
         style={{ y: contentY, opacity: contentOpacity }}
       >
         <div className="flex flex-col items-center text-center">
           {/* Brand mark — small, elegant, no glow rings */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={isLoaded ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
@@ -123,10 +124,10 @@ function HeroPortal() {
               className="rounded-xl ring-1 ring-white/[0.08] shadow-[0_4px_20px_rgba(0,0,0,0.4)]"
               priority
             />
-          </motion.div>
+          </m.div>
 
           {/* Headline — clean, large, confident */}
-          <motion.h1
+          <m.h1
             className="text-[clamp(2.5rem,6vw,5rem)] font-display font-bold tracking-[-0.035em] leading-[1.05] mb-4 md:mb-5"
             initial={{ opacity: 0, y: 24 }}
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
@@ -134,44 +135,45 @@ function HeroPortal() {
           >
             <span className="text-white">Create your </span>
             <HeroChangingWords />
-          </motion.h1>
+          </m.h1>
 
           {/* Subtitle — one line, restrained */}
-          <motion.p
+          <m.p
             className="max-w-lg mx-auto text-base md:text-lg text-white/40 leading-relaxed mb-12 md:mb-14 font-body"
             initial={{ opacity: 0, y: 16 }}
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Tell Arcanea what you want to build. AI specialists will help you
+            Tell Arcanea what you want to build. Luminors will help you
             shape it.
-          </motion.p>
+          </m.p>
 
           {/* Chat box — THE hero element */}
-          <motion.div
+          <m.div
             className="w-full"
             initial={{ opacity: 0, y: 16 }}
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.35 }}
           >
             <HeroChatBox />
-          </motion.div>
+          </m.div>
 
           {/* Minimal trust line */}
-          <motion.p
+          <m.p
             className="mt-10 md:mt-14 text-[11px] text-white/15 font-mono tracking-wider"
             initial={{ opacity: 0 }}
             animate={isLoaded ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.7 }}
           >
             Free to use &middot; No signup required
-          </motion.p>
+          </m.p>
         </div>
-      </motion.div>
+      </m.div>
 
       {/* Scroll fade — bottom edge dissolves into below-fold */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#09090b] to-transparent pointer-events-none" />
     </section>
+    </LazyMotion>
   );
 }
 

@@ -55,7 +55,7 @@ const fadeUp = {
 
 // ── steps data ───────────────────────────────
 const STEPS = [
-  { n: '01', label: 'Choose a companion', desc: 'Pick from 10 AI specialists' },
+  { n: '01', label: 'Choose a companion', desc: 'Pick from 10 Luminors' },
   { n: '02', label: 'Describe your vision', desc: 'Text, image, code, music' },
   { n: '03', label: 'Co-create together', desc: 'Real-time collaboration' },
   { n: '04', label: 'Share & evolve', desc: 'Publish to the community' },
