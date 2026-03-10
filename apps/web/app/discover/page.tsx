@@ -161,7 +161,7 @@ function ShowcaseCard({ creation, index }: { creation: Creation; index: number }
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.04 }}
       whileHover={{ y: -6 }}
-      className="group relative rounded-2xl overflow-hidden bg-slate-900/50 backdrop-blur-sm border border-white/[0.08] hover:border-arcane-crystal/25 transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-arcane-crystal/10"
+      className="group relative rounded-2xl overflow-hidden bg-slate-900/50 backdrop-blur-sm border border-white/[0.08] hover:border-[#00bcd4]/25 transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-[#00bcd4]/10"
     >
       {/* Gradient visual area */}
       <div className={`relative aspect-square bg-gradient-to-br ${bg} overflow-hidden`}>
@@ -219,7 +219,7 @@ function ShowcaseCard({ creation, index }: { creation: Creation; index: number }
             <span className="flex items-center gap-1"><PhEye className="w-3 h-3" />{creation.stats.views.toLocaleString()}</span>
           </div>
           {creation.luminor_id && (
-            <span className="text-arcane-crystal/60 text-xs">With {creation.luminor_id}</span>
+            <span className="text-[#00bcd4]/60 text-xs">With {creation.luminor_id}</span>
           )}
         </div>
       </div>
@@ -255,11 +255,11 @@ export default function DiscoverPage() {
 
   return (
     <LazyMotion features={domMax}>
-      <div className="min-h-screen bg-cosmic-deep py-12">
+      <div className="min-h-screen bg-[#09090b] py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           {/* Header */}
           <m.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center space-y-4">
-            <h1 className="text-5xl font-display font-bold bg-gradient-to-r from-arcane-crystal via-arcane-cosmic to-arcane-crystal bg-clip-text text-transparent">
+            <h1 className="text-5xl font-display font-bold bg-gradient-to-r from-[#00bcd4] via-[#0d47a1] to-[#00bcd4] bg-clip-text text-transparent">
               Discover Creations
             </h1>
             <p className="text-text-secondary text-lg max-w-2xl mx-auto font-sans">
@@ -276,7 +276,7 @@ export default function DiscoverPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search creations..."
-                className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white/[0.04] backdrop-blur-sm text-white placeholder-text-muted border border-white/[0.08] focus:border-arcane-crystal/30 outline-none transition-colors font-sans"
+                className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white/[0.04] backdrop-blur-sm text-white placeholder-text-muted border border-white/[0.08] focus:border-[#00bcd4]/30 outline-none transition-colors font-sans"
               />
             </div>
           </m.div>
@@ -293,7 +293,7 @@ export default function DiscoverPage() {
                 onClick={() => setSelectedFilter(key)}
                 className={`px-6 py-3 rounded-xl font-sans font-medium transition-all duration-300 flex items-center gap-2 ${
                   selectedFilter === key
-                    ? 'bg-arcane-crystal/15 text-arcane-crystal border border-arcane-crystal/30 shadow-lg shadow-arcane-crystal/10'
+                    ? 'bg-[#00bcd4]/15 text-[#00bcd4] border border-[#00bcd4]/30 shadow-lg shadow-[#00bcd4]/10'
                     : 'bg-white/[0.04] text-text-muted hover:text-white hover:bg-white/[0.08] border border-transparent'
                 }`}
               >
@@ -366,7 +366,7 @@ export default function DiscoverPage() {
             </p>
             <Link
               href="/studio"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-arcane-crystal/10 border border-arcane-crystal/20 text-arcane-crystal font-sans font-medium hover:bg-arcane-crystal/20 transition-all"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-[#00bcd4]/10 border border-[#00bcd4]/20 text-[#00bcd4] font-sans font-medium hover:bg-[#00bcd4]/20 transition-all"
             >
               Start Creating in Studio
             </Link>

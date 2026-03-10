@@ -870,7 +870,7 @@ export default function StudioPage() {
           </button>
 
           {saveMessage && (
-            <span className="text-xs text-atlantean-teal-aqua animate-pulse">{saveMessage}</span>
+            <span className="text-xs text-[#00bcd4] animate-pulse">{saveMessage}</span>
           )}
 
           <button

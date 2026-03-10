@@ -240,7 +240,7 @@ export default function ImaginePage() {
 
   return (
     <LazyMotion features={domMax}>
-    <div className="min-h-screen bg-cosmic-deep">
+    <div className="min-h-screen bg-[#09090b]">
       {/* Hero — only visible when no results */}
       <AnimatePresence>
         {!hasResults && (
@@ -253,7 +253,7 @@ export default function ImaginePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="text-5xl md:text-7xl font-display font-bold bg-gradient-to-r from-violet-400 via-fuchsia-300 to-violet-400 bg-clip-text text-transparent"
+              className="text-5xl md:text-7xl font-display font-bold bg-gradient-to-r from-[#00bcd4] via-[#0d47a1] to-[#00bcd4] bg-clip-text text-transparent"
             >
               Imagine
             </m.h1>
@@ -291,7 +291,7 @@ export default function ImaginePage() {
               {!autoScrollEnabled && currentPrompt && (
                 <button
                   onClick={() => setAutoScrollEnabled(true)}
-                  className="text-xs text-violet-400 hover:text-violet-300 px-3 py-1.5 rounded-lg hover:bg-violet-500/10 transition-all"
+                  className="text-xs text-[#00bcd4] hover:text-[#00acc1] px-3 py-1.5 rounded-lg hover:bg-[#00bcd4]/10 transition-all"
                 >
                   Resume infinite scroll
                 </button>
@@ -385,8 +385,8 @@ export default function ImaginePage() {
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="flex flex-col items-center gap-2.5">
                         <div className="relative w-10 h-10">
-                          <div className="absolute inset-0 border-2 border-violet-500/20 rounded-full" />
-                          <div className="absolute inset-0 border-2 border-transparent border-t-violet-500 rounded-full animate-spin" />
+                          <div className="absolute inset-0 border-2 border-[#00bcd4]/20 rounded-full" />
+                          <div className="absolute inset-0 border-2 border-transparent border-t-[#00bcd4] rounded-full animate-spin" />
                         </div>
                         <span className="text-[11px] text-text-muted/70 font-body">Creating...</span>
                       </div>
@@ -442,7 +442,7 @@ export default function ImaginePage() {
       {!hasResults && !isGenerating && (
         <div className="text-center py-12 px-6">
           <div className="max-w-md mx-auto">
-            <div className="w-20 h-20 rounded-3xl bg-violet-600/10 flex items-center justify-center mx-auto mb-6">
+            <div className="w-20 h-20 rounded-3xl bg-[#00bcd4]/10 flex items-center justify-center mx-auto mb-6">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="hsl(262, 83%, 66%)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="opacity-60">
                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
                 <circle cx="8.5" cy="8.5" r="1.5" />

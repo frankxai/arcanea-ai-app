@@ -149,7 +149,7 @@ export default function GalleryPage() {
   }, [allItems]);
 
   return (
-    <div className="min-h-screen bg-cosmic-deep">
+    <div className="min-h-screen bg-[#09090b]">
       {/* Hero */}
       <HeroSection
         isShowcaseMode={isShowcaseMode}
@@ -210,7 +210,7 @@ function HeroSection({
     <section className="relative overflow-hidden border-b border-white/[0.04]">
       {/* Background glow orbs */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-violet-500/8 rounded-full blur-[120px]" />
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#0d47a1]/8 rounded-full blur-[120px]" />
         <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-cyan-500/8 rounded-full blur-[100px]" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-amber-400/5 rounded-full blur-[80px]" />
       </div>
