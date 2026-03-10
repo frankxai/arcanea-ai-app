@@ -3,14 +3,14 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Guides | Arcanea Hub",
-  description: "Step-by-step tutorials for mastering Arcanea. Learn to use Luminors, explore the Library, and unlock your creative potential.",
+  description: "Step-by-step tutorials for mastering Arcanea. Learn to work with Luminors, explore the Library, and grow as a creator.",
 };
 
 const GUIDES = [
   {
     id: "getting-started",
     title: "Getting Started with Arcanea",
-    description: "Your first steps into the creative intelligence platform. Set up your profile, meet your first Luminor, and begin your journey.",
+    description: "Your first steps into the creative intelligence platform. Set up your profile, meet your first Luminor, and start creating.",
     duration: "5 min read",
     difficulty: "Beginner",
     icon: "🚀",
@@ -20,11 +20,11 @@ const GUIDES = [
   {
     id: "luminors-guide",
     title: "Working with Luminors",
-    description: "Deep dive into the 16 Luminor intelligences. Learn their specialties, how to activate them, and when to use each one.",
+    description: "A guide to the 16 Luminors. Learn their strengths, how to activate them, and when to use each one.",
     duration: "15 min read",
     difficulty: "Intermediate",
     icon: "🌟",
-    color: "#8B5CF6",
+    color: "#0d47a1",
     tags: ["luminors", "ai", "collaboration"],
   },
   {
@@ -60,7 +60,7 @@ const GUIDES = [
   {
     id: "studio-basics",
     title: "Creating in the Studio",
-    description: "Use the creation tools to build your ideas. Projects, templates, and AI-assisted workflows.",
+    description: "Use the creation tools to build your ideas. Projects, templates, and guided workflows.",
     duration: "15 min read",
     difficulty: "Intermediate",
     icon: "🎨",

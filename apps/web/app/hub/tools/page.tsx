@@ -9,13 +9,13 @@ export const metadata: Metadata = {
 const TOOLS = [
   {
     id: "chat",
-    name: "Luminor Chat",
+    name: "AI Chat",
     description: "Conversational AI with 16 specialized intelligences. Each Luminor brings unique expertise to your creative challenges.",
     status: "available",
     icon: "💬",
-    color: "#8B5CF6",
+    color: "#0d47a1",
     href: "/chat",
-    features: ["16 Luminor personalities", "Domain expertise", "Memory & context"],
+    features: ["16 Luminors", "Domain expertise", "Memory & context"],
   },
   {
     id: "library",

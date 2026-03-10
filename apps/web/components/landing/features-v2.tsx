@@ -1,6 +1,6 @@
 "use client";
 
-import { m, useInView, LazyMotion, domAnimation } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import {
   PhSparkle,
@@ -19,17 +19,17 @@ import {
 const MAIN_FEATURES = [
   {
     icon: PhSparkle,
-    title: "10 Luminors",
+    title: "16 AI Specialists",
     description:
-      "Each Luminor has mastered a specific domain of creation. They will challenge a weak idea before you waste time building it.",
+      "Each specialist has mastered a specific domain — patterns of how the greatest creators actually work. They will challenge a weak idea before you waste time building it.",
     gradient: "from-atlantean-teal-aqua to-creation-prism-purple",
     highlight: "atlantean-teal-aqua",
   },
   {
     icon: PhBrain,
-    title: "Seven Wisdoms",
+    title: "Seven Wisdoms Framework",
     description:
-      "Seven diagnostic lenses for creative blocks. Sophron sees structure. Kardia feels heart. Valora demands courage. Each reveals what you cannot see alone.",
+      "Stuck? Lost? Afraid? Seven diagnostic lenses for the most common creative blocks. Sophron sees structure. Kardia feels heart. Valora demands courage. Each Wisdom reveals what you cannot see alone.",
     gradient: "from-gold-bright to-draconic-crimson",
     highlight: "gold-bright",
   },
@@ -37,7 +37,7 @@ const MAIN_FEATURES = [
     icon: PhUsers,
     title: "Ten Gates of Mastery",
     description:
-      "A developmental framework from Foundation (174 Hz) to Source (1111 Hz). Each Gate maps to a specific creative capacity. Progress is earned through creation.",
+      "Each Gate corresponds to a specific creative capacity — from grounding your vision (174 Hz) to achieving meta-consciousness about creation itself (1111 Hz). Not gamification. A developmental framework.",
     gradient: "from-creation-prism-purple to-atlantean-teal-aqua",
     highlight: "creation-prism-purple",
   },
@@ -46,13 +46,13 @@ const MAIN_FEATURES = [
 const CAPABILITY_GRID = [
   {
     icon: PhChatCircle,
-    title: "Luminor Dialogue",
-    description: "Conversations shaped by distinct creative philosophies, not generic prompts",
+    title: "Guardian-Guided Dialogue",
+    description: "Conversations shaped by archetypal wisdom, not generic prompts",
   },
   {
     icon: PhPalette,
     title: "Visual Creation",
-    description: "Generate images and concept art with style direction from your Luminor",
+    description: "Generate images and concept art through elemental aesthetics",
   },
   {
     icon: PhBookOpen,
@@ -62,7 +62,7 @@ const CAPABILITY_GRID = [
   {
     icon: PhWand,
     title: "Music Composition",
-    description: "Compose original music with melody-driven prompts",
+    description: "Compose at the frequencies of the Ten Gates",
   },
   {
     icon: PhGraduationCap,
@@ -71,8 +71,8 @@ const CAPABILITY_GRID = [
   },
   {
     icon: PhUsers,
-    title: "Multi-Luminor Sessions",
-    description: "Multiple Luminors collaborating on a single project",
+    title: "Multi-Intelligence Sessions",
+    description: "Multiple specialists collaborating on a single project",
   },
   {
     icon: PhShield,
@@ -92,11 +92,10 @@ export function FeaturesV2() {
   const [activeFeature, setActiveFeature] = useState(0);
 
   return (
-    <LazyMotion features={domAnimation}>
     <section ref={ref} className="py-32 relative">
       {/* Section Header */}
       <div className="max-w-7xl mx-auto px-6">
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-20"
@@ -114,18 +113,18 @@ export function FeaturesV2() {
             </span>
           </h2>
           <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-            Ten Luminors rooted in the Guardians of Arcanea.
+            Sixteen AI intelligences rooted in the Ten Guardians of Arcanean mythology.
             Seven Wisdoms that diagnose creative blocks. A Library of 34 original texts.
-            A coherent philosophy of creation, not features strung together.
+            Not features strung together — a coherent philosophy of creation.
           </p>
-        </m.div>
+        </motion.div>
 
         {/* Main Features - Large Cards */}
         <div className="grid lg:grid-cols-3 gap-6 mb-20">
           {MAIN_FEATURES.map((feature, i) => {
             const Icon = feature.icon;
             return (
-              <m.div
+              <motion.div
                 key={feature.title}
                 role="article"
                 aria-label={feature.title}
@@ -174,13 +173,13 @@ export function FeaturesV2() {
                 <div
                   className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 transition-opacity -z-10`}
                 />
-              </m.div>
+              </motion.div>
             );
           })}
         </div>
 
         {/* Capability Grid */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.4 }}
@@ -196,7 +195,7 @@ export function FeaturesV2() {
               {CAPABILITY_GRID.map((capability, i) => {
                 const Icon = capability.icon;
                 return (
-                  <m.li
+                  <motion.li
                     key={capability.title}
                     initial={{ opacity: 0, y: 20 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -214,15 +213,15 @@ export function FeaturesV2() {
                         {capability.description}
                       </p>
                     </div>
-                  </m.li>
+                  </motion.li>
                 );
               })}
             </ul>
           </div>
-        </m.div>
+        </motion.div>
 
         {/* Bottom CTA */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.6 }}
@@ -235,9 +234,8 @@ export function FeaturesV2() {
             <PhSparkle className="w-5 h-5 text-atlantean-teal-aqua" />
             Explore All Features
           </a>
-        </m.div>
+        </motion.div>
       </div>
     </section>
-    </LazyMotion>
   );
 }

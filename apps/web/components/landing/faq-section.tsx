@@ -1,53 +1,41 @@
 'use client';
 
-import { m, useInView, AnimatePresence, LazyMotion, domMax } from 'framer-motion';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { PhQuestion, PhPlus, PhMinus } from '@/lib/phosphor-icons';
 
 const FAQS = [
-  // — Getting Started —
   {
-    question: 'What do I get on the free plan?',
-    answer: '3 Luminors (writing, research, brainstorming), 100 messages per month, full Library browsing, and Academy access through Gate 2.',
+    question: 'What makes Arcanea different from other AI tools?',
+    answer: "Arcanea isn't just an AI tool — it's a complete creative intelligence platform. Our 16 specialists each bring deep expertise, from storytelling to research to music composition. The Seven Wisdoms framework provides actionable creative methodology, while the Ten Gates progression system helps you systematically develop your creative abilities.",
   },
   {
-    question: 'Do I need a credit card to start?',
-    answer: 'No. The Spark plan is free with no card required.',
-  },
-  // — Luminors —
-  {
-    question: 'What are Luminors?',
-    answer: 'AI companions, each built for a specific creative domain — writing, code, design, music, research, and more. You chat with them directly, and they remember your work across sessions.',
+    question: 'How do the AI specialists work?',
+    answer: 'Each specialist is designed for a specific creative domain, with its own expertise and approach. Oracle excels at research and analysis, Chronica at storytelling and narrative, Prismatic at visual concepts, and so on. You can switch between specialists or combine their strengths for complex projects.',
   },
   {
-    question: 'Can I switch between Luminors mid-conversation?',
-    answer: 'Yes. Bring a different Luminor into any conversation at any point.',
-  },
-  // — Platform —
-  {
-    question: 'Is my work private?',
-    answer: 'Yes. Your conversations and creations are encrypted and never used for training. You own everything you make on Arcanea.',
+    question: 'Is my creative work private and secure?',
+    answer: 'Absolutely. Your creations, prompts, and conversations are encrypted and never shared or used to train AI models. You retain full ownership of everything you create on Arcanea. Your creative process is sacred — we treat it that way.',
   },
   {
     question: 'Can I export my work?',
-    answer: 'Spark exports to PDF. Creator and Studio add Markdown, HTML, and API access. Studio can export without Arcanea branding.',
+    answer: 'Yes! All plans include export capabilities. Explorer users can export to PDF, while Creator and Studio plans unlock Word, Markdown, HTML, and API access. Studio plans also include white-label exports without Arcanea branding.',
   },
   {
     question: 'What is the Ten Gates system?',
-    answer: 'A progression framework for creative growth. Each Gate represents a stage of mastery, from Foundation to Source. You advance by creating, not by paying.',
+    answer: 'The Ten Gates is our unique progression framework based on ancient wisdom traditions and modern creative psychology. Each Gate represents a stage of creative mastery—from Foundation (basic skills) to Source (creative leadership). As you create and learn, you advance through the Gates, unlocking new capabilities and deeper understanding.',
   },
-  // — Pricing —
   {
-    question: 'Can I switch plans later?',
-    answer: 'Yes. Upgrade or downgrade anytime from your settings. Payments are prorated.',
+    question: 'Do you offer team or enterprise plans?',
+    answer: 'Our Studio plan includes 5 team seats with collaboration features. For larger teams or enterprises needing custom solutions, dedicated support, and advanced security features, please contact our sales team for a tailored quote.',
+  },
+  {
+    question: 'Can I cancel my subscription anytime?',
+    answer: 'Yes, you can cancel anytime from your account settings. If you cancel, you\'ll retain access until the end of your current billing period. We also offer a 30-day money-back guarantee on annual plans.',
   },
   {
     question: 'What happens to my work if I downgrade?',
-    answer: 'Everything stays. Your creations, conversations, and progress are always kept. You return to the limits of your new plan.',
-  },
-  {
-    question: 'Can I cancel anytime?',
-    answer: 'Yes. Cancel from your settings and keep access through the end of your billing period.',
+    answer: 'Your work is always yours. If you downgrade, your existing creations remain accessible. You\'ll just be limited to the features of your new plan for future work. We never delete your content.',
   },
 ];
 
@@ -68,7 +56,7 @@ function FAQItem({
   const isInView = useInView(ref, { once: true, margin: '-50px' });
 
   return (
-    <m.div
+    <motion.div
       ref={ref}
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -95,7 +83,7 @@ function FAQItem({
       </button>
       <AnimatePresence>
         {isOpen && (
-          <m.div
+          <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
@@ -103,10 +91,10 @@ function FAQItem({
             className="overflow-hidden"
           >
             <p className="pb-6 text-text-secondary leading-relaxed">{answer}</p>
-          </m.div>
+          </motion.div>
         )}
       </AnimatePresence>
-    </m.div>
+    </motion.div>
   );
 }
 
@@ -116,7 +104,6 @@ export function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <LazyMotion features={domMax}>
     <section ref={ref} className="py-32 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 -z-10">
@@ -125,7 +112,7 @@ export function FAQSection() {
 
       <div className="max-w-4xl mx-auto px-6">
         {/* Header */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
@@ -140,7 +127,7 @@ export function FAQSection() {
           <p className="text-xl text-text-secondary">
             Everything you need to know about Arcanea.
           </p>
-        </m.div>
+        </motion.div>
 
         {/* FAQ list */}
         <div className="border-t border-white/[0.06]">
@@ -157,7 +144,7 @@ export function FAQSection() {
         </div>
 
         {/* Still have questions */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.5 }}
@@ -165,7 +152,7 @@ export function FAQSection() {
         >
           <h3 className="text-xl font-display font-semibold mb-3">Still have questions?</h3>
           <p className="text-text-secondary mb-6">
-            We typically respond within 24 hours.
+            Can't find the answer you're looking for? Our team is here to help.
           </p>
           <a
             href="mailto:support@arcanea.ai"
@@ -173,9 +160,8 @@ export function FAQSection() {
           >
             Contact Support
           </a>
-        </m.div>
+        </motion.div>
       </div>
     </section>
-    </LazyMotion>
   );
 }

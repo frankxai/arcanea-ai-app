@@ -1,15 +1,15 @@
 "use client";
 
-import { m, useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import navLogo from "@/assets/brand/arcanea-mark.jpg";
 
 const BENEFITS = [
-  "10 Luminors, each with a distinct creative philosophy and domain",
-  "Original library of philosophy texts, meditations, and practical craft guidance",
-  "Free to start — direct paths into Chat, Studio, and Academy",
+  "Canon-backed creation system: Primordials, Gods, Guardians, and Luminors",
+  "Library of philosophy texts, lore structures, and practical craft guidance",
+  "Free to start with direct paths into Chat, Studio, and Academy",
 ];
 
 const GUARDIAN_CDN = "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians";
@@ -45,7 +45,7 @@ export function CTASection() {
     <section ref={ref} className="py-32 relative overflow-hidden">
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-cosmic-deep via-cosmic-void to-cosmic-deep" />
-        <m.div
+        <motion.div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full"
           style={{
             background:
@@ -57,7 +57,7 @@ export function CTASection() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6">
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
@@ -70,7 +70,7 @@ export function CTASection() {
 
               <div className="relative grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                 <div>
-                  <m.div
+                  <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ delay: 0.15 }}
@@ -88,7 +88,7 @@ export function CTASection() {
 
                     <ul className="space-y-3 mb-10">
                       {BENEFITS.map((benefit, i) => (
-                        <m.li
+                        <motion.li
                           key={benefit}
                           initial={{ opacity: 0, x: -15 }}
                           animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -103,7 +103,7 @@ export function CTASection() {
                           <span className="text-text-secondary text-sm">
                             {benefit}
                           </span>
-                        </m.li>
+                        </motion.li>
                       ))}
                     </ul>
 
@@ -113,7 +113,7 @@ export function CTASection() {
                         className="group relative px-8 py-4 rounded-2xl font-semibold text-base overflow-hidden btn-glow"
                       >
                         <div className="absolute inset-0 bg-gradient-to-r from-[#00897b] via-[#1565c0] to-[#00bcd4]" />
-                        <m.div
+                        <motion.div
                           className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.15] to-transparent"
                           initial={{ x: "-100%" }}
                           whileHover={{ x: "100%" }}
@@ -134,10 +134,10 @@ export function CTASection() {
                         Explore Lore
                       </Link>
                     </div>
-                  </m.div>
+                  </motion.div>
                 </div>
 
-                <m.div
+                <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={isInView ? { opacity: 1, scale: 1 } : {}}
                   transition={{ delay: 0.3, duration: 0.8 }}
@@ -150,7 +150,7 @@ export function CTASection() {
                       const rad = (g.angle - 90) * (Math.PI / 180);
                       const r = 38;
                       return (
-                        <m.div
+                        <motion.div
                           key={g.name}
                           className="absolute"
                           style={{
@@ -164,7 +164,7 @@ export function CTASection() {
                             type: "spring",
                           }}
                         >
-                          <m.div
+                          <motion.div
                             className="w-12 h-12 rounded-xl overflow-hidden ring-1 ring-white/[0.12] shadow-xl shadow-black/40"
                             animate={{ y: [0, -6, 0] }}
                             transition={{
@@ -178,12 +178,12 @@ export function CTASection() {
                               alt={g.name}
                               className="w-full h-full object-cover object-top"
                             />
-                          </m.div>
-                        </m.div>
+                          </motion.div>
+                        </motion.div>
                       );
                     })}
 
-                    <m.div
+                    <motion.div
                       className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-2xl overflow-hidden ring-1 ring-white/[0.15]"
                       animate={{
                         boxShadow: [
@@ -201,13 +201,13 @@ export function CTASection() {
                         height={80}
                         className="w-full h-full object-cover"
                       />
-                    </m.div>
+                    </motion.div>
                   </div>
-                </m.div>
+                </motion.div>
               </div>
             </div>
           </div>
-        </m.div>
+        </motion.div>
       </div>
     </section>
   );

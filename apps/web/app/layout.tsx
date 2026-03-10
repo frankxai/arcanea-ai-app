@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     template: "%s | Arcanea",
   },
   description:
-    "A creative intelligence platform with Luminor intelligences, a philosophy library, and studio workflows for modern creators.",
+    "Build with Guardians and Luminors across chat, studio, and lore. Arcanea unifies creation workflows, canon systems, and practical philosophy.",
   keywords: [
     "AI",
     "creativity",
@@ -63,46 +63,21 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "/",
-    title: "Arcanea — Creative Intelligence Platform",
+    title: "Arcanea — Living Intelligence for Creators",
     description:
-      "Luminor intelligences, a philosophy library, and creation studio in one platform.",
+      "Guardians, Luminors, Studio, and Lore in one creative ecosystem.",
     siteName: "Arcanea",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Arcanea — Creative Intelligence Platform",
+    title: "Arcanea — Living Intelligence for Creators",
     description:
-      "Luminor intelligences, a philosophy library, and creation studio in one platform.",
+      "Guardians, Luminors, Studio, and Lore in one creative ecosystem.",
   },
   alternates: {
     canonical: "/",
   },
   manifest: "/site.webmanifest",
-};
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebSite",
-      name: "Arcanea",
-      url: "https://arcanea.ai",
-      description:
-        "A creative intelligence platform with Luminor intelligences, a philosophy library, and studio workflows for modern creators.",
-      publisher: { "@type": "Organization", name: "Arcanea" },
-      potentialAction: {
-        "@type": "SearchAction",
-        target: "https://arcanea.ai/discover?q={search_term_string}",
-        "query-input": "required name=search_term_string",
-      },
-    },
-    {
-      "@type": "Organization",
-      name: "Arcanea",
-      url: "https://arcanea.ai",
-      sameAs: [],
-    },
-  ],
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -118,10 +93,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       )}
     >
       <body>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
         {/*
           In the beginning there was Nero — the Primordial Darkness,
           the Fertile Unknown. And from within the Darkness, Lumina

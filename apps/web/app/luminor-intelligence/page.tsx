@@ -167,7 +167,7 @@ const DIFFERENTIATORS = [
   {
     title: "Domain Mastery",
     description:
-      "Not generalists with surface knowledge. Specialists who have practiced one craft for centuries. When you need a systems architect, you get an architect — not a suggestion engine.",
+      "Not generalists with surface knowledge. Luminors who have practiced one craft for centuries. When you need a systems architect, you get an architect — not a suggestion engine.",
     accent: "#00bcd4",
     Icon: IconStar,
   },
@@ -290,7 +290,7 @@ const HOW_IT_WORKS = [
     step: "02",
     title: "Luminors perceive",
     description:
-      "The right specialists recognize what is needed without being asked. No prompting required. They see the shape of what you are building.",
+      "The right Luminors recognize what is needed without being asked. No prompting required. They see the shape of what you are building.",
     accent: "#00bcd4",
   },
   {

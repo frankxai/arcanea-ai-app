@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { useAuth } from "@/lib/auth/context";
 import {
   Pen,
@@ -61,7 +61,7 @@ const MODES: ModeConfig[] = [
     gate: "Fire",
     element: "Fire",
     elementColor: "#ef4444",
-    description: "Generate and refine images from text prompts.",
+    description: "Generate and refine images with AI.",
   },
   {
     id: "code",
@@ -81,7 +81,7 @@ const MODES: ModeConfig[] = [
     gate: "Flow",
     element: "Water",
     elementColor: "#3b82f6",
-    description: "Compose original music and soundscapes.",
+    description: "Compose original music with AI.",
   },
 ];
 
@@ -111,17 +111,17 @@ const AI_SUGGESTIONS = [
 function TextCreationPanel({
   content,
   setContent,
-  aiMessages,
-  onAskAI,
-  aiInput,
-  setAiInput,
+  luminorMessages,
+  onAskLuminor,
+  luminorInput,
+  setLuminorInput,
 }: {
   content: string;
   setContent: (val: string) => void;
-  aiMessages: { role: "user" | "luminor"; text: string }[];
-  onAskAI: () => void;
-  aiInput: string;
-  setAiInput: (val: string) => void;
+  luminorMessages: { role: "user" | "luminor"; text: string }[];
+  onAskLuminor: () => void;
+  luminorInput: string;
+  setLuminorInput: (val: string) => void;
 }) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const wordCount = content.trim() ? content.trim().split(/\s+/).length : 0;
@@ -215,20 +215,20 @@ Use Markdown for formatting. The AI panel can help you develop ideas."
         </div>
       </div>
 
-      {/* Right: AI Panel */}
+      {/* Right: Luminor AI Panel */}
       <div className="lg:w-[340px] flex flex-col border-l border-white/[0.08] min-h-0">
         <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.08] bg-white/[0.02]">
           <div className="w-6 h-6 rounded-full bg-gradient-to-br from-crystal to-brand-primary flex items-center justify-center">
             <Brain size={14} className="text-cosmic-void" />
           </div>
           <span className="text-xs font-semibold text-text-primary">
-            Luminor
+            AI Assistant
           </span>
         </div>
 
         {/* Suggestions */}
         <div className="flex-1 overflow-y-auto p-3 space-y-2">
-          {aiMessages.length === 0 ? (
+          {luminorMessages.length === 0 ? (
             <>
               <p className="text-xs text-text-muted mb-3 px-1">
                 Suggestions to enhance your creation:
@@ -237,8 +237,8 @@ Use Markdown for formatting. The AI panel can help you develop ideas."
                 <button
                   key={s.title}
                   onClick={() => {
-                    setAiInput(s.title);
-                    setTimeout(onAskAI, 50);
+                    setLuminorInput(s.title);
+                    setTimeout(onAskLuminor, 50);
                   }}
                   className="w-full text-left p-3 rounded-xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06] hover:border-crystal/30 transition-all group"
                 >
@@ -261,7 +261,7 @@ Use Markdown for formatting. The AI panel can help you develop ideas."
               ))}
             </>
           ) : (
-            aiMessages.map((msg, i) => (
+            luminorMessages.map((msg, i) => (
               <div
                 key={i}
                 className={`p-3 rounded-xl text-xs leading-relaxed ${
@@ -274,7 +274,7 @@ Use Markdown for formatting. The AI panel can help you develop ideas."
                   <div className="flex items-center gap-1.5 mb-1.5 text-crystal">
                     <Sparkle size={10} weight="fill" />
                     <span className="font-semibold text-[10px] uppercase tracking-wider">
-                      AI
+                      Luminor
                     </span>
                   </div>
                 )}
@@ -289,17 +289,17 @@ Use Markdown for formatting. The AI panel can help you develop ideas."
           <div className="flex items-center gap-2">
             <input
               type="text"
-              value={aiInput}
-              onChange={(e) => setAiInput(e.target.value)}
+              value={luminorInput}
+              onChange={(e) => setLuminorInput(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter" && aiInput.trim()) onAskAI();
+                if (e.key === "Enter" && luminorInput.trim()) onAskLuminor();
               }}
-              placeholder="Ask AI..."
+              placeholder="Ask Luminor..."
               className="flex-1 bg-white/[0.04] border border-white/[0.06] rounded-lg px-3 py-2 text-xs text-text-primary placeholder-text-muted/50 focus:outline-none focus:border-crystal/40 transition-colors"
             />
             <button
-              onClick={onAskAI}
-              disabled={!aiInput.trim()}
+              onClick={onAskLuminor}
+              disabled={!luminorInput.trim()}
               className="p-2 rounded-lg bg-gradient-to-r from-crystal to-brand-primary text-cosmic-void hover:opacity-90 transition-opacity disabled:opacity-30 disabled:cursor-not-allowed"
             >
               <PaperPlane size={14} weight="fill" />
@@ -318,30 +318,9 @@ Use Markdown for formatting. The AI panel can help you develop ideas."
 // Image Creation Panel
 // ---------------------------------------------------------------------------
 
-interface GeneratedImageData {
-  id: string;
-  url: string;
-  prompt: string;
-}
-
-function ImageCreationPanel({
-  imagePrompt,
-  setImagePrompt,
-  generatedImages,
-  setGeneratedImages,
-}: {
-  imagePrompt: string;
-  setImagePrompt: (val: string) => void;
-  generatedImages: GeneratedImageData[];
-  setGeneratedImages: (val: GeneratedImageData[]) => void;
-}) {
+function ImageCreationPanel() {
+  const [prompt, setPrompt] = useState("");
   const [style, setStyle] = useState("Fantasy Art");
-  const [aspectRatio, setAspectRatio] = useState("1:1");
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [imageError, setImageError] = useState<string | null>(null);
-  const prompt = imagePrompt;
-  const setPrompt = setImagePrompt;
 
   const styles = [
     "Fantasy Art",
@@ -352,48 +331,6 @@ function ImageCreationPanel({
     "Watercolor",
     "Digital Painting",
   ];
-
-  const ratios = ["1:1", "16:9", "9:16", "4:3", "3:2"];
-
-  const handleGenerate = useCallback(async () => {
-    if (!prompt.trim() || isGenerating) return;
-
-    setIsGenerating(true);
-    setImageError(null);
-
-    const fullPrompt = `${prompt.trim()}, ${style.toLowerCase()} style`;
-
-    try {
-      const res = await fetch("/api/imagine/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: fullPrompt, count: 4, aspectRatio }),
-      });
-
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data.error || `Generation failed (${res.status})`);
-      }
-
-      const data = await res.json();
-      const images: GeneratedImageData[] = (data.images || []).map(
-        (img: { url?: string; data?: string; mimeType?: string; prompt?: string }, i: number) => ({
-          id: `studio_img_${Date.now()}_${i}`,
-          url: img.url || (img.data ? `data:${img.mimeType || "image/png"};base64,${img.data}` : ""),
-          prompt: img.prompt || fullPrompt,
-        })
-      );
-
-      setGeneratedImages(images);
-      if (images.length > 0) setSelectedImage(images[0].id);
-    } catch (err) {
-      setImageError(err instanceof Error ? err.message : "Image generation failed");
-    } finally {
-      setIsGenerating(false);
-    }
-  }, [prompt, style, aspectRatio, isGenerating]);
-
-  const activeImage = generatedImages.find((img) => img.id === selectedImage);
 
   return (
     <div className="flex flex-col lg:flex-row gap-4 flex-1 min-h-0">
@@ -408,12 +345,6 @@ function ImageCreationPanel({
         <textarea
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && (e.metaKey || e.ctrlKey) && prompt.trim()) {
-              e.preventDefault();
-              handleGenerate();
-            }
-          }}
           placeholder="Describe the image you want to create...
 
 Example: A solitary figure on a cliff edge at twilight,
@@ -423,69 +354,23 @@ in the style of epic fantasy concept art."
         />
 
         {/* Style selector */}
-        <div className="px-4 py-3 border-t border-white/[0.08] bg-white/[0.02] space-y-3">
-          <div>
-            <p className="text-xs text-text-muted mb-2">Style:</p>
-            <div className="flex flex-wrap gap-2">
-              {styles.map((s) => (
-                <button
-                  key={s}
-                  onClick={() => setStyle(s)}
-                  className={`px-3 py-1.5 rounded-full text-xs border transition-all ${
-                    style === s
-                      ? "border-fire/40 bg-fire/15 text-fire"
-                      : "border-white/[0.06] bg-white/[0.04] text-text-muted hover:border-white/[0.12]"
-                  }`}
-                >
-                  {s}
-                </button>
-              ))}
-            </div>
+        <div className="px-4 py-3 border-t border-white/[0.08] bg-white/[0.02]">
+          <p className="text-xs text-text-muted mb-2">Style:</p>
+          <div className="flex flex-wrap gap-2">
+            {styles.map((s) => (
+              <button
+                key={s}
+                onClick={() => setStyle(s)}
+                className={`px-3 py-1.5 rounded-full text-xs border transition-all ${
+                  style === s
+                    ? "border-fire/40 bg-fire/15 text-fire"
+                    : "border-white/[0.06] bg-white/[0.04] text-text-muted hover:border-white/[0.12]"
+                }`}
+              >
+                {s}
+              </button>
+            ))}
           </div>
-          <div>
-            <p className="text-xs text-text-muted mb-2">Aspect ratio:</p>
-            <div className="flex flex-wrap gap-2">
-              {ratios.map((r) => (
-                <button
-                  key={r}
-                  onClick={() => setAspectRatio(r)}
-                  className={`px-3 py-1.5 rounded-full text-xs border transition-all font-mono ${
-                    aspectRatio === r
-                      ? "border-fire/40 bg-fire/15 text-fire"
-                      : "border-white/[0.06] bg-white/[0.04] text-text-muted hover:border-white/[0.12]"
-                  }`}
-                >
-                  {r}
-                </button>
-              ))}
-            </div>
-          </div>
-          <button
-            onClick={handleGenerate}
-            disabled={!prompt.trim() || isGenerating}
-            className="w-full py-2.5 rounded-xl text-sm font-semibold transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-            style={{
-              background: isGenerating
-                ? "rgba(239,68,68,0.15)"
-                : "linear-gradient(135deg, #ef4444, #00bcd4)",
-              color: isGenerating ? "#ef4444" : "#0a0a1a",
-            }}
-          >
-            {isGenerating ? (
-              <>
-                <Sparkle size={14} className="animate-spin" style={{ animationDuration: "2s" }} />
-                Generating...
-              </>
-            ) : (
-              <>
-                <Sparkle size={14} weight="fill" />
-                Generate Image
-              </>
-            )}
-          </button>
-          <p className="text-[10px] text-text-muted text-center">
-            {prompt.trim() ? "Ctrl+Enter to generate" : "Enter a prompt to begin"}
-          </p>
         </div>
       </div>
 
@@ -496,92 +381,34 @@ in the style of epic fantasy concept art."
           <span className="text-xs font-semibold text-text-primary">
             Preview
           </span>
-          {generatedImages.length > 0 && (
-            <span className="text-[10px] text-text-muted ml-auto">
-              {generatedImages.length} image{generatedImages.length !== 1 ? "s" : ""}
-            </span>
-          )}
         </div>
 
-        <div className="flex-1 overflow-y-auto p-4">
-          {imageError && (
-            <div className="mb-3 p-3 rounded-xl border border-red-500/20 bg-red-500/5 text-xs text-red-300 flex items-center justify-between">
-              <span>{imageError}</span>
-              <button onClick={() => setImageError(null)} className="text-red-400 hover:text-red-300 ml-2 shrink-0">
-                <Info size={12} />
-              </button>
+        <div className="flex-1 flex items-center justify-center p-6">
+          <div className="w-full aspect-square max-w-[320px] rounded-2xl border border-white/[0.06] bg-gradient-to-br from-fire/5 via-transparent to-brand-primary/5 flex flex-col items-center justify-center gap-4 p-6">
+            <div className="w-16 h-16 rounded-2xl bg-fire/10 border border-fire/20 flex items-center justify-center">
+              <Image size={28} className="text-fire/60" />
             </div>
-          )}
-
-          {isGenerating && (
-            <div className="flex flex-col items-center justify-center gap-4 py-12">
-              <div className="w-16 h-16 rounded-2xl bg-fire/10 border border-fire/20 flex items-center justify-center">
-                <Sparkle size={24} className="text-fire animate-spin" style={{ animationDuration: "2s" }} />
-              </div>
-              <div className="text-center">
-                <p className="text-sm text-text-primary">Generating your vision...</p>
-                <p className="text-[11px] text-text-muted mt-1">This may take 10-30 seconds</p>
-              </div>
+            <div className="text-center">
+              <p className="text-sm text-text-muted">
+                {prompt.trim()
+                  ? "Ready to generate"
+                  : "Describe your image above"}
+              </p>
+              <p className="text-[11px] text-text-muted/60 mt-1">
+                {prompt.trim()
+                  ? `Style: ${style}`
+                  : "Your creation will appear here"}
+              </p>
             </div>
-          )}
-
-          {!isGenerating && generatedImages.length === 0 && (
-            <div className="flex flex-col items-center justify-center gap-4 py-12">
-              <div className="w-16 h-16 rounded-2xl bg-fire/10 border border-fire/20 flex items-center justify-center">
-                <Image size={28} className="text-fire/60" />
+            {prompt.trim() && (
+              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-fire/10 border border-fire/20">
+                <Info size={12} className="text-fire" />
+                <span className="text-[10px] text-fire">
+                  Connect API key in Settings
+                </span>
               </div>
-              <div className="text-center">
-                <p className="text-sm text-text-muted">
-                  {prompt.trim() ? "Ready to generate" : "Describe your image"}
-                </p>
-                <p className="text-[11px] text-text-muted/60 mt-1">
-                  {prompt.trim() ? `Style: ${style} | ${aspectRatio}` : "Your creation will appear here"}
-                </p>
-              </div>
-            </div>
-          )}
-
-          {!isGenerating && activeImage && (
-            <div className="space-y-3">
-              {/* Main image */}
-              <div className="relative rounded-xl overflow-hidden border border-white/[0.08] group">
-                <img
-                  src={activeImage.url}
-                  alt={activeImage.prompt}
-                  className="w-full object-contain bg-black/20"
-                />
-                <div className="absolute bottom-2 right-2 flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <a
-                    href={activeImage.url}
-                    download={`arcanea-${activeImage.id}.png`}
-                    className="p-2 rounded-lg bg-black/60 border border-white/[0.12] text-white hover:bg-black/80 transition-colors"
-                    title="Download"
-                  >
-                    <Download size={12} />
-                  </a>
-                </div>
-              </div>
-
-              {/* Thumbnails */}
-              {generatedImages.length > 1 && (
-                <div className="grid grid-cols-4 gap-2">
-                  {generatedImages.map((img) => (
-                    <button
-                      key={img.id}
-                      onClick={() => setSelectedImage(img.id)}
-                      className={`relative aspect-square rounded-lg overflow-hidden border transition-all ${
-                        selectedImage === img.id
-                          ? "border-fire/50 ring-1 ring-fire/30"
-                          : "border-white/[0.06] hover:border-white/[0.12]"
-                      }`}
-                    >
-                      <img src={img.url} alt="" className="w-full h-full object-cover" />
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </div>
@@ -592,22 +419,9 @@ in the style of epic fantasy concept art."
 // Code Creation Panel
 // ---------------------------------------------------------------------------
 
-function CodeCreationPanel({
-  code,
-  setCode,
-  language,
-  setLanguage,
-}: {
-  code: string;
-  setCode: (val: string) => void;
-  language: string;
-  setLanguage: (val: string) => void;
-}) {
-  const [codeAiMessages, setCodeAiMessages] = useState<
-    { role: "user" | "luminor"; text: string }[]
-  >([]);
-  const [codeAiInput, setCodeAiInput] = useState("");
-  const [isCodeGenerating, setIsCodeGenerating] = useState(false);
+function CodeCreationPanel() {
+  const [code, setCode] = useState("");
+  const [language, setLanguage] = useState("TypeScript");
 
   const languages = [
     "TypeScript",
@@ -617,94 +431,6 @@ function CodeCreationPanel({
     "Go",
     "HTML/CSS",
   ];
-
-  const CODE_SUGGESTIONS = [
-    { title: "Generate from description", description: "Describe what you need and get complete code." },
-    { title: "Explain this code", description: "Get a clear explanation of what the code does." },
-    { title: "Refactor for quality", description: "Improve structure, naming, and patterns." },
-    { title: "Find and fix bugs", description: "Identify potential issues and get fixes." },
-  ];
-
-  const handleCodeAI = useCallback(async () => {
-    const input = codeAiInput.trim();
-    if (!input || isCodeGenerating) return;
-
-    setCodeAiMessages((prev) => [...prev, { role: "user", text: input }]);
-    setCodeAiInput("");
-    setIsCodeGenerating(true);
-
-    try {
-      const systemPrompt = `You are a code generation Luminor working in ${language}. Write clean, production-quality code. When given a description, generate the complete implementation. When asked to explain, refactor, or debug, analyze the provided code carefully. Use ${language} by default. Be concise and practical. If the user provides existing code, consider it as context.`;
-
-      const contextMsg = code.trim()
-        ? `\n\n[Current code in editor]:\n\`\`\`${language.toLowerCase()}\n${code}\n\`\`\``
-        : "";
-
-      const res = await fetch("/api/ai/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          messages: [
-            { role: "system", content: systemPrompt },
-            ...codeAiMessages.slice(-6).map((m) => ({
-              role: m.role === "luminor" ? "assistant" : "user",
-              content: m.text,
-            })),
-            { role: "user", content: input + contextMsg },
-          ],
-        }),
-      });
-
-      if (res.ok && res.body) {
-        const reader = res.body.getReader();
-        const decoder = new TextDecoder();
-        let fullText = "";
-
-        setCodeAiMessages((prev) => [...prev, { role: "luminor", text: "" }]);
-
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          fullText += decoder.decode(value, { stream: true });
-          setCodeAiMessages((prev) => {
-            const updated = [...prev];
-            updated[updated.length - 1] = { role: "luminor", text: fullText };
-            return updated;
-          });
-        }
-
-        // If the response contains a code block, offer to apply it
-        const codeMatch = fullText.match(/```[\w]*\n([\s\S]*?)```/);
-        if (codeMatch && codeMatch[1]?.trim()) {
-          setCodeAiMessages((prev) => [
-            ...prev,
-            {
-              role: "luminor",
-              text: "__CODE_BLOCK__" + codeMatch[1].trim(),
-            },
-          ]);
-        }
-      } else {
-        setCodeAiMessages((prev) => [
-          ...prev,
-          {
-            role: "luminor",
-            text: "AI service is not available right now. Check that an API key is configured.",
-          },
-        ]);
-      }
-    } catch {
-      setCodeAiMessages((prev) => [
-        ...prev,
-        {
-          role: "luminor",
-          text: "Could not reach the AI service. Check your connection and try again.",
-        },
-      ]);
-    } finally {
-      setIsCodeGenerating(false);
-    }
-  }, [codeAiInput, code, language, codeAiMessages, isCodeGenerating]);
 
   return (
     <div className="flex flex-col lg:flex-row gap-4 flex-1 min-h-0">
@@ -732,7 +458,7 @@ function CodeCreationPanel({
         <textarea
           value={code}
           onChange={(e) => setCode(e.target.value)}
-          placeholder={`// Start writing ${language}...\n// The AI panel can generate, explain, refactor, or debug your code.\n\n`}
+          placeholder={`// Start writing ${language}...\n// The AI panel will help with suggestions and debugging.\n\n`}
           className="flex-1 w-full resize-none bg-transparent text-text-primary placeholder-text-muted/40 p-4 font-mono text-sm leading-relaxed focus:outline-none min-h-[300px] tab-size-2"
           spellCheck={false}
         />
@@ -740,128 +466,33 @@ function CodeCreationPanel({
         <div className="flex items-center gap-4 px-4 py-2 border-t border-white/[0.08] bg-white/[0.02] text-xs text-text-muted font-mono">
           <span>{language}</span>
           <span>{code.split("\n").length} lines</span>
-          {isCodeGenerating && (
-            <span className="flex items-center gap-1.5 text-brand-gold">
-              <Sparkle size={10} className="animate-spin" style={{ animationDuration: "2s" }} />
-              AI thinking...
-            </span>
-          )}
         </div>
       </div>
 
-      {/* Right: AI Panel */}
+      {/* Right: Output / AI */}
       <div className="lg:w-[340px] flex flex-col border-l border-white/[0.08] min-h-0">
         <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.08] bg-white/[0.02]">
-          <div className="w-6 h-6 rounded-full bg-gradient-to-br from-brand-gold to-brand-primary flex items-center justify-center">
-            <Brain size={14} className="text-cosmic-void" />
-          </div>
+          <Play size={14} className="text-brand-gold" />
           <span className="text-xs font-semibold text-text-primary">
-            Code AI
+            Output
           </span>
         </div>
 
-        {/* Messages / Suggestions */}
-        <div className="flex-1 overflow-y-auto p-3 space-y-2">
-          {codeAiMessages.length === 0 ? (
-            <>
-              <p className="text-xs text-text-muted mb-3 px-1">
-                Code assistance:
-              </p>
-              {CODE_SUGGESTIONS.map((s) => (
-                <button
-                  key={s.title}
-                  onClick={() => {
-                    setCodeAiInput(s.title);
-                    setTimeout(handleCodeAI, 50);
-                  }}
-                  className="w-full text-left p-3 rounded-xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06] hover:border-brand-gold/30 transition-all group"
-                >
-                  <div className="flex items-start gap-2">
-                    <Code
-                      size={14}
-                      className="text-brand-gold mt-0.5 shrink-0"
-                    />
-                    <div>
-                      <p className="text-xs font-medium text-text-primary group-hover:text-brand-gold transition-colors">
-                        {s.title}
-                      </p>
-                      <p className="text-[11px] text-text-muted mt-0.5">
-                        {s.description}
-                      </p>
-                    </div>
-                  </div>
-                </button>
-              ))}
-            </>
-          ) : (
-            codeAiMessages.map((msg, i) => {
-              // Special handling for extracted code blocks
-              if (msg.role === "luminor" && msg.text.startsWith("__CODE_BLOCK__")) {
-                const extractedCode = msg.text.replace("__CODE_BLOCK__", "");
-                return (
-                  <div
-                    key={i}
-                    className="p-2 rounded-xl bg-brand-gold/5 border border-brand-gold/20"
-                  >
-                    <button
-                      onClick={() => setCode(extractedCode)}
-                      className="w-full text-left px-2 py-1.5 rounded-lg text-[11px] font-medium text-brand-gold hover:bg-brand-gold/10 transition-colors flex items-center gap-1.5"
-                    >
-                      <Play size={10} weight="fill" />
-                      Apply generated code to editor
-                    </button>
-                  </div>
-                );
-              }
-
-              return (
-                <div
-                  key={i}
-                  className={`p-3 rounded-xl text-xs leading-relaxed ${
-                    msg.role === "user"
-                      ? "bg-brand-primary/10 border border-brand-primary/20 text-text-primary ml-6"
-                      : "bg-white/[0.03] border border-white/[0.08] text-text-secondary mr-2"
-                  }`}
-                >
-                  {msg.role === "luminor" && (
-                    <div className="flex items-center gap-1.5 mb-1.5 text-brand-gold">
-                      <Code size={10} />
-                      <span className="font-semibold text-[10px] uppercase tracking-wider">
-                        Code AI
-                      </span>
-                    </div>
-                  )}
-                  <pre className="whitespace-pre-wrap font-mono text-[11px]">{msg.text}</pre>
-                </div>
-              );
-            })
-          )}
-        </div>
-
-        {/* Input */}
-        <div className="p-3 border-t border-white/[0.08]">
-          <div className="flex items-center gap-2">
-            <input
-              type="text"
-              value={codeAiInput}
-              onChange={(e) => setCodeAiInput(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && codeAiInput.trim()) handleCodeAI();
-              }}
-              placeholder="Ask about code..."
-              className="flex-1 bg-white/[0.04] border border-white/[0.06] rounded-lg px-3 py-2 text-xs text-text-primary placeholder-text-muted/50 focus:outline-none focus:border-brand-gold/40 transition-colors"
-            />
-            <button
-              onClick={handleCodeAI}
-              disabled={!codeAiInput.trim() || isCodeGenerating}
-              className="p-2 rounded-lg bg-gradient-to-r from-brand-gold to-brand-primary text-cosmic-void hover:opacity-90 transition-opacity disabled:opacity-30 disabled:cursor-not-allowed"
-            >
-              <PaperPlane size={14} weight="fill" />
-            </button>
+        <div className="flex-1 p-4 flex flex-col items-center justify-center gap-3 text-center">
+          <div className="w-14 h-14 rounded-2xl bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center">
+            <Code size={24} className="text-brand-gold/60" />
           </div>
-          <p className="text-[10px] text-text-muted mt-2 px-1">
-            Code in the editor is sent as context to the AI.
+          <p className="text-xs text-text-muted max-w-[200px]">
+            {code.trim()
+              ? "Code is ready. Connect an AI key for assistance, auto-completion, and debugging."
+              : "Write code on the left. The AI will help with suggestions, refactoring, and debugging."}
           </p>
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/20 mt-2">
+            <Info size={12} className="text-brand-gold" />
+            <span className="text-[10px] text-brand-gold">
+              AI pair programming coming soon
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -982,29 +613,21 @@ export default function StudioPage() {
   const { user } = useAuth();
   const [activeMode, setActiveMode] = useState<CreationMode>("text");
   const [textContent, setTextContent] = useState("");
-  const [aiMessages, setAiMessages] = useState<
+  const [luminorMessages, setLuminorMessages] = useState<
     { role: "user" | "luminor"; text: string }[]
   >([]);
-  const [aiInput, setAiInput] = useState("");
-
-  // Lifted state for image panel
-  const [imagePrompt, setImagePrompt] = useState("");
-  const [generatedImages, setGeneratedImages] = useState<GeneratedImageData[]>([]);
-
-  // Lifted state for code panel
-  const [codeContent, setCodeContent] = useState("");
-  const [codeLanguage, setCodeLanguage] = useState("TypeScript");
+  const [luminorInput, setLuminorInput] = useState("");
 
   const currentMode = MODES.find((m) => m.id === activeMode)!;
 
-  const handleAskAI = useCallback(() => {
-    if (!aiInput.trim()) return;
+  const handleAskLuminor = useCallback(() => {
+    if (!luminorInput.trim()) return;
 
-    const userMsg = aiInput.trim();
-    setAiMessages((prev) => [...prev, { role: "user", text: userMsg }]);
-    setAiInput("");
+    const userMsg = luminorInput.trim();
+    setLuminorMessages((prev) => [...prev, { role: "user", text: userMsg }]);
+    setLuminorInput("");
 
-    // Call AI via chat API
+    // Call real Luminor AI via chat API
     (async () => {
       try {
         const res = await fetch('/api/ai/chat', {
@@ -1013,7 +636,7 @@ export default function StudioPage() {
           body: JSON.stringify({
             messages: [
               { role: 'system', content: `You are ${currentMode.guardian}, a ${currentMode.element} Guardian of Arcanea. Help the creator with their ${activeMode} work. Be concise, wise, and practical. Respond in 2-3 sentences.` },
-              ...aiMessages.slice(-6).map((m) => ({
+              ...luminorMessages.slice(-6).map((m) => ({
                 role: m.role === 'luminor' ? 'assistant' : 'user',
                 content: m.text,
               })),
@@ -1028,90 +651,41 @@ export default function StudioPage() {
           const decoder = new TextDecoder();
           let fullText = '';
 
-          setAiMessages((prev) => [...prev, { role: 'luminor', text: '' }]);
+          setLuminorMessages((prev) => [...prev, { role: 'luminor', text: '' }]);
 
           while (true) {
             const { done, value } = await reader.read();
             if (done) break;
             fullText += decoder.decode(value, { stream: true });
-            setAiMessages((prev) => {
+            setLuminorMessages((prev) => {
               const updated = [...prev];
               updated[updated.length - 1] = { role: 'luminor', text: fullText };
               return updated;
             });
           }
         } else {
-          setAiMessages((prev) => [
+          setLuminorMessages((prev) => [
             ...prev,
             { role: 'luminor', text: 'Connection is limited right now. Try again in a moment, or keep writing — sometimes the work itself is the best guide.' },
           ]);
         }
       } catch {
-        setAiMessages((prev) => [
+        setLuminorMessages((prev) => [
           ...prev,
           { role: 'luminor', text: 'Begin writing, and let the work reveal its own direction. The best ideas come from momentum.' },
         ]);
       }
     })();
-  }, [aiInput, currentMode.guardian]);
+  }, [luminorInput, currentMode.guardian]);
 
   const [isSaving, setIsSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
 
   const handleManifest = useCallback(async () => {
-    // Determine content based on active mode
-    let contentBody: string;
-    let contentPayload: Record<string, unknown>;
-    let title: string;
-    let description: string;
-
-    switch (activeMode) {
-      case 'text':
-        contentBody = textContent.trim();
-        if (!contentBody) {
-          setSaveMessage('Write something first.');
-          setTimeout(() => setSaveMessage(''), 3000);
-          return;
-        }
-        title = contentBody.split('\n')[0].slice(0, 100) || 'Text creation';
-        description = contentBody.slice(0, 500);
-        contentPayload = { body: contentBody, mode: 'text' };
-        break;
-
-      case 'image':
-        if (generatedImages.length === 0) {
-          setSaveMessage('Generate an image first.');
-          setTimeout(() => setSaveMessage(''), 3000);
-          return;
-        }
-        title = imagePrompt.slice(0, 100) || 'Image creation';
-        description = imagePrompt.slice(0, 500);
-        contentPayload = {
-          prompt: imagePrompt,
-          images: generatedImages.map((img) => ({ url: img.url, prompt: img.prompt })),
-          mode: 'image',
-        };
-        break;
-
-      case 'code':
-        contentBody = codeContent.trim();
-        if (!contentBody) {
-          setSaveMessage('Write some code first.');
-          setTimeout(() => setSaveMessage(''), 3000);
-          return;
-        }
-        title = `${codeLanguage} — ${contentBody.split('\n')[0].replace(/^\/\/\s*/, '').slice(0, 80) || 'Code creation'}`;
-        description = contentBody.slice(0, 500);
-        contentPayload = { body: contentBody, language: codeLanguage, mode: 'code' };
-        break;
-
-      case 'music':
-        setSaveMessage('Music saving is not available yet.');
-        setTimeout(() => setSaveMessage(''), 3000);
-        return;
-
-      default:
-        return;
+    if (!textContent.trim() && activeMode === 'text') {
+      setSaveMessage('Write something first.');
+      setTimeout(() => setSaveMessage(''), 3000);
+      return;
     }
 
     setIsSaving(true);
@@ -1130,9 +704,9 @@ export default function StudioPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           userId: user.id,
-          title: title.trim(),
-          description: description.trim(),
-          content: contentPayload,
+          title: textContent.slice(0, 100).trim() || `${activeMode} creation`,
+          description: textContent.slice(0, 500).trim(),
+          content: { body: textContent, mode: activeMode },
           type: activeMode === 'text' ? 'text' : activeMode === 'image' ? 'image' : activeMode === 'code' ? 'code' : 'mixed',
           status: 'draft',
           visibility: 'private',
@@ -1154,7 +728,7 @@ export default function StudioPage() {
       setIsSaving(false);
       setTimeout(() => setSaveMessage(''), 4000);
     }
-  }, [textContent, imagePrompt, generatedImages, codeContent, codeLanguage, activeMode, currentMode.element, currentMode.gate, currentMode.guardian, user]);
+  }, [textContent, activeMode, currentMode.element, currentMode.gate, currentMode.guardian, user]);
 
 
   return (
@@ -1230,11 +804,9 @@ export default function StudioPage() {
             <div className="flex items-center gap-1">
               <button
                 onClick={() => {
-                  const copyContent =
-                    activeMode === 'text' ? textContent :
-                    activeMode === 'code' ? codeContent :
-                    activeMode === 'image' ? imagePrompt : '';
-                  if (copyContent) navigator.clipboard.writeText(copyContent);
+                  if (textContent) {
+                    navigator.clipboard.writeText(textContent);
+                  }
                 }}
                 className="p-2 rounded-lg text-text-muted hover:text-text-primary hover:bg-white/[0.08] transition-colors"
                 title="Copy to clipboard"
@@ -1249,9 +821,8 @@ export default function StudioPage() {
               </button>
               <button
                 onClick={() => {
-                  if (activeMode === 'text') { setTextContent(""); setAiMessages([]); }
-                  else if (activeMode === 'code') { setCodeContent(""); }
-                  else if (activeMode === 'image') { setImagePrompt(""); setGeneratedImages([]); }
+                  setTextContent("");
+                  setLuminorMessages([]);
                 }}
                 className="p-2 rounded-lg text-text-muted hover:text-red-400 hover:bg-red-400/10 transition-colors"
                 title="Clear"
@@ -1266,28 +837,14 @@ export default function StudioPage() {
             <TextCreationPanel
               content={textContent}
               setContent={setTextContent}
-              aiMessages={aiMessages}
-              onAskAI={handleAskAI}
-              aiInput={aiInput}
-              setAiInput={setAiInput}
+              luminorMessages={luminorMessages}
+              onAskLuminor={handleAskLuminor}
+              luminorInput={luminorInput}
+              setLuminorInput={setLuminorInput}
             />
           )}
-          {activeMode === "image" && (
-            <ImageCreationPanel
-              imagePrompt={imagePrompt}
-              setImagePrompt={setImagePrompt}
-              generatedImages={generatedImages}
-              setGeneratedImages={setGeneratedImages}
-            />
-          )}
-          {activeMode === "code" && (
-            <CodeCreationPanel
-              code={codeContent}
-              setCode={setCodeContent}
-              language={codeLanguage}
-              setLanguage={setCodeLanguage}
-            />
-          )}
+          {activeMode === "image" && <ImageCreationPanel />}
+          {activeMode === "code" && <CodeCreationPanel />}
           {activeMode === "music" && <MusicCreationPanel />}
         </div>
 
@@ -1313,7 +870,7 @@ export default function StudioPage() {
           </button>
 
           {saveMessage && (
-            <span className="text-xs text-[#00bcd4] animate-pulse">{saveMessage}</span>
+            <span className="text-xs text-atlantean-teal-aqua animate-pulse">{saveMessage}</span>
           )}
 
           <button

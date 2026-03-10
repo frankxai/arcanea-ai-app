@@ -51,8 +51,8 @@ const UPDATES = [
     date: "2026-01-17",
     time: "12:00",
     type: "feature",
-    title: "Luminor Framework v4.0.0",
-    description: "Complete overhaul of the Luminor intelligence system with enhanced personality models and domain expertise.",
+    title: "Luminor Intelligence Framework v4.0.0",
+    description: "Complete overhaul of the intelligence system with enhanced personality models and domain expertise.",
     tags: ["luminors", "ai", "framework"],
   },
   {
@@ -67,7 +67,7 @@ const UPDATES = [
 ];
 
 const TYPE_CONFIG = {
-  feature: { color: "#8B5CF6", label: "Feature", icon: "✨" },
+  feature: { color: "#0d47a1", label: "Feature", icon: "✨" },
   fix: { color: "#10B981", label: "Fix", icon: "🔧" },
   content: { color: "#F59E0B", label: "Content", icon: "📝" },
   security: { color: "#EF4444", label: "Security", icon: "🔒" },
