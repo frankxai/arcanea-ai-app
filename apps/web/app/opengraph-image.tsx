@@ -75,7 +75,7 @@ export default function OGImage() {
             marginBottom: 44,
           }}
         >
-          <img src={markSrc} width={120} height={120} alt="Arcanea" />
+          <img src={markSrc} width={120} height={120} />
         </div>
 
         {/* Title */}
@@ -120,7 +120,7 @@ export default function OGImage() {
         >
           <span>arcanea.ai</span>
           <span style={{ color: '#3a3a5a' }}>|</span>
-          <span>16 Intelligences</span>
+          <span>10 Intelligences</span>
           <span style={{ color: '#3a3a5a' }}>|</span>
           <span>34+ Original Texts</span>
           <span style={{ color: '#3a3a5a' }}>|</span>

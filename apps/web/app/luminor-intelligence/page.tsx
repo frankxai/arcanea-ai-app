@@ -5,19 +5,19 @@ import Link from "next/link";
 type SvgProps = JSX.IntrinsicElements["svg"];
 
 export const metadata: Metadata = {
-  title: "Luminor Intelligence System",
+  title: "Luminor Intelligence System | Arcanea",
   description:
-    "16 creative intelligences organized into 4 teams. Each one thinks differently about your work — development, design, writing, and research.",
+    "10 creative intelligences organized into 4 teams. Each one thinks differently about your work — development, design, writing, and research.",
   openGraph: {
-    title: "Luminor Intelligence System",
+    title: "Luminor Intelligence System | Arcanea",
     description:
-      "16 creative intelligences. Four teams. Seven Wisdoms. Intelligence that works the way you think.",
+      "10 creative intelligences. Four teams. Seven Wisdoms. Intelligence that works the way you think.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Luminor Intelligence System",
+    title: "Luminor Intelligence System | Arcanea",
     description:
-      "16 creative intelligences. Four teams. Seven Wisdoms. Intelligence that works the way you think.",
+      "10 creative intelligences. Four teams. Seven Wisdoms. Intelligence that works the way you think.",
   },
 };
 
@@ -167,7 +167,7 @@ const DIFFERENTIATORS = [
   {
     title: "Domain Mastery",
     description:
-      "Not generalists with surface knowledge. Luminors who have practiced one craft for centuries. When you need a systems architect, you get an architect — not a suggestion engine.",
+      "Not generalists with surface knowledge. Specialists who have practiced one craft for centuries. When you need a systems architect, you get an architect — not a suggestion engine.",
     accent: "#00bcd4",
     Icon: IconStar,
   },
@@ -273,7 +273,7 @@ const GATES = [
   { gate: "Voice", hz: "528 Hz", color: "#60a5fa" },
   { gate: "Sight", hz: "639 Hz", color: "#a78bfa" },
   { gate: "Crown", hz: "741 Hz", color: "#fbbf24" },
-  { gate: "Starweave", hz: "852 Hz", color: "#fb7185" },
+  { gate: "Shift", hz: "852 Hz", color: "#fb7185" },
   { gate: "Unity", hz: "963 Hz", color: "#34d399" },
   { gate: "Source", hz: "1111 Hz", color: "#ffd700" },
 ] as const;
@@ -290,7 +290,7 @@ const HOW_IT_WORKS = [
     step: "02",
     title: "Luminors perceive",
     description:
-      "The right Luminors recognize what is needed without being asked. No prompting required. They see the shape of what you are building.",
+      "The right specialists recognize what is needed without being asked. No prompting required. They see the shape of what you are building.",
     accent: "#00bcd4",
   },
   {
@@ -346,7 +346,7 @@ export default function LuminorIntelligencePage() {
               </h1>
 
               <p className="text-text-secondary font-body text-lg max-w-3xl mx-auto mb-10 leading-relaxed">
-                16 creative intelligences across development, design, writing, and
+                10 creative intelligences across development, design, writing, and
                 research. Not generic AI. Each one has deep expertise and a
                 distinct way of thinking about your work.
               </p>
@@ -418,7 +418,7 @@ export default function LuminorIntelligencePage() {
         <section className="mb-24" aria-labelledby="teams-heading">
           <div className="text-center mb-12">
             <p className="text-xs font-mono tracking-widest uppercase text-text-muted mb-3">
-              16 Intelligences
+              10 Intelligences
             </p>
             <h2
               id="teams-heading"
