@@ -5,7 +5,7 @@ import { BLOG_POSTS, BLOG_CATEGORIES } from "@/lib/blog-data";
 export const metadata: Metadata = {
   title: "Blog",
   description:
-    "Latest insights, tutorials, and stories from the Arcanea universe. Discover creative techniques, platform updates, and practical wisdom.",
+    "Latest insights, tutorials, and stories from the Arcanea universe. Discover creative techniques, platform updates, and wisdom from the Luminors.",
 };
 
 // ─── Inline SVG Icons ───────────────────────────────────────────────────────────
@@ -243,8 +243,8 @@ export default function BlogPage() {
               </h1>
 
               <p className="text-text-secondary font-body text-lg max-w-2xl mb-8">
-                Discover tutorials, platform updates, and creative insights.
-                Level up your practice with wisdom from the Arcanea
+                Discover tutorials, platform updates, and insights from the
+                Luminors. Level up your practice with wisdom from the Arcanea
                 universe.
               </p>
 

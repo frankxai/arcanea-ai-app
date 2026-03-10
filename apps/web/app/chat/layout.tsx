@@ -1,11 +1,11 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Create',
-  description: 'Chat with AI companions — each with unique expertise in writing, coding, design, and research.',
+  title: 'Luminors',
+  description: 'Chat with Arcanea Luminors — creative intelligences for writing, coding, design, and research.',
   openGraph: {
-    title: 'Create',
-    description: 'Chat with AI companions for writing, coding, design, and research.',
+    title: 'Chat',
+    description: 'Chat with Luminors for writing, coding, design, and research.',
     type: 'website',
   },
 };

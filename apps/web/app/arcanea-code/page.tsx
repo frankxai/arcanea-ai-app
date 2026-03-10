@@ -43,7 +43,7 @@ const FEATURES: CodeFeature[] = [
   {
     title: "TypeScript SDK",
     description:
-      "Fully typed SDK with zero `any` types. Strict interfaces for every companion, Gate, and API interaction.",
+      "Fully typed SDK with zero `any` types. Strict interfaces for every Luminor, Gate, and intelligence layer interaction.",
     icon: <PhBracketsCurly weight="thin" size={24} />,
     accent: "var(--color-gold-bright)",
   },
@@ -92,7 +92,7 @@ const QUICK_START = [
 ];
 
 const VSCODE_FEATURES = [
-  "AI assistant panel — invoke any of the 16 companions inline",
+  "AI assistant panel — invoke any of the 16 Luminors inline",
   "`.arcanea` project config support — per-workspace AI presets",
   "Inline lore lookups — hover a Gate name to see its frequency and domain",
   "AI-powered code explanations — right-click any function",
@@ -328,8 +328,8 @@ export default function ArcaneaCodePage() {
                 </h2>
 
                 <p className="text-text-secondary font-body leading-relaxed mb-6">
-                  The Arcanea Realm VS Code extension brings AI companion
-                  capabilities directly into your development environment.
+                  The Arcanea Realm VS Code extension brings Luminor
+                  intelligence directly into your development environment.
                   Available on the VS Code Marketplace and as a standalone
                   `.vsix` for air-gapped installs.
                 </p>

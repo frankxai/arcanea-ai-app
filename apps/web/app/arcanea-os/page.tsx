@@ -160,7 +160,7 @@ const FEATURES: OSFeature[] = [
   {
     title: "AI Router",
     description:
-      "Intelligent routing of requests to the optimal companion for your task.",
+      "Intelligent routing of requests to the optimal Luminor for your task.",
     icon: "Router",
     color: "#0d47a1",
   },
@@ -269,7 +269,7 @@ export default function ArcaneaOSPage() {
 
                   <p className="text-text-secondary font-body text-lg leading-relaxed mb-8 max-w-2xl">
                     A sophisticated AI operating system that orchestrates
-                    companions, manages context, and delivers intelligent
+                    Luminors, manages context, and delivers intelligent
                     responses. The backbone of all Arcanea experiences.
                   </p>
 
@@ -462,7 +462,7 @@ export default function ArcaneaOSPage() {
                   </h2>
                   <p className="text-text-secondary font-body leading-relaxed mb-8">
                     See the Arcanea Operating System in action. Join the
-                    platform and let AI companions power your creative process.
+                    platform and let the Luminors power your creative process.
                   </p>
                   <div className="flex flex-wrap justify-center gap-4">
                     <Link

@@ -161,8 +161,8 @@ const FEATURES: VaultFeature[] = [
     color: "#0d47a1",
   },
   {
-    title: "AI Protection",
-    description: "Intelligent monitoring protects your vault with vigilant care.",
+    title: "Luminor Protection",
+    description: "Luminor intelligence protects your vault with vigilant care.",
     icon: "Shield",
     color: "#00bcd4",
   },
@@ -199,7 +199,7 @@ const BENEFITS = [
   "Cross-device synchronization",
   "Advanced search with vector embeddings",
   "Collaborative sharing with permissions",
-  "Premium support",
+  "Premium support from Luminors",
   "Early access to new features",
 ];
 
@@ -354,7 +354,7 @@ export default function ArcaneaVaultPage() {
                   </h2>
                   <p className="text-text-secondary font-body leading-relaxed mb-8">
                     Your creative assets deserve the best protection. Open your
-                    Arcanea Vault today and keep your creative assets safe.
+                    Arcanea Vault today and let the Luminors keep watch.
                   </p>
                   <div className="flex flex-wrap justify-center gap-4">
                     <Link
