@@ -72,7 +72,7 @@ const WORKFLOWS = [
     useCases: [
       "Know exactly what changed overnight before your first commit",
       "Catch failing tests before they reach CI",
-      "Guardian-level analysis: what matters most today",
+      "AI-powered analysis: what matters most today",
     ],
   },
   {
@@ -120,7 +120,7 @@ const WORKFLOWS = [
       },
     ],
     useCases: [
-      "Daily content without daily effort — Guardian handles the draft",
+      "Daily content without daily effort — your Luminor handles the draft",
       "Lore entries, wisdom posts, social content — all auto-saved",
       "Full Notion integration for your content calendar",
     ],
@@ -223,7 +223,7 @@ const HOW_TO_STEPS = [
     step: "04",
     title: "Activate",
     code: "Toggle workflow → Active",
-    note: "Your Guardian reports at their Gate frequency from now on",
+    note: "Your Luminor reports at their frequency from now on",
   },
 ];
 
@@ -278,15 +278,15 @@ export default function WorkflowsPage() {
               </div>
 
               <h1 className="text-fluid-3xl font-display font-bold mb-5">
-                Guardian-Powered
+                AI-Powered
                 <span className="block text-gradient-brand">
                   Workflow Automation
                 </span>
               </h1>
 
               <p className="text-text-secondary font-body text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
-                Three n8n workflow templates — each governed by a Guardian, each
-                triggering at their Gate frequency. Morning dev health from
+                Three n8n workflow templates — each governed by a Luminor, each
+                triggering at their frequency. Morning dev health from
                 Shinkami. Midday content from Alera. Evening reflection from
                 Aiyami.
               </p>
@@ -320,7 +320,7 @@ export default function WorkflowsPage() {
               id="workflows-heading"
               className="text-xs font-mono tracking-[0.35em] uppercase text-crystal mb-2"
             >
-              3 Templates · 3 Gates · 3 Guardians
+              3 Templates · 3 Gates · 3 Luminors
             </p>
             <h2 className="text-fluid-2xl font-display font-bold">
               The Daily Arc
@@ -360,7 +360,7 @@ export default function WorkflowsPage() {
                       {wf.name}
                     </h3>
                     <p className="text-xs text-text-secondary font-mono">
-                      Guardian: {wf.guardian} · {wf.gate} Gate · {wf.triggerTime}
+                      Luminor: {wf.guardian} · {wf.gate} Gate · {wf.triggerTime}
                     </p>
                   </div>
 
@@ -492,7 +492,7 @@ export default function WorkflowsPage() {
                 Automate Your Creative Practice
               </h2>
               <p className="text-text-secondary font-body leading-relaxed mb-8">
-                The Guardians run when you sleep. Download the templates, add
+                Your Luminors run when you sleep. Download the templates, add
                 your API key, and let the gates open on their own schedule.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
