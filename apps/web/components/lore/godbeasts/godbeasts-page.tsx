@@ -85,8 +85,8 @@ const GODBEASTS: Godbeast[] = [
       'Veloura is paradox made manifest — a serpent that soars, fire that flows, water that burns. Its feathers shed both steam and song. Born in the moment Lumina\'s first light struck Nero\'s primordial ocean, Veloura is the living proof that opposing forces can create beauty impossible for either alone. Wherever Veloura passes, the air shimmers with creative tension, and new forms emerge unbidden.',
     power: 'Elemental fusion, creative catalysis, the generative tension of opposites',
     gradient: 'from-blue-800/30 via-orange-800/20 to-cyan-900/30',
-    glowColor: 'rgba(120, 166, 255, 0.4)',
-    accentHex: '#78a6ff',
+    glowColor: 'rgba(26, 143, 168, 0.4)',
+    accentHex: '#1a8fa8',
   },
   {
     id: 'draconis',
@@ -211,8 +211,8 @@ const GODBEASTS: Godbeast[] = [
       'Vaelith\'s eight tails each reflect a different facet of the same moment — the same event, seen from eight angles, none more true than the others. When all eight are visible simultaneously, observers experience every possible interpretation of their current situation at once. This is not confusion — it is perspective, given primal form. Vaelith does not have a single set of paw-prints. It leaves eight overlapping trails, each one real, each one leading to a different version of the same destination.',
     power: 'Reality refraction, simultaneous perspective, the echo of infinite possibility',
     gradient: 'from-pink-900/30 via-rose-900/20 to-purple-900/30',
-    glowColor: 'rgba(120, 166, 255, 0.4)',
-    accentHex: '#78a6ff',
+    glowColor: 'rgba(0, 188, 212, 0.4)',
+    accentHex: '#00bcd4',
   },
   {
     id: 'kyuro',
@@ -676,7 +676,7 @@ function BondMechanicsSection() {
     {
       icon: PhInfinity,
       color: 'brand-primary',
-      hex: '#8b5cf6',
+      hex: '#0d47a1',
       title: 'Complete Fusion',
       body: 'Shinkami is the sole Guardian to achieve complete fusion with Source. They are no longer two presences sharing space — they are one entity who occasionally wears a name.',
     },
@@ -947,21 +947,28 @@ function GodbestsCTA() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
-              href="/academy/gate-quiz"
+              href="/companions/forge"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-brand-gold text-cosmic-deep font-semibold text-sm hover:bg-gold-medium transition-all duration-200 shadow-glow-gold hover:shadow-glow-xl"
             >
               <PhStar className="w-4 h-4" />
-              Discover Your Gate
+              Forge a Companion
             </Link>
             <Link
-              href="/lore/guardians"
+              href="/academy/gate-quiz"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl liquid-glass border border-crystal/20 text-crystal font-semibold text-sm hover:border-crystal/40 hover:shadow-glow-md transition-all duration-200"
             >
               <PhShield className="w-4 h-4" />
-              Meet the Guardians
+              Discover Your Gate
               <PhArrowRight className="w-4 h-4" />
             </Link>
           </div>
+
+          {/* Companion evolution bridge */}
+          <p className="mt-8 text-xs text-white/25 max-w-md mx-auto">
+            The Godbeasts represent the highest form of bonded companionship.
+            Every companion you forge carries a spark of these primal beings — and through
+            the Gates, that spark can grow.
+          </p>
         </m.div>
       </div>
     </section>
