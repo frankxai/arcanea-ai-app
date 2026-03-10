@@ -18,7 +18,7 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
 | Pages with loading.tsx | ~81 (+32) | 100% of dynamic pages |
 | Milestones Active | 11 (M001-M010 + M006) | M001 (Auth) → M008 (Onboarding) → M006 (Creator Tools) → M009 (Polish) |
 | Vercel Build | PASSING | Maintain green |
-| Last Deploy | 2026-03-10 | 1dbce7a1 — 23 commits since a560a8ff |
+| Last Deploy | 2026-03-10 | 4d9cd969 — naming v2 + companion forge + cleanup |
 | Live URL | arcanea.ai | arcanea.ai |
 
 ---
@@ -179,15 +179,21 @@ Source: `.arcanea/projects/milestones/`
   - [x] WCAG focus rings: 5 studio textareas (text, image, code, music modes) (Mar 10)
   - [x] WCAG focus rings: studio/image select + input, lore/library search input (Mar 10)
   - [x] WCAG focus rings: 9 prompt-books inputs/selects across 6 files (Mar 10)
+  - [x] WCAG focus rings: completed all bare focus:outline-none — 21 files fixed (studio creation-panels 5, prompt-books 12, chat InputArea/Sidebar, council ConveningFlow, templates 2, v3 hero-chat-box) (Mar 10)
+  - [x] Anti-slop: "begin your journey" on glossary, "Your imagination awaits" on imagine page (Mar 10)
+  - [x] Error boundaries: added error.tsx to companions, discover, feedback, lore, profile, prompt-books, settings (Mar 10)
+  - [x] WCAG audit complete: only 2 bare focus:outline-none remain (library modal container, headless UI Menu.Items — both containers, not interactive elements)
+  - [x] Naming v2 sweep: Luminor→companion on 13 first-contact surfaces (chat, dashboard, hub, workspace, vault, code, os, acos, blog, music) (Mar 10)
+  - [x] Gallery cleanup: removed LuminorShowcase, deleted luminor-agents.ts, CDN-only images (Mar 10)
+  - [x] Deleted dead files: home-content.tsx, gallery/luminors/page.tsx (Mar 10)
   - [ ] Core Web Vitals audit (Lighthouse — cannot run locally in WSL2)
-  - [ ] Remaining WCAG 2.2 deep audit (62→~20 remaining items)
 - **Files**: `m009-performance-polish.arc`
 
 ### M010: Language & Experience Transformation (100%) — COMPLETE
 - **Guardian**: Alera (Voice Gate)
 - **Target**: 2026-03-08 — COMPLETED 2026-03-10
 - **Strategy**: `.arcanea/strategy/LANGUAGE_EXPERIENCE_STRATEGY.md`
-- **Principle**: Creation first. Mythology as earned discovery. Luminor as brand vocabulary.
+- **Principle**: Creation first. Mythology as earned discovery. Companions by proper name. Luminor = rank only. Guardian = Gate-keeper role only.
 - **Scope**: Rewrite all user-facing copy across the platform. Replace jargon-first, lore-dump UX with progressive disclosure that respects viewer intelligence. Implement hidden depth system (color shifts, progressive vocabulary, Easter eggs). Final piece: specialist/intelligence → Luminor rename across all surfaces.
 - **Depends on**: Nothing — COMPLETE
 - **Phases**:
@@ -524,7 +530,8 @@ packages/              → 37 workspace packages
 | `/user-flows` | LIVE | None |
 | `/records` | LIVE | None |
 | `/records/vibe-gods` | PARTIAL | loading.tsx |
-| `/companions` | LIVE | None |
+| `/companions` | LIVE | Design system v5 aligned (Mar 10) |
+| `/companions/forge` | LIVE | NEW: 3-step forge flow, 16 archetypes (Mar 10) |
 | `/skills` | LIVE | None |
 
 ---
