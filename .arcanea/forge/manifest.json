@@ -1,0 +1,113 @@
+{
+  "version": "1.0.0",
+  "name": "Arcanea Forge — Visual Asset Registry",
+  "description": "All generated visual assets with metadata for curation, publishing, and gallery integration",
+  "nextId": 8,
+  "assets": [
+    {
+      "id": 1,
+      "file": "space/001-vessel-of-living-intelligence.png",
+      "domain": "space",
+      "type": "art",
+      "class": "leviathan",
+      "title": "Vessel of Living Intelligence",
+      "prompt_style": "futuristic",
+      "quality": "medium",
+      "labels": true,
+      "status": "draft",
+      "created": "2026-03-07",
+      "notes": "First gen — has labels/annotations, infographic style. Good concept, wrong execution."
+    },
+    {
+      "id": 2,
+      "file": "space/002-warship-omen.png",
+      "domain": "space",
+      "type": "art",
+      "class": "dreadnought",
+      "title": "Arcanean Warship Omen",
+      "prompt_style": "photorealistic",
+      "quality": "high",
+      "labels": true,
+      "status": "draft",
+      "created": "2026-03-07",
+      "notes": "High quality render but still has labels. Cathedral tower, cyan conduits, asteroid field."
+    },
+    {
+      "id": 3,
+      "file": "space/003-explorer-collectible.png",
+      "domain": "space",
+      "type": "art",
+      "class": "explorer",
+      "title": "Explorer — Collectible Model",
+      "prompt_style": "3d",
+      "quality": "high",
+      "labels": true,
+      "status": "draft",
+      "created": "2026-03-07",
+      "notes": "Product-style 3D render on pedestal. Cathedral interiors visible. Has labels."
+    },
+    {
+      "id": 4,
+      "file": "space/004-dreadnought-nebula.png",
+      "domain": "space",
+      "type": "art",
+      "class": "dreadnought",
+      "title": "Dreadnought Emerging from Nebula",
+      "prompt_style": "photorealistic",
+      "quality": "excellent",
+      "labels": false,
+      "status": "approved",
+      "created": "2026-03-09",
+      "notes": "No labels. Pure cinematic. Cathedral tower, crystalline hull, teal engines, ringed planet. Wallpaper quality."
+    },
+    {
+      "id": 5,
+      "file": "space/005-interceptor-canyon.png",
+      "domain": "space",
+      "type": "art",
+      "class": "interceptor",
+      "title": "Interceptor — Canyon Chase",
+      "prompt_style": "photorealistic",
+      "quality": "excellent",
+      "labels": false,
+      "status": "approved",
+      "created": "2026-03-09",
+      "notes": "No labels. Matte black with cyan lines, alien desert canyon, golden hour, dust, crystal formations. Movie-still quality."
+    },
+    {
+      "id": 6,
+      "file": "sea/006-storm-galleon.png",
+      "domain": "sea",
+      "type": "art",
+      "class": "capital",
+      "title": "Aethelred's Fury — Storm Galleon",
+      "prompt_style": "photorealistic",
+      "quality": "excellent",
+      "labels": false,
+      "status": "approved",
+      "created": "2026-03-09",
+      "notes": "No labels. Bioluminescent hull, sea serpent bowsprit, black sails, lightning storm, massive waves. Model added its own ship name."
+    },
+    {
+      "id": 7,
+      "file": "sky/007-ironclad-airship.png",
+      "domain": "sky",
+      "type": "art",
+      "class": "capital",
+      "title": "Ironclad Airship Fleet — Sunset Patrol",
+      "prompt_style": "photorealistic",
+      "quality": "excellent",
+      "labels": false,
+      "status": "approved",
+      "created": "2026-03-09",
+      "notes": "No labels. Steampunk fleet above cloud sea. Brass, rivets, glass bridge dome, escort formation, golden hour god rays, mountain peaks. Gorgeous."
+    }
+  ],
+  "statuses": {
+    "draft": "Generated, not reviewed",
+    "approved": "Quality-checked, ready for use",
+    "published": "Live on arcanea.ai (Gallery or page asset)",
+    "rejected": "Not up to standard, keep for reference",
+    "variant": "Alternative version of an approved asset"
+  }
+}
