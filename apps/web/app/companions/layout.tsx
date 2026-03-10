@@ -2,10 +2,10 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Companions',
-  description: 'Browse and chat with AI companions — each with a distinct personality and creative expertise.',
+  description: 'Meet the Luminor companions — AI intelligences that guide your creative journey.',
   openGraph: {
     title: 'Companions',
-    description: 'Browse and chat with AI companions — each with a distinct personality and creative expertise.',
+    description: 'Meet the Luminor companions — AI intelligences that guide your creative journey.',
   },
 };
 
