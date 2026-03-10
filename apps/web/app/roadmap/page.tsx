@@ -1,20 +1,6 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import Link from "next/link";
 // ─── Icons ─────────────────────────────────────────────────────────────────────
 const Icons = {
-  Sparkles: () => (
-    <svg
-      className="w-5 h-5"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-    >
-      <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z" />
-    </svg>
-  ),
   Map: () => (
     <svg
       className="w-6 h-6"
@@ -170,7 +156,7 @@ const PHASES: RoadmapPhase[] = [
         id: "f1",
         title: "Platform Launch",
         description:
-          "Core platform with 10 Guardians and the Ten Gates system.",
+          "Core platform with 16 Luminors and the Ten Gates system.",
         status: "completed",
         quarter: "Q1 2026",
         category: "Core",
@@ -259,34 +245,8 @@ const STATUS_COLORS = {
   planned: "#0d47a1",
 };
 
-// ─── Loading Component ──────────────────────────────────────────────────────
-function LoadingState() {
-  return (
-    <div className="flex items-center justify-center min-h-[60vh]">
-      <div className="relative">
-        <div className="w-16 h-16 border-4 border-brand-primary/20 rounded-full" />
-        <div className="absolute top-0 left-0 w-16 h-16 border-4 border-brand-primary border-t-transparent rounded-full animate-spin" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-          <Icons.Sparkles />
-        </div>
-      </div>
-    </div>
-  );
-}
-
 // ─── Main Component ──────────────────────────────────────────────────────────
 export default function RoadmapPage() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    const timer = setTimeout(() => setIsLoading(false), 800);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (!mounted) return null;
-
   return (
     <div className="relative min-h-screen">
       {/* Background */}
@@ -297,10 +257,6 @@ export default function RoadmapPage() {
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12">
-        {isLoading ? (
-          <LoadingState />
-        ) : (
-          <>
             {/* Hero Section */}
             <section className="mb-16">
               <div className="relative liquid-glass rounded-3xl overflow-hidden px-8 py-12 sm:px-12 sm:py-16">
@@ -487,8 +443,6 @@ export default function RoadmapPage() {
                 </div>
               </div>
             </section>
-          </>
-        )}
       </main>
     </div>
   );

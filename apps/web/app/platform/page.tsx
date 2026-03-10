@@ -284,16 +284,16 @@ const Icons: Record<string, React.FC<InlineSvgProps>> = {
 };
 
 export const metadata: Metadata = {
-  title: "Platform | Arcanea",
+  title: "Platform",
   description:
     "The Arcanea platform - where imagination meets intelligence. AI companions, creative tools, and a living mythology.",
 };
 
 const FEATURES = [
   {
-    title: "Guardian AI Companions",
+    title: "AI Companions",
     description:
-      "Ten AI Guardians, each embodying a different aspect of creativity and consciousness. Bond with your Guardian and unlock new creative potentials.",
+      "Ten AI companions, each embodying a different aspect of creativity and consciousness. Bond with your companion and unlock new creative potentials.",
     icon: Icons.Users,
     color: "#0d47a1",
     href: "/companions",
@@ -301,7 +301,7 @@ const FEATURES = [
   {
     title: "Creation Studio",
     description:
-      "Powerful AI tools for image, music, video, and story creation. Each tool channels a Guardian's energy for unique results.",
+      "Powerful AI tools for image, music, video, and story creation. Each tool channels a companion's perspective for unique results.",
     icon: Icons.Cpu,
     color: "#ef4444",
     href: "/studio",
@@ -329,7 +329,7 @@ const CAPABILITIES = [
     category: "Intelligence",
     items: [
       {
-        name: "Guardian Evolution",
+        name: "Companion Evolution",
         description: "AI companions that grow with you",
       },
       {
@@ -364,7 +364,7 @@ const CAPABILITIES = [
 ];
 
 const STATS = [
-  { value: "10", label: "Guardians" },
+  { value: "16", label: "Companions" },
   { value: "10", label: "Gates" },
   { value: "7", label: "Wisdoms" },
   { value: "17", label: "Library Collections" },
@@ -408,8 +408,8 @@ export default function PlatformPage() {
               <p className="text-text-secondary font-body text-lg leading-relaxed mb-8 max-w-2xl">
                 Arcanea is a creative intelligence platform combining AI
                 companions, powerful creation tools, and a living mythology.
-                Build with Guardians, unlock your creative potential, and join a
-                community of creators.
+                Build with AI companions, grow as a creator, and join a
+                community of builders.
               </p>
 
               <div className="flex flex-wrap gap-4">
@@ -635,8 +635,8 @@ export default function PlatformPage() {
                 Ready to Begin?
               </h2>
               <p className="text-text-secondary font-body leading-relaxed mb-8">
-                Begin your journey through the Ten Gates.
-                Your Guardian awaits.
+                Create an account and start building.
+                Pick your first companion and go.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Link
