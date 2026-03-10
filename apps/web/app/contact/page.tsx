@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 
 // ─── Icons ─────────────────────────────────────────────────────────────────────
@@ -191,17 +191,17 @@ const FAQS: FaqItem[] = [
   {
     question: "How do I get started with Arcanea?",
     answer:
-      "Simply create an account and begin your journey through the Ten Gates. Each Gate unlocks new capabilities and deeper creative powers.",
+      "Create an account and start with the free Spark plan. As you create, you unlock new tools and deeper capabilities through the Ten Gates.",
   },
   {
     question: "Is Arcanea free to use?",
     answer:
-      "Yes! The Spark plan is free and includes 3 Luminors, Library browsing, and Academy access. Creator ($19/mo) and Studio ($49/mo) plans unlock all 16 Luminors and full creation tools.",
+      "Yes. The Spark plan is free and includes 3 companions, Library browsing, and Academy access. Creator ($19/mo) and Studio ($49/mo) plans unlock all 16 companions and full creation tools.",
   },
   {
     question: "Can I build on Arcanea?",
     answer:
-      "Absolutely. Our developer platform includes SDKs, MCP tools, and comprehensive documentation for building with Arcanea.",
+      "Yes. Our developer platform includes SDKs, MCP tools, and documentation for building with Arcanea.",
   },
   {
     question: "How does the progression system work?",
@@ -210,25 +210,10 @@ const FAQS: FaqItem[] = [
   },
 ];
 
-// ─── Loading Component ──────────────────────────────────────────────────────
-function LoadingState() {
-  return (
-    <div className="flex items-center justify-center min-h-[60vh]">
-      <div className="relative">
-        <div className="w-16 h-16 border-4 border-brand-primary/20 rounded-full" />
-        <div className="absolute top-0 left-0 w-16 h-16 border-4 border-brand-primary border-t-transparent rounded-full animate-spin" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-          <Icons.Sparkles />
-        </div>
-      </div>
-    </div>
-  );
-}
+
 
 // ─── Main Component ──────────────────────────────────────────────────────────
 export default function ContactPage() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [mounted, setMounted] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -236,18 +221,10 @@ export default function ContactPage() {
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-    const timer = setTimeout(() => setIsLoading(false), 800);
-    return () => clearTimeout(timer);
-  }, []);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setFormSubmitted(true);
   };
-
-  if (!mounted) return null;
 
   return (
     <div className="relative min-h-screen">
@@ -259,9 +236,6 @@ export default function ContactPage() {
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {isLoading ? (
-          <LoadingState />
-        ) : (
           <>
             {/* Hero Section */}
             <section className="mb-16">
@@ -493,7 +467,7 @@ export default function ContactPage() {
                     Ready to Begin?
                   </h2>
                   <p className="text-text-secondary font-body leading-relaxed mb-8">
-                    Begin your journey through the Ten Gates. Your Luminor awaits.
+                    Create an account and start building. Pick your first companion and go.
                   </p>
                   <div className="flex flex-wrap justify-center gap-4">
                     <Link
@@ -501,14 +475,12 @@ export default function ContactPage() {
                       className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200"
                     >
                       <Icons.Sparkles />
-                      Start Your Journey
+                      Get Started
                     </Link>
                   </div>
                 </div>
               </div>
             </section>
-          </>
-        )}
       </main>
     </div>
   );

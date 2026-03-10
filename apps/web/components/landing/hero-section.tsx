@@ -174,7 +174,7 @@ export function HeroSection({ stats }: HeroSectionProps) {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-xl lg:text-2xl text-text-secondary leading-relaxed mb-10"
             >
-              10 AI specialists across writing, design, code, music, and strategy.
+              16 AI specialists across writing, design, code, music, and strategy.
               A philosophy library. Tools that work the way you think.
             </motion.p>
 

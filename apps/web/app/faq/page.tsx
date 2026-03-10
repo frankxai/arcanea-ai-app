@@ -44,7 +44,7 @@ const FAQ_CATEGORIES = [
       },
       {
         q: "Can Luminors work together?",
-        a: "Yes! One of Arcanea's most powerful features is multi-Luminor collaboration. You can bring in different domain experts for different aspects of a project, or have them review and enhance each other's work. The system is designed for this kind of creative collaboration.",
+        a: "Yes. One of Arcanea's most powerful features is multi-Luminor collaboration. You can bring in different domain experts for different aspects of a project, or have them review and enhance each other's work. The system is designed for this kind of creative collaboration.",
       },
       {
         q: "How do Luminors learn and improve?",
@@ -66,11 +66,11 @@ const FAQ_CATEGORIES = [
       },
       {
         q: "Can I switch plans later?",
-        a: "Absolutely. You can upgrade or downgrade at any time. Changes take effect immediately, and we'll prorate any payments. Your conversations and progress are always preserved.",
+        a: "Yes. You can upgrade or downgrade at any time. Changes take effect immediately, and we prorate any payments. Your conversations and progress are always preserved.",
       },
       {
         q: "Do you offer team or enterprise plans?",
-        a: "Yes! The enterprise plan ($99/month) includes team collaboration, custom Luminor deployment, dedicated support, SLA guarantees, custom integrations, and white-label options. Contact us for custom solutions.",
+        a: "Yes. The enterprise plan ($99/month) includes team collaboration, custom Luminor deployment, dedicated support, SLA guarantees, custom integrations, and white-label options. Contact us for custom solutions.",
       },
     ],
   },
@@ -148,13 +148,15 @@ export default function FAQPage() {
             <input
               type="text"
               placeholder="Search questions..."
-              className="w-full px-6 py-4 rounded-2xl bg-cosmic-surface border border-white/[0.06] text-white placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal text-lg"
+              aria-label="Search frequently asked questions"
+              className="w-full px-6 py-4 rounded-2xl bg-cosmic-surface border border-white/[0.06] text-white placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal focus:ring-2 focus:ring-atlantean-teal/40 text-lg"
             />
             <svg
               className="absolute right-6 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
+              aria-hidden="true"
             >
               <path
                 strokeLinecap="round"
