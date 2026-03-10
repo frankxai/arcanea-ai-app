@@ -62,7 +62,7 @@ const FAQ_CATEGORIES = [
       },
       {
         q: "What do the paid plans include?",
-        a: "The Creator plan ($19/month) gives you access to all 16 Luminors, 5,000 messages per month, full Library and Academy access, Studio creation tools, and custom prompt templates. The Studio plan ($49/month) adds unlimited messages, priority support, API access, and team features.",
+        a: "The Creator plan ($19/month) gives you access to all 16 Luminors, 5,000 messages per month, full Library and Academy access, Studio creation tools, and custom prompt templates. The Studio plan ($49/month) adds 5 team seats, API access, custom Luminor training, and priority support.",
       },
       {
         q: "Can I switch plans later?",
