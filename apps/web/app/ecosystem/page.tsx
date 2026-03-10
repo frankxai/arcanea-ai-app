@@ -170,8 +170,8 @@ const PRODUCTS: Product[] = [
     name: "Arcanea Flow",
     tagline: "Agent Orchestration",
     description:
-      "Multi-agent swarm orchestration with 60+ specialized agents. Hierarchical coordination, HNSW memory, and Byzantine fault-tolerant consensus. MIT licensed.",
-    status: "MIT Open Source",
+      "Multi-agent swarm orchestration with 60+ specialized agents. Hierarchical coordination, HNSW memory, and Byzantine fault-tolerant consensus.",
+    status: "Open Source",
     statusVariant: "oss",
     href: "https://github.com/frankxai/arcanea-flow",
     external: true,

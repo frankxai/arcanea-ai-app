@@ -327,7 +327,7 @@ const LINKS: LinkItem[] = [
   {
     href: "https://github.com/frankxai/arcanea",
     label: "GitHub",
-    description: "Open source. MIT License. Star & contribute",
+    description: "Open source. Star & contribute",
     icon: <Icons.Github />,
     color: "from-white/[0.12] to-white/[0.04]",
     external: true,
