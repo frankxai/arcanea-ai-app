@@ -57,9 +57,9 @@ export async function GET(_request: NextRequest) {
       );
     }
 
-    const allSeats = council.seats ?? [];
-    const base_seat_count = allSeats.filter((s) => s.is_base).length;
-    const custom_seat_count = allSeats.filter((s) => !s.is_base).length;
+    const allSeats: any[] = council.seats ?? [];
+    const base_seat_count = allSeats.filter((s: any) => s.is_base).length;
+    const custom_seat_count = allSeats.filter((s: any) => !s.is_base).length;
     const total_seat_count = allSeats.length;
 
     // Streak status — is the streak currently active?
