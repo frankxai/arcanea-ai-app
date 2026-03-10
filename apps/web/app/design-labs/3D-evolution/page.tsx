@@ -20,7 +20,7 @@ import { EvolutionScene } from "./evolution-scene";
 import { SplinePreview } from "./spline-preview";
 
 export const metadata: Metadata = {
-  title: "3D Evolution Lab",
+  title: "3D Evolution Lab — Arcanea",
   description:
     "A full-spectrum proposal for the next Arcanea experience: homepage architecture, key pages, motion system, and launch blueprint.",
 };

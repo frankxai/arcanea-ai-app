@@ -6,7 +6,7 @@ import { join } from "path";
 import ReactMarkdown from "react-markdown";
 
 export const metadata: Metadata = {
-  title: "The Book of Arcanea",
+  title: "The Book of Arcanea | A Complete World in One Text",
   description:
     "Creation myth. Philosophical core. Practical map. Community invitation. 23 chapters across the full mythology, the Ten Gates, and the creative life.",
   openGraph: {

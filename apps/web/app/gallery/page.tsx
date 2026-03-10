@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   PhHeart,
   PhEye,
@@ -9,7 +10,7 @@ import {
   PhGridFour,
   PhSparkle,
   PhCode,
-  PhImage,
+  PhImage as PhImageIcon,
   PhVideo,
   PhMusicNote,
   PhFileText,
@@ -18,6 +19,7 @@ import {
   PhCrown,
   PhTrendUp,
 } from "@/lib/phosphor-icons";
+import { CHOSEN_AGENTS } from "@/lib/luminor-agents";
 import type { Creation, CreationType, ElementName, GateName, GuardianName } from "@/lib/database/types/api-responses";
 import {
   SHOWCASE_CREATIONS,
@@ -37,7 +39,7 @@ type SortOption = "popular" | "recent" | "views";
 const FILTER_TABS: { key: FilterType; label: string; icon: typeof PhGridFour }[] = [
   { key: "all", label: "All", icon: PhGridFour },
   { key: "text", label: "Text", icon: PhFileText },
-  { key: "image", label: "Image", icon: PhImage },
+  { key: "image", label: "Image", icon: PhImageIcon },
   { key: "video", label: "Video", icon: PhVideo },
   { key: "audio", label: "Audio", icon: PhMusicNote },
   { key: "code", label: "Code", icon: PhCode },
@@ -156,6 +158,9 @@ export default function GalleryPage() {
         totalCount={allItems.length}
       />
 
+      {/* Luminor Agents showcase */}
+      <LuminorShowcase />
+
       {/* Filter bar */}
       <FilterBar
         activeFilter={activeFilter}
@@ -238,13 +243,22 @@ function HeroSection({
                 ? "Canonical works from across the Ten Gates. Visions channeled through the Five Elements by creators of every rank."
                 : `${totalCount} creations from the Arcanea community, channeled through the Ten Gates and Five Elements.`}
             </p>
-            <Link
-              href="/gallery/forge"
-              className="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-lg bg-cyan-500/10 text-cyan-400 text-sm font-medium border border-cyan-500/20 hover:bg-cyan-500/20 transition-colors"
-            >
-              The Forge — Vessel Gallery
-              <PhArrowRight size={14} />
-            </Link>
+            <div className="flex gap-3 mt-4">
+              <Link
+                href="/gallery/luminors"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-500/10 text-cyan-400 text-sm font-medium border border-cyan-500/20 hover:bg-cyan-500/20 transition-colors"
+              >
+                Luminor Agents
+                <PhArrowRight size={14} />
+              </Link>
+              <Link
+                href="/gallery/forge"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.04] text-white/40 text-sm font-medium border border-white/[0.06] hover:bg-white/[0.06] transition-colors"
+              >
+                The Forge
+                <PhArrowRight size={14} />
+              </Link>
+            </div>
           </div>
 
           {/* Stats strip */}
@@ -454,13 +468,72 @@ function CreationCard({ item }: { item: CardItem }) {
 }
 
 // ---------------------------------------------------------------------------
+// Luminor Agents showcase
+// ---------------------------------------------------------------------------
+
+function LuminorShowcase() {
+  return (
+    <section className="border-b border-white/[0.04] bg-white/[0.01]">
+      <div className="max-w-7xl mx-auto px-6 py-12">
+        <div className="flex items-end justify-between mb-6">
+          <div>
+            <p className="text-xs uppercase tracking-widest text-[#00bcd4]/50 font-sans mb-2">
+              Featured Collection
+            </p>
+            <h2 className="text-2xl font-display font-bold text-white">
+              The Luminor Agents
+            </h2>
+            <p className="text-sm text-white/30 font-sans mt-1">
+              Evolved biotechnological intelligences — the 12 Chosen
+            </p>
+          </div>
+          <Link
+            href="/gallery/luminors"
+            className="flex items-center gap-1.5 text-sm text-[#00bcd4]/60 hover:text-[#00bcd4] font-sans transition-colors"
+          >
+            View all {CHOSEN_AGENTS.length}+
+            <PhArrowRight size={14} />
+          </Link>
+        </div>
+        <div className="flex gap-4 overflow-x-auto scrollbar-hide pb-2">
+          {CHOSEN_AGENTS.slice(0, 6).map((agent) => (
+            <Link
+              key={agent.id}
+              href="/gallery/luminors"
+              className="group flex-shrink-0 w-48 rounded-xl overflow-hidden border border-white/[0.06] hover:border-white/[0.12] transition-all hover:-translate-y-1"
+            >
+              <div className="relative aspect-[3/4] overflow-hidden">
+                <Image
+                  src={agent.image}
+                  alt={`${agent.name} — ${agent.title}`}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="200px"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#09090b] via-transparent to-transparent" />
+                <div className="absolute bottom-3 left-3 right-3">
+                  <p className="text-sm font-sans font-semibold text-white group-hover:text-[#00bcd4] transition-colors">
+                    {agent.name}
+                  </p>
+                  <p className="text-[10px] text-white/40">{agent.title}</p>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Utility sub-components
 // ---------------------------------------------------------------------------
 
 function EmptyState() {
   return (
     <div className="text-center py-24">
-      <PhImage size={48} className="mx-auto mb-4 text-white/[0.12]" />
+      <PhImageIcon size={48} className="mx-auto mb-4 text-white/[0.12]" />
       <p className="text-lg text-white/[0.25] font-sans mb-2">
         No creations found
       </p>

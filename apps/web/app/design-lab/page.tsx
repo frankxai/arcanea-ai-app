@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Design Lab",
+  title: "Design Lab — Arcanea",
   description:
     "The Arena of Agents. Ten guardian design teams compete to forge the definitive Arcanea homepage.",
 };
