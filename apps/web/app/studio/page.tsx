@@ -228,7 +228,7 @@ Use Markdown for formatting. The AI panel can help you develop ideas."
             <Brain size={14} className="text-cosmic-void" />
           </div>
           <span className="text-xs font-semibold text-text-primary">
-            Luminor
+            Companion
           </span>
         </div>
 
