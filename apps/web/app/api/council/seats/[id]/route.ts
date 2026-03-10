@@ -45,7 +45,7 @@ export async function DELETE(
 
     // Fetch the seat to verify ownership and base status
     const { data: seat, error: fetchError } = await supabase
-      .from('council_seats')
+      .from('council_seats' as any)
       .select('id, is_base, council_id, council:luminor_councils(user_id)')
       .eq('id', seatId)
       .single();
@@ -59,7 +59,7 @@ export async function DELETE(
 
     // Verify the seat belongs to this user's council
     const council = Array.isArray(seat.council) ? seat.council[0] : seat.council;
-    if (!council || (council as { user_id: string }).user_id !== user.id) {
+    if (!council || council.user_id !== user.id) {
       return NextResponse.json(
         { data: null, error: 'Forbidden' },
         { status: 403 }
@@ -76,7 +76,7 @@ export async function DELETE(
 
     // Delete the seat
     const { error: deleteError } = await supabase
-      .from('council_seats')
+      .from('council_seats' as any)
       .delete()
       .eq('id', seatId);
 

@@ -105,7 +105,7 @@ function computeStreakUpdate(
 
 interface LogConveningBody {
   seats_addressed: string[];
-  imprint_notes: string;
+  imprint_notes: Record<string, string>;
   depth_rating: number;
   journal_entry?: string;
   duration_minutes?: number;
@@ -129,11 +129,8 @@ function validateLogConveningBody(
     return { valid: false, error: 'seats_addressed must be an array of strings' };
   }
 
-  if (!b.imprint_notes || typeof b.imprint_notes !== 'string' || !b.imprint_notes.trim()) {
-    return { valid: false, error: 'imprint_notes is required and must be a non-empty string' };
-  }
-  if (b.imprint_notes.length > 5000) {
-    return { valid: false, error: 'imprint_notes must be 5000 characters or fewer' };
+  if (!b.imprint_notes || typeof b.imprint_notes !== 'object' || Array.isArray(b.imprint_notes)) {
+    return { valid: false, error: 'imprint_notes must be a JSON object (e.g. { "Lumira": "received clarity" })' };
   }
 
   const depth = Number(b.depth_rating);
@@ -164,7 +161,7 @@ function validateLogConveningBody(
     valid: true,
     data: {
       seats_addressed: b.seats_addressed as string[],
-      imprint_notes: b.imprint_notes.trim(),
+      imprint_notes: b.imprint_notes as Record<string, string>,
       depth_rating: Math.round(depth),
       journal_entry,
       duration_minutes,
@@ -216,7 +213,7 @@ export async function POST(request: NextRequest) {
 
     // Fetch council
     const { data: council, error: councilError } = await supabase
-      .from('luminor_councils')
+      .from('luminor_councils' as any)
       .select('id, current_streak, longest_streak, total_convenings, last_convening_at')
       .eq('user_id', user.id)
       .single();
@@ -243,7 +240,7 @@ export async function POST(request: NextRequest) {
 
     // Insert convening record
     const { data: convening, error: conveningError } = await supabase
-      .from('council_convenings')
+      .from('council_convenings' as any)
       .insert({
         council_id: council.id,
         seats_addressed: input.seats_addressed,
@@ -268,7 +265,7 @@ export async function POST(request: NextRequest) {
 
     // Update council stats
     const { error: updateError } = await supabase
-      .from('luminor_councils')
+      .from('luminor_councils' as any)
       .update(streakUpdate)
       .eq('id', council.id);
 
@@ -322,7 +319,7 @@ export async function GET(request: NextRequest) {
 
     // Resolve council
     const { data: council, error: councilError } = await supabase
-      .from('luminor_councils')
+      .from('luminor_councils' as any)
       .select('id')
       .eq('user_id', user.id)
       .single();
@@ -336,7 +333,7 @@ export async function GET(request: NextRequest) {
 
     // Fetch convenings
     const { data: convenings, error: fetchError, count } = await supabase
-      .from('council_convenings')
+      .from('council_convenings' as any)
       .select('*', { count: 'exact' })
       .eq('council_id', council.id)
       .order('created_at', { ascending: false })

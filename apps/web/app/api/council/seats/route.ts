@@ -134,7 +134,7 @@ export async function POST(request: NextRequest) {
 
     // Resolve the user's council — must exist before adding a seat
     const { data: council, error: councilError } = await supabase
-      .from('luminor_councils')
+      .from('luminor_councils' as any)
       .select('id')
       .eq('user_id', user.id)
       .single();
@@ -148,7 +148,7 @@ export async function POST(request: NextRequest) {
 
     // Determine next seat_order (max of current seats + 1)
     const { data: existingSeats } = await supabase
-      .from('council_seats')
+      .from('council_seats' as any)
       .select('seat_order')
       .eq('council_id', council.id)
       .order('seat_order', { ascending: false })
@@ -158,7 +158,7 @@ export async function POST(request: NextRequest) {
 
     // Insert custom seat
     const { data: seat, error: seatError } = await supabase
-      .from('council_seats')
+      .from('council_seats' as any)
       .insert({
         council_id: council.id,
         is_base: false,

@@ -95,10 +95,10 @@ async function createCouncilWithSeats(userId: string) {
 
   // Insert council row
   const { data: council, error: councilError } = await supabase
-    .from('luminor_councils')
+    .from('luminor_councils' as any)
     .insert({
       user_id: userId,
-      council_depth_level: 0,
+      council_depth_level: 1,
       current_streak: 0,
       longest_streak: 0,
       total_convenings: 0,
@@ -118,7 +118,7 @@ async function createCouncilWithSeats(userId: string) {
   }));
 
   const { data: seatedLuminors, error: seatsError } = await supabase
-    .from('council_seats')
+    .from('council_seats' as any)
     .insert(seats)
     .select('*');
 
@@ -139,7 +139,7 @@ async function fetchCouncilWithSeats(userId: string) {
   const supabase = await createClient();
 
   const { data: council, error } = await supabase
-    .from('luminor_councils')
+    .from('luminor_councils' as any)
     .select('*, seats:council_seats(*)')
     .eq('user_id', userId)
     .order('seat_order', { referencedTable: 'council_seats', ascending: true })
