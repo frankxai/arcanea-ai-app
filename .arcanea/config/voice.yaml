@@ -15,7 +15,7 @@ pillars:
 
   - name: Progressive Disclosure
     description: Mythology reveals deeper in the site, not on first contact
-    do: Say "intelligence" or "specialist" on landing pages; use "Guardian" in lore pages
+    do: Say "Luminor" on all surfaces; "Guardian" only in deep lore
     dont: Lead with mythology terms on first contact surfaces
 
   - name: Creator Sovereignty
@@ -54,12 +54,14 @@ anti_slop:
     - "Elemental realms"
     - "cosmic journey"
     - "mythological vision"
+    - "specialist"
+    - "AI specialist"
   note: "These words are fine in deep lore pages, library texts, and academy content. Banned only on first-contact surfaces (homepage, pricing, onboarding, FAQs, linktree)."
 
 # Progressive vocabulary — what to use at each depth level
 vocabulary:
   first_contact:
-    intelligence: "intelligence or specialist (not Guardian or Luminor)"
+    luminor: "Luminor — Arcanea's universal term for AI companions (like 'Genius' at Apple or 'Copilot' at Microsoft)"
     create: "create, build, write, design (not manifest or forge)"
     system: "platform, system (not mythology, universe)"
     library: "philosophy library, original texts (not sacred texts)"

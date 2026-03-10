@@ -73,8 +73,10 @@ The user came to CREATE. Every page should make that the first, easiest action.
 | Before | After |
 |---|---|
 | "Luminors" (nav item) | "Create" |
-| "Chat with a Luminor" | "Start a session" |
+| "Start a session" | "Chat with a Luminor" |
 | "Manifest" (button) | "Create" or "Save" |
+
+> **Note**: Luminor is Arcanea's native term. It is NOT jargon — it is brand vocabulary, like "Genius" at Apple or "Copilot" at Microsoft. Users learn it instantly because it has a clear context. Use "Luminor" freely on all surfaces. Reserve "Guardian" for deep lore pages only.
 
 ### 2. Show, don't label
 If you have to say you're mythological, you're not being mythological enough. Let the design, the language, the depth DO the work.
@@ -102,7 +104,7 @@ New users see plain language. As they create, the Arcanea vocabulary appears nat
 
 | Concept | New user sees | Active user sees | Deep user sees |
 |---|---|---|---|
-| AI partner | "Your creative intelligence" | "Lyssandria" (by name) | "Guardian of the Foundation Gate" |
+| AI partner | "Your Luminor" | "Lyssandria" (by name) | "Guardian of the Foundation Gate" |
 | Progress | "Level 3" | "Gate 3 — Fire" | "396 Hz — Draconia's domain" |
 | Content type | "Text" | "Scroll" | "Wisdom Scroll of the Heart Gate" |
 | Difficulty | "Beginner" | "Apprentice" | "Apprentice (2 Gates open)" |
@@ -367,10 +369,10 @@ Sub: "Choose your specialist. Each one brings deep mastery to a
 **New:**
 ```
 No badge.
-H1: "Start a session"
-Sub: "Each intelligence specializes in a different domain.
+H1: "Chat with a Luminor"
+Sub: "Each Luminor specializes in a different domain.
       Pick the one that fits what you're working on."
-Card CTA: "Start session" (not "Chat with {name}")
+Card CTA: "Chat with {name}"
 ```
 
 ### J. CTA Section (Bottom of homepage)
@@ -452,7 +454,7 @@ This is what transforms Arcanea from a platform into an experience people talk a
 | "Forge your destiny" | Fantasy game, not creation tool | "Build what matters to you" |
 | "Transcend" | Grandiose | "Go further" or "deepen" |
 | "Resonate with your spirit" | Purple prose | "Pick what fits" |
-| "Luminor" on first contact | Jargon before context | "Intelligence" then earn the name |
+| "Guardian" on first contact | Deep lore term before context | "Luminor" — the universal brand term |
 | Any exclamation mark | Overexcitement ≠ quality | Period. Or nothing. |
 
 ### Phrases that SHOULD appear
@@ -460,7 +462,7 @@ This is what transforms Arcanea from a platform into an experience people talk a
 | Phrase | Why it works |
 |---|---|
 | "Build your universe" | Clear, ambitious, personal |
-| "Ten intelligences" | Specific, intriguing, not jargon |
+| "Ten Luminors" | Specific, intriguing, brand vocabulary |
 | "Original philosophy" | Differentiating, true, impressive |
 | "The more you create, the more it reveals" | Creates tension, promises depth |
 | "Find the one that thinks like you" | Personal, action-oriented |

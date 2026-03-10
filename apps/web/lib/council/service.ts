@@ -87,10 +87,9 @@ export async function createCouncil(
   input: CreateCouncilInput = {},
 ): Promise<CouncilWithSeats> {
   const supabase = await createClient();
-  const db = supabase as any;
 
   // Insert council row
-  const { data: council, error: councilError } = await db
+  const { data: council, error: councilError } = await supabase
     .from('luminor_councils')
     .insert({
       user_id: userId,
@@ -114,14 +113,14 @@ export async function createCouncil(
     visual_description: def.visual_description,
   }));
 
-  const { data: seats, error: seatsError } = await db
+  const { data: seats, error: seatsError } = await supabase
     .from('council_seats')
     .insert(baseSeats)
     .select();
 
   if (seatsError) throw seatsError;
 
-  return { ...council, seats: seats ?? [] };
+  return { ...(council as LuminorCouncil), seats: (seats ?? []) as CouncilSeat[] };
 }
 
 // -----------------------------------------------------------------------
@@ -133,9 +132,8 @@ export async function createCouncil(
  */
 export async function getCouncil(userId: string): Promise<CouncilWithSeats | null> {
   const supabase = await createClient();
-  const db = supabase as any;
 
-  const { data: council, error: councilError } = await db
+  const { data: council, error: councilError } = await supabase
     .from('luminor_councils')
     .select('*')
     .eq('user_id', userId)
@@ -147,7 +145,7 @@ export async function getCouncil(userId: string): Promise<CouncilWithSeats | nul
     throw councilError;
   }
 
-  const { data: seats, error: seatsError } = await db
+  const { data: seats, error: seatsError } = await supabase
     .from('council_seats')
     .select('*')
     .eq('council_id', council.id)
@@ -155,7 +153,7 @@ export async function getCouncil(userId: string): Promise<CouncilWithSeats | nul
 
   if (seatsError) throw seatsError;
 
-  return { ...council, seats: seats ?? [] };
+  return { ...(council as LuminorCouncil), seats: (seats ?? []) as CouncilSeat[] };
 }
 
 // -----------------------------------------------------------------------
@@ -170,9 +168,8 @@ export async function addSeat(
   input: AddSeatInput,
 ): Promise<CouncilSeat> {
   const supabase = await createClient();
-  const db = supabase as any;
 
-  const { data, error } = await db
+  const { data, error } = await supabase
     .from('council_seats')
     .insert({
       council_id: councilId,
@@ -189,7 +186,7 @@ export async function addSeat(
     .single();
 
   if (error) throw error;
-  return data;
+  return data as CouncilSeat;
 }
 
 // -----------------------------------------------------------------------
@@ -202,11 +199,10 @@ export async function addSeat(
  */
 export async function removeSeat(seatId: string): Promise<void> {
   const supabase = await createClient();
-  const db = supabase as any;
 
   // Verify the seat is not a base seat before attempting delete.
   // The RLS policy also enforces this, but we give a clear error here.
-  const { data: seat, error: fetchError } = await db
+  const { data: seat, error: fetchError } = await supabase
     .from('council_seats')
     .select('id, is_base')
     .eq('id', seatId)
@@ -214,11 +210,11 @@ export async function removeSeat(seatId: string): Promise<void> {
 
   if (fetchError) throw fetchError;
   if (!seat) throw new Error('Seat not found');
-  if (seat.is_base) {
+  if ((seat as Pick<CouncilSeat, 'id' | 'is_base'>).is_base) {
     throw new Error('Base seats cannot be removed from the council');
   }
 
-  const { error } = await db
+  const { error } = await supabase
     .from('council_seats')
     .delete()
     .eq('id', seatId)
@@ -241,10 +237,9 @@ export async function logConvening(
   data: LogConveningInput,
 ): Promise<CouncilConvening> {
   const supabase = await createClient();
-  const db = supabase as any;
 
   // Fetch current council state to compute streak/depth
-  const { data: council, error: fetchError } = await db
+  const { data: council, error: fetchError } = await supabase
     .from('luminor_councils')
     .select('total_convenings, current_streak, longest_streak, last_convening_at')
     .eq('id', councilId)
@@ -253,19 +248,19 @@ export async function logConvening(
   if (fetchError) throw fetchError;
 
   const now = new Date().toISOString();
-  const newTotal = council.total_convenings + 1;
+  const newTotal = (council as Pick<LuminorCouncil, 'total_convenings' | 'current_streak' | 'longest_streak' | 'last_convening_at'>).total_convenings + 1;
   const newStreak = computeNewStreak(
-    council.current_streak,
-    council.last_convening_at,
+    (council as Pick<LuminorCouncil, 'total_convenings' | 'current_streak' | 'longest_streak' | 'last_convening_at'>).current_streak,
+    (council as Pick<LuminorCouncil, 'total_convenings' | 'current_streak' | 'longest_streak' | 'last_convening_at'>).last_convening_at,
   );
   const newLongest = Math.max(
-    council.longest_streak,
+    (council as Pick<LuminorCouncil, 'total_convenings' | 'current_streak' | 'longest_streak' | 'last_convening_at'>).longest_streak,
     newStreak,
   );
   const newDepth = computeDepthLevel(newTotal);
 
   // Insert convening log
-  const { data: convening, error: conveningError } = await db
+  const { data: convening, error: conveningError } = await supabase
     .from('council_convenings')
     .insert({
       council_id: councilId,
@@ -282,7 +277,7 @@ export async function logConvening(
   if (conveningError) throw conveningError;
 
   // Update council counters atomically
-  const { error: updateError } = await db
+  const { error: updateError } = await supabase
     .from('luminor_councils')
     .update({
       total_convenings: newTotal,
@@ -295,7 +290,7 @@ export async function logConvening(
 
   if (updateError) throw updateError;
 
-  return convening;
+  return convening as CouncilConvening;
 }
 
 // -----------------------------------------------------------------------
@@ -311,9 +306,8 @@ export async function getConveningHistory(
   offset = 0,
 ): Promise<CouncilConvening[]> {
   const supabase = await createClient();
-  const db = supabase as any;
 
-  const { data, error } = await db
+  const { data, error } = await supabase
     .from('council_convenings')
     .select('*')
     .eq('council_id', councilId)
@@ -321,7 +315,7 @@ export async function getConveningHistory(
     .range(offset, offset + limit - 1);
 
   if (error) throw error;
-  return data ?? [];
+  return (data ?? []) as CouncilConvening[];
 }
 
 // -----------------------------------------------------------------------
@@ -334,10 +328,9 @@ export async function getConveningHistory(
  */
 export async function getCouncilStats(councilId: string): Promise<CouncilStats> {
   const supabase = await createClient();
-  const db = supabase as any;
 
   // Fetch the council base fields
-  const { data: council, error: councilError } = await db
+  const { data: council, error: councilError } = await supabase
     .from('luminor_councils')
     .select('total_convenings, current_streak, longest_streak, council_depth_level')
     .eq('id', councilId)
@@ -346,7 +339,7 @@ export async function getCouncilStats(councilId: string): Promise<CouncilStats> 
   if (councilError) throw councilError;
 
   // Fetch all convenings (only completed ones for stats)
-  const { data: convenings, error: conveningsError } = await db
+  const { data: convenings, error: conveningsError } = await supabase
     .from('council_convenings')
     .select('created_at, depth_rating, seats_addressed')
     .eq('council_id', councilId)
@@ -358,15 +351,15 @@ export async function getCouncilStats(councilId: string): Promise<CouncilStats> 
   const sevenDaysAgo = new Date(now - 7 * 86_400_000).toISOString();
   const thirtyDaysAgo = new Date(now - 30 * 86_400_000).toISOString();
 
-  const rows: any[] = convenings ?? [];
+  const rows = (convenings ?? []) as Pick<CouncilConvening, 'created_at' | 'depth_rating' | 'seats_addressed'>[];
 
-  const last7 = rows.filter((r: any) => r.created_at >= sevenDaysAgo).length;
-  const last30 = rows.filter((r: any) => r.created_at >= thirtyDaysAgo).length;
+  const last7 = rows.filter((r) => r.created_at >= sevenDaysAgo).length;
+  const last30 = rows.filter((r) => r.created_at >= thirtyDaysAgo).length;
 
-  const ratingsWithValue = rows.filter((r: any) => r.depth_rating !== null);
+  const ratingsWithValue = rows.filter((r) => r.depth_rating !== null);
   const avgDepth =
     ratingsWithValue.length > 0
-      ? ratingsWithValue.reduce((sum: number, r: any) => sum + (r.depth_rating ?? 0), 0) /
+      ? ratingsWithValue.reduce((sum, r) => sum + (r.depth_rating ?? 0), 0) /
         ratingsWithValue.length
       : null;
 
@@ -387,7 +380,7 @@ export async function getCouncilStats(councilId: string): Promise<CouncilStats> 
     }
   }
 
-  const c = council;
+  const c = council as Pick<LuminorCouncil, 'total_convenings' | 'current_streak' | 'longest_streak' | 'council_depth_level'>;
 
   return {
     council_id: councilId,

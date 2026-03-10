@@ -2,21 +2,26 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Pricing | Arcanea",
+  title: "Pricing",
   description:
-    "Simple pricing for creative intelligence. Free tier available. Premium unlocks all 10 intelligences and full Library access.",
+    "Simple pricing for Arcanea. Free tier with 3 Luminors. Creator plan unlocks all 10 Luminors and full Library access.",
+  openGraph: {
+    title: "Pricing | Arcanea",
+    description: "Simple pricing for Arcanea. Free tier with 3 Luminors, Creator and Studio plans for serious work.",
+    type: "website",
+  },
 };
 
 const TIERS = [
   {
     name: "Spark",
     price: "Free",
-    description: "Perfect for exploring Arcanea's AI specialists",
+    description: "A real starting point, not a demo",
     features: [
-      "Access to 2 AI specialists",
-      "50 messages per month",
-      "Library browsing",
-      "Basic Academy access",
+      "3 Luminors — writing, research, and brainstorming",
+      "100 messages per month",
+      "Browse the full Library (17 collections)",
+      "Academy access through Gate 2",
       "Community Discord",
     ],
     cta: "Start Free",
@@ -25,39 +30,39 @@ const TIERS = [
     color: "crystal",
   },
   {
-    name: "Ascendant",
-    price: "$29",
+    name: "Creator",
+    price: "$19",
     period: "/month",
-    description: "For creators who are serious about their craft",
+    description: "The full creative toolkit",
     features: [
-      "All 10 Creative Intelligences",
-      "Unlimited messages",
-      "Full Library access",
-      "Academy progression",
-      "Priority support",
-      "Custom specialist training",
-      "API access",
+      "All 10 Luminors — writing, code, design, music, research, and more",
+      "5,000 messages per month",
+      "Full Library access with reading progress",
+      "Academy progression through all 10 Gates",
+      "The Studio — image, music, and code generation",
+      "Custom prompt templates",
+      "Direct support within 24 hours",
     ],
-    cta: "Get Started",
-    href: "/auth/signup?plan=ascendant",
+    cta: "Upgrade",
+    href: "/auth/signup?plan=creator",
     popular: true,
     color: "violet",
   },
   {
-    name: "Luminor",
-    price: "$99",
+    name: "Studio",
+    price: "$49",
     period: "/month",
-    description: "For teams and enterprises building with Arcanea",
+    description: "For teams and professional workflows",
     features: [
-      "Everything in Ascendant",
-      "Team collaboration",
-      "Custom AI deployment",
-      "Dedicated support",
-      "SLA guarantee",
-      "Custom integrations",
-      "White-label options",
+      "Everything in Creator",
+      "5 team seats with shared workspace",
+      "API access (REST + streaming)",
+      "Train custom Luminors on your content",
+      "Direct support within 4 hours",
+      "Export without Arcanea branding",
+      "Usage analytics dashboard",
     ],
-    cta: "Contact Sales",
+    cta: "Contact Us",
     href: "/contact",
     popular: false,
     color: "gold",
@@ -65,44 +70,49 @@ const TIERS = [
 ];
 
 const COMPARISON = [
-  { feature: "AI Specialists", spark: "2", ascendant: "10", luminor: "10" },
+  { feature: "Luminors", spark: "3", creator: "10", studio: "10" },
   {
     feature: "Messages/month",
-    spark: "50",
-    ascendant: "Unlimited",
-    luminor: "Unlimited",
+    spark: "100",
+    creator: "5,000",
+    studio: "5,000 per seat",
   },
   {
     feature: "Library access",
     spark: "Browse",
-    ascendant: "Full",
-    luminor: "Full",
+    creator: "Full + progress tracking",
+    studio: "Full + progress tracking",
   },
   {
-    feature: "Academy progression",
-    spark: "Basic",
-    ascendant: "Full",
-    luminor: "Full",
+    feature: "Academy Gates",
+    spark: "1-2",
+    creator: "All 10",
+    studio: "All 10",
   },
-  { feature: "Priority support", spark: false, ascendant: true, luminor: true },
   {
-    feature: "Custom specialist training",
+    feature: "The Studio (image, music, code)",
     spark: false,
-    ascendant: true,
-    luminor: true,
-  },
-  { feature: "API access", spark: false, ascendant: true, luminor: true },
-  {
-    feature: "Team collaboration",
-    spark: false,
-    ascendant: false,
-    luminor: true,
+    creator: true,
+    studio: true,
   },
   {
-    feature: "Custom deployment",
+    feature: "Custom prompt templates",
     spark: false,
-    ascendant: false,
-    luminor: true,
+    creator: true,
+    studio: true,
+  },
+  { feature: "API access", spark: false, creator: false, studio: true },
+  {
+    feature: "Team seats",
+    spark: false,
+    creator: false,
+    studio: "5 included",
+  },
+  {
+    feature: "Custom Luminor training",
+    spark: false,
+    creator: false,
+    studio: true,
   },
 ];
 
@@ -110,27 +120,27 @@ const FAQs = [
   {
     question: "Can I switch plans later?",
     answer:
-      "Absolutely. You can upgrade or downgrade your plan at any time. Changes take effect immediately, and we'll prorate any payments.",
+      "Yes. Upgrade or downgrade anytime from your settings. Changes take effect immediately, and payments are prorated.",
   },
   {
-    question: "What happens to my conversations if I downgrade?",
+    question: "What happens to my work if I downgrade?",
     answer:
-      "Your conversations are always saved. If you downgrade to Spark, you'll still be able to view your history, though you may need to upgrade to continue chatting beyond your free limit.",
+      "Your conversations, creations, and Library progress are always kept. On Spark you can view everything but are limited to 3 Luminors and 100 messages.",
   },
   {
-    question: "Is there a free trial for Ascendant?",
+    question: "Is there a free trial for Creator?",
     answer:
-      "Yes! New users get a 7-day Ascendant trial with full access to all 10 creative intelligences. No credit card required to start.",
+      "New users get a 7-day Creator trial with all 10 Luminors. No credit card required.",
   },
   {
-    question: "Do you offer discounts for students or educators?",
+    question: "Do you offer student or educator pricing?",
     answer:
-      "Yes, we offer 50% off Ascendant for students, educators, and researchers. Contact us with proof of affiliation.",
+      "Yes. 50% off Creator for students, educators, and researchers. Contact us with proof of affiliation.",
   },
   {
     question: "What payment methods do you accept?",
     answer:
-      "We accept all major credit cards, PayPal, and crypto. Enterprise customers can pay via invoice.",
+      "All major credit cards and PayPal. Studio customers can pay via invoice.",
   },
 ];
 
@@ -181,7 +191,7 @@ export default function PricingPage() {
 
           <p className="text-xl text-text-secondary max-w-2xl mx-auto mb-8 leading-relaxed">
             Choose the plan that fits your work.
-            All plans include access to AI specialists and our full Library.
+            Every plan includes Luminors, the Library, and the Academy.
           </p>
         </section>
 
@@ -283,10 +293,10 @@ export default function PricingPage() {
                     Spark
                   </th>
                   <th className="text-center py-4 px-4 text-[#00bcd4] font-semibold">
-                    Ascendant
+                    Creator
                   </th>
                   <th className="text-center py-4 px-4 text-[#ffd700] font-semibold">
-                    Luminor
+                    Studio
                   </th>
                 </tr>
               </thead>
@@ -332,8 +342,8 @@ export default function PricingPage() {
                       )}
                     </td>
                     <td className="py-4 px-4 text-center bg-[#00bcd4]/5">
-                      {typeof row.ascendant === "boolean" ? (
-                        row.ascendant ? (
+                      {typeof row.creator === "boolean" ? (
+                        row.creator ? (
                           <svg
                             className="w-5 h-5 text-[#00bcd4] mx-auto"
                             fill="none"
@@ -364,13 +374,13 @@ export default function PricingPage() {
                         )
                       ) : (
                         <span className="text-text-secondary font-medium">
-                          {row.ascendant}
+                          {row.creator}
                         </span>
                       )}
                     </td>
                     <td className="py-4 px-4 text-center">
-                      {typeof row.luminor === "boolean" ? (
-                        row.luminor ? (
+                      {typeof row.studio === "boolean" ? (
+                        row.studio ? (
                           <svg
                             className="w-5 h-5 text-[#00bcd4] mx-auto"
                             fill="none"
@@ -401,7 +411,7 @@ export default function PricingPage() {
                         )
                       ) : (
                         <span className="text-text-secondary">
-                          {row.luminor}
+                          {row.studio}
                         </span>
                       )}
                     </td>
@@ -449,8 +459,7 @@ export default function PricingPage() {
                 Ready to start creating?
               </h2>
               <p className="text-lg text-text-secondary mb-10 max-w-2xl mx-auto">
-                10 creative intelligences. A philosophy library. Tools that work
-                the way you think.
+                10 Luminors. A Library of 34 texts. Tools that work the way you think.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Link
