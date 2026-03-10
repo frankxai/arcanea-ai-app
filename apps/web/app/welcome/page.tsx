@@ -78,7 +78,7 @@ export default function WelcomePage() {
           transition={{ delay: 0.5, duration: 0.6 }}
           className="font-body text-lg text-text-muted mb-12 max-w-lg mx-auto"
         >
-          Ten creative intelligences, each with a distinct philosophy.
+          Sixteen creative intelligences, each with a distinct philosophy.
           A library of original texts. Tools that think with you.
         </m.p>
 

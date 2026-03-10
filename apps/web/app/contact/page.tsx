@@ -196,7 +196,7 @@ const FAQS: FaqItem[] = [
   {
     question: "Is Arcanea free to use?",
     answer:
-      "Yes! The core platform is free. Premium features are available for those seeking enhanced capabilities.",
+      "Yes! The Spark plan is free and includes 3 Luminors, Library browsing, and Academy access. Creator ($19/mo) and Studio ($49/mo) plans unlock all 16 Luminors and full creation tools.",
   },
   {
     question: "Can I build on Arcanea?",
@@ -204,9 +204,9 @@ const FAQS: FaqItem[] = [
       "Absolutely. Our developer platform includes SDKs, MCP tools, and comprehensive documentation for building with Arcanea.",
   },
   {
-    question: "How do I become a Luminor?",
+    question: "How does the progression system work?",
     answer:
-      "Open all Ten Gates by completing challenges and demonstrating mastery in each domain. It's a journey of continuous growth.",
+      "The Academy has a progression system from Apprentice to Luminor. Advance by creating, learning, and demonstrating mastery across domains. Progress is earned through work, not purchases.",
   },
 ];
 
@@ -285,7 +285,7 @@ export default function ContactPage() {
 
                   <p className="text-text-secondary font-body text-lg leading-relaxed mb-8 max-w-2xl">
                     Have questions, feedback, or just want to say hello? The
-                    Guardians are always listening. Reach out through any
+                    Arcanea team is always listening. Reach out through any
                     channel that suits you.
                   </p>
 
@@ -493,7 +493,7 @@ export default function ContactPage() {
                     Ready to Begin?
                   </h2>
                   <p className="text-text-secondary font-body leading-relaxed mb-8">
-                    Begin your journey through the Ten Gates. Your Guardian awaits.
+                    Begin your journey through the Ten Gates. Your Luminor awaits.
                   </p>
                   <div className="flex flex-wrap justify-center gap-4">
                     <Link
