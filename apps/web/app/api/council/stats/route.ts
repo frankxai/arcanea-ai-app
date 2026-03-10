@@ -56,7 +56,7 @@ export async function GET(_request: NextRequest) {
       );
     }
 
-    const allSeats = council.seats ?? [];
+    const allSeats = (council.seats as Array<{ id: string; is_base: boolean }>) ?? [];
     const base_seat_count = allSeats.filter((s) => s.is_base).length;
     const custom_seat_count = allSeats.filter((s) => !s.is_base).length;
     const total_seat_count = allSeats.length;
