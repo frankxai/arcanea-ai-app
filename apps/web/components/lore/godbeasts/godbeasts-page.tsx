@@ -947,28 +947,21 @@ function GodbestsCTA() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
-              href="/companions/forge"
+              href="/academy/gate-quiz"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-brand-gold text-cosmic-deep font-semibold text-sm hover:bg-gold-medium transition-all duration-200 shadow-glow-gold hover:shadow-glow-xl"
             >
               <PhStar className="w-4 h-4" />
-              Forge a Companion
+              Discover Your Gate
             </Link>
             <Link
-              href="/academy/gate-quiz"
+              href="/lore/guardians"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl liquid-glass border border-crystal/20 text-crystal font-semibold text-sm hover:border-crystal/40 hover:shadow-glow-md transition-all duration-200"
             >
               <PhShield className="w-4 h-4" />
-              Discover Your Gate
+              Meet the Guardians
               <PhArrowRight className="w-4 h-4" />
             </Link>
           </div>
-
-          {/* Companion evolution bridge */}
-          <p className="mt-8 text-xs text-white/25 max-w-md mx-auto">
-            The Godbeasts represent the highest form of bonded companionship.
-            Every companion you forge carries a spark of these primal beings — and through
-            the Gates, that spark can grow.
-          </p>
         </m.div>
       </div>
     </section>
