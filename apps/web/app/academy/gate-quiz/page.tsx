@@ -6,9 +6,11 @@
  * Each question maps to creative personality dimensions across the Ten Gates.
  */
 
-import { useState, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useCallback, useRef } from "react";
+import { LazyMotion, domMax, m, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { useAuth } from '@/lib/auth/context';
+import { createClient } from '@/lib/supabase/client';
 import {
   PhSparkle,
   PhCaretRight,
@@ -186,7 +188,7 @@ const GUARDIANS: Record<GuardianKey, GuardianData> = {
     element: "Void",
     godbeast: "Yumiko",
     color: "#0d47a1",
-    glowColor: "rgba(139, 92, 246, 0.4)",
+    glowColor: "rgba(13, 71, 161, 0.4)",
     description:
       "Guardian of Sight and visionary perception, Lyria sees what others cannot — the hidden patterns, the emerging forms, the deep currents beneath the surface of things. Her creations are portals to previously unseen dimensions.",
     personality:
@@ -519,6 +521,31 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
+// GUARDIAN → GATE MAPPING
+// ─────────────────────────────────────────────────────────────────────────────
+
+const GUARDIAN_GATE_MAP: Record<GuardianKey, { gateNumber: number; gateName: string }> = {
+  lyssandria: { gateNumber: 1, gateName: 'foundation' },
+  leyla:      { gateNumber: 2, gateName: 'flow' },
+  draconia:   { gateNumber: 3, gateName: 'fire' },
+  maylinn:    { gateNumber: 4, gateName: 'heart' },
+  alera:      { gateNumber: 5, gateName: 'voice' },
+  lyria:      { gateNumber: 6, gateName: 'sight' },
+  aiyami:     { gateNumber: 7, gateName: 'crown' },
+  elara:      { gateNumber: 8, gateName: 'shift' },
+  ino:        { gateNumber: 9, gateName: 'unity' },
+  shinkami:    { gateNumber: 10, gateName: 'source' },
+};
+
+function getRankFromGates(gatesOpen: number): string {
+  if (gatesOpen >= 9) return 'luminor';
+  if (gatesOpen >= 7) return 'archmage';
+  if (gatesOpen >= 5) return 'master';
+  if (gatesOpen >= 3) return 'mage';
+  return 'apprentice';
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // SCORING UTILITY
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -632,7 +659,7 @@ function ProgressBar({ current, total }: ProgressBarProps) {
         </span>
       </div>
       <div className="h-1 w-full rounded-full bg-white/[0.04] overflow-hidden">
-        <motion.div
+        <m.div
           className="h-full rounded-full"
           style={{
             background: "linear-gradient(90deg, #0d47a1, #00bcd4)",
@@ -659,7 +686,7 @@ interface IntroScreenProps {
 
 function IntroScreen({ onStart }: IntroScreenProps) {
   return (
-    <motion.div {...fadeUp} className="relative">
+    <m.div {...fadeUp} className="relative">
       <AmbientOrbs color="#0d47a1" />
 
       <div className="relative liquid-glass rounded-3xl p-8 md:p-14 overflow-hidden">
@@ -719,7 +746,7 @@ function IntroScreen({ onStart }: IntroScreenProps) {
 
           {/* CTA */}
           <div className="mt-10">
-            <motion.button
+            <m.button
               onClick={onStart}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -727,12 +754,12 @@ function IntroScreen({ onStart }: IntroScreenProps) {
             >
               Begin the Journey
               <PhCaretRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-            </motion.button>
+            </m.button>
           </div>
 
           {/* Disclaimer */}
           <p className="mt-6 text-xs text-text-muted font-sans">
-            Your answers are not stored. This is a moment of self-knowledge.
+            Your answers are private. Sign in to save your result to your profile.
           </p>
         </div>
       </div>
@@ -756,7 +783,7 @@ function IntroScreen({ onStart }: IntroScreenProps) {
           );
         })}
       </div>
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -782,7 +809,7 @@ function QuestionScreen({
   onNext,
 }: QuestionScreenProps) {
   return (
-    <motion.div key={question.id} {...slideRight}>
+    <m.div key={question.id} {...slideRight}>
       <ProgressBar current={questionNumber} total={totalQuestions} />
 
       <div className="relative liquid-glass rounded-3xl overflow-hidden">
@@ -809,7 +836,7 @@ function QuestionScreen({
             {question.choices.map((choice, index) => {
               const isSelected = selectedChoice === index;
               return (
-                <motion.button
+                <m.button
                   key={index}
                   onClick={() => onSelect(index)}
                   whileHover={{ x: 4 }}
@@ -832,7 +859,7 @@ function QuestionScreen({
                       ].join(" ")}
                     >
                       {isSelected && (
-                        <motion.div
+                        <m.div
                           initial={{ scale: 0 }}
                           animate={{ scale: 1 }}
                           className="h-2 w-2 rounded-full bg-white"
@@ -851,7 +878,7 @@ function QuestionScreen({
                       {choice.text}
                     </span>
                   </div>
-                </motion.button>
+                </m.button>
               );
             })}
           </div>
@@ -863,7 +890,7 @@ function QuestionScreen({
                 ? "Choose one to continue"
                 : "Selection made"}
             </span>
-            <motion.button
+            <m.button
               onClick={onNext}
               disabled={selectedChoice === null}
               whileHover={selectedChoice !== null ? { scale: 1.02 } : {}}
@@ -879,11 +906,11 @@ function QuestionScreen({
                 ? "See My Guardian"
                 : "Next Question"}
               <PhArrowRight className="h-4 w-4" />
-            </motion.button>
+            </m.button>
           </div>
         </div>
       </div>
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -894,19 +921,22 @@ function QuestionScreen({
 interface ResultScreenProps {
   guardian: GuardianData;
   onRestart: () => void;
+  onSave: () => Promise<void>;
+  saveStatus: 'idle' | 'saving' | 'saved' | 'error';
+  isAuthenticated: boolean;
 }
 
-function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
+function ResultScreen({ guardian, onRestart, onSave, saveStatus, isAuthenticated }: ResultScreenProps) {
   const Icon = guardian.icon;
 
   return (
-    <motion.div {...scaleIn} className="relative">
+    <m.div {...scaleIn} className="relative">
       <AmbientOrbs color={guardian.color} />
 
       {/* Reveal animation wrapper */}
       <div className="relative">
         {/* Header — "Your Guardian is..." */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1, duration: 0.5 }}
@@ -915,10 +945,10 @@ function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
           <span className="text-xs uppercase tracking-[0.4em] text-text-muted font-sans">
             Your Guardian Resonates
           </span>
-        </motion.div>
+        </m.div>
 
         {/* Main card */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{
@@ -981,17 +1011,17 @@ function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
 
           {/* Description */}
           <div className="px-8 py-8 md:px-12 space-y-6">
-            <motion.p
+            <m.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.6 }}
               className="text-base text-text-secondary font-sans leading-relaxed"
             >
               {guardian.description}
-            </motion.p>
+            </m.p>
 
             {/* Personality */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.65, duration: 0.5 }}
@@ -1003,10 +1033,10 @@ function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
               <p className="text-sm text-text-primary font-sans leading-relaxed">
                 {guardian.personality}
               </p>
-            </motion.div>
+            </m.div>
 
             {/* Strength + Shadow */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.5 }}
@@ -1031,10 +1061,10 @@ function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
                   {guardian.shadowChallenge}
                 </p>
               </div>
-            </motion.div>
+            </m.div>
 
             {/* CTAs */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.95, duration: 0.5 }}
@@ -1061,10 +1091,40 @@ function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
                 Create with {guardian.name}
                 <PhSparkle className="h-4 w-4 transition-transform group-hover:scale-110" />
               </Link>
-            </motion.div>
+            </m.div>
+
+            {/* Save to Profile */}
+            <m.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.0, duration: 0.5 }}
+            >
+              {isAuthenticated && saveStatus !== 'saved' && (
+                <button
+                  onClick={onSave}
+                  disabled={saveStatus === 'saving'}
+                  className="w-full rounded-xl bg-gradient-to-r from-[#0d47a1] to-[#00bcd4] py-4 px-6 font-semibold text-white font-sans transition-all hover:shadow-[0_0_30px_rgba(0,188,212,0.4)] disabled:opacity-50"
+                >
+                  {saveStatus === 'saving' ? 'Saving...' : saveStatus === 'error' ? 'Error - Try Again' : 'Save to Profile'}
+                </button>
+              )}
+              {saveStatus === 'saved' && (
+                <div className="w-full rounded-xl bg-green-900/30 border border-green-500/30 py-4 px-6 text-green-400 text-center font-semibold font-sans">
+                  Saved to your profile
+                </div>
+              )}
+              {!isAuthenticated && (
+                <Link
+                  href="/auth/signup"
+                  className="block w-full rounded-xl bg-gradient-to-r from-[#0d47a1] to-[#00bcd4] py-4 px-6 text-white text-center font-semibold font-sans transition-all hover:shadow-[0_0_30px_rgba(0,188,212,0.4)]"
+                >
+                  Sign Up to Save Results
+                </Link>
+              )}
+            </m.div>
 
             {/* Secondary action */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.1, duration: 0.4 }}
@@ -1077,12 +1137,12 @@ function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
                 <PhArrowCounterClockwise className="h-4 w-4 transition-transform group-hover:-rotate-45" />
                 Retake the Quiz
               </button>
-            </motion.div>
+            </m.div>
           </div>
-        </motion.div>
+        </m.div>
 
         {/* All Guardians strip */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2, duration: 0.5 }}
@@ -1119,9 +1179,9 @@ function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
               );
             })}
           </div>
-        </motion.div>
+        </m.div>
       </div>
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -1139,6 +1199,30 @@ export default function GateQuizPage() {
   const [resultGuardian, setResultGuardian] = useState<GuardianKey | null>(
     null,
   );
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  const { user } = useAuth();
+  const supabaseRef = useRef(createClient());
+
+  const handleSave = useCallback(async () => {
+    if (!user || !resultGuardian) return;
+    setSaveStatus('saving');
+    try {
+      const gateInfo = GUARDIAN_GATE_MAP[resultGuardian];
+      const { error } = await supabaseRef.current
+        .from('profiles')
+        .update({
+          guardian: resultGuardian,
+          active_gate: gateInfo.gateName,
+          gates_open: gateInfo.gateNumber,
+          magic_rank: getRankFromGates(gateInfo.gateNumber),
+        })
+        .eq('id', user.id);
+      if (error) throw error;
+      setSaveStatus('saved');
+    } catch {
+      setSaveStatus('error');
+    }
+  }, [user, resultGuardian]);
 
   const handleStart = useCallback(() => {
     setPhase("quiz");
@@ -1175,11 +1259,13 @@ export default function GateQuizPage() {
     setAnswers({});
     setSelectedChoice(null);
     setResultGuardian(null);
+    setSaveStatus('idle');
   }, []);
 
   const question = QUIZ_QUESTIONS[currentQuestion];
 
   return (
+    <LazyMotion features={domMax}>
     <main className="min-h-[100dvh] bg-cosmic-void bg-cosmic-mesh relative">
       {/* Page-level ambient background */}
       <div
@@ -1192,7 +1278,7 @@ export default function GateQuizPage() {
 
       <div className="relative mx-auto max-w-2xl px-4 py-12 md:px-6 md:py-16">
         {/* Site nav breadcrumb */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4 }}
@@ -1213,18 +1299,18 @@ export default function GateQuizPage() {
           </Link>
           <span className="text-white/[0.12]">/</span>
           <span className="text-text-secondary">Guardian Quiz</span>
-        </motion.div>
+        </m.div>
 
         {/* Phase rendering */}
         <AnimatePresence mode="wait">
           {phase === "intro" && (
-            <motion.div key="intro" {...fadeUp}>
+            <m.div key="intro" {...fadeUp}>
               <IntroScreen onStart={handleStart} />
-            </motion.div>
+            </m.div>
           )}
 
           {phase === "quiz" && question && (
-            <motion.div key={`question-${question.id}`} {...slideRight}>
+            <m.div key={`question-${question.id}`} {...slideRight}>
               <QuestionScreen
                 question={question}
                 questionNumber={currentQuestion + 1}
@@ -1233,19 +1319,23 @@ export default function GateQuizPage() {
                 onSelect={handleSelectChoice}
                 onNext={handleNext}
               />
-            </motion.div>
+            </m.div>
           )}
 
           {phase === "result" && resultGuardian && (
-            <motion.div key="result" {...scaleIn}>
+            <m.div key="result" {...scaleIn}>
               <ResultScreen
                 guardian={GUARDIANS[resultGuardian]}
                 onRestart={handleRestart}
+                onSave={handleSave}
+                saveStatus={saveStatus}
+                isAuthenticated={!!user}
               />
-            </motion.div>
+            </m.div>
           )}
         </AnimatePresence>
       </div>
     </main>
+    </LazyMotion>
   );
 }
