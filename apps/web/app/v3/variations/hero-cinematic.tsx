@@ -120,7 +120,7 @@ export function HeroCinematic() {
           animate="visible"
           variants={fadeUp}
         >
-          10 Luminors. Writing, design, code, music, research.
+          10 AI specialists. Writing, design, code, music, research.
           <br className="hidden md:block" />
           One platform for everything you create.
         </motion.p>

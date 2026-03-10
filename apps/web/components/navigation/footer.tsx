@@ -3,35 +3,35 @@
 import Link from "next/link";
 
 const footerLinks = {
-  creation: {
-    label: "Creation",
+  create: {
+    label: "Create",
     links: [
-      { href: "/studio", label: "Create Your Arcanea" },
-      { href: "/world-builder", label: "Imagine Arcanean Worlds" },
-      { href: "/studio", label: "Listen to Arcanean Music" },
-      { href: "/chat", label: "Convene Luminor Swarms" },
+      { href: "/studio", label: "Studio" },
+      { href: "/world-builder", label: "World Builder" },
+      { href: "/chat", label: "Luminors" },
+      { href: "/gallery", label: "Gallery" },
     ],
   },
-  knowledge: {
-    label: "Knowledge",
+  learn: {
+    label: "Learn",
     links: [
-      { href: "/library", label: "Read Arcanean Books" },
-      { href: "/chat", label: "Write Arcanean Books" },
-      { href: "/lore", label: "Explore Arcanea" },
-      { href: "/academy", label: "Arcanean Academy" },
+      { href: "/library", label: "Library" },
+      { href: "/academy", label: "Academy" },
+      { href: "/lore", label: "Lore & Mythology" },
+      { href: "/glossary", label: "Glossary" },
     ],
   },
   platform: {
     label: "Platform",
     links: [
-      { href: "/luminors", label: "Guardians & Luminors" },
-      { href: "/studio", label: "Creation Studio" },
-      { href: "/chat", label: "Chat Surface" },
-      { href: "/records", label: "Records" },
+      { href: "/luminors", label: "Luminors" },
+      { href: "/pricing", label: "Pricing" },
+      { href: "/developers", label: "Developers" },
+      { href: "/about", label: "About" },
     ],
   },
-  network: {
-    label: "Network",
+  connect: {
+    label: "Connect",
     links: [
       {
         href: "https://github.com/frankxai/arcanea",
@@ -39,11 +39,7 @@ const footerLinks = {
         external: true,
       },
       { href: "https://discord.gg/arcanea", label: "Discord", external: true },
-      {
-        href: "https://open.spotify.com/artist/arcanea",
-        label: "Music",
-        external: true,
-      },
+      { href: "/music", label: "Music" },
       { href: "https://frankx.ai", label: "FrankX.ai", external: true },
     ],
   },
@@ -96,12 +92,12 @@ export function Footer() {
               Arcanea
             </Link>
             <p className="text-[11px] uppercase tracking-[0.2em] text-white/28 mt-1">
-              Kingdom of Light
+              Creative Intelligence
             </p>
           </div>
 
           <p className="text-xs text-white/40 font-body text-center max-w-md">
-            Build your Realm with Guardians, Luminors, and the Arcanean Studio.
+            A mythology. A library. An academy. Build your universe.
           </p>
 
           <div className="flex items-center gap-4 text-xs text-white/36">
