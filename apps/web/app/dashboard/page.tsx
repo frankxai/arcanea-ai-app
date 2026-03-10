@@ -275,6 +275,38 @@ export default function DashboardPage() {
             </div>
           </section>
 
+          {/* ── Your Companions ─────────────────────────────────────── */}
+          <section className="space-y-3">
+            <div className="flex items-center justify-between">
+              <h2 className="font-display text-xl text-white/80">Your Companions</h2>
+              <Link
+                href="/companions/forge"
+                className="text-sm text-[#00bcd4] hover:text-[#00bcd4]/80 transition-colors font-sans flex items-center gap-1"
+              >
+                Forge new <ArrowRight size={14} />
+              </Link>
+            </div>
+            <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md p-5">
+              {/* Empty state for now — will be populated when companions are created */}
+              <div className="text-center py-8">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#00bcd4]/10 to-[#a78bfa]/10 border border-white/[0.06] flex items-center justify-center mx-auto mb-4">
+                  <Sparkle size={24} weight="duotone" className="text-[#00bcd4]" />
+                </div>
+                <p className="font-sans text-sm text-white/50 mb-1">No companions yet</p>
+                <p className="font-sans text-xs text-white/30 mb-4">
+                  Visit the Forge to create your first companion
+                </p>
+                <Link
+                  href="/companions/forge"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-[#00bcd4]/20 to-[#a78bfa]/20 border border-[#00bcd4]/30 text-[#00bcd4] text-sm font-sans font-medium hover:border-[#00bcd4]/50 transition-all"
+                >
+                  <Sparkle size={16} weight="fill" />
+                  Enter the Forge
+                </Link>
+              </div>
+            </div>
+          </section>
+
           {/* ── Recent Activity ─────────────────────────────────────── */}
           <section className="space-y-3">
             <h2 className="font-display text-xl text-white/80">Recent Activity</h2>

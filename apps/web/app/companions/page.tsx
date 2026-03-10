@@ -47,10 +47,10 @@ export default function CompanionsPage() {
 
   return (
     <LazyMotion features={domAnimation}>
-      <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+      <div className="min-h-screen bg-[#09090b]">
         {/* Hero Section */}
         <div className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0d47a1]/20 via-transparent to-amber-500/20" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(0,188,212,0.06)_0%,transparent_60%)]" />
           <div className="relative max-w-7xl mx-auto px-4 py-16 sm:py-24">
             <m.div
               initial={{ opacity: 0, y: 20 }}
@@ -58,23 +58,23 @@ export default function CompanionsPage() {
               className="text-center"
             >
               <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">
-                AI Companions
+                Who will you create with?
               </h1>
-              <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-8">
-                16 creative intelligences, each with a distinct personality and expertise.
+              <p className="text-xl text-white/55 max-w-2xl mx-auto mb-8">
+                16 companions, each with a distinct personality and expertise.
                 Development, design, writing, and research — pick the one that fits your work.
               </p>
 
               {/* Search */}
               <div className="max-w-md mx-auto mb-8">
                 <div className="relative">
-                  <PhMagnifyingGlass className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                  <PhMagnifyingGlass className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
                   <input
                     type="text"
                     placeholder="Search companions..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-[#00bcd4] focus:ring-2 focus:ring-[#00bcd4]/30"
+                    className="w-full pl-12 pr-4 py-3 bg-white/[0.04] border border-white/[0.08] rounded-xl text-white placeholder-white/30 focus:outline-none focus:border-[#00bcd4] focus:ring-2 focus:ring-[#00bcd4]/30"
                   />
                 </div>
               </div>
@@ -85,8 +85,8 @@ export default function CompanionsPage() {
                   onClick={() => setSelectedTeam('all')}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                     selectedTeam === 'all'
-                      ? 'bg-white text-slate-900'
-                      : 'bg-slate-800/50 text-slate-300 hover:bg-slate-700/50'
+                      ? 'bg-white text-[#09090b]'
+                      : 'bg-white/[0.04] text-white/55 hover:bg-white/[0.06]'
                   }`}
                 >
                   All Companions
@@ -98,7 +98,7 @@ export default function CompanionsPage() {
                     className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${
                       selectedTeam === team
                         ? 'text-white'
-                        : 'bg-slate-800/50 text-slate-300 hover:bg-slate-700/50'
+                        : 'bg-white/[0.04] text-white/55 hover:bg-white/[0.06]'
                     }`}
                     style={
                       selectedTeam === team
@@ -135,7 +135,7 @@ export default function CompanionsPage() {
               animate={{ opacity: 1 }}
               className="text-center py-16"
             >
-              <p className="text-slate-400 text-lg">
+              <p className="text-white/40 text-lg">
                 No companions match your search. Try a different query.
               </p>
             </m.div>
@@ -149,7 +149,7 @@ export default function CompanionsPage() {
             <h2 className="text-2xl font-bold text-white mb-2">
               Just want a quick chat?
             </h2>
-            <p className="text-slate-300 mb-6 max-w-md mx-auto">
+            <p className="text-white/55 mb-6 max-w-md mx-auto">
               Try our premium AI chat - no character selection needed. Get instant,
               intelligent responses powered by the best AI models.
             </p>
@@ -185,7 +185,7 @@ function CompanionCard({
         href={`/chat/${luminor.id}`}
         className="block group"
       >
-        <div className="bg-slate-800/30 border border-slate-700/50 rounded-2xl p-6 transition-all duration-300 hover:bg-slate-800/50 hover:border-slate-600/50 hover:shadow-xl hover:shadow-slate-900/50 hover:-translate-y-1">
+        <div className="bg-white/[0.03] border border-white/[0.08] rounded-2xl p-6 transition-all duration-300 hover:bg-white/[0.04] hover:border-white/[0.12] hover:shadow-xl hover:shadow-black/50 hover:-translate-y-1">
           {/* Avatar & Badge */}
           <div className="flex items-start justify-between mb-4">
             <div
@@ -220,12 +220,12 @@ function CompanionCard({
           </p>
 
           {/* Tagline */}
-          <p className="text-slate-400 text-sm mb-4 line-clamp-2">
+          <p className="text-white/40 text-sm mb-4 line-clamp-2">
             {luminor.tagline}
           </p>
 
           {/* Specialty */}
-          <div className="flex items-center gap-2 text-xs text-slate-500">
+          <div className="flex items-center gap-2 text-xs text-white/30">
             <PhStar className="w-3 h-3" />
             <span>{luminor.specialty}</span>
           </div>
@@ -235,7 +235,7 @@ function CompanionCard({
             {luminor.personality.slice(0, 3).map((trait) => (
               <span
                 key={trait}
-                className="px-2 py-0.5 bg-slate-700/50 rounded-full text-xs text-slate-400"
+                className="px-2 py-0.5 bg-white/[0.06] rounded-full text-xs text-white/40"
               >
                 {trait}
               </span>
@@ -243,8 +243,8 @@ function CompanionCard({
           </div>
 
           {/* CTA */}
-          <div className="mt-4 pt-4 border-t border-slate-700/50 flex items-center justify-between">
-            <span className="text-sm text-slate-400">Start chatting</span>
+          <div className="mt-4 pt-4 border-t border-white/[0.08] flex items-center justify-between">
+            <span className="text-sm text-white/40">Start chatting</span>
             <div
               className="w-8 h-8 rounded-full flex items-center justify-center transition-colors group-hover:bg-opacity-100"
               style={{ backgroundColor: `${luminor.color}30` }}
