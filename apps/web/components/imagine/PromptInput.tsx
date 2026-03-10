@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useCallback } from 'react';
-import { m, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const ASPECT_RATIOS = [
   { id: '1:1', label: '1:1' },
@@ -98,7 +98,7 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
   // Collapsed compact bar
   if (hasResults && !isExpanded) {
     return (
-      <m.div
+      <motion.div
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-3rem)] max-w-2xl"
@@ -122,12 +122,12 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
             <div className="w-5 h-5 border-2 border-violet-400/30 border-t-violet-400 rounded-full animate-spin ml-auto flex-shrink-0" />
           )}
         </button>
-      </m.div>
+      </motion.div>
     );
   }
 
   return (
-    <m.div
+    <motion.div
       initial={{ y: 20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       className={hasResults
@@ -149,7 +149,7 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
             onFocus={() => setIsExpanded(true)}
             placeholder="Describe what you want to see..."
             rows={hasResults ? 2 : 3}
-            className="w-full bg-transparent px-6 pt-5 pb-3 text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:ring-inset resize-none font-body text-base leading-relaxed"
+            className="w-full bg-transparent px-6 pt-5 pb-3 text-text-primary placeholder:text-text-muted focus:outline-none resize-none font-body text-base leading-relaxed"
           />
 
           {/* Controls bar */}
@@ -209,7 +209,7 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
             <button
               onClick={handleSubmit}
               disabled={!prompt.trim() || isGenerating}
-              className="px-5 py-2 rounded-xl font-medium text-sm transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white hover:shadow-[0_0_24px_rgba(13,71,161,0.4)] active:scale-95"
+              className="px-5 py-2 rounded-xl font-medium text-sm transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white hover:shadow-[0_0_24px_rgba(139,92,246,0.4)] active:scale-95"
             >
               {isGenerating ? (
                 <span className="flex items-center gap-2">
@@ -225,7 +225,7 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
           {/* Expanded options panel */}
           <AnimatePresence>
             {showOptions && (
-              <m.div
+              <motion.div
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: 'auto', opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
@@ -253,7 +253,7 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
                     </div>
                   </div>
                 </div>
-              </m.div>
+              </motion.div>
             )}
           </AnimatePresence>
         </div>
@@ -261,7 +261,7 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
 
       {/* Quick suggestions — only show when no results yet */}
       {!hasResults && !prompt && (
-        <m.div
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
@@ -276,8 +276,8 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
               {suggestion.length > 50 ? suggestion.slice(0, 50) + '...' : suggestion}
             </button>
           ))}
-        </m.div>
+        </motion.div>
       )}
-    </m.div>
+    </motion.div>
   );
 }

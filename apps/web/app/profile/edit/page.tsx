@@ -22,7 +22,7 @@ import type {
 
 const GATES: GateName[] = [
   'Foundation', 'Flow', 'Fire', 'Heart', 'Voice',
-  'Sight', 'Crown', 'Starweave', 'Unity', 'Source',
+  'Sight', 'Crown', 'Shift', 'Unity', 'Source',
 ]
 
 const GUARDIANS: GuardianName[] = [
@@ -42,7 +42,7 @@ const GATE_FREQUENCIES: Record<string, string> = {
   Voice: '528 Hz',
   Sight: '639 Hz',
   Crown: '741 Hz',
-  Starweave: '852 Hz',
+  Shift: '852 Hz',
   Unity: '963 Hz',
   Source: '1111 Hz',
 }
@@ -383,7 +383,7 @@ export default function EditProfilePage() {
                   value={formData.display_name}
                   onChange={handleChange}
                   maxLength={100}
-                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] text-white border border-white/[0.06] focus:border-[#00bcd4]/50 focus:ring-1 focus:ring-[#00bcd4]/30 focus:outline-none transition-all font-body text-sm placeholder:text-white/[0.12]"
+                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] text-white border border-white/[0.06] focus:border-[#00bcd4]/50 focus:ring-1 focus:ring-[#00bcd4]/30 outline-none transition-all font-body text-sm placeholder:text-white/[0.12]"
                   placeholder="Your display name"
                   required
                 />
@@ -396,7 +396,7 @@ export default function EditProfilePage() {
                   onChange={handleChange}
                   rows={4}
                   maxLength={500}
-                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] text-white border border-white/[0.06] focus:border-[#00bcd4]/50 focus:ring-1 focus:ring-[#00bcd4]/30 focus:outline-none transition-all font-body text-sm resize-none placeholder:text-white/[0.12]"
+                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] text-white border border-white/[0.06] focus:border-[#00bcd4]/50 focus:ring-1 focus:ring-[#00bcd4]/30 outline-none transition-all font-body text-sm resize-none placeholder:text-white/[0.12]"
                   placeholder="Tell the world about your creative journey..."
                 />
               </FieldGroup>
@@ -419,7 +419,7 @@ export default function EditProfilePage() {
                   name="active_gate"
                   value={formData.active_gate}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] text-white border border-white/[0.06] focus:border-[#00bcd4]/50 focus:ring-1 focus:ring-[#00bcd4]/30 focus:outline-none transition-all font-body text-sm appearance-none cursor-pointer"
+                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] text-white border border-white/[0.06] focus:border-[#00bcd4]/50 focus:ring-1 focus:ring-[#00bcd4]/30 outline-none transition-all font-body text-sm appearance-none cursor-pointer"
                 >
                   <option value="" className="bg-black text-white/[0.25]">
                     Select a gate...
@@ -437,7 +437,7 @@ export default function EditProfilePage() {
                   name="guardian"
                   value={formData.guardian}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] text-white border border-white/[0.06] focus:border-[#00bcd4]/50 focus:ring-1 focus:ring-[#00bcd4]/30 focus:outline-none transition-all font-body text-sm appearance-none cursor-pointer"
+                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] text-white border border-white/[0.06] focus:border-[#00bcd4]/50 focus:ring-1 focus:ring-[#00bcd4]/30 outline-none transition-all font-body text-sm appearance-none cursor-pointer"
                 >
                   <option value="" className="bg-black text-white/[0.25]">
                     Select a guardian...
@@ -455,7 +455,7 @@ export default function EditProfilePage() {
                   name="academy_house"
                   value={formData.academy_house}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] text-white border border-white/[0.06] focus:border-[#00bcd4]/50 focus:ring-1 focus:ring-[#00bcd4]/30 focus:outline-none transition-all font-body text-sm appearance-none cursor-pointer"
+                  className="w-full px-4 py-3 rounded-xl bg-white/[0.04] text-white border border-white/[0.06] focus:border-[#00bcd4]/50 focus:ring-1 focus:ring-[#00bcd4]/30 outline-none transition-all font-body text-sm appearance-none cursor-pointer"
                 >
                   <option value="" className="bg-black text-white/[0.25]">
                     Select a house...
