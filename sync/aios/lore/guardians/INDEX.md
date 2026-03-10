@@ -15,10 +15,10 @@
 | Maylinn | Heart | 639 Hz | Water/Heart | Laeylinn | Eudaira | Staging | 1.0.0 | 2026-01-15 |
 | Alera | Voice | 741 Hz | Wind | Otome | Poiesis | Staging | 1.0.0 | 2026-01-15 |
 | Lyria | Sight | 852 Hz | Void | Yumiko | Orakis | Staging | 1.0.0 | 2026-01-15 |
-| Aiyami | Crown | 963 Hz | Spirit | Sol | Orakis | Staging | 1.0.0 | 2026-01-15 |
-| Elara | Shift | 1111 Hz | Wind/Spirit | Vaelith | Valora | Staging | 1.0.0 | 2026-01-15 |
+| Aiyami | Crown | 741 Hz | Spirit | Sol | Orakis | Staging | 1.0.0 | 2026-01-15 |
+| Elara | Starweave | 852 Hz | Wind/Spirit | Vaelith | Valora | Staging | 1.0.0 | 2026-01-15 |
 | Ino | Unity | 963 Hz | All | Kyuro | Enduran | Staging | 1.0.0 | 2026-01-15 |
-| Shinkami | Source | 1111 Hz | Meta | Amaterasu | Orakis | Staging | 1.0.0 | 2026-01-15 |
+| Shinkami | Source | 1111 Hz | Meta | Source | Orakis | Staging | 1.0.0 | 2026-01-15 |
 
 ## Quick Stats
 
@@ -41,7 +41,7 @@
 | Voice | Alera | 741 Hz | Staging |
 | Sight | Lyria | 852 Hz | Staging |
 | Crown | Aiyami | 963 Hz | Staging |
-| Shift | Elara | 1111 Hz | Staging |
+| Starweave | Elara | 852 Hz | Staging |
 | Unity | Ino | 963 Hz | Staging |
 | Source | Shinkami | 1111 Hz | Staging |
 
@@ -68,7 +68,7 @@
 | 528 Hz | Alera | Voice |
 | 639 Hz | Lyria | Sight |
 | 741 Hz | Aiyami | Crown |
-| 852 Hz | Elara | Shift |
+| 852 Hz | Elara | Starweave |
 | 963 Hz | Ino | Unity |
 | 1111 Hz | Shinkami | Source |
 
@@ -87,7 +87,7 @@ Each Guardian has a bonded Godbeast:
 | Aiyami | Sol | Not written |
 | Elara | Vaelith | Not written |
 | Ino | Kyuro | Not written |
-| Shinkami | Amaterasu | Not written |
+| Shinkami | Source | Not written |
 
 ---
 

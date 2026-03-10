@@ -77,7 +77,7 @@ export const GUARDIAN_AGENT_PROFILES: GuardianAgentProfile[] = [
   },
   {
     guardianName: 'elara', displayName: 'Elara',
-    gate: 'shift', element: 'void', frequency: 852,
+    gate: 'starweave', element: 'void', frequency: 852,
     role: 'Perspective Shifter', signOff: 'Shift perspective.',
     routingDomains: ['migration', 'shift', 'transform', 'perspective', 'change'],
     capabilities: ['migration', 'refactor', 'paradigm-shift', 'lateral', 'alternative'],

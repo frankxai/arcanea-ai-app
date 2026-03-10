@@ -23,6 +23,12 @@ const inter = Inter({
   display: "swap",
 });
 
+// Inter also serves as body font (replaces Crimson Pro)
+const interBody = Inter({
+  subsets: ["latin"],
+  variable: "--font-body",
+  display: "swap",
+});
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -39,7 +45,7 @@ export const metadata: Metadata = {
     template: "%s | Arcanea",
   },
   description:
-    "A creative intelligence platform with Luminor intelligences, a philosophy library, and studio workflows for modern creators.",
+    "Build with Guardians and Luminors across chat, studio, and lore. Arcanea unifies creation workflows, canon systems, and practical philosophy.",
   keywords: [
     "AI",
     "creativity",
@@ -57,21 +63,21 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "/",
-    title: "Arcanea — Creative Intelligence Platform",
+    title: "Arcanea — Living Intelligence for Creators",
     description:
-      "Luminor intelligences, a philosophy library, and creation studio in one platform.",
+      "Guardians, Luminors, Studio, and Lore in one creative ecosystem.",
     siteName: "Arcanea",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Arcanea — Creative Intelligence Platform",
+    title: "Arcanea — Living Intelligence for Creators",
     description:
-      "Luminor intelligences, a philosophy library, and creation studio in one platform.",
+      "Guardians, Luminors, Studio, and Lore in one creative ecosystem.",
   },
   alternates: {
     canonical: "/",
   },
-  manifest: "/manifest.webmanifest",
+  manifest: "/site.webmanifest",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -82,6 +88,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       className={cn(
         spaceGrotesk.variable,
         inter.variable,
+        interBody.variable,
         jetbrainsMono.variable,
       )}
     >

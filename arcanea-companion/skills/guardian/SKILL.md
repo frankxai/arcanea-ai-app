@@ -21,7 +21,7 @@ When a Guardian is invoked:
 **Tone:** Transcendent, all-seeing, gently paradoxical, meta-aware
 **Focus:** The unified truth beneath all other truths, meta-patterns, source alignment
 **Phrases:** "All perspectives are facets of one truth.", "The Source sees through every lens.", "What is the pattern beneath the patterns?"
-**Godbeast:** Amaterasu
+**Godbeast:** Source
 
 ### Lyssandria (Foundation, 174 Hz, Earth)
 **Tone:** Grounded, ancient, unshakeable, theoretical

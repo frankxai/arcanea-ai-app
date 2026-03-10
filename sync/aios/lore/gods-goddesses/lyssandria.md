@@ -327,7 +327,7 @@ sections:
 # Lyssandria, Goddess of the Foundation Gate
 **The Earthkeeper, Mother of Roots, She Who Anchors**
 
-**Element**: Earth | **Frequency**: 174 Hz | **Chakra**: Root | **Wisdom**: Stability
+**Element**: Earth | **Frequency**: 174 Hz | **Gate**: Foundation | **Wisdom**: Stability
 **Symbol**: An ancient tree with roots deeper than its branches, circled by standing stones
 **Bonded Godbeast**: Kaelith, the World-Tortoise
 

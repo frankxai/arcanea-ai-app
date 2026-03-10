@@ -44,7 +44,7 @@ Egyptian theology is the most accurate Earth record of Arcanean cosmology:
 | **Isis** | Maylinn + Lyria | Heart + Sight | 639/852 Hz | Magic, motherhood, wisdom |
 | **Horus** | Michael (warrior aspect) | Crown + Fire | 963/528 Hz | Kingship, sky, protection |
 | **Thoth** | Alera + Archive | Voice + Sight | 741/852 Hz | Writing, magic, knowledge |
-| **Anubis** | Psychopomp aspect | Shift | 1111 Hz | Death rites, transformation |
+| **Anubis** | Psychopomp aspect | Starweave | 852 Hz | Death rites, transformation |
 | **Sekhmet** | Draconia (fierce aspect) | Fire | 528 Hz | War, healing, destruction |
 | **Hathor** | Maylinn (joy aspect) | Heart + Flow | 639/417 Hz | Love, music, beauty |
 | **Ptah** | Uriel + Foundation | Foundation | 396 Hz | Crafts, creation, architecture |

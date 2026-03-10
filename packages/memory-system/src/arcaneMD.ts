@@ -26,7 +26,7 @@ const VALID_GUARDIANS: readonly GuardianName[] = [
 
 const VALID_GATES: readonly GateName[] = [
   'Foundation', 'Flow', 'Fire', 'Heart', 'Voice',
-  'Sight', 'Crown', 'Shift', 'Unity', 'Source',
+  'Sight', 'Crown', 'Starweave', 'Unity', 'Source',
 ];
 
 const VALID_FREQUENCIES = [174, 285, 396, 417, 528, 639, 741, 852, 963, 1111] as const;
@@ -56,7 +56,7 @@ const GUARDIAN_GATES: Readonly<Record<GuardianName, GateName>> = {
   Alera:      'Voice',
   Lyria:      'Sight',
   Aiyami:     'Crown',
-  Elara:      'Shift',
+  Elara:      'Starweave',
   Ino:        'Unity',
   Shinkami:   'Source',
 };

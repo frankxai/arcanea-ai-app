@@ -35,7 +35,7 @@ export interface ApiResponse<T = unknown> {
 
 // Arcanea domain enums
 export type MagicRank = 'Apprentice' | 'Mage' | 'Master' | 'Archmage' | 'Luminor'
-export type GateName = 'Foundation' | 'Flow' | 'Fire' | 'Heart' | 'Voice' | 'Sight' | 'Crown' | 'Shift' | 'Unity' | 'Source'
+export type GateName = 'Foundation' | 'Flow' | 'Fire' | 'Heart' | 'Voice' | 'Sight' | 'Crown' | 'Starweave' | 'Unity' | 'Source'
 export type GuardianName = 'Lyssandria' | 'Leyla' | 'Draconia' | 'Maylinn' | 'Alera' | 'Lyria' | 'Aiyami' | 'Elara' | 'Ino' | 'Shinkami'
 export type ElementName = 'Fire' | 'Water' | 'Earth' | 'Wind' | 'Void' | 'Spirit'
 export type AcademyHouse = 'Lumina' | 'Nero' | 'Pyros' | 'Aqualis' | 'Terra' | 'Ventus' | 'Synthesis'

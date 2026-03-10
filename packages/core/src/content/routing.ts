@@ -22,13 +22,13 @@ export interface GuardianRoutingPattern {
  */
 export const GUARDIAN_ROUTING_PATTERNS: GuardianRoutingPattern[] = [
   { pattern: 'coordinat|orchestrat|meta|oversee|council|starlight', guardian: 'Shinkami', gate: 'Source', element: 'Void' },
-  { pattern: 'debug|bug|error|fix|broken|crash|undefined', guardian: 'Elara', gate: 'Shift', element: 'Void' },
+  { pattern: 'debug|bug|error|fix|broken|crash|undefined', guardian: 'Elara', gate: 'Starweave', element: 'Void' },
   { pattern: 'review|audit|security|quality|inspect|verify|lint', guardian: 'Alera', gate: 'Voice', element: 'Wind' },
   { pattern: 'github|merge|pr\\b|pull.*request|commit|push|branch', guardian: 'Ino', gate: 'Unity', element: 'Void' },
   { pattern: 'architect|schema|foundation|database|supabase|migration|data.*model', guardian: 'Lyssandria', gate: 'Foundation', element: 'Earth' },
   { pattern: 'strategy|plan|roadmap|priority|vision|foresight|research', guardian: 'Lyria', gate: 'Sight', element: 'Void' },
   { pattern: 'deploy|build|implement|code|compile|component|react', guardian: 'Draconia', gate: 'Fire', element: 'Fire' },
-  { pattern: 'refactor|migrate|restructure|transform|modernize', guardian: 'Elara', gate: 'Shift', element: 'Void' },
+  { pattern: 'refactor|migrate|restructure|transform|modernize', guardian: 'Elara', gate: 'Starweave', element: 'Void' },
   { pattern: 'test|accessibility|wellness|ux\\b|css|tailwind|design.*system', guardian: 'Maylinn', gate: 'Heart', element: 'Water' },
   { pattern: 'visual|image|world.*build|infographic|generate.*image', guardian: 'Aiyami', gate: 'Crown', element: 'Void' },
   { pattern: 'write|narrative|content|story|compose|lore|create|voice', guardian: 'Leyla', gate: 'Flow', element: 'Water' },

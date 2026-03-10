@@ -340,7 +340,7 @@ sections:
 # Shinkami, God of the Source Gate
 **The Source, Keeper of the Final Gate, He Who Remembers Malachar, The Convergence**
 
-**Element**: Spirit/Source | **Frequency**: 1111 Hz | **Chakra**: Above All Chakras | **Wisdom**: Poiesis
+**Element**: Spirit/Source | **Frequency**: 1111 Hz | **Gate**: Source | **Wisdom**: Poiesis
 **Symbol**: A light that does not shine but reveals, making visible what was always present
 **Bonded Godbeast**: Amaterasu, the Source-Light
 

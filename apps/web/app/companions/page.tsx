@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { m, LazyMotion, domAnimation, AnimatePresence } from 'framer-motion';
+import { m, LazyMotion, domMax, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import {
   PhSparkle,
@@ -46,7 +46,7 @@ export default function CompanionsPage() {
   };
 
   return (
-    <LazyMotion features={domAnimation}>
+    <LazyMotion features={domMax}>
       <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
         {/* Hero Section */}
         <div className="relative overflow-hidden">
@@ -74,7 +74,7 @@ export default function CompanionsPage() {
                     placeholder="Search companions..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-[#00bcd4] focus:ring-2 focus:ring-[#00bcd4]/30"
+                    className="w-full pl-12 pr-4 py-3 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-[#00bcd4]"
                   />
                 </div>
               </div>

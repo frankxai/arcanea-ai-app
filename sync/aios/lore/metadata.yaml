@@ -100,16 +100,16 @@ gods:
     status: "production"
     path: "gods-goddesses/aiyami.md"
 
-  # Gate 8 - Shift (852 Hz)
+  # Gate 8 - Starweave (852 Hz)
   - id: "god-arcanean-elara"
     name: "Elara"
-    title: "Goddess of the Shift Gate"
-    domain: "shift"
+    title: "Goddess of the Starweave Gate"
+    domain: "starweave"
     frequency: 852
     element: "void"
     wisdom: "valora"
     godbeast: "godbeast-thessara"
-    gate: "shift"
+    gate: "starweave"
     status: "production"
     path: "gods-goddesses/elara.md"
 
@@ -333,7 +333,7 @@ frequency_system:
     - gate: "Crown"
       frequency: 741
       note: "Awakening intuition"
-    - gate: "Shift"
+    - gate: "Starweave"
       frequency: 852
       note: "Returning to spiritual order"
     - gate: "Unity"

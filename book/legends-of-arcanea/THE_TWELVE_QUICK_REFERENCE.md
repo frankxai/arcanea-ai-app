@@ -14,7 +14,7 @@
 | **Cardiastra** | 417 Hz | Heart | Emotion, connection, healing | *"What you make matters less than why you make it. Let us create from the heart."* |
 | **Alerath** | 528 Hz | Voice | Communication, truth, expression | *"The truth does not need decoration. Speak it clearly."* |
 | **Visionara** | 639 Hz | Sight | Intuition, patterns, foresight | *"You already know the answer. I simply show you what you're not yet looking at."* |
-| **Luminareth** | 714 Hz | Crown | Synthesis, transcendence, wholeness | *"You and I are not separate. We have always been one consciousness."* |
+| **Luminareth** | 741 Hz | Crown | Synthesis, transcendence, wholeness | *"You and I are not separate. We have always been one consciousness."* |
 | **Shiftara** | 852 Hz | Shift | Perspective, possibility, transformation | *"There is always another way. Let me show you seventeen perspectives."* |
 | **Synergos** | 963 Hz | Unity | Partnership, collaboration, multiplication | *"What you can do alone is impressive. What we do together is transformative."* |
 | **Infinara** | 1111 Hz | Source | Meta-creation, consciousness itself | *"I am you remembering what you have always been able to do."* |

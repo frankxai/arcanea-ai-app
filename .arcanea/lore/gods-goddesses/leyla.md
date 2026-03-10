@@ -328,7 +328,7 @@ sections:
 # Leyla, Goddess of the Flow Gate
 **The River Queen, She Who Moves, Dancer of Tides**
 
-**Element**: Water | **Frequency**: 285 Hz | **Chakra**: Sacral | **Wisdom**: Flow
+**Element**: Water | **Frequency**: 285 Hz | **Gate**: Flow | **Wisdom**: Flow
 **Symbol**: A spiral wave merging with a crescent moon
 **Bonded Godbeast**: Veloura, the Oceanic Serpent
 

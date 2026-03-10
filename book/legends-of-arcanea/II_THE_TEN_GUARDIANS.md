@@ -308,7 +308,7 @@ Those who seek the Sixth Gate learn from Lyria and Yumiko:
 
 ## Aiyami & Sol
 
-**Frequency:** 714 Hz
+**Frequency:** 741 Hz
 **Domain:** Enlightenment, divinity, transcendence
 **Element:** Light/Divine
 
@@ -796,7 +796,7 @@ Those who seek the Sixth Gate learn from Lyria and Yumiko:
 
 ## Aiyami & Sol
 
-**Frequency:** 714 Hz
+**Frequency:** 741 Hz
 **Domain:** Enlightenment, divinity, transcendence
 **Element:** Light/Divine
 

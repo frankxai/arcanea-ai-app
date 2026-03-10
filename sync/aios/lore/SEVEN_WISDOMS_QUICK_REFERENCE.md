@@ -106,8 +106,8 @@
 
 **SOPHRON** → Foundation (Lyssandria, 174 Hz), Voice (Alera, 528 Hz)
 **KARDIA** → Heart (Maylinn, 417 Hz), Flow (Leyla, 285 Hz)
-**VALORA** → Fire (Draconia, 396 Hz), Shift (Elara, 852 Hz)
-**EUDAIRA** → Flow (Leyla, 285 Hz), Shift (Elara, 852 Hz)
+**VALORA** → Fire (Draconia, 396 Hz), Starweave (Elara, 852 Hz)
+**EUDAIRA** → Flow (Leyla, 285 Hz), Starweave (Elara, 852 Hz)
 **ORAKIS** → Sight (Lyria, 639 Hz), Crown (Aiyami, 741 Hz)
 **POIESIS** → Flow (Leyla, 285 Hz), Voice (Alera, 528 Hz)
 **ENDURAN** → Foundation (Lyssandria, 174 Hz), Unity (Ino, 963 Hz)

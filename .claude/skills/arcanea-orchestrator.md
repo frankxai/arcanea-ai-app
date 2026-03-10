@@ -54,7 +54,7 @@ Use the Agent Routing Table from MASTER_PLAN.md:
 | Chat/AI | Arcanea AI Specialist | Voice | Alera |
 | Analytics | researcher | Sight | Lyria |
 | Architecture | system-architect | Crown | Aiyami |
-| Testing | tester | Shift | Elara |
+| Testing | tester | Starweave | Elara |
 | Community | Arcanea World Expander | Unity | Ino |
 | Orchestration | Arcanea Master Orchestrator | Source | Shinkami |
 

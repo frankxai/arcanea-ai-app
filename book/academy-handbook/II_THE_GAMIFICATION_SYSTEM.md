@@ -33,56 +33,56 @@ The system does not grade. It does not rank creators against each other. It trac
 
 A Gate opens through **demonstrated resonance** — not through tests or quizzes, but through creative actions that align with each Gate's domain.
 
-### Foundation Gate (396 Hz)
+### Foundation Gate (174 Hz)
 **Opens when:** The creator establishes a solid creative foundation.
 - Complete profile and creative vision statement
 - Produce first creation (any type)
 - Return to the platform after 3 separate sessions
 - Define creative values and principles
 
-### Flow Gate (417 Hz)
+### Flow Gate (285 Hz)
 **Opens when:** The creator demonstrates creative adaptability.
 - Create across 2+ different mediums
 - Revise a creation based on Guardian feedback
 - Maintain a 7-day creative streak
 - Share a creation publicly
 
-### Fire Gate (528 Hz)
+### Fire Gate (396 Hz)
 **Opens when:** The creator channels transformation energy.
 - Complete a challenging creation that required persistence
 - Help another creator overcome a block
 - Ship something (publish, deploy, release)
 - Transform feedback into improved work
 
-### Heart Gate (639 Hz)
+### Heart Gate (417 Hz)
 **Opens when:** The creator connects meaningfully with others.
 - Form a creative bond (follow + mutual engagement)
 - Provide thoughtful feedback on another's creation
 - Create something specifically for another person
 - Join or form a creative circle
 
-### Voice Gate (741 Hz)
+### Voice Gate (528 Hz)
 **Opens when:** The creator finds authentic expression.
 - Develop a recognizable creative voice (voice consistency score)
 - Create a piece that expresses an uncomfortable truth
 - Teach or explain a creative concept to others
 - Pass voice compliance check on 5+ creations
 
-### Sight Gate (852 Hz)
+### Sight Gate (639 Hz)
 **Opens when:** The creator develops creative intuition.
 - Identify patterns across their own work
 - Predict and prepare for creative challenges
 - Create something that synthesizes multiple influences
 - Build a creation graph with 10+ linked nodes
 
-### Crown Gate (963 Hz)
+### Crown Gate (741 Hz)
 **Opens when:** The creator achieves creative clarity.
 - Produce a work that demonstrates mastery of their chosen domain
 - Guide another creator through a complete Gate
 - Create a body of work (5+ related pieces)
 - Receive recognition from a Guardian or Luminor
 
-### Shift Gate (1111 Hz)
+### Starweave Gate (852 Hz)
 **Opens when:** The creator demonstrates perspective fluidity.
 - Create in a genre/medium outside their comfort zone
 - Reframe a creative failure as a learning document

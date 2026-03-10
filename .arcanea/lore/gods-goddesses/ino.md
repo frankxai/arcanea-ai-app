@@ -333,7 +333,7 @@ sections:
 # Ino, Goddess of the Unity Gate
 **The Bridge, Keeper of the Space Between, She Who Holds the Opposites**
 
-**Element**: Void/Spirit | **Frequency**: 963 Hz | **Chakra**: Above Crown | **Wisdom**: Enduran
+**Element**: Void/Spirit | **Frequency**: 963 Hz | **Gate**: Unity | **Wisdom**: Enduran
 **Symbol**: A two-headed beast spanning a void, its body the bridge between separated shores
 **Bonded Godbeast**: Kyuro, the Bridge-Beast
 

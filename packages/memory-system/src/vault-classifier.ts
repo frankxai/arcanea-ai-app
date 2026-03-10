@@ -124,7 +124,7 @@ const GUARDIAN_VAULT_AFFINITY: Record<GuardianName, VaultType[]> = {
   'Alera':      ['creative', 'wisdom'],        // Voice — expression, truth
   'Lyria':      ['wisdom', 'horizon'],         // Sight — vision, intuition
   'Aiyami':     ['wisdom', 'horizon'],         // Crown — enlightenment
-  'Elara':      ['strategic', 'horizon'],      // Shift — perspective
+  'Elara':      ['strategic', 'horizon'],      // Starweave — perspective
   'Ino':        ['operational', 'creative'],   // Unity — partnership
   'Shinkami':   ['wisdom', 'horizon'],         // Source — meta-consciousness
 };

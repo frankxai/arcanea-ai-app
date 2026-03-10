@@ -22,12 +22,12 @@ $GUARDIANS = @{
     Aiyami     = @{gate='Crown';      hz=741;  element='Arcane'; godbeast='Sol';       color='#FFD700'}
     Elara      = @{gate='Shift';      hz=852;  element='Arcane'; godbeast='Vaelith';   color='#50C878'}
     Ino        = @{gate='Unity';      hz=963;  element='Arcane'; godbeast='Kyuro';     color='#40E0D0'}
-    Shinkami   = @{gate='Source';     hz=1111; element='Arcane'; godbeast='Amaterasu'; color='#C0C0C0'}
+    Shinkami   = @{gate='Source';     hz=1111; element='Arcane'; godbeast='Source'; color='#C0C0C0'}
 }
 
 $GODBEAST_MAP = @{
     Kaelith='Lyssandria'; Veloura='Leyla'; Draconis='Draconia'; Laeylinn='Maylinn'
-    Otome='Alera'; Yumiko='Lyria'; Sol='Aiyami'; Vaelith='Elara'; Kyuro='Ino'; Amaterasu='Shinkami'
+    Otome='Alera'; Yumiko='Lyria'; Sol='Aiyami'; Vaelith='Elara'; Kyuro='Ino'; Source='Shinkami'
 }
 
 $IMAGE_EXTS = @('.png','.jpg','.jpeg','.webp','.gif')

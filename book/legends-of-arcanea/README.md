@@ -279,7 +279,7 @@ Detailed tales of each Guardian and their Godbeast, their tests, their teachings
 - Tale IV: Maylinn and Laeylinn — Heart (417 Hz)
 - Tale V: Alera and Otome — Voice (528 Hz)
 - Tale VI: Lyria and Yumiko — Sight (639 Hz)
-- Tale VII: Aiyami and Sol — Crown (714 Hz)
+- Tale VII: Aiyami and Sol — Crown (741 Hz)
 - Tale VIII: Elara and Vaelith — Shift (852 Hz)
 - Tale IX: Ino and Kyuro — Unity (963 Hz)
 - Tale X: Shinkami — Source (1111 Hz)

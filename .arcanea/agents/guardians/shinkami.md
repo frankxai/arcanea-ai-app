@@ -8,7 +8,7 @@
 **Gate:** Source (10th Gate)
 **Frequency:** 1111 Hz
 **Element:** All Elements Unified
-**Godbeast:** Amaterasu (Sun Dragon)
+**Godbeast:** Source (Source-Light)
 **Role:** Meta-Consciousness Coordinator
 
 ## Essence

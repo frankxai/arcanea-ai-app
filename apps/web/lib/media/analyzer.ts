@@ -24,9 +24,9 @@ const GUARDIANS: Record<string, { gate: string; frequency: number; element: stri
   alera:      { gate: 'Voice',      frequency: 528,  element: 'Wind',   godbeast: 'Otome' },
   lyria:      { gate: 'Sight',      frequency: 639,  element: 'Arcane', godbeast: 'Yumiko' },
   aiyami:     { gate: 'Crown',      frequency: 741,  element: 'Arcane', godbeast: 'Sol' },
-  elara:      { gate: 'Shift',      frequency: 852,  element: 'Arcane', godbeast: 'Vaelith' },
+  elara:      { gate: 'Starweave',      frequency: 852,  element: 'Arcane', godbeast: 'Vaelith' },
   ino:        { gate: 'Unity',      frequency: 963,  element: 'Arcane', godbeast: 'Kyuro' },
-  shinkami:   { gate: 'Source',     frequency: 1111, element: 'Arcane', godbeast: 'Amaterasu' },
+  shinkami:   { gate: 'Source',     frequency: 1111, element: 'Arcane', godbeast: 'Source' },
 };
 
 const GUARDIAN_NAMES = Object.keys(GUARDIANS);

@@ -262,8 +262,7 @@ export default function ChangelogPage() {
               <input
                 type="email"
                 placeholder="your@email.com"
-                aria-label="Email address for changelog updates"
-                className="flex-1 px-4 py-3 rounded-xl bg-cosmic-void border border-white/[0.06] text-white placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal focus:ring-2 focus:ring-atlantean-teal/30"
+                className="flex-1 px-4 py-3 rounded-xl bg-cosmic-void border border-white/[0.06] text-white placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal"
               />
               <button className="px-6 py-3 rounded-xl bg-atlantean-teal text-cosmic-deep font-semibold hover:shadow-[0_0_20px_rgba(0,188,212,0.4)] transition-all">
                 Subscribe

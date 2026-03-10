@@ -38,7 +38,7 @@ export const GUARDIANS: Record<GuardianName, GuardianProfile> = {
   alera:      { name: 'alera',      gate: 'Voice',      frequency: 528, element: 'wind',  vault: 'operational', godbeast: 'Otome' },
   lyria:      { name: 'lyria',      gate: 'Sight',      frequency: 639, element: 'water', vault: 'horizon', godbeast: 'Yumiko' },
   aiyami:     { name: 'aiyami',     gate: 'Crown',      frequency: 741, element: 'spirit', vault: 'wisdom', godbeast: 'Sol' },
-  elara:      { name: 'elara',      gate: 'Shift',      frequency: 852, element: 'void',  vault: 'wisdom', godbeast: 'Vaelith' },
+  elara:      { name: 'elara',      gate: 'Starweave',  frequency: 852, element: 'void',  vault: 'wisdom', godbeast: 'Vaelith' },
   ino:        { name: 'ino',        gate: 'Unity',      frequency: 963, element: 'earth', vault: 'operational', godbeast: 'Kyuro' },
-  shinkami:    { name: 'shinkami',    gate: 'Source',      frequency: 1111, element: 'void', vault: 'strategic', godbeast: 'Amaterasu' },
+  shinkami:    { name: 'shinkami',    gate: 'Source',      frequency: 1111, element: 'void', vault: 'strategic', godbeast: 'Source' },
 };

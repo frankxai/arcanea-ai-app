@@ -20,9 +20,9 @@ Based on research from multiple traditions:
 | Solar Plexus | Voice | 528 Hz | 528 Hz ✅ |
 | **Heart** | **Heart** | **639 Hz** | **417 Hz ❌** |
 | Throat | Sight | 741 Hz | 639 Hz ❌ |
-| Third Eye | Crown | 852 Hz | 714 Hz ❌ |
+| Third Eye | Crown | 852 Hz | 741 Hz ❌ |
 | Crown | Source | 963 Hz | 852 Hz ❌ |
-| Beyond | Shift | 1111 Hz | 1111 Hz ✅ |
+| Beyond | Starweave | 852 Hz | 852 Hz ✅ |
 
 **Corrected Frequencies (Solfeggio System):**
 ```
@@ -32,7 +32,7 @@ Fire (Solar Plexus):  528 Hz - Transformation, power
 Heart (Heart):        639 Hz - Love, relationships ⭐ CORRECTED
 Voice (Throat):       741 Hz - Expression, intuition
 Sight (Third Eye):    852 Hz - Vision, spiritual order
-Shift (Crown):        963 Hz - Awakening, enlightenment
+Starweave (Crown):    963 Hz - Awakening, enlightenment
 Source (Beyond):      1111 Hz - Divine connection
 ```
 
@@ -392,7 +392,7 @@ code arcanea-lore/metadata.yaml
 | 417 Hz | **639 Hz** ⭐ | Maylinn |
 | 528 Hz | 741 Hz | Alera |
 | 639 Hz | 852 Hz | Lyria |
-| 714 Hz | 963 Hz | Aiyami |
+| 741 Hz | 963 Hz | Aiyami |
 | 852 Hz | 1111 Hz | Elara |
 | 963 Hz | N/A | Ino (963 is correct for Unity) |
 | 1111 Hz | N/A | Shinkami (1111 is correct for Source) |

@@ -348,7 +348,7 @@ async function cmdGuardians(): Promise<void> {
     { guardian: 'Alera',      hz: 528,  gate: 'Voice'      },
     { guardian: 'Lyria',      hz: 639,  gate: 'Sight'      },
     { guardian: 'Aiyami',     hz: 741,  gate: 'Crown'      },
-    { guardian: 'Elara',      hz: 852,  gate: 'Shift'      },
+    { guardian: 'Elara',      hz: 852,  gate: 'Starweave'  },
     { guardian: 'Ino',        hz: 963,  gate: 'Unity'      },
     { guardian: 'Shinkami',   hz: 1111, gate: 'Source'     },
   ] as const;

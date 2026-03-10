@@ -24,7 +24,7 @@ guardians = [
     ('alera', 'Sentinel', 'Alera', 'Voice', None, 'google/gemini-2.5-pro', 'idle'),
     ('leyla', 'Weaver', 'Leyla', 'Flow', 'Water', 'google/gemini-2.5-pro', 'idle'),
     ('aiyami', 'Sage', 'Aiyami', 'Crown', None, 'google/gemini-2.5-pro', 'idle'),
-    ('elara', 'Shift', 'Elara', 'Shift', None, 'anthropic/claude-opus-4-6', 'idle'),
+    ('elara', 'Starweave', 'Elara', 'Starweave', None, 'anthropic/claude-opus-4-6', 'idle'),
     ('ino', 'Unity', 'Ino', 'Unity', None, 'google/gemini-2.5-flash', 'idle'),
     ('maylinn', 'Heart', 'Maylinn', 'Heart', 'Wind', 'google/gemini-2.5-flash', 'idle'),
 ]
@@ -39,7 +39,7 @@ vault = [
     ('intellect-ai', 'INTELLECT', 'ai', 'gateway', 'Vercel AI Gateway with OIDC auth', 'VAULT_TECH'),
     ('emotion-voice', 'EMOTION', 'voice', 'pillars', 'Arcane+Authoritative, Superintelligent+Accessible, Universe Not Platform, Creator Sovereignty, Antidote Principle', 'Voice Bible v2.0'),
     ('arcana-elements', 'ARCANA', 'cosmology', 'elements', 'Fire, Water, Earth, Wind, Void/Spirit', 'ARCANEA_CANON'),
-    ('arcana-gates', 'ARCANA', 'cosmology', 'gates', 'Foundation, Flow, Fire, Heart, Voice, Sight, Crown, Shift, Unity, Source', 'ARCANEA_CANON'),
+    ('arcana-gates', 'ARCANA', 'cosmology', 'gates', 'Foundation, Flow, Fire, Heart, Voice, Sight, Crown, Starweave, Unity, Source', 'ARCANEA_CANON'),
     ('horizon-vision', 'HORIZON', 'vision', 'premise', 'The antidote to a terrible future is imagining a good one', 'Voice Bible v2.0'),
 ]
 cursor.executemany(

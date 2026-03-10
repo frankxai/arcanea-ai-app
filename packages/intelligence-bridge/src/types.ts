@@ -212,7 +212,7 @@ export const GUARDIAN_ROUTING_PROFILES: GuardianRoutingProfile[] = [
   {
     guardianId: 'elara',
     guardianName: 'Elara',
-    gate: 'Shift',
+    gate: 'Starweave',
     frequency: 852,
     element: 'Wind',
     domains: ['migration', 'shift', 'transform', 'perspective', 'change'],

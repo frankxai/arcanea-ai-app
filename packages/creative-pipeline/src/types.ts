@@ -200,7 +200,7 @@ export const GUARDIAN_GATES: Record<string, string> = {
   alera: 'Voice',
   lyria: 'Sight',
   aiyami: 'Crown',
-  elara: 'Shift',
+  elara: 'Starweave',
   ino: 'Unity',
   shinkami: 'Source',
 };

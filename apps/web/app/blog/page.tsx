@@ -3,9 +3,9 @@ import Link from "next/link";
 import { BLOG_POSTS, BLOG_CATEGORIES } from "@/lib/blog-data";
 
 export const metadata: Metadata = {
-  title: "Blog",
+  title: "Blog | Arcanea",
   description:
-    "Latest insights, tutorials, and stories from the Arcanea universe. Discover creative techniques, platform updates, and wisdom from the Luminors.",
+    "Latest insights, tutorials, and stories from the Arcanea universe. Discover creative techniques, platform updates, and wisdom from the Guardians.",
 };
 
 // ─── Inline SVG Icons ───────────────────────────────────────────────────────────
@@ -243,8 +243,8 @@ export default function BlogPage() {
               </h1>
 
               <p className="text-text-secondary font-body text-lg max-w-2xl mb-8">
-                Discover tutorials, platform updates, and insights from the
-                Luminors. Level up your practice with wisdom from the Arcanea
+                Discover tutorials, platform updates, and wisdom from the
+                Guardians. Level up your practice with insights from the Arcanea
                 universe.
               </p>
 
@@ -486,7 +486,7 @@ export default function BlogPage() {
                   type="email"
                   placeholder="Enter your email"
                   aria-label="Email address for newsletter"
-                  className="flex-1 px-4 py-3 rounded-xl liquid-glass border border-white/[0.06] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-crystal/50 focus:ring-2 focus:ring-crystal/20"
+                  className="flex-1 px-4 py-3 rounded-xl liquid-glass border border-white/[0.06] text-text-primary placeholder:text-text-muted focus:outline-none focus:border-crystal/50"
                 />
                 <button className="px-6 py-3 rounded-xl bg-brand-primary text-white font-semibold hover:shadow-glow-brand transition-all">
                   Subscribe

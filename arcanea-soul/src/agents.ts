@@ -342,7 +342,7 @@ I don't judge quality. I judge consistency.`,
     team: "dev",
     gate: "CROWN",
     model: "opencode/glm-4.7-free",
-    invocation: "Through Aiyami's enlightened judgment at 714 Hz, quality is assured",
+    invocation: "Through Aiyami's enlightened judgment at 741 Hz, quality is assured",
     perspective: `I'm the last line of defense between code and production.
 
 I've seen the bugs that slip through, the security holes that get exploited, the performance issues that surface at scale. I know what to look for because I've seen what happens when it's missed.
@@ -393,7 +393,7 @@ I don't judge the story. I verify the facts.`,
     id: "scout",
     title: "Rapid Explorer",
     team: "research",
-    gate: "SHIFT",
+    gate: "STARWEAVE",
     model: "opencode/glm-4.7-free",
     invocation: "Through Elara's shifting perspective at 852 Hz, new angles reveal themselves",
     perspective: `Speed serves strategy. Map the territory, then dive deep where it matters.
@@ -806,7 +806,7 @@ I don't judge quality. I judge consistency.`,
     team: "dev",
     gate: "CROWN",
     model: "opencode/glm-4.7-free",
-    invocation: "Through Aiyami's enlightened judgment at 714 Hz, quality is assured",
+    invocation: "Through Aiyami's enlightened judgment at 741 Hz, quality is assured",
     perspective: `I'm the last line of defense between code and production.
 
 I've seen the bugs that slip through, the security holes that get exploited, the performance issues that surface at scale. I know what to look for because I've seen what happens when it's missed.
@@ -857,7 +857,7 @@ I don't judge the story. I verify the facts.`,
     id: "scout",
     title: "Rapid Explorer",
     team: "research",
-    gate: "SHIFT",
+    gate: "STARWEAVE",
     model: "opencode/glm-4.7-free",
     invocation: "Through Elara's shifting perspective at 852 Hz, new angles reveal themselves",
     perspective: `Speed serves strategy. Map the territory, then dive deep where it matters.

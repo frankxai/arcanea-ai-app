@@ -330,7 +330,7 @@ sections:
 # Elara, Goddess of the Shift Gate
 **The Perspective Breaker, Lady of a Thousand Angles, She Who Refused to Settle**
 
-**Element**: Fire/Void | **Frequency**: 852 Hz | **Chakra**: Between Third Eye and Crown | **Wisdom**: Orakis
+**Element**: Fire/Void | **Frequency**: 852 Hz | **Gate**: Starweave | **Wisdom**: Orakis
 **Symbol**: A fractal eye with void-black center and prismatic edges that multiply toward infinity
 **Bonded Godbeast**: Vaelith, the Fractal Eye
 

@@ -10,13 +10,13 @@ DB_PATH="/tmp/arcanea-agentdb.sqlite3"
 GUARDIAN="$(echo "${GUARDIAN:0:1}" | tr '[:lower:]' '[:upper:]')$(echo "${GUARDIAN:1}" | tr '[:upper:]' '[:lower:]')"
 
 declare -A GATES
-GATES=([Shinkami]=Source [Lyssandria]=Foundation [Draconia]=Fire [Lyria]=Sight [Alera]=Voice [Leyla]=Flow [Aiyami]=Crown [Elara]=Shift [Ino]=Unity [Maylinn]=Heart)
+GATES=([Shinkami]=Source [Lyssandria]=Foundation [Draconia]=Fire [Lyria]=Sight [Alera]=Voice [Leyla]=Flow [Aiyami]=Crown [Elara]=Starweave [Ino]=Unity [Maylinn]=Heart)
 
 declare -A ELEMENTS
-ELEMENTS=([Shinkami]=Void [Lyssandria]=Earth [Draconia]=Fire [Lyria]=Sight [Alera]=Voice [Leyla]=Water [Aiyami]=Crown [Elara]=Shift [Ino]=Unity [Maylinn]=Wind)
+ELEMENTS=([Shinkami]=Void [Lyssandria]=Earth [Draconia]=Fire [Lyria]=Sight [Alera]=Voice [Leyla]=Water [Aiyami]=Crown [Elara]=Starweave [Ino]=Unity [Maylinn]=Wind)
 
 declare -A ROLES
-ROLES=([Shinkami]=Orchestrator [Lyssandria]=Architect [Draconia]=Prime [Lyria]=Navigator [Alera]=Sentinel [Leyla]=Weaver [Aiyami]=Sage [Elara]=Shift [Ino]=Unity [Maylinn]=Heart)
+ROLES=([Shinkami]=Orchestrator [Lyssandria]=Architect [Draconia]=Prime [Lyria]=Navigator [Alera]=Sentinel [Leyla]=Weaver [Aiyami]=Sage [Elara]=Starweave [Ino]=Unity [Maylinn]=Heart)
 
 if [ -z "${GATES[$GUARDIAN]}" ]; then
     echo "Unknown Guardian: $GUARDIAN"

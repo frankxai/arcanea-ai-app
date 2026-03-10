@@ -217,7 +217,7 @@ Aiyami holds the longest view. She will pull the Council back from tactical opti
 
 ---
 
-### Gate 8: Elara (Shift, 1111 Hz, Void)
+### Gate 8: Elara (Starweave, 852 Hz, Void)
 
 **Domain**: Paradigm breaking, novel perspectives, questioning assumptions, discontinuous innovation
 

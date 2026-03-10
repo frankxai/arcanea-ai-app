@@ -16,9 +16,9 @@ const CANON_GATES = [
   { gate: 5, frequency: "528 Hz", guardian: "Alera", godbeast: "Otome", domain: "Voice", element: "Void" },
   { gate: 6, frequency: "639 Hz", guardian: "Lyria", godbeast: "Yumiko", domain: "Sight", element: "Spirit" },
   { gate: 7, frequency: "741 Hz", guardian: "Aiyami", godbeast: "Sol", domain: "Crown", element: "Spirit" },
-  { gate: 8, frequency: "852 Hz", guardian: "Elara", godbeast: "Thessara", domain: "Shift", element: "Void" },
+  { gate: 8, frequency: "852 Hz", guardian: "Elara", godbeast: "Vaelith", domain: "Starweave", element: "Void" },
   { gate: 9, frequency: "963 Hz", guardian: "Ino", godbeast: "Kyuro", domain: "Unity", element: "Spirit" },
-  { gate: 10, frequency: "1111 Hz", guardian: "Shinkami", godbeast: "Amaterasu", domain: "Source", element: "All" },
+  { gate: 10, frequency: "1111 Hz", guardian: "Shinkami", godbeast: "Source", domain: "Source", element: "All" },
 ];
 
 const CANON_ELEMENTS = ["Fire", "Water", "Earth", "Wind", "Void", "Spirit"];
@@ -37,7 +37,7 @@ describe('MCP Server — Canon Compliance', () => {
   });
 
   it('all 10 Godbeasts should have correct names', () => {
-    const expected = ["Kaelith", "Veloura", "Draconis", "Laeylinn", "Otome", "Yumiko", "Sol", "Thessara", "Kyuro", "Amaterasu"];
+    const expected = ["Kaelith", "Veloura", "Draconis", "Laeylinn", "Otome", "Yumiko", "Sol", "Vaelith", "Kyuro", "Source"];
     const actual = CANON_GATES.map(g => g.godbeast);
     assert.deepEqual(actual, expected);
   });

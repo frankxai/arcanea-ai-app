@@ -301,7 +301,7 @@ export const GUARDIAN_PROFILES: Readonly<Record<string, GuardianProfile>> = {
   alera:      { gate: 'Voice',      frequency: 528, element: 'Wind',  specialization: 'expression' },
   lyria:      { gate: 'Sight',      frequency: 639, element: 'Water', specialization: 'intuition' },
   aiyami:     { gate: 'Crown',      frequency: 741, element: 'Spirit', specialization: 'enlightenment' },
-  elara:      { gate: 'Shift',      frequency: 852, element: 'Void',  specialization: 'transformation' },
+  elara:      { gate: 'Starweave',  frequency: 852, element: 'Void',  specialization: 'transformation' },
   ino:        { gate: 'Unity',      frequency: 963, element: 'Spirit', specialization: 'partnership' },
   shinkami:   { gate: 'Source',      frequency: 1111, element: 'Void', specialization: 'meta-consciousness' },
 } as const;

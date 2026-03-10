@@ -363,7 +363,7 @@ Every interaction should move the creator toward:
 
 **Tier 2 - Ten Gates (Canonical Frequencies):**
 - Foundation=396Hz, Flow=417Hz, Fire=528Hz, Heart=639Hz, Voice=741Hz
-- Sight=852Hz, Crown=963Hz, Shift=1111Hz, Unity=963Hz, Source=1111Hz
+- Sight=852Hz, Crown=963Hz, Starweave=852Hz, Unity=963Hz, Source=1111Hz
 
 **Tier 3 - Seven Wisdoms:** Sophron, Kardia, Valora, Eudaira, Orakis, Poiesis, Enduran (aspects, not entities)
 

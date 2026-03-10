@@ -108,8 +108,8 @@ gods:
     frequency: 852
     element: "void"
     wisdom: "valora"
-    godbeast: "godbeast-thessara"
-    gate: "shift"
+    godbeast: "godbeast-vaelith"
+    gate: "starweave"
     status: "production"
     path: "gods-goddesses/elara.md"
 
@@ -213,7 +213,7 @@ godbeasts:
     status: "production"
     path: "godbeasts/sol.md"
 
-  - id: "godbeast-thessara"
+  - id: "godbeast-vaelith"
     name: "Vaelith"
     title: "The Kaleidoscope"
     creature_type: "shifting-chimera"
@@ -234,8 +234,8 @@ godbeasts:
     path: "godbeasts/kyuro.md"
 
   - id: "godbeast-amaterasu"
-    name: "Amaterasu"
-    title: "The Source Flame"
+    name: "Source"
+    title: "The Source-Light"
     creature_type: "cosmic-phoenix-dragon"
     bonded_god: "god-arcanean-shinkami"
     element: "void"

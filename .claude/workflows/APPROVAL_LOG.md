@@ -296,7 +296,7 @@
 
 ---
 
-### 2026-01-15 - Guardian - Elara (Shift Gate)
+### 2026-01-15 - Guardian - Elara (Starweave Gate)
 
 | Field | Value |
 |-------|-------|

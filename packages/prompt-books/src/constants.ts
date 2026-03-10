@@ -97,7 +97,7 @@ export const GUARDIAN_THEMES: Record<GuardianId, GuardianTheme> = {
     icon: 'Crown',
   },
   elara: {
-    gate: 'Shift',
+    gate: 'Starweave',
     frequency: 852,
     element: 'void',
     color: '#b38cff',

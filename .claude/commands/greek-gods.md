@@ -32,7 +32,7 @@ From ~1500 BCE to ~500 BCE, the Greek world had one of the most open Veils on Ea
 | **Ares** | Draconia | Fire | 528 Hz | War, courage, conflict |
 | **Aphrodite** | Maylinn | Heart | 639 Hz | Love, beauty, desire |
 | **Hephaestus** | Uriel (Archangel) | Foundation + Fire | 396/528 Hz | Forge, craft, creation |
-| **Hermes** | Gabriel (Archangel) | Voice + Shift | 741/1111 Hz | Messages, travel, thieves |
+| **Hermes** | Gabriel (Archangel) | Voice + Starweave | 741/852 Hz | Messages, travel, thieves |
 | **Dionysus** | Flow + Fire fusion | Flow + Fire | 417/528 Hz | Wine, ecstasy, theater |
 
 ## CHTHONIC DEITIES

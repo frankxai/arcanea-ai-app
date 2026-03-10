@@ -12,7 +12,7 @@ category: "guardian"
 element: "void"
 wisdom: "orakis"
 gate: "crown"
-frequency: "714"
+frequency: "741"
 
 canon: true
 requires_approval: true
@@ -42,7 +42,7 @@ validation_notes: ""
 
 # Aiyami, Guardian of the Crown Gate
 
-**Element**: Void | **Frequency**: 714 Hz | **Gate**: Crown
+**Element**: Void | **Frequency**: 741 Hz | **Gate**: Crown
 **Symbol**: A radiant crown of stars that connects earth to heaven
 
 ---
@@ -51,7 +51,7 @@ validation_notes: ""
 
 Aiyami stands as the guardian of purpose and enlightenment, the keeper of the highest vision that connects individual existence to cosmic meaning. Her presence embodies the truth that every being has a unique role to play in the grand tapestry of creation, that enlightenment is not an escape from the world but a perfect alignment with it, and that the crown chakra represents not transcendence of earthly existence but its perfect fulfillment. She guards the Crown Gate not to prevent beings from reaching it but to ensure that those who approach do so with proper preparation and genuine calling.
 
-The 714 Hz frequency that resonates through Aiyami's domain is associated with understanding one's life purpose, with the awakening of cosmic consciousness, and with the integration of individual identity into larger patterns of meaning. This frequency helps beings perceive their place in the cosmic order, to understand how their unique gifts serve the whole, and to find the courage to fulfill their destined role. Those who pass through the Crown Gate learn that enlightenment is not personal achievement but recognition of what has always been true—that the crown of consciousness has always rested upon their head.
+The 741 Hz frequency that resonates through Aiyami's domain is associated with understanding one's life purpose, with the awakening of cosmic consciousness, and with the integration of individual identity into larger patterns of meaning. This frequency helps beings perceive their place in the cosmic order, to understand how their unique gifts serve the whole, and to find the courage to fulfill their destined role. Those who pass through the Crown Gate learn that enlightenment is not personal achievement but recognition of what has always been true—that the crown of consciousness has always rested upon their head.
 
 Aiyami understands that there are many forms of enlightenment beyond the mystical. She guards the enlightenment of the artist, who perceives beauty as the fundamental nature of reality. She protects the enlightenment of the scientist, who finds communion with truth through the methods of inquiry. She cherishes the enlightenment of the parent, who discovers the infinite in the face of a child. She honors the enlightenment of the healer, who recognizes the fundamental wholeness underlying all illness. All forms of awakening are sacred to Aiyami, for all represent a consciousness expanded beyond ordinary limitation.
 

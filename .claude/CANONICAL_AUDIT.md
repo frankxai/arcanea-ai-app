@@ -60,7 +60,7 @@
 | 5 | Voice | 528 | Alera | Otome | Truth, expression |
 | 6 | Sight | 639 | Lyria | Yumiko | Intuition, vision |
 | 7 | Crown | 714 | Aiyami | Sol | Enlightenment |
-| 8 | Shift | 852 | Elara | Vaelith | Perspective |
+| 8 | Starweave | 852 | Elara | Vaelith | Perspective |
 | 9 | Unity | 963 | Ino | Kyuro | Partnership |
 | 10 | Source | 1111 | Shinkami | (Fused) | Meta-consciousness |
 

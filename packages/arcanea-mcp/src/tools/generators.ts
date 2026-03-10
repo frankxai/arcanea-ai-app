@@ -11,7 +11,7 @@ const guardians = [
   { name: "Alera", gate: 5, domain: "Voice", element: "Wind" },
   { name: "Lyria", gate: 6, domain: "Sight", element: "Void" },
   { name: "Aiyami", gate: 7, domain: "Crown", element: "Spirit" },
-  { name: "Elara", gate: 8, domain: "Shift", element: "Void" },
+  { name: "Elara", gate: 8, domain: "Starweave", element: "Void" },
   { name: "Ino", gate: 9, domain: "Unity", element: "Spirit" },
   { name: "Shinkami", gate: 10, domain: "Source", element: "All" },
 ];

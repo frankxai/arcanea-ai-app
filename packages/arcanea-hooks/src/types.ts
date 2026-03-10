@@ -8,7 +8,7 @@
  *
  * Guardian Mappings:
  * - LLM hooks     → Lyria (Sight, intuition) + Aiyami (Crown, enlightenment)
- * - Memory hooks  → Elara (Shift, perspective) + Lyssandria (Foundation)
+ * - Memory hooks  → Elara (Starweave, perspective) + Lyssandria (Foundation)
  * - Neural hooks  → Shinkami (Source, meta-consciousness)
  * - Performance   → Draconia (Fire, power) + Ino (Unity, partnership)
  * - Workflow      → Alera (Voice, expression) + Maylinn (Heart, healing)
@@ -90,7 +90,7 @@ export const CATEGORY_GUARDIANS: Record<HookCategory, GuardianAffinity[]> = {
     { guardian: 'aiyami', gate: 'Crown', frequency: 741, element: 'spirit' },
   ],
   memory: [
-    { guardian: 'elara', gate: 'Shift', frequency: 852, element: 'void' },
+    { guardian: 'elara', gate: 'Starweave', frequency: 852, element: 'void' },
     { guardian: 'lyssandria', gate: 'Foundation', frequency: 174, element: 'earth' },
   ],
   neural: [
