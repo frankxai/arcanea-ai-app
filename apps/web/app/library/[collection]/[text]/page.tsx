@@ -23,7 +23,6 @@ import {
   getAllTexts,
   COLLECTIONS,
 } from '../../../../lib/content';
-import { ReadingTracker } from '../../reading-tracker';
 
 interface Props {
   params: Promise<{ collection: string; text: string }>;
@@ -358,12 +357,6 @@ export default async function TextPage({ params }: Props) {
                   </ul>
                 </div>
               )}
-
-              {/* Reading Progress */}
-              <ReadingTracker
-                textSlug={`${collectionSlug}/${textSlug}`}
-                collectionSlug={collectionSlug}
-              />
 
               {/* Back to Collection */}
               <Link

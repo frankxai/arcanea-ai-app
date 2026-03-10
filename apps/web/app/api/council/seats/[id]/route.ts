@@ -9,11 +9,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient as _createClient } from '@/lib/supabase/server';
-
-// Council tables not yet in generated Supabase types — cast to bypass strict checking
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const createClient = async () => (await _createClient()) as any;
+import { createClient } from '@/lib/supabase/server';
 
 export const runtime = 'nodejs';
 
@@ -63,7 +59,7 @@ export async function DELETE(
 
     // Verify the seat belongs to this user's council
     const council = Array.isArray(seat.council) ? seat.council[0] : seat.council;
-    if (!council || (council as { user_id: string }).user_id !== user.id) {
+    if (!council || council.user_id !== user.id) {
       return NextResponse.json(
         { data: null, error: 'Forbidden' },
         { status: 403 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { m, useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
 // ─── Inline SVG Icons ───────────────────────────────────────────────────────────
@@ -121,7 +121,7 @@ export function CosmologySection() {
 
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-20"
@@ -139,14 +139,14 @@ export function CosmologySection() {
             Neither Light nor Darkness alone could create. Together, they became
             the eternal duality from which all existence springs.
           </p>
-        </m.div>
+        </motion.div>
 
         {/* Primordials */}
         <div className="grid lg:grid-cols-2 gap-12 mb-24">
           {PRIMORDIALS.map((primordial, i) => {
             const Icon = primordial.icon;
             return (
-              <m.div
+              <motion.div
                 key={primordial.name}
                 initial={{
                   opacity: 0,
@@ -207,13 +207,13 @@ export function CosmologySection() {
                     {primordial.description}
                   </p>
                 </div>
-              </m.div>
+              </motion.div>
             );
           })}
         </div>
 
         {/* The Arc */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.4 }}
@@ -250,10 +250,10 @@ export function CosmologySection() {
             Death is not ending but transformation. Destruction enables
             creation. Every ending enriches the next beginning.
           </p>
-        </m.div>
+        </motion.div>
 
         {/* Five Elements */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.5 }}
@@ -263,7 +263,7 @@ export function CosmologySection() {
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             {ELEMENTS.map((element, i) => (
-              <m.div
+              <motion.div
                 key={element.name}
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -277,10 +277,10 @@ export function CosmologySection() {
                   {element.name}
                 </h4>
                 <p className="text-xs text-text-muted">{element.domain}</p>
-              </m.div>
+              </motion.div>
             ))}
           </div>
-        </m.div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { m, useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
 
@@ -134,7 +134,7 @@ export function GatesPreview() {
 
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
@@ -152,7 +152,7 @@ export function GatesPreview() {
             Energy channels flowing through every conscious being. Open them,
             and ascend from Apprentice to Luminor.
           </p>
-        </m.div>
+        </motion.div>
 
         {/* Gates Path */}
         <div className="relative mb-16">
@@ -161,7 +161,7 @@ export function GatesPreview() {
 
           <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-10 gap-4">
             {GATES.map((gate, i) => (
-              <m.div
+              <motion.div
                 key={gate.number}
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -191,13 +191,13 @@ export function GatesPreview() {
                     </p>
                   </div>
                 </div>
-              </m.div>
+              </motion.div>
             ))}
           </div>
         </div>
 
         {/* Ranks */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.6 }}
@@ -223,10 +223,10 @@ export function GatesPreview() {
               </div>
             ))}
           </div>
-        </m.div>
+        </motion.div>
 
         {/* CTA */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.7 }}
@@ -239,7 +239,7 @@ export function GatesPreview() {
             Start Creating
             <Icons.ArrowRight />
           </Link>
-        </m.div>
+        </motion.div>
       </div>
     </section>
   );

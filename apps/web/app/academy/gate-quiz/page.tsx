@@ -7,7 +7,7 @@
  */
 
 import { useState, useCallback } from "react";
-import { LazyMotion, domMax, m, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import {
   PhSparkle,
@@ -186,7 +186,7 @@ const GUARDIANS: Record<GuardianKey, GuardianData> = {
     element: "Void",
     godbeast: "Yumiko",
     color: "#0d47a1",
-    glowColor: "rgba(13, 71, 161, 0.4)",
+    glowColor: "rgba(139, 92, 246, 0.4)",
     description:
       "Guardian of Sight and visionary perception, Lyria sees what others cannot — the hidden patterns, the emerging forms, the deep currents beneath the surface of things. Her creations are portals to previously unseen dimensions.",
     personality:
@@ -632,7 +632,7 @@ function ProgressBar({ current, total }: ProgressBarProps) {
         </span>
       </div>
       <div className="h-1 w-full rounded-full bg-white/[0.04] overflow-hidden">
-        <m.div
+        <motion.div
           className="h-full rounded-full"
           style={{
             background: "linear-gradient(90deg, #0d47a1, #00bcd4)",
@@ -659,7 +659,7 @@ interface IntroScreenProps {
 
 function IntroScreen({ onStart }: IntroScreenProps) {
   return (
-    <m.div {...fadeUp} className="relative">
+    <motion.div {...fadeUp} className="relative">
       <AmbientOrbs color="#0d47a1" />
 
       <div className="relative liquid-glass rounded-3xl p-8 md:p-14 overflow-hidden">
@@ -719,7 +719,7 @@ function IntroScreen({ onStart }: IntroScreenProps) {
 
           {/* CTA */}
           <div className="mt-10">
-            <m.button
+            <motion.button
               onClick={onStart}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -727,7 +727,7 @@ function IntroScreen({ onStart }: IntroScreenProps) {
             >
               Begin the Journey
               <PhCaretRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-            </m.button>
+            </motion.button>
           </div>
 
           {/* Disclaimer */}
@@ -756,7 +756,7 @@ function IntroScreen({ onStart }: IntroScreenProps) {
           );
         })}
       </div>
-    </m.div>
+    </motion.div>
   );
 }
 
@@ -782,7 +782,7 @@ function QuestionScreen({
   onNext,
 }: QuestionScreenProps) {
   return (
-    <m.div key={question.id} {...slideRight}>
+    <motion.div key={question.id} {...slideRight}>
       <ProgressBar current={questionNumber} total={totalQuestions} />
 
       <div className="relative liquid-glass rounded-3xl overflow-hidden">
@@ -809,7 +809,7 @@ function QuestionScreen({
             {question.choices.map((choice, index) => {
               const isSelected = selectedChoice === index;
               return (
-                <m.button
+                <motion.button
                   key={index}
                   onClick={() => onSelect(index)}
                   whileHover={{ x: 4 }}
@@ -832,7 +832,7 @@ function QuestionScreen({
                       ].join(" ")}
                     >
                       {isSelected && (
-                        <m.div
+                        <motion.div
                           initial={{ scale: 0 }}
                           animate={{ scale: 1 }}
                           className="h-2 w-2 rounded-full bg-white"
@@ -851,7 +851,7 @@ function QuestionScreen({
                       {choice.text}
                     </span>
                   </div>
-                </m.button>
+                </motion.button>
               );
             })}
           </div>
@@ -863,7 +863,7 @@ function QuestionScreen({
                 ? "Choose one to continue"
                 : "Selection made"}
             </span>
-            <m.button
+            <motion.button
               onClick={onNext}
               disabled={selectedChoice === null}
               whileHover={selectedChoice !== null ? { scale: 1.02 } : {}}
@@ -879,11 +879,11 @@ function QuestionScreen({
                 ? "See My Guardian"
                 : "Next Question"}
               <PhArrowRight className="h-4 w-4" />
-            </m.button>
+            </motion.button>
           </div>
         </div>
       </div>
-    </m.div>
+    </motion.div>
   );
 }
 
@@ -900,13 +900,13 @@ function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
   const Icon = guardian.icon;
 
   return (
-    <m.div {...scaleIn} className="relative">
+    <motion.div {...scaleIn} className="relative">
       <AmbientOrbs color={guardian.color} />
 
       {/* Reveal animation wrapper */}
       <div className="relative">
         {/* Header — "Your Guardian is..." */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1, duration: 0.5 }}
@@ -915,10 +915,10 @@ function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
           <span className="text-xs uppercase tracking-[0.4em] text-text-muted font-sans">
             Your Guardian Resonates
           </span>
-        </m.div>
+        </motion.div>
 
         {/* Main card */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{
@@ -981,17 +981,17 @@ function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
 
           {/* Description */}
           <div className="px-8 py-8 md:px-12 space-y-6">
-            <m.p
+            <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.6 }}
               className="text-base text-text-secondary font-sans leading-relaxed"
             >
               {guardian.description}
-            </m.p>
+            </motion.p>
 
             {/* Personality */}
-            <m.div
+            <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.65, duration: 0.5 }}
@@ -1003,10 +1003,10 @@ function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
               <p className="text-sm text-text-primary font-sans leading-relaxed">
                 {guardian.personality}
               </p>
-            </m.div>
+            </motion.div>
 
             {/* Strength + Shadow */}
-            <m.div
+            <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.5 }}
@@ -1031,10 +1031,10 @@ function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
                   {guardian.shadowChallenge}
                 </p>
               </div>
-            </m.div>
+            </motion.div>
 
             {/* CTAs */}
-            <m.div
+            <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.95, duration: 0.5 }}
@@ -1061,10 +1061,10 @@ function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
                 Create with {guardian.name}
                 <PhSparkle className="h-4 w-4 transition-transform group-hover:scale-110" />
               </Link>
-            </m.div>
+            </motion.div>
 
             {/* Secondary action */}
-            <m.div
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.1, duration: 0.4 }}
@@ -1077,12 +1077,12 @@ function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
                 <PhArrowCounterClockwise className="h-4 w-4 transition-transform group-hover:-rotate-45" />
                 Retake the Quiz
               </button>
-            </m.div>
+            </motion.div>
           </div>
-        </m.div>
+        </motion.div>
 
         {/* All Guardians strip */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2, duration: 0.5 }}
@@ -1119,9 +1119,9 @@ function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
               );
             })}
           </div>
-        </m.div>
+        </motion.div>
       </div>
-    </m.div>
+    </motion.div>
   );
 }
 
@@ -1180,7 +1180,6 @@ export default function GateQuizPage() {
   const question = QUIZ_QUESTIONS[currentQuestion];
 
   return (
-    <LazyMotion features={domMax}>
     <main className="min-h-[100dvh] bg-cosmic-void bg-cosmic-mesh relative">
       {/* Page-level ambient background */}
       <div
@@ -1193,7 +1192,7 @@ export default function GateQuizPage() {
 
       <div className="relative mx-auto max-w-2xl px-4 py-12 md:px-6 md:py-16">
         {/* Site nav breadcrumb */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4 }}
@@ -1214,18 +1213,18 @@ export default function GateQuizPage() {
           </Link>
           <span className="text-white/[0.12]">/</span>
           <span className="text-text-secondary">Guardian Quiz</span>
-        </m.div>
+        </motion.div>
 
         {/* Phase rendering */}
         <AnimatePresence mode="wait">
           {phase === "intro" && (
-            <m.div key="intro" {...fadeUp}>
+            <motion.div key="intro" {...fadeUp}>
               <IntroScreen onStart={handleStart} />
-            </m.div>
+            </motion.div>
           )}
 
           {phase === "quiz" && question && (
-            <m.div key={`question-${question.id}`} {...slideRight}>
+            <motion.div key={`question-${question.id}`} {...slideRight}>
               <QuestionScreen
                 question={question}
                 questionNumber={currentQuestion + 1}
@@ -1234,20 +1233,19 @@ export default function GateQuizPage() {
                 onSelect={handleSelectChoice}
                 onNext={handleNext}
               />
-            </m.div>
+            </motion.div>
           )}
 
           {phase === "result" && resultGuardian && (
-            <m.div key="result" {...scaleIn}>
+            <motion.div key="result" {...scaleIn}>
               <ResultScreen
                 guardian={GUARDIANS[resultGuardian]}
                 onRestart={handleRestart}
               />
-            </m.div>
+            </motion.div>
           )}
         </AnimatePresence>
       </div>
     </main>
-    </LazyMotion>
   );
 }

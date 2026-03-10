@@ -311,7 +311,7 @@ const tocItems = useMemo(() => {
   }, [codex]);
   return (
     <div className="space-y-24">
-      <section className="relative overflow-hidden rounded-3xl border border-[#2a385c]/60 bg-gradient-to-br from-[#0f1627] via-[#0b1220] to-[#060b16] p-10 shadow-[0_0_120px_rgba(0,188,212,0.18)]">
+      <section className="relative overflow-hidden rounded-3xl border border-[#2a385c]/60 bg-gradient-to-br from-[#0f1627] via-[#0b1220] to-[#060b16] p-10 shadow-[0_0_120px_rgba(120,166,255,0.18)]">
         <div className="pointer-events-none absolute inset-0 opacity-40" aria-hidden="true">
           <div className="absolute -left-24 top-16 h-72 w-72 rounded-full bg-[#76a6ff]/30 blur-3xl" />
           <div className="absolute right-[-10%] top-1/3 h-80 w-80 rounded-full bg-[#00bcd4]/25 blur-3xl" />
@@ -334,12 +334,12 @@ const tocItems = useMemo(() => {
               <button
                 type="button"
                 onClick={handleOpen}
-                className="rounded-full bg-[#00bcd4] px-6 py-3 text-sm font-semibold text-black transition hover:bg-[#00bcd4] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#05070d] focus-visible:ring-[#00bcd4]"
+                className="rounded-full bg-[#78a6ff] px-6 py-3 text-sm font-semibold text-black transition hover:bg-[#00bcd4] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#05070d] focus-visible:ring-[#00bcd4]"
               >
                 Open active codex
               </button>
               <a
-                className="rounded-full border border-[#00bcd4]/40 px-6 py-3 text-sm font-semibold text-[#c7d6f1] transition hover:border-[#00bcd4] hover:text-[#00bcd4] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#05070d] focus-visible:ring-[#00bcd4]"
+                className="rounded-full border border-[#78a6ff]/40 px-6 py-3 text-sm font-semibold text-[#c7d6f1] transition hover:border-[#00bcd4] hover:text-[#00bcd4] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#05070d] focus-visible:ring-[#00bcd4]"
                 href="#tomes"
               >
                 Explore the tomes
@@ -423,7 +423,7 @@ const tocItems = useMemo(() => {
               >
                 <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100" aria-hidden="true">
                   <div className="absolute -left-16 top-1/2 h-40 w-40 -translate-y-1/2 rounded-full bg-[#00bcd4]/20 blur-3xl" />
-                  <div className="absolute right-[-10%] bottom-[-20%] h-48 w-48 rounded-full bg-[#00bcd4]/20 blur-3xl" />
+                  <div className="absolute right-[-10%] bottom-[-20%] h-48 w-48 rounded-full bg-[#78a6ff]/20 blur-3xl" />
                 </div>
                 <div className="relative space-y-4">
                   <div className="flex items-center justify-between text-xs text-[#9bb1d0]">
@@ -471,7 +471,7 @@ const tocItems = useMemo(() => {
             In partnership with the Guardians of Resonance, every narrative cross-links to the creative practices of Arcanea’s world builders. Listen closely: the stacks hum the harmonics that guide you to the chapter your spirit needs most.
           </p>
         </div>
-        <div className="relative flex flex-col items-center gap-6 rounded-2xl border border-[#00bcd4]/25 bg-[#101626]/80 p-10 text-center text-[#9bb1d0]" aria-hidden="true">
+        <div className="relative flex flex-col items-center gap-6 rounded-2xl border border-[#78a6ff]/25 bg-[#101626]/80 p-10 text-center text-[#9bb1d0]" aria-hidden="true">
           <div className="flex h-24 w-24 items-center justify-center rounded-full border border-[#00bcd4]/40 bg-[#0b0f1d] text-2xl tracking-[0.3em] text-[#00bcd4]">
             AZ^
           </div>
@@ -492,7 +492,7 @@ const tocItems = useMemo(() => {
           <button
             type="button"
             onClick={handleOpen}
-            className="self-start rounded-full border border-[#00bcd4]/40 px-5 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-[#00bcd4] transition hover:border-[#00bcd4] hover:text-[#00bcd4] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00bcd4]"
+            className="self-start rounded-full border border-[#78a6ff]/40 px-5 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-[#78a6ff] transition hover:border-[#00bcd4] hover:text-[#00bcd4] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00bcd4]"
           >
             Open the codex
           </button>
@@ -501,7 +501,7 @@ const tocItems = useMemo(() => {
           {councilMembers.map((member) => (
             <article
               key={member.name}
-              className="h-full rounded-2xl border border-white/[0.06] bg-[#101726]/70 p-6 shadow-[0_25px_90px_rgba(10,15,25,0.4)] transition hover:-translate-y-1 hover:border-[#00bcd4]/50 hover:shadow-[0_35px_120px_rgba(0,188,212,0.22)]"
+              className="h-full rounded-2xl border border-white/[0.06] bg-[#101726]/70 p-6 shadow-[0_25px_90px_rgba(10,15,25,0.4)] transition hover:-translate-y-1 hover:border-[#78a6ff]/50 hover:shadow-[0_35px_120px_rgba(120,166,255,0.22)]"
             >
               <h3 className="text-xl font-semibold text-white">{member.name}</h3>
               <p className="mt-3 text-sm leading-relaxed text-[#c7d6f1]">{member.description}</p>
@@ -545,10 +545,10 @@ const tocItems = useMemo(() => {
             ))}
           </ul>
         </div>
-        <div className="relative flex items-center justify-center overflow-hidden rounded-2xl border border-[#00bcd4]/30 bg-gradient-to-br from-[#111b2b] to-[#090f1d]" aria-hidden="true">
+        <div className="relative flex items-center justify-center overflow-hidden rounded-2xl border border-[#78a6ff]/30 bg-gradient-to-br from-[#111b2b] to-[#090f1d]" aria-hidden="true">
           <div className="absolute inset-0 -rotate-12 opacity-60" aria-hidden="true">
             <div className="absolute left-1/2 top-8 h-72 w-72 -translate-x-1/2 rounded-full border border-[#00bcd4]/25" />
-            <div className="absolute left-1/2 top-16 h-72 w-72 -translate-x-1/2 rounded-full border border-[#00bcd4]/20" />
+            <div className="absolute left-1/2 top-16 h-72 w-72 -translate-x-1/2 rounded-full border border-[#78a6ff]/20" />
             <div className="absolute left-1/2 top-24 h-72 w-72 -translate-x-1/2 rounded-full border border-white/[0.06]" />
           </div>
           <div className="relative z-10 text-center text-xs uppercase tracking-[0.4em] text-[#00bcd4]">
@@ -569,7 +569,7 @@ const tocItems = useMemo(() => {
               key={stream.name}
               className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-gradient-to-br from-[#171f34] via-[#111a2c] to-[#0a111f] p-6"
             >
-              <div className="pointer-events-none absolute -right-10 top-1/2 h-32 w-32 -translate-y-1/2 rounded-full bg-[#00bcd4]/15 blur-3xl" aria-hidden="true" />
+              <div className="pointer-events-none absolute -right-10 top-1/2 h-32 w-32 -translate-y-1/2 rounded-full bg-[#78a6ff]/15 blur-3xl" aria-hidden="true" />
               <p className="text-xs uppercase tracking-[0.35em] text-[#00bcd4]">{stream.horizon}</p>
               <h3 className="mt-3 text-xl font-semibold text-white">{stream.name}</h3>
               <p className="mt-3 text-sm text-[#c7d6f1]">{stream.description}</p>
@@ -608,7 +608,7 @@ const tocItems = useMemo(() => {
           <button
             type="button"
             onClick={handleOpen}
-            className="rounded-full border border-[#00bcd4]/40 px-6 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-[#00bcd4] transition hover:border-[#00bcd4] hover:text-[#00bcd4] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00bcd4]"
+            className="rounded-full border border-[#78a6ff]/40 px-6 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-[#78a6ff] transition hover:border-[#00bcd4] hover:text-[#00bcd4] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00bcd4]"
           >
             Open the codex
           </button>
@@ -638,7 +638,7 @@ const tocItems = useMemo(() => {
             className="relative flex h-[85vh] w-[min(1140px,95vw)] flex-col overflow-hidden rounded-3xl border border-[#00bcd4]/35 bg-[#050910] shadow-[0_40px_160px_rgba(4,8,15,0.88)] focus:outline-none"
           >
             <div className="flex flex-1 flex-col overflow-hidden md:flex-row">
-              <aside className="w-full flex-none border-b border-[#00bcd4]/20 bg-[#070c16] p-6 md:w-80 md:border-b-0 md:border-r">
+              <aside className="w-full flex-none border-b border-[#78a6ff]/20 bg-[#070c16] p-6 md:w-80 md:border-b-0 md:border-r">
                 <div className="space-y-4">
                   <div>
                     <p className="text-xs uppercase tracking-[0.35em] text-[#00bcd4]">Tome</p>
@@ -687,7 +687,7 @@ const tocItems = useMemo(() => {
                 </div>
               </aside>
               <section className="flex flex-1 flex-col overflow-hidden">
-                <header className="flex flex-col gap-4 border-b border-[#00bcd4]/20 bg-[#0b1321] p-6 md:flex-row md:items-start md:justify-between">
+                <header className="flex flex-col gap-4 border-b border-[#78a6ff]/20 bg-[#0b1321] p-6 md:flex-row md:items-start md:justify-between">
                   <div className="space-y-2">
                     <p className="text-xs uppercase tracking-[0.35em] text-[#00bcd4]">Arcanea — living memory sequence</p>
                     <h3 className="text-2xl font-semibold text-white">{activeHeading.title}</h3>
@@ -699,7 +699,7 @@ const tocItems = useMemo(() => {
                     <button
                       type="button"
                       onClick={handleClose}
-                      className="rounded-full border border-[#00bcd4]/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-[#00bcd4] transition hover:border-[#00bcd4] hover:text-[#00bcd4] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00bcd4]"
+                      className="rounded-full border border-[#78a6ff]/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-[#78a6ff] transition hover:border-[#00bcd4] hover:text-[#00bcd4] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00bcd4]"
                     >
                       Close
                     </button>
@@ -772,7 +772,7 @@ function ChapterContent({ chapter }: { chapter: CodexChapter }) {
   return (
     <div className="space-y-8">
       {chapter.epigraph ? (
-        <blockquote className="rounded-2xl border border-[#00bcd4]/30 bg-[#101726]/60 p-5 text-sm italic text-[#00bcd4]">
+        <blockquote className="rounded-2xl border border-[#78a6ff]/30 bg-[#101726]/60 p-5 text-sm italic text-[#00bcd4]">
           <p>{chapter.epigraph.text}</p>
           {chapter.epigraph.attribution ? (
             <footer className="mt-3 text-xs text-[#9bb1d0]">— {chapter.epigraph.attribution}</footer>
@@ -804,7 +804,7 @@ function ChapterContent({ chapter }: { chapter: CodexChapter }) {
           <h4 className="text-sm font-semibold uppercase tracking-[0.35em] text-[#00bcd4]">Measurement constellations</h4>
           <ul className="space-y-3">
             {chapter.measurements.map((measurement, index) => (
-              <li key={`measurement-${index}`} className="rounded-xl border border-[#00bcd4]/30 bg-[#101726]/60 p-4">
+              <li key={`measurement-${index}`} className="rounded-xl border border-[#78a6ff]/30 bg-[#101726]/60 p-4">
                 <p className="font-semibold text-white">{measurement.name}</p>
                 <p className="mt-1 text-sm text-[#c7d6f1]">{measurement.description}</p>
               </li>
@@ -832,7 +832,7 @@ function ChapterSection({ section }: { section: CodexSection }) {
           {section.insights.map((insight, index) => (
             <div
               key={`insight-${index}`}
-              className="rounded-xl border border-[#00bcd4]/30 bg-[#0f1727] p-4"
+              className="rounded-xl border border-[#78a6ff]/30 bg-[#0f1727] p-4"
             >
               <p className="text-sm font-semibold text-white">{insight.title}</p>
               <p className="mt-2 text-sm text-[#c7d6f1]">{insight.detail}</p>

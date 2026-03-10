@@ -13,7 +13,7 @@ const SECTIONS = [
     description: "Daily activity log and platform announcements",
     icon: "📡",
     href: "/hub/updates",
-    color: "#0d47a1",
+    color: "#8B5CF6",
     stats: "Live feed",
   },
   {
@@ -47,7 +47,7 @@ const SECTIONS = [
 
 const QUICK_LINKS = [
   { label: "Getting Started", href: "/hub/guides/getting-started", icon: "🚀" },
-  { label: "AI Specialist Guide", href: "/hub/guides/luminors", icon: "🌟" },
+  { label: "Luminor Guide", href: "/hub/guides/luminors", icon: "🌟" },
   { label: "Library Tour", href: "/library", icon: "📚" },
   { label: "Join Discord", href: "https://discord.gg/arcanea", icon: "💬", external: true },
 ];

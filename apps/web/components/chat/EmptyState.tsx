@@ -115,7 +115,7 @@ function StarterCard({
       style={{
         background: 'rgba(255,255,255,0.03)',
         backdropFilter: 'blur(10px)',
-        border: '1px solid rgba(13,71,161,0.18)',
+        border: '1px solid rgba(139,92,246,0.18)',
       }}
       onMouseEnter={(e) => {
         const el = e.currentTarget
@@ -125,7 +125,7 @@ function StarterCard({
       }}
       onMouseLeave={(e) => {
         const el = e.currentTarget
-        el.style.borderColor = 'rgba(13,71,161,0.18)'
+        el.style.borderColor = 'rgba(139,92,246,0.18)'
         el.style.background = 'rgba(255,255,255,0.03)'
         el.style.boxShadow = 'none'
       }}

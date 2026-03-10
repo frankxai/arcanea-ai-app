@@ -1,6 +1,6 @@
 "use client";
 
-import { m, useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
 
@@ -152,7 +152,7 @@ export function LibraryPreview() {
 
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
@@ -170,14 +170,14 @@ export function LibraryPreview() {
             &quot;These books are not entertainment. They are equipment for
             living. Use them.&quot;
           </p>
-        </m.div>
+        </motion.div>
 
         {/* Featured Collections */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {FEATURED_COLLECTIONS.map((collection, i) => {
             const Icon = collection.icon;
             return (
-              <m.div
+              <motion.div
                 key={collection.title}
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -211,13 +211,13 @@ export function LibraryPreview() {
                     {collection.texts} texts
                   </p>
                 </Link>
-              </m.div>
+              </motion.div>
             );
           })}
         </div>
 
         {/* All Collections List */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.5 }}
@@ -236,10 +236,10 @@ export function LibraryPreview() {
               </span>
             ))}
           </div>
-        </m.div>
+        </motion.div>
 
         {/* Stats */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.6 }}
@@ -257,10 +257,10 @@ export function LibraryPreview() {
               <div className="text-sm text-text-muted">{stat.label}</div>
             </div>
           ))}
-        </m.div>
+        </motion.div>
 
         {/* CTA */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.7 }}
@@ -273,7 +273,7 @@ export function LibraryPreview() {
             Enter the Library
             <Icons.ArrowRight />
           </Link>
-        </m.div>
+        </motion.div>
       </div>
     </section>
   );

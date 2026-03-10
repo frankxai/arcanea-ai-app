@@ -51,9 +51,9 @@ const UPDATES = [
     date: "2026-01-17",
     time: "12:00",
     type: "feature",
-    title: "AI Specialist Framework v4.0.0",
-    description: "Complete overhaul of the intelligence system with enhanced personality models and domain expertise.",
-    tags: ["specialists", "ai", "framework"],
+    title: "Luminor Framework v4.0.0",
+    description: "Complete overhaul of the Luminor intelligence system with enhanced personality models and domain expertise.",
+    tags: ["luminors", "ai", "framework"],
   },
   {
     id: "2026-01-16-1",
@@ -67,7 +67,7 @@ const UPDATES = [
 ];
 
 const TYPE_CONFIG = {
-  feature: { color: "#0d47a1", label: "Feature", icon: "✨" },
+  feature: { color: "#8B5CF6", label: "Feature", icon: "✨" },
   fix: { color: "#10B981", label: "Fix", icon: "🔧" },
   content: { color: "#F59E0B", label: "Content", icon: "📝" },
   security: { color: "#EF4444", label: "Security", icon: "🔒" },

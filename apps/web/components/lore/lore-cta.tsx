@@ -1,6 +1,6 @@
 "use client";
 
-import { m, useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
 
@@ -62,7 +62,7 @@ export function LoreCTA() {
       </div>
 
       <div className="max-w-4xl mx-auto px-6">
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center"
@@ -100,14 +100,14 @@ export function LoreCTA() {
           </div>
 
           {/* Decorative element */}
-          <m.div
+          <motion.div
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ delay: 0.5 }}
             className="mt-16 flex justify-center gap-2"
           >
             {[...Array(5)].map((_, i) => (
-              <m.div
+              <motion.div
                 key={i}
                 className="w-2 h-2 rounded-full bg-gold-bright/50"
                 animate={{
@@ -121,8 +121,8 @@ export function LoreCTA() {
                 }}
               />
             ))}
-          </m.div>
-        </m.div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

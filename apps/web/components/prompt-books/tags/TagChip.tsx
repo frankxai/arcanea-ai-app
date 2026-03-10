@@ -23,7 +23,7 @@ export function TagChip({
   size = 'sm',
 }: TagChipProps) {
   const categoryColor = tag.category ? TAG_CATEGORIES[tag.category]?.color : tag.color
-  const chipColor = categoryColor || '#00bcd4'
+  const chipColor = categoryColor || '#78a6ff'
 
   return (
     <button

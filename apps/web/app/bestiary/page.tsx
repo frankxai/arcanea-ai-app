@@ -31,7 +31,7 @@ const CREATURES = [
     weakness: 'Small, immediate actions. Cannot survive direct engagement.',
     symptoms: ['Endless planning', 'Waiting for the perfect moment', 'Starting tomorrow'],
     icon: '🐍',
-    color: '#0d47a1',
+    color: '#8b5cf6',
   },
   {
     id: 'perfectus-demon',

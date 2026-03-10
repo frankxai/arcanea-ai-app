@@ -1,6 +1,6 @@
 'use client';
 
-import { m, LazyMotion, domAnimation, useInView } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import Link from 'next/link';
 import {
@@ -45,9 +45,9 @@ const HOUSES = [
     element: 'Void & Potential',
     colors: {
       accent: '#a78bfa',
-      glow: 'rgba(13,71,161,0.2)',
-      border: 'rgba(13,71,161,0.25)',
-      borderHover: 'rgba(13,71,161,0.55)',
+      glow: 'rgba(139,92,246,0.2)',
+      border: 'rgba(139,92,246,0.25)',
+      borderHover: 'rgba(139,92,246,0.55)',
       badge: 'bg-brand-primary/15 text-brand-primary border-brand-primary/30',
       title: 'text-brand-primary',
     },
@@ -180,7 +180,7 @@ function HouseCard({ house, index, isInView }: HouseCardProps) {
 
   if (house.isSynthesis) {
     return (
-      <m.div
+      <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ delay: index * 0.08, duration: 0.6, ease: 'easeOut' }}
@@ -196,13 +196,13 @@ function HouseCard({ house, index, isInView }: HouseCardProps) {
           {/* Prismatic animated border shimmer */}
           <div className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"
             style={{
-              background: 'linear-gradient(135deg, rgba(255,215,0,0.08), rgba(0,188,212,0.08), rgba(13,71,161,0.08), rgba(249,115,22,0.08))',
+              background: 'linear-gradient(135deg, rgba(255,215,0,0.08), rgba(0,188,212,0.08), rgba(139,92,246,0.08), rgba(249,115,22,0.08))',
             }}
           />
 
           {/* Background orbs */}
           <div className="pointer-events-none absolute -top-20 -right-20 w-64 h-64 rounded-full blur-3xl opacity-20"
-            style={{ background: 'conic-gradient(from 0deg, #ffd700, #00bcd4, #0d47a1, #f97316, #ffd700)' }}
+            style={{ background: 'conic-gradient(from 0deg, #ffd700, #00bcd4, #8b5cf6, #f97316, #ffd700)' }}
           />
           <div className="pointer-events-none absolute -bottom-12 -left-12 w-48 h-48 rounded-full blur-2xl opacity-15"
             style={{ background: 'conic-gradient(from 180deg, #4ade80, #e2e8f0, #00bcd4, #ffd700, #4ade80)' }}
@@ -271,12 +271,12 @@ function HouseCard({ house, index, isInView }: HouseCardProps) {
             </div>
           </div>
         </div>
-      </m.div>
+      </motion.div>
     );
   }
 
   return (
-    <m.div
+    <motion.div
       initial={{ opacity: 0, y: 32 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: index * 0.08, duration: 0.55, ease: 'easeOut' }}
@@ -354,7 +354,7 @@ function HouseCard({ house, index, isInView }: HouseCardProps) {
           </div>
         </div>
       </div>
-    </m.div>
+    </motion.div>
   );
 }
 
@@ -372,7 +372,6 @@ export function HousesPage() {
   const synthesisHouse = HOUSES.find((h) => h.isSynthesis)!;
 
   return (
-    <LazyMotion features={domAnimation} strict>
     <div className="relative min-h-screen">
       {/* ── Hero ───────────────────────────────────────────────────────── */}
       <section
@@ -388,7 +387,7 @@ export function HousesPage() {
 
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
           {/* Label */}
-          <m.div
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15 }}
@@ -398,29 +397,29 @@ export function HousesPage() {
             <span className="text-sm font-medium text-brand-gold font-sans">
               The Academy of Arcanea
             </span>
-          </m.div>
+          </motion.div>
 
           {/* Title */}
-          <m.h1
+          <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25 }}
             className="text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6"
           >
             <span className="text-gradient-cosmic">The Seven Houses</span>
-          </m.h1>
+          </motion.h1>
 
           {/* Subtitle */}
-          <m.p
+          <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35 }}
             className="text-xl md:text-2xl font-body italic text-text-secondary max-w-2xl mx-auto mb-4"
           >
             Every creator finds their home.
-          </m.p>
+          </motion.p>
 
-          <m.p
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45 }}
@@ -429,10 +428,10 @@ export function HousesPage() {
             The Academy is organised into seven Houses, each aligned with a cosmic force.
             Your House does not limit you — it reveals the elemental current that runs
             most naturally through your creative spirit.
-          </m.p>
+          </motion.p>
 
           {/* Divider */}
-          <m.div
+          <motion.div
             initial={{ opacity: 0, scaleX: 0 }}
             animate={{ opacity: 1, scaleX: 1 }}
             transition={{ delay: 0.6, duration: 0.8 }}
@@ -445,14 +444,14 @@ export function HousesPage() {
       <section ref={cardsRef} className="py-16 px-6">
         <div className="max-w-7xl mx-auto">
           {/* Label */}
-          <m.p
+          <motion.p
             initial={{ opacity: 0 }}
             animate={isCardsInView ? { opacity: 1 } : {}}
             transition={{ delay: 0.1 }}
             className="text-xs uppercase tracking-[0.4em] text-text-muted font-sans text-center mb-12"
           >
             Six elemental paths, one harmonising force
-          </m.p>
+          </motion.p>
 
           {/* 3+3 grid for regular houses */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
@@ -480,7 +479,7 @@ export function HousesPage() {
       {/* ── Wisdom Note ────────────────────────────────────────────────── */}
       <section className="py-16 px-6 border-t border-white/[0.04]">
         <div className="max-w-3xl mx-auto">
-          <m.div
+          <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={isCardsInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.6 }}
@@ -496,14 +495,14 @@ export function HousesPage() {
             <p className="text-sm text-text-muted font-sans">
               — Academy Handbook, Chapter I
             </p>
-          </m.div>
+          </motion.div>
         </div>
       </section>
 
       {/* ── CTA ────────────────────────────────────────────────────────── */}
       <section ref={ctaRef} className="py-24 px-6 border-t border-white/[0.04]">
         <div className="max-w-2xl mx-auto text-center">
-          <m.div
+          <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={isCtaInView ? { opacity: 1, y: 0 } : {}}
           >
@@ -530,10 +529,9 @@ export function HousesPage() {
                 Back to Academy
               </Link>
             </div>
-          </m.div>
+          </motion.div>
         </div>
       </section>
     </div>
-    </LazyMotion>
   );
 }

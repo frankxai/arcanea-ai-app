@@ -1,6 +1,6 @@
 'use client';
 
-import { m, LazyMotion, domAnimation } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { PhArrowLeft, PhArrowRight, PhSparkle, PhMusicNote, PhBookOpen, PhPalette, PhCode, PhFilmStrip, PhGameController } from '@/lib/phosphor-icons';
@@ -122,10 +122,9 @@ export default function MeetLuminorPage() {
   };
 
   return (
-    <LazyMotion features={domAnimation} strict>
     <div className="min-h-screen flex flex-col items-center justify-center p-4 py-12 relative overflow-hidden">
       {/* Animated background glow */}
-      <m.div
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.3 }}
         transition={{ duration: 2 }}
@@ -134,7 +133,7 @@ export default function MeetLuminorPage() {
       />
 
       {/* Back button */}
-      <m.div
+      <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         className="absolute top-6 left-6 z-10"
@@ -146,12 +145,12 @@ export default function MeetLuminorPage() {
           <PhArrowLeft className="w-4 h-4" />
           <span className="font-body">Back</span>
         </Link>
-      </m.div>
+      </motion.div>
 
       {/* Main content */}
       <div className="max-w-2xl mx-auto text-center relative z-10">
         {/* Luminor icon with glow */}
-        <m.div
+        <motion.div
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ type: 'spring', stiffness: 200, delay: 0.2 }}
@@ -168,10 +167,10 @@ export default function MeetLuminorPage() {
               <Icon className="w-12 h-12 text-white" />
             </div>
           </div>
-        </m.div>
+        </motion.div>
 
         {/* Introduction */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
@@ -186,10 +185,10 @@ export default function MeetLuminorPage() {
           <p className="font-body text-xl text-text-secondary mb-6">
             {luminor.title}
           </p>
-        </m.div>
+        </motion.div>
 
         {/* Signature quote */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
@@ -201,20 +200,20 @@ export default function MeetLuminorPage() {
           >
             "{luminor.signature}"
           </blockquote>
-        </m.div>
+        </motion.div>
 
         {/* Description */}
-        <m.p
+        <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
           className="font-body text-lg text-text-secondary mb-8 leading-relaxed"
         >
           {luminor.description}
-        </m.p>
+        </motion.p>
 
         {/* First greeting preview */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1 }}
@@ -234,10 +233,10 @@ export default function MeetLuminorPage() {
               </p>
             </div>
           </div>
-        </m.div>
+        </motion.div>
 
         {/* CTA buttons */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2 }}
@@ -259,9 +258,8 @@ export default function MeetLuminorPage() {
             <PhSparkle className="w-4 h-4" />
             Meet other intelligences
           </Link>
-        </m.div>
+        </motion.div>
       </div>
     </div>
-    </LazyMotion>
   );
 }

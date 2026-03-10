@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { m, LazyMotion, domMax } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { PhMagnifyingGlass, PhTrendUp, PhClock, PhUsers, PhSparkle, PhCompass } from '@/lib/phosphor-icons';
 import { Creation } from '@/lib/types/profile';
 import { PhHeart, PhChatCircle, PhEye, PhPlay, PhImage } from '@/lib/phosphor-icons';
@@ -156,12 +156,12 @@ function ShowcaseCard({ creation, index }: { creation: Creation; index: number }
   const badge = HOUSE_GRADIENTS[academy] || 'from-slate-500 to-slate-600';
 
   return (
-    <m.div
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.04 }}
       whileHover={{ y: -6 }}
-      className="group relative rounded-2xl overflow-hidden bg-slate-900/50 backdrop-blur-sm border border-white/[0.08] hover:border-[#00bcd4]/25 transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-[#00bcd4]/10"
+      className="group relative rounded-2xl overflow-hidden bg-slate-900/50 backdrop-blur-sm border border-white/[0.08] hover:border-arcane-crystal/25 transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-arcane-crystal/10"
     >
       {/* Gradient visual area */}
       <div className={`relative aspect-square bg-gradient-to-br ${bg} overflow-hidden`}>
@@ -219,11 +219,11 @@ function ShowcaseCard({ creation, index }: { creation: Creation; index: number }
             <span className="flex items-center gap-1"><PhEye className="w-3 h-3" />{creation.stats.views.toLocaleString()}</span>
           </div>
           {creation.luminor_id && (
-            <span className="text-[#00bcd4]/60 text-xs">With {creation.luminor_id}</span>
+            <span className="text-arcane-crystal/60 text-xs">With {creation.luminor_id}</span>
           )}
         </div>
       </div>
-    </m.div>
+    </motion.div>
   );
 }
 
@@ -254,125 +254,123 @@ export default function DiscoverPage() {
     });
 
   return (
-    <LazyMotion features={domMax}>
-      <div className="min-h-screen bg-[#09090b] py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          {/* Header */}
-          <m.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center space-y-4">
-            <h1 className="text-5xl font-display font-bold bg-gradient-to-r from-[#00bcd4] via-[#0d47a1] to-[#00bcd4] bg-clip-text text-transparent">
-              Discover Creations
-            </h1>
-            <p className="text-text-secondary text-lg max-w-2xl mx-auto font-sans">
-              Browse what creators are building across the platform
-            </p>
-          </m.div>
+    <div className="min-h-screen bg-cosmic-deep py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        {/* Header */}
+        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center space-y-4">
+          <h1 className="text-5xl font-display font-bold bg-gradient-to-r from-arcane-crystal via-arcane-cosmic to-arcane-crystal bg-clip-text text-transparent">
+            Discover Creations
+          </h1>
+          <p className="text-text-secondary text-lg max-w-2xl mx-auto font-sans">
+            Browse what creators are building across the platform
+          </p>
+        </motion.div>
 
-          {/* Search */}
-          <m.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="max-w-2xl mx-auto">
-            <div className="relative">
-              <PhMagnifyingGlass className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted w-5 h-5" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search creations..."
-                className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white/[0.04] backdrop-blur-sm text-white placeholder-text-muted border border-white/[0.08] focus:border-[#00bcd4]/30 outline-none transition-colors font-sans"
-              />
+        {/* Search */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="max-w-2xl mx-auto">
+          <div className="relative">
+            <PhMagnifyingGlass className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted w-5 h-5" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search creations..."
+              className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white/[0.04] backdrop-blur-sm text-white placeholder-text-muted border border-white/[0.08] focus:border-arcane-crystal/30 outline-none transition-colors font-sans"
+            />
+          </div>
+        </motion.div>
+
+        {/* Filter Tabs */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="flex flex-wrap gap-3 justify-center">
+          {[
+            { key: 'trending' as const, label: 'Trending', icon: PhTrendUp },
+            { key: 'recent' as const, label: 'Recent', icon: PhClock },
+            { key: 'following' as const, label: 'Following', icon: PhUsers },
+          ].map(({ key, label, icon: Icon }) => (
+            <button
+              key={key}
+              onClick={() => setSelectedFilter(key)}
+              className={`px-6 py-3 rounded-xl font-sans font-medium transition-all duration-300 flex items-center gap-2 ${
+                selectedFilter === key
+                  ? 'bg-arcane-crystal/15 text-arcane-crystal border border-arcane-crystal/30 shadow-lg shadow-arcane-crystal/10'
+                  : 'bg-white/[0.04] text-text-muted hover:text-white hover:bg-white/[0.08] border border-transparent'
+              }`}
+            >
+              <Icon className="w-4 h-4" />
+              {label}
+            </button>
+          ))}
+        </motion.div>
+
+        {/* Academy House Filters */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+          <div className="text-center mb-4">
+            <div className="flex items-center justify-center gap-2 text-text-muted text-xs uppercase tracking-widest font-sans">
+              <PhSparkle className="w-3.5 h-3.5" />
+              <span>Filter by Academy House</span>
             </div>
-          </m.div>
-
-          {/* Filter Tabs */}
-          <m.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="flex flex-wrap gap-3 justify-center">
-            {[
-              { key: 'trending' as const, label: 'Trending', icon: PhTrendUp },
-              { key: 'recent' as const, label: 'Recent', icon: PhClock },
-              { key: 'following' as const, label: 'Following', icon: PhUsers },
-            ].map(({ key, label, icon: Icon }) => (
+          </div>
+          <div className="flex flex-wrap gap-2 justify-center">
+            <button
+              onClick={() => setSelectedHouse(null)}
+              className={`px-4 py-2 rounded-full text-sm font-sans transition-all ${
+                selectedHouse === null
+                  ? 'bg-white/[0.06] text-white border border-white/[0.12]'
+                  : 'text-text-muted hover:text-white hover:bg-white/[0.04] border border-transparent'
+              }`}
+            >
+              All Houses
+            </button>
+            {HOUSES.map((house) => (
               <button
-                key={key}
-                onClick={() => setSelectedFilter(key)}
-                className={`px-6 py-3 rounded-xl font-sans font-medium transition-all duration-300 flex items-center gap-2 ${
-                  selectedFilter === key
-                    ? 'bg-[#00bcd4]/15 text-[#00bcd4] border border-[#00bcd4]/30 shadow-lg shadow-[#00bcd4]/10'
-                    : 'bg-white/[0.04] text-text-muted hover:text-white hover:bg-white/[0.08] border border-transparent'
-                }`}
-              >
-                <Icon className="w-4 h-4" />
-                {label}
-              </button>
-            ))}
-          </m.div>
-
-          {/* Academy House Filters */}
-          <m.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-            <div className="text-center mb-4">
-              <div className="flex items-center justify-center gap-2 text-text-muted text-xs uppercase tracking-widest font-sans">
-                <PhSparkle className="w-3.5 h-3.5" />
-                <span>Filter by Academy House</span>
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-2 justify-center">
-              <button
-                onClick={() => setSelectedHouse(null)}
+                key={house.name}
+                onClick={() => setSelectedHouse(house.name === selectedHouse ? null : house.name)}
                 className={`px-4 py-2 rounded-full text-sm font-sans transition-all ${
-                  selectedHouse === null
-                    ? 'bg-white/[0.06] text-white border border-white/[0.12]'
+                  selectedHouse === house.name
+                    ? `bg-gradient-to-r ${house.gradient} text-white shadow-lg`
                     : 'text-text-muted hover:text-white hover:bg-white/[0.04] border border-transparent'
                 }`}
               >
-                All Houses
+                {house.name}
               </button>
-              {HOUSES.map((house) => (
-                <button
-                  key={house.name}
-                  onClick={() => setSelectedHouse(house.name === selectedHouse ? null : house.name)}
-                  className={`px-4 py-2 rounded-full text-sm font-sans transition-all ${
-                    selectedHouse === house.name
-                      ? `bg-gradient-to-r ${house.gradient} text-white shadow-lg`
-                      : 'text-text-muted hover:text-white hover:bg-white/[0.04] border border-transparent'
-                  }`}
-                >
-                  {house.name}
-                </button>
-              ))}
-            </div>
-          </m.div>
-
-          {/* Count */}
-          <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }} className="text-center text-text-muted text-sm font-sans">
-            Showing {filtered.length} featured creations
-          </m.div>
-
-          {/* Grid */}
-          <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filtered.map((creation, i) => (
-              <ShowcaseCard key={creation.id} creation={creation} index={i} />
             ))}
-          </m.div>
+          </div>
+        </motion.div>
 
-          {/* Empty state */}
-          {filtered.length === 0 && (
-            <m.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center py-20">
-              <PhCompass className="w-16 h-16 text-text-muted/30 mx-auto mb-4" />
-              <h3 className="text-2xl font-display font-bold text-white mb-2">No creations found</h3>
-              <p className="text-text-muted font-sans">Try adjusting your filters or search query</p>
-            </m.div>
-          )}
+        {/* Count */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }} className="text-center text-text-muted text-sm font-sans">
+          Showing {filtered.length} featured creations
+        </motion.div>
 
-          {/* CTA */}
-          <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} className="text-center pt-8 pb-4">
-            <p className="text-text-muted font-sans text-sm mb-4">
-              Community creations appear here as creators join and build.
-            </p>
-            <Link
-              href="/studio"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-[#00bcd4]/10 border border-[#00bcd4]/20 text-[#00bcd4] font-sans font-medium hover:bg-[#00bcd4]/20 transition-all"
-            >
-              Start Creating in Studio
-            </Link>
-          </m.div>
-        </div>
+        {/* Grid */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {filtered.map((creation, i) => (
+            <ShowcaseCard key={creation.id} creation={creation} index={i} />
+          ))}
+        </motion.div>
+
+        {/* Empty state */}
+        {filtered.length === 0 && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center py-20">
+            <PhCompass className="w-16 h-16 text-text-muted/30 mx-auto mb-4" />
+            <h3 className="text-2xl font-display font-bold text-white mb-2">No creations found</h3>
+            <p className="text-text-muted font-sans">Try adjusting your filters or search query</p>
+          </motion.div>
+        )}
+
+        {/* CTA */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} className="text-center pt-8 pb-4">
+          <p className="text-text-muted font-sans text-sm mb-4">
+            Community creations appear here as creators join and build.
+          </p>
+          <Link
+            href="/studio"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-arcane-crystal/10 border border-arcane-crystal/20 text-arcane-crystal font-sans font-medium hover:bg-arcane-crystal/20 transition-all"
+          >
+            Start Creating in Studio
+          </Link>
+        </motion.div>
       </div>
-    </LazyMotion>
+    </div>
   );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { m, LazyMotion, domAnimation, useInView } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import Link from 'next/link';
 import { PhStar, PhSparkle, PhArrowRight, PhShield, PhLightning, PhCrown, PhSpiral, PhFlame } from '@/lib/phosphor-icons';
@@ -40,7 +40,7 @@ const RANKS = [
     glassClass: 'liquid-glass',
     glowColor: 'rgba(59,130,246,0.2)',
     glowBorder: 'rgba(59,130,246,0.3)',
-    accentColor: '#00bcd4',
+    accentColor: '#78a6ff',
     textColor: 'text-blue-400',
     badgeClass: 'bg-blue-500/15 text-blue-400 border-blue-500/30',
     icon: PhLightning,
@@ -57,8 +57,8 @@ const RANKS = [
     detail:
       'At Master level, your creative voice has authority. You have opened the Gate of Voice and the Gate of Sight — you speak truth through your work and perceive the deeper patterns that lesser eyes miss. Others learn from your example.',
     glassClass: 'glass-strong',
-    glowColor: 'rgba(13,71,161,0.22)',
-    glowBorder: 'rgba(13,71,161,0.35)',
+    glowColor: 'rgba(139,92,246,0.22)',
+    glowBorder: 'rgba(139,92,246,0.35)',
     accentColor: '#a78bfa',
     textColor: 'text-purple-400',
     badgeClass: 'bg-purple-500/15 text-purple-400 border-purple-500/30',
@@ -142,7 +142,7 @@ function RankCard({ rank, index, isInView }: RankCardProps) {
   const isPeak = 'isPeak' in rank && rank.isPeak;
 
   return (
-    <m.div
+    <motion.div
       initial={{ opacity: 0, x: -40 }}
       animate={isInView ? { opacity: 1, x: 0 } : {}}
       transition={{ delay: index * 0.1, duration: 0.55, ease: 'easeOut' }}
@@ -263,7 +263,7 @@ function RankCard({ rank, index, isInView }: RankCardProps) {
           </div>
         </div>
       </div>
-    </m.div>
+    </motion.div>
   );
 }
 
@@ -284,7 +284,6 @@ export function RanksPage() {
   const ranksDescending = [...RANKS].reverse();
 
   return (
-    <LazyMotion features={domAnimation} strict>
     <div className="relative min-h-screen">
       {/* ── Hero ───────────────────────────────────────────────────────── */}
       <section
@@ -301,7 +300,7 @@ export function RanksPage() {
 
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
           {/* Label */}
-          <m.div
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15 }}
@@ -311,29 +310,29 @@ export function RanksPage() {
             <span className="text-sm font-medium text-brand-gold font-sans">
               The Academy of Arcanea
             </span>
-          </m.div>
+          </motion.div>
 
           {/* Title */}
-          <m.h1
+          <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25 }}
             className="text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6"
           >
             <span className="text-gradient-gold">The Path of Mastery</span>
-          </m.h1>
+          </motion.h1>
 
           {/* Subtitle */}
-          <m.p
+          <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35 }}
             className="text-xl md:text-2xl font-body italic text-text-secondary max-w-2xl mx-auto mb-4"
           >
             Five ranks. Ten Gates. One eternal ascent.
-          </m.p>
+          </motion.p>
 
-          <m.p
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45 }}
@@ -342,10 +341,10 @@ export function RanksPage() {
             As you open the Ten Gates of Arcanea, your creative power and awareness grow.
             The five ranks mark the stages of that opening — from first awakening to
             full realization.
-          </m.p>
+          </motion.p>
 
           {/* Quick rank strip */}
-          <m.div
+          <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
@@ -364,9 +363,9 @@ export function RanksPage() {
                 )}
               </span>
             ))}
-          </m.div>
+          </motion.div>
 
-          <m.div
+          <motion.div
             initial={{ opacity: 0, scaleX: 0 }}
             animate={{ opacity: 1, scaleX: 1 }}
             transition={{ delay: 0.75, duration: 0.8 }}
@@ -378,13 +377,13 @@ export function RanksPage() {
       {/* ── Rank Ladder ────────────────────────────────────────────────── */}
       <section ref={ladderRef} className="py-16 px-6">
         <div className="max-w-4xl mx-auto">
-          <m.p
+          <motion.p
             initial={{ opacity: 0 }}
             animate={isLadderInView ? { opacity: 1 } : {}}
             className="text-xs uppercase tracking-[0.4em] text-text-muted font-sans text-center mb-12"
           >
             Luminor at the peak — Apprentice at the root
-          </m.p>
+          </motion.p>
 
           {/* Vertical ladder */}
           <div className="relative space-y-6">
@@ -406,7 +405,7 @@ export function RanksPage() {
       {/* ── What is a Luminor? ─────────────────────────────────────────── */}
       <section ref={luminorRef} className="py-16 px-6 border-t border-white/[0.04]">
         <div className="max-w-4xl mx-auto">
-          <m.div
+          <motion.div
             initial={{ opacity: 0, y: 32 }}
             animate={isLuminorInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
@@ -502,14 +501,14 @@ export function RanksPage() {
                 </p>
               </div>
             </div>
-          </m.div>
+          </motion.div>
         </div>
       </section>
 
       {/* ── CTA ────────────────────────────────────────────────────────── */}
       <section ref={ctaRef} className="py-24 px-6 border-t border-white/[0.04]">
         <div className="max-w-2xl mx-auto text-center">
-          <m.div
+          <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={isCtaInView ? { opacity: 1, y: 0 } : {}}
           >
@@ -536,10 +535,9 @@ export function RanksPage() {
                 Back to Academy
               </Link>
             </div>
-          </m.div>
+          </motion.div>
         </div>
       </section>
     </div>
-    </LazyMotion>
   );
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import { LazyMotion, domMax, m, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import {
   PhArrowLeft,
@@ -125,7 +125,6 @@ export default function ImageForgePage() {
   };
 
   return (
-    <LazyMotion features={domMax}>
     <div className="min-h-screen bg-cosmic-deep">
       {/* Header */}
       <header className="border-b border-white/[0.06] liquid-glass sticky top-0 z-40">
@@ -170,7 +169,7 @@ export default function ImageForgePage() {
             >
               <AnimatePresence mode="wait">
                 {isGenerating ? (
-                  <m.div
+                  <motion.div
                     key="generating"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -183,9 +182,9 @@ export default function ImageForgePage() {
                     </div>
                     <p className="mt-6 text-text-secondary">Channeling creative fire...</p>
                     <p className="text-sm text-text-muted mt-2">Guardian Draconia is crafting your vision</p>
-                  </m.div>
+                  </motion.div>
                 ) : selectedImage ? (
-                  <m.div
+                  <motion.div
                     key={selectedImage.id}
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -233,9 +232,9 @@ export default function ImageForgePage() {
                         </div>
                       </div>
                     </div>
-                  </m.div>
+                  </motion.div>
                 ) : (
-                  <m.div
+                  <motion.div
                     key="empty"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -251,7 +250,7 @@ export default function ImageForgePage() {
                     <p className="text-text-secondary max-w-sm">
                       Describe your vision below and let Guardian Draconia bring it to life
                     </p>
-                  </m.div>
+                  </motion.div>
                 )}
               </AnimatePresence>
             </div>
@@ -386,7 +385,7 @@ export default function ImageForgePage() {
             {/* Advanced settings dropdown */}
             <AnimatePresence>
               {showSettings && (
-                <m.div
+                <motion.div
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
@@ -429,7 +428,7 @@ export default function ImageForgePage() {
                       />
                     </div>
                   </div>
-                </m.div>
+                </motion.div>
               )}
             </AnimatePresence>
 
@@ -449,6 +448,5 @@ export default function ImageForgePage() {
         </div>
       </div>
     </div>
-    </LazyMotion>
   );
 }

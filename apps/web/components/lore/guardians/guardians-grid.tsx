@@ -1,6 +1,6 @@
 'use client';
 
-import { m, useInView } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import Link from 'next/link';
 import { PhArrowRight, PhShield } from '@/lib/phosphor-icons';
@@ -198,7 +198,7 @@ export function GuardiansGrid() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid gap-6">
           {GUARDIANS.map((guardian, i) => (
-            <m.div
+            <motion.div
               key={guardian.id}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -277,7 +277,7 @@ export function GuardiansGrid() {
 
                 {/* Expanded content */}
                 {expandedId === guardian.id && (
-                  <m.div
+                  <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
@@ -336,10 +336,10 @@ export function GuardiansGrid() {
                         </blockquote>
                       </div>
                     </div>
-                  </m.div>
+                  </motion.div>
                 )}
               </div>
-            </m.div>
+            </motion.div>
           ))}
         </div>
       </div>

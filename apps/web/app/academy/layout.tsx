@@ -32,12 +32,12 @@ const jsonLd = {
 
 export default function AcademyLayout({ children }: { children: ReactNode }) {
   return (
-    <div data-guardian="lyssandria">
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       {children}
-    </div>
+    </>
   );
 }

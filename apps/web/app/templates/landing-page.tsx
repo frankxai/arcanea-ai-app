@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { LazyMotion, domAnimation, m } from "framer-motion";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { CosmicCard, CosmicCardContent } from "@/components/ui/cosmic-card";
@@ -161,7 +161,7 @@ function HeroSection({
       <div className="max-w-6xl mx-auto">
         {/* Badge */}
         {config.badge && (
-          <m.div
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -175,46 +175,46 @@ function HeroSection({
                 {config.badge.text}
               </span>
             </div>
-          </m.div>
+          </motion.div>
         )}
 
         {/* Title */}
-        <m.h1
+        <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
           className="text-fluid-3xl md:text-fluid-4xl lg:text-fluid-5xl font-display font-bold text-center mb-4"
         >
           {config.title}
-        </m.h1>
+        </motion.h1>
 
         {/* Subtitle */}
         {config.subtitle && (
-          <m.p
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-xl md:text-2xl text-text-secondary text-center mb-6 font-body"
           >
             {config.subtitle}
-          </m.p>
+          </motion.p>
         )}
 
         {/* Description */}
         {config.description && (
-          <m.p
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
             className="text-text-muted text-center max-w-2xl mx-auto mb-10 font-body leading-relaxed"
           >
             {config.description}
-          </m.p>
+          </motion.p>
         )}
 
         {/* Hero CTA */}
         {hero && (
-          <m.div
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
@@ -238,12 +238,12 @@ function HeroSection({
                 </Button>
               </Link>
             )}
-          </m.div>
+          </motion.div>
         )}
 
         {/* Stats */}
         {stats && stats.length > 0 && (
-          <m.div
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.5 }}
@@ -263,7 +263,7 @@ function HeroSection({
                 </div>
               </div>
             ))}
-          </m.div>
+          </motion.div>
         )}
       </div>
     </section>
@@ -293,7 +293,7 @@ function FeaturesSection({
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, index) => (
-            <m.div
+            <motion.div
               key={feature.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -317,7 +317,7 @@ function FeaturesSection({
                   </CosmicCardContent>
                 </CosmicCard>
               </Link>
-            </m.div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -345,7 +345,7 @@ function TestimonialsSection({
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {testimonials.map((testimonial, index) => (
-            <m.div
+            <motion.div
               key={testimonial.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -376,7 +376,7 @@ function TestimonialsSection({
                   </div>
                 </CosmicCardContent>
               </CosmicCard>
-            </m.div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -411,7 +411,7 @@ function PricingSection({
 
         <div className="grid md:grid-cols-3 gap-6">
           {pricing.map((tier, index) => (
-            <m.div
+            <motion.div
               key={tier.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -462,7 +462,7 @@ function PricingSection({
                   </Link>
                 </CosmicCardContent>
               </CosmicCard>
-            </m.div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -539,7 +539,6 @@ export function LandingPage({
   }
 
   return (
-    <LazyMotion features={domAnimation}>
     <div className={cn("min-h-screen", className)}>
       <HeroSection config={config} hero={hero} stats={stats} />
       <FeaturesSection features={features} />
@@ -547,7 +546,6 @@ export function LandingPage({
       <PricingSection pricing={pricing} />
       <CTASection cta={cta} />
     </div>
-    </LazyMotion>
   );
 }
 

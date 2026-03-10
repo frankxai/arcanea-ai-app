@@ -2,7 +2,7 @@
   "name": "@arcanea/ai-provider",
   "version": "0.1.0",
   "description": "Arcanea Intelligence Gateway provider for the Vercel AI SDK. Curated AI models with intelligent routing.",
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "MIT",
   "author": "Arcanea <hello@arcanea.ai> (https://arcanea.ai)",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

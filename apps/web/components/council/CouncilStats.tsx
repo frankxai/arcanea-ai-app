@@ -1,6 +1,6 @@
 "use client";
 
-import { m } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface CouncilStatsProps {
   streak?: number;
@@ -41,13 +41,13 @@ export function CouncilStats({
       sub: "Sessions completed",
       icon: (
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden>
-          <circle cx="9" cy="9" r="6" stroke="#0d47a1" strokeWidth="1.5" fill="none" />
-          <circle cx="9" cy="9" r="2.5" fill="#0d47a1" opacity="0.7" />
-          <path d="M9 3V6M9 12V15M3 9H6M12 9H15" stroke="#0d47a1" strokeWidth="1.2" strokeLinecap="round" />
+          <circle cx="9" cy="9" r="6" stroke="#6366f1" strokeWidth="1.5" fill="none" />
+          <circle cx="9" cy="9" r="2.5" fill="#6366f1" opacity="0.7" />
+          <path d="M9 3V6M9 12V15M3 9H6M12 9H15" stroke="#6366f1" strokeWidth="1.2" strokeLinecap="round" />
         </svg>
       ),
-      color: "#0d47a1",
-      bg: "rgba(13,71,161,0.08)",
+      color: "#6366f1",
+      bg: "rgba(99,102,241,0.08)",
     },
     {
       label: "Last Convening",
@@ -73,7 +73,7 @@ export function CouncilStats({
       {/* Stat tiles */}
       <div className="grid grid-cols-3 gap-3">
         {stats.map((stat, i) => (
-          <m.div
+          <motion.div
             key={stat.label}
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
@@ -98,7 +98,7 @@ export function CouncilStats({
                 {stat.label}
               </p>
             </div>
-          </m.div>
+          </motion.div>
         ))}
       </div>
 
@@ -114,11 +114,11 @@ export function CouncilStats({
         </div>
 
         <div className="relative h-2 rounded-full bg-white/[0.05] overflow-hidden">
-          <m.div
+          <motion.div
             className="absolute inset-y-0 left-0 rounded-full"
             style={{
               background:
-                "linear-gradient(90deg, #00bcd4, #0d47a1 50%, #f59e0b)",
+                "linear-gradient(90deg, #00bcd4, #6366f1 50%, #f59e0b)",
             }}
             initial={{ width: "0%" }}
             animate={{ width: `${depthPercent}%` }}

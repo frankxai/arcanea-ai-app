@@ -9,11 +9,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient as _createClient } from '@/lib/supabase/server';
-
-// Council tables not yet in generated Supabase types — cast to bypass strict checking
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const createClient = async () => (await _createClient()) as any;
+import { createClient } from '@/lib/supabase/server';
 
 export const runtime = 'nodejs';
 
@@ -60,7 +56,7 @@ export async function GET(_request: NextRequest) {
       );
     }
 
-    const allSeats = (council.seats as Array<{ id: string; is_base: boolean }>) ?? [];
+    const allSeats = council.seats ?? [];
     const base_seat_count = allSeats.filter((s) => s.is_base).length;
     const custom_seat_count = allSeats.filter((s) => !s.is_base).length;
     const total_seat_count = allSeats.length;

@@ -42,7 +42,7 @@ export function VideoTab({ generationState }: VideoTabProps) {
   return (
     <div className="flex h-full overflow-hidden">
       {/* Controls */}
-      <div className="w-80 shrink-0 border-r border-[rgba(13,71,161,0.1)] overflow-y-auto p-5 space-y-5 bg-[rgba(10,10,15,0.3)]">
+      <div className="w-80 shrink-0 border-r border-[rgba(139,92,246,0.1)] overflow-y-auto p-5 space-y-5 bg-[rgba(10,10,15,0.3)]">
         {/* Prompt */}
         <div>
           <label className="text-[10px] uppercase tracking-widest font-mono text-muted-foreground mb-2 block">
@@ -52,7 +52,7 @@ export function VideoTab({ generationState }: VideoTabProps) {
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             rows={4}
-            className="w-full text-xs bg-[#16161f] border border-[rgba(13,71,161,0.15)] rounded-xl p-3 text-foreground placeholder:text-muted-foreground outline-none focus:border-[#0d47a1] transition-colors resize-none leading-relaxed"
+            className="w-full text-xs bg-[#16161f] border border-[rgba(139,92,246,0.15)] rounded-xl p-3 text-foreground placeholder:text-muted-foreground outline-none focus:border-[#8b5cf6] transition-colors resize-none leading-relaxed"
             placeholder="Describe the video scene with movement, mood, and mythic detail…"
           />
         </div>
@@ -71,8 +71,8 @@ export function VideoTab({ generationState }: VideoTabProps) {
             max={30}
             value={duration}
             onChange={(e) => setDuration(parseInt(e.target.value))}
-            className="w-full h-1.5 rounded-full appearance-none bg-[rgba(13,71,161,0.15)] accent-[#0d47a1] cursor-pointer"
-            style={{ accentColor: "#0d47a1" }}
+            className="w-full h-1.5 rounded-full appearance-none bg-[rgba(139,92,246,0.15)] accent-[#8b5cf6] cursor-pointer"
+            style={{ accentColor: "#8b5cf6" }}
           />
           <div className="flex justify-between mt-1">
             <span className="text-[10px] text-muted-foreground font-mono">3s</span>
@@ -93,13 +93,13 @@ export function VideoTab({ generationState }: VideoTabProps) {
                 className={cn(
                   "flex items-start gap-2 p-2 rounded-lg text-left border transition-all duration-200",
                   selectedCamera === cam.id
-                    ? "border-[rgba(13,71,161,0.4)] bg-[rgba(13,71,161,0.12)]"
-                    : "border-[rgba(255,255,255,0.06)] hover:border-[rgba(13,71,161,0.2)] hover:bg-[rgba(13,71,161,0.04)]"
+                    ? "border-[rgba(139,92,246,0.4)] bg-[rgba(139,92,246,0.12)]"
+                    : "border-[rgba(255,255,255,0.06)] hover:border-[rgba(139,92,246,0.2)] hover:bg-[rgba(139,92,246,0.04)]"
                 )}
               >
                 <Camera
                   size={12}
-                  className={selectedCamera === cam.id ? "text-[#0d47a1] mt-0.5 shrink-0" : "text-muted-foreground mt-0.5 shrink-0"}
+                  className={selectedCamera === cam.id ? "text-[#8b5cf6] mt-0.5 shrink-0" : "text-muted-foreground mt-0.5 shrink-0"}
                 />
                 <div>
                   <p className="text-[11px] font-medium text-foreground leading-tight">{cam.label}</p>
@@ -123,8 +123,8 @@ export function VideoTab({ generationState }: VideoTabProps) {
                 className={cn(
                   "px-2.5 py-1 rounded-full text-[11px] border transition-all duration-200",
                   selectedStyle === style
-                    ? "bg-[rgba(13,71,161,0.2)] border-[rgba(13,71,161,0.4)] text-[#a78bfa]"
-                    : "border-[rgba(255,255,255,0.08)] text-muted-foreground hover:text-foreground hover:border-[rgba(13,71,161,0.2)]"
+                    ? "bg-[rgba(139,92,246,0.2)] border-[rgba(139,92,246,0.4)] text-[#a78bfa]"
+                    : "border-[rgba(255,255,255,0.08)] text-muted-foreground hover:text-foreground hover:border-[rgba(139,92,246,0.2)]"
                 )}
               >
                 {style}
@@ -151,8 +151,8 @@ export function VideoTab({ generationState }: VideoTabProps) {
         {generationState === "idle" ? (
           <div className="flex-1 flex flex-col items-center justify-center gap-6 p-10">
             <div className="relative w-full max-w-lg">
-              <div className="aspect-video rounded-2xl border-2 border-dashed border-[rgba(13,71,161,0.2)] bg-[rgba(13,71,161,0.03)] flex flex-col items-center justify-center gap-3">
-                <Sparkle size={44} className="text-[rgba(13,71,161,0.25)]" />
+              <div className="aspect-video rounded-2xl border-2 border-dashed border-[rgba(139,92,246,0.2)] bg-[rgba(139,92,246,0.03)] flex flex-col items-center justify-center gap-3">
+                <Sparkle size={44} className="text-[rgba(139,92,246,0.25)]" />
                 <p className="text-sm text-muted-foreground">Your video will appear here</p>
               </div>
             </div>
@@ -164,12 +164,12 @@ export function VideoTab({ generationState }: VideoTabProps) {
         ) : generationState === "generating" ? (
           <div className="flex-1 flex flex-col items-center justify-center gap-8 p-10">
             <div className="relative w-full max-w-lg">
-              <div className="aspect-video rounded-2xl overflow-hidden shimmer border border-[rgba(13,71,161,0.3)]">
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(13,71,161,0.15)_0%,transparent_70%)]" />
+              <div className="aspect-video rounded-2xl overflow-hidden shimmer border border-[rgba(139,92,246,0.3)]">
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(139,92,246,0.15)_0%,transparent_70%)]" />
               </div>
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-16 h-16 rounded-full bg-[rgba(13,71,161,0.15)] border border-[rgba(13,71,161,0.4)] flex items-center justify-center pulse-glow">
-                  <Sparkle size={24} className="text-[#0d47a1]" style={{ animation: "spin 3s linear infinite" }} />
+                <div className="w-16 h-16 rounded-full bg-[rgba(139,92,246,0.15)] border border-[rgba(139,92,246,0.4)] flex items-center justify-center pulse-glow">
+                  <Sparkle size={24} className="text-[#8b5cf6]" style={{ animation: "spin 3s linear infinite" }} />
                 </div>
               </div>
             </div>
@@ -182,8 +182,8 @@ export function VideoTab({ generationState }: VideoTabProps) {
                 <span>Frame synthesis</span>
                 <span>47%</span>
               </div>
-              <div className="h-1.5 rounded-full bg-[rgba(13,71,161,0.1)] overflow-hidden">
-                <div className="h-full w-[47%] rounded-full bg-gradient-to-r from-[#0d47a1] to-[#00bcd4] shimmer" />
+              <div className="h-1.5 rounded-full bg-[rgba(139,92,246,0.1)] overflow-hidden">
+                <div className="h-full w-[47%] rounded-full bg-gradient-to-r from-[#8b5cf6] to-[#00bcd4] shimmer" />
               </div>
             </div>
           </div>
@@ -216,7 +216,7 @@ export function VideoTab({ generationState }: VideoTabProps) {
               </div>
             </div>
             {/* Video Player */}
-            <div className="relative rounded-2xl overflow-hidden border border-[rgba(13,71,161,0.2)] bg-black group flex-1 max-h-80">
+            <div className="relative rounded-2xl overflow-hidden border border-[rgba(139,92,246,0.2)] bg-black group flex-1 max-h-80">
               <img
                 src="/placeholder.svg?height=320&width=640"
                 alt="Generated video preview"
@@ -225,7 +225,7 @@ export function VideoTab({ generationState }: VideoTabProps) {
               <div className="absolute inset-0 flex items-center justify-center">
                 <button
                   onClick={() => setIsPlaying(!isPlaying)}
-                  className="w-16 h-16 rounded-full bg-[rgba(13,71,161,0.9)] flex items-center justify-center hover:bg-[#0d47a1] transition-colors glow-violet"
+                  className="w-16 h-16 rounded-full bg-[rgba(139,92,246,0.9)] flex items-center justify-center hover:bg-[#8b5cf6] transition-colors glow-violet"
                 >
                   {isPlaying ? <Pause size={24} weight="fill" className="text-white" /> : <Play size={24} weight="fill" className="text-white ml-1" />}
                 </button>
@@ -236,7 +236,7 @@ export function VideoTab({ generationState }: VideoTabProps) {
                   {isPlaying ? <Pause size={16} weight="fill" /> : <Play size={16} weight="fill" />}
                 </button>
                 <div className="flex-1 h-1 rounded-full bg-white/20 overflow-hidden">
-                  <div className="h-full w-[35%] rounded-full bg-[#0d47a1]" />
+                  <div className="h-full w-[35%] rounded-full bg-[#8b5cf6]" />
                 </div>
                 <span className="text-[10px] text-white/60 font-mono">0:03 / 0:{duration.toString().padStart(2, '0')}</span>
                 <button className="text-white/60 hover:text-white transition-colors">
@@ -252,7 +252,7 @@ export function VideoTab({ generationState }: VideoTabProps) {
                 { label: "Duration", value: `${duration}s` },
                 { label: "Resolution", value: "1920×1080" },
               ].map((meta) => (
-                <div key={meta.label} className="flex-1 p-2.5 rounded-lg bg-[rgba(13,71,161,0.05)] border border-[rgba(13,71,161,0.1)] text-center">
+                <div key={meta.label} className="flex-1 p-2.5 rounded-lg bg-[rgba(139,92,246,0.05)] border border-[rgba(139,92,246,0.1)] text-center">
                   <p className="text-[10px] text-muted-foreground">{meta.label}</p>
                   <p className="text-xs font-medium text-foreground mt-0.5">{meta.value}</p>
                 </div>

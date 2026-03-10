@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { LazyMotion, domMax, m, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { PhCaretDown } from '@/lib/phosphor-icons';
 import { cn } from '@/lib/utils';
 
@@ -283,10 +283,9 @@ const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
         </button>
 
         {/* Content */}
-        <LazyMotion features={domMax}>
         <AnimatePresence>
           {isOpen && (
-            <m.div
+            <motion.div
               key="dropdown"
               ref={menuRef}
               role="menu"
@@ -322,10 +321,9 @@ const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
                   ))}
                 </React.Fragment>
               ))}
-            </m.div>
+            </motion.div>
           )}
         </AnimatePresence>
-        </LazyMotion>
       </div>
     );
   }
