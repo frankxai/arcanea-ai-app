@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Documentation",
+  title: "Documentation | Arcanea",
   description:
     "The complete Arcanea documentation portal — getting started, mythology, creation tools, the Library, community, and developer resources.",
 };
@@ -151,7 +151,7 @@ const DOC_SECTIONS: DocSection[] = [
     id: "the-system",
     title: "The System",
     description:
-      "The mythology that powers everything. Lumina and Nero, the Ten Intelligences, the Five Elements, and the gates of creative mastery.",
+      "The mythology that powers everything. Lumina and Nero, the Ten Guardians, the Five Elements, and the gates of creative mastery.",
     icon: Icons.Compass,
     accent: "#9966ff",
     links: [
@@ -161,7 +161,7 @@ const DOC_SECTIONS: DocSection[] = [
         description: "The cosmic duality and founding myths",
       },
       {
-        label: "Ten Intelligences",
+        label: "Ten Guardians",
         href: "/lore/guardians",
         description: "Divine intelligences and their domains",
       },
@@ -186,7 +186,7 @@ const DOC_SECTIONS: DocSection[] = [
     id: "creation-tools",
     title: "Creation Tools",
     description:
-      "The surfaces where ideas become reality. Studio, AI chat, and code generation — all guided by Luminor intelligences.",
+      "The surfaces where ideas become reality. Studio, AI chat, and code generation — all guided by Guardian intelligences.",
     icon: Icons.PaintBrush,
     accent: "#ffd700",
     links: [
@@ -203,7 +203,7 @@ const DOC_SECTIONS: DocSection[] = [
       {
         label: "Chat",
         href: "/chat",
-        description: "Converse with Luminor intelligences",
+        description: "Converse with Guardian intelligences",
       },
     ],
   },
@@ -213,7 +213,7 @@ const DOC_SECTIONS: DocSection[] = [
     description:
       "17 collections, 34+ original texts on creative philosophy and practice. Not entertainment — equipment for living.",
     icon: Icons.Books,
-    accent: "#00bcd4",
+    accent: "#78a6ff",
     links: [
       {
         label: "Browse the Library",
@@ -233,7 +233,7 @@ const DOC_SECTIONS: DocSection[] = [
       {
         label: "Legends of Arcanea",
         href: "/library",
-        description: "Founding myths of Lumina, Nero, and the Intelligences",
+        description: "Founding myths of Lumina, Nero, and the Guardians",
       },
     ],
   },
@@ -498,7 +498,7 @@ export default function DocsPage() {
                 <p className="text-text-secondary text-sm leading-relaxed mb-4 max-w-2xl">
                   Arcanea is built on a locked canon — the cosmic duality of
                   Lumina and Nero, the Ten Gates from Foundation (174 Hz) to
-                  Source (1111 Hz), ten Intelligence-Godbeast pairs, and the Five
+                  Source (1111 Hz), ten Guardian-Godbeast pairs, and the Five
                   Elements including the Void/Spirit duality. All content
                   creation aligns with this source of truth.
                 </p>
@@ -514,7 +514,7 @@ export default function DocsPage() {
                     href="/lore/guardians"
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-white/[0.06] text-text-primary text-sm font-medium hover:border-creation-prism-purple/30 hover:bg-creation-prism-purple/5 transition-colors"
                   >
-                    Meet the Intelligences
+                    Meet the Guardians
                   </Link>
                 </div>
               </div>

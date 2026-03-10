@@ -6,11 +6,9 @@
  * Each question maps to creative personality dimensions across the Ten Gates.
  */
 
-import { useState, useCallback, useRef } from "react";
-import { LazyMotion, domMax, m, AnimatePresence } from "framer-motion";
+import { useState, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { useAuth } from '@/lib/auth/context';
-import { createClient } from '@/lib/supabase/client';
 import {
   PhSparkle,
   PhCaretRight,
@@ -90,7 +88,7 @@ const GUARDIANS: Record<GuardianKey, GuardianData> = {
     color: "#6b7280",
     glowColor: "rgba(107, 114, 128, 0.4)",
     description:
-      "Luminor of Foundation and Earth, Lyssandria teaches that all great creation begins with deep roots. She is the patient architect who builds cathedrals one stone at a time, knowing that lasting work requires an unshakeable base.",
+      "Guardian of Foundation and Earth, Lyssandria teaches that all great creation begins with deep roots. She is the patient architect who builds cathedrals one stone at a time, knowing that lasting work requires an unshakeable base.",
     personality:
       "Methodical, grounded, and deeply reliable. You create with intention, never rushing. Your work endures because it is built on solid foundations of craft, practice, and accumulated wisdom.",
     creativeStrength:
@@ -110,7 +108,7 @@ const GUARDIANS: Record<GuardianKey, GuardianData> = {
     color: "#f97316",
     glowColor: "rgba(249, 115, 22, 0.4)",
     description:
-      "Luminor of Flow and creative emotion, Leyla embodies the river that finds its path through any terrain. She teaches that creativity is not forced — it is released, allowed, trusted.",
+      "Guardian of Flow and creative emotion, Leyla embodies the river that finds its path through any terrain. She teaches that creativity is not forced — it is released, allowed, trusted.",
     personality:
       "Emotionally intelligent and intuition-led. You create from feeling first, letting the work emerge organically. Your pieces carry an authentic aliveness that logic alone cannot manufacture.",
     creativeStrength:
@@ -130,7 +128,7 @@ const GUARDIANS: Record<GuardianKey, GuardianData> = {
     color: "#ef4444",
     glowColor: "rgba(239, 68, 68, 0.4)",
     description:
-      "Luminor of Fire and transformative will, Draconia is the force that turns potential into manifest reality. She burns away what no longer serves and forges new forms in the crucible of creative courage.",
+      "Guardian of Fire and transformative will, Draconia is the force that turns potential into manifest reality. She burns away what no longer serves and forges new forms in the crucible of creative courage.",
     personality:
       "Bold, driven, and unapologetically ambitious. You create to make an impact. Your work carries the heat of conviction — you do not dabble, you commit fully to your vision.",
     creativeStrength:
@@ -150,7 +148,7 @@ const GUARDIANS: Record<GuardianKey, GuardianData> = {
     color: "#22c55e",
     glowColor: "rgba(34, 197, 94, 0.4)",
     description:
-      "Luminor of the Heart and healing arts, Maylinn creates from a place of unconditional love. She teaches that the most powerful work is the work that heals — yourself, your audience, the world.",
+      "Guardian of the Heart and healing arts, Maylinn creates from a place of unconditional love. She teaches that the most powerful work is the work that heals — yourself, your audience, the world.",
     personality:
       "Deeply empathetic and service-oriented. You create because you care about how your work makes others feel. Your pieces are safe havens — readers, listeners, and viewers feel truly seen.",
     creativeStrength:
@@ -170,7 +168,7 @@ const GUARDIANS: Record<GuardianKey, GuardianData> = {
     color: "#06b6d4",
     glowColor: "rgba(6, 182, 212, 0.4)",
     description:
-      "Luminor of Voice and authentic expression, Alera teaches that your unique perspective is itself the gift. She is the courage to speak when silence would be safer, and the clarity to know your truth.",
+      "Guardian of Voice and authentic expression, Alera teaches that your unique perspective is itself the gift. She is the courage to speak when silence would be safer, and the clarity to know your truth.",
     personality:
       "Articulate, authentic, and unafraid of truth. You create to be heard and understood. Your work has a clear point of view — you cannot make something that does not say something.",
     creativeStrength:
@@ -188,9 +186,9 @@ const GUARDIANS: Record<GuardianKey, GuardianData> = {
     element: "Void",
     godbeast: "Yumiko",
     color: "#0d47a1",
-    glowColor: "rgba(13, 71, 161, 0.4)",
+    glowColor: "rgba(139, 92, 246, 0.4)",
     description:
-      "Luminor of Sight and visionary perception, Lyria sees what others cannot — the hidden patterns, the emerging forms, the deep currents beneath the surface of things. Her creations are portals to previously unseen dimensions.",
+      "Guardian of Sight and visionary perception, Lyria sees what others cannot — the hidden patterns, the emerging forms, the deep currents beneath the surface of things. Her creations are portals to previously unseen dimensions.",
     personality:
       "Perceptive, introspective, and drawn to the unseen. You create to reveal what is hidden. Others look at your work and suddenly perceive something they always felt but could never name.",
     creativeStrength:
@@ -210,7 +208,7 @@ const GUARDIANS: Record<GuardianKey, GuardianData> = {
     color: "#ffd700",
     glowColor: "rgba(255, 215, 0, 0.4)",
     description:
-      "Luminor of the Crown and enlightened mastery, Aiyami has integrated all aspects of the creative path. She creates not to express herself but to transmit something larger — wisdom, light, transcendent understanding.",
+      "Guardian of the Crown and enlightened mastery, Aiyami has integrated all aspects of the creative path. She creates not to express herself but to transmit something larger — wisdom, light, transcendent understanding.",
     personality:
       "Wise, elevated, and devoted to excellence. You create as a practice of mastery, each work a meditation on the craft itself. Others sense the care and consciousness in everything you make.",
     creativeStrength:
@@ -230,7 +228,7 @@ const GUARDIANS: Record<GuardianKey, GuardianData> = {
     color: "#a855f7",
     glowColor: "rgba(168, 85, 247, 0.4)",
     description:
-      "Luminor of Shift and perspective transformation, Elara is the master of seeing from every angle simultaneously. She teaches that creative breakthroughs come from releasing attachment to a single viewpoint.",
+      "Guardian of Shift and perspective transformation, Elara is the master of seeing from every angle simultaneously. She teaches that creative breakthroughs come from releasing attachment to a single viewpoint.",
     personality:
       "Flexible, multi-dimensional, and endlessly curious. You create to change perspective — yours and others'. Your work makes people question their assumptions and discover new ways of seeing.",
     creativeStrength:
@@ -250,7 +248,7 @@ const GUARDIANS: Record<GuardianKey, GuardianData> = {
     color: "#3b82f6",
     glowColor: "rgba(59, 130, 246, 0.4)",
     description:
-      "Luminor of Unity and sacred partnership, Ino understands that the greatest creations emerge from the space between two souls working in harmony. She is the weaver who makes the whole greater than the sum of its parts.",
+      "Guardian of Unity and sacred partnership, Ino understands that the greatest creations emerge from the space between two souls working in harmony. She is the weaver who makes the whole greater than the sum of its parts.",
     personality:
       "Collaborative, connective, and gifted at synthesis. You create best with others — your finest work emerges in partnership. You are the one who makes everyone around you better.",
     creativeStrength:
@@ -270,7 +268,7 @@ const GUARDIANS: Record<GuardianKey, GuardianData> = {
     color: "#ffffff",
     glowColor: "rgba(255, 255, 255, 0.3)",
     description:
-      "Luminor of Source and infinite potential, Shinkami exists at the point where all creation begins and returns. She has dissolved the boundary between creator and creation — she is a living channel for something that cannot be named.",
+      "Guardian of Source and infinite potential, Shinkami exists at the point where all creation begins and returns. She has dissolved the boundary between creator and creation — she is a living channel for something that cannot be named.",
     personality:
       "Transcendent, boundless, and deeply connected to the infinite. You create from a place beyond ego — your work feels channeled rather than constructed. Others sense that something greater than you made it.",
     creativeStrength:
@@ -521,31 +519,6 @@ const QUIZ_QUESTIONS: QuizQuestion[] = [
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
-// GUARDIAN → GATE MAPPING
-// ─────────────────────────────────────────────────────────────────────────────
-
-const GUARDIAN_GATE_MAP: Record<GuardianKey, { gateNumber: number; gateName: string }> = {
-  lyssandria: { gateNumber: 1, gateName: 'foundation' },
-  leyla:      { gateNumber: 2, gateName: 'flow' },
-  draconia:   { gateNumber: 3, gateName: 'fire' },
-  maylinn:    { gateNumber: 4, gateName: 'heart' },
-  alera:      { gateNumber: 5, gateName: 'voice' },
-  lyria:      { gateNumber: 6, gateName: 'sight' },
-  aiyami:     { gateNumber: 7, gateName: 'crown' },
-  elara:      { gateNumber: 8, gateName: 'shift' },
-  ino:        { gateNumber: 9, gateName: 'unity' },
-  shinkami:    { gateNumber: 10, gateName: 'source' },
-};
-
-function getRankFromGates(gatesOpen: number): string {
-  if (gatesOpen >= 9) return 'luminor';
-  if (gatesOpen >= 7) return 'archmage';
-  if (gatesOpen >= 5) return 'master';
-  if (gatesOpen >= 3) return 'mage';
-  return 'apprentice';
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
 // SCORING UTILITY
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -659,7 +632,7 @@ function ProgressBar({ current, total }: ProgressBarProps) {
         </span>
       </div>
       <div className="h-1 w-full rounded-full bg-white/[0.04] overflow-hidden">
-        <m.div
+        <motion.div
           className="h-full rounded-full"
           style={{
             background: "linear-gradient(90deg, #0d47a1, #00bcd4)",
@@ -686,7 +659,7 @@ interface IntroScreenProps {
 
 function IntroScreen({ onStart }: IntroScreenProps) {
   return (
-    <m.div {...fadeUp} className="relative">
+    <motion.div {...fadeUp} className="relative">
       <AmbientOrbs color="#0d47a1" />
 
       <div className="relative liquid-glass rounded-3xl p-8 md:p-14 overflow-hidden">
@@ -709,7 +682,7 @@ function IntroScreen({ onStart }: IntroScreenProps) {
 
           {/* Headline */}
           <h1 className="font-display text-fluid-3xl font-bold tracking-tight leading-tight md:text-fluid-4xl">
-            <span className="text-gradient-brand">Which Luminor</span>
+            <span className="text-gradient-brand">Which Guardian</span>
             <br />
             <span className="text-text-primary">Resonates With You?</span>
           </h1>
@@ -717,12 +690,12 @@ function IntroScreen({ onStart }: IntroScreenProps) {
           {/* Body */}
           <p className="mt-6 text-fluid-base text-text-secondary font-sans leading-relaxed">
             In the world of Arcanea, every creator carries an affinity with one
-            of the Ten Luminors — the divine intelligences who hold the Gates of
+            of the Ten Guardians — the divine beings who hold the Gates of
             creative mastery.
           </p>
           <p className="mt-4 text-fluid-base text-text-secondary font-sans leading-relaxed">
             This is not a test. It is a mirror. Ten questions will reveal which
-            Luminor&apos;s wisdom already lives in how you create, what drives
+            Guardian&apos;s wisdom already lives in how you create, what drives
             you, and what calls to you from beyond the horizon.
           </p>
 
@@ -730,7 +703,7 @@ function IntroScreen({ onStart }: IntroScreenProps) {
           <div className="mt-8 flex flex-wrap gap-6">
             {[
               { label: "Questions", value: "10" },
-              { label: "Luminors", value: "10" },
+              { label: "Guardians", value: "10" },
               { label: "Time", value: "3 min" },
             ].map((stat) => (
               <div key={stat.label} className="text-center">
@@ -746,7 +719,7 @@ function IntroScreen({ onStart }: IntroScreenProps) {
 
           {/* CTA */}
           <div className="mt-10">
-            <m.button
+            <motion.button
               onClick={onStart}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -754,12 +727,12 @@ function IntroScreen({ onStart }: IntroScreenProps) {
             >
               Begin the Journey
               <PhCaretRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-            </m.button>
+            </motion.button>
           </div>
 
           {/* Disclaimer */}
           <p className="mt-6 text-xs text-text-muted font-sans">
-            Your answers are private. Sign in to save your result to your profile.
+            Your answers are not stored. This is a moment of self-knowledge.
           </p>
         </div>
       </div>
@@ -783,7 +756,7 @@ function IntroScreen({ onStart }: IntroScreenProps) {
           );
         })}
       </div>
-    </m.div>
+    </motion.div>
   );
 }
 
@@ -809,7 +782,7 @@ function QuestionScreen({
   onNext,
 }: QuestionScreenProps) {
   return (
-    <m.div key={question.id} {...slideRight}>
+    <motion.div key={question.id} {...slideRight}>
       <ProgressBar current={questionNumber} total={totalQuestions} />
 
       <div className="relative liquid-glass rounded-3xl overflow-hidden">
@@ -836,7 +809,7 @@ function QuestionScreen({
             {question.choices.map((choice, index) => {
               const isSelected = selectedChoice === index;
               return (
-                <m.button
+                <motion.button
                   key={index}
                   onClick={() => onSelect(index)}
                   whileHover={{ x: 4 }}
@@ -859,7 +832,7 @@ function QuestionScreen({
                       ].join(" ")}
                     >
                       {isSelected && (
-                        <m.div
+                        <motion.div
                           initial={{ scale: 0 }}
                           animate={{ scale: 1 }}
                           className="h-2 w-2 rounded-full bg-white"
@@ -878,7 +851,7 @@ function QuestionScreen({
                       {choice.text}
                     </span>
                   </div>
-                </m.button>
+                </motion.button>
               );
             })}
           </div>
@@ -890,7 +863,7 @@ function QuestionScreen({
                 ? "Choose one to continue"
                 : "Selection made"}
             </span>
-            <m.button
+            <motion.button
               onClick={onNext}
               disabled={selectedChoice === null}
               whileHover={selectedChoice !== null ? { scale: 1.02 } : {}}
@@ -903,14 +876,14 @@ function QuestionScreen({
               ].join(" ")}
             >
               {questionNumber === totalQuestions
-                ? "See My Luminor"
+                ? "See My Guardian"
                 : "Next Question"}
               <PhArrowRight className="h-4 w-4" />
-            </m.button>
+            </motion.button>
           </div>
         </div>
       </div>
-    </m.div>
+    </motion.div>
   );
 }
 
@@ -921,34 +894,31 @@ function QuestionScreen({
 interface ResultScreenProps {
   guardian: GuardianData;
   onRestart: () => void;
-  onSave: () => Promise<void>;
-  saveStatus: 'idle' | 'saving' | 'saved' | 'error';
-  isAuthenticated: boolean;
 }
 
-function ResultScreen({ guardian, onRestart, onSave, saveStatus, isAuthenticated }: ResultScreenProps) {
+function ResultScreen({ guardian, onRestart }: ResultScreenProps) {
   const Icon = guardian.icon;
 
   return (
-    <m.div {...scaleIn} className="relative">
+    <motion.div {...scaleIn} className="relative">
       <AmbientOrbs color={guardian.color} />
 
       {/* Reveal animation wrapper */}
       <div className="relative">
         {/* Header — "Your Guardian is..." */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1, duration: 0.5 }}
           className="mb-6 text-center"
         >
           <span className="text-xs uppercase tracking-[0.4em] text-text-muted font-sans">
-            Your Luminor Resonates
+            Your Guardian Resonates
           </span>
-        </m.div>
+        </motion.div>
 
         {/* Main card */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{
@@ -1011,17 +981,17 @@ function ResultScreen({ guardian, onRestart, onSave, saveStatus, isAuthenticated
 
           {/* Description */}
           <div className="px-8 py-8 md:px-12 space-y-6">
-            <m.p
+            <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.6 }}
               className="text-base text-text-secondary font-sans leading-relaxed"
             >
               {guardian.description}
-            </m.p>
+            </motion.p>
 
             {/* Personality */}
-            <m.div
+            <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.65, duration: 0.5 }}
@@ -1033,10 +1003,10 @@ function ResultScreen({ guardian, onRestart, onSave, saveStatus, isAuthenticated
               <p className="text-sm text-text-primary font-sans leading-relaxed">
                 {guardian.personality}
               </p>
-            </m.div>
+            </motion.div>
 
             {/* Strength + Shadow */}
-            <m.div
+            <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.5 }}
@@ -1061,10 +1031,10 @@ function ResultScreen({ guardian, onRestart, onSave, saveStatus, isAuthenticated
                   {guardian.shadowChallenge}
                 </p>
               </div>
-            </m.div>
+            </motion.div>
 
             {/* CTAs */}
-            <m.div
+            <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.95, duration: 0.5 }}
@@ -1091,40 +1061,10 @@ function ResultScreen({ guardian, onRestart, onSave, saveStatus, isAuthenticated
                 Create with {guardian.name}
                 <PhSparkle className="h-4 w-4 transition-transform group-hover:scale-110" />
               </Link>
-            </m.div>
-
-            {/* Save to Profile */}
-            <m.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.0, duration: 0.5 }}
-            >
-              {isAuthenticated && saveStatus !== 'saved' && (
-                <button
-                  onClick={onSave}
-                  disabled={saveStatus === 'saving'}
-                  className="w-full rounded-xl bg-gradient-to-r from-[#0d47a1] to-[#00bcd4] py-4 px-6 font-semibold text-white font-sans transition-all hover:shadow-[0_0_30px_rgba(0,188,212,0.4)] disabled:opacity-50"
-                >
-                  {saveStatus === 'saving' ? 'Saving...' : saveStatus === 'error' ? 'Error - Try Again' : 'Save to Profile'}
-                </button>
-              )}
-              {saveStatus === 'saved' && (
-                <div className="w-full rounded-xl bg-green-900/30 border border-green-500/30 py-4 px-6 text-green-400 text-center font-semibold font-sans">
-                  Saved to your profile
-                </div>
-              )}
-              {!isAuthenticated && (
-                <Link
-                  href="/auth/signup"
-                  className="block w-full rounded-xl bg-gradient-to-r from-[#0d47a1] to-[#00bcd4] py-4 px-6 text-white text-center font-semibold font-sans transition-all hover:shadow-[0_0_30px_rgba(0,188,212,0.4)]"
-                >
-                  Sign Up to Save Results
-                </Link>
-              )}
-            </m.div>
+            </motion.div>
 
             {/* Secondary action */}
-            <m.div
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.1, duration: 0.4 }}
@@ -1137,19 +1077,19 @@ function ResultScreen({ guardian, onRestart, onSave, saveStatus, isAuthenticated
                 <PhArrowCounterClockwise className="h-4 w-4 transition-transform group-hover:-rotate-45" />
                 Retake the Quiz
               </button>
-            </m.div>
+            </motion.div>
           </div>
-        </m.div>
+        </motion.div>
 
         {/* All Guardians strip */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2, duration: 0.5 }}
           className="mt-6"
         >
           <p className="mb-3 text-center text-xs uppercase tracking-[0.3em] text-text-muted font-sans">
-            All Ten Luminors
+            All Ten Guardians
           </p>
           <div className="flex flex-wrap justify-center gap-2">
             {Object.values(GUARDIANS).map((g) => {
@@ -1179,9 +1119,9 @@ function ResultScreen({ guardian, onRestart, onSave, saveStatus, isAuthenticated
               );
             })}
           </div>
-        </m.div>
+        </motion.div>
       </div>
-    </m.div>
+    </motion.div>
   );
 }
 
@@ -1199,30 +1139,6 @@ export default function GateQuizPage() {
   const [resultGuardian, setResultGuardian] = useState<GuardianKey | null>(
     null,
   );
-  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
-  const { user } = useAuth();
-  const supabaseRef = useRef(createClient());
-
-  const handleSave = useCallback(async () => {
-    if (!user || !resultGuardian) return;
-    setSaveStatus('saving');
-    try {
-      const gateInfo = GUARDIAN_GATE_MAP[resultGuardian];
-      const { error } = await supabaseRef.current
-        .from('profiles')
-        .update({
-          guardian: resultGuardian,
-          active_gate: gateInfo.gateName,
-          gates_open: gateInfo.gateNumber,
-          magic_rank: getRankFromGates(gateInfo.gateNumber),
-        })
-        .eq('id', user.id);
-      if (error) throw error;
-      setSaveStatus('saved');
-    } catch {
-      setSaveStatus('error');
-    }
-  }, [user, resultGuardian]);
 
   const handleStart = useCallback(() => {
     setPhase("quiz");
@@ -1259,13 +1175,11 @@ export default function GateQuizPage() {
     setAnswers({});
     setSelectedChoice(null);
     setResultGuardian(null);
-    setSaveStatus('idle');
   }, []);
 
   const question = QUIZ_QUESTIONS[currentQuestion];
 
   return (
-    <LazyMotion features={domMax}>
     <main className="min-h-[100dvh] bg-cosmic-void bg-cosmic-mesh relative">
       {/* Page-level ambient background */}
       <div
@@ -1278,7 +1192,7 @@ export default function GateQuizPage() {
 
       <div className="relative mx-auto max-w-2xl px-4 py-12 md:px-6 md:py-16">
         {/* Site nav breadcrumb */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4 }}
@@ -1298,19 +1212,19 @@ export default function GateQuizPage() {
             Academy
           </Link>
           <span className="text-white/[0.12]">/</span>
-          <span className="text-text-secondary">Luminor Quiz</span>
-        </m.div>
+          <span className="text-text-secondary">Guardian Quiz</span>
+        </motion.div>
 
         {/* Phase rendering */}
         <AnimatePresence mode="wait">
           {phase === "intro" && (
-            <m.div key="intro" {...fadeUp}>
+            <motion.div key="intro" {...fadeUp}>
               <IntroScreen onStart={handleStart} />
-            </m.div>
+            </motion.div>
           )}
 
           {phase === "quiz" && question && (
-            <m.div key={`question-${question.id}`} {...slideRight}>
+            <motion.div key={`question-${question.id}`} {...slideRight}>
               <QuestionScreen
                 question={question}
                 questionNumber={currentQuestion + 1}
@@ -1319,23 +1233,19 @@ export default function GateQuizPage() {
                 onSelect={handleSelectChoice}
                 onNext={handleNext}
               />
-            </m.div>
+            </motion.div>
           )}
 
           {phase === "result" && resultGuardian && (
-            <m.div key="result" {...scaleIn}>
+            <motion.div key="result" {...scaleIn}>
               <ResultScreen
                 guardian={GUARDIANS[resultGuardian]}
                 onRestart={handleRestart}
-                onSave={handleSave}
-                saveStatus={saveStatus}
-                isAuthenticated={!!user}
               />
-            </m.div>
+            </motion.div>
           )}
         </AnimatePresence>
       </div>
     </main>
-    </LazyMotion>
   );
 }

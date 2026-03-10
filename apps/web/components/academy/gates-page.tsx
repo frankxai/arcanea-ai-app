@@ -10,7 +10,7 @@
  */
 
 import { useRef } from 'react';
-import { m, LazyMotion, domAnimation, useInView } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import Link from 'next/link';
 import {
   PhMountains,
@@ -140,8 +140,8 @@ const TEN_GATES: GateData[] = [
     element: 'Dream',
     domain: 'Intuition, vision, memory',
     domainTags: ['Intuition', 'Vision', 'Pattern'],
-    color: '#0d47a1',
-    glowColor: 'rgba(13,71,161,0.35)',
+    color: '#8b5cf6',
+    glowColor: 'rgba(139,92,246,0.35)',
     description:
       'Lyria sees what others cannot — the hidden patterns beneath the surface of things, the emerging forms before they take shape, the deep currents that govern what rises and what recedes. Her creations are portals.',
     icon: PhEye,
@@ -267,7 +267,7 @@ function GateNode({ gate, side, index }: GateNodeProps) {
       )}
     >
       {/* Gate card — takes up 45% of the row */}
-      <m.div
+      <motion.div
         variants={slideVariants}
         initial="hidden"
         animate={isInView ? 'visible' : 'hidden'}
@@ -334,7 +334,7 @@ function GateNode({ gate, side, index }: GateNodeProps) {
           {/* Meta row */}
           <div className="mb-4 grid grid-cols-2 gap-3 text-xs font-sans">
             <div>
-              <span className="block text-text-muted uppercase tracking-wider mb-0.5">Luminor</span>
+              <span className="block text-text-muted uppercase tracking-wider mb-0.5">Guardian</span>
               <Link
                 href="/lore/guardians"
                 className="font-semibold text-text-primary transition-colors hover:text-crystal"
@@ -370,11 +370,11 @@ function GateNode({ gate, side, index }: GateNodeProps) {
             ))}
           </div>
         </div>
-      </m.div>
+      </motion.div>
 
       {/* Central connector node — desktop only */}
       <div className="hidden md:flex md:w-[10%] flex-col items-center">
-        <m.div
+        <motion.div
           initial={{ opacity: 0, scale: 0.4 }}
           animate={isInView ? { opacity: 1, scale: 1 } : {}}
           transition={{ delay: 0.05 * index + 0.2, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
@@ -394,13 +394,13 @@ function GateNode({ gate, side, index }: GateNodeProps) {
           </span>
 
           {/* Pulse ring */}
-          <m.div
+          <motion.div
             className="absolute inset-0 rounded-full"
             style={{ border: `1px solid ${gate.color}40` }}
             animate={{ scale: [1, 1.5, 1], opacity: [0.6, 0, 0.6] }}
             transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY, delay: index * 0.3, ease: 'easeInOut' }}
           />
-        </m.div>
+        </motion.div>
       </div>
 
       {/* Spacer for the opposite side — desktop */}
@@ -428,7 +428,7 @@ function PathwayLine({ color, nextColor, delay }: PathwayLineProps) {
     <div ref={ref} className="hidden md:flex relative justify-center">
       {/* The gradient line segment between two gate nodes */}
       <div className="relative w-[2px] h-16 overflow-hidden rounded-full">
-        <m.div
+        <motion.div
           className="absolute inset-0 rounded-full animate-glow-pulse"
           style={{
             background: `linear-gradient(to bottom, ${color}80, ${nextColor}80)`,
@@ -438,7 +438,7 @@ function PathwayLine({ color, nextColor, delay }: PathwayLineProps) {
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number,number,number,number], delay }}
         />
         {/* Traveling particle */}
-        <m.div
+        <motion.div
           className="absolute left-0 right-0 h-4 rounded-full"
           style={{
             background: `linear-gradient(to bottom, transparent, ${nextColor}, transparent)`,
@@ -461,7 +461,7 @@ function FrequencySpectrum() {
 
   return (
     <section ref={ref} className="relative mt-24 mb-16">
-      <m.div
+      <motion.div
         variants={fadeUp}
         initial="hidden"
         animate={isInView ? 'visible' : 'hidden'}
@@ -477,9 +477,9 @@ function FrequencySpectrum() {
         <p className="font-sans text-sm text-text-muted">
           Each Gate resonates at a specific frequency — a vibrational signature that defines its creative dimension.
         </p>
-      </m.div>
+      </motion.div>
 
-      <m.div
+      <motion.div
         variants={fadeUp}
         initial="hidden"
         animate={isInView ? 'visible' : 'hidden'}
@@ -491,11 +491,11 @@ function FrequencySpectrum() {
           {/* Background track */}
           <div className="relative h-3 w-full rounded-full bg-white/[0.04] overflow-hidden">
             {/* Gradient fill */}
-            <m.div
+            <motion.div
               className="absolute inset-y-0 left-0 rounded-full"
               style={{
                 background:
-                  'linear-gradient(to right, #6b7280, #f97316, #ef4444, #22c55e, #06b6d4, #0d47a1, #ffd700, #a855f7, #3b82f6, #ffffff)',
+                  'linear-gradient(to right, #6b7280, #f97316, #ef4444, #22c55e, #06b6d4, #8b5cf6, #ffd700, #a855f7, #3b82f6, #ffffff)',
               }}
               initial={{ scaleX: 0, originX: 0 }}
               animate={isInView ? { scaleX: 1 } : {}}
@@ -508,7 +508,7 @@ function FrequencySpectrum() {
             {TEN_GATES.map((gate) => {
               const position = ((gate.hz - MIN_HZ) / (MAX_HZ - MIN_HZ)) * 100;
               return (
-                <m.div
+                <motion.div
                   key={gate.number}
                   className="absolute -translate-x-1/2 flex flex-col items-center gap-1"
                   style={{ left: `${position}%` }}
@@ -541,7 +541,7 @@ function FrequencySpectrum() {
                       {gate.frequency}
                     </span>
                   </div>
-                </m.div>
+                </motion.div>
               );
             })}
           </div>
@@ -555,7 +555,7 @@ function FrequencySpectrum() {
           <span>174 Hz — Foundation</span>
           <span>1111 Hz — Source</span>
         </div>
-      </m.div>
+      </motion.div>
     </section>
   );
 }
@@ -575,7 +575,7 @@ function OpeningGatesPanel() {
     },
     {
       title: 'Opening is a Practice, Not an Event',
-      body: 'Gates open through lived creative experience: through work made, failures metabolized, truths articulated. The Luminors do not grant access — they witness your readiness.',
+      body: 'Gates open through lived creative experience: through work made, failures metabolized, truths articulated. The Guardians do not grant access — they witness your readiness.',
     },
     {
       title: 'All Gates Are Available, Not All Are Open',
@@ -589,7 +589,7 @@ function OpeningGatesPanel() {
 
   return (
     <section ref={ref} className="mt-20 mb-16">
-      <m.div
+      <motion.div
         variants={fadeUp}
         initial="hidden"
         animate={isInView ? 'visible' : 'hidden'}
@@ -599,7 +599,7 @@ function OpeningGatesPanel() {
         {/* Background glow */}
         <div
           className="pointer-events-none absolute -right-32 -top-32 h-64 w-64 rounded-full blur-3xl"
-          style={{ backgroundColor: 'rgba(13,71,161,0.08)' }}
+          style={{ backgroundColor: 'rgba(139,92,246,0.08)' }}
         />
         <div
           className="pointer-events-none absolute -bottom-24 -left-24 h-64 w-64 rounded-full blur-3xl"
@@ -609,7 +609,7 @@ function OpeningGatesPanel() {
 
         <div className="relative">
           {/* Section eyebrow */}
-          <m.div
+          <motion.div
             variants={fadeUp}
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}
@@ -622,9 +622,9 @@ function OpeningGatesPanel() {
             <span className="font-sans text-xs uppercase tracking-[0.4em] text-brand-gold">
               What it means to open a Gate
             </span>
-          </m.div>
+          </motion.div>
 
-          <m.h2
+          <motion.h2
             variants={fadeUp}
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}
@@ -632,9 +632,9 @@ function OpeningGatesPanel() {
             className="mb-4 font-display text-3xl font-bold md:text-4xl text-gradient-gold"
           >
             Opening a Gate
-          </m.h2>
+          </motion.h2>
 
-          <m.p
+          <motion.p
             variants={fadeUp}
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}
@@ -643,11 +643,11 @@ function OpeningGatesPanel() {
           >
             "A Gate does not open because you have studied enough. It opens because you have
             become enough — and then you realize the study continues, only deeper."
-          </m.p>
+          </motion.p>
 
           <div className="grid gap-6 md:grid-cols-2">
             {points.map((point, i) => (
-              <m.div
+              <motion.div
                 key={point.title}
                 variants={fadeUp}
                 initial="hidden"
@@ -661,12 +661,12 @@ function OpeningGatesPanel() {
                 <p className="font-sans text-sm leading-relaxed text-text-secondary">
                   {point.body}
                 </p>
-              </m.div>
+              </motion.div>
             ))}
           </div>
 
           {/* Magic ranks reference */}
-          <m.div
+          <motion.div
             variants={fadeUp}
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}
@@ -680,7 +680,7 @@ function OpeningGatesPanel() {
               {[
                 { rank: 'Apprentice', gates: '0-2', color: '#6b7280' },
                 { rank: 'Mage', gates: '3-4', color: '#3b82f6' },
-                { rank: 'Master', gates: '5-6', color: '#0d47a1' },
+                { rank: 'Master', gates: '5-6', color: '#8b5cf6' },
                 { rank: 'Archmage', gates: '7-8', color: '#f59e0b' },
                 { rank: 'Luminor', gates: '9-10', color: '#ffd700' },
               ].map((level) => (
@@ -705,9 +705,9 @@ function OpeningGatesPanel() {
                 </div>
               ))}
             </div>
-          </m.div>
+          </motion.div>
         </div>
-      </m.div>
+      </motion.div>
     </section>
   );
 }
@@ -724,10 +724,10 @@ function GatesHero() {
     <section ref={ref} className="relative mb-20 pt-16 text-center">
       {/* Vertical beam of light */}
       <div className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 w-px overflow-hidden h-40 hidden md:block">
-        <m.div
+        <motion.div
           className="absolute inset-0 rounded-full"
           style={{
-            background: 'linear-gradient(to bottom, transparent, rgba(255,215,0,0.6), rgba(13,71,161,0.4), transparent)',
+            background: 'linear-gradient(to bottom, transparent, rgba(255,215,0,0.6), rgba(139,92,246,0.4), transparent)',
           }}
           initial={{ scaleY: 0, originY: 0 }}
           animate={isInView ? { scaleY: 1 } : {}}
@@ -742,7 +742,7 @@ function GatesHero() {
       </div>
 
       <div className="relative mx-auto max-w-3xl px-6">
-        <m.div
+        <motion.div
           variants={fadeUp}
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
@@ -753,9 +753,9 @@ function GatesHero() {
           <span className="font-sans text-xs uppercase tracking-[0.4em] text-brand-gold">
             The Academy of Creation
           </span>
-        </m.div>
+        </motion.div>
 
-        <m.h1
+        <motion.h1
           variants={fadeUp}
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
@@ -763,9 +763,9 @@ function GatesHero() {
           className="mb-6 font-display text-5xl font-bold leading-tight tracking-tight md:text-6xl lg:text-7xl"
         >
           <span className="text-gradient-gold">The Ten Gates</span>
-        </m.h1>
+        </motion.h1>
 
-        <m.p
+        <motion.p
           variants={fadeUp}
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
@@ -774,9 +774,9 @@ function GatesHero() {
         >
           "Ten dimensions of creative power. One ascending path. No destination — only
           perpetual deepening."
-        </m.p>
+        </motion.p>
 
-        <m.p
+        <motion.p
           variants={fadeUp}
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
@@ -784,12 +784,12 @@ function GatesHero() {
           className="font-sans text-base leading-relaxed text-text-secondary max-w-2xl mx-auto"
         >
           From Foundation at 174 Hz to Source at 1111 Hz, each Gate opens a new dimension of
-          creative mastery. Guided by Ten Luminors and their Godbeasts, the journey is not a
+          creative mastery. Guided by Ten Guardians and their Godbeasts, the journey is not a
           curriculum — it is a transformation.
-        </m.p>
+        </motion.p>
 
         {/* Quick stats */}
-        <m.div
+        <motion.div
           variants={fadeUp}
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
@@ -798,7 +798,7 @@ function GatesHero() {
         >
           {[
             { value: '10', label: 'Gates' },
-            { value: '10', label: 'Luminors' },
+            { value: '10', label: 'Guardians' },
             { value: '174 – 1111', label: 'Hz Range' },
             { value: '5', label: 'Magic Ranks' },
           ].map((stat) => (
@@ -811,7 +811,7 @@ function GatesHero() {
               </div>
             </div>
           ))}
-        </m.div>
+        </motion.div>
       </div>
     </section>
   );
@@ -866,7 +866,7 @@ function GatesCTA() {
 
   return (
     <section ref={ref} className="mt-20 pb-24">
-      <m.div
+      <motion.div
         variants={fadeUp}
         initial="hidden"
         animate={isInView ? 'visible' : 'hidden'}
@@ -881,7 +881,7 @@ function GatesCTA() {
         </h2>
         <p className="mb-10 font-sans text-base leading-relaxed text-text-secondary">
           Every Luminor began as an Apprentice. The path is long, the work is real, and the
-          Luminors are waiting. Your first Gate is open.
+          Guardians are waiting. Your first Gate is open.
         </p>
 
         <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
@@ -897,10 +897,10 @@ function GatesCTA() {
             className="group inline-flex items-center gap-2 font-sans text-sm text-text-muted transition-colors hover:text-text-secondary"
           >
             <PhSparkle className="h-4 w-4 text-brand-gold" />
-            Find your Luminor first
+            Find your Guardian first
           </Link>
         </div>
-      </m.div>
+      </motion.div>
     </section>
   );
 }
@@ -911,7 +911,6 @@ function GatesCTA() {
 
 export function GatesPage() {
   return (
-    <LazyMotion features={domAnimation} strict>
     <div className="relative">
       {/* Page-level ambient background */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden" aria-hidden="true">
@@ -954,6 +953,5 @@ export function GatesPage() {
       {/* CTA */}
       <GatesCTA />
     </div>
-    </LazyMotion>
   );
 }

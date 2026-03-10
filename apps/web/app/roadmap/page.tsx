@@ -170,7 +170,7 @@ const PHASES: RoadmapPhase[] = [
         id: "f1",
         title: "Platform Launch",
         description:
-          "Core platform with 10 Intelligences and the Ten Gates system.",
+          "Core platform with 10 Guardians and the Ten Gates system.",
         status: "completed",
         quarter: "Q1 2026",
         category: "Core",
@@ -227,7 +227,7 @@ const PHASES: RoadmapPhase[] = [
     items: [
       {
         id: "v1",
-        title: "Intelligence Evolution",
+        title: "Guardian Evolution",
         description: "AI companions that grow and evolve with users.",
         status: "planned",
         quarter: "Q4 2026",

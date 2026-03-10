@@ -1,6 +1,6 @@
 'use client';
 
-import { m, useInView, AnimatePresence, LazyMotion, domAnimation } from 'framer-motion';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 import { PhQuotes, PhCaretLeft, PhCaretRight, PhStar } from '@/lib/phosphor-icons';
 
@@ -28,7 +28,7 @@ const TESTIMONIALS = [
   {
     id: 3,
     quote: "Ten archetypal intelligences, each attuned to a different creative frequency. From Draconia's transformative fire to Maylinn's healing wind — find the voice that resonates.",
-    author: 'The Luminors',
+    author: 'The Guardians',
     role: 'Living Intelligences',
     avatar: 'GI',
     color: 'gold-bright',
@@ -100,7 +100,6 @@ export function TestimonialsV2() {
   const activeTestimonial = TESTIMONIALS[activeIndex];
 
   return (
-    <LazyMotion features={domAnimation}>
     <section ref={ref} className="py-32 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 -z-10">
@@ -109,7 +108,7 @@ export function TestimonialsV2() {
 
       <div className="max-w-6xl mx-auto px-6">
         {/* Header */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
@@ -124,10 +123,10 @@ export function TestimonialsV2() {
           <p className="text-xl text-text-secondary max-w-2xl mx-auto">
             34 original texts, Ten Gates of progression, and a living mythology for the age of creation.
           </p>
-        </m.div>
+        </motion.div>
 
         {/* Testimonial carousel */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ delay: 0.2 }}
@@ -136,7 +135,7 @@ export function TestimonialsV2() {
           {/* Main testimonial */}
           <div className="relative min-h-[400px] flex items-center justify-center">
             <AnimatePresence custom={direction} mode="wait">
-              <m.div
+              <motion.div
                 key={activeTestimonial.id}
                 custom={direction}
                 variants={variants}
@@ -187,7 +186,7 @@ export function TestimonialsV2() {
                     </div>
                   </div>
                 </div>
-              </m.div>
+              </motion.div>
             </AnimatePresence>
           </div>
 
@@ -228,17 +227,17 @@ export function TestimonialsV2() {
               <PhCaretRight className="w-5 h-5" />
             </button>
           </div>
-        </m.div>
+        </motion.div>
 
         {/* Stats */}
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.4 }}
           className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 pt-12 border-t border-white/[0.06]"
         >
           {[
-            { value: '10', label: 'Luminor Archetypes' },
+            { value: '10', label: 'Guardian Archetypes' },
             { value: '7', label: 'Wisdom Frameworks' },
             { value: '34+', label: 'Original Texts' },
             { value: '50K+', label: 'Words of Wisdom' },
@@ -250,9 +249,8 @@ export function TestimonialsV2() {
               <div className="text-sm text-text-muted">{stat.label}</div>
             </div>
           ))}
-        </m.div>
+        </motion.div>
       </div>
     </section>
-    </LazyMotion>
   );
 }

@@ -292,13 +292,13 @@ const LINKS: LinkItem[] = [
   {
     href: "/lore",
     label: "Lore & Mythology",
-    description: "The cosmic story of Lumina, Nero, and the Ten Intelligences",
+    description: "The cosmic story of Lumina, Nero, and the Ten Guardians",
     icon: <Icons.Compass />,
     color: "from-void-el to-brand-primary",
   },
   {
     href: "/lore/guardians",
-    label: "The Ten Intelligences",
+    label: "The Ten Guardians",
     description: "Gods, Goddesses, and their sacred Godbeasts",
     icon: <Icons.Shield />,
     color: "from-fire to-brand-gold",
@@ -312,7 +312,7 @@ const LINKS: LinkItem[] = [
   },
   {
     href: "/academy/gate-quiz",
-    label: "Which Intelligence Are You?",
+    label: "Which Guardian Are You?",
     description: "Take the quiz. Discover your creative nature",
     icon: <Icons.Compass />,
     color: "from-brand-primary to-fire",
