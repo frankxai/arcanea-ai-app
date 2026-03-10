@@ -787,7 +787,7 @@ Some creators photograph the full spread before sorting, creating a record of ea
 
 ## The Solstice Renewal
 
-*Aligned with the Crown Gate (714 Hz) and the Source (1111 Hz) — Aiyami and Shinkami's teaching*
+*Aligned with the Crown Gate (741 Hz) and the Source (1111 Hz) — Aiyami and Shinkami's teaching*
 
 ### The Practice
 

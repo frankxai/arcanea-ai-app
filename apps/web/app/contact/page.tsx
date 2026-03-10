@@ -196,7 +196,7 @@ const FAQS: FaqItem[] = [
   {
     question: "Is Arcanea free to use?",
     answer:
-      "Yes! The Spark plan is free and includes 3 companions, Library browsing, and Academy access. Creator ($19/mo) and Studio ($49/mo) plans unlock all 16 companions and full creation tools.",
+      "Yes! The Spark plan is free and includes 3 Luminors, Library browsing, and Academy access. Creator ($19/mo) and Studio ($49/mo) plans unlock all 16 Luminors and full creation tools.",
   },
   {
     question: "Can I build on Arcanea?",
@@ -493,7 +493,7 @@ export default function ContactPage() {
                     Ready to Begin?
                   </h2>
                   <p className="text-text-secondary font-body leading-relaxed mb-8">
-                    Begin your journey through the Ten Gates. Your companion awaits.
+                    Begin your journey through the Ten Gates. Your Luminor awaits.
                   </p>
                   <div className="flex flex-wrap justify-center gap-4">
                     <Link
