@@ -179,8 +179,11 @@ Source: `.arcanea/projects/milestones/`
   - [x] WCAG focus rings: 5 studio textareas (text, image, code, music modes) (Mar 10)
   - [x] WCAG focus rings: studio/image select + input, lore/library search input (Mar 10)
   - [x] WCAG focus rings: 9 prompt-books inputs/selects across 6 files (Mar 10)
+  - [x] WCAG focus rings: completed all bare focus:outline-none — 21 files fixed (studio creation-panels 5, prompt-books 12, chat InputArea/Sidebar, council ConveningFlow, templates 2, v3 hero-chat-box) (Mar 10)
+  - [x] Anti-slop: "begin your journey" on glossary, "Your imagination awaits" on imagine page (Mar 10)
+  - [x] Error boundaries: added error.tsx to companions, discover, feedback, lore, profile, prompt-books, settings (Mar 10)
+  - [x] WCAG audit complete: only 2 bare focus:outline-none remain (library modal container, headless UI Menu.Items — both containers, not interactive elements)
   - [ ] Core Web Vitals audit (Lighthouse — cannot run locally in WSL2)
-  - [ ] Remaining WCAG 2.2 deep audit (62→~20 remaining items)
 - **Files**: `m009-performance-polish.arc`
 
 ### M010: Language & Experience Transformation (100%) — COMPLETE

@@ -45,7 +45,7 @@ const PRINCIPLES = [
 
 const ECOSYSTEM = [
   { name: 'Open Source', opacity: 0.5 },
-  { name: 'Source Available', opacity: 0.5 },
+  { name: 'MIT Licensed', opacity: 0.5 },
   { name: 'GitHub', opacity: 0.5 },
   { name: 'npm', opacity: 0.5 },
   { name: '37+ Packages', opacity: 0.5 },
