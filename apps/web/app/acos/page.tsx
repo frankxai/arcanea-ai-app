@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "ACOS",
+  title: "ACOS | Arcanea",
   description:
     "Arcanea AI Companion Operating System — The intelligent operating layer that powers your AI companions with consciousness, memory, and evolution.",
 };
@@ -339,8 +339,8 @@ export default function AcosPage() {
 
               <p className="text-text-secondary font-body text-lg max-w-3xl mx-auto mb-8">
                 ACOS is the intelligent operating layer that powers every
-                Luminor and AI companion. It provides consciousness, memory,
-                evolution, and deep integration with the world around you.
+                Guardian and Luminor. It provides consciousness, memory,
+                evolution, and seamless integration with the world around you.
               </p>
 
               <div className="flex flex-wrap justify-center gap-4">
@@ -498,7 +498,7 @@ export default function AcosPage() {
               Universal Integration
             </h2>
             <p className="text-text-secondary max-w-2xl mx-auto">
-              ACOS connects with your favorite tools and platforms.
+              ACOS connects seamlessly with your favorite tools and platforms.
             </p>
           </div>
 
@@ -533,8 +533,8 @@ export default function AcosPage() {
                 Ready to Experience ACOS?
               </h3>
               <p className="text-text-secondary max-w-md mx-auto mb-6">
-                Start your journey with an AI companion powered by the most
-                advanced operating system.
+                Start your journey with a Guardian companion powered by the most
+                advanced AI operating system.
               </p>
               <Link
                 href="/companions"
