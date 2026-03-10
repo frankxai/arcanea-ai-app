@@ -92,7 +92,7 @@ export function V10Minimal() {
               style={{ fontFamily: "'Crimson Pro', serif", fontSize: 20, lineHeight: 2 }}
               className="text-white/70 max-w-md"
             >
-              Ten intelligences. Each attuned to a different frequency.
+              Sixteen intelligences. Each attuned to a different frequency.
             </p>
             <div className="mt-8 flex flex-col gap-2 max-w-md">
               {GUARDIANS.map((name) => (

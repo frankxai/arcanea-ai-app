@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
+import { m, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import Link from 'next/link';
 import { PhArrowRight, PhShield } from '@/lib/phosphor-icons';
@@ -135,7 +135,7 @@ const GUARDIANS = [
   {
     id: 'elara',
     name: 'Elara',
-    title: 'Guardian of Shift',
+    title: 'Guardian of Starweave',
     gate: 8,
     frequency: '852 Hz',
     godbeast: 'Vaelith',
@@ -174,7 +174,7 @@ const GUARDIANS = [
     title: 'The Unified',
     gate: 10,
     frequency: '1111 Hz',
-    godbeast: 'Amaterasu',
+    godbeast: 'Source',
     godbestType: 'Cosmic wolf of starlight',
     element: 'All/None',
     wisdom: 'Orakis',
@@ -198,7 +198,7 @@ export function GuardiansGrid() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid gap-6">
           {GUARDIANS.map((guardian, i) => (
-            <motion.div
+            <m.div
               key={guardian.id}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -277,7 +277,7 @@ export function GuardiansGrid() {
 
                 {/* Expanded content */}
                 {expandedId === guardian.id && (
-                  <motion.div
+                  <m.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
@@ -336,10 +336,10 @@ export function GuardiansGrid() {
                         </blockquote>
                       </div>
                     </div>
-                  </motion.div>
+                  </m.div>
                 )}
               </div>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>

@@ -11,7 +11,7 @@ const GUARDIANS = [
   { name: 'Alera',      element: 'Voice',  hz: 528,  gradient: 'linear-gradient(160deg, #2a5a5a 0%, #3a6a6a 40%, #1a4a4a 100%)' },
   { name: 'Lyria',      element: 'Sight',  hz: 639,  gradient: 'linear-gradient(160deg, #3a2a6b 0%, #4a3a7b 40%, #2a1a5b 100%)' },
   { name: 'Aiyami',     element: 'Crown',  hz: 741,  gradient: 'linear-gradient(160deg, #5a5a2a 0%, #6a6a3a 40%, #4a4a1a 100%)' },
-  { name: 'Elara',      element: 'Shift',  hz: 852,  gradient: 'linear-gradient(160deg, #4a4a5a 0%, #5a5a6a 40%, #3a3a4a 100%)' },
+  { name: 'Elara',      element: 'Starweave',  hz: 852,  gradient: 'linear-gradient(160deg, #4a4a5a 0%, #5a5a6a 40%, #3a3a4a 100%)' },
   { name: 'Ino',        element: 'Unity',  hz: 963,  gradient: 'linear-gradient(160deg, #3a5a4a 0%, #2a6a5a 40%, #1a4a3a 100%)' },
   { name: 'Shinkami',   element: 'Source',  hz: 1111, gradient: 'linear-gradient(160deg, #3a2a2a 0%, #2a1a1a 40%, #5a4a3a 100%)' },
 ] as const;

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Resource Hub | Arcanea",
+  title: "Resource Hub",
   description: "Your central hub for Arcanea resources, updates, guides, and tools. Everything you need to master creative intelligence.",
 };
 
@@ -13,7 +13,7 @@ const SECTIONS = [
     description: "Daily activity log and platform announcements",
     icon: "📡",
     href: "/hub/updates",
-    color: "#8B5CF6",
+    color: "#0d47a1",
     stats: "Live feed",
   },
   {

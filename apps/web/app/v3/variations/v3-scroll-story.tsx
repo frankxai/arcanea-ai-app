@@ -17,7 +17,7 @@ const GUARDIANS: { name: string; el: string; hz: number; c: string; Icon: Phosph
   { name: 'Alera',      el: 'Voice',  hz: 528,  c: '#a78bfa', Icon: Wind },
   { name: 'Lyria',      el: 'Sight',  hz: 639,  c: '#c084fc', Icon: Eye },
   { name: 'Aiyami',     el: 'Crown',  hz: 741,  c: '#fbbf24', Icon: Crown },
-  { name: 'Elara',      el: 'Shift',  hz: 852,  c: '#94a3b8', Icon: Spiral },
+  { name: 'Elara',      el: 'Starweave',  hz: 852,  c: '#94a3b8', Icon: Spiral },
   { name: 'Ino',        el: 'Unity',  hz: 963,  c: '#7fffd4', Icon: Lightning },
   { name: 'Shinkami',   el: 'Source', hz: 1111, c: '#ffd700', Icon: Sun },
 ];

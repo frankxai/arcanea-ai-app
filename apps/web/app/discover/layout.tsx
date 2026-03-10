@@ -1,10 +1,10 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Discover | Explore Creative Worlds | Arcanea',
+  title: 'Discover | Explore Creative Worlds',
   description: 'Explore creators, collections, and creations across the Arcanea universe.',
   openGraph: {
-    title: 'Discover | Arcanea',
+    title: 'Discover',
     description: 'Explore creators, collections, and creations across the Arcanea universe.',
   },
 };

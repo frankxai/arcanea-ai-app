@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: 'Reset Password',
   description: 'Reset your Arcanea account password.',
   openGraph: {
-    title: 'Reset Password | Arcanea',
+    title: 'Reset Password',
     description: 'Reset your Arcanea account password.',
   },
 };

@@ -46,7 +46,7 @@ const guardians: Guardian[] = [
     name: "Leyla",
     gate: "Flow",
     element: "Water",
-    color: "#78a6ff",
+    color: "#00bcd4",
     frequency: 285,
   },
   {
@@ -92,7 +92,7 @@ const guardians: Guardian[] = [
   {
     id: "8",
     name: "Elara",
-    gate: "Shift",
+    gate: "Starweave",
     element: "Wind",
     color: "#00ff88",
     frequency: 852,
@@ -102,7 +102,7 @@ const guardians: Guardian[] = [
     name: "Ino",
     gate: "Unity",
     element: "Water",
-    color: "#78a6ff",
+    color: "#00bcd4",
     frequency: 963,
   },
   {

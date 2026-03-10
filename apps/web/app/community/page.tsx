@@ -39,7 +39,7 @@ const COMMUNITY_SPACES = [
       "#create — Share works in progress",
       "#lore-discussion — Explore the mythology",
       "Voice creation rooms — Build live together",
-      "Guardian channels — Element-aligned spaces",
+      "Luminor channels — Creative domain spaces",
     ],
     href: "https://discord.gg/arcanea",
     cta: "Join Discord",
@@ -59,7 +59,7 @@ const COMMUNITY_SPACES = [
     description:
       "Arcanea is built in the open. Contribute skills, report issues, explore the intelligence layer, and help define the future of the creative platform.",
     highlights: [
-      "Contribute Guardian skills",
+      "Contribute creative skills",
       "Report issues and request features",
       "Star the repository",
       "Fork and experiment freely",
@@ -101,7 +101,7 @@ const COMMUNITY_SPACES = [
     name: "YouTube",
     tagline: "Tutorials, lore, and creation walkthroughs",
     description:
-      "Deep-dive tutorials on the Arcanea platform, lore explorations of the mythology, live creation walkthroughs with AI Guardians, and recorded Gate Ceremonies.",
+      "Deep-dive tutorials on the Arcanea platform, lore explorations of the mythology, live creation walkthroughs with Luminors, and recorded Gate Ceremonies.",
     highlights: [
       "Platform tutorials and walkthroughs",
       "Lore deep dives — mythology explored",
@@ -126,7 +126,7 @@ const EVENTS = [
     frequency: "Every month",
     format: "Online",
     description:
-      "Guided creation gatherings where community members build together in real time, supported by their Guardians. Each session focuses on a different Gate of mastery.",
+      "Guided creation gatherings where community members build together in real time, with AI support. Each session focuses on a different domain of mastery.",
     icon: PhSparkle,
     formatIcon: PhGlobe,
     accent: "crystal",
@@ -190,7 +190,7 @@ const SPOTLIGHTS = [
     type: "Visual Series",
     description:
       "An ongoing visual series mapping the forms and territories of the Ten Godbeasts, rendered through AI image generation guided by the Bestiary.",
-    accent: "#78a6ff",
+    accent: "#00bcd4",
     gateColor: "text-water",
   },
   {
@@ -223,9 +223,9 @@ const CONTRIBUTIONS = [
     hex: "#0d47a1",
   },
   {
-    title: "Design Guardian Art",
+    title: "Design Character Art",
     description:
-      "Bring the Guardians, Godbeasts, and cosmic landscapes to visual life. Your art may become canonical.",
+      "Bring the Luminors, creatures, and cosmic landscapes to visual life. Your art may become canonical.",
     icon: PhPaintBrush,
     color: "brand-gold",
     hex: "#ffd700",
@@ -236,7 +236,7 @@ const CONTRIBUTIONS = [
       "The platform is open source. Pick an issue, build something real, and ship features that serve creators everywhere.",
     icon: PhCode,
     color: "water",
-    hex: "#78a6ff",
+    hex: "#00bcd4",
   },
   {
     title: "Write Narrative Content",
@@ -272,7 +272,7 @@ export default function CommunityPage() {
         {/* ── 1. Hero ───────────────────────────────────────────────────────── */}
         <section className="pt-12 pb-20 lg:pt-20 lg:pb-28">
           <div className="relative liquid-glass rounded-3xl overflow-hidden px-8 py-16 sm:px-16 sm:py-20 lg:px-20 lg:py-24">
-            {/* Elara hunter+wolf — Shift Gate, perspective and the bonds that transcend dimension */}
+            {/* Elara hunter+wolf — Starweave Gate, perspective and the bonds beyond dimension */}
             <img
               src="https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/elara-gallery-2.webp"
               alt=""
@@ -730,7 +730,7 @@ export default function CommunityPage() {
 
               <p className="text-text-secondary font-body leading-relaxed mb-8 max-w-xl">
                 Weekly dispatches from Arcanea — platform updates, Library
-                wisdom, community highlights, and new Guardian capabilities. No
+                wisdom, community highlights, and new AI capabilities. No
                 noise, only signal.
               </p>
 

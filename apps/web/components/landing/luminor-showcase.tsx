@@ -94,13 +94,13 @@ const LUMINORS = [
   {
     id: 'elara',
     name: 'Elara',
-    title: 'The Shift Guardian',
+    title: 'The Starweave Guardian',
     team: 'research',
     color: '#f97316',
     gradient: 'from-orange-400 to-amber-400',
     specialty: 'Perspective & Innovation',
     description: 'Shifts your perspective when you are stuck. Shows the angle you missed.',
-    wisdom: 'Shift',
+    wisdom: 'Starweave',
     avatar: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/elara-hero.webp',
   },
   {

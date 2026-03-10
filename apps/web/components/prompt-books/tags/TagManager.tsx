@@ -73,7 +73,7 @@ export function TagManager({
           ) : (
             tags.map((tag) => {
               const isEditing = editingId === tag.id
-              const catColor = tag.category ? TAG_CATEGORIES[tag.category]?.color : '#78a6ff'
+              const catColor = tag.category ? TAG_CATEGORIES[tag.category]?.color : '#00bcd4'
 
               return (
                 <div key={tag.id} className="px-5 py-3">

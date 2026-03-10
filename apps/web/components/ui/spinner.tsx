@@ -27,7 +27,7 @@ const spinnerVariants = cva(
         water: 'border-t-water border-[rgba(120,166,255,0.15)]',
         void: 'border-t-[#9966ff] border-[rgba(153,102,255,0.15)]',
         gold: 'border-t-brand-gold border-[rgba(255,215,0,0.15)]',
-        brand: 'border-t-brand-primary border-[rgba(139,92,246,0.15)]',
+        brand: 'border-t-brand-primary border-[rgba(13,71,161,0.15)]',
         white: 'border-t-white border-[rgba(255,255,255,0.15)]',
       },
     },

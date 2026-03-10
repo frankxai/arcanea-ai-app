@@ -57,7 +57,7 @@ const homepageArchitecture = [
   {
     block: "Three Pillars",
     intent: "Establish ecosystem depth without overwhelm.",
-    modules: "Ten Intelligences, The Library, The Academy with quantified proof points.",
+    modules: "Sixteen Intelligences, The Library, The Academy with quantified proof points.",
   },
   {
     block: "Guardian Gallery",

@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { createPortal } from 'react-dom';
 import { PhX } from '@/lib/phosphor-icons';
-import { motion, AnimatePresence } from 'framer-motion';
+import { LazyMotion, domAnimation, m, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 // ─── Focus trap ──────────────────────────────────────────────────────────────
@@ -235,6 +235,7 @@ function Modal({
   if (!mounted) return null;
 
   return createPortal(
+    <LazyMotion features={domAnimation}>
     <AnimatePresence>
       {isOpen && (
         <div
@@ -242,7 +243,7 @@ function Modal({
           role="presentation"
         >
           {/* Backdrop */}
-          <motion.div
+          <m.div
             key="backdrop"
             variants={backdropVariants}
             initial="hidden"
@@ -254,7 +255,7 @@ function Modal({
           />
 
           {/* Panel */}
-          <motion.div
+          <m.div
             key="panel"
             ref={panelRef}
             variants={panelVariants}
@@ -277,10 +278,11 @@ function Modal({
             )}
           >
             {children}
-          </motion.div>
+          </m.div>
         </div>
       )}
-    </AnimatePresence>,
+    </AnimatePresence>
+    </LazyMotion>,
     document.body
   );
 }

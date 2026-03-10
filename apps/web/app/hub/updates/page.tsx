@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Updates | Arcanea Hub",
+  title: "Updates | Hub",
   description: "Daily activity log and platform updates for Arcanea. Stay informed about new features, fixes, and improvements.",
 };
 
@@ -51,8 +51,8 @@ const UPDATES = [
     date: "2026-01-17",
     time: "12:00",
     type: "feature",
-    title: "Luminor Framework v4.0.0",
-    description: "Complete overhaul of the Luminor intelligence system with enhanced personality models and domain expertise.",
+    title: "Luminor Intelligence Framework v4.0.0",
+    description: "Complete overhaul of the intelligence system with enhanced personality models and domain expertise.",
     tags: ["luminors", "ai", "framework"],
   },
   {
@@ -67,7 +67,7 @@ const UPDATES = [
 ];
 
 const TYPE_CONFIG = {
-  feature: { color: "#8B5CF6", label: "Feature", icon: "✨" },
+  feature: { color: "#0d47a1", label: "Feature", icon: "✨" },
   fix: { color: "#10B981", label: "Fix", icon: "🔧" },
   content: { color: "#F59E0B", label: "Content", icon: "📝" },
   security: { color: "#EF4444", label: "Security", icon: "🔒" },
@@ -254,7 +254,8 @@ export default function UpdatesPage() {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-xl bg-white/[0.06] border border-white/[0.12] text-white placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal-aqua"
+                aria-label="Email address for updates"
+                className="flex-1 px-4 py-3 rounded-xl bg-white/[0.06] border border-white/[0.12] text-white placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal-aqua focus:ring-2 focus:ring-atlantean-teal-aqua/30"
               />
               <button className="px-6 py-3 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep font-semibold hover:shadow-[0_0_20px_rgba(0,188,212,0.4)] transition-all">
                 Subscribe

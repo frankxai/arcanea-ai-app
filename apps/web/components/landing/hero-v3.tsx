@@ -227,7 +227,7 @@ export function HeroV3() {
               A creation platform built on original mythology and philosophy.
             </p>
             <p className="text-base sm:text-lg md:text-xl text-white/[0.75] mt-1.5 font-normal">
-              Ten intelligences. A library of 34 texts. Tools that think with you.
+              Sixteen intelligences. A library of 34 texts. Tools that think with you.
             </p>
           </motion.div>
 

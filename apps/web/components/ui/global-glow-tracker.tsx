@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { motion, useSpring, useMotionValue } from "framer-motion";
+import { LazyMotion, domAnimation, m, useSpring, useMotionValue } from "framer-motion";
 import { useMouseStore } from "@/hooks/use-mouse-store";
 
 export function GlobalGlowTracker() {
@@ -37,22 +37,24 @@ export function GlobalGlowTracker() {
   }, [mouseX, mouseY, isVisibleStore, setMouse, setIsVisible]);
 
   return (
-    <motion.div
-      className="pointer-events-none fixed inset-0 z-30 overflow-hidden"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: isVisibleStore ? 1 : 0 }}
-    >
-      <motion.div
-        className="absolute w-[600px] h-[600px] rounded-full"
-        style={{
-          x: springX,
-          y: springY,
-          translateX: "-50%",
-          translateY: "-50%",
-          background: "radial-gradient(circle, rgba(0, 188, 212, 0.08) 0%, rgba(139, 92, 246, 0.03) 40%, transparent 70%)",
-          filter: "blur(60px)",
-        }}
-      />
-    </motion.div>
+    <LazyMotion features={domAnimation}>
+      <m.div
+        className="pointer-events-none fixed inset-0 z-30 overflow-hidden"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isVisibleStore ? 1 : 0 }}
+      >
+        <m.div
+          className="absolute w-[600px] h-[600px] rounded-full"
+          style={{
+            x: springX,
+            y: springY,
+            translateX: "-50%",
+            translateY: "-50%",
+            background: "radial-gradient(circle, rgba(0, 188, 212, 0.08) 0%, rgba(13, 71, 161, 0.03) 40%, transparent 70%)",
+            filter: "blur(60px)",
+          }}
+        />
+      </m.div>
+    </LazyMotion>
   );
 }

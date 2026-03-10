@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
+import { MotionProvider } from '@/lib/motion';
 import {
   Gauge,
   Package,
@@ -42,7 +43,7 @@ import {
 const ELEMENT_COLORS: Record<ElementVariant, string> = {
   crystal: 'text-[#00bcd4]',
   fire: 'text-[#ff6b35]',
-  water: 'text-[#78a6ff]',
+  water: 'text-[#00bcd4]',
   void: 'text-[#9966ff]',
   gold: 'text-[#ffd700]',
   brand: 'text-[#0d47a1]',
@@ -51,7 +52,7 @@ const ELEMENT_COLORS: Record<ElementVariant, string> = {
 const ELEMENT_BG: Record<ElementVariant, string> = {
   crystal: 'bg-[#00bcd4]/10 border-[#00bcd4]/20',
   fire: 'bg-[#ff6b35]/10 border-[#ff6b35]/20',
-  water: 'bg-[#78a6ff]/10 border-[#78a6ff]/20',
+  water: 'bg-[#00bcd4]/10 border-[#00bcd4]/20',
   void: 'bg-[#9966ff]/10 border-[#9966ff]/20',
   gold: 'bg-[#ffd700]/10 border-[#ffd700]/20',
   brand: 'bg-[#0d47a1]/10 border-[#0d47a1]/20',
@@ -72,7 +73,7 @@ const HEALTH_ICON: Record<PackageHealth, { icon: typeof CheckCircle; className: 
 
 const ACTIVITY_ICONS: Record<ActivityEntry['category'], { icon: typeof Rocket; className: string }> = {
   feature: { icon: Rocket, className: 'text-[#00bcd4]' },
-  build: { icon: Package, className: 'text-[#78a6ff]' },
+  build: { icon: Package, className: 'text-[#00bcd4]' },
   deploy: { icon: Lightning, className: 'text-[#ffd700]' },
   milestone: { icon: Target, className: 'text-[#9966ff]' },
   fix: { icon: ShieldCheck, className: 'text-[#ff6b35]' },
@@ -97,7 +98,7 @@ function StatCard({ icon: Icon, label, value, accent }: {
   accent: string;
 }) {
   return (
-    <motion.div
+    <m.div
       variants={fadeUp}
       className="liquid-glass rounded-xl p-5 border border-white/[0.06] hover:border-white/[0.12] transition-colors"
     >
@@ -108,7 +109,7 @@ function StatCard({ icon: Icon, label, value, accent }: {
         <span className="text-xs font-mono uppercase tracking-wider text-text-muted">{label}</span>
       </div>
       <span className="text-2xl font-bold text-text-primary tabular-nums">{value}</span>
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -117,7 +118,7 @@ function MilestoneCard({ milestone }: { milestone: Milestone }) {
   const bgClass = ELEMENT_BG[milestone.element];
 
   return (
-    <motion.div
+    <m.div
       variants={fadeUp}
       className={`rounded-xl p-5 border transition-colors hover:bg-white/[0.02] ${bgClass}`}
     >
@@ -163,7 +164,7 @@ function MilestoneCard({ milestone }: { milestone: Milestone }) {
           </span>
         )}
       </div>
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -236,6 +237,7 @@ export default function CommandCenterPage() {
   const sprintPercent = Math.round((CURRENT_SPRINT.completed / CURRENT_SPRINT.capacity) * 100);
 
   return (
+    <MotionProvider>
     <div className="relative min-h-screen">
       {/* Background */}
       <div className="fixed inset-0 -z-10">
@@ -245,11 +247,11 @@ export default function CommandCenterPage() {
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <motion.div initial="hidden" animate="visible" variants={stagger}>
+        <m.div initial="hidden" animate="visible" variants={stagger}>
 
           {/* ── Section A: Hero + Stats ─────────────────────────────── */}
           <section className="mb-12">
-            <motion.div
+            <m.div
               variants={fadeUp}
               className="relative liquid-glass rounded-3xl overflow-hidden px-8 py-10 sm:px-12 sm:py-14 mb-8"
             >
@@ -281,40 +283,40 @@ export default function CommandCenterPage() {
                   </div>
                 )}
               </div>
-            </motion.div>
+            </m.div>
 
             {/* Stats Strip */}
-            <motion.div variants={stagger} className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <m.div variants={stagger} className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <StatCard icon={Package} label="Workspace Packages" value={ECOSYSTEM_STATS.workspacePackages} accent="bg-[#00bcd4]/10 text-[#00bcd4]" />
-              <StatCard icon={Eye} label="Pages Live" value={ECOSYSTEM_STATS.pagesLive} accent="bg-[#78a6ff]/10 text-[#78a6ff]" />
+              <StatCard icon={Eye} label="Pages Live" value={ECOSYSTEM_STATS.pagesLive} accent="bg-[#00bcd4]/10 text-[#00bcd4]" />
               <StatCard icon={Rocket} label="Published to npm" value={ECOSYSTEM_STATS.publishedNpm} accent="bg-[#9966ff]/10 text-[#9966ff]" />
               <StatCard icon={Target} label="Active Milestones" value={ECOSYSTEM_STATS.activeMilestones} accent="bg-[#ffd700]/10 text-[#ffd700]" />
-            </motion.div>
+            </m.div>
           </section>
 
           {/* ── Section B: Milestones ──────────────────────────────── */}
           <section className="mb-12">
-            <motion.div variants={fadeUp} className="flex items-center gap-3 mb-6">
+            <m.div variants={fadeUp} className="flex items-center gap-3 mb-6">
               <Target weight="duotone" className="w-6 h-6 text-[#ffd700]" />
               <h2 className="text-xl font-display font-semibold text-text-primary">Milestones</h2>
-            </motion.div>
+            </m.div>
 
-            <motion.div variants={stagger} className="grid md:grid-cols-2 gap-6">
-              {milestones.map((m) => (
-                <MilestoneCard key={m.id} milestone={m} />
+            <m.div variants={stagger} className="grid md:grid-cols-2 gap-6">
+              {milestones.map((ms) => (
+                <MilestoneCard key={ms.id} milestone={ms} />
               ))}
-            </motion.div>
+            </m.div>
           </section>
 
           {/* ── Section C: Package Registry ────────────────────────── */}
           <section className="mb-12">
-            <motion.div variants={fadeUp} className="flex items-center gap-3 mb-6">
+            <m.div variants={fadeUp} className="flex items-center gap-3 mb-6">
               <Package weight="duotone" className="w-6 h-6 text-[#00bcd4]" />
               <h2 className="text-xl font-display font-semibold text-text-primary">Package Registry</h2>
-            </motion.div>
+            </m.div>
 
             {/* Tier Tabs */}
-            <motion.div variants={fadeUp} className="flex flex-wrap gap-2 mb-4">
+            <m.div variants={fadeUp} className="flex flex-wrap gap-2 mb-4">
               {PACKAGE_TIERS.map((tier) => (
                 <button
                   key={tier.id}
@@ -332,10 +334,10 @@ export default function CommandCenterPage() {
                   </span>
                 </button>
               ))}
-            </motion.div>
+            </m.div>
 
             {/* Active Tier Description */}
-            <motion.div variants={fadeUp}>
+            <m.div variants={fadeUp}>
               {PACKAGE_TIERS.filter((t) => t.id === activeTier).map((tier) => (
                 <div key={tier.id}>
                   <p className="text-sm text-text-muted mb-4 flex items-center gap-2">
@@ -352,19 +354,19 @@ export default function CommandCenterPage() {
                   </div>
                 </div>
               ))}
-            </motion.div>
+            </m.div>
           </section>
 
           {/* ── Section D: Sprint & Activity ───────────────────────── */}
           <section className="mb-12">
-            <motion.div variants={fadeUp} className="flex items-center gap-3 mb-6">
-              <Lightning weight="duotone" className="w-6 h-6 text-[#78a6ff]" />
+            <m.div variants={fadeUp} className="flex items-center gap-3 mb-6">
+              <Lightning weight="duotone" className="w-6 h-6 text-[#00bcd4]" />
               <h2 className="text-xl font-display font-semibold text-text-primary">Sprint & Activity</h2>
-            </motion.div>
+            </m.div>
 
-            <motion.div variants={stagger} className="grid md:grid-cols-2 gap-6">
+            <m.div variants={stagger} className="grid md:grid-cols-2 gap-6">
               {/* Sprint Progress */}
-              <motion.div variants={fadeUp} className="liquid-glass rounded-xl border border-white/[0.06] p-6">
+              <m.div variants={fadeUp} className="liquid-glass rounded-xl border border-white/[0.06] p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div>
                     <h3 className="font-semibold text-text-primary">{CURRENT_SPRINT.id}: {CURRENT_SPRINT.name}</h3>
@@ -405,7 +407,7 @@ export default function CommandCenterPage() {
                       <p className="text-[10px] font-mono uppercase text-text-muted mt-1">Agents</p>
                     </div>
                     <div className="text-center">
-                      <span className="text-sm font-bold text-[#78a6ff] tabular-nums">{ECOSYSTEM_STATS.loreTexts}</span>
+                      <span className="text-sm font-bold text-[#00bcd4] tabular-nums">{ECOSYSTEM_STATS.loreTexts}</span>
                       <p className="text-[10px] font-mono uppercase text-text-muted mt-1">Lore Texts</p>
                     </div>
                     <div className="text-center">
@@ -414,10 +416,10 @@ export default function CommandCenterPage() {
                     </div>
                   </div>
                 )}
-              </motion.div>
+              </m.div>
 
               {/* Activity Timeline */}
-              <motion.div variants={fadeUp} className="liquid-glass rounded-xl border border-white/[0.06] p-6">
+              <m.div variants={fadeUp} className="liquid-glass rounded-xl border border-white/[0.06] p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="font-semibold text-text-primary">Recent Activity</h3>
                   {!isBuilder && (
@@ -451,22 +453,22 @@ export default function CommandCenterPage() {
                     );
                   })}
                 </div>
-              </motion.div>
-            </motion.div>
+              </m.div>
+            </m.div>
           </section>
 
           {/* ── Audit Notes (builder-only) ─────────────────────────── */}
           {isBuilder && (
             <section className="mb-12">
-              <motion.div variants={fadeUp} className="flex items-center gap-3 mb-6">
+              <m.div variants={fadeUp} className="flex items-center gap-3 mb-6">
                 <Warning weight="duotone" className="w-6 h-6 text-[#ff6b35]" />
                 <h2 className="text-xl font-display font-semibold text-text-primary">Audit Notes</h2>
                 <span className="text-xs text-text-muted">(builder-only)</span>
-              </motion.div>
+              </m.div>
 
-              <motion.div variants={stagger} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <m.div variants={stagger} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {AUDIT_NOTES.map((note) => (
-                  <motion.div
+                  <m.div
                     key={note.id}
                     variants={fadeUp}
                     className={`liquid-glass rounded-xl p-4 border transition-colors ${
@@ -490,14 +492,15 @@ export default function CommandCenterPage() {
                     </div>
                     <h4 className="text-sm font-medium text-text-primary mb-1">{note.title}</h4>
                     <p className="text-xs text-text-muted">{note.detail}</p>
-                  </motion.div>
+                  </m.div>
                 ))}
-              </motion.div>
+              </m.div>
             </section>
           )}
 
-        </motion.div>
+        </m.div>
       </main>
     </div>
+    </MotionProvider>
   );
 }

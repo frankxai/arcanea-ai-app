@@ -29,28 +29,28 @@ const FEATURES: CodeFeature[] = [
   {
     title: "CLI Tools",
     description:
-      "Powerful command-line interface for scaffolding projects, running Guardian agents, and managing your Arcanea workspace from the terminal.",
+      "Powerful command-line interface for scaffolding projects, running AI agents, and managing your Arcanea workspace from the terminal.",
     icon: <PhTerminal weight="thin" size={24} />,
     accent: "var(--color-creation-prism-purple)",
   },
   {
     title: "MCP Server",
     description:
-      "Model Context Protocol server exposing 30+ specialized tools — memory search, Guardian invocation, lore queries, and intelligence routing.",
+      "Model Context Protocol server exposing 30+ specialized tools — memory search, AI invocation, lore queries, and intelligence routing.",
     icon: <PhPackage weight="thin" size={24} />,
     accent: "var(--color-atlantean-teal-aqua)",
   },
   {
     title: "TypeScript SDK",
     description:
-      "Fully typed SDK with zero `any` types. Strict interfaces for every Guardian, Gate, and intelligence layer interaction.",
+      "Fully typed SDK with zero `any` types. Strict interfaces for every Luminor, Gate, and intelligence layer interaction.",
     icon: <PhBracketsCurly weight="thin" size={24} />,
     accent: "var(--color-gold-bright)",
   },
   {
     title: "Git Integration",
     description:
-      "Arcanea-aware version control workflows. Commit hooks, branch naming conventions tied to Gates, and Guardian-reviewed pull requests.",
+      "Arcanea-aware version control workflows. Commit hooks, branch naming conventions tied to Gates, and AI-reviewed pull requests.",
     icon: <PhGitBranch weight="thin" size={24} />,
     accent: "var(--color-draconic-crimson)",
   },
@@ -81,21 +81,21 @@ const QUICK_START = [
     step: "02",
     title: "Initialize Project",
     code: "arcanea init my-app",
-    note: "Scaffolds with TypeScript, MCP, and Guardian config",
+    note: "Scaffolds with TypeScript, MCP, and AI config",
   },
   {
     step: "03",
     title: "Start Creating",
     code: "arcanea dev",
-    note: "Dev server with hot-reload Guardian sidebar",
+    note: "Dev server with hot-reload AI sidebar",
   },
 ];
 
 const VSCODE_FEATURES = [
-  "Guardian AI assistant panel — invoke any of the 10 Guardians inline",
-  "`.arcanea` project config support — per-workspace Guardian presets",
+  "AI assistant panel — invoke any of the 16 Luminors inline",
+  "`.arcanea` project config support — per-workspace AI presets",
   "Inline lore lookups — hover a Gate name to see its frequency and domain",
-  "Code explanations in Guardian voice — right-click any function",
+  "AI-powered code explanations — right-click any function",
   "Diagnostic overlays powered by the Arcanea intelligence layer",
   "Install from `.vsix` or search VS Code Marketplace for 'Arcanea Realm'",
 ];
@@ -171,8 +171,8 @@ export default function ArcaneaCodePage() {
               <p className="text-text-secondary font-body text-lg leading-relaxed mb-8 max-w-2xl">
                 A complete developer platform for building with the Arcanea
                 intelligence layer. TypeScript
-                SDK, 30+ MCP tools, intelligent Guardian agents, and a VS Code
-                extension that puts the cosmos inside your editor.
+                SDK, 30+ MCP tools, intelligent AI agents, and a VS Code
+                extension that puts intelligence inside your editor.
               </p>
 
               <div className="flex flex-wrap gap-4">
@@ -202,7 +202,7 @@ export default function ArcaneaCodePage() {
               Quick Start
             </h2>
             <p className="text-text-secondary text-sm text-center mb-8">
-              From zero to Guardian-assisted dev in under two minutes.
+              From zero to AI-assisted dev in under two minutes.
             </p>
 
             <div className="grid md:grid-cols-3 gap-6">
@@ -328,7 +328,7 @@ export default function ArcaneaCodePage() {
                 </h2>
 
                 <p className="text-text-secondary font-body leading-relaxed mb-6">
-                  The Arcanea Realm VS Code extension brings Guardian
+                  The Arcanea Realm VS Code extension brings Luminor
                   intelligence directly into your development environment.
                   Available on the VS Code Marketplace and as a standalone
                   `.vsix` for air-gapped installs.

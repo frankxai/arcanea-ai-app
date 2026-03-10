@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: 'Settings',
   description: 'Manage your Arcanea account, preferences, and privacy settings.',
   openGraph: {
-    title: 'Settings | Arcanea',
+    title: 'Settings',
     description: 'Manage your Arcanea account, preferences, and privacy settings.',
   },
 };

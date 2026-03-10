@@ -120,7 +120,7 @@ export function StudioTab() {
                       }}
                       onMouseEnter={(e) => {
                         const colorMap: { [key: string]: string } = {
-                          'text-element-water': '#78a6ff',
+                          'text-element-water': '#00bcd4',
                           'text-element-earth': '#8b7355',
                           'text-brand-primary': '#9966ff',
                           'text-element-fire': '#ff6b35',
@@ -144,7 +144,7 @@ export function StudioTab() {
                       </div>
                       
                       <div className="flex items-center gap-2 mb-3">
-                        <span className="text-xs font-sans text-text-muted">Guardian:</span>
+                        <span className="text-xs font-sans text-text-muted">Guide:</span>
                         <span className={`text-xs font-sans font-medium ${tool.elementColor}`}>{tool.guardian}</span>
                         <span className="text-text-muted">•</span>
                         <span className="text-xs font-sans text-text-muted">{tool.element} Element</span>

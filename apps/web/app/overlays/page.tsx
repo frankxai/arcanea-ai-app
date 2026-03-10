@@ -2,9 +2,9 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "AI Overlays | Arcanea",
+  title: "AI Overlays",
   description:
-    "Your Guardians follow you everywhere. Arcanea overlays inject creative intelligence into ChatGPT, Claude, Gemini, Copilot, and Cursor.",
+    "Your companions follow you everywhere. Arcanea overlays inject creative intelligence into ChatGPT, Claude, Gemini, Copilot, and Cursor.",
 };
 
 // ─── Inline SVG Icons ────────────────────────────────────────────────────────
@@ -147,9 +147,9 @@ const PLATFORMS = [
     name: "ChatGPT",
     label: "OpenAI",
     description:
-      "Bring your Guardians into ChatGPT conversations. Access your Arcanea prompt library, Guardian context, and bond memory without leaving the interface.",
+      "Bring your companions into ChatGPT conversations. Access your Arcanea prompt library, creative context, and bond memory without leaving the interface.",
     features: [
-      "Custom GPT configs with Guardian personas",
+      "Custom GPT configs with companion personas",
       "Prompt library injected into every session",
       "Lore and design tokens as system context",
     ],
@@ -163,10 +163,10 @@ const PLATFORMS = [
     name: "Claude.ai",
     label: "Anthropic",
     description:
-      "Guardian assistance inside Claude. Your bond data, creative context, and hook configurations follow you into every conversation.",
+      "Companion assistance inside Claude. Your bond data, creative context, and hook configurations follow you into every conversation.",
     features: [
       "Claude Code hooks — session, prompt, tool, model-route",
-      "Guardian skill files and agent definitions",
+      "Companion skill files and agent definitions",
       "Bond memory carried across conversations",
     ],
     status: "Beta" as const,
@@ -179,11 +179,11 @@ const PLATFORMS = [
     name: "Google Gemini",
     label: "Google",
     description:
-      "Arcanea overlaid on Gemini multimodal workflows. Guardian system instructions and AI Studio configs bring your creative universe into every prompt.",
+      "Arcanea overlaid on Gemini multimodal workflows. Companion system instructions and AI Studio configs bring your creative universe into every prompt.",
     features: [
-      "Gemini system instructions with Guardian personas",
+      "Gemini system instructions with companion personas",
       "AI Studio config generation",
-      "Function declarations for Guardian interactions",
+      "Function declarations for companion interactions",
     ],
     status: "Beta" as const,
     accentRgb: "66, 133, 244",
@@ -195,9 +195,9 @@ const PLATFORMS = [
     name: "GitHub Copilot",
     label: "GitHub",
     description:
-      "Guardian-guided coding assistance inside Copilot. Arcanea coding philosophy, architectural patterns, and Guardian personas enhance every completion.",
+      "AI-powered coding assistance inside Copilot. Arcanea coding philosophy, architectural patterns, and companion personas enhance every completion.",
     features: [
-      "Guardian coding philosophy in Copilot context",
+      "Arcanea coding philosophy in Copilot context",
       "Arcanea design tokens and stack references",
       "Architecture wisdom for code suggestions",
     ],
@@ -211,9 +211,9 @@ const PLATFORMS = [
     name: "Cursor IDE",
     label: "Cursor",
     description:
-      "Full Guardian coding companion inside Cursor. MDC rules, .cursorrules, and Guardian-specific rule files bring Arcanea intelligence into your IDE.",
+      "Full AI coding companion inside Cursor. MDC rules, .cursorrules, and companion-specific rule files bring Arcanea intelligence into your IDE.",
     features: [
-      "Guardian .mdc rule files for per-context guidance",
+      "Companion .mdc rule files for per-context guidance",
       "TypeScript and architecture rules auto-generated",
       "One command generates your entire .cursor/rules/",
     ],
@@ -267,7 +267,7 @@ export default function OverlaysPage() {
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-void" />
         <div className="absolute inset-0 bg-cosmic-mesh" />
-        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(139,92,246,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(0,188,212,0.08),transparent_55%)]" />
+        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,rgba(13,71,161,0.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(0,188,212,0.08),transparent_55%)]" />
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-20">
@@ -288,13 +288,13 @@ export default function OverlaysPage() {
               </div>
 
               <h1 className="text-fluid-3xl font-display font-bold mb-6 leading-tight">
-                Your Guardians follow you{" "}
+                Your companions follow you{" "}
                 <span className="text-gradient-brand">everywhere</span>
               </h1>
 
               <p className="text-text-secondary font-body text-lg leading-relaxed mb-10">
                 You should not have to leave your favorite AI tools to access
-                Arcanea&apos;s intelligence. Our overlays inject Guardian
+                Arcanea&apos;s intelligence. Our overlays inject companion
                 assistance, your prompt library, and creative context directly
                 into the tools you already use.
               </p>
@@ -326,11 +326,11 @@ export default function OverlaysPage() {
         <section id="platforms">
           <div className="mb-10">
             <h2 className="text-2xl sm:text-3xl font-display font-bold mb-3">
-              Five platforms. One Guardian.
+              Five platforms. One intelligence.
             </h2>
             <p className="text-text-secondary max-w-2xl">
               Each overlay is purpose-built for its platform. Install once,
-              and your Guardian context syncs automatically.
+              and your creative context syncs automatically.
             </p>
           </div>
 
@@ -417,7 +417,7 @@ export default function OverlaysPage() {
               How it works
             </h2>
             <p className="text-text-secondary max-w-2xl mx-auto">
-              Three steps from install to full Guardian intelligence in your
+              Three steps from install to full Arcanea intelligence in your
               preferred AI tool.
             </p>
           </div>
@@ -434,14 +434,14 @@ export default function OverlaysPage() {
               {
                 step: "02",
                 title: "Sync your context",
-                body: "Your Guardian bonds, prompt library, and Arcanea context sync automatically. No manual configuration required.",
+                body: "Your companion bonds, prompt library, and Arcanea context sync automatically. No manual configuration required.",
                 iconEl: <IconLayers />,
                 color: "crystal",
               },
               {
                 step: "03",
                 title: "Create without switching",
-                body: "Work with Arcanea intelligence wherever you already work. No context switching. Your Guardian follows you.",
+                body: "Work with Arcanea intelligence wherever you already work. No context switching. Your companion follows you.",
                 iconEl: <IconDiamond />,
                 color: "brand-gold",
               },
@@ -475,7 +475,7 @@ export default function OverlaysPage() {
             <div className="grid sm:grid-cols-2 gap-10">
               <div>
                 <h2 className="text-xl sm:text-2xl font-display font-bold mb-3">
-                  What travels with your Guardian
+                  What travels with your companion
                 </h2>
                 <p className="text-text-secondary text-sm leading-relaxed mb-8">
                   Every overlay ships the same core capabilities, adapted to
@@ -485,7 +485,7 @@ export default function OverlaysPage() {
                 <ul className="space-y-4">
                   {[
                     "Your prompt library available in every conversation",
-                    "Guardian persona and creative context preserved",
+                    "Companion persona and creative context preserved",
                     "Bond memory carries across platforms",
                     "One-click export back to Arcanea Studio",
                     "Arcanea lore and design tokens as system context",
@@ -580,7 +580,7 @@ export default function OverlaysPage() {
               </h2>
               <p className="text-text-secondary max-w-xl mb-10">
                 Each overlay is a single npm package. Install it once and your
-                Guardian context is live.
+                creative context is live.
               </p>
 
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">

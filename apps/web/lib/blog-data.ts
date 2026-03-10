@@ -258,7 +258,7 @@ The Ten Gates represent thresholds of consciousness, each resonant with a unique
 | Voice | 528 Hz | Alera | Truth, Expression |
 | Sight | 639 Hz | Lyria | Intuition, Vision |
 | Crown | 741 Hz | Aiyami | Enlightenment |
-| Shift | 852 Hz | Elara | Perspective |
+| Starweave | 852 Hz | Elara | Perspective |
 | Unity | 963 Hz | Ino | Partnership |
 | Source | 1111 Hz | Shinkami | Meta-consciousness |
 

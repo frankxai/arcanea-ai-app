@@ -44,13 +44,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { id } = await params;
   const gate = resolveGate(id);
-  if (!gate) return { title: 'Gate Not Found | Academy | Arcanea' };
+  if (!gate) return { title: 'Gate Not Found | Academy' };
 
   return {
     title: `${gate.name} Gate — ${gate.frequency} | Academy`,
     description: `The ${gate.name} Gate at ${gate.frequency}. Guardian: ${gate.guardian}. Godbeast: ${gate.godbeast}. Element: ${gate.element}. ${gate.description}`,
     openGraph: {
-      title: `${gate.name} Gate | ${gate.frequency} | Arcanea Academy`,
+      title: `${gate.name} Gate | ${gate.frequency} | Academy`,
       description: `"${gate.quote}" — ${gate.guardian}, Guardian of the ${gate.name} Gate.`,
       type: 'website',
     },

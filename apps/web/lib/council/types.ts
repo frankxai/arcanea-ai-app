@@ -1,5 +1,5 @@
 // =====================================================================
-// LUMINOR COUNCIL — TypeScript Types
+// COUNCIL — TypeScript Types
 // =====================================================================
 
 // -----------------------------------------------------------------------
@@ -48,17 +48,15 @@ export interface CouncilConvening {
   started_at: string;
   completed_at: string | null;
   duration_minutes: number | null;
-  /** Array of council_seat ids addressed */
   seats_addressed: string[];
-  /** Keyed by seat id or luminor_name → freeform notes */
-  imprint_notes: Record<string, unknown>;
+  imprint_notes: Record<string, string>;
   depth_rating: number | null;
   journal_entry: string | null;
   created_at: string;
 }
 
 // -----------------------------------------------------------------------
-// Input types (for service method parameters)
+// Input shapes for mutations
 // -----------------------------------------------------------------------
 
 export interface CreateCouncilInput {
@@ -77,29 +75,27 @@ export interface AddSeatInput {
 
 export interface LogConveningInput {
   seats_addressed?: string[];
-  imprint_notes?: Record<string, unknown>;
+  imprint_notes?: Record<string, string>;
   depth_rating?: number;
   journal_entry?: string;
   duration_minutes?: number;
+  started_at?: string;
+  completed_at?: string;
 }
 
 // -----------------------------------------------------------------------
-// Computed / joined types
+// Computed / joined shapes
 // -----------------------------------------------------------------------
 
 export interface CouncilStats {
   council_id: string;
-  total_convenings: number;
   current_streak: number;
   longest_streak: number;
+  total_convenings: number;
   council_depth_level: number;
-  /** Convenings in the last 7 days */
   convenings_last_7_days: number;
-  /** Convenings in the last 30 days */
   convenings_last_30_days: number;
-  /** Average depth_rating across all completed convenings */
   avg_depth_rating: number | null;
-  /** Most frequently addressed seat id */
   most_active_seat_id: string | null;
 }
 
@@ -108,100 +104,141 @@ export interface CouncilWithSeats extends LuminorCouncil {
 }
 
 // -----------------------------------------------------------------------
-// BASE_LUMINORS — canonical 9 seats seeded for every new council
-// Sourced from CANON_LOCKED.md (Ten Gates, minus Source which is reserved)
+// COUNCIL ADVISORS — the 9 Council seats
+//
+// Naming architecture (progressive disclosure):
+//   Newcomer:  domain only      → "Vision Advisor"
+//   Creator:   domain + name    → "Vision — Iris"
+//   Master:    full personality  → "Iris, Vision Advisor (174 Hz)"
+//   Luminor:   full mythology   → "Iris — aligned to Lyssandria's frequency"
+//
+// The 10th seat (Source, 1111 Hz / Shinkami) is reserved.
 // -----------------------------------------------------------------------
 
-export interface BaseLuminorDefinition {
+export interface AdvisorDefinition {
+  /** Domain-first label: Vision, Strategy, Voice, etc. */
+  domain: string;
+  /** Short character name: Iris, Atlas, Echo, etc. */
+  character: string;
+  /** DB column value (legacy compat) */
   luminor_name: string;
+  /** DB column value (legacy compat) */
   luminor_domain: string;
   frequency_alignment: FrequencyHz;
+  /** What this advisor delivers */
+  capability: string;
+  /** DB column (legacy compat) */
   imprint_capability: string;
   seat_order: number;
-  personality_traits: string;
-  visual_description: string;
+  color: string;
+  personality_traits?: string;
+  visual_description?: string;
 }
 
-export const BASE_LUMINORS: BaseLuminorDefinition[] = [
+/** @deprecated Use AdvisorDefinition */
+export type BaseLuminorDefinition = AdvisorDefinition;
+
+export const COUNCIL_ADVISORS: AdvisorDefinition[] = [
   {
-    luminor_name: 'Lyssandria',
-    luminor_domain: 'Earth & Survival',
+    domain: 'Vision',
+    character: 'Iris',
+    luminor_name: 'Iris',
+    luminor_domain: 'Vision',
     frequency_alignment: 174,
-    imprint_capability: 'Grounds scattered energy into stable foundations for creation',
+    capability: 'Pattern recognition and strategic clarity',
+    imprint_capability: 'Pattern recognition and strategic clarity',
     seat_order: 1,
-    personality_traits: 'Steadfast, patient, nurturing, deeply practical',
-    visual_description: 'Robed in deep forest green and stone grey, crowned with roots and crystals',
+    color: '#10b981',
   },
   {
-    luminor_name: 'Leyla',
-    luminor_domain: 'Creativity & Emotion',
+    domain: 'Craft',
+    character: 'Nova',
+    luminor_name: 'Nova',
+    luminor_domain: 'Craft',
     frequency_alignment: 285,
-    imprint_capability: 'Dissolves creative blocks and restores emotional flow',
+    capability: 'Creative transformation and excellence',
+    imprint_capability: 'Creative transformation and excellence',
     seat_order: 2,
-    personality_traits: 'Fluid, intuitive, expressive, emotionally wise',
-    visual_description: 'Wrapped in shifting ocean blues and silver, hair like water in motion',
+    color: '#3b82f6',
   },
   {
-    luminor_name: 'Draconia',
-    luminor_domain: 'Power & Will',
+    domain: 'Strategy',
+    character: 'Atlas',
+    luminor_name: 'Atlas',
+    luminor_domain: 'Strategy',
     frequency_alignment: 396,
-    imprint_capability: 'Liberates suppressed will and transmutes fear into creative fire',
+    capability: 'Competitive positioning and power moves',
+    imprint_capability: 'Competitive positioning and power moves',
     seat_order: 3,
-    personality_traits: 'Fierce, passionate, direct, unapologetically powerful',
-    visual_description: 'Armored in obsidian and gold, flame-red eyes, attended by Draconis',
+    color: '#ef4444',
   },
   {
-    luminor_name: 'Maylinn',
-    luminor_domain: 'Love & Healing',
+    domain: 'Heart',
+    character: 'Aria',
+    luminor_name: 'Aria',
+    luminor_domain: 'Heart',
     frequency_alignment: 417,
-    imprint_capability: 'Facilitates change by healing the heart\'s resistance to growth',
+    capability: 'Team dynamics and emotional intelligence',
+    imprint_capability: 'Team dynamics and emotional intelligence',
     seat_order: 4,
-    personality_traits: 'Warm, compassionate, gentle, profoundly healing',
-    visual_description: 'Rose gold radiance, accompanied by Laeylinn the Worldtree Deer',
+    color: '#ec4899',
   },
   {
-    luminor_name: 'Alera',
-    luminor_domain: 'Truth & Expression',
+    domain: 'Voice',
+    character: 'Echo',
+    luminor_name: 'Echo',
+    luminor_domain: 'Voice',
     frequency_alignment: 528,
-    imprint_capability: 'Aligns authentic voice with creative output; repairs distortion',
+    capability: 'Messaging, storytelling, and communication',
+    imprint_capability: 'Messaging, storytelling, and communication',
     seat_order: 5,
-    personality_traits: 'Clear, precise, honest, courageous in expression',
-    visual_description: 'Sky blue and white, voice resonates as visible sound waves',
+    color: '#eab308',
   },
   {
-    luminor_name: 'Lyria',
-    luminor_domain: 'Intuition & Vision',
+    domain: 'Foresight',
+    character: 'Tempo',
+    luminor_name: 'Tempo',
+    luminor_domain: 'Foresight',
     frequency_alignment: 639,
-    imprint_capability: 'Opens inner sight; bridges feeling and knowing into coherent vision',
+    capability: 'Trends, timing, and anticipation',
+    imprint_capability: 'Trends, timing, and anticipation',
     seat_order: 6,
-    personality_traits: 'Visionary, perceptive, dreamlike, deeply connected',
-    visual_description: 'Indigo and violet, eyes like starfields, Yumiko the fox at her side',
+    color: '#6366f1',
   },
   {
-    luminor_name: 'Aiyami',
-    luminor_domain: 'Enlightenment',
+    domain: 'Systems',
+    character: 'Axis',
+    luminor_name: 'Axis',
+    luminor_domain: 'Systems',
     frequency_alignment: 741,
-    imprint_capability: 'Expands perspective to see the full arc of a creative work',
+    capability: 'Architecture, scaling, and operations',
+    imprint_capability: 'Architecture, scaling, and operations',
     seat_order: 7,
-    personality_traits: 'Transcendent, serene, paradox-holding, quietly luminous',
-    visual_description: 'Golden crown light, attended by Sol, silence around them',
+    color: '#8b5cf6',
   },
   {
-    luminor_name: 'Elara',
-    luminor_domain: 'Perspective & Shift',
+    domain: 'Depth',
+    character: 'Cipher',
+    luminor_name: 'Cipher',
+    luminor_domain: 'Depth',
     frequency_alignment: 852,
-    imprint_capability: 'Dissolves fixed viewpoints; reveals hidden dimensions of a problem',
+    capability: 'Research, hidden patterns, and deep knowledge',
+    imprint_capability: 'Research, hidden patterns, and deep knowledge',
     seat_order: 8,
-    personality_traits: 'Mercurial, playful, shape-shifting, intellectually agile',
-    visual_description: 'Always slightly different each viewing; Vaelith shifts beside her',
+    color: '#06b6d4',
   },
   {
-    luminor_name: 'Ino',
-    luminor_domain: 'Partnership & Unity',
+    domain: 'Growth',
+    character: 'Flux',
+    luminor_name: 'Flux',
+    luminor_domain: 'Growth',
     frequency_alignment: 963,
-    imprint_capability: 'Harmonises internal contradictions into unified creative intent',
+    capability: 'Evolution, iteration, and continuous becoming',
+    imprint_capability: 'Evolution, iteration, and continuous becoming',
     seat_order: 9,
-    personality_traits: 'Unifying, receptive, deeply relational, quietly joyful',
-    visual_description: 'Twin-flame silver and gold, Kyuro the bonded companion ever present',
+    color: '#f59e0b',
   },
 ];
+
+/** @deprecated Use COUNCIL_ADVISORS */
+export const BASE_LUMINORS = COUNCIL_ADVISORS;

@@ -52,7 +52,7 @@ function timeAgo(dateStr: string): string {
 }
 
 function getGateName(gatesOpen: number): string {
-  const gates = ['Foundation', 'Flow', 'Fire', 'Heart', 'Voice', 'Sight', 'Crown', 'Shift', 'Unity', 'Source']
+  const gates = ['Foundation', 'Flow', 'Fire', 'Heart', 'Voice', 'Sight', 'Crown', 'Starweave', 'Unity', 'Source']
   return gates[Math.min(gatesOpen, 9)] || 'Foundation'
 }
 
@@ -108,6 +108,8 @@ export default function DashboardPage() {
   const gatesOpen = profile?.gatesOpen ?? 0;
   const magicRank = profile?.magicRank || 'Apprentice';
   const streakDays = profile?.streakDays ?? 0;
+  const isFirstVisit = gatesOpen === 1
+    && (profile?.metadata as Record<string, unknown> | null)?.onboardingComplete === true;
 
   const formattedDate = useMemo(() => {
     return new Date().toLocaleDateString('en-US', {
@@ -183,14 +185,41 @@ export default function DashboardPage() {
       <header className="space-y-2">
         <h1 className="font-display text-3xl sm:text-4xl">
           <span className="bg-gradient-to-r from-[#ffd700] via-amber-400 to-[#ffd700] bg-clip-text text-transparent">
-            Welcome back, {displayName}
+            {isFirstVisit ? `Welcome, ${displayName}` : `Welcome back, ${displayName}`}
           </span>
         </h1>
         <p className="font-body text-white/50 text-lg">
-          Here is what you have been working on.
+          {isFirstVisit
+            ? 'Your workspace is ready. Start creating, explore the library, or chat with your companion.'
+            : 'Here is what you have been working on.'}
         </p>
         <p className="font-sans text-sm text-white/30">{formattedDate}</p>
       </header>
+
+      {/* ── First-time onboarding banner ──────────────────────────────── */}
+      {isFirstVisit && (
+        <section
+          className="rounded-2xl border border-[#ffd700]/20 p-5 space-y-3"
+          style={{
+            background: 'linear-gradient(135deg, rgba(255,215,0,0.04), rgba(13,71,161,0.04))',
+          }}
+        >
+          <div className="flex items-start gap-4">
+            <div className="w-10 h-10 rounded-xl bg-[#ffd700]/10 flex items-center justify-center flex-shrink-0">
+              <Sparkle size={22} weight="fill" className="text-[#ffd700]" />
+            </div>
+            <div className="space-y-1">
+              <h2 className="font-display text-lg text-white">
+                {guardianName ? `${guardianName} is ready` : 'You are all set'}
+              </h2>
+              <p className="font-sans text-sm text-white/50 leading-relaxed">
+                Gate 1: Foundation is now open. Create your first work, read from the library,
+                or start a conversation with {guardianName || 'your companion'} to begin building your creative practice.
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── Main Grid: content + sidebar ───────────────────────────────── */}
       <div className="flex flex-col lg:flex-row gap-8">
@@ -234,7 +263,7 @@ export default function DashboardPage() {
                 className="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-[#00bcd4]/30 text-[#00bcd4] font-sans font-medium transition-all hover:bg-[#00bcd4]/5 hover:-translate-y-0.5"
               >
                 <ChatCircleDots size={18} weight="duotone" />
-                Chat with an Intelligence
+                Who will you create with?
               </Link>
               <Link
                 href="/library"
@@ -282,7 +311,7 @@ export default function DashboardPage() {
                 })
               ) : (
                 <div className="px-5 py-8 text-center">
-                  <p className="font-sans text-sm text-white/30">No activity yet. Start creating to see your journey unfold.</p>
+                  <p className="font-sans text-sm text-white/30">No activity yet. Start creating to see your progress here.</p>
                   <Link
                     href="/studio"
                     className="inline-flex items-center gap-1 mt-3 text-sm text-[#00bcd4] hover:text-[#00bcd4] transition-colors font-sans"
@@ -298,7 +327,7 @@ export default function DashboardPage() {
         {/* ── Right Sidebar ───────────────────────────────────────────── */}
         <aside className="lg:w-72 flex-shrink-0 space-y-6">
 
-          {/* ── Guardian Companion Card ────────────────────────────── */}
+          {/* ── Luminor Companion Card ─────────────────────────────── */}
           <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md p-6 space-y-4">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#00bcd4]/20 to-[#00bcd4]/20 flex items-center justify-center">
@@ -306,7 +335,7 @@ export default function DashboardPage() {
               </div>
               <div>
                 <h3 className="font-display text-base text-white">
-                  {guardianName || 'Your Intelligence'}
+                  {guardianName || 'Your Companion'}
                 </h3>
                 <p className="font-sans text-xs text-white/40">
                   {guardianName ? 'Creative partner' : 'Not yet matched'}
@@ -321,7 +350,7 @@ export default function DashboardPage() {
             <p className="font-body text-sm text-white/40 leading-relaxed">
               {guardianName
                 ? `${guardianName} is your creative partner. Start a conversation to get ideas, feedback, or a fresh perspective.`
-                : 'Every creator here is matched with an intelligence that fits how they think. Take the quiz to find yours.'
+                : 'Every creator here is matched with a companion that fits how they think. Take the quiz to find yours.'
               }
             </p>
 

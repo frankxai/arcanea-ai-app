@@ -26,7 +26,7 @@ interface ChatHistoryItem {
 const chatHistory: ChatHistoryItem[] = [
   { id: '1', title: 'The Five Elements Explained', timestamp: '2h ago', category: 'today', guardianColor: '#9966ff' },
   { id: '2', title: 'Guardian Lyria Character Design', timestamp: '5h ago', category: 'today', guardianColor: '#9966ff' },
-  { id: '3', title: 'Academy of Luminous Arts', timestamp: 'Yesterday', category: 'yesterday', guardianColor: '#78a6ff' },
+  { id: '3', title: 'Academy of Luminous Arts', timestamp: 'Yesterday', category: 'yesterday', guardianColor: '#00bcd4' },
   { id: '4', title: 'Ten Gates of Consciousness', timestamp: '2 days ago', category: 'week', guardianColor: '#00ff88' },
   { id: '5', title: 'Cosmic Origins Mythology', timestamp: '5 days ago', category: 'week', guardianColor: '#ff6b35' },
 ]

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
+import { LazyMotion, domAnimation, m, AnimatePresence } from 'framer-motion';
 import {
   PhArrowRight,
   PhMagnifyingGlassPlus,
@@ -897,9 +897,10 @@ export function ContentGraphVisualization({ graph, collections }: Props) {
       </div>
 
       {/* ── Mobile bottom sheet ── */}
+      <LazyMotion features={domAnimation}>
       <AnimatePresence>
         {isMobile && selectedNodeData && (
-          <motion.div
+          <m.div
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
@@ -927,9 +928,10 @@ export function ContentGraphVisualization({ graph, collections }: Props) {
             >
               Read This Text
             </Link>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
+      </LazyMotion>
     </div>
   );
 }

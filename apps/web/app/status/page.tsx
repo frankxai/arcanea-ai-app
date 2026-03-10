@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "System Status | Arcanea",
+  title: "System Status",
   description:
     "Real-time system status for the Arcanea platform — services, infrastructure, and incident history.",
 };

@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: 'Create Account',
   description: 'Join Arcanea — create your creator account and begin your journey through the Ten Gates.',
   openGraph: {
-    title: 'Create Account | Arcanea',
+    title: 'Create Account',
     description: 'Join Arcanea — create your creator account and begin your journey through the Ten Gates.',
   },
 };

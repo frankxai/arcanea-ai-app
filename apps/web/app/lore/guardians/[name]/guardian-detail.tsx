@@ -151,7 +151,7 @@ function GateIcon({ gate, className }: { gate: string; className?: string }) {
       return <PhEye {...props} />;
     case "Crown":
       return <PhCrown {...props} />;
-    case "Shift":
+    case "Starweave":
       return <PhShuffle {...props} />;
     case "Unity":
       return <PhLink {...props} />;

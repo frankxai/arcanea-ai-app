@@ -181,12 +181,12 @@ export async function generateMetadata({
 
   if (!post) {
     return {
-      title: "Post Not Found | Arcanea",
+      title: "Post Not Found",
     };
   }
 
   return {
-    title: `${post.title} | Arcanea Blog`,
+    title: `${post.title} | Blog`,
     description: post.excerpt,
     openGraph: {
       title: post.title,

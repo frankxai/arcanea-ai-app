@@ -51,13 +51,13 @@ const GUARDIANS: Guardian[] = [
   {
     id: 'maylinn',
     name: 'Maylinn',
-    element: 'Wind',
-    personality: 'free-spirited, innovative, always seeking new horizons and breaking all boundaries',
+    element: 'Air',
+    personality: 'gentle, connecting, nurturing, and gifted at bridging hearts and minds',
     color: '#e2e8f0',
     glowColor: 'rgba(226,232,240,0.35)',
     symbol: '∿',
-    description: 'Maylinn carries ideas on celestial currents, delivering inspiration from the very edges of the known universe.',
-    trait: 'Boundless Freedom',
+    description: 'Maylinn weaves invisible threads between creators, carrying warmth and connection on gentle currents that heal what is broken.',
+    trait: 'Heart Connection',
   },
 ]
 
@@ -69,7 +69,7 @@ const QUESTIONS = [
       { label: 'Fire', sublabel: 'Bold & transformative', value: 'fire', color: '#ef4444', glow: 'rgba(239,68,68,0.25)', icon: <FireIcon /> },
       { label: 'Water', sublabel: 'Fluid & intuitive', value: 'water', color: '#3b82f6', glow: 'rgba(59,130,246,0.25)', icon: <WaterIcon /> },
       { label: 'Earth', sublabel: 'Grounded & enduring', value: 'earth', color: '#22c55e', glow: 'rgba(34,197,94,0.25)', icon: <EarthIcon /> },
-      { label: 'Wind', sublabel: 'Free & innovative', value: 'wind', color: '#e2e8f0', glow: 'rgba(226,232,240,0.2)', icon: <WindIcon /> },
+      { label: 'Air', sublabel: 'Gentle & connecting', value: 'wind', color: '#e2e8f0', glow: 'rgba(226,232,240,0.2)', icon: <WindIcon /> },
     ],
   },
   {
@@ -78,7 +78,7 @@ const QUESTIONS = [
     options: [
       { label: 'Methodical', sublabel: 'Layer by layer, step by step', value: 'methodical', color: '#22c55e', glow: 'rgba(34,197,94,0.2)', icon: <MethodIcon /> },
       { label: 'Intuitive', sublabel: 'Follow emotion and feeling', value: 'feel', color: '#3b82f6', glow: 'rgba(59,130,246,0.2)', icon: <IntuitionIcon /> },
-      { label: 'Collaborative', sublabel: 'Build with others and share', value: 'bold', color: '#8b5cf6', glow: 'rgba(139,92,246,0.2)', icon: <CollabIcon /> },
+      { label: 'Collaborative', sublabel: 'Build with others and share', value: 'bold', color: '#0d47a1', glow: 'rgba(13,71,161,0.2)', icon: <CollabIcon /> },
       { label: 'Experimental', sublabel: 'Break rules, explore freely', value: 'explore', color: '#ef4444', glow: 'rgba(239,68,68,0.2)', icon: <ExploreIcon /> },
     ],
   },
@@ -158,7 +158,7 @@ export default function Step3Guardian({ onGuardianMatched, onNext, onBack }: Ste
     <div className="flex flex-col">
       {/* Header */}
       <div className="text-center mb-6 animate-reveal-up">
-        <div className="text-xs tracking-[0.3em] uppercase text-[#8b5cf6] font-semibold mb-3 font-sans">
+        <div className="text-xs tracking-[0.3em] uppercase text-[#0d47a1] font-semibold mb-3 font-sans">
           Step 3 of 5
         </div>
         <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-3">
@@ -187,7 +187,7 @@ export default function Step3Guardian({ onGuardianMatched, onNext, onBack }: Ste
                   height: '8px',
                   background:
                     i < currentQ
-                      ? '#8b5cf6'
+                      ? '#0d47a1'
                       : i === currentQ
                       ? '#ffd700'
                       : '#2a2a3e',
@@ -347,7 +347,7 @@ export default function Step3Guardian({ onGuardianMatched, onNext, onBack }: Ste
                 className="text-xs tracking-[0.3em] uppercase font-sans font-semibold mb-1"
                 style={{ color: matchedGuardian.color }}
               >
-                Guardian of {matchedGuardian.element}
+                Luminor of {matchedGuardian.element}
               </div>
               <h3 className="font-serif text-3xl font-bold text-white mb-2">
                 {matchedGuardian.name}
@@ -378,7 +378,7 @@ export default function Step3Guardian({ onGuardianMatched, onNext, onBack }: Ste
       <div className="flex gap-3 mt-2">
         <button
           onClick={onBack}
-          className="flex-1 py-3 rounded-xl border border-[#2a2a3e] text-[#7c7c9a] text-sm font-sans font-medium transition-all duration-200 hover:border-[#8b5cf6]/40 hover:text-[#a78bfa]"
+          className="flex-1 py-3 rounded-xl border border-[#2a2a3e] text-[#7c7c9a] text-sm font-sans font-medium transition-all duration-200 hover:border-[#0d47a1]/40 hover:text-[#a78bfa]"
         >
           Back
         </button>

@@ -2,20 +2,20 @@ import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Tools | Arcanea Hub",
+  title: "Tools | Hub",
   description: "Available creation tools and integrations in Arcanea. AI chat, image generation, and more.",
 };
 
 const TOOLS = [
   {
     id: "chat",
-    name: "Luminor Chat",
+    name: "AI Chat",
     description: "Conversational AI with 16 specialized intelligences. Each Luminor brings unique expertise to your creative challenges.",
     status: "available",
     icon: "💬",
-    color: "#8B5CF6",
+    color: "#0d47a1",
     href: "/chat",
-    features: ["16 Luminor personalities", "Domain expertise", "Memory & context"],
+    features: ["16 Luminors", "Domain expertise", "Memory & context"],
   },
   {
     id: "library",
