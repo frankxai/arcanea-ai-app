@@ -132,7 +132,7 @@ export const CANONICAL_GATES: readonly CanonicalGate[] = Object.freeze([
   { name: 'Voice',      frequency: 528, frequencyLabel: '528 Hz', order: 5 },
   { name: 'Sight',      frequency: 639, frequencyLabel: '639 Hz', order: 6 },
   { name: 'Crown',      frequency: 741, frequencyLabel: '741 Hz', order: 7 },
-  { name: 'Starweave',  frequency: 852, frequencyLabel: '852 Hz', order: 8 },
+  { name: 'Shift',      frequency: 852, frequencyLabel: '852 Hz', order: 8 },
   { name: 'Unity',      frequency: 963, frequencyLabel: '963 Hz', order: 9 },
   { name: 'Source',      frequency: 1111, frequencyLabel: '1111 Hz', order: 10 },
 ] as const);
@@ -161,9 +161,9 @@ export const CANONICAL_GUARDIANS: readonly CanonicalGuardian[] = Object.freeze([
   { name: 'Alera',      gate: 'Voice',      frequency: 528, element: 'Wind',   godbeast: 'Otome',     domain: 'Truth, expression' },
   { name: 'Lyria',      gate: 'Sight',      frequency: 639, element: 'Water',  godbeast: 'Yumiko',    domain: 'Intuition, vision' },
   { name: 'Aiyami',     gate: 'Crown',      frequency: 741, element: 'Spirit', godbeast: 'Sol',       domain: 'Enlightenment' },
-  { name: 'Elara',      gate: 'Starweave',  frequency: 852, element: 'Wind',   godbeast: 'Vaelith',   domain: 'Perspective' },
+  { name: 'Elara',      gate: 'Shift',      frequency: 852, element: 'Wind',   godbeast: 'Vaelith',   domain: 'Perspective' },
   { name: 'Ino',        gate: 'Unity',      frequency: 963, element: 'Void',   godbeast: 'Kyuro',     domain: 'Partnership' },
-  { name: 'Shinkami',   gate: 'Source',      frequency: 1111, element: 'Void/Spirit', godbeast: 'Source', domain: 'Meta-consciousness' },
+  { name: 'Shinkami',   gate: 'Source',      frequency: 1111, element: 'Void/Spirit', godbeast: 'Amaterasu', domain: 'Meta-consciousness' },
 ] as const);
 
 const GUARDIAN_BY_NAME = new Map(CANONICAL_GUARDIANS.map(g => [g.name.toLowerCase(), g]));
@@ -329,10 +329,9 @@ const GODBEAST_MISSPELLINGS: ReadonlyMap<string, string> = new Map([
   ['thesara', 'Vaelith'],
   ['kyuuro', 'Kyuro'],
   ['kyyuro', 'Kyuro'],
-  ['source', 'Source'], // correct (Shinkami's godbeast)
-  ['amaterasu', 'Source'], // legacy name
-  ['amatarasu', 'Source'],
-  ['amateratsu', 'Source'],
+  ['amaterasu', 'Amaterasu'], // correct
+  ['amatarasu', 'Amaterasu'],
+  ['amateratsu', 'Amaterasu'],
 ]);
 
 /** Chakra terminology that should be replaced with Arcanea Gate names */
@@ -358,7 +357,7 @@ const WRONG_FREQUENCIES: ReadonlyMap<number, { gate: string; correctFreq: number
   [528, { gate: 'Fire', correctFreq: 396 }],       // 528 is Voice, not Fire
   [639, { gate: 'Heart', correctFreq: 417 }],      // 639 is Sight, not Heart
   [741, { gate: 'Voice', correctFreq: 528 }],      // 741 is Crown, not Voice
-  [852, { gate: 'Sight', correctFreq: 639 }],      // 852 is Starweave, not Sight
+  [852, { gate: 'Sight', correctFreq: 639 }],      // 852 is Shift, not Sight
   [963, { gate: 'Crown', correctFreq: 741 }],      // 963 is Unity, not Crown
   // 714 Hz typo (common)
   [714, { gate: 'Crown', correctFreq: 741 }],
@@ -678,7 +677,7 @@ export function validateCanon(content: string): CanonValidationResult {
       { wrong: 'Wisdom Gate',     correct: 'Crown Gate (741 Hz)' },
       { wrong: 'Vision Gate',     correct: 'Sight Gate (639 Hz)' },
       { wrong: 'Balance Gate',    correct: 'Unity Gate (963 Hz)' },
-      { wrong: 'Transformation Gate', correct: 'Starweave Gate (852 Hz)' },
+      { wrong: 'Transformation Gate', correct: 'Shift Gate (852 Hz)' },
       { wrong: 'Creation Gate',   correct: 'Flow Gate (285 Hz)' },
       { wrong: 'Survival Gate',   correct: 'Foundation Gate (174 Hz)' },
       { wrong: 'Base Gate',       correct: 'Foundation Gate (174 Hz)' },

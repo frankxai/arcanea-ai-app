@@ -1,7 +1,7 @@
 /**
  * @arcanea/media — Processor
  * Local image/video processing. Zero API costs.
- * Guardian: Elara (Starweave Gate, 852 Hz) — Transformation
+ * Guardian: Elara (Shift Gate, 852 Hz) — Transformation
  *
  * Images: sharp (libvips — fastest Node.js image lib)
  * Videos: fluent-ffmpeg wrapping system FFmpeg

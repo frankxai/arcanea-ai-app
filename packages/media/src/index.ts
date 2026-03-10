@@ -8,7 +8,7 @@
  *   processor → sharp (images) + FFmpeg (video) — ALL LOCAL, $0
  *   watcher   → chokidar daemon, auto-processes new drops
  *
- * Guardian: Elara (Starweave Gate, 852 Hz) — Transformation
+ * Guardian: Elara (Shift Gate, 852 Hz) — Transformation
  */
 
 export { scanDirectory }                from './scanner.js';

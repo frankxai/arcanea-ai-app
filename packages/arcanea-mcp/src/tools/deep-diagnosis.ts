@@ -43,7 +43,7 @@ interface DeepDiagnosisResult {
 
 const gateNames = [
   "Foundation", "Flow", "Fire", "Heart", "Voice",
-  "Sight", "Crown", "Starweave", "Unity", "Source"
+  "Sight", "Crown", "Shift", "Unity", "Source"
 ];
 
 // Symptom patterns for deeper matching

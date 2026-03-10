@@ -228,7 +228,7 @@ Guided creative experiences:
 | 4 - Heart | 417 Hz | Maylinn | Love, healing |
 | 5 - Voice | 528 Hz | Alera | Truth, expression |
 | 6 - Sight | 639 Hz | Lyria | Intuition, vision |
-| 7 - Crown | 741 Hz | Aiyami | Enlightenment |
+| 7 - Crown | 714 Hz | Aiyami | Enlightenment |
 | 8 - Shift | 852 Hz | Elara | Perspective |
 | 9 - Unity | 963 Hz | Ino | Partnership |
 | 10 - Source | 1111 Hz | Shinkami | Meta-consciousness |

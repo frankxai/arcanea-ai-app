@@ -1,6 +1,6 @@
 /**
  * @arcanea/media — Core Types
- * Guardian: Elara (Starweave Gate, 852 Hz) — Transformation, Perspective
+ * Guardian: Elara (Shift Gate, 852 Hz) — Transformation, Perspective
  */
 
 // ── File Types ──────────────────────────────────────────────────────────────

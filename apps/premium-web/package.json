@@ -1,7 +1,6 @@
 {
   "name": "arcanea-premium-web",
   "version": "2.0.0",
-  "license": "SEE LICENSE IN LICENSE",
   "description": "Premium Arcanea Web Platform v2.0 - State-of-the-art creative superintelligence",
   "main": "dist/index.js",
   "type": "module",

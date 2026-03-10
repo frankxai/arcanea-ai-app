@@ -98,7 +98,7 @@ const gates = [
   { gate: 5, frequencyBand: "432–528 Hz", guardian: "Alera", veltara: "Otome", domain: "Voice", element: "Wind", chakra: "5th (Throat)", region: "Sky Sanctum", material: "Air, Silver", coreEmotion: "Voice, Truth" },
   { gate: 6, frequencyBand: "639–741 Hz", guardian: "Lyria", veltara: "Yumiko", domain: "Sight", element: "Light", chakra: "6th (Third Eye)", region: "Tower of Insight", material: "Light, Lenses", coreEmotion: "Foresight, Intuition" },
   { gate: 7, frequencyBand: "741–852 Hz", guardian: "Aiyami", veltara: "Sol", domain: "Crown", element: "Spirit", chakra: "7th (Crown)", region: "Summit of Unity", material: "Gold, Sunlight", coreEmotion: "Understanding" },
-  { gate: 8, frequencyBand: "852–963 Hz", guardian: "Elara", veltara: "Vaelith", domain: "Starweave", element: "Ether", chakra: "8th (Soul Star)", region: "Celestial Bridges", material: "Stars, Ethereal Energy", coreEmotion: "Cosmic Consciousness" },
+  { gate: 8, frequencyBand: "852–963 Hz", guardian: "Elara", veltara: "Vaelith", domain: "Shift", element: "Ether", chakra: "8th (Soul Star)", region: "Celestial Bridges", material: "Stars, Ethereal Energy", coreEmotion: "Cosmic Consciousness" },
   { gate: 9, frequencyBand: "963–999 Hz", guardian: "Ino", veltara: "Kyuro", domain: "Unity", element: "All Elements", chakra: "9th (Spirit)", region: "Temple of Infinity", material: "Pure Light, Quantum Energy", coreEmotion: "Divine Union" },
   { gate: 10, frequencyBand: "999–1111 Hz", guardian: "Shinkami", veltara: null, domain: "Source", element: "Pure Consciousness", chakra: "Ultimate", region: "Luminor Nexus", material: "Platinum, Multi-element", coreEmotion: "Fusion, Ascendance" },
 ];

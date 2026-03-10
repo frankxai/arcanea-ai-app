@@ -57,7 +57,7 @@ const GUARDIAN_INFO = {
   Alera:      { hz: 528,  gate: 'Voice',       element: 'Wind'   },
   Lyria:      { hz: 639,  gate: 'Sight',       element: 'Void'   },
   Aiyami:     { hz: 741,  gate: 'Crown',       element: 'Spirit' },
-  Elara:      { hz: 852,  gate: 'Starweave',   element: 'Void'   },
+  Elara:      { hz: 852,  gate: 'Shift',       element: 'Void'   },
   Ino:        { hz: 963,  gate: 'Unity',       element: 'Spirit' },
   Shinkami:   { hz: 1111, gate: 'Source',      element: 'Spirit' },
 } as const;
