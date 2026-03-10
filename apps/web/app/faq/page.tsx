@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "FAQ",
   description:
-    "Frequently asked questions about Arcanea, companions, pricing, and how it works.",
+    "Frequently asked questions about Arcanea, the intelligence system, pricing, and how it works.",
 };
 
 const FAQ_CATEGORIES = [
@@ -14,7 +14,7 @@ const FAQ_CATEGORIES = [
     questions: [
       {
         q: "What is Arcanea?",
-        a: "Arcanea is a creative platform with 16 companions organized into four teams. Unlike generic AI assistants, each has mastered a specific domain — architecture, coding, storytelling, character creation, and more. They're creative partners who see what you're building and help you build it better.",
+        a: "Arcanea is a creative intelligence platform with 16 Luminors organized into four teams. Unlike generic AI assistants, each has mastered a specific domain — architecture, coding, storytelling, character creation, and more. They're creative partners who see what you're building and help you build it better.",
       },
       {
         q: "How do I get started?",
@@ -252,9 +252,9 @@ export default function FAQPage() {
           <div className="grid md:grid-cols-3 gap-6">
             {[
               {
-                title: "Companions",
-                desc: "Meet the 16 companions across 4 teams",
-                href: "/companions",
+                title: "Luminors",
+                desc: "Meet the 16 intelligences across 4 teams",
+                href: "/luminors",
               },
               {
                 title: "Library",

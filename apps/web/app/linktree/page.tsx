@@ -3,7 +3,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
-  title: "Links",
+  title: "Arcanea | Links",
   description:
     "All Arcanea links in one place. Library, Academy, Studio, Community, and more. Enter seeking, leave transformed.",
   openGraph: {
@@ -327,7 +327,7 @@ const LINKS: LinkItem[] = [
   {
     href: "https://github.com/frankxai/arcanea",
     label: "GitHub",
-    description: "Open source. Star & contribute",
+    description: "Open source. MIT License. Star & contribute",
     icon: <Icons.Github />,
     color: "from-white/[0.12] to-white/[0.04]",
     external: true,
@@ -449,7 +449,7 @@ export default function LinktreePage() {
         </div>
         <div className="mt-2 flex items-center justify-center gap-2 text-text-muted text-xs font-sans">
           <Icons.Star />
-          <span>Powered by Arcanea</span>
+          <span>Powered by Arcanea Intelligence OS</span>
         </div>
       </div>
     </div>

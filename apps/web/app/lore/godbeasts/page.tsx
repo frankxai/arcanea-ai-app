@@ -2,11 +2,11 @@ import { Metadata } from 'next';
 import { GodbeastsPage } from '@/components/lore/godbeasts/godbeasts-page';
 
 export const metadata: Metadata = {
-  title: 'The Godbeasts | Lore of Arcanea',
+  title: 'The Godbeasts',
   description:
     'Discover the ten primal Godbeasts, bonded to the Arcanean Gods as cosmic companions. From Kaelith the stone serpent-dragon to Source, the light of meta-consciousness.',
   openGraph: {
-    title: 'The Godbeasts | Lore of Arcanea',
+    title: 'The Godbeasts — Lore of Arcanea',
     description:
       'Discover the ten primal Godbeasts, bonded to the Arcanean Gods as cosmic companions.',
   },

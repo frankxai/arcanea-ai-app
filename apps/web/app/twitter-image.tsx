@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
-export const alt = 'Arcanea — Build Your Universe'
+export const alt = 'Arcanea — Living Intelligence for Creators'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -69,7 +69,7 @@ export default async function TwitterImage() {
             letterSpacing: '0.05em',
           }}
         >
-          Build Your Universe
+          Living Intelligence for Creators
         </div>
         <div
           style={{
