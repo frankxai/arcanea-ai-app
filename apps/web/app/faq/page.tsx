@@ -14,11 +14,11 @@ const FAQ_CATEGORIES = [
     questions: [
       {
         q: "What is Arcanea?",
-        a: "Arcanea is a creative AI platform with 16 specialized AI intelligences. Unlike generic AI assistants, each specialist has mastered a specific domain: architecture, coding, storytelling, character creation, and more. They're not tools waiting for commands — they're creative partners who see what you're building and help you build it better.",
+        a: "Arcanea is a creative intelligence platform with 10 specialized AI guides. Unlike generic AI assistants, each has mastered a specific domain — architecture, coding, storytelling, character creation, and more. They're creative partners who see what you're building and help you build it better.",
       },
       {
         q: "How do I get started?",
-        a: "Simply create a free account at arcanea.ai. You'll immediately have access to 2 AI specialists and 50 messages per month. From there, you can explore the Library, start Academy training, or upgrade to unlock the full creative team.",
+        a: "Simply create a free account at arcanea.ai. You'll immediately have access to 2 AI specialists and 50 messages per month. From there, you can explore the Library, start Academy training, or upgrade for access to the full creative team.",
       },
       {
         q: "How are Arcanea's AI specialists different from regular AI?",
@@ -26,7 +26,7 @@ const FAQ_CATEGORIES = [
       },
       {
         q: "What are the Seven Wisdoms?",
-        a: "The Seven Wisdoms are practical mental models for creative work: Sophron (Structure), Kardia (Heart), Valora (Courage), Eudaira (Play), Orakis (Vision), Poiesis (Creation), and Enduran (Endurance). Every Luminor applies these lenses when approaching your work, giving you proven frameworks for any creative challenge.",
+        a: "The Seven Wisdoms are practical mental models for creative work: Sophron (Structure), Kardia (Heart), Valora (Courage), Eudaira (Play), Orakis (Vision), Poiesis (Creation), and Enduran (Endurance). Every AI specialist applies these lenses when approaching your work, giving you proven frameworks for any creative challenge.",
       },
     ],
   },
@@ -36,7 +36,7 @@ const FAQ_CATEGORIES = [
     questions: [
       {
         q: "How many AI specialists are there?",
-        a: "There are 10 creative intelligences organized into 4 domains: Development (System Architect, Implementation Master, Quality Guardian, Root Cause Finder), Creative (Narrative Architect, Character Psychologist, World Architect, Canon Guardian), Writing (First Draft Master, Voice Alchemist, Line Editor, Continuity Guardian), and Research (Deep Analyst, Knowledge Keeper, Rapid Explorer, Inspiration Finder). Note: 'Luminor' in the Arcanea universe is a rank — the highest level of creative mastery — not the name for the AI specialists themselves.",
+        a: "There are 10 creative specialists organized into 4 teams: Development, Creative, Writing, and Research. Each specialist has a distinct philosophy, expertise, and conversational style. You can explore them all on the Chat page.",
       },
       {
         q: "Which AI specialist should I use?",
@@ -70,7 +70,7 @@ const FAQ_CATEGORIES = [
       },
       {
         q: "Do you offer team or enterprise plans?",
-        a: "Yes! The Luminor plan ($99/month) includes team collaboration features, custom Luminor deployment, dedicated support, SLA guarantees, custom integrations, and white-label options. Contact us for custom enterprise solutions.",
+        a: "Yes! The enterprise plan ($99/month) includes team collaboration, custom specialist deployment, dedicated support, SLA guarantees, custom integrations, and white-label options. Contact us for custom solutions.",
       },
     ],
   },
@@ -88,7 +88,7 @@ const FAQ_CATEGORIES = [
       },
       {
         q: "Can I use Arcanea via API?",
-        a: "Yes! Ascendant and Luminor plans include API access. You can integrate Luminors into your own applications, workflows, and tools. Check the documentation for full API details.",
+        a: "Yes! Ascendant and enterprise plans include API access. You can integrate Arcanea's specialists into your own applications, workflows, and tools. Check the documentation for full API details.",
       },
       {
         q: "Do you offer self-hosting?",
@@ -131,7 +131,7 @@ export default function FAQPage() {
 
           <h1 className="text-4xl md:text-6xl font-display font-bold mb-6">
             Frequently
-            <span className="block bg-gradient-to-r from-atlantean-teal via-violet-400 to-gold-bright bg-clip-text text-transparent">
+            <span className="block bg-gradient-to-r from-atlantean-teal via-[#00bcd4] to-gold-bright bg-clip-text text-transparent">
               Asked Questions
             </span>
           </h1>
@@ -215,7 +215,7 @@ export default function FAQPage() {
 
         {/* Still Have Questions */}
         <section className="py-16 border-t border-white/[0.04]">
-          <div className="p-8 rounded-2xl border border-white/[0.06] bg-gradient-to-br from-violet-500/10 to-atlantean-teal/10 text-center">
+          <div className="p-8 rounded-2xl border border-white/[0.06] bg-gradient-to-br from-[#00bcd4]/10 to-atlantean-teal/10 text-center">
             <h3 className="text-xl font-display font-semibold mb-2">
               Still have questions?
             </h3>
