@@ -18,7 +18,7 @@ const FAQ_CATEGORIES = [
       },
       {
         q: "How do I get started?",
-        a: "Simply create a free account at arcanea.ai. You'll immediately have access to 2 Luminors and 50 messages per month. From there, you can explore the Library, start Academy training, or upgrade for access to the full creative team.",
+        a: "Simply create a free account at arcanea.ai. You'll immediately have access to 3 Luminors and 100 messages per month. From there, you can explore the Library, start Academy training, or upgrade for access to the full creative team.",
       },
       {
         q: "How are Arcanea's Luminors different from regular AI?",
