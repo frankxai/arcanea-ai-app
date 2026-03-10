@@ -102,7 +102,7 @@ export default function WorkspacePage() {
           />
           <Card
             href="/chat"
-            title="Choose Specialist"
+            title="Choose Luminor"
             description="Select from 16 creative intelligences by team and specialty."
             icon={<PhBrain className="h-5 w-5" />}
           />

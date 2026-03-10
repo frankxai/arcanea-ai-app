@@ -87,7 +87,7 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
             <select
               value={autoSaveDelay}
               onChange={(e) => setAutoSaveDelay(Number(e.target.value))}
-              className="bg-white/[0.03] border border-white/[0.06] rounded-lg px-2 py-1 text-[10px] font-mono text-text-secondary focus:outline-none"
+              className="bg-white/[0.03] border border-white/[0.06] rounded-lg px-2 py-1 text-[10px] font-mono text-text-secondary focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20"
             >
               <option value={1000}>1s</option>
               <option value={2000}>2s</option>

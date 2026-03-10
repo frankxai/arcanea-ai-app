@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ReactNode } from "react";
 
 interface TextRevealProps {
@@ -11,7 +11,7 @@ interface TextRevealProps {
 
 export function TextReveal({ children, className = "", delay = 0 }: TextRevealProps) {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
@@ -19,7 +19,7 @@ export function TextReveal({ children, className = "", delay = 0 }: TextRevealPr
       className={className}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -29,7 +29,7 @@ export function WordReveal({ text, className = "" }: { text: string; className?:
   return (
     <span className={className}>
       {words.map((word, i) => (
-        <motion.span
+        <m.span
           key={i}
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -38,7 +38,7 @@ export function WordReveal({ text, className = "" }: { text: string; className?:
           className="inline-block mr-2"
         >
           {word}
-        </motion.span>
+        </m.span>
       ))}
     </span>
   );
@@ -57,7 +57,7 @@ export function AuroraText({ children, className = "" }: { children: ReactNode; 
     <span
       className={`relative ${className}`}
       style={{
-        background: "linear-gradient(90deg, #00bcd4, #78a6ff, #ffd700, #00bcd4)",
+        background: "linear-gradient(90deg, #00bcd4, #00bcd4, #ffd700, #00bcd4)",
         backgroundSize: "300% 100%",
         WebkitBackgroundClip: "text",
         WebkitTextFillColor: "transparent",

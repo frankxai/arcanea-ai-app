@@ -239,12 +239,12 @@ export const SHOWCASE_CREATIONS: ShowcaseCreation[] = [
   },
   {
     id: "sc-009",
-    title: "The Shift Protocol",
+    title: "The Starweave Protocol",
     description:
       "Elara's perspective-shifting algorithms encoded as generative art at the 852 Hz frequency.",
     type: "code",
     element: "Wind",
-    gate: "Shift",
+    gate: "Starweave",
     guardian: "Elara",
     creatorName: "Phase Drift",
     academyHouse: "Ventus",
@@ -379,7 +379,7 @@ export const SHOWCASE_CREATIONS: ShowcaseCreation[] = [
       "Elara's Godbeast creates fractal patterns in desert winds at 852 Hz, each grain a universe.",
     type: "image",
     element: "Wind",
-    gate: "Shift",
+    gate: "Starweave",
     guardian: "Elara",
     creatorName: "Sand Shaper",
     academyHouse: "Ventus",

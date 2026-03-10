@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
+import { m, LazyMotion, domAnimation, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { PhBookOpen, PhMagnifyingGlass, PhFunnel, PhArrowRight, PhScroll, PhFeather, PhMusicNotes, PhSparkle, PhShield, PhMapTrifold, PhMoon, PhUsers, PhHeart } from '@/lib/phosphor-icons';
 import Link from 'next/link';
@@ -198,6 +198,7 @@ export default function LibraryPage() {
   const totalTexts = COLLECTIONS.reduce((sum, c) => sum + c.texts, 0);
 
   return (
+    <LazyMotion features={domAnimation} strict>
     <div className="relative min-h-screen bg-cosmic-deep">
       {/* Hero */}
       <section
@@ -220,16 +221,16 @@ export default function LibraryPage() {
         <div className="absolute inset-0 bg-gradient-radial from-draconic-crimson/10 via-transparent to-transparent" />
 
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-draconic-crimson/10 border border-draconic-crimson/20 mb-6"
           >
             <PhBookOpen className="w-4 h-4 text-draconic-crimson" />
             <span className="text-sm font-medium text-draconic-crimson">The Collected Wisdom</span>
-          </motion.div>
+          </m.div>
 
-          <motion.h1
+          <m.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
@@ -238,19 +239,19 @@ export default function LibraryPage() {
             <span className="bg-gradient-to-r from-draconic-crimson via-gold-bright to-atlantean-teal-aqua bg-clip-text text-transparent">
               The Library of Arcanea
             </span>
-          </motion.h1>
+          </m.h1>
 
-          <motion.p
+          <m.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
             className="text-xl text-text-secondary max-w-3xl mx-auto font-body italic mb-8"
           >
             "These books are not entertainment. They are equipment for living. Use them."
-          </motion.p>
+          </m.p>
 
           {/* Stats */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
@@ -268,7 +269,7 @@ export default function LibraryPage() {
               <div className="text-3xl font-display font-bold text-gold-bright">200K+</div>
               <div className="text-sm text-text-muted">Words</div>
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </section>
 
@@ -284,7 +285,7 @@ export default function LibraryPage() {
                 placeholder="Search collections..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 rounded-xl bg-cosmic-surface/50 border border-white/[0.06] text-white placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal-aqua/50"
+                className="w-full pl-10 pr-4 py-2 rounded-xl bg-cosmic-surface/50 border border-white/[0.06] text-white placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal-aqua/50 focus:ring-2 focus:ring-atlantean-teal-aqua/20"
               />
             </div>
 
@@ -315,7 +316,7 @@ export default function LibraryPage() {
             {filteredCollections.map((collection, i) => {
               const Icon = collection.icon;
               return (
-                <motion.div
+                <m.div
                   key={collection.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={isCollectionsInView ? { opacity: 1, y: 0 } : {}}
@@ -356,7 +357,7 @@ export default function LibraryPage() {
                       <span className="text-atlantean-teal-aqua">{collection.situation}</span>
                     </div>
                   </Link>
-                </motion.div>
+                </m.div>
               );
             })}
           </div>
@@ -389,5 +390,6 @@ export default function LibraryPage() {
         </div>
       </section>
     </div>
+    </LazyMotion>
   );
 }

@@ -384,7 +384,7 @@ export default function CommunityCreatePage() {
                 your circle. Every great work begins with a single spark.
               </p>
               <Link
-                href="/community/create/new"
+                href="/studio"
                 className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200"
               >
                 <PhLightning className="w-4 h-4" />

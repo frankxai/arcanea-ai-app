@@ -6,4 +6,5 @@ export { ConveningJournal } from "./ConveningJournal";
 export { LuminorAvatar } from "./LuminorAvatar";
 export { BreathingGuide } from "./BreathingGuide";
 export { FrequencyTone } from "./FrequencyTone";
+export { CouncilDashboard } from "./CouncilDashboard";
 export type { CouncilSeatData } from "./CouncilSeat";

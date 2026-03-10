@@ -77,8 +77,8 @@ export default function Step4Creation({ guardian, onCreationSaved, onNext, onBac
     onCreationSaved(prompt, response)
   }
 
-  const guardianColor = guardian?.color || '#8b5cf6'
-  const guardianGlow = guardian?.glowColor || 'rgba(139,92,246,0.3)'
+  const guardianColor = guardian?.color || '#0d47a1'
+  const guardianGlow = guardian?.glowColor || 'rgba(13,71,161,0.3)'
   const guardianSymbol = guardian?.symbol || '✦'
 
   return (
@@ -88,7 +88,7 @@ export default function Step4Creation({ guardian, onCreationSaved, onNext, onBac
         className="text-center mb-6 transition-all duration-600"
         style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(18px)' }}
       >
-        <div className="text-xs tracking-[0.3em] uppercase text-[#8b5cf6] font-semibold mb-3 font-sans">
+        <div className="text-xs tracking-[0.3em] uppercase text-[#0d47a1] font-semibold mb-3 font-sans">
           Step 4 of 5
         </div>
         <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-3">
@@ -129,7 +129,7 @@ export default function Step4Creation({ guardian, onCreationSaved, onNext, onBac
         <div
           className="relative rounded-2xl overflow-hidden transition-all duration-300"
           style={{
-            border: `1px solid ${prompt.trim() ? guardianColor + '45' : 'rgba(139,92,246,0.2)'}`,
+            border: `1px solid ${prompt.trim() ? guardianColor + '45' : 'rgba(13,71,161,0.2)'}`,
             boxShadow: prompt.trim() ? `0 0 24px ${guardianGlow}` : 'none',
           }}
         >
@@ -162,7 +162,7 @@ export default function Step4Creation({ guardian, onCreationSaved, onNext, onBac
                 generateCreation()
               }
             }}
-            className="relative w-full bg-transparent text-[#e8e6f0] text-sm font-sans resize-none focus:outline-none p-4 leading-relaxed"
+            className="relative w-full bg-transparent text-[#e8e6f0] text-sm font-sans resize-none focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/20 focus:ring-inset p-4 leading-relaxed"
             style={{ caretColor: guardianColor }}
           />
 
@@ -323,7 +323,7 @@ export default function Step4Creation({ guardian, onCreationSaved, onNext, onBac
       <div className="flex gap-3 mt-auto">
         <button
           onClick={onBack}
-          className="flex-1 py-3 rounded-xl border border-[#2a2a3e] text-[#7c7c9a] text-sm font-sans font-medium transition-all duration-200 hover:border-[#8b5cf6]/40 hover:text-[#a78bfa]"
+          className="flex-1 py-3 rounded-xl border border-[#2a2a3e] text-[#7c7c9a] text-sm font-sans font-medium transition-all duration-200 hover:border-[#0d47a1]/40 hover:text-[#a78bfa]"
         >
           Back
         </button>
@@ -332,8 +332,8 @@ export default function Step4Creation({ guardian, onCreationSaved, onNext, onBac
             onClick={onNext}
             className="w-full py-3 rounded-xl text-sm font-sans font-semibold text-white transition-all duration-300 relative overflow-hidden group"
             style={{
-              background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
-              boxShadow: '0 0 22px rgba(139,92,246,0.35)',
+              background: 'linear-gradient(135deg, #0d47a1, #7c3aed)',
+              boxShadow: '0 0 22px rgba(13,71,161,0.35)',
             }}
           >
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-r from-transparent via-white/10 to-transparent" />

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { LazyMotion, domAnimation, m, useInView } from "framer-motion";
 import { useRef } from "react";
 import {
   PhBrain,
@@ -26,9 +26,9 @@ import {
 const features = [
   {
     icon: PhBrain,
-    title: "16 AI Specialists",
+    title: "16 Luminors",
     description:
-      "Each specialist has mastered a specific domain — from system architecture to narrative design to deep research.",
+      "Each Luminor has mastered a specific domain — from system architecture to narrative design to deep research.",
     gradient: "from-crystal to-brand-primary",
     borderColor: "border-crystal/30",
     hoverGlow: "hover:shadow-glow-md",
@@ -99,7 +99,7 @@ function FeatureCard({
   index: number;
 }) {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
@@ -127,14 +127,14 @@ function FeatureCard({
       </p>
 
       {/* Arrow indicator */}
-      <motion.div
+      <m.div
         className="absolute bottom-8 right-8 opacity-0 group-hover:opacity-100 transition-opacity"
         initial={{ x: -10 }}
         whileHover={{ x: 0 }}
       >
         <PhArrowRight className="w-5 h-5 text-crystal" />
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   );
 }
 
@@ -143,6 +143,7 @@ export function FeaturesPremium() {
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
   return (
+    <LazyMotion features={domAnimation}>
     <section className="relative py-32 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 -z-10">
@@ -158,21 +159,21 @@ export function FeaturesPremium() {
 
       <div ref={containerRef} className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="text-center mb-20"
         >
-          <motion.span
+          <m.span
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             className="inline-block px-4 py-2 rounded-full glass border border-crystal/20 text-crystal font-medium text-sm mb-6"
           >
             Powerful Features
-          </motion.span>
+          </m.span>
 
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
             Everything You Need to
@@ -184,7 +185,7 @@ export function FeaturesPremium() {
             A complete creative ecosystem. From ideation to execution, Arcanea
             provides the tools, knowledge, and companions you need.
           </p>
-        </motion.div>
+        </m.div>
 
         {/* Features Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-24">
@@ -194,7 +195,7 @@ export function FeaturesPremium() {
         </div>
 
         {/* Capabilities Section */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -232,7 +233,7 @@ export function FeaturesPremium() {
                 { icon: PhGlobe, label: "Global CDN", value: "40+" },
                 { icon: PhDatabase, label: "Uptime", value: "99.9%" },
               ].map((stat, index) => (
-                <motion.div
+                <m.div
                   key={stat.label}
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
@@ -245,12 +246,13 @@ export function FeaturesPremium() {
                     {stat.value}
                   </div>
                   <div className="text-xs text-text-muted">{stat.label}</div>
-                </motion.div>
+                </m.div>
               ))}
             </div>
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </section>
+    </LazyMotion>
   );
 }

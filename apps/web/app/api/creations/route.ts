@@ -27,7 +27,7 @@ import { VALIDATION_RULES, type CreationFilters } from '@/lib/database/types/api
  * Query parameters:
  * - type: text|image|video|audio|code|mixed
  * - element: Fire|Water|Earth|Wind|Void|Spirit
- * - gate: Foundation|Flow|Fire|Heart|Voice|Sight|Crown|Shift|Unity|Source
+ * - gate: Foundation|Flow|Fire|Heart|Voice|Sight|Crown|Starweave|Unity|Source
  * - guardian: Lyssandria|Leyla|Draconia|Maylinn|Alera|Lyria|Aiyami|Elara|Ino|Shinkami
  * - status: draft|published|archived
  * - visibility: public|private|unlisted
@@ -111,7 +111,7 @@ export async function POST(request: NextRequest) {
       status: z.enum(['draft', 'published']).default('draft'),
       visibility: z.enum(['public', 'private', 'unlisted']).default('private'),
       element: z.enum(['Fire', 'Water', 'Earth', 'Wind', 'Void', 'Spirit']).optional(),
-      gate: z.enum(['Foundation', 'Flow', 'Fire', 'Heart', 'Voice', 'Sight', 'Crown', 'Shift', 'Unity', 'Source']).optional(),
+      gate: z.enum(['Foundation', 'Flow', 'Fire', 'Heart', 'Voice', 'Sight', 'Crown', 'Starweave', 'Unity', 'Source']).optional(),
       guardian: z.enum(['Lyssandria', 'Leyla', 'Draconia', 'Maylinn', 'Alera', 'Lyria', 'Aiyami', 'Elara', 'Ino', 'Shinkami']).optional(),
       tags: z.array(z.string().max(VALIDATION_RULES.tags.maxLength)).max(VALIDATION_RULES.tags.maxCount).optional(),
       thumbnailUrl: z.string().url().optional(),

@@ -1,9 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useRef } from 'react';
+import { LazyMotion, domAnimation, m, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { PhArrowLeft, PhArrowRight, PhSparkle, PhCheck, PhFlame, PhDrop, PhWind, PhMountains, PhStar } from '@/lib/phosphor-icons';
+import { useAuth } from '@/lib/auth/context';
+import { createClient } from '@/lib/supabase/client';
 
 // Assessment questions organized by Gate
 const ASSESSMENT_QUESTIONS = [
@@ -86,7 +88,7 @@ const ASSESSMENT_QUESTIONS = [
   },
   {
     gate: 8,
-    gateName: 'Shift',
+    gateName: 'Starweave',
     question: 'When your creative approach isn\'t working, you:',
     options: [
       { text: 'Completely transform your perspective', score: 4, element: 'void' },
@@ -100,7 +102,7 @@ const ASSESSMENT_QUESTIONS = [
     gateName: 'Unity',
     question: 'Your ideal creative collaboration looks like:',
     options: [
-      { text: 'Deep partnership where ideas merge seamlessly', score: 4, element: 'water' },
+      { text: 'Deep partnership where ideas merge naturally', score: 4, element: 'water' },
       { text: 'Leading a team toward a shared vision', score: 3, element: 'fire' },
       { text: 'Independent work with periodic check-ins', score: 2, element: 'earth' },
       { text: 'Dynamic ensemble with fluid roles', score: 3, element: 'wind' },
@@ -135,6 +137,12 @@ function getRank(gatesOpened: number): { rank: string; color: string } {
   return { rank: 'Apprentice', color: '#6b7280' };
 }
 
+// Map gate number to canonical gate name for the active_gate profile field
+const GATE_NAMES = [
+  '', 'foundation', 'flow', 'fire', 'heart', 'voice',
+  'sight', 'crown', 'shift', 'unity', 'source',
+];
+
 export default function AssessmentPage() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<number[]>([]);
@@ -147,6 +155,9 @@ export default function AssessmentPage() {
   });
   const [isComplete, setIsComplete] = useState(false);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  const { user } = useAuth();
+  const supabaseRef = useRef(createClient());
 
   const question = ASSESSMENT_QUESTIONS[currentQuestion];
   const progress = ((currentQuestion + 1) / ASSESSMENT_QUESTIONS.length) * 100;
@@ -198,8 +209,9 @@ export default function AssessmentPage() {
 
   if (isComplete) {
     return (
+      <LazyMotion features={domAnimation}>
       <div className="min-h-screen py-12 px-6">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           className="max-w-2xl mx-auto"
@@ -218,7 +230,7 @@ export default function AssessmentPage() {
             {/* Header */}
             <div className="relative p-8 text-center border-b border-white/[0.06]">
               <div className="absolute inset-0 bg-gradient-to-b from-gold-bright/10 to-transparent" />
-              <motion.div
+              <m.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 0.2, type: 'spring' }}
@@ -226,7 +238,7 @@ export default function AssessmentPage() {
                 style={{ backgroundColor: `${rankColor}20`, boxShadow: `0 0 40px ${rankColor}40` }}
               >
                 <PhSparkle className="w-12 h-12" style={{ color: rankColor }} />
-              </motion.div>
+              </m.div>
               <h1 className="text-3xl font-display font-bold mb-2">Assessment Complete</h1>
               <p className="text-text-secondary">Your creative path has been revealed</p>
             </div>
@@ -296,7 +308,7 @@ export default function AssessmentPage() {
                       <div key={element} className="flex items-center gap-3">
                         <span className="w-16 text-sm text-text-secondary capitalize">{element}</span>
                         <div className="flex-1 h-2 bg-white/[0.06] rounded-full overflow-hidden">
-                          <motion.div
+                          <m.div
                             initial={{ width: 0 }}
                             animate={{ width: `${percentage}%` }}
                             transition={{ delay: 0.3, duration: 0.5 }}
@@ -309,6 +321,50 @@ export default function AssessmentPage() {
                     );
                   })}
               </div>
+
+              {/* Save to Profile */}
+              {user && saveStatus !== 'saved' && (
+                <button
+                  onClick={async () => {
+                    setSaveStatus('saving');
+                    try {
+                      // Determine the highest opened gate for active_gate
+                      const highestGate = answers.reduce((max, score, i) => score >= 3 ? i + 1 : max, 0);
+                      const activeGate = GATE_NAMES[highestGate] || 'foundation';
+                      const { error } = await supabaseRef.current
+                        .from('profiles')
+                        .update({
+                          gates_open: gatesOpened,
+                          active_gate: activeGate,
+                          magic_rank: rank.toLowerCase(),
+                          academy_house: house.name.toLowerCase(),
+                        })
+                        .eq('id', user.id);
+                      if (error) throw error;
+                      setSaveStatus('saved');
+                    } catch {
+                      setSaveStatus('error');
+                    }
+                  }}
+                  disabled={saveStatus === 'saving'}
+                  className="w-full py-3 rounded-xl bg-gradient-to-r from-[#0d47a1] to-[#00bcd4] text-white text-center font-semibold transition-all hover:shadow-[0_0_30px_rgba(0,188,212,0.4)] disabled:opacity-50"
+                >
+                  {saveStatus === 'saving' ? 'Saving...' : saveStatus === 'error' ? 'Error - Try Again' : 'Save to Profile'}
+                </button>
+              )}
+              {saveStatus === 'saved' && (
+                <div className="w-full py-3 rounded-xl bg-green-900/30 border border-green-500/30 text-green-400 text-center font-semibold">
+                  Saved to your profile
+                </div>
+              )}
+              {!user && (
+                <Link
+                  href="/auth/signup"
+                  className="block w-full py-3 rounded-xl bg-gradient-to-r from-[#0d47a1] to-[#00bcd4] text-white text-center font-semibold transition-all hover:shadow-[0_0_30px_rgba(0,188,212,0.4)]"
+                >
+                  Sign Up to Save Results
+                </Link>
+              )}
 
               {/* Actions */}
               <div className="flex gap-4">
@@ -327,12 +383,14 @@ export default function AssessmentPage() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </m.div>
       </div>
+      </LazyMotion>
     );
   }
 
   return (
+    <LazyMotion features={domAnimation}>
     <div className="min-h-screen py-12 px-6">
       <div className="max-w-2xl mx-auto">
         {/* Back link */}
@@ -351,7 +409,7 @@ export default function AssessmentPage() {
             <span className="text-text-muted">{currentQuestion + 1} of {ASSESSMENT_QUESTIONS.length}</span>
           </div>
           <div className="h-2 bg-white/[0.06] rounded-full overflow-hidden">
-            <motion.div
+            <m.div
               className="h-full bg-gradient-to-r from-atlantean-teal-aqua to-gold-bright rounded-full"
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}
@@ -361,7 +419,7 @@ export default function AssessmentPage() {
 
         {/* Question card */}
         <AnimatePresence mode="wait">
-          <motion.div
+          <m.div
             key={currentQuestion}
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -418,9 +476,10 @@ export default function AssessmentPage() {
                 <PhArrowRight className="w-4 h-4" />
               </button>
             </div>
-          </motion.div>
+          </m.div>
         </AnimatePresence>
       </div>
     </div>
+    </LazyMotion>
   );
 }

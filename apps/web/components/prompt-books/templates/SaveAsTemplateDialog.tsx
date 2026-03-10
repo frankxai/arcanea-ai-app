@@ -114,7 +114,7 @@ export function SaveAsTemplateDialog({
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-xs font-sans text-text-primary focus:outline-none"
+                className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-xs font-sans text-text-primary focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20"
               >
                 {CATEGORIES.map((c) => (
                   <option key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1)}</option>
@@ -165,7 +165,7 @@ export function SaveAsTemplateDialog({
                       <select
                         value={v.type}
                         onChange={(e) => updateVariable(i, 'type', e.target.value)}
-                        className="bg-white/[0.03] border border-white/[0.06] rounded px-2 py-1 text-[10px] font-sans text-text-secondary focus:outline-none"
+                        className="bg-white/[0.03] border border-white/[0.06] rounded px-2 py-1 text-[10px] font-sans text-text-secondary focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20"
                       >
                         <option value="text">Text</option>
                         <option value="number">Number</option>
@@ -176,7 +176,7 @@ export function SaveAsTemplateDialog({
                         type="text"
                         value={v.default || ''}
                         onChange={(e) => updateVariable(i, 'default', e.target.value)}
-                        className="flex-1 bg-white/[0.03] border border-white/[0.06] rounded px-2 py-1 text-[10px] font-mono text-text-secondary focus:outline-none"
+                        className="flex-1 bg-white/[0.03] border border-white/[0.06] rounded px-2 py-1 text-[10px] font-mono text-text-secondary focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20"
                         placeholder="Default value"
                       />
                       <label className="flex items-center gap-1 text-[10px] font-sans text-text-muted cursor-pointer">

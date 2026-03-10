@@ -32,7 +32,7 @@ export default function ChatDemoPage() {
     {
       id: '1',
       role: 'assistant',
-      content: 'Welcome, Creator! I\'m Melodia, your guide through the realms of music and creation. How may I assist you today?',
+      content: 'Hello. I\'m Melodia, your partner for music and creative work. What are you working on?',
       timestamp: new Date(Date.now() - 60000),
     },
   ]);

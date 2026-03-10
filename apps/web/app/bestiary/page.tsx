@@ -8,11 +8,11 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 export const metadata: Metadata = {
-  title: 'Bestiary of Creation | Arcanea',
+  title: 'Bestiary of Creation',
   description:
     'Know your creative obstacles. The Bestiary catalogs the creatures every creator must face.',
   openGraph: {
-    title: 'Bestiary of Creation | Arcanea',
+    title: 'Bestiary of Creation',
     description: 'Know your creative obstacles to overcome them.',
   },
 };
@@ -31,7 +31,7 @@ const CREATURES = [
     weakness: 'Small, immediate actions. Cannot survive direct engagement.',
     symptoms: ['Endless planning', 'Waiting for the perfect moment', 'Starting tomorrow'],
     icon: '🐍',
-    color: '#8b5cf6',
+    color: '#0d47a1',
   },
   {
     id: 'perfectus-demon',

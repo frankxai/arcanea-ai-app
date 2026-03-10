@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: 'Companions',
   description: 'Meet the Luminor companions — AI intelligences that guide your creative journey.',
   openGraph: {
-    title: 'Companions | Arcanea',
+    title: 'Companions',
     description: 'Meet the Luminor companions — AI intelligences that guide your creative journey.',
   },
 };

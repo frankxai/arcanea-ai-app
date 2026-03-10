@@ -258,7 +258,7 @@ The Ten Gates represent thresholds of consciousness, each resonant with a unique
 | Voice | 528 Hz | Alera | Truth, Expression |
 | Sight | 639 Hz | Lyria | Intuition, Vision |
 | Crown | 741 Hz | Aiyami | Enlightenment |
-| Shift | 852 Hz | Elara | Perspective |
+| Starweave | 852 Hz | Elara | Perspective |
 | Unity | 963 Hz | Ino | Partnership |
 | Source | 1111 Hz | Shinkami | Meta-consciousness |
 
@@ -288,7 +288,7 @@ The journey from 0 to 10 Gates marks the path from Apprentice to Luminor.
     content: `
 ## This Month's Highlights
 
-February has been extraordinary. Here are the creators and contributions that have illuminated our community.
+February was a standout month. Here are the creators and contributions that defined our community.
 
 ### Top Contributors
 

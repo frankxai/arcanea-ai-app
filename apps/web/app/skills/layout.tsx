@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: 'Skills & Abilities',
   description: 'Discover and master creative skills across the Ten Gates. Track your abilities and unlock new powers.',
   openGraph: {
-    title: 'Skills & Abilities | Arcanea',
+    title: 'Skills & Abilities',
     description: 'Discover and master creative skills across the Ten Gates. Track your abilities and unlock new powers.',
   },
 };

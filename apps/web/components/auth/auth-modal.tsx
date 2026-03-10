@@ -2,7 +2,7 @@
 
 import React, { useState, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { LazyMotion, domAnimation, m, AnimatePresence } from 'framer-motion';
 import { PhEnvelope, PhLock, PhEye, PhEyeSlash, PhUser, PhX, PhSparkle, PhGithubLogo, PhCheck } from '@/lib/phosphor-icons';
 import { useAuth } from '@/lib/auth/context';
 
@@ -111,6 +111,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
   };
 
   return (
+    <LazyMotion features={domAnimation}>
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={handleClose}>
         <Transition.Child
@@ -148,7 +149,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                 <div className="p-8">
                   {/* Success state */}
                   {success ? (
-                    <motion.div
+                    <m.div
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
                       className="text-center py-8"
@@ -166,7 +167,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                       >
                         Got it
                       </button>
-                    </motion.div>
+                    </m.div>
                   ) : (
                     <>
                       {/* Header */}
@@ -249,7 +250,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                       {/* Form */}
                       <AnimatePresence mode="wait">
                         {tab === 'login' ? (
-                          <motion.form
+                          <m.form
                             key="login"
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
@@ -268,7 +269,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                                 placeholder="Email address"
                                 required
                                 aria-required="true"
-                                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-atlantean-teal-aqua/50 focus:bg-white/[0.06] focus:outline-none text-sm transition-all duration-300"
+                                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-atlantean-teal-aqua/50 focus:bg-white/[0.06] focus:outline-none focus:ring-2 focus:ring-atlantean-teal-aqua/20 text-sm transition-all duration-300"
                               />
                             </div>
 
@@ -283,7 +284,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                                 placeholder="Password"
                                 required
                                 aria-required="true"
-                                className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-atlantean-teal-aqua/50 focus:bg-white/[0.06] focus:outline-none text-sm transition-all duration-300"
+                                className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-atlantean-teal-aqua/50 focus:bg-white/[0.06] focus:outline-none focus:ring-2 focus:ring-atlantean-teal-aqua/20 text-sm transition-all duration-300"
                               />
                               <button
                                 type="button"
@@ -302,9 +303,9 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                             >
                               {isLoading ? 'Signing in...' : 'Sign In'}
                             </button>
-                          </motion.form>
+                          </m.form>
                         ) : (
-                          <motion.form
+                          <m.form
                             key="signup"
                             initial={{ opacity: 0, x: 20 }}
                             animate={{ opacity: 1, x: 0 }}
@@ -324,7 +325,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                                 required
                                 aria-required="true"
                                 minLength={3}
-                                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-atlantean-teal-aqua/50 focus:bg-white/[0.06] focus:outline-none text-sm transition-all duration-300"
+                                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-atlantean-teal-aqua/50 focus:bg-white/[0.06] focus:outline-none focus:ring-2 focus:ring-atlantean-teal-aqua/20 text-sm transition-all duration-300"
                               />
                             </div>
 
@@ -339,7 +340,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                                 placeholder="Email address"
                                 required
                                 aria-required="true"
-                                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-atlantean-teal-aqua/50 focus:bg-white/[0.06] focus:outline-none text-sm transition-all duration-300"
+                                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-atlantean-teal-aqua/50 focus:bg-white/[0.06] focus:outline-none focus:ring-2 focus:ring-atlantean-teal-aqua/20 text-sm transition-all duration-300"
                               />
                             </div>
 
@@ -355,7 +356,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                                   placeholder="Password"
                                   required
                                   aria-required="true"
-                                  className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-atlantean-teal-aqua/50 focus:bg-white/[0.06] focus:outline-none text-sm transition-all duration-300"
+                                  className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] focus:border-atlantean-teal-aqua/50 focus:bg-white/[0.06] focus:outline-none focus:ring-2 focus:ring-atlantean-teal-aqua/20 text-sm transition-all duration-300"
                                 />
                                 <button
                                   type="button"
@@ -380,7 +381,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                             >
                               {isLoading ? 'Creating...' : 'Create Account'}
                             </button>
-                          </motion.form>
+                          </m.form>
                         )}
                       </AnimatePresence>
                     </>
@@ -392,5 +393,6 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
         </div>
       </Dialog>
     </Transition>
+    </LazyMotion>
   );
 }

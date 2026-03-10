@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { createPortal } from 'react-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { LazyMotion, domAnimation, m, AnimatePresence } from 'framer-motion';
 import { PhX, PhCheckCircle, PhWarningCircle, PhWarning, PhInfo } from '@/lib/phosphor-icons';
 import { cn } from '@/lib/utils';
 
@@ -102,7 +102,7 @@ function ToastCard({
   }, [duration, handleDismiss]);
 
   return (
-    <motion.div
+    <m.div
       layout
       initial={{ opacity: 0, x: 48, scale: 0.95 }}
       animate={{ opacity: 1, x: 0, scale: 1 }}
@@ -167,7 +167,7 @@ function ToastCard({
       >
         <PhX size={14} aria-hidden="true" />
       </button>
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -187,20 +187,22 @@ function ToastContainer({ toasts, onDismiss }: {
   if (!mounted) return null;
 
   return createPortal(
-    <div
-      aria-label="Notifications"
-      className="fixed top-4 right-4 z-[60] flex flex-col gap-2 w-full max-w-sm pointer-events-none"
-    >
-      <AnimatePresence mode="popLayout" initial={false}>
-        {toasts.map((t) => (
-          <ToastCard
-            key={t.id}
-            {...t}
-            onDismissInternal={onDismiss}
-          />
-        ))}
-      </AnimatePresence>
-    </div>,
+    <LazyMotion features={domAnimation}>
+      <div
+        aria-label="Notifications"
+        className="fixed top-4 right-4 z-[60] flex flex-col gap-2 w-full max-w-sm pointer-events-none"
+      >
+        <AnimatePresence mode="popLayout" initial={false}>
+          {toasts.map((t) => (
+            <ToastCard
+              key={t.id}
+              {...t}
+              onDismissInternal={onDismiss}
+            />
+          ))}
+        </AnimatePresence>
+      </div>
+    </LazyMotion>,
     document.body
   );
 }

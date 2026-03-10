@@ -44,7 +44,7 @@ const GUARDS = [
   { pid: '005', name: 'Alera', el: 'Voice', freq: '528 Hz' },
   { pid: '006', name: 'Lyria', el: 'Sight', freq: '639 Hz' },
   { pid: '007', name: 'Aiyami', el: 'Crown', freq: '741 Hz' },
-  { pid: '008', name: 'Elara', el: 'Shift', freq: '852 Hz' },
+  { pid: '008', name: 'Elara', el: 'Starweave', freq: '852 Hz' },
   { pid: '009', name: 'Ino', el: 'Unity', freq: '963 Hz' },
   { pid: '010', name: 'Shinkami', el: 'Source', freq: '1111 Hz' },
 ];

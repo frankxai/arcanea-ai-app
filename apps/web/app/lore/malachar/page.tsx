@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description:
     "The tragic tale of Malachar Lumenbright, once the greatest of Lumina's champions, now sealed in the Shadowfen as the Dark Lord.",
   openGraph: {
-    title: 'Malachar — The Dark Lord | Arcanea',
+    title: 'Malachar — The Dark Lord',
     description:
       "He opened all Ten Gates. He earned the title First Eldrian Luminor. Then he tried to take what the universe would not give. Now he is the Shadowfen's sealed prisoner — and the warning every Luminor carries.",
   },

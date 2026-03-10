@@ -15,11 +15,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const profile = await getProfile(supabase, userId)
 
   if (!profile) {
-    return { title: 'Profile Not Found | Arcanea' }
+    return { title: 'Profile Not Found' }
   }
 
   return {
-    title: `${profile.displayName} | Arcanea`,
+    title: `${profile.displayName}`,
     description: profile.bio || `View ${profile.displayName}'s creations on Arcanea`,
     openGraph: {
       title: `${profile.displayName} on Arcanea`,

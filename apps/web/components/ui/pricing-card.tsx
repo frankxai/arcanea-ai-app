@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { motion, Variants } from "framer-motion";
+import { m, Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Button, ButtonProps } from "./button";
 import { Badge } from "./badge";
@@ -233,7 +233,7 @@ const PricingCard = React.forwardRef<HTMLDivElement, PricingCardProps>(
 
     if (animated) {
       return (
-        <motion.div
+        <m.div
           ref={ref}
           variants={cardVariants}
           initial="hidden"
@@ -242,7 +242,7 @@ const PricingCard = React.forwardRef<HTMLDivElement, PricingCardProps>(
           custom={0}
         >
           {content}
-        </motion.div>
+        </m.div>
       );
     }
 
@@ -299,7 +299,7 @@ const PricingGrid = React.forwardRef<HTMLDivElement, PricingGridProps>(
       return (
         <div ref={ref} className={gridClasses}>
           {tiers.map((tier, index) => (
-            <motion.div
+            <m.div
               key={tier.id}
               variants={cardVariants}
               initial="hidden"
@@ -308,7 +308,7 @@ const PricingGrid = React.forwardRef<HTMLDivElement, PricingGridProps>(
               custom={index}
             >
               <PricingCard tier={tier} />
-            </motion.div>
+            </m.div>
           ))}
         </div>
       );

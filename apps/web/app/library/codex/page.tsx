@@ -10,11 +10,11 @@ import Link from "next/link";
 import { LibraryExperience } from "../library-experience";
 
 export const metadata: Metadata = {
-  title: "Luminor Codex | Arcanea Library",
+  title: "Luminor Codex | Library",
   description:
     "Step into the Arcanea Library, meet the Remembering Luminor, and explore the interactive codex of living lore.",
   openGraph: {
-    title: "Luminor Codex | Arcanea Library",
+    title: "Luminor Codex | Library",
     description:
       "Step into the Arcanea Library, meet the Remembering Luminor, and explore the interactive codex of living lore.",
   },

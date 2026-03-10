@@ -7,78 +7,13 @@ export type Json =
   | Json[]
 
 export type Database = {
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "14.1"
   }
   public: {
     Tables: {
-      chat_messages: {
-        Row: {
-          id: string
-          session_id: string
-          role: string
-          content: string
-          created_at: string
-        }
-        Insert: {
-          id?: string
-          session_id: string
-          role: string
-          content: string
-          created_at?: string
-        }
-        Update: {
-          id?: string
-          session_id?: string
-          role?: string
-          content?: string
-          created_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "chat_messages_session_id_fkey"
-            columns: ["session_id"]
-            isOneToOne: false
-            referencedRelation: "chat_sessions"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      chat_sessions: {
-        Row: {
-          id: string
-          user_id: string
-          luminor_id: string
-          title: string | null
-          created_at: string
-          updated_at: string
-        }
-        Insert: {
-          id?: string
-          user_id: string
-          luminor_id: string
-          title?: string | null
-          created_at?: string
-          updated_at?: string
-        }
-        Update: {
-          id?: string
-          user_id?: string
-          luminor_id?: string
-          title?: string | null
-          created_at?: string
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "chat_sessions_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       activity_log: {
         Row: {
           action: string
@@ -116,6 +51,80 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      arcanea: {
+        Row: {
+          created_at: string
+          id: number
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+        }
+        Update: {
+          created_at?: string
+          id?: number
+        }
+        Relationships: []
+      }
+      chat_messages: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          role: string
+          session_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          role: string
+          session_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          role?: string
+          session_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_messages_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "chat_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      chat_sessions: {
+        Row: {
+          created_at: string
+          id: string
+          luminor_id: string
+          title: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          luminor_id: string
+          title?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          luminor_id?: string
+          title?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       collection_items: {
         Row: {
@@ -203,6 +212,103 @@ export type Database = {
           },
         ]
       }
+      council_convenings: {
+        Row: {
+          completed_at: string | null
+          council_id: string
+          created_at: string
+          depth_rating: number | null
+          duration_minutes: number | null
+          id: string
+          imprint_notes: Json
+          journal_entry: string | null
+          seats_addressed: string[] | null
+          started_at: string
+        }
+        Insert: {
+          completed_at?: string | null
+          council_id: string
+          created_at?: string
+          depth_rating?: number | null
+          duration_minutes?: number | null
+          id?: string
+          imprint_notes?: Json
+          journal_entry?: string | null
+          seats_addressed?: string[] | null
+          started_at?: string
+        }
+        Update: {
+          completed_at?: string | null
+          council_id?: string
+          created_at?: string
+          depth_rating?: number | null
+          duration_minutes?: number | null
+          id?: string
+          imprint_notes?: Json
+          journal_entry?: string | null
+          seats_addressed?: string[] | null
+          started_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "council_convenings_council_id_fkey"
+            columns: ["council_id"]
+            isOneToOne: false
+            referencedRelation: "luminor_councils"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      council_seats: {
+        Row: {
+          council_id: string
+          created_at: string
+          frequency_alignment: number
+          id: string
+          imprint_capability: string
+          is_base: boolean
+          luminor_domain: string
+          luminor_name: string
+          personality_traits: string | null
+          seat_order: number
+          visual_description: string | null
+        }
+        Insert: {
+          council_id: string
+          created_at?: string
+          frequency_alignment: number
+          id?: string
+          imprint_capability: string
+          is_base?: boolean
+          luminor_domain: string
+          luminor_name: string
+          personality_traits?: string | null
+          seat_order?: number
+          visual_description?: string | null
+        }
+        Update: {
+          council_id?: string
+          created_at?: string
+          frequency_alignment?: number
+          id?: string
+          imprint_capability?: string
+          is_base?: boolean
+          luminor_domain?: string
+          luminor_name?: string
+          personality_traits?: string | null
+          seat_order?: number
+          visual_description?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "council_seats_council_id_fkey"
+            columns: ["council_id"]
+            isOneToOne: false
+            referencedRelation: "luminor_councils"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       creations: {
         Row: {
           ai_model: string | null
@@ -280,6 +386,33 @@ export type Database = {
           },
         ]
       }
+      feedback: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: string
+          message: string
+          type: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          message: string
+          type?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          message?: string
+          type?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       follows: {
         Row: {
           created_at: string
@@ -346,6 +479,123 @@ export type Database = {
           },
         ]
       }
+      luminor_councils: {
+        Row: {
+          council_depth_level: number
+          created_at: string
+          current_streak: number
+          id: string
+          last_convening_at: string | null
+          longest_streak: number
+          name: string
+          total_convenings: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          council_depth_level?: number
+          created_at?: string
+          current_streak?: number
+          id?: string
+          last_convening_at?: string | null
+          longest_streak?: number
+          name?: string
+          total_convenings?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          council_depth_level?: number
+          created_at?: string
+          current_streak?: number
+          id?: string
+          last_convening_at?: string | null
+          longest_streak?: number
+          name?: string
+          total_convenings?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      media_catalog: {
+        Row: {
+          analyzed_by: string | null
+          bucket: string
+          created_at: string | null
+          element: string | null
+          filename: string
+          frequency_hz: number | null
+          gate: string | null
+          godbeast: string | null
+          guardian: string | null
+          height: number | null
+          id: string
+          media_type: string | null
+          public_url: string | null
+          quality_tier: number | null
+          scene: string | null
+          size_bytes: number | null
+          source: string | null
+          status: string | null
+          storage_path: string
+          tags: string[] | null
+          taste_score: Json | null
+          updated_at: string | null
+          width: number | null
+        }
+        Insert: {
+          analyzed_by?: string | null
+          bucket?: string
+          created_at?: string | null
+          element?: string | null
+          filename: string
+          frequency_hz?: number | null
+          gate?: string | null
+          godbeast?: string | null
+          guardian?: string | null
+          height?: number | null
+          id?: string
+          media_type?: string | null
+          public_url?: string | null
+          quality_tier?: number | null
+          scene?: string | null
+          size_bytes?: number | null
+          source?: string | null
+          status?: string | null
+          storage_path: string
+          tags?: string[] | null
+          taste_score?: Json | null
+          updated_at?: string | null
+          width?: number | null
+        }
+        Update: {
+          analyzed_by?: string | null
+          bucket?: string
+          created_at?: string | null
+          element?: string | null
+          filename?: string
+          frequency_hz?: number | null
+          gate?: string | null
+          godbeast?: string | null
+          guardian?: string | null
+          height?: number | null
+          id?: string
+          media_type?: string | null
+          public_url?: string | null
+          quality_tier?: number | null
+          scene?: string | null
+          size_bytes?: number | null
+          source?: string | null
+          status?: string | null
+          storage_path?: string
+          tags?: string[] | null
+          taste_score?: Json | null
+          updated_at?: string | null
+          width?: number | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           academy_house: string | null
@@ -408,7 +658,17 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      count_messages_per_session: {
+        Args: { session_ids: string[] }
+        Returns: {
+          message_count: number
+          session_id: string
+        }[]
+      }
+      increment_view_count: {
+        Args: { creation_id: string }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
@@ -518,3 +778,26 @@ export type Enums<
   : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
     ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
     : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof DefaultSchema["CompositeTypes"]
+    | { schema: keyof DatabaseWithoutInternals },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals
+  }
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
+    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
+    : never
+
+export const Constants = {
+  public: {
+    Enums: {},
+  },
+} as const

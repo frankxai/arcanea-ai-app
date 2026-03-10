@@ -1,20 +1,21 @@
+import type { ReactNode } from "react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Convening | Luminor Council",
+  title: "Session | Council",
   description:
-    "Enter the Council Chamber. Summon your Luminors and receive transmissions of wisdom, strategy, and perception.",
+    "Run a session with your Council. Consult nine specialized advisors across Vision, Strategy, Voice, Systems, and more.",
   openGraph: {
-    title: "Convening | Luminor Council",
+    title: "Council Session",
     description:
-      "Enter the Council Chamber. Summon your Luminors and receive transmissions.",
+      "Run a session with your Council. Nine advisors, one strategic mind.",
   },
 };
 
 export default function ConveningLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return <>{children}</>;
 }

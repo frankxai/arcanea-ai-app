@@ -913,3 +913,193 @@ p a, span a, li a {
     250px -280px 0 rgba(13, 71, 161, 0.25);
   animation: float-particle-alt 10s ease-in-out infinite 2s;
 }
+
+/* ============================================================
+   GUARDIAN COLOR SHIFTS — M010 Layer 1
+   Pages in different Guardian domains subtly shift accent colors.
+   Apply via data-guardian attribute on a wrapper element.
+   ============================================================ */
+
+[data-guardian="lyssandria"] { --guardian-accent: 142 71% 45%; } /* Earth green — Foundation 174 Hz */
+[data-guardian="leyla"]      { --guardian-accent: 210 80% 65%; } /* Water blue — Flow 285 Hz */
+[data-guardian="draconia"]   { --guardian-accent: 15 90% 55%; }  /* Fire orange — Fire 396 Hz */
+[data-guardian="maylinn"]    { --guardian-accent: 340 65% 60%; } /* Heart rose — Heart 417 Hz */
+[data-guardian="alera"]      { --guardian-accent: 45 100% 50%; } /* Voice gold — Voice 528 Hz */
+[data-guardian="lyria"]      { --guardian-accent: 270 60% 55%; } /* Sight indigo — Sight 639 Hz */
+[data-guardian="aiyami"]     { --guardian-accent: 45 80% 75%; }  /* Crown white-gold — Crown 741 Hz */
+[data-guardian="elara"]      { --guardian-accent: 220 30% 70%; } /* Shift silver — Shift 852 Hz */
+[data-guardian="ino"]        { --guardian-accent: 174 70% 45%; } /* Unity teal — Unity 963 Hz */
+[data-guardian="shinkami"]   { --guardian-accent: 270 50% 40%; } /* Source purple — Source 1111 Hz */
+
+/* ============================================================
+   CSS HOUDINI SHIMMER BORDERS
+   Premium rotating conic-gradient border effect.
+   Uses @property for smooth angle animation (no 200% hack).
+   Apply .shimmer-card to container, .shimmer-ring inside it.
+   ============================================================ */
+
+@property --shimmer-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes shimmer-spin {
+  to { --shimmer-angle: 360deg; }
+}
+
+/* Shimmer ring — the rotating border element */
+.shimmer-ring {
+  --shimmer-color-1: rgba(0, 188, 212, 0.8);
+  --shimmer-color-2: rgba(13, 71, 161, 0.8);
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--shimmer-angle),
+    transparent 55%,
+    var(--shimmer-color-1) 70%,
+    var(--shimmer-color-2) 80%,
+    transparent 95%
+  );
+  animation: shimmer-spin 3s linear infinite;
+  pointer-events: none;
+}
+
+/* Speed variants */
+.shimmer-ring-fast { animation-duration: 1.5s; }
+.shimmer-ring-slow { animation-duration: 5s; }
+
+/* Hover-only variant: hidden until parent hover */
+.shimmer-ring-hover {
+  animation: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.shimmer-hover:hover .shimmer-ring-hover {
+  animation: shimmer-spin 2.5s linear infinite;
+  opacity: 1;
+}
+
+/* Color presets */
+.shimmer-ring-cyan {
+  --shimmer-color-1: rgba(0, 188, 212, 0.8);
+  --shimmer-color-2: rgba(0, 137, 123, 0.8);
+}
+.shimmer-ring-gold {
+  --shimmer-color-1: rgba(255, 215, 0, 0.8);
+  --shimmer-color-2: rgba(245, 158, 11, 0.8);
+}
+.shimmer-ring-purple {
+  --shimmer-color-1: rgba(139, 92, 246, 0.8);
+  --shimmer-color-2: rgba(168, 85, 247, 0.8);
+}
+.shimmer-ring-fire {
+  --shimmer-color-1: rgba(239, 68, 68, 0.8);
+  --shimmer-color-2: rgba(249, 115, 22, 0.8);
+}
+
+/* Inner mask — clips border to ring width */
+.shimmer-mask {
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  background: var(--cosmic-void, #09090b);
+  z-index: 1;
+}
+
+/* ============================================================
+   SURFACE TONAL HIERARCHY
+   Radix-inspired opacity steps for consistent elevation.
+   ============================================================ */
+
+:root {
+  --surface-1: rgba(255, 255, 255, 0.02);
+  --surface-2: rgba(255, 255, 255, 0.04);
+  --surface-3: rgba(255, 255, 255, 0.06);
+  --surface-4: rgba(255, 255, 255, 0.09);
+  --surface-5: rgba(255, 255, 255, 0.13);
+  --surface-cyan: rgba(0, 188, 212, 0.06);
+  --surface-gold: rgba(255, 215, 0, 0.06);
+  --surface-purple: rgba(139, 92, 246, 0.06);
+}
+
+/* ============================================================
+   CSS-ONLY STAR FIELD
+   Replaces 100+ individual animated divs with a single element.
+   Uses box-shadow for static stars + keyframe for twinkling.
+   ============================================================ */
+
+.stars-ambient {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.stars-ambient::before,
+.stars-ambient::after {
+  content: '';
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.stars-ambient::before {
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow:
+    50px 80px 0 rgba(255,255,255,0.6),
+    120px 200px 0 rgba(255,255,255,0.4),
+    200px 50px 0 rgba(255,255,255,0.7),
+    320px 180px 0 rgba(255,255,255,0.3),
+    400px 120px 0 rgba(255,255,255,0.5),
+    520px 250px 0 rgba(255,255,255,0.6),
+    600px 30px 0 rgba(255,255,255,0.4),
+    700px 300px 0 rgba(255,255,255,0.7),
+    80px 350px 0 rgba(255,255,255,0.5),
+    180px 420px 0 rgba(255,255,255,0.3),
+    300px 380px 0 rgba(255,255,255,0.6),
+    450px 450px 0 rgba(255,255,255,0.4),
+    550px 350px 0 rgba(255,255,255,0.7),
+    650px 480px 0 rgba(255,255,255,0.5),
+    750px 400px 0 rgba(255,255,255,0.3),
+    850px 50px 0 rgba(255,255,255,0.6),
+    900px 200px 0 rgba(255,255,255,0.4),
+    950px 350px 0 rgba(255,255,255,0.5),
+    1000px 100px 0 rgba(255,255,255,0.7),
+    1100px 280px 0 rgba(255,255,255,0.3),
+    100px 550px 0 rgba(255,255,255,0.5),
+    350px 600px 0 rgba(255,255,255,0.4),
+    500px 550px 0 rgba(255,255,255,0.6),
+    700px 620px 0 rgba(255,255,255,0.3),
+    850px 500px 0 rgba(255,255,255,0.5);
+  animation: stars-twinkle 4s ease-in-out infinite alternate;
+}
+
+.stars-ambient::after {
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow:
+    30px 150px 0 rgba(255,255,255,0.4),
+    160px 300px 0 rgba(255,255,255,0.6),
+    280px 100px 0 rgba(255,255,255,0.3),
+    380px 280px 0 rgba(255,255,255,0.5),
+    480px 180px 0 rgba(255,255,255,0.7),
+    580px 380px 0 rgba(255,255,255,0.4),
+    680px 150px 0 rgba(255,255,255,0.6),
+    780px 320px 0 rgba(255,255,255,0.3),
+    150px 480px 0 rgba(255,255,255,0.5),
+    420px 520px 0 rgba(255,255,255,0.4),
+    620px 540px 0 rgba(255,255,255,0.6),
+    820px 450px 0 rgba(255,255,255,0.3),
+    920px 280px 0 rgba(255,255,255,0.5),
+    1050px 180px 0 rgba(255,255,255,0.4),
+    250px 650px 0 rgba(255,255,255,0.5),
+    550px 680px 0 rgba(255,255,255,0.3);
+  animation: stars-twinkle 5s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes stars-twinkle {
+  0% { opacity: 0.6; }
+  100% { opacity: 1; }
+}

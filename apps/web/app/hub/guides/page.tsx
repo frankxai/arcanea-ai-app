@@ -2,15 +2,15 @@ import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Guides | Arcanea Hub",
-  description: "Step-by-step tutorials for mastering Arcanea. Learn to use Luminors, explore the Library, and unlock your creative potential.",
+  title: "Guides | Hub",
+  description: "Step-by-step tutorials for mastering Arcanea. Learn to work with Luminors, explore the Library, and grow as a creator.",
 };
 
 const GUIDES = [
   {
     id: "getting-started",
     title: "Getting Started with Arcanea",
-    description: "Your first steps into the creative intelligence platform. Set up your profile, meet your first Luminor, and begin your journey.",
+    description: "Your first steps into the creative intelligence platform. Set up your profile, meet your first Luminor, and start creating.",
     duration: "5 min read",
     difficulty: "Beginner",
     icon: "🚀",
@@ -20,11 +20,11 @@ const GUIDES = [
   {
     id: "luminors-guide",
     title: "Working with Luminors",
-    description: "Deep dive into the 16 Luminor intelligences. Learn their specialties, how to activate them, and when to use each one.",
+    description: "A guide to the 16 Luminors. Learn their strengths, how to activate them, and when to use each one.",
     duration: "15 min read",
     difficulty: "Intermediate",
     icon: "🌟",
-    color: "#8B5CF6",
+    color: "#0d47a1",
     tags: ["luminors", "ai", "collaboration"],
   },
   {
@@ -60,7 +60,7 @@ const GUIDES = [
   {
     id: "studio-basics",
     title: "Creating in the Studio",
-    description: "Use the creation tools to build your ideas. Projects, templates, and AI-assisted workflows.",
+    description: "Use the creation tools to build your ideas. Projects, templates, and guided workflows.",
     duration: "15 min read",
     difficulty: "Intermediate",
     icon: "🎨",
@@ -132,7 +132,8 @@ export default function GuidesPage() {
               <input
                 type="text"
                 placeholder="Search guides..."
-                className="w-full px-4 py-3 pl-11 rounded-xl bg-white/[0.04] border border-white/[0.06] text-white placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal-aqua"
+                aria-label="Search guides"
+                className="w-full px-4 py-3 pl-11 rounded-xl bg-white/[0.04] border border-white/[0.06] text-white placeholder:text-text-muted focus:outline-none focus:border-atlantean-teal-aqua focus:ring-2 focus:ring-atlantean-teal-aqua/30"
               />
               <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />

@@ -73,7 +73,7 @@ export function TagManager({
           ) : (
             tags.map((tag) => {
               const isEditing = editingId === tag.id
-              const catColor = tag.category ? TAG_CATEGORIES[tag.category]?.color : '#78a6ff'
+              const catColor = tag.category ? TAG_CATEGORIES[tag.category]?.color : '#00bcd4'
 
               return (
                 <div key={tag.id} className="px-5 py-3">
@@ -92,7 +92,7 @@ export function TagManager({
                         <select
                           value={editCategory}
                           onChange={(e) => setEditCategory(e.target.value as TagCategory)}
-                          className="bg-white/[0.03] border border-white/[0.06] rounded-lg px-2 py-1.5 text-xs font-sans text-text-primary focus:outline-none"
+                          className="bg-white/[0.03] border border-white/[0.06] rounded-lg px-2 py-1.5 text-xs font-sans text-text-primary focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20"
                         >
                           {(Object.keys(TAG_CATEGORIES) as TagCategory[]).map((cat) => (
                             <option key={cat} value={cat}>{TAG_CATEGORIES[cat].label}</option>
@@ -111,7 +111,7 @@ export function TagManager({
                           type="number"
                           value={editWeight}
                           onChange={(e) => setEditWeight(e.target.value)}
-                          className="w-20 bg-white/[0.03] border border-white/[0.06] rounded-lg px-2.5 py-1.5 text-xs font-mono text-text-secondary focus:outline-none"
+                          className="w-20 bg-white/[0.03] border border-white/[0.06] rounded-lg px-2.5 py-1.5 text-xs font-mono text-text-secondary focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20"
                           placeholder="Weight"
                           step="0.05"
                           min="0.1"

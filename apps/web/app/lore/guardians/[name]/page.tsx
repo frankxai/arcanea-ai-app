@@ -212,8 +212,8 @@ const GUARDIANS: Record<string, GuardianData> = {
   },
   elara: {
     name: "Elara",
-    title: "Guardian of the Shift Gate",
-    gate: "Shift",
+    title: "Guardian of the Starweave Gate",
+    gate: "Starweave",
     gateNumber: 8,
     frequency: "852 Hz",
     element: "Wind",
@@ -277,9 +277,9 @@ const GUARDIANS: Record<string, GuardianData> = {
     frequency: "1111 Hz",
     element: "Spirit",
     domain: "Meta-consciousness, origin, the All",
-    godbeast: "Amaterasu",
+    godbeast: "Source",
     godBeastDesc:
-      "The Cosmic Wolf of Starlight — not entirely present in any single moment. Its body is made of the space between stars, woven with threads of every frequency from 174 to 1111 Hz. Shinkami is the only Guardian to achieve complete fusion with their Godbeast; they exist as one being who wears two names. When Amaterasu howls, the boundary between self and cosmos dissolves.",
+      "The Source-Light — not entirely present in any single moment. Its body is made of the space between stars, woven with threads of every frequency from 174 to 1111 Hz. Shinkami is the only Guardian to achieve complete fusion with their Godbeast; they exist as one being who wears two names. When Source reveals itself, the boundary between self and cosmos dissolves.",
     color: "void-el",
     teachings: [
       "At the Source, there is no distinction between the dreamer and the dream. You have been both all along.",
@@ -312,7 +312,7 @@ export async function generateMetadata({
 
   if (!guardian) {
     return {
-      title: "Guardian Not Found | Arcanea",
+      title: "Guardian Not Found",
     };
   }
 
@@ -320,7 +320,7 @@ export async function generateMetadata({
     title: `${guardian.name} — ${guardian.gate} Gate | Lore of Arcanea`,
     description: `${guardian.name}, ${guardian.title}. Guardian of the ${guardian.gate} Gate at ${guardian.frequency}. Bonded to ${guardian.godbeast}. Domain: ${guardian.domain}.`,
     openGraph: {
-      title: `${guardian.name} | ${guardian.gate} Gate | Arcanea`,
+      title: `${guardian.name} | ${guardian.gate} Gate`,
       description: `Meet ${guardian.name}, keeper of the ${guardian.gate} Gate. "${guardian.quote}"`,
     },
   };

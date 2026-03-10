@@ -33,7 +33,7 @@ const elementRings = {
   earth: 'ring-2 ring-earth/60 shadow-[0_0_10px_rgba(74,124,89,0.3)]',
   wind: 'ring-2 ring-wind/60 shadow-[0_0_10px_rgba(200,214,229,0.3)]',
   gold: 'ring-2 ring-brand-gold/60 shadow-[0_0_10px_rgba(255,215,0,0.3)]',
-  brand: 'ring-2 ring-brand-primary/60 shadow-[0_0_10px_rgba(139,92,246,0.3)]',
+  brand: 'ring-2 ring-brand-primary/60 shadow-[0_0_10px_rgba(13,71,161,0.3)]',
 } as const;
 
 type ElementRing = keyof typeof elementRings;

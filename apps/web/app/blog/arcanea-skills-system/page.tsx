@@ -1,17 +1,18 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { LazyMotion, domAnimation, m } from "framer-motion";
 import Link from "next/link";
 import { TextReveal } from "@/components/magic/text-reveal";
 
 export default function ArcanaeSkillsArticle() {
   return (
+    <LazyMotion features={domAnimation}>
     <article className="min-h-screen bg-cosmic-void text-text-primary">
       {/* Hero */}
       <header className="relative py-24 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-atlantean-teal/10 to-transparent" />
         <div className="max-w-3xl mx-auto px-6 relative z-10">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -23,7 +24,7 @@ export default function ArcanaeSkillsArticle() {
             <p className="text-xl text-text-secondary">
               28 skills, 7 Luminor guides, and a complete creative methodology—all open source.
             </p>
-          </motion.div>
+          </m.div>
         </div>
       </header>
 
@@ -233,5 +234,6 @@ cp -r arcanea/.claude/commands/* ~/.claude/commands/`}
         </div>
       </footer>
     </article>
+    </LazyMotion>
   );
 }

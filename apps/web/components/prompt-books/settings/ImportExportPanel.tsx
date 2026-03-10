@@ -194,7 +194,7 @@ export function ImportExportPanel({ onClose }: ImportExportPanelProps) {
             <select
               value={targetCollectionId}
               onChange={(e) => setTargetCollectionId(e.target.value)}
-              className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-xs font-sans text-text-primary focus:outline-none"
+              className="w-full bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2 text-xs font-sans text-text-primary focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20"
             >
               <option value="">No collection (uncategorized)</option>
               {collections.map((c) => (

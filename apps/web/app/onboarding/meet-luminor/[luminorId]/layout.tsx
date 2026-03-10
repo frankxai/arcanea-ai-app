@@ -22,10 +22,10 @@ export async function generateMetadata({
   const name = LUMINOR_NAMES[luminorId] || luminorId;
   return {
     title: `Meet ${name}`,
-    description: `Begin your journey with ${name} — your Luminor guide through the Gates of Creation.`,
+    description: `Meet ${name} — your AI creative partner on Arcanea.`,
     openGraph: {
-      title: `Meet ${name} | Arcanea`,
-      description: `Begin your journey with ${name} — your Luminor guide.`,
+      title: `Meet ${name}`,
+      description: `Meet ${name} — your AI creative partner on Arcanea.`,
     },
   };
 }

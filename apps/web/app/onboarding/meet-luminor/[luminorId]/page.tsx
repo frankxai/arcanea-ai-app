@@ -10,7 +10,7 @@ import { PhArrowLeft, PhArrowRight, PhSparkle, PhMusicNote, PhBookOpen, PhPalett
 // musician -> Alera (Voice/Expression, 528 Hz)
 // storyteller -> Lyria (Sight/Vision, 639 Hz)
 // architect -> Lyssandria (Foundation/Earth, 174 Hz)
-// filmmaker -> Elara (Shift/Perspective, 852 Hz)
+// filmmaker -> Elara (Starweave/Perspective, 852 Hz)
 // game-designer -> Draconia (Fire/Power, 396 Hz)
 const LUMINORS: Record<string, {
   name: string;
@@ -69,9 +69,9 @@ const LUMINORS: Record<string, {
   },
   director: {
     name: 'Elara',
-    title: 'Guardian of the Shift Gate',
+    title: 'Guardian of the Starweave Gate',
     signature: 'Every frame is a universe waiting to unfold.',
-    description: 'Elara, Guardian of the Shift Gate at 852 Hz, sees every story from a thousand angles. She helps you craft visual narratives that transform perspectives and reveal hidden truths through the art of moving images.',
+    description: 'Elara, Guardian of the Starweave Gate at 852 Hz, sees every story from a thousand angles. She helps you craft visual narratives that transform perspectives and reveal hidden truths through the art of moving images.',
     personality: 'Dynamic, perceptive, inspiring. Speaks in cinematic language, always seeking the unexpected angle.',
     firstGreeting: 'The lens is ready. The light is gathered. Now tell me -- what story does the world need to see through your eyes?',
     icon: PhFilmStrip,

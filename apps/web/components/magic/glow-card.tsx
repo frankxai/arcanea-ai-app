@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ReactNode, useState } from "react";
 
 interface GlowCardProps {
@@ -22,7 +22,7 @@ export function GlowCard({ children, className = "", glowColor = "rgba(0, 188, 2
   };
 
   return (
-    <motion.div
+    <m.div
       className={`relative overflow-hidden rounded-2xl ${className}`}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
@@ -50,13 +50,13 @@ export function GlowCard({ children, className = "", glowColor = "rgba(0, 188, 2
       <div className="relative z-10 bg-cosmic-surface/80 backdrop-blur-xl border border-cosmic-border rounded-2xl p-6 h-full">
         {children}
       </div>
-    </motion.div>
+    </m.div>
   );
 }
 
 export function FloatingCard({ children, className = "", delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
   return (
-    <motion.div
+    <m.div
       className={className}
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -65,6 +65,6 @@ export function FloatingCard({ children, className = "", delay = 0 }: { children
       whileHover={{ y: -8 }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }

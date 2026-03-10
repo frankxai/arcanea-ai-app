@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { motion, Variants } from "framer-motion";
+import { m, Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
@@ -116,7 +116,7 @@ const Timeline = React.forwardRef<HTMLDivElement, TimelineProps>(
 
             if (animated) {
               return (
-                <motion.div
+                <m.div
                   key={event.id}
                   variants={itemVariants}
                   initial="hidden"
@@ -217,7 +217,7 @@ const Timeline = React.forwardRef<HTMLDivElement, TimelineProps>(
                       </>
                     )}
                   </div>
-                </motion.div>
+                </m.div>
               );
             }
 

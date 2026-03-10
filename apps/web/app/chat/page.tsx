@@ -422,7 +422,7 @@ export default function ChatPage() {
 
         {/* Error banner */}
         {error && (
-          <div className="bg-red-500/8 border-b border-red-500/20 px-4 py-2.5">
+          <div role="alert" className="bg-red-500/8 border-b border-red-500/20 px-4 py-2.5">
             <div className="max-w-[680px] mx-auto flex items-center justify-between">
               <div className="flex items-center gap-2 text-red-400/80 text-sm">
                 <PhWarningCircle className="w-4 h-4" />
@@ -469,7 +469,7 @@ export default function ChatPage() {
             </div>
           ) : (
             /* Messages */
-            <div className="max-w-[680px] mx-auto px-4 py-6">
+            <div className="max-w-[680px] mx-auto px-4 py-6" aria-live="polite">
               {messages.map((msg) => (
                 <div key={msg.id} className={`mb-6 ${msg.role === 'user' ? 'flex justify-end' : ''}`}>
                   {msg.role === 'user' ? (
@@ -551,7 +551,7 @@ export default function ChatPage() {
                   aria-label="Message input"
                   disabled={isStreaming}
                   rows={1}
-                  className="w-full px-4 py-3 pr-14 bg-transparent text-white/90 placeholder-white/25 resize-none focus:outline-none disabled:opacity-40 text-[15px]"
+                  className="w-full px-4 py-3 pr-14 bg-transparent text-white/90 placeholder-white/25 resize-none focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/30 focus:rounded-lg disabled:opacity-40 text-[15px]"
                   style={{ minHeight: '52px', maxHeight: '200px' }}
                 />
 

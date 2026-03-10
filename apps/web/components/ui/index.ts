@@ -35,3 +35,10 @@ export type { AcademyBadgeProps } from './academy-badge';
 
 export { BondIndicator } from './bond-indicator';
 export type { BondIndicatorProps } from './bond-indicator';
+
+// Premium Components
+export { ShimmerCard } from './shimmer-card';
+export type { ShimmerCardProps, ShimmerColor, ShimmerSpeed } from './shimmer-card';
+
+export { GlowButton } from './glow-button';
+export type { GlowButtonProps, GlowButtonColor, GlowButtonVariant, GlowButtonSize } from './glow-button';

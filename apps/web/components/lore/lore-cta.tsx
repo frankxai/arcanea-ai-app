@@ -1,53 +1,9 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { m, useInView } from "framer-motion";
 import { useRef } from "react";
-import Link from "next/link";
-
-// ─── Inline SVG Icons ───────────────────────────────────────────────────────────
-type InlineSvgProps = { className?: string; style?: React.CSSProperties };
-const Icons: Record<string, React.FC<InlineSvgProps>> = {
-  Sparkles: () => (
-    <svg
-      className="w-5 h-5"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z" />
-    </svg>
-  ),
-  ArrowRight: () => (
-    <svg
-      className="w-5 h-5"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <line x1="5" y1="12" x2="19" y2="12" />
-      <polyline points="12 5 19 12 12 19" />
-    </svg>
-  ),
-  Play: () => (
-    <svg
-      className="w-5 h-5"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <polygon points="5 3 19 12 5 21 5 3" />
-    </svg>
-  ),
-};
+import { GlowButton } from "@/components/ui/glow-button";
+import { durations, m3Curves } from "@/lib/design/motion";
 
 export function LoreCTA() {
   const ref = useRef<HTMLDivElement>(null);
@@ -55,74 +11,54 @@ export function LoreCTA() {
 
   return (
     <section ref={ref} className="py-32 relative overflow-hidden">
-      {/* Background */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cosmic-surface/30 to-cosmic-deep" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-atlantean-teal-aqua/10 via-creation-prism-purple/5 to-transparent rounded-full" />
       </div>
 
       <div className="max-w-4xl mx-auto px-6">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: durations.slowest, ease: m3Curves.emphasized }}
           className="text-center"
         >
           {/* Quote */}
           <blockquote className="text-3xl md:text-4xl lg:text-5xl font-display italic text-text-secondary leading-relaxed mb-8">
-            &quot;Enter seeking, leave transformed, return whenever
-            needed.&quot;
+            &quot;Enter seeking, leave transformed, return whenever needed.&quot;
           </blockquote>
           <cite className="block text-sm text-text-muted font-mono tracking-wider mb-16">
             — Inscription on the Library Door
           </cite>
 
-          {/* CTA Buttons */}
+          {/* CTA Buttons — GlowButton */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href="/auth/signup"
-              className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-semibold text-lg overflow-hidden btn-glow text-cosmic-deep transition-all"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-atlantean-teal-aqua to-creation-prism-purple" />
-              <span className="relative z-10 flex items-center gap-3">
-                <Icons.Sparkles />
-                Start Creating
-                <Icons.ArrowRight className="group-hover:translate-x-1 transition-transform" />
-              </span>
-            </Link>
+            <GlowButton href="/auth/signup" variant="primary" color="cyan" size="lg">
+              Start Creating
+            </GlowButton>
 
-            <Link
-              href="/library/legends-of-arcanea/i-the-first-dawn"
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl liquid-glass border border-white/[0.10] text-white font-semibold text-lg hover:bg-white/[0.06] hover:border-white/[0.15] transition-all duration-300"
-            >
-              <Icons.Play />
+            <GlowButton href="/library/legends-of-arcanea/i-the-first-dawn" variant="secondary" color="purple" size="lg">
               Read the First Legend
-            </Link>
+            </GlowButton>
           </div>
 
-          {/* Decorative element */}
-          <motion.div
+          {/* Decorative dots */}
+          <m.div
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ delay: 0.5 }}
             className="mt-16 flex justify-center gap-2"
           >
             {[...Array(5)].map((_, i) => (
-              <motion.div
+              <m.div
                 key={i}
                 className="w-2 h-2 rounded-full bg-gold-bright/50"
-                animate={{
-                  opacity: [0.3, 1, 0.3],
-                  scale: [1, 1.2, 1],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  delay: i * 0.2,
-                }}
+                animate={{ opacity: [0.3, 1, 0.3], scale: [1, 1.2, 1] }}
+                transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
               />
             ))}
-          </motion.div>
-        </motion.div>
+          </m.div>
+        </m.div>
       </div>
     </section>
   );

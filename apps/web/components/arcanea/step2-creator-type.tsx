@@ -93,7 +93,7 @@ export default function Step2CreatorType({ selected, onSelect, onNext, onBack }:
         className="text-center mb-8 transition-all duration-700"
         style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(20px)' }}
       >
-        <div className="text-xs tracking-[0.3em] uppercase text-[#8b5cf6] font-semibold mb-3 font-sans">
+        <div className="text-xs tracking-[0.3em] uppercase text-[#0d47a1] font-semibold mb-3 font-sans">
           Step 2 of 5
         </div>
         <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-3">
@@ -116,7 +116,7 @@ export default function Step2CreatorType({ selected, onSelect, onNext, onBack }:
               onClick={() => toggle(type.id)}
               onMouseEnter={() => setHoveredId(type.id)}
               onMouseLeave={() => setHoveredId(null)}
-              className="group relative p-4 rounded-2xl text-left transition-all duration-300 focus:outline-none"
+              className="group relative p-4 rounded-2xl text-left transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/30"
               style={{
                 transform: isSelected ? 'scale(1.02)' : isHovered ? 'scale(1.015)' : 'scale(1)',
                 animationDelay: `${i * 0.07}s`,
@@ -137,7 +137,7 @@ export default function Step2CreatorType({ selected, onSelect, onNext, onBack }:
                     ? `1px solid ${type.color}70`
                     : isHovered
                     ? `1px solid ${type.color}35`
-                    : '1px solid rgba(139,92,246,0.15)',
+                    : '1px solid rgba(13,71,161,0.15)',
                   boxShadow: isSelected
                     ? `0 0 28px ${type.glowColor}, inset 0 1px 0 ${type.color}20`
                     : isHovered
@@ -174,8 +174,8 @@ export default function Step2CreatorType({ selected, onSelect, onNext, onBack }:
                 <div
                   className="w-10 h-10 rounded-xl flex items-center justify-center mb-3 transition-all duration-300"
                   style={{
-                    background: isSelected ? type.color + '30' : 'rgba(139,92,246,0.1)',
-                    color: isSelected ? type.color : isHovered ? type.color : '#8b5cf6',
+                    background: isSelected ? type.color + '30' : 'rgba(13,71,161,0.1)',
+                    color: isSelected ? type.color : isHovered ? type.color : '#0d47a1',
                     boxShadow: isSelected ? `0 0 14px ${type.glowColor}` : 'none',
                   }}
                 >
@@ -212,7 +212,7 @@ export default function Step2CreatorType({ selected, onSelect, onNext, onBack }:
       <div className="flex gap-3">
         <button
           onClick={onBack}
-          className="flex-1 py-3 rounded-xl border border-[#2a2a3e] text-[#7c7c9a] text-sm font-sans font-medium transition-all duration-200 hover:border-[#8b5cf6]/40 hover:text-[#a78bfa]"
+          className="flex-1 py-3 rounded-xl border border-[#2a2a3e] text-[#7c7c9a] text-sm font-sans font-medium transition-all duration-200 hover:border-[#0d47a1]/40 hover:text-[#a78bfa]"
           style={{ backdropFilter: 'blur(8px)' }}
         >
           Back
@@ -224,12 +224,12 @@ export default function Step2CreatorType({ selected, onSelect, onNext, onBack }:
           style={{
             background:
               selected.length > 0
-                ? 'linear-gradient(135deg, #8b5cf6, #7c3aed)'
+                ? 'linear-gradient(135deg, #0d47a1, #7c3aed)'
                 : '#1a1a2e',
             color: 'white',
             boxShadow:
               selected.length > 0
-                ? '0 0 24px rgba(139,92,246,0.4)'
+                ? '0 0 24px rgba(13,71,161,0.4)'
                 : 'none',
           }}
         >

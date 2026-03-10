@@ -79,7 +79,7 @@ export function TagSelector({
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search or create..."
-            className="flex-1 bg-transparent text-xs font-sans text-text-primary placeholder:text-text-muted/40 focus:outline-none"
+            className="flex-1 bg-transparent text-xs font-sans text-text-primary placeholder:text-text-muted/40 focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20"
             autoFocus
           />
         </div>

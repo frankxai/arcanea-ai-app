@@ -206,7 +206,7 @@ export function HeroWarmGradient() {
           <FeatureCard
             icon={<PhMusicNote size={24} weight="duotone" style={{ color: CYAN }} />}
             title="Music & Audio"
-            description="Compose melodies, arrange tracks, and explore sonic landscapes with a specialist that speaks music."
+            description="Compose melodies, arrange tracks, and explore sonic landscapes with a Luminor that speaks music."
             delay={0.8}
           />
           <FeatureCard
