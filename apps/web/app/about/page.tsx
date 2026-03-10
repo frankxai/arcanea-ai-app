@@ -2,11 +2,11 @@ import { Metadata } from "next";
 import { AboutContent } from "./about-content";
 
 export const metadata: Metadata = {
-  title: "About Arcanea | Creative Intelligence Platform",
+  title: "About",
   description:
     "Arcanea is a creation platform built on original mythology and philosophy. Sixteen creative intelligences. A library of 34 texts. Tools that think with you.",
   openGraph: {
-    title: "About Arcanea | Creative Intelligence Platform",
+    title: "About Arcanea — Creative Intelligence Platform",
     description:
       "A creation platform built on original mythology and philosophy. Sixteen creative intelligences, a library of original texts, and tools that think with you.",
   },

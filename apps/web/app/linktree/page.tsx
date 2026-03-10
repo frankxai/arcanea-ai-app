@@ -3,7 +3,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
-  title: "Arcanea | Links",
+  title: "Links",
   description:
     "All Arcanea links in one place. Library, Academy, Studio, Community, and more. Enter seeking, leave transformed.",
   openGraph: {
@@ -327,7 +327,7 @@ const LINKS: LinkItem[] = [
   {
     href: "https://github.com/frankxai/arcanea",
     label: "GitHub",
-    description: "Open source. MIT License. Star & contribute",
+    description: "Open source. Star & contribute",
     icon: <Icons.Github />,
     color: "from-white/[0.12] to-white/[0.04]",
     external: true,

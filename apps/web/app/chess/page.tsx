@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Arcanea Chess | Arcanea",
+  title: "Chess",
   description:
     "Play chess against AI companions infused with the wisdom of the Ten Gates. A unique blend of strategic gameplay and Arcanean lore.",
 };
