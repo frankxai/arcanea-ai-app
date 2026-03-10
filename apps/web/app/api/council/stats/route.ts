@@ -20,6 +20,7 @@ export const runtime = 'nodejs';
 export async function GET(_request: NextRequest) {
   try {
     const supabase = await createClient();
+    const db = supabase as any;
     const {
       data: { user },
     } = await supabase.auth.getUser();
@@ -32,8 +33,8 @@ export async function GET(_request: NextRequest) {
     }
 
     // Fetch council with seat counts in one query
-    const { data: council, error: councilError } = await supabase
-      .from('luminor_councils' as any)
+    const { data: council, error: councilError } = await db
+      .from('luminor_councils')
       .select(`
         id,
         user_id,
