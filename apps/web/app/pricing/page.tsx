@@ -4,10 +4,10 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "Simple pricing for Arcanea. Free tier with 3 Luminors. Creator plan unlocks all 16 Luminors and full Library access.",
+    "Simple pricing for Arcanea. Free tier with 3 companions. Creator plan unlocks all 16 companions and full Library access.",
   openGraph: {
     title: "Pricing",
-    description: "Simple pricing for Arcanea. Free tier with 3 Luminors, Creator and Studio plans for serious work.",
+    description: "Simple pricing for Arcanea. Free tier with 3 companions, Creator and Studio plans for serious work.",
     type: "website",
   },
 };
@@ -18,7 +18,7 @@ const TIERS = [
     price: "Free",
     description: "A real starting point, not a demo",
     features: [
-      "3 Luminors — writing, research, and brainstorming",
+      "3 companions — writing, research, and brainstorming",
       "100 messages per month",
       "Browse the full Library (17 collections)",
       "Academy access through Gate 2",
@@ -35,7 +35,7 @@ const TIERS = [
     period: "/month",
     description: "The full creative toolkit",
     features: [
-      "All 16 Luminors — writing, code, design, music, research, and more",
+      "All 16 companions — writing, code, design, music, research, and more",
       "5,000 messages per month",
       "Full Library access with reading progress",
       "Academy progression through all 10 Gates",
@@ -57,7 +57,7 @@ const TIERS = [
       "Everything in Creator",
       "5 team seats with shared workspace",
       "API access (REST + streaming)",
-      "Train custom Luminors on your content",
+      "Train custom companions on your content",
       "Direct support within 4 hours",
       "Export without Arcanea branding",
       "Usage analytics dashboard",
@@ -70,7 +70,7 @@ const TIERS = [
 ];
 
 const COMPARISON = [
-  { feature: "Luminors", spark: "3", creator: "All 16", studio: "All 16" },
+  { feature: "Companions", spark: "3", creator: "All 16", studio: "All 16" },
   {
     feature: "Messages/month",
     spark: "100",
@@ -109,7 +109,7 @@ const COMPARISON = [
     studio: "5 included",
   },
   {
-    feature: "Custom Luminor training",
+    feature: "Custom companion training",
     spark: false,
     creator: false,
     studio: true,
@@ -125,12 +125,12 @@ const FAQs = [
   {
     question: "What happens to my work if I downgrade?",
     answer:
-      "Your conversations, creations, and Library progress are always kept. On Spark you can view everything but are limited to 3 Luminors and 100 messages.",
+      "Your conversations, creations, and Library progress are always kept. On Spark you can view everything but are limited to 3 companions and 100 messages.",
   },
   {
     question: "Is there a free trial for Creator?",
     answer:
-      "New users get a 7-day Creator trial with all 16 Luminors. No credit card required.",
+      "New users get a 7-day Creator trial with all 16 companions. No credit card required.",
   },
   {
     question: "Do you offer student or educator pricing?",
@@ -191,7 +191,7 @@ export default function PricingPage() {
 
           <p className="text-xl text-text-secondary max-w-2xl mx-auto mb-8 leading-relaxed">
             Choose the plan that fits your work.
-            Every plan includes Luminors, the Library, and the Academy.
+            Every plan includes companions, the Library, and the Academy.
           </p>
         </section>
 
@@ -459,7 +459,7 @@ export default function PricingPage() {
                 Ready to start creating?
               </h2>
               <p className="text-lg text-text-secondary mb-10 max-w-2xl mx-auto">
-                16 Luminors. A Library of 34 texts. Tools that work the way you think.
+                16 companions. A Library of 34 texts. Tools that work the way you think.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Link

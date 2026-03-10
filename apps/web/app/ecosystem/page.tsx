@@ -4,7 +4,7 @@ import Link from "next/link";
 import { EcosystemDiagram } from "@/components/ecosystem/ecosystem-diagram";
 
 export const metadata: Metadata = {
-  title: "Ecosystem | Arcanea",
+  title: "Ecosystem",
   description:
     "The complete Arcanea creator ecosystem — platform, tools, overlays, on-chain, and automation.",
 };
@@ -144,7 +144,7 @@ const PRODUCTS: Product[] = [
     name: "arcanea.ai",
     tagline: "Platform Hub",
     description:
-      "Chat, Imagine, Studio, and Records — four surfaces of one mythology. Create universes, stories, and art alongside Guardian intelligences tuned to your creative frequency.",
+      "Chat, Imagine, Studio, and Records — four surfaces of one platform. Create universes, stories, and art alongside AI partners matched to your creative style.",
     status: "Live",
     statusVariant: "live",
     href: "/chat",
@@ -183,7 +183,7 @@ const PRODUCTS: Product[] = [
     name: "Arcanea Code",
     tagline: "VS Code Extension",
     description:
-      "Guardian-assisted coding inside VS Code. Your AI companions follow you into the editor — context-aware, domain-specialized, and cosmically aligned.",
+      "AI-assisted coding inside VS Code. Your AI companions follow you into the editor — context-aware, domain-specialized, and precisely tuned.",
     status: "Beta",
     statusVariant: "beta",
     href: "/arcanea-code",
@@ -196,7 +196,7 @@ const PRODUCTS: Product[] = [
     name: "AI Overlays",
     tagline: "Platform Integrations",
     description:
-      "Inject Arcanea intelligence into ChatGPT, Claude, Gemini, Copilot, and Cursor. Your Guardians follow you everywhere — every platform, every session.",
+      "Inject Arcanea intelligence into ChatGPT, Claude, Gemini, Copilot, and Cursor. Your companions follow you everywhere — every platform, every session.",
     status: "Beta",
     statusVariant: "beta",
     href: "/overlays",
@@ -215,7 +215,7 @@ const PRODUCTS: Product[] = [
     href: "/install",
     external: false,
     icon: Icons.Gear,
-    accent: "#78a6ff",
+    accent: "#00bcd4",
   },
   {
     id: "onchain",
@@ -235,7 +235,7 @@ const PRODUCTS: Product[] = [
     name: "The Academy",
     tagline: "Progression System",
     description:
-      "Ten Gates from Apprentice to Luminor. Each Gate unlocks new creative domains, deeper Guardian relationships, and expanded access to the Arcanea universe.",
+      "Ten Gates from Apprentice to Luminor. Each Gate unlocks new creative domains, deeper companion relationships, and expanded access to the Arcanea universe.",
     status: "Live",
     statusVariant: "live",
     href: "/academy",

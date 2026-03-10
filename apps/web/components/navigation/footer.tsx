@@ -24,7 +24,7 @@ const footerLinks = {
   platform: {
     label: "Platform",
     links: [
-      { href: "/luminors", label: "Luminors" },
+      { href: "/luminors", label: "Companions" },
       { href: "/pricing", label: "Pricing" },
       { href: "/developers", label: "Developers" },
       { href: "/about", label: "About" },
