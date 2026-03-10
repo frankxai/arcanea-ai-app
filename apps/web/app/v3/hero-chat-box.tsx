@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import {
   PhPaperPlane,
@@ -111,12 +111,33 @@ export function HeroChatBox() {
 
         const decoder = new TextDecoder();
         let full = "";
+        let buffer = "";
 
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
-          full += decoder.decode(value, { stream: true });
+          buffer += decoder.decode(value, { stream: true });
+
+          // Parse Vercel AI SDK text stream format: 0:"chunk"\n
+          const lines = buffer.split("\n");
+          buffer = lines.pop() || "";
+          for (const line of lines) {
+            const match = line.match(/^0:"((?:[^"\\]|\\.)*)"/);
+            if (match) {
+              full += match[1].replace(/\\n/g, "\n").replace(/\\"/g, '"');
+            } else if (!line.startsWith("e:") && !line.startsWith("d:") && line.trim()) {
+              // Plain text fallback (no API key configured returns plain text)
+              full += line;
+            }
+          }
           setStream({ isStreaming: true, content: full, isComplete: false });
+        }
+        // Process remaining buffer
+        if (buffer.trim()) {
+          const match = buffer.match(/^0:"((?:[^"\\]|\\.)*)"/);
+          if (match) {
+            full += match[1].replace(/\\n/g, "\n").replace(/\\"/g, '"');
+          }
         }
 
         setStream({ isStreaming: false, content: full, isComplete: true });
@@ -141,7 +162,7 @@ export function HeroChatBox() {
   };
 
   const handleContinue = () => {
-    router.push("/chat/chronica");
+    router.push(`/chat/chronica${message ? `?prompt=${encodeURIComponent(message.trim())}` : ""}`);
   };
 
   const handleReset = () => {
@@ -158,7 +179,7 @@ export function HeroChatBox() {
     <div className="w-full max-w-2xl mx-auto">
       <AnimatePresence mode="wait">
         {showInput ? (
-          <motion.div
+          <m.div
             key="input"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -211,7 +232,7 @@ export function HeroChatBox() {
             </div>
 
             {/* Suggested prompts */}
-            <motion.div
+            <m.div
               className="mt-5 flex flex-wrap justify-center gap-2"
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
@@ -230,10 +251,10 @@ export function HeroChatBox() {
                   </button>
                 );
               })}
-            </motion.div>
-          </motion.div>
+            </m.div>
+          </m.div>
         ) : (
-          <motion.div
+          <m.div
             key="response"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -262,7 +283,7 @@ export function HeroChatBox() {
                       </span>
                     )}
                     {stream.isStreaming && stream.content && (
-                      <motion.span
+                      <m.span
                         className="inline-block w-[2px] h-[14px] bg-[#00bcd4]/60 ml-0.5 align-middle rounded-full"
                         animate={{ opacity: [1, 0.2] }}
                         transition={{ duration: 0.6, repeat: Infinity }}
@@ -274,7 +295,7 @@ export function HeroChatBox() {
 
               {/* Action bar */}
               {stream.isComplete && (
-                <motion.div
+                <m.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.2, duration: 0.3 }}
@@ -290,13 +311,13 @@ export function HeroChatBox() {
                     onClick={handleContinue}
                     className="group flex items-center gap-1.5 text-[13px] font-semibold text-[#00bcd4]/80 hover:text-[#00bcd4] transition-colors"
                   >
-                    Continue in studio
+                    Continue in chat
                     <PhArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                   </button>
-                </motion.div>
+                </m.div>
               )}
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </div>

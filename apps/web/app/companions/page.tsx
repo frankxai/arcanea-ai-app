@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { m, LazyMotion, domMax, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import {
   PhSparkle,
@@ -46,124 +46,122 @@ export default function CompanionsPage() {
   };
 
   return (
-    <LazyMotion features={domMax}>
-      <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
-        {/* Hero Section */}
-        <div className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0d47a1]/20 via-transparent to-amber-500/20" />
-          <div className="relative max-w-7xl mx-auto px-4 py-16 sm:py-24">
-            <m.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-center"
-            >
-              <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">
-                AI Companions
-              </h1>
-              <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-8">
-                10 creative intelligences, each with a distinct personality and expertise.
-                Development, design, writing, and research — pick the one that fits your work.
-              </p>
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+      {/* Hero Section */}
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-violet-600/20 via-transparent to-amber-500/20" />
+        <div className="relative max-w-7xl mx-auto px-4 py-16 sm:py-24">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center"
+          >
+            <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">
+              AI Companions
+            </h1>
+            <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-8">
+              10 creative intelligences, each with a distinct personality and expertise.
+              Development, design, writing, and research — pick the one that fits your work.
+            </p>
 
-              {/* Search */}
-              <div className="max-w-md mx-auto mb-8">
-                <div className="relative">
-                  <PhMagnifyingGlass className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                  <input
-                    type="text"
-                    placeholder="Search companions..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-[#00bcd4]"
-                  />
-                </div>
+            {/* Search */}
+            <div className="max-w-md mx-auto mb-8">
+              <div className="relative">
+                <PhMagnifyingGlass className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                <input
+                  type="text"
+                  placeholder="Search companions..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-12 pr-4 py-3 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:border-violet-500"
+                />
               </div>
+            </div>
 
-              {/* Team Filters */}
-              <div className="flex flex-wrap justify-center gap-2">
+            {/* Team Filters */}
+            <div className="flex flex-wrap justify-center gap-2">
+              <button
+                onClick={() => setSelectedTeam('all')}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                  selectedTeam === 'all'
+                    ? 'bg-white text-slate-900'
+                    : 'bg-slate-800/50 text-slate-300 hover:bg-slate-700/50'
+                }`}
+              >
+                All Companions
+              </button>
+              {(Object.keys(TEAMS) as Team[]).map((team) => (
                 <button
-                  onClick={() => setSelectedTeam('all')}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                    selectedTeam === 'all'
-                      ? 'bg-white text-slate-900'
+                  key={team}
+                  onClick={() => setSelectedTeam(team)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${
+                    selectedTeam === team
+                      ? 'text-white'
                       : 'bg-slate-800/50 text-slate-300 hover:bg-slate-700/50'
                   }`}
+                  style={
+                    selectedTeam === team
+                      ? { backgroundColor: TEAMS[team].color }
+                      : {}
+                  }
                 >
-                  All Companions
+                  {teamIcons[team]}
+                  {TEAMS[team].name}
                 </button>
-                {(Object.keys(TEAMS) as Team[]).map((team) => (
-                  <button
-                    key={team}
-                    onClick={() => setSelectedTeam(team)}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${
-                      selectedTeam === team
-                        ? 'text-white'
-                        : 'bg-slate-800/50 text-slate-300 hover:bg-slate-700/50'
-                    }`}
-                    style={
-                      selectedTeam === team
-                        ? { backgroundColor: TEAMS[team].color }
-                        : {}
-                    }
-                  >
-                    {teamIcons[team]}
-                    {TEAMS[team].name}
-                  </button>
-                ))}
-              </div>
-            </m.div>
-          </div>
-        </div>
-
-        {/* Companions Grid */}
-        <div className="max-w-7xl mx-auto px-4 pb-16">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            <AnimatePresence mode="popLayout">
-              {filteredLuminors.map((luminor, index) => (
-                <CompanionCard
-                  key={luminor.id}
-                  luminor={luminor}
-                  index={index}
-                />
               ))}
-            </AnimatePresence>
-          </div>
-
-          {filteredLuminors.length === 0 && (
-            <m.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-center py-16"
-            >
-              <p className="text-slate-400 text-lg">
-                No companions match your search. Try a different query.
-              </p>
-            </m.div>
-          )}
-        </div>
-
-        {/* Premium Chat CTA */}
-        <div className="max-w-7xl mx-auto px-4 pb-16">
-          <div className="bg-gradient-to-r from-[#0d47a1]/20 to-[#0d47a1]/20 border border-[#00bcd4]/30 rounded-2xl p-8 text-center">
-            <PhSparkle className="w-12 h-12 text-[#00bcd4] mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-white mb-2">
-              Just want a quick chat?
-            </h2>
-            <p className="text-slate-300 mb-6 max-w-md mx-auto">
-              Try our premium AI chat - no character selection needed. Get instant,
-              intelligent responses powered by the best AI models.
-            </p>
-            <Link
-              href="/chat"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#00bcd4] to-[#0d47a1] text-white font-medium rounded-xl hover:from-[#00bcd4] hover:to-indigo-500 transition-all"
-            >
-              <PhChatCircle className="w-5 h-5" />
-              Open Premium Chat
-            </Link>
-          </div>
+            </div>
+          </motion.div>
         </div>
       </div>
-    </LazyMotion>
+
+      {/* Companions Grid */}
+      <div className="max-w-7xl mx-auto px-4 pb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <AnimatePresence mode="popLayout">
+            {filteredLuminors.map((luminor, index) => (
+              <CompanionCard
+                key={luminor.id}
+                luminor={luminor}
+                index={index}
+              />
+            ))}
+          </AnimatePresence>
+        </div>
+
+        {filteredLuminors.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-16"
+          >
+            <p className="text-slate-400 text-lg">
+              No companions match your search. Try a different query.
+            </p>
+          </motion.div>
+        )}
+      </div>
+
+      {/* Premium Chat CTA */}
+      <div className="max-w-7xl mx-auto px-4 pb-16">
+        <div className="bg-gradient-to-r from-violet-600/20 to-indigo-600/20 border border-violet-500/30 rounded-2xl p-8 text-center">
+          <PhSparkle className="w-12 h-12 text-violet-400 mx-auto mb-4" />
+          <h2 className="text-2xl font-bold text-white mb-2">
+            Just want a quick chat?
+          </h2>
+          <p className="text-slate-300 mb-6 max-w-md mx-auto">
+            Try our premium AI chat - no character selection needed. Get instant,
+            intelligent responses powered by the best AI models.
+          </p>
+          <Link
+            href="/chat"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-medium rounded-xl hover:from-violet-500 hover:to-indigo-500 transition-all"
+          >
+            <PhChatCircle className="w-5 h-5" />
+            Open Premium Chat
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -175,7 +173,7 @@ function CompanionCard({
   index: number;
 }) {
   return (
-    <m.div
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.9 }}
@@ -209,7 +207,7 @@ function CompanionCard({
           </div>
 
           {/* Name & Title */}
-          <h3 className="text-xl font-semibold text-white mb-1 group-hover:text-[#00bcd4] transition-colors">
+          <h3 className="text-xl font-semibold text-white mb-1 group-hover:text-violet-300 transition-colors">
             {luminor.name}
           </h3>
           <p
@@ -254,6 +252,6 @@ function CompanionCard({
           </div>
         </div>
       </Link>
-    </m.div>
+    </motion.div>
   );
 }

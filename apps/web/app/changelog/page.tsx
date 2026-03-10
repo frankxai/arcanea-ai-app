@@ -11,15 +11,15 @@ const CHANGES = [
     version: "v2.4.0",
     date: "February 2026",
     type: "major",
-    title: "AI Specialist System Launch",
+    title: "Luminor Intelligence System Launch",
     description:
-      "The complete AI specialist system is now live. 10 specialized creative intelligences, each mastering their domain.",
+      "The complete Luminor Intelligence System is now live. 16 specialized AI intelligences, each mastering their domain.",
     changes: [
-      { type: "added", text: "10 AI specialists across 4 teams" },
+      { type: "added", text: "16 Luminor agents across 4 teams" },
       { type: "added", text: "Seven Wisdoms framework integration" },
       { type: "added", text: "Academy progression system" },
       { type: "added", text: "Library with 17 collections" },
-      { type: "improved", text: "New chat interface with specialist selection" },
+      { type: "improved", text: "New chat interface with Luminor selection" },
     ],
   },
   {
@@ -134,7 +134,7 @@ export default function ChangelogPage() {
 
           <h1 className="text-4xl md:text-6xl font-display font-bold mb-6">
             Changelog
-            <span className="block bg-gradient-to-r from-gold-bright via-[#00bcd4] to-atlantean-teal bg-clip-text text-transparent">
+            <span className="block bg-gradient-to-r from-gold-bright via-violet-400 to-atlantean-teal bg-clip-text text-transparent">
               The Arcanea's Journey
             </span>
           </h1>
@@ -148,12 +148,12 @@ export default function ChangelogPage() {
         {/* Timeline */}
         <div className="relative">
           {/* Timeline Line */}
-          <div className="absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-[#00bcd4] via-atlantean-teal to-gold-bright hidden md:block" />
+          <div className="absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-violet-500 via-atlantean-teal to-gold-bright hidden md:block" />
 
           {Object.entries(CHANGELOG_BY_YEAR).map(([year, changes]) => (
             <section key={year} className="py-12">
               <div className="flex items-center gap-4 mb-8">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#00bcd4] to-[#0d47a1] flex items-center justify-center text-white font-display font-bold text-lg shrink-0">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white font-display font-bold text-lg shrink-0">
                   {year}
                 </div>
                 <div className="h-px flex-1 bg-white/[0.06]" />
@@ -166,7 +166,7 @@ export default function ChangelogPage() {
                     className="relative p-6 rounded-2xl liquid-glass"
                   >
                     {/* Timeline Dot */}
-                    <div className="absolute -left-[calc(1.5rem+1px)] top-8 w-3 h-3 rounded-full bg-gradient-to-r from-[#00bcd4] to-atlantean-teal hidden md:block" />
+                    <div className="absolute -left-[calc(1.5rem+1px)] top-8 w-3 h-3 rounded-full bg-gradient-to-r from-violet-500 to-atlantean-teal hidden md:block" />
 
                     <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
                       <div>
@@ -174,7 +174,7 @@ export default function ChangelogPage() {
                           <span
                             className={`px-3 py-1 rounded-full text-xs font-semibold ${
                               change.type === "major"
-                                ? "bg-[#00bcd4]/20 text-[#00bcd4]"
+                                ? "bg-violet-500/20 text-violet-400"
                                 : change.type === "minor"
                                   ? "bg-atlantean-teal/20 text-atlantean-teal"
                                   : "bg-white/[0.06] text-text-muted"

@@ -60,9 +60,9 @@ const QUICK_START = [
   },
   {
     step: "4",
-    title: "Start Creating",
-    description: "Work with a creative partner that has depth",
-    code: "Help me design a world with unique magic systems",
+    title: "Create Something Amazing",
+    description: "Work with AI that truly understands your craft",
+    code: "Help me build a cathedral-level system",
   },
 ];
 
@@ -141,7 +141,7 @@ export default function InstallPage() {
 
           <h1 className="text-4xl md:text-6xl font-display font-bold mb-6">
             Install Arcanea
-            <span className="block bg-gradient-to-r from-green-400 via-atlantean-teal to-[#00bcd4] bg-clip-text text-transparent">
+            <span className="block bg-gradient-to-r from-green-400 via-atlantean-teal to-violet-400 bg-clip-text text-transparent">
               on your machine
             </span>
           </h1>
@@ -191,7 +191,7 @@ export default function InstallPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {QUICK_START.map((step) => (
               <div key={step.step} className="relative">
-                <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-gradient-to-br from-[#00bcd4] to-[#0d47a1] flex items-center justify-center text-white font-bold text-sm z-10">
+                <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm z-10">
                   {step.step}
                 </div>
                 <div className="p-6 rounded-2xl liquid-glass pt-10">
@@ -301,7 +301,7 @@ export default function InstallPage() {
                   🤖 Connecting to System Architect...
                 </div>
                 <div className="text-text-secondary mb-4">
-                  <span className="text-[#00bcd4]">System Architect:</span> I
+                  <span className="text-violet-400">System Architect:</span> I
                   see systems the way a master builder sees a cathedral. Every
                   component exists for a reason. What would you like to build
                   today?
@@ -315,7 +315,7 @@ export default function InstallPage() {
         {/* CTA */}
         <section className="py-20 border-t border-white/[0.04]">
           <div className="relative rounded-3xl overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 via-atlantean-teal/20 to-[#00bcd4]/20" />
+            <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 via-atlantean-teal/20 to-violet-500/20" />
             <div className="absolute inset-0 liquid-glass" />
 
             <div className="relative p-12 md:p-16 text-center">
