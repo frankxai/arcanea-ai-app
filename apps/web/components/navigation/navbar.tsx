@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { LazyMotion, domMax, m, AnimatePresence } from "framer-motion";
 import { UserNav } from "@/components/auth";
 
 const navLinks = [
@@ -12,7 +12,6 @@ const navLinks = [
   { href: "/chat", label: "Chat" },
   { href: "/library", label: "Library" },
   { href: "/academy", label: "Academy" },
-  { href: "/council", label: "Council" },
 ];
 
 export function Navbar() {
@@ -27,7 +26,7 @@ export function Navbar() {
   }, []);
 
   return (
-    <>
+    <LazyMotion features={domMax}>
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
@@ -39,14 +38,17 @@ export function Navbar() {
           <div className="flex items-center justify-between gap-4">
             <Link
               href="/"
-              className="hidden md:block text-[10px] tracking-[0.26em] uppercase text-white/40 hover:text-[#00bcd4] transition-colors"
+              className="hidden md:block text-[10px] tracking-[0.26em] uppercase text-white/40 hover:text-[#00bcd4] transition-colors focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/30 rounded"
             >
               Arcanea
             </Link>
 
-            <div className="md:hidden text-[10px] tracking-[0.26em] uppercase text-white/40">
+            <Link
+              href="/"
+              className="md:hidden text-[10px] tracking-[0.26em] uppercase text-white/40 hover:text-[#00bcd4] transition-colors"
+            >
               Arcanea
-            </div>
+            </Link>
 
             <div className="hidden md:flex items-center gap-1.5">
               {navLinks.map((link) => {
@@ -58,7 +60,7 @@ export function Navbar() {
                     key={link.href}
                     href={link.href}
                     aria-current={isActive ? "page" : undefined}
-                    className={`relative px-3.5 py-2 rounded-xl text-[13px] font-medium transition-all duration-300 ${
+                    className={`relative px-3.5 py-2 rounded-xl text-[13px] font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/30 ${
                       isActive
                         ? "text-[#00bcd4] bg-[#00bcd4]/10"
                         : "text-white/68 hover:text-white hover:bg-white/[0.04]"
@@ -66,7 +68,7 @@ export function Navbar() {
                   >
                     {link.label}
                     {isActive && (
-                      <motion.div
+                      <m.div
                         layoutId="nav-indicator"
                         className="absolute bottom-0 left-3 right-3 h-[2px] bg-gradient-to-r from-[#00bcd4] to-[#1a237e] rounded-full"
                         transition={{
@@ -84,7 +86,7 @@ export function Navbar() {
             <div className="hidden md:flex items-center gap-2">
               <Link
                 href="/studio"
-                className="px-4 py-2 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-[#00897b] via-[#1565c0] to-[#00bcd4] hover:shadow-[0_0_26px_rgba(0,188,212,0.35)] transition-all"
+                className="px-4 py-2 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-[#00897b] via-[#1565c0] to-[#00bcd4] hover:shadow-[0_0_26px_rgba(0,188,212,0.35)] transition-all focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/40"
               >
                 Enter Studio
               </Link>
@@ -111,7 +113,7 @@ export function Navbar() {
 
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
+          <m.div
             id="mobile-nav-menu"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -160,13 +162,13 @@ export function Navbar() {
                 </div>
               </div>
             </nav>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
 
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -175,6 +177,6 @@ export function Navbar() {
           />
         )}
       </AnimatePresence>
-    </>
+    </LazyMotion>
   );
 }

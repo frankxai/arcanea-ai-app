@@ -18,7 +18,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
   disabled = false,
   placeholder = 'Share your thoughts...',
   maxLength = 4000,
-  luminorColor = '#8b5cf6',
+  luminorColor = '#0d47a1',
 }) => {
   const [message, setMessage] = useState('');
   const [attachments, setAttachments] = useState<File[]>([]);
@@ -141,7 +141,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
               placeholder={placeholder}
               disabled={disabled}
               rows={1}
-              className="w-full px-4 py-3 pr-24 bg-gray-800 text-gray-100 placeholder-gray-500 resize-none focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full px-4 py-3 pr-24 bg-gray-800 text-gray-100 placeholder-gray-500 resize-none focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/20 disabled:opacity-50 disabled:cursor-not-allowed"
               style={{
                 minHeight: '52px',
                 maxHeight: '200px',
