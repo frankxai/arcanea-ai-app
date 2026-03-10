@@ -2,7 +2,7 @@
 
 import React, { useState, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { LazyMotion, domAnimation, m, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { PhEnvelope, PhLock, PhEye, PhEyeSlash, PhUser, PhX, PhSparkle, PhGithubLogo, PhCheck } from '@/lib/phosphor-icons';
 import { useAuth } from '@/lib/auth/context';
 
@@ -111,7 +111,6 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
   };
 
   return (
-    <LazyMotion features={domAnimation}>
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={handleClose}>
         <Transition.Child
@@ -149,7 +148,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                 <div className="p-8">
                   {/* Success state */}
                   {success ? (
-                    <m.div
+                    <motion.div
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
                       className="text-center py-8"
@@ -167,7 +166,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                       >
                         Got it
                       </button>
-                    </m.div>
+                    </motion.div>
                   ) : (
                     <>
                       {/* Header */}
@@ -250,7 +249,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                       {/* Form */}
                       <AnimatePresence mode="wait">
                         {tab === 'login' ? (
-                          <m.form
+                          <motion.form
                             key="login"
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
@@ -303,9 +302,9 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                             >
                               {isLoading ? 'Signing in...' : 'Sign In'}
                             </button>
-                          </m.form>
+                          </motion.form>
                         ) : (
-                          <m.form
+                          <motion.form
                             key="signup"
                             initial={{ opacity: 0, x: 20 }}
                             animate={{ opacity: 1, x: 0 }}
@@ -381,7 +380,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                             >
                               {isLoading ? 'Creating...' : 'Create Account'}
                             </button>
-                          </m.form>
+                          </motion.form>
                         )}
                       </AnimatePresence>
                     </>
@@ -393,6 +392,5 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
         </div>
       </Dialog>
     </Transition>
-    </LazyMotion>
   );
 }

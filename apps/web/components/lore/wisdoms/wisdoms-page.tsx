@@ -1,6 +1,6 @@
 'use client';
 
-import { LazyMotion, domAnimation, m, useInView } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import {
   PhMountains,
@@ -215,7 +215,7 @@ function HeroOrb({
   const yPct = 50 + Math.sin(angle) * radiusVw;
 
   return (
-    <m.div
+    <motion.div
       className="absolute w-5 h-5 rounded-full"
       style={{
         left: `${xPct}%`,
@@ -245,7 +245,7 @@ function WisdomCard({ wisdom, delay }: { wisdom: Wisdom; delay: number }) {
   const ElementIcon = config.icon;
 
   return (
-    <m.div
+    <motion.div
       ref={ref}
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -388,7 +388,7 @@ function WisdomCard({ wisdom, delay }: { wisdom: Wisdom; delay: number }) {
           </blockquote>
         </div>
       </div>
-    </m.div>
+    </motion.div>
   );
 }
 
@@ -405,7 +405,7 @@ function WhenToInvokeSection() {
       </div>
 
       <div className="max-w-5xl mx-auto px-6">
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
@@ -420,7 +420,7 @@ function WhenToInvokeSection() {
           <p className="text-xl text-text-secondary max-w-2xl mx-auto font-body italic">
             Wisdoms are not chosen through preference. They arise when the situation demands them.
           </p>
-        </m.div>
+        </motion.div>
 
         <div className="space-y-3">
           {WISDOMS.map((wisdom, i) => {
@@ -429,7 +429,7 @@ function WhenToInvokeSection() {
             const isOpen = activeIndex === i;
 
             return (
-              <m.div
+              <motion.div
                 key={wisdom.name}
                 initial={{ opacity: 0, x: -20 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -483,7 +483,7 @@ function WhenToInvokeSection() {
 
                   {/* Expanded content */}
                   {isOpen && (
-                    <m.div
+                    <motion.div
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: 'auto' }}
                       exit={{ opacity: 0, height: 0 }}
@@ -493,10 +493,10 @@ function WhenToInvokeSection() {
                       <p className="text-text-secondary leading-relaxed">
                         {wisdom.whenToInvoke}
                       </p>
-                    </m.div>
+                    </motion.div>
                   )}
                 </div>
-              </m.div>
+              </motion.div>
             );
           })}
         </div>
@@ -517,7 +517,7 @@ function AtAGlanceSection() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6">
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
@@ -532,9 +532,9 @@ function AtAGlanceSection() {
           <p className="text-xl text-text-secondary max-w-2xl mx-auto">
             All seven wisdoms, side by side. A reference for the practicing creator.
           </p>
-        </m.div>
+        </motion.div>
 
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.2, duration: 0.7 }}
@@ -555,7 +555,7 @@ function AtAGlanceSection() {
             const ElementIcon = config.icon;
 
             return (
-              <m.div
+              <motion.div
                 key={wisdom.name}
                 initial={{ opacity: 0, x: -10 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -610,10 +610,10 @@ function AtAGlanceSection() {
                 <p className="text-sm font-body italic text-text-secondary group-hover:text-text-primary transition-colors">
                   &ldquo;{wisdom.signatureQuestion}&rdquo;
                 </p>
-              </m.div>
+              </motion.div>
             );
           })}
-        </m.div>
+        </motion.div>
       </div>
     </section>
   );
@@ -630,7 +630,7 @@ function PhilosophySection() {
       </div>
 
       <div className="max-w-4xl mx-auto px-6">
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
@@ -642,9 +642,9 @@ function PhilosophySection() {
           <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
             Aspects, Not Entities
           </h2>
-        </m.div>
+        </motion.div>
 
-        <m.div
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.2, duration: 0.7 }}
@@ -714,7 +714,7 @@ function PhilosophySection() {
               ))}
             </div>
           </div>
-        </m.div>
+        </motion.div>
       </div>
     </section>
   );
@@ -728,208 +728,206 @@ export function WisdomsPage() {
   const heroRef = useRef<HTMLDivElement>(null);
 
   return (
-    <LazyMotion features={domAnimation}>
-      <div className="relative">
-        {/* ------------------------------------------------------------------ */}
-        {/* HERO                                                                */}
-        {/* ------------------------------------------------------------------ */}
-        <section
-          ref={heroRef}
-          className="relative min-h-screen flex items-center justify-center overflow-hidden"
-        >
-          {/* Cosmic mesh background */}
-          <div className="absolute inset-0 -z-10">
-            {/* Deep radial gradient */}
-            <div className="absolute inset-0 bg-gradient-radial from-brand-primary/12 via-cosmic-deep to-cosmic-deep" />
+    <div className="relative">
+      {/* ------------------------------------------------------------------ */}
+      {/* HERO                                                                */}
+      {/* ------------------------------------------------------------------ */}
+      <section
+        ref={heroRef}
+        className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      >
+        {/* Cosmic mesh background */}
+        <div className="absolute inset-0 -z-10">
+          {/* Deep radial gradient */}
+          <div className="absolute inset-0 bg-gradient-radial from-brand-primary/12 via-cosmic-deep to-cosmic-deep" />
 
-            {/* Seven orbiting wisdom orbs */}
-            {WISDOMS.map((wisdom, i) => (
-              <HeroOrb key={wisdom.name} wisdom={wisdom} index={i} total={WISDOMS.length} />
-            ))}
+          {/* Seven orbiting wisdom orbs */}
+          {WISDOMS.map((wisdom, i) => (
+            <HeroOrb key={wisdom.name} wisdom={wisdom} index={i} total={WISDOMS.length} />
+          ))}
 
-            {/* Central convergence glow */}
-            <m.div
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full"
-              animate={{
-                scale: [1, 1.08, 1],
-                opacity: [0.4, 0.7, 0.4],
-              }}
-              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+          {/* Central convergence glow */}
+          <motion.div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full"
+            animate={{
+              scale: [1, 1.08, 1],
+              opacity: [0.4, 0.7, 0.4],
+            }}
+            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+            style={{
+              background:
+                'radial-gradient(circle, rgba(139,92,246,0.15) 0%, rgba(0,188,212,0.08) 40%, transparent 70%)',
+            }}
+          />
+
+          {/* Stars */}
+          {[...Array(80)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-px h-px bg-white rounded-full"
               style={{
-                background:
-                  'radial-gradient(circle, rgba(139,92,246,0.15) 0%, rgba(0,188,212,0.08) 40%, transparent 70%)',
+                left: `${(i * 137.508) % 100}%`,
+                top: `${(i * 97.3) % 100}%`,
+                opacity: 0.2 + (i % 5) * 0.12,
+              }}
+              animate={{
+                opacity: [0.2, 0.7, 0.2],
+              }}
+              transition={{
+                duration: 2 + (i % 4),
+                repeat: Infinity,
+                delay: (i % 8) * 0.3,
+                ease: 'easeInOut',
               }}
             />
+          ))}
 
-            {/* Stars */}
-            {[...Array(80)].map((_, i) => (
-              <m.div
-                key={i}
-                className="absolute w-px h-px bg-white rounded-full"
-                style={{
-                  left: `${(i * 137.508) % 100}%`,
-                  top: `${(i * 97.3) % 100}%`,
-                  opacity: 0.2 + (i % 5) * 0.12,
-                }}
-                animate={{
-                  opacity: [0.2, 0.7, 0.2],
-                }}
-                transition={{
-                  duration: 2 + (i % 4),
-                  repeat: Infinity,
-                  delay: (i % 8) * 0.3,
-                  ease: 'easeInOut',
-                }}
-              />
-            ))}
+          {/* Top-to-bottom fade */}
+          <div className="absolute inset-0 bg-gradient-to-b from-cosmic-deep/60 via-transparent to-cosmic-deep" />
+        </div>
 
-            {/* Top-to-bottom fade */}
-            <div className="absolute inset-0 bg-gradient-to-b from-cosmic-deep/60 via-transparent to-cosmic-deep" />
-          </div>
+        {/* Hero content */}
+        <div className="relative z-10 text-center px-6 max-w-5xl mx-auto pt-32 pb-24">
+          {/* Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary/10 border border-brand-primary/25 mb-8"
+          >
+            <PhSparkle className="w-4 h-4 text-brand-primary" />
+            <span className="text-sm font-medium text-brand-primary">Lore of Arcanea</span>
+          </motion.div>
 
-          {/* Hero content */}
-          <div className="relative z-10 text-center px-6 max-w-5xl mx-auto pt-32 pb-24">
-            {/* Badge */}
-            <m.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-primary/10 border border-brand-primary/25 mb-8"
+          {/* Title */}
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+            className="text-fluid-4xl md:text-fluid-hero font-display font-bold mb-6 leading-tight"
+          >
+            <span className="bg-gradient-to-br from-brand-primary via-white to-crystal bg-clip-text text-transparent">
+              The Seven Wisdoms
+            </span>
+          </motion.h1>
+
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.45, duration: 0.7 }}
+            className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto mb-12 font-body italic leading-relaxed"
+          >
+            Aspects of virtue that illuminate the creator&rsquo;s path. Seven qualities of mind,
+            seven ways of seeing — each one a gate within the gate.
+          </motion.p>
+
+          {/* Wisdom essence pills */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.6 }}
+            className="flex flex-wrap justify-center gap-3 mb-16"
+          >
+            {WISDOMS.map((wisdom) => {
+              const config = ELEMENT_CONFIGS[wisdom.element];
+              return (
+                <span
+                  key={wisdom.name}
+                  className={cn(
+                    'px-4 py-2 rounded-full text-sm font-semibold border backdrop-blur-sm',
+                    config.bgClass,
+                    config.borderClass,
+                    config.textClass,
+                  )}
+                >
+                  {wisdom.name}
+                </span>
+              );
+            })}
+          </motion.div>
+
+          {/* Scroll indicator */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.9 }}
+            className="flex flex-col items-center gap-2"
+          >
+            <span className="text-sm text-text-muted tracking-wider font-mono">
+              Descend into the Wisdoms
+            </span>
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
             >
-              <PhSparkle className="w-4 h-4 text-brand-primary" />
-              <span className="text-sm font-medium text-brand-primary">Lore of Arcanea</span>
-            </m.div>
+              <PhCaretDown className="w-6 h-6 text-text-muted" />
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
 
-            {/* Title */}
-            <m.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-              className="text-fluid-4xl md:text-fluid-hero font-display font-bold mb-6 leading-tight"
-            >
-              <span className="bg-gradient-to-br from-brand-primary via-white to-crystal bg-clip-text text-transparent">
-                The Seven Wisdoms
-              </span>
-            </m.h1>
+      {/* ------------------------------------------------------------------ */}
+      {/* WISDOM CARDS GRID                                                   */}
+      {/* ------------------------------------------------------------------ */}
+      <section className="py-28 relative overflow-hidden">
+        {/* Section background */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-1/3 right-0 w-[600px] h-[600px] bg-gradient-radial from-crystal/6 to-transparent rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-radial from-brand-gold/6 to-transparent rounded-full blur-3xl" />
+        </div>
 
-            {/* Subtitle */}
-            <m.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.45, duration: 0.7 }}
-              className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto mb-12 font-body italic leading-relaxed"
-            >
-              Aspects of virtue that illuminate the creator&rsquo;s path. Seven qualities of mind,
-              seven ways of seeing — each one a gate within the gate.
-            </m.p>
+        <div className="max-w-7xl mx-auto px-6">
+          {/* Section label */}
+          <WisdomsSectionHeader
+            badge="The Seven"
+            badgeIcon={<PhBookOpen className="w-4 h-4 text-brand-gold" />}
+            badgeClass="bg-brand-gold/10 border-brand-gold/20 text-brand-gold"
+            title="Aspects of the Creator Mind"
+            subtitle="Each wisdom is a complete philosophy. Together they form the full spectrum of creative consciousness."
+          />
 
-            {/* Wisdom essence pills */}
-            <m.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.6 }}
-              className="flex flex-wrap justify-center gap-3 mb-16"
-            >
-              {WISDOMS.map((wisdom) => {
-                const config = ELEMENT_CONFIGS[wisdom.element];
-                return (
-                  <span
-                    key={wisdom.name}
-                    className={cn(
-                      'px-4 py-2 rounded-full text-sm font-semibold border backdrop-blur-sm',
-                      config.bgClass,
-                      config.borderClass,
-                      config.textClass,
-                    )}
-                  >
-                    {wisdom.name}
-                  </span>
-                );
-              })}
-            </m.div>
+          {/* Cards: 3 + 3 + 1 layout */}
+          <div className="space-y-6">
+            {/* Row 1: Wisdoms 1–3 */}
+            <div className="grid md:grid-cols-3 gap-6">
+              {WISDOMS.slice(0, 3).map((wisdom, i) => (
+                <WisdomCard key={wisdom.name} wisdom={wisdom} delay={0.1 + i * 0.1} />
+              ))}
+            </div>
 
-            {/* Scroll indicator */}
-            <m.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.9 }}
-              className="flex flex-col items-center gap-2"
-            >
-              <span className="text-sm text-text-muted tracking-wider font-mono">
-                Descend into the Wisdoms
-              </span>
-              <m.div
-                animate={{ y: [0, 8, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                <PhCaretDown className="w-6 h-6 text-text-muted" />
-              </m.div>
-            </m.div>
-          </div>
-        </section>
+            {/* Row 2: Wisdoms 4–6 */}
+            <div className="grid md:grid-cols-3 gap-6">
+              {WISDOMS.slice(3, 6).map((wisdom, i) => (
+                <WisdomCard key={wisdom.name} wisdom={wisdom} delay={0.1 + i * 0.1} />
+              ))}
+            </div>
 
-        {/* ------------------------------------------------------------------ */}
-        {/* WISDOM CARDS GRID                                                   */}
-        {/* ------------------------------------------------------------------ */}
-        <section className="py-28 relative overflow-hidden">
-          {/* Section background */}
-          <div className="absolute inset-0 -z-10">
-            <div className="absolute top-1/3 right-0 w-[600px] h-[600px] bg-gradient-radial from-crystal/6 to-transparent rounded-full blur-3xl" />
-            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-radial from-brand-gold/6 to-transparent rounded-full blur-3xl" />
-          </div>
-
-          <div className="max-w-7xl mx-auto px-6">
-            {/* Section label */}
-            <WisdomsSectionHeader
-              badge="The Seven"
-              badgeIcon={<PhBookOpen className="w-4 h-4 text-brand-gold" />}
-              badgeClass="bg-brand-gold/10 border-brand-gold/20 text-brand-gold"
-              title="Aspects of the Creator Mind"
-              subtitle="Each wisdom is a complete philosophy. Together they form the full spectrum of creative consciousness."
-            />
-
-            {/* Cards: 3 + 3 + 1 layout */}
-            <div className="space-y-6">
-              {/* Row 1: Wisdoms 1-3 */}
-              <div className="grid md:grid-cols-3 gap-6">
-                {WISDOMS.slice(0, 3).map((wisdom, i) => (
-                  <WisdomCard key={wisdom.name} wisdom={wisdom} delay={0.1 + i * 0.1} />
-                ))}
-              </div>
-
-              {/* Row 2: Wisdoms 4-6 */}
-              <div className="grid md:grid-cols-3 gap-6">
-                {WISDOMS.slice(3, 6).map((wisdom, i) => (
-                  <WisdomCard key={wisdom.name} wisdom={wisdom} delay={0.1 + i * 0.1} />
-                ))}
-              </div>
-
-              {/* Row 3: Wisdom 7 — centered, elevated */}
-              <div className="flex justify-center">
-                <div className="w-full md:w-1/2 lg:w-1/3">
-                  <WisdomCard wisdom={WISDOMS[6]} delay={0.1} />
-                </div>
+            {/* Row 3: Wisdom 7 — centered, elevated */}
+            <div className="flex justify-center">
+              <div className="w-full md:w-1/2 lg:w-1/3">
+                <WisdomCard wisdom={WISDOMS[6]} delay={0.1} />
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* ------------------------------------------------------------------ */}
-        {/* WHEN TO INVOKE                                                      */}
-        {/* ------------------------------------------------------------------ */}
-        <WhenToInvokeSection />
+      {/* ------------------------------------------------------------------ */}
+      {/* WHEN TO INVOKE                                                      */}
+      {/* ------------------------------------------------------------------ */}
+      <WhenToInvokeSection />
 
-        {/* ------------------------------------------------------------------ */}
-        {/* AT A GLANCE                                                         */}
-        {/* ------------------------------------------------------------------ */}
-        <AtAGlanceSection />
+      {/* ------------------------------------------------------------------ */}
+      {/* AT A GLANCE                                                         */}
+      {/* ------------------------------------------------------------------ */}
+      <AtAGlanceSection />
 
-        {/* ------------------------------------------------------------------ */}
-        {/* PHILOSOPHICAL CONTEXT                                               */}
-        {/* ------------------------------------------------------------------ */}
-        <PhilosophySection />
-      </div>
-    </LazyMotion>
+      {/* ------------------------------------------------------------------ */}
+      {/* PHILOSOPHICAL CONTEXT                                               */}
+      {/* ------------------------------------------------------------------ */}
+      <PhilosophySection />
+    </div>
   );
 }
 
@@ -954,7 +952,7 @@ function WisdomsSectionHeader({
   const isInView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <m.div
+    <motion.div
       ref={ref}
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -972,6 +970,6 @@ function WisdomsSectionHeader({
       </div>
       <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">{title}</h2>
       <p className="text-xl text-text-secondary max-w-3xl mx-auto">{subtitle}</p>
-    </m.div>
+    </motion.div>
   );
 }
