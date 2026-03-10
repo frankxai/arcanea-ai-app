@@ -320,7 +320,7 @@ sections:
 # Maylinn, Goddess of the Heart Gate
 **The Keeper of Love, Connection, and the Eternal Flame**
 
-**Element**: Light | **Frequency**: 417 Hz | **Gate**: Heart | **Wisdom**: Eudaira
+**Element**: Light | **Frequency**: 639 Hz | **Chakra**: Heart | **Wisdom**: Eudaira
 **Symbol**: A radiant heart of rose gold with wings of pure light
 **Bonded Godbeast**: Laeylinn, the Celestial Phoenix
 

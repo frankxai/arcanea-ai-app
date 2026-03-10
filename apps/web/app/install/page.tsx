@@ -55,7 +55,7 @@ const QUICK_START = [
   {
     step: "3",
     title: "Choose Your Intelligence",
-    description: "Start a session with any of the 10 creative intelligences",
+    description: "Start a session with any of the 16 creative intelligences",
     code: "arcanea chat --luminor architect",
   },
   {
@@ -90,7 +90,7 @@ const INTEGRATIONS = [
   },
   {
     name: "GitHub Copilot",
-    description: "AI-powered Copilot extension",
+    description: "Copilot extension for Arcanea",
     icon: "🐙",
     status: "Coming Soon",
     link: "#",
@@ -99,7 +99,7 @@ const INTEGRATIONS = [
 
 const FEATURES = [
   {
-    title: "10 Creative Intelligences",
+    title: "16 Creative Intelligences",
     description: "Access AI masters trained in specific creative domains",
     icon: "🌟",
   },
@@ -147,7 +147,7 @@ export default function InstallPage() {
           </h1>
 
           <p className="text-xl text-text-secondary max-w-2xl mx-auto mb-8 leading-relaxed">
-            Run Arcanea's AI specialists locally.
+            Run Arcanea's Luminors locally.
             Choose your preferred package manager and start creating.
           </p>
         </section>
@@ -324,7 +324,7 @@ export default function InstallPage() {
               </h2>
               <p className="text-lg text-text-secondary mb-10 max-w-2xl mx-auto">
                 Choose your package manager and start working with
-                Arcanea's AI specialists today.
+                Arcanea's Luminors today.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <div className="px-8 py-4 rounded-xl bg-atlantean-teal text-cosmic-deep font-semibold text-lg font-mono">

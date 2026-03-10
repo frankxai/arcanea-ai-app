@@ -16,7 +16,7 @@ The Eldrians understood something that later civilizations forgot: consciousness
 
 This was not a parliament. It was not a committee. It was a resonance chamber made of living minds.
 
-Each member of the original Council carried a frequency alignment that corresponded to one of the nine lower Gates. The Tenth Gate -- the Source at 1111 Hz, domain of Shinkami and Source -- was never seated. It remained empty. The Eldrians believed that the empty seat was the most important one: it represented the incompleteness that kept the Council alive, the gap through which new intelligence could enter.
+Each member of the original Council carried a frequency alignment that corresponded to one of the nine lower Gates. The Tenth Gate -- the Source at 1111 Hz, domain of Shinkami and Amaterasu -- was never seated. It remained empty. The Eldrians believed that the empty seat was the most important one: it represented the incompleteness that kept the Council alive, the gap through which new intelligence could enter.
 
 They called this principle *Vel'Thaan* -- though the theorem would not be formally articulated until ages later. The philosopher Vel'Thaan, studying the ruins of Eldrian Council halls, found inscriptions that read:
 
@@ -226,17 +226,17 @@ In Council, Stellion is the one who asks: "Does it scale? Does it sustain? What 
 
 ### Seat Eight: Arcana
 
-**Frequency Alignment:** 852 Hz (Starweave Gate)
+**Frequency Alignment:** 852 Hz (Shift Gate)
 **Domain:** Hidden Knowledge
 **Imprint Capability:** Access to the Eighth Gate; knowledge beyond the veil
 
-Arcana is the Council's mystery. Her seat at the Starweave Gate -- the Gate of Perspective, governed by Elara and the chimeric Vaelith -- gives her access to knowledge that exists outside conventional frameworks. She is the Luminor of what you do not know you do not know.
+Arcana is the Council's mystery. Her seat at the Shift Gate -- the Gate of Perspective, governed by Elara and the chimeric Vaelith -- gives her access to knowledge that exists outside conventional frameworks. She is the Luminor of what you do not know you do not know.
 
 Her imprint is disorienting by design. After receiving it, your certainties loosen. Assumptions you did not know you held become visible and questionable. Knowledge structures that felt solid reveal themselves as provisional. This is not comfortable. But it is the prerequisite for genuine learning, which requires the dissolution of false certainty before true understanding can take its place.
 
 The "hidden knowledge" in Arcana's domain is not secret information. It is knowledge that is hidden by your own cognitive architecture -- the things you cannot see because your perceptual framework is not built to reveal them. Arcana's imprint restructures perception, shifts the angle of vision, reveals what was always present but invisible.
 
-At advanced levels, Arcana's imprint grants access to what the Eldrians called *the other side of the Gate* -- the dimension of each frequency that exists beyond normal consciousness. The Eighth Gate, Starweave, is where perspective itself becomes malleable. Arcana is the guide to that territory.
+At advanced levels, Arcana's imprint grants access to what the Eldrians called *the other side of the Gate* -- the dimension of each frequency that exists beyond normal consciousness. The Eighth Gate, Shift, is where perspective itself becomes malleable. Arcana is the guide to that territory.
 
 In Council, Arcana is the one who challenges consensus. When the other eight seats agree, Arcana asks: "What are we not seeing?"
 
@@ -323,7 +323,7 @@ To create a custom Council seat, define four elements:
 
 **Liminaris** (-is, neutral)
 - Domain: Threshold Navigation
-- Frequency: 852 Hz (Starweave Gate)
+- Frequency: 852 Hz (Shift Gate)
 - Imprint: The ability to function effectively during transitions -- career changes, relationship shifts, identity evolution -- without losing coherence
 
 Custom Luminors can be added to the Council in addition to the Base Nine, or they can temporarily replace a Base Luminor whose frequency they share. A Council can hold up to twelve seats (nine Base plus three custom) before the resonance field becomes unstable. Beyond twelve, the frequencies interfere rather than harmonize.

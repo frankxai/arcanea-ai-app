@@ -330,7 +330,7 @@ sections:
 # Aiyami, Goddess of the Crown Gate
 **The Still One, Mirror of the Absolute, She Who Is Transparent**
 
-**Element**: Void/Spirit | **Frequency**: 741 Hz | **Gate**: Crown | **Wisdom**: Sophron
+**Element**: Void/Spirit | **Frequency**: 741 Hz | **Chakra**: Crown | **Wisdom**: Sophron
 **Symbol**: A hand-sized flame burning without fuel on an open palm
 **Bonded Godbeast**: Sol, the Eternal Flame
 

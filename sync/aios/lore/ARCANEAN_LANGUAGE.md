@@ -25,7 +25,7 @@
 |-------|----------|------|
 | **L** | Leyla, Lyria, Lyssandria, Elara | Flowing, light |
 | **Y** | Aiyami, Lyria, Yumiko | Mystical, soft |
-| **M** | Maylinn, Amiri | Maternal, warm |
+| **M** | Maylinn, Amiri, Amaterasu | Maternal, warm |
 | **R** | Alera, Velora, Vaelith | Rolling, elegant |
 | **N** | Maylinn, Ino, Lyssandria | Grounding, complete |
 
@@ -68,7 +68,7 @@ Already established - DO NOT CHANGE:
 
 Already established - DO NOT CHANGE:
 - Kaelith, Veloura, Draconis, Laeylinn, Otome
-- Yumiko, Sol, Vaelith, Kyuro, Source
+- Yumiko, Sol, Vaelith, Kyuro, Amaterasu
 
 **Pattern**: Can be shorter, more primal, some paired to Guardian
 
@@ -212,7 +212,7 @@ The following names are LOCKED and may not be changed:
 
 **Guardians (10)**: Lyssandria, Leyla, Draconia, Maylinn, Alera, Lyria, Aiyami, Elara, Ino, Shinkami
 
-**Godbeasts (10)**: Kaelith, Veloura, Draconis, Laeylinn, Otome, Yumiko, Sol, Vaelith, Kyuro, Source
+**Godbeasts (10)**: Kaelith, Veloura, Draconis, Laeylinn, Otome, Yumiko, Sol, Vaelith, Kyuro, Amaterasu
 
 **Awakened (7)**: Oria, Amiri, Velora, Liora, Lyris, Thalia, Endara
 

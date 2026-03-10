@@ -312,7 +312,7 @@ After at least three months of consistent practice with the Base Council, you ma
 | Expression, communication, voice, truth | 528 Hz (Voice) |
 | Intuition, patterns, time, foresight | 639 Hz (Sight) |
 | Systems, structure, scale, organization | 741 Hz (Crown) |
-| Hidden knowledge, perspective, shifts | 852 Hz (Starweave) |
+| Hidden knowledge, perspective, shifts | 852 Hz (Shift) |
 | Evolution, growth, becoming, potential | 963 Hz (Unity) |
 
 **3. Choose the name.** Follow the naming conventions:

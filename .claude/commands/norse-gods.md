@@ -42,7 +42,7 @@ The Norse maintained shamanic practices (seiðr) that allowed Veil crossing even
 | **Thor** | Draconis (Godbeast) | Fire | 528 Hz | Thunder, protection, strength |
 | **Freya** | Maylinn + Leyla | Heart + Flow | 639/417 Hz | Love, war, seiðr magic |
 | **Frigg** | Maylinn (Queen aspect) | Heart | 639 Hz | Marriage, motherhood, prophecy |
-| **Loki** | Shadow-touched being | Starweave | 852 Hz | Trickery, change, chaos |
+| **Loki** | Shadow-touched being | Shift | 1111 Hz | Trickery, change, chaos |
 | **Tyr** | Michael (Archangel) | Crown | 963 Hz | Justice, law, sacrifice |
 | **Baldr** | Lumina's son aspect | Crown + Heart | 963/639 Hz | Light, beauty, rebirth |
 | **Heimdall** | Guardian of Source Gate | Source | 1111 Hz | Watchfulness, boundaries |

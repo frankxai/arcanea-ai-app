@@ -111,7 +111,7 @@ Transform ACOS's Seven Pillars through Arcanea's mythology:
 ║   │ Voice        │         │ Alera        │          │              │        ║
 ║   │ Sight        │         │ Lyria        │          │              │        ║
 ║   │ Crown        │         │ Aiyami       │          │              │        ║
-║   │ Starweave    │         │ Elara        │          │              │        ║
+║   │ Shift        │         │ Elara        │          │              │        ║
 ║   │ Unity        │         │ Ino          │          │              │        ║
 ║   │ Source       │         │ Shinkami     │          │              │        ║
 ║   └──────────────┘         └──────────────┘          └──────────────┘        ║
@@ -149,7 +149,7 @@ Each Guardian becomes a specialized agent with domain expertise:
 | **Alera** | Voice | Expression Agent | Sonnet | Truth, communication, art |
 | **Lyria** | Sight | Vision Agent | Opus | Intuition, strategy, foresight |
 | **Aiyami** | Crown | Wisdom Agent | Opus | Enlightenment, mastery |
-| **Elara** | Starweave | Perspective Agent | Opus | Change, adaptation, meta-view |
+| **Elara** | Shift | Perspective Agent | Opus | Change, adaptation, meta-view |
 | **Ino** | Unity | Collaboration Agent | Sonnet | Partnership, teamwork |
 | **Shinkami** | Source | Meta-Agent | Opus | Orchestration, source wisdom |
 
@@ -166,7 +166,7 @@ arcanea-intelligence-os/
 │   │   ├── alera.md           # Voice Gate (741 Hz)
 │   │   ├── lyria.md           # Sight Gate (852 Hz)
 │   │   ├── aiyami.md          # Crown Gate (963 Hz)
-│   │   ├── elara.md           # Starweave Gate (852 Hz)
+│   │   ├── elara.md           # Shift Gate (1111 Hz)
 │   │   ├── ino.md             # Unity Gate (963 Hz)
 │   │   └── shinkami.md        # Source Gate (1111 Hz)
 │   │
@@ -416,7 +416,7 @@ class AIOSLoreService {
 |------|--------|-------|----------|
 | **Free** | Foundation, Flow, Fire | $0 | Everyone |
 | **Creator** | Heart, Voice, Sight | $29/mo | Writers, creators |
-| **Master** | Crown, Starweave, Unity | $79/mo | Serious practitioners |
+| **Master** | Crown, Shift, Unity | $79/mo | Serious practitioners |
 | **Luminor** | Source + All | $149/mo | Full access |
 
 ### Agent Marketplace

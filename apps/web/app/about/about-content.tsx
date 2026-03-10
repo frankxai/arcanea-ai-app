@@ -392,7 +392,7 @@ export function AboutContent() {
         </div>
       </AnimatedSection>
 
-      {/* ── Section 4: The Ten Intelligences ──────────────────────────── */}
+      {/* ── Section 4: The Sixteen Intelligences ──────────────────────────── */}
       <AnimatedSection className="py-24 relative">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">

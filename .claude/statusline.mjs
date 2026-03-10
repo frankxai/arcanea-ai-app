@@ -28,7 +28,7 @@ const sh    = (cmd, timeout = 1500) => {
 
 const GATE_HZ = {
   Foundation: 174, Flow: 285, Fire: 396, Heart: 417,
-  Voice: 528, Sight: 639, Crown: 741, Starweave: 852,
+  Voice: 528, Sight: 639, Crown: 741, Shift: 852,
   Unity: 963, Source: 1111,
 };
 
@@ -289,7 +289,7 @@ const GUARDIAN_WISDOM = {
     EvolvedPotential: 'A new level of mastery available. The Crown opens higher than before.',
   },
   Elara: {
-    element: '🌀 Starweave', gate: 'Starweave', hz: 852,
+    element: '🌀 Shift', gate: 'Shift', hz: 852,
     Potential:     'Elara asks before the first keystroke: are you solving the right problem, or just the obvious one?',
     Manifestation: 'Every creation is a perspective shift. Something in the universe is different because of what you are building.',
     Experience:    'After many shifts, find the constant. What has not changed in your understanding?',

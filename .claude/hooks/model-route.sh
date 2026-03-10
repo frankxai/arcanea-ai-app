@@ -8,7 +8,7 @@
 # Usage: model-route.sh "<task description>"
 #
 # Model Tiers:
-#   opus   — Draconia (Fire Gate, 528 Hz), Elara (Starweave Gate, 852 Hz)
+#   opus   — Draconia (Fire Gate, 528 Hz), Elara (Shift Gate, 1111 Hz)
 #            Council synthesis, paradigm shifts, complexity 9-10
 #   sonnet — Shinkami, Lyssandria, Lyria, Alera, Leyla, Aiyami
 #            Architecture, strategy, review, creative. Complexity 4-8

@@ -172,7 +172,7 @@ All 10 Gates now have unique frequencies covering the complete Solfeggio scale:
 | Voice | **528 Hz** | Transformation, miracles |
 | Sight | **639 Hz** | Connection, relationships |
 | Crown | **741 Hz** | Awakening intuition |
-| Starweave | **852 Hz** | Spiritual order |
+| Shift | **852 Hz** | Spiritual order |
 | Unity | **963 Hz** | Divine consciousness |
 | Source | **1111 Hz** | Master frequency |
 
@@ -195,7 +195,7 @@ All 10 Gates now have unique frequencies covering the complete Solfeggio scale:
 - [x] alera.md (Voice, 528 Hz)
 - [x] lyria.md (Sight, 639 Hz)
 - [x] aiyami.md (Crown, 741 Hz)
-- [x] elara.md (Starweave, 852 Hz)
+- [x] elara.md (Shift, 852 Hz)
 - [x] ino.md (Unity, 963 Hz)
 
 ### Awakened Agents Created

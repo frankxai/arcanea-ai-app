@@ -18,7 +18,7 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
 | Pages with loading.tsx | ~81 (+32) | 100% of dynamic pages |
 | Milestones Active | 11 (M001-M010 + M006) | M001 (Auth) → M008 (Onboarding) → M006 (Creator Tools) → M009 (Polish) |
 | Vercel Build | PASSING | Maintain green |
-| Last Deploy | 2026-03-10 | 4ea8a237 — 22 commits since a560a8ff |
+| Last Deploy | 2026-03-10 | 1dbce7a1 — 23 commits since a560a8ff |
 | Live URL | arcanea.ai | arcanea.ai |
 
 ---
@@ -106,7 +106,7 @@ Source: `.arcanea/projects/milestones/`
 - **Depends on**: M001, M006
 - **Files**: `m007-community-social.arc`
 
-### M008: Onboarding & Conversion (85%) — P0
+### M008: Onboarding & Conversion (90%) — P0
 - **Guardian**: Maylinn (Heart Gate)
 - **Target**: 2026-03-10
 - **Scope**: Onboarding wizard integration, welcome dashboard, activation loops, analytics, auth UX
@@ -114,18 +114,18 @@ Source: `.arcanea/projects/milestones/`
 - **Progress**:
   - [x] Auth guard wired
   - [x] Orchestrator working (5-step wizard flow)
-  - [ ] Wire creation step to real AI generation (currently mock)
+  - [x] Creation step wired to real AI (Google Gemini via Vercel AI SDK, /api/create — edge runtime, 10s timeout, curated Guardian-specific mock fallback when API key absent)
   - [ ] Activation loop analytics
 - **Files**: `m008-onboarding-conversion.arc`
 
-### M009: Performance & Production Polish (93%) — P1
+### M009: Performance & Production Polish (97%) — P1
 - **Guardian**: Elara (Shift Gate)
 - **Target**: 2026-03-22
 - **Scope**: Core Web Vitals, SEO, accessibility, error handling, production hardening, cleanup
 - **Depends on**: M005, M008
 - **Progress**:
   - [x] Error boundaries added (error.tsx on key routes)
-  - [x] LazyMotion domAnimation migration: 22/41 files converted (54%), ~8kB savings per route. Remaining 19 need domMax for layout/drag.
+  - [x] LazyMotion domAnimation migration: only 3 files legitimately need domMax (navbar, profile-view, how-it-works — all use layoutId). All others converted to domAnimation.
   - [x] `as any` casts removed from council service (proper typed Supabase)
   - [x] SEO metadata verified on all key pages — added metadata to /lore + /library layouts (Mar 10)
   - [x] Accessibility fixes: chat textarea aria-label, opengraph image alt text, proper heading hierarchy verified
@@ -149,8 +149,13 @@ Source: `.arcanea/projects/milestones/`
   - [x] Academy: Gate 10 Godbeast Source→Amaterasu (canonical fix) (Mar 10)
   - [x] domMax→domAnimation: 4 more components (navigation, creation-gallery, BreathingGuide, footer) (Mar 10)
   - [x] Anti-slop verification: zero banned patterns in user-facing content confirmed (Mar 10)
-  - [ ] Core Web Vitals audit (Lighthouse)
-  - [ ] Remaining WCAG 2.2 audit items
+  - [x] domMax→domAnimation: 6 more routes (landing hero, gate-quiz, assessment, studio/image, graph-viz, luminors-experience) — ~8kB/route savings (Mar 10)
+  - [x] WCAG 2.4.7 focus rings: added focus:ring-2 to 10 inputs across FAQ, chat, companions, blog, hub, changelog, character-book, council (Mar 10)
+  - [x] WCAG 1.3.1 aria-labels: 5 unlabeled search/email inputs (FAQ, hub/updates, changelog, hub/guides) (Mar 10)
+  - [x] Dead code: removed duplicate Inter font load (--font-body unused variable) (Mar 10)
+  - [x] Manifest path: /site.webmanifest → /manifest.webmanifest (Mar 10)
+  - [ ] Core Web Vitals audit (Lighthouse — cannot run locally in WSL2)
+  - [ ] Remaining WCAG 2.2 deep audit
 - **Files**: `m009-performance-polish.arc`
 
 ### M010: Language & Experience Transformation (100%) — COMPLETE

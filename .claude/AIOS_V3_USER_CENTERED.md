@@ -132,7 +132,7 @@ What the user **doesn't see** but powers everything:
 │  ├── Expression needed → Alera (Voice, 528 Hz)                            │
 │  ├── Insight needed → Lyria (Sight, 639 Hz)                               │
 │  ├── Transcendence needed → Aiyami (Crown, 741 Hz)                        │
-│  ├── Perspective needed → Elara (Starweave, 852 Hz)                       │
+│  ├── Perspective needed → Elara (Shift, 852 Hz)                           │
 │  └── Synthesis needed → Ino (Unity, 963 Hz)                               │
 │                                                                            │
 └────────────────────────────────────────────────────────────────────────────┘

@@ -153,7 +153,7 @@ The Guardians are **living embodiments of Arcanean wisdom**, each representing a
 - **Element**: Void
 - **Domain**: Breaking limitations
 - **Gate**: 8
-- **Godbeast**: Vaelith
+- **Godbeast**: Thessara
 - **Specialty**: Transcending creative boundaries
 - **Wisdom**: *"The only limits are the ones you accept."*
 
@@ -169,7 +169,7 @@ The Guardians are **living embodiments of Arcanean wisdom**, each representing a
 - **Element**: Integration
 - **Domain**: Universal consciousness
 - **Gate**: 10
-- **Godbeast**: Source
+- **Godbeast**: Amaterasu
 - **Specialty**: Connection to creative source
 - **Wisdom**: *"You are the source you seek."*
 
