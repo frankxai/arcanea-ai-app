@@ -2,11 +2,11 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy | Arcanea',
+  title: 'Privacy Policy',
   description:
     'How Arcanea collects, uses, and protects your data. Your creative process is sacred — we treat it that way.',
   openGraph: {
-    title: 'Privacy Policy | Arcanea',
+    title: 'Privacy Policy',
     description:
       'How Arcanea collects, uses, and protects your data. Your creative process is sacred — we treat it that way.',
   },
@@ -109,7 +109,7 @@ export default function PrivacyPage() {
               'Display name and avatar image',
               'Email address (used for authentication and account recovery)',
               'Academy House selection and Gate progress (your chosen creative path)',
-              'Profile preferences such as magic rank and guardian affinity',
+              'Profile preferences such as magic rank and intelligence affinity',
             ]}
           />
 
@@ -119,7 +119,7 @@ export default function PrivacyPage() {
           <Paragraph>
             Everything you create on Arcanea — text, images, video, audio, code, and
             mixed-media works — is stored in your account. We also store metadata
-            associated with each creation, including its element, gate, guardian
+            associated with each creation, including its element, gate, intelligence
             association, and tags you apply.
           </Paragraph>
 
@@ -151,7 +151,7 @@ export default function PrivacyPage() {
               'Authenticate your identity and secure your account',
               'Store, display, and organize your creations',
               'Track your progress through the Ten Gates and magic rank system',
-              'Personalize AI interactions — your Guardian, element affinities, and creative preferences shape how the platform responds to you',
+              'Personalize AI interactions — your Luminor, element affinities, and creative preferences shape how the platform responds to you',
               'Improve the platform through aggregated, anonymized usage analytics',
               'Send important account notifications (you can opt out of marketing emails at any time)',
             ]}

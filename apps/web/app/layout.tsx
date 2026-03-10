@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     template: "%s | Arcanea",
   },
   description:
-    "Build with Guardians and Luminors across chat, studio, and lore. Arcanea unifies creation workflows, canon systems, and practical philosophy.",
+    "A creative intelligence platform with Luminor intelligences, a philosophy library, and studio workflows for modern creators.",
   keywords: [
     "AI",
     "creativity",
@@ -63,16 +63,16 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "/",
-    title: "Arcanea — Living Intelligence for Creators",
+    title: "Arcanea — Creative Intelligence Platform",
     description:
-      "Guardians, Luminors, Studio, and Lore in one creative ecosystem.",
+      "Luminor intelligences, a philosophy library, and creation studio in one platform.",
     siteName: "Arcanea",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Arcanea — Living Intelligence for Creators",
+    title: "Arcanea — Creative Intelligence Platform",
     description:
-      "Guardians, Luminors, Studio, and Lore in one creative ecosystem.",
+      "Luminor intelligences, a philosophy library, and creation studio in one platform.",
   },
   alternates: {
     canonical: "/",

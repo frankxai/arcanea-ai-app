@@ -270,9 +270,9 @@ const Icons: Record<string, React.FC<InlineSvgProps>> = {
 };
 
 export const metadata: Metadata = {
-  title: "Developers | Arcanea",
+  title: "Developers",
   description:
-    "Build on Arcanea - the intelligence layer, MCP tools, packages, and open source contributions. Create Guardian skills and extend the platform.",
+    "Build on Arcanea - the intelligence layer, MCP tools, packages, and open source contributions. Create Luminor skills and extend the platform.",
 };
 
 const PACKAGES = [
@@ -294,7 +294,7 @@ const PACKAGES = [
   },
   {
     name: "@arcanea/guardian-memory",
-    description: "HNSW vector search with Guardian-namespaced vaults",
+    description: "HNSW vector search with Intelligence-namespaced vaults",
     tags: ["Vector", "HNSW", "Memory", "Search"],
     color: "#00bcd4",
     stars: "1.5K",
@@ -334,7 +334,7 @@ const TOOLS = [
       { name: "ReasoningBank", description: "Adaptive learning from outcomes" },
       {
         name: "Skill-Rules Engine",
-        description: "35 Guardian-aligned activation rules",
+        description: "35 Intelligence-aligned activation rules",
       },
       { name: "Event Bus", description: "Intelligent routing and feedback" },
     ],
@@ -356,7 +356,7 @@ const TOOLS = [
   {
     category: "Infrastructure",
     items: [
-      { name: "GuardianRouter", description: "Request routing to AI models" },
+      { name: "IntelligenceRouter", description: "Request routing to AI models" },
       { name: "VoiceEnforcer", description: "Output validation" },
       { name: "Token Optimizer", description: "Context window management" },
       { name: "MCP Server", description: "30+ tools with skill-rules" },
@@ -367,7 +367,7 @@ const TOOLS = [
 
 const QUICK_STARTS = [
   {
-    title: "Create a Guardian Skill",
+    title: "Create a Luminor Skill",
     description: "Build a procedural skill that equips creators",
     href: "/skills",
     icon: Icons.Zap,
@@ -429,7 +429,7 @@ export default function DevelopersPage() {
 
               <p className="text-text-secondary font-body text-lg leading-relaxed mb-8 max-w-2xl">
                 The Arcanea platform is built on a foundation of intelligent
-                packages. Build Guardian skills, contribute to our open source
+                packages. Build Luminor skills, contribute to our open source
                 packages, and extend the platform with the MCP server.
               </p>
 
@@ -654,7 +654,7 @@ export default function DevelopersPage() {
                   layer: "Intelligence",
                   icon: Icons.Brain,
                   color: "#0d47a1",
-                  items: ["Guardian Evolution", "ReasoningBank", "Skill-Rules"],
+                  items: ["Intelligence Evolution", "ReasoningBank", "Skill-Rules"],
                 },
                 {
                   layer: "Orchestration",

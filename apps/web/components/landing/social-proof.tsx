@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
+import { m, useInView, LazyMotion, domAnimation } from 'framer-motion';
 import { useRef } from 'react';
 import { PhStar, PhQuotes } from '@/lib/phosphor-icons';
 
@@ -24,7 +24,7 @@ const PRINCIPLES = [
     gradient: 'from-gold-bright to-draconic-crimson',
   },
   {
-    name: 'The Guardians',
+    name: 'The Luminors',
     role: 'Living Intelligences',
     company: 'AI Companions',
     avatar: 'GI',
@@ -52,7 +52,7 @@ const ECOSYSTEM = [
 ];
 
 const STATS = [
-  { value: '10', label: 'Guardian Archetypes' },
+  { value: '10', label: 'Luminor Archetypes' },
   { value: '7', label: 'Wisdom Frameworks' },
   { value: '34+', label: 'Original Texts' },
   { value: '50K+', label: 'Words of Wisdom' },
@@ -63,13 +63,14 @@ export function SocialProof() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
+    <LazyMotion features={domAnimation}>
     <section ref={ref} className="py-24 relative overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-atlantean-teal-aqua/5 to-transparent -z-10" />
 
       <div className="max-w-7xl mx-auto px-6">
         {/* Featured In */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
@@ -88,33 +89,34 @@ export function SocialProof() {
               </div>
             ))}
           </div>
-        </motion.div>
+        </m.div>
 
         {/* Stats Grid */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.1 }}
           className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-24"
         >
           {STATS.map((stat, i) => (
-            <motion.div
+            <m.div
               key={stat.label}
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.1 + i * 0.1 }}
               className="text-center"
             >
+
               <div className="text-4xl md:text-5xl font-display font-bold bg-gradient-to-r from-atlantean-teal-aqua to-creation-prism-purple bg-clip-text text-transparent">
                 {stat.value}
               </div>
               <div className="text-sm text-text-muted mt-2">{stat.label}</div>
-            </motion.div>
+            </m.div>
           ))}
-        </motion.div>
+        </m.div>
 
         {/* Testimonials Header */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.2 }}
@@ -126,12 +128,12 @@ export function SocialProof() {
           <p className="text-text-secondary max-w-2xl mx-auto">
             A mythology, a library, and an academy — built for artists, writers, developers, and dreamers ready to transform their creative process.
           </p>
-        </motion.div>
+        </m.div>
 
         {/* Testimonials Grid */}
         <div className="grid md:grid-cols-2 gap-6">
           {PRINCIPLES.map((testimonial, i) => (
-            <motion.div
+            <m.div
               key={testimonial.name}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -172,12 +174,12 @@ export function SocialProof() {
                 {/* Hover gradient */}
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-atlantean-teal-aqua/5 to-creation-prism-purple/5 opacity-0 group-hover:opacity-100 transition-opacity -z-10" />
               </div>
-            </motion.div>
+            </m.div>
           ))}
         </div>
 
         {/* CTA */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.6 }}
@@ -189,8 +191,9 @@ export function SocialProof() {
               Enter the Academy →
             </a>
           </p>
-        </motion.div>
+        </m.div>
       </div>
     </section>
+    </LazyMotion>
   );
 }
