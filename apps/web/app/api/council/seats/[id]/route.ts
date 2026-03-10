@@ -32,6 +32,7 @@ export async function DELETE(
     }
 
     const supabase = await createClient();
+    const db = supabase as any;
     const {
       data: { user },
     } = await supabase.auth.getUser();
@@ -44,8 +45,8 @@ export async function DELETE(
     }
 
     // Fetch the seat to verify ownership and base status
-    const { data: seat, error: fetchError } = await supabase
-      .from('council_seats' as any)
+    const { data: seat, error: fetchError } = await db
+      .from('council_seats')
       .select('id, is_base, council_id, council:luminor_councils(user_id)')
       .eq('id', seatId)
       .single();
@@ -75,8 +76,8 @@ export async function DELETE(
     }
 
     // Delete the seat
-    const { error: deleteError } = await supabase
-      .from('council_seats' as any)
+    const { error: deleteError } = await db
+      .from('council_seats')
       .delete()
       .eq('id', seatId);
 
