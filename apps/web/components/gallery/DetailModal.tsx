@@ -15,8 +15,6 @@ import {
 } from '@/lib/phosphor-icons'
 import type { GalleryItem } from '@/lib/gallery-data'
 import { ELEMENT_COLORS } from '@/lib/gallery-data'
-import type { Comment } from '@/lib/types/profile'
-import { CommentSection } from '@/components/social/comment-section'
 
 interface DetailModalProps {
   item: GalleryItem | null
@@ -25,12 +23,6 @@ interface DetailModalProps {
   onLike: (id: string) => void
   onBookmark: (id: string) => void
   onOpenRelated: (item: GalleryItem) => void
-  comments?: Comment[]
-  commentsLoading?: boolean
-  onAddComment?: (content: string) => Promise<void>
-  onLikeComment?: (commentId: string) => Promise<void>
-  onDeleteComment?: (commentId: string) => Promise<void>
-  currentUserId?: string
 }
 
 export function DetailModal({
@@ -40,12 +32,6 @@ export function DetailModal({
   onLike,
   onBookmark,
   onOpenRelated,
-  comments = [],
-  commentsLoading = false,
-  onAddComment,
-  onLikeComment,
-  onDeleteComment,
-  currentUserId,
 }: DetailModalProps) {
   const [likeAnimating, setLikeAnimating] = useState(false)
   const [copied, setCopied] = useState(false)
@@ -98,7 +84,7 @@ export function DetailModal({
 
   if (!item) return null
 
-  const elementColor = ELEMENT_COLORS[item.element] || '#0d47a1'
+  const elementColor = ELEMENT_COLORS[item.element] || '#8b5cf6'
 
   return (
     <div
@@ -120,9 +106,9 @@ export function DetailModal({
         className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-3xl flex flex-col lg:flex-row"
         style={{
           background: 'rgba(12,12,20,0.95)',
-          border: '1px solid rgba(13,71,161,0.2)',
+          border: '1px solid rgba(139,92,246,0.2)',
           backdropFilter: 'blur(40px)',
-          boxShadow: '0 40px 120px rgba(13,71,161,0.15)',
+          boxShadow: '0 40px 120px rgba(139,92,246,0.15)',
         }}
       >
         {/* Close button */}
@@ -132,7 +118,7 @@ export function DetailModal({
           className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
           style={{
             background: 'rgba(10,10,15,0.8)',
-            border: '1px solid rgba(13,71,161,0.2)',
+            border: '1px solid rgba(139,92,246,0.2)',
             color: '#7c6fa0',
           }}
         >
@@ -236,15 +222,15 @@ export function DetailModal({
           <div
             className="flex items-center gap-3 p-3 rounded-xl"
             style={{
-              background: 'rgba(13,71,161,0.06)',
-              border: '1px solid rgba(13,71,161,0.12)',
+              background: 'rgba(139,92,246,0.06)',
+              border: '1px solid rgba(139,92,246,0.12)',
             }}
           >
             <img
               src={item.creator.avatar}
               alt={item.creator.name}
               className="w-10 h-10 rounded-full border"
-              style={{ borderColor: 'rgba(13,71,161,0.4)' }}
+              style={{ borderColor: 'rgba(139,92,246,0.4)' }}
             />
             <div>
               <p className="text-sm font-semibold" style={{ color: '#f0eeff' }}>
@@ -257,8 +243,8 @@ export function DetailModal({
             <button
               className="ml-auto px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 hover:opacity-80"
               style={{
-                background: 'rgba(13,71,161,0.15)',
-                border: '1px solid rgba(13,71,161,0.3)',
+                background: 'rgba(139,92,246,0.15)',
+                border: '1px solid rgba(139,92,246,0.3)',
                 color: '#c4b5fd',
               }}
             >
@@ -277,8 +263,8 @@ export function DetailModal({
             <div
               className="relative rounded-xl p-3 cursor-pointer"
               style={{
-                background: 'rgba(13,71,161,0.06)',
-                border: '1px solid rgba(13,71,161,0.1)',
+                background: 'rgba(139,92,246,0.06)',
+                border: '1px solid rgba(139,92,246,0.1)',
               }}
               onClick={() => setPromptExpanded(!promptExpanded)}
             >
@@ -289,7 +275,7 @@ export function DetailModal({
                 {item.prompt}
               </p>
               {!promptExpanded && (
-                <p className="text-xs mt-1" style={{ color: '#0d47a1' }}>
+                <p className="text-xs mt-1" style={{ color: '#8b5cf6' }}>
                   Click to expand
                 </p>
               )}
@@ -380,28 +366,6 @@ export function DetailModal({
               <Download size={16} />
             </a>
           </div>
-
-          {/* Comments Section */}
-          <div className="border-t pt-5" style={{ borderColor: 'rgba(13,71,161,0.1)' }}>
-            <h3 className="text-sm font-semibold mb-4" style={{ color: '#c4b5fd' }}>
-              Comments {comments.length > 0 && `(${comments.length})`}
-            </h3>
-            {commentsLoading ? (
-              <div className="flex items-center justify-center py-6">
-                <div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin" style={{ borderColor: 'rgba(13,71,161,0.4)', borderTopColor: 'transparent' }} />
-                <span className="ml-2 text-xs" style={{ color: '#7c6fa0' }}>Loading comments...</span>
-              </div>
-            ) : (
-              <CommentSection
-                creationId={item.id}
-                comments={comments}
-                onAddComment={onAddComment}
-                onLikeComment={onLikeComment}
-                onDeleteComment={onDeleteComment}
-                currentUserId={currentUserId}
-              />
-            )}
-          </div>
         </div>
 
         {/* Related creations — full width bottom */}
@@ -410,7 +374,7 @@ export function DetailModal({
             className="absolute bottom-0 left-0 right-0 lg:static lg:col-span-2 border-t p-5"
             style={{
               background: 'rgba(10,10,18,0.9)',
-              borderColor: 'rgba(13,71,161,0.1)',
+              borderColor: 'rgba(139,92,246,0.1)',
               position: 'relative',
             }}
           >
@@ -423,7 +387,7 @@ export function DetailModal({
                   onClick={() => scrollCarousel('left')}
                   aria-label="Scroll left"
                   className="w-7 h-7 rounded-lg flex items-center justify-center transition-all duration-200 hover:bg-primary/20"
-                  style={{ color: '#7c6fa0', border: '1px solid rgba(13,71,161,0.15)' }}
+                  style={{ color: '#7c6fa0', border: '1px solid rgba(139,92,246,0.15)' }}
                 >
                   <ArrowLeft size={14} />
                 </button>
@@ -431,7 +395,7 @@ export function DetailModal({
                   onClick={() => scrollCarousel('right')}
                   aria-label="Scroll right"
                   className="w-7 h-7 rounded-lg flex items-center justify-center transition-all duration-200 hover:bg-primary/20"
-                  style={{ color: '#7c6fa0', border: '1px solid rgba(13,71,161,0.15)' }}
+                  style={{ color: '#7c6fa0', border: '1px solid rgba(139,92,246,0.15)' }}
                 >
                   <ArrowRight size={14} />
                 </button>
@@ -449,7 +413,7 @@ export function DetailModal({
                   onClick={() => onOpenRelated(rel)}
                   className="shrink-0 w-24 h-24 rounded-xl overflow-hidden relative transition-all duration-200 hover:scale-105 hover:shadow-lg"
                   style={{
-                    border: '1px solid rgba(13,71,161,0.15)',
+                    border: '1px solid rgba(139,92,246,0.15)',
                     boxShadow: 'none',
                   }}
                   aria-label={`Open ${rel.title}`}
@@ -486,6 +450,6 @@ function formatCount(n: number): string {
 
 function hexToRgb(hex: string): string {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
-  if (!result) return '13,71,161'
+  if (!result) return '139,92,246'
   return `${parseInt(result[1], 16)},${parseInt(result[2], 16)},${parseInt(result[3], 16)}`
 }
