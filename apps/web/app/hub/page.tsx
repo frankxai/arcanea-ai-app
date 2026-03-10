@@ -47,7 +47,7 @@ const SECTIONS = [
 
 const QUICK_LINKS = [
   { label: "Getting Started", href: "/hub/guides/getting-started", icon: "🚀" },
-  { label: "Companion Guide", href: "/hub/guides/luminors", icon: "🌟" },
+  { label: "Luminor Guide", href: "/hub/guides/luminors", icon: "🌟" },
   { label: "Library Tour", href: "/library", icon: "📚" },
   { label: "Join Discord", href: "https://discord.gg/arcanea", icon: "💬", external: true },
 ];

@@ -156,7 +156,7 @@ const PHASES: RoadmapPhase[] = [
         id: "f1",
         title: "Platform Launch",
         description:
-          "Core platform with 16 companions and the Ten Gates system.",
+          "Core platform with 16 Luminors and the Ten Gates system.",
         status: "completed",
         quarter: "Q1 2026",
         category: "Core",
@@ -229,7 +229,7 @@ const PHASES: RoadmapPhase[] = [
       },
       {
         id: "v3",
-        title: "Creator Summit",
+        title: "Luminor Summit",
         description: "Annual flagship event for the community.",
         status: "planned",
         quarter: "Q1 2027",
