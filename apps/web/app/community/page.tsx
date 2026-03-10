@@ -39,7 +39,7 @@ const COMMUNITY_SPACES = [
       "#create — Share works in progress",
       "#lore-discussion — Explore the mythology",
       "Voice creation rooms — Build live together",
-      "Companion channels — Creative domain spaces",
+      "Luminor channels — Creative domain spaces",
     ],
     href: "https://discord.gg/arcanea",
     cta: "Join Discord",
@@ -101,7 +101,7 @@ const COMMUNITY_SPACES = [
     name: "YouTube",
     tagline: "Tutorials, lore, and creation walkthroughs",
     description:
-      "Deep-dive tutorials on the Arcanea platform, lore explorations of the mythology, live creation walkthroughs, and recorded Gate Ceremonies.",
+      "Deep-dive tutorials on the Arcanea platform, lore explorations of the mythology, live creation walkthroughs with Luminors, and recorded Gate Ceremonies.",
     highlights: [
       "Platform tutorials and walkthroughs",
       "Lore deep dives — mythology explored",
@@ -146,7 +146,7 @@ const EVENTS = [
     badgeText: "Quarterly",
   },
   {
-    title: "Creator Summit",
+    title: "Luminor Summit",
     frequency: "Annual",
     format: "Hybrid — physical + digital",
     description:
@@ -225,7 +225,7 @@ const CONTRIBUTIONS = [
   {
     title: "Design Character Art",
     description:
-      "Bring the Guardians, Godbeasts, and cosmic landscapes to visual life. Your art may become canonical.",
+      "Bring the Luminors, creatures, and cosmic landscapes to visual life. Your art may become canonical.",
     icon: PhPaintBrush,
     color: "brand-gold",
     hex: "#ffd700",

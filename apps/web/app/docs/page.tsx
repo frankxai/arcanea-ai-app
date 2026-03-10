@@ -203,7 +203,7 @@ const DOC_SECTIONS: DocSection[] = [
       {
         label: "Chat",
         href: "/chat",
-        description: "Chat with AI companions",
+        description: "Converse with Luminor intelligences",
       },
     ],
   },

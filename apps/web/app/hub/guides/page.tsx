@@ -3,14 +3,14 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Guides | Hub",
-  description: "Step-by-step tutorials for mastering Arcanea. Learn to work with Luminors, explore the Library, and grow as a creator.",
+  description: "Step-by-step tutorials for mastering Arcanea. Learn to work with companions, explore the Library, and grow as a creator.",
 };
 
 const GUIDES = [
   {
     id: "getting-started",
     title: "Getting Started with Arcanea",
-    description: "Your first steps into the creative intelligence platform. Set up your profile, meet your first Luminor, and start creating.",
+    description: "Your first steps into the creative platform. Set up your profile, meet your first companion, and start creating.",
     duration: "5 min read",
     difficulty: "Beginner",
     icon: "🚀",
@@ -19,8 +19,8 @@ const GUIDES = [
   },
   {
     id: "luminors-guide",
-    title: "Working with Luminors",
-    description: "A guide to the 16 Luminors. Learn their strengths, how to activate them, and when to use each one.",
+    title: "Working with Companions",
+    description: "A guide to the 16 companions. Learn their strengths, how to activate them, and when to use each one.",
     duration: "15 min read",
     difficulty: "Intermediate",
     icon: "🌟",
@@ -226,7 +226,7 @@ export default function GuidesPage() {
             href="/chat"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep font-semibold hover:shadow-[0_0_20px_rgba(0,188,212,0.4)] transition-all"
           >
-            Ask a Luminor
+            Ask a Companion
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
             </svg>

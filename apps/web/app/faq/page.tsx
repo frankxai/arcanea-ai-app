@@ -18,15 +18,15 @@ const FAQ_CATEGORIES = [
       },
       {
         q: "How do I get started?",
-        a: "Simply create a free account at arcanea.ai. You'll immediately have access to 3 Luminors and 100 messages per month. From there, you can explore the Library, start Academy training, or upgrade for access to the full creative team.",
+        a: "Simply create a free account at arcanea.ai. You'll immediately have access to 3 companions and 100 messages per month. From there, you can explore the Library, start Academy training, or upgrade for access to the full creative team.",
       },
       {
-        q: "How are Arcanea's Luminors different from regular AI?",
-        a: "Regular AI models are generalists — they know a little about everything. Arcanea's Luminors have each mastered a specific domain: architecture, coding, storytelling, character creation, dialogue, editing, research, and more. Each one brings deep expertise to your specific creative challenge.",
+        q: "How are Arcanea's companions different from regular AI?",
+        a: "Regular AI models are generalists — they know a little about everything. Arcanea's companions have each mastered a specific domain: architecture, coding, storytelling, character creation, dialogue, editing, research, and more. Each one brings deep expertise to your specific creative challenge.",
       },
       {
         q: "What are the Seven Wisdoms?",
-        a: "The Seven Wisdoms are practical mental models for creative work: Sophron (Structure), Kardia (Heart), Valora (Courage), Eudaira (Play), Orakis (Vision), Poiesis (Creation), and Enduran (Endurance). Every Luminor applies these lenses when approaching your work, giving you proven frameworks for any creative challenge.",
+        a: "The Seven Wisdoms are practical mental models for creative work: Sophron (Structure), Kardia (Heart), Valora (Courage), Eudaira (Play), Orakis (Vision), Poiesis (Creation), and Enduran (Endurance). Every companion applies these lenses when approaching your work, giving you proven frameworks for any creative challenge.",
       },
     ],
   },

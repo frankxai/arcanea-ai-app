@@ -100,7 +100,7 @@ const SHOWCASE_CREATIONS: Creation[] = [
   },
   {
     id: 'sc-09', user_id: 'creator-3', title: 'Vaelith in Shadow',
-    description: 'The Starweave Gate Luminor navigates between perspectives — seeing what others cannot.',
+    description: 'The Starweave Gate Guardian navigates between perspectives — seeing what others cannot.',
     type: 'image', media_url: '', thumbnail_url: '',
     luminor_id: 'Elara', academy: 'Nero',
     created_at: '2026-02-24T22:00:00Z', updated_at: '2026-02-24T22:00:00Z',
