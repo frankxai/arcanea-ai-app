@@ -27,7 +27,7 @@ Do NOT wait - launch simultaneously.
 | Agent Type | Subagent | Focus Area | Gates Channeled |
 |------------|----------|------------|-----------------|
 | Plan | Architecture | Design patterns, structure, trade-offs | Foundation (174 Hz) |
-| Explore | Codebase search | Find existing patterns, conventions | Shift (852 Hz) |
+| Explore | Codebase search | Find existing patterns, conventions | Starweave (852 Hz) |
 | feature-dev:code-architect | Blueprint | Specific files, components, data flow | Foundation + Fire |
 | general-purpose | Research | External docs, best practices | Sight (639 Hz) |
 
@@ -55,7 +55,7 @@ Task(subagent_type="general-purpose", prompt="[context] Research best practices 
 - **Fire** (396 Hz) - Courageous implementation
 - **Voice** (528 Hz) - Clear expression
 - **Sight** (639 Hz) - Future vision
-- **Crown** (714 Hz) - Enlightened quality
+- **Crown** (741 Hz) - Enlightened quality
 
 ---
 

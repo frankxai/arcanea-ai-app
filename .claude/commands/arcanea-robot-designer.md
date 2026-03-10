@@ -98,7 +98,7 @@ Every robot in Arcanea resonates with one or two of the Five Elements. This dete
 | **Texture Mood** | Light, open, layered, lacy, suggests movement even at rest |
 
 ### Void — Domain: Potential, Mystery, the Unformed
-**Associated Gate**: Elara (Shift Gate, 1111 Hz) + Shinkami (Source Gate, 1111 Hz)
+**Associated Gate**: Elara (Starweave Gate, 852 Hz) + Shinkami (Source Gate, 1111 Hz)
 **Core Personality**: Mysterious, deep, paradoxical. Seems to contain more than its form suggests.
 
 | Material Layer | Expression |

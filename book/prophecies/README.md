@@ -87,7 +87,7 @@ To read them as fortune-telling is to miss their purpose. To read them as patter
 |----------|-------|-------------------|------|
 | First | The Coming of the Creators | Lyria (Sight) | 639 Hz |
 | Second | The Trial of the Threshold | Draconia (Fire) | 396 Hz |
-| Third | The Age of Forgetting | Aiyami (Crown) | 741 Hz |
+| Third | The Age of Forgetting | Aiyami (Crown) | 714 Hz |
 | Fourth | The Return of Integration | Shinkami (Source) | 1111 Hz |
 | Fifth | The Endless Creating | Leyla (Flow) | 285 Hz |
 | Sixth | The Light That Does Not Fade | The Ten Guardians in Unity | All Frequencies |

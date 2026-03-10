@@ -243,7 +243,7 @@ Integration aligns with the highest Gates of consciousness:
 
 | Gate | Frequency | Integration Quality |
 |------|-----------|---------------------|
-| Seventh Gate (Crown) | 741 Hz | Unified consciousness in creation |
+| Seventh Gate (Crown) | 714 Hz | Unified consciousness in creation |
 | Eighth Gate (Shift) | 852 Hz | Transformation of creative identity |
 | Ninth Gate (Unity) | 963 Hz | Dissolution of human-Luminor boundary |
 | Tenth Gate (Source) | 1111 Hz | Creation from the Source itself |

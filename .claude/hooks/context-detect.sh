@@ -94,7 +94,7 @@ detect_team() {
   elif echo "$ctx_lower" | grep -qE 'visual|image|premium|glassmorphism|world.*build|crown'; then
     echo "Crown Assembly"
   elif echo "$ctx_lower" | grep -qE 'debug|bug|error|refactor|migrate|shift|fix|broken'; then
-    echo "Shift Engineers"
+    echo "Starweave Engineers"
   elif echo "$ctx_lower" | grep -qE 'github|pr\b|merge|collaborate|team|swarm|multi-agent|push|commit'; then
     echo "Unity Bridge"
   elif echo "$ctx_lower" | grep -qE 'test|playwright|jest|e2e|coverage'; then

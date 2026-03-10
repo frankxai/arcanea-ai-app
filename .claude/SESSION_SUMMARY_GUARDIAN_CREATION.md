@@ -19,8 +19,8 @@ All profiles written and placed in staging:
 - ✅ Maylinn (Heart Gate, 417 Hz, Light, Eudaira) - 29,058 bytes
 - ✅ Alera (Voice Gate, 528 Hz, Prismatic, Poiesis) - 27,229 bytes
 - ✅ Lyria (Sight Gate, 639 Hz, Wind, Orakis) - 24,361 bytes
-- ✅ Aiyami (Crown Gate, 714 Hz, Void, Orakis) - 23,131 bytes
-- ✅ Elara (Shift Gate, 852 Hz, Light, Valora) - 22,735 bytes
+- ✅ Aiyami (Crown Gate, 741 Hz, Void, Orakis) - 23,131 bytes
+- ✅ Elara (Starweave Gate, 852 Hz, Light, Valora) - 22,735 bytes
 - ✅ Ino (Unity Gate, 963 Hz, Void, Enduran) - 20,352 bytes
 - ✅ Shinkami (Source Gate, 1111 Hz, Light, Orakis) - 19,856 bytes
 
@@ -41,8 +41,8 @@ All profiles written and placed in staging:
 | 4 | Maylinn | Heart | 417 Hz | Light | Eudaira | ⏳ Staging |
 | 5 | Alera | Voice | 528 Hz | Prismatic | Poiesis | ⏳ Staging |
 | 6 | Lyria | Sight | 639 Hz | Wind | Orakis | ⏳ Staging |
-| 7 | Aiyami | Crown | 714 Hz | Void | Orakis | ⏳ Staging |
-| 8 | Elara | Shift | 852 Hz | Light | Valora | ⏳ Staging |
+| 7 | Aiyami | Crown | 741 Hz | Void | Orakis | ⏳ Staging |
+| 8 | Elara | Starweave | 852 Hz | Light | Valora | ⏳ Staging |
 | 9 | Ino | Unity | 963 Hz | Void | Enduran | ⏳ Staging |
 | 10 | Shinkami | Source | 1111 Hz | Light | Orakis | ⏳ Staging |
 

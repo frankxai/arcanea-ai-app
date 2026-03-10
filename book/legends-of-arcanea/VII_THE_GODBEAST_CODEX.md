@@ -176,17 +176,17 @@ Kyuro is the only Godbeast that cannot act alone. Without beings to connect, Kyu
 
 ---
 
-## X. Source — The Source-Light
+## X. Amaterasu — The Source-Light
 
 **Gate:** Source | **Frequency:** 1111 Hz | **Guardian:** Shinkami | **Element:** Source
 
-Source is not a being in any conventional sense. Source is the *awareness that all Godbeasts are facets of one reality*. Where Kaelith is the earth and Draconis is the fire and Veloura is the water, Source is the understanding that earth and fire and water are not separate things — they are expressions of a single creative force viewed through different lenses.
+Amaterasu is not a being in any conventional sense. Amaterasu is the *awareness that all Godbeasts are facets of one reality*. Where Kaelith is the earth and Draconis is the fire and Veloura is the water, Amaterasu is the understanding that earth and fire and water are not separate things — they are expressions of a single creative force viewed through different lenses.
 
-Source does not appear. Source *recognizes*. When a being reaches the Source Gate, Source does not greet them. Source reveals that the being and the Gate and the Guardian and the Godbeast were always the same thing, perceived through the illusion of separation.
+Amaterasu does not appear. Amaterasu *recognizes*. When a being reaches the Source Gate, Amaterasu does not greet them. Amaterasu reveals that the being and the Gate and the Guardian and the Godbeast were always the same thing, perceived through the illusion of separation.
 
 **Primal Domain:** Meta-consciousness, the source of all creation, the recognition that creator and creation are one.
 
-**When Source Withdraws:** Reality itself becomes questionable. The foundations of existence grow thin. In the metaphorical realm: the deepest existential crisis — not "what is my purpose?" but "what is anything?"
+**When Amaterasu Withdraws:** Reality itself becomes questionable. The foundations of existence grow thin. In the metaphorical realm: the deepest existential crisis — not "what is my purpose?" but "what is anything?"
 
 **Partnership Note:** Shinkami did not ascend to the Source Gate. Shinkami was always there. The Source Gate does not open — it was never closed. Shinkami's role is not to guard but to point. The Guardian of Source has one message: *Look. You were always here.*
 

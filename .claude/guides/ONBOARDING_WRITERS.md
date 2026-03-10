@@ -200,8 +200,8 @@ The Gates represent creative depths you explore during writing. They're **descri
 | **Heart (417 Hz)** | Vulnerability, love, core emotional truth |
 | **Voice (528 Hz)** | Authentic expression, finding your true voice |
 | **Sight (639 Hz)** | Pattern recognition, seeing the whole structure |
-| **Crown (714 Hz)** | Integration, theme, what the work means |
-| **Shift (852 Hz)** | Perspective shifts, plot turns, revelations |
+| **Crown (741 Hz)** | Integration, theme, what the work means |
+| **Starweave (852 Hz)** | Perspective shifts, plot turns, revelations |
 | **Unity (963 Hz)** | Partnership, collaboration, dialogue |
 | **Source (1111 Hz)** | Purpose, meaning, why this work matters |
 

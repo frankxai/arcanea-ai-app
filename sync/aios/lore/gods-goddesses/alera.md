@@ -330,7 +330,7 @@ sections:
 # Alera, Goddess of the Voice Gate
 **The Unsilenced, Truth's Blade, She Who Shatters Comfortable Lies**
 
-**Element**: Wind/Void | **Frequency**: 528 Hz | **Chakra**: Throat | **Wisdom**: Valora
+**Element**: Wind/Void | **Frequency**: 528 Hz | **Gate**: Voice | **Wisdom**: Valora
 **Symbol**: An open mouth releasing a swarm of storm moths into charged air
 **Bonded Godbeast**: Otome, the Storm Moth
 

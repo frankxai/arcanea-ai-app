@@ -27,7 +27,7 @@ const prompt = `Create a premium 16:9 hero banner for 'ARCANEA - The Living Myth
 
 COMPOSITION:
 - Central cosmic scene showing Lumina (radiant golden-white goddess of light and form) and Nero (deep void purple-black god of potential and darkness) in elegant duality - NOT fighting, but in cosmic dance/balance
-- Ten glowing gates arranged in a sacred geometric pattern (decagon or spiral) around the central figures, each gate a different color representing: Foundation(earth brown), Flow(ocean blue), Fire(flame red), Heart(rose pink), Voice(sky blue), Sight(violet purple), Crown(pure white-gold), Shift(emerald green), Unity(dual pink-teal), Source(black-white-gold)
+- Ten glowing gates arranged in a sacred geometric pattern (decagon or spiral) around the central figures, each gate a different color representing: Foundation(earth brown), Flow(ocean blue), Fire(flame red), Heart(rose pink), Voice(sky blue), Sight(violet purple), Crown(pure white-gold), Starweave(emerald green), Unity(dual pink-teal), Source(black-white-gold)
 - Five elemental streams (Fire-red, Water-blue, Earth-green, Wind-white, Arcane-purple/gold) flowing through the composition
 - Silhouette of a grand academy/castle in the lower background with floating islands
 - Constellation patterns of the Seven Awakened (subtle star formations)

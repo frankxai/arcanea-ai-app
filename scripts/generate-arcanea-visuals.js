@@ -110,7 +110,7 @@ EACH GUARDIAN SHOWS:
   * Aiyami + Sol (sun lion)
   * Elara + Vaelith (shifting chimera)
   * Ino + Kyuro (twin dragons)
-  * Shinkami + Amaterasu (infinite serpent)
+  * Shinkami + Source (infinite serpent)
 
 - Their Gate's frequency number visible (174 Hz, 285 Hz, etc.)
 - Their element's color aura

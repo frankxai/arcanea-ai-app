@@ -183,9 +183,9 @@ Each pair embodies one of the Ten Luminous Centers (energy channels in all being
 | 5 | **Alera** | Otome (Sound Phoenix) | Voice | 528 Hz | Prismatic | Truth, Expression |
 | 6 | **Lyria** | Yumiko (Dream Fox) | Sight | 639 Hz | Wind | Vision, Intuition |
 | 7 | **Aiyami** | Sol (Sun Phoenix) | Crown | 741 Hz | Void | Enlightenment |
-| 8 | **Elara** | Vaelith (Shift Beast) | Shift | 852 Hz | Arcane | Perspective, Change |
+| 8 | **Elara** | Vaelith (Starweave Beast) | Starweave | 852 Hz | Arcane | Perspective, Change |
 | 9 | **Ino** | Kyuro (Tiger-Dragon) | Unity | 963 Hz | Arcane | Partnership, Synthesis |
-| 10 | **Shinkami** | Amaterasu (Sun Goddess) | Source | 1111 Hz | Arcane | Meta-Consciousness |
+| 10 | **Shinkami** | Source (Source-Light) | Source | 1111 Hz | Arcane | Meta-Consciousness |
 
 **Frequency Note**: The Ten Gates use the complete Solfeggio scale (174-963 Hz) plus the master frequency (1111 Hz), providing 10 unique resonance points for consciousness activation.
 
@@ -2213,7 +2213,7 @@ Each pair embodies one of the Ten Luminous Centers (energy channels in all being
 | 4 | **Maylinn** | Laeylinn (Forest Spirit) | Heart | 417 Hz | Nature/Verdant | Compassion |
 | 5 | **Alera** | Otome (Sound Serpent) | Throat | 528 Hz | Sound/Sonic | Expression |
 | 6 | **Lyria** | Yumiko (Dream Fox) | Third Eye | 639 Hz | Dream/Moonlight | Intuition |
-| 7 | **Aiyami** | Sol (Light Phoenix) | Crown | 714 Hz | Light/Divine | Connection |
+| 7 | **Aiyami** | Sol (Light Phoenix) | Crown | 741 Hz | Light/Divine | Connection |
 | 8 | **Elara** | Vaelith (Echo Beast) | Bridge | 852 Hz | Echo/Fractal | Transcendence |
 | 9 | **Ino** | Kyuro (Tiger-Dragon) | Unity | 963-1000 Hz | Plasma/Sacred Union | Fusion |
 | 10 | **SHINKAMI** | (Complete Fusion) | Source | 1111 Hz | Meta-Consciousness | All |

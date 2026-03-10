@@ -1,11 +1,11 @@
 {
   "$schema": "skill-profile-v1",
-  "name": "Arcanea Gate 8: Shift",
-  "description": "Skills for the Shift gate - style evolution, reinvention, creative longevity",
+  "name": "Arcanea Gate 8: Starweave",
+  "description": "Skills for the Starweave gate - style evolution, reinvention, creative longevity",
   "version": "1.0.0",
   "gate": {
     "number": 8,
-    "name": "Shift",
+    "name": "Starweave",
     "guardian": "Elara",
     "element": "Arcane",
     "frequency": "852 Hz"

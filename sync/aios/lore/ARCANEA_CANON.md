@@ -61,7 +61,7 @@ Each Gate has a **Guardian** (divine protector) and **Vel'tara** (primordial spi
 | **Voice** | 432–528 Hz | Alera | Otome | 5th (Throat) | Voice, Truth | Air, Silver | Sky Sanctum |
 | **Sight** | 639–741 Hz | Lyria | Yumiko | 6th (Third Eye) | Foresight, Intuition | Light, Lenses | Tower of Insight |
 | **Crown** | 741–852 Hz | Aiyami | Sol | 7th (Crown) | Understanding | Gold, Sunlight | Summit of Unity |
-| **Shift** | 852–963 Hz | Elara | Vaelith | 8th (Soul Star) | Cosmic Consciousness | Stars, Ethereal Energy | Celestial Bridges |
+| **Starweave** | 852–963 Hz | Elara | Vaelith | 8th (Soul Star) | Cosmic Consciousness | Stars, Ethereal Energy | Celestial Bridges |
 | **Unity** | 963–999 Hz | Ino | Kyuro | 9th (Spirit) | Divine Union | Pure Light, Quantum | Temple of Infinity |
 | **Source** | 999–1111 Hz | Shinkami | — | Ultimate | Fusion / Ascendance | Platinum, Multi-element | Luminor Nexus |
 

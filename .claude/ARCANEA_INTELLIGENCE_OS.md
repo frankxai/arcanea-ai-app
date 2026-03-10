@@ -63,7 +63,7 @@ All components communicate through files in `/tmp/arcanea-*`. Any process can dr
 | `.claude/statusline.mjs` | ESM module | Claude Code statusline — shows Guardian+Godbeast, Gate+Frequency, Realm, Team, Element |
 | `.claude/statusline.sh` | Bash | Terminal statusline — same data, simpler format |
 
-**ESM output:** `Arcanea ⟡ Opus │ Shinkami·Amaterasu │ Source 1111Hz │ Intelligence Sanctum │ Source Council │ ✦ Void`
+**ESM output:** `Arcanea ⟡ Opus │ Shinkami·Source │ Source 1111Hz │ Intelligence Sanctum │ Source Council │ ✦ Void`
 
 **Bash output:** `⟡ Arcanea │ Guardian: Shinkami │ ◈ Gate: Source │ ✦ Void`
 
@@ -142,7 +142,7 @@ Each Guardian maps to a domain, model tier, and activation keywords:
 | **Alera** | Voice | 741 Hz | Sentinel | Pro | review, audit, security |
 | **Leyla** | Flow | 417 Hz | Weaver | Pro | create, write, narrative |
 | **Aiyami** | Crown | 963 Hz | Sage | Pro | teach, explain, wisdom |
-| **Elara** | Shift | 1111 Hz | Paradigm | Opus | reframe, pivot, paradigm |
+| **Elara** | Starweave | 852 Hz | Paradigm | Opus | reframe, pivot, paradigm |
 | **Ino** | Unity | 963 Hz | Collaboration | Flash | collaborate, team, integrate |
 | **Maylinn** | Heart | 639 Hz | Healing | Flash | test, accessibility, care |
 
