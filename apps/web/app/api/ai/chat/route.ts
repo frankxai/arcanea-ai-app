@@ -135,7 +135,7 @@ export async function POST(req: NextRequest) {
     const resolvedSystemPrompt = systemPrompt || ARCANEA_DEFAULT_SYSTEM_PROMPT;
 
     // --- Stream response ---
-    const result = streamText({
+    const result = await streamText({
       model,
       system: resolvedSystemPrompt,
       messages: normalizedMessages as Array<{ role: 'user' | 'assistant'; content: string }>,
@@ -143,7 +143,7 @@ export async function POST(req: NextRequest) {
       maxOutputTokens: maxTokens ?? 8192,
     });
 
-    return result.toDataStreamResponse({
+    return result.toTextStreamResponse({
       headers: { 'x-arcanea-model': MODEL_NAME },
     });
   } catch (error) {
