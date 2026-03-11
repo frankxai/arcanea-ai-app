@@ -1,0 +1,1605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arcanea — The Future of Creation</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* ─── FOUNDATION ──────────────────────────────────────────────────── */
+    :root {
+      --base: #0a0a0e;
+      --cyan: #00e5ff;
+      --cyan-dim: rgba(0, 229, 255, 0.12);
+      --cyan-mid: rgba(0, 229, 255, 0.25);
+      --ultramarine: #1a237e;
+      --silver: #c0c0c8;
+      --lime: #b2ff59;
+      --text: #f5f5f5;
+      --text-muted: rgba(245, 245, 245, 0.45);
+      --text-sub: rgba(245, 245, 245, 0.65);
+
+      --glass-bg: rgba(10, 10, 14, 0.55);
+      --glass-bg-light: rgba(255, 255, 255, 0.04);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-border-cyan: rgba(0, 229, 255, 0.18);
+
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-lg: 28px;
+      --radius-xl: 40px;
+
+      font-family: 'Geist', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--base);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ─── MESH BACKGROUND ────────────────────────────────────────────── */
+    .mesh-bg {
+      background:
+        radial-gradient(at 40% 20%, rgba(0, 229, 255, 0.07) 0%, transparent 50%),
+        radial-gradient(at 80% 80%, rgba(26, 35, 126, 0.10) 0%, transparent 40%),
+        radial-gradient(at 10% 90%, rgba(178, 255, 89, 0.04) 0%, transparent 30%),
+        #0a0a0e;
+    }
+
+    .mesh-bg-intense {
+      background:
+        radial-gradient(at 30% 30%, rgba(0, 229, 255, 0.12) 0%, transparent 45%),
+        radial-gradient(at 70% 70%, rgba(26, 35, 126, 0.15) 0%, transparent 40%),
+        radial-gradient(at 50% 10%, rgba(178, 255, 89, 0.06) 0%, transparent 30%),
+        #0a0a0e;
+    }
+
+    /* ─── VARIABLE GLASS ─────────────────────────────────────────────── */
+    .var-glass {
+      --blur: 24px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--blur)) saturate(1.8);
+      -webkit-backdrop-filter: blur(var(--blur)) saturate(1.8);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .var-glass:hover {
+      background: rgba(10, 10, 14, 0.45);
+      border-color: var(--glass-border-cyan);
+      box-shadow: 0 0 0 1px rgba(0, 229, 255, 0.06), 0 24px 48px rgba(0,0,0,0.35);
+    }
+
+    .var-glass-sm {
+      --blur: 16px;
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(16px) saturate(1.6);
+      -webkit-backdrop-filter: blur(16px) saturate(1.6);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-sm);
+      transition: background 0.25s, border-color 0.25s, transform 0.25s;
+    }
+
+    .var-glass-sm:hover {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: rgba(0, 229, 255, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .var-glass-heavy {
+      background: rgba(10, 10, 14, 0.72);
+      backdrop-filter: blur(40px) saturate(2.0);
+      -webkit-backdrop-filter: blur(40px) saturate(2.0);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+    }
+
+    /* ─── NAV ────────────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(10, 10, 14, 0.75);
+      backdrop-filter: blur(32px) saturate(1.9);
+      -webkit-backdrop-filter: blur(32px) saturate(1.9);
+      border-bottom: 1px solid var(--glass-border);
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    nav.scrolled {
+      background: rgba(10, 10, 14, 0.88);
+      border-bottom-color: rgba(0, 229, 255, 0.10);
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .nav-logo {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .nav-logo span {
+      color: var(--cyan);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+      flex: 1;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 450;
+      color: var(--text-sub);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .btn-glass-sm {
+      padding: 8px 18px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-sub);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--glass-border);
+      border-radius: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      letter-spacing: -0.01em;
+    }
+
+    .btn-glass-sm:hover {
+      background: rgba(255,255,255,0.09);
+      color: var(--text);
+      border-color: rgba(255,255,255,0.14);
+    }
+
+    .btn-cyan {
+      padding: 8px 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #0a0a0e;
+      background: var(--cyan);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+    }
+
+    .btn-cyan:hover {
+      background: #33ecff;
+      box-shadow: 0 0 20px rgba(0, 229, 255, 0.35);
+      transform: translateY(-1px);
+    }
+
+    /* ─── HERO ───────────────────────────────────────────────────────── */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 80px 24px 60px;
+    }
+
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+
+    .hero-orb-1 {
+      width: 600px;
+      height: 600px;
+      top: -100px;
+      left: -100px;
+      background: radial-gradient(circle, rgba(0, 229, 255, 0.08) 0%, transparent 70%);
+      animation: orb-drift-1 12s ease-in-out infinite;
+    }
+
+    .hero-orb-2 {
+      width: 500px;
+      height: 500px;
+      bottom: -80px;
+      right: -80px;
+      background: radial-gradient(circle, rgba(26, 35, 126, 0.14) 0%, transparent 70%);
+      animation: orb-drift-2 15s ease-in-out infinite;
+    }
+
+    .hero-orb-3 {
+      width: 300px;
+      height: 300px;
+      top: 40%;
+      left: 60%;
+      background: radial-gradient(circle, rgba(178, 255, 89, 0.04) 0%, transparent 70%);
+      animation: orb-drift-3 18s ease-in-out infinite;
+    }
+
+    @keyframes orb-drift-1 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(40px, 30px) scale(1.05); }
+      66% { transform: translate(-20px, 50px) scale(0.97); }
+    }
+
+    @keyframes orb-drift-2 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      40% { transform: translate(-30px, -40px) scale(1.08); }
+      70% { transform: translate(20px, -20px) scale(0.95); }
+    }
+
+    @keyframes orb-drift-3 {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(-40px, 30px); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 760px;
+      width: 100%;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: rgba(0, 229, 255, 0.08);
+      border: 1px solid rgba(0, 229, 255, 0.18);
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--cyan);
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+
+    .hero-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--cyan);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0, 229, 255, 0.4); }
+      50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(0, 229, 255, 0); }
+    }
+
+    .hero-h1 {
+      font-size: clamp(48px, 7vw, 88px);
+      font-weight: 800;
+      line-height: 1.03;
+      letter-spacing: -0.04em;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+
+    .hero-h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--cyan) 0%, #7b7fff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: clamp(16px, 2vw, 20px);
+      font-weight: 400;
+      color: var(--text-sub);
+      line-height: 1.65;
+      letter-spacing: -0.01em;
+      margin-bottom: 48px;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ─── CREATION INPUT ─────────────────────────────────────────────── */
+    .creation-box {
+      background: rgba(10, 10, 14, 0.70);
+      backdrop-filter: blur(40px) saturate(2.0);
+      -webkit-backdrop-filter: blur(40px) saturate(2.0);
+      border: 1px solid var(--glass-border);
+      border-radius: 18px;
+      padding: 6px 6px 6px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      max-width: 580px;
+      margin: 0 auto 20px;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+
+    .creation-box:focus-within {
+      border-color: rgba(0, 229, 255, 0.35);
+      box-shadow:
+        0 0 0 3px rgba(0, 229, 255, 0.08),
+        0 24px 64px rgba(0, 0, 0, 0.4);
+    }
+
+    .creation-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--text);
+      font-family: inherit;
+      letter-spacing: -0.01em;
+      padding: 10px 0;
+    }
+
+    .creation-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .creation-btn {
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: 650;
+      color: #0a0a0e;
+      background: var(--cyan);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-family: inherit;
+      letter-spacing: -0.01em;
+      flex-shrink: 0;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+    }
+
+    .creation-btn:hover {
+      background: #33ecff;
+      box-shadow: 0 0 24px rgba(0, 229, 255, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .hero-chips {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      max-width: 580px;
+      margin: 0 auto;
+    }
+
+    .chip {
+      padding: 7px 14px;
+      font-size: 13px;
+      font-weight: 450;
+      color: var(--text-sub);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--glass-border);
+      border-radius: 100px;
+      cursor: pointer;
+      font-family: inherit;
+      letter-spacing: -0.01em;
+      transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s;
+    }
+
+    .chip:hover {
+      background: rgba(0, 229, 255, 0.08);
+      color: var(--cyan);
+      border-color: rgba(0, 229, 255, 0.22);
+      transform: translateY(-1px);
+    }
+
+    /* ─── SECTION LAYOUT ─────────────────────────────────────────────── */
+    section {
+      padding: 96px 24px;
+    }
+
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 750;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 17px;
+      font-weight: 400;
+      color: var(--text-sub);
+      letter-spacing: -0.01em;
+      line-height: 1.6;
+    }
+
+    /* ─── TRUST BAR ──────────────────────────────────────────────────── */
+    .trust-bar {
+      padding: 40px 24px;
+      border-top: 1px solid var(--glass-border);
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .trust-label {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .trust-logos {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+
+    .trust-logo {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: rgba(255,255,255,0.20);
+      filter: blur(0.5px);
+      transition: color 0.25s, filter 0.25s;
+      cursor: default;
+      user-select: none;
+    }
+
+    .trust-logo:hover {
+      color: rgba(255,255,255,0.40);
+      filter: blur(0);
+    }
+
+    /* ─── BENTO GRID ─────────────────────────────────────────────────── */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: auto;
+      gap: 16px;
+    }
+
+    .bento-card {
+      background: rgba(255, 255, 255, 0.035);
+      backdrop-filter: blur(20px) saturate(1.6);
+      -webkit-backdrop-filter: blur(20px) saturate(1.6);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-md);
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+    }
+
+    .bento-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .bento-card:hover {
+      border-color: rgba(0, 229, 255, 0.14);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.25), 0 0 0 1px rgba(0, 229, 255, 0.05);
+      transform: translateY(-2px);
+    }
+
+    .bento-main {
+      grid-column: 1 / 8;
+      grid-row: 1 / 3;
+      padding: 48px;
+      min-height: 380px;
+      background: rgba(0, 229, 255, 0.04);
+      border-color: rgba(0, 229, 255, 0.10);
+    }
+
+    .bento-sm-1 { grid-column: 8 / 13; grid-row: 1 / 2; }
+    .bento-sm-2 { grid-column: 8 / 11; grid-row: 2 / 3; }
+    .bento-sm-3 { grid-column: 11 / 13; grid-row: 2 / 3; }
+
+    .bento-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: rgba(0, 229, 255, 0.10);
+      border: 1px solid rgba(0, 229, 255, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 22px;
+    }
+
+    .bento-icon-sm {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: rgba(0, 229, 255, 0.08);
+      border: 1px solid rgba(0, 229, 255, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      font-size: 18px;
+    }
+
+    .bento-card-title {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .bento-main .bento-card-title {
+      font-size: 28px;
+    }
+
+    .bento-card-desc {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-sub);
+      line-height: 1.65;
+      letter-spacing: -0.01em;
+    }
+
+    .bento-main .bento-card-desc {
+      font-size: 16px;
+      max-width: 400px;
+    }
+
+    .bento-visual {
+      margin-top: 32px;
+      background: rgba(0, 229, 255, 0.04);
+      border: 1px solid rgba(0, 229, 255, 0.08);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .bento-bar {
+      height: 4px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--cyan), transparent);
+      animation: bento-bar-grow 3s ease-in-out infinite;
+    }
+
+    @keyframes bento-bar-grow {
+      0% { width: 20%; opacity: 0.5; }
+      50% { width: 85%; opacity: 1; }
+      100% { width: 20%; opacity: 0.5; }
+    }
+
+    .bento-bar:nth-child(2) { animation-delay: 0.4s; }
+    .bento-bar:nth-child(3) { animation-delay: 0.8s; }
+    .bento-bar:nth-child(4) { animation-delay: 1.2s; }
+
+    .stat-number {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--cyan);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      font-weight: 450;
+      color: var(--text-muted);
+      letter-spacing: -0.01em;
+    }
+
+    /* ─── LIVE FEED ──────────────────────────────────────────────────── */
+    .feed-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .live-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: rgba(178, 255, 89, 0.08);
+      border: 1px solid rgba(178, 255, 89, 0.18);
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--lime);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--lime);
+      animation: pulse-dot 1.5s ease-in-out infinite;
+    }
+
+    .feed-track {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .feed-track::before,
+    .feed-track::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 80px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .feed-track::before {
+      left: 0;
+      background: linear-gradient(90deg, var(--base), transparent);
+    }
+
+    .feed-track::after {
+      right: 0;
+      background: linear-gradient(-90deg, var(--base), transparent);
+    }
+
+    .feed-scroll {
+      display: flex;
+      gap: 16px;
+      animation: feed-scroll 28s linear infinite;
+      width: max-content;
+    }
+
+    @keyframes feed-scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .feed-card {
+      width: 260px;
+      flex-shrink: 0;
+      background: rgba(255,255,255,0.035);
+      backdrop-filter: blur(16px) saturate(1.5);
+      -webkit-backdrop-filter: blur(16px) saturate(1.5);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .feed-card-type {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .feed-card-title {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 8px;
+      line-height: 1.35;
+    }
+
+    .feed-card-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: -0.01em;
+    }
+
+    .feed-card-preview {
+      margin-top: 14px;
+      height: 48px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    /* ─── CREATION TYPES ─────────────────────────────────────────────── */
+    .types-scroll {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding: 4px 0 20px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .types-scroll::-webkit-scrollbar { display: none; }
+
+    .type-card {
+      flex-shrink: 0;
+      width: 200px;
+      height: 260px;
+      border-radius: var(--radius-md);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
+    }
+
+    .type-card:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 24px 48px rgba(0,0,0,0.4);
+      border-color: rgba(255,255,255,0.12);
+    }
+
+    .type-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.5) 100%);
+      pointer-events: none;
+    }
+
+    .type-music  { background: linear-gradient(135deg, #1a0533 0%, #3d0068 50%, #0a0020 100%); }
+    .type-art    { background: linear-gradient(135deg, #0a1a33 0%, #0033aa 50%, #000d1a 100%); }
+    .type-story  { background: linear-gradient(135deg, #1a1500 0%, #4d3800 50%, #0d0a00 100%); }
+    .type-code   { background: linear-gradient(135deg, #001a0d 0%, #004422 50%, #00110d 100%); }
+    .type-video  { background: linear-gradient(135deg, #1a0a00 0%, #552200 50%, #0d0500 100%); }
+    .type-world  { background: linear-gradient(135deg, #00111a 0%, #003355 50%, #000a11 100%); }
+
+    .type-icon {
+      font-size: 32px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .type-info {
+      position: relative;
+      z-index: 1;
+    }
+
+    .type-name {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #f5f5f5;
+      margin-bottom: 4px;
+    }
+
+    .type-count {
+      font-size: 12px;
+      font-weight: 450;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: -0.01em;
+    }
+
+    .type-accent {
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      filter: blur(30px);
+      pointer-events: none;
+    }
+
+    /* ─── CTA SECTION ────────────────────────────────────────────────── */
+    .cta-panel {
+      background: rgba(10, 10, 14, 0.65);
+      backdrop-filter: blur(40px) saturate(2.0);
+      -webkit-backdrop-filter: blur(40px) saturate(2.0);
+      border: 1px solid rgba(0, 229, 255, 0.12);
+      border-radius: var(--radius-xl);
+      padding: 80px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-panel::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(0, 229, 255, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-panel::after {
+      content: '';
+      position: absolute;
+      bottom: -60px;
+      left: 20%;
+      width: 400px;
+      height: 300px;
+      background: radial-gradient(ellipse, rgba(26, 35, 126, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-title {
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--text);
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-sub {
+      font-size: 17px;
+      color: var(--text-sub);
+      margin-bottom: 40px;
+      letter-spacing: -0.01em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-input-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--glass-border);
+      padding: 60px 24px 40px;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand-name {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .footer-brand-name span { color: var(--cyan); }
+
+    .footer-brand-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      letter-spacing: -0.01em;
+      max-width: 280px;
+    }
+
+    .footer-col-title {
+      font-size: 13px;
+      font-weight: 650;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin-bottom: 16px;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      font-size: 14px;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--cyan); }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 24px;
+      border-top: 1px solid var(--glass-border);
+    }
+
+    .footer-copy {
+      font-size: 13px;
+      color: var(--text-muted);
+      letter-spacing: -0.01em;
+    }
+
+    .footer-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--lime);
+      box-shadow: 0 0 6px rgba(178, 255, 89, 0.5);
+    }
+
+    /* ─── CURSOR GLOW ────────────────────────────────────────────────── */
+    .cursor-glow {
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 229, 255, 0.04) 0%, transparent 70%);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 0;
+      transition: opacity 0.3s;
+    }
+
+    /* ─── SCROLLBAR ──────────────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(0, 229, 255, 0.25); }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .bento-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .bento-main { grid-column: 1 / 3; grid-row: 1 / 2; min-height: 280px; }
+      .bento-sm-1 { grid-column: 1 / 2; grid-row: 2 / 3; }
+      .bento-sm-2 { grid-column: 2 / 3; grid-row: 2 / 3; }
+      .bento-sm-3 { grid-column: 1 / 3; grid-row: 3 / 4; }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .cta-panel { padding: 48px 32px; }
+
+      .nav-links { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      .bento-grid { grid-template-columns: 1fr; }
+      .bento-main { grid-column: 1; grid-row: 1; }
+      .bento-sm-1 { grid-column: 1; grid-row: 2; }
+      .bento-sm-2 { grid-column: 1; grid-row: 3; }
+      .bento-sm-3 { grid-column: 1; grid-row: 4; }
+
+      .trust-logos { gap: 24px; }
+      section { padding: 64px 16px; }
+    }
+
+    /* ─── REDUCED MOTION ─────────────────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition-duration: 0.01ms !important; }
+    }
+
+    /* ─── SELECTION ──────────────────────────────────────────────────── */
+    ::selection {
+      background: rgba(0, 229, 255, 0.2);
+      color: var(--text);
+    }
+  </style>
+</head>
+<body class="mesh-bg">
+
+  <!-- Cursor Glow -->
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <!-- ── NAV ────────────────────────────────────────────────────────── -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">Arcanea<span>.</span></a>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#feed">Live</a></li>
+        <li><a href="#create-types">Explore</a></li>
+        <li><a href="#cta">Start</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="#" class="btn-glass-sm">Sign in</a>
+        <a href="#" class="btn-cyan">Get access</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HERO ───────────────────────────────────────────────────────── -->
+  <section class="hero" style="padding-top: 120px;">
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-orb hero-orb-3"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        Now in early access
+      </div>
+
+      <h1 class="hero-h1">
+        The future of<br>
+        <em>creation</em> is yours
+      </h1>
+
+      <p class="hero-sub">
+        One idea. Infinite forms. Music, stories, art, code, worlds.
+        Arcanea turns what you imagine into what exists.
+      </p>
+
+      <!-- Creation Input -->
+      <div class="creation-box" id="heroInput">
+        <input
+          class="creation-input"
+          type="text"
+          placeholder="What do you want to create?"
+          id="mainInput"
+          autocomplete="off"
+        />
+        <button class="creation-btn" onclick="handleCreate()">Create</button>
+      </div>
+
+      <!-- Quick-start chips -->
+      <div class="hero-chips">
+        <button class="chip" onclick="setPrompt('A haunting melody in minor key')">🎵 Haunting melody</button>
+        <button class="chip" onclick="setPrompt('A short story about a lighthouse keeper')">📖 Lighthouse story</button>
+        <button class="chip" onclick="setPrompt('Cosmic art, deep blues, fractal light')">🎨 Cosmic art</button>
+        <button class="chip" onclick="setPrompt('A fantasy world with floating cities')">🌍 Fantasy world</button>
+        <button class="chip" onclick="setPrompt('A fast, clean REST API in TypeScript')">⌨️ TypeScript API</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TRUST BAR ──────────────────────────────────────────────────── -->
+  <div class="trust-bar">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <p class="trust-label">Trusted by creators at</p>
+      <div class="trust-logos">
+        <span class="trust-logo">Spotify</span>
+        <span class="trust-logo">Figma</span>
+        <span class="trust-logo">Notion</span>
+        <span class="trust-logo">Vercel</span>
+        <span class="trust-logo">Linear</span>
+        <span class="trust-logo">Anthropic</span>
+        <span class="trust-logo">Midjourney</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FEATURES BENTO ─────────────────────────────────────────────── -->
+  <section id="features">
+    <div class="section-inner">
+      <div style="margin-bottom: 48px;">
+        <div class="section-label">Capabilities</div>
+        <h2 class="section-title">Everything you need<br>to manifest anything</h2>
+        <p class="section-sub" style="max-width: 480px;">
+          A complete creative stack. From first thought to finished work — in a single session.
+        </p>
+      </div>
+
+      <div class="bento-grid">
+
+        <!-- Main card -->
+        <div class="bento-card bento-main">
+          <div class="bento-icon">
+            <span>⚡</span>
+          </div>
+          <h3 class="bento-card-title">Zero-friction creation</h3>
+          <p class="bento-card-desc">
+            No setup. No learning curve. Type what you want — Arcanea builds the rest. Our AI understands intent, medium, mood, and style from plain language. You think; it creates.
+          </p>
+          <div class="bento-visual">
+            <div class="bento-bar" style="width: 75%;"></div>
+            <div class="bento-bar" style="width: 55%;"></div>
+            <div class="bento-bar" style="width: 90%;"></div>
+            <div class="bento-bar" style="width: 40%;"></div>
+          </div>
+        </div>
+
+        <!-- Small 1 -->
+        <div class="bento-card bento-sm-1">
+          <div class="bento-icon-sm"><span>🧠</span></div>
+          <h3 class="bento-card-title">Multi-modal AI</h3>
+          <p class="bento-card-desc">
+            Six creation types, one unified platform. The same prompt engine powers music, visual art, writing, code, video, and world design.
+          </p>
+        </div>
+
+        <!-- Small 2 -->
+        <div class="bento-card bento-sm-2" style="display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div class="bento-icon-sm"><span>🌐</span></div>
+            <h3 class="bento-card-title">Live collaboration</h3>
+            <p class="bento-card-desc">Create together, in real time.</p>
+          </div>
+          <div style="margin-top: 20px; display: flex; gap: -6px;">
+            <div style="width:28px; height:28px; border-radius:50%; background: linear-gradient(135deg, #00e5ff, #7b7fff); border: 2px solid var(--base); font-size:11px; display:flex; align-items:center; justify-content:center; font-weight:700; color:#0a0a0e;">A</div>
+            <div style="width:28px; height:28px; border-radius:50%; background: linear-gradient(135deg, #b2ff59, #00e5ff); border: 2px solid var(--base); font-size:11px; display:flex; align-items:center; justify-content:center; font-weight:700; color:#0a0a0e; margin-left:-6px;">K</div>
+            <div style="width:28px; height:28px; border-radius:50%; background: linear-gradient(135deg, #ff6b6b, #ff9f43); border: 2px solid var(--base); font-size:11px; display:flex; align-items:center; justify-content:center; font-weight:700; color:#0a0a0e; margin-left:-6px;">M</div>
+            <div style="width:28px; height:28px; border-radius:50%; background: rgba(255,255,255,0.08); border: 2px solid var(--glass-border); font-size:11px; display:flex; align-items:center; justify-content:center; color: var(--text-muted); margin-left:-6px;">+5</div>
+          </div>
+        </div>
+
+        <!-- Small 3 -->
+        <div class="bento-card bento-sm-3" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+          <span class="stat-number">2.4M</span>
+          <span class="stat-label">Works created this week</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── LIVE FEED ──────────────────────────────────────────────────── -->
+  <section id="feed" style="padding-top: 0;">
+    <div class="section-inner">
+      <div class="feed-header">
+        <div>
+          <div class="section-label">Feed</div>
+          <h2 class="section-title" style="margin-bottom: 0;">Happening now</h2>
+        </div>
+        <div class="live-indicator">
+          <div class="live-dot"></div>
+          Live
+        </div>
+      </div>
+
+      <div class="feed-track">
+        <div class="feed-scroll" id="feedScroll">
+
+          <!-- Cards set 1 -->
+          <div class="feed-card">
+            <div class="feed-card-type" style="color: #c084fc;">Music</div>
+            <div class="feed-card-title">"Neon Rain" — Ambient electronic</div>
+            <div class="feed-card-meta">by @velour · 2m ago</div>
+            <div class="feed-card-preview" style="background: linear-gradient(135deg, rgba(192,132,252,0.1), rgba(59,130,246,0.08));">🎵</div>
+          </div>
+
+          <div class="feed-card">
+            <div class="feed-card-type" style="color: var(--cyan);">Visual Art</div>
+            <div class="feed-card-title">Crystalline Depths — Oil + AI hybrid</div>
+            <div class="feed-card-meta">by @miru · 4m ago</div>
+            <div class="feed-card-preview" style="background: linear-gradient(135deg, rgba(0,229,255,0.1), rgba(26,35,126,0.15));">🎨</div>
+          </div>
+
+          <div class="feed-card">
+            <div class="feed-card-type" style="color: #fbbf24;">Story</div>
+            <div class="feed-card-title">"The Last Cartographer" — Chapter 3</div>
+            <div class="feed-card-meta">by @inkflow · 7m ago</div>
+            <div class="feed-card-preview" style="background: linear-gradient(135deg, rgba(251,191,36,0.08), rgba(217,119,6,0.06));">📖</div>
+          </div>
+
+          <div class="feed-card">
+            <div class="feed-card-type" style="color: var(--lime);">Code</div>
+            <div class="feed-card-title">Infinite canvas renderer — WebGL 2.0</div>
+            <div class="feed-card-meta">by @synth.dev · 12m ago</div>
+            <div class="feed-card-preview" style="background: linear-gradient(135deg, rgba(178,255,89,0.08), rgba(34,197,94,0.06));">⌨️</div>
+          </div>
+
+          <div class="feed-card">
+            <div class="feed-card-type" style="color: #f97316;">Video</div>
+            <div class="feed-card-title">Solstice — 90sec film, no dialogue</div>
+            <div class="feed-card-meta">by @lumina.frames · 15m ago</div>
+            <div class="feed-card-preview" style="background: linear-gradient(135deg, rgba(249,115,22,0.1), rgba(239,68,68,0.08));">🎬</div>
+          </div>
+
+          <div class="feed-card">
+            <div class="feed-card-type" style="color: #7dd3fc;">World</div>
+            <div class="feed-card-title">The Hollowed Archipelago — Full atlas</div>
+            <div class="feed-card-meta">by @cartovex · 19m ago</div>
+            <div class="feed-card-preview" style="background: linear-gradient(135deg, rgba(125,211,252,0.08), rgba(14,165,233,0.06));">🌍</div>
+          </div>
+
+          <!-- Duplicated for seamless loop -->
+          <div class="feed-card">
+            <div class="feed-card-type" style="color: #c084fc;">Music</div>
+            <div class="feed-card-title">"Neon Rain" — Ambient electronic</div>
+            <div class="feed-card-meta">by @velour · 2m ago</div>
+            <div class="feed-card-preview" style="background: linear-gradient(135deg, rgba(192,132,252,0.1), rgba(59,130,246,0.08));">🎵</div>
+          </div>
+
+          <div class="feed-card">
+            <div class="feed-card-type" style="color: var(--cyan);">Visual Art</div>
+            <div class="feed-card-title">Crystalline Depths — Oil + AI hybrid</div>
+            <div class="feed-card-meta">by @miru · 4m ago</div>
+            <div class="feed-card-preview" style="background: linear-gradient(135deg, rgba(0,229,255,0.1), rgba(26,35,126,0.15));">🎨</div>
+          </div>
+
+          <div class="feed-card">
+            <div class="feed-card-type" style="color: #fbbf24;">Story</div>
+            <div class="feed-card-title">"The Last Cartographer" — Chapter 3</div>
+            <div class="feed-card-meta">by @inkflow · 7m ago</div>
+            <div class="feed-card-preview" style="background: linear-gradient(135deg, rgba(251,191,36,0.08), rgba(217,119,6,0.06));">📖</div>
+          </div>
+
+          <div class="feed-card">
+            <div class="feed-card-type" style="color: var(--lime);">Code</div>
+            <div class="feed-card-title">Infinite canvas renderer — WebGL 2.0</div>
+            <div class="feed-card-meta">by @synth.dev · 12m ago</div>
+            <div class="feed-card-preview" style="background: linear-gradient(135deg, rgba(178,255,89,0.08), rgba(34,197,94,0.06));">⌨️</div>
+          </div>
+
+          <div class="feed-card">
+            <div class="feed-card-type" style="color: #f97316;">Video</div>
+            <div class="feed-card-title">Solstice — 90sec film, no dialogue</div>
+            <div class="feed-card-meta">by @lumina.frames · 15m ago</div>
+            <div class="feed-card-preview" style="background: linear-gradient(135deg, rgba(249,115,22,0.1), rgba(239,68,68,0.08));">🎬</div>
+          </div>
+
+          <div class="feed-card">
+            <div class="feed-card-type" style="color: #7dd3fc;">World</div>
+            <div class="feed-card-title">The Hollowed Archipelago — Full atlas</div>
+            <div class="feed-card-meta">by @cartovex · 19m ago</div>
+            <div class="feed-card-preview" style="background: linear-gradient(135deg, rgba(125,211,252,0.08), rgba(14,165,233,0.06));">🌍</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CREATION TYPES ─────────────────────────────────────────────── -->
+  <section id="create-types">
+    <div class="section-inner">
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 32px; flex-wrap: wrap; gap: 16px;">
+        <div>
+          <div class="section-label">Mediums</div>
+          <h2 class="section-title" style="margin-bottom: 0;">Every form of creation</h2>
+        </div>
+        <a href="#" style="font-size: 14px; color: var(--cyan); text-decoration: none; letter-spacing: -0.01em; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
+          Browse all →
+        </a>
+      </div>
+
+      <div class="types-scroll">
+
+        <div class="type-card type-music">
+          <div class="type-accent" style="background: rgba(192,132,252,0.4);"></div>
+          <div class="type-icon">🎵</div>
+          <div class="type-info">
+            <div class="type-name">Music</div>
+            <div class="type-count">847K tracks created</div>
+          </div>
+        </div>
+
+        <div class="type-card type-art">
+          <div class="type-accent" style="background: rgba(0,229,255,0.4);"></div>
+          <div class="type-icon">🎨</div>
+          <div class="type-info">
+            <div class="type-name">Visual Art</div>
+            <div class="type-count">2.1M works created</div>
+          </div>
+        </div>
+
+        <div class="type-card type-story">
+          <div class="type-accent" style="background: rgba(251,191,36,0.35);"></div>
+          <div class="type-icon">📖</div>
+          <div class="type-info">
+            <div class="type-name">Story</div>
+            <div class="type-count">320K stories written</div>
+          </div>
+        </div>
+
+        <div class="type-card type-code">
+          <div class="type-accent" style="background: rgba(178,255,89,0.3);"></div>
+          <div class="type-icon">⌨️</div>
+          <div class="type-info">
+            <div class="type-name">Code</div>
+            <div class="type-count">190K apps built</div>
+          </div>
+        </div>
+
+        <div class="type-card type-video">
+          <div class="type-accent" style="background: rgba(249,115,22,0.35);"></div>
+          <div class="type-icon">🎬</div>
+          <div class="type-info">
+            <div class="type-name">Video</div>
+            <div class="type-count">55K films made</div>
+          </div>
+        </div>
+
+        <div class="type-card type-world">
+          <div class="type-accent" style="background: rgba(125,211,252,0.3);"></div>
+          <div class="type-icon">🌍</div>
+          <div class="type-info">
+            <div class="type-name">World</div>
+            <div class="type-count">28K worlds designed</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ────────────────────────────────────────────────────────── -->
+  <section id="cta" class="mesh-bg-intense">
+    <div class="section-inner">
+      <div class="cta-panel">
+        <h2 class="cta-title">Your first creation<br>is one line away</h2>
+        <p class="cta-sub">No account required to start. Just create.</p>
+
+        <div class="cta-input-wrap">
+          <div class="creation-box" style="max-width: 100%;">
+            <input
+              class="creation-input"
+              type="text"
+              placeholder="Describe what you want to create..."
+              id="ctaInput"
+              autocomplete="off"
+            />
+            <button class="creation-btn" onclick="handleCtaCreate()">Create</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────────────── -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+
+        <div>
+          <div class="footer-brand-name">Arcanea<span>.</span></div>
+          <p class="footer-brand-desc">
+            A creation platform for the AI era. Every idea deserves to exist. We build the tools that make it possible.
+          </p>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Platform</div>
+          <ul class="footer-links">
+            <li><a href="#">Music</a></li>
+            <li><a href="#">Visual Art</a></li>
+            <li><a href="#">Stories</a></li>
+            <li><a href="#">Code</a></li>
+            <li><a href="#">Video</a></li>
+            <li><a href="#">Worlds</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Company</div>
+          <ul class="footer-links">
+            <li><a href="#">About</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 Arcanea. All rights reserved.</span>
+        <div class="footer-status">
+          <div class="status-dot"></div>
+          All systems operational
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── SCRIPTS ────────────────────────────────────────────────────── -->
+  <script>
+    // ── Cursor glow ──────────────────────────────────────────────────
+    const glow = document.getElementById('cursorGlow');
+    let mouseX = 0, mouseY = 0;
+    let glowX = 0, glowY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      glow.style.opacity = '1';
+    });
+
+    document.addEventListener('mouseleave', () => {
+      glow.style.opacity = '0';
+    });
+
+    function animateGlow() {
+      const speed = 0.08;
+      glowX += (mouseX - glowX) * speed;
+      glowY += (mouseY - glowY) * speed;
+      glow.style.left = glowX + 'px';
+      glow.style.top = glowY + 'px';
+      requestAnimationFrame(animateGlow);
+    }
+    animateGlow();
+
+    // ── Navbar scroll state ──────────────────────────────────────────
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 20) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // ── Creation input helpers ───────────────────────────────────────
+    function setPrompt(text) {
+      const input = document.getElementById('mainInput');
+      input.value = text;
+      input.focus();
+      input.setSelectionRange(text.length, text.length);
+    }
+
+    function handleCreate() {
+      const input = document.getElementById('mainInput');
+      const val = input.value.trim();
+      if (!val) {
+        input.focus();
+        // Subtle shake
+        const box = document.getElementById('heroInput');
+        box.style.transform = 'translateX(-4px)';
+        setTimeout(() => box.style.transform = 'translateX(4px)', 60);
+        setTimeout(() => box.style.transform = 'translateX(-2px)', 120);
+        setTimeout(() => box.style.transform = 'translateX(0)', 180);
+        return;
+      }
+      // Simulate creation init
+      const btn = document.querySelector('.hero .creation-btn');
+      btn.textContent = 'Creating...';
+      btn.style.opacity = '0.7';
+      setTimeout(() => {
+        btn.textContent = 'Create';
+        btn.style.opacity = '1';
+        input.value = '';
+        input.placeholder = 'Your creation is forming...';
+        setTimeout(() => {
+          input.placeholder = 'What do you want to create?';
+        }, 2000);
+      }, 1200);
+    }
+
+    function handleCtaCreate() {
+      const input = document.getElementById('ctaInput');
+      const val = input.value.trim();
+      if (!val) { input.focus(); return; }
+      const btn = document.querySelector('#cta .creation-btn');
+      btn.textContent = 'Creating...';
+      btn.style.opacity = '0.7';
+      setTimeout(() => {
+        btn.textContent = 'Create';
+        btn.style.opacity = '1';
+        input.value = '';
+      }, 1200);
+    }
+
+    // ── Enter key on inputs ──────────────────────────────────────────
+    document.getElementById('mainInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') handleCreate();
+    });
+    document.getElementById('ctaInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') handleCtaCreate();
+    });
+
+    // ── Pause live feed on hover ─────────────────────────────────────
+    const feedScroll = document.getElementById('feedScroll');
+    feedScroll.addEventListener('mouseenter', () => {
+      feedScroll.style.animationPlayState = 'paused';
+    });
+    feedScroll.addEventListener('mouseleave', () => {
+      feedScroll.style.animationPlayState = 'running';
+    });
+
+    // ── Bento card hover: variable glass blur ────────────────────────
+    document.querySelectorAll('.bento-card').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        card.style.backdropFilter = 'blur(32px) saturate(2.0)';
+        card.style.webkitBackdropFilter = 'blur(32px) saturate(2.0)';
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.backdropFilter = 'blur(20px) saturate(1.6)';
+        card.style.webkitBackdropFilter = 'blur(20px) saturate(1.6)';
+      });
+    });
+
+    // ── Type card: tilt on hover ─────────────────────────────────────
+    document.querySelectorAll('.type-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = `translateY(-4px) scale(1.01) rotateY(${x * 6}deg) rotateX(${-y * 6}deg)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
+    });
+
+    // ── Chip click: focus input after fill ──────────────────────────
+    document.querySelectorAll('.chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        setTimeout(() => {
+          document.getElementById('mainInput').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 50);
+      });
+    });
+  </script>
+
+</body>
+</html>

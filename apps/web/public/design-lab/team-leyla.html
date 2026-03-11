@@ -1,0 +1,1827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arcanea — Create From the Deep</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            abyss:     '#0a1628',
+            deep:      '#0c4a6e',
+            teal:      '#0d9488',
+            biolum:    '#22d3ee',
+            seafoam:   '#a7f3d0',
+            surface:   'rgba(10,22,40,0.7)',
+            textsoft:  '#e0f2fe',
+          },
+          fontFamily: {
+            display: ['Sora', 'sans-serif'],
+            body:    ['Inter', 'sans-serif'],
+          },
+          animation: {
+            'liquid-drift':    'liquid-drift 15s ease-in-out infinite alternate',
+            'bubble-rise':     'bubble-rise 8s ease-in infinite',
+            'pulse-glow':      'pulse-glow 3s ease-in-out infinite',
+            'current-flow':    'current-flow 20s linear infinite',
+            'biolum-flicker':  'biolum-flicker 4s ease-in-out infinite',
+            'depth-shift':     'depth-shift 12s ease-in-out infinite alternate',
+            'orb-drift':       'orb-drift 25s ease-in-out infinite alternate',
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* ─── Reset & Base ─────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: #0a1628;
+      color: #e0f2fe;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ─── Keyframes ─────────────────────────────────────────────────────────── */
+    @keyframes liquid-drift {
+      0%   { transform: translate(0, 0) rotate(0deg) scale(1); }
+      100% { transform: translate(-5%, -5%) rotate(3deg) scale(1.05); }
+    }
+
+    @keyframes bubble-rise {
+      0%   { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+      10%  { opacity: 0.6; }
+      90%  { opacity: 0.3; }
+      100% { transform: translateY(-120vh) translateX(var(--drift)) scale(0.6); opacity: 0; }
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(34,211,238,0.2), 0 0 40px rgba(13,148,136,0.1); }
+      50%       { box-shadow: 0 0 40px rgba(34,211,238,0.4), 0 0 80px rgba(13,148,136,0.2); }
+    }
+
+    @keyframes current-flow {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    @keyframes biolum-flicker {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50%       { opacity: 1;   transform: scale(1.15); }
+    }
+
+    @keyframes depth-shift {
+      0%   { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(-3%) rotate(2deg); }
+    }
+
+    @keyframes orb-drift {
+      0%   { transform: translate(0, 0); }
+      33%  { transform: translate(4%, -3%); }
+      66%  { transform: translate(-3%, 5%); }
+      100% { transform: translate(2%, -2%); }
+    }
+
+    @keyframes flow-line {
+      0%   { stroke-dashoffset: 400; }
+      100% { stroke-dashoffset: 0; }
+    }
+
+    @keyframes counter-rise {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes nav-shimmer {
+      0%, 100% { opacity: 0.3; }
+      50%       { opacity: 0.8; }
+    }
+
+    /* ─── Reduced Motion ────────────────────────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+
+    /* ─── Ocean Background ──────────────────────────────────────────────────── */
+    .ocean-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 100%, rgba(12,74,110,0.5) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 0%,   rgba(13,148,136,0.15) 0%, transparent 50%),
+        radial-gradient(ellipse 100% 80% at 50% 50%, rgba(10,22,40,1) 40%, #050e1a 100%);
+      pointer-events: none;
+    }
+
+    /* Slow ambient current overlay */
+    .ocean-current {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.06;
+      background: repeating-linear-gradient(
+        -45deg,
+        transparent 0px,
+        transparent 60px,
+        rgba(34,211,238,1) 60px,
+        rgba(34,211,238,1) 61px
+      );
+      background-size: 200% 200%;
+      animation: current-flow 20s linear infinite;
+      pointer-events: none;
+    }
+
+    /* ─── Ambient Orbs ──────────────────────────────────────────────────────── */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .orb-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(13,148,136,0.18) 0%, transparent 70%);
+      top: -200px; left: -100px;
+      animation: orb-drift 25s ease-in-out infinite alternate;
+    }
+    .orb-2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(34,211,238,0.12) 0%, transparent 70%);
+      bottom: 10%; right: -80px;
+      animation: orb-drift 30s ease-in-out 5s infinite alternate-reverse;
+    }
+    .orb-3 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(12,74,110,0.3) 0%, transparent 70%);
+      top: 40%; left: 60%;
+      animation: orb-drift 20s ease-in-out 10s infinite alternate;
+    }
+
+    /* ─── Bubbles ────────────────────────────────────────────────────────────── */
+    .bubbles-container {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .bubble {
+      position: absolute;
+      bottom: -20px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(167,243,208,0.5), rgba(34,211,238,0.1));
+      border: 1px solid rgba(34,211,238,0.25);
+      animation: bubble-rise var(--duration) ease-in var(--delay) infinite;
+    }
+
+    /* ─── Liquid Surface (glass panels) ─────────────────────────────────────── */
+    .liquid-surface {
+      background: rgba(10, 22, 40, 0.65);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid rgba(13, 148, 136, 0.2);
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+    .liquid-surface::after {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background:
+        radial-gradient(circle at 30% 50%, rgba(34, 211, 238, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 70% 80%, rgba(13, 148, 136, 0.05) 0%, transparent 40%);
+      animation: liquid-drift 15s ease-in-out infinite alternate;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .liquid-surface > * { position: relative; z-index: 1; }
+
+    .liquid-surface:hover {
+      border-color: rgba(34, 211, 238, 0.4);
+      box-shadow:
+        0 0 30px rgba(34,211,238,0.12),
+        0 0 60px rgba(13,148,136,0.08),
+        inset 0 1px 0 rgba(167,243,208,0.1);
+    }
+
+    /* ─── Navigation ─────────────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 0 2rem;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(10, 22, 40, 0.8);
+      backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      border-bottom: 1px solid rgba(13,148,136,0.15);
+      box-shadow: 0 4px 40px rgba(0,0,0,0.3);
+    }
+
+    /* Subtle teal glow under nav */
+    nav::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 10%; right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(34,211,238,0.6), rgba(13,148,136,0.6), rgba(34,211,238,0.6), transparent);
+      animation: nav-shimmer 4s ease-in-out infinite;
+    }
+
+    .nav-logo {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #22d3ee, #a7f3d0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+    .nav-links a {
+      color: rgba(224,242,254,0.7);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 400;
+      transition: color 0.3s ease;
+    }
+    .nav-links a:hover { color: #22d3ee; }
+
+    .nav-cta {
+      background: linear-gradient(135deg, rgba(13,148,136,0.8), rgba(34,211,238,0.6));
+      border: 1px solid rgba(34,211,238,0.4);
+      color: #e0f2fe !important;
+      padding: 0.5rem 1.25rem;
+      border-radius: 100px;
+      font-weight: 500;
+      font-size: 0.875rem;
+      transition: all 0.3s ease !important;
+    }
+    .nav-cta:hover {
+      color: #fff !important;
+      box-shadow: 0 0 20px rgba(34,211,238,0.3);
+      border-color: rgba(34,211,238,0.7) !important;
+    }
+
+    .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: rgba(34,211,238,0.8);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    /* ─── Hero ────────────────────────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 2rem 80px;
+      z-index: 2;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(34,211,238,0.8);
+      margin-bottom: 1.5rem;
+      padding: 0.4rem 1rem;
+      border: 1px solid rgba(34,211,238,0.2);
+      border-radius: 100px;
+      background: rgba(34,211,238,0.05);
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #22d3ee;
+      box-shadow: 0 0 8px #22d3ee;
+      animation: biolum-flicker 3s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    .hero-headline {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(3rem, 8vw, 7.5rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-headline .line-1 {
+      display: block;
+      color: #e0f2fe;
+    }
+    .hero-headline .line-2 {
+      display: block;
+      background: linear-gradient(135deg, #22d3ee 0%, #a7f3d0 50%, #0d9488 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: rgba(224,242,254,0.6);
+      max-width: 520px;
+      margin: 0 auto 3rem;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* Creation Input */
+    .creation-input-wrap {
+      position: relative;
+      max-width: 680px;
+      margin: 0 auto 2rem;
+      animation: pulse-glow 3s ease-in-out infinite;
+      border-radius: 20px;
+    }
+
+    .creation-input-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 21px;
+      background: linear-gradient(135deg, rgba(34,211,238,0.4), rgba(13,148,136,0.4), rgba(34,211,238,0.2));
+      z-index: -1;
+    }
+
+    .creation-input-field {
+      width: 100%;
+      padding: 1.25rem 180px 1.25rem 1.75rem;
+      background: rgba(10, 22, 40, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(13,148,136,0.3);
+      border-radius: 20px;
+      color: #e0f2fe;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .creation-input-field::placeholder { color: rgba(224,242,254,0.35); }
+    .creation-input-field:focus {
+      border-color: rgba(34,211,238,0.6);
+      box-shadow: 0 0 40px rgba(34,211,238,0.15);
+    }
+
+    .creation-btn {
+      position: absolute;
+      right: 8px; top: 50%;
+      transform: translateY(-50%);
+      padding: 0.7rem 1.5rem;
+      background: linear-gradient(135deg, #0d9488, #22d3ee);
+      border: none;
+      border-radius: 14px;
+      color: #0a1628;
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+    .creation-btn:hover {
+      box-shadow: 0 0 30px rgba(34,211,238,0.5), 0 0 60px rgba(13,148,136,0.3);
+      transform: translateY(-50%) scale(1.03);
+    }
+
+    .hero-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-top: 1.5rem;
+    }
+    .chip {
+      font-size: 0.78rem;
+      color: rgba(224,242,254,0.5);
+      padding: 0.3rem 0.8rem;
+      border: 1px solid rgba(13,148,136,0.2);
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: rgba(13,148,136,0.05);
+    }
+    .chip:hover {
+      color: #22d3ee;
+      border-color: rgba(34,211,238,0.5);
+      background: rgba(34,211,238,0.07);
+      box-shadow: 0 0 12px rgba(34,211,238,0.15);
+    }
+
+    /* ─── Depth Layers (decorative below fold marker) ────────────────────────── */
+    .depth-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 0 2rem;
+      margin-bottom: 3rem;
+    }
+    .depth-line {
+      flex: 1;
+      max-width: 200px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(13,148,136,0.5), transparent);
+    }
+    .depth-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(34,211,238,0.4);
+    }
+    .depth-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: #22d3ee;
+      box-shadow: 0 0 8px #22d3ee;
+      animation: biolum-flicker 2.5s ease-in-out infinite;
+    }
+
+    /* ─── Sections ──────────────────────────────────────────────────────────── */
+    section {
+      position: relative;
+      z-index: 2;
+      padding: 120px 2rem;
+    }
+
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(34,211,238,0.7);
+      margin-bottom: 1rem;
+    }
+    .section-eyebrow::before {
+      content: '';
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: #22d3ee;
+      box-shadow: 0 0 6px #22d3ee;
+      animation: biolum-flicker 3s ease-in-out infinite;
+    }
+
+    .section-title {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      color: #e0f2fe;
+    }
+
+    .section-sub {
+      font-size: 1.05rem;
+      color: rgba(224,242,254,0.5);
+      max-width: 500px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* ─── Features Grid ───────────────────────────────────────────────────────── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 4rem;
+    }
+
+    .feature-card {
+      padding: 2.5rem;
+      cursor: default;
+    }
+
+    .feature-icon {
+      width: 52px; height: 52px;
+      margin-bottom: 1.5rem;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(34,211,238,0.3);
+      background: rgba(34,211,238,0.06);
+      transition: all 0.4s ease;
+    }
+
+    .feature-card:hover .feature-icon {
+      border-color: rgba(34,211,238,0.7);
+      box-shadow: 0 0 20px rgba(34,211,238,0.25);
+      background: rgba(34,211,238,0.12);
+    }
+
+    .feature-icon svg { width: 26px; height: 26px; stroke: #22d3ee; fill: none; stroke-width: 1.5; }
+
+    .feature-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #e0f2fe;
+      margin-bottom: 0.75rem;
+    }
+
+    .feature-desc {
+      font-size: 0.92rem;
+      color: rgba(224,242,254,0.5);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* ─── Showcase Grid ──────────────────────────────────────────────────────── */
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto;
+      gap: 1.25rem;
+      margin-top: 4rem;
+    }
+
+    .showcase-card {
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.4s ease;
+    }
+    .showcase-card:hover { transform: translateY(-6px); }
+
+    .showcase-card.tall { grid-row: span 2; }
+
+    .showcase-visual {
+      width: 100%;
+      height: 100%;
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    /* Depth layers effect — layered translucent panels */
+    .showcase-visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      z-index: 0;
+    }
+    .showcase-visual::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,22,40,0.9) 0%, rgba(10,22,40,0.3) 50%, transparent 100%);
+      z-index: 1;
+      border-radius: 20px;
+    }
+
+    .v-music    { background: linear-gradient(135deg, #0c4a6e 0%, #0d9488 60%, #22d3ee 100%); }
+    .v-story    { background: linear-gradient(135deg, #0a1628 0%, #1e3a5f 50%, #0d9488 100%); }
+    .v-art      { background: linear-gradient(135deg, #0d2d4a 0%, #0c4a6e 40%, #22d3ee 100%); }
+    .v-code     { background: linear-gradient(135deg, #0a1628 0%, #0c3452 60%, #0d9488 100%); }
+    .v-video    { background: linear-gradient(135deg, #0d2d4a 0%, #0d9488 80%, #a7f3d0 100%); }
+
+    /* Bioluminescent sparkles inside cards */
+    .v-music::before    { background: radial-gradient(circle at 70% 20%, rgba(34,211,238,0.2), transparent 50%); }
+    .v-story::before    { background: radial-gradient(circle at 30% 60%, rgba(167,243,208,0.15), transparent 50%); }
+    .v-art::before      { background: radial-gradient(circle at 80% 40%, rgba(34,211,238,0.25), transparent 50%); }
+    .v-code::before     { background: radial-gradient(circle at 20% 30%, rgba(13,148,136,0.2), transparent 50%); }
+    .v-video::before    { background: radial-gradient(circle at 60% 70%, rgba(167,243,208,0.2), transparent 50%); }
+
+    .showcase-label {
+      position: relative;
+      z-index: 2;
+    }
+    .showcase-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(34,211,238,0.8);
+      margin-bottom: 0.5rem;
+    }
+    .showcase-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #e0f2fe;
+    }
+
+    /* Bioluminescent dot cluster decorations */
+    .bio-dots {
+      position: absolute;
+      top: 1.5rem; right: 1.5rem;
+      display: flex;
+      gap: 5px;
+      z-index: 2;
+    }
+    .bio-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: #22d3ee;
+      box-shadow: 0 0 8px #22d3ee;
+    }
+    .bio-dot:nth-child(2) {
+      background: #a7f3d0;
+      box-shadow: 0 0 6px #a7f3d0;
+      animation: biolum-flicker 3.5s ease-in-out 0.5s infinite;
+    }
+    .bio-dot:nth-child(3) {
+      background: #0d9488;
+      box-shadow: 0 0 6px #0d9488;
+      animation: biolum-flicker 4s ease-in-out 1s infinite;
+    }
+
+    /* ─── Journey Section ────────────────────────────────────────────────────── */
+    .journey-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      margin-top: 0;
+    }
+
+    .journey-steps {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* SVG flow line between steps */
+    .flow-svg {
+      position: absolute;
+      left: 24px;
+      top: 40px;
+      bottom: 40px;
+      width: 2px;
+      pointer-events: none;
+    }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 2rem;
+      padding: 2rem 0 2rem 0;
+    }
+
+    .step-node {
+      flex-shrink: 0;
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      border: 2px solid rgba(34,211,238,0.5);
+      background: rgba(34,211,238,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Sora', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #22d3ee;
+      position: relative;
+      z-index: 1;
+      transition: all 0.4s ease;
+    }
+    .step:hover .step-node {
+      border-color: #22d3ee;
+      background: rgba(34,211,238,0.15);
+      box-shadow: 0 0 20px rgba(34,211,238,0.3);
+    }
+
+    .step-content {}
+    .step-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #e0f2fe;
+      margin-bottom: 0.4rem;
+    }
+    .step-desc {
+      font-size: 0.9rem;
+      color: rgba(224,242,254,0.5);
+      line-height: 1.65;
+      font-weight: 300;
+    }
+
+    /* Journey visual — deep water panel */
+    .journey-visual {
+      position: relative;
+      aspect-ratio: 3/4;
+      max-height: 500px;
+    }
+    .journey-panel {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(160deg, #0c4a6e 0%, #0a1628 40%, #0d9488 100%);
+      border-radius: 28px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(13,148,136,0.3);
+    }
+    .journey-panel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 80%, rgba(34,211,238,0.15) 0%, transparent 50%),
+        radial-gradient(circle at 20% 20%, rgba(167,243,208,0.08) 0%, transparent 40%);
+      animation: liquid-drift 18s ease-in-out infinite alternate;
+    }
+
+    /* Floating creature light */
+    .creature-light {
+      position: absolute;
+      border-radius: 50%;
+      animation: biolum-flicker var(--dur) ease-in-out var(--delay) infinite;
+      filter: blur(3px);
+    }
+
+    .journey-quote {
+      position: absolute;
+      bottom: 2rem; left: 2rem; right: 2rem;
+      z-index: 2;
+    }
+    .journey-quote p {
+      font-family: 'Sora', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      color: rgba(224,242,254,0.9);
+      line-height: 1.6;
+      font-style: italic;
+    }
+    .journey-quote span {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+      color: rgba(34,211,238,0.6);
+      font-style: normal;
+      letter-spacing: 0.1em;
+    }
+
+    /* ─── Stats / Community ──────────────────────────────────────────────────── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-top: 4rem;
+    }
+
+    .stat-card {
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #22d3ee, #a7f3d0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: block;
+      margin-bottom: 0.5rem;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: rgba(224,242,254,0.45);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 400;
+    }
+
+    /* Live indicator */
+    .stat-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.7rem;
+      color: rgba(34,211,238,0.6);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .stat-live::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #22d3ee;
+      box-shadow: 0 0 8px #22d3ee;
+      animation: biolum-flicker 2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    /* ─── CTA Section ────────────────────────────────────────────────────────── */
+    .cta-section {
+      padding: 120px 2rem;
+      text-align: center;
+    }
+
+    .cta-panel {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 5rem 3rem;
+      position: relative;
+    }
+
+    /* Deep water radial glow behind CTA panel */
+    .cta-panel::before {
+      content: '';
+      position: absolute;
+      inset: -60px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(13,148,136,0.15) 0%, transparent 70%);
+      z-index: -1;
+      animation: depth-shift 12s ease-in-out infinite alternate;
+    }
+
+    .cta-title {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 1rem;
+      line-height: 1.05;
+    }
+    .cta-title .gradient {
+      background: linear-gradient(135deg, #22d3ee, #a7f3d0, #0d9488);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .cta-sub {
+      font-size: 1rem;
+      color: rgba(224,242,254,0.5);
+      margin-bottom: 3rem;
+      font-weight: 300;
+    }
+
+    .cta-input-wrap {
+      position: relative;
+      max-width: 560px;
+      margin: 0 auto;
+      border-radius: 18px;
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
+    .cta-input-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 19px;
+      background: linear-gradient(135deg, rgba(34,211,238,0.5), rgba(13,148,136,0.3));
+      z-index: -1;
+    }
+    .cta-input {
+      width: 100%;
+      padding: 1rem 160px 1rem 1.5rem;
+      background: rgba(10,22,40,0.9);
+      border: 1px solid rgba(13,148,136,0.25);
+      border-radius: 18px;
+      color: #e0f2fe;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+    }
+    .cta-input::placeholder { color: rgba(224,242,254,0.3); }
+    .cta-btn {
+      position: absolute;
+      right: 6px; top: 50%;
+      transform: translateY(-50%);
+      padding: 0.6rem 1.25rem;
+      background: linear-gradient(135deg, #0d9488, #22d3ee);
+      border: none;
+      border-radius: 13px;
+      color: #0a1628;
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .cta-btn:hover {
+      box-shadow: 0 0 30px rgba(34,211,238,0.6);
+      transform: translateY(-50%) scale(1.04);
+    }
+
+    /* ─── Footer ─────────────────────────────────────────────────────────────── */
+    footer {
+      position: relative;
+      z-index: 2;
+      padding: 4rem 2rem 2rem;
+      border-top: 1px solid rgba(13,148,136,0.1);
+    }
+
+    /* Bioluminescent separator dots */
+    .footer-sep {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+    .footer-sep-line {
+      flex: 1; max-width: 300px; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(13,148,136,0.3), transparent);
+    }
+    .footer-sep-dots { display: flex; gap: 6px; }
+    .footer-sep-dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: rgba(34,211,238,0.5);
+    }
+    .footer-sep-dot:nth-child(2) {
+      background: rgba(167,243,208,0.5);
+      width: 6px; height: 6px;
+      box-shadow: 0 0 8px rgba(167,243,208,0.5);
+      animation: biolum-flicker 3s ease-in-out infinite;
+    }
+    .footer-sep-dot:nth-child(3) {
+      background: rgba(13,148,136,0.5);
+      animation: biolum-flicker 4s ease-in-out 1s infinite;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+    }
+
+    .footer-brand {}
+    .footer-logo {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #22d3ee, #a7f3d0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.75rem;
+    }
+    .footer-tagline {
+      font-size: 0.85rem;
+      color: rgba(224,242,254,0.35);
+      line-height: 1.6;
+      font-weight: 300;
+      max-width: 220px;
+    }
+
+    .footer-col-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(34,211,238,0.6);
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+    .footer-links a {
+      font-size: 0.875rem;
+      color: rgba(224,242,254,0.4);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .footer-links a:hover { color: #22d3ee; }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 3rem auto 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(13,148,136,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-copy {
+      font-size: 0.78rem;
+      color: rgba(224,242,254,0.2);
+    }
+
+    /* Leyla guardian mark */
+    .guardian-mark {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      color: rgba(34,211,238,0.3);
+    }
+    .guardian-mark::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: rgba(34,211,238,0.5);
+      box-shadow: 0 0 6px rgba(34,211,238,0.5);
+      animation: biolum-flicker 4s ease-in-out infinite;
+    }
+
+    /* ─── Responsive ─────────────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+
+      .showcase-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .showcase-card.tall { grid-row: span 1; }
+
+      .journey-wrap {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+      .journey-visual { aspect-ratio: 16/9; max-height: 300px; }
+
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+
+      .footer-inner {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      section { padding: 80px 1.25rem; }
+
+      .showcase-grid { grid-template-columns: 1fr; }
+
+      .stats-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+      .stat-card { padding: 1.75rem 1.25rem; }
+
+      .creation-input-field { padding: 1rem 1.25rem 1rem 1.25rem; }
+      .creation-btn { position: static; display: block; width: 100%; margin-top: 0.75rem; transform: none; border-radius: 14px; }
+      .creation-input-wrap { border-radius: 16px; }
+
+      .cta-panel { padding: 3rem 1.5rem; }
+      .cta-input { padding: 1rem 1.25rem; }
+      .cta-btn { position: static; display: block; width: 100%; margin-top: 0.5rem; transform: none; }
+
+      .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ocean background layers -->
+  <div class="ocean-bg" aria-hidden="true"></div>
+  <div class="ocean-current" aria-hidden="true"></div>
+  <div class="orb orb-1" aria-hidden="true"></div>
+  <div class="orb orb-2" aria-hidden="true"></div>
+  <div class="orb orb-3" aria-hidden="true"></div>
+
+  <!-- Rising bubbles -->
+  <div class="bubbles-container" aria-hidden="true" id="bubblesContainer"></div>
+
+  <!-- ─── Navigation ──────────────────────────────────────────────────────────── -->
+  <nav role="navigation" aria-label="Main navigation">
+    <div class="nav-logo" aria-label="Arcanea">Arcanea</div>
+    <div class="nav-links" role="list">
+      <a href="#features" role="listitem">Create</a>
+      <a href="#showcase" role="listitem">Explore</a>
+      <a href="#journey" role="listitem">How it flows</a>
+      <a href="#community" role="listitem">Community</a>
+      <a href="#cta" class="nav-cta" role="listitem">Dive In</a>
+    </div>
+    <button class="hamburger" aria-label="Open menu" id="hamburger">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ─── Hero ───────────────────────────────────────────────────────────────── -->
+  <main>
+    <section class="hero" aria-labelledby="hero-headline">
+      <div style="max-width:800px; margin: 0 auto;">
+
+        <div class="hero-eyebrow" role="doc-subtitle">
+          AI Creation Platform
+        </div>
+
+        <h1 class="hero-headline" id="hero-headline">
+          <span class="line-1">Create From</span>
+          <span class="line-2">The Deep</span>
+        </h1>
+
+        <p class="hero-sub">
+          Music, stories, art, code, video — all forms. One question opens the current.
+          What do you want to create?
+        </p>
+
+        <!-- Creation Input -->
+        <div class="creation-input-wrap" role="search">
+          <input
+            type="text"
+            class="creation-input-field"
+            placeholder="An ocean lullaby for a whale who lost her song..."
+            aria-label="What do you want to create?"
+            id="heroInput"
+          />
+          <button class="creation-btn" aria-label="Begin creating" onclick="handleCreate()">
+            Dive In
+          </button>
+        </div>
+
+        <!-- Prompt chips -->
+        <div class="hero-chips" role="list" aria-label="Example prompts">
+          <span class="chip" role="listitem" onclick="setPrompt('A short story about a city that only exists at night')">Short story</span>
+          <span class="chip" role="listitem" onclick="setPrompt('Ambient music for a deep-sea expedition')">Music</span>
+          <span class="chip" role="listitem" onclick="setPrompt('Concept art for a bioluminescent forest')">Visual art</span>
+          <span class="chip" role="listitem" onclick="setPrompt('Code a particle system simulating ocean currents')">Code</span>
+          <span class="chip" role="listitem" onclick="setPrompt('A poem from the perspective of the last glacier')">Poetry</span>
+          <span class="chip" role="listitem" onclick="setPrompt('A documentary outline about deep sea creatures')">Video</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ─── Features ──────────────────────────────────────────────────────────── -->
+    <section id="features" aria-labelledby="features-title">
+      <div class="section-inner">
+
+        <div class="depth-divider" aria-hidden="true">
+          <div class="depth-line"></div>
+          <div class="depth-dot"></div>
+          <div class="depth-label">Depths below</div>
+          <div class="depth-dot"></div>
+          <div class="depth-line"></div>
+        </div>
+
+        <div class="section-eyebrow">What flows here</div>
+        <h2 class="section-title" id="features-title">Every form of creation,<br/>one current</h2>
+        <p class="section-sub">
+          The deep holds every form your vision can take. Describe it. Watch it surface.
+        </p>
+
+        <div class="features-grid" role="list">
+
+          <div class="liquid-surface feature-card" role="listitem">
+            <div class="feature-icon">
+              <!-- Music note icon -->
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 18V5l12-2v13"/>
+                <circle cx="6" cy="18" r="3"/>
+                <circle cx="18" cy="16" r="3"/>
+              </svg>
+            </div>
+            <div class="feature-title">Sound & Music</div>
+            <p class="feature-desc">Ambient worlds, full compositions, vocal harmonics. The current carries your sound to any depth.</p>
+          </div>
+
+          <div class="liquid-surface feature-card" role="listitem">
+            <div class="feature-icon">
+              <!-- Book icon -->
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+              </svg>
+            </div>
+            <div class="feature-title">Stories & Worlds</div>
+            <p class="feature-desc">Myths, novels, screenplays, lore bibles. Characters that remember. Worlds that breathe.</p>
+          </div>
+
+          <div class="liquid-surface feature-card" role="listitem">
+            <div class="feature-icon">
+              <!-- Image icon -->
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+                <path d="M21 15l-5-5L5 21"/>
+              </svg>
+            </div>
+            <div class="feature-title">Visuals & Art</div>
+            <p class="feature-desc">Concept art, illustrations, UI systems, bioluminescent dreams made pixel-real.</p>
+          </div>
+
+          <div class="liquid-surface feature-card" role="listitem">
+            <div class="feature-icon">
+              <!-- Code icon -->
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <polyline points="16 18 22 12 16 6"/>
+                <polyline points="8 6 2 12 8 18"/>
+              </svg>
+            </div>
+            <div class="feature-title">Code & Systems</div>
+            <p class="feature-desc">Full applications, APIs, generative algorithms. From idea to running software, one conversation.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Showcase ──────────────────────────────────────────────────────────── -->
+    <section id="showcase" aria-labelledby="showcase-title">
+      <div class="section-inner">
+        <div class="section-eyebrow">What others have surfaced</div>
+        <h2 class="section-title" id="showcase-title">Creations from the current</h2>
+        <p class="section-sub">Every piece started with a single question. This is what emerged.</p>
+
+        <div class="showcase-grid" role="list" aria-label="Creation showcase">
+
+          <div class="showcase-card liquid-surface tall" role="listitem">
+            <div class="showcase-visual v-music" style="min-height: 440px;">
+              <div class="bio-dots" aria-hidden="true">
+                <div class="bio-dot"></div>
+                <div class="bio-dot"></div>
+                <div class="bio-dot"></div>
+              </div>
+              <div class="showcase-label">
+                <div class="showcase-tag">Music</div>
+                <div class="showcase-title">Abyssal Lullaby — 4:32</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="showcase-card liquid-surface" role="listitem">
+            <div class="showcase-visual v-story" style="min-height: 200px;">
+              <div class="bio-dots" aria-hidden="true">
+                <div class="bio-dot"></div>
+                <div class="bio-dot"></div>
+              </div>
+              <div class="showcase-label">
+                <div class="showcase-tag">Story</div>
+                <div class="showcase-title">The City of Tides</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="showcase-card liquid-surface" role="listitem">
+            <div class="showcase-visual v-art" style="min-height: 200px;">
+              <div class="bio-dots" aria-hidden="true">
+                <div class="bio-dot"></div>
+                <div class="bio-dot"></div>
+                <div class="bio-dot"></div>
+              </div>
+              <div class="showcase-label">
+                <div class="showcase-tag">Visual Art</div>
+                <div class="showcase-title">Bioluminescent Forest Series</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="showcase-card liquid-surface" role="listitem">
+            <div class="showcase-visual v-code" style="min-height: 200px;">
+              <div class="bio-dots" aria-hidden="true">
+                <div class="bio-dot"></div>
+                <div class="bio-dot"></div>
+              </div>
+              <div class="showcase-label">
+                <div class="showcase-tag">Code</div>
+                <div class="showcase-title">Ocean Current Particle Engine</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="showcase-card liquid-surface" role="listitem">
+            <div class="showcase-visual v-video" style="min-height: 200px;">
+              <div class="bio-dots" aria-hidden="true">
+                <div class="bio-dot"></div>
+                <div class="bio-dot"></div>
+                <div class="bio-dot"></div>
+              </div>
+              <div class="showcase-label">
+                <div class="showcase-tag">Video</div>
+                <div class="showcase-title">Deep Sea Documentary Pilot</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Journey ──────────────────────────────────────────────────────────── -->
+    <section id="journey" aria-labelledby="journey-title">
+      <div class="section-inner">
+        <div class="journey-wrap">
+
+          <div>
+            <div class="section-eyebrow">How it flows</div>
+            <h2 class="section-title" id="journey-title">Your creative journey<br/>flows like water</h2>
+            <p class="section-sub" style="margin-bottom: 3rem;">
+              No friction. No configuration. You describe; the current carries it forward.
+            </p>
+
+            <div class="journey-steps" role="list">
+
+              <!-- Vertical connector line -->
+              <svg class="flow-svg" viewBox="0 0 2 300" preserveAspectRatio="none" aria-hidden="true" style="height: calc(100% - 80px);">
+                <line x1="1" y1="0" x2="1" y2="300"
+                  stroke="url(#lineGrad)"
+                  stroke-width="2"
+                  stroke-dasharray="8 4"
+                  style="animation: flow-line 3s ease-in-out infinite;"
+                />
+                <defs>
+                  <linearGradient id="lineGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#22d3ee" stop-opacity="0.8"/>
+                    <stop offset="100%" stop-color="#0d9488" stop-opacity="0.2"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+
+              <div class="step" role="listitem">
+                <div class="step-node" aria-hidden="true">01</div>
+                <div class="step-content">
+                  <div class="step-title">Describe your vision</div>
+                  <p class="step-desc">One sentence. One feeling. One question. That is enough to open the deep.</p>
+                </div>
+              </div>
+
+              <div class="step" role="listitem">
+                <div class="step-node" aria-hidden="true">02</div>
+                <div class="step-content">
+                  <div class="step-title">The current shapes it</div>
+                  <p class="step-desc">Intelligent agents work in parallel. Your idea becomes form — music, text, code, image, video.</p>
+                </div>
+              </div>
+
+              <div class="step" role="listitem">
+                <div class="step-node" aria-hidden="true">03</div>
+                <div class="step-content">
+                  <div class="step-title">Surface and share</div>
+                  <p class="step-desc">Refine, publish, collaborate. Your creation joins a vast living ocean of human expression.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Journey visual panel -->
+          <div class="journey-visual">
+            <div class="journey-panel" aria-hidden="true">
+
+              <!-- Creature lights -->
+              <div class="creature-light" style="width:12px;height:12px;background:rgba(34,211,238,0.9);box-shadow:0 0 20px rgba(34,211,238,0.6);top:30%;left:25%;--dur:3s;--delay:0s;"></div>
+              <div class="creature-light" style="width:8px;height:8px;background:rgba(167,243,208,0.8);box-shadow:0 0 14px rgba(167,243,208,0.5);top:55%;left:65%;--dur:4s;--delay:1s;"></div>
+              <div class="creature-light" style="width:6px;height:6px;background:rgba(34,211,238,0.7);box-shadow:0 0 12px rgba(34,211,238,0.4);top:20%;left:70%;--dur:5s;--delay:0.5s;"></div>
+              <div class="creature-light" style="width:10px;height:10px;background:rgba(13,148,136,0.9);box-shadow:0 0 16px rgba(13,148,136,0.6);top:70%;left:30%;--dur:3.5s;--delay:2s;"></div>
+              <div class="creature-light" style="width:5px;height:5px;background:rgba(167,243,208,0.9);box-shadow:0 0 10px rgba(167,243,208,0.5);top:40%;left:50%;--dur:4.5s;--delay:1.5s;"></div>
+              <div class="creature-light" style="width:7px;height:7px;background:rgba(34,211,238,0.6);box-shadow:0 0 12px rgba(34,211,238,0.3);top:80%;left:75%;--dur:6s;--delay:0.8s;"></div>
+
+              <!-- Quote -->
+              <div class="journey-quote">
+                <div class="liquid-surface" style="padding: 1.5rem; border-radius: 16px;">
+                  <p>"Flow where others resist. The deepest water holds the brightest light."</p>
+                  <span>— Leyla, Water Guardian · Gate of Creativity · 285 Hz</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Community / Stats ─────────────────────────────────────────────────── -->
+    <section id="community" aria-labelledby="community-title">
+      <div class="section-inner">
+
+        <div style="text-align: center; margin-bottom: 0;">
+          <div class="section-eyebrow" style="justify-content: center;">Join the current</div>
+          <h2 class="section-title" id="community-title" style="max-width: 600px; margin: 0 auto 1rem;">
+            A living ocean of creators
+          </h2>
+          <p class="section-sub" style="max-width: 480px; margin: 0 auto;">
+            Thousands of currents converging. Every creator adds depth.
+          </p>
+        </div>
+
+        <div class="stats-grid" role="list" aria-label="Platform statistics">
+
+          <div class="liquid-surface stat-card" role="listitem">
+            <div class="stat-live">Live now</div>
+            <span class="stat-number" id="stat-creators">48,291</span>
+            <div class="stat-label">Creators diving</div>
+          </div>
+
+          <div class="liquid-surface stat-card" role="listitem">
+            <span class="stat-number">2.4M</span>
+            <div class="stat-label">Creations surfaced</div>
+          </div>
+
+          <div class="liquid-surface stat-card" role="listitem">
+            <span class="stat-number">127</span>
+            <div class="stat-label">Countries in current</div>
+          </div>
+
+          <div class="liquid-surface stat-card" role="listitem">
+            <span class="stat-number">∞</span>
+            <div class="stat-label">Depth remaining</div>
+          </div>
+
+        </div>
+
+        <!-- Testimonials -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin-top: 3rem;">
+
+          <div class="liquid-surface" style="padding: 2rem;">
+            <p style="font-size: 0.925rem; color: rgba(224,242,254,0.65); line-height: 1.7; margin-bottom: 1.25rem; font-weight: 300; font-style: italic;">
+              "I described a feeling I'd had for years but couldn't name. Arcanea gave it music, a title, and a home in 4 minutes."
+            </p>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <div style="width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #0d9488, #22d3ee); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: 'Sora', sans-serif; font-size: 0.8rem; font-weight: 700; color: #0a1628;">M</div>
+              <div>
+                <div style="font-size: 0.85rem; font-weight: 500; color: #e0f2fe;">Mira Chen</div>
+                <div style="font-size: 0.75rem; color: rgba(34,211,238,0.5);">Composer & World-builder</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="liquid-surface" style="padding: 2rem;">
+            <p style="font-size: 0.925rem; color: rgba(224,242,254,0.65); line-height: 1.7; margin-bottom: 1.25rem; font-weight: 300; font-style: italic;">
+              "Other tools feel like forms to fill out. Arcanea feels like stepping into water — you just move naturally."
+            </p>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <div style="width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #0c4a6e, #0d9488); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: 'Sora', sans-serif; font-size: 0.8rem; font-weight: 700; color: #e0f2fe;">A</div>
+              <div>
+                <div style="font-size: 0.85rem; font-weight: 500; color: #e0f2fe;">Adé Okafor</div>
+                <div style="font-size: 0.75rem; color: rgba(34,211,238,0.5);">Novelist & Game Designer</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="liquid-surface" style="padding: 2rem;">
+            <p style="font-size: 0.925rem; color: rgba(224,242,254,0.65); line-height: 1.7; margin-bottom: 1.25rem; font-weight: 300; font-style: italic;">
+              "I've shipped three games, a graphic novel, and a music EP this year. I had never shipped anything before Arcanea."
+            </p>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <div style="width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #22d3ee, #a7f3d0); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: 'Sora', sans-serif; font-size: 0.8rem; font-weight: 700; color: #0a1628;">S</div>
+              <div>
+                <div style="font-size: 0.85rem; font-weight: 500; color: #e0f2fe;">Sari Virtanen</div>
+                <div style="font-size: 0.75rem; color: rgba(34,211,238,0.5);">Indie Creator</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── CTA ───────────────────────────────────────────────────────────────── -->
+    <section class="cta-section" id="cta" aria-labelledby="cta-title">
+      <div class="cta-panel liquid-surface">
+        <div class="section-eyebrow" style="justify-content: center; margin-bottom: 1.5rem;">The deep awaits</div>
+        <h2 class="cta-title" id="cta-title">
+          <span class="gradient">Dive in.</span><br/>
+          <span style="color: #e0f2fe; font-size: 0.8em; font-weight: 600;">The current will carry you.</span>
+        </h2>
+        <p class="cta-sub">One question. That is all it takes to begin.</p>
+
+        <div class="cta-input-wrap">
+          <input
+            type="text"
+            class="cta-input"
+            placeholder="What will you create today?"
+            aria-label="What will you create today?"
+            id="ctaInput"
+          />
+          <button class="cta-btn" onclick="handleCtaCreate()" aria-label="Start creating">
+            Begin
+          </button>
+        </div>
+
+        <p style="margin-top: 1.5rem; font-size: 0.75rem; color: rgba(224,242,254,0.25);">
+          Free to start. No card required. Your creations belong to you.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ─── Footer ────────────────────────────────────────────────────────────── -->
+  <footer role="contentinfo">
+    <div class="footer-sep" aria-hidden="true">
+      <div class="footer-sep-line"></div>
+      <div class="footer-sep-dots">
+        <div class="footer-sep-dot"></div>
+        <div class="footer-sep-dot"></div>
+        <div class="footer-sep-dot"></div>
+        <div class="footer-sep-dot"></div>
+        <div class="footer-sep-dot"></div>
+      </div>
+      <div class="footer-sep-line"></div>
+    </div>
+
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">Arcanea</div>
+        <p class="footer-tagline">Where creators dive into the deep and surface something the world has never seen.</p>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Create</div>
+        <ul class="footer-links">
+          <li><a href="#">Music</a></li>
+          <li><a href="#">Stories</a></li>
+          <li><a href="#">Visual Art</a></li>
+          <li><a href="#">Code</a></li>
+          <li><a href="#">Video</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Platform</div>
+        <ul class="footer-links">
+          <li><a href="#">Explore</a></li>
+          <li><a href="#">Community</a></li>
+          <li><a href="#">Library</a></li>
+          <li><a href="#">Companions</a></li>
+          <li><a href="#">Academy</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="#">About</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 Arcanea. All depths reserved.</div>
+      <div class="guardian-mark">Leyla · Water Guardian · Gate of Creativity · 285 Hz</div>
+    </div>
+  </footer>
+
+  <!-- ─── Scripts ──────────────────────────────────────────────────────────── -->
+  <script>
+    /* ─── Bubble Generator ─────────────────────────────────────────── */
+    (function() {
+      const container = document.getElementById('bubblesContainer');
+      if (!container) return;
+
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) return;
+
+      const COUNT = 22;
+
+      for (let i = 0; i < COUNT; i++) {
+        const b = document.createElement('div');
+        b.className = 'bubble';
+
+        const size = 4 + Math.random() * 14;
+        const left = 2 + Math.random() * 96;
+        const duration = 7 + Math.random() * 10;
+        const delay = Math.random() * 12;
+        const drift = (Math.random() - 0.5) * 60;
+
+        b.style.cssText = `
+          width: ${size}px;
+          height: ${size}px;
+          left: ${left}%;
+          --duration: ${duration}s;
+          --delay: ${delay}s;
+          --drift: ${drift}px;
+          animation-delay: ${delay}s;
+          animation-duration: ${duration}s;
+          opacity: 0;
+        `;
+
+        container.appendChild(b);
+      }
+    })();
+
+    /* ─── Prompt Helpers ───────────────────────────────────────────── */
+    function setPrompt(text) {
+      const input = document.getElementById('heroInput');
+      if (input) {
+        input.value = text;
+        input.focus();
+      }
+    }
+
+    function handleCreate() {
+      const input = document.getElementById('heroInput');
+      if (input && input.value.trim()) {
+        const btn = document.querySelector('.creation-btn');
+        if (btn) {
+          btn.textContent = 'Flowing...';
+          btn.style.opacity = '0.7';
+          setTimeout(() => {
+            btn.textContent = 'Dive In';
+            btn.style.opacity = '1';
+          }, 2000);
+        }
+      }
+    }
+
+    function handleCtaCreate() {
+      const input = document.getElementById('ctaInput');
+      if (input && input.value.trim()) {
+        const btn = document.querySelector('.cta-btn');
+        if (btn) {
+          btn.textContent = 'Flowing...';
+          btn.style.opacity = '0.7';
+          setTimeout(() => {
+            btn.textContent = 'Begin';
+            btn.style.opacity = '1';
+          }, 2000);
+        }
+      }
+    }
+
+    /* ─── Keyboard: Enter to create ──────────────────────────────── */
+    document.getElementById('heroInput')?.addEventListener('keydown', e => {
+      if (e.key === 'Enter') handleCreate();
+    });
+    document.getElementById('ctaInput')?.addEventListener('keydown', e => {
+      if (e.key === 'Enter') handleCtaCreate();
+    });
+
+    /* ─── Hamburger (mobile) ─────────────────────────────────────── */
+    document.getElementById('hamburger')?.addEventListener('click', function() {
+      // Simple toggle — in production would show a proper drawer
+      this.classList.toggle('open');
+    });
+
+    /* ─── Subtle parallax on mouse move ─────────────────────────── */
+    (function() {
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) return;
+
+      let ticking = false;
+      document.addEventListener('mousemove', (e) => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const nx = (e.clientX / window.innerWidth  - 0.5) * 2;
+          const ny = (e.clientY / window.innerHeight - 0.5) * 2;
+
+          const orbs = document.querySelectorAll('.orb');
+          orbs.forEach((orb, i) => {
+            const depth = (i + 1) * 8;
+            orb.style.transform = `translate(${nx * depth}px, ${ny * depth}px)`;
+          });
+          ticking = false;
+        });
+      });
+    })();
+
+    /* ─── Animate stats counter on scroll ───────────────────────── */
+    (function() {
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) return;
+
+      function animateCounter(el, target, suffix) {
+        const duration = 1800;
+        const start = performance.now();
+        const from = 0;
+
+        function step(now) {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const ease = 1 - Math.pow(1 - progress, 3);
+          const value = Math.floor(from + (target - from) * ease);
+          el.textContent = value.toLocaleString() + (suffix || '');
+          if (progress < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+
+      const statEls = document.querySelectorAll('.stat-number');
+      const statData = [
+        { target: 48291, suffix: '' },
+        { target: 2400000, suffix: '' },
+        { target: 127, suffix: '' },
+        null,
+      ];
+
+      let animated = false;
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !animated) {
+            animated = true;
+            statEls.forEach((el, i) => {
+              if (statData[i]) {
+                const raw = statData[i].target;
+                // Format nicely
+                if (raw >= 1000000) {
+                  // Animate to millions
+                  const ms = raw / 1000000;
+                  const startT = performance.now();
+                  function stepM(now) {
+                    const e = now - startT;
+                    const p = Math.min(e / 1800, 1);
+                    const ease = 1 - Math.pow(1 - p, 3);
+                    const v = (ms * ease).toFixed(1);
+                    el.textContent = v + 'M';
+                    if (p < 1) requestAnimationFrame(stepM);
+                  }
+                  requestAnimationFrame(stepM);
+                } else {
+                  animateCounter(el, raw, '');
+                  if (raw === 48291) {
+                    // Pulse live stat
+                    setInterval(() => {
+                      const v = 48000 + Math.floor(Math.random() * 600);
+                      el.textContent = v.toLocaleString();
+                    }, 4000);
+                  }
+                }
+              }
+            });
+          }
+        });
+      }, { threshold: 0.3 });
+
+      const statsSection = document.getElementById('community');
+      if (statsSection) observer.observe(statsSection);
+    })();
+
+    /* ─── Bioluminescent cursor trail ───────────────────────────── */
+    (function() {
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) return;
+
+      const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+      if (isMobile) return;
+
+      const trail = [];
+      const TRAIL_LEN = 8;
+
+      for (let i = 0; i < TRAIL_LEN; i++) {
+        const dot = document.createElement('div');
+        const scale = 1 - i / TRAIL_LEN;
+        dot.style.cssText = `
+          position: fixed;
+          pointer-events: none;
+          border-radius: 50%;
+          z-index: 9999;
+          width: ${8 * scale}px;
+          height: ${8 * scale}px;
+          background: rgba(34, 211, 238, ${0.5 * scale});
+          box-shadow: 0 0 ${10 * scale}px rgba(34, 211, 238, ${0.4 * scale});
+          transform: translate(-50%, -50%);
+          transition: left ${i * 30 + 50}ms ease, top ${i * 30 + 50}ms ease;
+          will-change: left, top;
+        `;
+        document.body.appendChild(dot);
+        trail.push(dot);
+      }
+
+      document.addEventListener('mousemove', (e) => {
+        trail.forEach(dot => {
+          dot.style.left = e.clientX + 'px';
+          dot.style.top  = e.clientY + 'px';
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
