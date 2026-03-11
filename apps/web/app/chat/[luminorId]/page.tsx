@@ -68,16 +68,19 @@ export default function CompanionChatPage() {
   }, [luminorId, luminorConfig, router]);
 
   // Vercel AI SDK — handles streaming, messages, parsing automatically
+  // NOTE: @ai-sdk/react v3.0.118 removed `input` and `handleInputChange` from useChat.
+  // Using local state instead. Tab 1 can refine this during chat revamp.
+  const [input, setInput] = useState('');
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInput(e.target.value);
+  }, []);
+
   const {
     messages,
-    input,
-    handleInputChange,
-    handleSubmit,
     isLoading,
     error,
     append,
     setMessages,
-    setInput,
   } = useChat({
     id: `companion-${luminorId}`,
     api: '/api/ai/chat',
@@ -85,6 +88,14 @@ export default function CompanionChatPage() {
       systemPrompt: luminorConfig?.systemPrompt,
     },
   });
+
+  const handleSubmit = useCallback((e: React.FormEvent) => {
+    e.preventDefault();
+    if (input.trim() && !isLoading) {
+      append({ role: 'user', content: input.trim() });
+      setInput('');
+    }
+  }, [input, isLoading, append]);
 
   // UI state
   const [autoScroll, setAutoScroll] = useState(true);

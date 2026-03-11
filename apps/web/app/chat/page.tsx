@@ -37,19 +37,29 @@ export default function ChatPage() {
   const initialPrompt = searchParams.get('prompt');
 
   // Vercel AI SDK — handles streaming, messages, parsing automatically
+  // @ai-sdk/react v3.0.118 removed `input`/`handleInputChange` — using local state
+  const [input, setInput] = useState('');
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInput(e.target.value);
+  }, []);
+
   const {
     messages,
-    input,
-    handleInputChange,
-    handleSubmit,
     isLoading,
     error,
     append,
     setMessages,
-    setInput,
   } = useChat({
     api: '/api/ai/chat',
   });
+
+  const handleSubmit = useCallback((e: React.FormEvent) => {
+    e.preventDefault();
+    if (input.trim() && !isLoading) {
+      append({ role: 'user', content: input.trim() });
+      setInput('');
+    }
+  }, [input, isLoading, append]);
 
   // UI state
   const [sidebarOpen, setSidebarOpen] = useState(true);
