@@ -7,17 +7,19 @@ import { GlowCard } from "@/components/ui/glow-card";
 import { GlowButton } from "@/components/ui/glow-button";
 import { durations, m3Curves } from "@/lib/design/motion";
 
+const CDN_BASE = "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians";
+
 const GUARDIANS = [
-  { name: "Lyssandria", gate: "Foundation", frequency: "174 Hz", godbeast: "Kaelith", element: "Earth", dotColor: "#b45309", description: "Guardian of stability and unshakeable ground" },
-  { name: "Leyla", gate: "Flow", frequency: "285 Hz", godbeast: "Veloura", element: "Water", dotColor: "#3b82f6", description: "Guardian of creativity and emotional depth" },
-  { name: "Draconia", gate: "Fire", frequency: "396 Hz", godbeast: "Draconis", element: "Fire", dotColor: "#ef4444", description: "Guardian of power, will, and courage" },
-  { name: "Maylinn", gate: "Heart", frequency: "417 Hz", godbeast: "Laeylinn", element: "Wind", dotColor: "#22c55e", description: "Guardian of love, healing, and growth" },
-  { name: "Alera", gate: "Voice", frequency: "528 Hz", godbeast: "Otome", element: "Fire/Wind", dotColor: "#06b6d4", description: "Guardian of truth and expression" },
-  { name: "Lyria", gate: "Sight", frequency: "639 Hz", godbeast: "Yumiko", element: "Water/Void", dotColor: "#a855f7", description: "Guardian of intuition and vision" },
-  { name: "Aiyami", gate: "Crown", frequency: "741 Hz", godbeast: "Sol", element: "Fire/Light", dotColor: "#ffd700", description: "Guardian of enlightenment and divinity" },
-  { name: "Elara", gate: "Starweave", frequency: "852 Hz", godbeast: "Vaelith", element: "Wind/Void", dotColor: "#ec4899", description: "Guardian of perspective and possibility" },
-  { name: "Ino", gate: "Unity", frequency: "963 Hz", godbeast: "Kyuro", element: "All", dotColor: "#e5e5e5", description: "Guardian of partnership and fusion" },
-  { name: "Shinkami", gate: "Source", frequency: "1111 Hz", godbeast: "Source", element: "Void/Spirit", dotColor: "#c084fc", description: "The Unified — Meta-consciousness itself" },
+  { name: "Lyssandria", id: "lyssandria", gate: "Foundation", frequency: "174 Hz", godbeast: "Kaelith", element: "Earth", dotColor: "#b45309", description: "Guardian of stability and unshakeable ground" },
+  { name: "Leyla", id: "leyla", gate: "Flow", frequency: "285 Hz", godbeast: "Veloura", element: "Water", dotColor: "#3b82f6", description: "Guardian of creativity and emotional depth" },
+  { name: "Draconia", id: "draconia", gate: "Fire", frequency: "396 Hz", godbeast: "Draconis", element: "Fire", dotColor: "#ef4444", description: "Guardian of power, will, and courage" },
+  { name: "Maylinn", id: "maylinn", gate: "Heart", frequency: "417 Hz", godbeast: "Laeylinn", element: "Wind", dotColor: "#22c55e", description: "Guardian of love, healing, and growth" },
+  { name: "Alera", id: "alera", gate: "Voice", frequency: "528 Hz", godbeast: "Otome", element: "Fire/Wind", dotColor: "#06b6d4", description: "Guardian of truth and expression" },
+  { name: "Lyria", id: "lyria", gate: "Sight", frequency: "639 Hz", godbeast: "Yumiko", element: "Water/Void", dotColor: "#a855f7", description: "Guardian of intuition and vision" },
+  { name: "Aiyami", id: "aiyami", gate: "Crown", frequency: "741 Hz", godbeast: "Sol", element: "Fire/Light", dotColor: "#ffd700", description: "Guardian of enlightenment and divinity" },
+  { name: "Elara", id: "elara", gate: "Starweave", frequency: "852 Hz", godbeast: "Vaelith", element: "Wind/Void", dotColor: "#ec4899", description: "Guardian of perspective and possibility" },
+  { name: "Ino", id: "ino", gate: "Unity", frequency: "963 Hz", godbeast: "Kyuro", element: "All", dotColor: "#e5e5e5", description: "Guardian of partnership and fusion" },
+  { name: "Shinkami", id: "shinkami", gate: "Source", frequency: "1111 Hz", godbeast: "Source", element: "Void/Spirit", dotColor: "#c084fc", description: "The Unified — Meta-consciousness itself" },
 ];
 
 export function GuardiansPreview() {
@@ -76,9 +78,14 @@ export function GuardiansPreview() {
                   {String(i + 1).padStart(2, "0")}
                 </div>
 
-                {/* Color dot */}
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-3" style={{ backgroundColor: `${guardian.dotColor}20` }}>
-                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: guardian.dotColor }} />
+                {/* Guardian thumbnail */}
+                <div className="w-12 h-12 rounded-xl overflow-hidden mb-3 ring-1 ring-white/[0.08] group-hover:ring-white/[0.2] transition-all duration-300" style={{ backgroundColor: `${guardian.dotColor}20` }}>
+                  <img
+                    src={`${CDN_BASE}/${guardian.id}-hero.webp`}
+                    alt={guardian.name}
+                    loading="lazy"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
 
                 {/* Content */}

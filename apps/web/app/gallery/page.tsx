@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import { getFeaturedLuminors } from "@/lib/luminor-images";
 import {
   PhHeart,
   PhEye,
@@ -156,8 +158,8 @@ export default function GalleryPage() {
         totalCount={allItems.length}
       />
 
-      {/* Featured showcase */}
-
+      {/* Featured companions showcase */}
+      <FeaturedCompanions />
 
       {/* Filter bar */}
       <FilterBar
@@ -281,6 +283,89 @@ function HeroSection({
               <span>5 Elements</span>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Featured companions showcase
+// ---------------------------------------------------------------------------
+
+const ELEMENT_BADGE_STYLES: Record<string, string> = {
+  Fire: "bg-red-500/10 text-red-400 border-red-500/20",
+  Water: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+  Earth: "bg-green-500/10 text-green-400 border-green-500/20",
+  Wind: "bg-white/[0.06] text-white/50 border-white/[0.10]",
+  Void: "bg-purple-500/10 text-purple-400 border-purple-500/20",
+  Spirit: "bg-amber-500/10 text-amber-400 border-amber-500/20",
+};
+
+function FeaturedCompanions() {
+  const featured = getFeaturedLuminors(4);
+
+  return (
+    <section className="border-b border-white/[0.04]">
+      <div className="max-w-7xl mx-auto px-6 py-10">
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h2 className="text-lg font-sans font-semibold text-white">
+              Featured Companions
+            </h2>
+            <p className="text-sm text-white/[0.30] font-sans mt-1">
+              Portraits from the Twenty — AI-generated companion artworks
+            </p>
+          </div>
+          <Link
+            href="/gallery/luminors"
+            className="flex items-center gap-1.5 text-sm font-sans text-white/[0.30] hover:text-[#00bcd4] transition-colors"
+          >
+            View all
+            <PhArrowRight size={14} />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {featured.map((companion) => {
+            const badgeStyle =
+              ELEMENT_BADGE_STYLES[companion.element] ??
+              ELEMENT_BADGE_STYLES.Spirit;
+
+            return (
+              <Link
+                key={companion.id}
+                href="/gallery/luminors"
+                className="group relative rounded-2xl overflow-hidden border border-white/[0.06] hover:border-white/[0.12] bg-[#09090b] transition-all duration-300 hover:-translate-y-0.5"
+              >
+                <div className="relative aspect-square bg-[#0a0a0c]">
+                  <Image
+                    src={companion.image}
+                    alt={`${companion.name} — ${companion.title}`}
+                    fill
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                    className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                  />
+                  {/* Bottom gradient */}
+                  <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#09090b] to-transparent" />
+                </div>
+
+                <div className="relative -mt-8 px-3 pb-3 z-10">
+                  <p className="text-sm font-sans font-semibold text-white group-hover:text-[#00bcd4] transition-colors">
+                    {companion.name}
+                  </p>
+                  <p className="text-xs text-white/[0.30] font-sans mt-0.5">
+                    {companion.title}
+                  </p>
+                  <span
+                    className={`inline-block mt-2 px-2 py-0.5 rounded-full text-[10px] font-sans border ${badgeStyle}`}
+                  >
+                    {companion.element}
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>
