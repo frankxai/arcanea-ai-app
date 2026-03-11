@@ -9,7 +9,7 @@
  * ─────────────────────────────────────────────────
  */
 
-import { readdir, readFile } from 'fs/promises';
+import { readdir, readFile, access } from 'fs/promises';
 import { join } from 'path';
 
 // gray-matter is CommonJS, use dynamic import pattern
@@ -429,6 +429,8 @@ export async function getTextsInCollection(collectionSlug: string): Promise<Text
   const collectionPath = join(CONTENT_DIR, collectionSlug);
 
   try {
+    // Check directory exists before reading (book/ may not exist on Vercel)
+    await access(collectionPath);
     const files = await readdir(collectionPath);
     const mdFiles = files.filter(f => f.endsWith('.md') && f !== 'README.md');
 
@@ -503,6 +505,7 @@ export async function getText(slug: string): Promise<Text | null> {
   const collectionPath = join(CONTENT_DIR, collectionSlug);
 
   try {
+    await access(collectionPath);
     const files = await readdir(collectionPath);
 
     // Find matching file (slug could be lowercase with dashes)

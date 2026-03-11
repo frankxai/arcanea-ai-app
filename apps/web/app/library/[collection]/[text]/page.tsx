@@ -29,12 +29,18 @@ interface Props {
   params: Promise<{ collection: string; text: string }>;
 }
 
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
-  const texts = await getAllTexts();
-  return texts.map((t) => {
-    const [collection, ...rest] = t.slug.split('/');
-    return { collection, text: rest.join('/') };
-  });
+  try {
+    const texts = await getAllTexts();
+    return texts.map((t) => {
+      const [collection, ...rest] = t.slug.split('/');
+      return { collection, text: rest.join('/') };
+    });
+  } catch {
+    return [];
+  }
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
