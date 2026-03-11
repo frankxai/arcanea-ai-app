@@ -22,7 +22,7 @@ const GATES = [
   { n: 7, name: 'Crown', hz: '741 Hz', god: 'Aiyami', beast: 'Sol', domain: 'Enlightenment', color: '#ffd700', icon: Crown, locked: true },
   { n: 8, name: 'Starweave', hz: '852 Hz', god: 'Elara', beast: 'Vaelith', domain: 'Perspective', color: '#c084fc', icon: Diamond, locked: true },
   { n: 9, name: 'Unity', hz: '963 Hz', god: 'Ino', beast: 'Kyuro', domain: 'Partnership', color: '#60a5fa', icon: Globe, locked: true },
-  { n: 10, name: 'Source', hz: '1111 Hz', god: 'Shinkami', beast: 'Amaterasu', domain: 'Meta-consciousness', color: '#ffffff', icon: Sun, locked: true },
+  { n: 10, name: 'Source', hz: '1111 Hz', god: 'Shinkami', beast: 'Source', domain: 'Meta-consciousness', color: '#ffffff', icon: Sun, locked: true },
 ];
 
 const HOUSES = [
@@ -92,11 +92,11 @@ export default function AcademyPage() {
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
             <Link
-              href="/library/academy-handbook"
+              href="/academy/courses"
               className="inline-flex items-center gap-2 rounded-2xl border border-white/[0.1] bg-white/[0.03] px-8 py-4 font-semibold text-white/80 backdrop-blur-sm transition-all duration-300 hover:border-white/[0.2] hover:bg-white/[0.06]"
             >
               <Book className="h-4 w-4" />
-              Read the Handbook
+              Browse Courses
             </Link>
           </div>
 
@@ -104,7 +104,7 @@ export default function AcademyPage() {
           <div className="mx-auto mt-14 flex max-w-lg justify-center gap-8 md:gap-12">
             {[
               { label: 'Gates', value: '10' },
-              { label: 'Houses', value: '7' },
+              { label: 'Courses', value: '5' },
               { label: 'Ranks', value: '5' },
             ].map((s) => (
               <div key={s.label} className="text-center">
@@ -363,11 +363,11 @@ export default function AcademyPage() {
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
             <Link
-              href="/library"
+              href="/academy/courses"
               className="inline-flex items-center gap-2 rounded-2xl border border-white/[0.1] bg-white/[0.03] px-8 py-4 font-semibold text-white/80 backdrop-blur-sm transition-all duration-300 hover:border-white/[0.2] hover:bg-white/[0.06]"
             >
-              <Shield className="h-4 w-4" />
-              Explore the Library
+              <Book className="h-4 w-4" />
+              Browse Courses
             </Link>
           </div>
         </div>

@@ -21,7 +21,6 @@ import {
   resolveGate,
   type GateData,
 } from '@/lib/gates';
-import { getCourseForGate } from '@/lib/courses';
 
 // ── Element icon helper ───────────────────────────────────────────────────────
 
@@ -345,55 +344,34 @@ export default async function GateDetailPage({
         </div>
 
         {/* Explore further */}
-        {(() => {
-          const course = getCourseForGate(gate.number);
-          return (
-            <div className={`mb-12 grid gap-4 ${course ? 'md:grid-cols-3' : 'md:grid-cols-2'}`}>
-              {course && (
-                <Link
-                  href={`/academy/courses/${course.slug}`}
-                  className="group flex items-center justify-between rounded-2xl liquid-glass border border-white/[0.06] px-6 py-5 hover:border-white/[0.12] transition-all duration-300"
-                  style={{ borderColor: `${gate.color}15` }}
-                >
-                  <div className="flex items-center gap-3">
-                    <PhSparkle className="w-5 h-5" style={{ color: gate.color }} />
-                    <div>
-                      <p className="text-xs text-text-muted">Course</p>
-                      <p className="font-semibold text-sm">{course.title}</p>
-                    </div>
-                  </div>
-                  <PhArrowRight className="w-4 h-4 text-text-muted group-hover:translate-x-0.5 transition-transform" />
-                </Link>
-              )}
-              <Link
-                href={`/lore/guardians/${gate.guardianSlug}`}
-                className="group flex items-center justify-between rounded-2xl liquid-glass border border-white/[0.06] px-6 py-5 hover:border-white/[0.12] transition-all duration-300"
-              >
-                <div className="flex items-center gap-3">
-                  <PhBookOpen className="w-5 h-5 text-text-muted" />
-                  <div>
-                    <p className="text-xs text-text-muted">Lore</p>
-                    <p className="font-semibold text-sm">{gate.guardian} — Full Profile</p>
-                  </div>
-                </div>
-                <PhArrowRight className="w-4 h-4 text-text-muted group-hover:translate-x-0.5 transition-transform" />
-              </Link>
-              <Link
-                href="/library/academy-handbook"
-                className="group flex items-center justify-between rounded-2xl liquid-glass border border-white/[0.06] px-6 py-5 hover:border-white/[0.12] transition-all duration-300"
-              >
-                <div className="flex items-center gap-3">
-                  <PhBookOpen className="w-5 h-5 text-text-muted" />
-                  <div>
-                    <p className="text-xs text-text-muted">Library</p>
-                    <p className="font-semibold text-sm">Academy Handbook</p>
-                  </div>
-                </div>
-                <PhArrowRight className="w-4 h-4 text-text-muted group-hover:translate-x-0.5 transition-transform" />
-              </Link>
+        <div className="mb-12 grid gap-4 md:grid-cols-2">
+          <Link
+            href={`/lore/guardians/${gate.guardianSlug}`}
+            className="group flex items-center justify-between rounded-2xl liquid-glass border border-white/[0.06] px-6 py-5 hover:border-white/[0.12] transition-all duration-300"
+          >
+            <div className="flex items-center gap-3">
+              <PhBookOpen className="w-5 h-5 text-text-muted" />
+              <div>
+                <p className="text-xs text-text-muted">Lore</p>
+                <p className="font-semibold text-sm">{gate.guardian} — Full Profile</p>
+              </div>
             </div>
-          );
-        })()}
+            <PhArrowRight className="w-4 h-4 text-text-muted group-hover:translate-x-0.5 transition-transform" />
+          </Link>
+          <Link
+            href="/library/academy-handbook"
+            className="group flex items-center justify-between rounded-2xl liquid-glass border border-white/[0.06] px-6 py-5 hover:border-white/[0.12] transition-all duration-300"
+          >
+            <div className="flex items-center gap-3">
+              <PhBookOpen className="w-5 h-5 text-text-muted" />
+              <div>
+                <p className="text-xs text-text-muted">Library</p>
+                <p className="font-semibold text-sm">Academy Handbook</p>
+              </div>
+            </div>
+            <PhArrowRight className="w-4 h-4 text-text-muted group-hover:translate-x-0.5 transition-transform" />
+          </Link>
+        </div>
 
         <GateNav gate={gate} />
       </main>
