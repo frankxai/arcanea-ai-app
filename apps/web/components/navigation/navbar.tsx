@@ -7,11 +7,9 @@ import { LazyMotion, domMax, m, AnimatePresence } from "framer-motion";
 import { UserNav } from "@/components/auth";
 
 const navLinks = [
-  { href: "/studio", label: "Create" },
-  { href: "/chat", label: "Chat" },
-  { href: "/library", label: "Library" },
-  { href: "/code", label: "The Code" },
-  { href: "/academy", label: "Academy" },
+  { href: "/chat", label: "Create" },
+  { href: "/gallery", label: "Explore" },
+  { href: "/academy", label: "Learn" },
   { href: "/pricing", label: "Pricing" },
 ];
 
@@ -86,10 +84,10 @@ export function Navbar() {
 
             <div className="hidden md:flex items-center gap-2">
               <Link
-                href="/studio"
+                href="/chat"
                 className="px-4 py-2 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-[#00897b] via-[#1565c0] to-[#00bcd4] hover:shadow-[0_0_26px_rgba(0,188,212,0.35)] transition-all focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/40"
               >
-                Enter Studio
+                Start Creating
               </Link>
               <UserNav />
             </div>
@@ -151,11 +149,11 @@ export function Navbar() {
                 <div className="h-px bg-white/[0.08] my-3" />
 
                 <Link
-                  href="/studio"
+                  href="/chat"
                   onClick={() => setMobileMenuOpen(false)}
                   className="block text-center px-4 py-3 rounded-xl text-sm font-semibold bg-gradient-to-r from-[#00897b] via-[#1565c0] to-[#00bcd4] text-white"
                 >
-                  Enter Studio
+                  Start Creating
                 </Link>
 
                 <div className="px-1 pt-2">
