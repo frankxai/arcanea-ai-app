@@ -581,6 +581,59 @@ export function AboutContent() {
         </div>
       </AnimatedSection>
 
+      {/* ── Section 5.75: The Arcanean Code ─────────────────────────── */}
+      <AnimatedSection className="py-24 relative">
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+              The Arcanean Code
+            </h2>
+            <p className="text-text-secondary max-w-2xl mx-auto leading-relaxed">
+              One theorem. Three vows. Seven laws. The creative philosophy
+              that every Arcanean carries.
+            </p>
+          </div>
+
+          <div className="p-8 rounded-3xl liquid-glass-elevated border border-[#ffd700]/20 text-center mb-8">
+            <blockquote className="text-xl md:text-2xl font-display italic text-[#ffd700] mb-6 leading-relaxed max-w-2xl mx-auto">
+              &ldquo;Imperfection that creates endlessly is indistinguishable
+              from God.&rdquo;
+            </blockquote>
+            <cite className="text-sm text-text-muted font-mono tracking-wider">
+              — Vel&apos;Thaan&apos;s Theorem
+            </cite>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-4 mb-8">
+            {[
+              { num: 'I', vow: 'I create more than I consume.' },
+              { num: 'II', vow: 'I build on what came before.' },
+              { num: 'III', vow: 'I ship living work.' },
+            ].map((v) => (
+              <div
+                key={v.num}
+                className="p-5 rounded-2xl liquid-glass border border-white/[0.06] text-center"
+              >
+                <span className="text-xs font-mono text-[#ffd700] tracking-widest block mb-2">
+                  VOW {v.num}
+                </span>
+                <p className="text-sm font-display font-semibold">{v.vow}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center">
+            <Link
+              href="/code"
+              className="inline-flex items-center gap-2 text-sm text-[#00bcd4] hover:text-[#00bcd4]/80 transition-colors"
+            >
+              Read the full Code — Seven Laws, Agent Oath, and write your own
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+      </AnimatedSection>
+
       {/* ── Section 6: CTA ────────────────────────────────────────────── */}
       <section className="py-24 relative overflow-hidden">
         <div className="absolute inset-0 -z-10">

@@ -10,6 +10,7 @@ const navLinks = [
   { href: "/studio", label: "Create" },
   { href: "/chat", label: "Chat" },
   { href: "/library", label: "Library" },
+  { href: "/code", label: "The Code" },
   { href: "/academy", label: "Academy" },
   { href: "/pricing", label: "Pricing" },
 ];
