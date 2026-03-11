@@ -18,7 +18,7 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
 | Pages with loading.tsx | ~81 (+32) | 100% of dynamic pages |
 | Milestones Active | 11 (M001-M010 + M006) | M001 (Auth) → M008 (Onboarding) → M006 (Creator Tools) → M009 (Polish) |
 | Vercel Build | PASSING | Maintain green |
-| Last Deploy | 2026-03-10 | 4d9cd969 — naming v2 + companion forge + cleanup |
+| Last Deploy | 2026-03-10 | 1dbce7a1 — 23 commits since a560a8ff |
 | Live URL | arcanea.ai | arcanea.ai |
 
 ---
@@ -84,7 +84,7 @@ Source: `.arcanea/projects/milestones/`
 - **Mar 1 Session 2**: Academy rewritten (376 lines, Ten Gates grid, Houses, Ranks), pricing reviewed (509 lines, already complete)
 - **Files**: `m005-premium-ui-v0.arc`
 
-### M006: Creator Tools Backend (75%) — P1
+### M006: Creator Tools Backend (60%) — P1
 - **Guardian**: Draconia (Fire Gate)
 - **Target**: 2026-03-22
 - **Scope**: Creation pipeline, AI generation APIs, Prompt Books persistence, Reading progress, Course system, Gallery social
@@ -96,7 +96,7 @@ Source: `.arcanea/projects/milestones/`
   - [x] Save creations to Supabase — API routes `/api/studio/save` (images) + `/api/creations` (text/code) + `creation-service.ts` all built
   - [x] Prompt Books persistence — DB schema live (6 tables: pb_collections, pb_prompts, pb_tags, pb_prompt_tags, pb_prompt_versions, pb_templates), service layer + Zustand store + full UI all built
   - [x] Reading progress tracking — DB table `reading_progress` live, `useReadingProgress` hook + `ReadingTracker` component + `ReadBadge` + collection progress bars all wired
-  - [x] Course system — 5 courses (Foundation, Flow, Fire, Voice, Vision), 20+ lessons, `/academy/courses` listing + `/academy/courses/[slug]` detail pages, JSON-LD, loading states, error boundaries, sitemap entries
+  - [ ] Course system
 - **Files**: `m006-creator-tools-backend.arc`
 
 ### M007: Community & Social (0%) — P2
@@ -179,21 +179,15 @@ Source: `.arcanea/projects/milestones/`
   - [x] WCAG focus rings: 5 studio textareas (text, image, code, music modes) (Mar 10)
   - [x] WCAG focus rings: studio/image select + input, lore/library search input (Mar 10)
   - [x] WCAG focus rings: 9 prompt-books inputs/selects across 6 files (Mar 10)
-  - [x] WCAG focus rings: completed all bare focus:outline-none — 21 files fixed (studio creation-panels 5, prompt-books 12, chat InputArea/Sidebar, council ConveningFlow, templates 2, v3 hero-chat-box) (Mar 10)
-  - [x] Anti-slop: "begin your journey" on glossary, "Your imagination awaits" on imagine page (Mar 10)
-  - [x] Error boundaries: added error.tsx to companions, discover, feedback, lore, profile, prompt-books, settings (Mar 10)
-  - [x] WCAG audit complete: only 2 bare focus:outline-none remain (library modal container, headless UI Menu.Items — both containers, not interactive elements)
-  - [x] Naming v2 sweep: Luminor→companion on 13 first-contact surfaces (chat, dashboard, hub, workspace, vault, code, os, acos, blog, music) (Mar 10)
-  - [x] Gallery cleanup: removed LuminorShowcase, deleted luminor-agents.ts, CDN-only images (Mar 10)
-  - [x] Deleted dead files: home-content.tsx, gallery/luminors/page.tsx (Mar 10)
   - [ ] Core Web Vitals audit (Lighthouse — cannot run locally in WSL2)
+  - [ ] Remaining WCAG 2.2 deep audit (62→~20 remaining items)
 - **Files**: `m009-performance-polish.arc`
 
 ### M010: Language & Experience Transformation (100%) — COMPLETE
 - **Guardian**: Alera (Voice Gate)
 - **Target**: 2026-03-08 — COMPLETED 2026-03-10
 - **Strategy**: `.arcanea/strategy/LANGUAGE_EXPERIENCE_STRATEGY.md`
-- **Principle**: Creation first. Mythology as earned discovery. Companions by proper name. Luminor = rank only. Guardian = Gate-keeper role only.
+- **Principle**: Creation first. Mythology as earned discovery. Luminor as brand vocabulary.
 - **Scope**: Rewrite all user-facing copy across the platform. Replace jargon-first, lore-dump UX with progressive disclosure that respects viewer intelligence. Implement hidden depth system (color shifts, progressive vocabulary, Easter eggs). Final piece: specialist/intelligence → Luminor rename across all surfaces.
 - **Depends on**: Nothing — COMPLETE
 - **Phases**:
@@ -283,7 +277,7 @@ packages/              → 37 workspace packages
 - **Needs**:
   - [x] Add metadata via layout.tsx — DONE
   - [x] Build `/academy/gates/[id]` dynamic route — DONE (10 gates pre-rendered)
-  - [x] Build `/academy/courses/[slug]` dynamic route — DONE (5 courses, 20+ lessons, pre-rendered)
+  - [ ] Build `/academy/courses/[slug]` dynamic route (linked but doesn't exist)
   - [ ] Connect assessment results to user profile (gates_open, active_gate)
   - [ ] Progress tracking per user per gate
 - **Priority**: P0 — primary conversion funnel
@@ -297,8 +291,7 @@ packages/              → 37 workspace packages
 | `/academy/ranks` | PARTIAL | loading.tsx added |
 | `/academy/assessment` | PARTIAL | loading.tsx added, save results to profile |
 | `/academy/gate-quiz` | PARTIAL | loading.tsx added, save results to profile |
-| `/academy/courses` | LIVE | 5 courses, difficulty badges, prerequisites, grid layout |
-| `/academy/courses/[slug]` | LIVE | 5 pre-rendered courses, inline lessons, JSON-LD, prev/next nav |
+| `/academy/courses/[slug]` | PLANNED | Build course system with lessons, progress tracking |
 
 #### Library `/library`
 - **Status**: LIVE
@@ -531,8 +524,7 @@ packages/              → 37 workspace packages
 | `/user-flows` | LIVE | None |
 | `/records` | LIVE | None |
 | `/records/vibe-gods` | PARTIAL | loading.tsx |
-| `/companions` | LIVE | Design system v5 aligned (Mar 10) |
-| `/companions/forge` | LIVE | NEW: 3-step forge flow, 16 archetypes (Mar 10) |
+| `/companions` | LIVE | None |
 | `/skills` | LIVE | None |
 
 ---
@@ -584,7 +576,7 @@ packages/              → 37 workspace packages
 10. ~~Migrate legacy API routes~~ — DONE (2026-03-01, lib/supabase.ts deleted, 0 imports remain)
 11. Integrate v0 Studio UI into /studio (M005-T1)
 12. Integrate v0 Gallery UI into /gallery (M005-T4)
-13. ~~Reading progress tracking in Library (M006-T4)~~ — DONE (hook, tracker, badges, progress bars all wired)
+13. Reading progress tracking in Library (M006-T4)
 14. Memory MCP package (M003)
 15. ~~Add missing API routes~~ — DONE (2026-03-01, /api/creations/upload, /api/profiles, /api/profiles/[username], /api/notifications/unread-count, /api/notifications/read-all)
 16. ~~Add JSON-LD structured data to homepage~~ — DONE (2026-03-01, Organization + WebSite schemas)
@@ -623,7 +615,7 @@ packages/              → 37 workspace packages
 ### P2 — Feature Expansion
 48. Integrate v0 Onboarding wizard (M008-T1)
 49. Integrate v0 Settings page (M005-T2)
-50. ~~Academy course system (M006-T5)~~ — DONE (5 courses, 20+ lessons, 2026-03-10)
+50. Academy course system (M006-T5)
 51. World/Universe builder backends
 52. Community features — forums, groups (M007)
 53. Cloudflare Stream integration (M002)
