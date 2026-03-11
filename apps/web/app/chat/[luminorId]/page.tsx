@@ -79,7 +79,7 @@ export default function CompanionChatPage() {
     messages,
     status,
     error,
-    append,
+    sendMessage,
     setMessages,
   } = useChat({
     id: `companion-${luminorId}`,
@@ -95,10 +95,10 @@ export default function CompanionChatPage() {
   const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     if (input.trim() && !isLoading) {
-      append({ role: 'user', content: input.trim() });
+      sendMessage({ text: input.trim() });
       setInput('');
     }
-  }, [input, isLoading, append]);
+  }, [input, isLoading, sendMessage]);
 
   // UI state
   const [autoScroll, setAutoScroll] = useState(true);
@@ -113,10 +113,10 @@ export default function CompanionChatPage() {
   const [initialSent, setInitialSent] = useState(false);
   useEffect(() => {
     if (initialPrompt && !initialSent && messages.length === 0) {
-      append({ role: 'user', content: initialPrompt });
+      sendMessage({ text: initialPrompt });
       setInitialSent(true);
     }
-  }, [initialPrompt, initialSent, messages.length, append]);
+  }, [initialPrompt, initialSent, messages.length, sendMessage]);
 
   // Auto-resize textarea
   useEffect(() => {
@@ -306,7 +306,7 @@ export default function CompanionChatPage() {
                 {starters.map((s) => (
                   <button
                     key={s}
-                    onClick={() => append({ role: 'user', content: s })}
+                    onClick={() => sendMessage({ text: s })}
                     className="px-4 py-2 rounded-full text-sm text-white/50 border border-white/[0.08] hover:text-white/70 hover:bg-white/[0.03] transition-all duration-150"
                     style={{
                       borderColor: 'rgba(255,255,255,0.08)',
