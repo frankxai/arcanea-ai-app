@@ -77,7 +77,7 @@ export default function CompanionChatPage() {
 
   const {
     messages,
-    isLoading,
+    status,
     error,
     append,
     setMessages,
@@ -88,6 +88,9 @@ export default function CompanionChatPage() {
       systemPrompt: luminorConfig?.systemPrompt,
     },
   });
+
+  // @ai-sdk/react v3.0.118 replaced isLoading with status enum
+  const isLoading = status === 'submitted' || status === 'streaming';
 
   const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
