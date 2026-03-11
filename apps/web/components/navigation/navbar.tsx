@@ -7,11 +7,11 @@ import { LazyMotion, domMax, m, AnimatePresence } from "framer-motion";
 import { UserNav } from "@/components/auth";
 
 const navLinks = [
-  { href: "/lore", label: "Explore" },
   { href: "/studio", label: "Create" },
   { href: "/chat", label: "Chat" },
   { href: "/library", label: "Library" },
   { href: "/academy", label: "Academy" },
+  { href: "/pricing", label: "Pricing" },
 ];
 
 export function Navbar() {

@@ -8,20 +8,20 @@ const FAQS = [
   // — Getting Started —
   {
     question: 'What do I get on the free plan?',
-    answer: '3 Luminors (writing, research, brainstorming), 100 messages per month, full Library browsing, and Academy access through Gate 2.',
+    answer: '3 companions (writing, research, brainstorming), 100 messages per month, full Library browsing, and Academy access through Gate 2.',
   },
   {
     question: 'Do I need a credit card to start?',
     answer: 'No. The Spark plan is free with no card required.',
   },
-  // — Luminors —
+  // — Companions —
   {
-    question: 'What are Luminors?',
+    question: 'What are the companions?',
     answer: 'AI companions, each built for a specific creative domain — writing, code, design, music, research, and more. You chat with them directly, and they remember your work across sessions.',
   },
   {
-    question: 'Can I switch between Luminors mid-conversation?',
-    answer: 'Yes. Bring a different Luminor into any conversation at any point.',
+    question: 'Can I switch between companions mid-conversation?',
+    answer: 'Yes. Bring a different companion into any conversation at any point.',
   },
   // — Platform —
   {

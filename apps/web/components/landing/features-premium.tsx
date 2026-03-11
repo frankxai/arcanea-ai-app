@@ -26,9 +26,9 @@ import {
 const features = [
   {
     icon: PhBrain,
-    title: "16 Luminors",
+    title: "16 Companions",
     description:
-      "Each Luminor has mastered a specific domain — from system architecture to narrative design to deep research.",
+      "Each companion has mastered a specific domain — from system architecture to narrative design to deep research.",
     gradient: "from-crystal to-brand-primary",
     borderColor: "border-crystal/30",
     hoverGlow: "hover:shadow-glow-md",

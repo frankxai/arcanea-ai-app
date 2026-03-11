@@ -7,9 +7,9 @@ import Image from "next/image";
 import navLogo from "@/assets/brand/arcanea-mark.jpg";
 
 const BENEFITS = [
-  "16 Luminors, each with a distinct creative philosophy and domain",
-  "Original library of philosophy texts, meditations, and practical craft guidance",
-  "Free to start — direct paths into Chat, Studio, and Academy",
+  "16 creative partners, each with distinct expertise and personality",
+  "107K+ words of original philosophy, meditations, and practical craft guidance",
+  "Free to start — create music, stories, art, and worlds immediately",
 ];
 
 const GUARDIAN_CDN = "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians";
@@ -128,10 +128,10 @@ export function CTASection() {
                       </Link>
 
                       <Link
-                        href="/lore"
+                        href="/library"
                         className="px-8 py-4 rounded-2xl border border-white/[0.10] text-white font-semibold text-base hover:bg-white/[0.06] hover:border-white/[0.15] transition-all duration-300"
                       >
-                        Explore Lore
+                        Explore the Library
                       </Link>
                     </div>
                   </m.div>

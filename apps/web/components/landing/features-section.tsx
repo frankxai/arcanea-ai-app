@@ -58,7 +58,7 @@ const FEATURES = [
   {
     title: "Deploy Arcanean Swarms",
     description:
-      "Configure coding agents with Swarms of Gods, Guardians, and Luminors working together. Use Skill Packages to build your Arcanea.",
+      "Configure coding agents with Swarms of Gods, Guardians, and companions working together. Use Skill Packages to build your Arcanea.",
     symbol: "\u25CE",
     href: "/install",
     gradient: "from-[#22c55e]/15 to-[#00897b]/15",
@@ -172,7 +172,7 @@ export function FeaturesSection() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-lg text-text-secondary max-w-2xl mx-auto"
           >
-            From the wisdom of the Gods to the tools of the Luminors —
+            From the wisdom of the Gods to the tools of the companions —
             everything a creator needs, in one universe.
           </m.p>
         </div>

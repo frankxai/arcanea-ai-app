@@ -20,7 +20,7 @@ const PLANS = [
     cta: "Start Free",
     href: "/auth/signup",
     features: [
-      "3 Luminors — writing, research, brainstorming",
+      "3 companions — writing, research, brainstorming",
       "100 messages per month",
       "Browse the full Library (17 collections)",
       "Academy access through Gate 2",
@@ -37,7 +37,7 @@ const PLANS = [
     href: "/auth/signup?plan=creator",
     badge: "Most Popular",
     features: [
-      "All 16 Luminors — writing, code, design, music, research",
+      "All 16 companions — writing, code, design, music, research",
       "5,000 messages per month",
       "Full Library with reading progress",
       "Academy progression through all 10 Gates",
@@ -59,7 +59,7 @@ const PLANS = [
       "Everything in Creator",
       "5 team seats with shared workspace",
       "API access (REST + streaming)",
-      "Train custom Luminors on your content",
+      "Train custom companions on your content",
       "Direct support within 4 hours",
       "Export without Arcanea branding",
       "Usage analytics dashboard",

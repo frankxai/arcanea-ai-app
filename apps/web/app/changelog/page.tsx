@@ -8,6 +8,28 @@ export const metadata: Metadata = {
 
 const CHANGES = [
   {
+    version: "v3.0.0",
+    date: "March 2026",
+    type: "major",
+    title: "Clarity Update — Competitive Redesign",
+    description:
+      "A comprehensive update driven by competitive benchmarking against 10 top AI platforms. Navigation, copy, and trust signals redesigned for instant clarity.",
+    changes: [
+      { type: "added", text: "Pricing added to main navigation" },
+      { type: "added", text: "Trust strip with tech stack on homepage" },
+      { type: "added", text: "Oracle credential badges on About page" },
+      { type: "added", text: "Multi-provider AI support (Google, Anthropic, OpenAI)" },
+      { type: "added", text: "5 Academy courses with 20+ lessons" },
+      { type: "improved", text: "Homepage hero: outcome-first copy, no jargon" },
+      { type: "improved", text: "How It Works section: action-first steps" },
+      { type: "improved", text: "Stats: accurate 107K+ words, 364+ artworks" },
+      { type: "improved", text: "All metadata descriptions rewritten for SEO" },
+      { type: "improved", text: "Gallery: full-size images with generation prompts" },
+      { type: "fixed", text: "CTA destination mismatch resolved" },
+      { type: "fixed", text: "AI SDK v6 migration: streaming chat restored" },
+    ],
+  },
+  {
     version: "v2.4.0",
     date: "February 2026",
     type: "major",

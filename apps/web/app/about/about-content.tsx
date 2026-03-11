@@ -100,7 +100,7 @@ export function AboutContent() {
             transition={{ delay: 0.3 }}
             className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto leading-relaxed"
           >
-            A creation platform built on original mythology and philosophy.
+            A creative intelligence platform where AI partners have real depth.
           </m.p>
 
           <m.p
@@ -109,10 +109,31 @@ export function AboutContent() {
             transition={{ delay: 0.4 }}
             className="text-base text-text-muted max-w-2xl mx-auto mt-6 leading-relaxed"
           >
-            Sixteen creative companions, each grounded in a distinct philosophy.
-            A library of 34 original texts. A progression system that deepens
-            the more you create. No limits on what you build.
+            16 creative AI partners for music, writing, art, and
+            world-building. 107K+ words of original creative philosophy. A
+            progression system that deepens the more you create. Open source.
+            Free to start.
           </m.p>
+
+          <m.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="mt-8 flex flex-wrap justify-center gap-3 text-xs font-mono text-white/30"
+          >
+            <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">
+              Built by Frank Riemer
+            </span>
+            <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">
+              AI Architect at Oracle
+            </span>
+            <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">
+              Next.js + Vercel AI SDK
+            </span>
+            <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">
+              Open Source
+            </span>
+          </m.div>
         </div>
       </section>
 

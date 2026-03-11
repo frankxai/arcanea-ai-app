@@ -144,8 +144,8 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Tell Arcanea what you want to build. Luminors will help you
-            shape it.
+            16 creative partners for music, stories, art, and worlds.
+            Each with real creative depth.
           </m.p>
 
           {/* Chat box — THE hero element */}
@@ -165,7 +165,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.7 }}
           >
-            Free to use &middot; No signup required
+            Free to use &middot; No signup required &middot; Open source &middot; Built with Next.js &amp; Vercel AI SDK
           </m.p>
         </div>
       </m.div>

@@ -118,7 +118,7 @@ export default function CompanionsPage() {
           </div>
         </div>
 
-        {/* Featured Luminor Images */}
+        {/* Featured Companion Images */}
         <div className="max-w-7xl mx-auto px-4 pb-12">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-lg font-display font-semibold text-white/70">

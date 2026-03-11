@@ -2,12 +2,12 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Pricing",
+  title: "Pricing — Simple. Start Free.",
   description:
-    "Simple pricing for Arcanea. Free tier with 3 companions. Creator plan unlocks all 16 companions and full Library access.",
+    "Simple pricing for Arcanea. Start free with no credit card required. Upgrade to Creator ($19/mo) for all 16 companions, the full Library, and the Studio.",
   openGraph: {
-    title: "Pricing",
-    description: "Simple pricing for Arcanea. Free tier with 3 companions, Creator and Studio plans for serious work.",
+    title: "Pricing — Simple. Start Free.",
+    description: "Start free, no credit card required. Upgrade anytime. Creator $19/mo unlocks all 16 companions and the full creative toolkit.",
     type: "website",
   },
 };
@@ -118,6 +118,16 @@ const COMPARISON = [
 
 const FAQs = [
   {
+    question: "Can I cancel anytime?",
+    answer:
+      "Yes, always. Cancel from your account settings with one click. No questions asked, no cancellation fees. Your data stays accessible on the Spark free tier.",
+  },
+  {
+    question: "Do I need a credit card to start?",
+    answer:
+      "No. The Spark plan is completely free and requires no payment information. You only need a credit card when you choose to upgrade to Creator or Studio.",
+  },
+  {
     question: "Can I switch plans later?",
     answer:
       "Yes. Upgrade or downgrade anytime from your settings. Changes take effect immediately, and payments are prorated.",
@@ -183,15 +193,19 @@ export default function PricingPage() {
           </div>
 
           <h1 className="text-4xl md:text-6xl font-display font-bold mb-6">
-            Invest in your
+            Simple pricing.
             <span className="block bg-gradient-to-r from-[#00bcd4] via-[#0d47a1] to-[#ffd700] bg-clip-text text-transparent">
-              creative evolution
+              Start free.
             </span>
           </h1>
 
-          <p className="text-xl text-text-secondary max-w-2xl mx-auto mb-8 leading-relaxed">
+          <p className="text-xl text-text-secondary max-w-2xl mx-auto mb-6 leading-relaxed">
             Choose the plan that fits your work.
             Every plan includes companions, the Library, and the Academy.
+          </p>
+
+          <p className="text-sm text-text-muted">
+            No credit card required to start. Cancel anytime.
           </p>
         </section>
 

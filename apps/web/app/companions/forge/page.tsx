@@ -36,7 +36,8 @@ const ELEMENT_COLORS: Record<Element, string> = {
   Void: '#a78bfa',
 };
 
-const ELEMENT_ICONS: Record<Element, React.ComponentType<{ size?: number; weight?: string; className?: string }>> = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const ELEMENT_ICONS: Record<Element, any> = {
   Fire: Flame,
   Water: Drop,
   Earth: Leaf,

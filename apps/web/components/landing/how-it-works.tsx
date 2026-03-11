@@ -6,23 +6,23 @@ import { useRef, useState } from "react";
 const STEPS = [
   {
     number: "01",
-    title: "Choose your Luminor",
+    title: "Choose your companion",
     description:
-      "Pick the creative intelligence aligned to the kind of work you need right now.",
+      "Pick a creative AI companion — each specializes in music, writing, visual art, or world-building.",
     accent: "#00bcd4",
   },
   {
     number: "02",
-    title: "Frame the challenge",
+    title: "Describe your vision",
     description:
-      "Describe your project constraints, desired output, and style direction.",
+      "Tell them what you want to create. They ask the right questions and help shape the direction.",
     accent: "#7c4dff",
   },
   {
     number: "03",
-    title: "Build in sequence",
+    title: "Create and iterate",
     description:
-      "Move from concept to artifact in Studio, with guided iteration at each step.",
+      "Move from concept to finished work in Studio, with guided iteration at each step.",
     accent: "#f59e0b",
   },
 ];
@@ -52,7 +52,7 @@ export function HowItWorks() {
             A stronger creation loop
           </h2>
           <p className="text-xl text-text-secondary max-w-2xl mx-auto">
-            Pick the right Luminor, define the work, and ship with discipline.
+            Three steps from idea to creative output.
           </p>
         </m.div>
 

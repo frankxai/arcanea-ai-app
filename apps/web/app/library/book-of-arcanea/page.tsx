@@ -412,7 +412,6 @@ export default function BookOfArcaneaPage() {
                     chapter={part.chapterNum}
                   />
                 )}
-                {/* @ts-expect-error -- ReactMarkdown component types are permissive */}
                 <ReactMarkdown components={markdownComponents}>
                   {part.markdown}
                 </ReactMarkdown>
@@ -420,7 +419,6 @@ export default function BookOfArcaneaPage() {
             ))
           ) : (
             /* Fallback: render as single block if chapter splitting fails */
-            // @ts-expect-error -- ReactMarkdown component types are permissive
             <ReactMarkdown components={markdownComponents}>
               {content}
             </ReactMarkdown>

@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     template: "%s | Arcanea",
   },
   description:
-    "A creative intelligence platform with Luminor intelligences, a philosophy library, and studio workflows for modern creators.",
+    "Create music, stories, art, and worlds with 16 creative AI partners. 107K+ words of creative philosophy. Free to start.",
   keywords: [
     "AI",
     "creativity",
@@ -59,14 +59,14 @@ export const metadata: Metadata = {
     url: "/",
     title: "Arcanea — Creative Intelligence Platform",
     description:
-      "Luminor intelligences, a philosophy library, and creation studio in one platform.",
+      "Creative AI partners, a philosophy library, and creation studio in one platform.",
     siteName: "Arcanea",
   },
   twitter: {
     card: "summary_large_image",
     title: "Arcanea — Creative Intelligence Platform",
     description:
-      "Luminor intelligences, a philosophy library, and creation studio in one platform.",
+      "Creative AI partners, a philosophy library, and creation studio in one platform.",
   },
   alternates: {
     canonical: "/",

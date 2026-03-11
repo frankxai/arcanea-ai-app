@@ -118,10 +118,10 @@ const ALL_GUARDIANS = [
 const FEATURES = [
   {
     icon: Diamond,
-    title: "16 Companions",
+    title: "16 Creative Partners",
     description:
-      "Sixteen creative intelligences across four teams, each with a unique philosophy and domain.",
-    href: "/luminors",
+      "Sixteen Luminors across four teams — each with distinct expertise in music, writing, art, and world-building.",
+    href: "/chat",
     accentHex: "#00bcd4",
     glowColor: "rgba(0, 188, 212, 0.15)",
   },
@@ -321,7 +321,7 @@ function MetricsStrip() {
   const isInView = useInView(ref, { once: true, margin: "-60px" });
 
   const metrics = [
-    { value: 16, suffix: "", label: "Companions", color: "#00bcd4", icon: Eye },
+    { value: 16, suffix: "", label: "Creative Partners", color: "#00bcd4", icon: Eye },
     {
       value: 17,
       suffix: "",
@@ -330,9 +330,9 @@ function MetricsStrip() {
       icon: Scroll,
     },
     {
-      value: 50,
+      value: 107,
       suffix: "K+",
-      label: "Words of Wisdom",
+      label: "Words of Philosophy",
       color: "#0d47a1",
       icon: Diamond,
     },

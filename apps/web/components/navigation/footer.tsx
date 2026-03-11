@@ -18,7 +18,7 @@ const footerLinks = {
       { href: "/library", label: "Library" },
       { href: "/academy", label: "Academy" },
       { href: "/lore", label: "Lore & Mythology" },
-      { href: "/glossary", label: "Glossary" },
+      { href: "/pricing", label: "Pricing" },
     ],
   },
   platform: {

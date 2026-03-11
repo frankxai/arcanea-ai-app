@@ -19,9 +19,9 @@ import {
 const MAIN_FEATURES = [
   {
     icon: PhSparkle,
-    title: "16 Luminors",
+    title: "16 Companions",
     description:
-      "Each Luminor has mastered a specific domain of creation. They will challenge a weak idea before you waste time building it.",
+      "Each companion has mastered a specific domain of creation. They will challenge a weak idea before you waste time building it.",
     gradient: "from-atlantean-teal-aqua to-creation-prism-purple",
     highlight: "atlantean-teal-aqua",
   },
@@ -46,13 +46,13 @@ const MAIN_FEATURES = [
 const CAPABILITY_GRID = [
   {
     icon: PhChatCircle,
-    title: "Luminor Dialogue",
+    title: "Companion Dialogue",
     description: "Conversations shaped by distinct creative philosophies, not generic prompts",
   },
   {
     icon: PhPalette,
     title: "Visual Creation",
-    description: "Generate images and concept art with style direction from your Luminor",
+    description: "Generate images and concept art with style direction from your companion",
   },
   {
     icon: PhBookOpen,
@@ -71,8 +71,8 @@ const CAPABILITY_GRID = [
   },
   {
     icon: PhUsers,
-    title: "Multi-Luminor Sessions",
-    description: "Multiple Luminors collaborating on a single project",
+    title: "Multi-Companion Sessions",
+    description: "Multiple companions collaborating on a single project",
   },
   {
     icon: PhShield,
@@ -114,7 +114,7 @@ export function FeaturesV2() {
             </span>
           </h2>
           <p className="text-xl text-text-secondary max-w-3xl mx-auto">
-            Sixteen Luminors rooted in the Guardians of Arcanea.
+            Sixteen companions rooted in the mythology of Arcanea.
             Seven Wisdoms that diagnose creative blocks. A Library of 34 original texts.
             A coherent philosophy of creation, not features strung together.
           </p>

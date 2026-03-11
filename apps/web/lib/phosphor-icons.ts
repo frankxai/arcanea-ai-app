@@ -16,7 +16,6 @@ export * from '@phosphor-icons/react';
 export {
   Heartbeat, ArrowBendUpLeft, ArrowCircleDown, ArrowCounterClockwise,
   ArrowDown, ArrowLeft, ArrowRight, ArrowSquareOut, ArrowUp, ArrowUpRight,
-  ArrowClockwise,
   ArrowsClockwise, ArrowsDownUp, ArrowsOut, Bell, Bird, Book, BookOpen,
   Bookmark, Books, BracketsSquare, BracketsCurly, Brain, Browser, Bug,
   Buildings, Calendar, CalendarDots, Camera, CaretDown, CaretLeft,
@@ -28,7 +27,7 @@ export {
   Download, Drop, Envelope, Eye, EyeSlash, Feather, File, FileCode,
   FileText, FilmStrip, Fire, Fish, Flame, FloppyDisk, FolderOpen, Funnel,
   GameController, Gear, GearSix, GitBranch, GithubLogo, Globe, GraduationCap,
-  GridFour, GridNine, Heart, House, Image, ImageSquare, Info, Key, Keyboard,
+  GridFour, GridNine, Heart, House, Image, ImageSquare, Info, Keyboard,
   Leaf, Lightbulb, Lightning, Link, List, ListDashes, ListNumbers, Lock,
   MagicWand, MagnifyingGlass, MapPin, MapTrifold,
   Microphone, Minus, Moon, Mountains, MusicNote, MusicNotes, Notebook,
@@ -49,7 +48,6 @@ import {
   Heartbeat,
   ArrowBendUpLeft,
   ArrowCircleDown,
-  ArrowClockwise,
   ArrowCounterClockwise,
   ArrowDown,
   ArrowLeft,
@@ -140,7 +138,6 @@ import {
   ImageSquare,
   Infinity as PhosphorInfinity,
   Info,
-  Key,
   Keyboard,
   Leaf,
   Lightbulb,
@@ -239,7 +236,7 @@ const Fallback = (() => null) as unknown as IconComponent;
 export const PhActivity = Heartbeat;
 export const PhArrowBendUpLeft = ArrowBendUpLeft;
 export const PhArrowCircleDown = ArrowCircleDown;
-export const PhArrowClockwise = ArrowClockwise;
+export const PhArrowClockwise = ArrowsClockwise;
 export const PhArrowCounterClockwise = ArrowCounterClockwise;
 export const PhArrowDown = ArrowDown;
 export const PhArrowLeft = ArrowLeft;
@@ -337,7 +334,7 @@ export const PhImage = Image;
 export const PhImageSquare = ImageSquare;
 export const PhInfinity = PhosphorInfinity;
 export const PhInfo = Info;
-export const PhKey = Key;
+export const PhKey = Keyboard; // Key icon not available in this version, fallback to Keyboard
 export const PhKeyboard = Keyboard;
 export const PhLayers = Stack;
 export const PhLeaf = Leaf;
