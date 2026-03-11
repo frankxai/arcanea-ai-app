@@ -125,7 +125,7 @@ export function AboutContent() {
               Built by Frank Riemer
             </span>
             <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">
-              AI Architect at Oracle
+              500+ AI Implementations
             </span>
             <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">
               Next.js + Vercel AI SDK

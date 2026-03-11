@@ -11,35 +11,9 @@ import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { createAnthropic } from '@ai-sdk/anthropic';
 import { createOpenAI } from '@ai-sdk/openai';
 import { streamText } from 'ai';
+import { createArcanea } from '@/lib/ai/arcanea-intelligence';
 
 export const runtime = 'edge';
-
-// ---------------------------------------------------------------------------
-// Default system prompt — used when no companion systemPrompt is provided
-// ---------------------------------------------------------------------------
-
-const ARCANEA_DEFAULT_SYSTEM_PROMPT = `You are Arcanea, a creative intelligence built for world-builders, storytellers, game designers, and makers of all kinds.
-
-Your core capabilities:
-- World-building: geography, magic systems, cultures, histories, cosmologies
-- Storytelling: narrative structure (hero's journey, three-act, kishōtenketsu, five-act), character arcs, dialogue, pacing
-- Character design: motivations, backstories, flaws, growth arcs, relationships
-- Game design: mechanics, progression systems, encounter design, lore integration
-- Creative frameworks: brainstorming, moodboards, concept art direction, naming conventions
-
-Your personality:
-- Warm and inspiring — you genuinely care about the creator's vision
-- Generative — you offer concrete ideas, not just encouragement. When asked "help me build a world," you start building it
-- Concise — respond in 2-4 focused paragraphs unless the creator asks for more depth
-- Curious — ask one clarifying question at the end to guide the creator deeper into their idea
-- Specific — use vivid details and names, not vague generalities
-
-Rules:
-- Never produce walls of text. Density over length.
-- When a creator shares an idea, build on it with something specific they did not expect.
-- End most responses with a single question that opens a new creative door.
-- Use markdown formatting (bold, lists, headers) only when it genuinely aids clarity.
-- You are not a generic assistant. You are a creative collaborator. Stay in that lane.`;
 
 // ---------------------------------------------------------------------------
 // Provider configuration
@@ -181,8 +155,28 @@ export async function POST(req: NextRequest) {
       content: msg.content,
     }));
 
-    // Use the provided companion prompt, or fall back to the default Arcanea prompt
-    const resolvedSystemPrompt = systemPrompt || ARCANEA_DEFAULT_SYSTEM_PROMPT;
+    // --- MoE Router: classify intent and blend expert fragments ---
+    // If a specific systemPrompt is provided (e.g., from /chat/[luminorId]),
+    // use it directly. Otherwise, run the Arcanea intelligence router.
+    let resolvedSystemPrompt: string;
+    let activeGates: string[] = [];
+
+    if (systemPrompt) {
+      // Direct companion prompt (legacy /chat/[luminorId] pages)
+      resolvedSystemPrompt = systemPrompt;
+    } else {
+      // MoE Router: one intelligence, Luminor experts as hidden layer
+      const lastUserMessage = [...messages].reverse().find((m) => m.role === 'user');
+      const messageText = lastUserMessage?.content || '';
+      const historyForRouter = normalizedMessages.slice(0, -1).map((m) => ({
+        role: m.role,
+        content: m.content,
+      }));
+
+      const arcanea = createArcanea(messageText, historyForRouter);
+      resolvedSystemPrompt = arcanea.systemPrompt;
+      activeGates = arcanea.router.activeGates;
+    }
 
     // --- Stream response ---
     const result = await streamText({
@@ -194,7 +188,10 @@ export async function POST(req: NextRequest) {
     });
 
     return result.toTextStreamResponse({
-      headers: { 'x-arcanea-model': label },
+      headers: {
+        'x-arcanea-model': label,
+        'x-arcanea-gates': activeGates.join(','),
+      },
     });
   } catch (error) {
     console.error('Chat API error:', error);

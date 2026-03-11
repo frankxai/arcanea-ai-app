@@ -17,7 +17,7 @@ const CHANGES = [
     changes: [
       { type: "added", text: "Pricing added to main navigation" },
       { type: "added", text: "Trust strip with tech stack on homepage" },
-      { type: "added", text: "Oracle credential badges on About page" },
+      { type: "added", text: "Enterprise AI credential badges on About page" },
       { type: "added", text: "Multi-provider AI support (Google, Anthropic, OpenAI)" },
       { type: "added", text: "5 Academy courses with 20+ lessons" },
       { type: "improved", text: "Homepage hero: outcome-first copy, no jargon" },

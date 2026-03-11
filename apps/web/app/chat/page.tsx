@@ -7,6 +7,7 @@ import { TextStreamChatTransport } from 'ai';
 import Link from 'next/link';
 import ChatMarkdown from '@/components/chat/chat-markdown';
 import { useProvider } from '@/hooks/use-provider';
+import { classifyIntent } from '@/lib/ai/router';
 import {
   PhPaperPlane,
   PhPlus,
@@ -27,16 +28,33 @@ function getMessageText(msg: { parts?: Array<{ type: string; text?: string }> })
 }
 
 // ---------------------------------------------------------------------------
+// Gate metadata for the frequency indicator
+// ---------------------------------------------------------------------------
+
+const GATE_META: Record<string, { label: string; hz: string; color: string }> = {
+  lyssandria: { label: 'Foundation', hz: '174', color: '#6b8e23' },
+  leyla:      { label: 'Flow',       hz: '285', color: '#4fc3f7' },
+  draconia:   { label: 'Fire',       hz: '396', color: '#ff6b35' },
+  maylinn:    { label: 'Heart',      hz: '417', color: '#e91e63' },
+  alera:      { label: 'Voice',      hz: '528', color: '#ab47bc' },
+  lyria:      { label: 'Sight',      hz: '639', color: '#7e57c2' },
+  aiyami:     { label: 'Crown',      hz: '741', color: '#ffd700' },
+  elara:      { label: 'Starweave',  hz: '852', color: '#26c6da' },
+  ino:        { label: 'Unity',      hz: '963', color: '#66bb6a' },
+  shinkami:   { label: 'Source',      hz: '1111', color: '#ffffff' },
+};
+
+// ---------------------------------------------------------------------------
 // Constants
 // ---------------------------------------------------------------------------
 
 const ACCENT = '#00bcd4';
 
 const SUGGESTIONS = [
-  'Write a short story about a wandering inventor',
+  'Help me build a magic system for my world',
   'Design the architecture for a real-time app',
-  'Help me name my creative project',
-  'Analyze the trends shaping indie games',
+  'Write a melody that feels like coming home',
+  'I feel stuck — help me find direction',
 ];
 
 // ---------------------------------------------------------------------------
@@ -49,6 +67,7 @@ export default function ChatPage() {
   const { provider, clientApiKey, label: providerLabel } = useProvider();
 
   const [input, setInput] = useState('');
+  const [activeGates, setActiveGates] = useState<string[]>([]);
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
   }, []);
@@ -67,6 +86,18 @@ export default function ChatPage() {
   });
 
   const isLoading = status === 'submitted' || status === 'streaming';
+
+  // Run client-side router for frequency indicator (mirrors server-side routing)
+  useEffect(() => {
+    const lastUser = [...messages].reverse().find((m) => m.role === 'user');
+    if (lastUser) {
+      const text = getMessageText(lastUser);
+      if (text) {
+        const result = classifyIntent(text);
+        setActiveGates(result.activeGates);
+      }
+    }
+  }, [messages]);
 
   const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
@@ -143,6 +174,7 @@ export default function ChatPage() {
   const startNewChat = () => {
     setMessages([]);
     setInput('');
+    setActiveGates([]);
     textareaRef.current?.focus();
   };
 
@@ -208,9 +240,29 @@ export default function ChatPage() {
             >
               Arcanea
             </Link>
-            <Link href="/settings/providers" className="text-[11px] text-white/25 font-mono hover:text-white/50 transition-colors">
-              {providerLabel}
-            </Link>
+            {/* Active Gates frequency indicator */}
+            {activeGates.length > 0 && messages.length > 0 ? (
+              <div className="flex items-center gap-1.5">
+                {activeGates.slice(0, 3).map((gate) => {
+                  const meta = GATE_META[gate];
+                  if (!meta) return null;
+                  return (
+                    <span
+                      key={gate}
+                      className="text-[10px] font-mono px-1.5 py-0.5 rounded-md border border-white/[0.06] transition-colors"
+                      style={{ color: meta.color, borderColor: `${meta.color}20` }}
+                      title={`${meta.label} Gate — ${meta.hz} Hz`}
+                    >
+                      {meta.hz}
+                    </span>
+                  );
+                })}
+              </div>
+            ) : (
+              <Link href="/settings/providers" className="text-[11px] text-white/25 font-mono hover:text-white/50 transition-colors">
+                {providerLabel}
+              </Link>
+            )}
           </div>
 
           <div className="flex items-center gap-2">
@@ -392,9 +444,9 @@ export default function ChatPage() {
                 <span className="text-[11px] text-white/20">
                   Enter to send · Shift+Enter for new line
                 </span>
-                <span className="text-[11px] text-white/15 font-mono">
+                <Link href="/settings/providers" className="text-[11px] text-white/15 font-mono hover:text-white/30 transition-colors">
                   {providerLabel}
-                </span>
+                </Link>
               </div>
             </form>
           </div>
