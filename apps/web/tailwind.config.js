@@ -12,8 +12,8 @@ module.exports = {
           panel: '#121826',
           text: '#e6eefc',
           muted: '#9bb1d0',
-          accent: '#78a6ff',
-          accent2: '#7fffd4',
+          accent: '#00bcd4',
+          accent2: '#0d47a1',
           border: '#233049'
         },
         cosmic: {

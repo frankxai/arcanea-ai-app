@@ -11,7 +11,7 @@ import { durations, m3Curves } from "@/lib/design/motion";
 const COLLECTION_COLORS: Record<string, { glow: string; dot: string; text: string; bg: string; shimmer: 'cyan' | 'gold' | 'purple' | 'fire' }> = {
   "gold-bright": { glow: "rgba(255, 215, 0, 0.12)", dot: "#ffd700", text: "text-gold-bright", bg: "bg-gold-bright/20", shimmer: "gold" },
   "atlantean-teal-aqua": { glow: "rgba(0, 188, 212, 0.12)", dot: "#00bcd4", text: "text-atlantean-teal-aqua", bg: "bg-atlantean-teal-aqua/20", shimmer: "cyan" },
-  "creation-prism-purple": { glow: "rgba(139, 92, 246, 0.12)", dot: "#8b5cf6", text: "text-creation-prism-purple", bg: "bg-creation-prism-purple/20", shimmer: "purple" },
+  "creation-prism-purple": { glow: "rgba(13, 71, 161, 0.12)", dot: "#0d47a1", text: "text-creation-prism-purple", bg: "bg-creation-prism-purple/20", shimmer: "purple" },
   "draconic-crimson": { glow: "rgba(239, 68, 68, 0.12)", dot: "#ef4444", text: "text-draconic-crimson", bg: "bg-draconic-crimson/20", shimmer: "fire" },
 };
 

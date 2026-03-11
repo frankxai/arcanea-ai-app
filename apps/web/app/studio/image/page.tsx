@@ -40,7 +40,7 @@ const ASPECT_RATIOS = [
 
 const QUICK_PROMPTS = [
   'A majestic dragon guardian protecting an ancient crystal',
-  'Luminor meditating in a cosmic void surrounded by stars',
+  'A cosmic guardian meditating in the void surrounded by stars',
   'The gates of Arcanea opening to reveal golden light',
   'A creator channeling the five elements in harmony',
   'The Library of Arcanea with floating books and ethereal light',

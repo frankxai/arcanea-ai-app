@@ -156,6 +156,9 @@ export default function GalleryPage() {
         totalCount={allItems.length}
       />
 
+      {/* Featured showcase */}
+
+
       {/* Filter bar */}
       <FilterBar
         activeFilter={activeFilter}
@@ -238,13 +241,29 @@ function HeroSection({
                 ? "Canonical works from across the Ten Gates. Visions channeled through the Five Elements by creators of every rank."
                 : `${totalCount} creations from the Arcanea community, channeled through the Ten Gates and Five Elements.`}
             </p>
-            <Link
-              href="/gallery/forge"
-              className="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-lg bg-cyan-500/10 text-cyan-400 text-sm font-medium border border-cyan-500/20 hover:bg-cyan-500/20 transition-colors"
-            >
-              The Forge — Vessel Gallery
-              <PhArrowRight size={14} />
-            </Link>
+            <div className="flex gap-3 mt-4">
+              <Link
+                href="/gallery/luminors"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#ffd700]/10 text-[#ffd700] text-sm font-medium border border-[#ffd700]/20 hover:bg-[#ffd700]/20 transition-colors"
+              >
+                The Twenty
+                <PhArrowRight size={14} />
+              </Link>
+              <Link
+                href="/companions"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-500/10 text-cyan-400 text-sm font-medium border border-cyan-500/20 hover:bg-cyan-500/20 transition-colors"
+              >
+                Companions
+                <PhArrowRight size={14} />
+              </Link>
+              <Link
+                href="/gallery/forge"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.04] text-white/40 text-sm font-medium border border-white/[0.06] hover:bg-white/[0.06] transition-colors"
+              >
+                The Forge
+                <PhArrowRight size={14} />
+              </Link>
+            </div>
           </div>
 
           {/* Stats strip */}
@@ -452,6 +471,8 @@ function CreationCard({ item }: { item: CardItem }) {
     </div>
   );
 }
+
+// (LuminorShowcase removed — agents data deleted)
 
 // ---------------------------------------------------------------------------
 // Utility sub-components

@@ -102,8 +102,8 @@ export default function WorkspacePage() {
           />
           <Card
             href="/chat"
-            title="Choose Luminor"
-            description="Select from 16 creative intelligences by team and specialty."
+            title="Choose Companion"
+            description="Select from 16 companions by team and specialty."
             icon={<PhBrain className="h-5 w-5" />}
           />
         </div>

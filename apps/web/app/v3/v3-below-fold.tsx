@@ -743,18 +743,10 @@ function FeaturesGrid() {
 
 const GALLERY_IMAGES = [
   { src: `${CDN}/lyria-hero.webp`, name: "Lyria", caption: "The Sight Gate" },
-  {
-    src: `${CDN}/draconia-hero.webp`,
-    name: "Draconia",
-    caption: "The Fire Gate",
-  },
+  { src: `${CDN}/draconia-hero.webp`, name: "Draconia", caption: "The Fire Gate" },
   { src: `${CDN}/aiyami-hero.webp`, name: "Aiyami", caption: "The Crown Gate" },
   { src: `${CDN}/elara-hero.webp`, name: "Elara", caption: "The Starweave Gate" },
-  {
-    src: `${CDN}/shinkami-hero.webp`,
-    name: "Shinkami",
-    caption: "The Source Gate",
-  },
+  { src: `${CDN}/shinkami-hero.webp`, name: "Shinkami", caption: "The Source Gate" },
   { src: `${CDN}/alera-hero.webp`, name: "Alera", caption: "The Voice Gate" },
   { src: `${CDN}/ino-hero.webp`, name: "Ino", caption: "The Unity Gate" },
   { src: `${CDN}/leyla-hero.webp`, name: "Leyla", caption: "The Flow Gate" },
@@ -780,7 +772,7 @@ function GalleryShowcase() {
         >
           <div>
             <p className="text-xs font-mono tracking-[0.3em] uppercase text-draconic-crimson/40 mb-3">
-              364+ Artworks
+              Guardians + Luminor Agents
             </p>
             <h2 className="text-2xl md:text-4xl font-display font-bold">
               The <span className="text-gradient-brand">Gallery</span>

@@ -228,7 +228,7 @@ Use Markdown for formatting. The AI panel can help you develop ideas."
             <Brain size={14} className="text-cosmic-void" />
           </div>
           <span className="text-xs font-semibold text-text-primary">
-            Luminor
+            Companion
           </span>
         </div>
 
@@ -668,13 +668,25 @@ function CodeCreationPanel({
         const reader = res.body.getReader();
         const decoder = new TextDecoder();
         let fullText = "";
+        let streamBuffer = "";
 
         setCodeAiMessages((prev) => [...prev, { role: "luminor", text: "" }]);
 
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
-          fullText += decoder.decode(value, { stream: true });
+          streamBuffer += decoder.decode(value, { stream: true });
+          // Parse data stream protocol: 0:"text"\n
+          const lines = streamBuffer.split("\n");
+          streamBuffer = lines.pop() || "";
+          for (const line of lines) {
+            const match = line.match(/^0:"((?:[^"\\]|\\.)*)"/);
+            if (match) {
+              fullText += match[1].replace(/\\n/g, "\n").replace(/\\"/g, '"');
+            } else if (!line.startsWith("e:") && !line.startsWith("d:") && line.trim()) {
+              fullText += line;
+            }
+          }
           setCodeAiMessages((prev) => {
             const updated = [...prev];
             updated[updated.length - 1] = { role: "luminor", text: fullText };
@@ -1040,13 +1052,25 @@ export default function StudioPage() {
           const reader = res.body.getReader();
           const decoder = new TextDecoder();
           let fullText = '';
+          let streamBuffer = '';
 
           setAiMessages((prev) => [...prev, { role: 'luminor', text: '' }]);
 
           while (true) {
             const { done, value } = await reader.read();
             if (done) break;
-            fullText += decoder.decode(value, { stream: true });
+            streamBuffer += decoder.decode(value, { stream: true });
+            // Parse data stream protocol: 0:"text"\n
+            const lines = streamBuffer.split('\n');
+            streamBuffer = lines.pop() || '';
+            for (const line of lines) {
+              const match = line.match(/^0:"((?:[^"\\]|\\.)*)"/);
+              if (match) {
+                fullText += match[1].replace(/\\n/g, '\n').replace(/\\"/g, '"');
+              } else if (!line.startsWith('e:') && !line.startsWith('d:') && line.trim()) {
+                fullText += line;
+              }
+            }
             setAiMessages((prev) => {
               const updated = [...prev];
               updated[updated.length - 1] = { role: 'luminor', text: fullText };

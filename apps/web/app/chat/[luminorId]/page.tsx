@@ -1,467 +1,447 @@
 'use client';
 
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useRef, useEffect, useCallback, useState, useMemo } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
-import {
-  PhList,
-  PhX,
-  PhWarningCircle,
-  PhArrowLeft,
-  PhPlus,
-  PhChatCircle,
-  PhCircleNotch,
-} from '@/lib/phosphor-icons';
-import { LuminorHeader } from '@/components/chat/luminor-header';
-import { ChatContainer } from '@/components/chat/chat-container';
-import { ChatInput } from '@/components/chat/chat-input';
-import { ContextSidebar } from '@/components/chat/context-sidebar';
-import { QuickActions } from '@/components/chat/quick-actions';
-import { useChat } from '@/hooks/use-chat';
-import { getLuminor } from '@/lib/luminors/config';
+import { useChat } from '@ai-sdk/react';
 import Link from 'next/link';
+import ReactMarkdown from 'react-markdown';
+import {
+  PhPaperPlane,
+  PhPlus,
+  PhCircleNotch,
+  PhArrowDown,
+  PhArrowLeft,
+  PhWarningCircle,
+  PhX,
+} from '@/lib/phosphor-icons';
+import { getLuminor } from '@/lib/luminors/config';
 
 // ---------------------------------------------------------------------------
-// Types
+// Companion-specific quick starters
 // ---------------------------------------------------------------------------
 
-interface SessionListItem {
-  id: string;
-  title: string | null;
-  updatedAt: string;
-}
+const LUMINOR_STARTERS: Record<string, string[]> = {
+  logicus: ['Help me design the architecture for...', 'What pattern should I use for...', 'Review this system design:', 'How should I structure...'],
+  synthra: ['Refactor this code for clarity:', 'Review this implementation:', 'Help me write clean code for...', 'What naming convention for...'],
+  debugon: ['I have a bug I cannot find:', 'This keeps failing:', 'Help me trace this error:', 'Root cause analysis for...'],
+  nexus: ['I need to integrate these two systems:', 'Design an API for...', 'Help me connect...', 'This integration keeps failing:'],
+  prismatic: ['Review this design:', 'What color palette for...', 'How should I layout...', 'This feels visually wrong:'],
+  melodia: ['I need music for...', 'Describe the sound of...', 'What sonic mood for...', 'Help me write lyrics for...'],
+  motio: ['How should this element animate?', 'Design the transition for...', 'What timing and easing for...', 'This animation feels wrong:'],
+  formis: ['I need to model...', 'How should I texture...', 'Help me visualize...', 'Design the 3D environment for...'],
+  chronica: ['I am stuck in my story:', 'Help me structure this narrative:', 'My character needs...', "The plot isn't working:"],
+  veritas: ['Rewrite this for clarity:', 'Help me write copy for...', "This message isn't landing:", 'How do I explain...'],
+  lexicon: ['What is the right word for...', 'Help me name this:', 'Analyze this language:', 'Translate this concept into...'],
+  poetica: ['Write a poem about...', 'Help me with these lyrics:', 'Find the rhythm in...', 'What metaphor for...'],
+  oracle: ['Research this topic:', 'What do we know about...', 'Find the best sources for...', 'Deep analysis of...'],
+  analytica: ['Analyze this data:', 'What pattern do you see in...', 'Help me interpret...', 'What does this mean?'],
+  memoria: ['Help me organize this:', 'Design a knowledge system for...', 'How should I structure this information?', 'Create documentation for...'],
+  futura: ['Where is this trend going?', 'What will this field look like in 5 years?', 'Anticipate the change in...', 'What am I missing about the future of...'],
+};
+
+const FALLBACK_STARTERS = [
+  'Help me brainstorm ideas for...',
+  'What do you think about...',
+  'I need guidance on...',
+  'Explore this concept with me:',
+];
 
 // ---------------------------------------------------------------------------
-// Helpers
+// Companion Chat Page — powered by Vercel AI SDK useChat
 // ---------------------------------------------------------------------------
 
-/**
- * Generate a stable guest ID so the chat hook has a userId even
- * when Supabase auth is not configured or the user is not logged in.
- */
-function getGuestId(): string {
-  if (typeof window === 'undefined') return 'guest';
-  const key = 'arcanea-guest-id';
-  let id = localStorage.getItem(key);
-  if (!id) {
-    id = `guest-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-    localStorage.setItem(key, id);
-  }
-  return id;
-}
-
-function formatSessionDate(iso: string): string {
-  const d = new Date(iso);
-  const now = new Date();
-  const diffMs = now.getTime() - d.getTime();
-  const diffDays = Math.floor(diffMs / 86400000);
-  if (diffDays === 0) return 'Today';
-  if (diffDays === 1) return 'Yesterday';
-  if (diffDays < 7) return `${diffDays} days ago`;
-  return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-}
-
-// ---------------------------------------------------------------------------
-// Sessions sidebar
-// ---------------------------------------------------------------------------
-
-interface SessionsSidebarProps {
-  luminorId: string;
-  luminorColor: string;
-  activeSessionId: string | null;
-  isAuthenticated: boolean;
-  onNewSession: () => void;
-  onSessionSelect: (sessionId: string) => void;
-}
-
-function SessionsSidebar({
-  luminorId,
-  luminorColor,
-  activeSessionId,
-  isAuthenticated,
-  onNewSession,
-  onSessionSelect,
-}: SessionsSidebarProps) {
-  const [sessions, setSessions] = useState<SessionListItem[]>([]);
-  const [loading, setLoading] = useState(false);
-
-  const fetchSessions = useCallback(async () => {
-    if (!isAuthenticated) return;
-    setLoading(true);
-    try {
-      const res = await fetch(
-        `/api/chat/sessions?userId=${encodeURIComponent('me')}&luminorId=${encodeURIComponent(luminorId)}`
-      );
-      if (res.ok) {
-        const json = await res.json();
-        // Support both { data } (new) and { sessions } (legacy) response shapes
-        const list = Array.isArray(json.data)
-          ? json.data
-          : Array.isArray(json.sessions)
-          ? json.sessions
-          : [];
-        setSessions(
-          list.map(
-            (s: { id: string; title: string | null; updatedAt: string }) => ({
-              id: s.id,
-              title: s.title,
-              updatedAt: s.updatedAt,
-            })
-          )
-        );
-      }
-    } catch {
-      // Non-critical
-    } finally {
-      setLoading(false);
-    }
-  }, [luminorId, isAuthenticated]);
-
-  // Reload when the active session changes (e.g. after new session is created)
-  useEffect(() => {
-    fetchSessions();
-  }, [fetchSessions, activeSessionId]);
-
-  return (
-    <aside className="hidden md:flex w-60 flex-col border-r border-white/[0.06] bg-cosmic-deep/60 backdrop-blur-sm shrink-0">
-      {/* New chat button */}
-      <div className="p-3 border-b border-white/[0.06]">
-        <button
-          onClick={onNewSession}
-          className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-mono font-semibold
-            border border-white/[0.08] text-text-secondary
-            hover:border-white/[0.15] hover:text-text-primary transition-all duration-200"
-        >
-          <PhPlus className="w-4 h-4" />
-          New chat
-        </button>
-      </div>
-
-      {/* Session list */}
-      <div
-        className="flex-1 overflow-y-auto p-2 space-y-1"
-        style={{ scrollbarWidth: 'thin', scrollbarColor: `${luminorColor}40 transparent` }}
-      >
-        {!isAuthenticated ? (
-          <p className="px-3 py-4 text-xs text-text-muted font-body text-center leading-relaxed">
-            Sign in to save your conversation history
-          </p>
-        ) : loading ? (
-          <div className="flex justify-center pt-6">
-            <PhCircleNotch
-              className="w-4 h-4 animate-spin"
-              style={{ color: luminorColor }}
-            />
-          </div>
-        ) : sessions.length === 0 ? (
-          <p className="px-3 py-4 text-xs text-text-muted font-body text-center">
-            No previous conversations yet
-          </p>
-        ) : (
-          sessions.map((session) => {
-            const isActive = session.id === activeSessionId;
-            return (
-              <button
-                key={session.id}
-                onClick={() => onSessionSelect(session.id)}
-                className="w-full text-left px-3 py-2.5 rounded-lg text-sm transition-all duration-150 group"
-                style={
-                  isActive
-                    ? {
-                        backgroundColor: `${luminorColor}18`,
-                        borderLeft: `2px solid ${luminorColor}`,
-                      }
-                    : {}
-                }
-              >
-                <div
-                  className={`flex items-start gap-2 ${
-                    isActive ? '' : 'text-text-secondary group-hover:text-text-primary'
-                  }`}
-                >
-                  <PhChatCircle className="w-3.5 h-3.5 mt-0.5 shrink-0 opacity-60" />
-                  <div className="min-w-0">
-                    <p className="truncate text-xs font-mono leading-snug">
-                      {session.title ?? 'Untitled session'}
-                    </p>
-                    <p className="text-[10px] text-text-muted mt-0.5">
-                      {formatSessionDate(session.updatedAt)}
-                    </p>
-                  </div>
-                </div>
-              </button>
-            );
-          })
-        )}
-      </div>
-    </aside>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Page
-// ---------------------------------------------------------------------------
-
-export default function ChatPage() {
+export default function CompanionChatPage() {
   const params = useParams();
   const router = useRouter();
   const searchParams = useSearchParams();
   const luminorId = params.luminorId as string;
   const initialPrompt = searchParams.get('prompt');
 
-  // Resolve auth state — never crashes if Supabase is not configured
-  const [userId, setUserId] = useState<string>('');
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [authReady, setAuthReady] = useState(false);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    async function resolveUser() {
-      try {
-        const { createClient } = await import('@/lib/supabase/client');
-        const supabase = createClient();
-        const { data } = await supabase.auth.getSession();
-        if (!cancelled) {
-          if (data.session?.user) {
-            setUserId(data.session.user.id);
-            setIsAuthenticated(true);
-          } else {
-            setUserId(getGuestId());
-            setIsAuthenticated(false);
-          }
-          setAuthReady(true);
-        }
-      } catch {
-        if (!cancelled) {
-          setUserId(getGuestId());
-          setIsAuthenticated(false);
-          setAuthReady(true);
-        }
-      }
-    }
-
-    resolveUser();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  const [contextSidebarOpen, setContextSidebarOpen] = useState(false);
-  const [showQuickActions, setShowQuickActions] = useState(true);
-
-  // Luminor config
+  // Companion config
   const luminorConfig = useMemo(() => getLuminor(luminorId), [luminorId]);
 
-  // Redirect if invalid Luminor
+  // Redirect if invalid companion
   useEffect(() => {
     if (luminorId && !luminorConfig) {
       router.push('/chat');
     }
   }, [luminorId, luminorConfig, router]);
 
-  // Chat hook
+  // Vercel AI SDK — handles streaming, messages, parsing automatically
   const {
     messages,
-    isStreaming,
-    streamingContent,
-    streamingEmotionalTone,
-    thinkingState,
-    bondState,
-    sessionId,
-    sendMessage,
-    startNewSession,
-    loadMore,
-    hasMore,
-    isLoadingMore,
+    input,
+    handleInputChange,
+    handleSubmit,
+    isLoading,
     error,
-    clearError,
+    append,
+    setMessages,
+    setInput,
   } = useChat({
-    luminorId,
-    userId,
-    systemPrompt: luminorConfig?.systemPrompt,
+    id: `companion-${luminorId}`,
+    api: '/api/ai/chat',
+    body: {
+      systemPrompt: luminorConfig?.systemPrompt,
+    },
   });
 
-  // Auto-send initial prompt from hero chat box (via ?prompt= query param)
-  const [initialPromptSent, setInitialPromptSent] = useState(false);
+  // UI state
+  const [autoScroll, setAutoScroll] = useState(true);
+  const [showScrollBtn, setShowScrollBtn] = useState(false);
+
+  // Refs
+  const containerRef = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // Auto-send initial prompt from ?prompt= query param
+  const [initialSent, setInitialSent] = useState(false);
   useEffect(() => {
-    if (initialPrompt && !initialPromptSent && authReady && messages.length === 0) {
-      sendMessage(initialPrompt);
-      setInitialPromptSent(true);
-      setShowQuickActions(false);
+    if (initialPrompt && !initialSent && messages.length === 0) {
+      append({ role: 'user', content: initialPrompt });
+      setInitialSent(true);
     }
-  }, [initialPrompt, initialPromptSent, authReady, messages.length, sendMessage]);
+  }, [initialPrompt, initialSent, messages.length, append]);
 
-  // Hide quick actions after first message
+  // Auto-resize textarea
   useEffect(() => {
-    if (messages.length > 0) {
-      setShowQuickActions(false);
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 200)}px`;
     }
-  }, [messages.length]);
+  }, [input]);
 
-  const handleSendMessage = (content: string, attachments?: File[]) => {
-    sendMessage(content, attachments);
+  // Auto-scroll on new content
+  useEffect(() => {
+    if (autoScroll && bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages, autoScroll]);
+
+  // Scroll detection
+  const handleScroll = useCallback(() => {
+    if (!containerRef.current) return;
+    const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+    const dist = scrollHeight - scrollTop - clientHeight;
+    setShowScrollBtn(dist > 200);
+    setAutoScroll(dist <= 100);
+  }, []);
+
+  const scrollToBottom = () => {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    setAutoScroll(true);
   };
 
-  const handleQuickAction = (prompt: string) => {
-    sendMessage(prompt);
-    setShowQuickActions(false);
+  // New chat
+  const startNewChat = () => {
+    setMessages([]);
+    setInput('');
+    textareaRef.current?.focus();
   };
 
-  const handleNewSession = () => {
-    startNewSession();
-    setShowQuickActions(true);
+  // Keyboard: Enter to send, Shift+Enter for newline
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (input.trim() && !isLoading) {
+        e.currentTarget.form?.requestSubmit();
+      }
+    }
   };
 
-  // Loading session history from a sidebar tap is handled by reloading chat
-  // history for the selected session. We pass a luminorId-scoped view, so
-  // for now switching sessions simply means starting a new session since the
-  // history API loads the most-recent session automatically. A future
-  // enhancement would pass sessionId as a query param to /api/chat/history.
-  const handleSessionSelect = (_sessionId: string) => {
-    // For now, this is a no-op hint for future deep-link per-session support.
-    // The sidebar's active highlight already reflects the current sessionId.
-  };
+  // Detect streaming state
+  const lastMsg = messages[messages.length - 1];
+  const isStreaming = isLoading && lastMsg?.role === 'assistant';
+  const isThinking = isLoading && (!lastMsg || lastMsg.role === 'user');
+  const isEmpty = messages.length === 0 && !isLoading;
 
-  // Loading state
-  if (!authReady || !luminorConfig) {
+  // Quick starters for this companion
+  const starters = LUMINOR_STARTERS[luminorId] || FALLBACK_STARTERS;
+
+  // Companion color (fallback to cyan)
+  const color = luminorConfig?.color || '#00bcd4';
+
+  // Loading state — wait for config
+  if (!luminorConfig) {
     return (
-      <div className="flex items-center justify-center h-screen bg-cosmic-deep">
-        <div className="text-center">
-          <div className="w-16 h-16 rounded-full bg-brand-primary/20 flex items-center justify-center mx-auto mb-4 animate-pulse">
-            <span className="text-2xl">{luminorConfig?.avatar ?? '...'}</span>
-          </div>
-          <p className="text-text-secondary font-body">
-            {!authReady ? 'Preparing session...' : 'Loading Intelligence...'}
-          </p>
-        </div>
+      <div className="flex items-center justify-center h-screen bg-[#09090b]">
+        <PhCircleNotch className="w-8 h-8 animate-spin text-white/20" />
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col h-screen bg-cosmic-deep">
+    <div className="flex flex-col h-screen bg-[#09090b]">
       {/* Header */}
-      <LuminorHeader
-        name={luminorConfig.name}
-        tagline={luminorConfig.tagline}
-        academy={luminorConfig.academy}
-        color={luminorConfig.color}
-        avatar={luminorConfig.avatar}
-        bondLevel={bondState.level}
-        bondXP={bondState.xp}
-        xpToNextLevel={bondState.xpToNextLevel}
-        relationshipStatus={bondState.relationshipStatus}
-        status={
-          isStreaming
-            ? 'generating'
-            : thinkingState !== 'idle'
-            ? 'thinking'
-            : 'active'
-        }
-        onBondClick={() => setContextSidebarOpen(true)}
-      />
+      <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06]">
+        <div className="flex items-center gap-3">
+          <Link
+            href="/chat"
+            className="flex w-8 h-8 items-center justify-center rounded-lg text-white/40 hover:text-white/70 hover:bg-white/[0.04] transition-colors"
+            aria-label="Back to chat"
+          >
+            <PhArrowLeft className="w-4 h-4" />
+          </Link>
 
-      {/* Error Banner */}
-      {error && (
-        <div className="bg-red-500/10 border-b border-red-500/30 px-4 py-3">
-          <div className="max-w-5xl mx-auto flex items-center justify-between">
-            <div className="flex items-center gap-2 text-red-400 text-sm">
-              <PhWarningCircle className="w-4 h-4" />
-              <span>{error}</span>
+          {/* Companion avatar + name */}
+          <div className="flex items-center gap-3">
+            <div
+              className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-medium shrink-0"
+              style={{ backgroundColor: color }}
+            >
+              {luminorConfig.avatar ? (
+                <img
+                  src={luminorConfig.avatar}
+                  alt={luminorConfig.name}
+                  className="w-full h-full rounded-full object-cover"
+                />
+              ) : (
+                luminorConfig.name.charAt(0).toUpperCase()
+              )}
             </div>
-            <button onClick={clearError} className="text-red-400 hover:text-red-300">
+            <div className="min-w-0">
+              <h1 className="text-sm font-medium text-white/90 truncate">
+                {luminorConfig.name}
+              </h1>
+              <p className="text-[11px] text-white/35 truncate">
+                {luminorConfig.tagline}
+              </p>
+            </div>
+          </div>
+
+          {/* Status */}
+          <div className="flex items-center gap-1.5 ml-2">
+            <span
+              className={`w-2 h-2 rounded-full ${isLoading ? 'animate-pulse' : ''}`}
+              style={{ backgroundColor: isLoading ? color : '#22c55e' }}
+            />
+            <span className="text-[11px] text-white/25">
+              {isThinking ? 'Thinking...' : isStreaming ? 'Generating...' : 'Online'}
+            </span>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2">
+          {messages.length > 0 && (
+            <button
+              onClick={startNewChat}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs text-white/40 hover:text-white/70 hover:bg-white/[0.04] transition-colors"
+            >
+              <PhPlus className="w-3.5 h-3.5" />
+              New
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Error banner */}
+      {error && (
+        <div role="alert" className="bg-red-500/8 border-b border-red-500/20 px-4 py-2.5">
+          <div className="max-w-[680px] mx-auto flex items-center justify-between">
+            <div className="flex items-center gap-2 text-red-400/80 text-sm">
+              <PhWarningCircle className="w-4 h-4" />
+              <span>{error.message}</span>
+            </div>
+            <button onClick={startNewChat} aria-label="Dismiss" className="text-red-400/60 hover:text-red-400">
               <PhX className="w-4 h-4" />
             </button>
           </div>
         </div>
       )}
 
-      {/* Main Content — sessions sidebar + chat area + context sidebar */}
-      <div className="flex flex-1 overflow-hidden">
-        {/* Sessions Sidebar (desktop only) */}
-        <SessionsSidebar
-          luminorId={luminorId}
-          luminorColor={luminorConfig.color}
-          activeSessionId={sessionId}
-          isAuthenticated={isAuthenticated}
-          onNewSession={handleNewSession}
-          onSessionSelect={handleSessionSelect}
-        />
+      {/* Messages area */}
+      <div
+        ref={containerRef}
+        onScroll={handleScroll}
+        className="flex-1 overflow-y-auto"
+        style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(255,255,255,0.08) transparent' }}
+      >
+        {isEmpty ? (
+          /* Empty state — companion welcome */
+          <div className="flex flex-col items-center justify-center h-full px-4">
+            <div className="max-w-[540px] w-full text-center">
+              {/* Companion avatar */}
+              <div
+                className="w-16 h-16 rounded-full flex items-center justify-center text-white text-2xl font-medium mx-auto mb-4"
+                style={{
+                  backgroundColor: color,
+                  boxShadow: `0 0 40px ${color}30`,
+                }}
+              >
+                {luminorConfig.avatar ? (
+                  <img
+                    src={luminorConfig.avatar}
+                    alt={luminorConfig.name}
+                    className="w-full h-full rounded-full object-cover"
+                  />
+                ) : (
+                  luminorConfig.name.charAt(0).toUpperCase()
+                )}
+              </div>
 
-        {/* Chat Area */}
-        <div className="flex-1 flex flex-col overflow-hidden">
-          {/* Quick Actions */}
-          {showQuickActions && messages.length === 0 && (
-            <QuickActions
-              luminorName={luminorConfig.name}
-              luminorSlug={luminorId}
-              luminorColor={luminorConfig.color}
-              onActionClick={handleQuickAction}
-            />
-          )}
+              <h1 className="text-2xl font-semibold text-white/90 mb-1 tracking-tight">
+                {luminorConfig.name}
+              </h1>
+              <p className="text-sm text-white/40 mb-8">
+                {luminorConfig.tagline}
+              </p>
 
-          {/* Messages */}
-          <ChatContainer
-            messages={messages}
-            luminorName={luminorConfig.name}
-            luminorColor={luminorConfig.color}
-            luminorAvatar={luminorConfig.avatar}
-            isStreaming={isStreaming}
-            streamingContent={streamingContent}
-            streamingEmotionalTone={streamingEmotionalTone}
-            thinkingState={thinkingState}
-            onLoadMore={loadMore}
-            hasMore={hasMore}
-            isLoadingMore={isLoadingMore}
-          />
+              {/* Quick starters */}
+              <div className="flex flex-wrap justify-center gap-2">
+                {starters.map((s) => (
+                  <button
+                    key={s}
+                    onClick={() => append({ role: 'user', content: s })}
+                    className="px-4 py-2 rounded-full text-sm text-white/50 border border-white/[0.08] hover:text-white/70 hover:bg-white/[0.03] transition-all duration-150"
+                    style={{
+                      borderColor: 'rgba(255,255,255,0.08)',
+                    }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget.style.borderColor = `${color}40`);
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)');
+                    }}
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        ) : (
+          /* Messages */
+          <div className="max-w-[680px] mx-auto px-4 py-6" aria-live="polite">
+            {messages.map((msg) => (
+              <div key={msg.id} className={`mb-6 ${msg.role === 'user' ? 'flex justify-end' : ''}`}>
+                {msg.role === 'user' ? (
+                  <div className="max-w-[85%]">
+                    <div className="inline-block px-4 py-3 rounded-2xl rounded-br-md bg-[#1a1a1f] text-white/90 text-[15px] leading-relaxed">
+                      {msg.content}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex gap-3">
+                    {/* Companion avatar */}
+                    <div
+                      className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-medium shrink-0 mt-0.5"
+                      style={{ backgroundColor: color }}
+                    >
+                      {luminorConfig.name.charAt(0).toUpperCase()}
+                    </div>
 
-          {/* Input */}
-          <ChatInput
-            onSend={handleSendMessage}
-            disabled={isStreaming || thinkingState !== 'idle'}
-            placeholder={`Share your thoughts with ${luminorConfig.name}...`}
-            luminorColor={luminorConfig.color}
-          />
-        </div>
+                    {/* Message content */}
+                    <div className="min-w-0 flex-1">
+                      <span className="text-xs font-medium mb-1 block" style={{ color }}>
+                        {luminorConfig.name}
+                      </span>
+                      <div className="prose prose-invert prose-sm max-w-none text-[15px] leading-[1.7] text-white/85">
+                        <ReactMarkdown>{msg.content}</ReactMarkdown>
+                        {isStreaming && msg.id === lastMsg?.id && (
+                          <span
+                            className="inline-block w-[2px] h-[18px] animate-pulse ml-0.5 align-text-bottom"
+                            style={{ backgroundColor: color }}
+                          />
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
 
-        {/* Context Sidebar (bond/memory) */}
-        <ContextSidebar
-          luminorName={luminorConfig.name}
-          luminorColor={luminorConfig.color}
-          bondLevel={bondState.level}
-          bondXP={bondState.xp}
-          xpToNextLevel={bondState.xpToNextLevel}
-          relationshipStatus={bondState.relationshipStatus}
-          keyMoments={[]}
-          recentTopics={[]}
-          creatorPreferences={{}}
-          isOpen={contextSidebarOpen}
-          onClose={() => setContextSidebarOpen(false)}
-        />
+            {/* Thinking indicator */}
+            {isThinking && (
+              <div className="mb-6 flex items-center gap-3">
+                <div
+                  className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-medium shrink-0 animate-pulse"
+                  style={{ backgroundColor: color }}
+                >
+                  {luminorConfig.name.charAt(0).toUpperCase()}
+                </div>
+                <div className="flex items-center gap-2 text-white/30">
+                  <div className="flex gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full animate-bounce" style={{ backgroundColor: color, animationDelay: '0ms' }} />
+                    <span className="w-1.5 h-1.5 rounded-full animate-bounce" style={{ backgroundColor: color, animationDelay: '150ms' }} />
+                    <span className="w-1.5 h-1.5 rounded-full animate-bounce" style={{ backgroundColor: color, animationDelay: '300ms' }} />
+                  </div>
+                  <span className="text-xs">Thinking...</span>
+                </div>
+              </div>
+            )}
+
+            <div ref={bottomRef} className="h-4" />
+          </div>
+        )}
       </div>
 
-      {/* Mobile FABs: back to selection + context sidebar toggle */}
-      <div className="lg:hidden fixed bottom-24 right-6 flex flex-col gap-3 z-30">
-        <Link
-          href="/chat"
-          className="w-12 h-12 rounded-full bg-gray-800/90 backdrop-blur-sm border border-gray-700 flex items-center justify-center shadow-lg"
-        >
-          <PhArrowLeft className="w-5 h-5 text-gray-300" />
-        </Link>
-        <button
-          onClick={() => setContextSidebarOpen(!contextSidebarOpen)}
-          className="w-12 h-12 rounded-full shadow-lg flex items-center justify-center"
-          style={{
-            backgroundColor: luminorConfig.color,
-            boxShadow: `0 4px 20px ${luminorConfig.color}60`,
-          }}
-        >
-          {contextSidebarOpen ? (
-            <PhX className="w-6 h-6 text-white" />
-          ) : (
-            <PhList className="w-6 h-6 text-white" />
-          )}
-        </button>
+      {/* Scroll to bottom */}
+      {showScrollBtn && (
+        <div className="absolute bottom-32 left-1/2 -translate-x-1/2 z-10">
+          <button
+            onClick={scrollToBottom}
+            aria-label="Scroll to bottom"
+            className="w-9 h-9 rounded-full bg-[#1a1a1f] border border-white/[0.1] shadow-lg flex items-center justify-center text-white/50 hover:text-white/80 transition-colors"
+          >
+            <PhArrowDown className="w-4 h-4" />
+          </button>
+        </div>
+      )}
+
+      {/* Input area */}
+      <div className="border-t border-white/[0.06] bg-[#09090b]">
+        <div className="max-w-[680px] mx-auto px-4 py-4">
+          <form onSubmit={handleSubmit}>
+            <div
+              className="relative rounded-2xl border transition-colors duration-150"
+              style={{
+                borderColor: input.trim() ? `${color}50` : 'rgba(255,255,255,0.08)',
+                backgroundColor: '#111113',
+              }}
+            >
+              <textarea
+                ref={textareaRef}
+                value={input}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
+                placeholder={`Message ${luminorConfig.name}...`}
+                aria-label="Message input"
+                disabled={isLoading}
+                rows={1}
+                className="w-full px-4 py-3 pr-14 bg-transparent text-white/90 placeholder-white/25 resize-none focus:outline-none disabled:opacity-40 text-[15px] rounded-2xl"
+                style={{ minHeight: '52px', maxHeight: '200px' }}
+              />
+
+              <div className="absolute right-2 bottom-2 flex items-center gap-1.5">
+                <button
+                  type="submit"
+                  disabled={!input.trim() || isLoading}
+                  aria-label="Send message"
+                  className="w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-150 disabled:opacity-20"
+                  style={{
+                    backgroundColor: input.trim() && !isLoading ? color : 'transparent',
+                  }}
+                >
+                  {isLoading ? (
+                    <PhCircleNotch className="w-4 h-4 text-white/40 animate-spin" />
+                  ) : (
+                    <PhPaperPlane className="w-4 h-4 text-white" />
+                  )}
+                </button>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between mt-2 px-1">
+              <span className="text-[11px] text-white/20">
+                Enter to send · Shift+Enter for new line
+              </span>
+              <span className="text-[11px] text-white/15 font-mono">
+                Gemini 2.0 Flash
+              </span>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

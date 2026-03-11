@@ -214,7 +214,7 @@ export const COUNCIL_ADVISORS: AdvisorDefinition[] = [
     capability: 'Architecture, scaling, and operations',
     imprint_capability: 'Architecture, scaling, and operations',
     seat_order: 7,
-    color: '#8b5cf6',
+    color: '#0d47a1',
   },
   {
     domain: 'Depth',

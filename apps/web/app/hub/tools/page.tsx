@@ -10,12 +10,12 @@ const TOOLS = [
   {
     id: "chat",
     name: "AI Chat",
-    description: "Conversational AI with 16 specialized intelligences. Each Luminor brings unique expertise to your creative challenges.",
+    description: "Conversational AI with 16 companions. Each brings unique expertise to your creative challenges.",
     status: "available",
     icon: "💬",
     color: "#0d47a1",
     href: "/chat",
-    features: ["16 Luminors", "Domain expertise", "Memory & context"],
+    features: ["16 companions", "Domain expertise", "Memory & context"],
   },
   {
     id: "library",

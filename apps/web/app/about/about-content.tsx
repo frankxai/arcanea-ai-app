@@ -4,6 +4,7 @@ import { m, LazyMotion, domAnimation, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
 
+import Image from "next/image";
 import {
   Sparkle,
   MusicNote,
@@ -14,6 +15,7 @@ import {
   Books,
   ChatCircleDots,
 } from "@/lib/phosphor-icons";
+import { getFeaturedLuminors } from "@/lib/luminor-images";
 import {
   VISION_CARDS,
   ELEMENTS,
@@ -502,6 +504,59 @@ export function AboutContent() {
               — The Library of Arcanea
             </cite>
           </m.div>
+        </div>
+      </AnimatedSection>
+
+      {/* ── Section 5.5: Luminor Showcase ─────────────────────────────── */}
+      <AnimatedSection className="py-24 relative">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+              The Creative Spirits
+            </h2>
+            <p className="text-text-secondary max-w-2xl mx-auto leading-relaxed">
+              Twenty unique visions, each aligned to an element and gate.
+              AI-generated companions that walk alongside creators.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+            {getFeaturedLuminors(6).map((luminor, i) => (
+              <m.div
+                key={luminor.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.05 * i }}
+                className="group relative overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02]"
+              >
+                <div className="aspect-square relative">
+                  <Image
+                    src={luminor.image}
+                    alt={`${luminor.name} — ${luminor.title}`}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 16vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 p-3">
+                  <p className="text-xs font-semibold text-white">{luminor.name}</p>
+                  <p className="text-[10px] text-white/45">{luminor.title}</p>
+                </div>
+              </m.div>
+            ))}
+          </div>
+
+          <div className="mt-8 text-center">
+            <Link
+              href="/gallery/luminors"
+              className="inline-flex items-center gap-2 text-sm text-[#00bcd4] hover:text-[#00bcd4]/80 transition-colors"
+            >
+              View all 20
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
         </div>
       </AnimatedSection>
 

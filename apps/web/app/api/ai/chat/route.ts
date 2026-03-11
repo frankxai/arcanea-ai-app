@@ -70,38 +70,14 @@ function resolveApiKey(): string | undefined {
 }
 
 /**
- * Build a plain-text streaming response for when no AI provider is available.
- * Returns a helpful message instead of an error.
+ * Build an error response when no AI provider is available.
+ * Compatible with @ai-sdk/react useChat error handling.
  */
-function createFallbackResponse(systemPrompt?: string): Response {
-  const luminorName = extractLuminorName(systemPrompt);
-  const greeting = luminorName
-    ? `Hello. I'm ${luminorName}, one of the Arcanea intelligences.`
-    : `Hello. I'm one of the Arcanea intelligences.`;
-
-  const body = [
-    greeting,
-    '',
-    'The AI service is not configured on this deployment yet.',
-    '',
-    'To activate chat, set this environment variable:',
-    '- `GOOGLE_GENERATIVE_AI_API_KEY` (Google Gemini)',
-    '',
-    'Once configured, I can help with writing, code, design, research, and more.',
-  ].join('\n');
-
-  return new Response(body, {
-    headers: { 'Content-Type': 'text/plain; charset=utf-8' },
-  });
-}
-
-/**
- * Try to extract a Luminor name from the system prompt, e.g. "You are Logicus, ..."
- */
-function extractLuminorName(prompt?: string): string | null {
-  if (!prompt) return null;
-  const match = prompt.match(/^You are (\w+)/i);
-  return match ? match[1] : null;
+function createFallbackResponse(): Response {
+  return Response.json(
+    { error: 'AI service is not configured. Set GOOGLE_GENERATIVE_AI_API_KEY on Vercel.' },
+    { status: 503 }
+  );
 }
 
 export async function POST(req: NextRequest) {
@@ -141,8 +117,8 @@ export async function POST(req: NextRequest) {
     const apiKey = resolveApiKey();
 
     if (!apiKey) {
-      // No key configured — return a graceful fallback message
-      return createFallbackResponse(systemPrompt);
+      // No key configured — return error for useChat to handle
+      return createFallbackResponse();
     }
 
     // --- Initialize Google Gemini via Vercel AI SDK ---
@@ -167,16 +143,15 @@ export async function POST(req: NextRequest) {
       maxOutputTokens: maxTokens ?? 8192,
     });
 
-    const response = result.toTextStreamResponse();
-    // Task 2: expose the model name so the frontend can display it
-    response.headers.set('x-arcanea-model', MODEL_NAME);
-    return response;
+    return result.toDataStreamResponse({
+      headers: { 'x-arcanea-model': MODEL_NAME },
+    });
   } catch (error) {
     console.error('Chat API error:', error);
 
     const message = error instanceof Error ? error.message : 'Internal server error';
 
-    // If it's an API key issue, return a friendlier message
+    // API key or auth issues
     if (message.includes('API key') || message.includes('GEMINI') || message.includes('401')) {
       return createFallbackResponse();
     }

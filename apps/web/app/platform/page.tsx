@@ -309,7 +309,7 @@ const FEATURES = [
   {
     title: "The Ten Gates",
     description:
-      "A journey of mastery through ten energy channels. Open Gates, ascend through ranks, and become a Luminor.",
+      "A journey of mastery through ten energy channels. Open Gates, ascend through ranks, and attain the rank of Luminor.",
     icon: Icons.Layers,
     color: "#ffd700",
     href: "/academy",
@@ -357,7 +357,7 @@ const CAPABILITIES = [
       { name: "Discord", description: "Real-time collaboration" },
       { name: "GitHub", description: "Open source contributions" },
       { name: "Gate Ceremonies", description: "Quarterly gatherings" },
-      { name: "Luminor Summit", description: "Annual flagship event" },
+      { name: "Creator Summit", description: "Annual flagship event" },
     ],
     color: "#00bcd4",
   },
