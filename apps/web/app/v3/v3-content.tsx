@@ -133,7 +133,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.1 }}
           >
-            <span className="text-white">Create your </span>
+            <span className="text-white">What will you </span>
             <HeroChangingWords />
           </m.h1>
 
@@ -144,8 +144,8 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            16 creative partners for music, stories, art, and worlds.
-            Each with real creative depth.
+            Write stories. Compose music. Design worlds. Build apps.
+            AI partners that create with you.
           </m.p>
 
           {/* Chat box — THE hero element */}
