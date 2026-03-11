@@ -1,10 +1,9 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { readFileSync } from "fs";
-import { join } from "path";
 import ReactMarkdown from "react-markdown";
 import { ReadingProgressBar, FloatingChapterNav } from "./reading-progress";
+import { BOOK_OF_ARCANEA_CONTENT } from "@/lib/book-content";
 
 export const metadata: Metadata = {
   title: "The Book of Arcanea",
@@ -143,20 +142,6 @@ const PULL_QUOTES: Record<number, string> = {
   22: "Ideas are not consumed by sharing. Knowledge is not diminished by distribution.",
   23: "Enter seeking. Leave transformed. Return whenever needed.",
 };
-
-function getBookContent(): string {
-  try {
-    const bookPath = join(process.cwd(), "../../book/THE-BOOK-OF-ARCANEA.md");
-    return readFileSync(bookPath, "utf-8");
-  } catch {
-    try {
-      const altPath = join(process.cwd(), "../../../book/THE-BOOK-OF-ARCANEA.md");
-      return readFileSync(altPath, "utf-8");
-    } catch {
-      return "";
-    }
-  }
-}
 
 /** Split book markdown into chapters for interleaved quote rendering */
 function splitIntoChapters(content: string): { chapterNum: number; markdown: string }[] {
@@ -314,7 +299,7 @@ function PullQuoteCard({ quote, chapter }: { quote: string; chapter: number }) {
 }
 
 export default function BookOfArcaneaPage() {
-  const rawContent = getBookContent();
+  const rawContent = BOOK_OF_ARCANEA_CONTENT;
 
   // Strip the top-level title and subtitle (already shown in hero)
   const content = rawContent
