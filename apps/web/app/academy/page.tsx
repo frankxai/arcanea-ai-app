@@ -5,7 +5,7 @@ import Link from 'next/link';
 import {
   ArrowRight, Lock, Sparkle, Crown, GraduationCap, Star,
   Lightning, Book, Scroll, Flame, Drop, Leaf, Wind, Globe,
-  Shield, Eye, Heart, Sun, Diamond, Compass,
+  Eye, Heart, Sun, Diamond, Compass,
 } from '@/lib/phosphor-icons';
 
 /* ------------------------------------------------------------------ */
