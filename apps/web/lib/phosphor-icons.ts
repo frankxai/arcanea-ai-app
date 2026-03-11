@@ -28,7 +28,7 @@ export {
   Download, Drop, Envelope, Eye, EyeSlash, Feather, File, FileCode,
   FileText, FilmStrip, Fire, Fish, Flame, FloppyDisk, FolderOpen, Funnel,
   GameController, Gear, GearSix, GitBranch, GithubLogo, Globe, GraduationCap,
-  GridFour, GridNine, Heart, House, Image, ImageSquare, Info, Keyboard,
+  GridFour, GridNine, Heart, House, Image, ImageSquare, Info, Key, Keyboard,
   Leaf, Lightbulb, Lightning, Link, List, ListDashes, ListNumbers, Lock,
   MagicWand, MagnifyingGlass, MapPin, MapTrifold,
   Microphone, Minus, Moon, Mountains, MusicNote, MusicNotes, Notebook,
@@ -49,6 +49,7 @@ import {
   Heartbeat,
   ArrowBendUpLeft,
   ArrowCircleDown,
+  ArrowClockwise,
   ArrowCounterClockwise,
   ArrowDown,
   ArrowLeft,
@@ -139,6 +140,7 @@ import {
   ImageSquare,
   Infinity as PhosphorInfinity,
   Info,
+  Key,
   Keyboard,
   Leaf,
   Lightbulb,
@@ -335,6 +337,7 @@ export const PhImage = Image;
 export const PhImageSquare = ImageSquare;
 export const PhInfinity = PhosphorInfinity;
 export const PhInfo = Info;
+export const PhKey = Key;
 export const PhKeyboard = Keyboard;
 export const PhLayers = Stack;
 export const PhLeaf = Leaf;
