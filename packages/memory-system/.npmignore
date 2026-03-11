@@ -1,0 +1,6 @@
+src/
+*.test.ts
+*.test.js
+tsconfig.json
+.arcanea/
+node_modules/

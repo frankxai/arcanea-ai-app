@@ -1,0 +1,69 @@
+{
+  "name": "@arcanea/ai-provider",
+  "version": "0.1.0",
+  "description": "Arcanea Intelligence Gateway provider for the Vercel AI SDK. Curated AI models with intelligent routing.",
+  "license": "SEE LICENSE IN LICENSE",
+  "author": "Arcanea <hello@arcanea.ai> (https://arcanea.ai)",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "ai",
+    "ai-sdk",
+    "vercel-ai",
+    "arcanea",
+    "llm",
+    "openai",
+    "anthropic",
+    "groq",
+    "cerebras",
+    "gemini",
+    "deepseek",
+    "provider",
+    "gateway",
+    "ai-gateway",
+    "model-routing"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/frankxai/arcanea",
+    "directory": "packages/ai-provider"
+  },
+  "homepage": "https://arcanea.ai/developers/api",
+  "bugs": {
+    "url": "https://github.com/frankxai/arcanea/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "peerDependencies": {
+    "ai": ">=6.0.0"
+  },
+  "dependencies": {
+    "@ai-sdk/openai-compatible": "^2.0.0"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.0",
+    "typescript": "^5.5.0"
+  }
+}

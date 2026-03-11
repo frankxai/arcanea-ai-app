@@ -1,0 +1,2183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arcanea Media — Crystal Midnight (WINNER)</title>
+<style>
+/* ╔══════════════════════════════════════════════════════════════════╗
+   ║  CRYSTAL MIDNIGHT — THE WINNING HYBRID DESIGN                  ║
+   ║  Arcanea Media Chrome Extension                                ║
+   ║                                                                ║
+   ║  FOUNDATION: V04 Midnight Minimal — layout, spacing, type     ║
+   ║  IDENTITY:   V01 Crystal Glass — brand colors, border, grid   ║
+   ║  SOUL:       V03 Aurora Flow — FAB, breathing, spinner, glow  ║
+   ║                                                                ║
+   ║  "Discipline with identity and soul."                          ║
+   ╚══════════════════════════════════════════════════════════════════╝ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+/* ── CSS Custom Properties for animated border (V01 technique) ── */
+@property --gradient-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* ── Design Tokens ── */
+:root {
+  /* Foundation neutrals (V04) */
+  --bg-deep:        #09090B;
+  --bg-surface:     #18181B;
+  --bg-card:        #27272A;
+  --border-subtle:  #27272A;
+  --border-hover:   #3f3f46;
+  --text-primary:   #FAFAFA;
+  --text-secondary: #A1A1AA;
+  --text-muted:     #52525B;
+
+  /* Identity accents (V01) */
+  --accent-teal:    #7fffd4;
+  --accent-violet:  #8b5cf6;
+  --accent-gold:    #ffd700;
+
+  /* Glass (V01 — outer panel only) */
+  --glass-border:   rgba(127, 255, 212, 0.08);
+  --glass-glow:     0 0 80px -30px rgba(127, 255, 212, 0.06);
+
+  /* Timing (V04) */
+  --transition-fast: 150ms ease;
+
+  /* Type (V04) */
+  --tracking:       -0.02em;
+  --font-stack:     'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ── Reset ── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: var(--font-stack);
+  letter-spacing: var(--tracking);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Page Showcase Layout ── */
+.showcase {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 48px 40px 80px;
+}
+
+.showcase-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-teal);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.showcase-subtitle {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.state-row {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin-bottom: 60px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.state-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.state-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+
+.state-desc {
+  font-size: 10px;
+  color: var(--border-hover);
+  margin-bottom: 16px;
+  text-align: center;
+  max-width: 400px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ANIMATED CONIC GRADIENT BORDER — from V01 Crystal Glass
+   Applied ONLY to outer panel frame. 0.25 opacity. 6s rotation.
+   Uses CSS @property for smooth angle interpolation.
+   ══════════════════════════════════════════════════════════════ */
+
+.panel-frame {
+  position: relative;
+  border-radius: 13px;
+}
+
+.panel-frame::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 13px;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--gradient-angle),
+    transparent 35%,
+    var(--accent-teal) 48%,
+    var(--accent-violet) 55%,
+    transparent 68%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: border-sweep 6s linear infinite;
+  opacity: 0.25;
+  z-index: 1;
+  pointer-events: none;
+}
+
+@keyframes border-sweep {
+  to { --gradient-angle: 360deg; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SIDE PANEL — 400px (V04 foundation)
+   ══════════════════════════════════════════════════════════════ */
+
+.side-panel {
+  width: 400px;
+  height: 700px;
+  background: var(--bg-deep);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 2;
+  box-shadow: var(--glass-glow);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   POPUP — 280px (V04 foundation)
+   ══════════════════════════════════════════════════════════════ */
+
+.popup {
+  width: 280px;
+  height: 440px;
+  background: var(--bg-deep);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 2;
+  box-shadow: var(--glass-glow);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   HEADER — V04 layout + V01 brand icon
+   ══════════════════════════════════════════════════════════════ */
+
+.cm-header {
+  padding: 16px 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.cm-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Brand Icon — layered diamond SVG from V01, teal-to-violet gradient */
+.cm-brand-icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.cm-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.cm-version {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.cm-header-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.cm-icon-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.cm-icon-btn:hover {
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+}
+
+.cm-icon-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TABS — V04 underline indicator + keyboard shortcuts
+   ══════════════════════════════════════════════════════════════ */
+
+.cm-tabs {
+  display: flex;
+  padding: 12px 20px 0;
+  gap: 0;
+  border-bottom: 1px solid var(--bg-surface);
+  flex-shrink: 0;
+}
+
+.cm-tab {
+  padding: 8px 12px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  border: none;
+  background: none;
+  position: relative;
+  transition: color var(--transition-fast);
+  letter-spacing: var(--tracking);
+  font-family: var(--font-stack);
+}
+
+.cm-tab:hover {
+  color: var(--text-secondary);
+}
+
+.cm-tab.active {
+  color: var(--text-primary);
+}
+
+/* Tab underline — teal accent from V01 (not white like V04) */
+.cm-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 12px;
+  right: 12px;
+  height: 1px;
+  background: var(--accent-teal);
+}
+
+.cm-tab .shortcut {
+  display: inline-block;
+  font-size: 9px;
+  color: var(--border-hover);
+  margin-left: 5px;
+  padding: 0px 4px;
+  background: var(--bg-surface);
+  border-radius: 3px;
+  font-weight: 400;
+  vertical-align: 1px;
+  font-family: var(--font-stack);
+  letter-spacing: 0;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   STATS BAR — V04 with tabular-nums
+   ══════════════════════════════════════════════════════════════ */
+
+.cm-stats {
+  padding: 10px 20px;
+  display: flex;
+  gap: 16px;
+  border-bottom: 1px solid var(--bg-surface);
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.cm-stat {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.cm-stat-value {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ACTION BAR — V04 filter pills + ghost/primary buttons
+   ══════════════════════════════════════════════════════════════ */
+
+.cm-action-bar {
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--bg-surface);
+  flex-shrink: 0;
+}
+
+.cm-filter-group {
+  display: flex;
+  gap: 2px;
+}
+
+.cm-filter {
+  padding: 4px 8px;
+  font-size: 11px;
+  color: var(--text-muted);
+  border: none;
+  background: transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  letter-spacing: var(--tracking);
+  font-family: var(--font-stack);
+}
+
+.cm-filter:hover {
+  color: var(--text-secondary);
+  background: var(--bg-surface);
+}
+
+.cm-filter.active {
+  color: var(--text-primary);
+  background: var(--bg-surface);
+}
+
+.cm-actions-right {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+/* Ghost button — default V04 pattern */
+.cm-btn-ghost {
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  letter-spacing: var(--tracking);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-stack);
+}
+
+.cm-btn-ghost:hover {
+  background: var(--bg-surface);
+  border-color: var(--border-hover);
+  color: var(--text-primary);
+}
+
+.cm-btn-ghost .shortcut {
+  font-size: 9px;
+  color: var(--border-hover);
+  padding: 1px 4px;
+  background: var(--bg-surface);
+  border-radius: 3px;
+  font-weight: 400;
+}
+
+/* Primary button — solid teal, only for primary CTA */
+.cm-btn-primary {
+  padding: 5px 12px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--bg-deep);
+  background: var(--accent-teal);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  letter-spacing: var(--tracking);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-stack);
+}
+
+.cm-btn-primary:hover {
+  background: #6ee8c0;
+}
+
+.cm-btn-primary .shortcut {
+  font-size: 9px;
+  color: rgba(9, 9, 11, 0.5);
+  font-weight: 400;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   MEDIA GRID — V04 dense 2px gap + V01 masonry spans
+   ══════════════════════════════════════════════════════════════ */
+
+.cm-grid {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: minmax(0, 1fr);
+  gap: 2px;
+  align-content: start;
+}
+
+.popup .cm-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.cm-grid-item {
+  aspect-ratio: 1;
+  background: var(--bg-surface);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: 1px solid transparent;
+}
+
+/* Masonry tall items from V01 */
+.cm-grid-item.tall {
+  grid-row: span 2;
+  aspect-ratio: auto;
+}
+
+.cm-grid-item:hover {
+  border-color: var(--border-subtle);
+}
+
+.cm-grid-item.selected {
+  border-color: var(--accent-teal);
+}
+
+/* Selection counter from V02 — shows ORDER (01, 02, 03...) */
+.cm-grid-item .select-counter {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 18px;
+  height: 18px;
+  background: var(--accent-teal);
+  border-radius: 4px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--bg-deep);
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.cm-grid-item.selected .select-counter {
+  display: flex;
+}
+
+/* Grid stagger animation from V03 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cm-grid-item {
+  animation: fadeInUp 0.3s ease both;
+}
+
+.cm-grid-item:nth-child(1)  { animation-delay: 0ms; }
+.cm-grid-item:nth-child(2)  { animation-delay: 20ms; }
+.cm-grid-item:nth-child(3)  { animation-delay: 40ms; }
+.cm-grid-item:nth-child(4)  { animation-delay: 60ms; }
+.cm-grid-item:nth-child(5)  { animation-delay: 80ms; }
+.cm-grid-item:nth-child(6)  { animation-delay: 100ms; }
+.cm-grid-item:nth-child(7)  { animation-delay: 120ms; }
+.cm-grid-item:nth-child(8)  { animation-delay: 140ms; }
+.cm-grid-item:nth-child(9)  { animation-delay: 160ms; }
+.cm-grid-item:nth-child(10) { animation-delay: 180ms; }
+.cm-grid-item:nth-child(11) { animation-delay: 200ms; }
+.cm-grid-item:nth-child(12) { animation-delay: 220ms; }
+.cm-grid-item:nth-child(13) { animation-delay: 240ms; }
+.cm-grid-item:nth-child(14) { animation-delay: 260ms; }
+.cm-grid-item:nth-child(15) { animation-delay: 280ms; }
+.cm-grid-item:nth-child(16) { animation-delay: 300ms; }
+
+/* Placeholder gradient thumbnails */
+.cm-thumb {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.ph-1  { background: linear-gradient(135deg, #1e1b2e, #2d1f3d); }
+.ph-2  { background: linear-gradient(135deg, #1b2e2a, #1f3d30); }
+.ph-3  { background: linear-gradient(135deg, #2e1b1b, #3d1f1f); }
+.ph-4  { background: linear-gradient(135deg, #1b1e2e, #1f2d3d); }
+.ph-5  { background: linear-gradient(135deg, #2e2a1b, #3d351f); }
+.ph-6  { background: linear-gradient(135deg, #1b2e2e, #1f3d3d); }
+.ph-7  { background: linear-gradient(135deg, #2e1b2e, #3d1f3d); }
+.ph-8  { background: linear-gradient(135deg, #1e2e1b, #2d3d1f); }
+.ph-9  { background: linear-gradient(135deg, #2a1b2e, #351f3d); }
+.ph-10 { background: linear-gradient(135deg, #1b2a2e, #1f353d); }
+.ph-11 { background: linear-gradient(135deg, #2e2e1b, #3d3d1f); }
+.ph-12 { background: linear-gradient(135deg, #1b1b2e, #1f1f3d); }
+.ph-13 { background: linear-gradient(135deg, #2e1b25, #3d1f30); }
+.ph-14 { background: linear-gradient(135deg, #1b2e1e, #1f3d25); }
+.ph-15 { background: linear-gradient(135deg, #251b2e, #301f3d); }
+.ph-16 { background: linear-gradient(135deg, #2e251b, #3d301f); }
+
+/* Badges */
+.cm-badge {
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+  padding: 1px 5px;
+  font-size: 9px;
+  font-weight: 600;
+  border-radius: 3px;
+  letter-spacing: 0.04em;
+  z-index: 2;
+}
+
+.cm-badge-video {
+  background: rgba(139, 92, 246, 0.85);
+  color: #e9e0ff;
+}
+
+.cm-badge-hd {
+  background: rgba(255, 215, 0, 0.85);
+  color: var(--bg-deep);
+}
+
+/* Duration badge for videos */
+.cm-badge-duration {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  padding: 1px 5px;
+  font-size: 9px;
+  font-weight: 500;
+  border-radius: 3px;
+  background: rgba(9, 9, 11, 0.8);
+  color: var(--text-secondary);
+  z-index: 2;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CONTEXTUAL SELECTION BAR — appears when items selected
+   ══════════════════════════════════════════════════════════════ */
+
+.cm-selection-bar {
+  padding: 8px 20px;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.cm-selection-info {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.cm-selection-info strong {
+  color: var(--accent-teal);
+  font-weight: 600;
+}
+
+.cm-selection-actions {
+  display: flex;
+  gap: 6px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   DOWNLOADS TAB — V04 layout + V03 progress glow dot
+   ══════════════════════════════════════════════════════════════ */
+
+.cm-downloads {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+}
+
+.cm-dl-item {
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--bg-surface);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cm-dl-thumb {
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.cm-dl-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.cm-dl-name {
+  font-size: 12px;
+  color: var(--text-primary);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cm-dl-meta {
+  font-size: 11px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 2px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Download progress bar with V03 glowing dot at leading edge */
+.cm-dl-progress-track {
+  height: 2px;
+  background: var(--bg-surface);
+  border-radius: 1px;
+  margin-top: 6px;
+  overflow: visible;
+  position: relative;
+}
+
+.cm-dl-progress-fill {
+  height: 100%;
+  background: var(--accent-teal);
+  border-radius: 1px;
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+/* Glowing dot at leading edge of active downloads (V03 soul) */
+.cm-dl-progress-fill.active::after {
+  content: '';
+  position: absolute;
+  right: -2px;
+  top: -2px;
+  width: 6px;
+  height: 6px;
+  background: var(--accent-teal);
+  border-radius: 50%;
+  box-shadow: 0 0 8px 2px rgba(127, 255, 212, 0.5);
+  animation: glow-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 6px 1px rgba(127, 255, 212, 0.4); }
+  50% { box-shadow: 0 0 12px 3px rgba(127, 255, 212, 0.7); }
+}
+
+.cm-dl-progress-fill.complete {
+  background: var(--text-muted);
+}
+
+.cm-dl-status {
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  min-width: 44px;
+  text-align: right;
+}
+
+.cm-dl-status.active {
+  color: var(--accent-teal);
+}
+
+.cm-dl-status.done {
+  color: var(--text-muted);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SETTINGS TAB — V04 grouped sections
+   ══════════════════════════════════════════════════════════════ */
+
+.cm-settings {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.cm-settings-section {
+  margin-bottom: 24px;
+}
+
+.cm-settings-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 12px;
+}
+
+.cm-setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+
+.cm-setting-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.cm-setting-desc {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Toggle switch */
+.cm-toggle {
+  width: 32px;
+  height: 18px;
+  background: var(--bg-card);
+  border-radius: 9px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  flex-shrink: 0;
+}
+
+.cm-toggle.on {
+  background: var(--accent-teal);
+}
+
+.cm-toggle::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 14px;
+  height: 14px;
+  background: var(--bg-deep);
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+
+.cm-toggle.on::after {
+  transform: translateX(14px);
+}
+
+/* Input */
+.cm-input {
+  padding: 6px 10px;
+  font-size: 12px;
+  color: var(--text-primary);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  width: 120px;
+  font-family: var(--font-stack);
+  letter-spacing: var(--tracking);
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.cm-input:focus {
+  border-color: var(--border-hover);
+}
+
+/* Select */
+.cm-select {
+  padding: 6px 10px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  font-family: var(--font-stack);
+  letter-spacing: var(--tracking);
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 24px;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%2352525B' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SCANNING STATE — V03 dual-ring concentric spinner
+   Teal, 3s and 2s rotation speeds for organic rhythm
+   ══════════════════════════════════════════════════════════════ */
+
+.cm-scanning-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.cm-scanner {
+  width: 64px;
+  height: 64px;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+/* Outer ring — 3s rotation */
+.cm-scanner-ring-outer {
+  position: absolute;
+  inset: 0;
+  border: 1.5px solid transparent;
+  border-top-color: var(--accent-teal);
+  border-right-color: rgba(127, 255, 212, 0.2);
+  border-radius: 50%;
+  animation: spin-outer 3s linear infinite;
+}
+
+/* Inner ring — 2s rotation, offset */
+.cm-scanner-ring-inner {
+  position: absolute;
+  inset: 10px;
+  border: 1.5px solid transparent;
+  border-top-color: rgba(127, 255, 212, 0.6);
+  border-left-color: rgba(127, 255, 212, 0.15);
+  border-radius: 50%;
+  animation: spin-inner 2s linear infinite reverse;
+}
+
+/* Center dot */
+.cm-scanner-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: var(--accent-teal);
+  border-radius: 50%;
+  animation: scanner-dot-pulse 2s ease-in-out infinite;
+}
+
+@keyframes spin-outer {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spin-inner {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes scanner-dot-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+.cm-scanning-text {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.cm-scanning-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Scanning progress bar */
+.cm-scan-progress-track {
+  width: 120px;
+  height: 2px;
+  background: var(--bg-surface);
+  border-radius: 1px;
+  margin-top: 16px;
+  overflow: visible;
+  position: relative;
+}
+
+.cm-scan-progress-fill {
+  height: 100%;
+  border-radius: 1px;
+  background: var(--accent-teal);
+  position: relative;
+}
+
+/* Indeterminate scan pulse */
+@keyframes scan-sweep {
+  0%   { left: 0; width: 30%; }
+  50%  { left: 70%; width: 30%; }
+  100% { left: 0; width: 30%; }
+}
+
+.cm-scan-progress-fill.indeterminate {
+  position: absolute;
+  animation: scan-sweep 2s ease-in-out infinite;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   EMPTY STATE — V03 breathing teal orb with expanding ring
+   ══════════════════════════════════════════════════════════════ */
+
+.cm-empty-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.cm-breathing-orb {
+  width: 48px;
+  height: 48px;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+/* Central orb — breathing scale */
+.cm-breathing-orb-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+  background: radial-gradient(circle, var(--accent-teal) 0%, rgba(127, 255, 212, 0.3) 70%, transparent 100%);
+  border-radius: 50%;
+  animation: orb-breathe 3s ease-in-out infinite;
+}
+
+@keyframes orb-breathe {
+  0%, 100% { transform: scale(0.9); opacity: 0.6; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+
+/* Expanding ring — concentric pulse */
+.cm-breathing-orb-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+  border: 1px solid var(--accent-teal);
+  border-radius: 50%;
+  animation: ring-expand 3s ease-out infinite;
+}
+
+@keyframes ring-expand {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(3.5);
+    opacity: 0;
+  }
+}
+
+.cm-empty-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.cm-empty-desc {
+  font-size: 11px;
+  color: var(--border-hover);
+  max-width: 200px;
+  line-height: 1.6;
+}
+
+/* Scan button in empty state */
+.cm-scan-btn {
+  margin-top: 16px;
+  padding: 7px 16px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-primary);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-stack);
+  letter-spacing: var(--tracking);
+}
+
+.cm-scan-btn:hover {
+  background: var(--bg-card);
+  border-color: var(--border-hover);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   FAB BUTTON — V03 teal gradient with ambient pulse glow
+   ══════════════════════════════════════════════════════════════ */
+
+.cm-fab {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--accent-teal), #4ae0b8);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: transform var(--transition-fast);
+  color: var(--bg-deep);
+}
+
+.cm-fab:hover {
+  transform: scale(1.05);
+}
+
+.cm-fab svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Ambient pulse ring around FAB */
+.cm-fab::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 16px;
+  border: 1px solid var(--accent-teal);
+  animation: fab-pulse 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes fab-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.15); opacity: 0; }
+}
+
+/* Second concentric ring — staggered */
+.cm-fab::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 20px;
+  border: 1px solid var(--accent-teal);
+  animation: fab-pulse 3s ease-in-out infinite 1.5s;
+  pointer-events: none;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════════════════════════ */
+
+.cm-footer {
+  padding: 8px 20px;
+  border-top: 1px solid var(--bg-surface);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.cm-footer-text {
+  font-size: 10px;
+  color: var(--border-hover);
+}
+
+.cm-footer-accent {
+  font-size: 10px;
+  color: var(--accent-teal);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SCROLLBAR — 4px wide, teal thumb
+   ══════════════════════════════════════════════════════════════ */
+
+.cm-grid::-webkit-scrollbar,
+.cm-downloads::-webkit-scrollbar,
+.cm-settings::-webkit-scrollbar {
+  width: 4px;
+}
+
+.cm-grid::-webkit-scrollbar-track,
+.cm-downloads::-webkit-scrollbar-track,
+.cm-settings::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cm-grid::-webkit-scrollbar-thumb,
+.cm-downloads::-webkit-scrollbar-thumb,
+.cm-settings::-webkit-scrollbar-thumb {
+  background: var(--border-subtle);
+  border-radius: 2px;
+}
+
+.cm-grid::-webkit-scrollbar-thumb:hover,
+.cm-downloads::-webkit-scrollbar-thumb:hover,
+.cm-settings::-webkit-scrollbar-thumb:hover {
+  background: var(--border-hover);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   DESIGN NOTES SECTION
+   ══════════════════════════════════════════════════════════════ */
+
+.design-notes {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 80px 40px;
+  border-top: 1px solid var(--bg-surface);
+}
+
+.design-notes h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  letter-spacing: -0.03em;
+}
+
+.design-notes .dn-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 40px;
+}
+
+.design-notes h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-top: 32px;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+
+.design-notes p {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 8px;
+}
+
+.design-notes ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 8px;
+}
+
+.design-notes li {
+  font-size: 13px;
+  color: var(--text-muted);
+  padding: 4px 0;
+  padding-left: 16px;
+  position: relative;
+  line-height: 1.6;
+}
+
+.design-notes li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 4px;
+  height: 4px;
+  background: var(--border-subtle);
+  border-radius: 50%;
+}
+
+.design-notes .source-tag {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 3px;
+  letter-spacing: 0.04em;
+  vertical-align: 1px;
+  margin-right: 4px;
+}
+
+.source-v04 {
+  background: rgba(250, 250, 250, 0.08);
+  color: var(--text-secondary);
+}
+
+.source-v01 {
+  background: rgba(127, 255, 212, 0.12);
+  color: var(--accent-teal);
+}
+
+.source-v03 {
+  background: rgba(139, 92, 246, 0.12);
+  color: var(--accent-violet);
+}
+
+.source-v02 {
+  background: rgba(255, 215, 0, 0.12);
+  color: var(--accent-gold);
+}
+
+.dn-divider {
+  height: 1px;
+  background: var(--bg-surface);
+  margin: 36px 0;
+}
+
+.color-swatch {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  vertical-align: middle;
+  margin-right: 6px;
+  border: 1px solid var(--border-subtle);
+}
+
+.dn-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0 8px;
+  font-size: 12px;
+}
+
+.dn-table th {
+  text-align: left;
+  font-weight: 500;
+  color: var(--text-secondary);
+  padding: 6px 12px 6px 0;
+  border-bottom: 1px solid var(--bg-surface);
+}
+
+.dn-table td {
+  color: var(--text-muted);
+  padding: 6px 12px 6px 0;
+  border-bottom: 1px solid var(--bg-surface);
+}
+
+.dn-table code {
+  font-size: 11px;
+  background: var(--bg-surface);
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: var(--text-secondary);
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+}
+</style>
+</head>
+<body>
+
+<div class="showcase">
+  <div class="showcase-title">Crystal Midnight</div>
+  <div class="showcase-subtitle">The Winning Hybrid &mdash; V04 Foundation + V01 Identity + V03 Soul &mdash; Arcanea Media Chrome Extension</div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       STATE 1: Side Panel — Library tab, 16 items, 4 selected
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="state-row">
+    <div class="state-group">
+      <div class="state-label">State 1 &mdash; Side Panel: Library</div>
+      <div class="state-desc">16 media items, 4 selected with ordered counters (01-04), 3 tall masonry items spanning 2 rows</div>
+
+      <div class="panel-frame">
+        <div class="side-panel">
+          <!-- Header -->
+          <div class="cm-header">
+            <div class="cm-header-left">
+              <!-- Brand icon: layered diamond from V01, teal-to-violet gradient -->
+              <svg class="cm-brand-icon" viewBox="0 0 22 22" fill="none">
+                <defs>
+                  <linearGradient id="brand-grad" x1="0" y1="0" x2="22" y2="22">
+                    <stop offset="0%" stop-color="#7fffd4"/>
+                    <stop offset="100%" stop-color="#8b5cf6"/>
+                  </linearGradient>
+                </defs>
+                <path d="M11 2L19 7.5V14.5L11 20L3 14.5V7.5L11 2Z" stroke="url(#brand-grad)" stroke-width="1.5" fill="none"/>
+                <path d="M11 6L15.5 8.75V13.25L11 16L6.5 13.25V8.75L11 6Z" stroke="url(#brand-grad)" stroke-width="1" fill="none" opacity="0.5"/>
+                <circle cx="11" cy="11" r="2" fill="url(#brand-grad)" opacity="0.7"/>
+              </svg>
+              <span class="cm-title">Arcanea Media <span class="cm-version">v0.1</span></span>
+            </div>
+            <div class="cm-header-actions">
+              <button class="cm-icon-btn" title="Scan page">
+                <!-- Phosphor magnifying glass: 1.5px stroke, round caps -->
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="7" cy="7" r="4.5"/>
+                  <path d="M10.5 10.5L14 14"/>
+                </svg>
+              </button>
+              <button class="cm-icon-btn" title="Settings">
+                <!-- Phosphor gear: 1.5px stroke, round caps -->
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="8" cy="8" r="2"/>
+                  <path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.4 3.4l1.4 1.4M11.2 11.2l1.4 1.4M3.4 12.6l1.4-1.4M11.2 4.8l1.4-1.4"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Tabs with keyboard shortcuts -->
+          <div class="cm-tabs">
+            <button class="cm-tab active">Library<span class="shortcut">1</span></button>
+            <button class="cm-tab">Downloads<span class="shortcut">2</span></button>
+            <button class="cm-tab">Settings<span class="shortcut">3</span></button>
+          </div>
+
+          <!-- Stats bar with tabular-nums -->
+          <div class="cm-stats">
+            <span class="cm-stat"><span class="cm-stat-value">156</span> images</span>
+            <span class="cm-stat"><span class="cm-stat-value">23</span> videos</span>
+            <span class="cm-stat"><span class="cm-stat-value">12</span> HD</span>
+            <span class="cm-stat"><span class="cm-stat-value">4</span> saved</span>
+          </div>
+
+          <!-- Action bar with filter pills -->
+          <div class="cm-action-bar">
+            <div class="cm-filter-group">
+              <button class="cm-filter active">All</button>
+              <button class="cm-filter">Image</button>
+              <button class="cm-filter">Video</button>
+              <button class="cm-filter">HD</button>
+              <button class="cm-filter">SD</button>
+            </div>
+            <div class="cm-actions-right">
+              <button class="cm-btn-ghost">Select<span class="shortcut">S</span></button>
+              <button class="cm-btn-primary">Download<span class="shortcut">D</span></button>
+            </div>
+          </div>
+
+          <!-- Media Grid: 16 items, masonry, 4 selected with counter order -->
+          <div class="cm-grid">
+            <div class="cm-grid-item selected"><div class="cm-thumb ph-1"></div><span class="select-counter">01</span></div>
+            <div class="cm-grid-item tall"><div class="cm-thumb ph-2"></div><span class="cm-badge cm-badge-video">VID</span><span class="cm-badge-duration">0:12</span></div>
+            <div class="cm-grid-item"><div class="cm-thumb ph-3"></div><span class="cm-badge cm-badge-hd">HD</span></div>
+            <div class="cm-grid-item selected"><div class="cm-thumb ph-4"></div><span class="select-counter">02</span></div>
+            <div class="cm-grid-item"><div class="cm-thumb ph-5"></div></div>
+            <div class="cm-grid-item"><div class="cm-thumb ph-6"></div><span class="cm-badge cm-badge-video">VID</span><span class="cm-badge-duration">1:34</span></div>
+            <div class="cm-grid-item selected"><div class="cm-thumb ph-7"></div><span class="select-counter">03</span><span class="cm-badge cm-badge-hd">HD</span></div>
+            <div class="cm-grid-item tall"><div class="cm-thumb ph-8"></div></div>
+            <div class="cm-grid-item"><div class="cm-thumb ph-9"></div></div>
+            <div class="cm-grid-item"><div class="cm-thumb ph-10"></div><span class="cm-badge cm-badge-video">VID</span><span class="cm-badge-duration">0:08</span></div>
+            <div class="cm-grid-item"><div class="cm-thumb ph-11"></div></div>
+            <div class="cm-grid-item selected"><div class="cm-thumb ph-12"></div><span class="select-counter">04</span></div>
+            <div class="cm-grid-item tall"><div class="cm-thumb ph-13"></div><span class="cm-badge cm-badge-hd">HD</span></div>
+            <div class="cm-grid-item"><div class="cm-thumb ph-14"></div></div>
+            <div class="cm-grid-item"><div class="cm-thumb ph-15"></div><span class="cm-badge cm-badge-video">VID</span><span class="cm-badge-duration">2:01</span></div>
+            <div class="cm-grid-item"><div class="cm-thumb ph-16"></div></div>
+          </div>
+
+          <!-- Contextual selection bar -->
+          <div class="cm-selection-bar">
+            <span class="cm-selection-info"><strong>4</strong> items selected &middot; 8.6 MB</span>
+            <div class="cm-selection-actions">
+              <button class="cm-btn-ghost" style="font-size: 10px; padding: 4px 8px;">Clear</button>
+              <button class="cm-btn-primary" style="font-size: 10px; padding: 4px 10px;">
+                Download 4
+                <!-- Phosphor arrow-down -->
+                <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M8 3v10M4 9l4 4 4-4"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- FAB with ambient pulse (V03 soul) -->
+          <button class="cm-fab" title="Quick scan">
+            <!-- Phosphor magnifying glass -->
+            <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="7.5" cy="7.5" r="5"/>
+              <path d="M11.5 11.5L16 16"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       STATE 2: Side Panel — Downloads tab
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="state-row">
+    <div class="state-group">
+      <div class="state-label">State 2 &mdash; Side Panel: Downloads</div>
+      <div class="state-desc">4 items: 1 complete, 2 downloading at different %, 1 queued. Progress bars with leading-edge glow dot.</div>
+
+      <div class="panel-frame">
+        <div class="side-panel">
+          <div class="cm-header">
+            <div class="cm-header-left">
+              <svg class="cm-brand-icon" viewBox="0 0 22 22" fill="none">
+                <path d="M11 2L19 7.5V14.5L11 20L3 14.5V7.5L11 2Z" stroke="url(#brand-grad)" stroke-width="1.5" fill="none"/>
+                <path d="M11 6L15.5 8.75V13.25L11 16L6.5 13.25V8.75L11 6Z" stroke="url(#brand-grad)" stroke-width="1" fill="none" opacity="0.5"/>
+                <circle cx="11" cy="11" r="2" fill="url(#brand-grad)" opacity="0.7"/>
+              </svg>
+              <span class="cm-title">Arcanea Media <span class="cm-version">v0.1</span></span>
+            </div>
+            <div class="cm-header-actions">
+              <button class="cm-icon-btn" title="Scan page">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg>
+              </button>
+              <button class="cm-icon-btn" title="Settings">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="2"/><path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.4 3.4l1.4 1.4M11.2 11.2l1.4 1.4M3.4 12.6l1.4-1.4M11.2 4.8l1.4-1.4"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="cm-tabs">
+            <button class="cm-tab">Library<span class="shortcut">1</span></button>
+            <button class="cm-tab active">Downloads<span class="shortcut">2</span></button>
+            <button class="cm-tab">Settings<span class="shortcut">3</span></button>
+          </div>
+
+          <!-- Downloads list -->
+          <div class="cm-downloads">
+            <!-- Item 1: Complete -->
+            <div class="cm-dl-item">
+              <div class="cm-dl-thumb ph-1"></div>
+              <div class="cm-dl-info">
+                <div class="cm-dl-name">grok_gen_2026_0303_aurora.png</div>
+                <div class="cm-dl-meta">
+                  <span>2.4 MB</span>
+                  <span>PNG</span>
+                  <span>1024 &times; 1024</span>
+                </div>
+                <div class="cm-dl-progress-track">
+                  <div class="cm-dl-progress-fill complete" style="width: 100%"></div>
+                </div>
+              </div>
+              <span class="cm-dl-status done">
+                <!-- Phosphor checkmark -->
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5L6.5 11.5L12.5 4.5"/></svg>
+              </span>
+            </div>
+
+            <!-- Item 2: Downloading 72% -->
+            <div class="cm-dl-item">
+              <div class="cm-dl-thumb ph-4"></div>
+              <div class="cm-dl-info">
+                <div class="cm-dl-name">grok_gen_2026_0303_crystal.png</div>
+                <div class="cm-dl-meta">
+                  <span>1.8 MB</span>
+                  <span>HD PNG</span>
+                  <span>2048 &times; 2048</span>
+                </div>
+                <div class="cm-dl-progress-track">
+                  <div class="cm-dl-progress-fill active" style="width: 72%"></div>
+                </div>
+              </div>
+              <span class="cm-dl-status active">72%</span>
+            </div>
+
+            <!-- Item 3: Downloading 31% -->
+            <div class="cm-dl-item">
+              <div class="cm-dl-thumb ph-7"></div>
+              <div class="cm-dl-info">
+                <div class="cm-dl-name">grok_vid_2026_0303_demo.mp4</div>
+                <div class="cm-dl-meta">
+                  <span>14.2 MB</span>
+                  <span>MP4</span>
+                  <span>1920 &times; 1080</span>
+                </div>
+                <div class="cm-dl-progress-track">
+                  <div class="cm-dl-progress-fill active" style="width: 31%"></div>
+                </div>
+              </div>
+              <span class="cm-dl-status active">31%</span>
+            </div>
+
+            <!-- Item 4: Queued -->
+            <div class="cm-dl-item">
+              <div class="cm-dl-thumb ph-12"></div>
+              <div class="cm-dl-info">
+                <div class="cm-dl-name">grok_gen_2026_0303_void.png</div>
+                <div class="cm-dl-meta">
+                  <span>3.1 MB</span>
+                  <span>PNG</span>
+                  <span>1024 &times; 1024</span>
+                </div>
+                <div class="cm-dl-progress-track">
+                  <div class="cm-dl-progress-fill" style="width: 0%"></div>
+                </div>
+              </div>
+              <span class="cm-dl-status">Queued</span>
+            </div>
+          </div>
+
+          <div class="cm-footer">
+            <span class="cm-footer-text">1 of 4 complete</span>
+            <span class="cm-footer-accent">21.5 MB total</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       STATE 3: Side Panel — Settings tab
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="state-row">
+    <div class="state-group">
+      <div class="state-label">State 3 &mdash; Side Panel: Settings</div>
+      <div class="state-desc">Grouped sections with toggles, inputs, and selects. V04 clean hierarchy.</div>
+
+      <div class="panel-frame">
+        <div class="side-panel">
+          <div class="cm-header">
+            <div class="cm-header-left">
+              <svg class="cm-brand-icon" viewBox="0 0 22 22" fill="none">
+                <path d="M11 2L19 7.5V14.5L11 20L3 14.5V7.5L11 2Z" stroke="url(#brand-grad)" stroke-width="1.5" fill="none"/>
+                <path d="M11 6L15.5 8.75V13.25L11 16L6.5 13.25V8.75L11 6Z" stroke="url(#brand-grad)" stroke-width="1" fill="none" opacity="0.5"/>
+                <circle cx="11" cy="11" r="2" fill="url(#brand-grad)" opacity="0.7"/>
+              </svg>
+              <span class="cm-title">Arcanea Media <span class="cm-version">v0.1</span></span>
+            </div>
+            <div class="cm-header-actions">
+              <button class="cm-icon-btn" title="Scan page">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg>
+              </button>
+              <button class="cm-icon-btn" title="Close">
+                <!-- Phosphor X -->
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="cm-tabs">
+            <button class="cm-tab">Library<span class="shortcut">1</span></button>
+            <button class="cm-tab">Downloads<span class="shortcut">2</span></button>
+            <button class="cm-tab active">Settings<span class="shortcut">3</span></button>
+          </div>
+
+          <div class="cm-settings">
+            <div class="cm-settings-section">
+              <div class="cm-settings-title">Downloads</div>
+              <div class="cm-setting-row">
+                <div>
+                  <div class="cm-setting-label">Auto-download HD</div>
+                  <div class="cm-setting-desc">Prefer highest available resolution</div>
+                </div>
+                <div class="cm-toggle on"></div>
+              </div>
+              <div class="cm-setting-row">
+                <div>
+                  <div class="cm-setting-label">Include videos</div>
+                  <div class="cm-setting-desc">Download video media alongside images</div>
+                </div>
+                <div class="cm-toggle on"></div>
+              </div>
+              <div class="cm-setting-row">
+                <div>
+                  <div class="cm-setting-label">Concurrent downloads</div>
+                </div>
+                <select class="cm-select">
+                  <option>3</option>
+                  <option>5</option>
+                  <option>10</option>
+                </select>
+              </div>
+              <div class="cm-setting-row">
+                <div>
+                  <div class="cm-setting-label">File naming</div>
+                </div>
+                <select class="cm-select">
+                  <option>Original</option>
+                  <option>Sequential</option>
+                  <option>Timestamp</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="cm-settings-section">
+              <div class="cm-settings-title">Storage</div>
+              <div class="cm-setting-row">
+                <div>
+                  <div class="cm-setting-label">Save location</div>
+                  <div class="cm-setting-desc">~/Downloads/Arcanea</div>
+                </div>
+                <button class="cm-btn-ghost" style="font-size: 10px; padding: 3px 8px;">Change</button>
+              </div>
+              <div class="cm-setting-row">
+                <div>
+                  <div class="cm-setting-label">Organize by date</div>
+                  <div class="cm-setting-desc">Create YYYY-MM-DD subfolders</div>
+                </div>
+                <div class="cm-toggle"></div>
+              </div>
+              <div class="cm-setting-row">
+                <div>
+                  <div class="cm-setting-label">Deduplicate files</div>
+                  <div class="cm-setting-desc">Skip already-downloaded media</div>
+                </div>
+                <div class="cm-toggle on"></div>
+              </div>
+            </div>
+
+            <div class="cm-settings-section">
+              <div class="cm-settings-title">Scanning</div>
+              <div class="cm-setting-row">
+                <div>
+                  <div class="cm-setting-label">Auto-scan on open</div>
+                </div>
+                <div class="cm-toggle on"></div>
+              </div>
+              <div class="cm-setting-row">
+                <div>
+                  <div class="cm-setting-label">Scan depth</div>
+                </div>
+                <select class="cm-select">
+                  <option>Last 50</option>
+                  <option selected>Last 100</option>
+                  <option>Last 250</option>
+                  <option>All</option>
+                </select>
+              </div>
+              <div class="cm-setting-row">
+                <div>
+                  <div class="cm-setting-label">Minimum resolution</div>
+                </div>
+                <select class="cm-select">
+                  <option>Any</option>
+                  <option selected>512px+</option>
+                  <option>1024px+</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="cm-settings-section">
+              <div class="cm-settings-title">About</div>
+              <div class="cm-setting-row">
+                <div>
+                  <div class="cm-setting-label" style="color: var(--text-muted);">Arcanea Media v0.1.0</div>
+                  <div class="cm-setting-desc">arcanea.ai/media</div>
+                </div>
+                <button class="cm-btn-ghost" style="font-size: 10px; padding: 3px 8px;">Check update</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       STATE 4: Side Panel — Scanning state
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="state-row">
+    <div class="state-group">
+      <div class="state-label">State 4 &mdash; Side Panel: Scanning</div>
+      <div class="state-desc">Dual-ring concentric spinner (teal, 3s/2s rotation). Progress text with live count. From V03 Aurora Flow.</div>
+
+      <div class="panel-frame">
+        <div class="side-panel">
+          <div class="cm-header">
+            <div class="cm-header-left">
+              <svg class="cm-brand-icon" viewBox="0 0 22 22" fill="none">
+                <path d="M11 2L19 7.5V14.5L11 20L3 14.5V7.5L11 2Z" stroke="url(#brand-grad)" stroke-width="1.5" fill="none"/>
+                <path d="M11 6L15.5 8.75V13.25L11 16L6.5 13.25V8.75L11 6Z" stroke="url(#brand-grad)" stroke-width="1" fill="none" opacity="0.5"/>
+                <circle cx="11" cy="11" r="2" fill="url(#brand-grad)" opacity="0.7"/>
+              </svg>
+              <span class="cm-title">Arcanea Media <span class="cm-version">v0.1</span></span>
+            </div>
+            <div class="cm-header-actions">
+              <button class="cm-icon-btn" title="Settings">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="2"/><path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.4 3.4l1.4 1.4M11.2 11.2l1.4 1.4M3.4 12.6l1.4-1.4M11.2 4.8l1.4-1.4"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="cm-tabs">
+            <button class="cm-tab active">Library<span class="shortcut">1</span></button>
+            <button class="cm-tab">Downloads<span class="shortcut">2</span></button>
+            <button class="cm-tab">Settings<span class="shortcut">3</span></button>
+          </div>
+
+          <div class="cm-scanning-state">
+            <div class="cm-scanner">
+              <div class="cm-scanner-ring-outer"></div>
+              <div class="cm-scanner-ring-inner"></div>
+              <div class="cm-scanner-dot"></div>
+            </div>
+            <div class="cm-scanning-text">Scanning favorites...</div>
+            <div class="cm-scanning-sub">Found 47 media items</div>
+            <div class="cm-scan-progress-track">
+              <div class="cm-scan-progress-fill indeterminate"></div>
+            </div>
+            <button class="cm-btn-ghost" style="margin-top: 20px; font-size: 10px; padding: 4px 10px; color: var(--text-muted);">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       STATE 5: Side Panel — Empty state
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="state-row">
+    <div class="state-group">
+      <div class="state-label">State 5 &mdash; Side Panel: Empty</div>
+      <div class="state-desc">Breathing teal orb with expanding ring animation. From V03 Aurora Flow, reduced to single-color teal.</div>
+
+      <div class="panel-frame">
+        <div class="side-panel">
+          <div class="cm-header">
+            <div class="cm-header-left">
+              <svg class="cm-brand-icon" viewBox="0 0 22 22" fill="none">
+                <path d="M11 2L19 7.5V14.5L11 20L3 14.5V7.5L11 2Z" stroke="url(#brand-grad)" stroke-width="1.5" fill="none"/>
+                <path d="M11 6L15.5 8.75V13.25L11 16L6.5 13.25V8.75L11 6Z" stroke="url(#brand-grad)" stroke-width="1" fill="none" opacity="0.5"/>
+                <circle cx="11" cy="11" r="2" fill="url(#brand-grad)" opacity="0.7"/>
+              </svg>
+              <span class="cm-title">Arcanea Media <span class="cm-version">v0.1</span></span>
+            </div>
+            <div class="cm-header-actions">
+              <button class="cm-icon-btn" title="Settings">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="2"/><path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.4 3.4l1.4 1.4M11.2 11.2l1.4 1.4M3.4 12.6l1.4-1.4M11.2 4.8l1.4-1.4"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="cm-tabs">
+            <button class="cm-tab active">Library<span class="shortcut">1</span></button>
+            <button class="cm-tab">Downloads<span class="shortcut">2</span></button>
+            <button class="cm-tab">Settings<span class="shortcut">3</span></button>
+          </div>
+
+          <div class="cm-empty-state">
+            <div class="cm-breathing-orb">
+              <div class="cm-breathing-orb-core"></div>
+              <div class="cm-breathing-orb-ring"></div>
+            </div>
+            <div class="cm-empty-title">No media found</div>
+            <div class="cm-empty-desc">Navigate to grok.com and scan your favorites to get started.</div>
+            <button class="cm-scan-btn">
+              <!-- Phosphor magnifying glass + plus -->
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="7" cy="7" r="4.5"/>
+                <path d="M10.5 10.5L14 14"/>
+                <path d="M5 7h4M7 5v4"/>
+              </svg>
+              Scan Now
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       STATE 6: Popup — Compact stats + action buttons
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="state-row">
+    <div class="state-group">
+      <div class="state-label">State 6 &mdash; Popup: Quick Stats</div>
+      <div class="state-desc">280px compact popup with stats overview and quick-action buttons.</div>
+
+      <div class="panel-frame">
+        <div class="popup">
+          <div class="cm-header">
+            <div class="cm-header-left">
+              <svg class="cm-brand-icon" viewBox="0 0 22 22" fill="none">
+                <path d="M11 2L19 7.5V14.5L11 20L3 14.5V7.5L11 2Z" stroke="url(#brand-grad)" stroke-width="1.5" fill="none"/>
+                <path d="M11 6L15.5 8.75V13.25L11 16L6.5 13.25V8.75L11 6Z" stroke="url(#brand-grad)" stroke-width="1" fill="none" opacity="0.5"/>
+                <circle cx="11" cy="11" r="2" fill="url(#brand-grad)" opacity="0.7"/>
+              </svg>
+              <span class="cm-title">Arcanea <span class="cm-version">v0.1</span></span>
+            </div>
+            <div class="cm-header-actions">
+              <button class="cm-icon-btn" title="Open side panel">
+                <!-- Phosphor grid-four -->
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="2" width="5" height="5" rx="1"/>
+                  <rect x="9" y="2" width="5" height="5" rx="1"/>
+                  <rect x="2" y="9" width="5" height="5" rx="1"/>
+                  <rect x="9" y="9" width="5" height="5" rx="1"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="cm-tabs">
+            <button class="cm-tab active">Library<span class="shortcut">1</span></button>
+            <button class="cm-tab">Downloads<span class="shortcut">2</span></button>
+            <button class="cm-tab">Settings<span class="shortcut">3</span></button>
+          </div>
+
+          <div class="cm-stats">
+            <span class="cm-stat"><span class="cm-stat-value">156</span> img</span>
+            <span class="cm-stat"><span class="cm-stat-value">23</span> vid</span>
+            <span class="cm-stat"><span class="cm-stat-value">12</span> HD</span>
+          </div>
+
+          <!-- Compact grid for popup -->
+          <div class="cm-grid">
+            <div class="cm-grid-item"><div class="cm-thumb ph-1"></div></div>
+            <div class="cm-grid-item"><div class="cm-thumb ph-2"></div><span class="cm-badge cm-badge-video">VID</span></div>
+            <div class="cm-grid-item"><div class="cm-thumb ph-3"></div><span class="cm-badge cm-badge-hd">HD</span></div>
+            <div class="cm-grid-item"><div class="cm-thumb ph-4"></div></div>
+            <div class="cm-grid-item"><div class="cm-thumb ph-5"></div><span class="cm-badge cm-badge-video">VID</span></div>
+            <div class="cm-grid-item"><div class="cm-thumb ph-6"></div></div>
+            <div class="cm-grid-item"><div class="cm-thumb ph-7"></div><span class="cm-badge cm-badge-hd">HD</span></div>
+            <div class="cm-grid-item"><div class="cm-thumb ph-8"></div></div>
+            <div class="cm-grid-item"><div class="cm-thumb ph-9"></div></div>
+            <div class="cm-grid-item"><div class="cm-thumb ph-10"></div><span class="cm-badge cm-badge-video">VID</span></div>
+          </div>
+
+          <div class="cm-footer" style="gap: 6px;">
+            <button class="cm-btn-ghost" style="font-size: 10px; padding: 4px 8px; flex: 1; justify-content: center;">
+              <!-- Phosphor funnel -->
+              <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h12L9 9v4l-2 1V9L2 3z"/></svg>
+              Filter
+            </button>
+            <button class="cm-btn-primary" style="font-size: 10px; padding: 4px 10px; flex: 1; justify-content: center;">
+              <!-- Phosphor arrow-down -->
+              <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v10M4 9l4 4 4-4"/></svg>
+              Download All
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         STATE 7: Popup — Quick download view
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="state-group">
+      <div class="state-label">State 7 &mdash; Popup: Downloads</div>
+      <div class="state-desc">280px compact download progress with active transfers.</div>
+
+      <div class="panel-frame">
+        <div class="popup">
+          <div class="cm-header">
+            <div class="cm-header-left">
+              <svg class="cm-brand-icon" viewBox="0 0 22 22" fill="none">
+                <path d="M11 2L19 7.5V14.5L11 20L3 14.5V7.5L11 2Z" stroke="url(#brand-grad)" stroke-width="1.5" fill="none"/>
+                <path d="M11 6L15.5 8.75V13.25L11 16L6.5 13.25V8.75L11 6Z" stroke="url(#brand-grad)" stroke-width="1" fill="none" opacity="0.5"/>
+                <circle cx="11" cy="11" r="2" fill="url(#brand-grad)" opacity="0.7"/>
+              </svg>
+              <span class="cm-title">Arcanea <span class="cm-version">v0.1</span></span>
+            </div>
+            <div class="cm-header-actions">
+              <button class="cm-icon-btn" title="Open side panel">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="2" width="5" height="5" rx="1"/>
+                  <rect x="9" y="2" width="5" height="5" rx="1"/>
+                  <rect x="2" y="9" width="5" height="5" rx="1"/>
+                  <rect x="9" y="9" width="5" height="5" rx="1"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="cm-tabs">
+            <button class="cm-tab">Library<span class="shortcut">1</span></button>
+            <button class="cm-tab active">Downloads<span class="shortcut">2</span></button>
+            <button class="cm-tab">Settings<span class="shortcut">3</span></button>
+          </div>
+
+          <!-- Compact downloads -->
+          <div class="cm-downloads">
+            <div class="cm-dl-item">
+              <div class="cm-dl-thumb ph-1" style="width: 28px; height: 28px;"></div>
+              <div class="cm-dl-info">
+                <div class="cm-dl-name" style="font-size: 11px;">grok_gen_aurora.png</div>
+                <div class="cm-dl-meta" style="font-size: 10px;">
+                  <span>2.4 MB</span>
+                  <span>PNG</span>
+                </div>
+                <div class="cm-dl-progress-track">
+                  <div class="cm-dl-progress-fill complete" style="width: 100%"></div>
+                </div>
+              </div>
+              <span class="cm-dl-status done" style="font-size: 10px;">
+                <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5L6.5 11.5L12.5 4.5"/></svg>
+              </span>
+            </div>
+
+            <div class="cm-dl-item">
+              <div class="cm-dl-thumb ph-4" style="width: 28px; height: 28px;"></div>
+              <div class="cm-dl-info">
+                <div class="cm-dl-name" style="font-size: 11px;">grok_gen_crystal.png</div>
+                <div class="cm-dl-meta" style="font-size: 10px;">
+                  <span>1.8 MB</span>
+                  <span>HD</span>
+                </div>
+                <div class="cm-dl-progress-track">
+                  <div class="cm-dl-progress-fill active" style="width: 72%"></div>
+                </div>
+              </div>
+              <span class="cm-dl-status active" style="font-size: 10px;">72%</span>
+            </div>
+
+            <div class="cm-dl-item">
+              <div class="cm-dl-thumb ph-7" style="width: 28px; height: 28px;"></div>
+              <div class="cm-dl-info">
+                <div class="cm-dl-name" style="font-size: 11px;">grok_vid_demo.mp4</div>
+                <div class="cm-dl-meta" style="font-size: 10px;">
+                  <span>14.2 MB</span>
+                  <span>MP4</span>
+                </div>
+                <div class="cm-dl-progress-track">
+                  <div class="cm-dl-progress-fill active" style="width: 31%"></div>
+                </div>
+              </div>
+              <span class="cm-dl-status active" style="font-size: 10px;">31%</span>
+            </div>
+
+            <div class="cm-dl-item">
+              <div class="cm-dl-thumb ph-12" style="width: 28px; height: 28px;"></div>
+              <div class="cm-dl-info">
+                <div class="cm-dl-name" style="font-size: 11px;">grok_gen_void.png</div>
+                <div class="cm-dl-meta" style="font-size: 10px;">
+                  <span>3.1 MB</span>
+                  <span>PNG</span>
+                </div>
+                <div class="cm-dl-progress-track">
+                  <div class="cm-dl-progress-fill" style="width: 0%"></div>
+                </div>
+              </div>
+              <span class="cm-dl-status" style="font-size: 10px;">Queued</span>
+            </div>
+          </div>
+
+          <div class="cm-footer">
+            <span class="cm-footer-text">1 of 4 complete</span>
+            <span class="cm-footer-accent">51%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /showcase -->
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     DESIGN NOTES — Every decision traced to its source variation
+     ══════════════════════════════════════════════════════════════ -->
+
+<div class="design-notes">
+  <h2>Crystal Midnight &mdash; Design Notes</h2>
+  <p class="dn-subtitle">The winning hybrid. Every design decision documented with its source variation.</p>
+
+  <div class="dn-divider"></div>
+
+  <h3>Design Philosophy</h3>
+  <p>Crystal Midnight synthesizes three competing philosophies: V04 Midnight Minimal's structural discipline and performance obsession, V01 Crystal Glass's brand identity and visual signature, and V03 Aurora Flow's emotional warmth and living personality. The result is a design that feels like a professional tool (V04), looks unmistakably like Arcanea (V01), and breathes with just enough life to create genuine delight (V03).</p>
+  <p>The guiding principle: <strong>restraint is the default; every embellishment must earn its place.</strong> The animated border, the breathing orb, the glowing progress dot &mdash; each is a single, intentional moment of magic in an otherwise disciplined interface.</p>
+
+  <div class="dn-divider"></div>
+
+  <h3>Color System</h3>
+  <p>Eight neutral values from V04 form the foundation. Three accent colors from V01 provide brand identity. The system is deliberately narrow &mdash; no color should appear without a clear functional role.</p>
+
+  <table class="dn-table">
+    <thead>
+      <tr><th>Token</th><th>Value</th><th>Role</th><th>Source</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>--bg-deep</code></td><td><span class="color-swatch" style="background:#09090B"></span>#09090B</td><td>Panel background</td><td><span class="source-tag source-v04">V04</span></td></tr>
+      <tr><td><code>--bg-surface</code></td><td><span class="color-swatch" style="background:#18181B"></span>#18181B</td><td>Elevated surfaces, hover fills</td><td><span class="source-tag source-v04">V04</span></td></tr>
+      <tr><td><code>--bg-card</code></td><td><span class="color-swatch" style="background:#27272A"></span>#27272A</td><td>Cards, toggle off state</td><td><span class="source-tag source-v04">V04</span></td></tr>
+      <tr><td><code>--border-subtle</code></td><td><span class="color-swatch" style="background:#27272A"></span>#27272A</td><td>Default borders (barely visible)</td><td><span class="source-tag source-v04">V04</span></td></tr>
+      <tr><td><code>--border-hover</code></td><td><span class="color-swatch" style="background:#3f3f46"></span>#3f3f46</td><td>Hover borders, shortcut hint text</td><td><span class="source-tag source-v04">V04</span></td></tr>
+      <tr><td><code>--text-primary</code></td><td><span class="color-swatch" style="background:#FAFAFA"></span>#FAFAFA</td><td>Titles, active tab, filenames</td><td><span class="source-tag source-v04">V04</span></td></tr>
+      <tr><td><code>--text-secondary</code></td><td><span class="color-swatch" style="background:#A1A1AA"></span>#A1A1AA</td><td>Body text, metadata</td><td><span class="source-tag source-v04">V04</span></td></tr>
+      <tr><td><code>--text-muted</code></td><td><span class="color-swatch" style="background:#52525B"></span>#52525B</td><td>Inactive tabs, section titles</td><td><span class="source-tag source-v04">V04</span></td></tr>
+      <tr><td><code>--accent-teal</code></td><td><span class="color-swatch" style="background:#7fffd4"></span>#7fffd4</td><td>Primary actions, active states, selections</td><td><span class="source-tag source-v01">V01</span></td></tr>
+      <tr><td><code>--accent-violet</code></td><td><span class="color-swatch" style="background:#8b5cf6"></span>#8b5cf6</td><td>Video badges, border gradient secondary</td><td><span class="source-tag source-v01">V01</span></td></tr>
+      <tr><td><code>--accent-gold</code></td><td><span class="color-swatch" style="background:#ffd700"></span>#ffd700</td><td>HD badge only</td><td><span class="source-tag source-v01">V01</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="dn-divider"></div>
+
+  <h3>Typography</h3>
+  <p><span class="source-tag source-v04">V04</span> Inter with <code>-0.02em</code> letter-spacing throughout. Weights restricted to 400 (body), 500 (labels/buttons), and 600 (headings/brand). Size scale: 9px (shortcut hints, badges), 10px (footer, compact text), 11px (metadata, filters, stats), 12px (body, filenames, settings), 13px (panel title). Nothing exceeds 13px &mdash; density over drama. <code>font-variant-numeric: tabular-nums</code> on all numeric displays for aligned, professional data presentation.</p>
+
+  <div class="dn-divider"></div>
+
+  <h3>Layout System</h3>
+  <ul>
+    <li><span class="source-tag source-v04">V04</span> <strong>Side Panel: 400px wide, 700px tall</strong> &mdash; optimal for Chrome Extension side panel at standard viewport heights</li>
+    <li><span class="source-tag source-v04">V04</span> <strong>Popup: 280px wide, 440px tall</strong> &mdash; compact toolbar popup format</li>
+    <li><span class="source-tag source-v04">V04</span> <strong>4px grid alignment</strong> &mdash; all padding, margins, and element sizes are multiples of 4px. Exceptions allowed only for 1px borders and 2px progress bars.</li>
+    <li><span class="source-tag source-v04">V04</span> <strong>2px media grid gap</strong> &mdash; creates the signature dense mosaic where content touches. Images breathe through their own color, not through whitespace.</li>
+    <li><span class="source-tag source-v01">V01</span> <strong>Masonry support</strong> &mdash; <code>grid-row: span 2</code> on tall items breaks the uniform grid and accommodates varied aspect ratios naturally.</li>
+  </ul>
+
+  <div class="dn-divider"></div>
+
+  <h3>Animation Inventory</h3>
+  <p>Every animation in Crystal Midnight is accounted for. There are exactly six CSS animations total &mdash; five from V03 and one from V01. None use JavaScript. None use <code>backdrop-filter</code>.</p>
+
+  <table class="dn-table">
+    <thead>
+      <tr><th>Animation</th><th>Duration</th><th>Property</th><th>Source</th><th>Context</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Border sweep</td><td>6s linear infinite</td><td>CSS @property angle</td><td><span class="source-tag source-v01">V01</span></td><td>Outer panel frame only, 0.25 opacity</td></tr>
+      <tr><td>FAB pulse</td><td>3s ease infinite</td><td>transform + opacity</td><td><span class="source-tag source-v03">V03</span></td><td>Two concentric rings, staggered 1.5s</td></tr>
+      <tr><td>Orb breathe</td><td>3s ease infinite</td><td>transform + opacity</td><td><span class="source-tag source-v03">V03</span></td><td>Empty state center dot</td></tr>
+      <tr><td>Ring expand</td><td>3s ease-out infinite</td><td>transform + opacity</td><td><span class="source-tag source-v03">V03</span></td><td>Empty state concentric ring</td></tr>
+      <tr><td>Scanner rings</td><td>3s + 2s linear infinite</td><td>transform (rotate)</td><td><span class="source-tag source-v03">V03</span></td><td>Dual rings, counter-rotate for organic feel</td></tr>
+      <tr><td>Grid stagger</td><td>0.3s ease, 20ms delay/item</td><td>opacity + translateY</td><td><span class="source-tag source-v03">V03</span></td><td>fadeInUp on grid items appearing</td></tr>
+      <tr><td>Progress glow</td><td>1.5s ease infinite</td><td>box-shadow</td><td><span class="source-tag source-v03">V03</span></td><td>Glowing dot at leading edge of active downloads</td></tr>
+    </tbody>
+  </table>
+
+  <p><span class="source-tag source-v04">V04</span> All hover transitions are <code>150ms ease</code>. Toggle switch transitions are <code>200ms ease</code>. Progress bar fills are <code>300ms ease</code>. No animation in the main library view is active &mdash; only the border sweep runs continuously, at 0.25 opacity, consuming minimal GPU resources.</p>
+
+  <div class="dn-divider"></div>
+
+  <h3>Component Decisions</h3>
+
+  <ul>
+    <li><span class="source-tag source-v04">V04</span> <strong>Tab underline indicator</strong> (not segmented control) &mdash; cleaner, uses 1px line that matches border system. Tinted teal instead of V04's white for brand consistency.</li>
+    <li><span class="source-tag source-v04">V04</span> <strong>Keyboard shortcut hints</strong> &mdash; [1] [2] [3] on tabs, [S] [D] on action buttons. Small grey badges that are visible but subordinate. Power-user friendly without cluttering. No other media extension offers this.</li>
+    <li><span class="source-tag source-v04">V04</span> <strong>Ghost buttons by default</strong> &mdash; transparent background + subtle border. Solid teal reserved ONLY for the primary CTA (Download). This creates unambiguous action hierarchy.</li>
+    <li><span class="source-tag source-v04">V04</span> <strong>Filter pills</strong> &mdash; All / Image / Video / HD / SD. Simple text toggles with background fill on active. No borders, no icons, no badges &mdash; text is enough.</li>
+    <li><span class="source-tag source-v01">V01</span> <strong>Animated conic gradient border</strong> &mdash; The signature visual element. A single teal-to-violet gradient sweeps around the outer panel frame at 6s rotation, 0.25 opacity. Uses CSS <code>@property</code> for smooth angle interpolation and <code>mask-composite: exclude</code> for the border-only effect. Applied only to the outermost frame &mdash; never on inner cards or elements.</li>
+    <li><span class="source-tag source-v01">V01</span> <strong>Brand icon</strong> &mdash; Layered hexagonal diamond SVG with teal-to-violet linear gradient. Three nested hexagons create depth. Center circle provides a focal point. Instantly recognizable as Arcanea.</li>
+    <li><span class="source-tag source-v01">V01</span> <strong>Video badges in violet</strong> &mdash; #8b5cf6 background distinguishes video content from images at a glance. HD badges use gold (#ffd700). Both are 9px text, 3px border-radius, tight padding.</li>
+    <li><span class="source-tag source-v02">V02</span> <strong>Selection counter showing ORDER</strong> &mdash; Selected items display 01, 02, 03, 04 instead of a generic checkmark. This adds information value (the user knows download order) and creates a sense of intentional curation. 18px teal square with 9px tabular-nums text.</li>
+    <li><span class="source-tag source-v03">V03</span> <strong>FAB with ambient pulse</strong> &mdash; Teal gradient button in the bottom-right corner with two concentric expanding ring animations staggered by 1.5s. Creates a subtle "heartbeat" effect that draws the eye without demanding attention.</li>
+    <li><span class="source-tag source-v03">V03</span> <strong>Breathing empty state</strong> &mdash; A central teal orb pulsates with a slow 3s breathe cycle while a single ring expands outward and fades. Single-color teal (not V03's four-color aurora) to match Crystal Midnight's restrained palette.</li>
+    <li><span class="source-tag source-v03">V03</span> <strong>Dual-ring scanner</strong> &mdash; Outer ring at 3s rotation, inner ring at 2s counter-rotation. Different speeds create an organic, non-mechanical feeling. Center dot pulses. Reduced from V03's triple-ring for performance.</li>
+    <li><span class="source-tag source-v03">V03</span> <strong>Progress bar glow dot</strong> &mdash; Active download progress bars have a 6px glowing dot at the leading edge with a pulsing box-shadow. Makes downloads feel alive and in-progress rather than static.</li>
+  </ul>
+
+  <div class="dn-divider"></div>
+
+  <h3>Performance Profile</h3>
+  <p>Crystal Midnight is designed for Chrome Extension constraints where the panel runs alongside complex web pages (grok.com, x.com) that are already GPU-intensive.</p>
+
+  <ul>
+    <li><strong>No <code>backdrop-filter</code></strong> anywhere &mdash; the single most expensive CSS property in extension contexts.</li>
+    <li><strong>One web font</strong> &mdash; Inter at three weights (400, 500, 600). Inter is also a system-common font, so the @import is a progressive enhancement, not a hard dependency.</li>
+    <li><strong>One continuous animation in library view</strong> &mdash; the border sweep. Uses CSS @property which is GPU-composited. The FAB pulse is lightweight (opacity + transform only).</li>
+    <li><strong>Zero JavaScript animations</strong> &mdash; all motion is pure CSS. The stagger effect on grid items uses CSS animation-delay, not JS IntersectionObserver.</li>
+    <li><strong>Scanning and empty states</strong> are temporary views &mdash; their animations only run when active, never in the background.</li>
+    <li><strong>Estimated CSS weight</strong>: ~12KB unminified. ~4KB minified + gzipped. Well within extension performance budgets.</li>
+  </ul>
+
+  <div class="dn-divider"></div>
+
+  <h3>What Crystal Midnight Does NOT Include</h3>
+  <p>Deliberate omissions are as important as deliberate inclusions:</p>
+  <ul>
+    <li><strong>No <code>backdrop-filter</code> / glassmorphism</strong> &mdash; the Design Knowledge Base says "Glassmorphism is dead." V01's glass layers were its biggest performance risk.</li>
+    <li><strong>No aurora/four-color gradients</strong> &mdash; V03's four-color system (teal, blue, purple, pink) created visual richness but reduced information hierarchy. Crystal Midnight uses teal as the single active accent with violet restricted to badges and the border gradient.</li>
+    <li><strong>No floating blobs</strong> &mdash; V03's three animated background blobs were ambient but GPU-heavy. Cut entirely.</li>
+    <li><strong>No gradient text</strong> &mdash; V01's gradient brand name was striking but adds complexity. Plain white text is clearer and more legible at small sizes.</li>
+    <li><strong>No custom fonts beyond Inter</strong> &mdash; V03's DM Sans was excellent but adds a font dependency. Inter covers all needs and is near-ubiquitous as a system font.</li>
+    <li><strong>No 3D transforms</strong> &mdash; V07's perspective system was impressive but inappropriate for an extension. Flat hierarchy with color-based depth instead.</li>
+  </ul>
+
+  <div class="dn-divider"></div>
+
+  <h3>Implementation Notes</h3>
+  <ul>
+    <li>The <code>@property</code> declaration for <code>--gradient-angle</code> is required for the animated border. Supported in Chrome 85+ (the extension's only target). Fallback: static subtle border.</li>
+    <li>The <code>mask-composite: exclude</code> technique creates the border-only effect without an extra wrapper element. Both <code>-webkit-mask-composite: xor</code> and <code>mask-composite: exclude</code> are declared for compatibility.</li>
+    <li>Grid stagger animation uses <code>animation-fill-mode: both</code> via the <code>both</code> shorthand to prevent a flash of unstyled content before the delay expires.</li>
+    <li>The <code>overflow: visible</code> on <code>.cm-dl-progress-track</code> allows the glowing dot on progress fills to extend beyond the 2px track without being clipped.</li>
+    <li>The FAB button uses <code>::before</code> and <code>::after</code> pseudo-elements for its two concentric pulse rings. The rings are staggered by setting <code>animation-delay: 1.5s</code> on the second ring to create a natural breathing rhythm.</li>
+    <li>The selection counter uses <code>font-variant-numeric: tabular-nums</code> to ensure "01" and "04" occupy the same width, preventing layout shifts as numbers change.</li>
+  </ul>
+
+  <div class="dn-divider"></div>
+
+  <h3>Recommended Build Stack</h3>
+  <table class="dn-table">
+    <thead>
+      <tr><th>Layer</th><th>Tool</th><th>Rationale</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Framework</td><td>Preact (3KB)</td><td>React-like DX at 1/15th the bundle size. Perfect for extension constraints.</td></tr>
+      <tr><td>Build</td><td>Vite + CRXJS</td><td>HMR in development, optimized Chrome Extension output in production.</td></tr>
+      <tr><td>CSS</td><td>Vanilla CSS with custom properties</td><td>No preprocessor needed. The design token system in :root handles theming.</td></tr>
+      <tr><td>Icons</td><td>Inline SVG (Phosphor-derived)</td><td>No icon font dependency. 1.5px stroke, round caps. Tree-shakeable by nature.</td></tr>
+      <tr><td>Font</td><td>Inter (Google Fonts CDN + system fallback)</td><td>Progressive enhancement: <code>'Inter', -apple-system, BlinkMacSystemFont, sans-serif</code></td></tr>
+    </tbody>
+  </table>
+
+  <div class="dn-divider"></div>
+
+  <p style="color: var(--text-muted); font-style: italic; text-align: center; margin-top: 40px;">"Discipline with identity and soul. The design that ships."</p>
+  <p style="color: var(--border-hover); font-size: 11px; text-align: center; margin-top: 8px;">&mdash; Arcanea Council, Crystal Midnight Specification, March 2026</p>
+
+</div>
+
+</body>
+</html>

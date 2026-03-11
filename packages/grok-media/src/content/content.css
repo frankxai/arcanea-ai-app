@@ -1,0 +1,79 @@
+/* Arcanea Media — Content script overlay styles (Crystal Midnight) */
+
+.arcanea-scan-overlay {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 99999;
+  padding: 12px 20px;
+  border-radius: 8px;
+  background: rgba(9, 9, 11, 0.92);
+  backdrop-filter: blur(16px);
+  border: 1px solid #27272A;
+  color: #FAFAFA;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  letter-spacing: -0.02em;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(127, 255, 212, 0.06);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: opacity 0.3s ease;
+}
+
+.arcanea-scan-overlay .arcanea-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #3f3f46;
+  border-top-color: #7fffd4;
+  border-radius: 50%;
+  animation: arcanea-spin 0.8s linear infinite;
+}
+
+.arcanea-scan-overlay .arcanea-count {
+  color: #7fffd4;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.arcanea-scan-overlay .arcanea-label {
+  color: #A1A1AA;
+}
+
+.arcanea-scan-overlay .arcanea-cancel {
+  background: transparent;
+  border: 1px solid #3f3f46;
+  color: #FAFAFA;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: inherit;
+  letter-spacing: -0.02em;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.arcanea-scan-overlay .arcanea-cancel:hover {
+  border-color: #7fffd4;
+  background: rgba(127, 255, 212, 0.06);
+}
+
+/* Progress bar in overlay */
+.arcanea-scan-overlay .arcanea-progress {
+  width: 60px;
+  height: 2px;
+  border-radius: 1px;
+  background: #27272A;
+  overflow: hidden;
+}
+
+.arcanea-scan-overlay .arcanea-progress-fill {
+  height: 100%;
+  background: #7fffd4;
+  border-radius: 1px;
+  transition: width 0.3s ease;
+}
+
+@keyframes arcanea-spin {
+  to { transform: rotate(360deg); }
+}
