@@ -6,6 +6,7 @@ import { useChat } from '@ai-sdk/react';
 import { TextStreamChatTransport } from 'ai';
 import Link from 'next/link';
 import ChatMarkdown from '@/components/chat/chat-markdown';
+import { useProvider } from '@/hooks/use-provider';
 import {
   PhPaperPlane,
   PhPlus,
@@ -68,6 +69,7 @@ export default function CompanionChatPage() {
   const initialPrompt = searchParams.get('prompt');
 
   const luminorConfig = useMemo(() => getLuminor(luminorId), [luminorId]);
+  const { provider, clientApiKey, label: providerLabel } = useProvider();
 
   useEffect(() => {
     if (luminorId && !luminorConfig) {
@@ -90,7 +92,7 @@ export default function CompanionChatPage() {
     id: `companion-${luminorId}`,
     transport: new TextStreamChatTransport({
       api: '/api/ai/chat',
-      body: { systemPrompt: luminorConfig?.systemPrompt },
+      body: { systemPrompt: luminorConfig?.systemPrompt, provider, clientApiKey },
     }),
   });
 
@@ -434,7 +436,7 @@ export default function CompanionChatPage() {
                 Enter to send · Shift+Enter for new line
               </span>
               <span className="text-[11px] text-white/15 font-mono">
-                Gemini 2.0 Flash
+                {providerLabel}
               </span>
             </div>
           </form>

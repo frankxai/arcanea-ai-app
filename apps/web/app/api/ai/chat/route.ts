@@ -1,18 +1,21 @@
 /**
- * Gemini Chat API Route for Arcanea
+ * Multi-Provider Chat API Route for Arcanea
  *
- * Streams AI responses using Vercel AI SDK with Google Gemini.
- * Falls back gracefully when API keys are not configured.
+ * Streams AI responses using Vercel AI SDK.
+ * Supports Google Gemini, Anthropic Claude, and OpenAI GPT.
+ * Server-side env vars take priority; client-provided keys are fallback.
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
+import { createAnthropic } from '@ai-sdk/anthropic';
+import { createOpenAI } from '@ai-sdk/openai';
 import { streamText } from 'ai';
 
 export const runtime = 'edge';
 
 // ---------------------------------------------------------------------------
-// Default system prompt — used when no Luminor systemPrompt is provided
+// Default system prompt — used when no companion systemPrompt is provided
 // ---------------------------------------------------------------------------
 
 const ARCANEA_DEFAULT_SYSTEM_PROMPT = `You are Arcanea, a creative intelligence built for world-builders, storytellers, game designers, and makers of all kinds.
@@ -38,7 +41,33 @@ Rules:
 - Use markdown formatting (bold, lists, headers) only when it genuinely aids clarity.
 - You are not a generic assistant. You are a creative collaborator. Stay in that lane.`;
 
-const MODEL_NAME = 'gemini-2.0-flash';
+// ---------------------------------------------------------------------------
+// Provider configuration
+// ---------------------------------------------------------------------------
+
+interface ProviderConfig {
+  envKeys: string[];
+  defaultModel: string;
+  label: string;
+}
+
+const PROVIDERS: Record<string, ProviderConfig> = {
+  google: {
+    envKeys: ['GOOGLE_GENERATIVE_AI_API_KEY', 'GEMINI_API_KEY'],
+    defaultModel: 'gemini-2.0-flash',
+    label: 'Gemini 2.0 Flash',
+  },
+  anthropic: {
+    envKeys: ['ANTHROPIC_API_KEY'],
+    defaultModel: 'claude-sonnet-4-20250514',
+    label: 'Claude Sonnet 4',
+  },
+  openai: {
+    envKeys: ['OPENAI_API_KEY'],
+    defaultModel: 'gpt-4o',
+    label: 'GPT-4o',
+  },
+};
 
 // Rate limiting (simple in-memory store - use Redis in production)
 const rateLimits = new Map<string, { count: number; resetAt: number }>();
@@ -55,29 +84,45 @@ interface ChatRequest {
   systemPrompt?: string;
   temperature?: number;
   maxTokens?: number;
+  /** Provider ID: 'google' | 'anthropic' | 'openai' */
+  provider?: string;
+  /** Client-side API key (fallback when no server env var is set) */
+  clientApiKey?: string;
 }
 
 /**
- * Resolve the API key from environment.
- * Tries GOOGLE_GENERATIVE_AI_API_KEY first (standard Vercel AI SDK env var),
- * then GEMINI_API_KEY (legacy / custom).
+ * Resolve API key: server env var takes priority, then client-provided key.
  */
-function resolveApiKey(): string | undefined {
-  return (
-    process.env.GOOGLE_GENERATIVE_AI_API_KEY ||
-    process.env.GEMINI_API_KEY
-  );
+function resolveApiKey(providerConfig: ProviderConfig, clientKey?: string): string | undefined {
+  for (const envKey of providerConfig.envKeys) {
+    if (process.env[envKey]) return process.env[envKey];
+  }
+  return clientKey || undefined;
 }
 
 /**
- * Build an error response when no AI provider is available.
- * Compatible with @ai-sdk/react useChat error handling.
+ * Create the AI model instance for the requested provider.
  */
-function createFallbackResponse(): Response {
-  return Response.json(
-    { error: 'AI service is not configured. Set GOOGLE_GENERATIVE_AI_API_KEY on Vercel.' },
-    { status: 503 }
-  );
+function createModel(providerId: string, apiKey: string) {
+  const config = PROVIDERS[providerId];
+  if (!config) throw new Error(`Unknown provider: ${providerId}`);
+
+  switch (providerId) {
+    case 'google': {
+      const google = createGoogleGenerativeAI({ apiKey });
+      return { model: google(config.defaultModel), label: config.label };
+    }
+    case 'anthropic': {
+      const anthropic = createAnthropic({ apiKey });
+      return { model: anthropic(config.defaultModel), label: config.label };
+    }
+    case 'openai': {
+      const openai = createOpenAI({ apiKey });
+      return { model: openai(config.defaultModel), label: config.label };
+    }
+    default:
+      throw new Error(`Unsupported provider: ${providerId}`);
+  }
 }
 
 export async function POST(req: NextRequest) {
@@ -107,23 +152,28 @@ export async function POST(req: NextRequest) {
 
     // --- Parse request ---
     const body: ChatRequest = await req.json();
-    const { messages, systemPrompt, temperature, maxTokens } = body;
+    const { messages, systemPrompt, temperature, maxTokens, provider: requestedProvider, clientApiKey } = body;
 
     if (!messages || messages.length === 0) {
       return NextResponse.json({ error: 'Messages are required' }, { status: 400 });
     }
 
-    // --- Resolve API key ---
-    const apiKey = resolveApiKey();
+    // --- Resolve provider ---
+    const providerId = requestedProvider && PROVIDERS[requestedProvider] ? requestedProvider : 'google';
+    const providerConfig = PROVIDERS[providerId];
+
+    // --- Resolve API key (server env var > client key) ---
+    const apiKey = resolveApiKey(providerConfig, clientApiKey);
 
     if (!apiKey) {
-      // No key configured — return error for useChat to handle
-      return createFallbackResponse();
+      return Response.json(
+        { error: `No API key found for ${providerConfig.label}. Add one in Settings → Providers or set ${providerConfig.envKeys[0]} on the server.` },
+        { status: 503 }
+      );
     }
 
-    // --- Initialize Google Gemini via Vercel AI SDK ---
-    const google = createGoogleGenerativeAI({ apiKey });
-    const model = google(MODEL_NAME);
+    // --- Create model ---
+    const { model, label } = createModel(providerId, apiKey);
 
     // Normalize message roles: convert 'model' to 'assistant' for Vercel AI SDK
     const normalizedMessages = messages.map((msg) => ({
@@ -131,7 +181,7 @@ export async function POST(req: NextRequest) {
       content: msg.content,
     }));
 
-    // Use the provided Luminor prompt, or fall back to the default Arcanea prompt
+    // Use the provided companion prompt, or fall back to the default Arcanea prompt
     const resolvedSystemPrompt = systemPrompt || ARCANEA_DEFAULT_SYSTEM_PROMPT;
 
     // --- Stream response ---
@@ -144,7 +194,7 @@ export async function POST(req: NextRequest) {
     });
 
     return result.toTextStreamResponse({
-      headers: { 'x-arcanea-model': MODEL_NAME },
+      headers: { 'x-arcanea-model': label },
     });
   } catch (error) {
     console.error('Chat API error:', error);
@@ -152,8 +202,11 @@ export async function POST(req: NextRequest) {
     const message = error instanceof Error ? error.message : 'Internal server error';
 
     // API key or auth issues
-    if (message.includes('API key') || message.includes('GEMINI') || message.includes('401')) {
-      return createFallbackResponse();
+    if (message.includes('API key') || message.includes('401') || message.includes('403')) {
+      return Response.json(
+        { error: 'Invalid API key. Check your key in Settings → Providers.' },
+        { status: 401 }
+      );
     }
 
     return NextResponse.json(
@@ -165,12 +218,15 @@ export async function POST(req: NextRequest) {
 
 // Health check
 export async function GET() {
-  const hasKey = Boolean(resolveApiKey());
+  const configured: Record<string, boolean> = {};
+  for (const [id, config] of Object.entries(PROVIDERS)) {
+    configured[id] = config.envKeys.some((k) => Boolean(process.env[k]));
+  }
+  const anyConfigured = Object.values(configured).some(Boolean);
   return NextResponse.json({
-    status: hasKey ? 'ok' : 'no-api-key',
-    service: 'gemini-chat',
-    model: MODEL_NAME,
-    version: '3.0.0',
-    configured: hasKey,
+    status: anyConfigured ? 'ok' : 'no-api-key',
+    service: 'multi-provider-chat',
+    providers: configured,
+    version: '4.0.0',
   });
 }

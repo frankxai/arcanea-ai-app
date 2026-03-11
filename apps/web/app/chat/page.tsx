@@ -6,6 +6,7 @@ import { useChat } from '@ai-sdk/react';
 import { TextStreamChatTransport } from 'ai';
 import Link from 'next/link';
 import ChatMarkdown from '@/components/chat/chat-markdown';
+import { useProvider } from '@/hooks/use-provider';
 import {
   PhPaperPlane,
   PhPlus,
@@ -30,7 +31,6 @@ function getMessageText(msg: { parts?: Array<{ type: string; text?: string }> })
 // ---------------------------------------------------------------------------
 
 const ACCENT = '#00bcd4';
-const MODEL_LABEL = 'Gemini 2.0 Flash';
 
 const SUGGESTIONS = [
   'Write a short story about a wandering inventor',
@@ -46,6 +46,7 @@ const SUGGESTIONS = [
 export default function ChatPage() {
   const searchParams = useSearchParams();
   const initialPrompt = searchParams.get('prompt');
+  const { provider, clientApiKey, label: providerLabel } = useProvider();
 
   const [input, setInput] = useState('');
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -59,7 +60,10 @@ export default function ChatPage() {
     sendMessage,
     setMessages,
   } = useChat({
-    transport: new TextStreamChatTransport({ api: '/api/ai/chat' }),
+    transport: new TextStreamChatTransport({
+      api: '/api/ai/chat',
+      body: { provider, clientApiKey },
+    }),
   });
 
   const isLoading = status === 'submitted' || status === 'streaming';
@@ -204,7 +208,9 @@ export default function ChatPage() {
             >
               Arcanea
             </Link>
-            <span className="text-[11px] text-white/25 font-mono">{MODEL_LABEL}</span>
+            <Link href="/settings/providers" className="text-[11px] text-white/25 font-mono hover:text-white/50 transition-colors">
+              {providerLabel}
+            </Link>
           </div>
 
           <div className="flex items-center gap-2">
@@ -387,7 +393,7 @@ export default function ChatPage() {
                   Enter to send · Shift+Enter for new line
                 </span>
                 <span className="text-[11px] text-white/15 font-mono">
-                  {MODEL_LABEL}
+                  {providerLabel}
                 </span>
               </div>
             </form>
