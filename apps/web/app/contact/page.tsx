@@ -236,7 +236,6 @@ export default function ContactPage() {
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <>
             {/* Hero Section */}
             <section className="mb-16">
               <div className="relative liquid-glass rounded-3xl overflow-hidden px-8 py-12 sm:px-12 sm:py-16">
