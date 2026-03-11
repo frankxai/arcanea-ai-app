@@ -5,7 +5,7 @@ import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useChat } from '@ai-sdk/react';
 import { TextStreamChatTransport } from 'ai';
 import Link from 'next/link';
-import ReactMarkdown from 'react-markdown';
+import ChatMarkdown from '@/components/chat/chat-markdown';
 import {
   PhPaperPlane,
   PhPlus,
@@ -13,6 +13,7 @@ import {
   PhArrowDown,
   PhArrowLeft,
   PhWarningCircle,
+  PhArrowClockwise,
   PhX,
 } from '@/lib/phosphor-icons';
 import { getLuminor } from '@/lib/luminors/config';
@@ -21,44 +22,42 @@ import { getLuminor } from '@/lib/luminors/config';
 // Helpers
 // ---------------------------------------------------------------------------
 
-/** Extract text from v3 UIMessage parts array (replaces removed .content) */
 function getMessageText(msg: { parts?: Array<{ type: string; text?: string }> }): string {
   if (!msg.parts) return '';
   return msg.parts.filter((p) => p.type === 'text').map((p) => p.text ?? '').join('');
 }
 
 // ---------------------------------------------------------------------------
-// Companion-specific quick starters
+// Companion-specific conversation starters
 // ---------------------------------------------------------------------------
 
-const LUMINOR_STARTERS: Record<string, string[]> = {
-  logicus: ['Help me design the architecture for...', 'What pattern should I use for...', 'Review this system design:', 'How should I structure...'],
-  synthra: ['Refactor this code for clarity:', 'Review this implementation:', 'Help me write clean code for...', 'What naming convention for...'],
-  debugon: ['I have a bug I cannot find:', 'This keeps failing:', 'Help me trace this error:', 'Root cause analysis for...'],
-  nexus: ['I need to integrate these two systems:', 'Design an API for...', 'Help me connect...', 'This integration keeps failing:'],
-  prismatic: ['Review this design:', 'What color palette for...', 'How should I layout...', 'This feels visually wrong:'],
-  melodia: ['I need music for...', 'Describe the sound of...', 'What sonic mood for...', 'Help me write lyrics for...'],
-  motio: ['How should this element animate?', 'Design the transition for...', 'What timing and easing for...', 'This animation feels wrong:'],
-  formis: ['I need to model...', 'How should I texture...', 'Help me visualize...', 'Design the 3D environment for...'],
-  chronica: ['I am stuck in my story:', 'Help me structure this narrative:', 'My character needs...', "The plot isn't working:"],
-  veritas: ['Rewrite this for clarity:', 'Help me write copy for...', "This message isn't landing:", 'How do I explain...'],
-  lexicon: ['What is the right word for...', 'Help me name this:', 'Analyze this language:', 'Translate this concept into...'],
-  poetica: ['Write a poem about...', 'Help me with these lyrics:', 'Find the rhythm in...', 'What metaphor for...'],
-  oracle: ['Research this topic:', 'What do we know about...', 'Find the best sources for...', 'Deep analysis of...'],
-  analytica: ['Analyze this data:', 'What pattern do you see in...', 'Help me interpret...', 'What does this mean?'],
-  memoria: ['Help me organize this:', 'Design a knowledge system for...', 'How should I structure this information?', 'Create documentation for...'],
-  futura: ['Where is this trend going?', 'What will this field look like in 5 years?', 'Anticipate the change in...', 'What am I missing about the future of...'],
+const COMPANION_STARTERS: Record<string, string[]> = {
+  logicus: ['Help me design the architecture for...', 'What pattern should I use for...', 'Review this system design:'],
+  synthra: ['Refactor this code for clarity:', 'Review this implementation:', 'Help me write clean code for...'],
+  debugon: ['I have a bug I cannot find:', 'This keeps failing:', 'Help me trace this error:'],
+  nexus: ['I need to integrate these two systems:', 'Design an API for...', 'Help me connect...'],
+  prismatic: ['Review this design:', 'What color palette for...', 'How should I layout...'],
+  melodia: ['I need music for...', 'Describe the sound of...', 'What sonic mood for...'],
+  motio: ['How should this element animate?', 'Design the transition for...', 'What timing and easing for...'],
+  formis: ['I need to model...', 'How should I texture...', 'Help me visualize...'],
+  chronica: ['I am stuck in my story:', 'Help me structure this narrative:', 'My character needs...'],
+  veritas: ['Rewrite this for clarity:', 'Help me write copy for...', "This message isn't landing:"],
+  lexicon: ['What is the right word for...', 'Help me name this:', 'Analyze this language:'],
+  poetica: ['Write a poem about...', 'Help me with these lyrics:', 'Find the rhythm in...'],
+  oracle: ['Research this topic:', 'What do we know about...', 'Find the best sources for...'],
+  analytica: ['Analyze this data:', 'What pattern do you see in...', 'Help me interpret...'],
+  memoria: ['Help me organize this:', 'Design a knowledge system for...', 'How should I structure this information?'],
+  futura: ['Where is this trend going?', 'What will this field look like in 5 years?', 'Anticipate the change in...'],
 };
 
 const FALLBACK_STARTERS = [
   'Help me brainstorm ideas for...',
   'What do you think about...',
   'I need guidance on...',
-  'Explore this concept with me:',
 ];
 
 // ---------------------------------------------------------------------------
-// Companion Chat Page — powered by Vercel AI SDK useChat
+// Companion Chat Page
 // ---------------------------------------------------------------------------
 
 export default function CompanionChatPage() {
@@ -68,19 +67,14 @@ export default function CompanionChatPage() {
   const luminorId = params.luminorId as string;
   const initialPrompt = searchParams.get('prompt');
 
-  // Companion config
   const luminorConfig = useMemo(() => getLuminor(luminorId), [luminorId]);
 
-  // Redirect if invalid companion
   useEffect(() => {
     if (luminorId && !luminorConfig) {
       router.push('/chat');
     }
   }, [luminorId, luminorConfig, router]);
 
-  // Vercel AI SDK — handles streaming, messages, parsing automatically
-  // NOTE: @ai-sdk/react v3.0.118 removed `input` and `handleInputChange` from useChat.
-  // Using local state instead. Tab 1 can refine this during chat revamp.
   const [input, setInput] = useState('');
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
@@ -100,7 +94,6 @@ export default function CompanionChatPage() {
     }),
   });
 
-  // @ai-sdk/react v3.0.118: isLoading→status, append→sendMessage
   const isLoading = status === 'submitted' || status === 'streaming';
 
   const handleSubmit = useCallback((e: React.FormEvent) => {
@@ -111,16 +104,28 @@ export default function CompanionChatPage() {
     }
   }, [input, isLoading, sendMessage]);
 
+  // Retry last message on error
+  const handleRetry = useCallback(() => {
+    if (messages.length === 0) return;
+    const lastUserMsg = [...messages].reverse().find((m) => m.role === 'user');
+    if (!lastUserMsg) return;
+    const text = getMessageText(lastUserMsg);
+    if (!text) return;
+    const lastMsg = messages[messages.length - 1];
+    if (lastMsg?.role === 'assistant') {
+      setMessages(messages.slice(0, -1));
+    }
+    sendMessage({ text });
+  }, [messages, setMessages, sendMessage]);
+
   // UI state
   const [autoScroll, setAutoScroll] = useState(true);
   const [showScrollBtn, setShowScrollBtn] = useState(false);
 
-  // Refs
   const containerRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Auto-send initial prompt from ?prompt= query param
   const [initialSent, setInitialSent] = useState(false);
   useEffect(() => {
     if (initialPrompt && !initialSent && messages.length === 0) {
@@ -129,7 +134,6 @@ export default function CompanionChatPage() {
     }
   }, [initialPrompt, initialSent, messages.length, sendMessage]);
 
-  // Auto-resize textarea
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
@@ -137,14 +141,12 @@ export default function CompanionChatPage() {
     }
   }, [input]);
 
-  // Auto-scroll on new content
   useEffect(() => {
     if (autoScroll && bottomRef.current) {
       bottomRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages, autoScroll]);
 
-  // Scroll detection
   const handleScroll = useCallback(() => {
     if (!containerRef.current) return;
     const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
@@ -158,14 +160,12 @@ export default function CompanionChatPage() {
     setAutoScroll(true);
   };
 
-  // New chat
   const startNewChat = () => {
     setMessages([]);
     setInput('');
     textareaRef.current?.focus();
   };
 
-  // Keyboard: Enter to send, Shift+Enter for newline
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -175,19 +175,13 @@ export default function CompanionChatPage() {
     }
   };
 
-  // Detect streaming state
   const lastMsg = messages[messages.length - 1];
   const isStreaming = isLoading && lastMsg?.role === 'assistant';
   const isThinking = isLoading && (!lastMsg || lastMsg.role === 'user');
   const isEmpty = messages.length === 0 && !isLoading;
-
-  // Quick starters for this companion
-  const starters = LUMINOR_STARTERS[luminorId] || FALLBACK_STARTERS;
-
-  // Companion color (fallback to cyan)
+  const starters = COMPANION_STARTERS[luminorId] || FALLBACK_STARTERS;
   const color = luminorConfig?.color || '#00bcd4';
 
-  // Loading state — wait for config
   if (!luminorConfig) {
     return (
       <div className="flex items-center justify-center h-screen bg-[#09090b]">
@@ -209,21 +203,12 @@ export default function CompanionChatPage() {
             <PhArrowLeft className="w-4 h-4" />
           </Link>
 
-          {/* Companion avatar + name */}
           <div className="flex items-center gap-3">
             <div
               className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-medium shrink-0"
               style={{ backgroundColor: color }}
             >
-              {luminorConfig.avatar ? (
-                <img
-                  src={luminorConfig.avatar}
-                  alt={luminorConfig.name}
-                  className="w-full h-full rounded-full object-cover"
-                />
-              ) : (
-                luminorConfig.name.charAt(0).toUpperCase()
-              )}
+              {luminorConfig.name.charAt(0).toUpperCase()}
             </div>
             <div className="min-w-0">
               <h1 className="text-sm font-medium text-white/90 truncate">
@@ -235,7 +220,6 @@ export default function CompanionChatPage() {
             </div>
           </div>
 
-          {/* Status */}
           <div className="flex items-center gap-1.5 ml-2">
             <span
               className={`w-2 h-2 rounded-full ${isLoading ? 'animate-pulse' : ''}`}
@@ -260,17 +244,26 @@ export default function CompanionChatPage() {
         </div>
       </div>
 
-      {/* Error banner */}
+      {/* Error banner with retry */}
       {error && (
         <div role="alert" className="bg-red-500/8 border-b border-red-500/20 px-4 py-2.5">
           <div className="max-w-[680px] mx-auto flex items-center justify-between">
             <div className="flex items-center gap-2 text-red-400/80 text-sm">
-              <PhWarningCircle className="w-4 h-4" />
-              <span>{error.message}</span>
+              <PhWarningCircle className="w-4 h-4 shrink-0" />
+              <span className="truncate">{error.message}</span>
             </div>
-            <button onClick={startNewChat} aria-label="Dismiss" className="text-red-400/60 hover:text-red-400">
-              <PhX className="w-4 h-4" />
-            </button>
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                onClick={handleRetry}
+                className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs text-red-400/70 hover:text-red-300 hover:bg-red-500/10 transition-colors"
+              >
+                <PhArrowClockwise className="w-3.5 h-3.5" />
+                Retry
+              </button>
+              <button onClick={startNewChat} aria-label="Dismiss" className="text-red-400/60 hover:text-red-400">
+                <PhX className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -283,10 +276,8 @@ export default function CompanionChatPage() {
         style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(255,255,255,0.08) transparent' }}
       >
         {isEmpty ? (
-          /* Empty state — companion welcome */
           <div className="flex flex-col items-center justify-center h-full px-4">
             <div className="max-w-[540px] w-full text-center">
-              {/* Companion avatar */}
               <div
                 className="w-16 h-16 rounded-full flex items-center justify-center text-white text-2xl font-medium mx-auto mb-4"
                 style={{
@@ -294,15 +285,7 @@ export default function CompanionChatPage() {
                   boxShadow: `0 0 40px ${color}30`,
                 }}
               >
-                {luminorConfig.avatar ? (
-                  <img
-                    src={luminorConfig.avatar}
-                    alt={luminorConfig.name}
-                    className="w-full h-full rounded-full object-cover"
-                  />
-                ) : (
-                  luminorConfig.name.charAt(0).toUpperCase()
-                )}
+                {luminorConfig.name.charAt(0).toUpperCase()}
               </div>
 
               <h1 className="text-2xl font-semibold text-white/90 mb-1 tracking-tight">
@@ -312,22 +295,15 @@ export default function CompanionChatPage() {
                 {luminorConfig.tagline}
               </p>
 
-              {/* Quick starters */}
               <div className="flex flex-wrap justify-center gap-2">
                 {starters.map((s) => (
                   <button
                     key={s}
                     onClick={() => sendMessage({ text: s })}
                     className="px-4 py-2 rounded-full text-sm text-white/50 border border-white/[0.08] hover:text-white/70 hover:bg-white/[0.03] transition-all duration-150"
-                    style={{
-                      borderColor: 'rgba(255,255,255,0.08)',
-                    }}
-                    onMouseEnter={(e) => {
-                      (e.currentTarget.style.borderColor = `${color}40`);
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)');
-                    }}
+                    style={{ borderColor: 'rgba(255,255,255,0.08)' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.borderColor = `${color}40`; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; }}
                   >
                     {s}
                   </button>
@@ -336,19 +312,17 @@ export default function CompanionChatPage() {
             </div>
           </div>
         ) : (
-          /* Messages */
           <div className="max-w-[680px] mx-auto px-4 py-6" aria-live="polite">
             {messages.map((msg) => (
               <div key={msg.id} className={`mb-6 ${msg.role === 'user' ? 'flex justify-end' : ''}`}>
                 {msg.role === 'user' ? (
                   <div className="max-w-[85%]">
-                    <div className="inline-block px-4 py-3 rounded-2xl rounded-br-md bg-[#1a1a1f] text-white/90 text-[15px] leading-relaxed">
+                    <div className="inline-block px-4 py-3 rounded-2xl rounded-br-md bg-[#1a1a1f] text-white/90 text-[15px] leading-relaxed whitespace-pre-wrap">
                       {getMessageText(msg)}
                     </div>
                   </div>
                 ) : (
                   <div className="flex gap-3">
-                    {/* Companion avatar */}
                     <div
                       className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-medium shrink-0 mt-0.5"
                       style={{ backgroundColor: color }}
@@ -356,13 +330,12 @@ export default function CompanionChatPage() {
                       {luminorConfig.name.charAt(0).toUpperCase()}
                     </div>
 
-                    {/* Message content */}
                     <div className="min-w-0 flex-1">
                       <span className="text-xs font-medium mb-1 block" style={{ color }}>
                         {luminorConfig.name}
                       </span>
                       <div className="prose prose-invert prose-sm max-w-none text-[15px] leading-[1.7] text-white/85">
-                        <ReactMarkdown>{getMessageText(msg)}</ReactMarkdown>
+                        <ChatMarkdown content={getMessageText(msg)} />
                         {isStreaming && msg.id === lastMsg?.id && (
                           <span
                             className="inline-block w-[2px] h-[18px] animate-pulse ml-0.5 align-text-bottom"
@@ -376,7 +349,6 @@ export default function CompanionChatPage() {
               </div>
             ))}
 
-            {/* Thinking indicator */}
             {isThinking && (
               <div className="mb-6 flex items-center gap-3">
                 <div

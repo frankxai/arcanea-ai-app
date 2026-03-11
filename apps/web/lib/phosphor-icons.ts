@@ -16,6 +16,7 @@ export * from '@phosphor-icons/react';
 export {
   Heartbeat, ArrowBendUpLeft, ArrowCircleDown, ArrowCounterClockwise,
   ArrowDown, ArrowLeft, ArrowRight, ArrowSquareOut, ArrowUp, ArrowUpRight,
+  ArrowClockwise,
   ArrowsClockwise, ArrowsDownUp, ArrowsOut, Bell, Bird, Book, BookOpen,
   Bookmark, Books, BracketsSquare, BracketsCurly, Brain, Browser, Bug,
   Buildings, Calendar, CalendarDots, Camera, CaretDown, CaretLeft,
@@ -236,6 +237,7 @@ const Fallback = (() => null) as unknown as IconComponent;
 export const PhActivity = Heartbeat;
 export const PhArrowBendUpLeft = ArrowBendUpLeft;
 export const PhArrowCircleDown = ArrowCircleDown;
+export const PhArrowClockwise = ArrowClockwise;
 export const PhArrowCounterClockwise = ArrowCounterClockwise;
 export const PhArrowDown = ArrowDown;
 export const PhArrowLeft = ArrowLeft;

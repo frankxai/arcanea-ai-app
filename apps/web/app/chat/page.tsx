@@ -5,13 +5,14 @@ import { useSearchParams } from 'next/navigation';
 import { useChat } from '@ai-sdk/react';
 import { TextStreamChatTransport } from 'ai';
 import Link from 'next/link';
-import ReactMarkdown from 'react-markdown';
+import ChatMarkdown from '@/components/chat/chat-markdown';
 import {
   PhPaperPlane,
   PhPlus,
   PhCircleNotch,
   PhArrowDown,
   PhWarningCircle,
+  PhArrowClockwise,
   PhX,
 } from '@/lib/phosphor-icons';
 
@@ -19,7 +20,6 @@ import {
 // Helpers
 // ---------------------------------------------------------------------------
 
-/** Extract text from v3 UIMessage parts array (replaces removed .content) */
 function getMessageText(msg: { parts?: Array<{ type: string; text?: string }> }): string {
   if (!msg.parts) return '';
   return msg.parts.filter((p) => p.type === 'text').map((p) => p.text ?? '').join('');
@@ -40,15 +40,13 @@ const SUGGESTIONS = [
 ];
 
 // ---------------------------------------------------------------------------
-// Chat Page — powered by Vercel AI SDK useChat
+// Chat Page
 // ---------------------------------------------------------------------------
 
 export default function ChatPage() {
   const searchParams = useSearchParams();
   const initialPrompt = searchParams.get('prompt');
 
-  // Vercel AI SDK — handles streaming, messages, parsing automatically
-  // @ai-sdk/react v3.0.118 removed `input`/`handleInputChange` — using local state
   const [input, setInput] = useState('');
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
@@ -64,7 +62,6 @@ export default function ChatPage() {
     transport: new TextStreamChatTransport({ api: '/api/ai/chat' }),
   });
 
-  // @ai-sdk/react v3.0.118: isLoading→status, append→sendMessage
   const isLoading = status === 'submitted' || status === 'streaming';
 
   const handleSubmit = useCallback((e: React.FormEvent) => {
@@ -74,6 +71,22 @@ export default function ChatPage() {
       setInput('');
     }
   }, [input, isLoading, sendMessage]);
+
+  // Retry last message on error
+  const handleRetry = useCallback(() => {
+    if (messages.length === 0) return;
+    // Find the last user message
+    const lastUserMsg = [...messages].reverse().find((m) => m.role === 'user');
+    if (!lastUserMsg) return;
+    const text = getMessageText(lastUserMsg);
+    if (!text) return;
+    // Remove the failed assistant message if present
+    const lastMsg = messages[messages.length - 1];
+    if (lastMsg?.role === 'assistant') {
+      setMessages(messages.slice(0, -1));
+    }
+    sendMessage({ text });
+  }, [messages, setMessages, sendMessage]);
 
   // UI state
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -85,7 +98,7 @@ export default function ChatPage() {
   const bottomRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Auto-send initial prompt from hero chat (?prompt= query param)
+  // Auto-send initial prompt
   const [initialSent, setInitialSent] = useState(false);
   useEffect(() => {
     if (initialPrompt && !initialSent && messages.length === 0) {
@@ -123,14 +136,12 @@ export default function ChatPage() {
     setAutoScroll(true);
   };
 
-  // New chat
   const startNewChat = () => {
     setMessages([]);
     setInput('');
     textareaRef.current?.focus();
   };
 
-  // Keyboard: Enter to send, Shift+Enter for newline
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -209,17 +220,26 @@ export default function ChatPage() {
           </div>
         </div>
 
-        {/* Error banner */}
+        {/* Error banner with retry */}
         {error && (
           <div role="alert" className="bg-red-500/8 border-b border-red-500/20 px-4 py-2.5">
             <div className="max-w-[680px] mx-auto flex items-center justify-between">
               <div className="flex items-center gap-2 text-red-400/80 text-sm">
-                <PhWarningCircle className="w-4 h-4" />
-                <span>{error.message}</span>
+                <PhWarningCircle className="w-4 h-4 shrink-0" />
+                <span className="truncate">{error.message}</span>
               </div>
-              <button onClick={startNewChat} aria-label="Dismiss error" className="text-red-400/60 hover:text-red-400">
-                <PhX className="w-4 h-4" />
-              </button>
+              <div className="flex items-center gap-2 shrink-0">
+                <button
+                  onClick={handleRetry}
+                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs text-red-400/70 hover:text-red-300 hover:bg-red-500/10 transition-colors"
+                >
+                  <PhArrowClockwise className="w-3.5 h-3.5" />
+                  Retry
+                </button>
+                <button onClick={startNewChat} aria-label="Dismiss error" className="text-red-400/60 hover:text-red-400">
+                  <PhX className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -232,7 +252,6 @@ export default function ChatPage() {
           style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(255,255,255,0.08) transparent' }}
         >
           {isEmpty ? (
-            /* Empty state */
             <div className="flex flex-col items-center justify-center h-full px-4">
               <div className="max-w-[540px] w-full text-center">
                 <h1 className="text-3xl font-semibold text-white/90 mb-2 tracking-tight">
@@ -256,22 +275,30 @@ export default function ChatPage() {
               </div>
             </div>
           ) : (
-            /* Messages */
             <div className="max-w-[680px] mx-auto px-4 py-6" aria-live="polite">
               {messages.map((msg) => (
                 <div key={msg.id} className={`mb-6 ${msg.role === 'user' ? 'flex justify-end' : ''}`}>
                   {msg.role === 'user' ? (
                     <div className="max-w-[85%]">
-                      <div className="inline-block px-4 py-3 rounded-2xl rounded-br-md bg-[#1a1a1f] text-white/90 text-[15px] leading-relaxed">
+                      <div className="inline-block px-4 py-3 rounded-2xl rounded-br-md bg-[#1a1a1f] text-white/90 text-[15px] leading-relaxed whitespace-pre-wrap">
                         {getMessageText(msg)}
                       </div>
                     </div>
                   ) : (
-                    <div className="prose prose-invert prose-sm max-w-none text-[15px] leading-[1.7] text-white/85">
-                      <ReactMarkdown>{getMessageText(msg)}</ReactMarkdown>
-                      {isStreaming && msg.id === lastMsg?.id && (
-                        <span className="inline-block w-[2px] h-[18px] bg-[#00bcd4] animate-pulse ml-0.5 align-text-bottom" />
-                      )}
+                    <div className="flex gap-3">
+                      {/* Arcanea avatar */}
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#00bcd4] to-[#0d47a1] flex items-center justify-center text-white text-xs font-bold shrink-0 mt-0.5">
+                        A
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <span className="text-xs font-medium text-[#00bcd4] mb-1 block">Arcanea</span>
+                        <div className="prose prose-invert prose-sm max-w-none text-[15px] leading-[1.7] text-white/85">
+                          <ChatMarkdown content={getMessageText(msg)} />
+                          {isStreaming && msg.id === lastMsg?.id && (
+                            <span className="inline-block w-[2px] h-[18px] bg-[#00bcd4] animate-pulse ml-0.5 align-text-bottom" />
+                          )}
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -279,13 +306,18 @@ export default function ChatPage() {
 
               {/* Thinking indicator */}
               {isThinking && (
-                <div className="mb-6 flex items-center gap-2 text-white/30">
-                  <div className="flex gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-white/30 animate-bounce" style={{ animationDelay: '0ms' }} />
-                    <span className="w-1.5 h-1.5 rounded-full bg-white/30 animate-bounce" style={{ animationDelay: '150ms' }} />
-                    <span className="w-1.5 h-1.5 rounded-full bg-white/30 animate-bounce" style={{ animationDelay: '300ms' }} />
+                <div className="mb-6 flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#00bcd4] to-[#0d47a1] flex items-center justify-center text-white text-xs font-bold shrink-0 animate-pulse">
+                    A
                   </div>
-                  <span className="text-xs">Thinking...</span>
+                  <div className="flex items-center gap-2 text-white/30">
+                    <div className="flex gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#00bcd4] animate-bounce" style={{ animationDelay: '0ms' }} />
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#00bcd4] animate-bounce" style={{ animationDelay: '150ms' }} />
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#00bcd4] animate-bounce" style={{ animationDelay: '300ms' }} />
+                    </div>
+                    <span className="text-xs">Thinking...</span>
+                  </div>
                 </div>
               )}
 
