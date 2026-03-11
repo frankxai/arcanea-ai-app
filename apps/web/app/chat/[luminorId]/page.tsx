@@ -3,6 +3,7 @@
 import React, { useRef, useEffect, useCallback, useState, useMemo } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useChat } from '@ai-sdk/react';
+import { TextStreamChatTransport } from 'ai';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import {
@@ -15,6 +16,16 @@ import {
   PhX,
 } from '@/lib/phosphor-icons';
 import { getLuminor } from '@/lib/luminors/config';
+
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
+
+/** Extract text from v3 UIMessage parts array (replaces removed .content) */
+function getMessageText(msg: { parts?: Array<{ type: string; text?: string }> }): string {
+  if (!msg.parts) return '';
+  return msg.parts.filter((p) => p.type === 'text').map((p) => p.text ?? '').join('');
+}
 
 // ---------------------------------------------------------------------------
 // Companion-specific quick starters
@@ -83,13 +94,13 @@ export default function CompanionChatPage() {
     setMessages,
   } = useChat({
     id: `companion-${luminorId}`,
-    api: '/api/ai/chat',
-    body: {
-      systemPrompt: luminorConfig?.systemPrompt,
-    },
+    transport: new TextStreamChatTransport({
+      api: '/api/ai/chat',
+      body: { systemPrompt: luminorConfig?.systemPrompt },
+    }),
   });
 
-  // @ai-sdk/react v3.0.118 replaced isLoading with status enum
+  // @ai-sdk/react v3.0.118: isLoading→status, append→sendMessage
   const isLoading = status === 'submitted' || status === 'streaming';
 
   const handleSubmit = useCallback((e: React.FormEvent) => {
@@ -332,7 +343,7 @@ export default function CompanionChatPage() {
                 {msg.role === 'user' ? (
                   <div className="max-w-[85%]">
                     <div className="inline-block px-4 py-3 rounded-2xl rounded-br-md bg-[#1a1a1f] text-white/90 text-[15px] leading-relaxed">
-                      {msg.content}
+                      {getMessageText(msg)}
                     </div>
                   </div>
                 ) : (
@@ -351,7 +362,7 @@ export default function CompanionChatPage() {
                         {luminorConfig.name}
                       </span>
                       <div className="prose prose-invert prose-sm max-w-none text-[15px] leading-[1.7] text-white/85">
-                        <ReactMarkdown>{msg.content}</ReactMarkdown>
+                        <ReactMarkdown>{getMessageText(msg)}</ReactMarkdown>
                         {isStreaming && msg.id === lastMsg?.id && (
                           <span
                             className="inline-block w-[2px] h-[18px] animate-pulse ml-0.5 align-text-bottom"
