@@ -1,15 +1,18 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
+import type { ReactNode } from 'react';
 
 export const metadata: Metadata = {
-  title: 'Creator Gallery',
-  description: 'Browse and discover creations from the Arcanea community. Images, stories, code, music, and more.',
+  title: 'Gallery of Creation',
+  description:
+    'Explore creations channeled through the Ten Gates and Five Elements. Art, code, stories, and music from the Arcanea community.',
   openGraph: {
-    title: 'Creator Gallery',
-    description: 'Browse and discover creations from the Arcanea community. Images, stories, code, music, and more.',
+    title: 'Gallery of Creation',
+    description:
+      'Explore creations channeled through the Ten Gates and Five Elements by creators of every rank.',
     type: 'website',
   },
 };
 
-export default function Layout({ children }: { children: React.ReactNode }) {
-  return children;
+export default function GalleryLayout({ children }: { children: ReactNode }) {
+  return <>{children}</>;
 }

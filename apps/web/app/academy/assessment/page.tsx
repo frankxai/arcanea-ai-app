@@ -378,7 +378,7 @@ export default function AssessmentPage() {
                   href="/lore/guardians"
                   className="flex-1 py-3 rounded-xl bg-atlantean-teal-aqua text-cosmic-deep text-center font-semibold hover:shadow-[0_0_30px_rgba(0,188,212,0.4)] transition-all"
                 >
-                  Meet Your Intelligence
+                  Meet Your Guardian
                 </Link>
               </div>
             </div>

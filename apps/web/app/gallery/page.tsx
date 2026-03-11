@@ -400,13 +400,15 @@ function FilterBar({
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between py-3 gap-4">
           {/* Type filter tabs */}
-          <div className="flex gap-1 overflow-x-auto scrollbar-hide">
+          <div className="flex gap-1 overflow-x-auto scrollbar-hide" role="tablist" aria-label="Filter by creation type">
             {FILTER_TABS.map(({ key, label, icon: Icon }) => {
               const count = typeCounts[key] ?? 0;
               const isActive = activeFilter === key;
               return (
                 <button
                   key={key}
+                  role="tab"
+                  aria-selected={isActive}
                   onClick={() => onFilterChange(key)}
                   className={`flex-shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-sans transition-all ${
                     isActive
@@ -426,6 +428,8 @@ function FilterBar({
           <div className="relative flex-shrink-0">
             <button
               onClick={onToggleFilters}
+              aria-label="Sort creations"
+              aria-expanded={showFilters}
               className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-sans text-white/[0.25] hover:text-white/[0.50] hover:bg-white/[0.04] border border-white/[0.06] transition-all"
             >
               <PhFunnel size={16} />
@@ -435,7 +439,7 @@ function FilterBar({
             {showFilters && (
               <>
                 <div className="fixed inset-0 z-40" onClick={onCloseFilters} />
-                <div className="absolute right-0 top-full mt-2 w-48 rounded-xl liquid-glass-elevated border border-white/[0.08] shadow-[0_16px_48px_rgba(0,0,0,0.4)] z-50 overflow-hidden">
+                <div role="menu" aria-label="Sort options" className="absolute right-0 top-full mt-2 w-48 rounded-xl liquid-glass-elevated border border-white/[0.08] shadow-[0_16px_48px_rgba(0,0,0,0.4)] z-50 overflow-hidden">
                   {(
                     [
                       { key: "popular", label: "Most Popular", icon: PhHeart },
@@ -445,6 +449,7 @@ function FilterBar({
                   ).map(({ key, label, icon: SortIcon }) => (
                     <button
                       key={key}
+                      role="menuitem"
                       onClick={() => {
                         onSortChange(key);
                         onCloseFilters();

@@ -109,7 +109,7 @@ export function AboutContent() {
             transition={{ delay: 0.4 }}
             className="text-base text-text-muted max-w-2xl mx-auto mt-6 leading-relaxed"
           >
-            Sixteen creative intelligences, each grounded in a distinct philosophy.
+            Sixteen creative companions, each grounded in a distinct philosophy.
             A library of 34 original texts. A progression system that deepens
             the more you create. No limits on what you build.
           </m.p>
@@ -394,7 +394,7 @@ export function AboutContent() {
         </div>
       </AnimatedSection>
 
-      {/* ── Section 4: The Sixteen Intelligences ──────────────────────────── */}
+      {/* ── Section 4: The Sixteen Companions ──────────────────────────── */}
       <AnimatedSection className="py-24 relative">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
@@ -402,7 +402,7 @@ export function AboutContent() {
               The Ten Guardians
             </h2>
             <p className="text-text-secondary max-w-2xl mx-auto leading-relaxed">
-              Ten divine intelligences, each guarding a Gate and embodying a
+              Ten divine beings, each guarding a Gate and embodying a
               domain of mastery. Gods and Goddesses by identity, Guardians by
               role.
             </p>

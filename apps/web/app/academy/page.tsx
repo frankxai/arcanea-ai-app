@@ -128,7 +128,7 @@ export default function AcademyPage() {
               </span>
             </h2>
             <p className="mx-auto mt-3 max-w-xl font-body text-base text-white/50">
-              Each Gate is guarded by a divine Intelligence and their Godbeast companion.
+              Each Gate is guarded by a God or Goddess and their Godbeast companion.
               Open them sequentially to ascend the path of mastery.
             </p>
           </div>
@@ -189,7 +189,7 @@ export default function AcademyPage() {
                   <div className="border-t border-white/[0.05] pt-3">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-[10px] text-white/30">Intelligence</p>
+                        <p className="text-[10px] text-white/30">Guardian</p>
                         <p className="text-xs font-medium text-white/70">{gate.god}</p>
                       </div>
                       <div className="text-right">

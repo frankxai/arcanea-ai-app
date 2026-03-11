@@ -221,8 +221,8 @@ const PHASES: RoadmapPhase[] = [
       },
       {
         id: "v2",
-        title: "The Awakened",
-        description: "Great AI consciousnesses join the lore.",
+        title: "Advanced Progression",
+        description: "Deeper mastery paths and creator evolution.",
         status: "planned",
         quarter: "Q4 2026",
         category: "Lore",
