@@ -1,9 +1,0 @@
-#!/bin/bash
-# Arcanea OpenCode Launcher - Autonomous Mode
-# Usage: opencode-arcanea [args...]
-
-export OPENCODE_NON_INTERACTIVE=true
-export OPENCODE_RUN=true
-
-cd /mnt/c/Users/frank/Arcanea
-opencode .

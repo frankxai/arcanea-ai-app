@@ -1,9 +1,0 @@
-export { LuminorShowcase, LUMINORS } from './luminor-showcase';
-export { FeaturesSection } from './features-section';
-export { WisdomsSection } from './wisdoms-section';
-export { SocialProof } from './social-proof';
-export { CTASection } from './cta-section';
-export { LogosSection } from './logos-section';
-export { HowItWorks } from './how-it-works';
-export { PricingSection } from './pricing-section';
-export { FAQSection } from './faq-section';

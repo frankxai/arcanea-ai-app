@@ -1,5 +1,0 @@
-export { PromptBooksSidebar } from './PromptBooksSidebar'
-export { CollectionTree } from './CollectionTree'
-export { CollectionItem } from './CollectionItem'
-export { SidebarSearch } from './SidebarSearch'
-export { SyncStatusIndicator } from './SyncStatusIndicator'

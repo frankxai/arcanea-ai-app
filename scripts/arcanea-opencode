@@ -1,8 +1,0 @@
-#!/bin/bash
-# Arcanea OpenCode Launcher - Autonomous Mode
-# Usage: ./scripts/arcanea-opencode [args...]
-
-export OPENCODE_NON_INTERACTIVE=true
-export OPENCODE_RUN=true
-
-opencode "$@"
