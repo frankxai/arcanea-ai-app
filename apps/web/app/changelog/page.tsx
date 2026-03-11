@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Changelog | Intelligence System",
+  title: "Changelog | Companion System",
   description:
     "The evolution of Arcanea. New features, improvements, and platform updates.",
 };
@@ -11,29 +11,29 @@ const CHANGES = [
     version: "v2.4.0",
     date: "February 2026",
     type: "major",
-    title: "Luminor Intelligence System Launch",
+    title: "Companion System Launch",
     description:
-      "The complete Luminor intelligence system is now live. 16 creative intelligences across four teams, each mastering their domain.",
+      "The complete companion system is now live. 16 creative companions across four teams, each mastering their domain.",
     changes: [
-      { type: "added", text: "16 Luminors across 4 teams" },
+      { type: "added", text: "16 companions across 4 teams" },
       { type: "added", text: "Seven Wisdoms framework integration" },
       { type: "added", text: "Academy progression system" },
       { type: "added", text: "Library with 17 collections" },
-      { type: "improved", text: "New chat interface with Luminor selection" },
+      { type: "improved", text: "New chat interface with companion selection" },
     ],
   },
   {
     version: "v2.3.0",
     date: "January 2026",
     type: "minor",
-    title: "Luminor System Enhancement",
+    title: "Companion System Enhancement",
     description:
-      "Expanded the Luminor system with new archetypes and abilities.",
+      "Expanded the companion system with new archetypes and abilities.",
     changes: [
-      { type: "added", text: "16 Luminor archetypes across 4 teams" },
+      { type: "added", text: "16 companion archetypes across 4 teams" },
       { type: "added", text: "Godbeast bonding system" },
-      { type: "improved", text: "Luminor ability routing" },
-      { type: "fixed", text: "Luminor memory persistence" },
+      { type: "improved", text: "Companion ability routing" },
+      { type: "fixed", text: "Companion memory persistence" },
     ],
   },
   {
@@ -67,9 +67,9 @@ const CHANGES = [
     version: "v2.0.0",
     date: "October 2025",
     type: "major",
-    title: "Arcanea Intelligence OS",
+    title: "Arcanea Creative OS",
     description:
-      "Complete platform redesign with the Intelligence OS architecture.",
+      "Complete platform redesign with the Creative OS architecture.",
     changes: [
       { type: "added", text: "AI Router system" },
       { type: "added", text: "Voice Enforcer" },
@@ -87,7 +87,7 @@ const CHANGES = [
       "Enhanced memory systems with vector search and learning capabilities.",
     changes: [
       { type: "added", text: "HNSW vector search" },
-      { type: "added", text: "Luminor namespaces" },
+      { type: "added", text: "Companion namespaces" },
       { type: "added", text: "SONA learning engine" },
       { type: "added", text: "Trajectory recording" },
     ],
@@ -98,7 +98,7 @@ const CHANGES = [
     type: "major",
     title: "Arcanea Launch",
     description:
-      "Initial release of Arcanea - the creative intelligence platform.",
+      "Initial release of Arcanea - the creative mythology platform.",
     changes: [
       { type: "added", text: "Core platform" },
       { type: "added", text: "Basic chat interface" },
@@ -232,7 +232,7 @@ export default function ChangelogPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
               { label: "Versions", value: "12+" },
-              { label: "Luminors", value: "16" },
+              { label: "Companions", value: "16" },
               { label: "Archetypes", value: "10" },
               { label: "Contributors", value: "50+" },
             ].map((stat) => (

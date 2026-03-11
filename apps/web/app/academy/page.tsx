@@ -1,7 +1,9 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
+import { getFeaturedLuminors } from '@/lib/luminor-images';
 import {
   ArrowRight, Lock, Sparkle, Crown, GraduationCap, Star,
   Lightning, Book, Scroll, Flame, Drop, Leaf, Wind, Globe,
@@ -126,7 +128,7 @@ export default function AcademyPage() {
               </span>
             </h2>
             <p className="mx-auto mt-3 max-w-xl font-body text-base text-white/50">
-              Each Gate is guarded by a divine Intelligence and their Godbeast companion.
+              Each Gate is guarded by a God or Goddess and their Godbeast companion.
               Open them sequentially to ascend the path of mastery.
             </p>
           </div>
@@ -187,7 +189,7 @@ export default function AcademyPage() {
                   <div className="border-t border-white/[0.05] pt-3">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-[10px] text-white/30">Intelligence</p>
+                        <p className="text-[10px] text-white/30">Guardian</p>
                         <p className="text-xs font-medium text-white/70">{gate.god}</p>
                       </div>
                       <div className="text-right">
@@ -253,6 +255,47 @@ export default function AcademyPage() {
                 </div>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* ============ COMPANION SHOWCASE ============ */}
+      <section className="relative px-6 py-16">
+        <div className="mx-auto max-w-4xl">
+          <div className="mb-8 flex items-center justify-between">
+            <h2 className="font-display text-lg font-semibold text-white/60">
+              Meet Your Companions
+            </h2>
+            <Link
+              href="/companions"
+              className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-[#00bcd4]/70 transition-colors hover:text-[#00bcd4]"
+            >
+              View All
+              <ArrowRight className="h-3 w-3" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-3 gap-4 md:grid-cols-6">
+            {getFeaturedLuminors(6).map((l) => (
+              <Link
+                key={l.id}
+                href="/companions"
+                className="group flex flex-col items-center gap-2"
+              >
+                <div className="relative h-20 w-20 overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] transition-all duration-300 group-hover:border-white/[0.15] group-hover:shadow-[0_0_20px_rgba(0,188,212,0.1)]">
+                  <Image
+                    src={l.image}
+                    alt={l.name}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    sizes="80px"
+                  />
+                </div>
+                <span className="text-[11px] font-medium text-white/40 transition-colors group-hover:text-white/70">
+                  {l.name}
+                </span>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
