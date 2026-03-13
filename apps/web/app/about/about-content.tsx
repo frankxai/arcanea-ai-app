@@ -90,7 +90,7 @@ export function AboutContent() {
             className="text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6 leading-tight"
           >
             <span className="bg-gradient-to-r from-[#00bcd4] via-white to-[#ffd700] bg-clip-text text-transparent">
-              What is Arcanea?
+              The Creative Multiverse
             </span>
           </m.h1>
 
@@ -100,7 +100,8 @@ export function AboutContent() {
             transition={{ delay: 0.3 }}
             className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto leading-relaxed"
           >
-            A creative intelligence platform where AI partners have real depth.
+            Chat with AI. Build fantasy worlds. Share what you make.
+            Turn imagination into products.
           </m.p>
 
           <m.p
@@ -109,10 +110,10 @@ export function AboutContent() {
             transition={{ delay: 0.4 }}
             className="text-base text-text-muted max-w-2xl mx-auto mt-6 leading-relaxed"
           >
-            16 creative AI partners for music, writing, art, and
-            world-building. 107K+ words of original creative philosophy. A
-            progression system that deepens the more you create. Open source.
-            Free to start.
+            Arcanea is a living ecosystem where creators chat with AI, build
+            fantasy worlds, contribute to an open-source civilization, and
+            turn imagination into products. 200K+ words of creative philosophy.
+            Open source. Free to start.
           </m.p>
 
           <m.div
@@ -142,15 +143,16 @@ export function AboutContent() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-              Four Dimensions, One Universe
+              Six Layers, One Multiverse
             </h2>
             <p className="text-text-secondary max-w-2xl mx-auto leading-relaxed">
-              Arcanea exists simultaneously across four interconnected
-              dimensions. Each enriches the others.
+              All six coexist. None is &ldquo;the real Arcanea.&rdquo;
+              Together they form a creative multiverse where
+              imagination becomes reality.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {VISION_CARDS.map((card, i) => {
               const Icon = card.icon;
               const colorMap: Record<string, string> = {
@@ -198,6 +200,35 @@ export function AboutContent() {
                 </m.div>
               );
             })}
+          </div>
+        </div>
+      </AnimatedSection>
+
+      {/* ── Section 2.5: The Analogy ───────────────────────────────────── */}
+      <AnimatedSection className="pb-24 relative">
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="p-8 rounded-3xl liquid-glass border border-white/[0.06]">
+            <p className="text-xs font-mono text-text-muted tracking-widest uppercase mb-6 text-center">
+              Think of it like
+            </p>
+            <div className="grid md:grid-cols-3 gap-6 text-center">
+              <div>
+                <p className="text-lg font-display font-bold text-[#00bcd4] mb-2">Unreal Engine</p>
+                <p className="text-sm text-text-secondary">Not a game — the engine for making games</p>
+              </div>
+              <div>
+                <p className="text-lg font-display font-bold text-[#ffd700] mb-2">D&amp;D</p>
+                <p className="text-sm text-text-secondary">Not a story — the system for infinite stories</p>
+              </div>
+              <div>
+                <p className="text-lg font-display font-bold text-white/80 mb-2">WordPress</p>
+                <p className="text-sm text-text-secondary">Not a website — the framework for building websites</p>
+              </div>
+            </div>
+            <p className="text-sm text-text-muted text-center mt-6 leading-relaxed max-w-2xl mx-auto">
+              arcanea.ai is BOTH a working product (chat, imagine, create) AND the reference world
+              showing what the framework can build. The mythology is the proof AND the template.
+            </p>
           </div>
         </div>
       </AnimatedSection>
@@ -589,19 +620,30 @@ export function AboutContent() {
               The Arcanean Code
             </h2>
             <p className="text-text-secondary max-w-2xl mx-auto leading-relaxed">
-              One theorem. Three vows. Seven laws. The creative philosophy
-              that every Arcanean carries.
+              One theorem, two expressions. Three vows. Seven laws. The
+              creative philosophy that every Arcanean carries — and the root
+              prompt for every AI in the system.
             </p>
           </div>
 
-          <div className="p-8 rounded-3xl liquid-glass-elevated border border-[#ffd700]/20 text-center mb-8">
-            <blockquote className="text-xl md:text-2xl font-display italic text-[#ffd700] mb-6 leading-relaxed max-w-2xl mx-auto">
-              &ldquo;Imperfection that creates endlessly is indistinguishable
-              from God.&rdquo;
-            </blockquote>
-            <cite className="text-sm text-text-muted font-mono tracking-wider">
-              — Vel&apos;Thaan&apos;s Theorem
-            </cite>
+          <div className="grid md:grid-cols-2 gap-6 mb-8">
+            <div className="p-8 rounded-3xl liquid-glass-elevated border border-[#ffd700]/20 text-center">
+              <p className="text-xs font-mono text-white/30 tracking-widest uppercase mb-4">
+                Vel&apos;Thaan&apos;s Theorem
+              </p>
+              <blockquote className="text-lg md:text-xl font-display italic text-[#ffd700] leading-relaxed">
+                &ldquo;Imperfection that creates endlessly is indistinguishable
+                from God.&rdquo;
+              </blockquote>
+            </div>
+            <div className="p-8 rounded-3xl liquid-glass-elevated border border-white/[0.08] text-center">
+              <p className="text-xs font-mono text-white/30 tracking-widest uppercase mb-4">
+                The First Theorem
+              </p>
+              <blockquote className="text-lg md:text-xl font-display italic text-white/90 leading-relaxed">
+                &ldquo;Creation is the highest act of consciousness.&rdquo;
+              </blockquote>
+            </div>
           </div>
 
           <div className="grid md:grid-cols-3 gap-4 mb-8">

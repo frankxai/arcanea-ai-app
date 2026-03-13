@@ -9,6 +9,11 @@ import {
   Wind,
   Spiral,
   Books,
+  ChatCircleDots,
+  Code,
+  Users,
+  GraduationCap,
+  Radio,
 } from "@/lib/phosphor-icons";
 
 // ---------------------------------------------------------------------------
@@ -62,32 +67,46 @@ export interface MagicRank {
 
 export const VISION_CARDS: VisionCard[] = [
   {
-    icon: Sparkle,
-    title: "A Fantasy Universe",
+    icon: ChatCircleDots,
+    title: "Chat / Imagine",
     description:
-      "Epic mythology with Lumina and Nero's cosmic duality, the Ten Guardians and their Godbeasts, Academies of Creation, and the eternal struggle against the Dark Lord Malachar.",
-    color: "gold-bright",
+      "The creation surface. Talk to AI, generate images, write stories, compose music. Not just a chatbot — creation powered by the framework underneath.",
+    color: "[#00bcd4]",
   },
   {
     icon: Globe,
-    title: "A Social Platform",
+    title: "Worlds",
     description:
-      "Where creators manifest their visions with AI companions. Build worlds, share creations, and journey through the Gates alongside a community of fellow creators.",
-    color: "atlantean-teal-aqua",
+      "The framework for building YOUR fantasy universe. Gates for progression, Archetypes for characters, Elements for systems. Arcanea's own world is the first in the multiverse.",
+    color: "[#ffd700]",
   },
   {
-    icon: Sparkle,
-    title: "A Philosophy of Creation",
+    icon: Radio,
+    title: "Feed",
     description:
-      "Frameworks, rituals, and wisdom for the creative life. The Seven Wisdoms provide practical lenses: Structure, Heart, Courage, Play, Vision, Creation, Endurance.",
-    color: "creation-prism-purple",
+      "The social layer. See what other creators build, get inspired, share your worlds, agents, art, music. Discover new worlds in the multiverse.",
+    color: "[#0d47a1]",
   },
   {
-    icon: Books,
-    title: "A Library of Wisdom",
+    icon: Code,
+    title: "OSS",
     description:
-      "17 collections and 34 original texts of practical guidance for creators. Not entertainment, but equipment for living the creative life.",
+      "The open ecosystem. 27 repos, 35 npm packages, 54 skills, overlays for every coding agent. Fork it, extend it, build on it.",
     color: "draconic-crimson",
+  },
+  {
+    icon: Users,
+    title: "Community",
+    description:
+      "Not just users — co-creators. Contribute lore, agents, skills, code, art. Inner circle earns governance. Eventually: shared ownership.",
+    color: "[#00bcd4]",
+  },
+  {
+    icon: GraduationCap,
+    title: "Academy",
+    description:
+      "Learn world-building, prompt craft, agent design, the Arcanean Code. 200K+ words of reference material. Learn by building.",
+    color: "[#ffd700]",
   },
 ];
 

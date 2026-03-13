@@ -18,6 +18,9 @@
 export const THEOREM =
   'Imperfection that creates endlessly is indistinguishable from God.';
 
+export const THEOREM_PHILOSOPHICAL =
+  'Creation is the highest act of consciousness.';
+
 // ---------------------------------------------------------------------------
 // The Three Vows
 // ---------------------------------------------------------------------------

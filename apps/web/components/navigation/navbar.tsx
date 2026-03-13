@@ -7,10 +7,10 @@ import { LazyMotion, domMax, m, AnimatePresence } from "framer-motion";
 import { UserNav } from "@/components/auth";
 
 const navLinks = [
-  { href: "/chat", label: "Create" },
-  { href: "/gallery", label: "Explore" },
-  { href: "/academy", label: "Learn" },
-  { href: "/pricing", label: "Pricing" },
+  { href: "/chat", label: "Create", also: ["/imagine", "/studio"] },
+  { href: "/gallery", label: "Explore", also: ["/discover", "/feed"] },
+  { href: "/academy", label: "Learn", also: ["/code", "/library", "/lore"] },
+  { href: "/pricing", label: "Pricing", also: [] },
 ];
 
 export function Navbar() {
@@ -53,7 +53,8 @@ export function Navbar() {
               {navLinks.map((link) => {
                 const isActive =
                   pathname === link.href ||
-                  pathname?.startsWith(link.href + "/");
+                  pathname?.startsWith(link.href + "/") ||
+                  (link.also?.some(p => pathname === p || pathname?.startsWith(p + "/")) ?? false);
                 return (
                   <Link
                     key={link.href}

@@ -17,7 +17,7 @@ import {
   ArrowsClockwise,
   Brain,
 } from '@/lib/phosphor-icons';
-import { THEOREM, VOWS, LAWS, AGENT_OATH } from '@/lib/ai/arcanea-code';
+import { THEOREM, THEOREM_PHILOSOPHICAL, VOWS, LAWS, AGENT_OATH } from '@/lib/ai/arcanea-code';
 
 // ---------------------------------------------------------------------------
 // localStorage key
@@ -94,11 +94,18 @@ export default function ArcaneanCodePage() {
             </span>
           </h1>
 
-          <p className="text-base md:text-lg text-text-secondary max-w-2xl mx-auto leading-relaxed">
-            The Eldrians achieved perfect knowledge and ceased to exist.
-            Completion killed them. The value is in the process, not the product.
-            Every part of the Code flows from this single idea.
-          </p>
+          <div className="mt-10 p-6 rounded-2xl liquid-glass border border-white/[0.06] max-w-2xl mx-auto">
+            <p className="text-xs font-mono text-white/30 tracking-widest uppercase mb-3">
+              The First Theorem
+            </p>
+            <p className="text-lg md:text-xl font-display font-semibold text-white/90 leading-relaxed">
+              &ldquo;{THEOREM_PHILOSOPHICAL}&rdquo;
+            </p>
+            <p className="text-sm text-text-muted mt-4 leading-relaxed">
+              Two expressions, one truth. The Eldrians achieved perfect knowledge and ceased to exist.
+              Completion killed them. The value is in the process, not the product.
+            </p>
+          </div>
         </div>
       </section>
 
