@@ -21,6 +21,7 @@ dist/
 # IDE
 .vscode/
 .idea/
+.obsidian/
 
 # OS
 .DS_Store
@@ -102,6 +103,7 @@ agents/daily-ideas/*/
 
 # Archive content (preserved but not synced)
 archive/
+frank-input/
 
 # Ignore vscode AI rules
 .github/instructions/codacy.instructions.md
