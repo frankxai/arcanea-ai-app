@@ -75,7 +75,7 @@ describe('GUARDIANS', () => {
   it('canonical gates match expected', () => {
     const expectedGates = [
       'Foundation', 'Flow', 'Fire', 'Heart', 'Voice',
-      'Sight', 'Crown', 'Shift', 'Unity', 'Source',
+      'Sight', 'Crown', 'Starweave', 'Unity', 'Source',
     ];
     const actualGates = Object.values(GUARDIANS).map(g => g.gate).sort();
     assert.deepEqual(actualGates, [...expectedGates].sort());

@@ -3,9 +3,8 @@
   "displayName": "Arcanea Realm",
   "description": "Guardian-routed AI intelligence for creators — 10 Guardians, 5 Elements, 10 Gates of creative progression",
   "version": "0.1.1",
-  "private": true,
   "publisher": "frankxai",
-  "license": "MIT",
+  "license": "SEE LICENSE IN LICENSE",
   "repository": {
     "type": "git",
     "url": "https://github.com/frankxai/arcanea"
@@ -146,8 +145,8 @@
         "id": "arcanea.teal",
         "description": "Arcanea primary teal",
         "defaults": {
-          "dark": "#7fffd4",
-          "light": "#2d7a65"
+          "dark": "#00bcd4",
+          "light": "#00838f"
         }
       },
       {
