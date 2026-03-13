@@ -14,6 +14,148 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: 'what-is-arcanea',
+    title: 'What Is Arcanea? A Creator\'s Guide to AI-Powered World Building',
+    excerpt:
+      'Arcanea is a creative multiverse — chat with AI, build your own fantasy world, share what you make, and join an open-source civilization of creators.',
+    category: 'Guide',
+    author: 'FrankX',
+    date: '2026-03-13',
+    readTime: '9 min read',
+    featured: true,
+    accent: '#00bcd4',
+    tags: ['arcanea', 'guide', 'world-building', 'multiverse', 'open-source', 'getting-started'],
+    content: `
+## Create with AI. Build Your World. Join the Multiverse.
+
+Arcanea is not one thing. It's a **creative multiverse** — a living ecosystem with six layers that feed each other. Some people come to chat with AI. Some come to build entire fantasy universes. Some come to fork the open-source framework and make it their own. All of it is Arcanea.
+
+Think of it like this:
+
+- **Unreal Engine** isn't a game — it's the engine for making games. Fortnite is Epic's reference game, but the product is the engine.
+- **D&D** isn't a story — it's the system for creating infinite stories. The published adventures are reference implementations.
+- **Arcanea** isn't one world — it's a **multiverse system** for building AI-powered worlds. The Arcanea mythology is the reference world.
+
+Here's what that actually means.
+
+## The Six Layers
+
+### 1. Chat / Imagine — The Creation Surface
+
+Talk to AI. Generate images. Write stories. Compose music. This is where most people enter Arcanea, and it works as a standalone creative tool.
+
+But it's not "just a chatbot." Every conversation is powered by the world-building framework underneath — prompt architecture that keeps your output coherent, stylistically consistent, and connected to a larger vision. You can create a character in chat, generate their portrait in the studio, write their backstory, and compose their theme music — all within a system designed to keep everything aligned.
+
+### 2. Worlds — Build YOUR Fantasy Universe
+
+This is the layer that makes Arcanea fundamentally different from every other AI tool.
+
+Arcanea gives you a **proven architecture for world-building**:
+
+- **Gates** for creative progression systems
+- **Archetypes** for character templates
+- **Elements** for magic/tech systems
+- **The Code** for your world's governing principles
+
+You use these patterns to design YOUR world — your mythology, your characters, your magic system, your visual language, your naming conventions, your lore bible. You're not starting from a blank page. You're starting from a framework that's been battle-tested across 200K+ words of reference material.
+
+Your world gets:
+- **AI agents** that know your lore, stay in character, and interact with your audience
+- **Consistent visuals** through prompt templates tuned to your world's aesthetic
+- **Overlay system** so your world's agents work inside Claude Code, Cursor, ChatGPT, Gemini — everywhere
+
+Arcanea's own world (the Ten Guardians, the Eldrian story, the Gates) is the **first world in the multiverse** — both the proof that the system works and the example you learn from.
+
+### 3. Feed — See What Others Build
+
+Creation is better when it's social. The Feed layer is where you discover what other creators are building — new worlds, agents, art, music, prompt packs. Get inspired. Share your own work. Find collaborators.
+
+This is what turns Arcanea from a solo tool into a living ecosystem. Your world can intersect with others. The multiverse grows.
+
+### 4. OSS — The Open-Source Ecosystem
+
+27 repositories. 35 npm packages. 54 skills. Overlays for every major coding agent.
+
+The framework belongs to everyone. Fork it, extend it, build on it:
+
+- **@arcanea/core** — Framework primitives (Gate, Element, Archetype, WorldConfig)
+- **MCP Servers** — Give AI agents access to your world's knowledge base
+- **Overlays** — System prompts that inject YOUR world's lore into any AI tool
+- **Agent Templates** — Patterns for AI characters that live in your world
+- **Design Tokens** — Color, typography, motion patterns for your world's visual identity
+
+You don't need to code to use Arcanea. But if you build, the entire stack is available.
+
+### 5. Community — Co-Create Together
+
+Not users. **Co-creators.**
+
+Contribute lore, agents, skills, code, translations, art. The inner circle earns governance rights. The vision is shared ownership — a creative civilization built together, not a platform that extracts from its users.
+
+### 6. Academy — Learn by Building
+
+Structured courses teach the whole system:
+
+- **World-building** — Design coherent universes from scratch
+- **Prompt craft** — Master the art of AI-human creative collaboration
+- **Agent design** — Build AI characters with personality, knowledge, and voice
+- **The Arcanean Code** — Philosophy and principles for the creative life
+- **The business model** — Monetize what you build
+
+200K+ words of reference material in the Library. 17 collections covering everything from daily creative practice to the theoretical foundations of world-building. You learn by doing, not just reading.
+
+## What Creators Actually Do With Arcanea
+
+Here's the full journey:
+
+**IMAGINE** — Design your world. Its mythology, characters, magic system, visual language. The framework gives you structure to keep it all consistent as it grows.
+
+**BUILD** — Create AI agents that LIVE in your world. Not generic chatbots — characters from your mythology with personality, knowledge, and voice. They know the lore. They stay in character. They interact with your audience.
+
+**CREATE** — Produce content FOR your world using AI. Images of your characters with your world's style guide. Music with your world's sonic identity. Stories with your world's system prompts. The prompt architecture ensures stylistic coherence across everything.
+
+**PUBLISH** — Build the website, the book, the community. Arcanea provides tech stack patterns (Next.js, Supabase, Vercel) and design system tokens for a professional web presence. The AI agents you built become interactive experiences on your site.
+
+**EARN** — Monetize your world. Sell books, art, music. Offer courses teaching your world's philosophy. Create subscription communities. License your AI agents as interactive experiences.
+
+**EXPAND** — Your fans become creators. They use the same framework to create within your world or fork it for their own. Your world becomes a multiverse.
+
+## Who Arcanea Is For
+
+**Authors and storytellers** who want to build living worlds their readers can interact with — not just static books, but universes with AI characters, explorable lore, and evolving narratives.
+
+**Game designers** who need consistent world architecture — magic systems, character progressions, and lore bibles that stay coherent across hundreds of assets.
+
+**Creative entrepreneurs** who want to turn their imagination into products — books, music, courses, communities, AI experiences — with a system that handles the creative pipeline from idea to revenue.
+
+**Developers and builders** who want to create AI agents grounded in rich, consistent worlds — not generic assistants, but characters with depth, personality, and domain knowledge.
+
+**Educators** who teach creative skills and want structured frameworks their students can learn from and build on.
+
+**Anyone** who has a world in their head and wants to make it real.
+
+## How arcanea.ai Fits
+
+The website at arcanea.ai is the **reference implementation** — a fully-realized AI-powered world that demonstrates what a creator can build with the framework.
+
+When someone asks "what can I build with Arcanea?" — you point at arcanea.ai itself. The chat, the studio, the gallery, the library, the academy — these are all features a creator's world can have.
+
+The Guardians you meet on the site? They're real characters you can talk to AND templates showing how to build AI personalities for your own world. The Ten Gates system? It's real creative philosophy AND an architectural pattern for progression systems. The Library? It's real wisdom AND a content architecture others can replicate.
+
+Everything is both the product and the proof.
+
+## Get Started
+
+**Use Arcanea right now** — Chat, create, explore at arcanea.ai. The Spark plan is free.
+
+**Build your own world** — Use the framework, the Academy courses, and the reference implementation to design and launch your universe.
+
+**Join the ecosystem** — Contribute to the open-source repos, join the community, help shape the multiverse.
+
+> The multiverse has room for every world. Yours is next.
+    `,
+  },
+  {
     slug: 'arcanea-skills-system',
     title: 'The Arcanea Skills System',
     excerpt:
@@ -313,6 +455,7 @@ Every Creator contributes to the growing tapestry of Arcanea. Share your work, e
 
 export const BLOG_CATEGORIES = [
   { id: 'all', label: 'All Posts', count: BLOG_POSTS.length },
+  { id: 'guide', label: 'Guides', count: BLOG_POSTS.filter((p) => p.category === 'Guide').length },
   { id: 'platform', label: 'Platform', count: BLOG_POSTS.filter((p) => p.category === 'Platform').length },
   { id: 'tutorial', label: 'Tutorials', count: BLOG_POSTS.filter((p) => p.category === 'Tutorial').length },
   { id: 'feature', label: 'Features', count: BLOG_POSTS.filter((p) => p.category === 'Feature').length },
