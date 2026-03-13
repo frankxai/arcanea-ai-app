@@ -26,6 +26,11 @@ interface ProviderConfig {
 }
 
 const PROVIDERS: Record<string, ProviderConfig> = {
+  openrouter: {
+    envKeys: ['OPENROUTER_API_KEY'],
+    defaultModel: 'google/gemini-2.5-flash',
+    label: 'Gemini 2.5 Flash (OpenRouter)',
+  },
   google: {
     envKeys: ['GOOGLE_GENERATIVE_AI_API_KEY', 'GEMINI_API_KEY'],
     defaultModel: 'gemini-2.0-flash',
@@ -58,8 +63,10 @@ interface ChatRequest {
   systemPrompt?: string;
   temperature?: number;
   maxTokens?: number;
-  /** Provider ID: 'google' | 'anthropic' | 'openai' */
+  /** Provider ID: 'openrouter' | 'google' | 'anthropic' | 'openai' */
   provider?: string;
+  /** OpenRouter model ID override (e.g. 'anthropic/claude-sonnet-4') */
+  model?: string;
   /** Client-side API key (fallback when no server env var is set) */
   clientApiKey?: string;
 }
@@ -77,22 +84,30 @@ function resolveApiKey(providerConfig: ProviderConfig, clientKey?: string): stri
 /**
  * Create the AI model instance for the requested provider.
  */
-function createModel(providerId: string, apiKey: string) {
+function createModel(providerId: string, apiKey: string, modelOverride?: string) {
   const config = PROVIDERS[providerId];
   if (!config) throw new Error(`Unknown provider: ${providerId}`);
+  const modelId = modelOverride || config.defaultModel;
 
   switch (providerId) {
+    case 'openrouter': {
+      const openrouter = createOpenAI({
+        apiKey,
+        baseURL: 'https://openrouter.ai/api/v1',
+      });
+      return { model: openrouter(modelId), label: modelId };
+    }
     case 'google': {
       const google = createGoogleGenerativeAI({ apiKey });
-      return { model: google(config.defaultModel), label: config.label };
+      return { model: google(modelId), label: config.label };
     }
     case 'anthropic': {
       const anthropic = createAnthropic({ apiKey });
-      return { model: anthropic(config.defaultModel), label: config.label };
+      return { model: anthropic(modelId), label: config.label };
     }
     case 'openai': {
       const openai = createOpenAI({ apiKey });
-      return { model: openai(config.defaultModel), label: config.label };
+      return { model: openai(modelId), label: config.label };
     }
     default:
       throw new Error(`Unsupported provider: ${providerId}`);
@@ -126,14 +141,24 @@ export async function POST(req: NextRequest) {
 
     // --- Parse request ---
     const body: ChatRequest = await req.json();
-    const { messages, systemPrompt, temperature, maxTokens, provider: requestedProvider, clientApiKey } = body;
+    const { messages, systemPrompt, temperature, maxTokens, provider: requestedProvider, model: modelOverride, clientApiKey } = body;
 
     if (!messages || messages.length === 0) {
       return NextResponse.json({ error: 'Messages are required' }, { status: 400 });
     }
 
-    // --- Resolve provider ---
-    const providerId = requestedProvider && PROVIDERS[requestedProvider] ? requestedProvider : 'google';
+    // --- Resolve provider (priority: requested > auto-detect with OpenRouter first) ---
+    let providerId: string;
+    if (requestedProvider && PROVIDERS[requestedProvider]) {
+      providerId = requestedProvider;
+    } else {
+      // Auto-detect: try providers in order (openrouter first)
+      const detected = Object.keys(PROVIDERS).find((id) => {
+        const cfg = PROVIDERS[id];
+        return cfg.envKeys.some((k) => Boolean(process.env[k]));
+      });
+      providerId = detected || 'openrouter';
+    }
     const providerConfig = PROVIDERS[providerId];
 
     // --- Resolve API key (server env var > client key) ---
@@ -147,7 +172,7 @@ export async function POST(req: NextRequest) {
     }
 
     // --- Create model ---
-    const { model, label } = createModel(providerId, apiKey);
+    const { model, label } = createModel(providerId, apiKey, modelOverride);
 
     // Normalize message roles: convert 'model' to 'assistant' for Vercel AI SDK
     const normalizedMessages = messages.map((msg) => ({

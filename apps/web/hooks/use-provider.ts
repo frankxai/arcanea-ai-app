@@ -6,6 +6,7 @@ const PROVIDER_STORAGE_KEY = 'arcanea-active-provider';
 const KEYS_STORAGE_KEY = 'arcanea-provider-keys';
 
 const PROVIDER_LABELS: Record<string, string> = {
+  openrouter: 'Gemini 2.5 Flash (OpenRouter)',
   google: 'Gemini 2.0 Flash',
   anthropic: 'Claude Sonnet 4',
   openai: 'GPT-4o',

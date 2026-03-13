@@ -30,6 +30,16 @@ interface Provider {
 
 const PROVIDERS: Provider[] = [
   {
+    id: 'openrouter',
+    name: 'OpenRouter',
+    description: 'One key, 300+ models — Gemini, Claude, GPT, Llama, Mistral & more',
+    color: '#6366f1',
+    envKey: 'OPENROUTER_API_KEY',
+    placeholder: 'sk-or-v1-...',
+    docsUrl: 'https://openrouter.ai/keys',
+    testEndpoint: '/api/ai/chat',
+  },
+  {
     id: 'google',
     name: 'Google Gemini',
     description: 'Gemini 2.0 Flash — fast, capable, great for creative work',
