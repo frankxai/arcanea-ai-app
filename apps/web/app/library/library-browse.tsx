@@ -2,7 +2,7 @@
  * Library Browse Component
  *
  * ★ Insight ─────────────────────────────────────
- * This component presents the 17 collections of the Library
+ * This component presents the 20 collections of the Library
  * in a visually stunning grid with:
  * 1. Collection cards with cosmic styling
  * 2. Situation-based filtering (read when...)
@@ -128,7 +128,7 @@ export function LibraryBrowse({ collections }: LibraryBrowseProps) {
           </div>
 
           <h1 className="font-display text-4xl font-bold tracking-tight text-text-primary md:text-5xl lg:text-6xl">
-            <span className="aurora-text">Seventeen Collections</span>
+            <span className="aurora-text">Twenty Collections</span>
             <br />
             of Wisdom, Legend, and Practice
           </h1>
@@ -310,7 +310,7 @@ function CollectionCard({ collection }: { collection: Collection }) {
         <div className="mb-4 flex items-center justify-between">
           <span className="text-3xl">{collection.icon}</span>
           <span className="rounded-full border border-cosmic-border-bright bg-cosmic-raised px-3 py-1 text-xs uppercase tracking-[0.2em] text-text-muted">
-            {collection.order}/17
+            {collection.order}/20
           </span>
         </div>
 

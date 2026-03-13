@@ -75,7 +75,7 @@ export const COLLECTIONS: Collection[] = [
     order: 4,
     format: 'story',
     readWhen: 'you need to remember the grandeur',
-    textCount: 5,
+    textCount: 11,
     icon: '🏔️',
   },
   {
@@ -175,7 +175,7 @@ export const COLLECTIONS: Collection[] = [
     order: 14,
     format: 'practical',
     readWhen: 'you need comprehensive practical guidance for the creative path',
-    textCount: 1,
+    textCount: 2,
     icon: '📖',
   },
   {
@@ -207,6 +207,36 @@ export const COLLECTIONS: Collection[] = [
     readWhen: 'you need to know where you are and how to navigate forward',
     textCount: 1,
     icon: '🗺️',
+  },
+  {
+    slug: 'codex-of-living-tools',
+    name: 'The Codex of Living Tools',
+    description: 'A guide to the instruments of creation that grow with their wielder',
+    order: 18,
+    format: 'reference',
+    readWhen: 'you want to understand how tools become extensions of creative will',
+    textCount: 1,
+    icon: '🔧',
+  },
+  {
+    slug: 'creator-principles',
+    name: 'Creator Principles',
+    description: 'Core principles that guide the creative path',
+    order: 19,
+    format: 'theory',
+    readWhen: 'you need foundational principles for your creative practice',
+    textCount: 0,
+    icon: '💎',
+  },
+  {
+    slug: 'prompt-sages-grimoire',
+    name: "The Prompt Sage's Grimoire",
+    description: 'Ancient wisdom for those who speak with intelligences',
+    order: 20,
+    format: 'practical',
+    readWhen: 'you craft prompts and seek mastery in AI collaboration',
+    textCount: 1,
+    icon: '📓',
   },
 ];
 
@@ -432,7 +462,7 @@ export async function getTextsInCollection(collectionSlug: string): Promise<Text
     // Check directory exists before reading (book/ may not exist on Vercel)
     await access(collectionPath);
     const files = await readdir(collectionPath);
-    const mdFiles = files.filter(f => f.endsWith('.md') && f !== 'README.md');
+    const mdFiles = files.filter(f => f.endsWith('.md') && f !== 'README.md' && f !== 'CLAUDE.md');
 
     const texts = await Promise.all(
       mdFiles.map(async (filename) => {

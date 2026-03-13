@@ -3,12 +3,12 @@ import Link from "next/link";
 import { LibraryBrowse } from "./library-browse";
 import { getCollections } from "../../lib/content";
 export const metadata: Metadata = {
-  title: "Library — 34 Original Texts on Creative Philosophy",
+  title: "Library — 34+ Original Texts on Creative Philosophy",
   description:
-    "Browse the Library of Arcanea — 17 collections of original philosophy, practice, and storytelling for creators.",
+    "Browse the Library of Arcanea — 20 collections of original philosophy, practice, and storytelling for creators.",
   openGraph: {
     title: "Library of Arcanea",
-    description: "17 collections of original philosophy, practice, and storytelling for creators.",
+    description: "20 collections of original philosophy, practice, and storytelling for creators.",
   },
 };
 
@@ -20,7 +20,7 @@ export default async function LibraryPage() {
     '@type': 'CollectionPage',
     name: 'Library of Arcanea',
     description:
-      'Seventeen collections of wisdom, legend, poetry, and practice for the creative soul.',
+      'Twenty collections of wisdom, legend, poetry, and practice for the creative soul.',
     url: 'https://arcanea.ai/library',
     mainEntity: {
       '@type': 'ItemList',
