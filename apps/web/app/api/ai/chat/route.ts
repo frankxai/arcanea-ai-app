@@ -165,9 +165,9 @@ export async function POST(req: NextRequest) {
     const apiKey = resolveApiKey(providerConfig, clientApiKey);
 
     if (!apiKey) {
-      return Response.json(
-        { error: `No API key found for ${providerConfig.label}. Add one in Settings → Providers or set ${providerConfig.envKeys[0]} on the server.` },
-        { status: 503 }
+      return new Response(
+        JSON.stringify({ error: `No API key configured. Set ${providerConfig.envKeys[0]} on Vercel or add a key in Settings → Providers.` }),
+        { status: 503, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
@@ -225,15 +225,15 @@ export async function POST(req: NextRequest) {
 
     // API key or auth issues
     if (message.includes('API key') || message.includes('401') || message.includes('403')) {
-      return Response.json(
-        { error: 'Invalid API key. Check your key in Settings → Providers.' },
-        { status: 401 }
+      return new Response(
+        JSON.stringify({ error: 'Invalid API key. Check your key in Settings → Providers.' }),
+        { status: 401, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
-    return NextResponse.json(
-      { error: message },
-      { status: 500 }
+    return new Response(
+      JSON.stringify({ error: message }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } }
     );
   }
 }

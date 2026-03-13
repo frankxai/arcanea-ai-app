@@ -72,6 +72,8 @@ export default function ChatPage() {
     setInput(e.target.value);
   }, []);
 
+  const [chatError, setChatError] = useState<string | null>(null);
+
   const {
     messages,
     status,
@@ -82,8 +84,20 @@ export default function ChatPage() {
     transport: new TextStreamChatTransport({
       api: '/api/ai/chat',
       body: { provider, clientApiKey },
+      headers: { 'Content-Type': 'application/json' },
     }),
+    onError: (err) => {
+      // Surface errors that TextStreamChatTransport catches
+      setChatError(err.message || 'Something went wrong. Check Settings → Providers.');
+    },
   });
+
+  // Sync SDK error state into our local error state
+  useEffect(() => {
+    if (error) {
+      setChatError(error.message || 'Connection failed');
+    }
+  }, [error]);
 
   const isLoading = status === 'submitted' || status === 'streaming';
 
@@ -279,14 +293,20 @@ export default function ChatPage() {
         </div>
 
         {/* Error banner with retry */}
-        {error && (
+        {chatError && (
           <div role="alert" className="bg-red-500/8 border-b border-red-500/20 px-4 py-2.5">
             <div className="max-w-[680px] mx-auto flex items-center justify-between">
-              <div className="flex items-center gap-2 text-red-400/80 text-sm">
+              <div className="flex items-center gap-2 text-red-400/80 text-sm min-w-0">
                 <PhWarningCircle className="w-4 h-4 shrink-0" />
-                <span className="truncate">{error.message}</span>
+                <span className="truncate">{chatError}</span>
               </div>
               <div className="flex items-center gap-2 shrink-0">
+                <Link
+                  href="/settings/providers"
+                  className="px-2.5 py-1 rounded-md text-xs text-red-400/70 hover:text-red-300 hover:bg-red-500/10 transition-colors"
+                >
+                  Settings
+                </Link>
                 <button
                   onClick={handleRetry}
                   className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs text-red-400/70 hover:text-red-300 hover:bg-red-500/10 transition-colors"
@@ -294,7 +314,7 @@ export default function ChatPage() {
                   <PhArrowClockwise className="w-3.5 h-3.5" />
                   Retry
                 </button>
-                <button onClick={startNewChat} aria-label="Dismiss error" className="text-red-400/60 hover:text-red-400">
+                <button onClick={() => { startNewChat(); setChatError(null); }} aria-label="Dismiss error" className="text-red-400/60 hover:text-red-400">
                   <PhX className="w-4 h-4" />
                 </button>
               </div>
