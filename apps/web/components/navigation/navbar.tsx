@@ -8,8 +8,10 @@ import { UserNav } from "@/components/auth";
 
 const navLinks = [
   { href: "/chat", label: "Create", also: ["/imagine", "/studio"] },
-  { href: "/gallery", label: "Explore", also: ["/discover", "/feed"] },
-  { href: "/academy", label: "Learn", also: ["/code", "/library", "/lore"] },
+  { href: "/library", label: "Library", also: [] },
+  { href: "/academy", label: "Academy", also: ["/academy/courses", "/academy/gates"] },
+  { href: "/gallery", label: "Gallery", also: ["/discover", "/feed"] },
+  { href: "/lore", label: "Lore", also: ["/lore/guardians", "/lore/gates"] },
   { href: "/pricing", label: "Pricing", also: [] },
 ];
 
@@ -37,14 +39,7 @@ export function Navbar() {
           <div className="flex items-center justify-between gap-4">
             <Link
               href="/"
-              className="hidden md:block text-[10px] tracking-[0.26em] uppercase text-white/40 hover:text-[#00bcd4] transition-colors focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/30 rounded"
-            >
-              Arcanea
-            </Link>
-
-            <Link
-              href="/"
-              className="md:hidden text-[10px] tracking-[0.26em] uppercase text-white/40 hover:text-[#00bcd4] transition-colors"
+              className="text-base font-display font-semibold text-white/90 tracking-tight hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/30 rounded"
             >
               Arcanea
             </Link>
@@ -84,12 +79,6 @@ export function Navbar() {
             </div>
 
             <div className="hidden md:flex items-center gap-2">
-              <Link
-                href="/chat"
-                className="px-4 py-2 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-[#00897b] via-[#1565c0] to-[#00bcd4] hover:shadow-[0_0_26px_rgba(0,188,212,0.35)] transition-all focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/40"
-              >
-                Start Creating
-              </Link>
               <UserNav />
             </div>
 
@@ -149,15 +138,7 @@ export function Navbar() {
 
                 <div className="h-px bg-white/[0.08] my-3" />
 
-                <Link
-                  href="/chat"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block text-center px-4 py-3 rounded-xl text-sm font-semibold bg-gradient-to-r from-[#00897b] via-[#1565c0] to-[#00bcd4] text-white"
-                >
-                  Start Creating
-                </Link>
-
-                <div className="px-1 pt-2">
+                <div className="px-1">
                   <UserNav />
                 </div>
               </div>
