@@ -451,6 +451,122 @@ February was a standout month. Here are the creators and contributions that defi
 Every Creator contributes to the growing tapestry of Arcanea. Share your work, engage with others, and rise together.
     `,
   },
+  {
+    slug: 'arcanean-prompt-language',
+    title: 'Stop Writing Bad AI Prompts. Learn SPARK.SHAPE.SHARPEN.',
+    excerpt:
+      'The three-word system that turns generic AI output into work you are proud of. Works on every model. Learnable in 60 seconds. No mythology required.',
+    category: 'Guide',
+    author: 'FrankX',
+    date: '2026-03-14',
+    readTime: '7 min read',
+    featured: true,
+    accent: '#fbbf24',
+    tags: ['apl', 'prompt-engineering', 'guide', 'spark-shape-sharpen', 'ai-quality', 'world-building'],
+    content: `
+## The Problem with 90% of AI Prompts
+
+They all say the same thing. "Write a fantasy story." "Create a beautiful landscape." "Compose an epic track." The AI has no reason to produce anything specific, so it produces everything generic.
+
+We call this **AI slop**. Not because the AI is bad — because the prompt gave it nothing real to work with.
+
+The Arcanean Prompt Language fixes this with three words.
+
+## SPARK. SHAPE. SHARPEN.
+
+### SPARK — The One Detail That Makes It Yours
+
+Not a description. A **truth**.
+
+**Before:** "Write a story about a lonely king"
+**After:** "Write a story about a king who eats dinner alone and sets a place for his dead wife every night — including pouring her wine"
+
+The SPARK is what makes someone stop scrolling. Every AI can generate a king. Only YOUR SPARK makes it yours.
+
+**How to find it:** Close your eyes. See the thing. Find the detail that surprises YOU.
+
+### SHAPE — The Sensory World
+
+What does this creation feel, smell, sound like? Five palettes to choose from:
+
+| Palette | Feels Like | Sounds Like |
+|---------|-----------|-------------|
+| **Forge** | Heat on skin, rough metal | Crackle, percussion, roar |
+| **Tide** | Cool stone, mist on face | Echo, sustained notes, rainfall |
+| **Root** | Packed earth, bark, weight | Low hum, grinding, drum |
+| **Drift** | Wind through hair, electric | Whistle, chime, distant thunder |
+| **Void** | Weightlessness, silence | Sub-bass, overtone, nothing |
+
+Pick the one that feels right. Let your SPARK live inside it.
+
+### SHARPEN — What It Must NOT Be
+
+The most powerful technique almost nobody uses: **tell the AI what to avoid.**
+
+| Default to Cut | Sharpen |
+|----------------|---------|
+| "In a world where..." | Start in the middle |
+| "Hauntingly beautiful ethereal cascading majesty" | One strong word beats five weak ones |
+| "I'd be happy to help!" | Respond AS the thing, not ABOUT the thing |
+| Every hero noble, every villain evil | Scars are more interesting than polish |
+| Everything wraps up neatly | Best endings are doors left open |
+
+## The Quality Ladder
+
+**Level 1 — SPARK only** (10 seconds): beats 80% of AI output
+**Level 2 — SPARK + SHARPEN** (30 seconds): beats 95%
+**Level 3 — SPARK + SHAPE + SHARPEN** (60 seconds): beats 99%
+
+## Works on Every Model
+
+APL changes what YOU ask, not what the AI does. That is why it works on Claude Opus 4.6, GPT-5.4, Gemini 3.1 Pro, Grok Imagine, Midjourney, Suno, and everything that comes next.
+
+## Complete Example
+
+\`\`\`
+SPARK:    A library where the books are warm to the touch —
+          they are alive, dreaming
+SHAPE:    VOID — near-black space, single warm light from
+          within the shelves. Dust motes suspended in honey.
+SHARPEN:  NOT a grand fantasy library. NOT colorful spines.
+          NOT orderly. The books have GROWN into the shelves
+          like roots into soil.
+
+Cinematic wide shot. Film grain. 21:9.
+A figure stands small in the center aisle, touching a spine
+that pulses faintly gold.
+\`\`\`
+
+Try this on any image AI. Compare it to "a fantasy library." Feel the difference.
+
+## For World-Builders
+
+APL becomes your world's DNA:
+
+\`\`\`
+WORLD SPARK:    [the one thing true here that is false everywhere else]
+WORLD SHAPE:    [primary palette] + [secondary palette]
+WORLD SHARPEN:  [the three biggest cliches your world refuses]
+\`\`\`
+
+Use this as a prefix. Every character, location, and song inherits the world's genetic code.
+
+## Learn More
+
+- **Full spec**: [prompts/ARCANEA-PROMPT-LANGUAGE.md](https://github.com/frankxai/arcanea-records)
+- **10 templates**: Character, location, magic system, visual style, music, creature, scene, world seed, name generator, lore consistency
+- **Academy course**: Learn SPARK.SHAPE.SHARPEN step by step at [arcanea.ai/academy](/academy)
+- **Prompt Books**: Save and organize your APL prompts at [arcanea.ai/prompt-books](/prompt-books)
+
+## Start Here
+
+1. Think of something you want to create
+2. Find the SPARK — the one detail that surprises you
+3. That is it. You are using APL.
+
+*SPARK. SHAPE. SHARPEN. That is the whole system. Everything else is practice.*
+    `,
+  },
 ];
 
 export const BLOG_CATEGORIES = [

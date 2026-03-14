@@ -778,6 +778,299 @@ You do not need to see every detail. You need to see the direction. The rest rev
       },
     ],
   },
+  {
+    slug: 'arcanean-prompt-language',
+    title: 'The Arcanean Prompt Language',
+    subtitle: 'SPARK. SHAPE. SHARPEN.',
+    description:
+      'Master the three-word system that turns generic AI output into work you are proud of. Works on every model — Claude, GPT, Gemini, Grok, Midjourney, Suno — because it changes what you ask, not what the AI does.',
+    gate: 5,
+    gateName: 'Voice',
+    guardian: 'Alera',
+    element: 'Voice',
+    color: '#fbbf24',
+    difficulty: 'beginner',
+    duration: '2 hours',
+    prerequisites: [],
+    outcomes: [
+      'The SPARK.SHAPE.SHARPEN pattern — learnable in 60 seconds',
+      'Five Sensory Palettes for building atmosphere in any medium',
+      'The Seven Defaults to Cut — an anti-slop checklist',
+      'A World DNA prefix that makes every prompt inherit your world',
+      'Before-and-after portfolio showing your quality transformation',
+    ],
+    lessons: [
+      {
+        id: 'apl-1-spark',
+        title: 'The SPARK',
+        description: 'Find the one detail that makes your creation yours',
+        duration: '20 min',
+        type: 'exercise',
+        content: `# The SPARK
+
+> *"The gap between AI slop and something that haunts you is one sentence of truth."*
+
+Every AI can generate a king, a warrior, a symphony. What it cannot do is find the detail that makes YOUR king different from every other king ever generated. That detail is your SPARK.
+
+### What a SPARK Is
+
+Not a description. A **truth**. The specific detail so precise it could only come from you.
+
+**Generic:** "Write a story about a lonely king"
+**Sparked:** "Write a story about a king who eats dinner alone and sets a place for his dead wife every night — including pouring her wine"
+
+**Generic:** "Create an image of a warrior"
+**Sparked:** "A warrior whose armor is covered in children's handprints — she lets them touch it for luck before she leaves"
+
+**Generic:** "Compose an epic orchestral track"
+**Sparked:** "An orchestral piece where a single piano keeps playing the wrong note — and by the end, the whole orchestra has shifted key to match it"
+
+### How to Find Your SPARK
+
+1. Close your eyes
+2. See the thing you want to create
+3. Find the detail that surprises YOU
+4. That is your SPARK
+
+### Exercise: Three SPARKs
+
+Take three generic prompts and add a SPARK to each:
+
+1. "Write a poem about the ocean" → find the truth
+2. "Generate an image of a forest" → find the detail no one else would choose
+3. "Create a character who is brave" → find the contradiction that makes them real
+
+Write your three sparked prompts. Compare them to the originals. Feel the difference.
+
+### The Quality Ladder — Level 1
+
+Adding a SPARK alone takes 10 seconds and beats 80% of AI output immediately. This is Level 1 on the Quality Ladder. You are already better than most.`,
+      },
+      {
+        id: 'apl-2-shape',
+        title: 'The SHAPE',
+        description: 'Build the sensory world your creation lives in',
+        duration: '25 min',
+        type: 'practice',
+        content: `# The SHAPE
+
+Your creation needs a world. Not a description — a **feeling**. What does this scene smell like? What does the air taste like? What sound is underneath everything?
+
+### Five Sensory Palettes
+
+| Palette | Feels Like | Sounds Like | Looks Like |
+|---------|-----------|-------------|-----------|
+| **Forge** | Heat on skin, rough metal, heartbeat | Crackle, percussion, roar | Ember, gold, molten glass, dawn |
+| **Tide** | Cool stone, mist on face, deep breath | Echo, sustained notes, rainfall | Silver, deep blue, mirror surface |
+| **Root** | Packed earth, bark, weight in the chest | Low hum, grinding, drum | Moss green, amber, bone, fossil |
+| **Drift** | Wind through hair, electric tingle | Whistle, chime, distant thunder | Cloud white, pale blue, ozone |
+| **Void** | Weightlessness, silence, vertigo | Sub-bass, overtone, nothing | Starfield, ink black, iridescent |
+
+These are not rules. They are **starting points for your senses**. Pick the one that feels right and let your SPARK live inside it.
+
+### Example: SPARK + SHAPE
+
+\`\`\`
+SPARK:  A king who sets a place for his dead wife
+SHAPE:  TIDE — the dining hall echoes. Rain against tall windows.
+        Everything is silver and cold and too clean.
+        His wine tastes like the sea because he has been crying into it.
+\`\`\`
+
+### Practice: Shape Three Worlds
+
+Take one of your SPARKs from Lesson 1. Write it in three different palettes:
+
+1. Your SPARK in FORGE — how does it feel when everything is hot, rough, burning?
+2. Your SPARK in VOID — how does it feel when everything is silent, weightless, infinite?
+3. Your SPARK in the palette that feels most RIGHT — trust your instinct
+
+### Blending Palettes
+
+For complexity, blend two palettes:
+- **FORGE + TIDE** = transformation through memory
+- **ROOT + VOID** = ancient things and the unknown spaces between them
+- **DRIFT + FORGE** = wind-fed fire, change that transforms
+
+### The Quality Ladder — Level 2
+
+SPARK + SHAPE takes 30 seconds. You now have a creation with a unique truth living in a sensory world. This beats 95% of AI output.`,
+      },
+      {
+        id: 'apl-3-sharpen',
+        title: 'The SHARPEN',
+        description: 'Cut the seven defaults that make AI output generic',
+        duration: '25 min',
+        type: 'exercise',
+        content: `# The SHARPEN
+
+The most powerful prompt technique almost nobody uses: **tell the AI what to avoid.**
+
+AI models have defaults. They reach for the obvious. They have been trained on everything, so they produce the average of everything unless you tell them not to. Sharpening is naming the obvious so the AI has to go somewhere more interesting.
+
+### The Seven Defaults to Cut
+
+| Default | What It Sounds Like | The Sharpen |
+|---------|-------------------|------------|
+| **The Opener** | "In a world where..." / "Once upon a time..." | Start in the middle. Start with a sound. Start with a lie. |
+| **The Avalanche** | "Hauntingly beautiful ethereal cascading majesty" | One strong word beats five weak ones. |
+| **The Slop** | "I'd be happy to help!" / "Great question!" | Respond AS the thing, not ABOUT the thing. |
+| **The Explanation** | Telling the reader what the metaphor means | Trust them. They are smart. |
+| **The Perfection** | Every hero is noble, every villain is evil | Scars are more interesting than polish. |
+| **The Resolution** | Everything wraps up neatly in the last paragraph | Sometimes the best ending is a door left open. |
+| **The Safety** | Generic, forgettable, could-be-anything output | If it does not make you feel something, it is not done. |
+
+### Example: Full SPARK.SHAPE.SHARPEN
+
+\`\`\`
+SPARK:    She counts things when she is nervous — ceiling tiles, buttons, heartbeats
+SHAPE:    ROOT — earthy, grounded, heavy. Smells like coffee and old paper.
+SHARPEN:  NOT a manic pixie. NOT tragically broken. NOT saved by love.
+          She is brilliant and she knows it, which makes her terrible
+          at asking for help.
+
+A data scientist who quit her job to open a bakery.
+Her sourdough starter is named after her thesis advisor.
+She is funnier than she realizes and sadder than she admits.
+\`\`\`
+
+### Exercise: The Anti-Slop Rewrite
+
+Take any AI output you have generated recently — a story, an image prompt, a character description — and apply SHARPEN:
+
+1. Read it aloud. Circle every adjective avalanche.
+2. Find every place it chose the safe option.
+3. Rewrite the prompt with explicit SHARPEN instructions.
+4. Generate again. Compare.
+
+### The Quality Ladder — Level 3
+
+SPARK + SHAPE + SHARPEN takes 60 seconds. This is where you get the results that make people stop and ask "how did you make this?" You are now at Level 3. This beats 99% of AI output.`,
+      },
+      {
+        id: 'apl-4-world-dna',
+        title: 'World DNA',
+        description: 'Build a prefix that makes every prompt inherit your world',
+        duration: '30 min',
+        type: 'practice',
+        content: `# World DNA
+
+If you are building a world — for a novel, a game, a campaign, a universe — APL becomes your world's genetic code.
+
+### The World Prefix
+
+\`\`\`
+WORLD SPARK:    [the one thing true here that is false everywhere else]
+WORLD SHAPE:    [primary palette] + [secondary palette]
+WORLD SHARPEN:  [the three biggest cliches your world refuses]
+\`\`\`
+
+Use this as a **prefix for every prompt you write in that world**. Every character, location, song, and image inherits the world's DNA automatically.
+
+### Example: A FORGE+TIDE World
+
+\`\`\`
+WORLD SPARK:    In this world, memories are literally flammable.
+                The more painful the memory, the hotter it burns.
+                Libraries are fireproof vaults. Forgetting is arson.
+WORLD SHAPE:    FORGE + TIDE — everything is either burning or drowning.
+                The air smells like heated copper and salt water.
+                Buildings sweat. People carry cooling stones.
+WORLD SHARPEN:  NOT medieval Europe. NOT a chosen one narrative.
+                NOT magic without cost. Every spell burns a memory forever.
+\`\`\`
+
+Now EVERY prompt in this world starts with that prefix. A character prompt inherits the heat and the salt and the cost. A location prompt inherits the sweating buildings. A music prompt inherits the tension between fire and water.
+
+### Practice: Build Your World DNA
+
+1. **WORLD SPARK** — What is the one rule in your world that breaks a rule in ours?
+2. **WORLD SHAPE** — Pick two palettes. Describe what the air feels like, what the default sound is, what color everything leans toward.
+3. **WORLD SHARPEN** — Name three things your world will NEVER be. Three cliches it refuses.
+
+Write your World DNA prefix. Then generate a character using it as the first three lines. Feel how the world shapes the character without you having to describe the world again.
+
+### For Musicians
+
+Your world has a sound. The World DNA becomes your album's sonic identity:
+
+\`\`\`
+WORLD SHAPE:    FORGE + VOID — percussive silence.
+                Drums appear from nothing. Between hits: vacuum.
+WORLD SHARPEN:  NOT orchestral. NOT reverb-heavy. Bone dry recording.
+                Every sound is deliberate. Silence is an instrument.
+\`\`\`
+
+### For Visual Artists
+
+Your world has a look. The World DNA becomes your series' visual identity:
+
+\`\`\`
+WORLD SHAPE:    ROOT + DRIFT — mossy ruins in high wind.
+                Everything is ancient but nothing is still.
+WORLD SHARPEN:  NOT dark fantasy. NOT clean lines.
+                Everything has texture. Nothing is smooth.
+\`\`\``,
+      },
+      {
+        id: 'apl-5-mastery',
+        title: 'The Quality Portfolio',
+        description: 'Prove the transformation with before-and-after work',
+        duration: '20 min',
+        type: 'reflection',
+        content: `# The Quality Portfolio
+
+You now have the complete system. Three words. Sixty seconds. Every AI model. Let us prove it works.
+
+### The Before-and-After Exercise
+
+Choose three things you want to create. For each one:
+
+1. **Write the prompt you WOULD HAVE written** before this course. The generic version. The one that sounds like everyone else.
+
+2. **Write it again with SPARK.SHAPE.SHARPEN.** The version that could only come from you.
+
+3. **Generate both.** Side by side.
+
+4. **Feel the difference.** Not just see it — feel it. The sparked version should make you feel something the generic version does not.
+
+### The Mastery Check
+
+You have mastered APL when:
+
+- [ ] You can find a SPARK in under 10 seconds
+- [ ] You instinctively reach for a palette when imagining a scene
+- [ ] You catch yourself writing defaults and cut them before hitting enter
+- [ ] Your prompts produce results that surprise even you
+- [ ] Other people ask you how you got that result
+
+### What You Built in This Course
+
+| Lesson | What You Learned | What You Made |
+|--------|-----------------|--------------|
+| SPARK | One unique detail changes everything | Three sparked prompts |
+| SHAPE | Five sensory palettes for atmosphere | Three palette variations |
+| SHARPEN | Seven defaults to cut | An anti-slop rewrite |
+| World DNA | A prefix that inherits everywhere | Your world's genetic code |
+| Mastery | Before vs. after proof | A quality portfolio |
+
+### The Voice Gate Opens
+
+The Arcanean Prompt Language lives at Gate 5 — the Voice Gate. Voice is not about volume. It is about saying something true in a way that is unmistakably yours.
+
+When your prompts carry your truth, your taste, and your refusal to accept the generic — the Voice Gate opens. Not because you learned a system. Because the system helped you find what was already there.
+
+### Keep Going
+
+- Use the templates in \`/prompt-books\` for ready-made SPARK.SHAPE.SHARPEN structures
+- Build your World DNA and use it as a prefix for everything
+- Share your before-and-after results — they teach others by example
+- Every time AI gives you something generic, SHARPEN it. The habit becomes instinct.
+
+*SPARK. SHAPE. SHARPEN. That is the whole system. Everything else is practice.*`,
+      },
+    ],
+  },
 ];
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
