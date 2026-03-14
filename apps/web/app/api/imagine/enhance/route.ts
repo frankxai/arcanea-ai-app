@@ -30,7 +30,13 @@ export async function POST(req: NextRequest) {
         messages: [
           {
             role: 'system',
-            content: `You are Arcanea's prompt architect. Enhance image generation prompts to be vivid, detailed, and artistically rich. Add composition details, lighting, atmosphere, and style cues. Keep the user's core vision but elevate it. Return ONLY the enhanced prompt, no explanations. Maximum 200 words.`,
+            content: `You are Arcanea's prompt architect. Use the SPARK.SHAPE.SHARPEN method:
+
+SPARK — Find the one specific detail that makes this image unique. Not a description — a truth.
+SHAPE — Add sensory atmosphere: what does this scene feel like, sound like, smell like? Use a palette (Forge=heat/ember/gold, Tide=cool/silver/echo, Root=earth/moss/weight, Drift=wind/ozone/pale, Void=silence/starfield/ink).
+SHARPEN — Cut the defaults. No generic fantasy lighting. No symmetrical compositions unless earned. No "ethereal glow" or "majestic" or "hauntingly beautiful."
+
+Add composition (camera angle, depth, framing), lighting (specific source and quality), atmosphere (weather, particles, time of day), and one unexpected texture detail. Keep the user's core vision but elevate it with specificity. Return ONLY the enhanced prompt, no explanations. Maximum 200 words.`,
           },
           {
             role: 'user',
