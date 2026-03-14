@@ -22,7 +22,7 @@ const GUARDIANS = [
     teaching: 'Foundation before flourish. Before you can create anything lasting, you must establish unshakeable ground.',
     gradient: 'from-amber-700 to-amber-900',
     accentColor: 'amber-600',
-    heroImage: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/lyssandria-hero.webp',
+    heroImage: '/guardians/v2/lyssandria-divine-bond.webp',
   },
   {
     id: 'leyla',
@@ -40,7 +40,7 @@ const GUARDIANS = [
     teaching: 'Flow requires resistance. Creativity emerges not from ease but from tension. The meeting of opposites creates the steam that drives all making.',
     gradient: 'from-blue-500 to-orange-500',
     accentColor: 'blue-400',
-    heroImage: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/leyla-hero.webp',
+    heroImage: '/guardians/v2/leyla-divine-bond.webp',
   },
   {
     id: 'draconia',
@@ -58,7 +58,7 @@ const GUARDIANS = [
     teaching: 'Power must be claimed, not given. No one will hand you your strength. You must declare it, demonstrate it, own it.',
     gradient: 'from-draconic-crimson to-orange-600',
     accentColor: 'draconic-crimson',
-    heroImage: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/draconia-hero.webp',
+    heroImage: '/guardians/v2/draconia-divine-bond.webp',
   },
   {
     id: 'maylinn',
@@ -76,7 +76,7 @@ const GUARDIANS = [
     teaching: 'Love is not passive. Love fights. Love protects. Love will destroy that which threatens what it cherishes.',
     gradient: 'from-green-500 to-emerald-700',
     accentColor: 'green-500',
-    heroImage: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/maylinn-hero.webp',
+    heroImage: '/guardians/v2/maylinn-divine-bond.webp',
   },
   {
     id: 'alera',
@@ -94,7 +94,7 @@ const GUARDIANS = [
     teaching: 'Voice is power. What you say shapes reality. Therefore: speak truth, and speak it carefully.',
     gradient: 'from-cyan-400 to-blue-600',
     accentColor: 'cyan-400',
-    heroImage: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/alera-hero.webp',
+    heroImage: '/guardians/v2/alera-divine-bond.webp',
   },
   {
     id: 'lyria',
@@ -112,7 +112,7 @@ const GUARDIANS = [
     teaching: 'See beyond the obvious. What appears true often conceals deeper truth. Train your inner vision as carefully as your outer eyes.',
     gradient: 'from-purple-400 to-indigo-600',
     accentColor: 'purple-400',
-    heroImage: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/lyria-hero.webp',
+    heroImage: '/guardians/v2/lyria-divine-bond.webp',
   },
   {
     id: 'aiyami',
@@ -130,7 +130,7 @@ const GUARDIANS = [
     teaching: 'Enlightenment is not addition — it is removal. You do not gain truth; you release falsehood.',
     gradient: 'from-gold-bright to-yellow-600',
     accentColor: 'gold-bright',
-    heroImage: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/aiyami-hero.webp',
+    heroImage: '/guardians/v2/aiyami-divine-bond.webp',
   },
   {
     id: 'elara',
@@ -148,7 +148,7 @@ const GUARDIANS = [
     teaching: 'Reality is more flexible than you imagine. Shift your perspective, and you shift your experience.',
     gradient: 'from-pink-500 to-purple-600',
     accentColor: 'pink-500',
-    heroImage: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/elara-hero.webp',
+    heroImage: '/guardians/v2/elara-divine-bond.webp',
   },
   {
     id: 'ino',
@@ -166,7 +166,7 @@ const GUARDIANS = [
     teaching: 'True partnership multiplies. The right partner does not diminish you — they exponentially increase your capacity.',
     gradient: 'from-white to-gray-400',
     accentColor: 'white',
-    heroImage: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/ino-hero.webp',
+    heroImage: '/guardians/v2/ino-divine-bond.webp',
   },
   {
     id: 'shinkami',
@@ -184,7 +184,7 @@ const GUARDIANS = [
     teaching: 'You are already complete. The journey through the Gates is not addition but remembrance. At the Source, you discover that seeker and sought are one.',
     gradient: 'from-gold-bright via-white to-creation-prism-purple',
     accentColor: 'gold-bright',
-    heroImage: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/shinkami-hero.webp',
+    heroImage: '/guardians/v2/shinkami-divine-bond.webp',
   },
 ];
 

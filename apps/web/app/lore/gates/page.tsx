@@ -20,7 +20,7 @@ const GATES = [
     creativeLesson: 'Every great creative work started with someone deciding where to stand. Your studio, your tools, your daily practice — these are not distractions from the real work. They are the real work.',
     practices: ['Morning grounding meditation', 'Body awareness exercises', 'Environmental stability'],
     color: 'from-amber-700 to-amber-900',
-    heroImage: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/lyssandria-hero.webp',
+    heroImage: '/guardians/v2/lyssandria-divine-bond.webp',
   },
   {
     number: 2,
@@ -37,7 +37,7 @@ const GATES = [
     creativeLesson: 'The blank page terrifies because it demands feeling. The flow state is not the absence of resistance — it is the moment you stop resisting the resistance. Let the water and fire meet. Let the steam rise.',
     practices: ['Emotion tracking journal', 'Creative tension exercises', 'Sensation awareness'],
     color: 'from-blue-500 to-orange-500',
-    heroImage: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/leyla-hero.webp',
+    heroImage: '/guardians/v2/leyla-divine-bond.webp',
   },
   {
     number: 3,
@@ -54,7 +54,7 @@ const GATES = [
     creativeLesson: 'Power is not arrogance. It is the refusal to stay small when you know you have something to offer. Claim your power the way Draconia claims hers: without apology, without cruelty, without hesitation.',
     practices: ['Will declaration ritual', 'Courage challenges', 'Power stance practice'],
     color: 'from-draconic-crimson to-orange-600',
-    heroImage: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/draconia-hero.webp',
+    heroImage: '/guardians/v2/draconia-divine-bond.webp',
   },
   {
     number: 4,
@@ -71,7 +71,7 @@ const GATES = [
     creativeLesson: 'The work you do with love will outlast the work you do for approval. If your creation does not carry something of your care for the world, it will ring hollow — no matter how technically accomplished.',
     practices: ['Compassion meditation', 'Healing visualization', 'Heart opening exercises'],
     color: 'from-green-500 to-emerald-700',
-    heroImage: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/maylinn-hero.webp',
+    heroImage: '/guardians/v2/maylinn-divine-bond.webp',
   },
   {
     number: 5,
@@ -88,7 +88,7 @@ const GATES = [
     creativeLesson: 'Name your work. Speak about it. Tell people what you are making and why it matters. The moment you give voice to your vision, you make it real in a way that silence never can.',
     practices: ['Truth speaking practice', 'Sound meditation', 'Naming rituals'],
     color: 'from-cyan-400 to-blue-600',
-    heroImage: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/alera-hero.webp',
+    heroImage: '/guardians/v2/alera-divine-bond.webp',
   },
   {
     number: 6,
@@ -105,7 +105,7 @@ const GATES = [
     creativeLesson: 'Your best ideas will arrive as hunches, not as plans. The vision precedes the form. Trust what your creative intuition shows you before you can rationally justify it. By the time you can explain it, you are already late.',
     practices: ['Dream journaling', 'Intuition training', 'Memory palace building'],
     color: 'from-purple-400 to-indigo-600',
-    heroImage: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/lyria-hero.webp',
+    heroImage: '/guardians/v2/lyria-divine-bond.webp',
   },
   {
     number: 7,
@@ -122,7 +122,7 @@ const GATES = [
     creativeLesson: 'At some point, you must stop adding to your work and start removing. The masterpiece lives inside the marble. Your job is to chip away everything that is not the masterpiece.',
     practices: ['Silent meditation', 'Light visualization', 'Ego dissolution practice'],
     color: 'from-gold-bright to-yellow-600',
-    heroImage: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/aiyami-hero.webp',
+    heroImage: '/guardians/v2/aiyami-divine-bond.webp',
   },
   {
     number: 8,
@@ -139,7 +139,7 @@ const GATES = [
     creativeLesson: 'When you are stuck, you do not need a better answer. You need a different question. Change the angle. Invert the assumption. Ask what the work would look like if everything you believed about it were wrong.',
     practices: ['Perspective shifting exercises', 'Possibility mapping', 'Alternative timeline meditation'],
     color: 'from-pink-500 to-purple-600',
-    heroImage: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/elara-hero.webp',
+    heroImage: '/guardians/v2/elara-divine-bond.webp',
   },
   {
     number: 9,
@@ -156,7 +156,7 @@ const GATES = [
     creativeLesson: 'Find your collaborator. Find the person who sees what you are blind to, who is strong where you are weak. The greatest works in every field emerged from partnerships, not from isolation.',
     practices: ['Partner meditation', 'Trust exercises', 'Fusion practice'],
     color: 'from-white to-gray-400',
-    heroImage: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/ino-hero.webp',
+    heroImage: '/guardians/v2/ino-divine-bond.webp',
   },
   {
     number: 10,
@@ -173,7 +173,7 @@ const GATES = [
     creativeLesson: 'You are not becoming a creator. You are remembering that you always were one. The Source Gate does not give you new powers. It removes the last illusion that you ever lacked them.',
     practices: ['Source meditation', 'Creator consciousness practice', 'Unity realization'],
     color: 'from-gold-bright via-white to-creation-prism-purple',
-    heroImage: 'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/shinkami-hero.webp',
+    heroImage: '/guardians/v2/shinkami-divine-bond.webp',
   },
 ];
 

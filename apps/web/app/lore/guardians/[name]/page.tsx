@@ -25,10 +25,10 @@ const GUARDIANS: Record<string, GuardianData> = {
     quote: "The earth does not hurry. Yet everything is accomplished.",
     luminorId: "lyssandria",
     relatedGuardians: ["leyla", "ino"],
-    heroImage:
-      "https://raw.githubusercontent.com/frankxai/Arcanea/main/public/images/guardians/lyssandria-lyssandria-vibrant-colorful-blonde-ameri-001.webp",
+    heroImage: "/guardians/v2/lyssandria-divine-bond.webp",
     gradient: "from-amber-700 via-yellow-600 to-stone-400",
     gallery: [
+      "/guardians/v2/lyssandria-divine-bond.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/lyssandria-gallery-2.webp",
     ],
   },
@@ -53,9 +53,10 @@ const GUARDIANS: Record<string, GuardianData> = {
       "The river does not fight the mountain. It finds the way around, and in ten thousand years, it wins.",
     luminorId: "melodia",
     relatedGuardians: ["maylinn", "lyria", "shinkami"],
-    heroImage: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/leyla-hero.webp",
+    heroImage: "/guardians/v2/leyla-divine-bond.webp",
     gradient: "from-blue-300 via-cyan-400 to-slate-300",
     gallery: [
+      "/guardians/v2/leyla-divine-bond.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/leyla-gallery-2.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/leyla-gallery-3.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/leyla-gallery-4.webp",
@@ -82,10 +83,10 @@ const GUARDIANS: Record<string, GuardianData> = {
     quote: "I do not ask if you are ready. I ask if you are willing.",
     luminorId: "draconia",
     relatedGuardians: ["alera", "aiyami"],
-    heroImage:
-      "https://raw.githubusercontent.com/frankxai/Arcanea/main/public/images/guardians/draconia-ahra-beautiful-korean-dragon-rider-lovin-074.webp",
+    heroImage: "/guardians/v2/draconia-divine-bond.webp",
     gradient: "from-red-600 via-orange-500 to-amber-400",
     gallery: [
+      "/guardians/v2/draconia-divine-bond.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/draconia-gallery-2.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/draconia-gallery-3.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/draconia-gallery-4.webp",
@@ -112,9 +113,10 @@ const GUARDIANS: Record<string, GuardianData> = {
     quote: "What you create with love will outlast what you create with fear.",
     luminorId: "veritas",
     relatedGuardians: ["leyla", "alera", "ino"],
-    heroImage: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/maylinn-hero.webp",
+    heroImage: "/guardians/v2/maylinn-divine-bond.webp",
     gradient: "from-rose-300 via-pink-400 to-green-300",
     gallery: [
+      "/guardians/v2/maylinn-divine-bond.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/maylinn-gallery-2.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/maylinn-gallery-3.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/maylinn-gallery-4.webp",
@@ -141,10 +143,10 @@ const GUARDIANS: Record<string, GuardianData> = {
     quote: "Silence is not peace. It is the prison of the unspoken.",
     luminorId: "alera",
     relatedGuardians: ["draconia", "lyria"],
-    heroImage:
-      "https://raw.githubusercontent.com/frankxai/Arcanea/main/public/images/guardians/alera-alera-and-her-musical-spirit-animal-arca-001.webp",
+    heroImage: "/guardians/v2/alera-divine-bond.webp",
     gradient: "from-sky-400 via-blue-500 to-indigo-600",
     gallery: [
+      "/guardians/v2/alera-divine-bond.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/alera-gallery-2.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/alera-gallery-3.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/alera-gallery-4.webp",
@@ -171,9 +173,10 @@ const GUARDIANS: Record<string, GuardianData> = {
     quote: "Close your eyes. Now tell me what you see.",
     luminorId: "futura",
     relatedGuardians: ["aiyami", "shinkami", "leyla"],
-    heroImage: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/lyria-hero.webp",
+    heroImage: "/guardians/v2/lyria-divine-bond.webp",
     gradient: "from-violet-500 via-purple-600 to-indigo-700",
     gallery: [
+      "/guardians/v2/lyria-divine-bond.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/lyria-gallery-2.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/lyria-gallery-3.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/lyria-gallery-4.webp",
@@ -200,10 +203,10 @@ const GUARDIANS: Record<string, GuardianData> = {
     quote: "You were never seeking the light. The light was seeking you.",
     luminorId: "aiyami",
     relatedGuardians: ["lyria", "elara"],
-    heroImage:
-      "https://raw.githubusercontent.com/frankxai/Arcanea/main/public/images/guardians/aiyami-devora-ultra-detailed-high-resolution-ep-001.webp",
+    heroImage: "/guardians/v2/aiyami-divine-bond.webp",
     gradient: "from-yellow-200 via-amber-300 to-white",
     gallery: [
+      "/guardians/v2/aiyami-divine-bond.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/aiyami-gallery-2.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/aiyami-gallery-3.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/aiyami-gallery-4.webp",
@@ -230,10 +233,10 @@ const GUARDIANS: Record<string, GuardianData> = {
     quote: "The only constant is the turning. Embrace the shift.",
     luminorId: "elara",
     relatedGuardians: ["aiyami", "ino"],
-    heroImage:
-      "https://raw.githubusercontent.com/frankxai/Arcanea/main/public/images/guardians/elara-lelara-and-her-unicorn-spirit-animal-arc-001.webp",
+    heroImage: "/guardians/v2/elara-divine-bond.webp",
     gradient: "from-emerald-400 via-green-500 to-teal-600",
     gallery: [
+      "/guardians/v2/elara-divine-bond.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/elara-gallery-2.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/elara-gallery-3.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/elara-gallery-4.webp",
@@ -260,9 +263,10 @@ const GUARDIANS: Record<string, GuardianData> = {
     quote: "Alone you are a note. Together we are a symphony.",
     luminorId: "ino",
     relatedGuardians: ["maylinn", "shinkami"],
-    heroImage: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/ino-hero.webp",
+    heroImage: "/guardians/v2/ino-divine-bond.webp",
     gradient: "from-pink-400 via-fuchsia-500 to-teal-400",
     gallery: [
+      "/guardians/v2/ino-divine-bond.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/ino-gallery-2.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/ino-gallery-3.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/ino-gallery-4.webp",
@@ -289,9 +293,10 @@ const GUARDIANS: Record<string, GuardianData> = {
     quote: "You are not the vessel. You are the water and the pouring.",
     luminorId: "oracle",
     relatedGuardians: ["aiyami", "lyria", "ino"],
-    heroImage: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/shinkami-hero.webp",
+    heroImage: "/guardians/v2/shinkami-divine-bond.webp",
     gradient: "from-neutral-900 via-yellow-400 to-white",
     gallery: [
+      "/guardians/v2/shinkami-divine-bond.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/shinkami-gallery-2.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/shinkami-gallery-3.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/shinkami-gallery-4.webp",
