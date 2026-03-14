@@ -1,290 +1,301 @@
-# Arcanean Prompt Language (APL) v3.0
+# The Arcanean Prompt Language
 
-> *"The difference between AI slop and something that moves you is seventeen words of intention."*
+> *"The gap between AI slop and something that haunts you is one sentence of truth."*
 
-APL is a prompt enrichment system. It takes whatever you're asking AI to make and elevates the output from generic to extraordinary. It works across any model (Claude, Gemini, GPT, Suno, Midjourney, ComfyUI) and any genre — fantasy, sci-fi, business, personal, abstract.
+## What This Is
 
-The Arcanean mythology (Gates, Elements, Guardians) is available as flavor when you want it. But the core of APL is model-agnostic and mythology-optional. It's about asking better questions so AI gives you better answers.
+APL turns any AI — Claude, GPT, Gemini, Grok, Suno, Midjourney, any model, any year — into something that produces work you're proud of. Not by adding complexity. By asking one better question.
 
----
-
-## The Problem APL Solves
-
-AI output is mediocre by default. Not because the models are bad — because the prompts are vague. "Write a character" gets you a generic character. "Create a landscape" gets you every landscape.
-
-APL fixes this with three principles:
-
-1. **The Anchor** — force one concrete, specific detail into every prompt. Specificity is the enemy of slop.
-2. **The Exclusion** — tell the AI what NOT to do. Most quality comes from removing the bad, not adding the good.
-3. **The Sensory Ground** — engage at least two senses. If you can't see it, hear it, or feel it, it doesn't exist yet.
-
-These three things alone will transform your output. Everything else in APL is enrichment.
+It works for authors, world-builders, musicians, visual artists, game designers, and anyone who creates with AI. No mythology required. No syntax to memorize. Just three words.
 
 ---
 
-## The Three Moves
+## SPARK. SHAPE. SHARPEN.
 
-### Move 1: Anchor It
+That's the whole system.
 
-Every APL prompt has one non-negotiable: `@anchor` — a single concrete detail that prevents the AI from going generic.
+### SPARK — The one thing that makes this creation yours
 
-```
-Without anchor:  "Create a wise mentor character"
-With anchor:     "Create a wise mentor whose hands shake when she lies"
-```
+Not a description. A **truth**. The detail so specific it could only come from you.
 
 ```
-Without anchor:  "Compose epic fantasy music"
-With anchor:     "Compose a track where the strings drop out completely at the climax, leaving only a single voice"
-```
-
-The anchor does three things: it gives the AI a focal point, it makes the output specific to YOUR vision, and it's the detail that makes someone say "that's different."
-
-### Move 2: Exclude the Defaults
-
-AI has strong defaults. APL names them so you can reject them:
-
-```
-@exclude  generic-fantasy    — "in a world where...", ancient prophecies, chosen ones
-@exclude  purple-prose       — "hauntingly beautiful ethereal majesty cascading..."
-@exclude  ai-slop            — "I'd be happy to", "it's important to note", "let's dive in"
-@exclude  symmetry           — not everything needs perfect parallel structure
-@exclude  resolution         — sometimes the best ending is an open question
-@exclude  perfection         — scars, asymmetry, and wear are more interesting than polish
-@exclude  explanation        — trust the audience. Don't explain the metaphor.
-```
-
-You don't need all of these every time. Pick the ones your prompt is most likely to trigger.
-
-### Move 3: Ground It in the Body
-
-Before any concept, establish a physical sensation:
-
-```
-Weak:   "The ancient library held countless secrets"
-Strong: "The library smelled like dust and copper. The books were warm to the touch."
+Generic:    "Write a story about a lonely king"
+Sparked:    "Write a story about a king who eats dinner alone
+             and sets a place for his dead wife every night —
+             including pouring her wine"
 ```
 
 ```
-Weak:   "A powerful magical artifact"
-Strong: "It hummed at a frequency you felt in your teeth, not your ears"
+Generic:    "Create an image of a warrior"
+Sparked:    "A warrior whose armor is covered in children's
+             handprints — she lets them touch it for luck
+             before she leaves"
 ```
 
-This works for visuals (what's the atmosphere?), music (what does the silence between notes feel like?), and narrative (ground the reader in one non-visual sense before anything else).
+```
+Generic:    "Compose an epic orchestral track"
+Sparked:    "An orchestral piece where a single piano keeps
+             playing the wrong note — and by the end, the
+             whole orchestra has shifted key to match it"
+```
+
+The Spark is the moment someone stops scrolling. It's what makes them say *"I've never seen that before."* Every AI can generate a king, a warrior, a symphony. Only YOUR Spark makes it yours.
+
+**How to find your Spark:** Close your eyes. See the thing you want to create. Find the detail that surprises YOU. That's it.
+
+### SHAPE — The world it lives in
+
+What does this creation feel, smell, sound, taste like? Not what it looks like first — what it FEELS like.
+
+Five sensory palettes to choose from (use one, blend two, or ignore them entirely):
+
+| Palette | Feels Like | Sounds Like | Looks Like |
+|:--------|:-----------|:------------|:-----------|
+| **Forge** | Heat on skin, rough metal, heartbeat | Crackle, percussion, roar | Ember, gold, molten glass, dawn |
+| **Tide** | Cool stone, mist on face, deep breath | Echo, sustained notes, rainfall | Silver, deep blue, mirror surface |
+| **Root** | Packed earth, bark, weight in the chest | Low hum, grinding, drum | Moss green, amber, bone, fossil |
+| **Drift** | Wind through hair, electric tingle | Whistle, chime, distant thunder | Cloud white, pale blue, ozone |
+| **Void** | Weightlessness, silence, vertigo | Sub-bass, overtone, nothing | Starfield, ink black, iridescent |
+
+These aren't rules. They're **starting points for your senses**. Pick the one that feels right and let your Spark live inside it.
+
+```
+Spark:  A king who sets a place for his dead wife
+Shape:  TIDE — the dining hall echoes. Rain against tall windows.
+        Everything is silver and cold and too clean.
+        His wine tastes like the sea because he's been crying into it.
+```
+
+### SHARPEN — What it must NOT be
+
+The most powerful prompt technique almost nobody uses: **tell the AI what to avoid.**
+
+AI models have defaults. They reach for the obvious. Sharpening is naming the obvious so the AI has to go somewhere more interesting.
+
+**The Seven Defaults to Cut:**
+
+| Default | What It Sounds Like | The Sharpen |
+|:--------|:-------------------|:------------|
+| **The Opener** | "In a world where..." / "Once upon a time..." | Start in the middle. Start with a sound. Start with a lie. |
+| **The Avalanche** | "Hauntingly beautiful ethereal cascading majesty" | One strong word beats five weak ones. |
+| **The Slop** | "I'd be happy to help!" / "Great question!" | Respond AS the thing, not ABOUT the thing. |
+| **The Explanation** | Telling the reader what the metaphor means | Trust them. They're smart. |
+| **The Perfection** | Every hero is noble, every villain is evil | Scars are more interesting than polish. |
+| **The Resolution** | Everything wraps up neatly in the last paragraph | Sometimes the best ending is a door left open. |
+| **The Safety** | Generic, forgettable, could-be-anything output | If it doesn't make you feel something, it's not done. |
+
+```
+Sharpen: NOT a noble king mourning nobly.
+         NOT a dramatic monologue about loss.
+         NOT a resolution where he "learns to move on."
+         He's pathetic and he knows it and he pours the wine anyway.
+```
 
 ---
 
-## Full APL Syntax
-
-When you want the full system, APL prompts can include any of these fields. **All are optional except @anchor:**
+## The Full Pattern (60 Seconds to Learn)
 
 ```
-@form     — what you're making (character, location, song, image, lore, name, system)
-@tone     — emotional register (mythic, intimate, fierce, reverent, playful, tense, raw)
-@anchor   — one concrete detail that grounds everything (REQUIRED)
-@exclude  — what to avoid (comma-separated)
-@render   — visual style (cinematic, concept-art, icon, premium-photo)
-@phonetics — name style (tolkien, marvel, miyazaki, ancient)
-@gate     — Arcanean Gate energy, if building within the mythology (optional)
-@element  — Five Element palette, if using elemental flavor (optional)
+SPARK:    [the one detail that makes it yours]
+SHAPE:    [the sensory world — what it feels/sounds/tastes like]
+SHARPEN:  [what it must NOT be — cut the defaults]
 
-[body]    — the actual creative direction, in plain language
+[your prompt in plain language]
 ```
 
-### Example: Character (no mythology)
+### Complete Example: Character
 
 ```
-@form     character
-@tone     intimate
-@anchor   she counts things when she's nervous — ceiling tiles, buttons, heartbeats
-@exclude  chosen-one, tragic-backstory-dump, flawless
+SPARK:    She counts things when she's nervous — ceiling tiles,
+          buttons, heartbeats
+SHAPE:    ROOT — she's earthy, grounded, heavy. Smells like
+          coffee and old paper. Moves slowly and deliberately.
+SHARPEN:  NOT a manic pixie. NOT tragically broken. NOT saved
+          by love. She's brilliant and she knows it, which makes
+          her terrible at asking for help.
 
-A data scientist who quit her job to open a bakery. She's brilliant
-and she knows it, which makes her terrible at asking for help.
+A data scientist who quit her job to open a bakery.
 Her sourdough starter is named after her thesis advisor.
 She's funnier than she realizes and sadder than she admits.
 ```
 
-### Example: Character (with Arcanean flavor)
+### Complete Example: Image
 
 ```
-@form     character
-@tone     fierce
-@gate     Fire
-@element  Fire
-@anchor   a scar that glows like cooling lava when she's angry
-@exclude  generic-fantasy, chosen-one, villain-monologue
-@phonetics ancient
+SPARK:    A library where the books are warm to the touch —
+          they're alive, dreaming
+SHAPE:    VOID — near-black space, a single warm light source
+          from within the shelves. Dust motes that move too slowly,
+          like they're suspended in honey.
+SHARPEN:  NOT a grand fantasy library. NOT colorful spines.
+          NOT orderly. The books have GROWN into the shelves
+          like roots into soil.
 
-A warrior-teacher of the Fire Gate. She burned away everything
-that wasn't essential — relationships, possessions, even her
-original name. She teaches by sparring. Every lesson leaves a mark.
-Her students fear her and would die for her.
+Cinematic wide shot. Film grain. Aspect ratio 21:9.
+A figure stands small in the center aisle, touching a spine
+that pulses faintly gold.
 ```
 
-Both prompts produce excellent characters. The Gate and Element add thematic richness if you want it, but the quality comes from the anchor, exclusions, and specificity.
+### Complete Example: Music (for Suno/Udio)
+
+```
+SPARK:    The cello is slightly out of tune — on purpose.
+          It sounds like someone trying not to cry.
+SHAPE:    TIDE — sustained, reverberant, oceanic. A piano
+          underneath like distant rain on glass.
+SHARPEN:  NOT epic. NOT building to a climax. It stays quiet
+          the entire time. The power is in the restraint.
+
+Ambient neoclassical, 72 BPM, solo cello with sparse piano,
+large reverb space, intimate recording, no percussion,
+instrumental only.
+```
 
 ---
 
-## The Sensory Palettes
+## Why This Works on Every Model
 
-These are enrichment vocabularies. Use them to make any prompt more vivid — whether you're building in Arcanea's mythology or your own world.
+APL doesn't depend on model-specific syntax or version-specific features. It works because it changes what YOU ask, not what the AI does.
 
-| Palette | Visual | Sound | Texture | Motion |
-|:--------|:-------|:------|:--------|:-------|
-| **Fire** | Ember, forge, molten glass, cooling lava | Crackle, roar, sharp percussion | Rough, hot, crystalline | Explosive, consuming, ascending |
-| **Water** | Tide, mirror, rain on still surface, depth | Resonance, echo, sustained notes | Smooth, cool, yielding | Flowing, spiraling, tidal |
-| **Earth** | Root, stone, moss, bone, fossil | Low hum, drum, grinding | Gritty, dense, layered | Slow, deliberate, growing |
-| **Wind** | Cloud, feather, spark, horizon line | Whistle, chime, breath | Light, sharp, electric | Swift, scattered, orbiting |
-| **Void** | Starfield, ink, absence, potential | Silence, sub-bass, overtone | Weightless, vast, paradoxical | Still, imploding, transcendent |
+| Model | How APL Helps |
+|:------|:-------------|
+| **Claude Opus 4.6** | Already great at nuance — APL gives it permission to be weird, specific, and brave instead of safe |
+| **GPT-5.4** | Excellent at following constraints — SHARPEN is incredibly effective here |
+| **Gemini 3.1 Pro** | Strong multimodal reasoning — SHAPE's sensory palettes translate beautifully to visual + text |
+| **Grok Imagine** | Responds well to emotional direction — SPARK gives it a focal point that prevents generic output |
+| **Midjourney / DALL-E** | Need concrete visual anchors — SPARK + SHAPE convert directly to effective image prompts |
+| **Suno / Udio** | Benefit hugely from SHARPEN — telling music AI what NOT to do is more effective than what to do |
+| **ComfyUI / Stable Diffusion** | SHAPE's palettes translate directly to color grading and atmosphere nodes |
 
-You don't have to call these "elements." They're just five sensory families. Use whichever one adds the right flavor to your prompt.
+The models get better every month. APL gets better WITH them because it's not a hack around limitations — it's a way of thinking about what you actually want.
 
 ---
 
 ## The Quality Ladder
 
-APL recognizes four levels of output quality. Each level adds one layer of intentionality:
+Not every prompt needs the full system. Here's how each layer improves your output:
 
-### Level 1: Clear (beats 80% of AI output)
-Just add an anchor. One specific detail.
-```
-"A castle on a cliff" → "A castle where the south wall has been rebuilt three times and each layer is a different stone"
-```
+### Level 1: SPARK Only
+Add one specific detail. Takes 10 seconds. Beats 80% of AI output immediately.
 
-### Level 2: Vivid (beats 95% of AI output)
-Add an exclusion and a sensory ground.
 ```
-@anchor   the south wall, rebuilt three times in different stone
-@exclude  generic-medieval, pristine-fortress
-The wind through the mismatched stones makes a sound the locals call "the argument."
+Before: "Write a poem about the ocean"
+After:  "Write a poem about the ocean from the perspective of
+         someone who's never seen it — they've only heard it
+         described by liars"
 ```
 
-### Level 3: Resonant (beats 99% of AI output)
-Add emotional subtext — what does this creation MEAN?
+### Level 2: SPARK + SHARPEN
+Add one specific detail and one thing to avoid. Takes 30 seconds. Beats 95%.
+
 ```
-@anchor   the south wall, rebuilt three times in different stone
-@exclude  generic-medieval, pristine-fortress
-@tone     bittersweet
-The castle keeps getting attacked from the south because that's where the road to
-the capital is. Every generation rebuilds it. The different stones are a family history
-you can read with your hands. The newest layer is the weakest.
+SPARK:    The ocean described by liars
+SHARPEN:  NOT beautiful. NOT peaceful. NOT a metaphor for freedom.
+          The liars made it sound terrifying and the speaker is
+          going to see it anyway.
 ```
 
-### Level 4: Genius (the top shelf)
-Add a contradiction or paradox — something that shouldn't work but does.
-```
-@anchor   the south wall, rebuilt three times in different stone
-@exclude  generic-medieval, pristine-fortress, resolution
-@tone     bittersweet
-The castle's weakest wall is also its most beautiful. Visitors come from across
-the continent to see the south face — three layers of stone, three colors,
-three centuries of being broken and remade. The family could reinforce it.
-They choose not to. The vulnerability IS the monument.
-```
-
-**This is the core of APL.** The difference between generic AI output and something that gives you chills is specificity, exclusion, sensory grounding, and one good paradox.
+### Level 3: SPARK + SHAPE + SHARPEN
+The full pattern. Takes 60 seconds. Beats 99%. This is where you get the results that make people stop and ask "how did you make this?"
 
 ---
 
-## Anti-Slop Patterns
+## For Authors and World-Builders
 
-These are the most common AI failure modes and how APL prevents them:
+APL was born in the Arcanea multiverse — a world-building framework with 200K+ words of lore, ten Gates of creative progression, and a mythology designed to teach the system by BEING the system.
 
-| AI Default | APL Counter |
-|:-----------|:------------|
-| "In a world where..." opener | `@exclude generic-fantasy` — start with action, image, or dialogue |
-| Adjective avalanche | `@exclude purple-prose` — one strong noun beats three weak adjectives |
-| Everything is epic/beautiful/ancient | `@tone` forces a specific register — intimate, playful, tense, raw |
-| Characters describe themselves | `@anchor` forces a SHOWN detail, not a TOLD one |
-| Moral clarity (pure good vs. pure evil) | `@exclude perfection` — interesting characters have contradictions |
-| Resolution in the last paragraph | `@exclude resolution` — some prompts should end with open questions |
-| "As a [role], I..." self-referencing | `@exclude ai-slop` — respond as the thing, not about the thing |
-| Symmetric structure (3 pillars, 5 principles...) | `@exclude symmetry` — asymmetry is more natural and interesting |
-| Name cliches (Shadowbane, Darkwood) | `@phonetics` — choose a linguistic register that has weight |
+If you're building worlds, APL's Sensory Palettes become your **world's DNA**:
 
----
+- Your world is primarily FORGE? Every location feels hot, every texture is rough, every conflict is about transformation.
+- Your world is TIDE? Memory is everywhere, things echo, the past is always present.
+- Your world is ROOT? Things grow slowly, history is layered, patience is power.
+- Your world is DRIFT? Change is constant, nothing stays, freedom is the highest value.
+- Your world is VOID? Potential is everywhere, silence speaks, the unknown is more interesting than the known.
 
-## Using APL Across Models
+**Blend two palettes** for complexity: a FORGE+TIDE world is about transformation through memory. A ROOT+VOID world is about ancient things and the unknown spaces between them.
 
-### Text (Claude, Gemini, GPT)
-Pass the full APL block as a prefix to your prompt. The model will follow the constraints and produce within them.
+Your Sparks become your **world's signature moments**. The details that make YOUR world different from every other fantasy world. Not "there are elves" — but "the trees here grow toward sound instead of light, so the forests are thickest near the cities."
 
-### Images (Midjourney, ComfyUI, Nano Banana, DALL-E)
-Translate to image prompt format: extract nouns, adjectives, atmosphere, and `@render` style. The `@anchor` becomes the focal point. Strip all narrative verbs.
+Your Sharpens become your **world's identity**. What your world is NOT is as important as what it is. "This is NOT a medieval Europe analog" is a design decision that shapes everything.
+
+### The World-Builder's Cheat Sheet
 
 ```
-APL:    @element Fire, @anchor cooling lava scar, @render cinematic, @tone fierce
-Image:  "fierce warrior, cinematic lighting, glowing lava-like scar on face,
-         ember particles in air, dark forge background, film grain, shallow depth of field"
+WORLD SPARK:    [the one thing true here that's false everywhere else]
+WORLD SHAPE:    [primary palette] + [secondary palette]
+WORLD SHARPEN:  [the three biggest cliches your world refuses]
+
+Then use this as a PREFIX for every prompt you write in that world.
+Every character, location, song, and image inherits the world's DNA.
 ```
 
-### Music (Suno, Udio)
-The sensory palette maps to instrumentation. The `@tone` guides mood. The `@anchor` becomes the signature moment — the 5 seconds someone would hum back.
+---
 
-### Multi-modal Coherence
-When creating matching content (character + portrait + theme music), use the SAME `@anchor` and `@tone` across all three prompts. That's what makes a world feel consistent.
+## For Musicians
+
+APL's biggest gift to music composition is SHARPEN. Most AI music sounds the same because nobody tells it what NOT to do.
+
+```
+SHARPEN for music:
+- NOT a build-drop structure
+- NOT every instrument playing at once
+- NOT a clean, polished production (leave the room noise)
+- NOT resolving to the tonic (end on tension)
+- NOT following the expected chord progression
+```
+
+The SPARK for music is the **anchor moment** — the 5 seconds someone would hum back to you. If you can't describe that moment before you generate, you'll get background music instead of a song.
 
 ---
 
-## Arcanean Flavor (Optional Layer)
+## The Arcanean Layer (Optional)
 
-If you're building within Arcanea's mythology, you can add `@gate` and `@element` for thematic richness. These are not required for APL to work — they're enrichment for when you want your creation to feel like it belongs in the Arcanean multiverse.
+Everything above works without any mythology. But if you want to build within the Arcanea multiverse — or if the mythological framing helps you think more creatively — here's how the system maps:
 
-### The Ten Gates as Creative Modes
+| APL Concept | Arcanean Equivalent | What It Adds |
+|:------------|:-------------------|:-------------|
+| SPARK | The First Light (Lumina) | "Creation begins with one point of light in the dark" |
+| SHAPE | The Five Elements | Fire, Water, Earth, Wind, Void — deeper sensory vocabulary |
+| SHARPEN | Know Your Shadow | Every strength has a dark side. Name it to master it. |
+| The Quality Ladder | The Ten Gates | Foundation → Source: a progression from basic to transcendent |
 
-Each Gate changes HOW the AI approaches the work:
+The full Arcanean framework — Ten Gates, Guardians, the Eldrian story, 200K-word Library — is available at [arcanea.ai](https://arcanea.ai) and in the `book/` directory of this repository.
 
-| Gate | Mode | Direction |
-|:-----|:-----|:----------|
-| **Foundation** | Structure first. Build the container. | "Make it solid. Make it real." |
-| **Flow** | Emotion first. Let feeling lead form. | "Let it breathe. No forcing." |
-| **Fire** | Momentum. Cut everything unnecessary. | "Make it hit. Ship it." |
-| **Heart** | Tenderness. Authentic connection. | "Make it kind. Make it true." |
-| **Voice** | Express the unsayable. Clarity. | "One true sentence. No hiding." |
-| **Sight** | See what others miss. | "Look deeper. What's really here?" |
-| **Crown** | Teach. Illuminate. | "Explain so they can do it themselves." |
-| **Starweave** | Transform perspective. | "Show it from an impossible angle." |
-| **Unity** | Collaboration. Fusion. | "Two voices becoming one." |
-| **Source** | Meta-creation. Systems. | "Build the tool, not the thing." |
-
-### Canon Reference
-
-When using Arcanean mythology, these are locked:
-- **Lumina** = First Light, creation. **Nero** = Primordial Dark, potential (NOT evil).
-- **Five Elements**: Fire, Water, Earth, Wind, Void/Spirit
-- **Frequencies**: 174 - 285 - 396 - 417 - 528 - 639 - 741 - 852 - 963 - 1111 Hz
-- **Names**: Lyssandria-tier quality. No Shadowbane, no Darkwood.
-- Full canon: `.arcanea/lore/CANON_LOCKED.md`
+Canon reference: `.arcanea/lore/CANON_LOCKED.md`
 
 ---
 
-## Template Index
+## Templates
 
-See `prompts/templates/` for ready-to-use templates:
+Ten ready-to-use templates in `prompts/templates/`:
 
-| Template | What It Does | Mythology Required? |
-|:---------|:-------------|:-------------------|
-| `character.md` | Create beings with depth, shadow, voice | No |
-| `location.md` | Build places that feel lived-in | No |
-| `magic-system.md` | Design consistent, bounded power systems | No |
-| `visual-style.md` | Generate images with intentional aesthetics | No |
-| `music-direction.md` | Compose tracks with emotional architecture | No |
-| `lore-consistency.md` | Audit content against established canon | Yes (Arcanea-specific) |
-| `name-generator.md` | Forge names with phonetic intention | No |
-| `creature.md` | Design creatures as elemental expressions | No |
-| `scene.md` | Write moments that shift something | No |
-| `world-seed.md` | Bootstrap an entire world from one idea | No |
-
----
-
-## The Promise
-
-APL doesn't tell you what to create. It asks you better questions about what you already want to create. The anchor forces you to be specific. The exclusion forces you to be honest about what you don't want. The sensory ground forces you to make it real.
-
-The mythology is a gift, not a cage. Use it when it enriches. Ignore it when it doesn't. The quality comes from the craft, not the lore.
+| Template | What It Does |
+|:---------|:-------------|
+| `character.md` | Create people with contradictions, shadows, and voices you'd recognize in a crowd |
+| `location.md` | Build places you can smell, hear, and feel under your feet |
+| `magic-system.md` | Design power systems where the cost is as interesting as the power |
+| `visual-style.md` | Generate images with atmosphere, not just subjects |
+| `music-direction.md` | Compose tracks with emotional architecture and signature moments |
+| `name-generator.md` | Forge names that sound like they've existed for centuries |
+| `creature.md` | Design beings that are ideas made flesh, not animals with powers |
+| `scene.md` | Write moments where something genuinely shifts |
+| `world-seed.md` | Bootstrap an entire world from one radical premise |
+| `lore-consistency.md` | Audit content against established canon |
 
 ---
 
-*Make it specific. Make it sensory. Make it surprising.*
-*That's the whole system. Everything else is vocabulary.*
+## Start Here
+
+1. Think of something you want to create
+2. Find the SPARK — the one detail that surprises you
+3. That's it. You're using APL.
+
+When you're ready for more: add SHAPE (what does it feel like?) and SHARPEN (what must it NOT be?).
+
+When you're ready for mastery: use the templates. Build a world. Write the world's DNA as a prefix. Let every creation inherit it.
+
+---
+
+*SPARK. SHAPE. SHARPEN.*
+*That's the whole system.*
+*Everything else is practice.*
