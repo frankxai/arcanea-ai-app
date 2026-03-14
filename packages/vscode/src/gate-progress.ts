@@ -44,7 +44,7 @@ class GateTreeItem extends vscode.TreeItem {
 
     this.iconPath = new vscode.ThemeIcon(
       opened ? 'pass-filled' : 'circle-outline',
-      new vscode.ThemeColor(opened ? 'arcanea.teal' : 'descriptionForeground')
+      new vscode.ThemeColor(opened ? 'arcanea.cyan' : 'descriptionForeground')
     );
 
     this.contextValue = opened ? 'gate-opened' : 'gate-sealed';

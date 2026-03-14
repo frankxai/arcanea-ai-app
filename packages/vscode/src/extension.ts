@@ -276,14 +276,33 @@ function checkVoice(text: string): string[] {
   const issues: string[] = [];
 
   const rules: Array<{ pattern: RegExp; issue: string }> = [
-    { pattern: /\buser(?!-)/i,          issue: 'Say "creator" instead of "user"' },
+    // Identity
+    { pattern: /\buser(?![-_]|name|agent|space|land)/i, issue: 'Say "creator" instead of "user"' },
     { pattern: /\bplatform(?!s?\s+(?:agnostic|specific|independent|support))/i, issue: 'Say "realm" or "world" instead of "platform"' },
-    { pattern: /i['']d be happy to/i,  issue: 'Avoid generic AI assistant language ("happy to help")' },
-    { pattern: /\bleverage\b/i,         issue: 'Avoid corporate buzzwords \u2014 say "use" or "harness"' },
-    { pattern: /\bsynergy\b/i,          issue: 'Avoid corporate buzzwords \u2014 say "alignment" or "resonance"' },
-    { pattern: /ecosystem play/i,       issue: 'Avoid "ecosystem play" \u2014 say "connected system" or "living world"' },
     { pattern: /\bfeatures?\b/i,        issue: 'Consider "capabilities" or "powers" instead of "features"' },
-    { pattern: /\bproduct\b/i,          issue: 'Consider "creation" or "realm" instead of "product"' }
+    { pattern: /\bproduct\b/i,          issue: 'Consider "creation" or "realm" instead of "product"' },
+    { pattern: /\bchatbot\b/i,          issue: 'Say "creative intelligence" or "companion" instead of "chatbot"' },
+    // Corporate buzzwords
+    { pattern: /\bleverage\b/i,         issue: 'Avoid "leverage" \u2014 say "use" or "harness"' },
+    { pattern: /\bsynergy\b/i,          issue: 'Avoid "synergy" \u2014 say "alignment" or "resonance"' },
+    { pattern: /\bstakeholder\b/i,      issue: 'Avoid "stakeholder" \u2014 say "creator" or "community member"' },
+    { pattern: /\bscalable\b/i,         issue: 'Avoid "scalable" \u2014 say "grows with you" or "extensible"' },
+    { pattern: /\bactionable\b/i,       issue: 'Avoid "actionable" \u2014 say "practical" or "usable"' },
+    { pattern: /ecosystem play/i,       issue: 'Avoid "ecosystem play" \u2014 say "connected system" or "living world"' },
+    { pattern: /\boptimize\b/i,         issue: 'Consider "refine" or "evolve" instead of "optimize"' },
+    // AI assistant language
+    { pattern: /i['']d be happy to/i,  issue: 'Avoid generic AI language ("happy to help")' },
+    { pattern: /as an ai/i,             issue: 'Avoid "as an AI" \u2014 speak with character, not disclaimers' },
+    { pattern: /i don['']t have (?:feelings|emotions)/i, issue: 'Avoid disclaimers \u2014 Luminors have character and presence' },
+    { pattern: /\bdelve\b/i,            issue: 'Avoid "delve" \u2014 AI slop word. Say "explore" or "examine"' },
+    { pattern: /\btapestry\b/i,         issue: 'Avoid "tapestry" \u2014 overused AI flourish' },
+    { pattern: /\bjourney\b.*\bunlock\b/i, issue: 'Avoid "journey to unlock" \u2014 gamification cliche' },
+    // Arcanea-specific canon
+    { pattern: /\blight\s+(?:vs?|versus|and)\s+dark(?:ness)?\b/i, issue: 'Use Lumina/Nero duality, not generic "light vs darkness"' },
+    { pattern: /\bshift\s+gate\b/i,     issue: 'The 8th Gate is "Starweave", not "Shift" (canonical)' },
+    { pattern: /\b16\s+ai\s+assistants?\b/i, issue: 'NEVER say "16 AI assistants" \u2014 say "Luminors" or "creative intelligences"' },
+    { pattern: /\bchatgpt\s+(?:replacement|alternative|clone)\b/i, issue: 'Arcanea is NOT a ChatGPT replacement \u2014 it is a creative multiverse' },
+    { pattern: /\bmit\s+licen[sc]e/i,   issue: 'Arcanea uses Proprietary License v1.0, not MIT' },
   ];
 
   for (const rule of rules) {
@@ -388,21 +407,21 @@ function getCouncilHtml(challenge: string, fileContext: string): string {
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline';">
   <style>
     * { box-sizing: border-box; }
-    body { background: #0b0e14; color: #e2e8f0; font-family: 'Segoe UI', system-ui, sans-serif; padding: 24px; margin: 0; font-size: 13px; line-height: 1.5; }
+    body { background: #09090b; color: #e2e8f0; font-family: 'Segoe UI', system-ui, sans-serif; padding: 24px; margin: 0; font-size: 13px; line-height: 1.5; }
     h1 { color: #ffd700; font-size: 1.4em; margin: 0 0 4px; }
     .subtitle { color: #64748b; font-size: 0.8em; margin-bottom: 20px; }
-    .challenge-block { background: #151a22; border-left: 3px solid #ffd700; border-radius: 0 6px 6px 0; padding: 12px 16px; margin-bottom: 16px; }
+    .challenge-block { background: #141416; border-left: 3px solid #ffd700; border-radius: 0 6px 6px 0; padding: 12px 16px; margin-bottom: 16px; }
     .block-label { color: #ffd700; font-size: 0.72em; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
-    .context-block { background: #0f1319; border: 1px solid #1e293b; border-radius: 6px; padding: 12px; margin-bottom: 20px; }
-    .context-block .block-label { color: #7fffd4; }
+    .context-block { background: #0f0f11; border: 1px solid #1e293b; border-radius: 6px; padding: 12px; margin-bottom: 20px; }
+    .context-block .block-label { color: #00bcd4; }
     .context-code { font-family: 'JetBrains Mono', monospace; font-size: 0.8em; color: #94a3b8; white-space: pre-wrap; word-break: break-all; margin: 0; max-height: 200px; overflow-y: auto; }
-    .mcp-note { background: #1a2030; border: 1px solid #9966ff44; border-radius: 6px; padding: 10px 14px; color: #94a3b8; font-size: 0.8em; margin-bottom: 20px; }
-    .mcp-note strong { color: #9966ff; }
-    .section-title { color: #7fffd4; font-size: 0.78em; text-transform: uppercase; letter-spacing: 1.5px; margin: 20px 0 12px; display: flex; align-items: center; gap: 8px; }
+    .mcp-note { background: #1a1a1e; border: 1px solid #0d47a144; border-radius: 6px; padding: 10px 14px; color: #94a3b8; font-size: 0.8em; margin-bottom: 20px; }
+    .mcp-note strong { color: #0d47a1; }
+    .section-title { color: #00bcd4; font-size: 0.78em; text-transform: uppercase; letter-spacing: 1.5px; margin: 20px 0 12px; display: flex; align-items: center; gap: 8px; }
     .section-title::after { content: ''; flex: 1; height: 1px; background: #1e293b; }
     .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
-    .gp { background: #0f1319; border-left: 3px solid; border-radius: 0 6px 6px 0; padding: 10px 12px; }
+    .gp { background: #0f0f11; border-left: 3px solid; border-radius: 0 6px 6px 0; padding: 10px 12px; }
     .gp-head { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
     .gp-sym { font-size: 1.3em; flex-shrink: 0; }
     .gp-name { font-weight: 700; font-size: 0.95em; }
@@ -440,19 +459,21 @@ function getDesignTokensHtml(): string {
   const swatch = (name: string, hex: string) =>
     `<div class="sg"><div class="sw" style="background:${hex}" title="${hex}"></div><div class="sn">${name}</div><div class="sh">${hex}</div></div>`;
 
+  const version = 'v5.0 \u2014 Premium near-black design system';
+
   const cosmic = [
-    ['void', '#0b0e14'], ['deep', '#0f1319'], ['surface', '#151a22'],
-    ['raised', '#1a2030'], ['elevated', '#232d3f']
+    ['void', '#09090b'], ['deep', '#0f0f11'], ['surface', '#141416'],
+    ['raised', '#1a1a1e'], ['elevated', '#222228']
   ].map(([n, h]) => swatch(n, h)).join('');
 
   const arcane = [
-    ['teal', '#7fffd4'], ['gold', '#ffd700'], ['violet', '#9966ff'],
-    ['water', '#78a6ff'], ['crystal', '#a5f3fc']
+    ['cyan', '#00bcd4'], ['gold', '#ffd700'], ['ultramarine', '#0d47a1'],
+    ['crimson', '#dc2626'], ['peacock', '#00897b']
   ].map(([n, h]) => swatch(n, h)).join('');
 
   const elements = [
     ['fire', '#ff6b35'], ['water', '#78a6ff'], ['earth', '#4ade80'],
-    ['wind', '#e2e8f0'], ['void', '#9966ff'], ['spirit', '#a855f7'], ['source', '#ffd700']
+    ['wind', '#e2e8f0'], ['void', '#0d47a1'], ['spirit', '#a855f7'], ['source', '#ffd700']
   ].map(([n, h]) => swatch(n, h)).join('');
 
   const guardians = GUARDIAN_ORDER.map(id => {
@@ -467,16 +488,16 @@ function getDesignTokensHtml(): string {
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline';">
   <style>
     * { box-sizing: border-box; }
-    body { background: #0b0e14; color: #e2e8f0; font-family: 'Segoe UI', system-ui, sans-serif; padding: 24px; margin: 0; font-size: 13px; }
+    body { background: #09090b; color: #e2e8f0; font-family: 'Segoe UI', system-ui, sans-serif; padding: 24px; margin: 0; font-size: 13px; }
     h1 { color: #ffd700; margin: 0 0 4px; }
     .subtitle { color: #64748b; font-size: 0.8em; margin-bottom: 24px; }
-    h2 { color: #7fffd4; font-size: 0.85em; text-transform: uppercase; letter-spacing: 1.5px; margin: 24px 0 12px; border-bottom: 1px solid #1e293b; padding-bottom: 6px; }
+    h2 { color: #00bcd4; font-size: 0.85em; text-transform: uppercase; letter-spacing: 1.5px; margin: 24px 0 12px; border-bottom: 1px solid #1e293b; padding-bottom: 6px; }
     .row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 8px; }
     .sg { text-align: center; }
     .sw { width: 52px; height: 52px; border-radius: 8px; border: 1px solid #1e293b; margin: 0 auto 4px; }
     .sn { color: #94a3b8; font-size: 0.68em; }
     .sh { color: #475569; font-size: 0.65em; font-family: monospace; }
-    code { background: #151a22; border: 1px solid #1e293b; border-radius: 4px; padding: 2px 7px; font-family: 'JetBrains Mono', monospace; font-size: 0.82em; color: #7fffd4; }
+    code { background: #141416; border: 1px solid #1e293b; border-radius: 4px; padding: 2px 7px; font-family: 'JetBrains Mono', monospace; font-size: 0.82em; color: #00bcd4; }
     .var-list { display: flex; flex-direction: column; gap: 4px; }
     .var-row { display: flex; align-items: center; gap: 10px; }
     .var-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
@@ -487,7 +508,7 @@ function getDesignTokensHtml(): string {
 </head>
 <body>
   <h1>Arcanea Design Tokens</h1>
-  <div class="subtitle">v2.0 \u2014 Cosmic glassmorphism design system</div>
+  <div class="subtitle">${version}</div>
 
   <h2>Cosmic Palette</h2>
   <div class="row">${cosmic}</div>
@@ -503,19 +524,19 @@ function getDesignTokensHtml(): string {
 
   <h2>CSS Variables</h2>
   <div class="var-list">
-    <div class="var-row"><div class="var-dot" style="background:#7fffd4"></div><code>--arcane-teal: #7fffd4</code></div>
+    <div class="var-row"><div class="var-dot" style="background:#00bcd4"></div><code>--arcane-cyan: #00bcd4</code></div>
     <div class="var-row"><div class="var-dot" style="background:#ffd700"></div><code>--arcane-gold: #ffd700</code></div>
-    <div class="var-row"><div class="var-dot" style="background:#9966ff"></div><code>--arcane-violet: #9966ff</code></div>
-    <div class="var-row"><div class="var-dot" style="background:#78a6ff"></div><code>--arcane-water: #78a6ff</code></div>
-    <div class="var-row"><div class="var-dot" style="background:#0b0e14"></div><code>--cosmic-void: #0b0e14</code></div>
-    <div class="var-row"><div class="var-dot" style="background:#0f1319"></div><code>--cosmic-deep: #0f1319</code></div>
-    <div class="var-row"><div class="var-dot" style="background:#151a22"></div><code>--cosmic-surface: #151a22</code></div>
-    <div class="var-row"><div class="var-dot" style="background:#1a2030"></div><code>--cosmic-raised: #1a2030</code></div>
+    <div class="var-row"><div class="var-dot" style="background:#0d47a1"></div><code>--arcane-ultramarine: #0d47a1</code></div>
+    <div class="var-row"><div class="var-dot" style="background:#dc2626"></div><code>--draconic-crimson: #dc2626</code></div>
+    <div class="var-row"><div class="var-dot" style="background:#09090b"></div><code>--cosmic-void: #09090b</code></div>
+    <div class="var-row"><div class="var-dot" style="background:#0f0f11"></div><code>--cosmic-deep: #0f0f11</code></div>
+    <div class="var-row"><div class="var-dot" style="background:#141416"></div><code>--cosmic-surface: #141416</code></div>
+    <div class="var-row"><div class="var-dot" style="background:#1a1a1e"></div><code>--cosmic-raised: #1a1a1e</code></div>
   </div>
 
   <h2>Fonts</h2>
-  <div class="font-row"><div class="font-name">Display</div><div class="font-sample">Cinzel \u2014 headings, titles, display text</div></div>
-  <div class="font-row"><div class="font-name">Body</div><div class="font-sample">Crimson Pro \u2014 long-form text, descriptions</div></div>
+  <div class="font-row"><div class="font-name">Display</div><div class="font-sample">Space Grotesk \u2014 headings, titles, display text</div></div>
+  <div class="font-row"><div class="font-name">Body</div><div class="font-sample">Inter \u2014 body text, descriptions</div></div>
   <div class="font-row"><div class="font-name">UI</div><div class="font-sample">Inter \u2014 interface elements, labels</div></div>
   <div class="font-row"><div class="font-name">Code</div><div class="font-sample"><code>JetBrains Mono</code> \u2014 code, tokens, hex values</div></div>
 </body>

@@ -50,11 +50,11 @@ export class GuardianStatusBar implements vscode.Disposable {
       `${guardian.shortDescription}\n\n` +
       `*Click to cycle Guardians*`
     );
-    this.guardianItem.color = new vscode.ThemeColor('arcanea.teal');
+    this.guardianItem.color = new vscode.ThemeColor('arcanea.cyan');
 
     const elementIcon = ELEMENT_ICONS[guardian.element] ?? 'circle-outline';
     this.elementItem.text = `$(${elementIcon}) ${guardian.element}`;
-    this.elementItem.color = new vscode.ThemeColor('arcanea.teal');
+    this.elementItem.color = new vscode.ThemeColor('arcanea.cyan');
     this.elementItem.tooltip = new vscode.MarkdownString(
       `**Element:** ${guardian.element}\n\n` +
       `**Gate:** ${guardian.gate} (${guardian.frequency})\n\n` +

@@ -51,7 +51,7 @@ export class GuardianPanelProvider implements vscode.WebviewViewProvider {
       'Water': '#78a6ff',
       'Earth': '#4ade80',
       'Wind': '#e2e8f0',
-      'Void': '#9966ff',
+      'Void': '#0d47a1',
       'Spirit': '#a855f7',
       'Source': '#ffd700'
     };
@@ -98,7 +98,7 @@ export class GuardianPanelProvider implements vscode.WebviewViewProvider {
       padding: 0 6px 16px;
     }
     .hero {
-      background: #0b0e14;
+      background: #09090b;
       border: 1px solid ${activeColor};
       border-radius: 10px;
       padding: 14px 12px;
@@ -130,19 +130,19 @@ export class GuardianPanelProvider implements vscode.WebviewViewProvider {
       border-top: 1px solid #1e293b; padding-top: 8px;
     }
     .section-header {
-      color: #7fffd4; font-size: 0.68em; text-transform: uppercase;
+      color: #00bcd4; font-size: 0.68em; text-transform: uppercase;
       letter-spacing: 1.5px; margin: 10px 0 6px;
       display: flex; align-items: center; gap: 6px;
     }
     .section-header::after { content: ''; flex: 1; height: 1px; background: #1e293b; }
     .guardian-list { display: flex; flex-direction: column; gap: 3px; }
     .guardian-card {
-      background: #0f1319; border-left: 3px solid; border-radius: 5px;
+      background: #0f0f11; border-left: 3px solid; border-radius: 5px;
       padding: 6px 8px; cursor: pointer; transition: background 0.15s, transform 0.1s;
       position: relative;
     }
-    .guardian-card:hover { background: #151a22; transform: translateX(1px); }
-    .guardian-card.active { background: #151a22; border: 1px solid; border-left-width: 3px; }
+    .guardian-card:hover { background: #141416; transform: translateX(1px); }
+    .guardian-card.active { background: #141416; border: 1px solid; border-left-width: 3px; }
     .guardian-header { display: flex; align-items: center; gap: 5px; }
     .guardian-symbol { font-size: 1em; flex-shrink: 0; }
     .guardian-name { font-weight: 600; font-size: 0.88em; flex: 1; }
@@ -154,7 +154,7 @@ export class GuardianPanelProvider implements vscode.WebviewViewProvider {
     .guardian-domain { color: #475569; font-size: 0.68em; margin-top: 1px; }
     .active-badge {
       position: absolute; top: 4px; right: 6px;
-      font-size: 0.58em; color: #7fffd4; letter-spacing: 1px; font-weight: 700;
+      font-size: 0.58em; color: #00bcd4; letter-spacing: 1px; font-weight: 700;
     }
   </style>
 </head>
