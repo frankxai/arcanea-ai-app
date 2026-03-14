@@ -68,7 +68,7 @@ export default function WelcomePage() {
           transition={{ delay: 0.4, duration: 0.6 }}
           className="font-body text-2xl md:text-3xl text-text-secondary mb-6"
         >
-          A platform for creators
+          The creative multiverse
         </m.p>
 
         {/* Description */}
@@ -78,7 +78,7 @@ export default function WelcomePage() {
           transition={{ delay: 0.5, duration: 0.6 }}
           className="font-body text-lg text-text-muted mb-12 max-w-lg mx-auto"
         >
-          Sixteen creative intelligences, each with a distinct philosophy.
+          Chat with AI. Build fantasy worlds. Share what you make.
           A library of original texts. Tools that think with you.
         </m.p>
 

@@ -4,11 +4,11 @@ import type { ReactNode } from 'react';
 export const metadata: Metadata = {
   title: 'Companions',
   description:
-    '16 AI companions, each with a distinct personality and expertise. Development, design, writing, and research — pick the one that fits your work.',
+    'Creative partners across development, design, writing, and research — each with a distinct personality and expertise. Pick the one that fits your work.',
   openGraph: {
     title: 'Companions',
     description:
-      '16 AI companions with distinct personalities. Development, design, writing, and research — pick the one that fits your work.',
+      'Creative partners with distinct personalities. Development, design, writing, and research — pick the one that fits your work.',
     type: 'website',
   },
 };

@@ -66,7 +66,7 @@ export default function Step4Creation({ guardian, onCreationSaved, onNext, onBac
       const data = await res.json()
       setResponse(data.text || 'The cosmos whispers... try again.')
     } catch {
-      setError('The arcane connection faltered. Please try again.')
+      setError('Something went wrong. Please try again.')
     } finally {
       setLoading(false)
     }
@@ -185,12 +185,12 @@ export default function Step4Creation({ guardian, onCreationSaved, onNext, onBac
               {loading ? (
                 <>
                   <SpinnerIcon />
-                  Channeling...
+                  Creating...
                 </>
               ) : (
                 <>
                   <LightningIcon />
-                  Manifest
+                  Create
                 </>
               )}
             </button>

@@ -2,10 +2,10 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Create Account',
-  description: 'Join Arcanea — create your account and start building with 16 creative intelligences.',
+  description: 'Join Arcanea — create your account and start building worlds, stories, music, and more.',
   openGraph: {
     title: 'Create Account',
-    description: 'Join Arcanea — create your account and start building with 16 creative intelligences.',
+    description: 'Join Arcanea — create your account and start building worlds, stories, music, and more.',
   },
 };
 

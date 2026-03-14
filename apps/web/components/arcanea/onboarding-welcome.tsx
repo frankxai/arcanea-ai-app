@@ -63,10 +63,10 @@ export default function OnboardingWelcome({ onNext }: OnboardingWelcomeProps) {
           Arcanea
         </h1>
         <p className="text-white/60 text-lg leading-relaxed max-w-sm mx-auto mb-2">
-          Sixteen intelligences. One creative platform.
+          A creative multiverse where imagination becomes real.
         </p>
         <p className="text-white/30 text-sm leading-relaxed max-w-xs mx-auto">
-          Pick what you create, meet your AI partner, and make something real.
+          Tell us what you create, find your creative partner, and make your first work.
         </p>
       </div>
 

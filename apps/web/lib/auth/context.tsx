@@ -11,7 +11,6 @@ interface AuthContextType {
   signIn: (email: string, password: string) => Promise<{ error: AuthError | null }>;
   signUp: (email: string, password: string, displayName?: string) => Promise<{ error: AuthError | null }>;
   signInWithGoogle: () => Promise<{ error: AuthError | null }>;
-  signInWithGithub: () => Promise<{ error: AuthError | null }>;
   signOut: () => Promise<void>;
 }
 
@@ -84,16 +83,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return { error };
   };
 
-  const signInWithGithub = async () => {
-    const { error } = await supabaseRef.current.auth.signInWithOAuth({
-      provider: 'github',
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-      },
-    });
-    return { error };
-  };
-
   const signOut = async () => {
     await supabaseRef.current.auth.signOut();
     setUser(null);
@@ -109,7 +98,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         signIn,
         signUp,
         signInWithGoogle,
-        signInWithGithub,
         signOut,
       }}
     >

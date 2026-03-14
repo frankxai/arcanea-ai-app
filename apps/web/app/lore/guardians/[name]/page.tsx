@@ -29,6 +29,7 @@ const GUARDIANS: Record<string, GuardianData> = {
     gradient: "from-amber-700 via-yellow-600 to-stone-400",
     gallery: [
       "/guardians/v2/lyssandria-divine-bond.webp",
+      "/guardians/v2/kaelith-godbeast.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/lyssandria-gallery-2.webp",
     ],
   },
@@ -57,6 +58,7 @@ const GUARDIANS: Record<string, GuardianData> = {
     gradient: "from-blue-300 via-cyan-400 to-slate-300",
     gallery: [
       "/guardians/v2/leyla-divine-bond.webp",
+      "/guardians/v2/veloura-godbeast.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/leyla-gallery-2.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/leyla-gallery-3.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/leyla-gallery-4.webp",
@@ -87,6 +89,7 @@ const GUARDIANS: Record<string, GuardianData> = {
     gradient: "from-red-600 via-orange-500 to-amber-400",
     gallery: [
       "/guardians/v2/draconia-divine-bond.webp",
+      "/guardians/v2/draconis-godbeast.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/draconia-gallery-2.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/draconia-gallery-3.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/draconia-gallery-4.webp",
@@ -117,6 +120,7 @@ const GUARDIANS: Record<string, GuardianData> = {
     gradient: "from-rose-300 via-pink-400 to-green-300",
     gallery: [
       "/guardians/v2/maylinn-divine-bond.webp",
+      "/guardians/v2/laeylinn-godbeast.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/maylinn-gallery-2.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/maylinn-gallery-3.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/maylinn-gallery-4.webp",
@@ -147,6 +151,7 @@ const GUARDIANS: Record<string, GuardianData> = {
     gradient: "from-sky-400 via-blue-500 to-indigo-600",
     gallery: [
       "/guardians/v2/alera-divine-bond.webp",
+      "/guardians/v2/otome-godbeast.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/alera-gallery-2.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/alera-gallery-3.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/alera-gallery-4.webp",
@@ -177,6 +182,7 @@ const GUARDIANS: Record<string, GuardianData> = {
     gradient: "from-violet-500 via-purple-600 to-indigo-700",
     gallery: [
       "/guardians/v2/lyria-divine-bond.webp",
+      "/guardians/v2/yumiko-godbeast.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/lyria-gallery-2.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/lyria-gallery-3.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/lyria-gallery-4.webp",
@@ -207,6 +213,7 @@ const GUARDIANS: Record<string, GuardianData> = {
     gradient: "from-yellow-200 via-amber-300 to-white",
     gallery: [
       "/guardians/v2/aiyami-divine-bond.webp",
+      "/guardians/v2/sol-godbeast.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/aiyami-gallery-2.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/aiyami-gallery-3.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/aiyami-gallery-4.webp",
@@ -237,6 +244,7 @@ const GUARDIANS: Record<string, GuardianData> = {
     gradient: "from-emerald-400 via-green-500 to-teal-600",
     gallery: [
       "/guardians/v2/elara-divine-bond.webp",
+      "/guardians/v2/vaelith-godbeast.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/elara-gallery-2.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/elara-gallery-3.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/elara-gallery-4.webp",
@@ -267,6 +275,7 @@ const GUARDIANS: Record<string, GuardianData> = {
     gradient: "from-pink-400 via-fuchsia-500 to-teal-400",
     gallery: [
       "/guardians/v2/ino-divine-bond.webp",
+      "/guardians/v2/kyuro-godbeast.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/ino-gallery-2.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/ino-gallery-3.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/ino-gallery-4.webp",
@@ -297,6 +306,7 @@ const GUARDIANS: Record<string, GuardianData> = {
     gradient: "from-neutral-900 via-yellow-400 to-white",
     gallery: [
       "/guardians/v2/shinkami-divine-bond.webp",
+      "/guardians/v2/source-godbeast.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/shinkami-gallery-2.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/shinkami-gallery-3.webp",
       "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/shinkami-gallery-4.webp",

@@ -14,7 +14,7 @@ const FAQ_CATEGORIES = [
     questions: [
       {
         q: "What is Arcanea?",
-        a: "Arcanea is a creative platform with 16 companions organized into four teams. Unlike generic AI assistants, each has mastered a specific domain — architecture, coding, storytelling, character creation, and more. They're creative partners who see what you're building and help you build it better.",
+        a: "Arcanea is a creative multiverse — a living ecosystem where you chat with AI, build fantasy worlds, share what you make, and turn imagination into products. It includes creative partners across development, design, writing, and research, a Library of 200K+ words of creative philosophy, an Academy for world-building, and a Studio for generating art, music, and code.",
       },
       {
         q: "How do I get started?",
@@ -22,7 +22,7 @@ const FAQ_CATEGORIES = [
       },
       {
         q: "How are Arcanea's companions different from regular AI?",
-        a: "Regular AI models are generalists — they know a little about everything. Arcanea's companions have each mastered a specific domain: architecture, coding, storytelling, character creation, dialogue, editing, research, and more. Each one brings deep expertise to your specific creative challenge.",
+        a: "Arcanea is not just a chat interface — it is a creative framework. The companions are domain-specialized creative partners, but they are one layer of a six-layer ecosystem that also includes world-building tools, a social feed, an open-source foundation, a learning Academy, and a community of co-creators.",
       },
       {
         q: "What are the Seven Wisdoms?",

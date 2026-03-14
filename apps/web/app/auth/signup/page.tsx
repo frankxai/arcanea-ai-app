@@ -10,15 +10,36 @@ import {
   PhLock,
   PhUser,
   PhArrowRight,
-  PhSparkle,
   PhEye,
   PhEyeSlash,
   PhCheck,
   PhWarningCircle,
   PhCircleNotch,
-  PhGithubLogo,
 } from "@/lib/phosphor-icons";
 import { GlowCard } from "@/components/ui/glow-card";
+
+function GoogleLogo() {
+  return (
+    <svg className="w-5 h-5" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        fill="#4285F4"
+        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+      />
+      <path
+        fill="#34A853"
+        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+      />
+      <path
+        fill="#FBBC05"
+        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+      />
+      <path
+        fill="#EA4335"
+        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+      />
+    </svg>
+  );
+}
 
 export default function SignupPage() {
   const router = useRouter();
@@ -93,7 +114,7 @@ export default function SignupPage() {
     }
   };
 
-  const handleSocialSignup = async (provider: "google" | "github") => {
+  const handleGoogleSignup = async () => {
     setIsLoading(true);
     setError("");
 
@@ -114,7 +135,7 @@ export default function SignupPage() {
       callbackUrl.searchParams.set("next", "/onboarding");
 
       const { error } = await supabase.auth.signInWithOAuth({
-        provider,
+        provider: "google",
         options: {
           redirectTo: callbackUrl.toString(),
         },
@@ -126,14 +147,14 @@ export default function SignupPage() {
           error.message.includes("Unsupported")
         ) {
           setError(
-            `${provider.charAt(0).toUpperCase() + provider.slice(1)} sign-up is not available yet. Please use email and password.`,
+            "Google sign-up is not available yet. Please use email and password.",
           );
         } else {
           setError(error.message);
         }
       }
     } catch {
-      setError(`Failed to sign up with ${provider}. Please try again.`);
+      setError("Failed to sign up with Google. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -141,71 +162,46 @@ export default function SignupPage() {
 
   return (
     <MotionProvider>
-    <div className="flex items-center justify-center min-h-[calc(100dvh-4rem)] px-4 py-12">
+    <div className="relative flex items-center justify-center min-h-[calc(100dvh-4rem)] px-4 py-12">
+      {/* Background radial glow */}
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
+        <div className="w-[600px] h-[600px] rounded-full bg-atlantean-teal-aqua/[0.04] blur-[120px]" />
+      </div>
+
       <m.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-md"
+        className="relative w-full max-w-md"
       >
         {/* Header */}
         <div className="text-center mb-10">
           <Link href="/" className="inline-block mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-atlantean-teal-aqua/15 to-atlantean-teal-aqua/5 border border-atlantean-teal-aqua/20">
-              <PhSparkle
-                className="w-8 h-8 text-atlantean-teal-aqua"
-                weight="duotone"
-              />
-            </div>
+            <span className="font-display text-2xl font-bold text-text-primary drop-shadow-[0_0_12px_rgba(0,188,212,0.3)]">
+              Arcanea
+            </span>
           </Link>
           <h1 className="text-2xl sm:text-3xl font-display font-bold text-text-primary mb-2">
-            Create Account
+            Join the Multiverse
           </h1>
           <p className="font-body text-text-secondary text-sm">
-            Start building your creative universe
+            Create worlds. Build with AI. Share what you make.
           </p>
         </div>
 
         {/* Signup card */}
         <GlowCard glass="none" className="rounded-2xl sm:rounded-3xl border border-white/[0.08] bg-white/[0.02] p-6 sm:p-8">
-          {/* Social signup buttons */}
-          <div className="grid grid-cols-2 gap-3 mb-5">
-            <button
-              type="button"
-              onClick={() => handleSocialSignup("google")}
-              disabled={isLoading}
-              className="flex items-center justify-center gap-2.5 px-4 py-3 rounded-xl border border-white/[0.08] bg-white/[0.02] hover:border-white/[0.14] hover:bg-white/[0.05] transition-all duration-300 font-body text-text-secondary text-sm disabled:opacity-50"
-            >
-              <svg className="w-4 h-4" viewBox="0 0 24 24">
-                <path
-                  fill="#4285F4"
-                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-                />
-                <path
-                  fill="#34A853"
-                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-                />
-                <path
-                  fill="#FBBC05"
-                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
-                />
-                <path
-                  fill="#EA4335"
-                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-                />
-              </svg>
-              Google
-            </button>
-            <button
-              type="button"
-              onClick={() => handleSocialSignup("github")}
-              disabled={isLoading}
-              className="flex items-center justify-center gap-2.5 px-4 py-3 rounded-xl border border-white/[0.08] bg-white/[0.02] hover:border-white/[0.14] hover:bg-white/[0.05] transition-all duration-300 font-body text-text-secondary text-sm disabled:opacity-50"
-            >
-              <PhGithubLogo className="w-4 h-4" />
-              GitHub
-            </button>
-          </div>
+          {/* Google sign-up — primary action */}
+          <button
+            type="button"
+            onClick={handleGoogleSignup}
+            disabled={isLoading}
+            className="w-full flex items-center justify-center gap-3 px-6 py-3.5 rounded-xl border border-white/[0.12] bg-white/[0.05] hover:border-white/[0.20] hover:bg-white/[0.08] transition-all duration-300 font-body font-medium text-text-primary text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            aria-label="Sign up with Google"
+          >
+            <GoogleLogo />
+            Sign up with Google
+          </button>
 
           {/* Divider */}
           <div className="relative my-6">
@@ -214,7 +210,7 @@ export default function SignupPage() {
             </div>
             <div className="relative flex justify-center">
               <span className="px-4 bg-cosmic-void font-body text-xs text-text-muted">
-                or continue with email
+                or create account with email
               </span>
             </div>
           </div>
@@ -378,7 +374,7 @@ export default function SignupPage() {
                 </div>
               ) : (
                 <>
-                  Create Account
+                  Start Creating
                   <PhArrowRight className="w-4 h-4" />
                 </>
               )}

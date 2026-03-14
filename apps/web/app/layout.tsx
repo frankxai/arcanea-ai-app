@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     template: "%s | Arcanea",
   },
   description:
-    "Create music, stories, art, and worlds with 16 creative AI partners. 107K+ words of creative philosophy. Free to start.",
+    "A creative multiverse: chat with AI, build fantasy worlds, share what you make, and turn imagination into products. 107K+ words of creative philosophy. Free to start.",
   keywords: [
     "AI",
     "creativity",

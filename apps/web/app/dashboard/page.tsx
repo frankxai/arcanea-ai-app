@@ -59,32 +59,71 @@ function getGateName(gatesOpen: number): string {
 // ─── Unauthenticated View ─────────────────────────────────────────────────
 
 function SignInPrompt() {
+  const features = [
+    { icon: Sparkle, label: 'Chat with AI creative partners', color: 'text-[#00bcd4]' },
+    { icon: Palette, label: 'Generate images, stories, and code', color: 'text-[#00bcd4]' },
+    { icon: Book, label: 'Access 200K+ words of creative frameworks', color: 'text-amber-400' },
+    { icon: Lightning, label: 'Track your progress across ten stages', color: 'text-[#ffd700]' },
+  ];
+
   return (
-    <div className="min-h-[70vh] flex items-center justify-center px-4">
-      <div className="max-w-md w-full text-center space-y-6">
-        <div className="mx-auto w-16 h-16 rounded-2xl bg-[#00bcd4]/10 flex items-center justify-center">
-          <Lock size={32} weight="duotone" className="text-[#00bcd4]" />
+    <div className="min-h-[70vh] flex items-center justify-center px-4 py-12">
+      <div className="max-w-lg w-full space-y-8">
+        {/* Hero */}
+        <div className="text-center space-y-4">
+          <div
+            className="mx-auto w-20 h-20 rounded-2xl flex items-center justify-center"
+            style={{
+              background: 'radial-gradient(circle at 30% 30%, rgba(0,188,212,0.15), rgba(13,71,161,0.08))',
+              border: '1px solid rgba(0,188,212,0.12)',
+            }}
+          >
+            <Sparkle size={36} weight="fill" className="text-[#00bcd4]" />
+          </div>
+          <h1 className="font-display text-3xl sm:text-4xl text-white leading-tight">
+            Your creative universe awaits
+          </h1>
+          <p className="font-body text-white/50 text-lg leading-relaxed max-w-md mx-auto">
+            Arcanea is where creators chat with AI, build worlds,
+            generate art, write stories, and turn imagination into reality.
+          </p>
         </div>
-        <h1 className="font-display text-3xl text-white">
-          Sign in to continue
-        </h1>
-        <p className="font-body text-white/50 text-lg leading-relaxed">
-          Access your creative dashboard, track your work,
-          and pick up where you left off.
-        </p>
-        <Link
-          href="/auth/login"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#00bcd4] to-[#0d47a1] text-white font-sans font-medium transition-all hover:shadow-lg hover:shadow-[#00bcd4]/25 hover:-translate-y-0.5"
+
+        {/* Feature list */}
+        <div
+          className="rounded-2xl border border-white/[0.06] p-5 space-y-4"
+          style={{ background: 'rgba(255,255,255,0.015)' }}
         >
-          Sign In
-          <ArrowRight size={18} weight="bold" />
-        </Link>
-        <p className="text-sm text-white/30 font-sans">
-          No account?{' '}
-          <Link href="/auth/signup" className="text-[#00bcd4] hover:underline">
-            Create one free
+          {features.map(({ icon: Icon, label, color }) => (
+            <div key={label} className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-white/[0.04] flex items-center justify-center flex-shrink-0">
+                <Icon size={18} weight="duotone" className={color} />
+              </div>
+              <span className="font-sans text-sm text-white/70">{label}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* CTA */}
+        <div className="text-center space-y-4">
+          <Link
+            href="/auth/login"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#00bcd4] to-[#0d47a1] text-white font-sans font-medium text-base transition-all hover:shadow-lg hover:shadow-[#00bcd4]/25 hover:-translate-y-0.5"
+            aria-label="Continue with Google to sign in"
+          >
+            Continue with Google
+            <ArrowRight size={18} weight="bold" />
           </Link>
-        </p>
+          <p className="text-sm text-white/30 font-sans">
+            Free to start. No credit card required.
+          </p>
+          <p className="text-sm text-white/30 font-sans">
+            Already have an account?{' '}
+            <Link href="/auth/login" className="text-[#00bcd4] hover:underline">
+              Sign in
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -182,7 +221,8 @@ export default function DashboardPage() {
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-8">
 
       {/* ── Welcome Section ────────────────────────────────────────────── */}
-      <header className="space-y-2">
+      <header className="space-y-3">
+        <p className="font-sans text-sm text-white/30">{formattedDate}</p>
         <h1 className="font-display text-3xl sm:text-4xl">
           <span className="bg-gradient-to-r from-[#ffd700] via-amber-400 to-[#ffd700] bg-clip-text text-transparent">
             {isFirstVisit ? `Welcome, ${displayName}` : `Welcome back, ${displayName}`}
@@ -190,11 +230,53 @@ export default function DashboardPage() {
         </h1>
         <p className="font-body text-white/50 text-lg">
           {isFirstVisit
-            ? 'Your workspace is ready. Start creating, explore the library, or chat with your companion.'
+            ? 'Your workspace is ready. Start creating, explore the library, or chat with a creative partner.'
             : 'Here is what you have been working on.'}
         </p>
-        <p className="font-sans text-sm text-white/30">{formattedDate}</p>
       </header>
+
+      {/* ── What will you create today? ───────────────────────────────── */}
+      <section
+        className="rounded-2xl border border-[#00bcd4]/15 p-6"
+        style={{
+          background: 'radial-gradient(ellipse at 20% 50%, rgba(0,188,212,0.04), transparent 60%), rgba(255,255,255,0.015)',
+        }}
+      >
+        <h2 className="font-display text-xl text-white mb-1">What will you create today?</h2>
+        <p className="font-sans text-sm text-white/40 mb-4">
+          Jump into any creative mode, or pick up where you left off.
+        </p>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <Link
+            href="/chat"
+            className="group flex flex-col items-center gap-2 px-4 py-4 rounded-xl border border-white/[0.06] bg-white/[0.02] transition-all hover:border-[#00bcd4]/30 hover:bg-[#00bcd4]/5 hover:-translate-y-0.5"
+          >
+            <ChatCircleDots size={24} weight="duotone" className="text-[#00bcd4] group-hover:scale-110 transition-transform" />
+            <span className="font-sans text-sm text-white/70 group-hover:text-white transition-colors">Start Creating</span>
+          </Link>
+          <Link
+            href="/studio"
+            className="group flex flex-col items-center gap-2 px-4 py-4 rounded-xl border border-white/[0.06] bg-white/[0.02] transition-all hover:border-[#00bcd4]/30 hover:bg-[#00bcd4]/5 hover:-translate-y-0.5"
+          >
+            <Palette size={24} weight="duotone" className="text-[#00bcd4] group-hover:scale-110 transition-transform" />
+            <span className="font-sans text-sm text-white/70 group-hover:text-white transition-colors">Open Studio</span>
+          </Link>
+          <Link
+            href="/library"
+            className="group flex flex-col items-center gap-2 px-4 py-4 rounded-xl border border-white/[0.06] bg-white/[0.02] transition-all hover:border-amber-400/30 hover:bg-amber-400/5 hover:-translate-y-0.5"
+          >
+            <Book size={24} weight="duotone" className="text-amber-400 group-hover:scale-110 transition-transform" />
+            <span className="font-sans text-sm text-white/70 group-hover:text-white transition-colors">Browse Library</span>
+          </Link>
+          <Link
+            href="/academy"
+            className="group flex flex-col items-center gap-2 px-4 py-4 rounded-xl border border-white/[0.06] bg-white/[0.02] transition-all hover:border-[#ffd700]/30 hover:bg-[#ffd700]/5 hover:-translate-y-0.5"
+          >
+            <Star size={24} weight="duotone" className="text-[#ffd700] group-hover:scale-110 transition-transform" />
+            <span className="font-sans text-sm text-white/70 group-hover:text-white transition-colors">Explore Academy</span>
+          </Link>
+        </div>
+      </section>
 
       {/* ── First-time onboarding banner ──────────────────────────────── */}
       {isFirstVisit && (
@@ -247,32 +329,29 @@ export default function DashboardPage() {
             ))}
           </section>
 
-          {/* ── Quick Actions ───────────────────────────────────────── */}
-          <section className="space-y-3">
-            <h2 className="font-display text-xl text-white/80">Quick Actions</h2>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <Link
-                href="/studio"
-                className="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#00bcd4] to-[#0d47a1] text-white font-sans font-medium transition-all hover:shadow-lg hover:shadow-[#00bcd4]/25 hover:-translate-y-0.5"
-              >
-                <Sparkle size={18} weight="fill" />
-                Create Something New
-              </Link>
-              <Link
-                href="/chat"
-                className="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-[#00bcd4]/30 text-[#00bcd4] font-sans font-medium transition-all hover:bg-[#00bcd4]/5 hover:-translate-y-0.5"
-              >
-                <ChatCircleDots size={18} weight="duotone" />
-                Who will you create with?
-              </Link>
-              <Link
-                href="/library"
-                className="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-[#ffd700]/30 text-[#ffd700] font-sans font-medium transition-all hover:bg-[#ffd700]/5 hover:-translate-y-0.5"
-              >
-                <Book size={18} weight="duotone" />
-                Explore Library
-              </Link>
-            </div>
+          {/* ── Quick Links ──────────────────────────────────────────── */}
+          <section className="flex flex-wrap gap-3">
+            <Link
+              href="/companions/forge"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-[#00bcd4]/20 text-[#00bcd4] font-sans text-sm font-medium transition-all hover:bg-[#00bcd4]/5 hover:-translate-y-0.5"
+            >
+              <Sparkle size={16} weight="fill" />
+              Forge a Companion
+            </Link>
+            <Link
+              href="/discover"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-white/[0.08] text-white/60 font-sans text-sm font-medium transition-all hover:bg-white/[0.04] hover:text-white/80 hover:-translate-y-0.5"
+            >
+              <Lightning size={16} weight="duotone" />
+              Discover Creators
+            </Link>
+            <Link
+              href="/academy/courses"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-white/[0.08] text-white/60 font-sans text-sm font-medium transition-all hover:bg-white/[0.04] hover:text-white/80 hover:-translate-y-0.5"
+            >
+              <Flame size={16} weight="duotone" />
+              Browse Courses
+            </Link>
           </section>
 
           {/* ── Your Companions ─────────────────────────────────────── */}
@@ -397,12 +476,18 @@ export default function DashboardPage() {
 
           {/* ── Progress ────────────────────────────────────────── */}
           <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md p-6 space-y-4">
-            <h3 className="font-display text-base text-white">Progress</h3>
+            <h3 className="font-display text-base text-white">Your Journey</h3>
             <div className="space-y-3">
+              {/* Current gate label */}
+              {gatesOpen > 0 && (
+                <p className="font-sans text-xs text-[#00bcd4]">
+                  Current: Gate of {getGateName(gatesOpen - 1)}
+                </p>
+              )}
               {/* Progress bar */}
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="font-sans text-xs text-white/50">{gatesOpen} of 10</span>
+                  <span className="font-sans text-xs text-white/50">{gatesOpen} of 10 gates</span>
                   <span className="font-sans text-xs text-[#ffd700]">{magicRank}</span>
                 </div>
                 <div className="w-full h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
@@ -413,13 +498,13 @@ export default function DashboardPage() {
                 </div>
               </div>
               <p className="font-sans text-xs text-white/30 leading-relaxed">
-                Create, read, and explore to advance. Each stage reveals more of the platform.
+                Create, read, and explore to advance. Each gate unlocks new tools and deeper access.
               </p>
               <Link
                 href="/academy"
                 className="block text-center px-4 py-2 rounded-xl border border-white/[0.06] text-white/50 font-sans text-xs transition-all hover:bg-white/[0.04] hover:text-white/70"
               >
-                View stages
+                View all gates
               </Link>
             </div>
           </div>

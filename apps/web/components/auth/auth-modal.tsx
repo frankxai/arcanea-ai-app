@@ -3,7 +3,7 @@
 import React, { useState, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { LazyMotion, domAnimation, m, AnimatePresence } from 'framer-motion';
-import { PhEnvelope, PhLock, PhEye, PhEyeSlash, PhUser, PhX, PhSparkle, PhGithubLogo, PhCheck } from '@/lib/phosphor-icons';
+import { PhEnvelope, PhLock, PhEye, PhEyeSlash, PhUser, PhX, PhCheck } from '@/lib/phosphor-icons';
 import { useAuth } from '@/lib/auth/context';
 
 interface AuthModalProps {
@@ -13,7 +13,7 @@ interface AuthModalProps {
 }
 
 export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalProps) {
-  const { signIn, signUp, signInWithGoogle, signInWithGithub } = useAuth();
+  const { signIn, signUp, signInWithGoogle } = useAuth();
 
   const [tab, setTab] = useState<'login' | 'signup'>(defaultTab);
   const [email, setEmail] = useState('');
@@ -97,19 +97,6 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
     }
   };
 
-  const handleGithubSignIn = async () => {
-    setIsLoading(true);
-    const { error } = await signInWithGithub();
-    if (error) {
-      if (error.message.includes('provider') || error.message.includes('Unsupported')) {
-        setError('GitHub sign-in is not available yet. Please use email and password.');
-      } else {
-        setError(error.message);
-      }
-      setIsLoading(false);
-    }
-  };
-
   return (
     <LazyMotion features={domAnimation}>
     <Transition appear show={isOpen} as={Fragment}>
@@ -172,9 +159,9 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                     <>
                       {/* Header */}
                       <div className="text-center mb-6">
-                        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-atlantean-teal-aqua to-creation-prism-purple flex items-center justify-center mx-auto mb-4">
-                          <PhSparkle className="w-7 h-7 text-cosmic-deep" />
-                        </div>
+                        <span className="font-display text-2xl font-bold text-text-primary drop-shadow-[0_0_12px_rgba(0,188,212,0.3)] inline-block mb-4">
+                          Arcanea
+                        </span>
                         <Dialog.Title className="text-xl font-display font-bold">
                           {tab === 'login' ? 'Welcome Back' : 'Create Account'}
                         </Dialog.Title>
@@ -216,11 +203,11 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                       )}
 
                       {/* OAuth buttons */}
-                      <div className="flex gap-3 mb-4">
+                      <div className="mb-4">
                         <button
                           onClick={handleGoogleSignIn}
                           disabled={isLoading}
-                          className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06] hover:border-white/[0.12] transition-all duration-300 disabled:opacity-50 text-sm"
+                          className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06] hover:border-white/[0.12] transition-all duration-300 disabled:opacity-50 text-sm"
                         >
                           <svg className="w-4 h-4" viewBox="0 0 24 24">
                             <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -228,15 +215,7 @@ export function AuthModal({ isOpen, onClose, defaultTab = 'login' }: AuthModalPr
                             <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
                             <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
                           </svg>
-                          Google
-                        </button>
-                        <button
-                          onClick={handleGithubSignIn}
-                          disabled={isLoading}
-                          className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06] hover:border-white/[0.12] transition-all duration-300 disabled:opacity-50 text-sm"
-                        >
-                          <PhGithubLogo className="w-4 h-4" />
-                          GitHub
+                          Continue with Google
                         </button>
                       </div>
 

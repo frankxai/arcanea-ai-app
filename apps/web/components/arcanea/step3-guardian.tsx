@@ -347,7 +347,7 @@ export default function Step3Guardian({ onGuardianMatched, onNext, onBack }: Ste
                 className="text-xs tracking-[0.3em] uppercase font-sans font-semibold mb-1"
                 style={{ color: matchedGuardian.color }}
               >
-                Luminor of {matchedGuardian.element}
+                {matchedGuardian.element} Intelligence
               </div>
               <h3 className="font-serif text-3xl font-bold text-white mb-2">
                 {matchedGuardian.name}

@@ -384,7 +384,7 @@ export default function LuminorIntelligencePage() {
             </h2>
             <p className="text-text-secondary max-w-2xl mx-auto">
               Four qualities that separate Luminor intelligence from
-              generic AI assistants.
+              generic AI.
             </p>
           </div>
 

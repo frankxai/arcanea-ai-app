@@ -5,15 +5,15 @@ import type { Guardian } from './step3-guardian'
 
 const GATES = [
   { id: 1, name: 'Foundation', active: true },
-  { id: 2, name: 'Awakening', active: false },
-  { id: 3, name: 'Ascension', active: false },
-  { id: 4, name: 'Mastery', active: false },
-  { id: 5, name: 'Transcendence', active: false },
-  { id: 6, name: 'Eternity', active: false },
-  { id: 7, name: 'Arcane', active: false },
-  { id: 8, name: 'Myth', active: false },
-  { id: 9, name: 'Legend', active: false },
-  { id: 10, name: 'Genesis', active: false },
+  { id: 2, name: 'Flow', active: false },
+  { id: 3, name: 'Fire', active: false },
+  { id: 4, name: 'Heart', active: false },
+  { id: 5, name: 'Voice', active: false },
+  { id: 6, name: 'Sight', active: false },
+  { id: 7, name: 'Crown', active: false },
+  { id: 8, name: 'Starweave', active: false },
+  { id: 9, name: 'Unity', active: false },
+  { id: 10, name: 'Source', active: false },
 ]
 
 const CREATOR_LABELS: Record<string, string> = {
@@ -331,7 +331,7 @@ export default function Step5YourUniverse({
             {guardian && (
               <div className="mb-3">
                 <div className="text-[10px] tracking-widest uppercase text-[#4a4a6a] font-sans mb-1.5">
-                  Luminor
+                  Creative Partner
                 </div>
                 <div className="flex items-center gap-2">
                   <div

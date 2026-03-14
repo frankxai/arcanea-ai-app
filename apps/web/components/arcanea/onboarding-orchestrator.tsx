@@ -15,7 +15,7 @@ const Step3Guardian = lazy(() => import('./step3-guardian'))
 const Step4Creation = lazy(() => import('./step4-creation'))
 const Step5YourUniverse = lazy(() => import('./step5-your-universe'))
 
-const STEP_LABELS = ['Welcome', 'Identity', 'Intelligence', 'Creation', 'Ready']
+const STEP_LABELS = ['Welcome', 'Identity', 'Partner', 'Creation', 'Ready']
 
 const GUARDIAN_GATE_MAP: Record<string, string> = {
   Lyssandria: 'Foundation',

@@ -4,10 +4,10 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Pricing — Simple. Start Free.",
   description:
-    "Simple pricing for Arcanea. Start free with no credit card required. Upgrade to Creator ($19/mo) for all 16 companions, the full Library, and the Studio.",
+    "Simple pricing for Arcanea. Start free with no credit card required. Upgrade to Creator ($19/mo) for the full creative toolkit — all companions, the Library, the Studio, and Academy progression.",
   openGraph: {
     title: "Pricing — Simple. Start Free.",
-    description: "Start free, no credit card required. Upgrade anytime. Creator $19/mo unlocks all 16 companions and the full creative toolkit.",
+    description: "Start free, no credit card required. Upgrade anytime. Creator $19/mo unlocks the full creative toolkit — companions, worlds, Studio, and Academy.",
     type: "website",
   },
 };
@@ -473,7 +473,7 @@ export default function PricingPage() {
                 Ready to start creating?
               </h2>
               <p className="text-lg text-text-secondary mb-10 max-w-2xl mx-auto">
-                16 companions. A Library of 34 texts. Tools that work the way you think.
+                Creative partners. A Library of 200K+ words. Tools for building worlds, stories, music, and code.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Link
