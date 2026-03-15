@@ -188,7 +188,7 @@ export const ModelSelector = React.memo(function ModelSelector({ value, onChange
       <button
         type="button"
         onClick={() => { setOpen(!open); setFocusIndex(SELECTABLE_IDS.indexOf(value)); }}
-        className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-medium transition-all
+        className="flex items-center gap-1.5 px-2.5 py-2 sm:py-1.5 rounded-lg text-[11px] font-medium transition-all min-h-[44px] sm:min-h-0
           border border-white/[0.06] hover:border-white/[0.12] hover:bg-white/[0.03]
           focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/50"
         style={{ color: tierMeta?.color || '#fff' }}
@@ -206,7 +206,7 @@ export const ModelSelector = React.memo(function ModelSelector({ value, onChange
           ref={dropdownRef}
           role="listbox"
           aria-label="Select AI model"
-          className={`absolute left-0 w-72 sm:w-80 max-h-[min(420px,70vh)] overflow-y-auto rounded-xl border border-white/[0.08] bg-[#111113] shadow-2xl z-50 ${
+          className={`absolute left-0 w-[calc(100vw-2rem)] sm:w-80 max-h-[70vh] sm:max-h-[min(420px,70vh)] overflow-y-auto rounded-xl border border-white/[0.08] bg-[#111113] shadow-2xl z-50 ${
             placement === 'top' ? 'bottom-full mb-2' : 'top-full mt-2'
           }`}
           style={{ scrollbarWidth: 'thin' }}

@@ -111,7 +111,7 @@ export const FocusModeSelector = React.memo(function FocusModeSelector({ value, 
       <button
         type="button"
         onClick={() => setExpanded(true)}
-        className="flex items-center gap-1.5 px-2 py-1 rounded-lg text-[11px] font-medium transition-all
+        className="flex items-center gap-1.5 px-2.5 py-2 sm:py-1 rounded-lg text-[11px] font-medium transition-all min-h-[44px] sm:min-h-0
           border border-white/[0.06] hover:border-white/[0.12] hover:bg-white/[0.03]
           focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/50"
         title="Change focus mode"
@@ -124,7 +124,7 @@ export const FocusModeSelector = React.memo(function FocusModeSelector({ value, 
   }
 
   return (
-    <div ref={ref} className="flex items-center gap-1 flex-wrap">
+    <div ref={ref} className="flex items-center gap-1 overflow-x-auto sm:flex-wrap sm:overflow-visible -mx-1 px-1 scrollbar-none">
       {FOCUS_MODES.map((mode) => {
         const isActive = mode.id === value;
         return (
@@ -132,7 +132,7 @@ export const FocusModeSelector = React.memo(function FocusModeSelector({ value, 
             key={mode.id}
             type="button"
             onClick={() => { onChange(mode.id); setExpanded(false); }}
-            className={`px-2.5 py-1 rounded-full text-[11px] font-medium transition-all border
+            className={`px-2.5 py-1 rounded-full text-[11px] font-medium transition-all border whitespace-nowrap shrink-0 sm:shrink
               focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/40 ${
               isActive
                 ? 'border-white/[0.15] bg-white/[0.06]'

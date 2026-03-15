@@ -50,7 +50,11 @@ export function BeamMode({ prompt, provider, clientApiKey, focusHint, onSelectRe
   ]);
   const [responses, setResponses] = useState<BeamResponse[]>([]);
   const [isRunning, setIsRunning] = useState(false);
+  const [isMerging, setIsMerging] = useState(false);
+  const [mergedText, setMergedText] = useState('');
+  const [showCompare, setShowCompare] = useState(false);
   const abortRef = useRef<AbortController[]>([]);
+  const mergeAbortRef = useRef<AbortController | null>(null);
 
   const toggleModel = useCallback((modelId: string) => {
     setSelectedModels((prev) =>
@@ -136,9 +140,107 @@ export function BeamMode({ prompt, provider, clientApiKey, focusHint, onSelectRe
     setIsRunning(false);
   }, [selectedModels, prompt, provider, clientApiKey, focusHint]);
 
+  // ---------------------------------------------------------------------------
+  // Merge — synthesize best parts from all completed responses
+  // ---------------------------------------------------------------------------
+  const handleMerge = useCallback(async () => {
+    const doneResponses = responses.filter((r) => r.status === 'done');
+    if (doneResponses.length < 2) return;
+
+    setIsMerging(true);
+    setMergedText('');
+
+    // Abort any previous merge
+    mergeAbortRef.current?.abort();
+    const controller = new AbortController();
+    mergeAbortRef.current = controller;
+
+    const mergePrompt = `You are a synthesis expert. Below are ${doneResponses.length} responses to the same prompt from different AI models. Analyze them and create a single response that takes the best parts from each — the most insightful points, the clearest explanations, the most creative ideas. Do not simply concatenate. Synthesize into a response better than any individual one.
+
+PROMPT: "${prompt}"
+
+${doneResponses.map((r, i) => `--- RESPONSE ${i + 1} (${r.shortName}) ---\n${r.text}`).join('\n\n')}
+
+--- YOUR SYNTHESIS ---`;
+
+    try {
+      const res = await fetch('/api/ai/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        signal: controller.signal,
+        body: JSON.stringify({
+          messages: [{ role: 'user', content: mergePrompt }],
+          gatewayModel: 'arcanea-auto',
+          maxTokens: 4096,
+        }),
+      });
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
+        throw new Error(errData.error || `HTTP ${res.status}`);
+      }
+
+      const reader = res.body?.getReader();
+      if (!reader) throw new Error('No response body');
+
+      const decoder = new TextDecoder();
+      let fullText = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        const chunk = decoder.decode(value, { stream: true });
+        fullText += chunk;
+        setMergedText(fullText);
+      }
+    } catch (err) {
+      if ((err as Error).name !== 'AbortError') {
+        setMergedText(`_Merge failed: ${(err as Error).message}_`);
+      }
+    } finally {
+      setIsMerging(false);
+    }
+  }, [responses, prompt]);
+
+  // ---------------------------------------------------------------------------
+  // Compare — build structured comparison of key aspects
+  // ---------------------------------------------------------------------------
+  const compareRows = React.useMemo(() => {
+    const doneResponses = responses.filter((r) => r.status === 'done');
+    if (doneResponses.length < 2) return [];
+
+    const aspects = ['Length', 'Key Strengths', 'Approach'];
+    return aspects.map((aspect) => ({
+      aspect,
+      values: doneResponses.map((r) => {
+        if (aspect === 'Length') {
+          const words = r.text.split(/\s+/).length;
+          return `${words} words`;
+        }
+        if (aspect === 'Key Strengths') {
+          const hasCode = /```/.test(r.text);
+          const hasList = /^[-*]\s/m.test(r.text);
+          const hasHeadings = /^#+\s/m.test(r.text);
+          const traits: string[] = [];
+          if (hasCode) traits.push('Code examples');
+          if (hasList) traits.push('Structured lists');
+          if (hasHeadings) traits.push('Section headings');
+          if (!traits.length) traits.push('Prose narrative');
+          return traits.join(', ');
+        }
+        // Approach — first ~80 chars as a teaser
+        const first = r.text.replace(/^#+\s.*\n/m, '').trim();
+        return first.slice(0, 80) + (first.length > 80 ? '...' : '');
+      }),
+    }));
+  }, [responses]);
+
   // Cleanup on unmount
   useEffect(() => {
-    return () => { abortRef.current.forEach((c) => c.abort()); };
+    return () => {
+      abortRef.current.forEach((c) => c.abort());
+      mergeAbortRef.current?.abort();
+    };
   }, []);
 
   const allDone = responses.length > 0 && responses.every((r) => r.status === 'done' || r.status === 'error');
@@ -146,11 +248,11 @@ export function BeamMode({ prompt, provider, clientApiKey, focusHint, onSelectRe
   return (
     <div className="fixed inset-0 z-50 bg-[#09090b]/95 backdrop-blur-sm flex flex-col">
       {/* Header */}
-      <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.06]">
-        <div className="flex items-center gap-3">
-          <PhLightning className="w-5 h-5 text-[#ffd700]" />
-          <h2 className="text-lg font-semibold text-white">Beam Mode</h2>
-          <span className="text-sm text-white/40">Compare models side-by-side</span>
+      <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-white/[0.06]">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <PhLightning className="w-5 h-5 text-[#ffd700] shrink-0" />
+          <h2 className="text-base sm:text-lg font-semibold text-white whitespace-nowrap">Beam Mode</h2>
+          <span className="hidden sm:inline text-sm text-white/40">Compare models side-by-side</span>
         </div>
         <button
           onClick={onClose}
@@ -162,13 +264,13 @@ export function BeamMode({ prompt, provider, clientApiKey, focusHint, onSelectRe
       </div>
 
       {/* Prompt display */}
-      <div className="px-6 py-3 border-b border-white/[0.04]">
-        <p className="text-sm text-white/60 truncate">{prompt}</p>
+      <div className="px-4 sm:px-6 py-3 border-b border-white/[0.04]">
+        <p className="text-xs sm:text-sm text-white/60 truncate">{prompt}</p>
       </div>
 
       {/* Model selector (if not running) */}
       {!isRunning && responses.length === 0 && (
-        <div className="px-6 py-4 border-b border-white/[0.04]">
+        <div className="px-4 sm:px-6 py-4 border-b border-white/[0.04]">
           <p className="text-xs text-white/30 mb-3">Select 2-4 models to compare (currently {selectedModels.length})</p>
           <div className="flex flex-wrap gap-2">
             {BEAM_MODELS.map((model) => {
@@ -178,7 +280,7 @@ export function BeamMode({ prompt, provider, clientApiKey, focusHint, onSelectRe
                   key={model.id}
                   type="button"
                   onClick={() => toggleModel(model.id)}
-                  className={`px-3 py-2 rounded-xl text-sm font-medium border transition-all ${
+                  className={`px-3 py-2.5 sm:py-2 rounded-xl text-sm font-medium border transition-all min-h-[44px] sm:min-h-0 ${
                     isSelected
                       ? 'border-white/[0.15] bg-white/[0.06]'
                       : 'border-white/[0.04] hover:border-white/[0.1] opacity-50 hover:opacity-80'
@@ -204,10 +306,10 @@ export function BeamMode({ prompt, provider, clientApiKey, focusHint, onSelectRe
       {/* Response grid */}
       {responses.length > 0 && (
         <div className="flex-1 overflow-auto p-4">
-          <div className={`grid gap-4 h-full ${
-            responses.length === 2 ? 'grid-cols-2' :
-            responses.length === 3 ? 'grid-cols-3' :
-            'grid-cols-2 lg:grid-cols-4'
+          <div className={`grid gap-3 sm:gap-4 h-full ${
+            responses.length === 2 ? 'grid-cols-1 sm:grid-cols-2' :
+            responses.length === 3 ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' :
+            'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'
           }`}>
             {responses.map((resp) => (
               <div
@@ -263,6 +365,94 @@ export function BeamMode({ prompt, provider, clientApiKey, focusHint, onSelectRe
               </div>
             ))}
           </div>
+
+          {/* Merge & Compare Actions — shown when all responses are done */}
+          {allDone && responses.filter((r) => r.status === 'done').length >= 2 && (
+            <div className="px-4 py-3 border-t border-white/[0.06] flex flex-wrap items-center gap-2 sm:gap-3">
+              <button
+                type="button"
+                onClick={handleMerge}
+                disabled={isMerging}
+                className="px-5 py-2 rounded-xl text-sm font-medium transition-all
+                  bg-gradient-to-r from-[#ffd700]/20 to-[#ff8c00]/20 border border-[#ffd700]/30
+                  text-[#ffd700] hover:from-[#ffd700]/30 hover:to-[#ff8c00]/30
+                  disabled:opacity-40 disabled:cursor-not-allowed"
+              >
+                {isMerging ? (
+                  <span className="flex items-center gap-2">
+                    <PhCircleNotch className="w-3.5 h-3.5 animate-spin" />
+                    Synthesizing...
+                  </span>
+                ) : (
+                  'Merge Best Parts'
+                )}
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowCompare((v) => !v)}
+                className="px-5 py-2 rounded-xl text-sm font-medium transition-all
+                  border border-white/[0.08] text-white/50
+                  hover:border-white/[0.15] hover:text-white/80 hover:bg-white/[0.03]"
+              >
+                {showCompare ? 'Hide Compare' : 'Compare'}
+              </button>
+            </div>
+          )}
+
+          {/* Compare Table */}
+          {showCompare && compareRows.length > 0 && (
+            <div className="px-4 py-4 border-t border-white/[0.06] overflow-x-auto">
+              <table className="w-full text-sm border-collapse min-w-[400px]">
+                <thead>
+                  <tr>
+                    <th className="text-left text-white/30 text-xs font-medium pb-2 pr-4">Aspect</th>
+                    {responses.filter((r) => r.status === 'done').map((r) => (
+                      <th key={r.modelId} className="text-left text-xs font-medium pb-2 pr-4" style={{ color: r.color }}>
+                        {r.shortName}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {compareRows.map((row) => (
+                    <tr key={row.aspect} className="border-t border-white/[0.04]">
+                      <td className="py-2 pr-4 text-white/40 text-xs font-medium whitespace-nowrap">{row.aspect}</td>
+                      {row.values.map((val, i) => (
+                        <td key={i} className="py-2 pr-4 text-white/60 text-xs">{val}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {/* Merged Result */}
+          {(mergedText || isMerging) && (
+            <div className="px-4 py-4 border-t border-white/[0.06] bg-[#0a0a0c]">
+              <div className="flex items-center gap-2 mb-3">
+                <PhLightning className="w-4 h-4 text-[#ffd700]" />
+                <span className="text-sm font-medium text-[#ffd700]">Synthesized Response</span>
+                {isMerging && <PhCircleNotch className="w-3.5 h-3.5 text-[#ffd700] animate-spin" />}
+              </div>
+              <div className="prose prose-invert prose-sm max-w-none max-h-[40vh] overflow-y-auto"
+                style={{ scrollbarWidth: 'thin' }}
+              >
+                <ChatMarkdown content={mergedText || 'Synthesizing...'} />
+              </div>
+              {!isMerging && mergedText && (
+                <button
+                  type="button"
+                  onClick={() => onSelectResponse(mergedText, 'merged')}
+                  className="mt-3 px-5 py-2 rounded-xl text-sm font-medium transition-all
+                    bg-[#ffd700]/10 border border-[#ffd700]/20 text-[#ffd700]
+                    hover:bg-[#ffd700]/20 hover:border-[#ffd700]/40"
+                >
+                  Use Merged Response
+                </button>
+              )}
+            </div>
+          )}
         </div>
       )}
     </div>
