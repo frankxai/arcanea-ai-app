@@ -62,11 +62,51 @@ const PROVIDERS: Provider[] = [
   {
     id: 'openai',
     name: 'OpenAI',
-    description: 'GPT-4o — versatile, fast, broad knowledge base',
+    description: 'GPT-5 — ultra high reasoning, mathematics, code',
     color: '#10a37f',
     envKey: 'OPENAI_API_KEY',
     placeholder: 'sk-...',
     docsUrl: 'https://platform.openai.com/api-keys',
+    testEndpoint: '/api/ai/chat',
+  },
+  {
+    id: 'xai',
+    name: 'xAI Grok',
+    description: 'Grok 4.2 — 500B params, real-time knowledge, unfiltered',
+    color: '#ffffff',
+    envKey: 'XAI_API_KEY',
+    placeholder: 'xai-...',
+    docsUrl: 'https://console.x.ai',
+    testEndpoint: '/api/ai/chat',
+  },
+  {
+    id: 'deepseek',
+    name: 'DeepSeek',
+    description: 'DeepSeek R1 + V3 — transparent reasoning, 50-100x cheaper',
+    color: '#667eea',
+    envKey: 'DEEPSEEK_API_KEY',
+    placeholder: 'sk-...',
+    docsUrl: 'https://platform.deepseek.com/api_keys',
+    testEndpoint: '/api/ai/chat',
+  },
+  {
+    id: 'groq',
+    name: 'Groq',
+    description: 'Lightning-fast inference — 750 tok/s, lowest latency',
+    color: '#f55036',
+    envKey: 'GROQ_API_KEY',
+    placeholder: 'gsk_...',
+    docsUrl: 'https://console.groq.com/keys',
+    testEndpoint: '/api/ai/chat',
+  },
+  {
+    id: 'cerebras',
+    name: 'Cerebras',
+    description: 'Bolt — 2,200+ tok/s, fastest inference on Earth',
+    color: '#00c853',
+    envKey: 'CEREBRAS_API_KEY',
+    placeholder: 'csk-...',
+    docsUrl: 'https://cloud.cerebras.ai/platform',
     testEndpoint: '/api/ai/chat',
   },
 ];
@@ -208,12 +248,12 @@ export default function ProvidersPage() {
         {/* Active Provider Selection */}
         <div className="bg-black/40 border border-white/[0.06] rounded-2xl p-5 mb-6">
           <h2 className="text-sm font-medium text-white/60 mb-3">Active Provider</h2>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             {PROVIDERS.map((p) => (
               <button
                 key={p.id}
                 onClick={() => setActiveId(p.id)}
-                className={`flex-1 px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                className={`px-3 py-2 rounded-xl text-xs font-medium transition-all ${
                   activeId === p.id
                     ? 'text-white border-2'
                     : 'text-white/40 border border-white/[0.06] hover:text-white/60 hover:border-white/[0.12]'

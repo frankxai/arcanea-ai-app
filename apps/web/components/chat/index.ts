@@ -9,6 +9,7 @@ export { ChatContainer } from './chat-container';
 export { ContextSidebar } from './context-sidebar';
 export { GenerationIndicator } from './generation-indicator';
 export { QuickActions } from './quick-actions';
+export { LuminorSidebar } from './luminor-sidebar';
 
 export type { default as ChatMessageProps } from './message';
 export type { default as StreamingMessageProps } from './streaming-message';
