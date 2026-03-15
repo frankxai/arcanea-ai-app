@@ -109,6 +109,16 @@ const PROVIDERS: Provider[] = [
     docsUrl: 'https://cloud.cerebras.ai/platform',
     testEndpoint: '/api/ai/chat',
   },
+  {
+    id: 'mistral',
+    name: 'Mistral AI',
+    description: 'Mistral Large & Codestral — multilingual, code, and reasoning',
+    color: '#ff7000',
+    envKey: 'MISTRAL_API_KEY',
+    placeholder: 'sk-...',
+    docsUrl: 'https://console.mistral.ai/api-keys',
+    testEndpoint: '/api/ai/chat',
+  },
 ];
 
 // ---------------------------------------------------------------------------
