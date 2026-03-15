@@ -62,7 +62,7 @@ const FAQ_CATEGORIES = [
       },
       {
         q: "What do the paid plans include?",
-        a: "The Creator plan ($19/month) unlocks all 16 companions with unlimited messages, full Studio creation tools, complete Academy access, and custom prompt templates. The Studio plan ($49/month) adds API access, priority support, custom companion training, and team collaboration features.",
+        a: "The Creator plan ($19/month) unlocks all creative partners with 5,000 messages per month, full Studio creation tools, complete Academy access, and custom prompt templates. The Studio plan ($49/month) adds API access, priority support, custom partner training, and team collaboration features.",
       },
       {
         q: "Can I switch plans later?",

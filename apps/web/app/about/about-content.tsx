@@ -143,8 +143,8 @@ export function AboutContent() {
         <div className="max-w-5xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6">
             {[
-              { value: "107K+", label: "Words generated" },
-              { value: "200K+", label: "Words of philosophy" },
+              { value: "190K+", label: "Words in the Library" },
+              { value: "17", label: "Library collections" },
               { value: "10", label: "Gates of mastery" },
               { value: "16", label: "Creative partners" },
               { value: "27", label: "Open source repos" },

@@ -741,95 +741,7 @@ function FeaturesGrid() {
 }
 
 // ---------------------------------------------------------------------------
-// SECTION 3b: Creator Voices — Social Proof
-// ---------------------------------------------------------------------------
-
-const CREATOR_VOICES = [
-  {
-    quote:
-      "I built my entire fantasy world in a weekend. The Gates system gave me structure I never had.",
-    name: "World Builder",
-    role: "Fantasy Creator",
-  },
-  {
-    quote:
-      "Finally an AI tool that understands creative process, not just prompts. The Library changed how I think about writing.",
-    name: "Story Architect",
-    role: "Author & Designer",
-  },
-  {
-    quote:
-      "The companions don't just answer questions — they push my thinking. It's like having a creative director on call.",
-    name: "Visual Creator",
-    role: "Digital Artist",
-  },
-  {
-    quote:
-      "200K words of philosophy that actually applies to making things. Nothing else like it.",
-    name: "Framework Thinker",
-    role: "Indie Developer",
-  },
-];
-
-function CreatorVoices() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-
-  return (
-    <section ref={ref} className="py-24 md:py-32 relative">
-      {/* Atmospheric */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-[radial-gradient(ellipse,rgba(0,188,212,0.04),transparent_60%)] pointer-events-none" />
-      </div>
-
-      <div className="max-w-5xl mx-auto px-6">
-        <m.div
-          className="text-center mb-14"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-        >
-          <p className="text-xs font-mono tracking-[0.3em] uppercase text-white/30 mb-4">
-            Creator Voices
-          </p>
-          <h2 className="text-3xl md:text-4xl font-display font-bold tracking-tight">
-            What creators are{" "}
-            <span className="text-gradient-brand">saying</span>
-          </h2>
-        </m.div>
-
-        <div className="grid md:grid-cols-2 gap-4 md:gap-5">
-          {CREATOR_VOICES.map((v, i) => (
-            <m.div
-              key={v.name}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-            >
-              <GlowCard
-                glass="liquid-glass"
-                glowColor="rgba(0, 188, 212, 0.06)"
-                lift={false}
-                className="p-7 h-full border border-white/[0.06] hover:border-white/[0.12] transition-all duration-500"
-              >
-                <Quotes className="w-5 h-5 text-white/15 mb-4" />
-                <p className="text-sm text-white/60 leading-relaxed font-body italic mb-6">
-                  &ldquo;{v.quote}&rdquo;
-                </p>
-                <div className="pt-4 border-t border-white/[0.06]">
-                  <p className="text-sm font-medium text-white/80">
-                    {v.name}
-                  </p>
-                  <p className="text-xs text-white/30 mt-0.5">{v.role}</p>
-                </div>
-              </GlowCard>
-            </m.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+// CreatorVoices removed — will add back when we have real testimonials
 
 // ---------------------------------------------------------------------------
 // SECTION 4b: Gallery Showcase — Cinematic Image Strip
@@ -1494,8 +1406,7 @@ export function V3BelowFold({
         {/* 2. How it works — 3 clear steps */}
         <HowItWorks />
 
-        {/* 2b. Creator voices — social proof */}
-        <CreatorVoices />
+        {/* Social proof — add back when we have real testimonials */}
 
         {/* 3. Arcanean pathways */}
         <PathwaysGrid />
