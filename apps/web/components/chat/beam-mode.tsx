@@ -292,13 +292,18 @@ ${doneResponses.map((r, i) => `--- RESPONSE ${i + 1} (${r.shortName}) ---\n${r.t
               );
             })}
           </div>
+          {/* Cost notice */}
+          <p className="text-[11px] text-white/30 mt-2">
+            Beam sends your prompt to {selectedModels.length} models in parallel.
+            Each model counts as a separate API call against your usage.
+          </p>
           <button
             onClick={runBeam}
             disabled={selectedModels.length < 2}
             className="mt-4 px-6 py-2.5 rounded-xl bg-[#00bcd4] hover:bg-[#00acc1] text-white text-sm font-medium
               disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
           >
-            Fire Beam ({selectedModels.length} models)
+            Send to {selectedModels.length} Models
           </button>
         </div>
       )}
@@ -450,6 +455,11 @@ ${doneResponses.map((r, i) => `--- RESPONSE ${i + 1} (${r.shortName}) ---\n${r.t
                 >
                   Use Merged Response
                 </button>
+              )}
+              {!isMerging && mergedText && (
+                <p className="text-[10px] text-white/20 mt-2">
+                  Synthesized from {responses.filter(r => r.status === 'done').map(r => r.shortName).join(', ')}
+                </p>
               )}
             </div>
           )}

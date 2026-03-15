@@ -13,47 +13,9 @@ import { createAnthropic } from '@ai-sdk/anthropic';
 import { createOpenAI } from '@ai-sdk/openai';
 import { streamText } from 'ai';
 import { createArcanea } from '@/lib/ai/arcanea-intelligence';
+import { GATEWAY_MODELS, EXTENDED_PROVIDERS } from '@/lib/gateway/catalog';
 
 export const runtime = 'edge';
-
-// ---------------------------------------------------------------------------
-// Gateway model catalog — maps arcanea-* IDs to provider + model
-// ---------------------------------------------------------------------------
-
-interface GatewayModel {
-  provider: string;
-  modelId: string;
-  label: string;
-}
-
-const GATEWAY_MODELS: Record<string, GatewayModel> = {
-  'arcanea-opus':        { provider: 'anthropic',  modelId: 'claude-opus-4-6',           label: 'Opus 4.6' },
-  'arcanea-sonnet':      { provider: 'anthropic',  modelId: 'claude-sonnet-4-6',         label: 'Sonnet 4.6' },
-  'arcanea-haiku':       { provider: 'anthropic',  modelId: 'claude-haiku-4-5-20251001', label: 'Haiku 4.5' },
-  'arcanea-gpt5':        { provider: 'openai',     modelId: 'gpt-5.2-pro',               label: 'GPT-5.2 Pro' },
-  'arcanea-gemini-pro':  { provider: 'google',     modelId: 'gemini-3.1-pro-preview',    label: 'Gemini 3.1 Pro' },
-  'arcanea-gemini-flash':{ provider: 'google',     modelId: 'gemini-2.5-flash',          label: 'Gemini 2.5 Flash' },
-  'arcanea-grok':        { provider: 'xai',        modelId: 'grok-4.20',                 label: 'Grok 4.2' },
-  'arcanea-deepseek-r1': { provider: 'deepseek',   modelId: 'deepseek-reasoner',         label: 'DeepSeek R1' },
-  'arcanea-deepseek':    { provider: 'deepseek',   modelId: 'deepseek-chat',             label: 'DeepSeek V3' },
-  'arcanea-kimi':        { provider: 'moonshot',   modelId: 'kimi-k2.5',                 label: 'Kimi K2.5' },
-  'arcanea-qwen':        { provider: 'cerebras',   modelId: 'qwen-3-235b-a22b-instruct-2507', label: 'Qwen 3' },
-  'arcanea-maverick':    { provider: 'groq',       modelId: 'meta-llama/llama-4-maverick-17b-128e-instruct', label: 'Maverick' },
-  'arcanea-mistral':     { provider: 'mistral',    modelId: 'mistral-large-2512',        label: 'Mistral Large' },
-  'arcanea-bolt':        { provider: 'cerebras',   modelId: 'llama3.1-8b',               label: 'Bolt (2200 tok/s)' },
-  'arcanea-thunder':     { provider: 'cerebras',   modelId: 'llama3.3-70b',              label: 'Thunder (450 tok/s)' },
-  'arcanea-lightning':   { provider: 'groq',       modelId: 'llama-3.1-8b-instant',      label: 'Lightning (750 tok/s)' },
-};
-
-// Map extended providers to their env keys and base URLs
-const EXTENDED_PROVIDERS: Record<string, { envKeys: string[]; baseUrl: string }> = {
-  xai:       { envKeys: ['XAI_API_KEY'],        baseUrl: 'https://api.x.ai/v1' },
-  deepseek:  { envKeys: ['DEEPSEEK_API_KEY'],   baseUrl: 'https://api.deepseek.com/v1' },
-  moonshot:  { envKeys: ['MOONSHOT_API_KEY'],    baseUrl: 'https://api.moonshot.ai/v1' },
-  cerebras:  { envKeys: ['CEREBRAS_API_KEY'],    baseUrl: 'https://api.cerebras.ai/v1' },
-  groq:      { envKeys: ['GROQ_API_KEY'],        baseUrl: 'https://api.groq.com/openai/v1' },
-  mistral:   { envKeys: ['MISTRAL_API_KEY'],     baseUrl: 'https://api.mistral.ai/v1' },
-};
 
 // ---------------------------------------------------------------------------
 // Provider configuration (legacy — used when no Gateway model specified)
@@ -88,10 +50,9 @@ const PROVIDERS: Record<string, ProviderConfig> = {
   },
 };
 
-// Rate limiting (simple in-memory store - use Redis in production)
-const rateLimits = new Map<string, { count: number; resetAt: number }>();
-const RATE_LIMIT_WINDOW = 60000; // 1 minute
-const MAX_REQUESTS_PER_WINDOW = 20;
+// Rate limiting handled by Vercel's built-in Edge rate limiting
+// For custom limits, use Vercel KV: https://vercel.com/docs/storage/vercel-kv
+// TODO: Add Vercel KV rate limiting when scaling beyond MVP
 
 interface ChatMessage {
   role: 'user' | 'assistant' | 'model' | 'system';
@@ -160,30 +121,6 @@ function createModel(providerId: string, apiKey: string, modelOverride?: string)
 
 export async function POST(req: NextRequest) {
   try {
-    // --- Rate limiting (by IP, no auth required) ---
-    const forwarded = req.headers.get('x-forwarded-for');
-    const ip = forwarded?.split(',')[0].trim() || 'anonymous';
-    const rateLimitKey = `guest:${ip}`;
-    const now = Date.now();
-    const userLimit = rateLimits.get(rateLimitKey);
-
-    if (userLimit) {
-      if (now < userLimit.resetAt) {
-        if (userLimit.count >= MAX_REQUESTS_PER_WINDOW) {
-          const retryAfterSec = Math.ceil((userLimit.resetAt - now) / 1000);
-          return NextResponse.json(
-            { error: `Rate limit exceeded. Try again in ${retryAfterSec}s.` },
-            { status: 429, headers: { 'Retry-After': String(retryAfterSec) } }
-          );
-        }
-        userLimit.count++;
-      } else {
-        rateLimits.set(rateLimitKey, { count: 1, resetAt: now + RATE_LIMIT_WINDOW });
-      }
-    } else {
-      rateLimits.set(rateLimitKey, { count: 1, resetAt: now + RATE_LIMIT_WINDOW });
-    }
-
     // --- Parse request ---
     const body: ChatRequest = await req.json();
     const { messages, systemPrompt, temperature, maxTokens, provider: requestedProvider, model: modelOverride, gatewayModel, focusHint, clientApiKey } = body;
