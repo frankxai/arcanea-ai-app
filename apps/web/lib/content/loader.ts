@@ -161,7 +161,7 @@ export const COLLECTIONS: Collection[] = [
   {
     slug: 'meditations-on-elements',
     name: 'Meditations on the Elements',
-    description: 'Fire, Water, Air, and Earth in the Creative Life',
+    description: 'Fire, Water, Earth, Wind, and Void in the Creative Life',
     order: 13,
     format: 'meditation',
     readWhen: 'you need to invoke elemental forces or restore creative balance',

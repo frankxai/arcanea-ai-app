@@ -362,8 +362,8 @@ export default async function GuardianDetailPage({
   }
 
   const related = guardian.relatedGuardians
-    .map((slug) => GUARDIANS[slug])
-    .filter(Boolean);
+    .map((slug) => ({ ...GUARDIANS[slug], slug }))
+    .filter((g): g is GuardianData & { slug: string } => Boolean(g.name));
 
   const jsonLd = {
     '@context': 'https://schema.org',

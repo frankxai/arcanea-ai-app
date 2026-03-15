@@ -76,11 +76,32 @@ export default function WelcomePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.6 }}
-          className="font-body text-lg text-text-muted mb-12 max-w-lg mx-auto"
+          className="font-body text-lg text-text-muted mb-8 max-w-lg mx-auto"
         >
           Chat with AI. Build fantasy worlds. Share what you make.
           A library of original texts. Tools that think with you.
         </m.p>
+
+        {/* Six Layers */}
+        <m.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.55, duration: 0.6 }}
+          className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-lg mx-auto mb-12"
+        >
+          {[
+            { label: 'Chat & Imagine', icon: '~' },
+            { label: 'Build Worlds', icon: '~' },
+            { label: 'Social Feed', icon: '~' },
+            { label: 'Open Source', icon: '~' },
+            { label: 'Community', icon: '~' },
+            { label: 'Academy', icon: '~' },
+          ].map((layer) => (
+            <div key={layer.label} className="px-3 py-2.5 rounded-xl border border-white/[0.06] bg-white/[0.02] text-center">
+              <span className="text-xs text-text-secondary font-medium">{layer.label}</span>
+            </div>
+          ))}
+        </m.div>
 
         {/* CTA Buttons */}
         <m.div

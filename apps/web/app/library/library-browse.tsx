@@ -18,6 +18,7 @@ import Link from 'next/link';
 import type { Collection, Situation } from '../../lib/content/types';
 import { useAuth } from '../../lib/auth/context';
 import { getLabel } from '../../lib/vocabulary';
+import { useReadingProgress } from '../../hooks/use-reading-progress';
 
 interface LibraryBrowseProps {
   collections: Collection[];
@@ -77,6 +78,10 @@ export function LibraryBrowse({ collections }: LibraryBrowseProps) {
     ?.user_metadata?.gates_open ?? 0;
   const libraryLabel = getLabel('library', gatesOpen);
 
+  // Reading progress for collection-level indicators
+  const { getCollectionProgress } = useReadingProgress(user?.id ?? null);
+  const totalCollections = collections.length;
+
   // Check if search query matches a Gate frequency
   const activeFrequency = useMemo(() => {
     const trimmed = searchQuery.trim();
@@ -128,7 +133,7 @@ export function LibraryBrowse({ collections }: LibraryBrowseProps) {
           </div>
 
           <h1 className="font-display text-4xl font-bold tracking-tight text-text-primary md:text-5xl lg:text-6xl">
-            <span className="aurora-text">Twenty Collections</span>
+            <span className="aurora-text">{totalCollections} Collections</span>
             <br />
             of Wisdom, Legend, and Practice
           </h1>
@@ -244,9 +249,17 @@ export function LibraryBrowse({ collections }: LibraryBrowseProps) {
           </div>
         ) : (
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {filteredCollections.map((collection) => (
-              <CollectionCard key={collection.slug} collection={collection} />
-            ))}
+            {filteredCollections.map((collection) => {
+              const progress = user ? getCollectionProgress(collection.slug, collection.textCount) : null;
+              return (
+                <CollectionCard
+                  key={collection.slug}
+                  collection={collection}
+                  totalCollections={totalCollections}
+                  progress={progress}
+                />
+              );
+            })}
           </div>
         )}
       </section>
@@ -295,7 +308,13 @@ export function LibraryBrowse({ collections }: LibraryBrowseProps) {
   );
 }
 
-function CollectionCard({ collection }: { collection: Collection }) {
+interface CollectionCardProps {
+  collection: Collection;
+  totalCollections: number;
+  progress: { completed: number; total: number; percent: number } | null;
+}
+
+function CollectionCard({ collection, totalCollections, progress }: CollectionCardProps) {
   return (
     <Link
       href={`/library/${collection.slug}`}
@@ -310,7 +329,7 @@ function CollectionCard({ collection }: { collection: Collection }) {
         <div className="mb-4 flex items-center justify-between">
           <span className="text-3xl">{collection.icon}</span>
           <span className="rounded-full border border-cosmic-border-bright bg-cosmic-raised px-3 py-1 text-xs uppercase tracking-[0.2em] text-text-muted">
-            {collection.order}/20
+            {collection.order}/{totalCollections}
           </span>
         </div>
 
@@ -333,6 +352,28 @@ function CollectionCard({ collection }: { collection: Collection }) {
           <span>{collection.textCount} {collection.textCount === 1 ? 'text' : 'texts'}</span>
           <span className="capitalize">{collection.format}</span>
         </div>
+
+        {/* Reading progress indicator */}
+        {progress && progress.total > 0 && progress.completed > 0 && (
+          <div className="mt-3 flex items-center gap-2">
+            <div
+              className="h-1 flex-1 overflow-hidden rounded-full bg-cosmic-raised"
+              role="progressbar"
+              aria-valuenow={progress.percent}
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-label={`${progress.completed} of ${progress.total} texts read`}
+            >
+              <div
+                className="h-full rounded-full bg-atlantean-teal transition-all duration-500"
+                style={{ width: `${progress.percent}%` }}
+              />
+            </div>
+            <span className="text-[0.65rem] text-atlantean-teal/70">
+              {progress.completed}/{progress.total}
+            </span>
+          </div>
+        )}
 
         <div className="mt-4 flex items-center gap-2 text-sm text-atlantean-teal opacity-0 transition-opacity group-hover:opacity-100">
           <span>Enter collection</span>

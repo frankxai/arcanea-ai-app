@@ -201,7 +201,7 @@ export default async function TextPage({ params }: Props) {
             </header>
 
             {/* Content */}
-            <article className="prose-arcanea">
+            <article className="prose-arcanea max-w-[65ch]">
               <ReactMarkdown
                 components={{
                   h1: ({ children }) => (

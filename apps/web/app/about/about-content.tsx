@@ -146,7 +146,7 @@ export function AboutContent() {
               { value: "107K+", label: "Words generated" },
               { value: "200K+", label: "Words of philosophy" },
               { value: "10", label: "Gates of mastery" },
-              { value: "16", label: "Luminor partners" },
+              { value: "16", label: "Creative partners" },
               { value: "27", label: "Open source repos" },
             ].map((stat, i) => (
               <m.div
@@ -257,8 +257,9 @@ export function AboutContent() {
               </div>
             </div>
             <p className="text-sm text-text-muted text-center mt-6 leading-relaxed max-w-2xl mx-auto">
-              arcanea.ai is BOTH a working product (chat, imagine, create) AND the reference world
-              showing what the framework can build. The mythology is the proof AND the template.
+              arcanea.ai is both a working product you can use today (chat, imagine, create)
+              and the reference world showing what the framework can build. You use it. You learn from it.
+              Then you build your own.
             </p>
           </div>
         </div>
@@ -477,7 +478,7 @@ export function AboutContent() {
         </div>
       </AnimatedSection>
 
-      {/* ── Section 4: The Sixteen Companions ──────────────────────────── */}
+      {/* ── Section 4: The Ten Guardians ──────────────────────────────── */}
       <AnimatedSection className="py-24 relative">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
@@ -595,11 +596,11 @@ export function AboutContent() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-              The Creative Spirits
+              Meet the Creative Partners
             </h2>
             <p className="text-text-secondary max-w-2xl mx-auto leading-relaxed">
-              Twenty unique visions, each aligned to an element and gate.
-              AI-generated companions that walk alongside creators.
+              Sixteen AI intelligences, each with a distinct voice, deep domain
+              expertise, and a creative philosophy. They think with you, not for you.
             </p>
           </div>
 
@@ -633,10 +634,10 @@ export function AboutContent() {
 
           <div className="mt-8 text-center">
             <Link
-              href="/gallery/luminors"
+              href="/gallery"
               className="inline-flex items-center gap-2 text-sm text-[#00bcd4] hover:text-[#00bcd4]/80 transition-colors"
             >
-              View all 20
+              Explore the Gallery
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -703,6 +704,79 @@ export function AboutContent() {
               Read the full Code — Seven Laws, Agent Oath, and write your own
               <ArrowRight className="w-4 h-4" />
             </Link>
+          </div>
+        </div>
+      </AnimatedSection>
+
+      {/* ── Section 5.9: The Creator Journey ──────────────────────────── */}
+      <AnimatedSection className="py-24 relative">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+              The Creator Journey
+            </h2>
+            <p className="text-text-secondary max-w-2xl mx-auto leading-relaxed">
+              Every feature moves you forward. From first spark to published work.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap justify-center items-center gap-3 text-sm">
+            {[
+              { step: "Imagine", desc: "Chat, generate, explore" },
+              { step: "Build", desc: "Worlds, agents, systems" },
+              { step: "Create", desc: "Stories, art, music, code" },
+              { step: "Publish", desc: "Share with the multiverse" },
+              { step: "Earn", desc: "Monetize your creations" },
+              { step: "Expand", desc: "Grow your universe" },
+            ].map((item, i) => (
+              <span key={item.step} className="flex items-center gap-3">
+                <span className="px-5 py-3 rounded-xl liquid-glass border border-white/[0.06] text-center">
+                  <span className="block font-display font-semibold text-[#00bcd4]">{item.step}</span>
+                  <span className="block text-xs text-text-muted mt-0.5">{item.desc}</span>
+                </span>
+                {i < 5 && (
+                  <ArrowRight className="w-4 h-4 text-[#ffd700] hidden sm:block" />
+                )}
+              </span>
+            ))}
+          </div>
+        </div>
+      </AnimatedSection>
+
+      {/* ── Section 5.95: The Founder ──────────────────────────────────── */}
+      <AnimatedSection className="py-24 relative">
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="p-8 md:p-12 rounded-3xl liquid-glass border border-white/[0.06]">
+            <div className="flex flex-col md:flex-row gap-8 items-start">
+              <div className="shrink-0 w-20 h-20 rounded-2xl bg-gradient-to-br from-[#00bcd4]/20 to-[#ffd700]/20 flex items-center justify-center">
+                <span className="text-3xl font-display font-bold bg-gradient-to-r from-[#00bcd4] to-[#ffd700] bg-clip-text text-transparent">FR</span>
+              </div>
+              <div>
+                <p className="text-xs font-mono text-text-muted tracking-widest uppercase mb-3">
+                  Built by
+                </p>
+                <h3 className="text-2xl font-display font-bold mb-4">
+                  Frank Riemer
+                </h3>
+                <p className="text-text-secondary leading-relaxed mb-4">
+                  500+ AI implementations. Former enterprise architect. Creator of Arcanea
+                  because the tools for building AI-powered creative worlds didn&apos;t exist --
+                  so he built the framework, the reference world, the Library, and the
+                  open-source ecosystem from scratch.
+                </p>
+                <p className="text-text-secondary leading-relaxed mb-6">
+                  Arcanea isn&apos;t a product built by committee. It&apos;s one person&apos;s
+                  vision, built in the open, designed so every creator can build
+                  their own.
+                </p>
+                <div className="flex flex-wrap gap-3 text-xs font-mono text-text-muted">
+                  <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">500+ AI implementations</span>
+                  <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">200K+ words written</span>
+                  <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">27 open-source repos</span>
+                  <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">Source available</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </AnimatedSection>

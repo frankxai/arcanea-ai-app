@@ -25,6 +25,15 @@ const EXPLORATIONS = [
     borderColor: 'border-crystal/20 hover:border-crystal/40',
   },
   {
+    href: '/lore/gates',
+    title: 'The Ten Gates',
+    description: 'The journey from Foundation to Source — 174 Hz to 1111 Hz',
+    icon: PhCompass,
+    gradient: 'from-gold-bright/20 to-amber-500/10',
+    accentColor: 'text-gold-bright',
+    borderColor: 'border-gold-bright/20 hover:border-gold-bright/40',
+  },
+  {
     href: '/lore/godbeasts',
     title: 'The Godbeasts',
     description: 'Primal divine creatures bonded to each Guardian',

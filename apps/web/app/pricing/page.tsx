@@ -4,10 +4,10 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Pricing — Simple. Start Free.",
   description:
-    "Simple pricing for Arcanea. Start free with no credit card required. Upgrade to Creator ($19/mo) for the full creative toolkit — all companions, the Library, the Studio, and Academy progression.",
+    "Simple pricing for Arcanea. Start free with no credit card required. Upgrade to Creator ($19/mo) for the full creative toolkit — all creative partners, the Library, the Studio, and Academy progression.",
   openGraph: {
     title: "Pricing — Simple. Start Free.",
-    description: "Start free, no credit card required. Upgrade anytime. Creator $19/mo unlocks the full creative toolkit — companions, worlds, Studio, and Academy.",
+    description: "Start free, no credit card required. Upgrade anytime. Creator $19/mo unlocks the full creative toolkit — creative partners, worlds, Studio, and Academy.",
     type: "website",
   },
 };
@@ -18,7 +18,7 @@ const TIERS = [
     price: "Free",
     description: "A real starting point, not a demo",
     features: [
-      "3 companions — writing, research, and brainstorming",
+      "3 creative partners — writing, research, and brainstorming",
       "100 messages per month",
       "Browse the full Library (17 collections)",
       "Academy access through Gate 2",
@@ -35,7 +35,7 @@ const TIERS = [
     period: "/month",
     description: "The full creative toolkit",
     features: [
-      "All 16 companions — writing, code, design, music, research, and more",
+      "All 16 creative partners — writing, code, design, music, research, and more",
       "5,000 messages per month",
       "Full Library access with reading progress",
       "Academy progression through all 10 Gates",
@@ -57,7 +57,7 @@ const TIERS = [
       "Everything in Creator",
       "5 team seats with shared workspace",
       "API access (REST + streaming)",
-      "Train custom companions on your content",
+      "Train custom AI partners on your content",
       "Direct support within 4 hours",
       "Export without Arcanea branding",
       "Usage analytics dashboard",
@@ -70,7 +70,7 @@ const TIERS = [
 ];
 
 const COMPARISON = [
-  { feature: "Companions", spark: "3", creator: "All 16", studio: "All 16" },
+  { feature: "Creative partners", spark: "3", creator: "All 16", studio: "All 16" },
   {
     feature: "Messages/month",
     spark: "100",
@@ -109,7 +109,7 @@ const COMPARISON = [
     studio: "5 included",
   },
   {
-    feature: "Custom companion training",
+    feature: "Custom AI partner training",
     spark: false,
     creator: false,
     studio: true,
@@ -135,12 +135,12 @@ const FAQs = [
   {
     question: "What happens to my work if I downgrade?",
     answer:
-      "Your conversations, creations, and Library progress are always kept. On Spark you can view everything but are limited to 3 companions and 100 messages.",
+      "Your conversations, creations, and Library progress are always kept. On Spark you can view everything but are limited to 3 creative partners and 100 messages.",
   },
   {
     question: "Is there a free trial for Creator?",
     answer:
-      "New users get a 7-day Creator trial with all 16 companions. No credit card required.",
+      "New users get a 7-day Creator trial with all 16 creative partners. No credit card required.",
   },
   {
     question: "Do you offer student or educator pricing?",
@@ -188,7 +188,7 @@ export default function PricingPage() {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#00bcd4]/30 bg-[#00bcd4]/10 mb-8">
             <span className="w-2 h-2 rounded-full bg-[#00bcd4] animate-pulse" />
             <span className="text-sm text-[#00bcd4] font-mono tracking-wider">
-              CREATIVE COMPANIONS
+              SIMPLE, TRANSPARENT PRICING
             </span>
           </div>
 
@@ -282,6 +282,28 @@ export default function PricingPage() {
                 </Link>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* Trust Strip */}
+        <section className="py-10">
+          <div className="flex flex-wrap justify-center gap-6 text-xs text-text-muted font-mono tracking-wide">
+            <span className="flex items-center gap-2">
+              <svg className="w-4 h-4 text-[#00bcd4]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+              7-day free Creator trial
+            </span>
+            <span className="flex items-center gap-2">
+              <svg className="w-4 h-4 text-[#00bcd4]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+              No credit card to start
+            </span>
+            <span className="flex items-center gap-2">
+              <svg className="w-4 h-4 text-[#00bcd4]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+              Cancel anytime, keep your work
+            </span>
+            <span className="flex items-center gap-2">
+              <svg className="w-4 h-4 text-[#00bcd4]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+              Your data stays yours
+            </span>
           </div>
         </section>
 

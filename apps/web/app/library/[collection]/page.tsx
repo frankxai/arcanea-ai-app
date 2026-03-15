@@ -101,7 +101,7 @@ export default async function CollectionPage({ params }: Props) {
           <div className="mb-4 flex items-center gap-4">
             <span className="text-4xl">{collection.icon}</span>
             <span className="rounded-full border border-atlantean-teal/40 bg-atlantean-teal/10 px-4 py-1 text-xs uppercase tracking-[0.3em] text-atlantean-teal">
-              Collection {collection.order} of 17
+              Collection {collection.order} of {COLLECTIONS.length}
             </span>
           </div>
 

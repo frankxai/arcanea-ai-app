@@ -24,6 +24,7 @@ import {
 
 export interface GuardianData {
   name: string;
+  slug?: string;
   title: string;
   gate: string;
   gateNumber: number;
@@ -451,10 +452,11 @@ export function GuardianDetailContent({
             <div className="grid sm:grid-cols-2 gap-4">
               {related.map((rel) => {
                 const relConfig = ELEMENT_CONFIG[rel.color];
+                const relSlug = rel.slug || rel.name.toLowerCase();
                 return (
                   <Link
-                    key={rel.luminorId}
-                    href={`/lore/guardians/${rel.luminorId}`}
+                    key={relSlug}
+                    href={`/lore/guardians/${relSlug}`}
                     className="group flex items-center gap-4 p-5 card-3d liquid-glass rounded-2xl border border-white/[0.06] hover:border-white/[0.12] glow-card hover-lift transition-all"
                   >
                     <div
