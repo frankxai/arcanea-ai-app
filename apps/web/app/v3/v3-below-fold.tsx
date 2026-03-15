@@ -1398,38 +1398,18 @@ export function V3BelowFold({
   return (
     <MotionProvider>
       <>
-        {/* 1. Guardian showcase — visual proof of the 10 Guardians */}
+        {/* 1. Guardian showcase — visual proof */}
         <GuardianShowcase />
 
         <AtmosphericDivider variant="teal" />
 
-        {/* 2. How it works — 3 clear steps */}
+        {/* 2. How it works — 4 clear steps */}
         <HowItWorks />
 
-        {/* Social proof — add back when we have real testimonials */}
-
-        {/* 3. Arcanean pathways */}
-        <PathwaysGrid />
-
-        {/* 4. Gallery — cinematic horizontal scroll */}
-        <GalleryShowcase />
-
-        {/* 4c. Companion portraits — 6 featured AI-generated spirits */}
-        <CompanionShowcase />
-
-        <AtmosphericDivider variant="purple" />
-
-        {/* 5. Three products: Companions, Library, Academy */}
-        <ThreePillars
-          collectionsCount={collectionsCount}
-          textsCount={textsCount}
-          totalWords={totalWords}
-        />
-
-        {/* 6. FAQ — objection handling */}
+        {/* 3. FAQ — objection handling */}
         <FAQInline />
 
-        {/* 7. Final CTA */}
+        {/* 4. Final CTA */}
         <CTASection />
       </>
     </MotionProvider>
