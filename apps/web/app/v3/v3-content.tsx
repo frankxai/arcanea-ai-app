@@ -128,7 +128,7 @@ function HeroPortal() {
 
           {/* Headline — clean, large, confident */}
           <m.h1
-            className="text-[clamp(2.5rem,6vw,5rem)] font-display font-bold tracking-[-0.035em] leading-[1.05] mb-4 md:mb-5"
+            className="text-[clamp(2.2rem,5.5vw,4.5rem)] font-display font-bold tracking-[-0.035em] leading-[1.08] mb-4 md:mb-5"
             initial={{ opacity: 0, y: 24 }}
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.1 }}
@@ -145,6 +145,16 @@ function HeroPortal() {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             Chat with AI. Build worlds. Share what you create.
+          </m.p>
+
+          {/* Differentiator — what makes this different */}
+          <m.p
+            className="max-w-md mx-auto text-xs text-white/20 leading-relaxed -mt-8 mb-12 md:mb-14 font-body"
+            initial={{ opacity: 0 }}
+            animate={isLoaded ? { opacity: 1 } : {}}
+            transition={{ duration: 0.5, delay: 0.25 }}
+          >
+            AI that knows your world &mdash; grounded in 190K words of creative philosophy.
           </m.p>
 
           {/* Chat box — THE hero element */}
