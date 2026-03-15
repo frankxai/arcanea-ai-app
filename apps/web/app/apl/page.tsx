@@ -64,10 +64,6 @@ export default function APLPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt: analyzeInput }),
       });
-      if (!res.ok) {
-        setAnalysisResult(null);
-        return;
-      }
       const data = await res.json();
       setAnalysisResult(data);
     } catch {
@@ -160,17 +156,17 @@ export default function APLPage() {
         <h2 className="mb-8 text-center text-2xl font-bold">The Quality Ladder</h2>
         <div className="space-y-4">
           {[
-            { level: 'SPARK only', time: '10 seconds', beats: '80%', labelClass: 'text-cyan-400', beatsClass: 'text-cyan-400' },
-            { level: 'SPARK + SHARPEN', time: '30 seconds', beats: '95%', labelClass: 'text-amber-400', beatsClass: 'text-amber-400' },
-            { level: 'SPARK + SHAPE + SHARPEN', time: '60 seconds', beats: '99%', labelClass: 'text-emerald-400', beatsClass: 'text-emerald-400' },
+            { level: 'SPARK only', time: '10 seconds', beats: '80%', color: 'cyan' },
+            { level: 'SPARK + SHARPEN', time: '30 seconds', beats: '95%', color: 'amber' },
+            { level: 'SPARK + SHAPE + SHARPEN', time: '60 seconds', beats: '99%', color: 'emerald' },
           ].map((tier, i) => (
             <div key={i} className="flex items-center gap-4 rounded-lg border border-neutral-800 bg-neutral-900/50 p-4">
-              <div className={`text-2xl font-bold ${tier.labelClass}`}>L{i + 1}</div>
+              <div className={`text-2xl font-bold text-${tier.color}-400`}>L{i + 1}</div>
               <div className="flex-1">
                 <div className="font-medium text-neutral-200">{tier.level}</div>
                 <div className="text-sm text-neutral-500">{tier.time}</div>
               </div>
-              <div className={`text-lg font-bold ${tier.beatsClass}`}>Beats {tier.beats}</div>
+              <div className={`text-lg font-bold text-${tier.color}-400`}>Beats {tier.beats}</div>
             </div>
           ))}
         </div>
@@ -336,16 +332,10 @@ export default function APLPage() {
           <li>2. Find the SPARK — the one detail that surprises you</li>
           <li>3. That is it. You are using APL.</li>
         </ol>
-        <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-center">
-          <a
-            href="/apl/library"
-            className="rounded-xl bg-cyan-600 px-6 py-3 font-medium text-white transition hover:bg-cyan-500"
-          >
-            Browse 30 Prompts
-          </a>
+        <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
           <a
             href="/academy/courses/arcanean-prompt-language"
-            className="rounded-xl border border-neutral-700 px-6 py-3 font-medium text-neutral-300 transition hover:border-neutral-500"
+            className="rounded-xl bg-cyan-600 px-6 py-3 font-medium text-white transition hover:bg-cyan-500"
           >
             Take the Course
           </a>
