@@ -1,8 +1,8 @@
 {
   "name": "arcanea-code",
   "displayName": "Arcanea Realm",
-  "description": "Guardian-routed AI intelligence for creators — 10 Guardians, 5 Elements, 10 Gates of creative progression",
-  "version": "0.2.0",
+  "description": "BYOK AI coding agent with world-building superpowers — 10 Guardians, 5 Elements, multi-model streaming",
+  "version": "0.3.0",
   "publisher": "frankxai",
   "license": "SEE LICENSE IN LICENSE",
   "repository": {
@@ -23,18 +23,18 @@
   ],
   "keywords": [
     "ai",
+    "gemini",
+    "claude",
+    "openai",
+    "byok",
     "guardian",
     "creativity",
     "arcanea",
     "mcp",
     "world-building",
     "creative-ai",
-    "mythology",
-    "routing",
     "coding-agent",
-    "luminor",
-    "design-system",
-    "voice-bible"
+    "luminor"
   ],
   "activationEvents": [
     "onStartupFinished"
@@ -68,6 +68,12 @@
       ]
     },
     "commands": [
+      {
+        "command": "arcanea.setApiKey",
+        "title": "Set API Key",
+        "category": "Arcanea",
+        "icon": "$(key)"
+      },
       {
         "command": "arcanea.routeGuardian",
         "title": "Route to Guardian",
@@ -187,6 +193,72 @@
     "configuration": {
       "title": "Arcanea Realm",
       "properties": {
+        "arcanea.gatewayModel": {
+          "type": "string",
+          "default": "arcanea-gemini-flash",
+          "enum": [
+            "arcanea-opus", "arcanea-sonnet", "arcanea-haiku",
+            "arcanea-gpt5", "arcanea-gpt4o", "arcanea-gpt4o-mini", "arcanea-o3",
+            "arcanea-gemini-pro", "arcanea-gemini-flash", "arcanea-gemini-lite",
+            "arcanea-grok", "arcanea-grok-mini",
+            "arcanea-deepseek-r1", "arcanea-deepseek",
+            "arcanea-kimi",
+            "arcanea-qwen", "arcanea-bolt", "arcanea-thunder",
+            "arcanea-maverick", "arcanea-lightning", "arcanea-scout",
+            "arcanea-samba-llama", "arcanea-samba-405b", "arcanea-samba-qwen",
+            "arcanea-together-llama", "arcanea-together-qwen",
+            "arcanea-fireworks-llama",
+            "arcanea-mistral", "arcanea-codestral",
+            "arcanea-or-auto", "arcanea-or-opus", "arcanea-or-sonnet",
+            "arcanea-or-gpt5", "arcanea-or-gemini", "arcanea-or-grok",
+            "arcanea-or-deepseek", "arcanea-or-free"
+          ],
+          "enumDescriptions": [
+            "Opus 4.6 — Deep reasoning, 1M context (Anthropic)",
+            "Sonnet 4.6 — Best code + creative balance (Anthropic)",
+            "Haiku 4.5 — Fast + cheap (Anthropic)",
+            "GPT-5.2 Pro — Ultra reasoning (OpenAI)",
+            "GPT-4o — Balanced multimodal (OpenAI)",
+            "GPT-4o Mini — Fast + cheap (OpenAI)",
+            "o3 — Chain-of-thought reasoning (OpenAI)",
+            "Gemini 3.1 Pro — Deep reasoning (Google)",
+            "Gemini 2.5 Flash — Fast, free tier available (Google)",
+            "Gemini 2.0 Lite — Ultra-fast (Google)",
+            "Grok 4.2 Heavy — Deep reasoning + humor (xAI)",
+            "Grok 3 Mini — Fast (xAI)",
+            "DeepSeek R1 — Reasoning chain (DeepSeek)",
+            "DeepSeek V3 — Great code, low cost (DeepSeek)",
+            "Kimi K2.5 — Creative writing (Moonshot)",
+            "Qwen 3 235B — Multilingual code (Cerebras 200 tok/s)",
+            "Bolt — 2200 tok/s SPEED KING (Cerebras)",
+            "Thunder — 450 tok/s fast 70B (Cerebras)",
+            "Maverick — Llama 4 creative (Groq 300 tok/s)",
+            "Lightning — 750 tok/s instant (Groq)",
+            "Scout — Llama 4 fast (Groq 500 tok/s)",
+            "SambaNova 70B — 1000 tok/s custom silicon",
+            "SambaNova 405B — Largest open model (130 tok/s)",
+            "SambaNova Qwen 72B — 400 tok/s multilingual",
+            "Together 70B Turbo — Fast open-source (Together)",
+            "Together Qwen 72B — Multilingual (Together)",
+            "Fireworks 70B — Fast inference (Fireworks)",
+            "Mistral Large — European code (Mistral)",
+            "Codestral — Code-specialized (Mistral)",
+            "OpenRouter Auto — Auto-routes to best model (OR)",
+            "OR: Opus 4.6 via OpenRouter",
+            "OR: Sonnet 4.6 via OpenRouter",
+            "OR: GPT-5.2 via OpenRouter",
+            "OR: Gemini Pro via OpenRouter",
+            "OR: Grok 4 via OpenRouter",
+            "OR: DeepSeek R1 via OpenRouter",
+            "OR: Free Flash — Free tier (OpenRouter)"
+          ],
+          "description": "Intelligence Gateway — 40+ frontier models across 14 providers. Use OpenRouter for 200+ additional models."
+        },
+        "arcanea.customModel": {
+          "type": "string",
+          "default": "",
+          "description": "Custom OpenRouter model ID (e.g. 'anthropic/claude-sonnet-4'). Overrides gatewayModel when set."
+        },
         "arcanea.activeGuardian": {
           "type": "string",
           "default": "shinkami",
@@ -293,7 +365,7 @@
   "scripts": {
     "build": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --minify",
     "dev": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --watch",
-    "test": "esbuild src/guardians.ts --outfile=tests/_guardians.mjs --format=esm --platform=node && node --test tests/*.test.mjs",
+    "test": "esbuild src/guardians.ts --outfile=tests/_guardians.mjs --format=esm --platform=node && esbuild src/intelligence.ts --outfile=tests/_intelligence.mjs --format=esm --platform=node && node --test tests/*.test.mjs",
     "package": "vsce package",
     "publish": "vsce publish"
   },

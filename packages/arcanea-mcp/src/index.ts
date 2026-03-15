@@ -146,6 +146,11 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
     // === CANON & REFERENCE ===
     { name: "validate_canon", description: "Check content for Arcanea canon compliance", inputSchema: { type: "object", properties: { content: { type: "string" }, contentType: { type: "string", enum: ["story", "character", "general"] } }, required: ["content"] } },
     { name: "identify_gate", description: "Get detailed information about a specific Gate, Guardian, and Godbeast", inputSchema: { type: "object", properties: { gateNumber: { type: "number", minimum: 1, maximum: 10 } }, required: ["gateNumber"] } },
+
+    // === APL — ARCANEAN PROMPT LANGUAGE ===
+    { name: "apl_enhance", description: "Analyze a prompt using SPARK.SHAPE.SHARPEN and get quality score, slop detection, palette suggestions, and improvement tips", inputSchema: { type: "object", properties: { prompt: { type: "string", description: "The prompt to analyze and enhance" }, palette: { type: "string", enum: ["forge", "tide", "root", "drift", "void"], description: "Force a specific sensory palette" } }, required: ["prompt"] } },
+    { name: "apl_anti_slop", description: "Scan text for AI slop patterns (The Opener, The Avalanche, The Slop, etc.) and get specific fixes", inputSchema: { type: "object", properties: { text: { type: "string", description: "Text to scan for slop patterns" } }, required: ["text"] } },
+    { name: "apl_format", description: "Format a prompt using the SPARK.SHAPE.SHARPEN structure for maximum AI output quality", inputSchema: { type: "object", properties: { spark: { type: "string", description: "The one unique detail that makes this yours" }, palette: { type: "string", enum: ["forge", "tide", "root", "drift", "void"], description: "Sensory palette" }, paletteDescription: { type: "string", description: "What the world feels/sounds/looks like" }, sharpen: { type: "array", items: { type: "string" }, description: "List of things it must NOT be" }, prompt: { type: "string", description: "The main prompt in plain language" } }, required: ["spark", "prompt"] } },
   ],
 }));
 
@@ -425,7 +430,67 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       }, null, 2) }] };
     }
 
-    default: return { content: [{ type: "text", text: `Unknown tool: ${name}. Use tools like generate_character, invoke_luminor, or diagnose_block.` }] };
+    // === APL HANDLERS ===
+    case "apl_enhance": {
+      const prompt = args?.prompt as string;
+      const palette = args?.palette as string | undefined;
+      // Inline APL analysis (no external deps needed)
+      const slopPatterns = [
+        { id: "opener", name: "The Opener", re: /\bin a world where\b/i, fix: "Start in the middle." },
+        { id: "avalanche", name: "The Avalanche", re: /\bhauntingly beautiful\b/i, fix: "One strong word beats five weak ones." },
+        { id: "slop", name: "The Slop", re: /\bi'?d be happy to help\b/i, fix: "Respond AS the thing, not ABOUT the thing." },
+        { id: "slop2", name: "The Slop", re: /\bgreat question\b/i, fix: "Just answer." },
+        { id: "safety", name: "The Safety", re: /\ba (?:beautiful|stunning) (?:landscape|sunset)\b/i, fix: "If it doesn't make you feel something, it's not done." },
+      ];
+      const slopMatches = slopPatterns.filter(p => p.re.test(prompt)).map(p => ({ name: p.name, fix: p.fix }));
+      const hasSpecific = /\b(?:every night|always|never fails|the way she|his habit)\b/i.test(prompt);
+      const hasSensory = /\b(?:smell|taste|feel|sound|texture|heat|cold|weight|echo)\b/i.test(prompt);
+      const hasNegation = /\b(?:not|never|no|without|avoid|don't|must not)\b/i.test(prompt);
+      const suggestions: string[] = [];
+      if (!hasSpecific) suggestions.push("SPARK: Add one specific, surprising detail — the thing only YOU would think of.");
+      if (!hasSensory) suggestions.push("SHAPE: Add sensory language — what does this feel/smell/sound like?" + (palette ? ` Use the ${palette.toUpperCase()} palette.` : ""));
+      if (!hasNegation) suggestions.push("SHARPEN: Tell the AI what to AVOID — what must this NOT be?");
+      slopMatches.forEach(m => suggestions.push(`Cut slop: ${m.name} → ${m.fix}`));
+      const quality = hasSpecific && hasSensory && hasNegation && slopMatches.length === 0 ? "resonant" : hasSpecific && hasSensory ? "vivid" : hasSpecific ? "clear" : "generic";
+      return { content: [{ type: "text", text: JSON.stringify({ quality, slopMatches, suggestions, sparkPresent: hasSpecific, shapePresent: hasSensory, sharpenPresent: hasNegation }, null, 2) }] };
+    }
+
+    case "apl_anti_slop": {
+      const text = args?.text as string;
+      const patterns = [
+        { name: "The Opener", re: /\bin a world where\b/gi, fix: "Start in the middle." },
+        { name: "The Avalanche", re: /\b(?:hauntingly|breathtakingly|stunningly)\s+\w+/gi, fix: "One strong word beats five." },
+        { name: "The Slop", re: /\b(?:i'd be happy to|great question|certainly!|absolutely!|dive (?:deep )?into|unpack this)/gi, fix: "Respond AS the thing." },
+        { name: "The Explanation", re: /\bthis (?:metaphor|symbol) (?:represents|means)\b/gi, fix: "Trust the reader." },
+        { name: "The Safety", re: /\ba (?:beautiful|stunning|brave|epic) (?:landscape|warrior|adventure|journey)\b/gi, fix: "Make them feel something specific." },
+      ];
+      const matches: Array<{name: string; match: string; fix: string}> = [];
+      for (const p of patterns) {
+        let m;
+        while ((m = p.re.exec(text)) !== null) {
+          matches.push({ name: p.name, match: m[0], fix: p.fix });
+        }
+      }
+      const words = text.split(/\s+/).length;
+      const score = Math.min(matches.length / Math.max(words / 50, 1), 1);
+      return { content: [{ type: "text", text: JSON.stringify({ slopScore: Math.round(score * 100) / 100, matchCount: matches.length, wordCount: words, matches, verdict: score === 0 ? "CLEAN" : score < 0.3 ? "MILD" : score < 0.6 ? "SLOPPY" : "MAXIMUM SLOP" }, null, 2) }] };
+    }
+
+    case "apl_format": {
+      const spark = args?.spark as string;
+      const paletteId = args?.palette as string | undefined;
+      const paletteDesc = args?.paletteDescription as string | undefined;
+      const sharpen = args?.sharpen as string[] | undefined;
+      const mainPrompt = args?.prompt as string;
+      const parts: string[] = [];
+      parts.push(`SPARK: ${spark}`);
+      if (paletteId) parts.push(`SHAPE: ${paletteId.toUpperCase()}${paletteDesc ? ` — ${paletteDesc}` : ""}`);
+      if (sharpen && sharpen.length > 0) parts.push(`SHARPEN: ${sharpen.map(s => `NOT ${s}`).join(". ")}.`);
+      parts.push("", mainPrompt);
+      return { content: [{ type: "text", text: parts.join("\n") }] };
+    }
+
+    default: return { content: [{ type: "text", text: `Unknown tool: ${name}. Use tools like generate_character, invoke_luminor, apl_enhance, or diagnose_block.` }] };
   }
 });
 

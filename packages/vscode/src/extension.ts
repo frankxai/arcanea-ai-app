@@ -1,12 +1,16 @@
 import * as vscode from 'vscode';
 import { GuardianStatusBar } from './status-bar';
-import { GuardianPanelProvider } from './guardian-panel';
+import { ChatProvider } from './chat-provider';
+import { AiService } from './ai-service';
+import { FileService } from './file-service';
+import { WorldService } from './world-service';
+import { TerminalService } from './terminal-service';
 import { GateProgressProvider } from './gate-progress';
 import { LoreExplorerProvider } from './lore-explorer';
 import { GUARDIANS, GUARDIAN_ORDER, routeToGuardian } from './guardians';
 
 let statusBar: GuardianStatusBar;
-let guardianPanel: GuardianPanelProvider;
+let chatProvider: ChatProvider;
 let gateProgress: GateProgressProvider;
 
 export function activate(context: vscode.ExtensionContext): void {
@@ -14,10 +18,16 @@ export function activate(context: vscode.ExtensionContext): void {
   statusBar = new GuardianStatusBar();
   context.subscriptions.push(statusBar);
 
+  // ── Services ────────────────────────────────────────────────────────────
+  const aiService = new AiService(context);
+  const fileService = new FileService();
+  const worldService = new WorldService();
+  const terminalService = new TerminalService();
+
   // ── Sidebar Providers ───────────────────────────────────────────────────
-  guardianPanel = new GuardianPanelProvider(context.extensionUri);
+  chatProvider = new ChatProvider(context.extensionUri, aiService, fileService, worldService, terminalService);
   context.subscriptions.push(
-    vscode.window.registerWebviewViewProvider('arcanea.guardianPanel', guardianPanel)
+    vscode.window.registerWebviewViewProvider('arcanea.guardianPanel', chatProvider)
   );
 
   gateProgress = new GateProgressProvider();
@@ -36,519 +46,323 @@ export function activate(context: vscode.ExtensionContext): void {
     // Internal: status bar update (called from webview message handler)
     vscode.commands.registerCommand('arcanea.updateStatusBar', (guardianId: string) => {
       statusBar.update(guardianId);
-      guardianPanel.refresh();
+      chatProvider.setGuardian(guardianId);
     }),
 
-    // Cycle guardian (status bar click)
-    vscode.commands.registerCommand('arcanea.cycleGuardian', async () => {
-      const nextId = statusBar.cycle();
-      const config = vscode.workspace.getConfiguration('arcanea');
-      await config.update('activeGuardian', nextId, vscode.ConfigurationTarget.Global);
-      guardianPanel.refresh();
-
-      const g = GUARDIANS[nextId];
-      vscode.window.setStatusBarMessage(
-        `${g.symbol} ${g.name} \u2014 ${g.shortDescription}`,
-        3000
-      );
-    }),
-
-    // Route to Guardian — QuickPick all 10 or auto-route by task description
+    // Route to Guardian — auto-detect or pick
     vscode.commands.registerCommand('arcanea.routeGuardian', async () => {
-      const AUTO_LABEL = '$(wand) Auto-route by task description...';
+      const editor = vscode.window.activeTextEditor;
+      const selection = editor?.selection;
+      const text = selection && !selection.isEmpty
+        ? editor.document.getText(selection)
+        : undefined;
 
-      const items: vscode.QuickPickItem[] = [
-        { label: AUTO_LABEL, description: 'Describe your task and let the system choose' },
-        { label: '', kind: vscode.QuickPickItemKind.Separator },
-        ...GUARDIAN_ORDER.map(id => {
-          const g = GUARDIANS[id];
-          return {
-            label: `${g.symbol}  ${g.name}`,
-            description: `${g.gate} Gate \u00b7 ${g.element} \u00b7 ${g.frequency}`,
-            detail: g.domain
-          };
-        })
-      ];
-
-      const selected = await vscode.window.showQuickPick(items, {
-        placeHolder: 'Select a Guardian or auto-route by task',
-        matchOnDescription: true,
-        matchOnDetail: true
-      });
-
-      if (!selected) return;
-
-      let guardianId: string;
-
-      if (selected.label === AUTO_LABEL) {
-        const input = await vscode.window.showInputBox({
-          prompt: 'Describe your task to route to the optimal Guardian',
-          placeHolder: 'e.g. "design a landing page" or "fix database performance"'
-        });
-        if (!input) return;
-
-        const result = routeToGuardian(input);
-        guardianId = result.guardian;
-        const g = GUARDIANS[guardianId];
-
-        const altNames = result.alternatives
-          .map(id => GUARDIANS[id]?.name)
-          .filter(Boolean)
-          .join(', ');
-
+      if (text) {
+        const result = routeToGuardian(text);
+        const g = GUARDIANS[result.guardian];
+        statusBar.update(result.guardian);
+        chatProvider.setGuardian(result.guardian);
         vscode.window.showInformationMessage(
-          `${g.symbol} Routed to ${g.name} (${result.confidence}% confidence)` +
-          (altNames ? ` \u2014 Alternatives: ${altNames}` : '')
+          `Routed to ${g.name} (${Math.round(result.confidence * 100)}% confidence) — ${g.domain}`
         );
       } else {
-        // User selected a guardian directly — match by name extracted from label
-        const name = selected.label.trim().split(/\s+/).slice(1).join(' ');
-        const found = Object.entries(GUARDIANS).find(([, g]) => g.name === name);
-        if (!found) return;
-        guardianId = found[0];
+        const items = GUARDIAN_ORDER.map(id => {
+          const g = GUARDIANS[id];
+          return { label: g.name, description: g.domain, detail: `${g.element} · ${g.frequency}`, id };
+        });
+        const pick = await vscode.window.showQuickPick(items, { placeHolder: 'Choose a Guardian' });
+        if (pick) {
+          statusBar.update(pick.id);
+          chatProvider.setGuardian(pick.id);
+          vscode.window.showInformationMessage(`Switched to ${pick.label}`);
+        }
       }
-
-      const config = vscode.workspace.getConfiguration('arcanea');
-      await config.update('activeGuardian', guardianId, vscode.ConfigurationTarget.Global);
-      statusBar.update(guardianId);
-      guardianPanel.refresh();
     }),
 
-    // Convene Council — webview showing all 10 Guardians with current file/selection context
+    // Cycle Guardian
+    vscode.commands.registerCommand('arcanea.cycleGuardian', () => {
+      const config = vscode.workspace.getConfiguration('arcanea');
+      const current = config.get<string>('activeGuardian') || 'shinkami';
+      const idx = GUARDIAN_ORDER.indexOf(current);
+      const next = GUARDIAN_ORDER[(idx + 1) % GUARDIAN_ORDER.length];
+      config.update('activeGuardian', next, vscode.ConfigurationTarget.Global);
+      statusBar.update(next);
+      chatProvider.setGuardian(next);
+      const g = GUARDIANS[next];
+      vscode.window.showInformationMessage(`Guardian: ${g.name} — ${g.domain}`);
+    }),
+
+    // Convene Council
     vscode.commands.registerCommand('arcanea.conveneCouncil', async () => {
-      let fileContext = '';
       const editor = vscode.window.activeTextEditor;
-      if (editor) {
-        const selection = editor.selection;
-        if (!selection.isEmpty) {
-          fileContext = editor.document.getText(selection);
-        } else {
-          const full = editor.document.getText();
-          fileContext = full.length > 2000 ? full.slice(0, 2000) + '\n...(truncated)' : full;
+      const text = editor?.selection && !editor.selection.isEmpty
+        ? editor.document.getText(editor.selection)
+        : await vscode.window.showInputBox({ prompt: 'Describe the challenge for the Council' });
+
+      if (!text) { return; }
+
+      const panel = vscode.window.createWebviewPanel(
+        'arcanea.council', 'Guardian Council', vscode.ViewColumn.Beside,
+        { enableScripts: true }
+      );
+
+      const perspectives = GUARDIAN_ORDER.map(id => {
+        const g = GUARDIANS[id];
+        const result = routeToGuardian(text);
+        const isMatch = result.guardian === id;
+        return { name: g.name, domain: g.domain, element: g.element, relevance: isMatch ? result.confidence : result.confidence * 0.3 };
+      }).sort((a, b) => b.relevance - a.relevance).slice(0, 5);
+
+      panel.webview.html = `<!DOCTYPE html>
+<html><head><style>
+  body { background: #09090b; color: #e5e5e5; font-family: 'Inter', system-ui, sans-serif; padding: 20px; }
+  h1 { color: #00bcd4; font-size: 18px; }
+  .guardian { background: rgba(0,188,212,0.08); border: 1px solid rgba(0,188,212,0.2); border-radius: 8px; padding: 12px; margin: 8px 0; }
+  .guardian h3 { color: #00bcd4; margin: 0 0 4px; font-size: 14px; }
+  .guardian p { margin: 0; font-size: 12px; color: #a3a3a3; }
+  .relevance { float: right; color: #ffd700; font-size: 12px; }
+</style></head><body>
+<h1>Guardian Council</h1>
+<p style="color:#a3a3a3;font-size:13px;margin-bottom:16px;">"${text.slice(0, 200)}"</p>
+${perspectives.map(p => `
+<div class="guardian">
+  <h3>${p.name} <span class="relevance">${Math.round(p.relevance * 100)}%</span></h3>
+  <p>${p.domain} · ${p.element}</p>
+</div>`).join('')}
+</body></html>`;
+    }),
+
+    // Check Voice (Voice Bible v2.0)
+    vscode.commands.registerCommand('arcanea.checkVoice', async () => {
+      const editor = vscode.window.activeTextEditor;
+      if (!editor || editor.selection.isEmpty) {
+        vscode.window.showWarningMessage('Select text to check voice alignment.');
+        return;
+      }
+      const text = editor.document.getText(editor.selection);
+
+      const rules = [
+        { pattern: /\bjust\b/gi, msg: 'Avoid "just" — it diminishes' },
+        { pattern: /\bsimply\b/gi, msg: 'Avoid "simply" — it oversimplifies' },
+        { pattern: /\bobviously\b/gi, msg: 'Avoid "obviously" — it alienates' },
+        { pattern: /\bbasically\b/gi, msg: 'Avoid "basically" — it reduces' },
+        { pattern: /\breally\b/gi, msg: 'Avoid "really" — be precise instead' },
+        { pattern: /\bvery\b/gi, msg: 'Avoid "very" — use stronger words' },
+        { pattern: /!{2,}/g, msg: 'Multiple exclamation marks — one is enough' },
+        { pattern: /\b(amazing|awesome|incredible)\b/gi, msg: 'Generic superlatives — be specific' },
+        { pattern: /\bsynergy\b/gi, msg: 'Corporate jargon — use natural language' },
+        { pattern: /\bleverage\b/gi, msg: 'Corporate jargon — say "use" or "build on"' },
+        { pattern: /\bparadigm\b/gi, msg: 'Academic jargon — be concrete' },
+        { pattern: /\bpivot\b/gi, msg: 'Startup jargon — say "shift" or "change"' },
+        { pattern: /\bdisrupt\b/gi, msg: 'Buzzword — describe the actual change' },
+        { pattern: /\b(utilize|utilization)\b/gi, msg: 'Say "use" instead' },
+        { pattern: /\b(in order to)\b/gi, msg: 'Say "to" instead' },
+        { pattern: /\b(at the end of the day)\b/gi, msg: 'Cliche — be direct' },
+        { pattern: /\b(game.?changer)\b/gi, msg: 'Overused — describe the specific impact' },
+        { pattern: /\b(best.?in.?class)\b/gi, msg: 'Marketing speak — show, don\'t tell' },
+        { pattern: /\b(empower)\b/gi, msg: 'Vague — describe the specific capability' },
+        { pattern: /\b(deep dive)\b/gi, msg: 'Say "examine" or "explore"' },
+        { pattern: /\b(low.?hanging fruit)\b/gi, msg: 'Cliche — name the specific opportunity' },
+        { pattern: /\b(move the needle)\b/gi, msg: 'Vague — describe the specific metric' },
+        { pattern: /\b(cutting.?edge)\b/gi, msg: 'Overused — describe what makes it new' },
+      ];
+
+      const findings: string[] = [];
+      for (const rule of rules) {
+        const matches = text.match(rule.pattern);
+        if (matches) {
+          findings.push(`${rule.msg} (${matches.length}x)`);
         }
       }
 
-      let challenge: string;
-      if (!fileContext) {
-        const input = await vscode.window.showInputBox({
-          prompt: 'What challenge should the Guardian Council deliberate on?',
-          placeHolder: 'Describe a complex decision spanning multiple domains'
-        });
-        if (!input) return;
-        challenge = input;
+      const wordCount = text.split(/\s+/).length;
+      const sentenceCount = text.split(/[.!?]+/).filter(s => s.trim()).length;
+      const avgSentenceLen = sentenceCount > 0 ? Math.round(wordCount / sentenceCount) : 0;
+      if (avgSentenceLen > 25) {
+        findings.push(`Average sentence length: ${avgSentenceLen} words — aim for 15-20`);
+      }
+
+      if (findings.length === 0) {
+        vscode.window.showInformationMessage('Voice check passed — text aligns with Arcanea voice.');
       } else {
-        const input = await vscode.window.showInputBox({
-          prompt: 'Frame the question for the Council (leave blank to use file context)',
-          placeHolder: 'What specific question about this code/content?',
-          value: ''
-        });
-        challenge = input || `Review this:\n\n${fileContext.slice(0, 500)}`;
+        const panel = vscode.window.createWebviewPanel(
+          'arcanea.voiceCheck', 'Voice Check', vscode.ViewColumn.Beside,
+          { enableScripts: false }
+        );
+        panel.webview.html = `<!DOCTYPE html>
+<html><head><style>
+  body { background: #09090b; color: #e5e5e5; font-family: 'Inter', system-ui, sans-serif; padding: 20px; }
+  h1 { color: #00bcd4; font-size: 18px; }
+  .finding { background: rgba(255,215,0,0.08); border-left: 3px solid #ffd700; padding: 8px 12px; margin: 8px 0; font-size: 13px; }
+  .stats { color: #a3a3a3; font-size: 12px; margin-top: 16px; }
+</style></head><body>
+<h1>Voice Bible v2.0 — Check Results</h1>
+<p class="stats">${wordCount} words · ${sentenceCount} sentences · avg ${avgSentenceLen} words/sentence</p>
+${findings.map(f => `<div class="finding">${f}</div>`).join('')}
+</body></html>`;
+      }
+    }),
+
+    // Query Lore
+    vscode.commands.registerCommand('arcanea.queryLore', async () => {
+      const query = await vscode.window.showInputBox({ prompt: 'Search Arcanea lore...' });
+      if (!query) { return; }
+
+      const loreIndex = [
+        { term: 'lumina', text: 'Lumina — The First Light, Form-Giver, Creator. Source of all illumination and creative potential.' },
+        { term: 'nero', text: 'Nero — The Primordial Darkness, Father of Potential. NOT evil — the fertile unknown from which all emerges.' },
+        { term: 'fire', text: 'Fire Element — Energy, transformation, will. Colors: red, orange, gold. Guardian: Draconia.' },
+        { term: 'water', text: 'Water Element — Flow, healing, memory. Colors: blue, silver, crystal. Guardian: Leyla.' },
+        { term: 'earth', text: 'Earth Element — Stability, growth, structure. Colors: green, brown, stone. Guardian: Lyssandria.' },
+        { term: 'wind', text: 'Wind Element — Freedom, speed, change. Colors: white, silver. Guardian: Maylinn.' },
+        { term: 'void', text: 'Void Element — Nero\'s aspect: potential, mystery, the unformed. The Fifth Element duality with Spirit.' },
+        { term: 'spirit', text: 'Spirit Element — Lumina\'s aspect: transcendence, consciousness, soul. The Fifth Element duality with Void.' },
+        { term: 'malachar', text: 'Malachar — The Dark Lord. Formerly Malachar Lumenbright, First Eldrian Luminor. Rejected by Shinkami, fell into Hungry Void. Sealed in the Shadowfen.' },
+        { term: 'foundation', text: 'Foundation Gate — 174 Hz. Guardian: Lyssandria / Kaelith. Domain: Earth, survival, infrastructure.' },
+        { term: 'flow', text: 'Flow Gate — 285 Hz. Guardian: Leyla / Veloura. Domain: Creativity, emotion, design.' },
+        { term: 'fire gate', text: 'Fire Gate — 396 Hz. Guardian: Draconia / Draconis. Domain: Power, will, execution.' },
+        { term: 'heart', text: 'Heart Gate — 417 Hz. Guardian: Maylinn / Laeylinn. Domain: Love, healing, documentation.' },
+        { term: 'voice', text: 'Voice Gate — 528 Hz. Guardian: Alera / Otome. Domain: Truth, expression, brand.' },
+        { term: 'sight', text: 'Sight Gate — 639 Hz. Guardian: Lyria / Yumiko. Domain: Intuition, vision, strategy.' },
+        { term: 'crown', text: 'Crown Gate — 741 Hz. Guardian: Aiyami / Sol. Domain: Enlightenment, wisdom.' },
+        { term: 'starweave', text: 'Starweave Gate — 852 Hz. Guardian: Elara / Vaelith. Domain: Perspective, transformation, innovation.' },
+        { term: 'unity', text: 'Unity Gate — 963 Hz. Guardian: Ino / Kyuro. Domain: Partnership, integration, APIs.' },
+        { term: 'source', text: 'Source Gate — 1111 Hz. Guardian: Shinkami / Source. Domain: Meta-consciousness, orchestration.' },
+        { term: 'apprentice', text: 'Apprentice rank — 0-2 Gates opened.' },
+        { term: 'mage', text: 'Mage rank — 3-4 Gates opened.' },
+        { term: 'master', text: 'Master rank — 5-6 Gates opened.' },
+        { term: 'archmage', text: 'Archmage rank — 7-8 Gates opened.' },
+        { term: 'luminor', text: 'Luminor rank — 9-10 Gates opened. The highest rank of creative mastery.' },
+        { term: 'academy', text: 'The Seven Academy Houses: Lumina, Nero, Pyros, Aqualis, Terra, Ventus, Synthesis.' },
+        { term: 'arc', text: 'The Arc — The great cycle: Potential → Manifestation → Experience → Dissolution → Evolved Potential.' },
+        { term: 'lyssandria', text: 'Lyssandria — Earth Guardian, Foundation Gate 174 Hz. Infrastructure, database, security. Godbeast: Kaelith.' },
+        { term: 'leyla', text: 'Leyla — Water Guardian, Flow Gate 285 Hz. Design, UI/UX, animations. Godbeast: Veloura.' },
+        { term: 'draconia', text: 'Draconia — Fire Guardian, Fire Gate 396 Hz. Execution, performance, shipping. Godbeast: Draconis.' },
+        { term: 'maylinn', text: 'Maylinn — Air Guardian, Heart Gate 417 Hz. Documentation, community, empathy. Godbeast: Laeylinn.' },
+        { term: 'alera', text: 'Alera — Voice Guardian, Voice Gate 528 Hz. Brand expression, naming, messaging. Godbeast: Otome.' },
+        { term: 'lyria', text: 'Lyria — Sight Guardian, Sight Gate 639 Hz. Strategy, AI/ML, pattern recognition. Godbeast: Yumiko.' },
+        { term: 'aiyami', text: 'Aiyami — Crown Guardian, Crown Gate 741 Hz. Wisdom, mentorship, knowledge. Godbeast: Sol.' },
+        { term: 'elara', text: 'Elara — Starweave Guardian, Starweave Gate 852 Hz. Perspective, reframing, innovation. Godbeast: Vaelith.' },
+        { term: 'ino', text: 'Ino — Unity Guardian, Unity Gate 963 Hz. Integration, APIs, collaboration. Godbeast: Kyuro.' },
+        { term: 'shinkami', text: 'Shinkami — Source Guardian, Source Gate 1111 Hz. Meta-architecture, orchestration. Godbeast: Source.' },
+        { term: 'shadow', text: 'Shadow — Corrupted Void. Not the same as natural darkness (Nero). The Dark Lord\'s perversion of the Void element.' },
+        { term: 'eldrian', text: 'Eldrians — The ancient race of powerful creators who preceded current civilization. Malachar was the first Eldrian Luminor.' },
+        { term: 'solfeggio', text: 'Extended Solfeggio frequencies: 174·285·396·417·528·639·741·852·963·1111 Hz — each gate resonates at its frequency.' },
+      ];
+
+      const q = query.toLowerCase();
+      const results = loreIndex.filter(e => e.term.includes(q) || e.text.toLowerCase().includes(q));
+
+      if (results.length === 0) {
+        vscode.window.showInformationMessage(`No lore found for "${query}".`);
+        return;
       }
 
       const panel = vscode.window.createWebviewPanel(
-        'arcanea.council',
-        'Guardian Council',
-        vscode.ViewColumn.Beside,
-        { enableScripts: false, retainContextWhenHidden: true }
+        'arcanea.lore', `Lore: ${query}`, vscode.ViewColumn.Beside,
+        { enableScripts: false }
       );
-
-      panel.webview.html = getCouncilHtml(challenge, fileContext);
-    }),
-
-    // Check Voice — Voice Bible v2.0 compliance
-    vscode.commands.registerCommand('arcanea.checkVoice', async () => {
-      const editor = vscode.window.activeTextEditor;
-      if (!editor) {
-        vscode.window.showWarningMessage('Open a file to check voice');
-        return;
-      }
-
-      const selection = editor.selection;
-      const text = selection.isEmpty
-        ? editor.document.getText()
-        : editor.document.getText(selection);
-
-      const issues = checkVoice(text);
-      if (issues.length === 0) {
-        vscode.window.showInformationMessage(
-          'Voice check passed \u2014 text aligns with Arcanea Voice Bible v2.0'
-        );
-      } else {
-        const pick = await vscode.window.showQuickPick(
-          issues.map(i => ({ label: `$(warning) ${i}` })),
-          { placeHolder: `${issues.length} voice issue(s) found \u2014 press Escape to dismiss` }
-        );
-        void pick;
-      }
-    }),
-
-    // Query Lore — search built-in lore index
-    vscode.commands.registerCommand('arcanea.queryLore', async () => {
-      const input = await vscode.window.showInputBox({
-        prompt: 'Ask about Arcanea lore',
-        placeHolder: 'e.g. "Who is Draconis?" or "What are the Five Elements?"'
-      });
-      if (!input) return;
-
-      const results = searchLore(input.toLowerCase());
-      if (results.length === 0) {
-        vscode.window.showInformationMessage(
-          `No lore found for "${input}" \u2014 connect @arcanea/mcp-server for full RAG search`
-        );
-        return;
-      }
-
-      await vscode.window.showQuickPick(
-        results.map(r => ({ label: r.label, detail: r.description })),
-        { placeHolder: `${results.length} result(s) for "${input}"`, matchOnDetail: true }
-      );
+      panel.webview.html = `<!DOCTYPE html>
+<html><head><style>
+  body { background: #09090b; color: #e5e5e5; font-family: 'Inter', system-ui, sans-serif; padding: 20px; }
+  h1 { color: #00bcd4; font-size: 18px; }
+  .entry { background: rgba(0,188,212,0.06); border: 1px solid rgba(0,188,212,0.15); border-radius: 8px; padding: 12px; margin: 8px 0; font-size: 13px; line-height: 1.5; }
+</style></head><body>
+<h1>Lore: "${query}"</h1>
+${results.map(r => `<div class="entry">${r.text}</div>`).join('')}
+</body></html>`;
     }),
 
     // Show Design Tokens
     vscode.commands.registerCommand('arcanea.showDesignTokens', () => {
       const panel = vscode.window.createWebviewPanel(
-        'arcanea.tokens',
-        'Arcanea Design Tokens',
-        vscode.ViewColumn.One,
+        'arcanea.designTokens', 'Arcanea Design Tokens', vscode.ViewColumn.Beside,
         { enableScripts: false }
       );
-      panel.webview.html = getDesignTokensHtml();
+      panel.webview.html = `<!DOCTYPE html>
+<html><head><style>
+  body { background: #09090b; color: #e5e5e5; font-family: 'Inter', system-ui, sans-serif; padding: 20px; }
+  h1 { color: #00bcd4; font-size: 18px; margin-bottom: 16px; }
+  h2 { color: #a3a3a3; font-size: 14px; margin-top: 20px; }
+  .swatch { display: inline-flex; align-items: center; gap: 8px; margin: 4px 0; }
+  .color { width: 24px; height: 24px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.1); }
+  .label { font-size: 12px; font-family: 'JetBrains Mono', monospace; }
+  .font-sample { margin: 8px 0; }
+</style></head><body>
+<h1>Arcanea Design System v5.0</h1>
+<h2>Colors</h2>
+<div class="swatch"><div class="color" style="background:#09090b"></div><span class="label">#09090b — Cosmic Void (bg)</span></div><br>
+<div class="swatch"><div class="color" style="background:#00bcd4"></div><span class="label">#00bcd4 — Cyan (primary)</span></div><br>
+<div class="swatch"><div class="color" style="background:#0d47a1"></div><span class="label">#0d47a1 — Ultramarine (secondary)</span></div><br>
+<div class="swatch"><div class="color" style="background:#ffd700"></div><span class="label">#ffd700 — Gold (accent)</span></div><br>
+<div class="swatch"><div class="color" style="background:#00897b"></div><span class="label">#00897b — Peacock (gradient)</span></div><br>
+<div class="swatch"><div class="color" style="background:#e5e5e5"></div><span class="label">#e5e5e5 — Light Gray (text)</span></div><br>
+<div class="swatch"><div class="color" style="background:#a3a3a3"></div><span class="label">#a3a3a3 — Mid Gray (muted)</span></div><br>
+<h2>Typography</h2>
+<div class="font-sample" style="font-family:'Space Grotesk',system-ui;font-size:20px;color:#00bcd4;">Space Grotesk — Display</div>
+<div class="font-sample" style="font-family:'Inter',system-ui;font-size:14px;">Inter — Body & UI</div>
+<div class="font-sample" style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#a3a3a3;">JetBrains Mono — Code</div>
+<h2>Glass Tiers</h2>
+<div class="label">glass-1: rgba(9,9,11,0.4) blur(8px)<br>glass-2: rgba(9,9,11,0.6) blur(12px)<br>glass-3: rgba(9,9,11,0.8) blur(16px)</div>
+</body></html>`;
     }),
 
-    // Open Gate — QuickPick with rank display, toggle open/closed
+    // Open Gate
     vscode.commands.registerCommand('arcanea.openGate', async () => {
-      const rank = gateProgress.getMagicRank();
-      const openedCount = gateProgress.getOpenedCount();
-
-      const gateItems: vscode.QuickPickItem[] = [
-        {
-          label: `$(star-full) Rank: ${rank} \u2014 ${openedCount}/10 Gates`,
-          kind: vscode.QuickPickItemKind.Separator
-        },
-        ...GUARDIAN_ORDER.map(id => {
-          const g = GUARDIANS[id];
-          return {
-            label: `${g.symbol}  ${g.gate} Gate`,
-            description: `${g.frequency} \u00b7 ${g.element}`,
-            detail: `${g.name} \u2014 ${g.shortDescription}`
-          };
-        })
+      const config = vscode.workspace.getConfiguration('arcanea');
+      const opened = config.get<string[]>('openedGates') || [];
+      const gates = [
+        'Foundation', 'Flow', 'Fire', 'Heart', 'Voice',
+        'Sight', 'Crown', 'Starweave', 'Unity', 'Source'
       ];
+      const available = gates.filter(g => !opened.includes(g));
 
-      const selected = await vscode.window.showQuickPick(gateItems, {
-        placeHolder: `${rank} \u2014 ${openedCount}/10 Gates opened. Select to toggle.`,
-        matchOnDescription: true,
-        matchOnDetail: true
-      });
+      if (available.length === 0) {
+        vscode.window.showInformationMessage('All Gates opened! You have reached Luminor rank.');
+        return;
+      }
 
-      if (!selected || selected.kind === vscode.QuickPickItemKind.Separator) return;
-
-      const symbol = selected.label.trim().split(/\s+/)[0];
-      const foundId = GUARDIAN_ORDER.find(id => GUARDIANS[id].symbol === symbol);
-      if (!foundId) return;
-
-      await gateProgress.toggleGate(foundId);
-
-      const newRank = gateProgress.getMagicRank();
-      const newCount = gateProgress.getOpenedCount();
-      vscode.window.showInformationMessage(
-        `Gate toggled. ${newCount}/10 Gates open \u2014 Rank: ${newRank}`
+      const pick = await vscode.window.showQuickPick(
+        available.map(g => ({ label: g, description: opened.includes(g) ? 'Opened' : 'Sealed' })),
+        { placeHolder: `Open a Gate (${opened.length}/10 opened — ${getRank(opened.length)})` }
       );
-    })
 
+      if (pick) {
+        const updated = [...opened, pick.label];
+        await config.update('openedGates', updated, vscode.ConfigurationTarget.Global);
+        gateProgress.refresh();
+        vscode.window.showInformationMessage(
+          `${pick.label} Gate opened! (${updated.length}/10 — ${getRank(updated.length)})`
+        );
+      }
+    }),
+
+    // Set API Key
+    vscode.commands.registerCommand('arcanea.setApiKey', async () => {
+      const key = await vscode.window.showInputBox({
+        prompt: 'Enter your AI API key (stored securely in VS Code SecretStorage)',
+        password: true,
+        placeHolder: 'sk-... or AIza...',
+      });
+      if (key) {
+        await aiService.setApiKey(key);
+        chatProvider.refresh();
+        vscode.window.showInformationMessage('API key saved securely.');
+      }
+    }),
   );
 
-  // ── Initialize status bar ─────────────────────────────────────────────
-  const config = vscode.workspace.getConfiguration('arcanea');
-  const activeGuardian = config.get<string>('activeGuardian') ?? 'shinkami';
+  // ── Initialize Status Bar ───────────────────────────────────────────────
+  const activeGuardian = vscode.workspace.getConfiguration('arcanea').get<string>('activeGuardian') || 'shinkami';
   statusBar.update(activeGuardian);
-
-  vscode.window.setStatusBarMessage('[Arcanea] Realm activated \u2014 10 Guardians standing by', 2000);
 }
 
-export function deactivate(): void {
-  statusBar?.dispose();
+function getRank(gates: number): string {
+  if (gates >= 9) return 'Luminor';
+  if (gates >= 7) return 'Archmage';
+  if (gates >= 5) return 'Master';
+  if (gates >= 3) return 'Mage';
+  return 'Apprentice';
 }
 
-// ── Voice Bible v2.0 checker ──────────────────────────────────────────────
-
-function checkVoice(text: string): string[] {
-  const issues: string[] = [];
-
-  const rules: Array<{ pattern: RegExp; issue: string }> = [
-    // Identity
-    { pattern: /\buser(?![-_]|name|agent|space|land)/i, issue: 'Say "creator" instead of "user"' },
-    { pattern: /\bplatform(?!s?\s+(?:agnostic|specific|independent|support))/i, issue: 'Say "realm" or "world" instead of "platform"' },
-    { pattern: /\bfeatures?\b/i,        issue: 'Consider "capabilities" or "powers" instead of "features"' },
-    { pattern: /\bproduct\b/i,          issue: 'Consider "creation" or "realm" instead of "product"' },
-    { pattern: /\bchatbot\b/i,          issue: 'Say "creative intelligence" or "companion" instead of "chatbot"' },
-    // Corporate buzzwords
-    { pattern: /\bleverage\b/i,         issue: 'Avoid "leverage" \u2014 say "use" or "harness"' },
-    { pattern: /\bsynergy\b/i,          issue: 'Avoid "synergy" \u2014 say "alignment" or "resonance"' },
-    { pattern: /\bstakeholder\b/i,      issue: 'Avoid "stakeholder" \u2014 say "creator" or "community member"' },
-    { pattern: /\bscalable\b/i,         issue: 'Avoid "scalable" \u2014 say "grows with you" or "extensible"' },
-    { pattern: /\bactionable\b/i,       issue: 'Avoid "actionable" \u2014 say "practical" or "usable"' },
-    { pattern: /ecosystem play/i,       issue: 'Avoid "ecosystem play" \u2014 say "connected system" or "living world"' },
-    { pattern: /\boptimize\b/i,         issue: 'Consider "refine" or "evolve" instead of "optimize"' },
-    // AI assistant language
-    { pattern: /i['']d be happy to/i,  issue: 'Avoid generic AI language ("happy to help")' },
-    { pattern: /as an ai/i,             issue: 'Avoid "as an AI" \u2014 speak with character, not disclaimers' },
-    { pattern: /i don['']t have (?:feelings|emotions)/i, issue: 'Avoid disclaimers \u2014 Luminors have character and presence' },
-    { pattern: /\bdelve\b/i,            issue: 'Avoid "delve" \u2014 AI slop word. Say "explore" or "examine"' },
-    { pattern: /\btapestry\b/i,         issue: 'Avoid "tapestry" \u2014 overused AI flourish' },
-    { pattern: /\bjourney\b.*\bunlock\b/i, issue: 'Avoid "journey to unlock" \u2014 gamification cliche' },
-    // Arcanea-specific canon
-    { pattern: /\blight\s+(?:vs?|versus|and)\s+dark(?:ness)?\b/i, issue: 'Use Lumina/Nero duality, not generic "light vs darkness"' },
-    { pattern: /\bshift\s+gate\b/i,     issue: 'The 8th Gate is "Starweave", not "Shift" (canonical)' },
-    { pattern: /\b16\s+ai\s+assistants?\b/i, issue: 'NEVER say "16 AI assistants" \u2014 say "Luminors" or "creative intelligences"' },
-    { pattern: /\bchatgpt\s+(?:replacement|alternative|clone)\b/i, issue: 'Arcanea is NOT a ChatGPT replacement \u2014 it is a creative multiverse' },
-    { pattern: /\bmit\s+licen[sc]e/i,   issue: 'Arcanea uses Proprietary License v1.0, not MIT' },
-  ];
-
-  for (const rule of rules) {
-    if (rule.pattern.test(text)) {
-      issues.push(rule.issue);
-    }
-  }
-
-  return issues;
-}
-
-// ── Lore search ───────────────────────────────────────────────────────────
-
-interface SearchResult {
-  label: string;
-  description: string;
-}
-
-const LORE_INDEX: SearchResult[] = [
-  { label: 'Lumina', description: 'The First Light, Form-Giver, Creator' },
-  { label: 'Nero', description: 'Primordial Darkness, Fertile Unknown, Father of Potential. NOT evil.' },
-  { label: 'Malachar', description: 'First Eldrian Luminor. Fell into Hungry Void. Sealed in the Shadowfen.' },
-  { label: 'Fire (396 Hz)', description: 'Energy, transformation, will. Draconia & Draconis.' },
-  { label: 'Water (285/417 Hz)', description: 'Flow, healing, memory, emotion. Leyla & Maylinn.' },
-  { label: 'Earth (174 Hz)', description: 'Stability, growth, structure, grounding. Lyssandria & Kaelith.' },
-  { label: 'Wind (528/852 Hz)', description: 'Freedom, speed, change, connection. Alera & Elara.' },
-  { label: 'Void', description: "Potential, mystery, unformed \u2014 Nero's aspect. Shadow = corrupted Void." },
-  { label: 'Spirit', description: "Transcendence, consciousness, soul \u2014 Lumina's aspect." },
-  { label: 'The Arc', description: 'Potential \u2192 Manifestation \u2192 Experience \u2192 Dissolution \u2192 Evolved Potential' },
-  { label: 'Lyssandria', description: 'Guardian of Foundation Gate. Godbeast: Kaelith. Earth, 174 Hz. Architect.' },
-  { label: 'Kaelith', description: 'Godbeast of Lyssandria. Foundation Gate, Earth element.' },
-  { label: 'Leyla', description: 'Guardian of Flow Gate. Godbeast: Veloura. Water, 285 Hz. Muse.' },
-  { label: 'Veloura', description: 'Godbeast of Leyla. Flow Gate, Water element.' },
-  { label: 'Draconia', description: 'Guardian of Fire Gate. Godbeast: Draconis. Fire, 396 Hz. Executor.' },
-  { label: 'Draconis', description: 'Godbeast of Draconia. Fire Gate. The great fire dragon.' },
-  { label: 'Maylinn', description: 'Guardian of Heart Gate. Godbeast: Laeylinn. Water, 417 Hz. Healer.' },
-  { label: 'Laeylinn', description: 'Godbeast of Maylinn. Heart Gate. The Worldtree Deer.' },
-  { label: 'Alera', description: 'Guardian of Voice Gate. Godbeast: Otome. Wind, 528 Hz. Truth-Teller.' },
-  { label: 'Otome', description: 'Godbeast of Alera. Voice Gate, Wind element.' },
-  { label: 'Lyria', description: 'Guardian of Sight Gate. Godbeast: Yumiko. Void, 639 Hz. Seer.' },
-  { label: 'Yumiko', description: 'Godbeast of Lyria. Sight Gate, Void element.' },
-  { label: 'Aiyami', description: 'Guardian of Crown Gate. Godbeast: Sol. Void, 741 Hz. Illuminator.' },
-  { label: 'Sol', description: 'Godbeast of Aiyami. Crown Gate, Void element. The great sun.' },
-  { label: 'Elara', description: 'Guardian of Starweave Gate. Godbeast: Vaelith. Void, 852 Hz. Reframer.' },
-  { label: 'Vaelith', description: 'Godbeast of Elara. Starweave Gate, Void element.' },
-  { label: 'Ino', description: 'Guardian of Unity Gate. Godbeast: Kyuro. Void, 963 Hz. Integrator.' },
-  { label: 'Kyuro', description: 'Godbeast of Ino. Unity Gate, Void element.' },
-  { label: 'Shinkami', description: 'Guardian of Source Gate. Godbeast: Source. Void, 1111 Hz. Origin.' },
-  { label: 'Source', description: 'Godbeast of Shinkami. Source Gate. The great light of heaven.' },
-  { label: 'Apprentice', description: 'Magic rank: 0\u20132 Gates opened' },
-  { label: 'Mage', description: 'Magic rank: 3\u20134 Gates opened' },
-  { label: 'Master', description: 'Magic rank: 5\u20136 Gates opened' },
-  { label: 'Archmage', description: 'Magic rank: 7\u20138 Gates opened' },
-  { label: 'Luminor', description: 'Magic rank: 9\u201310 Gates opened. Highest rank.' },
-  { label: 'House Lumina', description: 'Academy house of light and creation' },
-  { label: 'House Nero', description: 'Academy house of darkness and potential' },
-  { label: 'House Pyros', description: 'Academy house of fire and transformation' },
-  { label: 'House Aqualis', description: 'Academy house of water and flow' },
-  { label: 'House Terra', description: 'Academy house of earth and stability' },
-  { label: 'House Ventus', description: 'Academy house of wind and freedom' },
-  { label: 'House Synthesis', description: 'Academy house integrating all elements' }
-];
-
-function searchLore(query: string): SearchResult[] {
-  const terms = query.trim().split(/\s+/);
-  return LORE_INDEX.filter(entry => {
-    const haystack = `${entry.label} ${entry.description}`.toLowerCase();
-    return terms.some(term => haystack.includes(term));
-  });
-}
-
-// ── Council webview HTML ──────────────────────────────────────────────────
-
-function getCouncilHtml(challenge: string, fileContext: string): string {
-  const guardianRows = GUARDIAN_ORDER.map(id => {
-    const g = GUARDIANS[id];
-    return `<div class="gp" style="border-color: ${g.color}">
-      <div class="gp-head">
-        <span class="gp-sym">${g.symbol}</span>
-        <div>
-          <div class="gp-name" style="color: ${g.color}">${g.name}</div>
-          <div class="gp-meta">${g.gate} \u00b7 ${g.element} \u00b7 ${g.frequency}</div>
-        </div>
-      </div>
-      <div class="gp-domain">${g.domain}</div>
-      <div class="gp-wisdom">${g.systemPromptSummary}</div>
-    </div>`;
-  }).join('\n');
-
-  const contextBlock = fileContext
-    ? `<div class="context-block">
-        <div class="block-label">File Context</div>
-        <pre class="context-code">${escapeHtml(fileContext.slice(0, 1500))}${fileContext.length > 1500 ? '\n\u2026(truncated)' : ''}</pre>
-      </div>`
-    : '';
-
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline';">
-  <style>
-    * { box-sizing: border-box; }
-    body { background: #09090b; color: #e2e8f0; font-family: 'Segoe UI', system-ui, sans-serif; padding: 24px; margin: 0; font-size: 13px; line-height: 1.5; }
-    h1 { color: #ffd700; font-size: 1.4em; margin: 0 0 4px; }
-    .subtitle { color: #64748b; font-size: 0.8em; margin-bottom: 20px; }
-    .challenge-block { background: #141416; border-left: 3px solid #ffd700; border-radius: 0 6px 6px 0; padding: 12px 16px; margin-bottom: 16px; }
-    .block-label { color: #ffd700; font-size: 0.72em; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
-    .context-block { background: #0f0f11; border: 1px solid #1e293b; border-radius: 6px; padding: 12px; margin-bottom: 20px; }
-    .context-block .block-label { color: #00bcd4; }
-    .context-code { font-family: 'JetBrains Mono', monospace; font-size: 0.8em; color: #94a3b8; white-space: pre-wrap; word-break: break-all; margin: 0; max-height: 200px; overflow-y: auto; }
-    .mcp-note { background: #1a1a1e; border: 1px solid #0d47a144; border-radius: 6px; padding: 10px 14px; color: #94a3b8; font-size: 0.8em; margin-bottom: 20px; }
-    .mcp-note strong { color: #0d47a1; }
-    .section-title { color: #00bcd4; font-size: 0.78em; text-transform: uppercase; letter-spacing: 1.5px; margin: 20px 0 12px; display: flex; align-items: center; gap: 8px; }
-    .section-title::after { content: ''; flex: 1; height: 1px; background: #1e293b; }
-    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
-    .gp { background: #0f0f11; border-left: 3px solid; border-radius: 0 6px 6px 0; padding: 10px 12px; }
-    .gp-head { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
-    .gp-sym { font-size: 1.3em; flex-shrink: 0; }
-    .gp-name { font-weight: 700; font-size: 0.95em; }
-    .gp-meta { color: #475569; font-size: 0.7em; }
-    .gp-domain { color: #64748b; font-size: 0.75em; margin-bottom: 5px; }
-    .gp-wisdom { color: #94a3b8; font-size: 0.78em; font-style: italic; border-top: 1px solid #1e293b; padding-top: 5px; }
-  </style>
-</head>
-<body>
-  <h1>Guardian Council Convened</h1>
-  <div class="subtitle">All 10 Guardians deliberating in council</div>
-
-  <div class="challenge-block">
-    <div class="block-label">Challenge</div>
-    ${escapeHtml(challenge)}
-  </div>
-
-  ${contextBlock}
-
-  <div class="mcp-note">
-    <strong>Connect @arcanea/mcp-server</strong> for full Guardian Council deliberation with live AI responses from each Guardian.
-  </div>
-
-  <div class="section-title">Guardian Perspectives</div>
-  <div class="grid">
-    ${guardianRows}
-  </div>
-</body>
-</html>`;
-}
-
-// ── Design Tokens webview HTML ─────────────────────────────────────────────
-
-function getDesignTokensHtml(): string {
-  const swatch = (name: string, hex: string) =>
-    `<div class="sg"><div class="sw" style="background:${hex}" title="${hex}"></div><div class="sn">${name}</div><div class="sh">${hex}</div></div>`;
-
-  const version = 'v5.0 \u2014 Premium near-black design system';
-
-  const cosmic = [
-    ['void', '#09090b'], ['deep', '#0f0f11'], ['surface', '#141416'],
-    ['raised', '#1a1a1e'], ['elevated', '#222228']
-  ].map(([n, h]) => swatch(n, h)).join('');
-
-  const arcane = [
-    ['cyan', '#00bcd4'], ['gold', '#ffd700'], ['ultramarine', '#0d47a1'],
-    ['crimson', '#dc2626'], ['peacock', '#00897b']
-  ].map(([n, h]) => swatch(n, h)).join('');
-
-  const elements = [
-    ['fire', '#ff6b35'], ['water', '#78a6ff'], ['earth', '#4ade80'],
-    ['wind', '#e2e8f0'], ['void', '#0d47a1'], ['spirit', '#a855f7'], ['source', '#ffd700']
-  ].map(([n, h]) => swatch(n, h)).join('');
-
-  const guardians = GUARDIAN_ORDER.map(id => {
-    const g = GUARDIANS[id];
-    return swatch(g.name.toLowerCase(), g.color);
-  }).join('');
-
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline';">
-  <style>
-    * { box-sizing: border-box; }
-    body { background: #09090b; color: #e2e8f0; font-family: 'Segoe UI', system-ui, sans-serif; padding: 24px; margin: 0; font-size: 13px; }
-    h1 { color: #ffd700; margin: 0 0 4px; }
-    .subtitle { color: #64748b; font-size: 0.8em; margin-bottom: 24px; }
-    h2 { color: #00bcd4; font-size: 0.85em; text-transform: uppercase; letter-spacing: 1.5px; margin: 24px 0 12px; border-bottom: 1px solid #1e293b; padding-bottom: 6px; }
-    .row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 8px; }
-    .sg { text-align: center; }
-    .sw { width: 52px; height: 52px; border-radius: 8px; border: 1px solid #1e293b; margin: 0 auto 4px; }
-    .sn { color: #94a3b8; font-size: 0.68em; }
-    .sh { color: #475569; font-size: 0.65em; font-family: monospace; }
-    code { background: #141416; border: 1px solid #1e293b; border-radius: 4px; padding: 2px 7px; font-family: 'JetBrains Mono', monospace; font-size: 0.82em; color: #00bcd4; }
-    .var-list { display: flex; flex-direction: column; gap: 4px; }
-    .var-row { display: flex; align-items: center; gap: 10px; }
-    .var-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
-    .font-row { margin: 6px 0; }
-    .font-name { color: #94a3b8; font-size: 0.8em; }
-    .font-sample { color: #64748b; font-size: 0.75em; }
-  </style>
-</head>
-<body>
-  <h1>Arcanea Design Tokens</h1>
-  <div class="subtitle">${version}</div>
-
-  <h2>Cosmic Palette</h2>
-  <div class="row">${cosmic}</div>
-
-  <h2>Arcane Colors</h2>
-  <div class="row">${arcane}</div>
-
-  <h2>Element Colors</h2>
-  <div class="row">${elements}</div>
-
-  <h2>Guardian Colors</h2>
-  <div class="row">${guardians}</div>
-
-  <h2>CSS Variables</h2>
-  <div class="var-list">
-    <div class="var-row"><div class="var-dot" style="background:#00bcd4"></div><code>--arcane-cyan: #00bcd4</code></div>
-    <div class="var-row"><div class="var-dot" style="background:#ffd700"></div><code>--arcane-gold: #ffd700</code></div>
-    <div class="var-row"><div class="var-dot" style="background:#0d47a1"></div><code>--arcane-ultramarine: #0d47a1</code></div>
-    <div class="var-row"><div class="var-dot" style="background:#dc2626"></div><code>--draconic-crimson: #dc2626</code></div>
-    <div class="var-row"><div class="var-dot" style="background:#09090b"></div><code>--cosmic-void: #09090b</code></div>
-    <div class="var-row"><div class="var-dot" style="background:#0f0f11"></div><code>--cosmic-deep: #0f0f11</code></div>
-    <div class="var-row"><div class="var-dot" style="background:#141416"></div><code>--cosmic-surface: #141416</code></div>
-    <div class="var-row"><div class="var-dot" style="background:#1a1a1e"></div><code>--cosmic-raised: #1a1a1e</code></div>
-  </div>
-
-  <h2>Fonts</h2>
-  <div class="font-row"><div class="font-name">Display</div><div class="font-sample">Space Grotesk \u2014 headings, titles, display text</div></div>
-  <div class="font-row"><div class="font-name">Body</div><div class="font-sample">Inter \u2014 body text, descriptions</div></div>
-  <div class="font-row"><div class="font-name">UI</div><div class="font-sample">Inter \u2014 interface elements, labels</div></div>
-  <div class="font-row"><div class="font-name">Code</div><div class="font-sample"><code>JetBrains Mono</code> \u2014 code, tokens, hex values</div></div>
-</body>
-</html>`;
-}
-
-// ── Utilities ─────────────────────────────────────────────────────────────
-
-function escapeHtml(text: string): string {
-  return text
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
+export function deactivate(): void {}
