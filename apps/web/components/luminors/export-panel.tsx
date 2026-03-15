@@ -97,7 +97,7 @@ export function ExportPanel({ spec }: ExportPanelProps) {
           Export as Agent
         </p>
       </div>
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
         {EXPORT_OPTIONS.map((opt) => {
           const Icon = opt.icon;
           return (

@@ -253,7 +253,7 @@ export default function ProvidersPage() {
               <button
                 key={p.id}
                 onClick={() => setActiveId(p.id)}
-                className={`px-3 py-2 rounded-xl text-xs font-medium transition-all ${
+                className={`px-3 py-2.5 sm:py-2 rounded-xl text-xs font-medium transition-all min-h-[44px] sm:min-h-0 ${
                   activeId === p.id
                     ? 'text-white border-2'
                     : 'text-white/40 border border-white/[0.06] hover:text-white/60 hover:border-white/[0.12]'
@@ -343,7 +343,7 @@ export default function ProvidersPage() {
                 </div>
 
                 {/* Actions row */}
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
                   <a
                     href={provider.docsUrl}
                     target="_blank"
@@ -373,7 +373,7 @@ export default function ProvidersPage() {
                       type="button"
                       onClick={() => testConnection(provider)}
                       disabled={!hasKey || status === 'testing'}
-                      className="px-3 py-1.5 rounded-lg text-[11px] font-medium text-white/50 border border-white/[0.08] hover:text-white/70 hover:border-white/[0.15] disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+                      className="px-3 py-2 sm:py-1.5 rounded-lg text-[11px] font-medium text-white/50 border border-white/[0.08] hover:text-white/70 hover:border-white/[0.15] disabled:opacity-30 disabled:cursor-not-allowed transition-all min-h-[44px] sm:min-h-0"
                     >
                       {status === 'testing' ? (
                         <span className="flex items-center gap-1.5">

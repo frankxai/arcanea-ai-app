@@ -10,6 +10,7 @@ import {
   PhCaretLeft,
   PhCaretRight,
 } from '@/lib/phosphor-icons';
+import { ConversationList } from '@/components/chat/conversation-list';
 
 const TEAM_ORDER: Team[] = ['development', 'creative', 'writing', 'research'];
 
@@ -18,6 +19,7 @@ interface LuminorSidebarProps {
   onSelectLuminor: (luminor: LuminorConfig) => void;
   collapsed: boolean;
   onToggle: () => void;
+  onNewChat?: () => void;
 }
 
 export function LuminorSidebar({
@@ -25,6 +27,7 @@ export function LuminorSidebar({
   onSelectLuminor,
   collapsed,
   onToggle,
+  onNewChat,
 }: LuminorSidebarProps) {
   const [filter, setFilter] = useState('');
 
@@ -68,7 +71,7 @@ export function LuminorSidebar({
       {/* Header */}
       <div className="flex items-center justify-between px-3 py-3 border-b border-white/[0.06]">
         <span className="text-xs font-medium text-white/50 uppercase tracking-wider">
-          Luminors
+          Chat
         </span>
         <button
           onClick={onToggle}
@@ -77,6 +80,16 @@ export function LuminorSidebar({
         >
           <PhCaretLeft className="w-3.5 h-3.5" />
         </button>
+      </div>
+
+      {/* Recent Conversations */}
+      {onNewChat && <ConversationList onNewChat={onNewChat} />}
+
+      {/* Luminors section header */}
+      <div className="px-3 pt-2 pb-0">
+        <span className="text-[10px] font-medium text-white/35 uppercase tracking-wider">
+          Luminors
+        </span>
       </div>
 
       {/* Search */}

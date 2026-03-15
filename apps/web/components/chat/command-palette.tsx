@@ -187,13 +187,13 @@ export function CommandPalette({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh]" onClick={onClose}>
+    <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[8vh] sm:pt-[15vh]" onClick={onClose}>
       {/* Backdrop */}
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
 
       {/* Palette */}
       <div
-        className="relative w-full max-w-lg mx-4 rounded-2xl border border-white/[0.08] bg-[#111113]/95 backdrop-blur-xl shadow-2xl overflow-hidden"
+        className="relative w-full max-w-[calc(100vw-2rem)] sm:max-w-lg mx-4 rounded-2xl border border-white/[0.08] bg-[#111113]/95 backdrop-blur-xl shadow-2xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
         onKeyDown={handleKeyDown}
         role="dialog"
@@ -238,7 +238,7 @@ export function CommandPalette({
                       type="button"
                       data-focused={isFocused}
                       onClick={item.action}
-                      className={`w-full flex items-center gap-3 px-4 py-2.5 text-left text-sm transition-colors outline-none ${
+                      className={`w-full flex items-center gap-3 px-4 py-3 sm:py-2.5 text-left text-sm transition-colors outline-none ${
                         isFocused ? 'bg-white/[0.06] text-white' : 'text-white/60 hover:bg-white/[0.03] hover:text-white/80'
                       }`}
                     >

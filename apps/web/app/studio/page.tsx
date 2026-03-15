@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useRef } from "react";
 import { useAuth } from "@/lib/auth/context";
+import { ModelSelector } from "@/components/chat/model-selector";
 import {
   Pen,
   Image,
@@ -606,11 +607,13 @@ function CodeCreationPanel({
   setCode,
   language,
   setLanguage,
+  selectedModel,
 }: {
   code: string;
   setCode: (val: string) => void;
   language: string;
   setLanguage: (val: string) => void;
+  selectedModel?: string;
 }) {
   const [codeAiMessages, setCodeAiMessages] = useState<
     { role: "user" | "luminor"; text: string }[]
@@ -661,6 +664,7 @@ function CodeCreationPanel({
             })),
             { role: "user", content: input + contextMsg },
           ],
+          gatewayModel: selectedModel || undefined,
         }),
       });
 
@@ -725,7 +729,7 @@ function CodeCreationPanel({
     } finally {
       setIsCodeGenerating(false);
     }
-  }, [codeAiInput, code, language, codeAiMessages, isCodeGenerating]);
+  }, [codeAiInput, code, language, codeAiMessages, isCodeGenerating, selectedModel]);
 
   return (
     <div className="flex flex-col lg:flex-row gap-4 flex-1 min-h-0">
@@ -1012,6 +1016,9 @@ export default function StudioPage() {
   >([]);
   const [aiInput, setAiInput] = useState("");
 
+  // Intelligence Gateway model selection
+  const [selectedModel, setSelectedModel] = useState("arcanea-auto");
+
   // Lifted state for image panel
   const [imagePrompt, setImagePrompt] = useState("");
   const [generatedImages, setGeneratedImages] = useState<GeneratedImageData[]>([]);
@@ -1045,6 +1052,7 @@ export default function StudioPage() {
               { role: 'user', content: userMsg },
             ],
             luminorId: currentMode.guardian.toLowerCase(),
+            gatewayModel: selectedModel || undefined,
           }),
         });
 
@@ -1090,7 +1098,7 @@ export default function StudioPage() {
         ]);
       }
     })();
-  }, [aiInput, currentMode.guardian]);
+  }, [aiInput, currentMode.guardian, currentMode.element, activeMode, aiMessages, selectedModel]);
 
   const [isSaving, setIsSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
@@ -1280,6 +1288,14 @@ export default function StudioPage() {
         <div className="flex-1 flex flex-col rounded-2xl liquid-glass border border-white/[0.06] overflow-hidden min-h-[500px]">
           {/* Workspace Header */}
           <div className="flex items-center gap-3 px-4 py-2.5 border-b border-white/[0.08] bg-white/[0.02]">
+            {/* Model Selector — Intelligence Gateway */}
+            {(activeMode === "text" || activeMode === "code") && (
+              <ModelSelector
+                value={selectedModel}
+                onChange={setSelectedModel}
+              />
+            )}
+
             <div className="flex-1" />
 
             {/* Actions */}
@@ -1345,6 +1361,7 @@ export default function StudioPage() {
               setCode={setCodeContent}
               language={codeLanguage}
               setLanguage={setCodeLanguage}
+              selectedModel={selectedModel}
             />
           )}
           {activeMode === "music" && <MusicCreationPanel />}

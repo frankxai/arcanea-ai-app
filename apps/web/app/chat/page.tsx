@@ -407,6 +407,7 @@ export default function ChatPage() {
         onSelectLuminor={handleSelectLuminor}
         collapsed={!luminorSidebarOpen}
         onToggle={() => setLuminorSidebarOpen((v) => !v)}
+        onNewChat={startNewChat}
       />
 
       {/* Main Chat Area */}
