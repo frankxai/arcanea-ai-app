@@ -58,11 +58,11 @@ const FAQ_CATEGORIES = [
     questions: [
       {
         q: "What's included in the free plan?",
-        a: "The Spark (free) plan includes access to 3 companions, Library browsing, Gallery access, and the Academy. It's perfect for exploring the platform and seeing if Arcanea fits your creative workflow.",
+        a: "The Spark (free) plan includes 3 creative companions, 100 messages per month, full Library access, and Gallery browsing. It's everything you need to explore the platform and see if Arcanea fits your creative workflow.",
       },
       {
         q: "What do the paid plans include?",
-        a: "The Creator plan ($19/month) gives you access to all 16 companions, 5,000 messages per month, full Library and Academy access, Studio creation tools, and custom prompt templates. The Studio plan ($49/month) adds 5 team seats, API access, custom companion training, and priority support.",
+        a: "The Creator plan ($19/month) unlocks all 16 companions with unlimited messages, full Studio creation tools, complete Academy access, and custom prompt templates. The Studio plan ($49/month) adds API access, priority support, custom companion training, and team collaboration features.",
       },
       {
         q: "Can I switch plans later?",

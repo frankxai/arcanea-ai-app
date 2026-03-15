@@ -6,24 +6,31 @@ import { useRef, useState } from "react";
 const STEPS = [
   {
     number: "01",
-    title: "Choose your companion",
+    title: "Imagine",
     description:
-      "Pick a creative AI companion — each specializes in music, writing, visual art, or world-building.",
+      "Chat with creative AI partners who specialize in writing, art, music, and world-building. Describe your vision and watch it take shape.",
     accent: "#00bcd4",
   },
   {
     number: "02",
-    title: "Describe your vision",
+    title: "Build",
     description:
-      "Tell them what you want to create. They ask the right questions and help shape the direction.",
+      "Create worlds, stories, and code in Studio. Use the Academy to master the craft, and the Library for 200K+ words of creative philosophy.",
     accent: "#7c4dff",
   },
   {
     number: "03",
-    title: "Create and iterate",
+    title: "Share",
     description:
-      "Move from concept to finished work in Studio, with guided iteration at each step.",
+      "Publish your creations to the Feed. Get discovered by other world-builders. Contribute to a growing multiverse of shared imagination.",
     accent: "#f59e0b",
+  },
+  {
+    number: "04",
+    title: "Grow",
+    description:
+      "Advance through the Ten Gates. Unlock new creative powers, earn recognition, and evolve from Apprentice to Luminor.",
+    accent: "#00897b",
   },
 ];
 
@@ -52,7 +59,7 @@ export function HowItWorks() {
             A stronger creation loop
           </h2>
           <p className="text-xl text-text-secondary max-w-2xl mx-auto">
-            Three steps from idea to creative output.
+            From first idea to a world of your own.
           </p>
         </m.div>
 

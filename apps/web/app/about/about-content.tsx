@@ -138,6 +138,37 @@ export function AboutContent() {
         </div>
       </section>
 
+      {/* ── Section 1.5: Stats Bar ─────────────────────────────────────── */}
+      <AnimatedSection className="pb-20 relative">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6">
+            {[
+              { value: "107K+", label: "Words generated" },
+              { value: "200K+", label: "Words of philosophy" },
+              { value: "10", label: "Gates of mastery" },
+              { value: "16", label: "Luminor partners" },
+              { value: "27", label: "Open source repos" },
+            ].map((stat, i) => (
+              <m.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.06 * i }}
+                className="text-center p-5 rounded-2xl liquid-glass border border-white/[0.06]"
+              >
+                <p className="text-2xl md:text-3xl font-display font-bold text-[#00bcd4] mb-1">
+                  {stat.value}
+                </p>
+                <p className="text-xs text-text-muted tracking-wide">
+                  {stat.label}
+                </p>
+              </m.div>
+            ))}
+          </div>
+        </div>
+      </AnimatedSection>
+
       {/* ── Section 2: The Vision ─────────────────────────────────────── */}
       <AnimatedSection className="py-24 relative">
         <div className="max-w-6xl mx-auto px-6">

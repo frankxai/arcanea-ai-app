@@ -19,7 +19,6 @@ import {
   Star,
   Shield,
   Clock,
-  Lock,
   Spinner,
 } from '@/lib/phosphor-icons';
 
@@ -235,46 +234,25 @@ export default function DashboardPage() {
         </p>
       </header>
 
-      {/* ── What will you create today? ───────────────────────────────── */}
-      <section
-        className="rounded-2xl border border-[#00bcd4]/15 p-6"
-        style={{
-          background: 'radial-gradient(ellipse at 20% 50%, rgba(0,188,212,0.04), transparent 60%), rgba(255,255,255,0.015)',
-        }}
-      >
-        <h2 className="font-display text-xl text-white mb-1">What will you create today?</h2>
-        <p className="font-sans text-sm text-white/40 mb-4">
-          Jump into any creative mode, or pick up where you left off.
-        </p>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <Link
-            href="/chat"
-            className="group flex flex-col items-center gap-2 px-4 py-4 rounded-xl border border-white/[0.06] bg-white/[0.02] transition-all hover:border-[#00bcd4]/30 hover:bg-[#00bcd4]/5 hover:-translate-y-0.5"
-          >
-            <ChatCircleDots size={24} weight="duotone" className="text-[#00bcd4] group-hover:scale-110 transition-transform" />
-            <span className="font-sans text-sm text-white/70 group-hover:text-white transition-colors">Start Creating</span>
-          </Link>
-          <Link
-            href="/studio"
-            className="group flex flex-col items-center gap-2 px-4 py-4 rounded-xl border border-white/[0.06] bg-white/[0.02] transition-all hover:border-[#00bcd4]/30 hover:bg-[#00bcd4]/5 hover:-translate-y-0.5"
-          >
-            <Palette size={24} weight="duotone" className="text-[#00bcd4] group-hover:scale-110 transition-transform" />
-            <span className="font-sans text-sm text-white/70 group-hover:text-white transition-colors">Open Studio</span>
-          </Link>
-          <Link
-            href="/library"
-            className="group flex flex-col items-center gap-2 px-4 py-4 rounded-xl border border-white/[0.06] bg-white/[0.02] transition-all hover:border-amber-400/30 hover:bg-amber-400/5 hover:-translate-y-0.5"
-          >
-            <Book size={24} weight="duotone" className="text-amber-400 group-hover:scale-110 transition-transform" />
-            <span className="font-sans text-sm text-white/70 group-hover:text-white transition-colors">Browse Library</span>
-          </Link>
-          <Link
-            href="/academy"
-            className="group flex flex-col items-center gap-2 px-4 py-4 rounded-xl border border-white/[0.06] bg-white/[0.02] transition-all hover:border-[#ffd700]/30 hover:bg-[#ffd700]/5 hover:-translate-y-0.5"
-          >
-            <Star size={24} weight="duotone" className="text-[#ffd700] group-hover:scale-110 transition-transform" />
-            <span className="font-sans text-sm text-white/70 group-hover:text-white transition-colors">Explore Academy</span>
-          </Link>
+      {/* ── Chat Input (Perplexity-style) ────────────────────────────── */}
+      <section className="space-y-3">
+        <Link href="/chat" className="block w-full">
+          <div className="flex items-center gap-3 px-5 py-4 rounded-2xl border border-white/[0.08] bg-white/[0.02] hover:border-[#00bcd4]/30 hover:bg-white/[0.03] transition-all cursor-text">
+            <ChatCircleDots size={20} className="text-white/30" />
+            <span className="text-white/30 text-base font-sans">What will you create?</span>
+            <ArrowRight size={16} className="text-white/20 ml-auto" />
+          </div>
+        </Link>
+        <div className="flex flex-wrap gap-2">
+          {['Write a story', 'Generate an image', 'Build a world', 'Learn something new'].map((s) => (
+            <Link
+              key={s}
+              href="/chat"
+              className="px-3 py-1.5 rounded-full border border-white/[0.06] text-white/40 text-xs font-sans hover:border-[#00bcd4]/30 hover:text-white/60 transition-all"
+            >
+              {s}
+            </Link>
+          ))}
         </div>
       </section>
 
@@ -308,83 +286,6 @@ export default function DashboardPage() {
 
         {/* ── Left Column ─────────────────────────────────────────────── */}
         <div className="flex-1 space-y-8">
-
-          {/* ── Stats Grid ──────────────────────────────────────────── */}
-          <section className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {statCards.map(({ label, value, icon: Icon, color, bg }) => (
-              <div
-                key={label}
-                className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md p-5 space-y-3"
-              >
-                <div className={`w-10 h-10 rounded-xl ${bg} flex items-center justify-center`}>
-                  <Icon size={22} weight="duotone" className={color} />
-                </div>
-                <div>
-                  <p className="font-sans text-lg font-semibold text-white">
-                    {dataLoading ? <span className="inline-block w-16 h-5 bg-white/[0.06] rounded animate-pulse" /> : value}
-                  </p>
-                  <p className="font-sans text-sm text-white/40">{label}</p>
-                </div>
-              </div>
-            ))}
-          </section>
-
-          {/* ── Quick Links ──────────────────────────────────────────── */}
-          <section className="flex flex-wrap gap-3">
-            <Link
-              href="/companions/forge"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-[#00bcd4]/20 text-[#00bcd4] font-sans text-sm font-medium transition-all hover:bg-[#00bcd4]/5 hover:-translate-y-0.5"
-            >
-              <Sparkle size={16} weight="fill" />
-              Forge a Companion
-            </Link>
-            <Link
-              href="/discover"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-white/[0.08] text-white/60 font-sans text-sm font-medium transition-all hover:bg-white/[0.04] hover:text-white/80 hover:-translate-y-0.5"
-            >
-              <Lightning size={16} weight="duotone" />
-              Discover Creators
-            </Link>
-            <Link
-              href="/academy/courses"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-white/[0.08] text-white/60 font-sans text-sm font-medium transition-all hover:bg-white/[0.04] hover:text-white/80 hover:-translate-y-0.5"
-            >
-              <Flame size={16} weight="duotone" />
-              Browse Courses
-            </Link>
-          </section>
-
-          {/* ── Your Companions ─────────────────────────────────────── */}
-          <section className="space-y-3">
-            <div className="flex items-center justify-between">
-              <h2 className="font-display text-xl text-white/80">Your Companions</h2>
-              <Link
-                href="/companions/forge"
-                className="text-sm text-[#00bcd4] hover:text-[#00bcd4]/80 transition-colors font-sans flex items-center gap-1"
-              >
-                Forge new <ArrowRight size={14} />
-              </Link>
-            </div>
-            <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md p-5">
-              {/* Empty state for now — will be populated when companions are created */}
-              <div className="text-center py-8">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#00bcd4]/10 to-[#a78bfa]/10 border border-white/[0.06] flex items-center justify-center mx-auto mb-4">
-                  <Sparkle size={24} weight="duotone" className="text-[#00bcd4]" />
-                </div>
-                <p className="font-sans text-sm text-white/50 mb-1">No companions yet</p>
-                <p className="font-sans text-xs text-white/30 mb-4">
-                  Visit the Forge to create your first companion
-                </p>
-                <Link
-                  href="/companions/forge"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-[#00bcd4]/20 to-[#a78bfa]/20 border border-[#00bcd4]/30 text-[#00bcd4] text-sm font-sans font-medium hover:border-[#00bcd4]/50 transition-all"
-                >
-                  <Sparkle size={16} weight="fill" />
-                  Enter the Forge
-                </Link>
-              </div>
-            </div>
-          </section>
 
           {/* ── Recent Activity ─────────────────────────────────────── */}
           <section className="space-y-3">
@@ -432,6 +333,26 @@ export default function DashboardPage() {
                 </div>
               )}
             </div>
+          </section>
+
+          {/* ── Stats Grid ──────────────────────────────────────────── */}
+          <section className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {statCards.map(({ label, value, icon: Icon, color, bg }) => (
+              <div
+                key={label}
+                className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md p-5 space-y-3"
+              >
+                <div className={`w-10 h-10 rounded-xl ${bg} flex items-center justify-center`}>
+                  <Icon size={22} weight="duotone" className={color} />
+                </div>
+                <div>
+                  <p className="font-sans text-lg font-semibold text-white">
+                    {dataLoading ? <span className="inline-block w-16 h-5 bg-white/[0.06] rounded animate-pulse" /> : value}
+                  </p>
+                  <p className="font-sans text-sm text-white/40">{label}</p>
+                </div>
+              </div>
+            ))}
           </section>
         </div>
 

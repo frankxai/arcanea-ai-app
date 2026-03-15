@@ -144,8 +144,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Write stories. Compose music. Design worlds. Build apps.
-            AI partners that create with you.
+            Chat with AI. Build worlds. Share what you create.
           </m.p>
 
           {/* Chat box — THE hero element */}
@@ -165,7 +164,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.7 }}
           >
-            Free to use &middot; No signup required &middot; Open source &middot; Built with Next.js &amp; Vercel AI SDK
+            107K+ creators &middot; 200K+ words of creative philosophy &middot; Free to start
           </m.p>
         </div>
       </m.div>
