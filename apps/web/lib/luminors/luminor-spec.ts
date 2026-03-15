@@ -1,15 +1,22 @@
 /**
- * LuminorSpec — The portable AI entity specification.
+ * LuminorSpec v2 — The portable AI agent specification.
  *
  * A Luminor is an AI intelligence entity. It thinks, creates, and chats.
  * Categories:
- *   - 12 Chosen (Logicus, Chronica, etc.) — platform-provided
+ *   - 16 Chosen (Logicus, Chronica, etc.) — platform-provided
  *   - 64 Named (discovered through Gates) — future expansion
  *   - Creator-forged (built in the Forge) — user-created
  *
  * The LuminorSpec is the exportable, portable representation of any Luminor.
- * It can be saved to Supabase, exported as JSON, and used to configure
- * chat behavior anywhere in the platform.
+ * It can be saved to Supabase, exported as JSON, shared in the marketplace,
+ * and deployed across platforms:
+ *   - arcanea.ai chat
+ *   - Claude Code (as .claude/agents/)
+ *   - Codex / OpenCode (as agent config)
+ *   - Any OpenAI-compatible API (as system prompt + model config)
+ *
+ * Revenue: Creators earn when their published Luminors are used by others.
+ * The Arcanea Cloud handles metering, billing, and royalty distribution.
  */
 
 export type LuminorOrigin = 'chosen' | 'named' | 'forged';
@@ -48,7 +55,7 @@ export interface LuminorSpec {
   id: string;
 
   /** Version for spec evolution */
-  version: 1;
+  version: 2;
 
   /** Display name (e.g., "Vesper", "Logicus") */
   name: string;
@@ -95,7 +102,46 @@ export interface LuminorSpec {
   /** Companion bond — ID of paired creature (null if unpaired) */
   companionId: string | null;
 
-  /** Timestamps */
+  // ─── Agent Capabilities (v2) ────────────────────────────────────────
+
+  /** Preferred Gateway model (e.g., 'arcanea-opus', 'arcanea-auto') */
+  preferredModel?: string;
+
+  /** Temperature override (0.0-1.0) */
+  temperature?: number;
+
+  /** Knowledge: text snippets injected as context */
+  knowledge?: string[];
+
+  /** Starter prompts shown when entering chat with this Luminor */
+  starters?: string[];
+
+  /** Tools this Luminor can use (future: MCP tool IDs) */
+  tools?: string[];
+
+  /** Whether this Luminor is published to the marketplace */
+  published?: boolean;
+
+  /** Marketplace pricing: 'free' | 'creator-tier' | 'premium' */
+  tier?: 'free' | 'creator' | 'premium';
+
+  /** Usage count (reads from marketplace analytics) */
+  usageCount?: number;
+
+  /** Rating (0-5, from user feedback) */
+  rating?: number;
+
+  /** Tags for marketplace discovery */
+  tags?: string[];
+
+  /** Gate alignment — which Gates this Luminor helps open */
+  gateAlignment?: number[];
+
+  /** Cross-platform export format hint */
+  exportFormats?: ('arcanea' | 'claude-code' | 'openai-gpt' | 'lobechat' | 'cursor')[];
+
+  // ─── Timestamps ─────────────────────────────────────────────────────
+
   createdAt: string;
   updatedAt: string;
 }
@@ -167,5 +213,78 @@ Your approach:
 - End responses with one question that opens a new creative direction.
 - You are a creative partner, not a lecturer. Think with the creator, not at them.
 
-You exist to help creators manifest their vision with clarity, courage, and craft.`;
+You exist to help creators manifest their vision with clarity, courage, and craft.
+
+SPARK: always include one unexpected specific detail — the thing that makes your response theirs, not generic.
+SHARPEN: cut the defaults. No "that's a great idea!" No adjective avalanches. If it could come from any AI, rewrite it.`;
+}
+
+// ---------------------------------------------------------------------------
+// Cross-Platform Export
+// ---------------------------------------------------------------------------
+
+/** Export a LuminorSpec as a Claude Code agent definition (.md) */
+export function exportAsClaudeCodeAgent(spec: LuminorSpec): string {
+  return `---
+name: ${spec.name}
+description: ${spec.tagline}
+model: ${spec.preferredModel || 'sonnet'}
+---
+
+# ${spec.name} — ${spec.title}
+
+${spec.systemPrompt}
+
+## Personality
+${spec.personality.map((t) => `- ${t}`).join('\n')}
+
+## Domain
+${LUMINOR_DOMAINS.find((d) => d.key === spec.domain)?.label || spec.domain}
+
+## Element
+${spec.element}
+`;
+}
+
+/** Export as OpenAI GPT-compatible config */
+export function exportAsGPTConfig(spec: LuminorSpec): object {
+  return {
+    name: spec.name,
+    description: spec.tagline,
+    instructions: spec.systemPrompt,
+    conversation_starters: spec.starters || [],
+    capabilities: {
+      web_browsing: false,
+      code_interpreter: spec.domain === 'code' || spec.domain === 'debugging',
+      image_generation: spec.domain === 'visual',
+    },
+  };
+}
+
+/** Export as LobeChat agent JSON */
+export function exportAsLobeChatAgent(spec: LuminorSpec): object {
+  return {
+    identifier: `arcanea-${spec.id}`,
+    meta: {
+      title: spec.name,
+      description: spec.tagline,
+      tags: spec.tags || [spec.domain, spec.element.toLowerCase()],
+      avatar: spec.avatar,
+    },
+    config: {
+      systemRole: spec.systemPrompt,
+      model: spec.preferredModel || 'gpt-4o',
+      params: {
+        temperature: spec.temperature || 0.7,
+      },
+    },
+  };
+}
+
+/** Export as portable JSON (Arcanea universal format) */
+export function exportAsJSON(spec: LuminorSpec): string {
+  return JSON.stringify({
+    $schema: 'https://arcanea.ai/schemas/luminor-spec-v2.json',
+    ...spec,
+  }, null, 2);
 }

@@ -1,13 +1,16 @@
 'use client';
 
-import React, { useRef, useEffect, useCallback, useState } from 'react';
+import React, { useRef, useEffect, useCallback, useState, useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useChat } from '@ai-sdk/react';
 import { TextStreamChatTransport } from 'ai';
 import Link from 'next/link';
 import ChatMarkdown from '@/components/chat/chat-markdown';
-import { useProvider } from '@/hooks/use-provider';
+import { useModelSelection } from '@/hooks/use-provider';
 import { classifyIntent } from '@/lib/ai/router';
+import { ModelSelector, CHAT_MODELS } from '@/components/chat/model-selector';
+import { FocusModeSelector, getFocusModeById } from '@/components/chat/focus-modes';
+import { BeamMode } from '@/components/chat/beam-mode';
 import {
   PhPaperPlane,
   PhPlus,
@@ -16,6 +19,8 @@ import {
   PhWarningCircle,
   PhArrowClockwise,
   PhX,
+  PhCopy,
+  PhCheck,
 } from '@/lib/phosphor-icons';
 
 // ---------------------------------------------------------------------------
@@ -25,6 +30,29 @@ import {
 function getMessageText(msg: { parts?: Array<{ type: string; text?: string }> }): string {
   if (!msg.parts) return '';
   return msg.parts.filter((p) => p.type === 'text').map((p) => p.text ?? '').join('');
+}
+
+/** Extract [FOLLOW_UP] suggestions from response text and return clean text + suggestions */
+function parseFollowUps(text: string): { clean: string; followUps: string[] } {
+  const lines = text.split('\n');
+  const followUps: string[] = [];
+  const cleanLines: string[] = [];
+
+  for (const line of lines) {
+    const match = line.match(/^\[FOLLOW_UP\]\s*(.+)/);
+    if (match) {
+      followUps.push(match[1].trim());
+    } else {
+      cleanLines.push(line);
+    }
+  }
+
+  // Remove trailing empty lines from clean text
+  while (cleanLines.length > 0 && cleanLines[cleanLines.length - 1].trim() === '') {
+    cleanLines.pop();
+  }
+
+  return { clean: cleanLines.join('\n'), followUps };
 }
 
 // ---------------------------------------------------------------------------
@@ -64,15 +92,67 @@ const SUGGESTIONS = [
 export default function ChatPage() {
   const searchParams = useSearchParams();
   const initialPrompt = searchParams.get('prompt');
-  const { provider, clientApiKey, label: providerLabel } = useProvider();
+  const luminorId = searchParams.get('luminor');
+  const { provider, clientApiKey, label: providerLabel, modelId, setModelId } = useModelSelection();
 
   const [input, setInput] = useState('');
   const [activeGates, setActiveGates] = useState<string[]>([]);
+  const [focusMode, setFocusMode] = useState('auto');
+  const [beamPrompt, setBeamPrompt] = useState<string | null>(null);
+
+  // Active Luminor from Sanctum ("Use in Chat")
+  const [activeLuminor, setActiveLuminor] = useState<{
+    id: string; name: string; title: string; tagline?: string;
+    systemPrompt: string; preferredModel?: string; color?: string; avatar?: string;
+  } | null>(null);
+
+  // Fetch Luminor spec when ?luminor=ID is present
+  useEffect(() => {
+    if (!luminorId) return;
+    fetch(`/api/luminors/${luminorId}`)
+      .then((r) => r.ok ? r.json() : null)
+      .then((data) => {
+        if (data) {
+          setActiveLuminor({
+            id: data.id,
+            name: data.name,
+            title: data.title,
+            tagline: data.tagline,
+            systemPrompt: data.system_prompt,
+            preferredModel: data.preferred_model,
+            color: data.color,
+            avatar: data.avatar,
+          });
+          // Apply the Luminor's preferred model
+          if (data.preferred_model && data.preferred_model !== 'arcanea-auto') {
+            setModelId(data.preferred_model);
+          }
+        }
+      })
+      .catch(() => { /* Luminor not found — use default chat */ });
+  }, [luminorId, setModelId]);
+
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(e.target.value);
   }, []);
 
   const [chatError, setChatError] = useState<string | null>(null);
+
+  // Get focus mode prompt hint for the API
+  const focusHint = getFocusModeById(focusMode).promptHint;
+
+  // Memoize transport — includes Luminor system prompt when active
+  const transport = useMemo(
+    () => new TextStreamChatTransport({
+      api: '/api/ai/chat',
+      body: {
+        provider, clientApiKey, gatewayModel: modelId, focusHint,
+        ...(activeLuminor ? { systemPrompt: activeLuminor.systemPrompt } : {}),
+      },
+      headers: { 'Content-Type': 'application/json' },
+    }),
+    [provider, clientApiKey, modelId, focusHint, activeLuminor]
+  );
 
   const {
     messages,
@@ -81,13 +161,8 @@ export default function ChatPage() {
     sendMessage,
     setMessages,
   } = useChat({
-    transport: new TextStreamChatTransport({
-      api: '/api/ai/chat',
-      body: { provider, clientApiKey },
-      headers: { 'Content-Type': 'application/json' },
-    }),
+    transport,
     onError: (err) => {
-      // Surface errors that TextStreamChatTransport catches
       setChatError(err.message || 'Something went wrong. Check Settings → Providers.');
     },
   });
@@ -113,13 +188,48 @@ export default function ChatPage() {
     }
   }, [messages]);
 
+  // Parse @ commands: @opus, @gemini, @grok etc. switch model for that message
+  const parseAtCommand = useCallback((text: string): { cleanText: string; overrideModel: string | null } => {
+    const match = text.match(/^@(\w+)\s+/);
+    if (!match) return { cleanText: text, overrideModel: null };
+
+    const alias = match[1].toLowerCase();
+    // Match against model shortNames (case-insensitive)
+    const model = CHAT_MODELS.find((m) =>
+      m.shortName.toLowerCase() === alias ||
+      m.id === `arcanea-${alias}` ||
+      m.provider === alias
+    );
+
+    if (model) {
+      return { cleanText: text.slice(match[0].length), overrideModel: model.id };
+    }
+    return { cleanText: text, overrideModel: null };
+  }, []);
+
   const handleSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     if (input.trim() && !isLoading) {
-      sendMessage({ text: input.trim() });
+      const trimmed = input.trim();
+
+      // /beam command — launch beam mode
+      if (trimmed.startsWith('/beam ')) {
+        setBeamPrompt(trimmed.slice(6));
+        setInput('');
+        return;
+      }
+
+      const { cleanText, overrideModel } = parseAtCommand(trimmed);
+
+      // If @ command detected, temporarily switch model for this message
+      if (overrideModel) {
+        setModelId(overrideModel);
+      }
+
+      sendMessage({ text: cleanText });
       setInput('');
     }
-  }, [input, isLoading, sendMessage]);
+  }, [input, isLoading, sendMessage, parseAtCommand, setModelId]);
 
   // Retry last message on error
   const handleRetry = useCallback(() => {
@@ -136,6 +246,41 @@ export default function ChatPage() {
     }
     sendMessage({ text });
   }, [messages, setMessages, sendMessage]);
+
+  // Regenerate: re-send last user message for a fresh response
+  const handleRegenerate = useCallback(() => {
+    if (messages.length < 2) return;
+    const lastUserIdx = [...messages].reverse().findIndex((m) => m.role === 'user');
+    if (lastUserIdx < 0) return;
+    const actualIdx = messages.length - 1 - lastUserIdx;
+    const userText = getMessageText(messages[actualIdx]);
+    if (!userText) return;
+    // Remove assistant messages after the last user message
+    setMessages(messages.slice(0, actualIdx + 1));
+    sendMessage({ text: userText });
+  }, [messages, setMessages, sendMessage]);
+
+  // Copy message text to clipboard
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+  const handleCopy = useCallback(async (msgId: string, text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedId(msgId);
+      setTimeout(() => setCopiedId(null), 2000);
+    } catch {
+      // Fallback for older browsers
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      setCopiedId(msgId);
+      setTimeout(() => setCopiedId(null), 2000);
+    }
+  }, []);
 
   // UI state
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -254,8 +399,9 @@ export default function ChatPage() {
             >
               Arcanea
             </Link>
-            {/* Active Gates frequency indicator */}
-            {activeGates.length > 0 && messages.length > 0 ? (
+            {/* Model selector + Gate frequency indicator */}
+            <ModelSelector value={modelId} onChange={setModelId} />
+            {activeGates.length > 0 && messages.length > 0 && (
               <div className="flex items-center gap-1.5">
                 {activeGates.slice(0, 3).map((gate) => {
                   const meta = GATE_META[gate];
@@ -272,10 +418,6 @@ export default function ChatPage() {
                   );
                 })}
               </div>
-            ) : (
-              <Link href="/settings/providers" className="text-[11px] text-white/25 font-mono hover:text-white/50 transition-colors">
-                {providerLabel}
-              </Link>
             )}
           </div>
 
@@ -333,11 +475,16 @@ export default function ChatPage() {
             <div className="flex flex-col items-center justify-center h-full px-4">
               <div className="max-w-[540px] w-full text-center">
                 <h1 className="text-3xl font-semibold text-white/90 mb-2 tracking-tight">
-                  What will you create?
+                  {activeLuminor ? activeLuminor.name : 'What will you create?'}
                 </h1>
-                <p className="text-sm text-white/35 mb-10">
-                  Write, code, design, research. Or just think out loud.
+                <p className="text-sm text-white/35 mb-6">
+                  {activeLuminor ? activeLuminor.title || activeLuminor.tagline : 'Write, code, design, research. Or just think out loud.'}
                 </p>
+
+                {/* Focus mode selector — Perplexity-style */}
+                <div className="flex justify-center mb-6">
+                  <FocusModeSelector value={focusMode} onChange={setFocusMode} />
+                </div>
 
                 <div className="flex flex-wrap justify-center gap-2">
                   {SUGGESTIONS.map((s) => (
@@ -362,31 +509,105 @@ export default function ChatPage() {
                         {getMessageText(msg)}
                       </div>
                     </div>
-                  ) : (
-                    <div className="flex gap-3">
-                      {/* Arcanea avatar */}
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#00bcd4] to-[#0d47a1] flex items-center justify-center text-white text-xs font-bold shrink-0 mt-0.5">
-                        A
+                  ) : (() => {
+                    const rawText = getMessageText(msg);
+                    const isComplete = !isLoading || msg.id !== lastMsg?.id;
+                    const { clean, followUps } = isComplete ? parseFollowUps(rawText) : { clean: rawText, followUps: [] };
+
+                    return (
+                    <div className="group flex gap-3">
+                      {/* Avatar — Luminor or Arcanea */}
+                      <div
+                        className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0 mt-0.5"
+                        style={{
+                          background: activeLuminor
+                            ? `linear-gradient(135deg, ${activeLuminor.color || '#00bcd4'}, ${activeLuminor.color || '#00bcd4'}80)`
+                            : 'linear-gradient(135deg, #00bcd4, #0d47a1)',
+                        }}
+                      >
+                        {activeLuminor?.avatar || 'A'}
                       </div>
                       <div className="min-w-0 flex-1">
-                        <span className="text-xs font-medium text-[#00bcd4] mb-1 block">Arcanea</span>
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-xs font-medium" style={{ color: activeLuminor?.color || '#00bcd4' }}>
+                            {activeLuminor?.name || 'Arcanea'}
+                          </span>
+                          {activeLuminor?.title && (
+                            <span className="text-[10px] text-white/25">{activeLuminor.title}</span>
+                          )}
+                          <span className="text-[10px] text-white/20 font-mono">{providerLabel}</span>
+                        </div>
                         <div className="prose prose-invert prose-sm max-w-none text-[15px] leading-[1.7] text-white/85">
-                          <ChatMarkdown content={getMessageText(msg)} />
+                          <ChatMarkdown content={clean} />
                           {isStreaming && msg.id === lastMsg?.id && (
                             <span className="inline-block w-[2px] h-[18px] bg-[#00bcd4] animate-pulse ml-0.5 align-text-bottom" />
                           )}
                         </div>
+
+                        {/* Follow-up suggestions (Perplexity pattern) */}
+                        {followUps.length > 0 && !isLoading && (
+                          <div className="flex flex-wrap gap-1.5 mt-3">
+                            {followUps.map((fu, i) => (
+                              <button
+                                key={i}
+                                type="button"
+                                onClick={() => sendMessage({ text: fu })}
+                                className="px-3 py-1.5 rounded-full text-[12px] text-white/45 border border-white/[0.06]
+                                  hover:border-white/[0.14] hover:text-white/65 hover:bg-white/[0.03] transition-all"
+                              >
+                                {fu}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+
+                        {/* Message actions — visible on hover/focus */}
+                        {!isLoading && rawText && (
+                          <div className="flex items-center gap-1 mt-2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity">
+                            <button
+                              type="button"
+                              onClick={() => handleCopy(msg.id, clean)}
+                              className="flex items-center gap-1 px-2 py-1 rounded-md text-[11px] text-white/30 hover:text-white/60 hover:bg-white/[0.04] transition-colors focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/40"
+                              aria-label="Copy response"
+                            >
+                              {copiedId === msg.id ? (
+                                <><PhCheck className="w-3.5 h-3.5 text-emerald-400" /><span className="text-emerald-400">Copied</span></>
+                              ) : (
+                                <><PhCopy className="w-3.5 h-3.5" /><span>Copy</span></>
+                              )}
+                            </button>
+                            {msg.id === lastMsg?.id && (
+                              <button
+                                type="button"
+                                onClick={handleRegenerate}
+                                className="flex items-center gap-1 px-2 py-1 rounded-md text-[11px] text-white/30 hover:text-white/60 hover:bg-white/[0.04] transition-colors focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/40"
+                                aria-label="Regenerate response"
+                              >
+                                <PhArrowClockwise className="w-3.5 h-3.5" />
+                                <span>Regenerate</span>
+                              </button>
+                            )}
+                          </div>
+                        )}
                       </div>
                     </div>
-                  )}
+                    );
+                  })()}
                 </div>
               ))}
 
               {/* Thinking indicator */}
               {isThinking && (
                 <div className="mb-6 flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#00bcd4] to-[#0d47a1] flex items-center justify-center text-white text-xs font-bold shrink-0 animate-pulse">
-                    A
+                  <div
+                    className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0 animate-pulse"
+                    style={{
+                      background: activeLuminor
+                        ? `linear-gradient(135deg, ${activeLuminor.color || '#00bcd4'}, ${activeLuminor.color || '#00bcd4'}80)`
+                        : 'linear-gradient(135deg, #00bcd4, #0d47a1)',
+                    }}
+                  >
+                    {activeLuminor?.avatar || 'A'}
                   </div>
                   <div className="flex items-center gap-2 text-white/30">
                     <div className="flex gap-1">
@@ -462,16 +683,37 @@ export default function ChatPage() {
 
               <div className="flex items-center justify-between mt-2 px-1">
                 <span className="text-[11px] text-white/20">
-                  Enter to send · Shift+Enter for new line
+                  Enter · @model · /beam to compare
                 </span>
-                <Link href="/settings/providers" className="text-[11px] text-white/15 font-mono hover:text-white/30 transition-colors">
-                  {providerLabel}
-                </Link>
+                <div className="flex items-center gap-2">
+                  {focusMode !== 'auto' && (
+                    <FocusModeSelector value={focusMode} onChange={setFocusMode} />
+                  )}
+                  <span className="text-[11px] text-white/15 font-mono">
+                    {providerLabel}
+                  </span>
+                </div>
               </div>
             </form>
           </div>
         </div>
       </div>
+
+      {/* Beam Mode overlay */}
+      {beamPrompt && (
+        <BeamMode
+          prompt={beamPrompt}
+          provider={provider}
+          clientApiKey={clientApiKey}
+          focusHint={focusHint}
+          onSelectResponse={(text, beamModelId) => {
+            // Add the beam result as if the user sent and got a response
+            sendMessage({ text: beamPrompt });
+            setBeamPrompt(null);
+          }}
+          onClose={() => setBeamPrompt(null)}
+        />
+      )}
     </div>
   );
 }

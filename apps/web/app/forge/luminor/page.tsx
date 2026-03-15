@@ -113,11 +113,49 @@ export default function ForgeLuminorPage() {
   const [personality, setPersonality] = useState<string[]>([]);
 
   // Forge state
+  // AI-assisted creation
+  const [aiDescription, setAiDescription] = useState('');
+  const [isAiGenerating, setIsAiGenerating] = useState(false);
+
   const [isForging, setIsForging] = useState(false);
   const [forgeComplete, setForgeComplete] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const resultRef = useRef<HTMLDivElement>(null);
+
+  // Ask Lumina to generate a LuminorSpec from natural language
+  const handleAiForge = useCallback(async () => {
+    if (!aiDescription.trim() || aiDescription.length < 10) return;
+    setIsAiGenerating(true);
+    try {
+      const res = await fetch('/api/forge/luminor', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          description: aiDescription,
+          name: name || undefined,
+          element: element || undefined,
+          domain: domain || undefined,
+        }),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || 'Forge failed');
+      }
+      const { spec } = await res.json();
+      // Populate form with AI-generated values
+      if (spec.name && !name) setName(spec.name);
+      if (spec.title) setTitle(spec.title || '');
+      if (spec.domain) setDomain(spec.domain);
+      if (spec.voice) setVoice(spec.voice);
+      if (spec.element) setElement(spec.element);
+      if (spec.personality) setPersonality(spec.personality.slice(0, 5));
+    } catch (err) {
+      console.error('AI Forge error:', err);
+    } finally {
+      setIsAiGenerating(false);
+    }
+  }, [aiDescription, name, element, domain]);
 
   const canForge =
     name.trim().length > 0 &&
@@ -150,7 +188,7 @@ export default function ForgeLuminorPage() {
   const forgedSpec: Partial<LuminorSpec> | null =
     forgeComplete && domain && voice && element
       ? {
-          version: 1,
+          version: 2,
           name: name.trim(),
           title: title.trim(),
           tagline: `${LUMINOR_DOMAINS.find((d) => d.key === domain)?.label} specialist with a ${voice} voice`,
@@ -215,6 +253,54 @@ export default function ForgeLuminorPage() {
             </p>
           </m.div>
         </section>
+
+        {/* AI-Assisted Creation — Talk to Lumina */}
+        <section className="mx-auto max-w-3xl px-6 pb-8">
+          <m.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.05 }}
+            className="rounded-2xl border border-[#00bcd4]/20 bg-[#00bcd4]/[0.03] p-6 md:p-8"
+          >
+            <div className="mb-4 flex items-center gap-2">
+              <Sparkle className="h-5 w-5 text-[#00bcd4]" />
+              <h2 className="font-display text-lg font-semibold text-white/80">
+                Ask Lumina
+              </h2>
+              <span className="rounded-full bg-[#00bcd4]/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[#00bcd4]">
+                AI
+              </span>
+            </div>
+            <p className="mb-4 text-sm text-white/40">
+              Describe what you want your Luminor to help with. Lumina will shape the intelligence for you.
+            </p>
+            <div className="flex gap-3">
+              <textarea
+                value={aiDescription}
+                onChange={(e) => setAiDescription(e.target.value)}
+                placeholder="I need a creative partner who understands music theory and can help me compose emotional piano pieces with jazz influences..."
+                className="flex-1 rounded-xl border border-white/[0.06] bg-white/[0.04] px-4 py-3 text-sm text-white/90 placeholder-white/25 focus:border-[#00bcd4]/40 focus:outline-none"
+                rows={2}
+              />
+              <button
+                type="button"
+                onClick={handleAiForge}
+                disabled={isAiGenerating || aiDescription.length < 10}
+                className="shrink-0 self-end rounded-xl bg-[#00bcd4] px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-[#00acc1] disabled:opacity-30 disabled:cursor-not-allowed"
+              >
+                {isAiGenerating ? 'Shaping...' : 'Shape'}
+              </button>
+            </div>
+          </m.div>
+        </section>
+
+        <div className="mx-auto max-w-3xl px-6 pb-4">
+          <div className="flex items-center gap-3">
+            <div className="h-px flex-1 bg-white/[0.06]" />
+            <span className="text-[11px] text-white/20 uppercase tracking-wider">or customize manually</span>
+            <div className="h-px flex-1 bg-white/[0.06]" />
+          </div>
+        </div>
 
         {/* Step 1: Identity */}
         <section className="mx-auto max-w-3xl px-6 pb-12">
