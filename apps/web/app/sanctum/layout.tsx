@@ -2,9 +2,38 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'The Sanctum | Arcanea',
-  description: 'Discover, forge, and share illuminated AI intelligences. Each Luminor is a creative partner shaped by its creator — with unique voice, domain expertise, and personality.',
+  description:
+    'Discover, forge, and share illuminated AI intelligences. Each Luminor is a creative partner shaped by its creator — with unique voice, domain expertise, and personality.',
+  openGraph: {
+    title: 'The Sanctum — Where Intelligence Is Born',
+    description:
+      'Browse AI Luminors forged by creators. Use them in chat, export anywhere.',
+    type: 'website',
+  },
 };
 
 export default function SanctumLayout({ children }: { children: React.ReactNode }) {
-  return children;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'WebPage',
+            name: 'The Sanctum',
+            description:
+              'Discover AI Luminors forged by creators on Arcanea',
+            url: 'https://arcanea.ai/sanctum',
+            isPartOf: {
+              '@type': 'WebSite',
+              name: 'Arcanea',
+              url: 'https://arcanea.ai',
+            },
+          }),
+        }}
+      />
+      {children}
+    </>
+  );
 }
