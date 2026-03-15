@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arcanea Media v05 — Neon Matrix</title>
+<style>
+  /* ═══════════════════════════════════════════════
+     V05: NEON MATRIX
+     Cyberpunk hacker aesthetic — electric & alive
+     ═══════════════════════════════════════════════ */
+
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&display=swap');
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    background: #000000;
+    color: #00ff41;
+    font-family: 'Share Tech Mono', monospace;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Page Layout ── */
+  .page-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    padding: 60px 40px;
+    min-height: 100vh;
+    align-items: flex-start;
+  }
+
+  .device-frame {
+    flex-shrink: 0;
+  }
+
+  .device-label {
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    color: #00ff41;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    margin-bottom: 8px;
+  }
+
+  .device-sublabel {
+    font-size: 11px;
+    color: #004d14;
+    margin-bottom: 20px;
+  }
+
+  /* ── CRT / Scanline Effects ── */
+  .crt-frame {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .crt-frame::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 255, 65, 0.03) 2px,
+      rgba(0, 255, 65, 0.03) 4px
+    );
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .crt-frame::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border: 1px solid #00ff41;
+    border-radius: 6px;
+    box-shadow:
+      0 0 8px rgba(0, 255, 65, 0.3),
+      inset 0 0 30px rgba(0, 255, 65, 0.03);
+    pointer-events: none;
+    z-index: 11;
+  }
+
+  /* ── Side Panel Frame ── */
+  .side-panel {
+    width: 400px;
+    height: 720px;
+    background: #000000;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  /* ── Popup Frame ── */
+  .popup {
+    width: 280px;
+    height: 440px;
+    background: #000000;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  /* ── Terminal Header ── */
+  .nm-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid #003310;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nm-terminal-title {
+    font-size: 11px;
+    color: #00ff41;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nm-terminal-title .prompt {
+    color: #00ff41;
+    opacity: 0.6;
+  }
+
+  .nm-cursor {
+    display: inline-block;
+    width: 7px;
+    height: 13px;
+    background: #00ff41;
+    animation: nm-blink 1s step-end infinite;
+    vertical-align: middle;
+    margin-left: 2px;
+  }
+
+  @keyframes nm-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .nm-status-dot {
+    width: 6px;
+    height: 6px;
+    background: #00ff41;
+    border-radius: 50%;
+    box-shadow: 0 0 6px #00ff41;
+    animation: nm-pulse-dot 2s ease-in-out infinite;
+  }
+
+  @keyframes nm-pulse-dot {
+    0%, 100% { box-shadow: 0 0 4px #00ff41; }
+    50% { box-shadow: 0 0 12px #00ff41, 0 0 20px rgba(0,255,65,0.3); }
+  }
+
+  .nm-header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nm-icon-btn {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #003310;
+    background: transparent;
+    color: #006622;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 2px;
+  }
+
+  .nm-icon-btn:hover {
+    border-color: #00ff41;
+    color: #00ff41;
+    box-shadow: 0 0 8px rgba(0, 255, 65, 0.3);
+  }
+
+  .nm-icon-btn svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  /* ── ASCII Logo ── */
+  .nm-ascii-logo {
+    padding: 8px 16px;
+    font-size: 8px;
+    line-height: 1.1;
+    color: #004d14;
+    white-space: pre;
+    border-bottom: 1px solid #001a08;
+  }
+
+  /* ── Tab Bar ── */
+  .nm-tabs {
+    display: flex;
+    padding: 0;
+    border-bottom: 1px solid #003310;
+  }
+
+  .nm-tab {
+    flex: 1;
+    padding: 8px 12px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: #004d14;
+    cursor: pointer;
+    border: none;
+    background: none;
+    text-align: center;
+    transition: all 0.2s ease;
+    border-right: 1px solid #001a08;
+    position: relative;
+  }
+
+  .nm-tab:last-child {
+    border-right: none;
+  }
+
+  .nm-tab:hover {
+    color: #00ff41;
+    background: rgba(0, 255, 65, 0.03);
+  }
+
+  .nm-tab.active {
+    color: #00ff41;
+    background: rgba(0, 255, 65, 0.05);
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+  }
+
+  .nm-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #00ff41;
+    box-shadow: 0 0 6px #00ff41;
+  }
+
+  /* ── Stats Feed ── */
+  .nm-stats {
+    padding: 8px 16px;
+    font-size: 10px;
+    color: #006622;
+    border-bottom: 1px solid #001a08;
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+
+  .nm-stat {
+    display: flex;
+    gap: 4px;
+  }
+
+  .nm-stat-label {
+    color: #004d14;
+  }
+
+  .nm-stat-value {
+    color: #00ff41;
+  }
+
+  .nm-stat-sep {
+    color: #001a08;
+  }
+
+  /* ── Action Bar ── */
+  .nm-action-bar {
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #003310;
+  }
+
+  .nm-filter-group {
+    display: flex;
+    gap: 0;
+  }
+
+  .nm-filter {
+    padding: 3px 8px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: #004d14;
+    border: 1px solid #003310;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    margin-right: -1px;
+  }
+
+  .nm-filter:first-child {
+    border-radius: 2px 0 0 2px;
+  }
+
+  .nm-filter:last-child {
+    border-radius: 0 2px 2px 0;
+  }
+
+  .nm-filter:hover {
+    color: #00ff41;
+    border-color: #00ff41;
+    z-index: 1;
+  }
+
+  .nm-filter.active {
+    color: #000000;
+    background: #00ff41;
+    border-color: #00ff41;
+    z-index: 2;
+  }
+
+  .nm-btn-execute {
+    padding: 4px 12px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: #000000;
+    background: #00ff41;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 2px;
+  }
+
+  .nm-btn-execute:hover {
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+    text-shadow: none;
+  }
+
+  .nm-btn-execute::before {
+    content: '>';
+    margin-right: 6px;
+    opacity: 0.6;
+  }
+
+  .nm-btn-ghost {
+    padding: 4px 10px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: #006622;
+    background: transparent;
+    border: 1px solid #003310;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 2px;
+  }
+
+  .nm-btn-ghost:hover {
+    color: #00ff41;
+    border-color: #00ff41;
+  }
+
+  .nm-btn-cyan {
+    padding: 4px 12px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: #000000;
+    background: #00f0ff;
+    border: none;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+
+  /* ── Media Grid ── */
+  .nm-grid {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    align-content: start;
+  }
+
+  .popup .nm-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .nm-grid-item {
+    aspect-ratio: 1;
+    position: relative;
+    cursor: pointer;
+    border: 1px solid #003310;
+    overflow: hidden;
+    transition: all 0.2s ease;
+  }
+
+  .nm-grid-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 8px; height: 8px;
+    border-top: 1px solid #006622;
+    border-left: 1px solid #006622;
+    z-index: 2;
+    transition: all 0.2s ease;
+  }
+
+  .nm-grid-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 8px; height: 8px;
+    border-bottom: 1px solid #006622;
+    border-right: 1px solid #006622;
+    z-index: 2;
+    transition: all 0.2s ease;
+  }
+
+  .nm-grid-item:hover {
+    border-color: #00ff41;
+  }
+
+  .nm-grid-item:hover::before,
+  .nm-grid-item:hover::after {
+    border-color: #00ff41;
+    width: 12px;
+    height: 12px;
+  }
+
+  .nm-grid-item.selected {
+    border-color: #00ff41;
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.3), inset 0 0 10px rgba(0, 255, 65, 0.1);
+  }
+
+  .nm-grid-item.selected::before,
+  .nm-grid-item.selected::after {
+    border-color: #00ff41;
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Glitch hover effect */
+  @keyframes nm-glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-1px, 1px); }
+    40% { transform: translate(1px, -1px); }
+    60% { transform: translate(-1px, -1px); }
+    80% { transform: translate(1px, 1px); }
+    100% { transform: translate(0); }
+  }
+
+  .nm-grid-item:hover .nm-placeholder {
+    animation: nm-glitch 0.3s ease-in-out;
+  }
+
+  .nm-placeholder {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  /* Neon placeholder gradients */
+  .nph-1 { background: linear-gradient(135deg, #001a08 0%, #003310 50%, #001a08 100%); }
+  .nph-2 { background: linear-gradient(135deg, #000d1a 0%, #002233 50%, #000d1a 100%); }
+  .nph-3 { background: linear-gradient(135deg, #1a000d 0%, #330019 50%, #1a000d 100%); }
+  .nph-4 { background: linear-gradient(135deg, #0d1a00 0%, #193300 50%, #0d1a00 100%); }
+  .nph-5 { background: linear-gradient(135deg, #1a0d00 0%, #331900 50%, #1a0d00 100%); }
+  .nph-6 { background: linear-gradient(135deg, #001a0d 0%, #003319 50%, #001a0d 100%); }
+  .nph-7 { background: linear-gradient(135deg, #0d001a 0%, #190033 50%, #0d001a 100%); }
+  .nph-8 { background: linear-gradient(135deg, #001a14 0%, #003328 50%, #001a14 100%); }
+  .nph-9 { background: linear-gradient(135deg, #0a1a00 0%, #143300 50%, #0a1a00 100%); }
+  .nph-10 { background: linear-gradient(135deg, #001a1a 0%, #003333 50%, #001a1a 100%); }
+  .nph-11 { background: linear-gradient(135deg, #1a1a00 0%, #333300 50%, #1a1a00 100%); }
+  .nph-12 { background: linear-gradient(135deg, #001a00 0%, #003300 50%, #001a00 100%); }
+  .nph-13 { background: linear-gradient(135deg, #1a0008 0%, #330010 50%, #1a0008 100%); }
+  .nph-14 { background: linear-gradient(135deg, #000a1a 0%, #001433 50%, #000a1a 100%); }
+  .nph-15 { background: linear-gradient(135deg, #140a1a 0%, #281433 50%, #140a1a 100%); }
+  .nph-16 { background: linear-gradient(135deg, #1a140a 0%, #332814 50%, #1a140a 100%); }
+
+  .nm-badge {
+    position: absolute;
+    bottom: 3px;
+    left: 3px;
+    padding: 1px 4px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    z-index: 2;
+  }
+
+  .nm-badge-video {
+    color: #00f0ff;
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    background: rgba(0, 0, 0, 0.8);
+  }
+
+  .nm-badge-hd {
+    color: #ffb000;
+    border: 1px solid rgba(255, 176, 0, 0.3);
+    background: rgba(0, 0, 0, 0.8);
+  }
+
+  .nm-check {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    width: 14px;
+    height: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    color: #00ff41;
+    font-size: 10px;
+    text-shadow: 0 0 6px #00ff41;
+  }
+
+  /* ── Selection Bar ── */
+  .nm-selection-bar {
+    padding: 6px 16px;
+    border-top: 1px solid #003310;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(0, 255, 65, 0.03);
+  }
+
+  .nm-selection-text {
+    font-size: 10px;
+    color: #006622;
+  }
+
+  .nm-selection-text strong {
+    color: #00ff41;
+    text-shadow: 0 0 6px rgba(0, 255, 65, 0.5);
+  }
+
+  .nm-selection-actions {
+    display: flex;
+    gap: 6px;
+  }
+
+  /* ── Terminal Progress ── */
+  .nm-progress-terminal {
+    padding: 6px 16px;
+    font-size: 10px;
+    color: #006622;
+    border-top: 1px solid #001a08;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nm-progress-bar-text {
+    color: #00ff41;
+    white-space: nowrap;
+  }
+
+  .nm-progress-pct {
+    color: #00f0ff;
+    white-space: nowrap;
+  }
+
+  /* ── Downloads Tab ── */
+  .nm-downloads {
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .nm-dl-item {
+    padding: 10px 16px;
+    border-bottom: 1px solid #001a08;
+    transition: background 0.2s ease;
+  }
+
+  .nm-dl-item:hover {
+    background: rgba(0, 255, 65, 0.02);
+  }
+
+  .nm-dl-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+
+  .nm-dl-name {
+    font-size: 10px;
+    color: #00ff41;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .nm-dl-name .file-type {
+    color: #00f0ff;
+    font-size: 9px;
+  }
+
+  .nm-dl-status {
+    font-size: 10px;
+  }
+
+  .nm-dl-status.active {
+    color: #00ff41;
+    animation: nm-blink 1.5s step-end infinite;
+  }
+
+  .nm-dl-status.done {
+    color: #004d14;
+  }
+
+  .nm-dl-status.queued {
+    color: #004d14;
+  }
+
+  .nm-dl-status.error {
+    color: #ff0080;
+  }
+
+  .nm-dl-progress {
+    font-size: 10px;
+    color: #003310;
+    margin-top: 2px;
+  }
+
+  .nm-dl-progress .filled {
+    color: #00ff41;
+  }
+
+  .nm-dl-meta {
+    font-size: 9px;
+    color: #004d14;
+    margin-top: 2px;
+  }
+
+  /* ── Settings Tab ── */
+  .nm-settings {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 16px;
+  }
+
+  .nm-settings-section {
+    margin-bottom: 20px;
+  }
+
+  .nm-settings-title {
+    font-size: 10px;
+    color: #006622;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #001a08;
+  }
+
+  .nm-setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 0;
+  }
+
+  .nm-setting-label {
+    font-size: 11px;
+    color: #006622;
+  }
+
+  .nm-setting-desc {
+    font-size: 9px;
+    color: #004d14;
+    margin-top: 1px;
+  }
+
+  .nm-toggle {
+    width: 36px;
+    height: 16px;
+    border: 1px solid #003310;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: #000000;
+  }
+
+  .nm-toggle.on {
+    border-color: #00ff41;
+    box-shadow: 0 0 6px rgba(0, 255, 65, 0.3);
+  }
+
+  .nm-toggle::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 10px;
+    height: 10px;
+    background: #003310;
+    transition: all 0.2s ease;
+  }
+
+  .nm-toggle.on::after {
+    left: 22px;
+    background: #00ff41;
+    box-shadow: 0 0 4px #00ff41;
+  }
+
+  .nm-input {
+    padding: 4px 8px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: #00ff41;
+    background: #000000;
+    border: 1px solid #003310;
+    width: 100px;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+
+  .nm-input:focus {
+    border-color: #00ff41;
+    box-shadow: 0 0 6px rgba(0, 255, 65, 0.3);
+  }
+
+  /* ── Empty State with Matrix Rain ── */
+  .nm-empty {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .nm-matrix-rain {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    opacity: 0.15;
+    z-index: 0;
+  }
+
+  .nm-rain-col {
+    position: absolute;
+    top: -100%;
+    font-size: 10px;
+    line-height: 1.2;
+    color: #00ff41;
+    animation: nm-rain-fall linear infinite;
+    white-space: pre;
+  }
+
+  @keyframes nm-rain-fall {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(calc(100vh + 100%)); }
+  }
+
+  .nm-rain-col:nth-child(1) { left: 5%; animation-duration: 4s; animation-delay: 0s; }
+  .nm-rain-col:nth-child(2) { left: 15%; animation-duration: 5s; animation-delay: 1s; }
+  .nm-rain-col:nth-child(3) { left: 25%; animation-duration: 3.5s; animation-delay: 0.5s; }
+  .nm-rain-col:nth-child(4) { left: 35%; animation-duration: 4.5s; animation-delay: 1.5s; }
+  .nm-rain-col:nth-child(5) { left: 45%; animation-duration: 3s; animation-delay: 0.3s; }
+  .nm-rain-col:nth-child(6) { left: 55%; animation-duration: 5.5s; animation-delay: 2s; }
+  .nm-rain-col:nth-child(7) { left: 65%; animation-duration: 4.2s; animation-delay: 0.8s; }
+  .nm-rain-col:nth-child(8) { left: 75%; animation-duration: 3.8s; animation-delay: 1.2s; }
+  .nm-rain-col:nth-child(9) { left: 85%; animation-duration: 4.8s; animation-delay: 0.6s; }
+  .nm-rain-col:nth-child(10) { left: 95%; animation-duration: 3.3s; animation-delay: 1.8s; }
+
+  .nm-empty-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .nm-empty-icon {
+    width: 36px;
+    height: 36px;
+    color: #003310;
+    margin-bottom: 12px;
+  }
+
+  .nm-empty-title {
+    font-size: 11px;
+    color: #006622;
+    margin-bottom: 4px;
+  }
+
+  .nm-empty-desc {
+    font-size: 10px;
+    color: #004d14;
+    max-width: 180px;
+  }
+
+  /* ── Scanning State ── */
+  .nm-scan-state {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+  }
+
+  .nm-radar {
+    width: 60px;
+    height: 60px;
+    border: 1px solid #003310;
+    border-radius: 50%;
+    position: relative;
+    margin-bottom: 16px;
+  }
+
+  .nm-radar::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: 1px;
+    background: linear-gradient(90deg, #00ff41, transparent);
+    transform-origin: left center;
+    animation: nm-radar-sweep 2s linear infinite;
+  }
+
+  @keyframes nm-radar-sweep {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .nm-radar::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 4px;
+    height: 4px;
+    background: #00ff41;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 8px #00ff41;
+  }
+
+  .nm-radar-ring {
+    position: absolute;
+    border: 1px solid #001a08;
+    border-radius: 50%;
+  }
+
+  .nm-radar-ring:nth-child(1) {
+    inset: 25%;
+  }
+
+  .nm-radar-ring:nth-child(2) {
+    inset: 50%;
+    width: 4px; height: 4px;
+  }
+
+  .nm-scan-text {
+    font-size: 11px;
+    color: #00ff41;
+    margin-bottom: 4px;
+  }
+
+  .nm-scan-sub {
+    font-size: 10px;
+    color: #004d14;
+    margin-bottom: 12px;
+  }
+
+  .nm-scan-progress-text {
+    font-size: 10px;
+    color: #003310;
+    letter-spacing: 0.05em;
+  }
+
+  .nm-scan-progress-text .filled {
+    color: #00ff41;
+  }
+
+  /* ── Footer ── */
+  .nm-footer {
+    padding: 6px 16px;
+    border-top: 1px solid #003310;
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    color: #004d14;
+  }
+
+  .nm-footer-link {
+    color: #006622;
+    text-decoration: none;
+  }
+
+  .nm-footer-link:hover {
+    color: #00ff41;
+  }
+
+  /* ── Scrollbar ── */
+  .nm-grid::-webkit-scrollbar,
+  .nm-downloads::-webkit-scrollbar,
+  .nm-settings::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .nm-grid::-webkit-scrollbar-track,
+  .nm-downloads::-webkit-scrollbar-track,
+  .nm-settings::-webkit-scrollbar-track {
+    background: #000000;
+  }
+
+  .nm-grid::-webkit-scrollbar-thumb,
+  .nm-downloads::-webkit-scrollbar-thumb,
+  .nm-settings::-webkit-scrollbar-thumb {
+    background: #003310;
+  }
+
+  .nm-grid::-webkit-scrollbar-thumb:hover,
+  .nm-downloads::-webkit-scrollbar-thumb:hover,
+  .nm-settings::-webkit-scrollbar-thumb:hover {
+    background: #006622;
+  }
+
+  /* ── Typing animation ── */
+  @keyframes nm-type {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+
+  .nm-typing {
+    overflow: hidden;
+    white-space: nowrap;
+    animation: nm-type 1.5s steps(30) forwards;
+  }
+
+  /* ── Design Notes ── */
+  .design-notes {
+    max-width: 800px;
+    margin: 80px auto;
+    padding: 0 40px 80px;
+    font-family: 'Share Tech Mono', monospace;
+  }
+
+  .design-notes h2 {
+    font-family: 'Orbitron', monospace;
+    font-size: 16px;
+    font-weight: 700;
+    color: #00ff41;
+    margin-bottom: 32px;
+    text-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+    letter-spacing: 0.05em;
+  }
+
+  .design-notes h3 {
+    font-size: 12px;
+    color: #00f0ff;
+    margin-top: 28px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .design-notes p {
+    font-size: 12px;
+    color: #006622;
+    line-height: 1.8;
+    margin-bottom: 8px;
+  }
+
+  .design-notes ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .design-notes li {
+    font-size: 12px;
+    color: #006622;
+    padding: 4px 0;
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .design-notes li::before {
+    content: '>';
+    position: absolute;
+    left: 0;
+    color: #00ff41;
+  }
+
+  .color-swatch {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    vertical-align: middle;
+    margin-right: 6px;
+    border: 1px solid #003310;
+  }
+
+  .dn-divider {
+    height: 1px;
+    background: #003310;
+    margin: 32px 0;
+    box-shadow: 0 0 4px rgba(0, 255, 65, 0.2);
+  }
+</style>
+</head>
+<body>
+
+<div class="page-wrapper">
+
+  <!-- ═══════════════════════════════════════
+       SIDE PANEL — 400px
+       ═══════════════════════════════════════ -->
+  <div class="device-frame">
+    <div class="device-label">// Side Panel</div>
+    <div class="device-sublabel">400 x 720 -- chrome.sidePanel.open()</div>
+
+    <div class="crt-frame">
+      <div class="side-panel">
+        <!-- ASCII Logo -->
+        <div class="nm-ascii-logo">  _   ___  ___   _   _  _  ___   _
+ /_\ | _ \/ __| /_\ | \| || __| /_\
+/ _ \|   / (__ / _ \| .` || _| / _ \
+/_/ \_\_|_\\___/_/ \_\_|\_||___|/_/ \_\  MEDIA</div>
+
+        <!-- Terminal Header -->
+        <div class="nm-header">
+          <div class="nm-terminal-title">
+            <span class="prompt">></span> ARCANEA_MEDIA v0.1.0 [ONLINE]<span class="nm-cursor"></span>
+          </div>
+          <div class="nm-header-right">
+            <div class="nm-status-dot"></div>
+            <button class="nm-icon-btn">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="8" cy="8" r="2"/>
+                <path d="M8 1v2M8 13v2M1 8h2M13 8h2"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="nm-tabs">
+          <button class="nm-tab active">[1:LIB]</button>
+          <button class="nm-tab">[2:DL]</button>
+          <button class="nm-tab">[3:CFG]</button>
+        </div>
+
+        <!-- Stats -->
+        <div class="nm-stats">
+          <span class="nm-stat"><span class="nm-stat-label">IMG:</span> <span class="nm-stat-value">156</span></span>
+          <span class="nm-stat-sep">|</span>
+          <span class="nm-stat"><span class="nm-stat-label">VID:</span> <span class="nm-stat-value">23</span></span>
+          <span class="nm-stat-sep">|</span>
+          <span class="nm-stat"><span class="nm-stat-label">HD:</span> <span class="nm-stat-value" style="color:#ffb000">8</span></span>
+          <span class="nm-stat-sep">|</span>
+          <span class="nm-stat"><span class="nm-stat-label">SEL:</span> <span class="nm-stat-value" style="color:#00f0ff">4</span></span>
+          <span class="nm-stat-sep">|</span>
+          <span class="nm-stat"><span class="nm-stat-label">SAVED:</span> <span class="nm-stat-value">89</span></span>
+        </div>
+
+        <!-- Action Bar -->
+        <div class="nm-action-bar">
+          <div class="nm-filter-group">
+            <button class="nm-filter active">ALL</button>
+            <button class="nm-filter">IMG</button>
+            <button class="nm-filter">VID</button>
+            <button class="nm-filter">HD</button>
+            <button class="nm-filter">SD</button>
+          </div>
+          <div style="display: flex; gap: 6px;">
+            <button class="nm-btn-ghost">SELECT</button>
+            <button class="nm-btn-execute">DOWNLOAD</button>
+          </div>
+        </div>
+
+        <!-- Media Grid -->
+        <div class="nm-grid">
+          <div class="nm-grid-item selected"><div class="nm-placeholder nph-1"></div><span class="nm-check">+</span></div>
+          <div class="nm-grid-item"><div class="nm-placeholder nph-2"></div><span class="nm-badge nm-badge-video">VID</span></div>
+          <div class="nm-grid-item selected"><div class="nm-placeholder nph-3"></div><span class="nm-badge nm-badge-hd">HD</span><span class="nm-check">+</span></div>
+          <div class="nm-grid-item"><div class="nm-placeholder nph-4"></div></div>
+          <div class="nm-grid-item"><div class="nm-placeholder nph-5"></div></div>
+          <div class="nm-grid-item selected"><div class="nm-placeholder nph-6"></div><span class="nm-badge nm-badge-video">VID</span><span class="nm-check">+</span></div>
+          <div class="nm-grid-item"><div class="nm-placeholder nph-7"></div></div>
+          <div class="nm-grid-item"><div class="nm-placeholder nph-8"></div><span class="nm-badge nm-badge-hd">HD</span></div>
+          <div class="nm-grid-item selected"><div class="nm-placeholder nph-9"></div><span class="nm-check">+</span></div>
+          <div class="nm-grid-item"><div class="nm-placeholder nph-10"></div></div>
+          <div class="nm-grid-item"><div class="nm-placeholder nph-11"></div><span class="nm-badge nm-badge-video">VID</span></div>
+          <div class="nm-grid-item"><div class="nm-placeholder nph-12"></div></div>
+          <div class="nm-grid-item"><div class="nm-placeholder nph-13"></div></div>
+          <div class="nm-grid-item"><div class="nm-placeholder nph-14"></div><span class="nm-badge nm-badge-hd">HD</span></div>
+          <div class="nm-grid-item"><div class="nm-placeholder nph-15"></div></div>
+          <div class="nm-grid-item"><div class="nm-placeholder nph-16"></div></div>
+        </div>
+
+        <!-- Selection Bar -->
+        <div class="nm-selection-bar">
+          <span class="nm-selection-text"><strong>4</strong> TARGETS ACQUIRED</span>
+          <div class="nm-selection-actions">
+            <button class="nm-btn-ghost" style="font-size: 9px;">CLEAR</button>
+            <button class="nm-btn-execute" style="font-size: 9px;">EXECUTE_DOWNLOAD</button>
+          </div>
+        </div>
+
+        <!-- Progress -->
+        <div class="nm-progress-terminal">
+          <span class="nm-progress-bar-text">[<span style="color:#00ff41">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span style="color:#003310">&#9608;&#9608;&#9608;&#9608;</span>]</span>
+          <span class="nm-progress-pct">67%</span>
+          <span style="color:#004d14">| 4/6 COMPLETE</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       POPUP — 280px (multiple states)
+       ═══════════════════════════════════════ -->
+  <div class="device-frame">
+    <div class="device-label">// Popup</div>
+    <div class="device-sublabel">280 x 440 -- browserAction.popup</div>
+
+    <!-- STATE 1: Downloads Tab -->
+    <div class="crt-frame" style="margin-bottom: 40px;">
+      <div class="popup">
+        <div class="nm-header">
+          <div class="nm-terminal-title">
+            <span class="prompt">></span> DOWNLOADS<span class="nm-cursor"></span>
+          </div>
+          <div class="nm-status-dot"></div>
+        </div>
+
+        <div class="nm-tabs">
+          <button class="nm-tab">[1:LIB]</button>
+          <button class="nm-tab active">[2:DL]</button>
+          <button class="nm-tab">[3:CFG]</button>
+        </div>
+
+        <div class="nm-downloads">
+          <div class="nm-dl-item">
+            <div class="nm-dl-header">
+              <span class="nm-dl-name">grok_001.png <span class="file-type">[PNG]</span></span>
+              <span class="nm-dl-status done">DONE</span>
+            </div>
+            <div class="nm-dl-progress">[<span class="filled">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span>] 100%</div>
+            <div class="nm-dl-meta">2.4 MB | 1024x1024</div>
+          </div>
+
+          <div class="nm-dl-item">
+            <div class="nm-dl-header">
+              <span class="nm-dl-name">grok_002.png <span class="file-type">[HD]</span></span>
+              <span class="nm-dl-status active">67%</span>
+            </div>
+            <div class="nm-dl-progress">[<span class="filled">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span style="color:#003310">&#9608;&#9608;&#9608;&#9608;</span>] 67%</div>
+            <div class="nm-dl-meta">1.8 MB | 2048x2048</div>
+          </div>
+
+          <div class="nm-dl-item">
+            <div class="nm-dl-header">
+              <span class="nm-dl-name">grok_v01.mp4 <span class="file-type" style="color:#00f0ff">[MP4]</span></span>
+              <span class="nm-dl-status active">34%</span>
+            </div>
+            <div class="nm-dl-progress">[<span class="filled">&#9608;&#9608;&#9608;&#9608;</span><span style="color:#003310">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span>] 34%</div>
+            <div class="nm-dl-meta">12.1 MB | 720p</div>
+          </div>
+
+          <div class="nm-dl-item">
+            <div class="nm-dl-header">
+              <span class="nm-dl-name">grok_003.png <span class="file-type">[PNG]</span></span>
+              <span class="nm-dl-status queued">QUEUED</span>
+            </div>
+            <div class="nm-dl-progress">[<span style="color:#003310">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span>] 0%</div>
+            <div class="nm-dl-meta">3.1 MB | pending</div>
+          </div>
+
+          <div class="nm-dl-item">
+            <div class="nm-dl-header">
+              <span class="nm-dl-name">grok_004.png <span class="file-type">[PNG]</span></span>
+              <span class="nm-dl-status error">ERROR</span>
+            </div>
+            <div class="nm-dl-progress" style="color:#ff0080">[<span style="color:#ff0080">&#9608;&#9608;&#9608;</span><span style="color:#330010">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span>] FAIL</div>
+            <div class="nm-dl-meta" style="color:#ff0080">TIMEOUT: retry available</div>
+          </div>
+        </div>
+
+        <div class="nm-footer">
+          <span>SYS: 2/5 DONE</span>
+          <span style="color:#00ff41">NET: 67%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATE 2: Settings Tab -->
+    <div class="crt-frame" style="margin-bottom: 40px;">
+      <div class="popup">
+        <div class="nm-header">
+          <div class="nm-terminal-title">
+            <span class="prompt">></span> CONFIG<span class="nm-cursor"></span>
+          </div>
+        </div>
+
+        <div class="nm-tabs">
+          <button class="nm-tab">[1:LIB]</button>
+          <button class="nm-tab">[2:DL]</button>
+          <button class="nm-tab active">[3:CFG]</button>
+        </div>
+
+        <div class="nm-settings">
+          <div class="nm-settings-section">
+            <div class="nm-settings-title">// DOWNLOAD_CFG</div>
+            <div class="nm-setting-row">
+              <div>
+                <div class="nm-setting-label">auto_hd</div>
+                <div class="nm-setting-desc">prefer max resolution</div>
+              </div>
+              <div class="nm-toggle on"></div>
+            </div>
+            <div class="nm-setting-row">
+              <div>
+                <div class="nm-setting-label">include_vid</div>
+              </div>
+              <div class="nm-toggle on"></div>
+            </div>
+            <div class="nm-setting-row">
+              <div>
+                <div class="nm-setting-label">max_concurrent</div>
+              </div>
+              <input class="nm-input" value="3" style="width: 50px; text-align: center;">
+            </div>
+          </div>
+
+          <div class="nm-settings-section">
+            <div class="nm-settings-title">// STORAGE_CFG</div>
+            <div class="nm-setting-row">
+              <div>
+                <div class="nm-setting-label">save_path</div>
+                <div class="nm-setting-desc">~/dl/arcanea/</div>
+              </div>
+              <button class="nm-btn-ghost" style="font-size: 9px;">EDIT</button>
+            </div>
+            <div class="nm-setting-row">
+              <div>
+                <div class="nm-setting-label">sort_by_date</div>
+              </div>
+              <div class="nm-toggle"></div>
+            </div>
+          </div>
+
+          <div class="nm-settings-section">
+            <div class="nm-settings-title">// SCAN_CFG</div>
+            <div class="nm-setting-row">
+              <div>
+                <div class="nm-setting-label">auto_scan</div>
+              </div>
+              <div class="nm-toggle on"></div>
+            </div>
+            <div class="nm-setting-row">
+              <div>
+                <div class="nm-setting-label">scan_depth</div>
+              </div>
+              <input class="nm-input" value="100" style="width: 50px; text-align: center;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATE 3: Empty State with Matrix Rain -->
+    <div class="crt-frame" style="margin-bottom: 40px;">
+      <div class="popup">
+        <div class="nm-header">
+          <div class="nm-terminal-title">
+            <span class="prompt">></span> AWAITING_INPUT<span class="nm-cursor"></span>
+          </div>
+        </div>
+
+        <div class="nm-tabs">
+          <button class="nm-tab active">[1:LIB]</button>
+          <button class="nm-tab">[2:DL]</button>
+          <button class="nm-tab">[3:CFG]</button>
+        </div>
+
+        <div class="nm-empty">
+          <div class="nm-matrix-rain">
+            <div class="nm-rain-col">0 1 0 1 1 0 0 1 0 1 1 0 1 0 0 1 1 0</div>
+            <div class="nm-rain-col">1 0 1 1 0 0 1 0 1 0 1 1 0 1 0 0 1 0</div>
+            <div class="nm-rain-col">0 0 1 0 1 1 0 1 0 0 1 0 1 1 0 1 0 1</div>
+            <div class="nm-rain-col">1 1 0 1 0 0 1 0 1 1 0 0 1 0 1 0 1 1</div>
+            <div class="nm-rain-col">0 1 1 0 0 1 0 1 0 1 1 0 0 1 0 1 1 0</div>
+            <div class="nm-rain-col">1 0 0 1 1 0 1 0 1 0 0 1 1 0 1 0 0 1</div>
+            <div class="nm-rain-col">0 1 0 0 1 1 0 0 1 1 0 1 0 1 0 1 1 0</div>
+            <div class="nm-rain-col">1 1 1 0 0 0 1 1 0 0 1 0 1 0 1 1 0 0</div>
+            <div class="nm-rain-col">0 0 1 1 0 1 0 1 1 0 0 1 0 1 1 0 0 1</div>
+            <div class="nm-rain-col">1 0 0 0 1 1 1 0 0 1 0 1 1 0 0 1 1 0</div>
+          </div>
+          <div class="nm-empty-content">
+            <svg class="nm-empty-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1">
+              <rect x="4" y="8" width="28" height="20" rx="1"/>
+              <line x1="4" y1="16" x2="32" y2="16"/>
+              <line x1="18" y1="8" x2="18" y2="28"/>
+            </svg>
+            <div class="nm-empty-title">> NO_DATA_FOUND</div>
+            <div class="nm-empty-desc">Navigate to grok.com and execute INITIATE_SCAN</div>
+            <button class="nm-btn-execute" style="margin-top: 14px; font-size: 10px;">INITIATE_SCAN</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATE 4: Scanning with Radar -->
+    <div class="crt-frame">
+      <div class="popup">
+        <div class="nm-header">
+          <div class="nm-terminal-title">
+            <span class="prompt">></span> SCANNING<span class="nm-cursor"></span>
+          </div>
+          <div class="nm-status-dot"></div>
+        </div>
+
+        <div class="nm-tabs">
+          <button class="nm-tab active">[1:LIB]</button>
+          <button class="nm-tab">[2:DL]</button>
+          <button class="nm-tab">[3:CFG]</button>
+        </div>
+
+        <div class="nm-scan-state">
+          <div class="nm-radar">
+            <div class="nm-radar-ring"></div>
+          </div>
+          <div class="nm-scan-text">> SCANNING_FAVORITES...</div>
+          <div class="nm-scan-sub">47 TARGETS DETECTED</div>
+          <div class="nm-scan-progress-text">[<span class="filled">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span><span style="color:#003310">&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;</span>] 50%</div>
+          <button class="nm-btn-ghost" style="margin-top: 14px; font-size: 9px; color: #ff0080; border-color: rgba(255,0,128,0.3);">ABORT</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     DESIGN NOTES
+     ═══════════════════════════════════════ -->
+<div class="design-notes">
+  <h2>> V05: NEON MATRIX -- DESIGN NOTES</h2>
+
+  <div class="dn-divider"></div>
+
+  <h3>// Design Philosophy</h3>
+  <p>Neon Matrix channels the raw energy of cyberpunk terminals, hacker culture, and the iconic green-on-black Matrix aesthetic. Every element is designed to feel like a specialized tool wielded by an expert operator. The CRT scanline overlay, the corner brackets on media items, the terminal-style progress bars -- everything reinforces the fiction that this is not a consumer app but a precision instrument. It is deliberately maximalist within its monochrome constraint.</p>
+
+  <h3>// Color Palette</h3>
+  <ul>
+    <li><span class="color-swatch" style="background:#000000; border-color:#003310"></span>#000000 -- Pure black background (no warmth, no compromise)</li>
+    <li><span class="color-swatch" style="background:#001a08; border-color:#003310"></span>#001a08 -- Deep matrix (subtle surface)</li>
+    <li><span class="color-swatch" style="background:#003310; border-color:#006622"></span>#003310 -- Border / dimmed elements</li>
+    <li><span class="color-swatch" style="background:#006622; border-color:#00ff41"></span>#006622 -- Secondary text / labels</li>
+    <li><span class="color-swatch" style="background:#00ff41; border-color:#00ff41"></span>#00ff41 -- Neon green primary (THE color)</li>
+    <li><span class="color-swatch" style="background:#00f0ff; border-color:#00f0ff"></span>#00f0ff -- Electric cyan (secondary accent, video/info)</li>
+    <li><span class="color-swatch" style="background:#ff0080; border-color:#ff0080"></span>#ff0080 -- Hot pink (errors, warnings, abort)</li>
+    <li><span class="color-swatch" style="background:#ffb000; border-color:#ffb000"></span>#ffb000 -- Amber (HD/premium indicator)</li>
+  </ul>
+
+  <h3>// Typography</h3>
+  <p>Share Tech Mono for all UI text -- a clean, legible monospace that evokes terminal output without being overly retro. Orbitron for the device labels and main heading, adding a futuristic edge. Monospace is essential to the aesthetic -- every character occupies equal space, reinforcing the grid-like precision of the design. Sizes range from 8px (ASCII art) to 12px (body), never exceeding 16px.</p>
+
+  <h3>// Animation Approach</h3>
+  <p>Six distinct CSS-only animations work together: (1) Blinking cursor on active elements (1s step-end). (2) Pulsing glow on the status dot (2s ease-in-out). (3) Radar sweep rotation for scanning state (2s linear). (4) Matrix rain columns falling at staggered speeds (3-5.5s linear). (5) Glitch effect on media item hover (0.3s transform jitter). (6) CRT scanline overlay as a static repeating gradient. All animations are performant -- transform and opacity only for animated elements.</p>
+
+  <h3>// Recommended Icon Library</h3>
+  <p>Custom inline SVGs with 1px stroke weight for maximum sharpness on the dark background. Alternatively, Feather Icons at the "thin" variant. Icons should feel like they belong in a terminal -- geometric, minimal, no fill. Consider adding ASCII alternatives for a true hacker feel: [X] for close, [>] for expand, [+] for select.</p>
+
+  <h3>// What Makes It Unique</h3>
+  <ul>
+    <li>CRT scanline overlay and border glow create an authentic retro-tech feeling</li>
+    <li>Terminal-style progress bars ([########....] 67%) are both functional and atmospheric</li>
+    <li>Corner bracket decoration on grid items evokes targeting/acquisition UI from sci-fi</li>
+    <li>Matrix rain in empty states turns "nothing to show" into a visually engaging moment</li>
+    <li>Radar sweep scanning animation communicates active search better than any spinner</li>
+    <li>ASCII art header transforms the brand into something that feels hacker-native</li>
+    <li>Hot pink error states cut through the green like a system warning -- impossible to miss</li>
+    <li>The entire UI tells a story: you are an operator, your media is the target, this tool is your weapon</li>
+  </ul>
+
+  <div class="dn-divider"></div>
+</div>
+
+</body>
+</html>

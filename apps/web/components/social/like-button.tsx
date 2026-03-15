@@ -1,0 +1,98 @@
+'use client';
+
+import { useState } from 'react';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
+import { PhHeart } from '@/lib/phosphor-icons';
+
+interface LikeButtonProps {
+  creationId: string;
+  initialLikes: number;
+  initialIsLiked?: boolean;
+  onLike?: (creationId: string, isLiked: boolean) => Promise<void>;
+  size?: 'sm' | 'md' | 'lg';
+  showCount?: boolean;
+}
+
+export function LikeButton({
+  creationId,
+  initialLikes,
+  initialIsLiked = false,
+  onLike,
+  size = 'md',
+  showCount = true,
+}: LikeButtonProps) {
+  const [isLiked, setIsLiked] = useState(initialIsLiked);
+  const [likes, setLikes] = useState(initialLikes);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const sizeClasses = {
+    sm: 'w-4 h-4',
+    md: 'w-5 h-5',
+    lg: 'w-6 h-6',
+  };
+
+  const handleLike = async () => {
+    // Optimistic update
+    const newIsLiked = !isLiked;
+    setIsLiked(newIsLiked);
+    setLikes((prev) => (newIsLiked ? prev + 1 : prev - 1));
+    setIsAnimating(true);
+
+    try {
+      // Call API
+      if (onLike) {
+        await onLike(creationId, newIsLiked);
+      }
+    } catch (error) {
+      // Revert on error
+      setIsLiked(!newIsLiked);
+      setLikes((prev) => (newIsLiked ? prev - 1 : prev + 1));
+      console.error('Failed to update like:', error);
+    } finally {
+      setTimeout(() => setIsAnimating(false), 300);
+    }
+  };
+
+  return (
+    <LazyMotion features={domAnimation}>
+      <m.button
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        onClick={handleLike}
+        aria-label={isLiked ? `Unlike creation. Currently ${likes} likes` : `Like creation. Currently ${likes} likes`}
+        aria-pressed={isLiked}
+        className={`flex items-center gap-2 transition-colors duration-300 ${
+          isLiked ? 'text-pink-500' : 'text-slate-400 hover:text-pink-500'
+        }`}
+      >
+        <m.div
+          animate={
+            isAnimating
+              ? {
+                  scale: [1, 1.3, 1],
+                  rotate: [0, -10, 10, 0],
+                }
+              : {}
+          }
+          transition={{ duration: 0.3 }}
+        >
+          <PhHeart
+            className={`${sizeClasses[size]} ${isLiked ? 'fill-current' : ''}`}
+            aria-hidden="true"
+          />
+        </m.div>
+
+        {showCount && (
+          <m.span
+            key={likes}
+            initial={{ scale: 1.2, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="font-medium text-sm"
+          >
+            {likes.toLocaleString()}
+          </m.span>
+        )}
+      </m.button>
+    </LazyMotion>
+  );
+}

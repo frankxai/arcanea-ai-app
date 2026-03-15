@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arcanea Media — Aurora Flow</title>
+<style>
+/* ============================================================
+   VARIATION 3: AURORA FLOW
+   Arcanea Media Chrome Extension — Side Panel + Popup
+   Inspired by Runway ML / Midjourney's ethereal aesthetic
+   Flowing aurora gradients, organic shapes, deep navy
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap');
+
+/* --- CSS Custom Properties for aurora animations --- */
+@property --aurora-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+@property --aurora-pos {
+  syntax: '<percentage>';
+  initial-value: 0%;
+  inherits: false;
+}
+@property --glow-spread {
+  syntax: '<length>';
+  initial-value: 0px;
+  inherits: false;
+}
+
+/* --- Reset & Base --- */
+*, *::before, *::after {
+  margin: 0; padding: 0; box-sizing: border-box;
+}
+
+body {
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #060810;
+  color: #c8cad8;
+  min-height: 100vh;
+  padding: 40px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.design-container {
+  display: flex;
+  gap: 60px;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.design-label {
+  text-align: center;
+  margin-bottom: 16px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #5ee7c8;
+  opacity: 0.7;
+}
+
+/* --- Panel --- */
+.panel {
+  background: #0B1120;
+  border: 1px solid rgba(94, 231, 200, 0.08);
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  box-shadow:
+    0 0 0 1px rgba(94, 231, 200, 0.03),
+    0 12px 48px rgba(0, 0, 0, 0.5),
+    0 0 100px -30px rgba(94, 231, 200, 0.08);
+}
+.panel-side { width: 400px; height: 700px; }
+.panel-popup { width: 280px; height: 420px; }
+
+.panel-inner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+/* --- Aurora border glow --- */
+.panel::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 21px;
+  padding: 1px;
+  background: linear-gradient(
+    var(--aurora-angle),
+    transparent 20%,
+    #5ee7c8 30%,
+    #4a9eff 40%,
+    #9b6dff 50%,
+    #ff6db5 55%,
+    transparent 70%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: aurora-border 8s linear infinite;
+  opacity: 0.35;
+  z-index: 1;
+  pointer-events: none;
+}
+@keyframes aurora-border {
+  to { --aurora-angle: 360deg; }
+}
+
+/* --- Header with wave --- */
+.header {
+  padding: 16px 20px 0;
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+}
+.header::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(
+    180deg,
+    rgba(94, 231, 200, 0.04) 0%,
+    rgba(74, 158, 255, 0.02) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Wave decoration */
+.wave-deco {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #5ee7c8 20%,
+    #4a9eff 40%,
+    #9b6dff 60%,
+    #ff6db5 80%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: wave-flow 4s ease-in-out infinite;
+  opacity: 0.6;
+  z-index: 10;
+}
+@keyframes wave-flow {
+  0%, 100% { background-position: 0% 0; }
+  50% { background-position: 100% 0; }
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.brand-orb {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #5ee7c8, #4a9eff, #9b6dff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.brand-orb::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3), transparent 60%);
+}
+.brand-orb svg { width: 14px; height: 14px; color: #fff; position: relative; z-index: 1; }
+.brand-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #e8eaf4;
+}
+.brand-sub {
+  font-size: 10px;
+  font-weight: 500;
+  color: #5ee7c8;
+  opacity: 0.7;
+  margin-left: 6px;
+}
+
+.header-actions { display: flex; gap: 4px; }
+.icon-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.03);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #5a5e7a;
+}
+.icon-btn:hover {
+  background: rgba(94, 231, 200, 0.08);
+  border-color: rgba(94, 231, 200, 0.15);
+  color: #5ee7c8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(94, 231, 200, 0.1);
+}
+.icon-btn svg { width: 16px; height: 16px; }
+
+/* --- Aurora Stats Cards --- */
+.stats-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.stat-card {
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+.stat-card:hover {
+  border-color: rgba(94, 231, 200, 0.12);
+  background: rgba(94, 231, 200, 0.04);
+}
+/* Aurora edge glow on hover */
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #5ee7c8, #4a9eff, #9b6dff);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.stat-card:hover::before { opacity: 0.6; }
+.stat-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #e8eaf4;
+  line-height: 1.2;
+}
+.stat-label {
+  font-size: 10px;
+  font-weight: 500;
+  color: #4a4e68;
+  margin-top: 2px;
+}
+
+/* --- Tabs with aurora underline --- */
+.tabs {
+  display: flex;
+  position: relative;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+.tab {
+  flex: 1;
+  padding: 10px 0;
+  font-size: 12px;
+  font-weight: 500;
+  color: #4a4e68;
+  text-align: center;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  position: relative;
+}
+.tab.active { color: #e8eaf4; }
+.tab:hover:not(.active) { color: #6a6e88; }
+
+/* Aurora underline indicator */
+.tab-aurora {
+  position: absolute;
+  bottom: -1px;
+  height: 2px;
+  border-radius: 1px;
+  background: linear-gradient(90deg, #5ee7c8, #4a9eff, #9b6dff, #ff6db5);
+  background-size: 200% 100%;
+  animation: aurora-tab 3s ease-in-out infinite;
+  transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1), width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 16px rgba(94, 231, 200, 0.3);
+}
+@keyframes aurora-tab {
+  0%, 100% { background-position: 0% 0; }
+  50% { background-position: 100% 0; }
+}
+.tabs[data-active="0"] .tab-aurora { left: 0; width: 33.33%; }
+.tabs[data-active="1"] .tab-aurora { left: 33.33%; width: 33.33%; }
+.tabs[data-active="2"] .tab-aurora { left: 66.66%; width: 33.33%; }
+
+/* --- Filter Pills with aurora hover --- */
+.filters {
+  display: flex;
+  gap: 6px;
+  padding: 12px 20px;
+  overflow-x: auto;
+  flex-shrink: 0;
+}
+.filters::-webkit-scrollbar { display: none; }
+.filter-pill {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.02);
+  color: #4a4e68;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.filter-pill:hover {
+  border-color: rgba(94, 231, 200, 0.15);
+  color: #8a8eaa;
+  background: rgba(94, 231, 200, 0.04);
+}
+.filter-pill.active {
+  border-color: rgba(94, 231, 200, 0.2);
+  color: #e8eaf4;
+  background: linear-gradient(135deg, rgba(94, 231, 200, 0.1), rgba(74, 158, 255, 0.06));
+}
+/* Active pill glow */
+.filter-pill.active::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  box-shadow: inset 0 0 12px rgba(94, 231, 200, 0.1);
+  pointer-events: none;
+}
+
+/* --- Content Area --- */
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 12px 12px;
+}
+.content::-webkit-scrollbar { width: 3px; }
+.content::-webkit-scrollbar-track { background: transparent; }
+.content::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #5ee7c8, #4a9eff, #9b6dff);
+  border-radius: 2px;
+  opacity: 0.4;
+}
+
+/* --- Media Grid --- */
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 4px 0;
+}
+.panel-popup .media-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+}
+
+.media-card {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  aspect-ratio: 1;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+.media-card:hover {
+  transform: scale(1.04) translateY(-2px);
+  z-index: 2;
+}
+/* Aurora edge glow on hover */
+.media-card:hover::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 15px;
+  padding: 1px;
+  background: linear-gradient(135deg, #5ee7c8, #4a9eff, #9b6dff, #ff6db5);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: 5;
+  animation: card-aurora 2s linear infinite;
+  pointer-events: none;
+}
+@keyframes card-aurora {
+  0% { opacity: 0.3; filter: hue-rotate(0deg); }
+  50% { opacity: 0.7; filter: hue-rotate(30deg); }
+  100% { opacity: 0.3; filter: hue-rotate(0deg); }
+}
+.media-card:hover {
+  box-shadow:
+    0 8px 24px rgba(94, 231, 200, 0.08),
+    0 0 40px -10px rgba(94, 231, 200, 0.15);
+}
+
+/* Gradient placeholders — deep, rich, varied */
+.media-thumb { width: 100%; height: 100%; }
+.media-thumb.g1 { background: linear-gradient(135deg, #0f1a2e, #1a2847, #152440); }
+.media-thumb.g2 { background: linear-gradient(225deg, #0e1928, #162940, #0d1f35); }
+.media-thumb.g3 { background: linear-gradient(45deg, #1a1033, #251a45, #1a1238); }
+.media-thumb.g4 { background: linear-gradient(180deg, #0d2420, #153830, #0d2018); }
+.media-thumb.g5 { background: linear-gradient(315deg, #2a1a18, #1f1210, #281815); }
+.media-thumb.g6 { background: linear-gradient(90deg, #101028, #181840, #121235); }
+.media-thumb.g7 { background: linear-gradient(160deg, #0e2030, #152a40, #0d1a28); }
+.media-thumb.g8 { background: linear-gradient(200deg, #201510, #2a1c12, #181008); }
+.media-thumb.g9 { background: linear-gradient(270deg, #0d2328, #153538, #0d1d20); }
+.media-thumb.g10 { background: linear-gradient(30deg, #1a0e25, #251838, #180d20); }
+.media-thumb.g11 { background: linear-gradient(120deg, #0d1530, #152045, #0d1028); }
+.media-thumb.g12 { background: linear-gradient(340deg, #102a20, #183d30, #0d2018); }
+.media-thumb.g13 { background: linear-gradient(60deg, #2a1020, #381830, #200d18); }
+.media-thumb.g14 { background: linear-gradient(240deg, #0d2030, #152a45, #0d1828); }
+.media-thumb.g15 { background: linear-gradient(150deg, #20200d, #303018, #181808); }
+.media-thumb.g16 { background: linear-gradient(300deg, #150d28, #201838, #100818); }
+
+/* Badges — soft, aurora-tinted */
+.badge-video, .badge-hd {
+  position: absolute;
+  font-size: 8px;
+  font-weight: 700;
+  padding: 3px 6px;
+  border-radius: 6px;
+  letter-spacing: 0.5px;
+  z-index: 4;
+  backdrop-filter: blur(12px);
+}
+.badge-video {
+  top: 7px;
+  left: 7px;
+  background: rgba(155, 109, 255, 0.7);
+  color: #fff;
+}
+.badge-hd {
+  top: 7px;
+  right: 7px;
+  background: rgba(94, 231, 200, 0.7);
+  color: #0B1120;
+  font-weight: 700;
+}
+
+/* Selection — soft aurora ring */
+.media-check {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 22px;
+  height: 22px;
+  border-radius: 8px;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  background: rgba(11, 17, 32, 0.5);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 6;
+}
+.media-check svg { width: 12px; height: 12px; color: transparent; transition: color 0.2s; }
+.media-card.selected .media-check {
+  background: linear-gradient(135deg, #5ee7c8, #4a9eff);
+  border-color: transparent;
+  box-shadow: 0 0 12px rgba(94, 231, 200, 0.4);
+  animation: aurora-check 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes aurora-check {
+  0% { transform: scale(0.5) rotate(-10deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+.media-card.selected .media-check svg { color: #0B1120; }
+.media-card.selected {
+  box-shadow:
+    0 0 0 2px rgba(94, 231, 200, 0.2),
+    0 4px 20px rgba(94, 231, 200, 0.12);
+}
+
+/* Tall masonry items */
+.media-card.tall { grid-row: span 2; }
+
+/* --- Blob decoration --- */
+.blob-deco {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 0;
+}
+.blob-deco.teal {
+  background: #5ee7c8;
+  width: 120px;
+  height: 120px;
+  bottom: 30%;
+  right: -20px;
+  animation: blob-drift 8s ease-in-out infinite;
+}
+.blob-deco.purple {
+  background: #9b6dff;
+  width: 100px;
+  height: 100px;
+  top: 40%;
+  left: -15px;
+  animation: blob-drift 10s ease-in-out infinite reverse;
+}
+.blob-deco.pink {
+  background: #ff6db5;
+  width: 80px;
+  height: 80px;
+  top: 20%;
+  right: 10%;
+  animation: blob-drift 12s ease-in-out infinite 2s;
+}
+@keyframes blob-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(10px, -15px) scale(1.1); }
+  66% { transform: translate(-8px, 10px) scale(0.95); }
+}
+
+/* --- Download Progress --- */
+.download-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 8px;
+}
+.dl-item {
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.dl-item:hover {
+  background: rgba(94, 231, 200, 0.03);
+  border-color: rgba(94, 231, 200, 0.08);
+}
+.dl-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.dl-name {
+  font-size: 12px;
+  font-weight: 500;
+  color: #b0b4cc;
+}
+.dl-size {
+  font-size: 10px;
+  color: #4a4e68;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Aurora gradient progress bar */
+.dl-bar {
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.03);
+  overflow: hidden;
+  position: relative;
+}
+.dl-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #5ee7c8, #4a9eff, #9b6dff);
+  background-size: 200% 100%;
+  animation: aurora-flow 3s ease-in-out infinite;
+  position: relative;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes aurora-flow {
+  0%, 100% { background-position: 0% 0; }
+  50% { background-position: 100% 0; }
+}
+/* Glow line on progress */
+.dl-fill::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  right: 0;
+  width: 8px;
+  height: 9px;
+  background: #fff;
+  border-radius: 50%;
+  filter: blur(3px);
+  opacity: 0.6;
+  animation: glow-pulse 1.5s ease-in-out infinite;
+}
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+.dl-status {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 10px;
+  color: #4a4e68;
+}
+.dl-percent {
+  font-weight: 600;
+  background: linear-gradient(90deg, #5ee7c8, #4a9eff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.dl-complete .dl-fill {
+  background: linear-gradient(90deg, #5ee7c8, #4a9eff);
+  animation: none;
+}
+.dl-complete .dl-fill::after { display: none; }
+.dl-complete .dl-name { color: #5ee7c8; }
+
+/* --- Settings --- */
+.settings-list {
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.setting-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 16px;
+  border-radius: 14px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.setting-item:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+.setting-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.setting-icon-wrap {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(94, 231, 200, 0.08), rgba(74, 158, 255, 0.05));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #5ee7c8;
+  transition: all 0.3s ease;
+}
+.setting-item:hover .setting-icon-wrap {
+  background: linear-gradient(135deg, rgba(94, 231, 200, 0.15), rgba(74, 158, 255, 0.1));
+}
+.setting-icon-wrap svg { width: 16px; height: 16px; }
+.setting-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #b0b4cc;
+}
+.setting-desc {
+  font-size: 11px;
+  color: #3a3e58;
+  margin-top: 2px;
+}
+
+/* Aurora toggle */
+.aurora-toggle {
+  width: 40px;
+  height: 22px;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.06);
+  position: relative;
+  cursor: pointer;
+  transition: all 0.35s ease;
+}
+.aurora-toggle::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #3a3e58;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.aurora-toggle.on {
+  background: linear-gradient(90deg, #5ee7c8, #4a9eff);
+  box-shadow: 0 0 12px rgba(94, 231, 200, 0.25);
+}
+.aurora-toggle.on::after {
+  transform: translateX(18px);
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Empty State with aurora orb --- */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  position: relative;
+}
+.aurora-orb {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  position: relative;
+  margin-bottom: 24px;
+}
+.aurora-orb-inner {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 40% 35%,
+    rgba(94, 231, 200, 0.5),
+    rgba(74, 158, 255, 0.3) 40%,
+    rgba(155, 109, 255, 0.2) 60%,
+    transparent 80%
+  );
+  animation: orb-breathe 4s ease-in-out infinite;
+  filter: blur(1px);
+}
+@keyframes orb-breathe {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+.aurora-orb-ring {
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  border: 1px solid rgba(94, 231, 200, 0.1);
+  animation: ring-expand 4s ease-in-out infinite 1s;
+}
+@keyframes ring-expand {
+  0%, 100% { transform: scale(1); opacity: 0.4; }
+  50% { transform: scale(1.15); opacity: 0.1; }
+}
+.aurora-orb-ring:nth-child(2) {
+  inset: -20px;
+  animation-delay: 1.5s;
+  border-color: rgba(74, 158, 255, 0.06);
+}
+.empty-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #e8eaf4;
+  margin-bottom: 8px;
+}
+.empty-desc {
+  font-size: 12px;
+  color: #4a4e68;
+  line-height: 1.6;
+  max-width: 220px;
+  margin-bottom: 24px;
+}
+.empty-btn {
+  padding: 10px 24px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(94, 231, 200, 0.15), rgba(74, 158, 255, 0.1));
+  border: 1px solid rgba(94, 231, 200, 0.15);
+  color: #5ee7c8;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'DM Sans', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+.empty-btn:hover {
+  background: linear-gradient(135deg, rgba(94, 231, 200, 0.2), rgba(74, 158, 255, 0.15));
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(94, 231, 200, 0.15);
+}
+/* Ripple pseudo on button */
+.empty-btn::after {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  background: radial-gradient(circle, rgba(94, 231, 200, 0.15) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.empty-btn:hover::after { opacity: 1; }
+
+/* --- Scanning State --- */
+.scan-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+.scan-aurora {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  position: relative;
+  margin-bottom: 24px;
+}
+.scan-aurora-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: #5ee7c8;
+  border-right-color: #4a9eff;
+  animation: aurora-spin 1.5s linear infinite;
+}
+.scan-aurora-ring:nth-child(2) {
+  inset: 6px;
+  border-top-color: #9b6dff;
+  border-right-color: #ff6db5;
+  animation-duration: 2s;
+  animation-direction: reverse;
+}
+.scan-aurora-ring:nth-child(3) {
+  inset: 12px;
+  border-top-color: #5ee7c8;
+  border-left-color: #4a9eff;
+  animation-duration: 2.5s;
+}
+.scan-aurora-core {
+  position: absolute;
+  inset: 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(94, 231, 200, 0.4), rgba(74, 158, 255, 0.2), transparent);
+  animation: core-pulse 2s ease-in-out infinite;
+}
+@keyframes aurora-spin { to { transform: rotate(360deg); } }
+@keyframes core-pulse {
+  0%, 100% { opacity: 0.5; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+.scan-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #e8eaf4;
+  margin-bottom: 6px;
+}
+.scan-sub {
+  font-size: 12px;
+  color: #4a4e68;
+  margin-bottom: 20px;
+}
+.scan-bar-wrap {
+  width: 100%;
+  max-width: 200px;
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.03);
+  overflow: hidden;
+}
+.scan-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #5ee7c8, #4a9eff, #9b6dff);
+  background-size: 200% 100%;
+  animation: aurora-flow 3s ease-in-out infinite, scan-width 3s ease-in-out infinite;
+}
+@keyframes scan-width {
+  0% { width: 15%; }
+  50% { width: 85%; }
+  100% { width: 15%; }
+}
+
+/* --- FAB with ripple --- */
+.fab {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #5ee7c8, #4a9eff);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 24px rgba(94, 231, 200, 0.3);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10;
+  overflow: hidden;
+  position: relative;
+}
+.fab:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 32px rgba(94, 231, 200, 0.4);
+}
+.fab svg { width: 22px; height: 22px; color: #0B1120; position: relative; z-index: 2; }
+/* Expanding ripple */
+.fab::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.4s ease;
+}
+.fab:hover::before {
+  opacity: 1;
+  transform: scale(1.5);
+}
+/* Ambient pulse */
+.fab::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #5ee7c8, #4a9eff);
+  opacity: 0;
+  filter: blur(15px);
+  z-index: -1;
+  animation: fab-glow 2.5s ease-in-out infinite;
+}
+@keyframes fab-glow {
+  0%, 100% { opacity: 0; transform: scale(0.9); }
+  50% { opacity: 0.3; transform: scale(1.1); }
+}
+
+.panel-popup .fab { width: 42px; height: 42px; border-radius: 14px; bottom: 14px; right: 14px; }
+.panel-popup .fab svg { width: 18px; height: 18px; }
+
+/* --- Action Bar --- */
+.action-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 14px 20px;
+  background: rgba(11, 17, 32, 0.95);
+  backdrop-filter: blur(24px);
+  border-top: 1px solid rgba(94, 231, 200, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 10;
+  animation: bar-rise 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@keyframes bar-rise {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.action-count {
+  font-size: 12px;
+  color: #5a5e7a;
+}
+.action-count strong {
+  color: #5ee7c8;
+  font-weight: 700;
+}
+.action-buttons { display: flex; gap: 8px; }
+.action-btn {
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  font-family: 'DM Sans', sans-serif;
+}
+.action-btn.primary {
+  background: linear-gradient(135deg, #5ee7c8, #4a9eff);
+  color: #0B1120;
+}
+.action-btn.primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(94, 231, 200, 0.3);
+}
+.action-btn.secondary {
+  background: rgba(255, 255, 255, 0.04);
+  color: #5a5e7a;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.action-btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #8a8eaa;
+}
+
+/* --- Popup adjustments --- */
+.panel-popup .header { padding: 12px 14px 0; }
+.panel-popup .stats-row { gap: 4px; }
+.panel-popup .stat-card { padding: 6px 8px; border-radius: 10px; }
+.panel-popup .stat-value { font-size: 13px; }
+.panel-popup .stat-label { font-size: 9px; }
+.panel-popup .filters { padding: 10px 14px; gap: 4px; }
+.panel-popup .filter-pill { padding: 5px 11px; font-size: 10px; }
+.panel-popup .content { padding: 0 8px 8px; }
+.panel-popup .media-card { border-radius: 12px; }
+.panel-popup .brand-name { font-size: 12px; }
+.panel-popup .icon-btn { width: 30px; height: 30px; border-radius: 10px; }
+.panel-popup .icon-btn svg { width: 14px; height: 14px; }
+.panel-popup .tab { padding: 8px 0; font-size: 11px; }
+.panel-popup .action-bar { padding: 10px 14px; }
+
+/* --- DESIGN NOTES SECTION --- */
+.design-notes {
+  max-width: 900px;
+  margin: 80px auto 0;
+  padding: 40px;
+  background: rgba(11, 17, 32, 0.6);
+  border: 1px solid rgba(94, 231, 200, 0.08);
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.design-notes::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #5ee7c8, #4a9eff, #9b6dff, #ff6db5);
+  opacity: 0.5;
+}
+.design-notes h2 {
+  font-size: 20px;
+  font-weight: 700;
+  background: linear-gradient(90deg, #5ee7c8, #4a9eff, #9b6dff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 24px;
+}
+.design-notes h3 {
+  font-size: 13px;
+  font-weight: 600;
+  color: #5ee7c8;
+  margin: 24px 0 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+.design-notes p, .design-notes li {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #6a6e88;
+}
+.design-notes ul { list-style: none; }
+.design-notes li {
+  padding-left: 18px;
+  position: relative;
+  margin-bottom: 4px;
+}
+.design-notes li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 8px;
+  height: 3px;
+  background: linear-gradient(90deg, #5ee7c8, #4a9eff);
+  border-radius: 1px;
+}
+.color-swatch-af {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 6px;
+  vertical-align: middle;
+  margin-right: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+</style>
+</head>
+<body>
+
+<div class="design-container">
+
+  <!-- ======================== SIDE PANEL (400px) ======================== -->
+  <div>
+    <div class="design-label">Side Panel  --  400px</div>
+    <div class="panel panel-side">
+      <div class="panel-inner">
+        <div class="wave-deco"></div>
+
+        <!-- Blob decorations -->
+        <div class="blob-deco teal"></div>
+        <div class="blob-deco purple"></div>
+        <div class="blob-deco pink"></div>
+
+        <!-- Header -->
+        <div class="header">
+          <div class="header-top">
+            <div class="brand">
+              <div class="brand-orb">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                  <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                  <path d="M2 17l10 5 10-5"/>
+                  <path d="M2 12l10 5 10-5" opacity="0.5"/>
+                </svg>
+              </div>
+              <span class="brand-name">Arcanea Media</span>
+              <span class="brand-sub">v1.2</span>
+            </div>
+            <div class="header-actions">
+              <button class="icon-btn" title="Select">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="4"/><polyline points="9 11 12 14 20 6" opacity="0.5"/></svg>
+              </button>
+              <button class="icon-btn" title="Settings">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Stats -->
+          <div class="stats-row">
+            <div class="stat-card">
+              <div class="stat-value">247</div>
+              <div class="stat-label">Total Items</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">189</div>
+              <div class="stat-label">Images</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">58</div>
+              <div class="stat-label">Videos</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" style="color:#5ee7c8;">3</div>
+              <div class="stat-label">Selected</div>
+            </div>
+          </div>
+
+          <!-- Tabs -->
+          <div class="tabs" data-active="0">
+            <div class="tab active">
+              <svg style="width:12px;height:12px;vertical-align:-1px;margin-right:4px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>
+              Library
+            </div>
+            <div class="tab">
+              <svg style="width:12px;height:12px;vertical-align:-1px;margin-right:4px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Downloads
+            </div>
+            <div class="tab">
+              <svg style="width:12px;height:12px;vertical-align:-1px;margin-right:4px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15"/></svg>
+              Settings
+            </div>
+            <div class="tab-aurora"></div>
+          </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+          <div class="filter-pill active">All</div>
+          <div class="filter-pill">
+            <svg style="width:10px;height:10px;vertical-align:-1px;margin-right:3px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/></svg>
+            Images
+          </div>
+          <div class="filter-pill">
+            <svg style="width:10px;height:10px;vertical-align:-1px;margin-right:3px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3" fill="currentColor" opacity="0.3"/></svg>
+            Videos
+          </div>
+          <div class="filter-pill">HD</div>
+          <div class="filter-pill">SD</div>
+          <div class="filter-pill">Favorites</div>
+        </div>
+
+        <!-- Media Grid -->
+        <div class="content">
+          <div class="media-grid">
+            <div class="media-card selected">
+              <div class="media-thumb g1"></div>
+              <div class="media-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+            </div>
+            <div class="media-card tall">
+              <div class="media-thumb g2"></div>
+              <span class="badge-video">VID</span>
+              <div class="media-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            </div>
+            <div class="media-card">
+              <div class="media-thumb g3"></div>
+              <span class="badge-hd">HD</span>
+              <div class="media-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            </div>
+            <div class="media-card selected">
+              <div class="media-thumb g4"></div>
+              <div class="media-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+            </div>
+            <div class="media-card">
+              <div class="media-thumb g5"></div>
+              <span class="badge-video">VID</span>
+              <span class="badge-hd">HD</span>
+              <div class="media-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            </div>
+            <div class="media-card">
+              <div class="media-thumb g6"></div>
+              <div class="media-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            </div>
+            <div class="media-card selected">
+              <div class="media-thumb g7"></div>
+              <div class="media-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+            </div>
+            <div class="media-card tall">
+              <div class="media-thumb g8"></div>
+              <div class="media-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            </div>
+            <div class="media-card">
+              <div class="media-thumb g9"></div>
+              <span class="badge-video">VID</span>
+              <div class="media-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            </div>
+            <div class="media-card">
+              <div class="media-thumb g10"></div>
+              <div class="media-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            </div>
+            <div class="media-card">
+              <div class="media-thumb g11"></div>
+              <span class="badge-hd">HD</span>
+              <div class="media-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            </div>
+            <div class="media-card">
+              <div class="media-thumb g12"></div>
+              <span class="badge-video">VID</span>
+              <div class="media-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            </div>
+            <div class="media-card">
+              <div class="media-thumb g13"></div>
+              <div class="media-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            </div>
+            <div class="media-card">
+              <div class="media-thumb g14"></div>
+              <span class="badge-hd">HD</span>
+              <div class="media-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            </div>
+            <div class="media-card">
+              <div class="media-thumb g15"></div>
+              <div class="media-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            </div>
+            <div class="media-card">
+              <div class="media-thumb g16"></div>
+              <span class="badge-video">VID</span>
+              <div class="media-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Bar -->
+        <div class="action-bar">
+          <div class="action-count"><strong>3</strong> selected</div>
+          <div class="action-buttons">
+            <button class="action-btn secondary">
+              <svg style="width:11px;height:11px;vertical-align:-1px;margin-right:4px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Cancel
+            </button>
+            <button class="action-btn primary">
+              <svg style="width:11px;height:11px;vertical-align:-1px;margin-right:4px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download
+            </button>
+          </div>
+        </div>
+
+        <!-- FAB -->
+        <button class="fab" title="Scan Favorites" style="bottom: 70px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================== POPUP (280px) ======================== -->
+  <div>
+    <div class="design-label">Popup  --  280px</div>
+    <div class="panel panel-popup">
+      <div class="panel-inner">
+        <div class="wave-deco"></div>
+        <div class="blob-deco teal" style="width:80px;height:80px;"></div>
+        <div class="blob-deco purple" style="width:60px;height:60px;"></div>
+
+        <div class="header">
+          <div class="header-top">
+            <div class="brand">
+              <div class="brand-orb" style="width:26px;height:26px;border-radius:8px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="width:12px;height:12px;">
+                  <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                  <path d="M2 17l10 5 10-5"/>
+                </svg>
+              </div>
+              <span class="brand-name">Arcanea</span>
+            </div>
+            <button class="icon-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83"/></svg>
+            </button>
+          </div>
+
+          <div class="stats-row">
+            <div class="stat-card">
+              <div class="stat-value">247</div>
+              <div class="stat-label">Items</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" style="color:#5ee7c8;">2</div>
+              <div class="stat-label">Active</div>
+            </div>
+          </div>
+
+          <div class="tabs" data-active="1">
+            <div class="tab">Library</div>
+            <div class="tab active">Downloads</div>
+            <div class="tab">Settings</div>
+            <div class="tab-aurora"></div>
+          </div>
+        </div>
+
+        <!-- Downloads -->
+        <div class="content">
+          <div class="download-list">
+            <div class="dl-item">
+              <div class="dl-top">
+                <span class="dl-name">cosmic_landscape.png</span>
+                <span class="dl-size">4.2 MB</span>
+              </div>
+              <div class="dl-bar">
+                <div class="dl-fill" style="width: 78%;"></div>
+              </div>
+              <div class="dl-status">
+                <span>3.3 / 4.2 MB</span>
+                <span class="dl-percent">78%</span>
+              </div>
+            </div>
+
+            <div class="dl-item">
+              <div class="dl-top">
+                <span class="dl-name">aurora_vid_hd.mp4</span>
+                <span class="dl-size">28.1 MB</span>
+              </div>
+              <div class="dl-bar">
+                <div class="dl-fill" style="width: 34%;"></div>
+              </div>
+              <div class="dl-status">
+                <span>9.6 / 28.1 MB</span>
+                <span class="dl-percent">34%</span>
+              </div>
+            </div>
+
+            <div class="dl-item dl-complete">
+              <div class="dl-top">
+                <span class="dl-name">crystal_dragon.png</span>
+                <span class="dl-size">2.8 MB</span>
+              </div>
+              <div class="dl-bar">
+                <div class="dl-fill" style="width: 100%;"></div>
+              </div>
+              <div class="dl-status">
+                <span>Complete</span>
+                <span class="dl-percent">100%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="fab" title="Scan">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" style="width:18px;height:18px;">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div style="margin-top: 30px;">
+      <div class="design-label">Empty State</div>
+      <div class="panel" style="width: 280px; height: 280px;">
+        <div class="panel-inner">
+          <div class="wave-deco"></div>
+          <div class="empty-state">
+            <div class="aurora-orb">
+              <div class="aurora-orb-inner"></div>
+              <div class="aurora-orb-ring"></div>
+              <div class="aurora-orb-ring"></div>
+            </div>
+            <div class="empty-title">No media found</div>
+            <div class="empty-desc">Visit grok.com and favorite some images or videos to get started.</div>
+            <button class="empty-btn">
+              <svg style="width:12px;height:12px;vertical-align:-1px;margin-right:4px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              Scan Favorites
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scanning State -->
+    <div style="margin-top: 20px;">
+      <div class="design-label">Scanning</div>
+      <div class="panel" style="width: 280px; height: 260px;">
+        <div class="panel-inner">
+          <div class="wave-deco"></div>
+          <div class="scan-state">
+            <div class="scan-aurora">
+              <div class="scan-aurora-ring"></div>
+              <div class="scan-aurora-ring"></div>
+              <div class="scan-aurora-ring"></div>
+              <div class="scan-aurora-core"></div>
+            </div>
+            <div class="scan-title">Scanning favorites...</div>
+            <div class="scan-sub">Found 142 items so far</div>
+            <div class="scan-bar-wrap">
+              <div class="scan-bar-fill"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings -->
+    <div style="margin-top: 20px;">
+      <div class="design-label">Settings</div>
+      <div class="panel" style="width: 280px; height: 340px;">
+        <div class="panel-inner">
+          <div class="wave-deco"></div>
+          <div class="settings-list">
+            <div class="setting-item">
+              <div class="setting-left">
+                <div class="setting-icon-wrap">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                </div>
+                <div>
+                  <div class="setting-label">Download Path</div>
+                  <div class="setting-desc">~/Downloads/Arcanea</div>
+                </div>
+              </div>
+            </div>
+            <div class="setting-item">
+              <div class="setting-left">
+                <div class="setting-icon-wrap">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/></svg>
+                </div>
+                <div>
+                  <div class="setting-label">Auto HD</div>
+                  <div class="setting-desc">Prefer HD versions</div>
+                </div>
+              </div>
+              <div class="aurora-toggle on"></div>
+            </div>
+            <div class="setting-item">
+              <div class="setting-left">
+                <div class="setting-icon-wrap">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                </div>
+                <div>
+                  <div class="setting-label">Include Videos</div>
+                  <div class="setting-desc">Download video files</div>
+                </div>
+              </div>
+              <div class="aurora-toggle on"></div>
+            </div>
+            <div class="setting-item">
+              <div class="setting-left">
+                <div class="setting-icon-wrap">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+                </div>
+                <div>
+                  <div class="setting-label">Notifications</div>
+                  <div class="setting-desc">Download alerts</div>
+                </div>
+              </div>
+              <div class="aurora-toggle"></div>
+            </div>
+            <div class="setting-item">
+              <div class="setting-left">
+                <div class="setting-icon-wrap">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+                </div>
+                <div>
+                  <div class="setting-label">Auto-scan</div>
+                  <div class="setting-desc">Scan on grok.com visit</div>
+                </div>
+              </div>
+              <div class="aurora-toggle on"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ======================== DESIGN NOTES ======================== -->
+<div class="design-notes">
+  <h2>V03 -- Aurora Flow</h2>
+
+  <h3>Design Philosophy</h3>
+  <p>Inspired by Runway ML's ethereal gradients and Midjourney's dark, organic interfaces. This variation embraces flowing movement — aurora gradients that shift through teal, blue, purple, and pink, giving every element a sense of living, breathing energy. The deep navy background (#0B1120) is warmer than pure black, creating a sense of depth that pure dark themes often lack. Every interaction has a flowing, organic quality rather than mechanical precision.</p>
+
+  <h3>Color Palette</h3>
+  <ul>
+    <li><span class="color-swatch-af" style="background:#0B1120"></span> <strong>#0B1120</strong> — Deep navy background</li>
+    <li><span class="color-swatch-af" style="background:#5ee7c8"></span> <strong>#5ee7c8</strong> — Aurora teal (primary accent)</li>
+    <li><span class="color-swatch-af" style="background:#4a9eff"></span> <strong>#4a9eff</strong> — Aurora blue</li>
+    <li><span class="color-swatch-af" style="background:#9b6dff"></span> <strong>#9b6dff</strong> — Aurora purple</li>
+    <li><span class="color-swatch-af" style="background:#ff6db5"></span> <strong>#ff6db5</strong> — Aurora pink</li>
+    <li><span class="color-swatch-af" style="background:#e8eaf4"></span> <strong>#e8eaf4</strong> — Primary text</li>
+    <li><span class="color-swatch-af" style="background:#4a4e68"></span> <strong>#4a4e68</strong> — Secondary text</li>
+    <li><span class="color-swatch-af" style="background:#b0b4cc"></span> <strong>#b0b4cc</strong> — Body text</li>
+  </ul>
+
+  <h3>Typography</h3>
+  <ul>
+    <li><strong>DM Sans</strong> — Modern geometric sans-serif, softer than Inter</li>
+    <li>Weights: 300 (light labels), 400 (body), 500 (UI), 600 (emphasis), 700 (headings)</li>
+    <li>Generous letter-spacing on smaller sizes for readability</li>
+    <li>Gradient text via background-clip for percentage displays</li>
+  </ul>
+
+  <h3>Animation Approach</h3>
+  <ul>
+    <li><strong>Aurora border sweep</strong> — 4-color gradient rotating around the panel edge via @property</li>
+    <li><strong>Wave header bar</strong> — Top bar with flowing 4-color gradient shifting position</li>
+    <li><strong>Blob decorations</strong> — 3 soft blobs floating in the background with offset timing</li>
+    <li><strong>Aurora tab underline</strong> — Gradient underline that both slides and color-shifts</li>
+    <li><strong>Card hover aurora ring</strong> — On hover, media cards get a full aurora gradient border with hue-rotate</li>
+    <li><strong>Triple-ring scanner</strong> — 3 concentric rings with different speeds and colors</li>
+    <li><strong>Breathing orb</strong> — Empty state orb scales and pulses with expanding ring waves</li>
+    <li><strong>Progress bar aurora flow</strong> — Download bars have flowing gradient + glow dot at leading edge</li>
+    <li><strong>FAB ripple expansion</strong> — Radial gradient pseudo-element scales up on hover</li>
+  </ul>
+
+  <h3>Recommended Icon Library</h3>
+  <ul>
+    <li>Inline SVG with round linecaps, 2px stroke weight</li>
+    <li>If external: <strong>Lucide Icons</strong> — clean, consistent, round aesthetic</li>
+    <li>Icons should feel soft and organic, matching the flowing design language</li>
+  </ul>
+
+  <h3>What Makes It Unique</h3>
+  <ul>
+    <li><strong>Four-color aurora system</strong> — Unlike V01's two-color scheme, this uses teal, blue, purple, and pink in flowing gradients that shift and breathe across every element</li>
+    <li><strong>Organic blob decoration</strong> — Background blobs drift with offset timing, creating a living, generative feel</li>
+    <li><strong>Deep navy warmth</strong> — #0B1120 instead of pure black gives the entire UI a warmer, more inviting atmosphere</li>
+    <li><strong>Hue-rotating card borders</strong> — On hover, card aurora borders shift through the color spectrum via CSS hue-rotate</li>
+    <li><strong>Triple-ring scanner</strong> — Three concentric rings at different speeds and directions create a complex, mesmerizing loading state</li>
+    <li><strong>DM Sans typography</strong> — Geometric but soft, differentiating from V01's Inter and V02's monospace</li>
+    <li><strong>Aurora-gradient scrollbar</strong> — Even the scrollbar uses the four-color gradient, maintaining the theme to the last pixel</li>
+    <li><strong>Toggle with glow shadow</strong> — Active toggles emit a teal-to-blue glow, reinforcing the aurora brand</li>
+  </ul>
+</div>
+
+</body>
+</html>

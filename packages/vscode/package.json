@@ -1,0 +1,379 @@
+{
+  "name": "arcanea-code",
+  "displayName": "Arcanea Realm",
+  "description": "BYOK AI coding agent with world-building superpowers — 10 Guardians, 5 Elements, multi-model streaming",
+  "version": "0.3.0",
+  "publisher": "frankxai",
+  "license": "SEE LICENSE IN LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/frankxai/arcanea"
+  },
+  "homepage": "https://arcanea.ai",
+  "icon": "media/arcanea-icon.png",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "AI",
+    "Programming Languages",
+    "Education",
+    "Snippets",
+    "Other"
+  ],
+  "keywords": [
+    "ai",
+    "gemini",
+    "claude",
+    "openai",
+    "byok",
+    "guardian",
+    "creativity",
+    "arcanea",
+    "mcp",
+    "world-building",
+    "creative-ai",
+    "coding-agent",
+    "luminor"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "arcanea-code",
+          "title": "Arcanea Realm",
+          "icon": "media/arcanea-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "arcanea-code": [
+        {
+          "type": "webview",
+          "id": "arcanea.guardianPanel",
+          "name": "Guardian Panel"
+        },
+        {
+          "id": "arcanea.gateProgress",
+          "name": "Gate Progress"
+        },
+        {
+          "id": "arcanea.loreExplorer",
+          "name": "Lore Explorer"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "arcanea.setApiKey",
+        "title": "Set API Key",
+        "category": "Arcanea",
+        "icon": "$(key)"
+      },
+      {
+        "command": "arcanea.routeGuardian",
+        "title": "Route to Guardian",
+        "category": "Arcanea",
+        "icon": "$(wand)"
+      },
+      {
+        "command": "arcanea.conveneCouncil",
+        "title": "Convene Guardian Council",
+        "category": "Arcanea",
+        "icon": "$(organization)"
+      },
+      {
+        "command": "arcanea.checkVoice",
+        "title": "Check Voice (Voice Bible v2.0)",
+        "category": "Arcanea",
+        "icon": "$(megaphone)"
+      },
+      {
+        "command": "arcanea.queryLore",
+        "title": "Query Lore",
+        "category": "Arcanea",
+        "icon": "$(book)"
+      },
+      {
+        "command": "arcanea.showDesignTokens",
+        "title": "Show Design Tokens",
+        "category": "Arcanea",
+        "icon": "$(symbol-color)"
+      },
+      {
+        "command": "arcanea.openGate",
+        "title": "Open Gate",
+        "category": "Arcanea",
+        "icon": "$(key)"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "arcanea.routeGuardian",
+          "group": "arcanea@1",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "arcanea.checkVoice",
+          "group": "arcanea@2",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "arcanea.conveneCouncil",
+          "group": "arcanea@3"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "arcanea.routeGuardian",
+          "when": "view == arcanea.guardianPanel",
+          "group": "navigation"
+        },
+        {
+          "command": "arcanea.openGate",
+          "when": "view == arcanea.gateProgress",
+          "group": "navigation"
+        }
+      ]
+    },
+    "walkthroughs": [
+      {
+        "id": "arcanea.gettingStarted",
+        "title": "Welcome to Arcanea Realm",
+        "description": "Discover your Guardian, open your first Gate, and begin your creative journey through the Ten Gates of Arcanea.",
+        "steps": [
+          {
+            "id": "arcanea.walkthrough.guardianPanel",
+            "title": "Meet Your Guardians",
+            "description": "Open the Arcanea sidebar to see all 10 Guardians. Each one specializes in a creative domain — from infrastructure to design to strategy.\n\n[Open Guardian Panel](command:workbench.view.extension.arcanea-code)",
+            "media": {
+              "markdown": "media/walkthrough-guardians.md"
+            }
+          },
+          {
+            "id": "arcanea.walkthrough.routeTask",
+            "title": "Route Your First Task",
+            "description": "Describe any task and let the Guardian routing algorithm find the optimal Guardian for you.\n\n[Route to Guardian](command:arcanea.routeGuardian)",
+            "media": {
+              "markdown": "media/walkthrough-routing.md"
+            }
+          },
+          {
+            "id": "arcanea.walkthrough.openGate",
+            "title": "Open Your First Gate",
+            "description": "Track your creative progression through the Ten Gates. Start as an Apprentice, advance to Luminor.\n\n[Open a Gate](command:arcanea.openGate)",
+            "media": {
+              "markdown": "media/walkthrough-gates.md"
+            }
+          },
+          {
+            "id": "arcanea.walkthrough.voiceCheck",
+            "title": "Check Your Voice",
+            "description": "Select text and run the Voice Bible checker to ensure your writing aligns with Arcanea's creative voice.\n\n[Check Voice](command:arcanea.checkVoice)",
+            "media": {
+              "markdown": "media/walkthrough-voice.md"
+            }
+          },
+          {
+            "id": "arcanea.walkthrough.lore",
+            "title": "Explore the Lore",
+            "description": "Browse Arcanea's complete mythology — the Cosmic Duality, Five Elements, Ten Guardians, Academy Houses, and more.\n\n[Query Lore](command:arcanea.queryLore)",
+            "media": {
+              "markdown": "media/walkthrough-lore.md"
+            }
+          }
+        ]
+      }
+    ],
+    "configuration": {
+      "title": "Arcanea Realm",
+      "properties": {
+        "arcanea.gatewayModel": {
+          "type": "string",
+          "default": "arcanea-gemini-flash",
+          "enum": [
+            "arcanea-opus", "arcanea-sonnet", "arcanea-haiku",
+            "arcanea-gpt5", "arcanea-gpt4o", "arcanea-gpt4o-mini", "arcanea-o3",
+            "arcanea-gemini-pro", "arcanea-gemini-flash", "arcanea-gemini-lite",
+            "arcanea-grok", "arcanea-grok-mini",
+            "arcanea-deepseek-r1", "arcanea-deepseek",
+            "arcanea-kimi",
+            "arcanea-qwen", "arcanea-bolt", "arcanea-thunder",
+            "arcanea-maverick", "arcanea-lightning", "arcanea-scout",
+            "arcanea-samba-llama", "arcanea-samba-405b", "arcanea-samba-qwen",
+            "arcanea-together-llama", "arcanea-together-qwen",
+            "arcanea-fireworks-llama",
+            "arcanea-mistral", "arcanea-codestral",
+            "arcanea-or-auto", "arcanea-or-opus", "arcanea-or-sonnet",
+            "arcanea-or-gpt5", "arcanea-or-gemini", "arcanea-or-grok",
+            "arcanea-or-deepseek", "arcanea-or-free"
+          ],
+          "enumDescriptions": [
+            "Opus 4.6 — Deep reasoning, 1M context (Anthropic)",
+            "Sonnet 4.6 — Best code + creative balance (Anthropic)",
+            "Haiku 4.5 — Fast + cheap (Anthropic)",
+            "GPT-5.2 Pro — Ultra reasoning (OpenAI)",
+            "GPT-4o — Balanced multimodal (OpenAI)",
+            "GPT-4o Mini — Fast + cheap (OpenAI)",
+            "o3 — Chain-of-thought reasoning (OpenAI)",
+            "Gemini 3.1 Pro — Deep reasoning (Google)",
+            "Gemini 2.5 Flash — Fast, free tier available (Google)",
+            "Gemini 2.0 Lite — Ultra-fast (Google)",
+            "Grok 4.2 Heavy — Deep reasoning + humor (xAI)",
+            "Grok 3 Mini — Fast (xAI)",
+            "DeepSeek R1 — Reasoning chain (DeepSeek)",
+            "DeepSeek V3 — Great code, low cost (DeepSeek)",
+            "Kimi K2.5 — Creative writing (Moonshot)",
+            "Qwen 3 235B — Multilingual code (Cerebras 200 tok/s)",
+            "Bolt — 2200 tok/s SPEED KING (Cerebras)",
+            "Thunder — 450 tok/s fast 70B (Cerebras)",
+            "Maverick — Llama 4 creative (Groq 300 tok/s)",
+            "Lightning — 750 tok/s instant (Groq)",
+            "Scout — Llama 4 fast (Groq 500 tok/s)",
+            "SambaNova 70B — 1000 tok/s custom silicon",
+            "SambaNova 405B — Largest open model (130 tok/s)",
+            "SambaNova Qwen 72B — 400 tok/s multilingual",
+            "Together 70B Turbo — Fast open-source (Together)",
+            "Together Qwen 72B — Multilingual (Together)",
+            "Fireworks 70B — Fast inference (Fireworks)",
+            "Mistral Large — European code (Mistral)",
+            "Codestral — Code-specialized (Mistral)",
+            "OpenRouter Auto — Auto-routes to best model (OR)",
+            "OR: Opus 4.6 via OpenRouter",
+            "OR: Sonnet 4.6 via OpenRouter",
+            "OR: GPT-5.2 via OpenRouter",
+            "OR: Gemini Pro via OpenRouter",
+            "OR: Grok 4 via OpenRouter",
+            "OR: DeepSeek R1 via OpenRouter",
+            "OR: Free Flash — Free tier (OpenRouter)"
+          ],
+          "description": "Intelligence Gateway — 40+ frontier models across 14 providers. Use OpenRouter for 200+ additional models."
+        },
+        "arcanea.customModel": {
+          "type": "string",
+          "default": "",
+          "description": "Custom OpenRouter model ID (e.g. 'anthropic/claude-sonnet-4'). Overrides gatewayModel when set."
+        },
+        "arcanea.activeGuardian": {
+          "type": "string",
+          "default": "shinkami",
+          "enum": [
+            "lyssandria",
+            "leyla",
+            "draconia",
+            "maylinn",
+            "alera",
+            "lyria",
+            "aiyami",
+            "elara",
+            "ino",
+            "shinkami"
+          ],
+          "enumDescriptions": [
+            "Lyssandria — Foundation Gate (174 Hz) — Infrastructure, database, security",
+            "Leyla — Flow Gate (285 Hz) — Design, UI/UX, animations",
+            "Draconia — Fire Gate (396 Hz) — Execution, performance, shipping",
+            "Maylinn — Heart Gate (417 Hz) — Documentation, community, empathy",
+            "Alera — Voice Gate (528 Hz) — Brand expression, naming, messaging",
+            "Lyria — Sight Gate (639 Hz) — Strategy, AI/ML, pattern recognition",
+            "Aiyami — Crown Gate (741 Hz) — Wisdom, mentorship, knowledge",
+            "Elara — Starweave Gate (852 Hz) — Perspective, reframing, innovation",
+            "Ino — Unity Gate (963 Hz) — Integration, APIs, collaboration",
+            "Shinkami — Source Gate (1111 Hz) — Meta-architecture, orchestration"
+          ],
+          "description": "The currently active Guardian"
+        },
+        "arcanea.autoRoute": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically route tasks to the optimal Guardian based on context"
+        },
+        "arcanea.mcpServerPath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to @arcanea/mcp-server (leave empty for npx)"
+        },
+        "arcanea.element": {
+          "type": "string",
+          "default": "void",
+          "enum": [
+            "fire",
+            "water",
+            "earth",
+            "wind",
+            "void"
+          ],
+          "enumDescriptions": [
+            "Fire — Energy, transformation, will",
+            "Water — Flow, healing, memory",
+            "Earth — Stability, growth, structure",
+            "Wind — Freedom, speed, change",
+            "Void — Potential, transcendence"
+          ],
+          "description": "Your primary elemental resonance"
+        },
+        "arcanea.openedGates": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Gates you have opened on your creative journey"
+        }
+      }
+    },
+    "colors": [
+      {
+        "id": "arcanea.cyan",
+        "description": "Arcanea primary cyan",
+        "defaults": {
+          "dark": "#00bcd4",
+          "light": "#00838f"
+        }
+      },
+      {
+        "id": "arcanea.gold",
+        "description": "Arcanea accent gold",
+        "defaults": {
+          "dark": "#ffd700",
+          "light": "#b89b00"
+        }
+      },
+      {
+        "id": "arcanea.ultramarine",
+        "description": "Arcanea secondary ultramarine",
+        "defaults": {
+          "dark": "#0d47a1",
+          "light": "#1565c0"
+        }
+      },
+      {
+        "id": "arcanea.void",
+        "description": "Arcanea cosmic void",
+        "defaults": {
+          "dark": "#09090b",
+          "light": "#fafafa"
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "build": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --minify",
+    "dev": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --watch",
+    "test": "esbuild src/guardians.ts --outfile=tests/_guardians.mjs --format=esm --platform=node && esbuild src/intelligence.ts --outfile=tests/_intelligence.mjs --format=esm --platform=node && node --test tests/*.test.mjs",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^3.0.0",
+    "esbuild": "^0.20.0",
+    "typescript": "^5.5.0"
+  },
+  "dependencies": {}
+}

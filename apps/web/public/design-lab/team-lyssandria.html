@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ARCANEA — The Foundation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"IBM Plex Sans"', 'sans-serif'],
+            mono: ['"IBM Plex Mono"', 'monospace'],
+          },
+          colors: {
+            slate: {
+              950: '#0f172a',
+              900: '#0f1826',
+              800: '#1e293b',
+              700: '#334155',
+              600: '#475569',
+              400: '#94a3b8',
+              100: '#f1f5f9',
+              50:  '#f8fafc',
+            },
+            amber: {
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* ── Reset & base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'IBM Plex Sans', sans-serif;
+      background-color: #0f172a;
+      color: #f8fafc;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── Visible background grid ── */
+    .bg-grid {
+      background-image:
+        linear-gradient(to right, rgba(51,65,85,0.35) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(51,65,85,0.35) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+    .bg-grid-fine {
+      background-image:
+        linear-gradient(to right, rgba(51,65,85,0.18) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(51,65,85,0.18) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    .bg-grid-combined {
+      background-image:
+        linear-gradient(to right, rgba(51,65,85,0.40) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(51,65,85,0.40) 1px, transparent 1px),
+        linear-gradient(to right, rgba(51,65,85,0.15) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(51,65,85,0.15) 1px, transparent 1px);
+      background-size: 80px 80px, 80px 80px, 20px 20px, 20px 20px;
+    }
+
+    /* ── Sharp structural elements ── */
+    .sharp { border-radius: 0 !important; }
+    .card-sharp {
+      border-radius: 2px;
+      border: 1px solid #334155;
+    }
+
+    /* ── Amber geometric outlines ── */
+    .geo-circle {
+      width: 48px; height: 48px;
+      border: 2px solid #f59e0b;
+      border-radius: 50%;
+    }
+    .geo-square {
+      width: 48px; height: 48px;
+      border: 2px solid #f59e0b;
+    }
+    .geo-triangle {
+      width: 0; height: 0;
+      border-left: 26px solid transparent;
+      border-right: 26px solid transparent;
+      border-bottom: 46px solid transparent;
+      border-bottom-color: transparent;
+      /* drawn via outline trick */
+      position: relative;
+    }
+    .geo-triangle::before {
+      content: '';
+      position: absolute;
+      top: 4px; left: -22px;
+      width: 0; height: 0;
+      border-left: 22px solid transparent;
+      border-right: 22px solid transparent;
+      border-bottom: 38px solid #0f172a;
+    }
+    .geo-hex {
+      width: 48px; height: 28px;
+      position: relative;
+      background: transparent;
+    }
+    .geo-hex::before, .geo-hex::after {
+      content: '';
+      position: absolute;
+      left: 50%; transform: translateX(-50%);
+      width: 0; height: 0;
+    }
+
+    /* SVG hex is cleaner — used inline */
+
+    /* ── Input structural ── */
+    .input-structural {
+      background: #1e293b;
+      border: 0;
+      border-bottom: 2px solid #f59e0b;
+      border-top: 1px solid #334155;
+      border-left: 1px solid #334155;
+      border-right: 1px solid #334155;
+      border-radius: 2px;
+      color: #f8fafc;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 1rem;
+      padding: 14px 18px;
+      outline: none;
+      width: 100%;
+      transition: border-color 0.15s;
+    }
+    .input-structural::placeholder { color: #475569; }
+    .input-structural:focus { border-bottom-color: #fbbf24; border-color: #475569; border-bottom-color: #fbbf24; }
+
+    /* ── Button structural ── */
+    .btn-amber {
+      background: #f59e0b;
+      color: #0f172a;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-weight: 700;
+      font-size: 0.875rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border: 0;
+      border-radius: 2px;
+      padding: 14px 32px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.12s;
+    }
+    .btn-amber:hover { background: #fbbf24; }
+
+    .btn-ghost {
+      background: transparent;
+      color: #f8fafc;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-weight: 500;
+      font-size: 0.875rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid #334155;
+      border-radius: 2px;
+      padding: 13px 28px;
+      cursor: pointer;
+      transition: border-color 0.12s, color 0.12s;
+    }
+    .btn-ghost:hover { border-color: #f59e0b; color: #f59e0b; }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(15,23,42,0.96);
+      border-bottom: 1px solid #334155;
+      backdrop-filter: blur(0px);
+    }
+    .nav-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 40px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 1.125rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      color: #f8fafc;
+      text-decoration: none;
+    }
+    .nav-logo span { color: #f59e0b; }
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #94a3b8;
+      text-decoration: none;
+      transition: color 0.12s;
+    }
+    .nav-links a:hover { color: #f59e0b; }
+    .nav-actions { display: flex; gap: 12px; align-items: center; }
+    .nav-sep {
+      width: 1px; height: 20px;
+      background: #334155;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-content {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      width: 100%;
+    }
+    .hero-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #f59e0b;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .hero-label::before {
+      content: '';
+      display: block;
+      width: 24px; height: 1px;
+      background: #f59e0b;
+    }
+    .hero-headline {
+      font-size: clamp(80px, 12vw, 180px);
+      font-weight: 700;
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      color: #f8fafc;
+      margin-bottom: 16px;
+    }
+    .hero-headline .amber { color: #f59e0b; }
+    .hero-sub {
+      font-size: clamp(1rem, 1.5vw, 1.25rem);
+      font-weight: 400;
+      color: #94a3b8;
+      max-width: 560px;
+      margin-bottom: 56px;
+      line-height: 1.7;
+    }
+    .hero-input-row {
+      display: flex;
+      gap: 0;
+      max-width: 640px;
+    }
+    .hero-input-row .input-structural {
+      border-right: 0;
+      border-radius: 2px 0 0 2px;
+    }
+    .hero-input-row .btn-amber {
+      border-radius: 0 2px 2px 0;
+      flex-shrink: 0;
+    }
+    .hero-meta {
+      margin-top: 48px;
+      display: flex;
+      gap: 40px;
+      align-items: center;
+    }
+    .hero-meta-item {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #475569;
+    }
+    .hero-meta-item strong {
+      display: block;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0;
+      color: #f8fafc;
+      text-transform: none;
+    }
+    .hero-corner-geo {
+      position: absolute;
+      right: 80px;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.12;
+      pointer-events: none;
+    }
+
+    /* ── Section ── */
+    section {
+      position: relative;
+    }
+    .section-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 100px 40px;
+    }
+    .section-label {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #f59e0b;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-label::before {
+      content: '';
+      width: 16px; height: 1px;
+      background: #f59e0b;
+    }
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: #f8fafc;
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      font-size: 1rem;
+      color: #94a3b8;
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* ── Architecture pillars ── */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1px solid #334155;
+      margin-top: 64px;
+    }
+    .pillar {
+      padding: 48px 40px;
+      border-right: 1px solid #334155;
+    }
+    .pillar:last-child { border-right: 0; }
+    .pillar-icon {
+      margin-bottom: 32px;
+    }
+    .pillar-number {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6875rem;
+      letter-spacing: 0.2em;
+      color: #475569;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .pillar-title {
+      font-size: 1.375rem;
+      font-weight: 700;
+      color: #f8fafc;
+      margin-bottom: 14px;
+      letter-spacing: -0.01em;
+    }
+    .pillar-desc {
+      font-size: 0.9375rem;
+      color: #94a3b8;
+      line-height: 1.65;
+    }
+    .pillar-footer {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid #334155;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #f59e0b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pillar-footer::after {
+      content: '→';
+      font-size: 0.875rem;
+    }
+
+    /* ── Blueprint steps ── */
+    .blueprint-section {
+      background: #1e293b;
+      border-top: 1px solid #334155;
+      border-bottom: 1px solid #334155;
+    }
+    .blueprint-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 64px;
+    }
+    .blueprint-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      color: #475569;
+      letter-spacing: 0.1em;
+    }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    /* Amber connector line */
+    .steps-grid::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: calc(12.5% + 16px);
+      right: calc(12.5% + 16px);
+      height: 1px;
+      background: linear-gradient(to right, #f59e0b 0%, #f59e0b 100%);
+      z-index: 0;
+    }
+    .step {
+      padding: 0 32px;
+      position: relative;
+      z-index: 1;
+    }
+    .step:first-child { padding-left: 0; }
+    .step:last-child { padding-right: 0; }
+    .step-number {
+      width: 56px; height: 56px;
+      border: 2px solid #f59e0b;
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: #f59e0b;
+      background: #1e293b;
+      margin-bottom: 32px;
+    }
+    .step-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: #f8fafc;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .step-desc {
+      font-size: 0.875rem;
+      color: #94a3b8;
+      line-height: 1.65;
+    }
+    .step-tag {
+      margin-top: 24px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6875rem;
+      letter-spacing: 0.15em;
+      color: #475569;
+      text-transform: uppercase;
+    }
+
+    /* ── Gallery ── */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 0;
+      border: 1px solid #334155;
+      margin-top: 56px;
+      aspect-ratio: 16 / 7;
+    }
+    .gallery-cell {
+      border-right: 1px solid #334155;
+      border-bottom: 1px solid #334155;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .gallery-cell:nth-child(4n) { border-right: 0; }
+    .gallery-cell:nth-last-child(-n+4) { border-bottom: 0; }
+    .gallery-cell:hover { background: rgba(245,158,11,0.04); }
+    .gallery-cell:hover .cell-accent { opacity: 1; }
+    .cell-accent {
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: #f59e0b;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+    .cell-type {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.625rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #475569;
+    }
+    .cell-visual {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 0;
+    }
+    .cell-info { }
+    .cell-title {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: #f8fafc;
+      margin-bottom: 4px;
+      letter-spacing: -0.01em;
+    }
+    .cell-creator {
+      font-size: 0.75rem;
+      color: #475569;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Metrics ── */
+    .metrics-section {
+      border-top: 1px solid #334155;
+    }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border: 1px solid #334155;
+      margin-top: 56px;
+    }
+    .metric {
+      padding: 56px 40px;
+      border-right: 1px solid #334155;
+    }
+    .metric:last-child { border-right: 0; }
+    .metric-number {
+      font-size: clamp(56px, 6vw, 80px);
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: #f59e0b;
+      display: block;
+      margin-bottom: 12px;
+    }
+    .metric-label {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #94a3b8;
+      display: block;
+    }
+    .metric-desc {
+      font-size: 0.8125rem;
+      color: #475569;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: #1e293b;
+      border-top: 1px solid #334155;
+    }
+    .cta-tagline {
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: #f59e0b;
+      margin-bottom: 24px;
+      max-width: 800px;
+    }
+    .cta-sub {
+      font-size: 1rem;
+      color: #94a3b8;
+      margin-bottom: 48px;
+      max-width: 480px;
+      line-height: 1.7;
+    }
+    .cta-input-row {
+      display: flex;
+      gap: 0;
+      max-width: 580px;
+    }
+    .cta-input-row .input-structural {
+      border-right: 0;
+      border-radius: 2px 0 0 2px;
+    }
+    .cta-input-row .btn-amber {
+      border-radius: 0 2px 2px 0;
+    }
+    .cta-trust {
+      margin-top: 28px;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #475569;
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid #334155;
+      background: #0f172a;
+    }
+    .footer-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 64px 40px 40px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 0;
+      padding-bottom: 48px;
+      border-bottom: 1px solid #334155;
+    }
+    .footer-col {
+      padding-right: 48px;
+    }
+    .footer-logo {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: #f8fafc;
+      margin-bottom: 16px;
+    }
+    .footer-logo span { color: #f59e0b; }
+    .footer-tagline {
+      font-size: 0.875rem;
+      color: #475569;
+      line-height: 1.65;
+      margin-bottom: 24px;
+    }
+    .footer-heading {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #f8fafc;
+      margin-bottom: 20px;
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .footer-links a {
+      font-size: 0.875rem;
+      color: #475569;
+      text-decoration: none;
+      transition: color 0.12s;
+      letter-spacing: 0.01em;
+    }
+    .footer-links a:hover { color: #f59e0b; }
+    .footer-bottom {
+      padding-top: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-copy {
+      font-size: 0.75rem;
+      color: #334155;
+      letter-spacing: 0.05em;
+    }
+    .footer-bottom-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .footer-bottom-links a {
+      font-size: 0.75rem;
+      color: #334155;
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.12s;
+    }
+    .footer-bottom-links a:hover { color: #f59e0b; }
+
+    /* ── Divider geo ── */
+    .geo-divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 0 40px;
+    }
+    .geo-divider-line {
+      flex: 1;
+      height: 1px;
+      background: #334155;
+    }
+    .geo-divider-shape {
+      flex-shrink: 0;
+      opacity: 0.5;
+    }
+
+    /* ── Corner decorations ── */
+    .corner-tl {
+      position: absolute;
+      top: 0; left: 0;
+      width: 120px; height: 120px;
+      border-right: 0; border-bottom: 0;
+      border-top: 1px solid rgba(245,158,11,0.2);
+      border-left: 1px solid rgba(245,158,11,0.2);
+      pointer-events: none;
+    }
+    .corner-br {
+      position: absolute;
+      bottom: 0; right: 0;
+      width: 120px; height: 120px;
+      border-top: 0; border-left: 0;
+      border-bottom: 1px solid rgba(245,158,11,0.2);
+      border-right: 1px solid rgba(245,158,11,0.2);
+      pointer-events: none;
+    }
+
+    /* ── Features bar ── */
+    .features-bar {
+      border-top: 1px solid #334155;
+      border-bottom: 1px solid #334155;
+      overflow: hidden;
+    }
+    .features-scroll {
+      display: flex;
+      gap: 0;
+    }
+    .feature-tag {
+      flex-shrink: 0;
+      padding: 18px 40px;
+      border-right: 1px solid #334155;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap;
+    }
+    .feature-tag .dot {
+      width: 4px; height: 4px;
+      background: #f59e0b;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 1024px) {
+      .nav-links { display: none; }
+      .pillars-grid { grid-template-columns: 1fr; }
+      .pillar { border-right: 0; border-bottom: 1px solid #334155; }
+      .pillar:last-child { border-bottom: 0; }
+      .steps-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+      .steps-grid::before { display: none; }
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        aspect-ratio: auto;
+      }
+      .gallery-cell:nth-child(4n) { border-right: 1px solid #334155; }
+      .gallery-cell:nth-child(2n) { border-right: 0; }
+      .gallery-cell:nth-last-child(-n+4) { border-bottom: 1px solid #334155; }
+      .gallery-cell:nth-last-child(-n+2) { border-bottom: 0; }
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      .metric:nth-child(2) { border-right: 0; }
+      .metric:nth-child(3) { border-top: 1px solid #334155; }
+      .metric:nth-child(4) { border-top: 1px solid #334155; border-right: 0; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .footer-col { padding-right: 0; }
+      .hero-corner-geo { display: none; }
+    }
+    @media (max-width: 640px) {
+      .section-inner { padding: 64px 24px; }
+      .nav-inner { padding: 0 24px; }
+      .hero-content { padding: 64px 24px; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr; aspect-ratio: auto; }
+      .gallery-cell { min-height: 180px; }
+      .gallery-cell:nth-child(n) { border-right: 0; border-bottom: 1px solid #334155; }
+      .gallery-cell:last-child { border-bottom: 0; }
+      .metrics-grid { grid-template-columns: 1fr; }
+      .metric:nth-child(n) { border-right: 0; border-bottom: 1px solid #334155; }
+      .metric:last-child { border-bottom: 0; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 16px; align-items: flex-start; }
+      .hero-input-row, .cta-input-row { flex-direction: column; }
+      .hero-input-row .input-structural,
+      .cta-input-row .input-structural { border-right: 1px solid #334155; border-bottom: 2px solid #f59e0b; border-radius: 2px; }
+      .hero-input-row .btn-amber,
+      .cta-input-row .btn-amber { border-radius: 2px; }
+      .hero-meta { flex-wrap: wrap; gap: 24px; }
+      .blueprint-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+    }
+
+    /* ── No animations (prefers-reduced-motion) ── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════
+       NAV
+  ══════════════════════════════════════════ -->
+  <nav>
+    <div class="nav-inner bg-grid" style="background-size:20px 20px; background-image: linear-gradient(to right, rgba(51,65,85,0.15) 1px, transparent 1px), linear-gradient(to bottom, rgba(51,65,85,0.15) 1px, transparent 1px);">
+      <a href="#" class="nav-logo">ARC<span>A</span>NEA</a>
+      <ul class="nav-links">
+        <li><a href="#architecture">Platform</a></li>
+        <li><a href="#blueprint">Blueprint</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#metrics">Scale</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="btn-ghost" style="padding:9px 20px; font-size:0.75rem;">Sign In</button>
+        <div class="nav-sep"></div>
+        <button class="btn-amber" style="padding:9px 20px; font-size:0.75rem;">Build Now</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════════
+       FEATURES BAR (below nav, scrollable)
+  ══════════════════════════════════════════ -->
+  <div class="features-bar" style="margin-top:64px;">
+    <div class="features-scroll">
+      <div class="feature-tag"><span class="dot"></span> Music Generation</div>
+      <div class="feature-tag"><span class="dot"></span> Story Engine</div>
+      <div class="feature-tag"><span class="dot"></span> Visual Creation</div>
+      <div class="feature-tag"><span class="dot"></span> Code Architecture</div>
+      <div class="feature-tag"><span class="dot"></span> Video Production</div>
+      <div class="feature-tag"><span class="dot"></span> World Building</div>
+      <div class="feature-tag"><span class="dot"></span> AI Collaboration</div>
+      <div class="feature-tag" style="border-right:0;"><span class="dot"></span> Live Publishing</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       HERO
+  ══════════════════════════════════════════ -->
+  <section class="hero bg-grid-combined" style="margin-top:0; padding-top:0;">
+    <div class="corner-tl"></div>
+    <div class="corner-br"></div>
+
+    <!-- Large geometric decoration — top right -->
+    <div class="hero-corner-geo">
+      <svg width="480" height="480" viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Outer square -->
+        <rect x="2" y="2" width="476" height="476" stroke="#f59e0b" stroke-width="1.5" fill="none"/>
+        <!-- Inner square rotated 45° -->
+        <rect x="240" y="2" width="336" height="336" stroke="#334155" stroke-width="1" fill="none" transform="rotate(45 240 240)"/>
+        <!-- Circle -->
+        <circle cx="240" cy="240" r="160" stroke="#f59e0b" stroke-width="1" fill="none" opacity="0.5"/>
+        <!-- Inner circle -->
+        <circle cx="240" cy="240" r="80" stroke="#334155" stroke-width="1" fill="none"/>
+        <!-- Cross lines -->
+        <line x1="240" y1="2" x2="240" y2="478" stroke="#334155" stroke-width="0.5"/>
+        <line x1="2" y1="240" x2="478" y2="240" stroke="#334155" stroke-width="0.5"/>
+        <!-- Diagonal lines -->
+        <line x1="2" y1="2" x2="478" y2="478" stroke="#334155" stroke-width="0.5" opacity="0.5"/>
+        <line x1="478" y1="2" x2="2" y2="478" stroke="#334155" stroke-width="0.5" opacity="0.5"/>
+        <!-- Corner marks -->
+        <rect x="2" y="2" width="20" height="20" stroke="#f59e0b" stroke-width="1.5" fill="none"/>
+        <rect x="458" y="2" width="20" height="20" stroke="#f59e0b" stroke-width="1.5" fill="none"/>
+        <rect x="2" y="458" width="20" height="20" stroke="#f59e0b" stroke-width="1.5" fill="none"/>
+        <rect x="458" y="458" width="20" height="20" stroke="#f59e0b" stroke-width="1.5" fill="none"/>
+        <!-- Hexagon -->
+        <polygon points="240,80 325,130 325,230 240,280 155,230 155,130" stroke="#f59e0b" stroke-width="1" fill="none" opacity="0.3"/>
+      </svg>
+    </div>
+
+    <div class="hero-content">
+      <p class="hero-label">AI Creation Platform — v3.0</p>
+      <h1 class="hero-headline">
+        Build.<br/>
+        <span class="amber">Create.</span><br/>
+        Ship.
+      </h1>
+      <p class="hero-sub">
+        One input. Infinite output. Arcanea is the structural foundation for creators who build with precision — music, stories, art, code, video.
+      </p>
+      <div class="hero-input-row">
+        <input
+          class="input-structural"
+          type="text"
+          placeholder="What do you want to create?"
+          aria-label="Creation input"
+        />
+        <button class="btn-amber">Execute</button>
+      </div>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <strong>2.4M+</strong>
+          Creators
+        </div>
+        <div style="width:1px;height:32px;background:#334155;"></div>
+        <div class="hero-meta-item">
+          <strong>18M+</strong>
+          Works Built
+        </div>
+        <div style="width:1px;height:32px;background:#334155;"></div>
+        <div class="hero-meta-item">
+          <strong>99.9%</strong>
+          Uptime
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       ARCHITECTURE — 3 Pillars
+  ══════════════════════════════════════════ -->
+  <section id="architecture" class="bg-grid-fine" style="background-color:#0f172a;">
+    <div class="section-inner">
+      <p class="section-label">Architecture</p>
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:24px;">
+        <h2 class="section-title">Three pillars.<br/>One platform.</h2>
+        <p class="section-desc" style="margin-bottom:0;">Engineered with the precision of a master blueprint. Every layer purposeful. Every layer permanent.</p>
+      </div>
+
+      <div class="pillars-grid">
+
+        <!-- Pillar 1: Generate -->
+        <div class="pillar">
+          <div class="pillar-icon">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="24" cy="24" r="22" stroke="#f59e0b" stroke-width="2"/>
+              <circle cx="24" cy="24" r="12" stroke="#334155" stroke-width="1"/>
+              <line x1="24" y1="2" x2="24" y2="46" stroke="#334155" stroke-width="0.75"/>
+              <line x1="2" y1="24" x2="46" y2="24" stroke="#334155" stroke-width="0.75"/>
+              <circle cx="24" cy="24" r="3" fill="#f59e0b"/>
+            </svg>
+          </div>
+          <span class="pillar-number">01 / 03</span>
+          <h3 class="pillar-title">Generate</h3>
+          <p class="pillar-desc">State-of-the-art AI models purpose-built for creative output. Music, prose, visuals, code — produced with structural fidelity to your intent.</p>
+          <div class="pillar-footer">Generation Engine</div>
+        </div>
+
+        <!-- Pillar 2: Refine -->
+        <div class="pillar">
+          <div class="pillar-icon">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="2" width="44" height="44" stroke="#f59e0b" stroke-width="2"/>
+              <rect x="10" y="10" width="28" height="28" stroke="#334155" stroke-width="1"/>
+              <rect x="18" y="18" width="12" height="12" stroke="#f59e0b" stroke-width="1.5" fill="rgba(245,158,11,0.08)"/>
+              <line x1="2" y1="2" x2="18" y2="18" stroke="#334155" stroke-width="0.75"/>
+              <line x1="46" y1="2" x2="30" y2="18" stroke="#334155" stroke-width="0.75"/>
+              <line x1="2" y1="46" x2="18" y2="30" stroke="#334155" stroke-width="0.75"/>
+              <line x1="46" y1="46" x2="30" y2="30" stroke="#334155" stroke-width="0.75"/>
+            </svg>
+          </div>
+          <span class="pillar-number">02 / 03</span>
+          <h3 class="pillar-title">Refine</h3>
+          <p class="pillar-desc">Iterative precision tooling. Edit with granular control. Versions tracked, comparisons instant, rollbacks immediate. Your draft is never lost.</p>
+          <div class="pillar-footer">Precision Editor</div>
+        </div>
+
+        <!-- Pillar 3: Publish -->
+        <div class="pillar">
+          <div class="pillar-icon">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Hexagon -->
+              <polygon points="24,2 43,13 43,35 24,46 5,35 5,13" stroke="#f59e0b" stroke-width="2" fill="none"/>
+              <polygon points="24,10 36,17 36,31 24,38 12,31 12,17" stroke="#334155" stroke-width="1" fill="none"/>
+              <line x1="24" y1="2" x2="24" y2="46" stroke="#334155" stroke-width="0.5" opacity="0.5"/>
+              <line x1="5" y1="13" x2="43" y2="35" stroke="#334155" stroke-width="0.5" opacity="0.5"/>
+              <line x1="43" y1="13" x2="5" y2="35" stroke="#334155" stroke-width="0.5" opacity="0.5"/>
+              <circle cx="24" cy="24" r="4" fill="#f59e0b"/>
+            </svg>
+          </div>
+          <span class="pillar-number">03 / 03</span>
+          <h3 class="pillar-title">Publish</h3>
+          <p class="pillar-desc">One-click distribution to every surface. Portfolio, marketplace, API endpoint, or private archive. Built-in analytics. Real revenue infrastructure.</p>
+          <div class="pillar-footer">Distribution Layer</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       BLUEPRINT — 4 Steps
+  ══════════════════════════════════════════ -->
+  <section id="blueprint" class="blueprint-section">
+    <div class="section-inner">
+      <div class="blueprint-header">
+        <div>
+          <p class="section-label">Blueprint</p>
+          <h2 class="section-title">The build sequence.</h2>
+        </div>
+        <span class="blueprint-tag">SCHEMA v3.0 // ARCANEA</span>
+      </div>
+
+      <div class="steps-grid">
+
+        <div class="step">
+          <div class="step-number">01</div>
+          <h3 class="step-title">State your intention</h3>
+          <p class="step-desc">One clear input. Describe what you want to create in plain language. No prompting expertise required.</p>
+          <p class="step-tag">INPUT // INTENT</p>
+        </div>
+
+        <div class="step">
+          <div class="step-number">02</div>
+          <h3 class="step-title">Select your medium</h3>
+          <p class="step-desc">Music, narrative, visual, code, or video. Arcanea routes your intent to the optimized model stack.</p>
+          <p class="step-tag">ROUTING // MEDIUM</p>
+        </div>
+
+        <div class="step">
+          <div class="step-number">03</div>
+          <h3 class="step-title">Build and refine</h3>
+          <p class="step-desc">Iterate in the editor. Each iteration logged. Diff comparisons live. Accept, reject, or branch any version.</p>
+          <p class="step-tag">PROCESS // ITERATION</p>
+        </div>
+
+        <div class="step">
+          <div class="step-number">04</div>
+          <h3 class="step-title">Ship to the world</h3>
+          <p class="step-desc">Publish directly. Portfolio, marketplace, or API. Revenue tracking built in from day one.</p>
+          <p class="step-tag">OUTPUT // PUBLISH</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       GALLERY — 4×2 strict grid
+  ══════════════════════════════════════════ -->
+  <section id="gallery" class="bg-grid-fine" style="background-color:#0f172a;">
+    <div class="section-inner">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:0;">
+        <div>
+          <p class="section-label">Gallery</p>
+          <h2 class="section-title">Built on Arcanea.</h2>
+        </div>
+        <button class="btn-ghost" style="margin-bottom:4px;">View All Works →</button>
+      </div>
+
+      <div class="gallery-grid">
+
+        <!-- Row 1 -->
+        <div class="gallery-cell">
+          <div class="cell-accent"></div>
+          <span class="cell-type">Music</span>
+          <div class="cell-visual">
+            <svg width="80" height="40" viewBox="0 0 80 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0" y="20" width="4" height="20" fill="#334155"/>
+              <rect x="8" y="10" width="4" height="30" fill="#475569"/>
+              <rect x="16" y="4" width="4" height="36" fill="#f59e0b"/>
+              <rect x="24" y="12" width="4" height="28" fill="#475569"/>
+              <rect x="32" y="18" width="4" height="22" fill="#334155"/>
+              <rect x="40" y="6" width="4" height="34" fill="#f59e0b"/>
+              <rect x="48" y="14" width="4" height="26" fill="#475569"/>
+              <rect x="56" y="8" width="4" height="32" fill="#334155"/>
+              <rect x="64" y="16" width="4" height="24" fill="#475569"/>
+              <rect x="72" y="22" width="4" height="18" fill="#334155"/>
+            </svg>
+          </div>
+          <div class="cell-info">
+            <div class="cell-title">Structural Resonance</div>
+            <div class="cell-creator">by meridian.arc</div>
+          </div>
+        </div>
+
+        <div class="gallery-cell">
+          <div class="cell-accent"></div>
+          <span class="cell-type">Narrative</span>
+          <div class="cell-visual">
+            <svg width="80" height="60" viewBox="0 0 80 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0" y="0" width="80" height="8" fill="#334155"/>
+              <rect x="0" y="12" width="60" height="8" fill="#475569"/>
+              <rect x="0" y="24" width="72" height="8" fill="#334155"/>
+              <rect x="0" y="36" width="48" height="8" fill="#475569"/>
+              <rect x="0" y="48" width="64" height="8" fill="#334155"/>
+              <rect x="8" y="0" width="2" height="56" fill="#f59e0b"/>
+            </svg>
+          </div>
+          <div class="cell-info">
+            <div class="cell-title">The Last Cartographer</div>
+            <div class="cell-creator">by zero.fold</div>
+          </div>
+        </div>
+
+        <div class="gallery-cell">
+          <div class="cell-accent"></div>
+          <span class="cell-type">Visual</span>
+          <div class="cell-visual">
+            <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="2" width="68" height="68" stroke="#334155" stroke-width="1"/>
+              <rect x="12" y="12" width="48" height="48" stroke="#475569" stroke-width="1" transform="rotate(15 36 36)"/>
+              <circle cx="36" cy="36" r="18" stroke="#f59e0b" stroke-width="1.5" fill="none"/>
+              <circle cx="36" cy="36" r="6" fill="#f59e0b" opacity="0.3"/>
+              <line x1="2" y1="2" x2="70" y2="70" stroke="#334155" stroke-width="0.5"/>
+              <line x1="70" y1="2" x2="2" y2="70" stroke="#334155" stroke-width="0.5"/>
+            </svg>
+          </div>
+          <div class="cell-info">
+            <div class="cell-title">Grid Study No. 7</div>
+            <div class="cell-creator">by vault.architect</div>
+          </div>
+        </div>
+
+        <div class="gallery-cell">
+          <div class="cell-accent"></div>
+          <span class="cell-type">Code</span>
+          <div class="cell-visual">
+            <svg width="80" height="52" viewBox="0 0 80 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0" y="0" width="80" height="52" fill="#0f172a" rx="0"/>
+              <text font-family="IBM Plex Mono, monospace" font-size="7" fill="#475569" x="4" y="12">01  const build = (intent) => {</text>
+              <text font-family="IBM Plex Mono, monospace" font-size="7" fill="#f59e0b" x="12" y="22">02    return arcanea</text>
+              <text font-family="IBM Plex Mono, monospace" font-size="7" fill="#f59e0b" x="20" y="32">03      .create(intent)</text>
+              <text font-family="IBM Plex Mono, monospace" font-size="7" fill="#f59e0b" x="20" y="42">04      .ship();</text>
+              <text font-family="IBM Plex Mono, monospace" font-size="7" fill="#475569" x="4" y="52">05  };</text>
+            </svg>
+          </div>
+          <div class="cell-info">
+            <div class="cell-title">Arcanea SDK v2</div>
+            <div class="cell-creator">by null.system</div>
+          </div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="gallery-cell">
+          <div class="cell-accent"></div>
+          <span class="cell-type">Video</span>
+          <div class="cell-visual">
+            <svg width="80" height="48" viewBox="0 0 80 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="2" width="56" height="44" stroke="#334155" stroke-width="1.5"/>
+              <polygon points="64,24 80,14 80,34" fill="#f59e0b"/>
+              <line x1="2" y1="2" x2="58" y2="46" stroke="#334155" stroke-width="0.5"/>
+              <circle cx="29" cy="24" r="10" stroke="#f59e0b" stroke-width="1" fill="none"/>
+              <polygon points="26,19 26,29 36,24" fill="#f59e0b" opacity="0.6"/>
+            </svg>
+          </div>
+          <div class="cell-info">
+            <div class="cell-title">Void Sequence 001</div>
+            <div class="cell-creator">by echo.prime</div>
+          </div>
+        </div>
+
+        <div class="gallery-cell">
+          <div class="cell-accent"></div>
+          <span class="cell-type">Music</span>
+          <div class="cell-visual">
+            <svg width="80" height="48" viewBox="0 0 80 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Circular waveform -->
+              <circle cx="40" cy="24" r="20" stroke="#334155" stroke-width="1"/>
+              <circle cx="40" cy="24" r="14" stroke="#475569" stroke-width="1"/>
+              <circle cx="40" cy="24" r="8" stroke="#f59e0b" stroke-width="1.5"/>
+              <circle cx="40" cy="24" r="2" fill="#f59e0b"/>
+              <!-- tick marks -->
+              <line x1="40" y1="4" x2="40" y2="8" stroke="#f59e0b" stroke-width="1.5"/>
+              <line x1="40" y1="40" x2="40" y2="44" stroke="#f59e0b" stroke-width="1.5"/>
+              <line x1="20" y1="24" x2="24" y2="24" stroke="#f59e0b" stroke-width="1.5"/>
+              <line x1="56" y1="24" x2="60" y2="24" stroke="#f59e0b" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="cell-info">
+            <div class="cell-title">174 Hz Foundation</div>
+            <div class="cell-creator">by groundwork.mx</div>
+          </div>
+        </div>
+
+        <div class="gallery-cell">
+          <div class="cell-accent"></div>
+          <span class="cell-type">Visual</span>
+          <div class="cell-visual">
+            <svg width="72" height="64" viewBox="0 0 72 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Isometric cube wireframe -->
+              <polygon points="36,4 68,20 68,44 36,60 4,44 4,20" stroke="#334155" stroke-width="1" fill="none"/>
+              <polygon points="36,4 68,20 36,36 4,20" stroke="#f59e0b" stroke-width="1.5" fill="rgba(245,158,11,0.04)"/>
+              <polygon points="4,20 36,36 36,60 4,44" stroke="#475569" stroke-width="1" fill="none"/>
+              <polygon points="68,20 36,36 36,60 68,44" stroke="#475569" stroke-width="1" fill="none"/>
+              <line x1="36" y1="4" x2="36" y2="36" stroke="#f59e0b" stroke-width="0.75" opacity="0.4"/>
+            </svg>
+          </div>
+          <div class="cell-info">
+            <div class="cell-title">Isometric Genesis</div>
+            <div class="cell-creator">by construct.lab</div>
+          </div>
+        </div>
+
+        <div class="gallery-cell">
+          <div class="cell-accent"></div>
+          <span class="cell-type">Narrative</span>
+          <div class="cell-visual">
+            <svg width="72" height="56" viewBox="0 0 72 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Book shape -->
+              <rect x="2" y="2" width="32" height="52" stroke="#334155" stroke-width="1"/>
+              <rect x="38" y="2" width="32" height="52" stroke="#f59e0b" stroke-width="1.5"/>
+              <line x1="34" y1="2" x2="34" y2="54" stroke="#334155" stroke-width="2"/>
+              <line x1="44" y1="10" x2="64" y2="10" stroke="#f59e0b" stroke-width="0.75"/>
+              <line x1="44" y1="18" x2="64" y2="18" stroke="#475569" stroke-width="0.75"/>
+              <line x1="44" y1="26" x2="60" y2="26" stroke="#475569" stroke-width="0.75"/>
+              <line x1="44" y1="34" x2="64" y2="34" stroke="#475569" stroke-width="0.75"/>
+              <line x1="44" y1="42" x2="56" y2="42" stroke="#475569" stroke-width="0.75"/>
+            </svg>
+          </div>
+          <div class="cell-info">
+            <div class="cell-title">The Architect's Log</div>
+            <div class="cell-creator">by stoneform.wrt</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       METRICS
+  ══════════════════════════════════════════ -->
+  <section id="metrics" class="metrics-section" style="background-color:#0f172a;">
+    <div class="section-inner">
+      <p class="section-label">Scale</p>
+      <h2 class="section-title">Structural numbers.</h2>
+
+      <div class="metrics-grid">
+        <div class="metric">
+          <span class="metric-number">2.4M</span>
+          <span class="metric-label">Active Creators</span>
+          <p class="metric-desc">Builders who shipped at least one work in the last 30 days.</p>
+        </div>
+        <div class="metric">
+          <span class="metric-number">18M+</span>
+          <span class="metric-label">Works Created</span>
+          <p class="metric-desc">Total outputs across music, narrative, visual, code, and video.</p>
+        </div>
+        <div class="metric">
+          <span class="metric-number">99.9%</span>
+          <span class="metric-label">Platform Uptime</span>
+          <p class="metric-desc">Infrastructure built for creation at every hour, every timezone.</p>
+        </div>
+        <div class="metric">
+          <span class="metric-number">$12M</span>
+          <span class="metric-label">Creator Earnings</span>
+          <p class="metric-desc">Paid directly to creators through our marketplace since launch.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       GEOMETRIC DIVIDER
+  ══════════════════════════════════════════ -->
+  <div style="padding:32px 0;background:#0f172a;border-top:1px solid #334155;border-bottom:1px solid #334155;">
+    <div class="geo-divider" style="max-width:1440px;margin:0 auto;">
+      <div class="geo-divider-line"></div>
+      <div class="geo-divider-shape">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1" y="1" width="30" height="30" stroke="#f59e0b" stroke-width="1.5"/>
+          <rect x="7" y="7" width="18" height="18" stroke="#334155" stroke-width="1" transform="rotate(45 16 16)"/>
+          <circle cx="16" cy="16" r="4" stroke="#f59e0b" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="geo-divider-line"></div>
+      <div class="geo-divider-shape">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="16" r="14" stroke="#f59e0b" stroke-width="1.5"/>
+          <circle cx="16" cy="16" r="7" stroke="#334155" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="geo-divider-line"></div>
+      <div class="geo-divider-shape">
+        <svg width="32" height="36" viewBox="0 0 32 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="16,2 30,10 30,26 16,34 2,26 2,10" stroke="#f59e0b" stroke-width="1.5" fill="none"/>
+          <polygon points="16,8 24,13 24,23 16,28 8,23 8,13" stroke="#334155" stroke-width="1" fill="none"/>
+        </svg>
+      </div>
+      <div class="geo-divider-line"></div>
+      <div class="geo-divider-shape">
+        <svg width="32" height="28" viewBox="0 0 32 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="16,2 30,26 2,26" stroke="#f59e0b" stroke-width="1.5" fill="none"/>
+          <polygon points="16,10 22,22 10,22" stroke="#334155" stroke-width="1" fill="none"/>
+        </svg>
+      </div>
+      <div class="geo-divider-line"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       CTA
+  ══════════════════════════════════════════ -->
+  <section class="cta-section bg-grid-combined" style="background-color:#1e293b;">
+    <div class="section-inner" style="position:relative;">
+      <div class="corner-tl"></div>
+      <div class="corner-br"></div>
+      <p class="section-label">Begin</p>
+      <h2 class="cta-tagline">Construct your vision.</h2>
+      <p class="cta-sub">
+        Builders don't wait for permission. State what you want to create. Arcanea builds the foundation.
+      </p>
+      <div class="cta-input-row">
+        <input
+          class="input-structural"
+          type="text"
+          placeholder="What do you want to create?"
+          aria-label="Creation input"
+        />
+        <button class="btn-amber">Build</button>
+      </div>
+      <p class="cta-trust">No account required to start. Build first, register when ready.</p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════ -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+
+        <div class="footer-col">
+          <div class="footer-logo">ARC<span>A</span>NEA</div>
+          <p class="footer-tagline">
+            The structural foundation for creators who build with precision. Music. Stories. Art. Code. Video. One platform. Zero limits.
+          </p>
+          <div style="display:flex;gap:12px;margin-top:8px;">
+            <a href="#" style="color:#475569;font-size:0.75rem;text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.12s;" onmouseover="this.style.color='#f59e0b'" onmouseout="this.style.color='#475569'">X</a>
+            <span style="color:#334155;">·</span>
+            <a href="#" style="color:#475569;font-size:0.75rem;text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.12s;" onmouseover="this.style.color='#f59e0b'" onmouseout="this.style.color='#475569'">GitHub</a>
+            <span style="color:#334155;">·</span>
+            <a href="#" style="color:#475569;font-size:0.75rem;text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.12s;" onmouseover="this.style.color='#f59e0b'" onmouseout="this.style.color='#475569'">Discord</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <p class="footer-heading">Platform</p>
+          <ul class="footer-links">
+            <li><a href="#">Music Generation</a></li>
+            <li><a href="#">Story Engine</a></li>
+            <li><a href="#">Visual Creation</a></li>
+            <li><a href="#">Code Architecture</a></li>
+            <li><a href="#">Video Production</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <p class="footer-heading">Company</p>
+          <ul class="footer-links">
+            <li><a href="#">About</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Press</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <p class="footer-heading">Resources</p>
+          <ul class="footer-links">
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">API Reference</a></li>
+            <li><a href="#">Status</a></li>
+            <li><a href="#">Changelog</a></li>
+            <li><a href="#">Community</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">
+          © 2026 ARCANEA. All rights reserved. // STRUCTURE IS FREEDOM.
+        </p>
+        <ul class="footer-bottom-links">
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Security</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
