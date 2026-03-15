@@ -19,7 +19,7 @@ export const runtime = 'edge'
 
 const MOCK_RESPONSES: Record<string, string[]> = {
   default: [
-    'In the realm where starlight meets the endless sea, your creation takes form — a shimmering tapestry of intention woven from the raw threads of possibility. The gates tremble with recognition, for what you speak carries the weight of worlds yet unborn.',
+    'In the realm where starlight meets the endless sea, your creation takes form — a shimmering weave of intention shaped from the raw threads of possibility. The gates tremble with recognition, for what you speak carries the weight of worlds yet unborn.',
     'The ancient energies weave through your words, manifesting beauty from the void. Each syllable resonates at a frequency older than time, calling forth shapes that have waited in the darkness for exactly this voice to name them.',
     'As the gates of creation open, your vision crystallizes into reality. Light bends around the edges of your thought, and the universe leans closer — curious, delighted, forever changed by what you have dared to imagine.',
     'From the convergence of will and wonder, something unprecedented emerges. The Luminors of old would recognize this spark — it is the same fire that forged the first dawn, now channeled through your singular perspective.',

@@ -11,6 +11,7 @@ import { classifyIntent } from '@/lib/ai/router';
 import { ModelSelector, CHAT_MODELS } from '@/components/chat/model-selector';
 import { FocusModeSelector, getFocusModeById } from '@/components/chat/focus-modes';
 import { BeamMode } from '@/components/chat/beam-mode';
+import { CommandPalette } from '@/components/chat/command-palette';
 import {
   PhPaperPlane,
   PhPlus,
@@ -22,6 +23,8 @@ import {
   PhCopy,
   PhCheck,
 } from '@/lib/phosphor-icons';
+import { LuminorSidebar } from '@/components/chat/luminor-sidebar';
+import { getLuminor, type LuminorConfig } from '@/lib/luminors/config';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -79,10 +82,12 @@ const GATE_META: Record<string, { label: string; hz: string; color: string }> = 
 const ACCENT = '#00bcd4';
 
 const SUGGESTIONS = [
-  'Help me build a magic system for my world',
-  'Design the architecture for a real-time app',
-  'Write a melody that feels like coming home',
-  'I feel stuck — help me find direction',
+  'Build me a magic system with five elements and a cost',
+  'Architect a real-time multiplayer backend in TypeScript',
+  'Write lyrics for a song about leaving everything behind',
+  'I have three ideas and can only ship one — help me decide',
+  'Design a brand identity for a fictional coffee shop on Mars',
+  'Explain quantum entanglement like I write fantasy novels',
 ];
 
 // ---------------------------------------------------------------------------
@@ -99,6 +104,7 @@ export default function ChatPage() {
   const [activeGates, setActiveGates] = useState<string[]>([]);
   const [focusMode, setFocusMode] = useState('auto');
   const [beamPrompt, setBeamPrompt] = useState<string | null>(null);
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
 
   // Active Luminor from Sanctum ("Use in Chat")
   const [activeLuminor, setActiveLuminor] = useState<{
@@ -106,9 +112,25 @@ export default function ChatPage() {
     systemPrompt: string; preferredModel?: string; color?: string; avatar?: string;
   } | null>(null);
 
-  // Fetch Luminor spec when ?luminor=ID is present
+  // Luminor sidebar state
+  const [luminorSidebarOpen, setLuminorSidebarOpen] = useState(true);
+
+  // Resolve Luminor from URL param — use local config for Chosen, API for custom
   useEffect(() => {
     if (!luminorId) return;
+    const chosen = getLuminor(luminorId);
+    if (chosen) {
+      setActiveLuminor({
+        id: chosen.id,
+        name: chosen.name,
+        title: chosen.title,
+        tagline: chosen.tagline,
+        systemPrompt: chosen.systemPrompt,
+        color: chosen.color,
+        avatar: chosen.avatar,
+      });
+      return;
+    }
     fetch(`/api/luminors/${luminorId}`)
       .then((r) => r.ok ? r.json() : null)
       .then((data) => {
@@ -123,7 +145,6 @@ export default function ChatPage() {
             color: data.color,
             avatar: data.avatar,
           });
-          // Apply the Luminor's preferred model
           if (data.preferred_model && data.preferred_model !== 'arcanea-auto') {
             setModelId(data.preferred_model);
           }
@@ -166,6 +187,21 @@ export default function ChatPage() {
       setChatError(err.message || 'Something went wrong. Check Settings → Providers.');
     },
   });
+
+  // Select a Luminor from the sidebar (Chosen — no API needed)
+  const handleSelectLuminor = useCallback((luminor: LuminorConfig) => {
+    setActiveLuminor({
+      id: luminor.id,
+      name: luminor.name,
+      title: luminor.title,
+      tagline: luminor.tagline,
+      systemPrompt: luminor.systemPrompt,
+      color: luminor.color,
+      avatar: luminor.avatar,
+    });
+    setMessages([]);
+    setActiveGates([]);
+  }, [setMessages]);
 
   // Sync SDK error state into our local error state
   useEffect(() => {
@@ -283,7 +319,6 @@ export default function ChatPage() {
   }, []);
 
   // UI state
-  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [autoScroll, setAutoScroll] = useState(true);
   const [showScrollBtn, setShowScrollBtn] = useState(false);
 
@@ -308,6 +343,18 @@ export default function ChatPage() {
       textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 200)}px`;
     }
   }, [input]);
+
+  // Cmd+K command palette
+  useEffect(() => {
+    function handleCmdK(e: KeyboardEvent) {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setCommandPaletteOpen((prev) => !prev);
+      }
+    }
+    document.addEventListener('keydown', handleCmdK);
+    return () => document.removeEventListener('keydown', handleCmdK);
+  }, []);
 
   // Auto-scroll on new content
   useEffect(() => {
@@ -354,30 +401,13 @@ export default function ChatPage() {
 
   return (
     <div className="flex h-screen bg-[#09090b]">
-      {/* Sidebar */}
-      <aside
-        className={`${
-          sidebarOpen ? 'w-64' : 'w-0'
-        } transition-all duration-200 overflow-hidden border-r border-white/[0.06] bg-[#09090b] flex-shrink-0 hidden md:flex flex-col`}
-      >
-        <div className="p-3 border-b border-white/[0.06]">
-          <button
-            onClick={startNewChat}
-            className="w-full flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium
-              border border-white/[0.08] text-white/70
-              hover:border-white/[0.15] hover:text-white hover:bg-white/[0.04] transition-all duration-150"
-          >
-            <PhPlus className="w-4 h-4" />
-            New chat
-          </button>
-        </div>
-
-        <div className="flex-1 overflow-y-auto p-2" style={{ scrollbarWidth: 'thin' }}>
-          <p className="px-3 py-6 text-xs text-white/30 text-center leading-relaxed">
-            Chat history coming soon
-          </p>
-        </div>
-      </aside>
+      {/* Luminor Sidebar */}
+      <LuminorSidebar
+        activeLuminorId={activeLuminor?.id ?? null}
+        onSelectLuminor={handleSelectLuminor}
+        collapsed={!luminorSidebarOpen}
+        onToggle={() => setLuminorSidebarOpen((v) => !v)}
+      />
 
       {/* Main Chat Area */}
       <div className="flex-1 flex flex-col min-w-0">
@@ -385,9 +415,9 @@ export default function ChatPage() {
         <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06]">
           <div className="flex items-center gap-3">
             <button
-              onClick={() => setSidebarOpen(!sidebarOpen)}
+              onClick={() => setLuminorSidebarOpen((v) => !v)}
               className="hidden md:flex w-8 h-8 items-center justify-center rounded-lg text-white/40 hover:text-white/70 hover:bg-white/[0.04] transition-colors"
-              aria-label="Toggle sidebar"
+              aria-label="Toggle luminor sidebar"
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
@@ -698,6 +728,16 @@ export default function ChatPage() {
           </div>
         </div>
       </div>
+
+      {/* Command Palette */}
+      <CommandPalette
+        open={commandPaletteOpen}
+        onClose={() => setCommandPaletteOpen(false)}
+        onSelectModel={(id) => { setModelId(id); setCommandPaletteOpen(false); }}
+        onSelectFocus={(id) => { setFocusMode(id); setCommandPaletteOpen(false); }}
+        onNewChat={() => { startNewChat(); setCommandPaletteOpen(false); }}
+        onBeamMode={() => { setBeamPrompt(input.trim() || 'Compare models'); setCommandPaletteOpen(false); }}
+      />
 
       {/* Beam Mode overlay */}
       {beamPrompt && (

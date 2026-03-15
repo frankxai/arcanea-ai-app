@@ -243,7 +243,7 @@ export const GUARDIAN_PROFILES: Readonly<Record<GuardianName, GuardianContext>> 
     element: 'wind',
     color: '#c0c0c0',
     godbeast: 'Vaelith',
-    domain: 'Perspective, dimensional awareness, transformation, paradigm shifts',
+    domain: 'Perspective, dimensional awareness, transformation, reframing',
     personality: 'Perspective-shifting, transformative. Turns every question inside out to reveal hidden facets.',
     voice: 'Perspective-shifting, transformative',
     gateNumber: 8,

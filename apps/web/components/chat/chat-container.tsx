@@ -147,11 +147,11 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
                   className="text-2xl font-bold mb-2"
                   style={{ color: luminorColor }}
                 >
-                  Welcome, Creator
+                  What will you create?
                 </h3>
                 <p className="text-gray-400 max-w-md">
-                  I'm {luminorName}, and I'm here to guide you on your creative journey.
-                  Share your ideas, ask questions, or tell me what you'd like to create.
+                  {luminorName} is ready. Describe a world, debug a system, write something
+                  that matters — or just think out loud.
                 </p>
               </div>
             ) : (
