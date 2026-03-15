@@ -55,7 +55,7 @@ const QUICK_START = [
   {
     step: "3",
     title: "Choose Your Companion",
-    description: "Start a session with any of the 16 companions",
+    description: "Start a session with a creative partner",
     code: "arcanea chat --luminor architect",
   },
   {

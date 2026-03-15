@@ -156,7 +156,7 @@ const PHASES: RoadmapPhase[] = [
         id: "f1",
         title: "Platform Launch",
         description:
-          "Core platform with 16 companions and the Ten Gates system.",
+          "Core platform with creative partners and the Ten Gates system.",
         status: "completed",
         quarter: "Q1 2026",
         category: "Core",

@@ -284,9 +284,9 @@ const Icons: Record<string, React.FC<InlineSvgProps>> = {
 };
 
 export const metadata: Metadata = {
-  title: "Platform",
+  title: "Platform | Arcanea",
   description:
-    "The Arcanea platform - where imagination meets intelligence. AI companions, creative tools, and a living mythology.",
+    "The Arcanea platform — where imagination meets intelligence. Creative tools, world-building, and a living mythology.",
 };
 
 const FEATURES = [

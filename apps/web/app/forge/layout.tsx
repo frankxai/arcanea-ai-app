@@ -14,27 +14,5 @@ export const metadata: Metadata = {
 };
 
 export default function ForgeLayout({ children }: { children: ReactNode }) {
-  return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'WebPage',
-            name: 'The Forge',
-            description:
-              'Shape a Luminor intelligence or summon a bonded Companion creature on Arcanea',
-            url: 'https://arcanea.ai/forge',
-            isPartOf: {
-              '@type': 'WebSite',
-              name: 'Arcanea',
-              url: 'https://arcanea.ai',
-            },
-          }),
-        }}
-      />
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }
