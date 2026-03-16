@@ -1,14 +1,12 @@
 /**
  * Library Text Reading Page
  *
- * ★ Insight ─────────────────────────────────────
  * The reading experience is the heart of the Library.
- * This page prioritizes:
- * 1. Typography - Crimson Pro for body, Cinzel for headings
+ * Priorities:
+ * 1. Typography - prose-arcanea CSS class for optimal long-form reading
  * 2. Focus - Minimal distractions, centered content
- * 3. Navigation - Table of contents, related texts
- * 4. Accessibility - Proper heading hierarchy, skip links
- * ─────────────────────────────────────────────────
+ * 3. Navigation - Table of contents (sidebar + mobile), prev/next, related texts
+ * 4. Accessibility - Proper heading hierarchy, skip links, scroll-mt anchors
  */
 
 import { Metadata } from 'next';
@@ -88,6 +86,7 @@ export default async function TextPage({ params }: Props) {
     '@type': 'Article',
     headline: text.frontmatter.title,
     description: text.frontmatter.excerpt,
+    wordCount: text.frontmatter.wordCount,
     url: `https://arcanea.ai/library/${fullSlug}`,
     author: { '@type': 'Organization', name: 'Arcanea' },
     publisher: { '@type': 'Organization', name: 'Arcanea', url: 'https://arcanea.ai' },
@@ -128,17 +127,17 @@ export default async function TextPage({ params }: Props) {
               Library
             </Link>
             <span aria-hidden="true">/</span>
-            <Link href={`/library/${collectionSlug}`} className="hover:text-atlantean-teal transition-colors">
+            <Link href={`/library/${collectionSlug}`} className="hidden sm:inline hover:text-atlantean-teal transition-colors">
               {collection?.name}
             </Link>
-            <span aria-hidden="true">/</span>
-            <span className="text-text-primary truncate max-w-[200px]">{text.frontmatter.title}</span>
+            <span className="hidden sm:inline" aria-hidden="true">/</span>
+            <span className="text-text-primary truncate max-w-[200px] sm:max-w-[300px] md:max-w-[400px]">{text.frontmatter.title}</span>
           </nav>
 
-          <div className="flex items-center gap-4">
-            <span className="text-xs text-text-muted">
-              {text.frontmatter.readingTime} min read
-            </span>
+          <div className="hidden sm:flex items-center gap-4 text-xs text-text-muted">
+            <span>{text.frontmatter.wordCount?.toLocaleString()} words</span>
+            <span className="h-3 w-px bg-cosmic-border" aria-hidden="true" />
+            <span>{text.frontmatter.readingTime} min read</span>
           </div>
         </div>
       </header>
@@ -165,9 +164,16 @@ export default async function TextPage({ params }: Props) {
                 {text.frontmatter.title}
               </h1>
 
-              <p className="mt-6 text-xl text-text-secondary leading-relaxed">
+              <p className="mt-6 text-xl text-text-secondary leading-relaxed max-w-[65ch]">
                 {text.frontmatter.excerpt}
               </p>
+
+              {/* Mobile metadata */}
+              <div className="mt-4 flex items-center gap-3 text-xs text-text-muted sm:hidden">
+                <span>{text.frontmatter.wordCount?.toLocaleString()} words</span>
+                <span className="h-3 w-px bg-cosmic-border" aria-hidden="true" />
+                <span>{text.frontmatter.readingTime} min read</span>
+              </div>
 
               {/* Situations */}
               {text.frontmatter.situations.length > 0 && (
@@ -200,78 +206,54 @@ export default async function TextPage({ params }: Props) {
               </div>
             </header>
 
-            {/* Content */}
-            <article className="prose-arcanea max-w-[65ch]">
+            {/* Mobile Table of Contents */}
+            {tocHeadings.length > 0 && (
+              <details className="mb-10 rounded-xl border border-cosmic-border bg-cosmic-surface lg:hidden">
+                <summary className="cursor-pointer px-6 py-4 text-xs font-semibold uppercase tracking-[0.3em] text-atlantean-teal">
+                  Table of Contents
+                </summary>
+                <nav className="border-t border-cosmic-border px-6 py-4" aria-label="Table of contents">
+                  <ul className="space-y-2">
+                    {tocHeadings.map((heading) => (
+                      <li
+                        key={heading.slug}
+                        className={heading.level === 3 ? 'ml-4' : ''}
+                      >
+                        <a
+                          href={`#${heading.slug}`}
+                          className="block text-sm text-text-muted hover:text-atlantean-teal transition-colors py-1"
+                        >
+                          {heading.text}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              </details>
+            )}
+
+            {/* Content — styled by .prose-arcanea in globals.css */}
+            <article className="prose-arcanea">
               <ReactMarkdown
                 components={{
-                  h1: ({ children }) => (
-                    <h1 className="font-display text-3xl font-bold tracking-tight text-text-primary mt-16 mb-6 first:mt-0">
-                      {children}
-                    </h1>
-                  ),
                   h2: ({ children }) => {
-                    const text = String(children);
-                    const slug = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
+                    const headingText = String(children);
+                    const slug = headingText.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
                     return (
-                      <h2 id={slug} className="font-display text-2xl font-semibold tracking-tight text-text-primary mt-12 mb-4 scroll-mt-24">
+                      <h2 id={slug} className="scroll-mt-24">
                         {children}
                       </h2>
                     );
                   },
                   h3: ({ children }) => {
-                    const text = String(children);
-                    const slug = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
+                    const headingText = String(children);
+                    const slug = headingText.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
                     return (
-                      <h3 id={slug} className="font-display text-xl font-semibold text-text-primary mt-8 mb-3 scroll-mt-24">
+                      <h3 id={slug} className="scroll-mt-24">
                         {children}
                       </h3>
                     );
                   },
-                  h4: ({ children }) => (
-                    <h4 className="font-display text-lg font-semibold text-text-primary mt-6 mb-2">
-                      {children}
-                    </h4>
-                  ),
-                  p: ({ children }) => (
-                    <p className="font-body text-lg leading-relaxed text-text-secondary mb-6">
-                      {children}
-                    </p>
-                  ),
-                  blockquote: ({ children }) => (
-                    <blockquote className="my-8 border-l-4 border-atlantean-teal/60 bg-cosmic-surface/50 pl-6 py-4 pr-4 rounded-r-lg italic text-text-primary">
-                      {children}
-                    </blockquote>
-                  ),
-                  ul: ({ children }) => (
-                    <ul className="my-6 ml-6 space-y-2 list-disc text-text-secondary">
-                      {children}
-                    </ul>
-                  ),
-                  ol: ({ children }) => (
-                    <ol className="my-6 ml-6 space-y-2 list-decimal text-text-secondary">
-                      {children}
-                    </ol>
-                  ),
-                  li: ({ children }) => (
-                    <li className="text-lg leading-relaxed">{children}</li>
-                  ),
-                  strong: ({ children }) => (
-                    <strong className="font-semibold text-text-primary">{children}</strong>
-                  ),
-                  em: ({ children }) => (
-                    <em className="italic text-atlantean-teal/90">{children}</em>
-                  ),
-                  hr: () => (
-                    <hr className="my-12 border-cosmic-border" />
-                  ),
-                  a: ({ href, children }) => (
-                    <a
-                      href={href}
-                      className="text-atlantean-teal underline decoration-atlantean-teal/30 hover:decoration-atlantean-teal transition-colors"
-                    >
-                      {children}
-                    </a>
-                  ),
                 }}
               >
                 {text.content}
@@ -279,7 +261,7 @@ export default async function TextPage({ params }: Props) {
             </article>
 
             {/* Text Navigation */}
-            <nav className="mt-16 flex items-stretch gap-4 border-t border-cosmic-border pt-8">
+            <nav className="mt-16 flex flex-col sm:flex-row items-stretch gap-4 border-t border-cosmic-border pt-8">
               {prevText ? (
                 <Link
                   href={`/library/${prevText.slug}`}
@@ -291,7 +273,7 @@ export default async function TextPage({ params }: Props) {
                   </p>
                 </Link>
               ) : (
-                <div className="flex-1" />
+                <div className="hidden sm:block flex-1" />
               )}
 
               {nextText ? (
@@ -305,9 +287,20 @@ export default async function TextPage({ params }: Props) {
                   </p>
                 </Link>
               ) : (
-                <div className="flex-1" />
+                <div className="hidden sm:block flex-1" />
               )}
             </nav>
+
+            {/* Mobile: Back to Collection */}
+            <Link
+              href={`/library/${collectionSlug}`}
+              className="mt-6 flex items-center justify-center gap-2 rounded-xl border border-cosmic-border bg-cosmic-surface p-4 text-sm text-text-muted hover:border-atlantean-teal/50 hover:text-atlantean-teal transition-all lg:hidden"
+            >
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              Back to {collection?.name}
+            </Link>
           </main>
 
           {/* Sidebar */}
@@ -346,24 +339,54 @@ export default async function TextPage({ params }: Props) {
                     Related Texts
                   </h2>
                   <ul className="space-y-3">
-                    {relatedTexts.map((related) => (
-                      <li key={related.slug}>
-                        <Link
-                          href={`/library/${related.slug}`}
-                          className="group block"
-                        >
-                          <p className="text-sm font-semibold text-text-primary group-hover:text-atlantean-teal transition-colors">
-                            {related.frontmatter.title}
-                          </p>
-                          <p className="text-xs text-text-muted mt-1">
-                            {related.frontmatter.collection}
-                          </p>
-                        </Link>
-                      </li>
-                    ))}
+                    {relatedTexts.map((related) => {
+                      const relatedCollection = COLLECTIONS.find(c => c.slug === related.frontmatter.collection);
+                      return (
+                        <li key={related.slug}>
+                          <Link
+                            href={`/library/${related.slug}`}
+                            className="group block"
+                          >
+                            <p className="text-sm font-semibold text-text-primary group-hover:text-atlantean-teal transition-colors">
+                              {related.frontmatter.title}
+                            </p>
+                            <p className="text-xs text-text-muted mt-1">
+                              {relatedCollection?.name || related.frontmatter.collection}
+                            </p>
+                          </Link>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               )}
+
+              {/* Text Stats */}
+              <div className="rounded-xl border border-cosmic-border bg-cosmic-surface p-6">
+                <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-text-muted">
+                  Details
+                </h2>
+                <dl className="space-y-3 text-sm">
+                  <div className="flex justify-between">
+                    <dt className="text-text-muted">Words</dt>
+                    <dd className="font-semibold text-text-primary">{text.frontmatter.wordCount?.toLocaleString()}</dd>
+                  </div>
+                  <div className="flex justify-between">
+                    <dt className="text-text-muted">Reading time</dt>
+                    <dd className="font-semibold text-text-primary">{text.frontmatter.readingTime} min</dd>
+                  </div>
+                  <div className="flex justify-between">
+                    <dt className="text-text-muted">Format</dt>
+                    <dd className="font-semibold text-text-primary capitalize">{text.frontmatter.format}</dd>
+                  </div>
+                  {text.frontmatter.difficulty && (
+                    <div className="flex justify-between">
+                      <dt className="text-text-muted">Difficulty</dt>
+                      <dd className="font-semibold text-text-primary capitalize">{text.frontmatter.difficulty}</dd>
+                    </div>
+                  )}
+                </dl>
+              </div>
 
               {/* Reading Progress */}
               <ReadingTracker

@@ -5,10 +5,10 @@ import { getCollections } from "../../lib/content";
 export const metadata: Metadata = {
   title: "Library of Arcanea — 190K+ Words of Creative Philosophy",
   description:
-    "Browse the Library of Arcanea — 20 collections of original philosophy, poetry, legend, and practice for creators. Equipment for living.",
+    "Browse the Library of Arcanea — 190K+ words of original philosophy, poetry, legend, and practice for creators across 20 collections. Equipment for living.",
   openGraph: {
     title: "Library of Arcanea",
-    description: "20 collections of original philosophy, poetry, legend, and practice for creators. Equipment for living.",
+    description: "190K+ words of original philosophy, poetry, legend, and practice for creators across 20 collections. Equipment for living.",
   },
 };
 
@@ -20,7 +20,7 @@ export default async function LibraryPage() {
     '@type': 'CollectionPage',
     name: 'Library of Arcanea',
     description:
-      '20 collections of wisdom, legend, poetry, and practice for the creative soul. 190,000+ words of original content.',
+      '190,000+ words of wisdom, legend, poetry, and practice for the creative soul across 20 collections of original content.',
     url: 'https://arcanea.ai/library',
     mainEntity: {
       '@type': 'ItemList',

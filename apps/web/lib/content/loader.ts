@@ -105,7 +105,7 @@ export const COLLECTIONS: Collection[] = [
     order: 7,
     format: 'story',
     readWhen: 'you face the impossible',
-    textCount: 1,
+    textCount: 7,
     icon: '🌟',
   },
   {
@@ -165,7 +165,7 @@ export const COLLECTIONS: Collection[] = [
     order: 13,
     format: 'meditation',
     readWhen: 'you need to invoke elemental forces or restore creative balance',
-    textCount: 1,
+    textCount: 2,
     icon: '🌀',
   },
   {
@@ -235,7 +235,7 @@ export const COLLECTIONS: Collection[] = [
     order: 20,
     format: 'practical',
     readWhen: 'you craft prompts and seek mastery in AI collaboration',
-    textCount: 1,
+    textCount: 0,
     icon: '📓',
   },
 ];
