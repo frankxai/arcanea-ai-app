@@ -175,20 +175,20 @@ function getUniverse() {
 
   const BASE = '/mnt/c/Users/frank/Arcanea';
 
-  // Lore texts in book/
-  const loreRaw = sh(`ls ${BASE}/book/*/*.md 2>/dev/null | wc -l`, 3000);
+  // Lore texts in book/ (cached 120s — these barely change)
+  const loreRaw = cachedSh('lore-count', `ls ${BASE}/book/*/*.md 2>/dev/null | wc -l`, 120_000, 3000);
   const loreCount = parseInt(loreRaw, 10) || 76;
 
-  // Live web pages: count page.tsx files under apps/web/app/lore/
-  const pagesRaw = sh(`find ${BASE}/apps/web/app/lore -name "page.tsx" 2>/dev/null | wc -l`, 2000);
+  // Live web pages (cached 120s)
+  const pagesRaw = cachedSh('lore-pages', `find ${BASE}/apps/web/app/lore -name "page.tsx" 2>/dev/null | wc -l`, 120_000, 2000);
   const lorePages = parseInt(pagesRaw, 10) || 14;
 
-  // Agents count (from .claude/agents/ — main agent registry)
-  const agentsRaw = sh(`ls ${BASE}/.claude/agents/ 2>/dev/null | wc -l`, 2000);
+  // Agents count (cached 120s)
+  const agentsRaw = cachedSh('agents-count', `ls ${BASE}/.claude/agents/ 2>/dev/null | wc -l`, 120_000, 2000);
   const agents = parseInt(agentsRaw, 10) || 65;
 
-  // Collections in book/
-  const collectionsRaw = sh(`ls -d ${BASE}/book/*/ 2>/dev/null | wc -l`, 2000);
+  // Collections in book/ (cached 120s)
+  const collectionsRaw = cachedSh('collections-count', `ls -d ${BASE}/book/*/ 2>/dev/null | wc -l`, 120_000, 2000);
   const collections = parseInt(collectionsRaw, 10) || 17;
 
   _universe = { loreCount, lorePages, agents, collections };
