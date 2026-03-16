@@ -174,7 +174,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.7 }}
           >
-            200K+ words of creative philosophy &middot; 17 collections &middot; Free to start
+            190K+ words of creative philosophy &middot; 17 collections &middot; Free to start
           </m.p>
         </div>
       </m.div>

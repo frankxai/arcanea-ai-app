@@ -105,7 +105,7 @@ export const VISION_CARDS: VisionCard[] = [
     icon: GraduationCap,
     title: "Academy",
     description:
-      "Learn world-building, prompt craft, agent design, the Arcanean Code. 200K+ words of reference material. Learn by building.",
+      "Learn world-building, prompt craft, agent design, the Arcanean Code. 190K+ words of reference material. Learn by building.",
     color: "[#ffd700]",
   },
 ];

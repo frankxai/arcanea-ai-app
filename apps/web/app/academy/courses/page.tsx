@@ -143,7 +143,7 @@ export default function CoursesPage() {
             More courses in development
           </p>
           <p className="text-sm text-text-secondary">
-            Courses for the Heart, Crown, Starweave, Unity, and Source Gates are
+            Courses for the Heart, Sight, Crown, Starweave, Unity, and Source Gates are
             being crafted. Each will open when the time is right.
           </p>
         </div>

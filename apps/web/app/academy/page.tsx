@@ -106,7 +106,7 @@ export default function AcademyPage() {
           <div className="mx-auto mt-14 flex max-w-lg justify-center gap-8 md:gap-12">
             {[
               { label: 'Gates', value: '10' },
-              { label: 'Courses', value: '5' },
+              { label: 'Courses', value: '6' },
               { label: 'Ranks', value: '5' },
             ].map((s) => (
               <div key={s.label} className="text-center">

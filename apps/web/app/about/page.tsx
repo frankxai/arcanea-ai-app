@@ -24,7 +24,7 @@ const jsonLd = {
     name: 'Arcanea',
     url: 'https://arcanea.ai',
     description:
-      'Creative multiverse platform. Six layers: Chat, Worlds, Feed, OSS, Community, Academy. 200K+ words of creative philosophy. Open source.',
+      'Creative multiverse platform. Six layers: Chat, Worlds, Feed, OSS, Community, Academy. 190K+ words of creative philosophy. Open source.',
   },
 };
 

@@ -57,7 +57,7 @@ Arcanea gives you a **proven architecture for world-building**:
 - **Elements** for magic/tech systems
 - **The Code** for your world's governing principles
 
-You use these patterns to design YOUR world — your mythology, your characters, your magic system, your visual language, your naming conventions, your lore bible. You're not starting from a blank page. You're starting from a framework that's been battle-tested across 200K+ words of reference material.
+You use these patterns to design YOUR world — your mythology, your characters, your magic system, your visual language, your naming conventions, your lore bible. You're not starting from a blank page. You're starting from a framework that's been battle-tested across 190K+ words of reference material.
 
 Your world gets:
 - **AI agents** that know your lore, stay in character, and interact with your audience
@@ -102,7 +102,7 @@ Structured courses teach the whole system:
 - **The Arcanean Code** — Philosophy and principles for the creative life
 - **The business model** — Monetize what you build
 
-200K+ words of reference material in the Library. 17 collections covering everything from daily creative practice to the theoretical foundations of world-building. You learn by doing, not just reading.
+190K+ words of reference material in the Library. 17 collections covering everything from daily creative practice to the theoretical foundations of world-building. You learn by doing, not just reading.
 
 ## What Creators Actually Do With Arcanea
 
