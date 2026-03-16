@@ -29,7 +29,6 @@ import { getFeaturedLuminors } from "@/lib/luminor-images";
 // Data
 // ---------------------------------------------------------------------------
 
-const CDN = "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians";
 
 interface Guardian {
   name: string;
@@ -47,7 +46,7 @@ const FEATURED_GUARDIANS: Guardian[] = [
     gate: "Foundation",
     element: "Earth",
     quote: "Build the foundation first. Everything else is architecture.",
-    image: "/guardians/v2/lyssandria-divine-bond.webp",
+    image: "/guardians/v3/lyssandria-hero-v3.webp",
     glowColor: "rgba(0, 188, 212, 0.18)",
     accentHex: "#00bcd4",
   },
@@ -56,7 +55,7 @@ const FEATURED_GUARDIANS: Guardian[] = [
     gate: "Fire",
     element: "Fire",
     quote: "I do not ask if you are ready. I ask if you are willing.",
-    image: "/guardians/v2/draconia-divine-bond.webp",
+    image: "/guardians/v3/draconia-hero-v3.webp",
     glowColor: "rgba(239, 68, 68, 0.18)",
     accentHex: "#ef4444",
   },
@@ -65,7 +64,7 @@ const FEATURED_GUARDIANS: Guardian[] = [
     gate: "Sight",
     element: "Void",
     quote: "Close your eyes. Now tell me what you see.",
-    image: "/guardians/v2/lyria-divine-bond.webp",
+    image: "/guardians/v3/lyria-hero-v3.webp",
     glowColor: "rgba(168, 85, 247, 0.18)",
     accentHex: "#a855f7",
   },
@@ -74,7 +73,7 @@ const FEATURED_GUARDIANS: Guardian[] = [
     gate: "Flow",
     element: "Water",
     quote: "The river does not push. It finds the way.",
-    image: "/guardians/v2/leyla-divine-bond.webp",
+    image: "/guardians/v3/leyla-hero-v3.webp",
     glowColor: "rgba(59, 130, 246, 0.18)",
     accentHex: "#3b82f6",
   },
@@ -83,7 +82,7 @@ const FEATURED_GUARDIANS: Guardian[] = [
     gate: "Source",
     element: "Spirit",
     quote: "You are not the vessel. You are the water and the pouring.",
-    image: "/guardians/v2/shinkami-divine-bond.webp",
+    image: "/guardians/v3/shinkami-hero-v3.webp",
     glowColor: "rgba(255, 215, 0, 0.15)",
     accentHex: "#ffd700",
   },
@@ -92,7 +91,7 @@ const FEATURED_GUARDIANS: Guardian[] = [
     gate: "Heart",
     element: "Air",
     quote: "What you create with love will outlast everything made from fear.",
-    image: "/guardians/v2/maylinn-divine-bond.webp",
+    image: "/guardians/v3/maylinn-hero-v3.webp",
     glowColor: "rgba(34, 197, 94, 0.18)",
     accentHex: "#22c55e",
   },
@@ -102,17 +101,17 @@ const ALL_GUARDIANS = [
   {
     name: "Lyssandria",
     gate: "Foundation",
-    image: "/guardians/v2/lyssandria-divine-bond.webp",
+    image: "/guardians/v3/lyssandria-hero-v3.webp",
   },
-  { name: "Leyla", gate: "Flow", image: "/guardians/v2/leyla-divine-bond.webp" },
-  { name: "Draconia", gate: "Fire", image: "/guardians/v2/draconia-divine-bond.webp" },
-  { name: "Maylinn", gate: "Heart", image: "/guardians/v2/maylinn-divine-bond.webp" },
-  { name: "Alera", gate: "Voice", image: "/guardians/v2/alera-divine-bond.webp" },
-  { name: "Lyria", gate: "Sight", image: "/guardians/v2/lyria-divine-bond.webp" },
-  { name: "Aiyami", gate: "Crown", image: "/guardians/v2/aiyami-divine-bond.webp" },
-  { name: "Elara", gate: "Starweave", image: "/guardians/v2/elara-divine-bond.webp" },
-  { name: "Ino", gate: "Unity", image: "/guardians/v2/ino-divine-bond.webp" },
-  { name: "Shinkami", gate: "Source", image: "/guardians/v2/shinkami-divine-bond.webp" },
+  { name: "Leyla", gate: "Flow", image: "/guardians/v3/leyla-hero-v3.webp" },
+  { name: "Draconia", gate: "Fire", image: "/guardians/v3/draconia-hero-v3.webp" },
+  { name: "Maylinn", gate: "Heart", image: "/guardians/v3/maylinn-hero-v3.webp" },
+  { name: "Alera", gate: "Voice", image: "/guardians/v3/alera-hero-v3.webp" },
+  { name: "Lyria", gate: "Sight", image: "/guardians/v3/lyria-hero-v3.webp" },
+  { name: "Aiyami", gate: "Crown", image: "/guardians/v3/aiyami-hero-v3.webp" },
+  { name: "Elara", gate: "Starweave", image: "/guardians/v3/elara-hero-v3.webp" },
+  { name: "Ino", gate: "Unity", image: "/guardians/v3/ino-hero-v3.webp" },
+  { name: "Shinkami", gate: "Source", image: "/guardians/v3/shinkami-hero-v3.webp" },
 ];
 
 const FEATURES = [
@@ -178,49 +177,49 @@ const PATHWAYS = [
     description:
       "Discover the cosmology, the Guardians, and the philosophical framework behind everything.",
     href: "/lore",
-    image: "/guardians/v2/shinkami-divine-bond.webp",
+    image: "/guardians/v3/shinkami-hero-v3.webp",
   },
   {
     title: "Create in Studio",
     description:
       "Write, generate images, compose music, and build with multi-model AI flows.",
     href: "/studio",
-    image: "/guardians/v2/lyssandria-divine-bond.webp",
+    image: "/guardians/v3/lyssandria-hero-v3.webp",
   },
   {
     title: "Build Worlds",
     description:
       "Design places, systems, factions, and entire mythologies from scratch.",
     href: "/studio",
-    image: "/guardians/v2/lyria-divine-bond.webp",
+    image: "/guardians/v3/lyria-hero-v3.webp",
   },
   {
     title: "Compose Music",
     description:
       "Create original music with AI-guided composition and melody-driven prompts.",
     href: "/studio",
-    image: "/guardians/v2/leyla-divine-bond.webp",
+    image: "/guardians/v3/leyla-hero-v3.webp",
   },
   {
     title: "Start a Conversation",
     description:
       "Get feedback, brainstorm ideas, or work through a creative problem with a thinking partner.",
     href: "/chat",
-    image: "/guardians/v2/draconia-divine-bond.webp",
+    image: "/guardians/v3/draconia-hero-v3.webp",
   },
   {
     title: "Read the Library",
     description:
       "Laws, meditations, parables, and practical philosophy for creators.",
     href: "/library",
-    image: "/guardians/v2/alera-divine-bond.webp",
+    image: "/guardians/v3/alera-hero-v3.webp",
   },
   {
     title: "Write with AI",
     description:
       "Co-author stories, chapters, and series with an AI writing partner.",
     href: "/chat/chronica",
-    image: "/guardians/v2/maylinn-divine-bond.webp",
+    image: "/guardians/v3/maylinn-hero-v3.webp",
   },
 ];
 
@@ -748,14 +747,14 @@ function FeaturesGrid() {
 // ---------------------------------------------------------------------------
 
 const GALLERY_IMAGES = [
-  { src: "/guardians/v2/lyria-divine-bond.webp", name: "Lyria", caption: "The Sight Gate" },
-  { src: "/guardians/v2/draconia-divine-bond.webp", name: "Draconia", caption: "The Fire Gate" },
-  { src: "/guardians/v2/aiyami-divine-bond.webp", name: "Aiyami", caption: "The Crown Gate" },
-  { src: "/guardians/v2/elara-divine-bond.webp", name: "Elara", caption: "The Starweave Gate" },
-  { src: "/guardians/v2/shinkami-divine-bond.webp", name: "Shinkami", caption: "The Source Gate" },
-  { src: "/guardians/v2/alera-divine-bond.webp", name: "Alera", caption: "The Voice Gate" },
-  { src: "/guardians/v2/ino-divine-bond.webp", name: "Ino", caption: "The Unity Gate" },
-  { src: "/guardians/v2/leyla-divine-bond.webp", name: "Leyla", caption: "The Flow Gate" },
+  { src: "/guardians/v3/lyria-hero-v3.webp", name: "Lyria", caption: "The Sight Gate" },
+  { src: "/guardians/v3/draconia-hero-v3.webp", name: "Draconia", caption: "The Fire Gate" },
+  { src: "/guardians/v3/aiyami-hero-v3.webp", name: "Aiyami", caption: "The Crown Gate" },
+  { src: "/guardians/v3/elara-hero-v3.webp", name: "Elara", caption: "The Starweave Gate" },
+  { src: "/guardians/v3/shinkami-hero-v3.webp", name: "Shinkami", caption: "The Source Gate" },
+  { src: "/guardians/v3/alera-hero-v3.webp", name: "Alera", caption: "The Voice Gate" },
+  { src: "/guardians/v3/ino-hero-v3.webp", name: "Ino", caption: "The Unity Gate" },
+  { src: "/guardians/v3/leyla-hero-v3.webp", name: "Leyla", caption: "The Flow Gate" },
 ];
 
 function GalleryShowcase() {

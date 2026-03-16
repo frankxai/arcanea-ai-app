@@ -7,7 +7,7 @@ import { GlowCard } from "@/components/ui/glow-card";
 import { GlowButton } from "@/components/ui/glow-button";
 import { durations, m3Curves } from "@/lib/design/motion";
 
-const CDN_BASE = "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians";
+const CDN_BASE = "/guardians/v3";
 
 const GUARDIANS = [
   { name: "Lyssandria", id: "lyssandria", gate: "Foundation", frequency: "174 Hz", godbeast: "Kaelith", element: "Earth", dotColor: "#b45309", description: "Guardian of stability and unshakeable ground" },
@@ -81,7 +81,7 @@ export function GuardiansPreview() {
                 {/* Guardian thumbnail */}
                 <div className="w-12 h-12 rounded-xl overflow-hidden mb-3 ring-1 ring-white/[0.08] group-hover:ring-white/[0.2] transition-all duration-300" style={{ backgroundColor: `${guardian.dotColor}20` }}>
                   <img
-                    src={`${CDN_BASE}/${guardian.id}-hero.webp`}
+                    src={`${CDN_BASE}/${guardian.id}-hero-v3.webp`}
                     alt={guardian.name}
                     loading="lazy"
                     className="w-full h-full object-cover"

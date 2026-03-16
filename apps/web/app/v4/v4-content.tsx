@@ -18,16 +18,16 @@ import {
 import { V4Scene } from "./v4-scene";
 
 const guardians = [
-  { name: "Lyssandria", philosophy: "Structure. Patience. Foundation.", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/lyssandria-hero.webp" },
-  { name: "Leyla", philosophy: "Flow. Feeling. Adaptation.", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/leyla-hero.webp" },
-  { name: "Draconia", philosophy: "Willpower. Intensity. Transformation.", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/draconia-hero.webp" },
-  { name: "Maylinn", philosophy: "Compassion. Healing. Connection.", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/maylinn-hero.webp" },
-  { name: "Alera", philosophy: "Truth. Voice. Expression.", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/alera-hero.webp" },
-  { name: "Lyria", philosophy: "Intuition. Vision. Inner sight.", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/lyria-hero.webp" },
-  { name: "Aiyami", philosophy: "Wisdom. Light. Clarity.", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/aiyami-hero.webp" },
-  { name: "Elara", philosophy: "Change. Perspective. Unknown.", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/elara-hero.webp" },
-  { name: "Ino", philosophy: "Partnership. Balance. Unity.", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/ino-hero.webp" },
-  { name: "Shinkami", philosophy: "Consciousness. Source. Everything.", image: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/shinkami-hero.webp" },
+  { name: "Lyssandria", philosophy: "Structure. Patience. Foundation.", image: "/guardians/v3/lyssandria-hero-v3.webp" },
+  { name: "Leyla", philosophy: "Flow. Feeling. Adaptation.", image: "/guardians/v3/leyla-hero-v3.webp" },
+  { name: "Draconia", philosophy: "Willpower. Intensity. Transformation.", image: "/guardians/v3/draconia-hero-v3.webp" },
+  { name: "Maylinn", philosophy: "Compassion. Healing. Connection.", image: "/guardians/v3/maylinn-hero-v3.webp" },
+  { name: "Alera", philosophy: "Truth. Voice. Expression.", image: "/guardians/v3/alera-hero-v3.webp" },
+  { name: "Lyria", philosophy: "Intuition. Vision. Inner sight.", image: "/guardians/v3/lyria-hero-v3.webp" },
+  { name: "Aiyami", philosophy: "Wisdom. Light. Clarity.", image: "/guardians/v3/aiyami-hero-v3.webp" },
+  { name: "Elara", philosophy: "Change. Perspective. Unknown.", image: "/guardians/v3/elara-hero-v3.webp" },
+  { name: "Ino", philosophy: "Partnership. Balance. Unity.", image: "/guardians/v3/ino-hero-v3.webp" },
+  { name: "Shinkami", philosophy: "Consciousness. Source. Everything.", image: "/guardians/v3/shinkami-hero-v3.webp" },
 ];
 
 const keyPages = [

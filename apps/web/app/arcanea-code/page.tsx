@@ -111,7 +111,7 @@ export default function ArcaneaCodePage() {
         <div className="absolute inset-0 bg-cosmic-mesh" />
         {/* Draconia — Fire Gate, forge of code and will */}
         <img
-          src="https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/draconia-gallery-4.webp"
+          src="/guardians/v3/draconia-hero-v3.webp"
           alt=""
           aria-hidden="true"
           className="absolute inset-0 w-full h-full object-cover opacity-[0.07] pointer-events-none"
