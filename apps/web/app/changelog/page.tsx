@@ -22,7 +22,7 @@ const CHANGES = [
       { type: "added", text: "5 Academy courses with 20+ lessons" },
       { type: "improved", text: "Homepage hero: outcome-first copy, no jargon" },
       { type: "improved", text: "How It Works section: action-first steps" },
-      { type: "improved", text: "Stats: accurate 107K+ words, 364+ artworks" },
+      { type: "improved", text: "Stats: accurate 190K+ words, 364+ artworks" },
       { type: "improved", text: "All metadata descriptions rewritten for SEO" },
       { type: "improved", text: "Gallery: full-size images with generation prompts" },
       { type: "fixed", text: "CTA destination mismatch resolved" },

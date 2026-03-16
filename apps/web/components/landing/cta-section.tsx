@@ -6,8 +6,8 @@ import Image from "next/image";
 import navLogo from "@/assets/brand/arcanea-mark.jpg";
 
 const BENEFITS = [
-  "16 creative partners, each with distinct expertise and personality",
-  "107K+ words of original philosophy, meditations, and practical craft guidance",
+  "Creative partners across writing, code, design, music, and research",
+  "190K+ words of original philosophy, meditations, and practical craft guidance",
   "Free to start — create music, stories, art, and worlds immediately",
 ];
 
@@ -48,7 +48,7 @@ export function CTASection() {
               <div>
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold leading-tight mb-6">
                   <span className="text-gradient-cosmic">
-                    Build with depth.
+                    Start creating.
                   </span>
                 </h2>
 
@@ -77,12 +77,12 @@ export function CTASection() {
 
                 <div className="flex flex-wrap gap-4">
                   <Link
-                    href="/studio"
+                    href="/chat"
                     className="group relative px-8 py-4 rounded-2xl font-semibold text-base overflow-hidden"
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-[#00897b] via-[#1565c0] to-[#00bcd4]" />
                     <span className="relative z-10 text-white flex items-center gap-2">
-                      Enter Studio
+                      Start Creating
                       <span className="group-hover:translate-x-1 transition-transform">
                         →
                       </span>
