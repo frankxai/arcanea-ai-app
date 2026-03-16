@@ -1,15 +1,10 @@
 'use client';
 
-import React, { useRef, useEffect, useCallback, useState, useMemo } from 'react';
-import { useSearchParams } from 'next/navigation';
-import { useChat } from '@ai-sdk/react';
-import { TextStreamChatTransport } from 'ai';
+import React, { useRef, useEffect, useCallback, useState } from 'react';
 import Link from 'next/link';
 import ChatMarkdown from '@/components/chat/chat-markdown';
-import { useModelSelection } from '@/hooks/use-provider';
-import { classifyIntent } from '@/lib/ai/router';
-import { ModelSelector, CHAT_MODELS } from '@/components/chat/model-selector';
-import { FocusModeSelector, getFocusModeById } from '@/components/chat/focus-modes';
+import { ModelSelector } from '@/components/chat/model-selector';
+import { FocusModeSelector } from '@/components/chat/focus-modes';
 import { BeamMode } from '@/components/chat/beam-mode';
 import { CommandPalette } from '@/components/chat/command-palette';
 import {
@@ -24,39 +19,11 @@ import {
   PhCheck,
 } from '@/lib/phosphor-icons';
 import { LuminorSidebar } from '@/components/chat/luminor-sidebar';
-import { getLuminor, type LuminorConfig } from '@/lib/luminors/config';
-
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
-function getMessageText(msg: { parts?: Array<{ type: string; text?: string }> }): string {
-  if (!msg.parts) return '';
-  return msg.parts.filter((p) => p.type === 'text').map((p) => p.text ?? '').join('');
-}
-
-/** Extract [FOLLOW_UP] suggestions from response text and return clean text + suggestions */
-function parseFollowUps(text: string): { clean: string; followUps: string[] } {
-  const lines = text.split('\n');
-  const followUps: string[] = [];
-  const cleanLines: string[] = [];
-
-  for (const line of lines) {
-    const match = line.match(/^\[FOLLOW_UP\]\s*(.+)/);
-    if (match) {
-      followUps.push(match[1].trim());
-    } else {
-      cleanLines.push(line);
-    }
-  }
-
-  // Remove trailing empty lines from clean text
-  while (cleanLines.length > 0 && cleanLines[cleanLines.length - 1].trim() === '') {
-    cleanLines.pop();
-  }
-
-  return { clean: cleanLines.join('\n'), followUps };
-}
+import {
+  useConversation,
+  getMessageText,
+  parseFollowUps,
+} from '@/hooks/use-conversation';
 
 // ---------------------------------------------------------------------------
 // Gate metadata for the frequency indicator
@@ -95,246 +62,53 @@ const SUGGESTIONS = [
 // ---------------------------------------------------------------------------
 
 export default function ChatPage() {
-  const searchParams = useSearchParams();
-  const initialPrompt = searchParams.get('prompt');
-  const luminorId = searchParams.get('luminor');
-  const { provider, clientApiKey, label: providerLabel, modelId, setModelId } = useModelSelection();
-
-  const [input, setInput] = useState('');
-  const [activeGates, setActiveGates] = useState<string[]>([]);
-  const [focusMode, setFocusMode] = useState('auto');
-  const [beamPrompt, setBeamPrompt] = useState<string | null>(null);
-  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
-
-  // Active Luminor from Sanctum ("Use in Chat")
-  const [activeLuminor, setActiveLuminor] = useState<{
-    id: string; name: string; title: string; tagline?: string;
-    systemPrompt: string; preferredModel?: string; color?: string; avatar?: string;
-  } | null>(null);
-
-  // Luminor sidebar state
-  const [luminorSidebarOpen, setLuminorSidebarOpen] = useState(true);
-
-  // Resolve Luminor from URL param — use local config for Chosen, API for custom
-  useEffect(() => {
-    if (!luminorId) return;
-    const chosen = getLuminor(luminorId);
-    if (chosen) {
-      setActiveLuminor({
-        id: chosen.id,
-        name: chosen.name,
-        title: chosen.title,
-        tagline: chosen.tagline,
-        systemPrompt: chosen.systemPrompt,
-        color: chosen.color,
-        avatar: chosen.avatar,
-      });
-      return;
-    }
-    fetch(`/api/luminors/${luminorId}`)
-      .then((r) => r.ok ? r.json() : null)
-      .then((data) => {
-        if (data) {
-          setActiveLuminor({
-            id: data.id,
-            name: data.name,
-            title: data.title,
-            tagline: data.tagline,
-            systemPrompt: data.system_prompt,
-            preferredModel: data.preferred_model,
-            color: data.color,
-            avatar: data.avatar,
-          });
-          if (data.preferred_model && data.preferred_model !== 'arcanea-auto') {
-            setModelId(data.preferred_model);
-          }
-        }
-      })
-      .catch(() => { /* Luminor not found — use default chat */ });
-  }, [luminorId, setModelId]);
-
-  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setInput(e.target.value);
-  }, []);
-
-  const [chatError, setChatError] = useState<string | null>(null);
-
-  // Get focus mode prompt hint for the API
-  const focusHint = getFocusModeById(focusMode).promptHint;
-
-  // Memoize transport — includes Luminor system prompt when active
-  const transport = useMemo(
-    () => new TextStreamChatTransport({
-      api: '/api/ai/chat',
-      body: {
-        provider, clientApiKey, gatewayModel: modelId, focusHint,
-        ...(activeLuminor ? { systemPrompt: activeLuminor.systemPrompt } : {}),
-      },
-      headers: { 'Content-Type': 'application/json' },
-    }),
-    [provider, clientApiKey, modelId, focusHint, activeLuminor]
-  );
-
   const {
     messages,
-    status,
-    error,
     sendMessage,
-    setMessages,
-  } = useChat({
-    transport,
-    onError: (err) => {
-      setChatError(err.message || 'Something went wrong. Check Settings → Providers.');
-    },
-  });
+    input,
+    setInput,
+    handleInputChange,
+    modelId,
+    setModelId,
+    providerLabel,
+    provider,
+    clientApiKey,
+    focusMode,
+    setFocusMode,
+    focusHint,
+    activeLuminor,
+    handleSelectLuminor,
+    isLoading,
+    isStreaming,
+    isThinking,
+    isEmpty,
+    chatError,
+    setChatError,
+    copiedId,
+    handleCopy,
+    activeGates,
+    beamPrompt,
+    setBeamPrompt,
+    commandPaletteOpen,
+    setCommandPaletteOpen,
+    handleSubmit,
+    handleRetry,
+    handleRegenerate,
+    startNewChat,
+    lastMsg,
+  } = useConversation();
 
-  // Select a Luminor from the sidebar (Chosen — no API needed)
-  const handleSelectLuminor = useCallback((luminor: LuminorConfig) => {
-    setActiveLuminor({
-      id: luminor.id,
-      name: luminor.name,
-      title: luminor.title,
-      tagline: luminor.tagline,
-      systemPrompt: luminor.systemPrompt,
-      color: luminor.color,
-      avatar: luminor.avatar,
-    });
-    setMessages([]);
-    setActiveGates([]);
-  }, [setMessages]);
+  // ---------------------------------------------------------------------------
+  // UI-only state (scroll, sidebar, refs) — stays in the component
+  // ---------------------------------------------------------------------------
 
-  // Sync SDK error state into our local error state
-  useEffect(() => {
-    if (error) {
-      setChatError(error.message || 'Connection failed');
-    }
-  }, [error]);
-
-  const isLoading = status === 'submitted' || status === 'streaming';
-
-  // Run client-side router for frequency indicator (mirrors server-side routing)
-  useEffect(() => {
-    const lastUser = [...messages].reverse().find((m) => m.role === 'user');
-    if (lastUser) {
-      const text = getMessageText(lastUser);
-      if (text) {
-        const result = classifyIntent(text);
-        setActiveGates(result.activeGates);
-      }
-    }
-  }, [messages]);
-
-  // Parse @ commands: @opus, @gemini, @grok etc. switch model for that message
-  const parseAtCommand = useCallback((text: string): { cleanText: string; overrideModel: string | null } => {
-    const match = text.match(/^@(\w+)\s+/);
-    if (!match) return { cleanText: text, overrideModel: null };
-
-    const alias = match[1].toLowerCase();
-    // Match against model shortNames (case-insensitive)
-    const model = CHAT_MODELS.find((m) =>
-      m.shortName.toLowerCase() === alias ||
-      m.id === `arcanea-${alias}` ||
-      m.provider === alias
-    );
-
-    if (model) {
-      return { cleanText: text.slice(match[0].length), overrideModel: model.id };
-    }
-    return { cleanText: text, overrideModel: null };
-  }, []);
-
-  const handleSubmit = useCallback((e: React.FormEvent) => {
-    e.preventDefault();
-    if (input.trim() && !isLoading) {
-      const trimmed = input.trim();
-
-      // /beam command — launch beam mode
-      if (trimmed.startsWith('/beam ')) {
-        setBeamPrompt(trimmed.slice(6));
-        setInput('');
-        return;
-      }
-
-      const { cleanText, overrideModel } = parseAtCommand(trimmed);
-
-      // If @ command detected, temporarily switch model for this message
-      if (overrideModel) {
-        setModelId(overrideModel);
-      }
-
-      sendMessage({ text: cleanText });
-      setInput('');
-    }
-  }, [input, isLoading, sendMessage, parseAtCommand, setModelId]);
-
-  // Retry last message on error
-  const handleRetry = useCallback(() => {
-    if (messages.length === 0) return;
-    // Find the last user message
-    const lastUserMsg = [...messages].reverse().find((m) => m.role === 'user');
-    if (!lastUserMsg) return;
-    const text = getMessageText(lastUserMsg);
-    if (!text) return;
-    // Remove the failed assistant message if present
-    const lastMsg = messages[messages.length - 1];
-    if (lastMsg?.role === 'assistant') {
-      setMessages(messages.slice(0, -1));
-    }
-    sendMessage({ text });
-  }, [messages, setMessages, sendMessage]);
-
-  // Regenerate: re-send last user message for a fresh response
-  const handleRegenerate = useCallback(() => {
-    if (messages.length < 2) return;
-    const lastUserIdx = [...messages].reverse().findIndex((m) => m.role === 'user');
-    if (lastUserIdx < 0) return;
-    const actualIdx = messages.length - 1 - lastUserIdx;
-    const userText = getMessageText(messages[actualIdx]);
-    if (!userText) return;
-    // Remove assistant messages after the last user message
-    setMessages(messages.slice(0, actualIdx + 1));
-    sendMessage({ text: userText });
-  }, [messages, setMessages, sendMessage]);
-
-  // Copy message text to clipboard
-  const [copiedId, setCopiedId] = useState<string | null>(null);
-  const handleCopy = useCallback(async (msgId: string, text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopiedId(msgId);
-      setTimeout(() => setCopiedId(null), 2000);
-    } catch {
-      // Fallback for older browsers
-      const ta = document.createElement('textarea');
-      ta.value = text;
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-      setCopiedId(msgId);
-      setTimeout(() => setCopiedId(null), 2000);
-    }
-  }, []);
-
-  // UI state
+  const [luminorSidebarOpen, setLuminorSidebarOpen] = useState(true);
   const [autoScroll, setAutoScroll] = useState(true);
   const [showScrollBtn, setShowScrollBtn] = useState(false);
 
-  // Refs
   const containerRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  // Auto-send initial prompt
-  const [initialSent, setInitialSent] = useState(false);
-  useEffect(() => {
-    if (initialPrompt && !initialSent && messages.length === 0) {
-      sendMessage({ text: initialPrompt });
-      setInitialSent(true);
-    }
-  }, [initialPrompt, initialSent, messages.length, sendMessage]);
 
   // Auto-resize textarea
   useEffect(() => {
@@ -343,18 +117,6 @@ export default function ChatPage() {
       textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 200)}px`;
     }
   }, [input]);
-
-  // Cmd+K command palette
-  useEffect(() => {
-    function handleCmdK(e: KeyboardEvent) {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault();
-        setCommandPaletteOpen((prev) => !prev);
-      }
-    }
-    document.addEventListener('keydown', handleCmdK);
-    return () => document.removeEventListener('keydown', handleCmdK);
-  }, []);
 
   // Auto-scroll on new content
   useEffect(() => {
@@ -377,12 +139,11 @@ export default function ChatPage() {
     setAutoScroll(true);
   };
 
-  const startNewChat = () => {
-    setMessages([]);
-    setInput('');
-    setActiveGates([]);
+  // Focus textarea after clearing chat
+  const handleStartNewChat = useCallback(() => {
+    startNewChat();
     textareaRef.current?.focus();
-  };
+  }, [startNewChat]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -393,12 +154,6 @@ export default function ChatPage() {
     }
   };
 
-  // Detect streaming state
-  const lastMsg = messages[messages.length - 1];
-  const isStreaming = isLoading && lastMsg?.role === 'assistant';
-  const isThinking = isLoading && (!lastMsg || lastMsg.role === 'user');
-  const isEmpty = messages.length === 0 && !isLoading;
-
   return (
     <div className="flex h-screen bg-[#09090b]">
       {/* Luminor Sidebar */}
@@ -407,7 +162,7 @@ export default function ChatPage() {
         onSelectLuminor={handleSelectLuminor}
         collapsed={!luminorSidebarOpen}
         onToggle={() => setLuminorSidebarOpen((v) => !v)}
-        onNewChat={startNewChat}
+        onNewChat={handleStartNewChat}
       />
 
       {/* Main Chat Area */}
@@ -455,7 +210,7 @@ export default function ChatPage() {
           <div className="flex items-center gap-2">
             {messages.length > 0 && (
               <button
-                onClick={startNewChat}
+                onClick={handleStartNewChat}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs text-white/40 hover:text-white/70 hover:bg-white/[0.04] transition-colors"
               >
                 <PhPlus className="w-3.5 h-3.5" />
@@ -487,7 +242,7 @@ export default function ChatPage() {
                   <PhArrowClockwise className="w-3.5 h-3.5" />
                   Retry
                 </button>
-                <button onClick={() => { startNewChat(); setChatError(null); }} aria-label="Dismiss error" className="text-red-400/60 hover:text-red-400">
+                <button onClick={() => { handleStartNewChat(); setChatError(null); }} aria-label="Dismiss error" className="text-red-400/60 hover:text-red-400">
                   <PhX className="w-4 h-4" />
                 </button>
               </div>
@@ -736,7 +491,7 @@ export default function ChatPage() {
         onClose={() => setCommandPaletteOpen(false)}
         onSelectModel={(id) => { setModelId(id); setCommandPaletteOpen(false); }}
         onSelectFocus={(id) => { setFocusMode(id); setCommandPaletteOpen(false); }}
-        onNewChat={() => { startNewChat(); setCommandPaletteOpen(false); }}
+        onNewChat={() => { handleStartNewChat(); setCommandPaletteOpen(false); }}
         onBeamMode={() => { setBeamPrompt(input.trim() || 'Compare models'); setCommandPaletteOpen(false); }}
       />
 

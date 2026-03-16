@@ -1,6 +1,6 @@
 'use client';
 
-import { m, useInView, LazyMotion, domAnimation } from 'framer-motion';
+import { m, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { PhStar, PhQuotes } from '@/lib/phosphor-icons';
 
@@ -63,7 +63,6 @@ export function SocialProof() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <LazyMotion features={domAnimation}>
     <section ref={ref} className="py-24 relative overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-atlantean-teal-aqua/5 to-transparent -z-10" />
@@ -194,6 +193,5 @@ export function SocialProof() {
         </m.div>
       </div>
     </section>
-    </LazyMotion>
   );
 }

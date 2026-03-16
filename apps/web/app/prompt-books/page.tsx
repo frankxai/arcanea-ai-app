@@ -31,6 +31,8 @@ import {
   PhSparkle,
   PhLightning,
   PhBooks,
+  PhFlame,
+  PhStar,
 } from "@/lib/phosphor-icons";
 import { GlowCard } from "@/components/ui/glow-card";
 import * as service from "@/lib/prompt-books/service";
@@ -39,6 +41,7 @@ import type {
   Prompt,
   UpdateTagInput,
 } from "@/lib/prompt-books/types";
+import { EXAMPLES as APL_EXAMPLES } from "@/lib/apl/examples";
 
 // ─── Demo collections for unauthenticated preview ─────────────────────────────
 const DEMO_COLLECTIONS = [
@@ -74,9 +77,27 @@ const DEMO_COLLECTIONS = [
     promptCount: 24,
     description: "Captured from ChatGPT, Claude, and Gemini sessions",
   },
+  {
+    id: "apl",
+    name: "SPARK.SHAPE.SHARPEN",
+    icon: PhFlame,
+    color: "#ff6b35",
+    promptCount: APL_EXAMPLES.length,
+    description: "Master prompts using the Arcanean Prompt Language",
+  },
 ];
 
+const APL_CATEGORY_LABELS: Record<string, string> = {
+  character: "Character",
+  image: "Image",
+  music: "Music",
+  scene: "Scene",
+  world: "World",
+};
+
 function PromptBooksLanding() {
+  const [aplExpanded, setAplExpanded] = useState(false);
+
   return (
     <div className="flex-1 overflow-auto">
       <div className="max-w-3xl mx-auto px-6 sm:px-8 py-16 sm:py-24">
@@ -98,14 +119,20 @@ function PromptBooksLanding() {
         </div>
 
         {/* Demo grid */}
-        <div className="grid sm:grid-cols-2 gap-4 sm:gap-5 mb-14">
+        <div className="grid sm:grid-cols-2 gap-4 sm:gap-5 mb-6">
           {DEMO_COLLECTIONS.map((c) => {
             const Icon = c.icon;
+            const isApl = c.id === "apl";
             return (
               <GlowCard
                 key={c.id}
                 glass="none"
-                className="group rounded-2xl p-5 sm:p-6 border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.1] transition-all duration-300"
+                className={cn(
+                  "group rounded-2xl p-5 sm:p-6 border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.1] transition-all duration-300",
+                  isApl && "cursor-pointer sm:col-span-2",
+                  isApl && aplExpanded && "border-[#ff6b35]/30 bg-[#ff6b35]/[0.03]",
+                )}
+                onClick={isApl ? () => setAplExpanded((v) => !v) : undefined}
               >
                 <div className="flex items-center gap-3 mb-3">
                   <div
@@ -117,21 +144,88 @@ function PromptBooksLanding() {
                   >
                     <Icon className="w-5 h-5" style={{ color: c.color }} weight="duotone" />
                   </div>
-                  <div className="min-w-0">
+                  <div className="min-w-0 flex-1">
                     <p className="font-display font-semibold text-text-primary text-sm truncate">
                       {c.name}
                     </p>
                     <p className="text-xs text-text-muted">{c.promptCount} prompts</p>
                   </div>
+                  {isApl && (
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono uppercase tracking-wider bg-[#ff6b35]/10 text-[#ff6b35] border border-[#ff6b35]/20">
+                      <PhFlame className="w-3 h-3" />
+                      APL
+                    </span>
+                  )}
                 </div>
                 <p className="text-sm text-text-secondary leading-relaxed">{c.description}</p>
+                {isApl && (
+                  <p className="text-xs text-text-muted mt-2">
+                    {aplExpanded ? "Click to collapse" : "Click to preview prompts"}
+                  </p>
+                )}
               </GlowCard>
             );
           })}
         </div>
 
+        {/* APL Expanded Examples */}
+        {aplExpanded && (
+          <div className="mb-14 space-y-3 animate-in fade-in slide-in-from-top-2 duration-300">
+            <div className="flex items-center gap-2 mb-4 px-1">
+              <PhFlame className="w-4 h-4 text-[#ff6b35]" />
+              <h3 className="font-display font-semibold text-sm text-text-primary">
+                SPARK.SHAPE.SHARPEN Prompts
+              </h3>
+              <span className="text-xs text-text-muted">
+                — Before & after with Arcanean Prompt Language
+              </span>
+            </div>
+            {APL_EXAMPLES.map((ex) => (
+              <div
+                key={ex.id}
+                className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-5 hover:border-white/[0.1] transition-all duration-200"
+              >
+                <div className="flex items-start justify-between gap-3 mb-3">
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h4 className="font-display font-semibold text-sm text-text-primary">
+                        {ex.title}
+                      </h4>
+                      <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-mono uppercase tracking-wider bg-[#ff6b35]/10 text-[#ff6b35] border border-[#ff6b35]/20">
+                        <PhStar className="w-2.5 h-2.5" />
+                        APL Enhanced
+                      </span>
+                    </div>
+                    <p className="text-xs text-text-muted">
+                      {APL_CATEGORY_LABELS[ex.category] || ex.category} &middot; Best on {ex.bestModels.slice(0, 2).join(", ")}
+                    </p>
+                  </div>
+                </div>
+                {/* Before */}
+                <div className="mb-3">
+                  <p className="text-[10px] font-mono uppercase tracking-wider text-text-muted/60 mb-1">
+                    Before
+                  </p>
+                  <p className="text-sm text-text-secondary/70 italic">
+                    &ldquo;{ex.before}&rdquo;
+                  </p>
+                </div>
+                {/* After */}
+                <div>
+                  <p className="text-[10px] font-mono uppercase tracking-wider text-[#ff6b35]/70 mb-1">
+                    After — SPARK.SHAPE.SHARPEN
+                  </p>
+                  <pre className="text-xs text-text-secondary leading-relaxed whitespace-pre-wrap font-body bg-white/[0.02] rounded-lg p-3 border border-white/[0.04] max-h-48 overflow-y-auto">
+                    {ex.after}
+                  </pre>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
         {/* CTAs */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div className={cn("flex flex-col sm:flex-row items-center justify-center gap-4", !aplExpanded && "mt-8")}>
           <Link
             href="/auth/login?next=/prompt-books"
             className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-aqua/80 text-cosmic-deep font-semibold text-sm hover:shadow-[0_0_30px_rgba(0,188,212,0.25)] hover:scale-[1.02] transition-all duration-300"
