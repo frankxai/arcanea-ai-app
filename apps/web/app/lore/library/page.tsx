@@ -266,7 +266,7 @@ export default function LibraryPage() {
               <div className="text-sm text-text-muted">Texts</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-display font-bold text-gold-bright">200K+</div>
+              <div className="text-3xl font-display font-bold text-gold-bright">190K+</div>
               <div className="text-sm text-text-muted">Words</div>
             </div>
           </m.div>

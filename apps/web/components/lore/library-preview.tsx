@@ -139,7 +139,7 @@ export function LibraryPreview() {
           {[
             { value: "17", label: "Collections" },
             { value: "34+", label: "Major Texts" },
-            { value: "200K+", label: "Words of Wisdom" },
+            { value: "190K+", label: "Words of Wisdom" },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
               <div className="text-3xl font-display font-bold text-gold-bright">{stat.value}</div>

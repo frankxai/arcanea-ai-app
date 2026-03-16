@@ -495,7 +495,7 @@ export default function PricingPage() {
                 Ready to start creating?
               </h2>
               <p className="text-lg text-text-secondary mb-10 max-w-2xl mx-auto">
-                Creative partners. A Library of 200K+ words. Tools for building worlds, stories, music, and code.
+                Creative partners. A Library of 190K+ words. Tools for building worlds, stories, music, and code.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Link

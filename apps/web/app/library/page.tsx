@@ -3,7 +3,7 @@ import Link from "next/link";
 import { LibraryBrowse } from "./library-browse";
 import { getCollections } from "../../lib/content";
 export const metadata: Metadata = {
-  title: "Library of Arcanea — 200K+ Words of Creative Philosophy",
+  title: "Library of Arcanea — 190K+ Words of Creative Philosophy",
   description:
     "Browse the Library of Arcanea — 20 collections of original philosophy, poetry, legend, and practice for creators. Equipment for living.",
   openGraph: {
@@ -20,7 +20,7 @@ export default async function LibraryPage() {
     '@type': 'CollectionPage',
     name: 'Library of Arcanea',
     description:
-      '20 collections of wisdom, legend, poetry, and practice for the creative soul. 200,000+ words of original content.',
+      '20 collections of wisdom, legend, poetry, and practice for the creative soul. 190,000+ words of original content.',
     url: 'https://arcanea.ai/library',
     mainEntity: {
       '@type': 'ItemList',

@@ -14,7 +14,7 @@ const FAQ_CATEGORIES = [
     questions: [
       {
         q: "What is Arcanea?",
-        a: "Arcanea is a creative multiverse — a living ecosystem where you chat with AI, build fantasy worlds, share what you make, and turn imagination into products. It includes creative partners across development, design, writing, and research, a Library of 200K+ words of creative philosophy, an Academy for world-building, and a Studio for generating art, music, and code.",
+        a: "Arcanea is a creative multiverse — a living ecosystem where you chat with AI, build fantasy worlds, share what you make, and turn imagination into products. It includes creative partners across development, design, writing, and research, a Library of 190K+ words of creative philosophy, an Academy for world-building, and a Studio for generating art, music, and code.",
       },
       {
         q: "How do I get started?",

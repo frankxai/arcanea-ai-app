@@ -112,7 +112,7 @@ export function AboutContent() {
           >
             Arcanea is a living ecosystem where creators chat with AI, build
             fantasy worlds, contribute to an open-source civilization, and
-            turn imagination into products. 200K+ words of creative philosophy.
+            turn imagination into products. 190K+ words of creative philosophy.
             Open source. Free to start.
           </m.p>
 
@@ -771,7 +771,7 @@ export function AboutContent() {
                 </p>
                 <div className="flex flex-wrap gap-3 text-xs font-mono text-text-muted">
                   <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">500+ AI implementations</span>
-                  <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">200K+ words written</span>
+                  <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">190K+ words written</span>
                   <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">27 open-source repos</span>
                   <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">Source available</span>
                 </div>

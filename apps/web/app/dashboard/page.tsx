@@ -61,7 +61,7 @@ function SignInPrompt() {
   const features = [
     { icon: Sparkle, label: 'Chat with AI creative partners', color: 'text-[#00bcd4]' },
     { icon: Palette, label: 'Generate images, stories, and code', color: 'text-[#00bcd4]' },
-    { icon: Book, label: 'Access 200K+ words of creative frameworks', color: 'text-amber-400' },
+    { icon: Book, label: 'Access 190K+ words of creative frameworks', color: 'text-amber-400' },
     { icon: Lightning, label: 'Track your progress across ten stages', color: 'text-[#ffd700]' },
   ];
 

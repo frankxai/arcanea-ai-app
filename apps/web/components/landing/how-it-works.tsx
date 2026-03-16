@@ -14,7 +14,7 @@ const STEPS = [
     number: "02",
     title: "Build",
     description:
-      "Create worlds, stories, and code in Studio. Use the Academy to master the craft, and the Library for 200K+ words of creative philosophy.",
+      "Create worlds, stories, and code in Studio. Use the Academy to master the craft, and the Library for 190K+ words of creative philosophy.",
     accent: "#7c4dff",
   },
   {
