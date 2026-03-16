@@ -22,9 +22,15 @@ import { getLuminor, type LuminorConfig } from '@/lib/luminors/config';
 // Helpers (pure functions, co-located with their consumer)
 // ---------------------------------------------------------------------------
 
-export function getMessageText(msg: { parts?: Array<{ type: string; text?: string }> }): string {
-  if (!msg.parts) return '';
-  return msg.parts.filter((p) => p.type === 'text').map((p) => p.text ?? '').join('');
+export function getMessageText(msg: { parts?: Array<{ type: string; text?: string }>; content?: string }): string {
+  // AI SDK v6: prefer parts (structured), fallback to content (plain string)
+  if (msg.parts && msg.parts.length > 0) {
+    const text = msg.parts.filter((p) => p.type === 'text').map((p) => p.text ?? '').join('');
+    if (text) return text;
+  }
+  // Fallback: some transports populate content as a plain string
+  if (typeof msg.content === 'string') return msg.content;
+  return '';
 }
 
 /** Extract [FOLLOW_UP] suggestions from response text and return clean text + suggestions */

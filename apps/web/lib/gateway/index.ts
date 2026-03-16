@@ -9,8 +9,6 @@
  *   GET  /api/v1/models            — Curated model catalog
  */
 
-export { GATEWAY_MODELS, EXTENDED_PROVIDERS } from './catalog';
-export type { GatewayModel } from './catalog';
 export { CURATED_MODELS, PROVIDERS, getModelById, getModelsByCategory, getTextModels, getImageModels, getVideoModels, resolveProviderModel } from './models';
 export { classifyTask, selectModel, routeRequest } from './router';
 export { dispatchToProvider, resolveApiKey, proxyToOpenAICompatible, proxyToAnthropic } from './providers';

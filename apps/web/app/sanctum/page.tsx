@@ -109,20 +109,7 @@ function EmptyState({ message }: { message: string }) {
 // Page
 // ---------------------------------------------------------------------------
 
-const ELEMENTS = ['Fire', 'Water', 'Earth', 'Wind', 'Void', 'Spirit'] as const;
-const PAGE_SIZE = 12;
-
-export default async function SanctumPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ page?: string; domain?: string; element?: string }>;
-}) {
-  const params = await searchParams;
-  const page = Math.max(1, parseInt(params.page || '1', 10));
-  const offset = (page - 1) * PAGE_SIZE;
-  const domain = params.domain || undefined;
-  const element = params.element || undefined;
-
+export default async function SanctumPage() {
   // Fetch current user (may be null if not authenticated)
   let userId: string | null = null;
   let myLuminors: LuminorRow[] = [];
@@ -144,10 +131,10 @@ export default async function SanctumPage({
     // Auth not configured or Supabase unavailable — continue without user data
   }
 
-  // Fetch published luminors for marketplace (paginated)
+  // Fetch published luminors for marketplace
   let publishedLuminors: LuminorRow[] = [];
   try {
-    publishedLuminors = await getPublishedLuminors({ domain, element, limit: PAGE_SIZE, offset });
+    publishedLuminors = await getPublishedLuminors({ limit: 24 });
   } catch {
     // Supabase may not be configured yet
   }
@@ -214,33 +201,6 @@ export default async function SanctumPage({
             </p>
           </div>
 
-          {/* Element filters */}
-          <div className="mb-6 flex flex-wrap gap-2">
-            <Link
-              href="/sanctum"
-              className={`px-3 py-1.5 rounded-full text-xs border transition-colors ${
-                !element
-                  ? 'border-[#00bcd4]/40 bg-[#00bcd4]/10 text-[#00bcd4]'
-                  : 'border-white/[0.06] text-white/40 hover:text-white/60'
-              }`}
-            >
-              All
-            </Link>
-            {ELEMENTS.map((el) => (
-              <Link
-                key={el}
-                href={`/sanctum?element=${el}`}
-                className={`px-3 py-1.5 rounded-full text-xs border transition-colors ${
-                  element === el
-                    ? 'border-[#00bcd4]/40 bg-[#00bcd4]/10 text-[#00bcd4]'
-                    : 'border-white/[0.06] text-white/40 hover:text-white/60'
-                }`}
-              >
-                {el}
-              </Link>
-            ))}
-          </div>
-
           {publishedLuminors.length > 0 ? (
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {publishedLuminors.map((l) => (
@@ -250,27 +210,6 @@ export default async function SanctumPage({
           ) : (
             <EmptyState message="No published Luminors yet. Be the first to forge and share one." />
           )}
-
-          {/* Pagination */}
-          <div className="mt-8 flex items-center justify-center gap-2">
-            {page > 1 && (
-              <Link
-                href={`/sanctum?page=${page - 1}${domain ? `&domain=${domain}` : ''}${element ? `&element=${element}` : ''}`}
-                className="px-4 py-2 rounded-lg border border-white/[0.06] text-xs text-white/40 hover:text-white/70 hover:border-white/[0.12] transition-colors"
-              >
-                Previous
-              </Link>
-            )}
-            <span className="text-xs text-white/25">Page {page}</span>
-            {publishedLuminors.length === PAGE_SIZE && (
-              <Link
-                href={`/sanctum?page=${page + 1}${domain ? `&domain=${domain}` : ''}${element ? `&element=${element}` : ''}`}
-                className="px-4 py-2 rounded-lg border border-white/[0.06] text-xs text-white/40 hover:text-white/70 hover:border-white/[0.12] transition-colors"
-              >
-                Next
-              </Link>
-            )}
-          </div>
         </section>
       </div>
     </div>
