@@ -5,6 +5,11 @@ export const metadata: Metadata = {
   title: "FAQ",
   description:
     "Frequently asked questions about Arcanea, companions, pricing, and how it works.",
+  openGraph: {
+    title: "FAQ",
+    description:
+      "Frequently asked questions about Arcanea, companions, pricing, and how it works.",
+  },
 };
 
 const FAQ_CATEGORIES = [

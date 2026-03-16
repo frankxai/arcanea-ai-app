@@ -6,6 +6,11 @@ export const metadata: Metadata = {
   title: "System Status",
   description:
     "Real-time system status for the Arcanea platform — services, infrastructure, and incident history.",
+  openGraph: {
+    title: "System Status",
+    description:
+      "Real-time system status for the Arcanea platform — services, infrastructure, and incident history.",
+  },
 };
 
 // ─── Inline SVG Icons ───────────────────────────────────────────────────────

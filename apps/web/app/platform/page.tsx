@@ -287,6 +287,11 @@ export const metadata: Metadata = {
   title: "Platform | Arcanea",
   description:
     "The Arcanea platform — where imagination meets intelligence. Creative tools, world-building, and a living mythology.",
+  openGraph: {
+    title: "Platform",
+    description:
+      "The Arcanea platform — where imagination meets intelligence. Creative tools, world-building, and a living mythology.",
+  },
 };
 
 const FEATURES = [

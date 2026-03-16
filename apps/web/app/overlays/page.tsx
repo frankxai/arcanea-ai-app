@@ -5,6 +5,11 @@ export const metadata: Metadata = {
   title: "AI Overlays",
   description:
     "Your companions follow you everywhere. Arcanea overlays inject creative intelligence into ChatGPT, Claude, Gemini, Copilot, and Cursor.",
+  openGraph: {
+    title: "AI Overlays",
+    description:
+      "Arcanea overlays inject creative intelligence into ChatGPT, Claude, Gemini, Copilot, and Cursor.",
+  },
 };
 
 // ─── Inline SVG Icons ────────────────────────────────────────────────────────

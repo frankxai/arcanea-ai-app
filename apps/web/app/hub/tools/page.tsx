@@ -4,6 +4,10 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Tools | Hub",
   description: "Available creation tools and integrations in Arcanea. AI chat, image generation, and more.",
+  openGraph: {
+    title: "Tools",
+    description: "Available creation tools and integrations in Arcanea.",
+  },
 };
 
 const TOOLS = [

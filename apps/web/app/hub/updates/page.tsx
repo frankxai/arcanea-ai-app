@@ -4,6 +4,10 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Updates | Hub",
   description: "Daily activity log and platform updates for Arcanea. Stay informed about new features, fixes, and improvements.",
+  openGraph: {
+    title: "Updates",
+    description: "Daily activity log and platform updates for Arcanea.",
+  },
 };
 
 // Update entries - in production, this would come from an API/database

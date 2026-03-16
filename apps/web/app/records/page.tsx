@@ -6,6 +6,11 @@ export const metadata: Metadata = {
   title: "The Arcanean Records",
   description:
     "Art, music, and chronicles from the universe of Arcanea. Guardian portraits, world imagery, and video chronicles from across the Ten Gates.",
+  openGraph: {
+    title: "The Arcanean Records",
+    description:
+      "Art, music, and chronicles from the universe of Arcanea.",
+  },
 };
 
 // ─── Types ─────────────────────────────────────────────────────────────────────

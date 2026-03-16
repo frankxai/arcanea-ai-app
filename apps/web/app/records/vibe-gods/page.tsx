@@ -5,6 +5,11 @@ export const metadata: Metadata = {
   title: "Vibe Gods",
   description:
     "Discover your creative archetypes. The Vibe Gods represent different creative energies and styles.",
+  openGraph: {
+    title: "Vibe Gods",
+    description:
+      "Discover your creative archetypes. The Vibe Gods represent different creative energies and styles.",
+  },
 };
 
 // ─── Inline SVG Icons ───────────────────────────────────────────────────────────

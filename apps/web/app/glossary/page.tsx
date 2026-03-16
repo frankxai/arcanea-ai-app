@@ -256,7 +256,12 @@ const Icons: Record<string, React.FC<InlineSvgProps>> = {
 export const metadata: Metadata = {
   title: "Glossary",
   description:
-    "The terminology of Arcanea - from Guardians and Gates to Wisdoms and the Arc. A comprehensive guide to the language of creation.",
+    "The terminology of Arcanea — from Guardians and Gates to Wisdoms and the Arc. A comprehensive guide to the language of creation.",
+  openGraph: {
+    title: "Glossary",
+    description:
+      "The terminology of Arcanea — from Guardians and Gates to Wisdoms and the Arc.",
+  },
 };
 
 const CATEGORIES = [

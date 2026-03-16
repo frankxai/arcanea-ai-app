@@ -4,6 +4,10 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Resource Hub | Arcanea",
   description: "Your central hub for Arcanea resources, updates, guides, and tools. Everything you need to master creative intelligence.",
+  openGraph: {
+    title: "Resource Hub",
+    description: "Your central hub for Arcanea resources, updates, guides, and tools.",
+  },
 };
 
 const SECTIONS = [
