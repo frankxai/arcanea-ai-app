@@ -23,7 +23,7 @@ export function HeroChangingWords() {
   }, []);
 
   return (
-    <span className="relative inline-flex justify-start min-w-[3ch] overflow-hidden align-baseline">
+    <span className="relative inline-flex justify-start min-w-[4.5em] overflow-hidden align-baseline">
       <AnimatePresence mode="wait">
         <m.span
           key={words[index]}

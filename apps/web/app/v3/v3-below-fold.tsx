@@ -866,16 +866,11 @@ function GuardianShowcase() {
       {/* Cinematic atmosphere */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[600px] bg-[radial-gradient(ellipse,rgba(0,188,212,0.05),transparent_55%)] pointer-events-none" />
-        <m.div
+        <div
           className="absolute inset-0 pointer-events-none"
-          animate={{
-            background: [
-              "radial-gradient(ellipse 60% 40% at 30% 50%, rgba(13,71,161,0.05) 0%, transparent 60%)",
-              "radial-gradient(ellipse 60% 40% at 70% 50%, rgba(0,137,123,0.04) 0%, transparent 60%)",
-              "radial-gradient(ellipse 60% 40% at 30% 50%, rgba(13,71,161,0.05) 0%, transparent 60%)",
-            ],
+          style={{
+            background: "radial-gradient(ellipse 60% 40% at 50% 50%, rgba(13,71,161,0.05) 0%, transparent 60%)",
           }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         />
       </div>
 
