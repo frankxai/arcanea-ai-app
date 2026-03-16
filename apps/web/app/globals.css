@@ -701,6 +701,112 @@
 }
 
 /* ============================================================
+   LIBRARY READING EXPERIENCE — Optimized long-form typography
+   ============================================================ */
+
+.prose-arcanea {
+  font-family: var(--font-inter), 'Inter', system-ui, sans-serif;
+  font-size: 1.1875rem;
+  line-height: 1.75;
+  color: hsl(var(--text-secondary));
+  max-width: 65ch;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  hanging-punctuation: first last;
+}
+
+.prose-arcanea p {
+  margin-bottom: 1.5em;
+}
+
+.prose-arcanea p:last-child {
+  margin-bottom: 0;
+}
+
+.prose-arcanea h1,
+.prose-arcanea h2,
+.prose-arcanea h3,
+.prose-arcanea h4 {
+  font-family: var(--font-display), 'Space Grotesk', system-ui, sans-serif;
+  color: hsl(var(--text-primary));
+  letter-spacing: -0.02em;
+}
+
+.prose-arcanea h1 { font-size: 2rem; font-weight: 700; margin-top: 3em; margin-bottom: 0.75em; }
+.prose-arcanea h2 { font-size: 1.625rem; font-weight: 600; margin-top: 2.5em; margin-bottom: 0.6em; }
+.prose-arcanea h3 { font-size: 1.3125rem; font-weight: 600; margin-top: 2em; margin-bottom: 0.5em; }
+.prose-arcanea h4 { font-size: 1.125rem; font-weight: 600; margin-top: 1.5em; margin-bottom: 0.4em; }
+
+.prose-arcanea h1:first-child,
+.prose-arcanea h2:first-child,
+.prose-arcanea h3:first-child { margin-top: 0; }
+
+.prose-arcanea blockquote {
+  border-left: 4px solid hsl(180 70% 50% / 0.6);
+  background: hsl(var(--cosmic-surface) / 0.5);
+  padding: 1.25em 1.5em;
+  margin: 2em 0;
+  border-radius: 0 0.75rem 0.75rem 0;
+  font-style: italic;
+  color: hsl(var(--text-primary));
+}
+
+.prose-arcanea blockquote p {
+  margin-bottom: 0.5em;
+}
+
+.prose-arcanea blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.prose-arcanea ul,
+.prose-arcanea ol {
+  margin: 1.5em 0;
+  padding-left: 1.75em;
+}
+
+.prose-arcanea ul { list-style-type: disc; }
+.prose-arcanea ol { list-style-type: decimal; }
+
+.prose-arcanea li {
+  margin-bottom: 0.5em;
+  line-height: 1.7;
+}
+
+.prose-arcanea li::marker {
+  color: hsl(180 70% 50% / 0.6);
+}
+
+.prose-arcanea strong {
+  font-weight: 600;
+  color: hsl(var(--text-primary));
+}
+
+.prose-arcanea em {
+  font-style: italic;
+  color: hsl(180 70% 50% / 0.9);
+}
+
+.prose-arcanea a {
+  color: hsl(180 70% 50%);
+  text-decoration: underline;
+  text-decoration-color: hsl(180 70% 50% / 0.3);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.2s;
+}
+
+.prose-arcanea a:hover {
+  text-decoration-color: hsl(180 70% 50%);
+}
+
+.prose-arcanea hr {
+  border: none;
+  border-top: 1px solid hsl(var(--cosmic-border));
+  margin: 3em 0;
+}
+
+/* ============================================================
    CUSTOM ANIMATIONS
    ============================================================ */
 
