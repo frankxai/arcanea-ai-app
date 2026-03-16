@@ -6,6 +6,11 @@ export const metadata: Metadata = {
   title: "Blog",
   description:
     "Latest insights, tutorials, and stories from the Arcanea universe. Discover creative techniques, platform updates, and practical wisdom.",
+  openGraph: {
+    title: "Blog",
+    description:
+      "Latest insights, tutorials, and stories from the Arcanea universe.",
+  },
 };
 
 // ─── Inline SVG Icons ───────────────────────────────────────────────────────────

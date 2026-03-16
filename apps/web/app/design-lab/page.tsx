@@ -4,6 +4,12 @@ export const metadata: Metadata = {
   title: "Design Lab",
   description:
     "The Arena of Agents. Ten guardian design teams compete to forge the definitive Arcanea homepage.",
+  robots: { index: false },
+  openGraph: {
+    title: "Design Lab",
+    description:
+      "The Arena of Agents. Ten guardian design teams compete to forge the definitive Arcanea homepage.",
+  },
 };
 
 const TEAMS = [

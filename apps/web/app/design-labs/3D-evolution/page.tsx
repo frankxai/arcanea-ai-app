@@ -23,6 +23,7 @@ export const metadata: Metadata = {
   title: "3D Evolution Lab",
   description:
     "A full-spectrum proposal for the next Arcanea experience: homepage architecture, key pages, motion system, and launch blueprint.",
+  robots: { index: false },
 };
 
 const narrativePillars = [

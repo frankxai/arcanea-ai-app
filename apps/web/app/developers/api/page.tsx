@@ -5,6 +5,11 @@ export const metadata: Metadata = {
   title: "Intelligence Gateway API",
   description:
     "26 curated AI models from 13 providers through one OpenAI-compatible API. Claude Opus 4.6, GPT-5.2, Gemini 3.1, Grok 4.20, Flux 2, Veo 3.1, Sora 2 — only the best.",
+  openGraph: {
+    title: "Intelligence Gateway API",
+    description:
+      "26 curated AI models from 13 providers through one OpenAI-compatible API.",
+  },
 };
 
 // ─── Model data — Verified March 2026 ───────────────────────────────

@@ -5,6 +5,11 @@ export const metadata: Metadata = {
   title: "ACOS",
   description:
     "Arcanea AI Companion Operating System — The intelligent operating layer that powers your AI companions with consciousness, memory, and evolution.",
+  openGraph: {
+    title: "ACOS — AI Companion Operating System",
+    description:
+      "The intelligent operating layer that powers AI companions with consciousness, memory, and evolution.",
+  },
 };
 
 // ─── Inline SVG Icons ───────────────────────────────────────────────────────────

@@ -30,6 +30,13 @@ const QUICK_PROMPTS = [
   'Ancient tree of knowledge with glowing runes carved into bark, fireflies dancing',
 ];
 
+interface AplFeedback {
+  qualityBefore: number;
+  qualityAfter: number;
+  spark: string | null;
+  palette: string | null;
+}
+
 interface PromptInputProps {
   onGenerate: (prompt: string, count: number, aspectRatio: string) => void;
   isGenerating: boolean;
@@ -43,6 +50,7 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
   const [isExpanded, setIsExpanded] = useState(true);
   const [isEnhancing, setIsEnhancing] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
+  const [aplFeedback, setAplFeedback] = useState<AplFeedback | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const buildPrompt = useCallback(() => {
@@ -71,18 +79,40 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
   const handleEnhance = useCallback(async () => {
     if (!prompt.trim() || isEnhancing) return;
     setIsEnhancing(true);
+    setAplFeedback(null);
     try {
-      const res = await fetch('/api/imagine/enhance', {
+      const res = await fetch('/api/apl/enhance', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: prompt.trim() }),
+        body: JSON.stringify({ prompt: prompt.trim(), mode: 'image' }),
       });
       if (res.ok) {
         const data = await res.json();
-        if (data.enhanced) setPrompt(data.enhanced);
+        if (data.enhanced) {
+          setPrompt(data.enhanced);
+          setAplFeedback({
+            qualityBefore: data.qualityBefore ?? 0,
+            qualityAfter: data.qualityAfter ?? 0,
+            spark: data.spark ?? null,
+            palette: data.palette ?? null,
+          });
+          // Auto-dismiss feedback after 6 seconds
+          setTimeout(() => setAplFeedback(null), 6000);
+        }
+      } else {
+        // Fall back to simpler enhance endpoint
+        const fallbackRes = await fetch('/api/imagine/enhance', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt: prompt.trim() }),
+        });
+        if (fallbackRes.ok) {
+          const fallbackData = await fallbackRes.json();
+          if (fallbackData.enhanced) setPrompt(fallbackData.enhanced);
+        }
       }
     } catch {
-      // Enhancement is optional
+      // Enhancement is optional — silently fail
     } finally {
       setIsEnhancing(false);
     }
@@ -187,12 +217,12 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
                 </svg>
               </button>
 
-              {/* Enhance button */}
+              {/* Enhance with APL button */}
               <button
                 onClick={handleEnhance}
                 disabled={!prompt.trim() || isEnhancing || isGenerating}
                 className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all disabled:opacity-30 disabled:cursor-not-allowed text-text-muted hover:text-violet-300 hover:bg-violet-500/10"
-                title="Enhance prompt with AI"
+                title="Enhance prompt with APL (SPARK.SHAPE.SHARPEN)"
               >
                 {isEnhancing ? (
                   <span className="w-3.5 h-3.5 border-2 border-violet-400/30 border-t-violet-400 rounded-full animate-spin" />
@@ -201,7 +231,7 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                   </svg>
                 )}
-                <span className="hidden sm:inline">Enhance</span>
+                <span className="hidden sm:inline">Enhance with APL</span>
               </button>
             </div>
 
@@ -252,6 +282,49 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
                       ))}
                     </div>
                   </div>
+                </div>
+              </m.div>
+            )}
+          </AnimatePresence>
+
+          {/* APL enhancement feedback */}
+          <AnimatePresence>
+            {aplFeedback && (
+              <m.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="border-t border-violet-500/20 overflow-hidden"
+              >
+                <div className="px-4 py-2.5 flex items-center gap-3 bg-violet-500/[0.04]">
+                  <div className="flex items-center gap-2 text-xs">
+                    <span className="text-text-muted">Quality</span>
+                    <span className="text-orange-300 font-mono">{aplFeedback.qualityBefore}%</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-text-muted">
+                      <polyline points="9 18 15 12 9 6" />
+                    </svg>
+                    <span className="text-emerald-400 font-mono font-semibold">{aplFeedback.qualityAfter}%</span>
+                  </div>
+                  {aplFeedback.palette && (
+                    <span className="text-[10px] uppercase tracking-wider text-violet-300/60 bg-violet-500/10 px-2 py-0.5 rounded-full">
+                      {aplFeedback.palette}
+                    </span>
+                  )}
+                  {aplFeedback.spark && (
+                    <span className="text-[11px] text-text-muted truncate max-w-[200px] hidden sm:inline" title={aplFeedback.spark}>
+                      Spark: {aplFeedback.spark}
+                    </span>
+                  )}
+                  <button
+                    onClick={() => setAplFeedback(null)}
+                    className="ml-auto p-1 rounded text-text-muted/50 hover:text-text-muted transition-colors"
+                  >
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="18" y1="6" x2="6" y2="18" />
+                      <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                  </button>
                 </div>
               </m.div>
             )}

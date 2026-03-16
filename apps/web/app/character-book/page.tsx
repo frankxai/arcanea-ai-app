@@ -5,6 +5,11 @@ export const metadata: Metadata = {
   title: "Character Book",
   description:
     "Create and manage your character profiles. Build detailed personas for your stories, games, and creative projects.",
+  openGraph: {
+    title: "Character Book",
+    description:
+      "Create and manage your character profiles. Build detailed personas for your creative projects.",
+  },
 };
 
 // ─── Inline SVG Icons ───────────────────────────────────────────────────────────

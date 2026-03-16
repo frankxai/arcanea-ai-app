@@ -6,6 +6,11 @@ export const metadata: Metadata = {
   title: "Documentation",
   description:
     "The complete Arcanea documentation portal — getting started, mythology, creation tools, the Library, community, and developer resources.",
+  openGraph: {
+    title: "Documentation",
+    description:
+      "The complete Arcanea documentation portal — getting started, creation tools, the Library, and developer resources.",
+  },
 };
 
 // ── Inline SVG Icons (server-component safe) ─────────────────────────────────

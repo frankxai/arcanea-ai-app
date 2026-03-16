@@ -1,9 +1,14 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Changelog | Companion System",
+  title: "Changelog",
   description:
     "The evolution of Arcanea. New features, improvements, and platform updates.",
+  openGraph: {
+    title: "Changelog",
+    description:
+      "The evolution of Arcanea. New features, improvements, and platform updates.",
+  },
 };
 
 const CHANGES = [

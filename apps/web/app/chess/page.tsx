@@ -5,6 +5,11 @@ export const metadata: Metadata = {
   title: "Chess",
   description:
     "Play chess against AI companions infused with the wisdom of the Ten Gates. A unique blend of strategic gameplay and Arcanean lore.",
+  openGraph: {
+    title: "Chess",
+    description:
+      "Play chess against AI companions infused with the wisdom of the Ten Gates.",
+  },
 };
 
 // ─── Inline SVG Icons ───────────────────────────────────────────────────────────

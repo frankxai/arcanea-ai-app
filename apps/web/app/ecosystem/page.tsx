@@ -7,6 +7,11 @@ export const metadata: Metadata = {
   title: "Ecosystem",
   description:
     "The complete Arcanea creator ecosystem — platform, tools, overlays, on-chain, and automation.",
+  openGraph: {
+    title: "Ecosystem",
+    description:
+      "The complete Arcanea creator ecosystem — platform, tools, overlays, on-chain, and automation.",
+  },
 };
 
 // ─── Inline SVG Icons ───────────────────────────────────────────────────────

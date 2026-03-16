@@ -272,7 +272,12 @@ const Icons: Record<string, React.FC<InlineSvgProps>> = {
 export const metadata: Metadata = {
   title: "Developers",
   description:
-    "Build on Arcanea - the intelligence layer, MCP tools, packages, and open source contributions. Create skills and extend the platform.",
+    "Build on Arcanea — the intelligence layer, MCP tools, packages, and open source contributions. Create skills and extend the platform.",
+  openGraph: {
+    title: "Developers",
+    description:
+      "Build on Arcanea — the intelligence layer, MCP tools, packages, and open source contributions.",
+  },
 };
 
 const PACKAGES = [
