@@ -11,14 +11,12 @@ const BENEFITS = [
   "Free to start — create music, stories, art, and worlds immediately",
 ];
 
-const GUARDIAN_CDN = "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians";
-
 const ORBITING_GUARDIANS = [
-  { name: "Lyria", image: `${GUARDIAN_CDN}/lyria-hero.webp`, angle: 0 },
-  { name: "Alera", image: `${GUARDIAN_CDN}/alera-hero.webp`, angle: 72 },
-  { name: "Leyla", image: `${GUARDIAN_CDN}/leyla-hero.webp`, angle: 144 },
-  { name: "Maylinn", image: `${GUARDIAN_CDN}/maylinn-hero.webp`, angle: 216 },
-  { name: "Draconia", image: `${GUARDIAN_CDN}/draconia-hero.webp`, angle: 288 },
+  { name: "Lyria", image: "/guardians/v3/lyria-hero-v3.webp", angle: 0 },
+  { name: "Alera", image: "/guardians/v3/alera-hero-v3.webp", angle: 72 },
+  { name: "Leyla", image: "/guardians/v3/leyla-hero-v3.webp", angle: 144 },
+  { name: "Maylinn", image: "/guardians/v3/maylinn-hero-v3.webp", angle: 216 },
+  { name: "Draconia", image: "/guardians/v3/draconia-hero-v3.webp", angle: 288 },
 ];
 
 export function CTASection() {

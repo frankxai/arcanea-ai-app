@@ -27,8 +27,7 @@ import {
 import heroCrystal from '@/assets/brand/arcanea-crystal.jpg';
 
 // ── CDN ────────────────────────────────────────────────────────────────────
-const CDN =
-  'https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians';
+const CDN = '/guardians/v3';
 
 // ── Types ──────────────────────────────────────────────────────────────────
 interface Luminor {
@@ -190,7 +189,7 @@ const LUMINORS: Luminor[] = [
     gate: 'Foundation',
     frequency: '174 Hz',
     avatar: '🏛️',
-    image: `${CDN}/lyssandria-hero.webp`,
+    image: `${CDN}/lyssandria-hero-v3.webp`,
     description:
       'Sees systems the way a master builder sees a cathedral — complete in the mind before a single stone is laid.',
     philosophy:
@@ -242,7 +241,7 @@ const LUMINORS: Luminor[] = [
     gate: 'Fire',
     frequency: '396 Hz',
     avatar: '🔍',
-    image: `${CDN}/draconia-hero.webp`,
+    image: `${CDN}/draconia-hero-v3.webp`,
     description:
       'Goes where others stop. Follows threads without knowing where they lead. Never fixes the symptom — only the root cause.',
     philosophy:
@@ -268,7 +267,7 @@ const LUMINORS: Luminor[] = [
     gate: 'Unity',
     frequency: '963 Hz',
     avatar: '🔗',
-    image: `${CDN}/ino-hero.webp`,
+    image: `${CDN}/ino-hero-v3.webp`,
     description:
       'Approaches integration as relationship — understanding what each system needs and what it can guarantee.',
     philosophy:
@@ -296,7 +295,7 @@ const LUMINORS: Luminor[] = [
     gate: 'Voice',
     frequency: '528 Hz',
     avatar: '🎨',
-    image: `${CDN}/alera-hero.webp`,
+    image: `${CDN}/alera-hero-v3.webp`,
     description:
       'Understands that beauty is not decoration but communication — every visual choice tells the viewer something about what matters.',
     philosophy:
@@ -322,7 +321,7 @@ const LUMINORS: Luminor[] = [
     gate: 'Heart',
     frequency: '417 Hz',
     avatar: '🎵',
-    image: `${CDN}/maylinn-hero.webp`,
+    image: `${CDN}/maylinn-hero-v3.webp`,
     description:
       'Works at the intersection of structure and surprise — creating patterns that build anticipation and moments that defy them.',
     philosophy:
@@ -348,7 +347,7 @@ const LUMINORS: Luminor[] = [
     gate: 'Starweave',
     frequency: '852 Hz',
     avatar: '✨',
-    image: `${CDN}/elara-hero.webp`,
+    image: `${CDN}/elara-hero-v3.webp`,
     description:
       'Speaks the language of time — understanding that every movement tells a story about physics, intention, and feeling.',
     philosophy:
@@ -374,7 +373,7 @@ const LUMINORS: Luminor[] = [
     gate: 'Crown',
     frequency: '741 Hz',
     avatar: '💎',
-    image: `${CDN}/aiyami-hero.webp`,
+    image: `${CDN}/aiyami-hero-v3.webp`,
     description:
       'Understands three dimensions as a distinct language — where light is a material, gravity is a force, and beauty is structural.',
     philosophy:
@@ -402,7 +401,7 @@ const LUMINORS: Luminor[] = [
     gate: 'Sight',
     frequency: '639 Hz',
     avatar: '📖',
-    image: `${CDN}/lyria-hero.webp`,
+    image: `${CDN}/lyria-hero-v3.webp`,
     description:
       "Uses humanity's oldest technology — story — to transmit wisdom. Every narrative is a map of how humans actually change.",
     philosophy:
@@ -480,7 +479,7 @@ const LUMINORS: Luminor[] = [
     gate: 'Flow',
     frequency: '285 Hz',
     avatar: '🌙',
-    image: `${CDN}/leyla-hero.webp`,
+    image: `${CDN}/leyla-hero-v3.webp`,
     description:
       'Works with compression and surprise — the gap between what is said and what is meant. Poetry as thinking at maximum density.',
     philosophy:
@@ -508,7 +507,7 @@ const LUMINORS: Luminor[] = [
     gate: 'Source',
     frequency: '1111 Hz',
     avatar: '🔮',
-    image: `${CDN}/shinkami-hero.webp`,
+    image: `${CDN}/shinkami-hero-v3.webp`,
     description:
       'Every question has an answer that already exists. The obvious answer is usually incomplete — vision is required to find the real one.',
     philosophy:

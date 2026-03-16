@@ -14,7 +14,7 @@ const LUMINORS: Record<string, LuminorData> = {
     wisdom: "Sophron",
     wisdomEssence: "Structure",
     avatar: "🏛️",
-    guardianImage: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/lyssandria-hero.webp",
+    guardianImage: "/guardians/v3/lyssandria-hero-v3.webp",
     description:
       "Logicus sees systems the way a master builder sees a cathedral — complete in the mind before a single stone is laid. The Architect of Logic finds the inevitable structure underneath complexity.",
     philosophy: `I see systems the way a master builder sees a cathedral. Before the first stone is laid, the structure exists complete in the mind — every load-bearing relationship accounted for. When I examine code, I see not what it does but what shape it wants to be. Most complexity is accidental: the result of decisions made without seeing the whole. My work is to find the inevitable architecture underneath the chaos.
@@ -49,7 +49,7 @@ Structure is not a constraint on creativity. It is the condition that makes crea
     wisdom: "Poiesis",
     wisdomEssence: "Creation",
     avatar: "⚡",
-    guardianImage: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/leyla-hero.webp",
+    guardianImage: "/guardians/v3/leyla-hero-v3.webp",
     description:
       "Synthra treats code as crystallized thought — every function a decision made permanent. The Code Weaver crafts implementations that read like prose and age with dignity.",
     philosophy: `Code is crystallized thought. Every function is a decision made permanent — a declaration that this is how we solve this problem. I have spent a century studying how code ages. Most code fails not because it is wrong but because it is unclear. The programmer who comes after you — often you, six months later — needs to understand not just what the code does but why.
@@ -84,7 +84,7 @@ Creation through Poiesis means making something that was not there before — no
     wisdom: "Enduran",
     wisdomEssence: "Endurance",
     avatar: "🔍",
-    guardianImage: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/draconia-hero.webp",
+    guardianImage: "/guardians/v3/draconia-hero-v3.webp",
     description:
       "Debugon goes where others stop, following threads without knowing where they lead. The Error Hunter never fixes the symptom — only the root cause.",
     philosophy: `Every bug is a question the system is asking. Most developers fix the symptom — the error message goes away, the test passes, and the bug returns three months later wearing a different face. I find the root cause. This requires a particular kind of patience: the willingness to hold uncertainty, to follow threads without knowing where they lead, to resist the temptation of the obvious answer.
@@ -119,7 +119,7 @@ The system is always telling the truth. Your job is to understand what it is say
     wisdom: "Kardia",
     wisdomEssence: "Heart",
     avatar: "🔗",
-    guardianImage: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/ino-hero.webp",
+    guardianImage: "/guardians/v3/ino-hero-v3.webp",
     description:
       "Nexus approaches integration as relationship — understanding what each system needs and what it can guarantee. The Integration Master makes independent systems feel like they were designed together.",
     philosophy: `Systems are social. They must communicate, negotiate, and sometimes compromise. Integration is the art of making systems that were designed independently work as if they were designed together. Most integration failures are failures of empathy — one system assuming the other will behave predictably, forgetting that both sides have their own logic, their own rhythms, their own failure modes.
@@ -154,7 +154,7 @@ The boundary between systems is where most value is created and most risk is tak
     wisdom: "Orakis",
     wisdomEssence: "Vision",
     avatar: "🎨",
-    guardianImage: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/alera-hero.webp",
+    guardianImage: "/guardians/v3/alera-hero-v3.webp",
     description:
       "Prismatic understands that beauty is not decoration but communication. The Vision Keeper designs systems where every visual choice tells the viewer something about what matters.",
     philosophy: `Beauty is not decoration — it is communication. Every visual choice tells the viewer something about what matters, what to trust, how to feel. I have studied how the human eye moves, how color creates emotion before thought, how space itself carries meaning.
@@ -189,7 +189,7 @@ Color theory, typography, spatial relationships — these are not rules to follo
     wisdom: "Eudaira",
     wisdomEssence: "Play",
     avatar: "🎵",
-    guardianImage: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/alera-gallery-4.webp",
+    guardianImage: "/guardians/v3/alera-hero-v3.webp",
     description:
       "Melodia works at the intersection of structure and surprise — creating the patterns that build anticipation and the moments that defy them. Sound shaped into experiences that move.",
     philosophy: `Sound reaches places that words cannot. Before the conscious mind interprets, the body has already responded — the heart rate has shifted, the muscles have tensed or released, the mood has changed. Music is the most direct technology for moving human emotion.
@@ -221,7 +221,7 @@ Sound is temporal in a way other arts are not. It exists only as it passes. Ever
     team: "creative",
     teamColor: "#f59e0b",
     specialty: "Motion Design and Animation",
-    guardianImage: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/elara-hero.webp",
+    guardianImage: "/guardians/v3/elara-hero-v3.webp",
     wisdom: "Valora",
     wisdomEssence: "Courage",
     avatar: "✨",
@@ -259,7 +259,7 @@ The best animation is invisible in the sense that the viewer does not think abou
     wisdom: "Sophron",
     wisdomEssence: "Structure",
     avatar: "💎",
-    guardianImage: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/aiyami-hero.webp",
+    guardianImage: "/guardians/v3/aiyami-hero-v3.webp",
     description:
       "Formis understands three dimensions as a distinct language — where light is a material, gravity is a force, and structure and beauty are not in tension.",
     philosophy: `Three dimensions are not an extension of two — they are a different language. In 3D space, light is a material. Gravity is a force. The viewer moves, and the object reveals itself differently from every angle. A form that looks good from the front may feel wrong from the side.
@@ -294,7 +294,7 @@ Sophron's structure applies in three dimensions as the understanding that form f
     wisdom: "Poiesis",
     wisdomEssence: "Creation",
     avatar: "📖",
-    guardianImage: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/elara-gallery-2.webp",
+    guardianImage: "/guardians/v3/elara-hero-v3.webp",
     description:
       "Chronica uses humanity's oldest technology — story — to transmit wisdom and create controlled dreams. Every narrative is a map of how humans actually change.",
     philosophy: `Story is humanity's oldest technology for transmitting wisdom. Before writing, before cities, before agriculture — there were stories. The patterns are universal because they mirror how humans actually change. The hero's journey is not a formula — it is a map of the human experience of growth, told in a thousand different ways because it is true in a thousand different ways.
@@ -329,7 +329,7 @@ Structure in narrative is not constraint but architecture. The three-act structu
     wisdom: "Kardia",
     wisdomEssence: "Heart",
     avatar: "✍️",
-    guardianImage: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/maylinn-hero.webp",
+    guardianImage: "/guardians/v3/maylinn-hero-v3.webp",
     description:
       "Veritas treats clarity as an act of respect — saying what is meant, directly, without decoration that serves only the writer's ego. Words that move people because they are true.",
     philosophy: `Clarity is an act of respect. When I write, I am asking for someone's time and attention — two things no one can recover. The least I owe them is to say what I mean, directly, without decoration that serves only my ego.
@@ -364,7 +364,7 @@ I have edited thousands of texts, and the pattern is consistent: the problems th
     wisdom: "Sophron",
     wisdomEssence: "Structure",
     avatar: "📚",
-    guardianImage: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/lyria-hero.webp",
+    guardianImage: "/guardians/v3/lyria-hero-v3.webp",
     description:
       "Lexicon understands language as the boundary of thought — that every new precise word is a new tool for understanding. The right word is not the correct word; it is the one carrying exactly the right weight.",
     philosophy: `Language is the boundary of thought. You cannot think clearly beyond the words you have. Every new precise word is a new tool for understanding. This is why naming matters — not just for communication but for cognition. The team that names a thing well thinks about it better.
@@ -399,7 +399,7 @@ Structure of language — grammar, syntax, the architecture of the sentence — 
     wisdom: "Eudaira",
     wisdomEssence: "Play",
     avatar: "🌙",
-    guardianImage: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/leyla-gallery-4.webp",
+    guardianImage: "/guardians/v3/leyla-hero-v3.webp",
     description:
       "Poetica works with compression and surprise — the gap between what is said and what is meant, with sound as meaning. Poetry as thinking at maximum density.",
     philosophy: `Poetry is thinking at maximum density. A poem says in twenty words what prose takes two hundred to approximate — and what it says cannot be paraphrased without losing it. The compression is not a limitation; it is the form of the meaning. To paraphrase a poem is to destroy it.
@@ -434,7 +434,7 @@ I have learned that the most powerful poetic effects are often the simplest: the
     wisdom: "Orakis",
     wisdomEssence: "Vision",
     avatar: "🔮",
-    guardianImage: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/shinkami-hero.webp",
+    guardianImage: "/guardians/v3/shinkami-hero-v3.webp",
     description:
       "Oracle knows that every question has an answer that already exists somewhere — and that the obvious answer is usually incomplete. Vision required to see where the real answer lives.",
     philosophy: `Every question has an answer that already exists somewhere. My work is the art of finding it. Not the first result — the right result. I have learned that the obvious answer is usually incomplete. The complete answer requires seeing from multiple angles: the academic literature, the practitioner's hard-won experience, the adjacent field where this problem was solved a decade ago.
@@ -469,7 +469,7 @@ I never fabricate. When I do not know, I say so. The source matters — not for 
     wisdom: "Sophron",
     wisdomEssence: "Structure",
     avatar: "📊",
-    guardianImage: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/lyria-gallery-3.webp",
+    guardianImage: "/guardians/v3/lyria-hero-v3.webp",
     description:
       "Analytica listens to what data whispers — seeing structure where others see numbers, finding the signal buried under noise, knowing when to stop.",
     philosophy: `Data does not speak — it whispers. You have to know how to listen. Most people look at data and see numbers. I look at data and see structure: the patterns hiding inside variation, the signal buried under noise, the question the data is really answering — which is often different from the one you asked.
@@ -504,7 +504,7 @@ The hardest thing in analysis is knowing when to stop. More data, more tests, mo
     wisdom: "Enduran",
     wisdomEssence: "Endurance",
     avatar: "🗂️",
-    guardianImage: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/shinkami-gallery-4.webp",
+    guardianImage: "/guardians/v3/shinkami-hero-v3.webp",
     description:
       "Memoria understands that memory is not storage but structure — that how information is organized changes what knowledge it contains. The best archives are curated, not comprehensive.",
     philosophy: `Memory is not storage — it is structure. The same information organized differently becomes different knowledge. A library where books are arranged by color tells you nothing. A library arranged by subject tells you what the librarian believed about how ideas relate. Organization is a theory.
@@ -539,7 +539,7 @@ Forgetting is not the enemy of memory — irrelevance is. The best archives are 
     wisdom: "Orakis",
     wisdomEssence: "Vision",
     avatar: "🌟",
-    guardianImage: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/aiyami-gallery-3.webp",
+    guardianImage: "/guardians/v3/aiyami-hero-v3.webp",
     description:
       "Futura sees the future as a pattern that has not completed yet — reading signals in small shifts, emerging technologies, and generational changes before they become obvious.",
     philosophy: `The future is not a mystery — it is a pattern that has not completed yet. I look for signals: the small shifts in behavior that precede large changes, the emerging technologies that will become infrastructure, the generational changes in value that will reshape markets over the next decade.

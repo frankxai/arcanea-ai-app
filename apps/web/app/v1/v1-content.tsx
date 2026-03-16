@@ -29,8 +29,7 @@ import { CTASection } from "@/components/landing";
 // Constants
 // ---------------------------------------------------------------------------
 
-const SUPABASE_CDN =
-  "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians";
+const V3_GUARDIANS_PATH = "/guardians/v3";
 
 const HERO_PHRASES = [
   { text: "Build your Universe.", gradient: "text-gradient-crystal" },
@@ -515,7 +514,7 @@ function FeaturedGuardianSection() {
               {/* Left: Guardian image */}
               <div className="relative aspect-[4/3] lg:aspect-auto overflow-hidden">
                 <img
-                  src={`${SUPABASE_CDN}/draconia-hero.webp`}
+                  src={`${V3_GUARDIANS_PATH}/draconia-hero-v3.webp`}
                   alt="Draconia, Guardian of the Fire Gate"
                   className="w-full h-full object-cover object-top"
                   loading="lazy"
@@ -660,7 +659,7 @@ function ChatPreviewSection() {
                   >
                     <div className="w-8 h-8 rounded-xl overflow-hidden flex-shrink-0 ring-1 ring-white/[0.08]">
                       <img
-                        src={`${SUPABASE_CDN}/lyria-hero.webp`}
+                        src={`${V3_GUARDIANS_PATH}/lyria-hero-v3.webp`}
                         alt="Lyria"
                         className="w-full h-full object-cover object-top"
                       />
@@ -765,7 +764,7 @@ function GuardianGallerySection() {
 
                   <div className="aspect-[3/4] bg-cosmic-surface">
                     <img
-                      src={`${SUPABASE_CDN}/${guardian.name.toLowerCase()}-hero.webp`}
+                      src={`${V3_GUARDIANS_PATH}/${guardian.name.toLowerCase()}-hero-v3.webp`}
                       alt={guardian.name}
                       className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
                       loading="lazy"
@@ -822,7 +821,7 @@ function GalleryGridSection() {
   const galleryImages = GUARDIANS.map((g) => ({
     name: g.name,
     element: g.element,
-    src: `${SUPABASE_CDN}/${g.name.toLowerCase()}-hero.webp`,
+    src: `${V3_GUARDIANS_PATH}/${g.name.toLowerCase()}-hero-v3.webp`,
   }));
 
   // Grid spanning pattern: make some images span 2 rows for visual interest

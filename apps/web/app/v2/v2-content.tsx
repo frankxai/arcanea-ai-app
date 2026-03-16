@@ -33,9 +33,6 @@ interface V2ContentProps {
 // ---------------------------------------------------------------------------
 // Constants
 // ---------------------------------------------------------------------------
-const CDN_BASE =
-  "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/";
-
 const GUARDIANS = [
   {
     name: "Lyssandria",
@@ -43,7 +40,7 @@ const GUARDIANS = [
     freq: "174 Hz",
     element: "Earth",
     quote: "The earth does not hurry. Yet everything is accomplished.",
-    image: `${CDN_BASE}lyssandria-hero.webp`,
+    image: "/guardians/v3/lyssandria-hero-v3.webp",
   },
   {
     name: "Leyla",
@@ -51,7 +48,7 @@ const GUARDIANS = [
     freq: "285 Hz",
     element: "Water",
     quote: "The river does not fight the mountain.",
-    image: `${CDN_BASE}leyla-hero.webp`,
+    image: "/guardians/v3/leyla-hero-v3.webp",
   },
   {
     name: "Draconia",
@@ -60,7 +57,7 @@ const GUARDIANS = [
     element: "Fire",
     quote:
       "I do not ask if you are ready. I ask if you are willing.",
-    image: `${CDN_BASE}draconia-hero.webp`,
+    image: "/guardians/v3/draconia-hero-v3.webp",
   },
   {
     name: "Maylinn",
@@ -69,7 +66,7 @@ const GUARDIANS = [
     element: "Wind",
     quote:
       "What you create with love will outlast what you create with fear.",
-    image: `${CDN_BASE}maylinn-hero.webp`,
+    image: "/guardians/v3/maylinn-hero-v3.webp",
   },
   {
     name: "Alera",
@@ -78,7 +75,7 @@ const GUARDIANS = [
     element: "Fire",
     quote:
       "Silence is not peace. It is the prison of the unspoken.",
-    image: `${CDN_BASE}alera-hero.webp`,
+    image: "/guardians/v3/alera-hero-v3.webp",
   },
   {
     name: "Lyria",
@@ -86,7 +83,7 @@ const GUARDIANS = [
     freq: "639 Hz",
     element: "Void",
     quote: "Close your eyes. Now tell me what you see.",
-    image: `${CDN_BASE}lyria-hero.webp`,
+    image: "/guardians/v3/lyria-hero-v3.webp",
   },
   {
     name: "Aiyami",
@@ -95,7 +92,7 @@ const GUARDIANS = [
     element: "Void",
     quote:
       "You were never seeking the light. The light was seeking you.",
-    image: `${CDN_BASE}aiyami-hero.webp`,
+    image: "/guardians/v3/aiyami-hero-v3.webp",
   },
   {
     name: "Elara",
@@ -104,7 +101,7 @@ const GUARDIANS = [
     element: "Wind",
     quote:
       "The only constant is the turning. Embrace the shift.",
-    image: `${CDN_BASE}elara-hero.webp`,
+    image: "/guardians/v3/elara-hero-v3.webp",
   },
   {
     name: "Ino",
@@ -113,7 +110,7 @@ const GUARDIANS = [
     element: "Earth",
     quote:
       "Alone you are a note. Together we are a symphony.",
-    image: `${CDN_BASE}ino-hero.webp`,
+    image: "/guardians/v3/ino-hero-v3.webp",
   },
   {
     name: "Shinkami",
@@ -122,7 +119,7 @@ const GUARDIANS = [
     element: "Spirit",
     quote:
       "You are not the vessel. You are the water and the pouring.",
-    image: `${CDN_BASE}shinkami-hero.webp`,
+    image: "/guardians/v3/shinkami-hero-v3.webp",
   },
 ];
 
