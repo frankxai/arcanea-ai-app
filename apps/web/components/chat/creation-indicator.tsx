@@ -45,6 +45,7 @@ interface CreationIndicatorProps {
 export function CreationIndicator({ autoSave }: CreationIndicatorProps) {
   const { savedArcs, lastSaved, lastDetection, notification } = autoSave;
   const [panelOpen, setPanelOpen] = useState(false);
+  const [notifVisible, setNotifVisible] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
 
   // Close panel on outside click
@@ -59,6 +60,14 @@ export function CreationIndicator({ autoSave }: CreationIndicatorProps) {
     return () => document.removeEventListener('mousedown', handleClick);
   }, [panelOpen]);
 
+  // Animate notification in
+  useEffect(() => {
+    if (notification) {
+      setNotifVisible(false);
+      requestAnimationFrame(() => setNotifVisible(true));
+    }
+  }, [notification]);
+
   // Nothing to show
   if (savedArcs.length === 0 && !notification) return null;
 
@@ -71,11 +80,11 @@ export function CreationIndicator({ autoSave }: CreationIndicatorProps) {
       {/* Notification toast — appears briefly after each save */}
       {notification && (
         <div
-          className="absolute bottom-full right-0 mb-2 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap
-            bg-[#1a1a1f] border border-white/[0.08] text-white/70 shadow-lg
-            animate-[fadeInUp_0.2s_ease-out]"
+          className="absolute bottom-full right-0 mb-2 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap bg-[#1a1a1f] border border-white/[0.08] text-white/70 shadow-lg"
           style={{
-            animation: 'fadeInUp 0.2s ease-out',
+            opacity: notifVisible ? 1 : 0,
+            transform: notifVisible ? 'translateY(0)' : 'translateY(4px)',
+            transition: 'opacity 0.2s ease-out, transform 0.2s ease-out',
           }}
         >
           <span
@@ -90,8 +99,7 @@ export function CreationIndicator({ autoSave }: CreationIndicatorProps) {
       <button
         type="button"
         onClick={() => setPanelOpen((v) => !v)}
-        className="flex items-center gap-1.5 px-2 py-1 rounded-lg text-[11px] text-white/40
-          hover:text-white/60 hover:bg-white/[0.04] transition-colors"
+        className="flex items-center gap-1.5 px-2 py-1 rounded-lg text-[11px] text-white/40 hover:text-white/60 hover:bg-white/[0.04] transition-colors"
         title={`${savedArcs.length} creation${savedArcs.length !== 1 ? 's' : ''} saved`}
       >
         <span
@@ -106,10 +114,7 @@ export function CreationIndicator({ autoSave }: CreationIndicatorProps) {
 
       {/* Expanded panel */}
       {panelOpen && (
-        <div
-          className="absolute bottom-full right-0 mb-2 w-72 rounded-xl overflow-hidden
-            bg-[#111113] border border-white/[0.08] shadow-xl"
-        >
+        <div className="absolute bottom-full right-0 mb-2 w-72 rounded-xl overflow-hidden bg-[#111113] border border-white/[0.08] shadow-xl">
           <div className="px-3 py-2 border-b border-white/[0.06] flex items-center justify-between">
             <span className="text-xs font-medium text-white/60">
               Saved Creations
@@ -131,8 +136,7 @@ export function CreationIndicator({ autoSave }: CreationIndicatorProps) {
               return (
                 <div
                   key={arc.id}
-                  className="px-3 py-2.5 border-b border-white/[0.04] last:border-0
-                    hover:bg-white/[0.02] transition-colors"
+                  className="px-3 py-2.5 border-b border-white/[0.04] last:border-0 hover:bg-white/[0.02] transition-colors"
                 >
                   <div className="flex items-start gap-2">
                     <span
@@ -180,20 +184,6 @@ export function CreationIndicator({ autoSave }: CreationIndicatorProps) {
           )}
         </div>
       )}
-
-      {/* Keyframe animation for notification */}
-      <style jsx>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(4px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
     </div>
   );
 }
