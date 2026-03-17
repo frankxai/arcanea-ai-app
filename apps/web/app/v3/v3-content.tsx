@@ -74,7 +74,7 @@ function HeroPortal() {
       ref={containerRef}
       className="relative min-h-[100svh] flex items-center justify-center overflow-hidden"
     >
-      {/* Background: pure dark with subtle aurora — no hero image */}
+      {/* Background: pure dark with subtle aurora */}
       <div className="absolute inset-0 -z-20 bg-[#09090b]">
         {/* Single soft aurora bloom — top center */}
         <m.div
@@ -91,6 +91,32 @@ function HeroPortal() {
         />
         {/* Subtle bottom warmth */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_30%_at_50%_100%,rgba(0,188,212,0.03),transparent_60%)]" />
+
+        {/* Guardian portrait accents — visible only on xl screens, low opacity */}
+        <div
+          className="hidden xl:block absolute left-0 top-0 bottom-0 w-[340px] pointer-events-none"
+          style={{ maskImage: "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.55) 35%, rgba(0,0,0,0.55) 70%, transparent 100%)" }}
+        >
+          <img
+            src="/guardians/v3/lyria-hero-v3.webp"
+            alt="Lyria — Sight Gate Guardian"
+            loading="eager"
+            className="absolute inset-0 w-full h-full object-cover object-top opacity-[0.09] mix-blend-luminosity"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#09090b] via-transparent to-[#09090b]" />
+        </div>
+        <div
+          className="hidden xl:block absolute right-0 top-0 bottom-0 w-[340px] pointer-events-none"
+          style={{ maskImage: "linear-gradient(to left, transparent 0%, rgba(0,0,0,0.55) 35%, rgba(0,0,0,0.55) 70%, transparent 100%)" }}
+        >
+          <img
+            src="/guardians/v3/shinkami-hero-v3.webp"
+            alt="Shinkami — Source Gate Guardian"
+            loading="eager"
+            className="absolute inset-0 w-full h-full object-cover object-top opacity-[0.09] mix-blend-luminosity"
+          />
+          <div className="absolute inset-0 bg-gradient-to-l from-[#09090b] via-transparent to-[#09090b]" />
+        </div>
       </div>
 
       {/* Fine grid — barely visible texture */}

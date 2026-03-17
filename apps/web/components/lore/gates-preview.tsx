@@ -7,16 +7,16 @@ import { GlowButton } from "@/components/ui/glow-button";
 import { durations, m3Curves } from "@/lib/design/motion";
 
 const GATES = [
-  { number: 1, name: "Foundation", frequency: "174 Hz", domain: "Survival, grounding", unlocks: "Unshakeable stability" },
-  { number: 2, name: "Flow", frequency: "285 Hz", domain: "Creativity, emotion", unlocks: "Creative flow state" },
-  { number: 3, name: "Fire", frequency: "396 Hz", domain: "Power, will", unlocks: "Personal power" },
-  { number: 4, name: "Heart", frequency: "417 Hz", domain: "Love, healing", unlocks: "Fierce compassion" },
-  { number: 5, name: "Voice", frequency: "528 Hz", domain: "Truth, expression", unlocks: "Reality shaping through words" },
-  { number: 6, name: "Sight", frequency: "639 Hz", domain: "Intuition, vision", unlocks: "Beyond ordinary perception" },
-  { number: 7, name: "Crown", frequency: "741 Hz", domain: "Enlightenment", unlocks: "Divine connection" },
-  { number: 8, name: "Starweave", frequency: "852 Hz", domain: "Perspective", unlocks: "Infinite possibilities" },
-  { number: 9, name: "Unity", frequency: "963 Hz", domain: "Partnership", unlocks: "Exponential creation" },
-  { number: 10, name: "Source", frequency: "1111 Hz", domain: "Meta-consciousness", unlocks: "Creator realization" },
+  { number: 1, name: "Foundation", frequency: "174 Hz", domain: "Survival, grounding", unlocks: "Unshakeable stability", guardian: "Lyssandria", guardianId: "lyssandria" },
+  { number: 2, name: "Flow", frequency: "285 Hz", domain: "Creativity, emotion", unlocks: "Creative flow state", guardian: "Leyla", guardianId: "leyla" },
+  { number: 3, name: "Fire", frequency: "396 Hz", domain: "Power, will", unlocks: "Personal power", guardian: "Draconia", guardianId: "draconia" },
+  { number: 4, name: "Heart", frequency: "417 Hz", domain: "Love, healing", unlocks: "Fierce compassion", guardian: "Maylinn", guardianId: "maylinn" },
+  { number: 5, name: "Voice", frequency: "528 Hz", domain: "Truth, expression", unlocks: "Reality shaping through words", guardian: "Alera", guardianId: "alera" },
+  { number: 6, name: "Sight", frequency: "639 Hz", domain: "Intuition, vision", unlocks: "Beyond ordinary perception", guardian: "Lyria", guardianId: "lyria" },
+  { number: 7, name: "Crown", frequency: "741 Hz", domain: "Enlightenment", unlocks: "Divine connection", guardian: "Aiyami", guardianId: "aiyami" },
+  { number: 8, name: "Starweave", frequency: "852 Hz", domain: "Perspective", unlocks: "Infinite possibilities", guardian: "Elara", guardianId: "elara" },
+  { number: 9, name: "Unity", frequency: "963 Hz", domain: "Partnership", unlocks: "Exponential creation", guardian: "Ino", guardianId: "ino" },
+  { number: 10, name: "Source", frequency: "1111 Hz", domain: "Meta-consciousness", unlocks: "Creator realization", guardian: "Shinkami", guardianId: "shinkami" },
 ];
 
 const RANKS = [
@@ -84,12 +84,20 @@ export function GatesPreview() {
                   glass="liquid-glass"
                   className="p-4 rounded-2xl border border-white/[0.06] text-center hover:border-gold-bright/30 transition-all duration-300"
                 >
-                  {/* Gate number */}
-                  <div className="w-10 h-10 mx-auto mb-3 rounded-full bg-gradient-to-br from-gold-bright/20 to-gold-bright/5 flex items-center justify-center text-gold-bright font-display font-bold">
-                    {gate.number}
+                  {/* Guardian avatar */}
+                  <div className="w-12 h-12 mx-auto mb-3 rounded-full overflow-hidden ring-2 ring-gold-bright/20 group-hover:ring-gold-bright/50 transition-all duration-300">
+                    <img
+                      src={`/guardians/v3/${gate.guardianId}-hero-v3.webp`}
+                      alt={gate.guardian}
+                      width={48}
+                      height={48}
+                      loading="lazy"
+                      className="w-full h-full object-cover object-top"
+                    />
                   </div>
 
-                  <h4 className="font-display font-semibold text-sm mb-1">{gate.name}</h4>
+                  <h4 className="font-display font-semibold text-sm mb-0.5">{gate.name}</h4>
+                  <p className="text-xs text-text-muted mb-1">{gate.guardian}</p>
                   <p className="text-xs text-atlantean-teal-aqua font-mono mb-2">{gate.frequency}</p>
 
                   {/* Tooltip on hover */}

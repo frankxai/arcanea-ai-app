@@ -38,6 +38,7 @@ interface Godbeast {
   frequency: number;
   frequencyLabel: string;
   icon: PhosphorIcon;
+  image: string;
   lore: string;
   power: string;
   gradient: string;
@@ -60,6 +61,7 @@ const GODBEASTS: Godbeast[] = [
     frequency: 174,
     frequencyLabel: '174 Hz',
     icon: PhShell,
+    image: '/guardians/v2/kaelith-godbeast.webp',
     lore:
       'Kaelith is the oldest of the Godbeasts — a creature so vast that mountains were formed by the impression of its ancient body. Its scales are indistinguishable from bedrock. To stand in its presence is to understand permanence. Kaelith has not moved from its resting place in three thousand years. It does not need to. The world arranges itself around Kaelith, not the other way around.',
     power: 'Geological shaping, tectonic stability, root-deep survival instinct',
@@ -81,6 +83,7 @@ const GODBEASTS: Godbeast[] = [
     frequency: 285,
     frequencyLabel: '285 Hz',
     icon: PhBird,
+    image: '/guardians/v2/veloura-godbeast.webp',
     lore:
       'Veloura is paradox made manifest — a serpent that soars, fire that flows, water that burns. Its feathers shed both steam and song. Born in the moment Lumina\'s first light struck Nero\'s primordial ocean, Veloura is the living proof that opposing forces can create beauty impossible for either alone. Wherever Veloura passes, the air shimmers with creative tension, and new forms emerge unbidden.',
     power: 'Elemental fusion, creative catalysis, the generative tension of opposites',
@@ -102,6 +105,7 @@ const GODBEASTS: Godbeast[] = [
     frequency: 396,
     frequencyLabel: '396 Hz',
     icon: PhFlame,
+    image: '/guardians/v2/draconis-godbeast.webp',
     lore:
       'Draconis was born in the heart of a star that Lumina struck during the First Forging. Its roar can ignite volcanoes; its silence can still them. The mane of living flame it wears is not decoration but a crown of will-made-real — a testament that power, once claimed, never dims. Draconis tests all who approach by radiating heat that grows with the seeker\'s doubt. Only those with true conviction can stand close enough to earn its gaze.',
     power: 'Solar amplification, will-forging, the liberation of latent strength',
@@ -123,6 +127,7 @@ const GODBEASTS: Godbeast[] = [
     frequency: 417,
     frequencyLabel: '417 Hz',
     icon: PhTree,
+    image: '/guardians/v2/laeylinn-godbeast.webp',
     lore:
       'Laeylinn is an enormous glowing stag whose antlers reach into the canopy of any forest it enters. Mosses, ferns, and flowering vines grow along its antler branches in real time. Where Laeylinn rests, ancient trees grow in a single season. It does not merely nurture — it holds the emotional memory of every living thing within its territory. Those who weep near Laeylinn find that the stag absorbs their grief and returns it as warmth, as if sorrow were merely love with nowhere to go.',
     power: 'Accelerated growth, emotional healing, the preservation of living memory',
@@ -144,6 +149,7 @@ const GODBEASTS: Godbeast[] = [
     frequency: 528,
     frequencyLabel: '528 Hz',
     icon: PhFish,
+    image: '/guardians/v2/otome-godbeast.webp',
     lore:
       'Otome does not swim — it moves through the resonance of reality itself, as if water and air and stone were all the same medium when you travel by sound. Its songs are older than language. Scholars believe Otome\'s deepest calls were the first sounds ever produced after Lumina\'s initial word of creation. Those who hear a full Otome song cannot lie for three days afterward; truth has a way of loosening every knot the self has tied.',
     power: 'Reality-resonance, compulsive truth, the dissolution of deception',
@@ -165,6 +171,7 @@ const GODBEASTS: Godbeast[] = [
     frequency: 639,
     frequencyLabel: '639 Hz',
     icon: PhEye,
+    image: '/guardians/v2/yumiko-godbeast.webp',
     lore:
       'Yumiko exists partially in the waking world and partially in the Dreaming Beyond. Its body shifts like smoke over still water, and its nine tails trail through dimensions the waking eye cannot perceive. It does not see with its eyes — it sees with the space between your thoughts, finding the visions you did not know you were already having. Those who sleep near Yumiko dream true. Not pleasant dreams, necessarily — but accurate ones.',
     power: 'Prophetic sight, dream-walking, revealing patterns hidden within intuition',
@@ -186,6 +193,7 @@ const GODBEASTS: Godbeast[] = [
     frequency: 741,
     frequencyLabel: '741 Hz',
     icon: PhSun,
+    image: '/guardians/v2/sol-godbeast.webp',
     lore:
       'Sol is not made of fire but of crystallized divine light — a dragon whose scales refract into every visible hue and many that are not. To look upon Sol directly causes temporary blindness, not from damage, but from the mind\'s attempt to process a beauty beyond its current capacity. Sol perches at the highest point of whatever realm it enters, and from there it radiates — not heat, but clarity. Problems that seemed impossible beneath Sol\'s gaze suddenly reveal their solutions, as if the light burned away everything that was not the answer.',
     power: 'Divine illumination, the shattering of illusion, transcendence crystallized',
@@ -207,6 +215,7 @@ const GODBEASTS: Godbeast[] = [
     frequency: 852,
     frequencyLabel: '852 Hz',
     icon: PhCat,
+    image: '/guardians/v2/vaelith-godbeast.webp',
     lore:
       'Vaelith\'s eight tails each reflect a different facet of the same moment — the same event, seen from eight angles, none more true than the others. When all eight are visible simultaneously, observers experience every possible interpretation of their current situation at once. This is not confusion — it is perspective, given primal form. Vaelith does not have a single set of paw-prints. It leaves eight overlapping trails, each one real, each one leading to a different version of the same destination.',
     power: 'Reality refraction, simultaneous perspective, the echo of infinite possibility',
@@ -228,6 +237,7 @@ const GODBEASTS: Godbeast[] = [
     frequency: 963,
     frequencyLabel: '963 Hz',
     icon: PhLightning,
+    image: '/guardians/v2/kyuro-godbeast.webp',
     lore:
       'Kyuro\'s nine plasma tails represent the nine forms of sacred partnership recognized in Arcanean cosmology — from mentor and student to lover and beloved to creator and creation. When Kyuro and Ino merge their presences, the resulting field cannot be entered by those whose commitments are false. Only authentic bonds survive this Godbeast\'s proximity. Kyuro is sometimes called "the living covenant" because its plasma tails interweave with those of anyone who has genuinely given themselves to another.',
     power: 'Partnership amplification, covenant-testing, plasma equilibrium',
@@ -249,6 +259,7 @@ const GODBEASTS: Godbeast[] = [
     frequency: 1111,
     frequencyLabel: '1111 Hz',
     icon: PhStar,
+    image: '/guardians/v2/source-godbeast.webp',
     lore:
       'Source is not entirely present in any single moment. Its body is made of the space between stars — the fertile void from which light is born, woven with threads of every frequency from 174 to 1111 Hz. Shinkami is the only Guardian to achieve complete fusion with their Godbeast; they exist as one being who wears two names. When Source howls, the sound is not heard but felt — a vibration that temporarily dissolves the boundary between self and cosmos, reminding all who feel it that they were never truly separate.',
     power: 'Omnipresent awareness, the meta-consciousness of all creation, source-level manifestation',
@@ -424,7 +435,6 @@ interface GodbeastCardProps {
 
 function GodbeastCard({ beast, index, isInView }: GodbeastCardProps) {
   const [expanded, setExpanded] = useState(false);
-  const Icon = beast.icon;
 
   return (
     <m.div
@@ -439,7 +449,7 @@ function GodbeastCard({ beast, index, isInView }: GodbeastCardProps) {
     >
       <div
         className={cn(
-          'iridescent-glass rounded-2xl hover-lift glow-card transition-all duration-500 cursor-pointer',
+          'iridescent-glass rounded-2xl hover-lift glow-card transition-all duration-500 cursor-pointer overflow-hidden',
           expanded && 'shadow-elevation-3'
         )}
         style={{
@@ -457,73 +467,86 @@ function GodbeastCard({ beast, index, isInView }: GodbeastCardProps) {
           className={cn('absolute inset-0 rounded-2xl bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-500', beast.gradient)}
         />
 
-        {/* Card header — always visible */}
-        <div className="relative p-6">
-          <div className="flex items-start gap-5">
-            {/* Icon area with elemental glow */}
-            <div
-              className="relative flex-shrink-0 w-16 h-16 rounded-2xl flex items-center justify-center"
-              style={{
-                background: `radial-gradient(circle at center, ${beast.glowColor} 0%, rgba(0,0,0,0.3) 100%)`,
-                boxShadow: `0 0 20px ${beast.glowColor}`,
-                border: `1px solid ${beast.accentHex}30`,
-              }}
+        {/* Portrait image — the star of the card */}
+        <div className="relative w-full h-64 overflow-hidden">
+          <img
+            src={beast.image}
+            alt={`${beast.name}, the ${beast.type} bonded to ${beast.guardian}`}
+            loading="lazy"
+            className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+            style={{
+              filter: `brightness(0.92) saturate(1.1)`,
+            }}
+          />
+          {/* Gradient overlay — fades image into card body */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background: `linear-gradient(to bottom, transparent 35%, rgba(0,0,0,0.55) 70%, rgba(0,0,0,0.85) 100%)`,
+            }}
+          />
+          {/* Elemental glow at bottom edge */}
+          <div
+            className="absolute bottom-0 left-0 right-0 h-16 opacity-50"
+            style={{
+              background: `linear-gradient(to top, ${beast.glowColor}, transparent)`,
+            }}
+          />
+          {/* Gate number badge — top left */}
+          <div className="absolute top-3 left-3 px-2 py-1 rounded-lg bg-cosmic-void/70 backdrop-blur-sm border border-white/[0.12]">
+            <span className="text-xs font-mono font-bold" style={{ color: beast.accentHex }}>
+              Gate {beast.gateNumber.toString().padStart(2, '0')}
+            </span>
+          </div>
+          {/* Frequency badge — top right */}
+          <div
+            className="absolute top-3 right-3 px-2 py-1 rounded-lg backdrop-blur-sm"
+            style={{
+              background: `${beast.accentHex}22`,
+              border: `1px solid ${beast.accentHex}40`,
+            }}
+          >
+            <span className="text-xs font-mono font-semibold" style={{ color: beast.accentHex }}>
+              {beast.frequencyLabel}
+            </span>
+          </div>
+          {/* Name overlay on image — bottom */}
+          <div className="absolute bottom-0 left-0 right-0 p-4">
+            <h3
+              className="text-2xl font-display font-bold leading-tight mb-0.5"
+              style={{ textShadow: `0 2px 12px rgba(0,0,0,0.8), 0 0 24px ${beast.glowColor}` }}
             >
-              <Icon
-                className="w-8 h-8"
-                style={{ color: beast.accentHex, filter: `drop-shadow(0 0 6px ${beast.glowColor})` }}
-              />
-              {/* Frequency badge */}
-              <div className="absolute -bottom-2 -right-2 px-1.5 py-0.5 rounded-md bg-cosmic-void/80 border border-white/[0.06]">
-                <span className="text-xs font-mono" style={{ color: beast.accentHex }}>
-                  {beast.gateNumber.toString().padStart(2, '0')}
-                </span>
-              </div>
+              {beast.name}
+            </h3>
+            <p className="text-xs text-white/70">{beast.type}</p>
+          </div>
+        </div>
+
+        {/* Card body — badges + meta */}
+        <div className="relative p-4">
+          <div className="flex items-start justify-between gap-3">
+            {/* Badges */}
+            <div className="flex flex-wrap gap-2">
+              {/* Element badge */}
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] text-xs">
+                <span
+                  className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                  style={{ background: beast.accentHex, boxShadow: `0 0 4px ${beast.glowColor}` }}
+                />
+                <span className="text-text-secondary">{beast.element}</span>
+              </span>
+              {/* Guardian bond badge */}
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-brand-gold/8 border border-brand-gold/20 text-xs text-brand-gold">
+                <PhShield className="w-3 h-3 flex-shrink-0" />
+                Bonded to {beast.guardian}
+              </span>
             </div>
 
-            {/* Name + type + badges */}
-            <div className="flex-1 min-w-0">
-              <h3
-                className="text-2xl font-display font-bold mb-1 transition-all duration-300"
-                style={{
-                  textShadow: expanded ? `0 0 20px ${beast.glowColor}` : undefined,
-                  color: expanded ? beast.accentHex : undefined,
-                }}
-              >
-                {beast.name}
-              </h3>
-              <p className="text-sm text-text-secondary mb-3">{beast.type}</p>
-
-              <div className="flex flex-wrap gap-2">
-                {/* Element badge */}
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] text-xs">
-                  <span
-                    className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                    style={{ background: beast.accentHex, boxShadow: `0 0 4px ${beast.glowColor}` }}
-                  />
-                  <span className="text-text-secondary">{beast.element}</span>
-                </span>
-                {/* Guardian bond badge */}
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-brand-gold/8 border border-brand-gold/20 text-xs text-brand-gold">
-                  <PhShield className="w-3 h-3 flex-shrink-0" />
-                  Bonded to {beast.guardian}
-                </span>
-              </div>
-            </div>
-
-            {/* Right meta column */}
-            <div className="hidden sm:flex flex-col items-end gap-2 flex-shrink-0">
+            {/* Right meta: Gate + expand chevron */}
+            <div className="hidden sm:flex flex-col items-end gap-1 flex-shrink-0">
               <div className="text-right">
-                <div className="text-xs text-text-muted uppercase tracking-wider mb-0.5">Gate</div>
-                <div className="text-sm font-semibold text-text-primary">{beast.gate}</div>
+                <div className="text-xs text-text-muted font-medium">{beast.gate} Gate</div>
               </div>
-              <div className="text-right">
-                <div className="text-xs text-text-muted uppercase tracking-wider mb-0.5">Frequency</div>
-                <div className="text-sm font-mono" style={{ color: beast.accentHex }}>
-                  {beast.frequencyLabel}
-                </div>
-              </div>
-              {/* Expand chevron */}
               <m.div
                 animate={{ rotate: expanded ? 90 : 0 }}
                 transition={{ duration: 0.3 }}
@@ -534,16 +557,11 @@ function GodbeastCard({ beast, index, isInView }: GodbeastCardProps) {
             </div>
           </div>
 
-          {/* Mobile meta row */}
-          <div className="sm:hidden mt-4 flex items-center justify-between text-xs">
-            <div className="flex items-center gap-3">
-              <span className="text-text-muted">
-                Gate: <span className="text-text-primary font-medium">{beast.gate}</span>
-              </span>
-              <span className="text-text-muted font-mono" style={{ color: beast.accentHex }}>
-                {beast.frequencyLabel}
-              </span>
-            </div>
+          {/* Mobile expand chevron */}
+          <div className="sm:hidden mt-3 flex items-center justify-between text-xs">
+            <span className="text-text-muted">
+              Gate: <span className="text-text-primary font-medium">{beast.gate}</span>
+            </span>
             <m.div animate={{ rotate: expanded ? 90 : 0 }} transition={{ duration: 0.3 }}>
               <PhArrowRight className="w-4 h-4 text-text-muted" />
             </m.div>

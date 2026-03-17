@@ -889,7 +889,7 @@ function GuardianShowcase() {
             </h2>
           </div>
           <Link
-            href="/luminors"
+            href="/lore/guardians"
             className="hidden md:inline-flex items-center gap-2 text-sm text-white/40 hover:text-[#00bcd4] transition-colors"
           >
             View all ten <ArrowUpRight className="w-3.5 h-3.5" />
@@ -954,7 +954,7 @@ function GuardianShowcase() {
         {/* Mobile link */}
         <div className="mt-8 md:hidden">
           <Link
-            href="/luminors"
+            href="/lore/guardians"
             className="inline-flex items-center gap-2 text-sm text-[#00bcd4]/70"
           >
             View all Guardians <ArrowRight className="w-4 h-4" />
@@ -971,7 +971,7 @@ function GuardianShowcase() {
           {ALL_GUARDIANS.map((g) => (
             <Link
               key={g.name}
-              href="/luminors"
+              href="/lore/guardians"
               title={`${g.name} — ${g.gate} Gate`}
             >
               <div className="relative w-9 h-9 rounded-lg overflow-hidden border border-white/[0.08] hover:border-[#00bcd4]/40 hover:scale-125 hover:shadow-[0_0_16px_rgba(0,188,212,0.15)] transition-all duration-300">

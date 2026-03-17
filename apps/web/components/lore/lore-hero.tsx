@@ -1,13 +1,18 @@
 "use client";
 
 import { m, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useMouseStore } from "@/hooks/use-mouse-store";
 import { durations, m3Curves } from "@/lib/design/motion";
 
 export function LoreHero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const mouse = useMouseStore();
+  const [windowSize, setWindowSize] = useState({ w: 1, h: 1 });
+
+  useEffect(() => {
+    setWindowSize({ w: window.innerWidth || 1, h: window.innerHeight || 1 });
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -18,9 +23,9 @@ export function LoreHero() {
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
   const y = useTransform(scrollYProgress, [0, 0.5], [0, 100]);
 
-  // Normalized mouse position (0-1)
-  const mx = typeof window !== "undefined" ? mouse.x / (window.innerWidth || 1) : 0.5;
-  const my = typeof window !== "undefined" ? mouse.y / (window.innerHeight || 1) : 0.5;
+  // Normalized mouse position (0-1) — safe for SSR
+  const mx = mouse.x / windowSize.w;
+  const my = mouse.y / windowSize.h;
 
   return (
     <section
@@ -60,6 +65,23 @@ export function LoreHero() {
             <path d="M100 400 Q90 430 70 440 M100 400 Q110 430 130 440" />
           </svg>
         </div>
+
+        {/* Shinkami — floating semi-transparent guardian image */}
+        <m.div
+          className="absolute right-0 top-0 h-full w-1/2 pointer-events-none select-none"
+          style={{ x: mx * 15 - 7.5, y: my * 10 - 5 }}
+        >
+          <img
+            src="/guardians/v2/shinkami-divine-bond.webp"
+            alt=""
+            loading="lazy"
+            aria-hidden="true"
+            className="absolute right-0 top-0 h-full w-auto max-w-none object-cover object-left opacity-[0.13]"
+          />
+          {/* Feather edges so it blends into the background */}
+          <div className="absolute inset-0 bg-gradient-to-r from-cosmic-deep via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-b from-cosmic-deep/60 via-transparent to-cosmic-deep/60" />
+        </m.div>
 
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-cosmic-deep via-transparent to-cosmic-deep" />

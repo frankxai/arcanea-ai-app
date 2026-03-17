@@ -23,6 +23,7 @@ const EXPLORATIONS = [
     gradient: 'from-crystal/20 to-brand-primary/10',
     accentColor: 'text-crystal',
     borderColor: 'border-crystal/20 hover:border-crystal/40',
+    bgImage: '/guardians/v3/shinkami-hero-v3.webp',
   },
   {
     href: '/lore/gates',
@@ -32,6 +33,7 @@ const EXPLORATIONS = [
     gradient: 'from-gold-bright/20 to-amber-500/10',
     accentColor: 'text-gold-bright',
     borderColor: 'border-gold-bright/20 hover:border-gold-bright/40',
+    bgImage: null,
   },
   {
     href: '/lore/godbeasts',
@@ -41,6 +43,7 @@ const EXPLORATIONS = [
     gradient: 'from-brand-gold/20 to-amber-500/10',
     accentColor: 'text-brand-gold',
     borderColor: 'border-brand-gold/20 hover:border-brand-gold/40',
+    bgImage: '/guardians/v2/draconis-godbeast.webp',
   },
   {
     href: '/lore/elements',
@@ -50,6 +53,7 @@ const EXPLORATIONS = [
     gradient: 'from-fire/20 to-orange-500/10',
     accentColor: 'text-fire',
     borderColor: 'border-fire/20 hover:border-fire/40',
+    bgImage: null,
   },
   {
     href: '/lore/wisdoms',
@@ -59,6 +63,7 @@ const EXPLORATIONS = [
     gradient: 'from-brand-primary/20 to-purple-500/10',
     accentColor: 'text-brand-primary',
     borderColor: 'border-brand-primary/20 hover:border-brand-primary/40',
+    bgImage: null,
   },
   {
     href: '/lore/malachar',
@@ -68,6 +73,8 @@ const EXPLORATIONS = [
     gradient: 'from-red-500/20 to-purple-900/10',
     accentColor: 'text-red-400',
     borderColor: 'border-red-400/20 hover:border-red-400/40',
+    bgImage: null,
+    darkGradient: true,
   },
 ];
 
@@ -115,28 +122,47 @@ export function LoreExploreGrid() {
                 <Link
                   href={item.href}
                   className={cn(
-                    'group block p-6 rounded-2xl liquid-glass border transition-all duration-300',
+                    'group relative block p-6 rounded-2xl liquid-glass border transition-all duration-300 overflow-hidden',
                     'hover-lift',
                     item.borderColor
                   )}
                 >
+                  {/* Background image (subtle) */}
+                  {item.bgImage && (
+                    <img
+                      src={item.bgImage}
+                      alt=""
+                      loading="lazy"
+                      aria-hidden="true"
+                      className="absolute inset-0 w-full h-full object-cover object-top opacity-[0.15] group-hover:opacity-[0.22] transition-opacity duration-500 pointer-events-none select-none"
+                    />
+                  )}
+                  {/* Dark gradient overlay for Malachar */}
+                  {'darkGradient' in item && item.darkGradient && (
+                    <div className="absolute inset-0 bg-gradient-to-br from-red-950/40 via-purple-950/30 to-black/50 pointer-events-none" />
+                  )}
+                  {/* Fade-to-card-bg at bottom so text stays readable */}
+                  {item.bgImage && (
+                    <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-cosmic-deep/80 to-transparent pointer-events-none" />
+                  )}
+
                   <div
                     className={cn(
-                      'w-12 h-12 rounded-xl bg-gradient-to-br flex items-center justify-center mb-4',
+                      'relative w-12 h-12 rounded-xl bg-gradient-to-br flex items-center justify-center mb-4',
                       item.gradient
                     )}
                   >
                     <Icon className={cn('w-6 h-6', item.accentColor)} />
                   </div>
-                  <h3 className="font-display font-bold text-lg mb-2 group-hover:text-crystal transition-colors">
+                  <h3 className="relative font-display font-bold text-lg mb-2 group-hover:text-crystal transition-colors">
                     {item.title}
                   </h3>
-                  <p className="text-sm text-text-secondary mb-4 leading-relaxed">
+                  <p className="relative text-sm text-text-secondary mb-4 leading-relaxed">
                     {item.description}
                   </p>
                   <span
                     className={cn(
-                      'inline-flex items-center gap-1.5 text-sm font-medium',
+                      'relative inline-flex items-center gap-1.5 text-sm font-medium',
                       item.accentColor
                     )}
                   >
