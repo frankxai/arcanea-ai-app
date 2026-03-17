@@ -407,10 +407,10 @@ function GodbeastsHero() {
           initial={{ opacity: 0, scaleX: 0 }}
           animate={{ opacity: 1, scaleX: 1 }}
           transition={{ delay: 0.6, duration: 0.8 }}
-          className="mt-10 flex items-center justify-center gap-4"
+          className="mt-10 flex items-center justify-center gap-2 sm:gap-4 flex-wrap px-4"
         >
           <span className="text-xs font-mono text-text-muted">174 Hz</span>
-          <div className="relative h-px w-48 md:w-72">
+          <div className="relative h-px w-32 sm:w-48 md:w-72">
             <div className="absolute inset-0 bg-gradient-to-r from-earth via-crystal via-brand-gold to-brand-gold rounded-full" />
             <m.div
               className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.25] to-transparent rounded-full"
@@ -468,7 +468,7 @@ function GodbeastCard({ beast, index, isInView }: GodbeastCardProps) {
         />
 
         {/* Portrait image — the star of the card */}
-        <div className="relative w-full h-64 overflow-hidden">
+        <div className="relative w-full aspect-[4/5] overflow-hidden">
           <img
             src={beast.image}
             alt={`${beast.name}, the ${beast.type} bonded to ${beast.guardian}`}
@@ -584,7 +584,7 @@ function GodbeastCard({ beast, index, isInView }: GodbeastCardProps) {
               style={{ background: `linear-gradient(90deg, transparent, ${beast.accentHex}60, transparent)` }}
             />
 
-            <div className="p-6 grid md:grid-cols-2 gap-6">
+            <div className="p-4 sm:p-6 grid sm:grid-cols-2 gap-4 sm:gap-6">
               {/* Lore */}
               <div>
                 <h4 className="text-xs font-semibold text-text-muted uppercase tracking-widest mb-3">
@@ -848,7 +848,7 @@ function FrequencySpectrum() {
                   )}
                 >
                   {/* Content card */}
-                  <div className={cn('flex-1', isLeft ? 'text-right' : 'text-left')}>
+                  <div className={cn('flex-1 hidden sm:block', isLeft ? 'text-right' : 'text-left')}>
                     <div
                       className={cn(
                         'inline-block liquid-glass rounded-xl px-4 py-3 hover-lift glow-card transition-all duration-300'
@@ -910,7 +910,7 @@ function FrequencySpectrum() {
                   </div>
 
                   {/* Frequency label */}
-                  <div className={cn('flex-1', isLeft ? 'text-left' : 'text-right')}>
+                  <div className={cn('flex-1 hidden sm:block', isLeft ? 'text-left' : 'text-right')}>
                     <span
                       className="text-sm font-mono font-semibold"
                       style={{ color: beast.accentHex }}

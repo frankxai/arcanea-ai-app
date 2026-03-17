@@ -66,7 +66,7 @@ export function GatesPreview() {
         <div className="relative mb-16">
           <div className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/[0.12] to-transparent -translate-y-1/2 hidden lg:block" />
 
-          <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-10 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-10 gap-3 sm:gap-4">
             {GATES.map((gate, i) => (
               <m.div
                 key={gate.number}
@@ -100,8 +100,8 @@ export function GatesPreview() {
                   <p className="text-xs text-text-muted mb-1">{gate.guardian}</p>
                   <p className="text-xs text-atlantean-teal-aqua font-mono mb-2">{gate.frequency}</p>
 
-                  {/* Tooltip on hover */}
-                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-3 rounded-lg bg-cosmic-deep border border-white/[0.12] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20 shadow-lg">
+                  {/* Tooltip on hover/tap */}
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-40 sm:w-48 p-3 rounded-lg bg-cosmic-deep border border-white/[0.12] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20 shadow-lg text-xs sm:text-sm">
                     <p className="text-xs text-text-secondary mb-1">{gate.domain}</p>
                     <p className="text-xs text-gold-bright">Unlocks: {gate.unlocks}</p>
                   </div>

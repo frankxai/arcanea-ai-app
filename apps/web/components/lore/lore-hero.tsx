@@ -36,18 +36,18 @@ export function LoreHero() {
       <div className="absolute inset-0">
         <div className="absolute inset-0 stars-ambient" />
 
-        {/* Lumina — Golden Light (top right) */}
+        {/* Lumina — Golden Light (top right) — hidden on mobile */}
         <m.div
-          className="absolute top-20 right-20 w-[600px] h-[600px]"
+          className="hidden sm:block absolute top-4 sm:top-20 right-4 sm:right-20 w-[300px] sm:w-[600px] h-[300px] sm:h-[600px]"
           style={{ x: mx * 30 - 15, y: my * 30 - 15 }}
         >
           <div className="absolute inset-0 bg-gradient-radial from-gold-bright/30 via-gold-bright/10 to-transparent rounded-full blur-3xl" />
           <div className="absolute inset-20 bg-gradient-radial from-white/[0.12] via-gold-bright/5 to-transparent rounded-full blur-2xl animate-pulse" />
         </m.div>
 
-        {/* Nero — Deep Void (bottom left) */}
+        {/* Nero — Deep Void (bottom left) — hidden on mobile */}
         <m.div
-          className="absolute bottom-20 left-20 w-[600px] h-[600px]"
+          className="hidden sm:block absolute bottom-4 sm:bottom-20 left-4 sm:left-20 w-[300px] sm:w-[600px] h-[300px] sm:h-[600px]"
           style={{ x: -mx * 30 + 15, y: -my * 30 + 15 }}
         >
           <div className="absolute inset-0 bg-gradient-radial from-creation-prism-purple/30 via-cosmic-void/50 to-transparent rounded-full blur-3xl" />
@@ -66,9 +66,9 @@ export function LoreHero() {
           </svg>
         </div>
 
-        {/* Shinkami — floating semi-transparent guardian image */}
+        {/* Shinkami — floating semi-transparent guardian image — hidden on mobile */}
         <m.div
-          className="absolute right-0 top-0 h-full w-1/2 pointer-events-none select-none"
+          className="hidden md:block absolute right-0 top-0 h-full w-1/2 pointer-events-none select-none"
           style={{ x: mx * 15 - 7.5, y: my * 10 - 5 }}
         >
           <img
@@ -90,7 +90,7 @@ export function LoreHero() {
       {/* Content */}
       <m.div
         style={{ opacity, scale, y }}
-        className="relative z-10 text-center px-6 max-w-5xl mx-auto"
+        className="relative z-10 text-center px-4 sm:px-6 max-w-5xl mx-auto"
       >
         {/* Badge */}
         <m.div
@@ -112,7 +112,7 @@ export function LoreHero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: durations.slowest, ease: m3Curves.emphasized }}
-          className="text-6xl md:text-7xl lg:text-8xl font-display font-bold mb-6"
+          className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-6"
         >
           <span className="bg-gradient-to-r from-gold-bright via-white to-creation-prism-purple bg-clip-text text-transparent">
             Lore of Arcanea
@@ -124,7 +124,7 @@ export function LoreHero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: durations.slow, ease: m3Curves.emphasizedDecelerate }}
-          className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto mb-8 font-body italic"
+          className="text-lg sm:text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto mb-8 font-body italic"
         >
           &quot;Before Lumina spoke, there was only Nero—the Fertile Unknown,
           pregnant with infinite possibility. And when the First Light pierced
@@ -146,7 +146,7 @@ export function LoreHero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: durations.slow, ease: m3Curves.emphasizedDecelerate }}
-          className="flex flex-wrap justify-center gap-8 mb-16"
+          className="flex flex-wrap justify-center gap-4 sm:gap-8 mb-12 sm:mb-16"
         >
           {[
             { value: "10", label: "Guardians" },
@@ -155,10 +155,10 @@ export function LoreHero() {
             { value: "17", label: "Library Collections" },
           ].map((stat) => (
             <div key={stat.label} className="text-center group">
-              <div className="text-3xl md:text-4xl font-display font-bold text-white group-hover:text-gold-bright transition-colors duration-300">
+              <div className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-white group-hover:text-gold-bright transition-colors duration-300">
                 {stat.value}
               </div>
-              <div className="text-sm text-text-muted">{stat.label}</div>
+              <div className="text-xs sm:text-sm text-text-muted">{stat.label}</div>
             </div>
           ))}
         </m.div>
