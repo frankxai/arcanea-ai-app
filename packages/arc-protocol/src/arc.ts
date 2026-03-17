@@ -61,7 +61,7 @@ export function createArc(options: CreateArcOptions): Arc {
   }];
 
   if (options.tags) arc.tags = options.tags;
-  if (options.gate) arc.gate = options.gate;
+  if (options.gate !== undefined) arc.gate = options.gate;
   if (options.element) arc.element = options.element;
 
   return arc;
@@ -175,7 +175,7 @@ export function parse(content: string): Arc {
   const yaml = fmMatch[1];
   const body = content.slice(fmMatch[0].length).trim() || undefined;
 
-  const arc = fromYaml(yaml) as Arc;
+  const arc = fromYaml(yaml) as unknown as Arc;
   if (body) arc.body = body;
 
   return arc;
@@ -212,7 +212,7 @@ export function validate(arc: Arc): ValidationResult {
     warnings.push('Arc is past potential stage but has no history');
   }
 
-  if (arc.gate && (arc.gate < 1 || arc.gate > 10)) {
+  if (arc.gate !== undefined && (arc.gate < 1 || arc.gate > 10)) {
     errors.push(`Gate must be 1-10, got ${arc.gate}`);
   }
 
