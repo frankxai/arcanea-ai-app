@@ -17,13 +17,19 @@ import {
   PhX,
   PhCopy,
   PhCheck,
+  PhClockCounterClockwise,
 } from '@/lib/phosphor-icons';
 import { LuminorSidebar } from '@/components/chat/luminor-sidebar';
+import { SessionSidebar } from '@/components/chat/session-sidebar';
+import { CreationIndicator } from '@/components/chat/creation-indicator';
+import { useAutoSave } from '@/lib/arc/auto-save';
 import {
   useConversation,
   getMessageText,
   parseFollowUps,
 } from '@/hooks/use-conversation';
+import { useChatPersistence } from '@/hooks/use-chat-persistence';
+import type { ChatMessage as StoredMessage } from '@/lib/chat/local-store';
 
 // ---------------------------------------------------------------------------
 // Gate metadata for the frequency indicator
@@ -65,6 +71,7 @@ export default function ChatPage() {
   const {
     messages,
     sendMessage,
+    setMessages,
     input,
     setInput,
     handleInputChange,
@@ -99,16 +106,80 @@ export default function ChatPage() {
   } = useConversation();
 
   // ---------------------------------------------------------------------------
+  // Refs (declared early — used by persistence and UI sections below)
+  // ---------------------------------------------------------------------------
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // ---------------------------------------------------------------------------
+  // Chat persistence — localStorage-based history
+  // ---------------------------------------------------------------------------
+
+  const persistence = useChatPersistence();
+  const [historySidebarOpen, setHistorySidebarOpen] = useState(false);
+  const restoredRef = useRef(false);
+
+  // Serialize AI SDK messages → storable format
+  const serializeMessages = useCallback((msgs: typeof messages): StoredMessage[] => {
+    return msgs.map((m) => ({
+      id: m.id,
+      role: m.role as 'user' | 'assistant',
+      content: getMessageText(m),
+      parts: m.parts,
+      createdAt: m.createdAt ? new Date(m.createdAt).toISOString() : undefined,
+    }));
+  }, []);
+
+  // Auto-save messages after each change (persistence hook debounces internally)
+  useEffect(() => {
+    if (messages.length > 0 && !isLoading) {
+      persistence.saveMessages(serializeMessages(messages), {
+        luminorId: activeLuminor?.id ?? null,
+        modelId,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [messages, isLoading]);
+
+  // Load a saved session
+  const handleLoadSession = useCallback((sessionId: string) => {
+    const session = persistence.loadSession(sessionId);
+    if (session && session.messages.length > 0) {
+      // Restore messages into the AI SDK state
+      setMessages(session.messages.map((m) => ({
+        id: m.id,
+        role: m.role,
+        content: m.content,
+        parts: m.parts || [{ type: 'text', text: m.content }],
+        createdAt: m.createdAt ? new Date(m.createdAt) : new Date(),
+      })));
+    }
+    setHistorySidebarOpen(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [persistence, setMessages]);
+
+  // Wire new chat to also create a new persistence session
+  const handlePersistentNewChat = useCallback(() => {
+    startNewChat();
+    persistence.newSession();
+    textareaRef.current?.focus();
+  }, [startNewChat, persistence]);
+
+  // ---------------------------------------------------------------------------
+  // Arc auto-save — silently detects and saves creations
+  // ---------------------------------------------------------------------------
+
+  const autoSave = useAutoSave(messages, isLoading);
+
+  // ---------------------------------------------------------------------------
   // UI-only state (scroll, sidebar, refs) — stays in the component
   // ---------------------------------------------------------------------------
 
   const [luminorSidebarOpen, setLuminorSidebarOpen] = useState(true);
   const [autoScroll, setAutoScroll] = useState(true);
   const [showScrollBtn, setShowScrollBtn] = useState(false);
-
-  const containerRef = useRef<HTMLDivElement>(null);
-  const bottomRef = useRef<HTMLDivElement>(null);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Auto-resize textarea
   useEffect(() => {
@@ -139,11 +210,8 @@ export default function ChatPage() {
     setAutoScroll(true);
   };
 
-  // Focus textarea after clearing chat
-  const handleStartNewChat = useCallback(() => {
-    startNewChat();
-    textareaRef.current?.focus();
-  }, [startNewChat]);
+  // Focus textarea after clearing chat — uses persistent new chat
+  const handleStartNewChat = handlePersistentNewChat;
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -186,7 +254,7 @@ export default function ChatPage() {
               Arcanea
             </Link>
             {/* Model selector + Gate frequency indicator */}
-            <ModelSelector value={modelId} onChange={setModelId} />
+            <ModelSelector value={modelId ?? 'arcanea-auto'} onChange={setModelId} />
             {activeGates.length > 0 && messages.length > 0 && (
               <div className="flex items-center gap-1.5">
                 {activeGates.slice(0, 3).map((gate) => {
@@ -208,6 +276,19 @@ export default function ChatPage() {
           </div>
 
           <div className="flex items-center gap-2">
+            <button
+              onClick={() => { persistence.refreshSessions(); setHistorySidebarOpen((v) => !v); }}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-colors ${
+                historySidebarOpen
+                  ? 'text-[#00bcd4]/80 bg-[#00bcd4]/8'
+                  : 'text-white/40 hover:text-white/70 hover:bg-white/[0.04]'
+              }`}
+              aria-label="Toggle chat history"
+              title="Chat history"
+            >
+              <PhClockCounterClockwise className="w-3.5 h-3.5" />
+              History
+            </button>
             {messages.length > 0 && (
               <button
                 onClick={handleStartNewChat}
@@ -219,6 +300,19 @@ export default function ChatPage() {
             )}
           </div>
         </div>
+
+        {/* Session history panel */}
+        {historySidebarOpen && (
+          <div className="border-b border-white/[0.06] bg-[#0c0c0e]">
+            <SessionSidebar
+              sessions={persistence.sessions}
+              activeSessionId={persistence.activeSessionId}
+              onSelectSession={handleLoadSession}
+              onDeleteSession={persistence.deleteSession}
+              onNewChat={handleStartNewChat}
+            />
+          </div>
+        )}
 
         {/* Error banner with retry */}
         {chatError && (
@@ -472,6 +566,7 @@ export default function ChatPage() {
                   Enter · @model · /beam to compare
                 </span>
                 <div className="flex items-center gap-2">
+                  <CreationIndicator autoSave={autoSave} />
                   {focusMode !== 'auto' && (
                     <FocusModeSelector value={focusMode} onChange={setFocusMode} />
                   )}
