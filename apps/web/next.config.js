@@ -27,6 +27,9 @@ const nextConfig = {
       },
     ],
     formats: ['image/avif', 'image/webp'],
+    // Guardian portrait breakpoints: covers sm (48), md (256/320), lg (512), hero (896)
+    imageSizes: [48, 64, 128, 256, 320, 512],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
   },
   typescript: {
     // Temporary: @ai-sdk/react v3.0.118 has many breaking changes.

@@ -3,6 +3,7 @@
 import { m, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { GlowCard } from "@/components/ui/glow-card";
 import { GlowButton } from "@/components/ui/glow-button";
 import { durations, m3Curves } from "@/lib/design/motion";
@@ -80,9 +81,13 @@ export function GuardiansPreview() {
 
                 {/* Guardian thumbnail */}
                 <div className="w-12 h-12 rounded-xl overflow-hidden mb-3 ring-1 ring-white/[0.08] group-hover:ring-white/[0.2] transition-all duration-300" style={{ backgroundColor: `${guardian.dotColor}20` }}>
-                  <img
+                  <Image
                     src={`${CDN_BASE}/${guardian.id}-hero-v3.webp`}
                     alt={guardian.name}
+                    width={48}
+                    height={48}
+                    sizes="48px"
+                    quality={75}
                     loading="lazy"
                     className="w-full h-full object-cover"
                   />
