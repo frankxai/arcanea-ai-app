@@ -5,21 +5,45 @@
   "license": "SEE LICENSE IN LICENSE",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": ["dist"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist/index.js",
+    "dist/index.d.ts",
+    "dist/arc.js",
+    "dist/arc.d.ts",
+    "dist/types.js",
+    "dist/types.d.ts",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsc",
-    "test": "node --test dist/test.js"
+    "test": "tsc && node test.mjs",
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "typescript": "^5.5.0"
   },
+  "engines": {
+    "node": ">=18"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/frankxai/arcanea"
+    "url": "https://github.com/frankxai/arcanea",
+    "directory": "packages/arc-protocol"
+  },
+  "bugs": {
+    "url": "https://github.com/frankxai/arcanea/issues"
   },
   "homepage": "https://arcanea.ai",
   "keywords": [
     "arc-protocol", "creation-genome", "ai-human-cocreation",
-    "creative-lifecycle", "provenance", "arcanea", "agentic"
+    "creative-lifecycle", "provenance", "arcanea", "agentic",
+    "ai-agent", "creative-ai", "world-building"
   ]
 }

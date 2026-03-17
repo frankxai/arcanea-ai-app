@@ -1,0 +1,8 @@
+src/
+examples/
+test.mjs
+tsconfig.json
+dist/test.js
+dist/test.d.ts
+*.ts
+!dist/**/*.d.ts
