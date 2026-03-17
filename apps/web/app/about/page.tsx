@@ -9,6 +9,11 @@ export const metadata: Metadata = {
     title: "About Arcanea — The Creative Multiverse",
     description:
       "Chat with AI. Build fantasy worlds. Share what you make. Turn imagination into products. Six layers, one creative multiverse.",
+    images: [{ url: '/guardians/v3/shinkami-hero-v3.webp', width: 1024, height: 1024, alt: 'Shinkami — Guardian of the Source Gate' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/guardians/v3/shinkami-hero-v3.webp'],
   },
 };
 

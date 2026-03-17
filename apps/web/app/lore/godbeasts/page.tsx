@@ -9,6 +9,11 @@ export const metadata: Metadata = {
     title: 'The Godbeasts — Lore of Arcanea',
     description:
       'Discover the ten primal Godbeasts, bonded to the Arcanean Gods as cosmic companions.',
+    images: [{ url: '/guardians/v2/kaelith-godbeast.webp', width: 1024, height: 1024, alt: 'Kaelith — Godbeast of the Foundation Gate' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/guardians/v2/kaelith-godbeast.webp'],
   },
 };
 

@@ -6,6 +6,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'The Ten Gates | Lore of Arcanea',
     description: 'From Foundation to Source — ten frequencies, ten Guardians, ten dimensions of creative power.',
+    images: [{ url: '/guardians/v3/lyssandria-hero-v3.webp', width: 1024, height: 1024, alt: 'Lyssandria — Guardian of the Foundation Gate' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/guardians/v3/lyssandria-hero-v3.webp'],
   },
 };
 

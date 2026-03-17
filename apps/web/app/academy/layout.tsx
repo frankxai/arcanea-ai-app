@@ -13,6 +13,11 @@ export const metadata: Metadata = {
     description:
       'Journey through the Ten Gates — from Foundation at 174 Hz to Source at 1111 Hz. Unlock your creative power through the Arcanean Academy.',
     type: 'website',
+    images: [{ url: '/guardians/v3/aiyami-hero-v3.webp', width: 1024, height: 1024, alt: 'Aiyami — Guardian of the Crown Gate' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/guardians/v3/aiyami-hero-v3.webp'],
   },
 };
 

@@ -7,6 +7,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Imagine — Arcanea',
     description: 'AI-powered generative art. Describe. Create. Animate.',
+    images: [{ url: '/guardians/v3/leyla-hero-v3.webp', width: 1024, height: 1024, alt: 'Leyla — Guardian of the Flow Gate' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/guardians/v3/leyla-hero-v3.webp'],
   },
 };
 

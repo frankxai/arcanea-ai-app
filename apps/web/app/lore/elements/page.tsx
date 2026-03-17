@@ -9,6 +9,11 @@ export const metadata: Metadata = {
     title: 'The Five Elements | Lore of Arcanea',
     description:
       'Explore the five elemental forces — Fire, Water, Earth, Wind, and Void/Spirit — that underpin all creation in Arcanea.',
+    images: [{ url: '/guardians/v3/lyria-hero-v3.webp', width: 1024, height: 1024, alt: 'Lyria — Guardian of the Sight Gate' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/guardians/v3/lyria-hero-v3.webp'],
   },
 };
 

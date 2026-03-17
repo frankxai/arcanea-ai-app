@@ -243,7 +243,14 @@ function HeroSection({
                 ? "Canonical works from across the Ten Gates. Visions channeled through the Five Elements by creators of every rank."
                 : `${totalCount} creations from the Arcanea community, channeled through the Ten Gates and Five Elements.`}
             </p>
-            <div className="flex gap-3 mt-4">
+            <div className="flex flex-wrap gap-3 mt-4">
+              <Link
+                href="/gallery/guardians"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-violet-500/10 text-violet-400 text-sm font-medium border border-violet-500/20 hover:bg-violet-500/20 transition-colors"
+              >
+                Guardians
+                <PhArrowRight size={14} />
+              </Link>
               <Link
                 href="/gallery/luminors"
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#ffd700]/10 text-[#ffd700] text-sm font-medium border border-[#ffd700]/20 hover:bg-[#ffd700]/20 transition-colors"

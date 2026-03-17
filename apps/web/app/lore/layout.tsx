@@ -10,6 +10,11 @@ export const metadata: Metadata = {
     description:
       'Explore the living mythology — Guardians, Godbeasts, Elements, and the cosmic duality that shapes all creation.',
     type: 'website',
+    images: [{ url: '/guardians/v3/shinkami-hero-v3.webp', width: 1024, height: 1024, alt: 'Shinkami — Guardian of the Source Gate' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/guardians/v3/shinkami-hero-v3.webp'],
   },
 };
 

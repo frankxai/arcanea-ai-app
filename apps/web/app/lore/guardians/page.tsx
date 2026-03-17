@@ -9,6 +9,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'The Ten Guardians | Lore of Arcanea',
     description: 'Meet the Ten Gods and Goddesses who guard the Gates of creation.',
+    images: [{ url: '/guardians/v3/draconia-hero-v3.webp', width: 1024, height: 1024, alt: 'Draconia — Guardian of the Fire Gate' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/guardians/v3/draconia-hero-v3.webp'],
   },
 };
 

@@ -9,6 +9,11 @@ export const metadata: Metadata = {
     description:
       'Browse AI Luminors forged by creators. Use them in chat, export anywhere.',
     type: 'website',
+    images: [{ url: '/guardians/v3/ino-hero-v3.webp', width: 1024, height: 1024, alt: 'Ino — Guardian of the Unity Gate' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/guardians/v3/ino-hero-v3.webp'],
   },
 };
 

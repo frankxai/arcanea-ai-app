@@ -9,6 +9,11 @@ export const metadata: Metadata = {
     title: "Pricing — Simple. Start Free.",
     description: "Start free, no credit card required. Upgrade anytime. Creator $19/mo unlocks the full creative toolkit — creative partners, worlds, Studio, and Academy.",
     type: "website",
+    images: [{ url: '/guardians/v3/alera-hero-v3.webp', width: 1024, height: 1024, alt: 'Alera — Guardian of the Voice Gate' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/guardians/v3/alera-hero-v3.webp'],
   },
 };
 

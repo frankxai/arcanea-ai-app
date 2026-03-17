@@ -9,6 +9,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Library of Arcanea",
     description: "190K+ words of original philosophy, poetry, legend, and practice for creators across 20 collections. Equipment for living.",
+    images: [{ url: '/guardians/v3/maylinn-hero-v3.webp', width: 1024, height: 1024, alt: 'Maylinn — Guardian of the Heart Gate' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/guardians/v3/maylinn-hero-v3.webp'],
   },
 };
 

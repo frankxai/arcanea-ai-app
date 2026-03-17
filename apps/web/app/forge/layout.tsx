@@ -10,6 +10,11 @@ export const metadata: Metadata = {
     description:
       'Two creation flows, one place. Forge a Luminor intelligence or summon a bonded Companion. Together they become your creative signature on Arcanea.',
     type: 'website',
+    images: [{ url: '/guardians/v3/draconia-hero-v3.webp', width: 1024, height: 1024, alt: 'Draconia — Guardian of the Fire Gate' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/guardians/v3/draconia-hero-v3.webp'],
   },
 };
 
