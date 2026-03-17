@@ -302,8 +302,8 @@ export default function GatesPage() {
                 The journey is not linear, though the numbering suggests it. You may open the Heart Gate
                 before the Fire Gate. You may glimpse the Crown before you have fully grounded the Foundation.
                 But the frequencies build on each other. Each Gate resonates at a higher harmonic of the
-                Extended Solfeggio scale — from 174 Hz at the root to 1111 Hz at the Source — and each
-                higher frequency requires the stability of those below it.
+                and each
+                higher vibration requires the stability of those below it.
               </p>
               <p>
                 The Gates are guarded, not locked. Each Guardian stands at their Gate not to bar passage
@@ -370,9 +370,6 @@ export default function GatesPage() {
                         <div className="flex-1">
                           <div className="flex items-center gap-3 mb-1">
                             <h3 className="text-xl font-display font-bold">{gate.name}</h3>
-                            <span className="text-sm text-atlantean-teal-aqua font-mono">
-                              {gate.frequency}
-                            </span>
                           </div>
                           <p className="text-text-secondary">{gate.domain}</p>
                         </div>

@@ -313,17 +313,7 @@ function GateNode({ gate, side, index }: GateNodeProps) {
               </div>
             </div>
 
-            {/* Frequency badge */}
-            <div
-              className="flex-shrink-0 rounded-lg px-3 py-1.5 font-mono text-sm font-semibold"
-              style={{
-                color: gate.color,
-                backgroundColor: `${gate.color}12`,
-                border: `1px solid ${gate.color}28`,
-              }}
-            >
-              {gate.frequency}
-            </div>
+
           </div>
 
           {/* Description */}
@@ -471,7 +461,7 @@ function FrequencySpectrum() {
         <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-crystal/20 bg-crystal/5 px-4 py-1.5">
           <PhRadio className="h-3.5 w-3.5 text-crystal" />
           <span className="font-sans text-xs uppercase tracking-[0.3em] text-crystal">
-            Solfeggio Frequency Spectrum
+            The Gate Spectrum
           </span>
         </div>
         <p className="font-sans text-sm text-text-muted">
@@ -537,9 +527,7 @@ function FrequencySpectrum() {
                     >
                       {gate.name}
                     </span>
-                    <span className="font-mono text-[9px] text-text-muted whitespace-nowrap">
-                      {gate.frequency}
-                    </span>
+
                   </div>
                 </m.div>
               );
@@ -552,8 +540,8 @@ function FrequencySpectrum() {
 
         {/* Min/Max labels */}
         <div className="mt-4 flex items-center justify-between font-mono text-xs text-text-muted">
-          <span>174 Hz — Foundation</span>
-          <span>1111 Hz — Source</span>
+          <span>Foundation</span>
+          <span>Source</span>
         </div>
       </m.div>
     </section>
@@ -783,7 +771,7 @@ function GatesHero() {
           custom={0.28}
           className="font-sans text-base leading-relaxed text-text-secondary max-w-2xl mx-auto"
         >
-          From Foundation at 174 Hz to Source at 1111 Hz, each Gate opens a new dimension of
+          From Foundation to Source, each Gate opens a new dimension of
           creative mastery. Guided by the Ten Guardians and their Godbeasts, the journey is not a
           curriculum — it is a transformation.
         </m.p>
@@ -799,7 +787,6 @@ function GatesHero() {
           {[
             { value: '10', label: 'Gates' },
             { value: '10', label: 'Guardians' },
-            { value: '174 – 1111', label: 'Hz Range' },
             { value: '5', label: 'Magic Ranks' },
           ].map((stat) => (
             <div key={stat.label} className="text-center">

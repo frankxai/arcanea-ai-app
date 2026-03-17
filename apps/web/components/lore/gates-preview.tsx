@@ -98,7 +98,6 @@ export function GatesPreview() {
 
                   <h4 className="font-display font-semibold text-sm mb-0.5">{gate.name}</h4>
                   <p className="text-xs text-text-muted mb-1">{gate.guardian}</p>
-                  <p className="text-xs text-atlantean-teal-aqua font-mono mb-2">{gate.frequency}</p>
 
                   {/* Tooltip on hover/tap */}
                   <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-40 sm:w-48 p-3 rounded-lg bg-cosmic-deep border border-white/[0.12] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20 shadow-lg text-xs sm:text-sm">

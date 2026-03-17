@@ -89,7 +89,7 @@ export function GuardiansPreview() {
                     sizes="48px"
                     quality={75}
                     loading="lazy"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover object-[center_40%]"
                   />
                 </div>
 
@@ -97,7 +97,6 @@ export function GuardiansPreview() {
                 <div className="relative">
                   <h3 className="font-display font-bold text-lg mb-1">{guardian.name}</h3>
                   <p className="text-sm text-text-muted mb-2">{guardian.gate} Gate</p>
-                  <p className="text-xs text-atlantean-teal-aqua font-mono">{guardian.frequency}</p>
                 </div>
 
                 {/* Hover reveal — CSS only */}

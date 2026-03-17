@@ -255,10 +255,6 @@ export function GuardiansGrid() {
                     {/* Meta */}
                     <div className="flex flex-wrap gap-4 text-sm">
                       <div>
-                        <span className="text-text-muted">Frequency:</span>
-                        <span className="ml-2 text-atlantean-teal-aqua font-mono">{guardian.frequency}</span>
-                      </div>
-                      <div>
                         <span className="text-text-muted">Element:</span>
                         <span className="ml-2 text-white">{guardian.element}</span>
                       </div>

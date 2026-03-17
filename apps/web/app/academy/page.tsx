@@ -163,7 +163,6 @@ export default function AcademyPage() {
                     </div>
                     <div className="flex items-center gap-2">
                       {gate.locked && <Lock className="h-3.5 w-3.5 text-white/20" />}
-                      <span className="font-mono text-[10px] text-white/30">{gate.hz}</span>
                     </div>
                   </div>
 
