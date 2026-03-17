@@ -1,0 +1,25 @@
+{
+  "name": "@arcanea/arc",
+  "version": "0.1.0",
+  "description": "The Arc Protocol — creation genome format for AI-human co-creation",
+  "license": "SEE LICENSE IN LICENSE",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc",
+    "test": "node --test dist/test.js"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/frankxai/arcanea"
+  },
+  "homepage": "https://arcanea.ai",
+  "keywords": [
+    "arc-protocol", "creation-genome", "ai-human-cocreation",
+    "creative-lifecycle", "provenance", "arcanea", "agentic"
+  ]
+}
