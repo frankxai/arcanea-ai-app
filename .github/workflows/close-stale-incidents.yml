@@ -1,0 +1,61 @@
+name: Close Stale Incident Issues
+
+on:
+  workflow_dispatch:
+
+jobs:
+  close-incidents:
+    name: Close All Auto-Generated Incident Issues
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Close stale deployment incident issues
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const PER_PAGE = 100;
+            let page = 1;
+            let closed = 0;
+
+            while (true) {
+              const { data: issues } = await github.rest.issues.listForRepo({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: 'open',
+                labels: 'incident',
+                per_page: PER_PAGE,
+                page,
+              });
+
+              if (issues.length === 0) break;
+
+              for (const issue of issues) {
+                await github.rest.issues.update({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  state: 'closed',
+                  state_reason: 'not_planned',
+                });
+
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  body: 'Closed by automated cleanup. The workflow that generated these issues has been fixed to use workflow summaries instead of auto-creating issues.',
+                });
+
+                closed++;
+              }
+
+              if (issues.length < PER_PAGE) break;
+              page++;
+            }
+
+            console.log(`Closed ${closed} stale incident issues.`);
+
+            await core.summary
+              .addHeading('Incident Cleanup Complete')
+              .addRaw(`Closed **${closed}** stale incident issues.`)
+              .write();
