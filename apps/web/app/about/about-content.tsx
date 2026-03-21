@@ -100,8 +100,8 @@ export function AboutContent() {
             transition={{ delay: 0.3 }}
             className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto leading-relaxed"
           >
-            Chat with AI. Build fantasy worlds. Share what you make.
-            Turn imagination into products.
+            Creative Superintelligence — where creators and AI build together.
+            16 specialized minds. 190K words of philosophy. Open source.
           </m.p>
 
           <m.p
@@ -110,10 +110,10 @@ export function AboutContent() {
             transition={{ delay: 0.4 }}
             className="text-base text-text-muted max-w-2xl mx-auto mt-6 leading-relaxed"
           >
-            Arcanea is a living ecosystem where creators chat with AI, build
-            fantasy worlds, contribute to an open-source civilization, and
-            turn imagination into products. 190K+ words of creative philosophy.
-            Open source. Free to start.
+            Arcanea is a creative superintelligence — 16 specialized AI minds
+            trained on 190K words of original creative philosophy, a three-layer
+            intelligence architecture, and an open-source ecosystem of 27
+            repositories. Not a chatbot. A creative operating system.
           </m.p>
 
           <m.div
@@ -143,11 +143,11 @@ export function AboutContent() {
         <div className="max-w-5xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6">
             {[
-              { value: "190K+", label: "Words in the Library" },
-              { value: "17", label: "Library collections" },
-              { value: "10", label: "Gates of mastery" },
-              { value: "16", label: "Creative partners" },
-              { value: "27", label: "Open source repos" },
+              { value: "190K+", label: "Words of Intelligence" },
+              { value: "17", label: "Knowledge Collections" },
+              { value: "10", label: "Mastery Gates" },
+              { value: "16", label: "AI Intelligences" },
+              { value: "27", label: "Open Source Repos" },
             ].map((stat, i) => (
               <m.div
                 key={stat.label}
@@ -165,6 +165,106 @@ export function AboutContent() {
                 </p>
               </m.div>
             ))}
+          </div>
+        </div>
+      </AnimatedSection>
+
+      {/* ── Section 1.75: Our Intelligence ────────────────────────────── */}
+      <AnimatedSection className="pb-24 relative">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <p className="text-xs font-mono tracking-[0.3em] uppercase text-[#00bcd4]/50 mb-4">
+              Architecture
+            </p>
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+              Our Intelligence
+            </h2>
+            <p className="text-text-secondary max-w-2xl mx-auto leading-relaxed">
+              Not a wrapper around GPT. A purpose-built creative intelligence
+              system with proprietary knowledge, specialized agents, and a
+              three-layer architecture.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6 mb-8">
+            <div className="p-6 rounded-2xl liquid-glass border border-[#00bcd4]/20">
+              <div className="w-10 h-10 rounded-xl bg-[#00bcd4]/10 flex items-center justify-center mb-4">
+                <span className="text-[#00bcd4] font-display font-bold text-sm">16</span>
+              </div>
+              <h3 className="text-lg font-display font-semibold mb-2">
+                Specialized AI Intelligences
+              </h3>
+              <p className="text-sm text-text-secondary leading-relaxed">
+                Each trained on a specific creative domain — writing, research,
+                design, music, code, strategy, and world-building. Not one
+                general AI. Sixteen specialized minds.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl liquid-glass border border-[#ffd700]/20">
+              <div className="w-10 h-10 rounded-xl bg-[#ffd700]/10 flex items-center justify-center mb-4">
+                <span className="text-[#ffd700] font-display font-bold text-sm">190K</span>
+              </div>
+              <h3 className="text-lg font-display font-semibold mb-2">
+                Words of Creative Philosophy
+              </h3>
+              <p className="text-sm text-text-secondary leading-relaxed">
+                The knowledge foundation that trains every AI in the system.
+                Original philosophy grounded in consciousness, creativity, and
+                transformation — not scraped data.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl liquid-glass border border-[#0d47a1]/20">
+              <div className="w-10 h-10 rounded-xl bg-[#0d47a1]/10 flex items-center justify-center mb-4">
+                <span className="text-[#0d47a1] font-display font-bold text-sm">3</span>
+              </div>
+              <h3 className="text-lg font-display font-semibold mb-2">
+                Three-Layer Architecture
+              </h3>
+              <p className="text-sm text-text-secondary leading-relaxed">
+                Starlight Intelligence (memory + learning) feeds Intelligence OS
+                (orchestration + routing), which powers the Platform (creation
+                tools you interact with).
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl liquid-glass border border-purple-500/20">
+              <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center mb-4">
+                <span className="text-purple-400 font-display font-bold text-sm">10</span>
+              </div>
+              <h3 className="text-lg font-display font-semibold mb-2">
+                Progression Gates
+              </h3>
+              <p className="text-sm text-text-secondary leading-relaxed">
+                From Apprentice to Luminor mastery. Each Gate unlocks deeper AI
+                capabilities, specialized training, and creative power. Progress
+                earned through creation.
+              </p>
+            </div>
+          </div>
+
+          <div className="p-6 rounded-2xl liquid-glass border border-white/[0.06] text-center">
+            <h3 className="text-lg font-display font-semibold mb-3">
+              Open Source Ecosystem
+            </h3>
+            <p className="text-sm text-text-secondary leading-relaxed max-w-2xl mx-auto mb-4">
+              27 repositories. 35 npm packages. 54 skills. Fork it, extend it,
+              build on it. The entire intelligence stack is source-available.
+            </p>
+            <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs font-mono text-white/25">
+              <span>Next.js 16</span>
+              <span className="text-white/10">·</span>
+              <span>React 19</span>
+              <span className="text-white/10">·</span>
+              <span>Supabase</span>
+              <span className="text-white/10">·</span>
+              <span>Vercel</span>
+              <span className="text-white/10">·</span>
+              <span>Claude</span>
+              <span className="text-white/10">·</span>
+              <span>Gemini</span>
+            </div>
           </div>
         </div>
       </AnimatedSection>

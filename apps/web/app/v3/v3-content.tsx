@@ -170,7 +170,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Chat with AI. Build worlds. Share what you create.
+            The Creative Superintelligence — 16 AI minds trained on 190K words of creative philosophy, ready to imagine, build, and create with you.
           </m.p>
 
           {/* Differentiator — what makes this different */}
@@ -180,7 +180,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.25 }}
           >
-            AI that knows your world &mdash; grounded in 190K words of creative philosophy.
+            Where creators and AI build together &mdash; not generic chat, original creative intelligence.
           </m.p>
 
           {/* Chat box — THE hero element */}
@@ -200,7 +200,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.7 }}
           >
-            190K+ words of creative philosophy &middot; 17 collections &middot; Free to start
+            16 Creative Intelligences &middot; 190K+ Words of Philosophy &middot; 17 Knowledge Collections &middot; Open Source
           </m.p>
         </div>
       </m.div>

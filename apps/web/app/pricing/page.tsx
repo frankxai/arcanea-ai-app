@@ -21,9 +21,10 @@ const TIERS = [
   {
     name: "Spark",
     price: "Free",
+    subtitle: "Free Forever",
     description: "A real starting point, not a demo",
     features: [
-      "3 creative partners — writing, research, and brainstorming",
+      "3 AI Intelligences — writing, research, and brainstorming",
       "100 messages per month",
       "Browse the full Library (17 collections)",
       "Academy access through Gate 2",
@@ -38,9 +39,9 @@ const TIERS = [
     name: "Creator",
     price: "$19",
     period: "/month",
-    description: "The full creative toolkit",
+    description: "The full creative intelligence",
     features: [
-      "All 16 creative partners — writing, code, design, music, research, and more",
+      "All 16 AI Intelligences — writing, code, design, music, research, and more",
       "5,000 messages per month",
       "Full Library access with reading progress",
       "Academy progression through all 10 Gates",
@@ -57,12 +58,13 @@ const TIERS = [
     name: "Studio",
     price: "$49",
     period: "/month",
+    subtitle: "Team + API",
     description: "For teams and professional workflows",
     features: [
       "Everything in Creator",
       "5 team seats with shared workspace",
       "API access (REST + streaming)",
-      "Train custom AI partners on your content",
+      "Custom Intelligence Training on your content",
       "Direct support within 4 hours",
       "Export without Arcanea branding",
       "Usage analytics dashboard",
@@ -75,7 +77,7 @@ const TIERS = [
 ];
 
 const COMPARISON = [
-  { feature: "Creative partners", spark: "3", creator: "All 16", studio: "All 16" },
+  { feature: "AI Intelligences", spark: "3", creator: "All 16", studio: "All 16" },
   {
     feature: "Messages/month",
     spark: "100",
@@ -114,7 +116,7 @@ const COMPARISON = [
     studio: "5 included",
   },
   {
-    feature: "Custom AI partner training",
+    feature: "Custom Intelligence Training",
     spark: false,
     creator: false,
     studio: true,
@@ -145,7 +147,7 @@ const FAQs = [
   {
     question: "Is there a free trial for Creator?",
     answer:
-      "New users get a 7-day Creator trial with all 16 creative partners. No credit card required.",
+      "New users get a 7-day Creator trial with all 16 AI Intelligences. No credit card required.",
   },
   {
     question: "Do you offer student or educator pricing?",
@@ -205,8 +207,8 @@ export default function PricingPage() {
           </h1>
 
           <p className="text-xl text-text-secondary max-w-2xl mx-auto mb-6 leading-relaxed">
-            Choose the plan that fits your work.
-            Every plan includes companions, the Library, and the Academy.
+            Choose the intelligence level that fits your work.
+            Every plan includes AI intelligences, the Library, and the Academy.
           </p>
 
           <p className="text-sm text-text-muted">
@@ -233,9 +235,14 @@ export default function PricingPage() {
                 )}
 
                 <div className="mb-6">
-                  <h3 className="text-xl font-display font-semibold mb-2">
+                  <h3 className="text-xl font-display font-semibold mb-1">
                     {tier.name}
                   </h3>
+                  {(tier as any).subtitle && (
+                    <p className="text-xs font-mono text-[#00bcd4]/60 tracking-wider mb-1">
+                      {(tier as any).subtitle}
+                    </p>
+                  )}
                   <div className="flex items-baseline gap-1">
                     <span className="text-4xl font-display font-bold">
                       {tier.price}
@@ -287,6 +294,29 @@ export default function PricingPage() {
                 </Link>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* Enterprise Teaser */}
+        <section className="pb-10">
+          <div className="max-w-5xl mx-auto">
+            <div className="p-8 rounded-2xl liquid-glass border border-[#ffd700]/20 flex flex-col md:flex-row items-center justify-between gap-6">
+              <div>
+                <h3 className="text-xl font-display font-semibold mb-1">
+                  Enterprise
+                </h3>
+                <p className="text-sm text-text-secondary leading-relaxed max-w-lg">
+                  Custom-trained AI on your creative corpus. Dedicated support. Volume pricing.
+                  White-label deployment and SLA guarantees.
+                </p>
+              </div>
+              <Link
+                href="/contact"
+                className="shrink-0 px-6 py-3 rounded-xl border border-[#ffd700]/30 text-[#ffd700] font-semibold text-sm hover:bg-[#ffd700]/10 transition-all"
+              >
+                Contact Sales
+              </Link>
+            </div>
           </div>
         </section>
 
@@ -500,7 +530,7 @@ export default function PricingPage() {
                 Ready to start creating?
               </h2>
               <p className="text-lg text-text-secondary mb-10 max-w-2xl mx-auto">
-                Creative partners. A Library of 190K+ words. Tools for building worlds, stories, music, and code.
+                16 AI Intelligences. 190K+ words of creative philosophy. Tools for building worlds, stories, music, and code.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Link
