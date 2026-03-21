@@ -8,6 +8,7 @@ export const metadata: Metadata = {
     description: 'Discover automation workflows built for creators. Streamline your creative practice with intelligent pipelines powered by the Arcanea platform.',
     type: 'website',
   },
+  alternates: { canonical: '/workflows' },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

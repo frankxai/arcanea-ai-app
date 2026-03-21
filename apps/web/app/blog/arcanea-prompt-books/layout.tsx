@@ -18,6 +18,7 @@ export const metadata: Metadata = {
     description:
       "A complete cross-device prompt management system with context engineering and real-time sync.",
   },
+  alternates: { canonical: '/blog/arcanea-prompt-books' },
 };
 
 export default function Layout({ children }: { children: ReactNode }) {

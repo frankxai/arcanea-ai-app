@@ -14,6 +14,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
   },
+  alternates: { canonical: '/arcs' },
 };
 
 export default function ArcsLayout({ children }: { children: ReactNode }) {

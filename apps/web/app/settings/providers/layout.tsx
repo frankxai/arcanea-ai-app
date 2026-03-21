@@ -9,6 +9,7 @@ export const metadata: Metadata = {
     description:
       'Configure AI provider API keys for the Arcanea Intelligence Gateway.',
   },
+  alternates: { canonical: '/settings/providers' },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

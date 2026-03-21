@@ -15,6 +15,7 @@ export const metadata: Metadata = {
     description:
       "Your feedback shapes the living mythology. Help us build the future of AI-powered creation.",
   },
+  alternates: { canonical: '/feedback' },
 };
 
 export default function FeedbackLayout({

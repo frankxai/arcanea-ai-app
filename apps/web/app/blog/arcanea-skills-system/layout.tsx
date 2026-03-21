@@ -18,6 +18,7 @@ export const metadata: Metadata = {
     description:
       "28 skills, 7 Luminor guides, and a complete creative methodology for Claude Code.",
   },
+  alternates: { canonical: '/blog/arcanea-skills-system' },
 };
 
 export default function Layout({ children }: { children: ReactNode }) {

@@ -7,6 +7,7 @@ export const metadata: Metadata = {
     title: 'Image Studio',
     description: 'Generate images with AI-powered creation tools.',
   },
+  alternates: { canonical: '/studio/image' },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

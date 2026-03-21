@@ -7,6 +7,7 @@ export const metadata: Metadata = {
     title: 'Chat Demo',
     description: 'Try a live conversation with an Arcanea companion.',
   },
+  alternates: { canonical: '/chat-demo' },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

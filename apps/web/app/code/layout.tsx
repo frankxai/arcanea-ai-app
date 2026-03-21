@@ -11,6 +11,7 @@ export const metadata: Metadata = {
       '"Imperfection that creates endlessly is indistinguishable from God." — The root philosophy behind every Arcanean creation.',
     type: 'website',
   },
+  alternates: { canonical: '/code' },
 };
 
 export default function CodeLayout({ children }: { children: ReactNode }) {

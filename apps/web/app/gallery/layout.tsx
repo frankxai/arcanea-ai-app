@@ -11,6 +11,7 @@ export const metadata: Metadata = {
       'Explore creations channeled through the Ten Gates and Five Elements by creators of every rank.',
     type: 'website',
   },
+  alternates: { canonical: '/gallery' },
 };
 
 export default function GalleryLayout({ children }: { children: ReactNode }) {

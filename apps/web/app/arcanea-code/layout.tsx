@@ -7,6 +7,7 @@ export const metadata: Metadata = {
     title: 'Arcanea Code | AI-Powered Development',
     description: 'Build smarter with Arcanea Code — AI-powered development tools designed for creative developers.',
   },
+  alternates: { canonical: '/arcanea-code' },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

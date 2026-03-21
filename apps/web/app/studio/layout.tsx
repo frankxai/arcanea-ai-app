@@ -9,6 +9,7 @@ export const metadata: Metadata = {
     description: "Write, design, compose, and code in one workspace.",
     type: "website",
   },
+  alternates: { canonical: '/studio' },
 };
 
 export default function StudioLayout({

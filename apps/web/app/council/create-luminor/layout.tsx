@@ -9,6 +9,7 @@ export const metadata: Metadata = {
     description:
       "Design a custom advisor for your Luminor Council.",
   },
+  alternates: { canonical: '/council/create-luminor' },
 };
 
 export default function CreateLuminorLayout({

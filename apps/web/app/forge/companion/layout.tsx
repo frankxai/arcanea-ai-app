@@ -9,6 +9,7 @@ export const metadata: Metadata = {
     description:
       'Summon a bonded creature from 16 elemental archetypes on Arcanea.',
   },
+  alternates: { canonical: '/forge/companion' },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

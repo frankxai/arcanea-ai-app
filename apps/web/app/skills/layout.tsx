@@ -7,6 +7,7 @@ export const metadata: Metadata = {
     title: 'Skills & Abilities',
     description: 'Discover and master creative skills across the Ten Gates. Track your abilities and unlock new powers.',
   },
+  alternates: { canonical: '/skills' },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

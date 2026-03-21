@@ -9,6 +9,7 @@ export const metadata: Metadata = {
     description:
       'Browse the full collection of Luminor intelligences on Arcanea.',
   },
+  alternates: { canonical: '/gallery/luminors' },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

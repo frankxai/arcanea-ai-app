@@ -9,6 +9,7 @@ export const metadata: Metadata = {
     description:
       "Cinematic vessel art across space, sea, sky, and void. Design your ship, share it with the community.",
   },
+  alternates: { canonical: '/gallery/forge' },
 };
 
 export default function ForgeLayout({

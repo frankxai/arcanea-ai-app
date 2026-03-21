@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     images: ['/guardians/v3/shinkami-hero-v3.webp'],
   },
+  alternates: { canonical: '/lore' },
 };
 
 export default function LoreLayout({ children }: { children: ReactNode }) {

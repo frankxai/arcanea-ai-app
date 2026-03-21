@@ -10,6 +10,7 @@ export const metadata: Metadata = {
     description:
       "Nine specialized AI advisors. One strategic mind. Build your Council.",
   },
+  alternates: { canonical: '/council' },
 };
 
 export default function CouncilLayout({ children }: { children: ReactNode }) {

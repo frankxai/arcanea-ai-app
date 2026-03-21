@@ -8,6 +8,7 @@ export const metadata: Metadata = {
     description: 'Reach the Arcanea team for support, partnerships, or general inquiries. We are building the future of creative intelligence together.',
     type: 'website',
   },
+  alternates: { canonical: '/contact' },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

@@ -15,6 +15,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     images: ['/guardians/v3/ino-hero-v3.webp'],
   },
+  alternates: { canonical: '/sanctum' },
 };
 
 export default function SanctumLayout({ children }: { children: React.ReactNode }) {

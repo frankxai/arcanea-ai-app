@@ -7,6 +7,7 @@ export const metadata: Metadata = {
     title: 'Get Started',
     description: 'Choose what you create, find your AI creative partner, and get started on Arcanea.',
   },
+  alternates: { canonical: '/onboarding' },
 }
 
 export default function OnboardingLayout({ children }: { children: React.ReactNode }) {

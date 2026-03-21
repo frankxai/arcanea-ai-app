@@ -7,6 +7,7 @@ export const metadata: Metadata = {
     title: 'Create | Community',
     description: 'Share a new creation with the Arcanea community.',
   },
+  alternates: { canonical: '/community/create' },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

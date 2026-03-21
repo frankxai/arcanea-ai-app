@@ -7,6 +7,7 @@ export const metadata: Metadata = {
     title: 'Gate Quiz | Academy',
     description: 'Test your mastery of the Ten Gates of Creation.',
   },
+  alternates: { canonical: '/academy/gate-quiz' },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

@@ -7,6 +7,7 @@ export const metadata: Metadata = {
     title: 'Arcanea OS',
     description: 'The Agentic Creator Operating System — orchestrate AI agents for creative workflows.',
   },
+  alternates: { canonical: '/arcanea-os' },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     images: ['/guardians/v3/draconia-hero-v3.webp'],
   },
+  alternates: { canonical: '/forge' },
 };
 
 export default function ForgeLayout({ children }: { children: ReactNode }) {

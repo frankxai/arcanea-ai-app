@@ -7,6 +7,7 @@ export const metadata: Metadata = {
     title: 'Dashboard',
     description: 'Your creative command center on Arcanea.',
   },
+  alternates: { canonical: '/dashboard' },
 }
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {

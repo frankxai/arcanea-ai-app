@@ -11,6 +11,7 @@ export const metadata: Metadata = {
       '17 collections of original wisdom — from Laws of Creation to the Book of Shadows. Equipment for living.',
     type: 'website',
   },
+  alternates: { canonical: '/library' },
 };
 
 export default function LibraryLayout({ children }: { children: ReactNode }) {

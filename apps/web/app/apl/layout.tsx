@@ -9,6 +9,7 @@ export const metadata: Metadata = {
     description: 'The three-word system that eliminates AI slop. Works on Claude, GPT, Gemini, Grok, Midjourney, Suno.',
     url: 'https://arcanea.ai/apl',
   },
+  alternates: { canonical: '/apl' },
 };
 
 export default function APLLayout({ children }: { children: React.ReactNode }) {

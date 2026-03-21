@@ -7,6 +7,7 @@ export const metadata: Metadata = {
     title: 'Install — Get Started',
     description: 'Install the Arcanea platform, CLI tools, and companion apps to begin your creative journey.',
   },
+  alternates: { canonical: '/install' },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

@@ -11,6 +11,7 @@ export const metadata: Metadata = {
       'Forge a unique AI companion. Choose an archetype aligned with the Five Elements, customize its personality, and bring it to life.',
     type: 'website',
   },
+  alternates: { canonical: '/companions/forge' },
 };
 
 export default function ForgeLayout({ children }: { children: ReactNode }) {

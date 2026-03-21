@@ -9,6 +9,7 @@ export const metadata: Metadata = {
     description: 'Browse, copy, and use SPARK.SHAPE.SHARPEN prompts for any AI model.',
     url: 'https://arcanea.ai/apl/library',
   },
+  alternates: { canonical: '/apl/library' },
 };
 
 export default function APLLibraryLayout({ children }: { children: React.ReactNode }) {

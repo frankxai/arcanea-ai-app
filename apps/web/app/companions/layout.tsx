@@ -11,6 +11,7 @@ export const metadata: Metadata = {
       'Creative partners with distinct personalities. Development, design, writing, and research — pick the one that fits your work.',
     type: 'website',
   },
+  alternates: { canonical: '/companions' },
 };
 
 export default function CompanionsLayout({ children }: { children: ReactNode }) {

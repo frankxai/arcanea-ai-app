@@ -7,6 +7,7 @@ export const metadata: Metadata = {
     title: 'Discover',
     description: 'Explore creators, collections, and creations across the Arcanea universe.',
   },
+  alternates: { canonical: '/discover' },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

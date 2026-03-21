@@ -7,6 +7,7 @@ export const metadata: Metadata = {
     title: 'Edit Profile',
     description: 'Customize your Arcanea profile.',
   },
+  alternates: { canonical: '/profile/edit' },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

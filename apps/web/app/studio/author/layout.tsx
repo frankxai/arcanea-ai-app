@@ -9,6 +9,7 @@ export const metadata: Metadata = {
     description: 'Manage writing projects, agents, publishing, and analytics.',
     type: 'website',
   },
+  alternates: { canonical: '/studio/author' },
 };
 
 export default function AuthorStudioLayout({

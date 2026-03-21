@@ -9,6 +9,7 @@ export const metadata: Metadata = {
     description:
       'Shape a Luminor intelligence to think and create alongside you on Arcanea.',
   },
+  alternates: { canonical: '/forge/luminor' },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

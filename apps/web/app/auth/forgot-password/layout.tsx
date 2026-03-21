@@ -7,6 +7,7 @@ export const metadata: Metadata = {
     title: 'Reset Password',
     description: 'Reset your Arcanea account password.',
   },
+  alternates: { canonical: '/auth/forgot-password' },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

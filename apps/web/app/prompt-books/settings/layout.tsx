@@ -7,6 +7,7 @@ export const metadata: Metadata = {
     title: 'Settings | Prompt Books — Arcanea',
     description: 'Configure your Prompt Books preferences on Arcanea.',
   },
+  alternates: { canonical: '/prompt-books/settings' },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

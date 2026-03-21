@@ -9,6 +9,7 @@ export const metadata: Metadata = {
     description:
       "Design immersive creative worlds with AI. Geography, cultures, magic systems, and lore — all in one builder.",
   },
+  alternates: { canonical: '/world-builder' },
 };
 
 export default function WorldBuilderLayout({

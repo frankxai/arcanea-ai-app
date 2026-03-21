@@ -9,6 +9,7 @@ export const metadata: Metadata = {
     description:
       "Map your creative vision, set goals, and track your journey through the Ten Gates of Arcanea.",
   },
+  alternates: { canonical: '/vision-board' },
 };
 
 export default function VisionBoardLayout({

@@ -10,6 +10,7 @@ export const metadata: Metadata = {
     description:
       "Run a session with your Council. Nine advisors, one strategic mind.",
   },
+  alternates: { canonical: '/council/convening' },
 };
 
 export default function ConveningLayout({

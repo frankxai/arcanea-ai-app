@@ -8,6 +8,7 @@ export const metadata: Metadata = {
     title: 'Prompt Books',
     description: 'Cross-device AI prompt management with context engineering.',
   },
+  alternates: { canonical: '/prompt-books' },
 }
 
 export default function PromptBooksLayout({ children }: { children: ReactNode }) {

@@ -9,6 +9,7 @@ export const metadata: Metadata = {
     description:
       "Build interconnected universes with consistent canon, timelines, and cross-world lore for epic storytelling.",
   },
+  alternates: { canonical: '/universe-builder' },
 };
 
 export default function UniverseBuilderLayout({

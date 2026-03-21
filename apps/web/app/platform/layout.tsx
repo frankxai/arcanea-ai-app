@@ -8,6 +8,7 @@ export const metadata: Metadata = {
     description: 'Explore the Arcanea platform architecture: AI companions, the Ten Gates progression system, and tools that turn creative vision into reality.',
     type: 'website',
   },
+  alternates: { canonical: '/platform' },
 };
 
 export default function PlatformLayout({ children }: { children: React.ReactNode }) {

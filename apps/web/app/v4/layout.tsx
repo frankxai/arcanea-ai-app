@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   description:
     'The fourth-generation Arcanea homepage design — preserved as a reference for the evolution of the platform.',
   robots: { index: false },
+  alternates: { canonical: '/v4' },
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

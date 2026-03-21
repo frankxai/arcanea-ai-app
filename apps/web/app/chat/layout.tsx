@@ -13,6 +13,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     images: ['/guardians/v3/elara-hero-v3.webp'],
   },
+  alternates: { canonical: '/chat' },
 };
 
 export default function ChatLayout({ children }: { children: React.ReactNode }) {

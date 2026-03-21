@@ -19,6 +19,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     images: ['/guardians/v3/aiyami-hero-v3.webp'],
   },
+  alternates: { canonical: '/academy' },
 };
 
 const jsonLd = {
