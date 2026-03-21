@@ -101,7 +101,7 @@ export const createStreamResponse = (stream: StreamTextResult): Response => {
 export const createImagenProvider = (config: { apiKey?: string }) => {
   return {
     generateImage: async (prompt: string, options?: ImageGenerationOptions): Promise<GeneratedImage> => {
-      console.warn("Imagen Provider is still a STUB - connect to Gemini 2.5 Flash Image (Nano Banana)");
+      if (process.env.NODE_ENV === 'development') console.warn("Imagen Provider is still a STUB");
       return {
         id: `stub-${Date.now()}`,
         url: "https://placehold.co/1024x1024/1a2332/e6eefc?text=Imagen+Stub",
@@ -113,7 +113,7 @@ export const createImagenProvider = (config: { apiKey?: string }) => {
       };
     },
     editImage: async (imageUrl: string, prompt: string, options?: ImageGenerationOptions): Promise<GeneratedImage> => {
-      console.warn("Imagen Edit is still a STUB");
+      if (process.env.NODE_ENV === 'development') console.warn("Imagen Edit is still a STUB");
       return {
         id: `stub-edit-${Date.now()}`,
         url: "https://placehold.co/1024x1024/1a2332/e6eefc?text=Edited+Image+Stub",
@@ -125,7 +125,7 @@ export const createImagenProvider = (config: { apiKey?: string }) => {
       };
     },
     generateVariations: async (prompt: string, count: number, options?: ImageGenerationOptions): Promise<GeneratedImage[]> => {
-      console.warn("Imagen Variations is still a STUB");
+      if (process.env.NODE_ENV === 'development') console.warn("Imagen Variations is still a STUB");
       return Array.from({ length: count }, (_, i) => ({
         id: `stub-var-${Date.now()}-${i}`,
         url: "https://placehold.co/1024x1024/1a2332/e6eefc?text=Variation+Stub",
@@ -142,7 +142,7 @@ export const createImagenProvider = (config: { apiKey?: string }) => {
 export const createVeoProvider = (config: { apiKey?: string }) => {
   return {
     generateVideo: async (prompt: string, options?: VideoGenerationOptions): Promise<GeneratedVideo> => {
-      console.warn("Veo Provider is still a STUB");
+      if (process.env.NODE_ENV === 'development') console.warn("Veo Provider is still a STUB");
       return {
         id: 'mock-video-id',
         url: "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4",
