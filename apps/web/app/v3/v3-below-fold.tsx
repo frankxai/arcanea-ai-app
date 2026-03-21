@@ -814,11 +814,13 @@ function GalleryShowcase() {
                     src={img.src}
                     alt={img.name}
                     fill
-                    className="object-cover group-hover:scale-[1.06] transition-transform duration-700"
+                    className="object-cover object-[center_40%] group-hover:scale-[1.06] transition-transform duration-700"
                     sizes="320px"
                   />
+                  {/* Top gradient to mask infographic labels */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-transparent z-[1]" />
                   {/* Gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent z-[1]" />
                   {/* Iridescent edge on hover */}
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[linear-gradient(135deg,rgba(0,188,212,0.06)_0%,transparent_40%,transparent_60%,rgba(13,71,161,0.06)_100%)]" />
                   {/* Caption */}
@@ -916,11 +918,13 @@ function GuardianShowcase() {
                     src={g.image}
                     alt={g.name}
                     fill
-                    className="object-cover group-hover:scale-[1.05] transition-transform duration-700"
+                    className="object-cover object-[center_40%] group-hover:scale-[1.05] transition-transform duration-700"
                     sizes="(max-width: 640px) 50vw, 33vw"
                   />
+                  {/* Top gradient to mask infographic labels */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-transparent z-[1]" />
                   {/* Multi-gradient overlay for depth */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/5" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent z-[1]" />
                   {/* Accent color wash on hover */}
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
