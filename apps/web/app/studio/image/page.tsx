@@ -3,6 +3,7 @@
 import React, { useState, useRef } from 'react';
 import { LazyMotion, domAnimation, m, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import { createClient } from '@/lib/supabase/client';
 import {
   PhArrowLeft,
   PhSparkle,
@@ -18,6 +19,7 @@ import {
   PhCheck,
   PhCaretDown,
   PhFlame,
+  PhWarning,
 } from '@/lib/phosphor-icons';
 
 // Style presets aligned with Arcanea aesthetics
@@ -65,6 +67,7 @@ export default function ImageForgePage() {
   const [selectedImage, setSelectedImage] = useState<GeneratedImage | null>(null);
   const [showSettings, setShowSettings] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -72,24 +75,69 @@ export default function ImageForgePage() {
     if (!prompt.trim() || isGenerating) return;
 
     setIsGenerating(true);
+    setError(null);
 
-    // Simulate API call - in production, this would call your image generation API
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    try {
+      // Get auth token for the API call
+      const supabase = createClient();
+      const { data: { session } } = await supabase.auth.getSession();
 
-    // Mock generated image - replace with actual API response
-    const newImage: GeneratedImage = {
-      id: Date.now().toString(),
-      // Using placeholder - in production, use actual generated image URL
-      url: `https://picsum.photos/seed/${Date.now()}/1024/1024`,
-      prompt: prompt,
-      style: selectedStyle,
-      aspectRatio: selectedRatio,
-      timestamp: new Date(),
-    };
+      if (!session?.access_token) {
+        setError('Please sign in to generate images.');
+        setIsGenerating(false);
+        return;
+      }
 
-    setGeneratedImages((prev) => [newImage, ...prev]);
-    setSelectedImage(newImage);
-    setIsGenerating(false);
+      // Resolve aspect ratio to width/height for the API
+      const ratio = ASPECT_RATIOS.find((r) => r.id === selectedRatio);
+
+      const response = await fetch('/api/ai/generate-image', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({
+          prompt: prompt.trim(),
+          style: selectedStyle,
+          width: ratio?.width ?? 1024,
+          height: ratio?.height ?? 1024,
+          operation: 'generate',
+        }),
+      });
+
+      if (!response.ok) {
+        const errBody = await response.json().catch(() => ({}));
+        throw new Error(errBody.error || `Generation failed (${response.status})`);
+      }
+
+      const data = await response.json();
+
+      if (!data.success || !data.images?.length) {
+        throw new Error('No images returned from the API.');
+      }
+
+      // Map API response to our GeneratedImage format
+      const newImages: GeneratedImage[] = data.images.map(
+        (img: { id?: string; url: string; storageUrl?: string }) => ({
+          id: img.id || Date.now().toString(),
+          url: img.storageUrl || img.url,
+          prompt: prompt.trim(),
+          style: selectedStyle,
+          aspectRatio: selectedRatio,
+          timestamp: new Date(),
+        })
+      );
+
+      setGeneratedImages((prev) => [...newImages, ...prev]);
+      setSelectedImage(newImages[0]);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Image generation failed. Please try again.';
+      setError(message);
+      console.error('Image generation error:', err);
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   const handleQuickPrompt = (quickPrompt: string) => {
@@ -255,6 +303,29 @@ export default function ImageForgePage() {
                 )}
               </AnimatePresence>
             </div>
+
+            {/* Error display */}
+            <AnimatePresence>
+              {error && (
+                <m.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="flex items-start gap-3 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-300"
+                >
+                  <PhWarning className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                  <div className="flex-1">
+                    <p className="text-sm">{error}</p>
+                  </div>
+                  <button
+                    onClick={() => setError(null)}
+                    className="text-red-400 hover:text-red-300 text-xs"
+                  >
+                    Dismiss
+                  </button>
+                </m.div>
+              )}
+            </AnimatePresence>
 
             {/* Generated images gallery */}
             {generatedImages.length > 0 && (

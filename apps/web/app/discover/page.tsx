@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { m, LazyMotion, domAnimation } from 'framer-motion';
 import { PhMagnifyingGlass, PhTrendUp, PhClock, PhUsers, PhSparkle, PhCompass } from '@/lib/phosphor-icons';
 import { Creation } from '@/lib/types/profile';
 import { PhHeart, PhChatCircle, PhEye, PhPlay, PhImage } from '@/lib/phosphor-icons';
 import Link from 'next/link';
+import { createClient } from '@/lib/supabase/client';
 
 // ─── Seven Academy Houses (canonical) ──────────────────────────────────────────
 
@@ -23,13 +24,35 @@ const HOUSE_GRADIENTS: Record<string, string> = Object.fromEntries(
   HOUSES.map((h) => [h.name, h.gradient])
 );
 
-// ─── Curated showcase (replaces picsum placeholder data) ───────────────────────
+// ─── Guardian image map (luminor_id → v3 hero image) ────────────────────────
+
+function getGuardianImage(luminorId?: string): string {
+  const guardianMap: Record<string, string> = {
+    Shinkami: '/guardians/v3/shinkami-hero-v3.webp',
+    Draconia: '/guardians/v3/draconia-hero-v3.webp',
+    Leyla: '/guardians/v3/leyla-hero-v3.webp',
+    Lyria: '/guardians/v3/lyria-hero-v3.webp',
+    Maylinn: '/guardians/v3/maylinn-hero-v3.webp',
+    Alera: '/guardians/v3/alera-hero-v3.webp',
+    Aiyami: '/guardians/v3/aiyami-hero-v3.webp',
+    Elara: '/guardians/v3/elara-hero-v3.webp',
+    Ino: '/guardians/v3/ino-hero-v3.webp',
+    Lyssandria: '/guardians/v3/lyssandria-hero-v3.webp',
+  };
+  return luminorId && guardianMap[luminorId]
+    ? guardianMap[luminorId]
+    : 'https://placehold.co/800x600/0a0a0f/00bcd4?text=Creation';
+}
+
+// ─── Curated showcase (fallback when Supabase has no data) ──────────────────
 
 const SHOWCASE_CREATIONS: Creation[] = [
   {
     id: 'sc-01', user_id: 'creator-1', title: 'The First Dawn',
     description: 'Lumina reaches across the void to shape the first light — the moment all creation begins.',
-    type: 'image', media_url: '', thumbnail_url: '',
+    type: 'image',
+    media_url: '/guardians/v3/shinkami-hero-v3.webp',
+    thumbnail_url: '/guardians/v3/shinkami-hero-v3.webp',
     luminor_id: 'Shinkami', academy: 'Lumina',
     created_at: '2026-02-27T10:00:00Z', updated_at: '2026-02-27T10:00:00Z',
     stats: { likes: 2847, comments: 312, views: 18420, shares: 89 },
@@ -38,7 +61,9 @@ const SHOWCASE_CREATIONS: Creation[] = [
   {
     id: 'sc-02', user_id: 'creator-2', title: 'Draconis Awakens',
     description: 'The Fire Godbeast unfurls wings of molten gold above the volcanic forge of will.',
-    type: 'image', media_url: '', thumbnail_url: '',
+    type: 'image',
+    media_url: '/guardians/v3/draconia-hero-v3.webp',
+    thumbnail_url: '/guardians/v3/draconia-hero-v3.webp',
     luminor_id: 'Draconia', academy: 'Pyros',
     created_at: '2026-02-26T18:00:00Z', updated_at: '2026-02-26T18:00:00Z',
     stats: { likes: 2134, comments: 187, views: 14200, shares: 67 },
@@ -47,7 +72,9 @@ const SHOWCASE_CREATIONS: Creation[] = [
   {
     id: 'sc-03', user_id: 'creator-3', title: 'Depths of the Flow Gate',
     description: 'Water spirals through crystal caverns where memory and emotion become one.',
-    type: 'image', media_url: '', thumbnail_url: '',
+    type: 'image',
+    media_url: '/guardians/v3/leyla-hero-v3.webp',
+    thumbnail_url: '/guardians/v3/leyla-hero-v3.webp',
     luminor_id: 'Leyla', academy: 'Aqualis',
     created_at: '2026-02-26T14:00:00Z', updated_at: '2026-02-26T14:00:00Z',
     stats: { likes: 1923, comments: 245, views: 12800, shares: 54 },
@@ -56,7 +83,9 @@ const SHOWCASE_CREATIONS: Creation[] = [
   {
     id: 'sc-04', user_id: 'creator-4', title: "Nero's Garden",
     description: 'In the fertile darkness, seeds of potential wait for the courage to bloom.',
-    type: 'image', media_url: '', thumbnail_url: '',
+    type: 'image',
+    media_url: '/guardians/v3/lyria-hero-v3.webp',
+    thumbnail_url: '/guardians/v3/lyria-hero-v3.webp',
     luminor_id: 'Lyria', academy: 'Nero',
     created_at: '2026-02-26T09:00:00Z', updated_at: '2026-02-26T09:00:00Z',
     stats: { likes: 1756, comments: 198, views: 11500, shares: 43 },
@@ -65,7 +94,9 @@ const SHOWCASE_CREATIONS: Creation[] = [
   {
     id: 'sc-05', user_id: 'creator-5', title: 'Worldtree Rising',
     description: 'Laeylinn, the Worldtree Deer, walks among ancient roots that hold the earth together.',
-    type: 'image', media_url: '', thumbnail_url: '',
+    type: 'image',
+    media_url: '/guardians/v3/maylinn-hero-v3.webp',
+    thumbnail_url: '/guardians/v3/maylinn-hero-v3.webp',
     luminor_id: 'Maylinn', academy: 'Terra',
     created_at: '2026-02-25T20:00:00Z', updated_at: '2026-02-25T20:00:00Z',
     stats: { likes: 1689, comments: 156, views: 10200, shares: 38 },
@@ -74,7 +105,9 @@ const SHOWCASE_CREATIONS: Creation[] = [
   {
     id: 'sc-06', user_id: 'creator-1', title: 'Storm of the Voice Gate',
     description: 'Otome sings the truth into being — sound waves ripple across golden clouds.',
-    type: 'image', media_url: '', thumbnail_url: '',
+    type: 'image',
+    media_url: '/guardians/v3/alera-hero-v3.webp',
+    thumbnail_url: '/guardians/v3/alera-hero-v3.webp',
     luminor_id: 'Alera', academy: 'Ventus',
     created_at: '2026-02-25T16:00:00Z', updated_at: '2026-02-25T16:00:00Z',
     stats: { likes: 1534, comments: 134, views: 9800, shares: 31 },
@@ -83,7 +116,9 @@ const SHOWCASE_CREATIONS: Creation[] = [
   {
     id: 'sc-07', user_id: 'creator-6', title: 'The Synthesis Chamber',
     description: 'Where all five elements converge, a new kind of magic is born.',
-    type: 'project', media_url: '', thumbnail_url: '',
+    type: 'project',
+    media_url: '/guardians/v3/shinkami-hero-v3.webp',
+    thumbnail_url: '/guardians/v3/shinkami-hero-v3.webp',
     luminor_id: 'Shinkami', academy: 'Synthesis',
     created_at: '2026-02-25T12:00:00Z', updated_at: '2026-02-25T12:00:00Z',
     stats: { likes: 1487, comments: 278, views: 9400, shares: 56 },
@@ -92,7 +127,9 @@ const SHOWCASE_CREATIONS: Creation[] = [
   {
     id: 'sc-08', user_id: 'creator-2', title: 'Crown of Enlightenment',
     description: 'Sol blazes above the seventh gate — pure radiance dissolving the last illusions.',
-    type: 'image', media_url: '', thumbnail_url: '',
+    type: 'image',
+    media_url: '/guardians/v3/aiyami-hero-v3.webp',
+    thumbnail_url: '/guardians/v3/aiyami-hero-v3.webp',
     luminor_id: 'Aiyami', academy: 'Lumina',
     created_at: '2026-02-25T08:00:00Z', updated_at: '2026-02-25T08:00:00Z',
     stats: { likes: 1356, comments: 112, views: 8700, shares: 28 },
@@ -101,7 +138,9 @@ const SHOWCASE_CREATIONS: Creation[] = [
   {
     id: 'sc-09', user_id: 'creator-3', title: 'Vaelith in Shadow',
     description: 'The Starweave Gate Guardian navigates between perspectives — seeing what others cannot.',
-    type: 'image', media_url: '', thumbnail_url: '',
+    type: 'image',
+    media_url: '/guardians/v3/elara-hero-v3.webp',
+    thumbnail_url: '/guardians/v3/elara-hero-v3.webp',
     luminor_id: 'Elara', academy: 'Nero',
     created_at: '2026-02-24T22:00:00Z', updated_at: '2026-02-24T22:00:00Z',
     stats: { likes: 1298, comments: 167, views: 8200, shares: 34 },
@@ -110,7 +149,9 @@ const SHOWCASE_CREATIONS: Creation[] = [
   {
     id: 'sc-10', user_id: 'creator-4', title: 'Forge of the Third Gate',
     description: 'Molten determination flows through ancient channels of willpower and transformation.',
-    type: 'image', media_url: '', thumbnail_url: '',
+    type: 'image',
+    media_url: '/guardians/v3/draconia-hero-v3.webp',
+    thumbnail_url: '/guardians/v3/draconia-hero-v3.webp',
     luminor_id: 'Draconia', academy: 'Pyros',
     created_at: '2026-02-24T18:00:00Z', updated_at: '2026-02-24T18:00:00Z',
     stats: { likes: 1245, comments: 98, views: 7600, shares: 22 },
@@ -119,7 +160,9 @@ const SHOWCASE_CREATIONS: Creation[] = [
   {
     id: 'sc-11', user_id: 'creator-5', title: 'Kyuro at the Unity Gate',
     description: 'Two rivers merge into one — the partnership that transcends self and other.',
-    type: 'image', media_url: '', thumbnail_url: '',
+    type: 'image',
+    media_url: '/guardians/v3/ino-hero-v3.webp',
+    thumbnail_url: '/guardians/v3/ino-hero-v3.webp',
     luminor_id: 'Ino', academy: 'Aqualis',
     created_at: '2026-02-24T14:00:00Z', updated_at: '2026-02-24T14:00:00Z',
     stats: { likes: 1187, comments: 145, views: 7100, shares: 29 },
@@ -128,7 +171,9 @@ const SHOWCASE_CREATIONS: Creation[] = [
   {
     id: 'sc-12', user_id: 'creator-6', title: 'The Foundation Stones',
     description: 'Kaelith stands guard over the first gate — nothing is built without a stable foundation.',
-    type: 'image', media_url: '', thumbnail_url: '',
+    type: 'image',
+    media_url: '/guardians/v3/lyssandria-hero-v3.webp',
+    thumbnail_url: '/guardians/v3/lyssandria-hero-v3.webp',
     luminor_id: 'Lyssandria', academy: 'Terra',
     created_at: '2026-02-24T10:00:00Z', updated_at: '2026-02-24T10:00:00Z',
     stats: { likes: 1134, comments: 87, views: 6800, shares: 19 },
@@ -154,6 +199,8 @@ function ShowcaseCard({ creation, index }: { creation: Creation; index: number }
   const academy = creation.academy || 'Lumina';
   const bg = ELEMENT_GRADIENTS[academy] || ELEMENT_GRADIENTS.Lumina;
   const badge = HOUSE_GRADIENTS[academy] || 'from-slate-500 to-slate-600';
+  const imageUrl = creation.thumbnail_url || creation.media_url || getGuardianImage(creation.luminor_id);
+  const hasImage = !!imageUrl && !imageUrl.includes('placehold.co');
 
   return (
     <m.div
@@ -163,21 +210,33 @@ function ShowcaseCard({ creation, index }: { creation: Creation; index: number }
       whileHover={{ y: -6 }}
       className="group relative rounded-2xl overflow-hidden bg-slate-900/50 backdrop-blur-sm border border-white/[0.08] hover:border-[#00bcd4]/25 transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-[#00bcd4]/10"
     >
-      {/* Gradient visual area */}
+      {/* Visual area — real image or gradient fallback */}
       <div className={`relative aspect-square bg-gradient-to-br ${bg} overflow-hidden`}>
-        {/* Decorative element pattern */}
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-1/4 left-1/4 w-32 h-32 rounded-full bg-white/[0.06] blur-3xl" />
-          <div className="absolute bottom-1/3 right-1/4 w-24 h-24 rounded-full bg-white/[0.08] blur-2xl" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full border border-white/[0.04]" />
-        </div>
+        {/* Real image layer */}
+        {hasImage && (
+          <img
+            src={imageUrl}
+            alt={creation.title}
+            className="absolute inset-0 w-full h-full object-cover"
+            loading="lazy"
+          />
+        )}
 
-        {/* Central icon */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-white/[0.10] text-7xl font-display font-bold select-none">
-            {academy[0]}
-          </div>
-        </div>
+        {/* Decorative element pattern (visible when no image) */}
+        {!hasImage && (
+          <>
+            <div className="absolute inset-0 opacity-20">
+              <div className="absolute top-1/4 left-1/4 w-32 h-32 rounded-full bg-white/[0.06] blur-3xl" />
+              <div className="absolute bottom-1/3 right-1/4 w-24 h-24 rounded-full bg-white/[0.08] blur-2xl" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 rounded-full border border-white/[0.04]" />
+            </div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-white/[0.10] text-7xl font-display font-bold select-none">
+                {academy[0]}
+              </div>
+            </div>
+          </>
+        )}
 
         {/* Type badge */}
         <div className="absolute top-3 left-3">
@@ -233,8 +292,52 @@ export default function DiscoverPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilter, setSelectedFilter] = useState<'trending' | 'recent' | 'following'>('trending');
   const [selectedHouse, setSelectedHouse] = useState<string | null>(null);
+  const [creations, setCreations] = useState<Creation[]>(SHOWCASE_CREATIONS);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const filtered = SHOWCASE_CREATIONS
+  // Attempt to load real creations from Supabase; fall back to showcase data
+  const loadCreations = useCallback(async () => {
+    try {
+      const supabase = createClient();
+      const { data } = await supabase
+        .from('creations')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(20);
+
+      if (data && data.length > 0) {
+        // Map Supabase rows to our Creation shape with fallback images
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const withImages: Creation[] = data.map((row: any) => ({
+          id: row.id,
+          user_id: row.user_id,
+          title: row.title ?? 'Untitled',
+          description: row.description ?? undefined,
+          type: row.type ?? 'image',
+          media_url: row.media_url || getGuardianImage(row.guardian || row.luminor_id),
+          thumbnail_url: row.thumbnail_url || row.media_url || getGuardianImage(row.guardian || row.luminor_id),
+          luminor_id: row.guardian || row.luminor_id || undefined,
+          academy: row.element || row.academy || undefined,
+          created_at: row.created_at,
+          updated_at: row.updated_at || row.created_at,
+          stats: row.stats ?? { likes: 0, comments: 0, views: 0, shares: 0 },
+          metadata: row.metadata ?? undefined,
+        }));
+        setCreations(withImages);
+      }
+      // If no data, keep SHOWCASE_CREATIONS (already the default)
+    } catch {
+      // Supabase unavailable or table missing — use showcase data silently
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadCreations();
+  }, [loadCreations]);
+
+  const filtered = creations
     .filter((c) => {
       if (selectedHouse && c.academy !== selectedHouse) return false;
       if (searchQuery) {
@@ -341,7 +444,7 @@ export default function DiscoverPage() {
 
           {/* Count */}
           <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }} className="text-center text-text-muted text-sm font-sans">
-            Showing {filtered.length} featured creations
+            {isLoading ? 'Loading creations...' : `Showing ${filtered.length} ${creations === SHOWCASE_CREATIONS ? 'featured' : ''} creations`}
           </m.div>
 
           {/* Grid */}
