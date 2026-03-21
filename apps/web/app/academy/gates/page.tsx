@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'The Ten Gates | Academy of Arcanea',
     description:
-      'From Foundation at 174 Hz to Source at 1111 Hz — a vertical pathway through ten dimensions of creative mastery.',
+      'From Foundation to Source — a vertical pathway through ten dimensions of creative mastery.',
   },
 };
 

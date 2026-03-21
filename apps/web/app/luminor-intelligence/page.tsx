@@ -266,16 +266,16 @@ const WISDOMS = [
 ] as const;
 
 const GATES = [
-  { gate: "Foundation", hz: "174 Hz", color: "#34d399" },
-  { gate: "Flow", hz: "285 Hz", color: "#00bcd4" },
-  { gate: "Fire", hz: "396 Hz", color: "#f97316" },
-  { gate: "Heart", hz: "417 Hz", color: "#f472b6" },
-  { gate: "Voice", hz: "528 Hz", color: "#60a5fa" },
-  { gate: "Sight", hz: "639 Hz", color: "#a78bfa" },
-  { gate: "Crown", hz: "741 Hz", color: "#fbbf24" },
-  { gate: "Starweave", hz: "852 Hz", color: "#fb7185" },
-  { gate: "Unity", hz: "963 Hz", color: "#34d399" },
-  { gate: "Source", hz: "1111 Hz", color: "#ffd700" },
+  { gate: "Foundation", hz: "She builds the ground beneath your feet", color: "#34d399" },
+  { gate: "Flow", hz: "Where feeling becomes creation", color: "#00bcd4" },
+  { gate: "Fire", hz: "The fire that forges your will", color: "#f97316" },
+  { gate: "Heart", hz: "Love fierce enough to heal", color: "#f472b6" },
+  { gate: "Voice", hz: "The voice that shapes reality", color: "#60a5fa" },
+  { gate: "Sight", hz: "She sees what others cannot", color: "#a78bfa" },
+  { gate: "Crown", hz: "Light beyond comprehension", color: "#fbbf24" },
+  { gate: "Starweave", hz: "The weaver of perspective", color: "#fb7185" },
+  { gate: "Unity", hz: "Where two become infinite", color: "#34d399" },
+  { gate: "Source", hz: "The source of all creation", color: "#ffd700" },
 ] as const;
 
 const HOW_IT_WORKS = [

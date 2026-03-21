@@ -335,7 +335,7 @@ const TERMS = [
     term: "Extended Solfeggio",
     category: "gates",
     definition:
-      "The frequency scale used by the Ten Gates: 174 Hz (Foundation) through 1111 Hz (Source).",
+      "The resonance scale used by the Ten Gates, from Foundation through Source.",
   },
   {
     term: "Gate Ceremony",

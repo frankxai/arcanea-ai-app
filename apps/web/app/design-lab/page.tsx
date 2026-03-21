@@ -17,7 +17,7 @@ const TEAMS = [
     name: "Draconia",
     title: "The Forge",
     element: "Fire",
-    frequency: "396 Hz",
+    frequency: "The fire that forges your will",
     direction:
       "Obsidian + molten gold. Volcanic glass with inner fire. Metallic luxury.",
     color: "#d97706",
@@ -27,7 +27,7 @@ const TEAMS = [
     name: "Lyria",
     title: "The Prism",
     element: "Sight",
-    frequency: "639 Hz",
+    frequency: "She sees what others cannot",
     direction:
       "Iridescent crystal. Rainbow-refracting glass. Holographic premium.",
     color: "#ec4899",
@@ -37,7 +37,7 @@ const TEAMS = [
     name: "Leyla",
     title: "The Deep",
     element: "Water",
-    frequency: "285 Hz",
+    frequency: "Where feeling becomes creation",
     direction:
       "Ocean depth. Bioluminescent glass. Liquid surfaces with current.",
     color: "#0d9488",
@@ -47,7 +47,7 @@ const TEAMS = [
     name: "Shinkami",
     title: "The Cosmos",
     element: "Source",
-    frequency: "1111 Hz",
+    frequency: "The source of all creation",
     direction:
       "Nebula gradients. Starlight metallic shimmer. Linear-clean over cosmic depth.",
     color: "#7c3aed",
@@ -57,7 +57,7 @@ const TEAMS = [
     name: "Maylinn",
     title: "The Bloom",
     element: "Heart",
-    frequency: "417 Hz",
+    frequency: "Love fierce enough to heal",
     direction:
       "Rose gold bubble-glass. Warm lavender. Organic luxury and warmth.",
     color: "#e8b4b8",
@@ -67,7 +67,7 @@ const TEAMS = [
     name: "Elara",
     title: "The Shift",
     element: "Perspective",
-    frequency: "852 Hz",
+    frequency: "The weaver of perspective",
     direction:
       "Apple Liquid Glass variable blur. Mesh gradients. Vercel-clean with electric cyan.",
     color: "#00e5ff",
@@ -77,7 +77,7 @@ const TEAMS = [
     name: "Aiyami",
     title: "The Crown",
     element: "Enlightenment",
-    frequency: "741 Hz",
+    frequency: "Light beyond comprehension",
     direction:
       "Ultra-luxury editorial. True black + old gold. Cormorant Garamond serif. Zero effects.",
     color: "#c9a96e",
@@ -87,7 +87,7 @@ const TEAMS = [
     name: "Ino",
     title: "The Unity",
     element: "Partnership",
-    frequency: "963 Hz",
+    frequency: "Where two become infinite",
     direction:
       "Social-first live feed. Community avatars. Coral-teal-yellow social gradient.",
     color: "#ff6b6b",
@@ -97,7 +97,7 @@ const TEAMS = [
     name: "Alera",
     title: "The Voice",
     element: "Truth",
-    frequency: "528 Hz",
+    frequency: "The voice that shapes reality",
     direction:
       "Audio-visual studio. CSS waveforms. Neon green equalizer bars. Space Mono.",
     color: "#00ff87",
@@ -107,7 +107,7 @@ const TEAMS = [
     name: "Lyssandria",
     title: "The Foundation",
     element: "Earth",
-    frequency: "174 Hz",
+    frequency: "She builds the ground beneath your feet",
     direction:
       "Architectural Bauhaus. Visible grid. Sharp corners. IBM Plex Sans. Left-aligned.",
     color: "#f59e0b",

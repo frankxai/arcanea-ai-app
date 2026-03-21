@@ -118,7 +118,7 @@ Wide shot, natural light from above through missing glass panels, depth of field
     title: 'Gate Opening at Dawn',
     category: 'Images',
     before: 'Create a fantasy portal image',
-    after: `SPARK: The Gate does not open — it blooms. Stone petals unfurling like a flower made of architecture, and through the gap you see a frequency made visible: 528 Hz rendered as golden geometry
+    after: `SPARK: The Gate does not open — it blooms. Stone petals unfurling like a flower made of architecture, and through the gap you see a frequency made visible: rendered as golden geometry
 
 SHAPE: FORGE — warm stone the color of old honey, the air distorted by heat and resonance, dust motes frozen mid-spiral, the ground cracked in concentric circles
 
@@ -195,16 +195,16 @@ Solo piano, 64 BPM, largo, no quantization, room mic only, slight tape hiss, A m
   },
   {
     id: 'mus-02',
-    title: '528 Hz — The Voice Gate',
+    title: 'The Voice Gate',
     category: 'Music',
-    before: 'Make a meditation track at 528 Hz',
+    before: 'Make a meditation track for the Voice Gate',
     after: `SPARK: The frequency does not wash over you — it finds the exact crack in your chest where you have been holding something you never said, and it vibrates that crack wider until the words fall out
 
 SHAPE: FORGE — warmth that starts in the sternum and radiates, a single sustained note that shifts in overtones like light through stained glass, a heartbeat underneath at 60 BPM
 
 SHARPEN: NOT ambient wallpaper. NOT "healing frequencies." NOT new age. This is confrontational sound. It demands you listen to yourself. The comfort comes after the honesty.
 
-Drone-based, 528 Hz fundamental with natural harmonic series, processed cello sustain, binaural elements (use headphones), 12 minutes, slow evolution, no percussion.`,
+Drone-based, the fundamental tone with natural harmonic series, processed cello sustain, binaural elements (use headphones), 12 minutes, slow evolution, no percussion.`,
   },
   {
     id: 'mus-03',
@@ -261,9 +261,9 @@ SHARPEN: NOT a first contact story. It is a customer service story. The cashier 
     title: 'The Moment Before the Gate Opens',
     category: 'Scenes',
     before: 'Write about someone unlocking a magical power',
-    after: `SPARK: She has tried to open the Heart Gate for three years. The moment it finally responds, she realizes the Gate was not locked — she was. The frequency was 417 Hz the whole time. She just could not hear it over her own noise.
+    after: `SPARK: She has tried to open the Heart Gate for three years. The moment it finally responds, she realizes the Gate was not locked — she was. The frequency was there the whole time. She just could not hear it over her own noise.
 
-SHAPE: TIDE — the meditation chamber is filled with water one inch deep, every surface reflective, her heartbeat visible in the ripples, the 417 Hz tone rising from below like something breathing
+SHAPE: TIDE — the meditation chamber is filled with water one inch deep, every surface reflective, her heartbeat visible in the ripples, the tone rising from below like something breathing
 
 SHARPEN: NOT a power-up moment. NOT dramatic. NOT triumphant. It is quiet. She cries. The Gate opens because she stops trying. The most powerful moment in magic is surrender.`,
   },
@@ -383,7 +383,7 @@ SHARPEN: NOT solemn. NOT epic. It is awkward the way all retirement parties are 
     title: 'Opening Your First Gate',
     category: 'Arcanean',
     before: 'Write about someone gaining magical power',
-    after: `SPARK: The Foundation Gate at 174 Hz does not feel like power. It feels like the first time you stood up as a baby — the ground was always there, you just did not know you could trust it.
+    after: `SPARK: The Foundation Gate does not feel like power. It feels like the first time you stood up as a baby — the ground was always there, you just did not know you could trust it.
 
 SHAPE: ROOT — the resonance starts in the soles of your feet. The floor of the meditation chamber is raw stone, warm from the planet's core. You feel your own skeleton for the first time. Every bone has a name and a memory.
 

@@ -7,7 +7,6 @@ import Link from "next/link";
 import Image from "next/image";
 import {
   Sparkle,
-  MusicNote,
   Sun,
   Spiral,
   ArrowRight,
@@ -529,9 +528,8 @@ export function AboutContent() {
               The Ten Gates of Mastery
             </h3>
             <p className="text-text-muted text-center text-sm mb-8 max-w-xl mx-auto">
-              Each Gate resonates at a unique frequency of the Extended
-              Solfeggio scale (174 Hz to 1111 Hz), guarded by a God or Goddess
-              and their bonded Godbeast.
+              Each Gate is guarded by a God or Goddess and their bonded
+              Godbeast — divine keepers of the path.
             </p>
             <div className="flex flex-wrap justify-center gap-3">
               {GUARDIANS.map((g, i) => (
@@ -546,7 +544,7 @@ export function AboutContent() {
                   <span className={`font-semibold ${g.accent}`}>
                     {g.gate}
                   </span>
-                  <span className="text-text-muted ml-2">{g.frequency}</span>
+                  <span className="text-text-muted ml-2 text-xs italic">{g.frequency}</span>
                 </m.div>
               ))}
             </div>
@@ -602,18 +600,12 @@ export function AboutContent() {
                 transition={{ delay: 0.04 * i }}
                 className={`relative card-3d p-5 rounded-2xl liquid-glass border ${guardian.border} group hover:scale-[1.02] transition-transform duration-300`}
               >
-                <div className="flex items-center gap-2 mb-3">
-                  <MusicNote className={`w-4 h-4 ${guardian.accent}`} />
-                  <span className="text-xs text-text-muted font-mono">
-                    {guardian.frequency}
-                  </span>
-                </div>
+                <p className="text-xs text-text-muted font-mono tracking-wider uppercase mb-3">
+                  {guardian.gate} Gate
+                </p>
                 <h3 className={`text-lg font-display font-bold ${guardian.accent} mb-1`}>
                   {guardian.name}
                 </h3>
-                <p className="text-xs text-text-muted font-mono tracking-wider uppercase mb-2">
-                  {guardian.gate} Gate
-                </p>
                 <p className="text-sm text-text-secondary">{guardian.domain}</p>
                 <div className="mt-3 pt-3 border-t border-white/[0.04]">
                   <span className="text-xs text-text-muted">{guardian.element}</span>

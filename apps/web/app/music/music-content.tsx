@@ -33,7 +33,7 @@ const TRACKS: Track[] = [
     genre: "Cinematic Orchestral",
     duration: "4:15",
     description:
-      "Lyssandria's theme. Earth frequencies at 174 Hz, grounding and powerful.",
+      "Lyssandria's theme. Earth frequencies, grounding and powerful.",
   },
   {
     id: "3",
@@ -57,14 +57,14 @@ const TRACKS: Track[] = [
     genre: "Healing Ambient",
     duration: "4:33",
     description:
-      "Maylinn's 417 Hz — the frequency of love and cellular healing.",
+      "Maylinn's frequency of love and cellular healing.",
   },
   {
     id: "6",
     title: "Voice of Truth",
     genre: "Ethereal Vocals",
     duration: "3:55",
-    description: "Alera speaks through melody. 528 Hz, the miracle tone.",
+    description: "Alera speaks through melody. The miracle tone.",
   },
   {
     id: "7",
@@ -78,7 +78,7 @@ const TRACKS: Track[] = [
     title: "Crown Light",
     genre: "Ambient Meditation",
     duration: "6:12",
-    description: "Aiyami's enlightenment frequency. 741 Hz purification.",
+    description: "Aiyami's enlightenment frequency. Purification.",
   },
   {
     id: "9",
@@ -100,7 +100,7 @@ const TRACKS: Track[] = [
     genre: "Experimental",
     duration: "7:11",
     description:
-      "Shinkami's 1111 Hz. The frequency of Source — meta-consciousness in sound.",
+      "Shinkami's frequency. The resonance of Source — meta-consciousness in sound.",
   },
   {
     id: "12",

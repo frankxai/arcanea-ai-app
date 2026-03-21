@@ -510,7 +510,7 @@ function QuickStats() {
           <div className="flex items-center justify-between">
             <span className="text-text-secondary">Gate Level</span>
             <span className="font-semibold text-brand-primary">
-              Fire (396 Hz)
+              Fire
             </span>
           </div>
         </div>

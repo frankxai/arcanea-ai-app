@@ -503,8 +503,8 @@ export default function DocsPage() {
                 </h3>
                 <p className="text-text-secondary text-sm leading-relaxed mb-4 max-w-2xl">
                   Arcanea is built on a locked canon — the cosmic duality of
-                  Lumina and Nero, the Ten Gates from Foundation (174 Hz) to
-                  Source (1111 Hz), ten Guardian-Godbeast pairs, and the Five
+                  Lumina and Nero, the Ten Gates from Foundation to
+                  Source, ten Guardian-Godbeast pairs, and the Five
                   Elements including the Void/Spirit duality. All content
                   creation aligns with this source of truth.
                 </p>

@@ -35,16 +35,16 @@ const ACADEMY_HOUSES: AcademyHouse[] = [
 ]
 
 const GATE_FREQUENCIES: Record<string, string> = {
-  Foundation: '174 Hz',
-  Flow: '285 Hz',
-  Fire: '396 Hz',
-  Heart: '417 Hz',
-  Voice: '528 Hz',
-  Sight: '639 Hz',
-  Crown: '741 Hz',
-  Starweave: '852 Hz',
-  Unity: '963 Hz',
-  Source: '1111 Hz',
+  Foundation: 'She builds the ground beneath your feet',
+  Flow: 'Where feeling becomes creation',
+  Fire: 'The fire that forges your will',
+  Heart: 'Love fierce enough to heal',
+  Voice: 'The voice that shapes reality',
+  Sight: 'She sees what others cannot',
+  Crown: 'Light beyond comprehension',
+  Starweave: 'The weaver of perspective',
+  Unity: 'Where two become infinite',
+  Source: 'The source of all creation',
 }
 
 interface FormData {

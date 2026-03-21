@@ -176,7 +176,7 @@ const SPOTLIGHTS = [
   {
     title: "The Dungeon of Silence",
     creator: "Resonance Mage",
-    gate: "Voice — 528 Hz",
+    gate: "Voice",
     type: "Written Work",
     description:
       "A guided meditation descended from the Voice Gate, combining Alera's teachings with personal creative practice into an immersive ritual text.",
@@ -186,7 +186,7 @@ const SPOTLIGHTS = [
   {
     title: "Godbeast Field Studies",
     creator: "Archive Walker",
-    gate: "Sight — 639 Hz",
+    gate: "Sight",
     type: "Visual Series",
     description:
       "An ongoing visual series mapping the forms and territories of the Ten Godbeasts, rendered through AI image generation guided by the Bestiary.",
@@ -196,7 +196,7 @@ const SPOTLIGHTS = [
   {
     title: "Frequency Compositions",
     creator: "The Solfeggio Wanderer",
-    gate: "Foundation — 174 Hz",
+    gate: "Foundation",
     type: "Audio Creation",
     description:
       "Original compositions built around the Extended Solfeggio frequencies, one piece per Gate—designed to open creative states before a session.",

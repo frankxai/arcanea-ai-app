@@ -157,7 +157,7 @@ export const GUARDIANS: Guardian[] = [
   {
     name: "Lyssandria",
     gate: "Foundation",
-    frequency: "174 Hz",
+    frequency: "She builds the ground beneath your feet",
     domain: "Earth, survival",
     element: "Earth",
     color: "from-green-600/30 to-emerald-800/20",
@@ -167,7 +167,7 @@ export const GUARDIANS: Guardian[] = [
   {
     name: "Leyla",
     gate: "Flow",
-    frequency: "285 Hz",
+    frequency: "Where feeling becomes creation",
     domain: "Creativity, emotion",
     element: "Water",
     color: "from-blue-500/30 to-cyan-700/20",
@@ -177,7 +177,7 @@ export const GUARDIANS: Guardian[] = [
   {
     name: "Draconia",
     gate: "Fire",
-    frequency: "396 Hz",
+    frequency: "The fire that forges your will",
     domain: "Power, will",
     element: "Fire",
     color: "from-red-600/30 to-orange-800/20",
@@ -187,7 +187,7 @@ export const GUARDIANS: Guardian[] = [
   {
     name: "Maylinn",
     gate: "Heart",
-    frequency: "417 Hz",
+    frequency: "Love fierce enough to heal",
     domain: "Love, healing",
     element: "Wind",
     color: "from-pink-500/30 to-rose-700/20",
@@ -197,7 +197,7 @@ export const GUARDIANS: Guardian[] = [
   {
     name: "Alera",
     gate: "Voice",
-    frequency: "528 Hz",
+    frequency: "The voice that shapes reality",
     domain: "Truth, expression",
     element: "Wind",
     color: "from-sky-500/30 to-blue-700/20",
@@ -207,7 +207,7 @@ export const GUARDIANS: Guardian[] = [
   {
     name: "Lyria",
     gate: "Sight",
-    frequency: "639 Hz",
+    frequency: "She sees what others cannot",
     domain: "Intuition, vision",
     element: "Water",
     color: "from-indigo-500/30 to-violet-700/20",
@@ -217,7 +217,7 @@ export const GUARDIANS: Guardian[] = [
   {
     name: "Aiyami",
     gate: "Crown",
-    frequency: "741 Hz",
+    frequency: "Light beyond comprehension",
     domain: "Enlightenment",
     element: "Void",
     color: "from-violet-500/30 to-purple-800/20",
@@ -227,7 +227,7 @@ export const GUARDIANS: Guardian[] = [
   {
     name: "Elara",
     gate: "Starweave",
-    frequency: "852 Hz",
+    frequency: "The weaver of perspective",
     domain: "Perspective",
     element: "Spirit",
     color: "from-fuchsia-500/30 to-purple-700/20",
@@ -237,7 +237,7 @@ export const GUARDIANS: Guardian[] = [
   {
     name: "Ino",
     gate: "Unity",
-    frequency: "963 Hz",
+    frequency: "Where two become infinite",
     domain: "Partnership",
     element: "Spirit",
     color: "from-amber-500/30 to-yellow-700/20",
@@ -247,7 +247,7 @@ export const GUARDIANS: Guardian[] = [
   {
     name: "Shinkami",
     gate: "Source",
-    frequency: "1111 Hz",
+    frequency: "The source of all creation",
     domain: "Meta-consciousness",
     element: "All",
     color: "from-gold-bright/30 to-amber-700/20",

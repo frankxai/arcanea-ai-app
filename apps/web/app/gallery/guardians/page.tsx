@@ -4,7 +4,7 @@ import { GuardianGallery } from "@/components/gallery/guardian-gallery";
 export const metadata: Metadata = {
   title: "Guardians of the Ten Gates | Arcanea Gallery",
   description:
-    "Behold the ten divine Guardians of Arcanea — God/Goddess portraits, Godbeast companions, and gallery art across every Gate from Foundation (174 Hz) to Source (1111 Hz).",
+    "Behold the ten divine Guardians of Arcanea — God/Goddess portraits, Godbeast companions, and gallery art across every Gate from Foundation to Source.",
   openGraph: {
     title: "Guardians of the Ten Gates — Arcanea",
     description:
@@ -39,7 +39,7 @@ const jsonLd = {
     "@type": "Thing",
     name: "Arcanea — Ten Gates and Ten Guardians",
     description:
-      "The ten divine Gate-keepers of Arcanea, each aligned to a frequency from 174 Hz (Foundation) to 1111 Hz (Source).",
+      "The ten divine Gate-keepers of Arcanea, each aligned to a frequency from Foundation to Source.",
   },
 };
 

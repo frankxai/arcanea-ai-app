@@ -119,9 +119,9 @@ const GOVERNANCE_ROLES = [
 
 const STATS = [
   { label: "Active Proposals", value: "3", icon: PhFileText },
-  { label: "Total Votes Cast", value: "892", icon: PhChecks },
-  { label: "Community Members", value: "2.4K", icon: PhUsers },
-  { label: "Proposals Passed", value: "18", icon: PhCheckCircle },
+  { label: "Total Votes Cast", value: "—", icon: PhChecks },
+  { label: "Community Members", value: "—", icon: PhUsers },
+  { label: "Proposals Passed", value: "—", icon: PhCheckCircle },
 ];
 
 export default function CommunityStrategyPage() {
