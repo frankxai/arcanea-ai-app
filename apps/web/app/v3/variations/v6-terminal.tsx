@@ -37,16 +37,16 @@ const CMDS = [
 ];
 
 const GUARDS = [
-  { pid: '001', name: 'Lyssandria', el: 'Earth', freq: '174 Hz' },
-  { pid: '002', name: 'Leyla', el: 'Water', freq: '285 Hz' },
-  { pid: '003', name: 'Draconia', el: 'Fire', freq: '396 Hz' },
-  { pid: '004', name: 'Maylinn', el: 'Heart', freq: '417 Hz' },
-  { pid: '005', name: 'Alera', el: 'Voice', freq: '528 Hz' },
-  { pid: '006', name: 'Lyria', el: 'Sight', freq: '639 Hz' },
-  { pid: '007', name: 'Aiyami', el: 'Crown', freq: '741 Hz' },
-  { pid: '008', name: 'Elara', el: 'Starweave', freq: '852 Hz' },
-  { pid: '009', name: 'Ino', el: 'Unity', freq: '963 Hz' },
-  { pid: '010', name: 'Shinkami', el: 'Source', freq: '1111 Hz' },
+  { pid: '001', name: 'Lyssandria', el: 'Earth', freq: 'Foundation' },
+  { pid: '002', name: 'Leyla', el: 'Water', freq: 'Flow' },
+  { pid: '003', name: 'Draconia', el: 'Fire', freq: 'Fire' },
+  { pid: '004', name: 'Maylinn', el: 'Heart', freq: 'Heart' },
+  { pid: '005', name: 'Alera', el: 'Voice', freq: 'Voice' },
+  { pid: '006', name: 'Lyria', el: 'Sight', freq: 'Sight' },
+  { pid: '007', name: 'Aiyami', el: 'Crown', freq: 'Crown' },
+  { pid: '008', name: 'Elara', el: 'Starweave', freq: 'Starweave' },
+  { pid: '009', name: 'Ino', el: 'Unity', freq: 'Unity' },
+  { pid: '010', name: 'Shinkami', el: 'Source', freq: 'Source' },
 ];
 
 const CSS = `

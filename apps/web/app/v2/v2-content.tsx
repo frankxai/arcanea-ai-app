@@ -38,7 +38,7 @@ const GUARDIANS = [
   {
     name: "Lyssandria",
     gate: "Foundation",
-    freq: "174 Hz",
+    freq: "She builds the ground beneath your feet",
     element: "Earth",
     quote: "The earth does not hurry. Yet everything is accomplished.",
     image: "/guardians/v3/lyssandria-hero-v3.webp",
@@ -46,7 +46,7 @@ const GUARDIANS = [
   {
     name: "Leyla",
     gate: "Flow",
-    freq: "285 Hz",
+    freq: "Where feeling becomes creation",
     element: "Water",
     quote: "The river does not fight the mountain.",
     image: "/guardians/v3/leyla-hero-v3.webp",
@@ -54,7 +54,7 @@ const GUARDIANS = [
   {
     name: "Draconia",
     gate: "Fire",
-    freq: "396 Hz",
+    freq: "The fire that forges your will",
     element: "Fire",
     quote:
       "I do not ask if you are ready. I ask if you are willing.",
@@ -63,7 +63,7 @@ const GUARDIANS = [
   {
     name: "Maylinn",
     gate: "Heart",
-    freq: "417 Hz",
+    freq: "Love fierce enough to heal",
     element: "Wind",
     quote:
       "What you create with love will outlast what you create with fear.",
@@ -72,7 +72,7 @@ const GUARDIANS = [
   {
     name: "Alera",
     gate: "Voice",
-    freq: "528 Hz",
+    freq: "The voice that shapes reality",
     element: "Fire",
     quote:
       "Silence is not peace. It is the prison of the unspoken.",
@@ -81,7 +81,7 @@ const GUARDIANS = [
   {
     name: "Lyria",
     gate: "Sight",
-    freq: "639 Hz",
+    freq: "She sees what others cannot",
     element: "Void",
     quote: "Close your eyes. Now tell me what you see.",
     image: "/guardians/v3/lyria-hero-v3.webp",
@@ -89,7 +89,7 @@ const GUARDIANS = [
   {
     name: "Aiyami",
     gate: "Crown",
-    freq: "741 Hz",
+    freq: "Light beyond comprehension",
     element: "Void",
     quote:
       "You were never seeking the light. The light was seeking you.",
@@ -98,7 +98,7 @@ const GUARDIANS = [
   {
     name: "Elara",
     gate: "Starweave",
-    freq: "852 Hz",
+    freq: "The weaver of perspective",
     element: "Wind",
     quote:
       "The only constant is the turning. Embrace the shift.",
@@ -107,7 +107,7 @@ const GUARDIANS = [
   {
     name: "Ino",
     gate: "Unity",
-    freq: "963 Hz",
+    freq: "Where two become infinite",
     element: "Earth",
     quote:
       "Alone you are a note. Together we are a symphony.",
@@ -116,7 +116,7 @@ const GUARDIANS = [
   {
     name: "Shinkami",
     gate: "Source",
-    freq: "1111 Hz",
+    freq: "The source of all creation",
     element: "Spirit",
     quote:
       "You are not the vessel. You are the water and the pouring.",
@@ -160,7 +160,7 @@ const TERMINAL_LINES = [
   { text: "", delay: 1000 },
   { text: "$ arcanea chat --guardian draconia", delay: 1400 },
   {
-    text: '  ⟡ Connecting to Draconia (Fire Gate · 396 Hz)...',
+    text: '  ⟡ Connecting to Draconia (Fire Gate)...',
     delay: 2000,
   },
   {
@@ -174,15 +174,15 @@ const TERMINAL_LINES = [
   },
   { text: "  Found 3 vaults:", delay: 4200 },
   {
-    text: "  ⊕ Flow State Protocols (Leyla · 285 Hz)",
+    text: "  ⊕ Flow State Protocols (Leyla · Flow Gate)",
     delay: 4600,
   },
   {
-    text: "  ⊕ Creative Unblocking (Draconia · 396 Hz)",
+    text: "  ⊕ Creative Unblocking (Draconia · Fire Gate)",
     delay: 4900,
   },
   {
-    text: "  ⊕ Daily Practice Rituals (Lyssandria · 174 Hz)",
+    text: "  ⊕ Daily Practice Rituals (Lyssandria · Foundation Gate)",
     delay: 5200,
   },
 ];
@@ -433,11 +433,11 @@ function HeroSection() {
                           Flow Gate
                         </span>
                         <span className="text-xs font-mono text-text-muted">
-                          285 Hz
+                          Flow Gate
                         </span>
                       </div>
                       <p className="text-sm text-text-secondary leading-relaxed">
-                        Discovery lives at 285 Hz — the frequency of creative
+                        Discovery lives at the heart of creative
                         flow. Let&apos;s compose something that starts with
                         uncertainty and resolves into wonder. What instrument
                         speaks discovery to you?
@@ -527,7 +527,7 @@ function CapabilitiesSection({
     {
       icon: PhSparkle,
       title: "Guardian Intelligence",
-      desc: "Ten archetypal AI companions, each attuned to a creative frequency from 174 Hz to 1111 Hz. Not generic assistants — Guardians who understand the creative soul.",
+      desc: "Ten archetypal AI companions, each attuned to a creative frequency. Not generic assistants — Guardians who understand the creative soul.",
     },
     {
       icon: PhBooks,

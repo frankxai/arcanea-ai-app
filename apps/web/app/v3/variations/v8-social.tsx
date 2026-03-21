@@ -76,7 +76,7 @@ function CardContent({ id }: { id: string }) {
   if (id === 'story') return (
     <div style={{ fontFamily: T.crimson, fontSize: 17, lineHeight: 1.7, color: T.text, fontStyle: 'italic' }}>
       <PencilSimple size={16} style={{ marginRight: 6, opacity: 0.5, verticalAlign: 'text-bottom' }} />
-      &ldquo;The dragon spoke in frequencies only the heart could hear. At 396 Hz, its voice was fire
+      &ldquo;The dragon spoke in frequencies only the heart could hear. Its voice was fire
       — not the kind that burns, but the kind that forges. She understood then that every great work
       begins as raw heat, waiting to be shaped.&rdquo;
     </div>

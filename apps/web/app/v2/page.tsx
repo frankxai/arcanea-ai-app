@@ -2,6 +2,8 @@ import { Suspense } from "react";
 import { getCollections, getAllTexts } from "@/lib/content";
 import { V2Content, V2Loading } from "./v2-content";
 
+export const dynamic = 'force-dynamic';
+
 async function V2WithData() {
   const collections = await getCollections();
   const allTexts = await getAllTexts();

@@ -276,7 +276,7 @@ export function V2Bento() {
             </Cell>
           </motion.div>
 
-          {/* 1,111 Hz — 1x1 */}
+          {/* Source — 1x1 */}
           <motion.div className="col-span-1 row-span-1" custom={6} variants={fadeUp}>
             <Cell className="h-full flex flex-col justify-center items-center text-center" accent={VIOLET}>
               <p
@@ -285,7 +285,7 @@ export function V2Bento() {
               >
                 1,111
               </p>
-              <p className="text-sm mt-1" style={{ color: MUTED }}>Hz &middot; Source frequency</p>
+              <p className="text-sm mt-1" style={{ color: MUTED }}>The source of all creation</p>
             </Cell>
           </motion.div>
 

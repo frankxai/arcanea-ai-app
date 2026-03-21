@@ -16,16 +16,16 @@ const GOLD = '#ffd700';
 const WHITE = '#ffffff';
 
 const GUARDIANS = [
-  { name: 'Lyssandria', hz: '174 Hz', domain: 'Foundation' },
-  { name: 'Leyla', hz: '285 Hz', domain: 'Flow' },
-  { name: 'Draconia', hz: '396 Hz', domain: 'Fire' },
-  { name: 'Maylinn', hz: '417 Hz', domain: 'Heart' },
-  { name: 'Alera', hz: '528 Hz', domain: 'Voice' },
-  { name: 'Lyria', hz: '639 Hz', domain: 'Sight' },
-  { name: 'Aiyami', hz: '741 Hz', domain: 'Crown' },
-  { name: 'Elara', hz: '852 Hz', domain: 'Starweave' },
-  { name: 'Ino', hz: '963 Hz', domain: 'Unity' },
-  { name: 'Shinkami', hz: '1111 Hz', domain: 'Source' },
+  { name: 'Lyssandria', hz: 'She builds the ground beneath your feet', domain: 'Foundation' },
+  { name: 'Leyla', hz: 'Where feeling becomes creation', domain: 'Flow' },
+  { name: 'Draconia', hz: 'The fire that forges your will', domain: 'Fire' },
+  { name: 'Maylinn', hz: 'Love fierce enough to heal', domain: 'Heart' },
+  { name: 'Alera', hz: 'The voice that shapes reality', domain: 'Voice' },
+  { name: 'Lyria', hz: 'She sees what others cannot', domain: 'Sight' },
+  { name: 'Aiyami', hz: 'Light beyond comprehension', domain: 'Crown' },
+  { name: 'Elara', hz: 'The weaver of perspective', domain: 'Starweave' },
+  { name: 'Ino', hz: 'Where two become infinite', domain: 'Unity' },
+  { name: 'Shinkami', hz: 'The source of all creation', domain: 'Source' },
 ];
 
 const COLLECTIONS = [
@@ -185,7 +185,7 @@ export function V9Particles() {
           <span style={{ fontFamily: "'Cinzel', serif", fontSize: 13, opacity: 0.7, letterSpacing: '0.15em' }}>
             THE SOURCE
           </span>
-          <div style={{ fontSize: 11, opacity: 0.35, marginTop: 2 }}>1111 Hz</div>
+          <div style={{ fontSize: 11, opacity: 0.35, marginTop: 2 }}>Source</div>
         </div>
 
         {/* Ring 1 */}

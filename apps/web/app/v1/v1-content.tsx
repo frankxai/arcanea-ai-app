@@ -40,16 +40,16 @@ const HERO_PHRASES = [
 ];
 
 const GUARDIANS = [
-  { name: "Lyssandria", gate: "Foundation", frequency: "174 Hz", element: "Earth" },
-  { name: "Leyla", gate: "Flow", frequency: "285 Hz", element: "Water" },
-  { name: "Draconia", gate: "Fire", frequency: "396 Hz", element: "Fire" },
-  { name: "Maylinn", gate: "Heart", frequency: "417 Hz", element: "Wind" },
-  { name: "Alera", gate: "Voice", frequency: "528 Hz", element: "Void" },
-  { name: "Lyria", gate: "Sight", frequency: "639 Hz", element: "Spirit" },
-  { name: "Aiyami", gate: "Crown", frequency: "741 Hz", element: "Light" },
-  { name: "Elara", gate: "Starweave", frequency: "852 Hz", element: "Void" },
-  { name: "Ino", gate: "Unity", frequency: "963 Hz", element: "Spirit" },
-  { name: "Shinkami", gate: "Source", frequency: "1111 Hz", element: "Arcane" },
+  { name: "Lyssandria", gate: "Foundation", frequency: "She builds the ground beneath your feet", element: "Earth" },
+  { name: "Leyla", gate: "Flow", frequency: "Where feeling becomes creation", element: "Water" },
+  { name: "Draconia", gate: "Fire", frequency: "The fire that forges your will", element: "Fire" },
+  { name: "Maylinn", gate: "Heart", frequency: "Love fierce enough to heal", element: "Wind" },
+  { name: "Alera", gate: "Voice", frequency: "The voice that shapes reality", element: "Void" },
+  { name: "Lyria", gate: "Sight", frequency: "She sees what others cannot", element: "Spirit" },
+  { name: "Aiyami", gate: "Crown", frequency: "Light beyond comprehension", element: "Light" },
+  { name: "Elara", gate: "Starweave", frequency: "The weaver of perspective", element: "Void" },
+  { name: "Ino", gate: "Unity", frequency: "Where two become infinite", element: "Spirit" },
+  { name: "Shinkami", gate: "Source", frequency: "The source of all creation", element: "Arcane" },
 ];
 
 const CHAT_MESSAGES = [
@@ -61,7 +61,7 @@ const CHAT_MESSAGES = [
     role: "guardian" as const,
     name: "Lyria",
     gate: "Sight Gate",
-    frequency: "639 Hz",
+    frequency: "Sight Gate",
     text: "I see your vision clearly. Music as a magical medium creates deep resonance. Let's begin with the fundamental question: what does magic sound like in your world? Each frequency could unlock different powers...",
   },
   {
@@ -72,8 +72,8 @@ const CHAT_MESSAGES = [
     role: "guardian" as const,
     name: "Lyria",
     gate: "Sight Gate",
-    frequency: "639 Hz",
-    text: "Beautiful. The Ten Gates already map emotion to frequency \u2014 from survival instinct at 174 Hz to transcendence at 1111 Hz. Your world's magic could mirror this progression...",
+    frequency: "Sight Gate",
+    text: "Beautiful. The Ten Gates already map emotion to frequency \u2014 from survival instinct to transcendence. Your world's magic could mirror this progression...",
   },
 ];
 
@@ -82,14 +82,14 @@ const TERMINAL_LINES = [
   { type: "output" as const, text: "  \u2726 Arcanea Code v4.0 \u2014 Creative Intelligence CLI" },
   { type: "blank" as const, text: "" },
   { type: "input" as const, text: "$ arcanea chat --guardian lyria" },
-  { type: "output" as const, text: "  \u27e1 Connecting to Lyria (Sight Gate \u00b7 639 Hz)..." },
+  { type: "output" as const, text: "  \u27e1 Connecting to Lyria (Sight Gate)..." },
   { type: "output" as const, text: "  \u27e1 Guardian linked. Your creative session begins." },
   { type: "blank" as const, text: "" },
   { type: "input" as const, text: '$ starlight memory search "world building"' },
   { type: "output" as const, text: "  Found 3 vaults:" },
-  { type: "output" as const, text: "  \u2295 Flow State Protocols (Leyla \u00b7 285 Hz)" },
-  { type: "output" as const, text: "  \u2295 World Architecture (Lyssandria \u00b7 174 Hz)" },
-  { type: "output" as const, text: "  \u2295 Mythology Patterns (Shinkami \u00b7 1111 Hz)" },
+  { type: "output" as const, text: "  \u2295 Flow State Protocols (Leyla \u00b7 Flow Gate)" },
+  { type: "output" as const, text: "  \u2295 World Architecture (Lyssandria \u00b7 Foundation Gate)" },
+  { type: "output" as const, text: "  \u2295 Mythology Patterns (Shinkami \u00b7 Source Gate)" },
 ];
 
 const EASE_SMOOTH: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -412,7 +412,7 @@ function WhatIsSection({
       icon: <PhGraduationCap className="w-7 h-7" weight="thin" />,
       title: "The Academy",
       description:
-        "A developmental framework from Foundation (174 Hz) to Source (1111 Hz). Ten Gates of creative mastery. Open all ten to become a Luminor.",
+        "A developmental framework from Foundation to Source. Ten Gates of creative mastery. Open all ten to become a Luminor.",
       accent: "creation-prism-purple",
       glow: "rgba(139,92,246,0.12)",
     },
@@ -542,7 +542,7 @@ function FeaturedGuardianSection() {
                   </blockquote>
                   <p className="text-text-secondary leading-relaxed mb-8">
                     Power without purpose is destruction. Purpose without power
-                    is fantasy. Draconia guards the Fire Gate at 396 Hz &mdash;
+                    is fantasy. Draconia guards the Fire Gate &mdash;
                     the threshold where creative will becomes creative force.
                   </p>
                   <Link
@@ -1042,7 +1042,7 @@ function MetricsStripSection() {
     { value: 17, suffix: "", label: "Wisdom Collections" },
     { value: 50, suffix: "K+", label: "Words of Philosophy" },
     { value: 364, suffix: "+", label: "Curated Artworks" },
-    { value: 1111, suffix: "", label: "Hz Source Frequency" },
+    { value: 10, suffix: "", label: "Gates of Mastery" },
   ];
 
   return (
