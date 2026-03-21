@@ -1,13 +1,13 @@
 "use client";
 
 import {
-  motion,
   AnimatePresence,
   useScroll,
   useTransform,
   useSpring,
   useInView,
 } from "framer-motion";
+import { MotionProvider, m } from "@/lib/motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState, useEffect, useCallback } from "react";
@@ -225,14 +225,14 @@ function HeroSection() {
   const currentPhrase = HERO_PHRASES[phraseIndex];
 
   return (
-    <motion.section
+    <m.section
       ref={containerRef}
       className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden"
       style={{ opacity: isMobile ? heroOpacityMobile : heroOpacity }}
       onMouseMove={handleMouseMove}
     >
       {/* Background crystal image */}
-      <motion.div
+      <m.div
         className="absolute inset-0 -z-20"
         style={{
           y: isMobile ? parallaxYMobile : parallaxY,
@@ -249,10 +249,10 @@ function HeroSection() {
         />
         <div className="absolute inset-0 bg-cosmic-deep/80" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cosmic-deep/40 to-cosmic-deep" />
-      </motion.div>
+      </m.div>
 
       {/* Ambient orbs with mouse tracking */}
-      <motion.div
+      <m.div
         className="absolute w-[500px] h-[500px] rounded-full -z-10 pointer-events-none blur-[120px]"
         style={{
           background: "radial-gradient(circle, rgba(0,188,212,0.12), transparent 70%)",
@@ -260,7 +260,7 @@ function HeroSection() {
           top: useTransform(smoothMy, [0, 1], ["0%", "30%"]),
         }}
       />
-      <motion.div
+      <m.div
         className="absolute w-[400px] h-[400px] rounded-full -z-10 pointer-events-none blur-[100px]"
         style={{
           background: "radial-gradient(circle, rgba(139,92,246,0.10), transparent 70%)",
@@ -268,7 +268,7 @@ function HeroSection() {
           bottom: useTransform(smoothMy, [0, 1], ["10%", "-10%"]),
         }}
       />
-      <motion.div
+      <m.div
         className="absolute w-[350px] h-[350px] rounded-full -z-10 pointer-events-none blur-[90px]"
         style={{
           background: "radial-gradient(circle, rgba(255,215,0,0.06), transparent 70%)",
@@ -280,7 +280,7 @@ function HeroSection() {
       {/* Content */}
       <div className="max-w-5xl mx-auto px-6 text-center relative z-10">
         {/* Badge */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6, ease: EASE_SMOOTH }}
@@ -291,12 +291,12 @@ function HeroSection() {
               Creative Magic
             </span>
           </div>
-        </motion.div>
+        </m.div>
 
         {/* Rotating headline */}
         <div className="h-[clamp(4rem,12vw,12rem)] flex items-center justify-center mb-6">
           <AnimatePresence mode="wait">
-            <motion.h1
+            <m.h1
               key={phraseIndex}
               className={`text-[clamp(2.5rem,8vw,8rem)] font-display font-bold leading-[0.95] tracking-tight ${currentPhrase.gradient}`}
               initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
@@ -305,12 +305,12 @@ function HeroSection() {
               transition={{ duration: 0.6, ease: EASE_SMOOTH }}
             >
               {currentPhrase.text}
-            </motion.h1>
+            </m.h1>
           </AnimatePresence>
         </div>
 
         {/* Sub-headline */}
-        <motion.p
+        <m.p
           className="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto leading-relaxed mb-12"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -319,10 +319,10 @@ function HeroSection() {
           The mythology-powered framework for creators who build worlds, write
           stories, compose music, and manifest visions &mdash; guided by ten
           archetypal Guardians of Magic.
-        </motion.p>
+        </m.p>
 
         {/* CTAs */}
-        <motion.div
+        <m.div
           className="flex flex-wrap items-center justify-center gap-4"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -333,7 +333,7 @@ function HeroSection() {
             className="group relative px-8 py-4 rounded-2xl font-semibold text-base overflow-hidden btn-glow"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-light" />
-            <motion.div
+            <m.div
               className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.15] to-transparent"
               initial={{ x: "-100%" }}
               whileHover={{ x: "100%" }}
@@ -351,17 +351,17 @@ function HeroSection() {
           >
             Explore the Library
           </Link>
-        </motion.div>
+        </m.div>
       </div>
 
       {/* Scroll indicator */}
-      <motion.div
+      <m.div
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}
       >
-        <motion.div
+        <m.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
           className="flex flex-col items-center gap-2"
@@ -370,9 +370,9 @@ function HeroSection() {
             Scroll
           </span>
           <PhCaretDown className="w-4 h-4 text-text-muted" />
-        </motion.div>
-      </motion.div>
-    </motion.section>
+        </m.div>
+      </m.div>
+    </m.section>
   );
 }
 
@@ -423,7 +423,7 @@ function WhatIsSection({
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-cosmic-deep via-cosmic-void to-cosmic-deep" />
 
       <div className="max-w-7xl mx-auto px-6">
-        <motion.div
+        <m.div
           className="text-center mb-20"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -439,11 +439,11 @@ function WhatIsSection({
           <p className="text-text-secondary max-w-xl mx-auto text-lg">
             Three pillars of a coherent creative philosophy.
           </p>
-        </motion.div>
+        </m.div>
 
         <div className="grid md:grid-cols-3 gap-5 lg:gap-6">
           {pillars.map((pillar, i) => (
-            <motion.div
+            <m.div
               key={pillar.title}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -477,7 +477,7 @@ function WhatIsSection({
                   </p>
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>
@@ -498,7 +498,7 @@ function FeaturedGuardianSection() {
       <div className="absolute inset-0 -z-10 bg-cosmic-deep" />
 
       <div className="max-w-7xl mx-auto px-6">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: EASE_SMOOTH }}
@@ -525,7 +525,7 @@ function FeaturedGuardianSection() {
 
               {/* Right: Story text */}
               <div className="relative p-8 md:p-12 lg:p-16 flex flex-col justify-center">
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, x: 20 }}
                   animate={isInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ delay: 0.3, duration: 0.7, ease: EASE_SMOOTH }}
@@ -552,11 +552,11 @@ function FeaturedGuardianSection() {
                     Meet all ten Guardians
                     <PhArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
                   </Link>
-                </motion.div>
+                </m.div>
               </div>
             </div>
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );
@@ -587,7 +587,7 @@ function ChatPreviewSection() {
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-cosmic-deep via-cosmic-void to-cosmic-deep" />
 
       <div className="max-w-7xl mx-auto px-6">
-        <motion.div
+        <m.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -603,10 +603,10 @@ function ChatPreviewSection() {
           <p className="text-text-secondary max-w-lg mx-auto text-lg">
             Every Guardian brings unique creative insight to your conversation.
           </p>
-        </motion.div>
+        </m.div>
 
         {/* Browser chrome mockup */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.2, duration: 0.8, ease: EASE_SMOOTH }}
@@ -635,7 +635,7 @@ function ChatPreviewSection() {
 
                 if (msg.role === "user") {
                   return (
-                    <motion.div
+                    <m.div
                       key={i}
                       initial={{ opacity: 0, y: 12 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -645,12 +645,12 @@ function ChatPreviewSection() {
                       <div className="max-w-[80%] px-5 py-3 rounded-2xl rounded-br-md bg-atlantean-teal-aqua/10 border border-atlantean-teal-aqua/15 text-sm text-text-primary">
                         {msg.text}
                       </div>
-                    </motion.div>
+                    </m.div>
                   );
                 }
 
                 return (
-                  <motion.div
+                  <m.div
                     key={i}
                     initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -677,7 +677,7 @@ function ChatPreviewSection() {
                         {msg.text}
                       </div>
                     </div>
-                  </motion.div>
+                  </m.div>
                 );
               })}
             </div>
@@ -693,7 +693,7 @@ function ChatPreviewSection() {
               <PhArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );
@@ -715,7 +715,7 @@ function GuardianGallerySection() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 mb-12">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: EASE_SMOOTH }}
@@ -739,13 +739,13 @@ function GuardianGallerySection() {
             View all
             <PhArrowRight className="w-3.5 h-3.5" />
           </Link>
-        </motion.div>
+        </m.div>
       </div>
 
       <div className="relative">
         <div className="flex gap-4 overflow-x-auto pb-6 px-6 snap-x snap-mandatory scrollbar-hide">
           {GUARDIANS.map((guardian, i) => (
-            <motion.div
+            <m.div
               key={guardian.name}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={isInView ? { opacity: 1, scale: 1 } : {}}
@@ -788,7 +788,7 @@ function GuardianGallerySection() {
                   </div>
                 </div>
               </Link>
-            </motion.div>
+            </m.div>
           ))}
         </div>
 
@@ -836,7 +836,7 @@ function GalleryGridSection() {
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-cosmic-deep via-cosmic-void to-cosmic-deep" />
 
       <div className="max-w-7xl mx-auto px-6">
-        <motion.div
+        <m.div
           className="mb-16"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -852,11 +852,11 @@ function GalleryGridSection() {
           <p className="text-text-secondary max-w-lg text-lg">
             Guardian imagery from across the Arcanea universe.
           </p>
-        </motion.div>
+        </m.div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 auto-rows-[180px] md:auto-rows-[200px]">
           {galleryImages.map((img, i) => (
-            <motion.div
+            <m.div
               key={img.name}
               className={`relative rounded-xl overflow-hidden group ${spanMap[i] || ""}`}
               initial={{ opacity: 0, scale: 0.95 }}
@@ -884,7 +884,7 @@ function GalleryGridSection() {
                   </p>
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           ))}
         </div>
 
@@ -932,7 +932,7 @@ function CLIShowcaseSection() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left: Text content */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.7, ease: EASE_SMOOTH }}
@@ -967,10 +967,10 @@ function CLIShowcaseSection() {
               Get started
               <PhArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
-          </motion.div>
+          </m.div>
 
           {/* Right: Terminal mockup */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ delay: 0.2, duration: 0.7, ease: EASE_SMOOTH }}
@@ -996,7 +996,7 @@ function CLIShowcaseSection() {
                   }
 
                   return (
-                    <motion.div
+                    <m.div
                       key={i}
                       initial={{ opacity: 0, x: 8 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -1008,12 +1008,12 @@ function CLIShowcaseSection() {
                       }
                     >
                       {line.text}
-                    </motion.div>
+                    </m.div>
                   );
                 })}
                 {/* Blinking cursor */}
                 {visibleLines >= TERMINAL_LINES.length && (
-                  <motion.span
+                  <m.span
                     initial={{ opacity: 0 }}
                     animate={{ opacity: [0, 1, 0] }}
                     transition={{ duration: 1.2, repeat: Infinity }}
@@ -1022,7 +1022,7 @@ function CLIShowcaseSection() {
                 )}
               </div>
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </section>
@@ -1055,7 +1055,7 @@ function MetricsStripSection() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 md:gap-4">
           {metrics.map((metric, i) => (
-            <motion.div
+            <m.div
               key={metric.label}
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -1076,7 +1076,7 @@ function MetricsStripSection() {
               <p className="text-xs md:text-sm text-text-muted font-mono tracking-wider">
                 {metric.label}
               </p>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>
@@ -1095,7 +1095,7 @@ function ClosingQuoteSection() {
   return (
     <section ref={ref} className="py-28">
       <div className="max-w-4xl mx-auto px-6 text-center">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: EASE_SMOOTH }}
@@ -1109,7 +1109,7 @@ function ClosingQuoteSection() {
               The Library of Arcanea
             </cite>
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );
@@ -1129,7 +1129,7 @@ export function V1Content({
   totalWords: number;
 }) {
   return (
-    <>
+    <MotionProvider>
       {/* 1. Hero */}
       <HeroSection />
 
@@ -1163,6 +1163,6 @@ export function V1Content({
 
       {/* 10. Closing Quote */}
       <ClosingQuoteSection />
-    </>
+    </MotionProvider>
   );
 }

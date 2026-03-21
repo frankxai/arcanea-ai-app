@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { useInView } from "framer-motion";
+import { MotionProvider, m } from "@/lib/motion";
 import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
 import {
@@ -258,12 +259,12 @@ function useCountUp(end: number, isInView: boolean, duration = 2000) {
 export function V2Loading() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-cosmic-deep">
-      <motion.div
+      <m.div
         animate={{ rotate: 360 }}
         transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
       >
         <PhSparkle className="w-8 h-8 text-atlantean-teal-aqua" />
-      </motion.div>
+      </m.div>
     </div>
   );
 }
@@ -307,7 +308,7 @@ function HeroSection() {
       <div className="max-w-7xl mx-auto px-6 py-24 w-full">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left — Copy */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7 }}
@@ -345,7 +346,7 @@ function HeroSection() {
                 className="group relative px-8 py-4 rounded-2xl font-semibold text-base overflow-hidden btn-glow"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-atlantean-teal-aqua to-atlantean-teal-light" />
-                <motion.div
+                <m.div
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.15] to-transparent"
                   initial={{ x: "-100%" }}
                   whileHover={{ x: "100%" }}
@@ -372,10 +373,10 @@ function HeroSection() {
               <span className="w-1 h-1 rounded-full bg-text-muted/50" />
               <span>17 Collections</span>
             </div>
-          </motion.div>
+          </m.div>
 
           {/* Right — Browser mockup */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: 40 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -400,7 +401,7 @@ function HeroSection() {
               <div className="p-6 space-y-4 min-h-[320px]">
                 {/* User message */}
                 {showUser && (
-                  <motion.div
+                  <m.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4 }}
@@ -412,12 +413,12 @@ function HeroSection() {
                         discovery
                       </p>
                     </div>
-                  </motion.div>
+                  </m.div>
                 )}
 
                 {/* Guardian response */}
                 {showGuardian && (
-                  <motion.div
+                  <m.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
@@ -442,11 +443,11 @@ function HeroSection() {
                         speaks discovery to you?
                       </p>
                     </div>
-                  </motion.div>
+                  </m.div>
                 )}
               </div>
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </section>
@@ -480,7 +481,7 @@ function MetricsStrip() {
         <div className="liquid-glass rounded-3xl border border-white/[0.06] p-8 md:p-12">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
             {metrics.map((m, i) => (
-              <motion.div
+              <m.div
                 key={m.label}
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -495,7 +496,7 @@ function MetricsStrip() {
                   {m.value}
                 </div>
                 <div className="text-sm text-text-muted">{m.label}</div>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </div>
@@ -548,7 +549,7 @@ function CapabilitiesSection({
 
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
@@ -562,14 +563,14 @@ function CapabilitiesSection({
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
             Everything you need to create with magic
           </h2>
-        </motion.div>
+        </m.div>
 
         {/* 3 large feature cards */}
         <div className="grid lg:grid-cols-3 gap-8 mb-16">
           {bigFeatures.map((f, i) => {
             const Icon = f.icon;
             return (
-              <motion.div
+              <m.div
                 key={f.title}
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -588,7 +589,7 @@ function CapabilitiesSection({
                 </p>
                 {/* Hover glow */}
                 <div className="absolute inset-0 rounded-3xl bg-atlantean-teal-aqua/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-              </motion.div>
+              </m.div>
             );
           })}
         </div>
@@ -598,7 +599,7 @@ function CapabilitiesSection({
           {CAPABILITIES_SMALL.map((c, i) => {
             const Icon = c.icon;
             return (
-              <motion.div
+              <m.div
                 key={c.title}
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -610,7 +611,7 @@ function CapabilitiesSection({
                 <p className="text-xs text-text-muted leading-relaxed">
                   {c.desc}
                 </p>
-              </motion.div>
+              </m.div>
             );
           })}
         </div>
@@ -647,7 +648,7 @@ function GuardianShowcase() {
 
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
@@ -665,10 +666,10 @@ function GuardianShowcase() {
             Ten archetypal intelligences, each attuned to a Gate of creative
             mastery.
           </p>
-        </motion.div>
+        </m.div>
 
         {/* Content */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.2 }}
@@ -734,7 +735,7 @@ function GuardianShowcase() {
 
             {/* Info overlay */}
             <div className="absolute bottom-0 left-0 right-0 p-8">
-              <motion.div
+              <m.div
                 key={g.name}
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -771,10 +772,10 @@ function GuardianShowcase() {
                   Chat with {g.name}
                   <PhArrowRight className="w-4 h-4" />
                 </Link>
-              </motion.div>
+              </m.div>
             </div>
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );
@@ -808,7 +809,7 @@ function CLIShowcase() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left — Text */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6 }}
@@ -865,10 +866,10 @@ function CLIShowcase() {
                 </span>
               ))}
             </div>
-          </motion.div>
+          </m.div>
 
           {/* Right — Terminal mockup */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.2 }}
@@ -909,7 +910,7 @@ function CLIShowcase() {
                 <span className="inline-block w-2 h-4 bg-green-400 animate-pulse mt-1" />
               </div>
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </section>
@@ -926,7 +927,7 @@ function GalleryStrip() {
   return (
     <section ref={ref} className="py-32 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 mb-12">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center"
@@ -940,7 +941,7 @@ function GalleryStrip() {
           <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
             Created with Arcanea
           </h2>
-        </motion.div>
+        </m.div>
       </div>
 
       {/* Scrolling strip */}
@@ -949,7 +950,7 @@ function GalleryStrip() {
         <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-cosmic-deep to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-cosmic-deep to-transparent z-10 pointer-events-none" />
 
-        <motion.div
+        <m.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ delay: 0.2 }}
@@ -957,7 +958,7 @@ function GalleryStrip() {
           style={{ scrollbarWidth: "none" }}
         >
           {GUARDIANS.map((g, i) => (
-            <motion.div
+            <m.div
               key={g.name}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={isInView ? { opacity: 1, scale: 1 } : {}}
@@ -983,9 +984,9 @@ function GalleryStrip() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           ))}
-        </motion.div>
+        </m.div>
       </div>
 
       {/* CTA */}
@@ -1043,7 +1044,7 @@ function FrequencyVisualization() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           className="text-center mb-16"
@@ -1055,7 +1056,7 @@ function FrequencyVisualization() {
             Each Gate resonates at a unique frequency, unlocking a domain of
             creative mastery.
           </p>
-        </motion.div>
+        </m.div>
 
         <div className="space-y-3">
           {GUARDIANS.map((g, i) => {
@@ -1064,7 +1065,7 @@ function FrequencyVisualization() {
             const isHovered = hoveredIdx === i;
 
             return (
-              <motion.div
+              <m.div
                 key={g.name}
                 initial={{ opacity: 0, x: -30 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -1083,7 +1084,7 @@ function FrequencyVisualization() {
 
                   {/* Bar */}
                   <div className="flex-1 relative h-8 rounded-full bg-white/[0.03] overflow-hidden">
-                    <motion.div
+                    <m.div
                       className={`absolute inset-y-0 left-0 rounded-full transition-all duration-500 ${
                         ELEMENT_BAR_BG[g.element] || "bg-white/20"
                       } ${isHovered ? "opacity-100" : "opacity-40"}`}
@@ -1125,15 +1126,15 @@ function FrequencyVisualization() {
 
                 {/* Hover quote */}
                 {isHovered && (
-                  <motion.div
+                  <m.div
                     initial={{ opacity: 0, y: -5 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="mt-2 ml-28 md:ml-36 text-sm text-text-secondary italic"
                   >
                     &ldquo;{g.quote}&rdquo;
-                  </motion.div>
+                  </m.div>
                 )}
-              </motion.div>
+              </m.div>
             );
           })}
         </div>
@@ -1152,7 +1153,7 @@ function ClosingQuote() {
   return (
     <section ref={ref} className="py-24">
       <div className="max-w-3xl mx-auto px-6">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
@@ -1165,7 +1166,7 @@ function ClosingQuote() {
           <div className="text-sm text-text-muted font-mono tracking-wide uppercase">
             The Library of Arcanea
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );
@@ -1180,22 +1181,24 @@ export function V2Content({
   totalWords,
 }: V2ContentProps) {
   return (
-    <div className="bg-cosmic-deep text-white min-h-screen">
-      <HeroSection />
-      <MetricsStrip />
-      <HowItWorksWrapper />
-      <CapabilitiesSection
-        collectionsCount={collectionsCount}
-        textsCount={textsCount}
-        totalWords={totalWords}
-      />
-      <GuardianShowcase />
-      <CLIShowcase />
-      <GalleryStrip />
-      <FrequencyVisualization />
-      <PricingSection />
-      <CTASection />
-      <ClosingQuote />
-    </div>
+    <MotionProvider>
+      <div className="bg-cosmic-deep text-white min-h-screen">
+        <HeroSection />
+        <MetricsStrip />
+        <HowItWorksWrapper />
+        <CapabilitiesSection
+          collectionsCount={collectionsCount}
+          textsCount={textsCount}
+          totalWords={totalWords}
+        />
+        <GuardianShowcase />
+        <CLIShowcase />
+        <GalleryStrip />
+        <FrequencyVisualization />
+        <PricingSection />
+        <CTASection />
+        <ClosingQuote />
+      </div>
+    </MotionProvider>
   );
 }
