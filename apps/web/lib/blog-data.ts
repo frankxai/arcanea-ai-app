@@ -452,6 +452,474 @@ Every Creator contributes to the growing tapestry of Arcanea. Share your work, e
     `,
   },
   {
+    slug: '16-specialized-ai-minds',
+    title: 'Why We Built 16 Specialized AI Minds Instead of One General Assistant',
+    excerpt:
+      'Most AI products ship one general model and call it done. We built 16 domain-specific intelligences, each trained on a distinct creative discipline. Here is why that decision changes everything about AI-assisted creation.',
+    category: 'Architecture',
+    author: 'Frank',
+    date: '2026-03-21',
+    readTime: '8 min read',
+    featured: true,
+    accent: '#00bcd4',
+    tags: ['Architecture', 'AI', 'Creative Intelligence'],
+    content: `
+## The General-Purpose Problem
+
+Ask a general AI assistant to write a sonnet, then ask it to compose a chord progression, then ask it to design a magic system for a tabletop RPG. It will produce something for each. None of it will be particularly good.
+
+This is not a model quality problem. It is a context problem. A single system prompt cannot simultaneously encode the conventions of literary craft, music theory, game design, visual composition, and narrative architecture. When you try to make one model do everything, you get a model that does nothing with real depth.
+
+We know this because we tried it. For the first six months of Arcanea's development, we ran a single general-purpose creative agent. It could write passable prose, generate basic visual prompts, and sketch out world-building ideas. But it never produced work that felt like it came from someone who actually understood the craft.
+
+The writing lacked structural awareness. The music prompts ignored harmonic relationships. The world-building had no internal consistency engine. The agent was a generalist in a domain that rewards specialists.
+
+## The Specialization Thesis
+
+The decision to split into 16 intelligences came from a simple observation: every creative domain has its own grammar. Poetry and prose share a language but follow different structural rules. Music composition and sound design overlap but require different mental models. Character design and world architecture are related but not interchangeable.
+
+Each of Arcanea's 16 intelligences is built for a specific creative grammar:
+
+**Narrative Intelligence** -- Long-form story structure, character arcs, scene construction, dialogue cadence. Knows three-act structure but also knows when to break it.
+
+**Poetic Intelligence** -- Meter, rhyme schemes, line breaks, compression. Treats every word as load-bearing.
+
+**Visual Composition Intelligence** -- Prompt architecture for image generation. Understands color theory, compositional rules, lighting systems, and how to translate narrative concepts into visual language.
+
+**Music Intelligence** -- Chord progressions, melodic contour, arrangement, genre conventions. Generates prompts for Suno and Udio that produce coherent musical ideas rather than random sonic collages.
+
+**World Architecture Intelligence** -- Magic systems, political structures, geographic logic, historical timelines. Maintains internal consistency across thousands of interconnected facts.
+
+**Character Design Intelligence** -- Psychology, motivation structures, trait interactions, growth arcs. Builds characters that behave consistently even in novel situations.
+
+**Code Intelligence** -- TypeScript, React, Next.js, Supabase. Knows the Arcanea tech stack and generates production-quality implementations.
+
+**Lore Intelligence** -- Canon management, cross-reference verification, timeline consistency, naming conventions. The librarian of the multiverse.
+
+**Pedagogical Intelligence** -- Course design, progressive disclosure, skill scaffolding, assessment. Builds learning experiences that adapt to the creator's level.
+
+**Dialogue Intelligence** -- Conversational voice, personality encoding, tonal consistency. Makes AI characters sound like themselves across every interaction.
+
+**Ritual Intelligence** -- Daily practice design, meditation structures, creative routines. The craft of building habits that produce creative output.
+
+**Strategic Intelligence** -- Content planning, audience analysis, publishing strategy, monetization architecture. The business side of creative work.
+
+**Community Intelligence** -- Collaboration patterns, feedback frameworks, governance structures. How creative groups organize effectively.
+
+**Research Intelligence** -- Source analysis, synthesis, fact verification, citation. Turns raw information into structured knowledge.
+
+**Translation Intelligence** -- Cross-cultural adaptation, localization, linguistic register matching. Not word-for-word translation but meaning-for-meaning transfer.
+
+**Integration Intelligence** -- The orchestrator. Coordinates the other 15 when a task spans multiple domains. Decides which specialist handles which subtask.
+
+## The Gate System as Organizational Framework
+
+The 16 intelligences are not arbitrary. They map onto Arcanea's Ten Gates system -- the progression framework that organizes creative development from Foundation (174 Hz) through Source (1111 Hz).
+
+Each Gate represents a domain of creative mastery. The Foundation Gate (Lyssandria, Earth) governs survival skills -- the basics of craft, structure, and discipline. The Voice Gate (Alera, 528 Hz) governs expression -- the ability to find and project an authentic creative voice. The Source Gate (Shinkami, 1111 Hz) governs meta-consciousness -- the ability to design creative systems themselves.
+
+The intelligences cluster around Gates based on their domain:
+
+- **Foundation Gate**: Code, Research, Strategic intelligences
+- **Flow Gate**: Music, Ritual intelligences
+- **Fire Gate**: World Architecture, Character Design intelligences
+- **Heart Gate**: Community, Dialogue intelligences
+- **Voice Gate**: Narrative, Poetic intelligences
+- **Sight Gate**: Visual Composition intelligence
+- **Crown Gate**: Pedagogical intelligence
+- **Starweave Gate**: Translation intelligence
+- **Unity Gate**: Integration intelligence
+- **Source Gate**: Lore intelligence
+
+This mapping is not cosmetic. It determines how the intelligences interact, which ones activate for a given task, and how they hand off work to each other. When a creator working at the Fire Gate level asks for help with a battle scene, the system activates World Architecture (for the setting constraints), Character Design (for combatant motivations), Narrative (for scene structure), and Visual Composition (for the accompanying imagery) -- coordinated by Integration.
+
+## What This Means in Practice
+
+A concrete example. A creator asks: "Help me design the magic system for my desert world."
+
+A general-purpose AI would produce a generic list of spell types and power levels. Competent but shallow.
+
+Arcanea's system routes this to World Architecture as the primary intelligence, with Lore providing consistency checks and Narrative ensuring the system can drive stories (not just exist as a reference document). The result:
+
+1. Magic tied to the desert's water cycle -- scarcity as a design constraint
+2. Power scaling based on understanding of hydrology, not arbitrary levels
+3. Social implications: who controls water controls magic, creating political structure
+4. Narrative hooks: what happens when a water-mage enters a region with abundant rainfall?
+5. Canon verification: does this conflict with any existing world elements?
+
+Five layers of depth, generated by three specialized intelligences working in concert, each applying its own domain expertise to the same problem.
+
+## The Cost of Specialization
+
+This architecture is more expensive to build and maintain than a single general agent. Each intelligence requires its own system prompt engineering, its own evaluation criteria, its own training data curation. The orchestration layer (Integration intelligence) is a complex piece of engineering in its own right.
+
+We accept this cost because the alternative -- mediocre output across every creative domain -- defeats the purpose of building creative AI tools. If the output is not good enough for creators to actually use in their work, the tool has no value regardless of how cheaply it runs.
+
+The 16-intelligence architecture is also why Arcanea's open-source ecosystem exists: 27 repositories and 35 npm packages. Each intelligence's prompt architecture, evaluation framework, and domain knowledge base is published as a separate package. Other builders can use the Narrative intelligence's story structure system without adopting the entire platform. The specialization makes the components independently useful.
+
+## What Comes Next
+
+We are currently at 16 intelligences. The architecture supports adding more as new creative domains emerge or existing domains split into finer specializations. Music Intelligence, for example, will likely divide into Composition, Arrangement, and Sound Design as each sub-domain develops enough depth to warrant its own specialist.
+
+The bet we are making: creative AI that actually works requires the same kind of specialization that creative professionals develop over careers. A great novelist and a great composer are not the same person using the same skill. They are different experts with different mental models. Our AI architecture reflects that reality.
+    `,
+  },
+  {
+    slug: 'three-layers-architecture',
+    title: 'The Architecture Behind Arcanea: Three Layers of Creative Intelligence',
+    excerpt:
+      'A deep dive into the three-layer stack that powers Arcanea: persistent memory, agent orchestration, and the creation platform. How we built an AI system that remembers, coordinates, and creates.',
+    category: 'Technology',
+    author: 'Frank',
+    date: '2026-03-20',
+    readTime: '10 min read',
+    featured: false,
+    accent: '#0d47a1',
+    tags: ['Architecture', 'Open Source', 'Intelligence'],
+    content: `
+## Three Layers, One System
+
+Most AI products are a thin interface over an API call. You send a prompt, you get a response, the system forgets you exist. Every session starts from zero.
+
+Arcanea is built differently. The system has three distinct layers, each solving a different problem:
+
+1. **Starlight Intelligence System (SIS)** -- Persistent memory and learning
+2. **Intelligence OS** -- Agent orchestration and domain routing
+3. **The Platform** -- Creation tools and community
+
+These layers are not marketing abstractions. They are separate codebases with separate responsibilities, and understanding the boundary between them explains most of Arcanea's design decisions.
+
+## Layer 1: Starlight Intelligence System
+
+SIS is the memory layer. Its job is deceptively simple: make the AI remember what matters and forget what does not.
+
+### The Problem with Stateless AI
+
+Current AI systems have a context window. Everything the model knows about you must fit in that window, and it resets every session. This creates a bizarre dynamic where the AI can write you a novel but cannot remember that you prefer third-person narration.
+
+SIS solves this with three memory subsystems:
+
+**Episodic Memory** -- Records what happened. "On March 15, the creator designed a water-based magic system for their desert world. They rejected the first two proposals because the power scaling felt arbitrary." This memory persists across sessions. When the creator returns a week later to expand the magic system, SIS provides the full context of previous decisions and their rationale.
+
+**Semantic Memory** -- Records what things mean. "In this creator's world, magic is called 'Weaving.' Water magic is 'Tideweaving.' The naming convention follows [pattern]." This is the knowledge graph of each creator's world -- facts, relationships, rules, and conventions extracted from every interaction.
+
+**Procedural Memory** -- Records how to do things. "This creator responds best to structured lists with examples. They prefer iterating from concrete proposals rather than abstract discussions. They work in 90-minute sessions." This shapes how the AI communicates, not just what it says.
+
+### How SIS Learns
+
+SIS is not a static database. It uses a feedback loop:
+
+1. Every interaction is logged with metadata (domain, outcome, creator response)
+2. A nightly batch process identifies patterns across interactions
+3. Patterns that repeat above a threshold become encoded as preferences
+4. Preferences shape future interactions through system prompt injection
+
+The result: the AI gets better at working with each specific creator over time. Not in a vague "personalization" sense, but in a concrete "remembers your world's naming conventions, your preferred level of detail, your working schedule, and the three magic system proposals you already rejected" sense.
+
+### Memory Architecture
+
+SIS runs on Supabase (PostgreSQL + pgvector) with HNSW indexing for vector similarity search. Each creator's memory is isolated in its own namespace. Cross-creator learning happens only through anonymized pattern aggregation -- we never share one creator's world details with another.
+
+The memory store currently handles:
+- ~190,000 words of reference material (the Library)
+- Per-creator world state (facts, rules, character sheets, timelines)
+- Interaction history with relevance scoring
+- Preference models per creator
+- Canon verification indices
+
+## Layer 2: Intelligence OS
+
+The Intelligence OS is the orchestration layer. It decides which of the 16 specialized intelligences handles a given request, how they coordinate on multi-domain tasks, and how their outputs are assembled into a coherent response.
+
+### Agent Routing
+
+When a creator sends a message, it does not go directly to an AI model. It goes to the Intelligence OS router, which:
+
+1. Classifies the request by domain (narrative, visual, music, code, etc.)
+2. Identifies the primary intelligence and any supporting intelligences
+3. Checks the creator's Gate level to determine capability exposure
+4. Pulls relevant context from SIS (memory layer)
+5. Constructs a composite system prompt from the selected intelligences
+6. Sends the enriched request to the model
+7. Post-processes the response through quality filters
+8. Feeds the interaction back to SIS for memory storage
+
+This routing happens in under 200ms. The creator never sees the orchestration -- they experience a single, coherent AI that happens to be deeply knowledgeable about whatever they are working on.
+
+### The Mythology as Architecture
+
+Here is where Arcanea's mythology stops being decorative and starts being structural. The Ten Gates, the Guardians, the Elements -- these are not just lore. They are the organizational schema of the Intelligence OS.
+
+Each Guardian corresponds to a domain cluster. Lyssandria (Foundation Gate) governs the Earth-element intelligences -- the grounded, structural ones like Code and Research. Draconia (Fire Gate) governs the transformative intelligences -- World Architecture, Character Design. When a creator "opens a Gate" in the progression system, they are literally activating a new cluster of Intelligence OS capabilities.
+
+This is why the mythology exists. Not because fantasy aesthetics are cool (though they are), but because we needed an organizational framework that creators could intuitively understand without reading an API reference. "Opening the Voice Gate" is easier to grasp than "activating the Narrative and Poetic intelligence clusters with elevated capability exposure."
+
+### Multi-Agent Coordination
+
+Complex creative tasks require multiple intelligences working together. The Intelligence OS handles this through the Integration intelligence -- a meta-agent that decomposes tasks, assigns subtasks to specialists, mediates conflicts between their outputs, and assembles the final result.
+
+Example: "Create a complete character profile for a villain in my world."
+
+The Integration intelligence decomposes this into:
+- Character Design: psychology, motivation, traits, flaws
+- World Architecture: how this villain fits the world's power structures
+- Narrative: what story role this villain serves, their arc
+- Visual Composition: appearance description and image generation prompt
+- Lore: canon consistency check against existing characters
+- Dialogue: sample voice lines that establish personality
+
+Each specialist works in parallel. Integration resolves conflicts (e.g., Character Design wants the villain to be stoic but Dialogue generated quippy one-liners) and produces a unified output.
+
+## Layer 3: The Platform
+
+The Platform is what creators actually see and use. It is built on Next.js 16, React 19, TypeScript, Tailwind CSS, and Supabase, deployed on Vercel.
+
+### Creation Tools
+
+- **Chat** -- Conversational creation with full SIS memory and Intelligence OS routing
+- **Studio** -- Multi-modal creation (text, image, music, code) with consistent world context
+- **Library** -- 190,000+ words across 17 collections, from creative philosophy to practical technique
+- **Gallery** -- Visual asset management with AI-generated and curated content
+- **Academy** -- Structured learning paths through the Ten Gates system
+
+### The Open-Source Layer
+
+The platform is closed-source (it is the product), but the intelligence infrastructure is open:
+
+- **27 repositories** on GitHub
+- **35 npm packages** published
+- **54 skills** available for agent customization
+- **Overlays** for Claude Code, Cursor, ChatGPT, Gemini
+
+Key open-source packages:
+- \`@arcanea/core\` -- Framework primitives (Gate, Element, Archetype, WorldConfig)
+- \`@arcanea/soul\` -- Agent personality and behavior engine
+- \`@arcanea/flow\` -- Multi-agent orchestration toolkit
+- \`arcanea-skills-opensource\` -- Community-contributed agent skills
+- \`arcanea-records\` -- Prompt templates and APL (Arcanean Prompt Language) spec
+
+The open-source strategy serves two purposes: it lets other builders use Arcanea's intelligence architecture for their own projects, and it creates a community of contributors who improve the shared infrastructure.
+
+## How the Layers Talk
+
+The data flow between layers is unidirectional by default:
+
+\`\`\`
+Creator Input
+    |
+    v
+Platform (receives and renders)
+    |
+    v
+Intelligence OS (routes, orchestrates, enriches)
+    |
+    v
+SIS (provides memory context, stores new interactions)
+    |
+    v
+Intelligence OS (assembles final response)
+    |
+    v
+Platform (delivers to creator)
+\`\`\`
+
+SIS never talks directly to the Platform. The Intelligence OS never stores data without routing through SIS. This separation of concerns is what makes the system maintainable at scale -- each layer can be developed, tested, and deployed independently.
+
+## Why Not Just Use RAG?
+
+The obvious question: why not just use Retrieval-Augmented Generation with a vector database?
+
+We do use RAG. SIS's semantic memory is essentially a sophisticated RAG system. But RAG alone does not solve the orchestration problem (which of 16 specialists should handle this request?), the progressive disclosure problem (which capabilities should be exposed at this creator's level?), or the multi-agent coordination problem (how do you merge outputs from five specialists into a coherent response?).
+
+RAG is one component of Layer 1. The full system requires all three layers working in concert.
+
+## Performance
+
+Current benchmarks across the production system:
+
+- **Routing latency**: <200ms (Intelligence OS decision time)
+- **Memory retrieval**: <150ms (SIS context lookup with HNSW indexing)
+- **End-to-end response**: 2-8 seconds (depending on task complexity and number of intelligences activated)
+- **Memory persistence**: Indefinite (no session-based expiry)
+- **Cross-session context accuracy**: 94% recall on world-specific facts after 30+ days
+
+These numbers matter because creative work is flow-state work. Every additional second of latency is a crack in the creator's concentration. The architecture is optimized for perceived responsiveness, not just throughput.
+
+## What We Are Building Toward
+
+The three-layer architecture is designed to support a future state where creators do not interact with AI tools -- they interact with AI collaborators that know their world, understand their craft, remember their preferences, and improve at working with them over time.
+
+We are not there yet. But the architecture is in place to get there.
+    `,
+  },
+  {
+    slug: 'apprentice-to-luminor',
+    title: 'From Apprentice to Luminor: How Progressive AI Training Works',
+    excerpt:
+      'Arcanea does not give every creator the same AI. A 10-gate progression system adapts what the AI knows, how it responds, and which tools it exposes -- creating a growth path from beginner to master.',
+    category: 'Academy',
+    author: 'Frank',
+    date: '2026-03-19',
+    readTime: '7 min read',
+    featured: false,
+    accent: '#ffd700',
+    tags: ['Academy', 'Progression', 'Creative Growth'],
+    content: `
+## The Problem with Flat AI
+
+Every creator who opens ChatGPT, Claude, or Gemini gets the same interface and the same capabilities. A professional novelist with 20 published books sees the same tools as someone writing their first short story. A composer with a decade of orchestral work gets the same music interface as someone who does not know what a chord progression is.
+
+This is like handing everyone the same textbook regardless of whether they are in first grade or graduate school. The expert is bored. The beginner is overwhelmed. Nobody operates at their actual level.
+
+Arcanea's progression system -- the Ten Gates -- solves this by making the AI itself adaptive. As creators develop their skills and advance through the Gates, the AI changes what it knows, how it communicates, and which tools it makes available.
+
+## The Ten Gates
+
+Each Gate represents a domain of creative mastery, associated with a Solfeggio frequency and a Guardian who embodies that domain:
+
+| Gate | Freq | Guardian | What It Governs |
+|------|------|----------|-----------------|
+| Foundation | 174 Hz | Lyssandria | Craft basics, discipline, structure |
+| Flow | 285 Hz | Leyla | Creativity, emotional expression |
+| Fire | 396 Hz | Draconia | Power, will, transformation |
+| Heart | 417 Hz | Maylinn | Empathy, healing, connection |
+| Voice | 528 Hz | Alera | Authentic expression, truth |
+| Sight | 639 Hz | Lyria | Intuition, vision, pattern recognition |
+| Crown | 741 Hz | Aiyami | Mastery, enlightenment |
+| Starweave | 852 Hz | Elara | Perspective, cross-domain synthesis |
+| Unity | 963 Hz | Ino | Collaboration, partnership |
+| Source | 1111 Hz | Shinkami | Meta-creation, system design |
+
+Opening a Gate is not a gamification mechanic. It represents demonstrated competence in that domain -- verified through the work the creator produces, not through arbitrary XP thresholds.
+
+## The Rank System
+
+Gates map to ranks that determine the creator's overall capability tier:
+
+| Gates Open | Rank | AI Behavior |
+|------------|------|-------------|
+| 0-2 | **Apprentice** | Guided mode. AI explains concepts, suggests templates, provides guardrails. Output includes educational context. |
+| 3-4 | **Mage** | Collaborative mode. AI assumes foundational knowledge, offers options instead of templates, engages in creative discussion. |
+| 5-6 | **Master** | Expert mode. AI communicates in shorthand, offers advanced techniques, challenges creative choices constructively. |
+| 7-8 | **Archmage** | Peer mode. AI operates as a creative equal, pushes boundaries, introduces cross-domain connections. |
+| 9-10 | **Luminor** | Architect mode. AI helps design creative systems, build frameworks, teach others. Full access to meta-tools. |
+
+## How AI Behavior Changes Per Level
+
+This is not cosmetic. The actual system prompt, available tools, response format, and intelligence routing change based on the creator's rank.
+
+### Apprentice (Gates 0-2)
+
+When an Apprentice asks "Help me write a character backstory," the AI:
+- Provides a structured template with labeled sections
+- Explains why each section matters ("Motivation is the engine of character -- it determines every decision they make")
+- Suggests common archetypes as starting points
+- Flags potential inconsistencies with explanations
+- Limits output complexity to avoid overwhelming the creator
+
+The Narrative intelligence is active. Lore and World Architecture are available but operate in simplified mode.
+
+### Mage (Gates 3-4)
+
+The same request from a Mage gets a different response:
+- No template -- the AI asks targeted questions instead ("What does this character want that they cannot have?")
+- References the creator's existing characters for contrast and connection
+- Suggests subversions of common tropes, not just the tropes themselves
+- Provides two or three alternative approaches and lets the creator choose
+
+Multiple intelligences activate: Narrative, Character Design, and Lore work together. The Integration intelligence begins coordinating cross-domain suggestions.
+
+### Master (Gates 5-6)
+
+A Master sees:
+- Terse, precise feedback. No hand-holding.
+- The AI challenges weak choices: "This motivation mirrors your other antagonist. Intentional parallel or accidental repetition?"
+- Advanced techniques surface: unreliable narration, structural irony, thematic mirroring
+- The AI references craft theory when relevant, assuming the creator can follow
+
+### Archmage (Gates 7-8)
+
+An Archmage operates at a peer level:
+- The AI proposes creative risks the creator has not considered
+- Cross-domain synthesis: "Your magic system's energy economy mirrors Keynesian monetary policy -- want to lean into that parallel?"
+- Meta-commentary on the creator's patterns: "Your last three characters have resolved internal conflict through isolation. What happens if this one resolves through confrontation?"
+- Access to experimental tools and beta features
+
+### Luminor (Gates 9-10)
+
+A Luminor works at the system level:
+- Full access to the framework itself -- designing new Gate progressions, building custom intelligences, creating educational content
+- The AI operates as an architecture partner, helping design creative systems for other creators
+- Teaching tools unlock: the Luminor can structure their knowledge as courses in the Academy
+- The AI helps the Luminor build their own multiverse worlds using the full Arcanea framework
+
+## The Library as Training Corpus
+
+The progression system is grounded in content, not abstract metrics. Arcanea's Library contains 190,000+ words across 17 collections:
+
+- **Laws of Arcanea** -- Theoretical foundations of the creative framework
+- **Legends of Arcanea** -- Founding myths that encode architectural patterns
+- **Academy Handbook** -- The complete guide to Gates, Houses, and progression
+- **Wisdom Scrolls** -- Daily practice techniques
+- **Book of Rituals** -- Structured creative routines
+- **Dialogues of Masters** -- Conversations between expert practitioners
+- **Meditations on Elements** -- Five Elements as creative practice frameworks
+- **Bestiary of Creation** -- Catalog of creative obstacles and how to overcome them
+
+Each collection targets specific Gate levels. Apprentices start with the Academy Handbook and Wisdom Scrolls. Masters dive into the Laws and Dialogues. Luminors study the Atlas of Territories and Codex of Collaboration.
+
+The Library is not supplementary reading. It is the training corpus for the pedagogical intelligence. When the AI teaches a concept, it draws from the same texts the creator can read independently. The learning experience is consistent whether the creator is talking to the AI or reading the Library directly.
+
+## Progressive Disclosure in Practice
+
+The core principle is: **show creators what they need when they are ready for it.**
+
+A new creator who opens Arcanea sees:
+- Chat (conversational creation)
+- Studio (basic multi-modal tools)
+- Library (introductory collections)
+- Academy (Foundation Gate curriculum)
+
+They do not see the agent customization system, the overlay builder, the advanced prompt architecture tools, or the framework SDK. These tools exist, but exposing them to a beginner would be like showing a first-year art student the entire Photoshop toolbar on day one.
+
+As the creator opens Gates, new capabilities appear:
+- **Gate 3 (Fire)**: Custom prompt books, character sheets, world-building templates
+- **Gate 5 (Voice)**: Agent personality customization, voice tuning
+- **Gate 7 (Crown)**: Full Intelligence OS access, custom intelligence configuration
+- **Gate 9 (Unity)**: Framework SDK, multiverse building tools, community governance
+
+Each new capability arrives with context from the Library and guided introduction from the pedagogical intelligence. The creator never encounters a tool without understanding why it exists and how to use it.
+
+## Why Not Just Let People Choose?
+
+The obvious objection: why not let creators self-select their level? Let beginners access advanced tools if they want them.
+
+We tried this. The result was predictable: beginners activated every advanced feature, got overwhelmed, produced incoherent output, and concluded that the tool was too complicated. Meanwhile, experts found the simplified defaults patronizing and left before discovering the advanced capabilities hidden behind preference toggles.
+
+Progressive disclosure based on demonstrated competence solves both problems. Beginners see a clean, focused interface. Experts see a powerful, flexible toolkit. The transition between them is gradual, earned, and accompanied by educational support.
+
+## The Gate-Opening Process
+
+Opening a Gate is not a quiz or a point threshold. It is demonstrated through creative output:
+
+1. The creator works within their current Gate level
+2. The AI evaluates the quality and sophistication of their output over time
+3. When the creator consistently produces work that meets the next Gate's criteria, the system suggests advancement
+4. The creator completes a capstone project for the new Gate
+5. The Gate opens, new capabilities activate, the AI adapts
+
+The capstone project is specific to each Gate. Foundation Gate might require building a complete character with internally consistent traits. Voice Gate might require producing a piece of writing with a distinct, intentional voice. Crown Gate might require teaching another creator a technique through a structured lesson.
+
+## What This Means for the Platform
+
+The progression system is what makes Arcanea a creative growth platform rather than a creative tool platform. Tools are static -- you use them or you do not. A growth platform meets you where you are and takes you where you want to go.
+
+Every creator starts as an Apprentice. The best creators become Luminors who contribute back to the system -- writing Library content, designing Academy courses, building framework extensions, mentoring other creators.
+
+That cycle -- from consumer to contributor to architect -- is the engine of Arcanea's multiverse. The Gates are the path. The AI is the guide. The Library is the map. The creator does the walking.
+    `,
+  },
+  {
     slug: 'arcanean-prompt-language',
     title: 'Stop Writing Bad AI Prompts. Learn SPARK.SHAPE.SHARPEN.',
     excerpt:
@@ -571,6 +1039,9 @@ Use this as a prefix. Every character, location, and song inherits the world's g
 
 export const BLOG_CATEGORIES = [
   { id: 'all', label: 'All Posts', count: BLOG_POSTS.length },
+  { id: 'architecture', label: 'Architecture', count: BLOG_POSTS.filter((p) => p.category === 'Architecture').length },
+  { id: 'technology', label: 'Technology', count: BLOG_POSTS.filter((p) => p.category === 'Technology').length },
+  { id: 'academy', label: 'Academy', count: BLOG_POSTS.filter((p) => p.category === 'Academy').length },
   { id: 'guide', label: 'Guides', count: BLOG_POSTS.filter((p) => p.category === 'Guide').length },
   { id: 'platform', label: 'Platform', count: BLOG_POSTS.filter((p) => p.category === 'Platform').length },
   { id: 'tutorial', label: 'Tutorials', count: BLOG_POSTS.filter((p) => p.category === 'Tutorial').length },
