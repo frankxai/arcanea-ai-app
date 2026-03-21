@@ -1,0 +1,62 @@
+{
+  "mcpServers": {
+    "next-devtools": {
+      "command": "npx",
+      "args": ["-y", "next-devtools-mcp@latest"],
+      "env": {},
+      "description": "Next.js development tools - runtime errors, logs, and page metadata"
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {},
+      "description": "GitHub integration for Arcanea repository management, PRs, and issues"
+    },
+    "figma-remote-mcp": {
+      "type": "http",
+      "url": "https://mcp.figma.com/mcp"
+    },
+    "notion": {
+      "type": "http",
+      "url": "https://mcp.notion.com/mcp"
+    },
+    "linear-server": {
+      "type": "sse",
+      "url": "https://mcp.linear.app/sse"
+    },
+    "supabase": {
+      "type": "http",
+      "url": "https://mcp.supabase.com/mcp?project_ref=YOUR_PROJECT_REF",
+      "description": "Supabase project management, SQL, migrations, and auth (OAuth — no token needed)"
+    },
+    "arcanea-mcp": {
+      "command": "node",
+      "args": ["/mnt/c/Users/frank/Arcanea/packages/arcanea-mcp/dist/cli.js"],
+      "env": {},
+      "description": "Arcanea local MCP server (worldbuilding, creative orchestration, canon tools)"
+    },
+    "arcanea-memory": {
+      "command": "node",
+      "args": ["/mnt/c/Users/frank/Arcanea/packages/memory-mcp/dist/server.js"],
+      "env": {
+        "STARLIGHT_PATH": "/mnt/c/Users/frank/Arcanea/.arcanea/memory"
+      },
+      "description": "Arcanea memory MCP (vault_remember, vault_recall, horizon)"
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@executeautomation/playwright-mcp-server"],
+      "env": {},
+      "description": "Browser automation for E2E testing and UI verification"
+    },
+    "arcanea-claw": {
+      "command": "node",
+      "args": ["/mnt/c/Users/frank/Arcanea/arcanea-claw/mcp-server/dist/index.js"],
+      "env": {
+        "CLAW_DIR": "/mnt/c/Users/frank/Arcanea/arcanea-claw",
+        "MANIFEST_PATH": "/mnt/c/Users/frank/Arcanea/arcanea-claw/manifest.json"
+      },
+      "description": "ArcaneaClaw media pipeline — scan, classify, score, approve/reject creative assets"
+    }
+  }
+}
