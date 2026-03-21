@@ -191,7 +191,7 @@ export default function ImageForgePage() {
               </div>
               <div>
                 <h1 className="font-display text-lg font-semibold">Image Forge</h1>
-                <p className="text-xs text-text-muted">Powered by Draconia • 396 Hz</p>
+                <p className="text-xs text-text-muted">Powered by Draconia</p>
               </div>
             </div>
           </div>
