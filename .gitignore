@@ -114,13 +114,114 @@ arcanea-intelligence-os/
 arcanea-opencode-fork/
 
 # Runtime agent state — changes every session, never commit
-.claude-flow/.trend-cache.json
-.claude-flow/metrics/
+.claude-flow/
+.swarm/
+
+# Claude Code local state (per-machine, never commit)
+.claude/
+.codex/
+.codacy/
+.cursor/
+.cursorrules
+.editorconfig
+.gemini/
+.opencode/
+.nano-banana-config.json
+.arcanea-learning.json
+.arcanea-library-cache.json
+.npmrc
+
+# Separate repos / local-only projects (not submodules)
+arcanea-intelligence-os/
+arcanea-opencode-fork/
+arcanea-companion/
+arcanea-code/
+arcanea-ecosystem/
+arcanea-flow/
+arcanea-game-development/
+arcanea-infogenius/
+arcanea-library-superintelligence/
+arcanea-luminor/
+arcanea-mobile/
+arcanea-onchain/
+arcanea-opencode/
+arcanea-records/
+arcanea-lore/
+arcanea-agents/
+arcanea-claw/
+arcanea-skills-opensource/
+arcanea-soul/
+arcanea.ai/
+arcaneabot/
+claude-arcanea/
+claude-code-oracle-skills/
+codex-arcanea/
+gemini-arcanea/
+oci-ai-architect-skills/
+intelligence-os/
+intelligence/
+starlight-intelligence-system/
+starlight-protocol/
+infogenius/
+Nano-Banana-MCP/
+
+# Local-only content & tooling
+agentic/
+agents/
+core/
+desktop/
+games/
+labs/
+/lore/
+output/
+pages/
+research/
+sync/
+versions/
+vision-board/
+generated/
+
+# Local scripts, planning, status (not canonical)
+planning-with-files/
+tasks/
+status/
+findings.md
+progress.md
+task_plan.md
+
+# Config files (local dev, not shared)
+cypress.config.ts
+jest.config.js
+next.config.js
+playwright.config.js
+postcss.config.js
+tailwind.config.js
+
+# Misc local-only
+assets/
+content/
+design/
+public/
+styles/
+src/
+spec/
+tests/
+book-de/
+CHANGELOG.md
+CONTRIBUTING.md
+CODE_OF_CONDUCT.md
+LICENSE
+SECURITY.md
+SECURITY_FIXES/
+.changeset/
+.github/
+
+# Database files
+vectors.db
+*.db
 
 # Windows path junk that leaks into WSL
 "C:\\Users\\*"
-starlight-intelligence-system/.starlight/
 
-
-#Ignore cursor AI rules
-.cursor\rules\codacy.mdc
+# Cursor AI rules
+.cursor/
