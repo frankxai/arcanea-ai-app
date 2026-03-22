@@ -12,6 +12,9 @@
  */
 
 import type { LuminorWeights } from './router';
+// Note: circular dependency with soul-bridge (this exports LUMINOR_HINTS, soul-bridge imports it).
+// Safe because LUMINOR_HINTS is a const initialized at module load, and getSoulAgentForLuminor
+// is only called inside buildLuminorLayer (lazy), not at module initialization time.
 import { getSoulAgentForLuminor } from './soul-bridge';
 
 // ---------------------------------------------------------------------------
@@ -129,8 +132,9 @@ export function classifyCoordinationMode(weights: LuminorWeights): CoordinationM
   if (top > 0.8 && second < 0.5) return 'solo';
 
   // Multiple strong signals — council of Guardians
+  // (resolveSwarm caps active guardians to 3, so no upper bound needed here)
   const strongCount = sorted.filter(w => w >= 0.4).length;
-  if (strongCount >= 2 && strongCount <= 3) return 'council';
+  if (strongCount >= 2) return 'council';
 
   // No clear signal — convergence (Shinkami mode)
   return 'convergence';

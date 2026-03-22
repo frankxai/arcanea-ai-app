@@ -264,7 +264,7 @@ export async function POST(req: NextRequest) {
       resolvedSystemPrompt = systemPrompt;
     } else {
       // MoE Router: one intelligence, Luminor experts as hidden layer
-      const lastUserMessage = [...messages].reverse().find((m: any) => m.role === 'user');
+      const lastUserMessage: any = [...messages].reverse().find((m: any) => m.role === 'user');
       // Extract text from parts or content (AI SDK v6 UIMessage compat)
       let messageText = '';
       if (lastUserMessage?.parts && Array.isArray(lastUserMessage.parts)) {

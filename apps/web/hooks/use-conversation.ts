@@ -279,6 +279,7 @@ export function useConversation(): ConversationState {
     });
     setMessages([]);
     setActiveGates([]);
+    setSwarmResult(null);
   }, [setMessages]);
 
   // ---------------------------------------------------------------------------
@@ -306,6 +307,8 @@ export function useConversation(): ConversationState {
   // ---------------------------------------------------------------------------
 
   useEffect(() => {
+    // Skip re-classification during streaming — the last user message hasn't changed
+    if (isLoading) return;
     const lastUser = [...messages].reverse().find((m) => m.role === 'user');
     if (lastUser) {
       const text = getMessageText(lastUser);
@@ -315,7 +318,7 @@ export function useConversation(): ConversationState {
         setSwarmResult(resolveSwarm(result.weights, result.activeGates));
       }
     }
-  }, [messages]);
+  }, [messages, isLoading]);
 
   // ---------------------------------------------------------------------------
   // Auto-send initial prompt from URL
@@ -492,6 +495,7 @@ export function useConversation(): ConversationState {
     setMessages([]);
     setInput('');
     setActiveGates([]);
+    setSwarmResult(null);
   }, [setMessages]);
 
   // ---------------------------------------------------------------------------

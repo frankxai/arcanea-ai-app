@@ -25,11 +25,11 @@ export async function POST(req: NextRequest) {
     // Get stripe customer ID from profile
     const { data: profile } = await supabase
       .from('profiles')
-      .select('stripe_customer_id')
+      .select('stripe_customer_id' as any)
       .eq('id', user.id)
       .single();
 
-    if (!profile?.stripe_customer_id) {
+    if (!(profile as any)?.stripe_customer_id) {
       return NextResponse.json(
         { error: 'No subscription found. Visit /pricing to subscribe.' },
         { status: 404 }
@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
     const stripe = new Stripe(stripeKey);
 
     const portalSession = await stripe.billingPortal.sessions.create({
-      customer: profile.stripe_customer_id,
+      customer: (profile as any).stripe_customer_id,
       return_url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://arcanea.ai'}/settings`,
     });
 

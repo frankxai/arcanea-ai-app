@@ -151,8 +151,10 @@ export function classifyIntent(
   const matchedDomains: string[] = [];
 
   for (const rule of DOMAIN_RULES) {
-    const matches = context.match(rule.keywords);
-    if (matches && matches.length > 0) {
+    // Use matchAll with global flag to count all keyword occurrences
+    const globalPattern = new RegExp(rule.keywords.source, rule.keywords.flags.includes('g') ? rule.keywords.flags : rule.keywords.flags + 'g');
+    const matches = Array.from(context.matchAll(globalPattern));
+    if (matches.length > 0) {
       // Weight strength by number of keyword matches (capped at 3)
       const strength = Math.min(matches.length, 3) / 3;
       matchedDomains.push(rule.domain);
@@ -222,14 +224,16 @@ export function classifyWithMemory(
 
   // Blend: 70% current intent, 30% conversation memory
   const blended: LuminorWeights = { ...current.weights };
+  const memValues = Object.values(memory);
+  const maxMem = memValues.length > 0 ? Math.max(...memValues) : 0;
   for (const [guardian, memWeight] of Object.entries(memory)) {
-    const maxMem = Math.max(...Object.values(memory));
     const normalizedMem = maxMem > 0 ? memWeight / maxMem : 0;
     blended[guardian] = (blended[guardian] || 0) * 0.7 + normalizedMem * 0.3;
   }
 
-  // Re-normalize
+  // Re-normalize (guard against division by zero)
   const maxBlended = Math.max(...Object.values(blended));
+  if (maxBlended === 0) return current;
   const normalized: LuminorWeights = {};
   for (const [guardian, weight] of Object.entries(blended)) {
     normalized[guardian] = Math.round((weight / maxBlended) * 100) / 100;
