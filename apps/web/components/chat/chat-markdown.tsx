@@ -6,10 +6,12 @@ import CodeBlock from './code-block';
 
 interface ChatMarkdownProps {
   content: string;
+  isStreaming?: boolean;
 }
 
-export default function ChatMarkdown({ content }: ChatMarkdownProps) {
+export default function ChatMarkdown({ content, isStreaming }: ChatMarkdownProps) {
   return (
+    <div className={isStreaming ? 'streaming-text' : undefined}>
     <ReactMarkdown
       components={{
         // Code blocks with syntax highlighting + copy
@@ -133,5 +135,6 @@ export default function ChatMarkdown({ content }: ChatMarkdownProps) {
     >
       {content}
     </ReactMarkdown>
+    </div>
   );
 }

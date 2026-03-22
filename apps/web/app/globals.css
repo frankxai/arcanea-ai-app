@@ -1261,6 +1261,23 @@ p a, span a, li a {
   100% { background-position: 0% 0%; }
 }
 
+/* Streaming text fade-in animation */
+@keyframes text-fade-in {
+  from { opacity: 0; transform: translateY(2px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.streaming-text > *:last-child {
+  animation: text-fade-in 0.15s ease-out;
+}
+
+/* Smooth token appearance */
+.streaming-text p:last-of-type,
+.streaming-text li:last-of-type,
+.streaming-text pre:last-of-type {
+  animation: text-fade-in 0.2s ease-out;
+}
+
 /* Disable all non-essential animations for users who prefer reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .animate-cosmic-gradient,

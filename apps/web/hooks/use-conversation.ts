@@ -131,6 +131,10 @@ export interface ConversationState {
   handleEditMessage: (messageId: string, newText: string) => void;
   handleRegenerateFrom: (messageId: string) => void;
 
+  // Branching
+  branches: Map<string, any[]>;
+  loadBranch: (messageId: string, branchIndex: number) => void;
+
   // Actions
   handleSubmit: (e: React.FormEvent) => void;
   handleRetry: () => void;
@@ -165,6 +169,7 @@ export function useConversation(): ConversationState {
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
   const [initialSent, setInitialSent] = useState(false);
+  const [branches, setBranches] = useState<Map<string, any[]>>(new Map());
 
   // Active Luminor from Sanctum ("Use in Chat")
   const [activeLuminor, setActiveLuminor] = useState<ActiveLuminor | null>(null);
@@ -447,6 +452,18 @@ export function useConversation(): ConversationState {
   const handleRegenerateFrom = useCallback((messageId: string) => {
     const idx = messages.findIndex((m: any) => m.id === messageId);
     if (idx < 0) return;
+
+    // Save the current branch from this point forward
+    const branchKey = messageId;
+    const branchContent = messages.slice(idx);
+    setBranches(prev => {
+      const next = new Map(prev);
+      const existing = next.get(branchKey) || [];
+      existing.push(branchContent);
+      next.set(branchKey, existing);
+      return next;
+    });
+
     // Find the user message immediately before this assistant message
     let userIdx = -1;
     for (let i = idx - 1; i >= 0; i--) {
@@ -462,6 +479,20 @@ export function useConversation(): ConversationState {
     setMessages(messages.slice(0, userIdx + 1));
     sendMessage({ text: userText });
   }, [messages, setMessages, sendMessage]);
+
+  // ---------------------------------------------------------------------------
+  // Load a previously saved branch (conversation branching)
+  // ---------------------------------------------------------------------------
+
+  const loadBranch = useCallback((messageId: string, branchIndex: number) => {
+    const branchList = branches.get(messageId);
+    if (!branchList || !branchList[branchIndex]) return;
+    const idx = messages.findIndex((m: any) => m.id === messageId);
+    if (idx < 0) return;
+    // Replace from this point with the saved branch
+    const before = messages.slice(0, idx);
+    setMessages([...before, ...branchList[branchIndex]]);
+  }, [messages, branches, setMessages]);
 
   // ---------------------------------------------------------------------------
   // Copy message text to clipboard
@@ -560,6 +591,10 @@ export function useConversation(): ConversationState {
     setEditingMessageId,
     handleEditMessage,
     handleRegenerateFrom,
+
+    // Branching
+    branches,
+    loadBranch,
 
     // Actions
     handleSubmit,

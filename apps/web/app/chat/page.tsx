@@ -8,6 +8,8 @@ import { FocusModeSelector } from '@/components/chat/focus-modes';
 import { BeamMode } from '@/components/chat/beam-mode';
 import { CommandPalette } from '@/components/chat/command-palette';
 import { ExportDialog } from '@/components/chat/export-dialog';
+import { ArtifactsPanel, detectArtifact } from '@/components/chat/artifacts-panel';
+import type { Artifact } from '@/components/chat/artifacts-panel';
 import {
   PhPaperPlane,
   PhPlus,
@@ -150,6 +152,8 @@ export default function ChatPage() {
     setEditingMessageId,
     handleEditMessage,
     handleRegenerateFrom,
+    branches,
+    loadBranch,
   } = useConversation();
 
   // ---------------------------------------------------------------------------
@@ -233,6 +237,7 @@ export default function ChatPage() {
   const [attachments, setAttachments] = useState<File[]>([]);
   const [isDragOver, setIsDragOver] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  const [activeArtifact, setActiveArtifact] = useState<Artifact | null>(null);
   const recognitionRef = useRef<any>(null);
 
   // Auto-resize textarea
@@ -263,6 +268,18 @@ export default function ChatPage() {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
     setAutoScroll(true);
   };
+
+  // Detect artifacts from the latest assistant message
+  useEffect(() => {
+    if (!isLoading && messages.length > 0) {
+      const lastAssistant = [...messages].reverse().find((m: any) => m.role === 'assistant');
+      if (lastAssistant) {
+        const text = getMessageText(lastAssistant);
+        const artifact = detectArtifact(text);
+        if (artifact) setActiveArtifact(artifact);
+      }
+    }
+  }, [messages, isLoading]);
 
   // Focus textarea after clearing chat — uses persistent new chat
   const handleStartNewChat = handlePersistentNewChat;
@@ -619,7 +636,7 @@ export default function ChatPage() {
                           <span className="text-[10px] text-white/20 font-mono">{providerLabel}</span>
                         </div>
                         <div className="prose prose-invert prose-sm max-w-none text-[15px] leading-[1.75] text-white/85 prose-headings:text-white/90 prose-headings:font-semibold prose-code:text-[#00bcd4]/80 prose-a:text-[#00bcd4] prose-strong:text-white/90">
-                          <ChatMarkdown content={clean} />
+                          <ChatMarkdown content={clean} isStreaming={isStreaming && msg.id === lastMsg?.id} />
                           {isStreaming && msg.id === lastMsg?.id && (
                             <span className="inline-block w-2 h-2 rounded-full bg-[#00bcd4] animate-pulse ml-1 align-middle shadow-[0_0_8px_rgba(0,188,212,0.6)]" />
                           )}
@@ -711,6 +728,22 @@ export default function ChatPage() {
                               <PhArrowClockwise className="w-3.5 h-3.5" />
                               <span>Regenerate</span>
                             </button>
+                            {branches.has(msg.id) && (
+                              <div className="flex items-center gap-1 ml-2">
+                                <span className="text-[10px] text-white/25">|</span>
+                                {branches.get(msg.id)!.map((_: any, i: number) => (
+                                  <button
+                                    key={i}
+                                    type="button"
+                                    onClick={() => loadBranch(msg.id, i)}
+                                    className="px-1.5 py-0.5 rounded text-[10px] text-white/30 hover:text-white/60 hover:bg-white/[0.04] transition-colors font-mono"
+                                    title={`Load branch ${i + 1}`}
+                                  >
+                                    v{i + 1}
+                                  </button>
+                                ))}
+                              </div>
+                            )}
                           </div>
                         )}
                       </div>
@@ -861,6 +894,14 @@ export default function ChatPage() {
           </div>
         </div>
       </div>
+
+      {/* Artifacts side panel — renders code / HTML / SVG from AI responses */}
+      {activeArtifact && (
+        <ArtifactsPanel
+          artifact={activeArtifact}
+          onClose={() => setActiveArtifact(null)}
+        />
+      )}
 
       {/* Command Palette */}
       <CommandPalette
