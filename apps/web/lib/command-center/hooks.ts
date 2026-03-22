@@ -66,7 +66,7 @@ export function useAssets(filter: InboxFilter) {
     const { data, count, error } = await query.limit(48);
 
     if (!error && data) {
-      setAssets(data as AssetMetadata[]);
+      setAssets(data as unknown as AssetMetadata[]);
       setTotal(count ?? 0);
     }
     setLoading(false);
@@ -236,7 +236,7 @@ export function useCommandStats() {
       return;
     }
 
-    const allAssets = (assets ?? []) as Array<{
+    const allAssets = (assets ?? []) as unknown as Array<{
       status: AssetStatus;
       guardian: Guardian | null;
       element: Element | null;

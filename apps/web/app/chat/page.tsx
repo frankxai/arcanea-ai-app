@@ -26,6 +26,7 @@ import {
   PhGear,
 } from '@/lib/phosphor-icons';
 import { LuminorSidebar } from '@/components/chat/luminor-sidebar';
+import { getLuminor } from '@/lib/luminors/config';
 import { SessionSidebar } from '@/components/chat/session-sidebar';
 import { CreationIndicator } from '@/components/chat/creation-indicator';
 import { useAutoSave } from '@/lib/arc/auto-save';
@@ -566,7 +567,7 @@ export default function ChatPage() {
                               <button
                                 key={l.id}
                                 type="button"
-                                onClick={() => handleSelectLuminor(l.id)}
+                                onClick={() => { const cfg = getLuminor(l.id); if (cfg) handleSelectLuminor(cfg); }}
                                 className="px-2.5 py-1 rounded-full text-[11px] border border-white/[0.05] text-white/30
                                   hover:border-white/[0.12] hover:text-white/55 hover:bg-white/[0.03] transition-all"
                                 title={l.hint}
