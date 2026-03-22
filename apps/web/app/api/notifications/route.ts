@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase/server';
 import { getNotifications, markAllAsRead } from '@/services/notification-service';
 import { requireAuth, validateOwnership } from '@/lib/auth/middleware';
 import { applyRateLimit, RateLimitPresets } from '@/lib/rate-limit/rate-limiter';
-import { validateQuery, validateBody, notificationQuerySchema, markNotificationsReadSchema } from '@/lib/validation/schemas';
+import { validateBody, markNotificationsReadSchema } from '@/lib/validation/schemas';
 
 export async function GET(req: NextRequest) {
   try {
@@ -15,17 +16,19 @@ export async function GET(req: NextRequest) {
     const rateLimitResult = await applyRateLimit(req, RateLimitPresets.generous, user.id);
     if (rateLimitResult) return rateLimitResult;
 
-    // 3. Validate query parameters
-    const validationResult = validateQuery(req, notificationQuerySchema);
-    if (!validationResult.success) return validationResult.error;
-    const { userId, page, pageSize } = validationResult.data;
+    // 3. Extract query parameters (userId defaults to authenticated user)
+    const url = new URL(req.url);
+    const userId = url.searchParams.get('userId') || user.id;
+    const page = parseInt(url.searchParams.get('page') || '1', 10) || 1;
+    const pageSize = Math.min(parseInt(url.searchParams.get('pageSize') || '20', 10) || 20, 100);
 
     // 4. Verify ownership (users can only see their own notifications)
     const ownershipError = validateOwnership(user.id, userId);
     if (ownershipError) return ownershipError;
 
     // 5. Execute business logic
-    const notifications = await getNotifications(userId, { page, pageSize });
+    const supabase = await createClient();
+    const notifications = await getNotifications(supabase, userId, { page, pageSize });
     return NextResponse.json({ success: true, data: notifications });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'An unexpected error occurred';
@@ -54,7 +57,8 @@ export async function PATCH(req: NextRequest) {
     if (ownershipError) return ownershipError;
 
     // 5. Execute business logic
-    await markAllAsRead(userId);
+    const supabase = await createClient();
+    await markAllAsRead(supabase, userId);
     return NextResponse.json({ success: true });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'An unexpected error occurred';

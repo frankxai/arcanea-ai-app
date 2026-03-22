@@ -1,12 +1,14 @@
 /**
  * Notification Service - Web App Wrapper
  *
- * Wraps database service for user notifications
+ * Wraps database service for user notifications.
+ * Accepts a SupabaseClient to delegate real queries.
  */
 
+import type { SupabaseClient } from '@supabase/supabase-js'
 import {
   getNotifications as dbGetNotifications,
-  markAsRead,
+  markAsRead as dbMarkAsRead,
   markAllAsRead as dbMarkAllAsRead,
 } from '@/lib/database/services/notification-service';
 
@@ -15,37 +17,31 @@ export interface NotificationOptions {
   pageSize?: number;
 }
 
-export async function getNotifications(userId: string, options: NotificationOptions = {}) {
+export async function getNotifications(supabase: SupabaseClient, userId: string, options: NotificationOptions = {}) {
   const { page = 1, pageSize = 20 } = options;
-
-  // Stub returns array, we add pagination wrapper
-  const notifications = await dbGetNotifications(userId);
-
-  // Manual pagination over stub results
-  const start = (page - 1) * pageSize;
-  const paginatedNotifications = notifications.slice(start, start + pageSize);
+  const result = await dbGetNotifications(supabase, userId, { page, pageSize });
 
   return {
-    notifications: paginatedNotifications,
+    notifications: result.notifications,
     pagination: {
       page,
       pageSize,
-      total: notifications.length,
-      hasMore: start + pageSize < notifications.length,
+      total: result.total,
+      hasMore: page * pageSize < result.total,
     },
   };
 }
 
-export async function getUserNotifications(userId: string, options: NotificationOptions = {}) {
-  return getNotifications(userId, options);
+export async function getUserNotifications(supabase: SupabaseClient, userId: string, options: NotificationOptions = {}) {
+  return getNotifications(supabase, userId, options);
 }
 
-export async function markNotificationAsRead(notificationId: string, _userId: string) {
-  await markAsRead(notificationId);
+export async function markNotificationAsRead(supabase: SupabaseClient, notificationIds: string[]) {
+  await dbMarkAsRead(supabase, notificationIds);
   return { success: true };
 }
 
-export async function markAllAsRead(userId: string) {
-  await dbMarkAllAsRead(userId);
+export async function markAllAsRead(supabase: SupabaseClient, userId: string) {
+  await dbMarkAllAsRead(supabase, userId);
   return { success: true };
 }

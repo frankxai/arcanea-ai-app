@@ -50,7 +50,59 @@ export type Database = {
             referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "activity_log_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_engagement"
+            referencedColumns: ["user_id"]
+          },
         ]
+      }
+      analytics_snapshots: {
+        Row: {
+          created_at: string
+          id: string
+          new_creations_7d: number | null
+          new_users_7d: number | null
+          snapshot_date: string
+          total_chat_sessions: number | null
+          total_creations: number | null
+          total_likes: number | null
+          total_luminors: number | null
+          total_messages: number | null
+          total_users: number | null
+          total_views: number | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          new_creations_7d?: number | null
+          new_users_7d?: number | null
+          snapshot_date?: string
+          total_chat_sessions?: number | null
+          total_creations?: number | null
+          total_likes?: number | null
+          total_luminors?: number | null
+          total_messages?: number | null
+          total_users?: number | null
+          total_views?: number | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          new_creations_7d?: number | null
+          new_users_7d?: number | null
+          snapshot_date?: string
+          total_chat_sessions?: number | null
+          total_creations?: number | null
+          total_likes?: number | null
+          total_luminors?: number | null
+          total_messages?: number | null
+          total_users?: number | null
+          total_views?: number | null
+        }
+        Relationships: []
       }
       arcanea: {
         Row: {
@@ -66,6 +118,53 @@ export type Database = {
           id?: number
         }
         Relationships: []
+      }
+      chat_conversations: {
+        Row: {
+          created_at: string
+          focus_mode: string | null
+          id: string
+          luminor_id: string | null
+          message_count: number
+          messages: Json
+          model_id: string | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          focus_mode?: string | null
+          id?: string
+          luminor_id?: string | null
+          message_count?: number
+          messages?: Json
+          model_id?: string | null
+          title?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          focus_mode?: string | null
+          id?: string
+          luminor_id?: string | null
+          message_count?: number
+          messages?: Json
+          model_id?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_conversations_luminor_id_fkey"
+            columns: ["luminor_id"]
+            isOneToOne: false
+            referencedRelation: "luminors"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       chat_messages: {
         Row: {
@@ -163,6 +262,13 @@ export type Database = {
             referencedRelation: "creations"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "collection_items_creation_id_fkey"
+            columns: ["creation_id"]
+            isOneToOne: false
+            referencedRelation: "trending_creations"
+            referencedColumns: ["id"]
+          },
         ]
       }
       collections: {
@@ -209,6 +315,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "collections_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_engagement"
+            referencedColumns: ["user_id"]
           },
         ]
       }
@@ -322,6 +435,7 @@ export type Database = {
           id: string
           like_count: number
           metadata: Json | null
+          search_vector: unknown
           status: string
           tags: string[] | null
           thumbnail_url: string | null
@@ -344,6 +458,7 @@ export type Database = {
           id?: string
           like_count?: number
           metadata?: Json | null
+          search_vector?: unknown
           status?: string
           tags?: string[] | null
           thumbnail_url?: string | null
@@ -366,6 +481,7 @@ export type Database = {
           id?: string
           like_count?: number
           metadata?: Json | null
+          search_vector?: unknown
           status?: string
           tags?: string[] | null
           thumbnail_url?: string | null
@@ -383,6 +499,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "creations_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_engagement"
+            referencedColumns: ["user_id"]
           },
         ]
       }
@@ -438,11 +561,25 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "follows_follower_id_fkey"
+            columns: ["follower_id"]
+            isOneToOne: false
+            referencedRelation: "user_engagement"
+            referencedColumns: ["user_id"]
+          },
+          {
             foreignKeyName: "follows_following_id_fkey"
             columns: ["following_id"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "follows_following_id_fkey"
+            columns: ["following_id"]
+            isOneToOne: false
+            referencedRelation: "user_engagement"
+            referencedColumns: ["user_id"]
           },
         ]
       }
@@ -471,11 +608,25 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "likes_creation_id_fkey"
+            columns: ["creation_id"]
+            isOneToOne: false
+            referencedRelation: "trending_creations"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "likes_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "likes_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_engagement"
+            referencedColumns: ["user_id"]
           },
         ]
       }
@@ -515,6 +666,114 @@ export type Database = {
           total_convenings?: number
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      luminors: {
+        Row: {
+          avatar: string | null
+          color: string | null
+          companion_id: string | null
+          created_at: string
+          creator_id: string | null
+          domain: string
+          element: string
+          export_formats: string[] | null
+          gate_alignment: number[] | null
+          gradient: string | null
+          id: string
+          knowledge: string[] | null
+          name: string
+          origin: string
+          personality: string[]
+          preferred_model: string | null
+          published: boolean
+          rating: number | null
+          rating_count: number
+          search_vector: unknown
+          slug: string | null
+          starters: string[] | null
+          system_prompt: string
+          tagline: string
+          tags: string[] | null
+          temperature: number | null
+          tier: string
+          title: string
+          tools: string[] | null
+          updated_at: string
+          usage_count: number
+          voice: string
+          wisdom: string | null
+        }
+        Insert: {
+          avatar?: string | null
+          color?: string | null
+          companion_id?: string | null
+          created_at?: string
+          creator_id?: string | null
+          domain?: string
+          element?: string
+          export_formats?: string[] | null
+          gate_alignment?: number[] | null
+          gradient?: string | null
+          id?: string
+          knowledge?: string[] | null
+          name: string
+          origin?: string
+          personality?: string[]
+          preferred_model?: string | null
+          published?: boolean
+          rating?: number | null
+          rating_count?: number
+          search_vector?: unknown
+          slug?: string | null
+          starters?: string[] | null
+          system_prompt: string
+          tagline?: string
+          tags?: string[] | null
+          temperature?: number | null
+          tier?: string
+          title?: string
+          tools?: string[] | null
+          updated_at?: string
+          usage_count?: number
+          voice?: string
+          wisdom?: string | null
+        }
+        Update: {
+          avatar?: string | null
+          color?: string | null
+          companion_id?: string | null
+          created_at?: string
+          creator_id?: string | null
+          domain?: string
+          element?: string
+          export_formats?: string[] | null
+          gate_alignment?: number[] | null
+          gradient?: string | null
+          id?: string
+          knowledge?: string[] | null
+          name?: string
+          origin?: string
+          personality?: string[]
+          preferred_model?: string | null
+          published?: boolean
+          rating?: number | null
+          rating_count?: number
+          search_vector?: unknown
+          slug?: string | null
+          starters?: string[] | null
+          system_prompt?: string
+          tagline?: string
+          tags?: string[] | null
+          temperature?: number | null
+          tier?: string
+          title?: string
+          tools?: string[] | null
+          updated_at?: string
+          usage_count?: number
+          voice?: string
+          wisdom?: string | null
         }
         Relationships: []
       }
@@ -596,6 +855,490 @@ export type Database = {
         }
         Relationships: []
       }
+      notifications: {
+        Row: {
+          actor_id: string | null
+          body: string | null
+          created_at: string
+          entity_id: string | null
+          entity_type: string | null
+          id: string
+          link: string | null
+          read: boolean
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          actor_id?: string | null
+          body?: string | null
+          created_at?: string
+          entity_id?: string | null
+          entity_type?: string | null
+          id?: string
+          link?: string | null
+          read?: boolean
+          title: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          actor_id?: string | null
+          body?: string | null
+          created_at?: string
+          entity_id?: string | null
+          entity_type?: string | null
+          id?: string
+          link?: string | null
+          read?: boolean
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      pb_collections: {
+        Row: {
+          color: string | null
+          created_at: string
+          description: string | null
+          element: string | null
+          guardian_id: string | null
+          icon: string | null
+          id: string
+          is_archived: boolean
+          is_pinned: boolean
+          metadata: Json
+          name: string
+          parent_id: string | null
+          prompt_count: number
+          share_token: string | null
+          sort_order: number
+          updated_at: string
+          user_id: string
+          visibility: string
+        }
+        Insert: {
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          element?: string | null
+          guardian_id?: string | null
+          icon?: string | null
+          id?: string
+          is_archived?: boolean
+          is_pinned?: boolean
+          metadata?: Json
+          name: string
+          parent_id?: string | null
+          prompt_count?: number
+          share_token?: string | null
+          sort_order?: number
+          updated_at?: string
+          user_id: string
+          visibility?: string
+        }
+        Update: {
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          element?: string | null
+          guardian_id?: string | null
+          icon?: string | null
+          id?: string
+          is_archived?: boolean
+          is_pinned?: boolean
+          metadata?: Json
+          name?: string
+          parent_id?: string | null
+          prompt_count?: number
+          share_token?: string | null
+          sort_order?: number
+          updated_at?: string
+          user_id?: string
+          visibility?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pb_collections_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "pb_collections"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pb_collections_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pb_collections_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_engagement"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      pb_prompt_tags: {
+        Row: {
+          created_at: string
+          prompt_id: string
+          tag_id: string
+        }
+        Insert: {
+          created_at?: string
+          prompt_id: string
+          tag_id: string
+        }
+        Update: {
+          created_at?: string
+          prompt_id?: string
+          tag_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pb_prompt_tags_prompt_id_fkey"
+            columns: ["prompt_id"]
+            isOneToOne: false
+            referencedRelation: "pb_prompts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pb_prompt_tags_tag_id_fkey"
+            columns: ["tag_id"]
+            isOneToOne: false
+            referencedRelation: "pb_tags"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pb_prompt_versions: {
+        Row: {
+          change_summary: string | null
+          content: string
+          context_config: Json
+          created_at: string
+          diff_data: Json | null
+          few_shot_examples: Json
+          id: string
+          negative_content: string | null
+          prompt_id: string
+          system_prompt: string | null
+          user_id: string
+          version: number
+        }
+        Insert: {
+          change_summary?: string | null
+          content: string
+          context_config?: Json
+          created_at?: string
+          diff_data?: Json | null
+          few_shot_examples?: Json
+          id?: string
+          negative_content?: string | null
+          prompt_id: string
+          system_prompt?: string | null
+          user_id: string
+          version: number
+        }
+        Update: {
+          change_summary?: string | null
+          content?: string
+          context_config?: Json
+          created_at?: string
+          diff_data?: Json | null
+          few_shot_examples?: Json
+          id?: string
+          negative_content?: string | null
+          prompt_id?: string
+          system_prompt?: string | null
+          user_id?: string
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pb_prompt_versions_prompt_id_fkey"
+            columns: ["prompt_id"]
+            isOneToOne: false
+            referencedRelation: "pb_prompts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pb_prompt_versions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pb_prompt_versions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_engagement"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      pb_prompts: {
+        Row: {
+          chain_steps: Json
+          collection_id: string | null
+          content: string
+          context_config: Json
+          created_at: string
+          few_shot_examples: Json
+          id: string
+          is_archived: boolean
+          is_favorite: boolean
+          is_pinned: boolean
+          is_template: boolean
+          last_used_at: string | null
+          metadata: Json
+          negative_content: string | null
+          prompt_type: string
+          sort_order: number
+          system_prompt: string | null
+          template_variables: Json
+          title: string
+          updated_at: string
+          use_count: number
+          user_id: string
+          version: number
+        }
+        Insert: {
+          chain_steps?: Json
+          collection_id?: string | null
+          content?: string
+          context_config?: Json
+          created_at?: string
+          few_shot_examples?: Json
+          id?: string
+          is_archived?: boolean
+          is_favorite?: boolean
+          is_pinned?: boolean
+          is_template?: boolean
+          last_used_at?: string | null
+          metadata?: Json
+          negative_content?: string | null
+          prompt_type?: string
+          sort_order?: number
+          system_prompt?: string | null
+          template_variables?: Json
+          title: string
+          updated_at?: string
+          use_count?: number
+          user_id: string
+          version?: number
+        }
+        Update: {
+          chain_steps?: Json
+          collection_id?: string | null
+          content?: string
+          context_config?: Json
+          created_at?: string
+          few_shot_examples?: Json
+          id?: string
+          is_archived?: boolean
+          is_favorite?: boolean
+          is_pinned?: boolean
+          is_template?: boolean
+          last_used_at?: string | null
+          metadata?: Json
+          negative_content?: string | null
+          prompt_type?: string
+          sort_order?: number
+          system_prompt?: string | null
+          template_variables?: Json
+          title?: string
+          updated_at?: string
+          use_count?: number
+          user_id?: string
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pb_prompts_collection_id_fkey"
+            columns: ["collection_id"]
+            isOneToOne: false
+            referencedRelation: "pb_collections"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pb_prompts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pb_prompts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_engagement"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      pb_tags: {
+        Row: {
+          category: string | null
+          collection_id: string | null
+          color: string | null
+          created_at: string
+          icon: string | null
+          id: string
+          inject_position: string
+          inject_text: string | null
+          is_global: boolean
+          name: string
+          sort_order: number
+          updated_at: string
+          user_id: string
+          weight_modifier: number | null
+        }
+        Insert: {
+          category?: string | null
+          collection_id?: string | null
+          color?: string | null
+          created_at?: string
+          icon?: string | null
+          id?: string
+          inject_position?: string
+          inject_text?: string | null
+          is_global?: boolean
+          name: string
+          sort_order?: number
+          updated_at?: string
+          user_id: string
+          weight_modifier?: number | null
+        }
+        Update: {
+          category?: string | null
+          collection_id?: string | null
+          color?: string | null
+          created_at?: string
+          icon?: string | null
+          id?: string
+          inject_position?: string
+          inject_text?: string | null
+          is_global?: boolean
+          name?: string
+          sort_order?: number
+          updated_at?: string
+          user_id?: string
+          weight_modifier?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pb_tags_collection_id_fkey"
+            columns: ["collection_id"]
+            isOneToOne: false
+            referencedRelation: "pb_collections"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pb_tags_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pb_tags_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_engagement"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      pb_templates: {
+        Row: {
+          category: string
+          chain_steps: Json
+          content: string
+          context_config: Json
+          created_at: string
+          description: string | null
+          element: string | null
+          few_shot_examples: Json
+          guardian_id: string | null
+          id: string
+          is_public: boolean
+          name: string
+          negative_content: string | null
+          prompt_type: string
+          system_prompt: string | null
+          tags: string[]
+          updated_at: string
+          use_count: number
+          user_id: string | null
+          variables: Json
+        }
+        Insert: {
+          category: string
+          chain_steps?: Json
+          content: string
+          context_config?: Json
+          created_at?: string
+          description?: string | null
+          element?: string | null
+          few_shot_examples?: Json
+          guardian_id?: string | null
+          id?: string
+          is_public?: boolean
+          name: string
+          negative_content?: string | null
+          prompt_type?: string
+          system_prompt?: string | null
+          tags?: string[]
+          updated_at?: string
+          use_count?: number
+          user_id?: string | null
+          variables?: Json
+        }
+        Update: {
+          category?: string
+          chain_steps?: Json
+          content?: string
+          context_config?: Json
+          created_at?: string
+          description?: string | null
+          element?: string | null
+          few_shot_examples?: Json
+          guardian_id?: string | null
+          id?: string
+          is_public?: boolean
+          name?: string
+          negative_content?: string | null
+          prompt_type?: string
+          system_prompt?: string | null
+          tags?: string[]
+          updated_at?: string
+          use_count?: number
+          user_id?: string | null
+          variables?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pb_templates_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pb_templates_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_engagement"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           academy_house: string | null
@@ -653,9 +1396,165 @@ export type Database = {
         }
         Relationships: []
       }
+      reading_progress: {
+        Row: {
+          collection_slug: string
+          completed_at: string | null
+          created_at: string
+          id: string
+          progress_percent: number
+          text_slug: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          collection_slug: string
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          progress_percent?: number
+          text_slug: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          collection_slug?: string
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          progress_percent?: number
+          text_slug?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reading_progress_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reading_progress_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_engagement"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
     }
     Views: {
-      [_ in never]: never
+      element_distribution: {
+        Row: {
+          creation_count: number | null
+          element: string | null
+          percentage: number | null
+          total_likes: number | null
+          total_views: number | null
+        }
+        Relationships: []
+      }
+      platform_stats: {
+        Row: {
+          new_creations_7d: number | null
+          new_users_30d: number | null
+          new_users_7d: number | null
+          total_chat_messages: number | null
+          total_chat_sessions: number | null
+          total_councils: number | null
+          total_creations: number | null
+          total_likes: number | null
+          total_luminors: number | null
+          total_users: number | null
+          total_views: number | null
+        }
+        Relationships: []
+      }
+      trending_creations: {
+        Row: {
+          created_at: string | null
+          creator_name: string | null
+          element: string | null
+          gate: string | null
+          guardian: string | null
+          id: string | null
+          like_count: number | null
+          title: string | null
+          trending_score: number | null
+          type: string | null
+          user_id: string | null
+          view_count: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "creations_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "creations_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_engagement"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      user_engagement: {
+        Row: {
+          chat_session_count: number | null
+          creation_count: number | null
+          display_name: string | null
+          gates_open: number | null
+          joined_at: string | null
+          last_active: string | null
+          level: number | null
+          likes_given: number | null
+          likes_received: number | null
+          magic_rank: string | null
+          streak_days: number | null
+          user_id: string | null
+          views_received: number | null
+          xp: number | null
+        }
+        Insert: {
+          chat_session_count?: never
+          creation_count?: never
+          display_name?: string | null
+          gates_open?: number | null
+          joined_at?: string | null
+          last_active?: string | null
+          level?: number | null
+          likes_given?: never
+          likes_received?: never
+          magic_rank?: string | null
+          streak_days?: number | null
+          user_id?: string | null
+          views_received?: never
+          xp?: number | null
+        }
+        Update: {
+          chat_session_count?: never
+          creation_count?: never
+          display_name?: string | null
+          gates_open?: number | null
+          joined_at?: string | null
+          last_active?: string | null
+          level?: number | null
+          likes_given?: never
+          likes_received?: never
+          magic_rank?: string | null
+          streak_days?: number | null
+          user_id?: string | null
+          views_received?: never
+          xp?: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       count_messages_per_session: {
@@ -665,8 +1564,65 @@ export type Database = {
           session_id: string
         }[]
       }
+      fuzzy_search_creations: {
+        Args: {
+          result_limit?: number
+          search_query: string
+          similarity_threshold?: number
+        }
+        Returns: {
+          id: string
+          similarity: number
+          title: string
+          type: string
+        }[]
+      }
+      get_leaderboard: {
+        Args: { board_type?: string; result_limit?: number }
+        Returns: {
+          avatar_url: string
+          display_name: string
+          gates_open: number
+          magic_rank: string
+          rank: number
+          score: number
+          user_id: string
+          xp: number
+        }[]
+      }
+      get_unread_notification_count: { Args: never; Returns: number }
+      increment_luminor_usage: {
+        Args: { p_luminor_id: string }
+        Returns: undefined
+      }
       increment_view_count: {
         Args: { creation_id: string }
+        Returns: undefined
+      }
+      mark_all_notifications_read: { Args: never; Returns: undefined }
+      mark_notifications_read: {
+        Args: { notification_ids: string[] }
+        Returns: undefined
+      }
+      search_creations: {
+        Args: {
+          result_limit?: number
+          result_offset?: number
+          search_query: string
+        }
+        Returns: {
+          description: string
+          id: string
+          like_count: number
+          rank: number
+          title: string
+          type: string
+          user_id: string
+          view_count: number
+        }[]
+      }
+      unlock_gate: {
+        Args: { p_gate_name: string; p_gate_number: number; p_user_id: string }
         Returns: undefined
       }
     }
@@ -801,3 +1757,4 @@ export const Constants = {
     Enums: {},
   },
 } as const
+

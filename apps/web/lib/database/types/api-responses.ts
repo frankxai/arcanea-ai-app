@@ -178,14 +178,5 @@ export interface Memory {
   createdAt: string
 }
 
-// Notification types — used by notification-service
-export interface Notification {
-  id: string
-  userId: string
-  type: string
-  title: string
-  message: string
-  read: boolean
-  metadata?: Record<string, unknown> | null
-  createdAt: string
-}
+// Notification types — re-exported from notification-service for backward compatibility
+export type { Notification } from '@/lib/database/services/notification-service'
