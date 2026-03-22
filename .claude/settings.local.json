@@ -1,0 +1,109 @@
+{
+  "statusLine": {
+    "type": "command",
+    "command": "node --input-type=module \"$HOME/Arcanea/.claude/statusline.mjs\""
+  },
+  "permissions": {
+    "allow": [
+      "Bash(git:*)",
+      "Bash(npm:*)",
+      "Bash(npx:*)",
+      "Bash(node:*)",
+      "Bash(python3:*)",
+      "Bash(bash .claude/*:*)",
+      "Bash(cat:*)",
+      "Bash(where:*)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "next-devtools",
+    "github",
+    "supabase",
+    "arcanea-mcp",
+    "arcanea-memory",
+    "figma-remote-mcp",
+    "notion",
+    "linear-server",
+    "playwright"
+  ],
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/Arcanea/.claude/hooks/session-start.sh\"",
+            "timeout": 5000
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/Arcanea/.claude/hooks/prompt-submit.sh\" \"$USER_PROMPT\"",
+            "timeout": 3000
+          },
+          {
+            "type": "command",
+            "command": "bash \"$HOME/Arcanea/.claude/hooks/model-route.sh\" \"$USER_PROMPT\"",
+            "timeout": 3000
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Task|Bash|Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/Arcanea/.claude/hooks/pre-tool.sh\" \"$TOOL_NAME\"",
+            "timeout": 3000
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/Arcanea/.claude/hooks/voice-check.sh\" \"$TOOL_INPUT\"",
+            "timeout": 3000
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Task|Bash|Write|Edit|Read|Grep|Glob|WebFetch|WebSearch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/Arcanea/.claude/hooks/post-tool.sh\" \"$TOOL_NAME\"",
+            "timeout": 3000
+          },
+          {
+            "type": "command",
+            "command": "bash \"$HOME/Arcanea/.claude/hooks/context-tracker.sh\" \"$TOOL_NAME\"",
+            "timeout": 3000
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME/Arcanea/.claude/hooks/session-end.sh\"",
+            "timeout": 5000
+          }
+        ]
+      }
+    ]
+  }
+}
