@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Particle {
   x: number;
@@ -12,10 +12,43 @@ interface Particle {
   color: string;
 }
 
-export function CosmicParticles({ className = "" }: { className?: string }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+function useReducedMotion(): boolean {
+  const [prefersReduced, setPrefersReduced] = useState(false);
 
   useEffect(() => {
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReduced(mql.matches);
+    const handler = (e: MediaQueryListEvent) => setPrefersReduced(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
+
+  return prefersReduced;
+}
+
+function StaticCosmicGradient({ className }: { className?: string }) {
+  return (
+    <div
+      className={`absolute inset-0 w-full h-full pointer-events-none ${className}`}
+      style={{
+        background:
+          "radial-gradient(ellipse at 30% 20%, rgba(0,188,212,0.12), transparent 50%)," +
+          "radial-gradient(ellipse at 70% 80%, rgba(120,166,255,0.1), transparent 50%)," +
+          "radial-gradient(ellipse at 50% 50%, rgba(255,215,0,0.06), transparent 60%)",
+      }}
+    />
+  );
+}
+
+export function CosmicParticles({ className = "" }: { className?: string }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animIdRef = useRef<number>(0);
+  const isVisibleRef = useRef(true);
+  const prefersReduced = useReducedMotion();
+
+  useEffect(() => {
+    if (prefersReduced) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -23,22 +56,29 @@ export function CosmicParticles({ className = "" }: { className?: string }) {
     if (!ctx) return;
 
     const resizeCanvas = () => {
-      canvas.width = canvas.offsetWidth * window.devicePixelRatio;
-      canvas.height = canvas.offsetHeight * window.devicePixelRatio;
-      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      const dpr = window.devicePixelRatio;
+      canvas.width = canvas.offsetWidth * dpr;
+      canvas.height = canvas.offsetHeight * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
     const colors = [
-      "rgba(0, 188, 212, 0.6)", // Atlantean teal
-      "rgba(120, 166, 255, 0.6)", // Cosmic blue
-      "rgba(255, 215, 0, 0.5)",   // Gold
-      "rgba(255, 255, 255, 0.4)", // White
+      "rgba(0, 188, 212, 0.6)",
+      "rgba(120, 166, 255, 0.6)",
+      "rgba(255, 215, 0, 0.5)",
+      "rgba(255, 255, 255, 0.4)",
     ];
 
-    const particles: Particle[] = Array.from({ length: 60 }, () => ({
+    // Reduce particle count on mobile
+    const isMobile = window.innerWidth < 768;
+    const particleCount = isMobile ? 20 : 60;
+    // Reduce connection distance on mobile for fewer line draws
+    const connectionDistance = isMobile ? 80 : 120;
+
+    const particles: Particle[] = Array.from({ length: particleCount }, () => ({
       x: Math.random() * canvas.offsetWidth,
       y: Math.random() * canvas.offsetHeight,
       vx: (Math.random() - 0.5) * 0.3,
@@ -48,19 +88,30 @@ export function CosmicParticles({ className = "" }: { className?: string }) {
       color: colors[Math.floor(Math.random() * colors.length)],
     }));
 
-    let animationId: number;
+    // Pause animation when tab is hidden
+    const handleVisibility = () => {
+      isVisibleRef.current = !document.hidden;
+      if (!document.hidden) {
+        animIdRef.current = requestAnimationFrame(animate);
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
 
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
+      if (!isVisibleRef.current) return;
+
+      const w = canvas.offsetWidth;
+      const h = canvas.offsetHeight;
+      ctx.clearRect(0, 0, w, h);
 
       particles.forEach((particle) => {
         particle.x += particle.vx;
         particle.y += particle.vy;
 
-        if (particle.x < 0) particle.x = canvas.offsetWidth;
-        if (particle.x > canvas.offsetWidth) particle.x = 0;
-        if (particle.y < 0) particle.y = canvas.offsetHeight;
-        if (particle.y > canvas.offsetHeight) particle.y = 0;
+        if (particle.x < 0) particle.x = w;
+        if (particle.x > w) particle.x = 0;
+        if (particle.y < 0) particle.y = h;
+        if (particle.y > h) particle.y = 0;
 
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
@@ -75,32 +126,38 @@ export function CosmicParticles({ className = "" }: { className?: string }) {
           const dy = p1.y - p2.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < 120) {
+          if (distance < connectionDistance) {
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(0, 188, 212, ${0.1 * (1 - distance / 120)})`;
+            ctx.strokeStyle = `rgba(0, 188, 212, ${0.1 * (1 - distance / connectionDistance)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
         });
       });
 
-      animationId = requestAnimationFrame(animate);
+      animIdRef.current = requestAnimationFrame(animate);
     };
 
     animate();
 
     return () => {
+      cancelAnimationFrame(animIdRef.current);
       window.removeEventListener("resize", resizeCanvas);
-      cancelAnimationFrame(animationId);
+      document.removeEventListener("visibilitychange", handleVisibility);
     };
-  }, []);
+  }, [prefersReduced]);
+
+  if (prefersReduced) {
+    return <StaticCosmicGradient className={className} />;
+  }
 
   return (
     <canvas
       ref={canvasRef}
       className={`absolute inset-0 w-full h-full pointer-events-none ${className}`}
+      style={{ willChange: "transform" }}
     />
   );
 }

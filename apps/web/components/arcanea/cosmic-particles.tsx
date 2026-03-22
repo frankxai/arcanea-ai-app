@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface Particle {
   x: number;
@@ -14,16 +14,53 @@ interface Particle {
   maxLife: number;
 }
 
+function useReducedMotion(): boolean {
+  const [prefersReduced, setPrefersReduced] = useState(false);
+
+  useEffect(() => {
+    const mql = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReduced(mql.matches);
+    const handler = (e: MediaQueryListEvent) => setPrefersReduced(e.matches);
+    mql.addEventListener('change', handler);
+    return () => mql.removeEventListener('change', handler);
+  }, []);
+
+  return prefersReduced;
+}
+
+function StaticCosmicGradient() {
+  return (
+    <div
+      className="absolute inset-0 w-full h-full pointer-events-none"
+      style={{
+        opacity: 0.7,
+        background:
+          'radial-gradient(ellipse at 30% 20%, rgba(13,71,161,0.15), transparent 50%),' +
+          'radial-gradient(ellipse at 70% 80%, rgba(0,188,212,0.1), transparent 50%),' +
+          'radial-gradient(ellipse at 50% 50%, rgba(167,139,250,0.08), transparent 60%)',
+      }}
+    />
+  );
+}
+
 export default function CosmicParticles({ count = 60 }: { count?: number }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animRef = useRef<number>(0);
   const particlesRef = useRef<Particle[]>([]);
+  const isVisibleRef = useRef(true);
+  const prefersReduced = useReducedMotion();
 
   useEffect(() => {
+    if (prefersReduced) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
+
+    // Reduce particle count on mobile
+    const isMobile = window.innerWidth < 768;
+    const effectiveCount = isMobile ? Math.min(count, 20) : count;
 
     const colors = ['#0d47a1', '#a78bfa', '#00bcd4', '#ffd700', '#c4b5fd', '#ffffff'];
 
@@ -46,9 +83,20 @@ export default function CosmicParticles({ count = 60 }: { count?: number }) {
       maxLife: Math.random() * 300 + 150,
     });
 
-    particlesRef.current = Array.from({ length: count }, createParticle);
+    particlesRef.current = Array.from({ length: effectiveCount }, createParticle);
+
+    // Pause animation when tab is hidden
+    const handleVisibility = () => {
+      isVisibleRef.current = !document.hidden;
+      if (!document.hidden) {
+        animRef.current = requestAnimationFrame(draw);
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
 
     const draw = () => {
+      if (!isVisibleRef.current) return;
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       particlesRef.current.forEach((p, i) => {
@@ -89,14 +137,19 @@ export default function CosmicParticles({ count = 60 }: { count?: number }) {
     return () => {
       cancelAnimationFrame(animRef.current);
       window.removeEventListener('resize', resize);
+      document.removeEventListener('visibilitychange', handleVisibility);
     };
-  }, [count]);
+  }, [count, prefersReduced]);
+
+  if (prefersReduced) {
+    return <StaticCosmicGradient />;
+  }
 
   return (
     <canvas
       ref={canvasRef}
       className="absolute inset-0 w-full h-full pointer-events-none"
-      style={{ opacity: 0.7 }}
+      style={{ opacity: 0.7, willChange: 'transform' }}
     />
   );
 }

@@ -1,7 +1,6 @@
 'use client';
 
 import * as React from 'react';
-import { m } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { type Academy } from '@/lib/theme-utils';
 
@@ -39,29 +38,21 @@ const CosmicGradient = React.forwardRef<HTMLDivElement, CosmicGradientProps>(
       'absolute inset-0 -z-10',
       gradientVariants[variant],
       'bg-[length:200%_200%]',
+      animated && 'animate-cosmic-gradient',
       className
     );
 
-    if (animated) {
-      return (
-        <m.div
-          ref={ref}
-          className={baseClassName}
-          style={{ opacity }}
-          animate={{
-            backgroundPosition: ['0% 0%', '100% 100%', '0% 0%'],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: 'linear',
-          }}
-        />
-      );
-    }
-
     return (
-      <div ref={ref} className={baseClassName} style={{ opacity }} />
+      <div
+        ref={ref}
+        className={baseClassName}
+        style={{
+          opacity,
+          ...(animated
+            ? { animation: 'cosmic-gradient-drift 20s linear infinite' }
+            : {}),
+        }}
+      />
     );
   }
 );

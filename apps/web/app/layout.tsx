@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { CosmicBackground } from "@/lib/arcanea-ui";
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
+import dynamic from "next/dynamic";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { AuthProvider } from "@/lib/auth/context";
@@ -9,6 +9,27 @@ import { Navbar, Footer } from "@/components/navigation";
 import { GlobalGlowTracker } from "@/components/ui";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
+
+const CosmicBackground = dynamic(
+  () =>
+    import("@/lib/arcanea-ui/CosmicBackground").then((mod) => ({
+      default: mod.CosmicBackground,
+    })),
+  { ssr: false }
+);
+
+function CosmicBackgroundFallback() {
+  return (
+    <div
+      className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
+      style={{
+        background:
+          "radial-gradient(ellipse at 40% 40%, rgba(0,188,212,0.04), transparent 60%)," +
+          "radial-gradient(ellipse at 65% 55%, rgba(0,137,123,0.03), transparent 60%)",
+      }}
+    />
+  );
+}
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -104,7 +125,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             Skip to main content
           </a>
           <div className="relative min-h-dvh bg-cosmic-void font-sans text-text-primary selection:bg-atlantean-aqua/30 selection:text-atlantean-aqua">
-            <CosmicBackground />
+            <Suspense fallback={<CosmicBackgroundFallback />}>
+              <CosmicBackground />
+            </Suspense>
             <GlobalGlowTracker />
             <Navbar />
             <main id="main-content" className="relative pt-16">

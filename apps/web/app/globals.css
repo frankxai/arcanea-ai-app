@@ -9,6 +9,10 @@
  */
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   :root {
     /* === COSMIC PALETTE (6 depth levels — near-black foundation) === */
     --cosmic-void: 240 6% 4%;
@@ -563,6 +567,52 @@
   .hover-lift:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0, 137, 123, 0.12);
+  }
+
+  /* Card lift — subtle elevation on hover for cards */
+  .card-lift {
+    transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  }
+
+  /* Link underline animation — width 0 to 100% on hover */
+  .link-underline {
+    position: relative;
+  }
+
+  .link-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: currentColor;
+    transition: width 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .link-underline:hover::after {
+    width: 100%;
+  }
+
+  /* Button glow — teal glow pulse on hover */
+  .btn-glow {
+    transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-glow:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 24px rgba(0, 188, 212, 0.25), 0 0 60px rgba(0, 188, 212, 0.08);
+  }
+
+  .btn-glow:active {
+    transform: scale(0.98);
   }
 
   /* Cursor glow card — mouse-tracking highlight (used by GlowCard component) */
@@ -1209,4 +1259,19 @@ p a, span a, li a {
 @keyframes stars-twinkle {
   0% { opacity: 0.6; }
   100% { opacity: 1; }
+}
+
+@keyframes cosmic-gradient-drift {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+/* Disable all non-essential animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-cosmic-gradient,
+  .animate-float,
+  .animate-pulse {
+    animation: none !important;
+  }
 }
