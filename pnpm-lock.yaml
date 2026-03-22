@@ -314,6 +314,9 @@ importers:
       remark-html:
         specifier: ^16.0.1
         version: 16.0.1
+      stripe:
+        specifier: ^20.4.1
+        version: 20.4.1(@types/node@20.19.17)
       tailwind-merge:
         specifier: ^2.6.0
         version: 2.6.0

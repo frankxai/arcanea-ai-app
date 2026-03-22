@@ -12,6 +12,8 @@ export { buildIntelligenceOSPrompt, buildCompactPrompt, detectTaskRoute, INTELLI
 export type { IntelligenceLayer, ModelRoute, CreativeDomain, TaskPattern, IntelligenceOSOptions, } from './intelligence-os.js';
 export { CREATIVE_AGENTS, getCreativeAgent, getAgentsByGuardian, getAgentsByElement, getAgentsByTier, getAgentPrompt, listCreativeAgents, suggestAgentsForTask, } from './creative-agents.js';
 export type { CreativeAgentType, CreativeAgentConfig, } from './creative-agents.js';
+export { GUARDIAN_LUMINOR_MAP, LUMINOR_HINTS, resolveSwarm, buildLuminorLayer, classifyCoordinationMode, } from './intelligence.js';
+export type { LuminorWeights, CoordinationMode, LuminorActivation, SwarmResult, } from './intelligence.js';
 export declare const VERSION = "2.0.0";
 export declare const PLATFORM: "claude";
 //# sourceMappingURL=index.d.ts.map
