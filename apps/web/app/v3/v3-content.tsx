@@ -32,17 +32,25 @@ const V3BelowFold = dynamic(
 
 export function V3Loading() {
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="text-center">
-        <Image
-          src={navLogo}
-          alt="Arcanea"
-          width={48}
-          height={48}
-          className="rounded-xl mx-auto mb-6 opacity-40"
-          priority
-        />
-        <div className="w-5 h-5 mx-auto rounded-full border-2 border-[#00bcd4]/35 border-t-[#00bcd4] animate-spin" />
+    <div className="min-h-screen">
+      {/* Hero skeleton */}
+      <div className="min-h-[100svh] flex items-center justify-center">
+        <div className="w-full max-w-3xl mx-auto px-6 text-center">
+          <div className="w-14 h-14 rounded-xl mx-auto mb-12 bg-white/[0.04] animate-pulse" />
+          <div className="h-12 md:h-16 w-3/4 mx-auto rounded-lg bg-white/[0.03] animate-pulse mb-5" />
+          <div className="h-5 w-2/3 mx-auto rounded bg-white/[0.02] animate-pulse mb-14" />
+          <div className="h-14 w-full max-w-2xl mx-auto rounded-2xl bg-white/[0.025] animate-pulse" />
+          <div className="flex justify-center gap-2 mt-5">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="h-10 w-28 rounded-full bg-white/[0.02] animate-pulse" />
+            ))}
+          </div>
+        </div>
+      </div>
+      {/* Below-fold skeleton */}
+      <div className="w-full space-y-4 px-6 py-28">
+        <div className="h-96 animate-pulse bg-white/[0.02] rounded-2xl" />
+        <div className="h-80 animate-pulse bg-white/[0.02] rounded-2xl" />
       </div>
     </div>
   );

@@ -142,7 +142,7 @@ export function Footer() {
                             "aria-label": `${link.label} (opens in new tab)`,
                           }
                         : {})}
-                      className="text-sm text-white/55 hover:text-[#00bcd4] transition-colors duration-300"
+                      className="text-sm text-white/55 hover:text-[#00bcd4] transition-colors duration-300 link-underline"
                     >
                       {link.label}
                       {"external" in link && link.external && (

@@ -76,12 +76,13 @@ export function CTASection() {
                 <div className="flex flex-wrap gap-4">
                   <Link
                     href="/chat"
-                    className="group relative px-8 py-4 rounded-2xl font-semibold text-base overflow-hidden"
+                    className="group relative px-8 py-4 rounded-2xl font-semibold text-base overflow-hidden btn-glow"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#00897b] via-[#1565c0] to-[#00bcd4]" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#00897b] via-[#1565c0] to-[#00bcd4] transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#00bcd4] via-[#1565c0] to-[#00897b] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <span className="relative z-10 text-white flex items-center gap-2">
                       Start Creating
-                      <span className="group-hover:translate-x-1 transition-transform">
+                      <span className="group-hover:translate-x-1 transition-transform duration-200">
                         →
                       </span>
                     </span>
@@ -89,7 +90,7 @@ export function CTASection() {
 
                   <Link
                     href="/library"
-                    className="px-8 py-4 rounded-2xl border border-white/[0.10] text-white font-semibold text-base hover:bg-white/[0.06] hover:border-white/[0.15] transition-all duration-300"
+                    className="px-8 py-4 rounded-2xl border border-white/[0.10] text-white font-semibold text-base hover:bg-white/[0.06] hover:border-white/[0.15] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
                   >
                     Explore the Library
                   </Link>

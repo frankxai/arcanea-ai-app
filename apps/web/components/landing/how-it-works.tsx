@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { m, useInView } from "framer-motion";
 
 const STEPS = [
   {
@@ -35,6 +36,7 @@ const STEPS = [
 
 export function HowItWorks() {
   const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
   const [activeStep, setActiveStep] = useState(0);
 
   return (
@@ -44,7 +46,12 @@ export function HowItWorks() {
       </div>
 
       <div className="max-w-5xl mx-auto px-6">
-        <div className="text-center mb-16">
+        <m.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+        >
           <p className="text-xs font-mono tracking-[0.3em] uppercase text-white/30 mb-4">
             How It Works
           </p>
@@ -54,17 +61,20 @@ export function HowItWorks() {
           <p className="text-lg text-white/40 max-w-2xl mx-auto">
             From first idea to a world of your own.
           </p>
-        </div>
+        </m.div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
           {STEPS.map((step, i) => {
             const isActive = activeStep === i;
 
             return (
-              <div
+              <m.div
                 key={step.number}
+                initial={{ opacity: 0, y: 24 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
                 onMouseEnter={() => setActiveStep(i)}
-                className="group relative p-6 rounded-2xl border cursor-pointer transition-all duration-300"
+                className="group relative p-6 rounded-2xl border cursor-pointer card-lift transition-all duration-300"
                 style={{
                   backgroundColor: isActive
                     ? "rgba(255,255,255,0.05)"
@@ -104,7 +114,7 @@ export function HowItWorks() {
                 <p className="text-sm text-white/45 leading-relaxed">
                   {step.description}
                 </p>
-              </div>
+              </m.div>
             );
           })}
         </div>

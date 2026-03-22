@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { LazyMotion, domMax, m, AnimatePresence } from "framer-motion";
 import { UserNav } from "@/components/auth";
 import { NotificationBell } from "@/components/notifications/notification-bell";
+import { SearchBar } from "@/components/search/search-bar";
 
 const navLinks = [
   { href: "/chat", label: "Create", also: ["/imagine", "/studio"] },
@@ -62,7 +63,9 @@ export function Navbar() {
                         : "text-white/68 hover:text-white hover:bg-white/[0.04]"
                     }`}
                   >
-                    {link.label}
+                    <span className={isActive ? "" : "link-underline"}>
+                      {link.label}
+                    </span>
                     {isActive && (
                       <m.div
                         layoutId="nav-indicator"
@@ -80,6 +83,7 @@ export function Navbar() {
             </div>
 
             <div className="hidden md:flex items-center gap-2">
+              <SearchBar compact />
               <NotificationBell />
               <UserNav />
             </div>
@@ -106,10 +110,10 @@ export function Navbar() {
         {mobileMenuOpen && (
           <m.div
             id="mobile-nav-menu"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
+            initial={{ opacity: 0, y: -20, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -12, scale: 0.98 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
             className="fixed inset-x-0 top-[64px] z-40 md:hidden"
           >
             <nav
@@ -117,33 +121,44 @@ export function Navbar() {
               className="mx-4 rounded-2xl liquid-glass-elevated border border-white/[0.08] overflow-hidden"
             >
               <div className="p-4 space-y-1">
-                {navLinks.map((link) => {
+                {navLinks.map((link, i) => {
                   const isActive =
                     pathname === link.href ||
                     pathname?.startsWith(link.href + "/");
                   return (
-                    <Link
+                    <m.div
                       key={link.href}
-                      href={link.href}
-                      aria-current={isActive ? "page" : undefined}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className={`block px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
-                        isActive
-                          ? "text-[#00bcd4] bg-[#00bcd4]/10"
-                          : "text-white/70 hover:text-white hover:bg-white/[0.04]"
-                      }`}
+                      initial={{ opacity: 0, x: -12 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.25, delay: i * 0.04 }}
                     >
-                      {link.label}
-                    </Link>
+                      <Link
+                        href={link.href}
+                        aria-current={isActive ? "page" : undefined}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={`block px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
+                          isActive
+                            ? "text-[#00bcd4] bg-[#00bcd4]/10"
+                            : "text-white/70 hover:text-white hover:bg-white/[0.04]"
+                        }`}
+                      >
+                        {link.label}
+                      </Link>
+                    </m.div>
                   );
                 })}
 
                 <div className="h-px bg-white/[0.08] my-3" />
 
-                <div className="px-1">
+                <m.div
+                  className="px-1"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.2, delay: 0.25 }}
+                >
                   <NotificationBell />
                   <UserNav />
-                </div>
+                </m.div>
               </div>
             </nav>
           </m.div>

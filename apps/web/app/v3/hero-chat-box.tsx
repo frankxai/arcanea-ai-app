@@ -130,7 +130,7 @@ export function HeroChatBox() {
             <button
               key={card.label}
               onClick={() => goToChat(card.prompt)}
-              className="group flex items-center gap-2 px-4 py-2.5 rounded-full text-[13px] text-white/30 hover:text-white/60 bg-white/[0.02] hover:bg-white/[0.05] border border-white/[0.04] hover:border-white/[0.10] transition-all duration-200"
+              className="group flex items-center gap-2 px-4 py-2.5 rounded-full text-[13px] text-white/30 hover:text-white/60 bg-white/[0.02] hover:bg-white/[0.05] border border-white/[0.04] hover:border-white/[0.10] hover:scale-[1.03] active:scale-[0.97] transition-all duration-200"
             >
               <Icon className="w-3.5 h-3.5 text-white/20 group-hover:text-[#00bcd4]/70 transition-colors" />
               {card.label}
