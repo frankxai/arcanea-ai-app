@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ReactNode, Suspense } from "react";
-import dynamic from "next/dynamic";
+import { ReactNode, Suspense, lazy } from "react";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { AuthProvider } from "@/lib/auth/context";
@@ -9,14 +8,7 @@ import { Navbar, Footer } from "@/components/navigation";
 import { GlobalGlowTracker } from "@/components/ui";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
-
-const CosmicBackground = dynamic(
-  () =>
-    import("@/lib/arcanea-ui/CosmicBackground").then((mod) => ({
-      default: mod.CosmicBackground,
-    })),
-  { ssr: false }
-);
+import { CosmicBackground } from "@/lib/arcanea-ui/CosmicBackground";
 
 function CosmicBackgroundFallback() {
   return (

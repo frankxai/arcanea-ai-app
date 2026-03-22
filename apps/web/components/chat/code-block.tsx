@@ -31,15 +31,15 @@ export default function CodeBlock({ language, children }: CodeBlockProps) {
   };
 
   return (
-    <div className="relative group rounded-xl overflow-hidden my-3 border border-white/[0.06]">
+    <div className="relative group rounded-xl overflow-hidden my-3 border border-white/[0.06] shadow-lg shadow-black/20">
       {/* Header bar */}
-      <div className="flex items-center justify-between px-4 py-2 bg-[#1e1e1e] border-b border-white/[0.06]">
-        <span className="text-[11px] text-white/30 font-mono uppercase tracking-wider">
+      <div className="flex items-center justify-between px-4 py-2 bg-[#1e1e1e] border-t-2 border-t-[#00bcd4]/30 border-b border-b-white/[0.06]">
+        <span className="text-[11px] text-[#00bcd4]/60 font-mono uppercase tracking-wider select-none">
           {language || 'text'}
         </span>
         <button
           onClick={handleCopy}
-          className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] text-white/40 hover:text-white/70 hover:bg-white/[0.06] transition-all"
+          className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] text-white/50 hover:text-[#00bcd4] hover:bg-white/[0.06] transition-all"
           aria-label="Copy code"
         >
           {copied ? (

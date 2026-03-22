@@ -54,7 +54,7 @@ export default function ChatMarkdown({ content }: ChatMarkdownProps) {
         // Better blockquotes
         blockquote({ children }) {
           return (
-            <blockquote className="border-l-2 border-[#00bcd4]/40 pl-4 my-3 text-white/60 italic">
+            <blockquote className="border-l-2 border-[#00bcd4]/40 pl-4 my-3 text-white/60 italic bg-white/[0.02] py-1 rounded-r-md">
               {children}
             </blockquote>
           );
@@ -62,7 +62,7 @@ export default function ChatMarkdown({ content }: ChatMarkdownProps) {
 
         // Horizontal rules
         hr() {
-          return <hr className="border-white/[0.06] my-4" />;
+          return <hr className="border-0 h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent my-5" />;
         },
 
         // Tables
@@ -80,6 +80,13 @@ export default function ChatMarkdown({ content }: ChatMarkdownProps) {
             </th>
           );
         },
+        tr({ children, ...props }) {
+          return (
+            <tr className="even:bg-white/[0.02]" {...props}>
+              {children}
+            </tr>
+          );
+        },
         td({ children }) {
           return (
             <td className="px-3 py-2 border-b border-white/[0.04] text-white/80">
@@ -90,10 +97,13 @@ export default function ChatMarkdown({ content }: ChatMarkdownProps) {
 
         // Lists with better styling
         ul({ children }) {
-          return <ul className="list-disc list-outside ml-5 space-y-1 my-2">{children}</ul>;
+          return <ul className="list-disc list-outside ml-5 space-y-1.5 my-2.5">{children}</ul>;
         },
         ol({ children }) {
-          return <ol className="list-decimal list-outside ml-5 space-y-1 my-2">{children}</ol>;
+          return <ol className="list-decimal list-outside ml-5 space-y-1.5 my-2.5">{children}</ol>;
+        },
+        li({ children }) {
+          return <li className="pl-1 leading-[1.7]">{children}</li>;
         },
 
         // Headings with anchors

@@ -61,6 +61,13 @@ const GATE_META: Record<string, { label: string; tagline: string; color: string 
 
 const ACCENT = '#00bcd4';
 
+const TEAM_COLORS: Record<string, string> = {
+  development: '#00bcd4',
+  creative: '#e040fb',
+  writing: '#ffab40',
+  research: '#69f0ae',
+};
+
 const SUGGESTIONS = [
   'Build me a magic system with five elements and a cost',
   'Architect a real-time multiplayer backend in TypeScript',
@@ -267,6 +274,18 @@ export default function ChatPage() {
 
   return (
     <div className="flex h-screen bg-[#09090b]">
+      {/* Swarm animation keyframes */}
+      <style>{`
+        @keyframes gatePulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.6; }
+        }
+        @keyframes luminorFadeIn {
+          from { opacity: 0; transform: translateY(4px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
+
       {/* Luminor Sidebar */}
       <LuminorSidebar
         activeLuminorId={activeLuminor?.id ?? null}
@@ -300,28 +319,58 @@ export default function ChatPage() {
             <ModelSelector value={modelId ?? 'arcanea-auto'} onChange={setModelId} />
             {activeGates.length > 0 && messages.length > 0 && (
               <div className="flex items-center gap-1.5">
-                {activeGates.slice(0, 3).map((gate) => {
+                {/* Gate tagline chips — max 2 on mobile, 3 on desktop */}
+                {activeGates.slice(0, 3).map((gate, idx) => {
                   const meta = GATE_META[gate];
                   if (!meta) return null;
+                  const isLead = swarmResult?.coordinationMode === 'solo' && swarmResult.leadGuardian === gate;
                   return (
                     <span
                       key={gate}
-                      className="text-[10px] font-mono px-1.5 py-0.5 rounded-md border border-white/[0.06] transition-colors"
-                      style={{ color: meta.color, borderColor: `${meta.color}20` }}
+                      className={`text-[10px] font-mono px-1.5 py-0.5 rounded-md border transition-colors ${idx >= 2 ? 'hidden sm:inline-flex' : 'inline-flex'}`}
+                      style={{
+                        color: meta.color,
+                        borderColor: `${meta.color}${isLead ? '30' : '15'}`,
+                        opacity: isLead ? 1 : 0.65,
+                        animation: isLead ? 'gatePulse 3s ease-in-out infinite' : undefined,
+                      }}
                       title={`${meta.label} Gate — ${meta.tagline}`}
                     >
                       {meta.tagline}
                     </span>
                   );
                 })}
-                {swarmResult && swarmResult.coordinationMode !== 'convergence' && (
-                  <span
-                    className="text-[9px] font-mono px-1.5 py-0.5 rounded-md border border-white/[0.04] text-white/25"
-                    title={`Coordination: ${swarmResult.coordinationMode}${swarmResult.leadGuardian ? ` — ${swarmResult.leadGuardian} leads` : ''}`}
-                  >
-                    {swarmResult.coordinationMode === 'solo' ? '◆' : '◇◇'}
-                  </span>
-                )}
+                {/* Coordination mode indicator — hidden on mobile */}
+                {swarmResult && swarmResult.coordinationMode !== 'convergence' && (() => {
+                  const leadMeta = swarmResult.leadGuardian ? GATE_META[swarmResult.leadGuardian] : null;
+                  const activeNames = swarmResult.activeLuminors.map(l =>
+                    l.id.charAt(0).toUpperCase() + l.id.slice(1)
+                  ).join(', ');
+                  const tooltipText = swarmResult.coordinationMode === 'solo' && leadMeta
+                    ? `${leadMeta.label} leads${activeNames ? ` · ${activeNames} active` : ''}`
+                    : `Council mode${activeNames ? ` · ${activeNames} active` : ''}`;
+                  return (
+                    <span
+                      className="hidden sm:inline-flex items-center gap-1 text-[9px] font-mono px-1.5 py-0.5 rounded-md border transition-colors cursor-default group/coord relative"
+                      style={swarmResult.coordinationMode === 'solo' && leadMeta ? {
+                        color: leadMeta.color,
+                        borderColor: `${leadMeta.color}20`,
+                        textShadow: `0 0 8px ${leadMeta.color}40`,
+                      } : {
+                        color: 'rgba(255,255,255,0.35)',
+                        borderImage: 'linear-gradient(135deg, #ff6b3530, #4fc3f730, #ab47bc30, #ffd70030) 1',
+                      }}
+                    >
+                      {swarmResult.coordinationMode === 'solo' && leadMeta
+                        ? leadMeta.label
+                        : 'Council'}
+                      {/* Tooltip */}
+                      <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1.5 rounded-lg bg-[#1a1a1f] border border-white/[0.08] text-[10px] text-white/60 whitespace-nowrap opacity-0 pointer-events-none group-hover/coord:opacity-100 transition-opacity duration-200 shadow-lg z-50">
+                        {tooltipText}
+                      </span>
+                    </span>
+                  );
+                })()}
               </div>
             )}
           </div>
@@ -431,10 +480,10 @@ export default function ChatPage() {
           {isEmpty ? (
             <div className="flex flex-col items-center justify-center h-full px-4">
               <div className="max-w-[540px] w-full text-center">
-                <h1 className="text-3xl font-semibold text-white/90 mb-2 tracking-tight">
+                <h1 className="text-4xl md:text-5xl font-bold text-white mb-3 tracking-tight bg-gradient-to-b from-white via-white/90 to-white/50 bg-clip-text text-transparent">
                   {activeLuminor ? activeLuminor.name : 'What will you create?'}
                 </h1>
-                <p className="text-sm text-white/35 mb-6">
+                <p className="text-sm text-white/40 mb-8 max-w-sm mx-auto leading-relaxed">
                   {activeLuminor ? activeLuminor.title || activeLuminor.tagline : 'Write, code, design, research. Or just think out loud.'}
                 </p>
 
@@ -472,7 +521,7 @@ export default function ChatPage() {
                     <button
                       key={s}
                       onClick={() => sendMessage({ text: s })}
-                      className="px-4 py-2 rounded-full text-sm text-white/50 border border-white/[0.08] hover:border-white/[0.16] hover:text-white/70 hover:bg-white/[0.03] transition-all duration-150"
+                      className="px-4 py-2.5 rounded-2xl text-[13px] text-white/45 border border-white/[0.06] backdrop-blur-sm hover:border-[#00bcd4]/25 hover:text-white/75 hover:bg-[#00bcd4]/[0.04] hover:shadow-[0_0_20px_rgba(0,188,212,0.06)] transition-all duration-200"
                     >
                       {s}
                     </button>
@@ -494,7 +543,7 @@ export default function ChatPage() {
                         />
                       ) : (
                         <div className="relative">
-                          <div className="inline-block px-4 py-3 rounded-2xl rounded-br-md bg-[#1a1a1f] text-white/90 text-[15px] leading-relaxed whitespace-pre-wrap">
+                          <div className="inline-block px-4 py-3 rounded-2xl rounded-br-md bg-gradient-to-br from-[#1a1a1f] to-[#141418] text-white/90 text-[15px] leading-relaxed whitespace-pre-wrap shadow-sm">
                             {getMessageText(msg)}
                           </div>
                           <button
@@ -536,10 +585,10 @@ export default function ChatPage() {
                           )}
                           <span className="text-[10px] text-white/20 font-mono">{providerLabel}</span>
                         </div>
-                        <div className="prose prose-invert prose-sm max-w-none text-[15px] leading-[1.7] text-white/85">
+                        <div className="prose prose-invert prose-sm max-w-none text-[15px] leading-[1.75] text-white/85 prose-headings:text-white/90 prose-headings:font-semibold prose-code:text-[#00bcd4]/80 prose-a:text-[#00bcd4] prose-strong:text-white/90">
                           <ChatMarkdown content={clean} />
                           {isStreaming && msg.id === lastMsg?.id && (
-                            <span className="inline-block w-[2px] h-[18px] bg-[#00bcd4] animate-pulse ml-0.5 align-text-bottom" />
+                            <span className="inline-block w-2 h-2 rounded-full bg-[#00bcd4] animate-pulse ml-1 align-middle shadow-[0_0_8px_rgba(0,188,212,0.6)]" />
                           )}
                         </div>
 
@@ -563,18 +612,45 @@ export default function ChatPage() {
                         {/* Luminor suggestions — show on last message when swarm is active */}
                         {!isLoading && msg.id === lastMsg?.id && swarmResult && swarmResult.coordinationMode !== 'convergence' && swarmResult.activeLuminors.length > 0 && !activeLuminor && (
                           <div className="flex flex-wrap gap-1.5 mt-2">
-                            {swarmResult.activeLuminors.slice(0, 3).map((l) => (
-                              <button
-                                key={l.id}
-                                type="button"
-                                onClick={() => { const cfg = getLuminor(l.id); if (cfg) handleSelectLuminor(cfg); }}
-                                className="px-2.5 py-1 rounded-full text-[11px] border border-white/[0.05] text-white/30
-                                  hover:border-white/[0.12] hover:text-white/55 hover:bg-white/[0.03] transition-all"
-                                title={l.hint}
-                              >
-                                Go deeper with {l.id.charAt(0).toUpperCase() + l.id.slice(1)}
-                              </button>
-                            ))}
+                            {swarmResult.activeLuminors.slice(0, 3).map((l, idx) => {
+                              const teamColor = TEAM_COLORS[l.team] || '#00bcd4';
+                              const displayName = l.id.charAt(0).toUpperCase() + l.id.slice(1);
+                              return (
+                                <button
+                                  key={l.id}
+                                  type="button"
+                                  onClick={() => { const cfg = getLuminor(l.id); if (cfg) handleSelectLuminor(cfg as any); }}
+                                  className="group/lum flex items-center gap-2 pl-1 pr-3 py-1 rounded-full text-[11px] border border-white/[0.06] text-white/35
+                                    hover:text-white/65 hover:bg-white/[0.03] transition-all duration-200"
+                                  style={{
+                                    borderLeftWidth: '2px',
+                                    borderLeftColor: `${teamColor}50`,
+                                    animation: `luminorFadeIn 300ms ease-out ${idx * 50}ms both`,
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    (e.currentTarget as HTMLElement).style.boxShadow = `0 0 12px ${teamColor}15, inset 0 0 12px ${teamColor}08`;
+                                    (e.currentTarget as HTMLElement).style.borderLeftColor = teamColor;
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    (e.currentTarget as HTMLElement).style.boxShadow = 'none';
+                                    (e.currentTarget as HTMLElement).style.borderLeftColor = `${teamColor}50`;
+                                  }}
+                                  title={l.hint}
+                                >
+                                  <span
+                                    className="w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold shrink-0"
+                                    style={{ background: `${teamColor}20`, color: teamColor }}
+                                  >
+                                    {displayName.charAt(0)}
+                                  </span>
+                                  <span>
+                                    <span className="font-medium" style={{ color: `${teamColor}cc` }}>{displayName}</span>
+                                    <span className="text-white/20 mx-1">·</span>
+                                    <span className="text-white/30">{l.hint}</span>
+                                  </span>
+                                </button>
+                              );
+                            })}
                           </div>
                         )}
 
@@ -630,7 +706,7 @@ export default function ChatPage() {
                       <span className="w-1.5 h-1.5 rounded-full bg-[#00bcd4] animate-bounce" style={{ animationDelay: '150ms' }} />
                       <span className="w-1.5 h-1.5 rounded-full bg-[#00bcd4] animate-bounce" style={{ animationDelay: '300ms' }} />
                     </div>
-                    <span className="text-xs">Thinking...</span>
+                    <span className="text-xs font-light tracking-wide">Thinking</span>
                   </div>
                 </div>
               )}
@@ -662,6 +738,7 @@ export default function ChatPage() {
                 style={{
                   borderColor: input.trim() ? 'rgba(0,188,212,0.3)' : 'rgba(255,255,255,0.08)',
                   backgroundColor: '#111113',
+                  boxShadow: input.trim() ? '0 0 30px rgba(0,188,212,0.08), inset 0 0 30px rgba(0,188,212,0.02)' : 'none',
                 }}
               >
                 {attachments.length > 0 && (
@@ -715,7 +792,7 @@ export default function ChatPage() {
 
               <div className="flex items-center justify-between mt-2 px-1">
                 <span className="text-[11px] text-white/20">
-                  Enter · @model · /beam to compare
+                  Enter to send · Shift+Enter for newline
                 </span>
                 <div className="flex items-center gap-2">
                   <CreationIndicator autoSave={autoSave} />
