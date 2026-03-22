@@ -19,6 +19,12 @@ import {
   PhStack,
   PhCrown,
   PhTrendUp,
+  PhPlus,
+  PhFire,
+  PhDrop,
+  PhLeaf,
+  PhWind,
+  PhSpiral,
 } from "@/lib/phosphor-icons";
 import type { Creation, CreationType, ElementName, GateName, GuardianName } from "@/lib/database/types/api-responses";
 import {
@@ -34,6 +40,7 @@ import {
 // ---------------------------------------------------------------------------
 
 type FilterType = "all" | CreationType;
+type ElementFilter = "all" | ElementName;
 type SortOption = "popular" | "recent" | "views";
 
 const FILTER_TABS: { key: FilterType; label: string; icon: typeof PhGridFour }[] = [
@@ -43,6 +50,15 @@ const FILTER_TABS: { key: FilterType; label: string; icon: typeof PhGridFour }[]
   { key: "video", label: "Video", icon: PhVideo },
   { key: "audio", label: "Audio", icon: PhMusicNote },
   { key: "code", label: "Code", icon: PhCode },
+];
+
+const ELEMENT_FILTER_TABS: { key: ElementFilter; label: string; icon: typeof PhFire; color: string }[] = [
+  { key: "all", label: "All Elements", icon: PhSparkle, color: "text-[#00bcd4]" },
+  { key: "Fire", label: "Fire", icon: PhFire, color: "text-red-400" },
+  { key: "Water", label: "Water", icon: PhDrop, color: "text-blue-400" },
+  { key: "Earth", label: "Earth", icon: PhLeaf, color: "text-green-400" },
+  { key: "Wind", label: "Wind", icon: PhWind, color: "text-slate-300" },
+  { key: "Void", label: "Void", icon: PhSpiral, color: "text-violet-400" },
 ];
 
 // ---------------------------------------------------------------------------
@@ -69,10 +85,12 @@ interface CardItem {
 
 export default function GalleryPage() {
   const [activeFilter, setActiveFilter] = useState<FilterType>("all");
+  const [activeElement, setActiveElement] = useState<ElementFilter>("all");
   const [sortBy, setSortBy] = useState<SortOption>("popular");
   const [showFilters, setShowFilters] = useState(false);
   const [liveCreations, setLiveCreations] = useState<Creation[] | null>(null);
   const [fetchError, setFetchError] = useState(false);
+  const [trending, setTrending] = useState<CardItem[]>([]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -104,6 +122,30 @@ export default function GalleryPage() {
     };
   }, []);
 
+  useEffect(() => {
+    fetch('/api/trending?pageSize=8')
+      .then(r => r.json())
+      .then(data => {
+        if (data.success && data.data?.creations) {
+          setTrending(data.data.creations.map((c: any) => ({
+            id: c.id,
+            title: c.title,
+            description: '',
+            type: c.type || 'text',
+            element: c.element || 'Fire',
+            gate: c.gate || 'Foundation',
+            guardian: c.guardian || 'Lyssandria',
+            creatorName: c.creator_name || 'Creator',
+            likeCount: c.like_count || 0,
+            viewCount: c.view_count || 0,
+            tags: [],
+            createdAt: c.created_at,
+          })));
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   const isShowcaseMode = liveCreations === null;
 
   // Normalize both sources into CardItem[]
@@ -128,10 +170,15 @@ export default function GalleryPage() {
 
   // Filter + sort
   const filtered = useMemo(() => {
-    let items =
-      activeFilter === "all"
-        ? allItems
-        : allItems.filter((c) => c.type === activeFilter);
+    let items = allItems;
+
+    if (activeFilter !== "all") {
+      items = items.filter((c) => c.type === activeFilter);
+    }
+
+    if (activeElement !== "all") {
+      items = items.filter((c) => c.element === activeElement);
+    }
 
     if (sortBy === "popular") {
       items = [...items].sort((a, b) => b.likeCount - a.likeCount);
@@ -139,7 +186,7 @@ export default function GalleryPage() {
       items = [...items].sort((a, b) => b.viewCount - a.viewCount);
     }
     return items;
-  }, [allItems, activeFilter, sortBy]);
+  }, [allItems, activeFilter, activeElement, sortBy]);
 
   // Per-type counts for tab badges
   const typeCounts = useMemo(() => {
@@ -161,6 +208,42 @@ export default function GalleryPage() {
       {/* Featured companions showcase */}
       <FeaturedCompanions />
 
+      {/* Trending Now */}
+      {trending.length > 0 && (
+        <section className="border-b border-white/[0.04]">
+          <div className="max-w-7xl mx-auto px-6 py-8">
+            <div className="flex items-center gap-2 mb-4">
+              <PhTrendUp className="w-5 h-5 text-[#00bcd4]" />
+              <h2 className="text-lg font-semibold text-white">Trending Now</h2>
+            </div>
+            <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide -mx-2 px-2">
+              {trending.map(item => (
+                <Link
+                  key={item.id}
+                  href={`/gallery/${item.id}`}
+                  className="flex-shrink-0 w-56 bg-white/[0.04] border border-white/[0.08] rounded-xl p-4 hover:bg-white/[0.08] hover:border-[#00bcd4]/20 transition-all group"
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-medium uppercase bg-[#00bcd4]/10 text-[#00bcd4]">
+                      {item.type}
+                    </span>
+                    {item.element && (
+                      <span className="text-[10px] text-white/40">{item.element}</span>
+                    )}
+                  </div>
+                  <p className="text-sm font-medium text-white/90 truncate group-hover:text-white">{item.title}</p>
+                  <div className="flex items-center gap-3 mt-2 text-[11px] text-white/40">
+                    <span className="flex items-center gap-1"><PhHeart className="w-3 h-3" /> {item.likeCount}</span>
+                    <span className="flex items-center gap-1"><PhEye className="w-3 h-3" /> {item.viewCount}</span>
+                  </div>
+                  <p className="text-[11px] text-white/30 mt-1.5">{item.creatorName}</p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Filter bar */}
       <FilterBar
         activeFilter={activeFilter}
@@ -172,6 +255,30 @@ export default function GalleryPage() {
         onToggleFilters={() => setShowFilters(!showFilters)}
         onCloseFilters={() => setShowFilters(false)}
       />
+
+      {/* Element filter row */}
+      <div className="max-w-7xl mx-auto px-6 pt-6">
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="text-xs text-white/[0.20] font-sans uppercase tracking-widest mr-1">Element</span>
+          {ELEMENT_FILTER_TABS.map(({ key, label, icon: EIcon, color }) => {
+            const isActive = activeElement === key;
+            return (
+              <button
+                key={key}
+                onClick={() => setActiveElement(key)}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-sans transition-all ${
+                  isActive
+                    ? "bg-white/[0.08] border border-white/[0.15] text-white"
+                    : "text-white/[0.25] hover:text-white/[0.50] hover:bg-white/[0.04] border border-transparent"
+                }`}
+              >
+                <EIcon size={14} weight={isActive ? "fill" : "regular"} className={isActive ? color : ""} />
+                <span>{label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
 
       {/* Grid */}
       <div className="max-w-7xl mx-auto px-6 py-10">
@@ -196,6 +303,16 @@ export default function GalleryPage() {
           />
         )}
       </div>
+
+      {/* Floating Action Button — Create New */}
+      <Link
+        href="/studio"
+        aria-label="Create new in Studio"
+        className="fixed bottom-8 right-8 z-50 flex items-center gap-2 px-5 py-3.5 rounded-2xl bg-gradient-to-r from-[#00bcd4] to-[#0d47a1] text-white font-sans font-semibold shadow-lg shadow-[#00bcd4]/25 hover:shadow-xl hover:shadow-[#00bcd4]/30 hover:scale-105 transition-all duration-200 group"
+      >
+        <PhPlus size={20} weight="bold" className="group-hover:rotate-90 transition-transform duration-300" />
+        <span className="hidden sm:inline">Create New</span>
+      </Link>
     </div>
   );
 }

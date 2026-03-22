@@ -706,14 +706,15 @@
 
 .prose-arcanea {
   font-family: var(--font-inter), 'Inter', system-ui, sans-serif;
-  font-size: 1.1875rem;
-  line-height: 1.75;
+  font-size: 1.125rem;    /* 18px — optimal for long-form reading */
+  line-height: 1.75;      /* ~31.5px line-height for comfortable scanning */
   color: hsl(var(--text-secondary));
-  max-width: 65ch;
+  max-width: 720px;       /* fixed width for consistent readability */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   hanging-punctuation: first last;
+  letter-spacing: -0.003em; /* subtle tightening for body text */
 }
 
 .prose-arcanea p {
@@ -733,10 +734,10 @@
   letter-spacing: -0.02em;
 }
 
-.prose-arcanea h1 { font-size: 2rem; font-weight: 700; margin-top: 3em; margin-bottom: 0.75em; }
-.prose-arcanea h2 { font-size: 1.625rem; font-weight: 600; margin-top: 2.5em; margin-bottom: 0.6em; }
-.prose-arcanea h3 { font-size: 1.3125rem; font-weight: 600; margin-top: 2em; margin-bottom: 0.5em; }
-.prose-arcanea h4 { font-size: 1.125rem; font-weight: 600; margin-top: 1.5em; margin-bottom: 0.4em; }
+.prose-arcanea h1 { font-size: 2rem; font-weight: 700; margin-top: 3em; margin-bottom: 0.75em; line-height: 1.3; }
+.prose-arcanea h2 { font-size: 1.5rem; font-weight: 600; margin-top: 2.5em; margin-bottom: 0.75em; line-height: 1.35; }
+.prose-arcanea h3 { font-size: 1.25rem; font-weight: 600; margin-top: 2em; margin-bottom: 0.6em; line-height: 1.4; }
+.prose-arcanea h4 { font-size: 1.0625rem; font-weight: 600; margin-top: 1.5em; margin-bottom: 0.5em; line-height: 1.45; }
 
 .prose-arcanea h1:first-child,
 .prose-arcanea h2:first-child,

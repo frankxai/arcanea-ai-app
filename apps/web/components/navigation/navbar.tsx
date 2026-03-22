@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LazyMotion, domMax, m, AnimatePresence } from "framer-motion";
 import { UserNav } from "@/components/auth";
+import { NotificationBell } from "@/components/notifications/notification-bell";
 
 const navLinks = [
   { href: "/chat", label: "Create", also: ["/imagine", "/studio"] },
@@ -79,6 +80,7 @@ export function Navbar() {
             </div>
 
             <div className="hidden md:flex items-center gap-2">
+              <NotificationBell />
               <UserNav />
             </div>
 
@@ -139,6 +141,7 @@ export function Navbar() {
                 <div className="h-px bg-white/[0.08] my-3" />
 
                 <div className="px-1">
+                  <NotificationBell />
                   <UserNav />
                 </div>
               </div>

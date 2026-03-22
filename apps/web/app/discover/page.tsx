@@ -211,7 +211,7 @@ function ShowcaseCard({ creation, index }: { creation: Creation; index: number }
       className="group relative rounded-2xl overflow-hidden bg-slate-900/50 backdrop-blur-sm border border-white/[0.08] hover:border-[#00bcd4]/25 transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-[#00bcd4]/10"
     >
       {/* Visual area — real image or gradient fallback */}
-      <div className={`relative aspect-square bg-gradient-to-br ${bg} overflow-hidden`}>
+      <Link href={`/gallery/${creation.id}`} className={`block relative aspect-square bg-gradient-to-br ${bg} overflow-hidden`}>
         {/* Real image layer */}
         {hasImage && (
           <img
@@ -267,10 +267,10 @@ function ShowcaseCard({ creation, index }: { creation: Creation; index: number }
             </div>
           </div>
         </div>
-      </div>
+      </Link>
 
       {/* Bottom info (always visible on mobile) */}
-      <div className="p-3 bg-slate-900/90">
+      <Link href={`/gallery/${creation.id}`} className="block p-3 bg-slate-900/90 hover:bg-slate-800/90 transition-colors">
         <h3 className="text-white font-semibold text-sm line-clamp-1 mb-1">{creation.title}</h3>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3 text-slate-400 text-xs">
@@ -281,7 +281,7 @@ function ShowcaseCard({ creation, index }: { creation: Creation; index: number }
             <span className="text-[#00bcd4]/60 text-xs">With {creation.luminor_id}</span>
           )}
         </div>
-      </div>
+      </Link>
     </m.div>
   );
 }

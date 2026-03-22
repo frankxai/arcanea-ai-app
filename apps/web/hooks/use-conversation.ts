@@ -15,6 +15,7 @@ import { TextStreamChatTransport } from 'ai';
 import { useModelSelection } from './use-provider';
 import { getFocusModeById } from '@/components/chat/focus-modes';
 import { classifyIntent } from '@/lib/ai/router';
+import { resolveSwarm, type SwarmResult } from '@/lib/ai/guardian-swarm';
 import { CHAT_MODELS } from '@/components/chat/model-selector';
 import { getLuminor, type LuminorConfig } from '@/lib/luminors/config';
 
@@ -75,7 +76,7 @@ export interface ConversationState {
   // Messages
   messages: any[];
   status: string;
-  error: Error | null;
+  error: Error | undefined;
   sendMessage: (opts: { text: string }) => void;
   setMessages: (msgs: any[]) => void;
 
@@ -85,7 +86,7 @@ export interface ConversationState {
   handleInputChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 
   // Model
-  modelId: string;
+  modelId: string | null;
   setModelId: (id: string) => void;
   providerLabel: string;
   provider: string;
@@ -112,8 +113,9 @@ export interface ConversationState {
   copiedId: string | null;
   handleCopy: (msgId: string, text: string) => Promise<void>;
 
-  // Gates
+  // Gates & Swarm
   activeGates: string[];
+  swarmResult: SwarmResult | null;
 
   // Beam
   beamPrompt: string | null;
@@ -155,6 +157,7 @@ export function useConversation(): ConversationState {
 
   const [input, setInput] = useState('');
   const [activeGates, setActiveGates] = useState<string[]>([]);
+  const [swarmResult, setSwarmResult] = useState<SwarmResult | null>(null);
   const [focusMode, setFocusMode] = useState('auto');
   const [beamPrompt, setBeamPrompt] = useState<string | null>(null);
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
@@ -309,6 +312,7 @@ export function useConversation(): ConversationState {
       if (text) {
         const result = classifyIntent(text);
         setActiveGates(result.activeGates);
+        setSwarmResult(resolveSwarm(result.weights, result.activeGates));
       }
     }
   }, [messages]);
@@ -535,8 +539,9 @@ export function useConversation(): ConversationState {
     copiedId,
     handleCopy,
 
-    // Gates
+    // Gates & Swarm
     activeGates,
+    swarmResult,
 
     // Beam
     beamPrompt,

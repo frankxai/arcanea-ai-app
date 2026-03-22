@@ -22,6 +22,8 @@ import {
   PhPencilSimple,
   PhExport,
   PhImageSquare,
+  PhSparkle,
+  PhGear,
 } from '@/lib/phosphor-icons';
 import { LuminorSidebar } from '@/components/chat/luminor-sidebar';
 import { SessionSidebar } from '@/components/chat/session-sidebar';
@@ -124,6 +126,7 @@ export default function ChatPage() {
     copiedId,
     handleCopy,
     activeGates,
+    swarmResult,
     beamPrompt,
     setBeamPrompt,
     commandPaletteOpen,
@@ -310,6 +313,14 @@ export default function ChatPage() {
                     </span>
                   );
                 })}
+                {swarmResult && swarmResult.coordinationMode !== 'convergence' && (
+                  <span
+                    className="text-[9px] font-mono px-1.5 py-0.5 rounded-md border border-white/[0.04] text-white/25"
+                    title={`Coordination: ${swarmResult.coordinationMode}${swarmResult.leadGuardian ? ` — ${swarmResult.leadGuardian} leads` : ''}`}
+                  >
+                    {swarmResult.coordinationMode === 'solo' ? '◆' : '◇◇'}
+                  </span>
+                )}
               </div>
             )}
           </div>
@@ -519,6 +530,24 @@ export default function ChatPage() {
                                   hover:border-white/[0.14] hover:text-white/65 hover:bg-white/[0.03] transition-all"
                               >
                                 {fu}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+
+                        {/* Luminor suggestions — show on last message when swarm is active */}
+                        {!isLoading && msg.id === lastMsg?.id && swarmResult && swarmResult.coordinationMode !== 'convergence' && swarmResult.activeLuminors.length > 0 && !activeLuminor && (
+                          <div className="flex flex-wrap gap-1.5 mt-2">
+                            {swarmResult.activeLuminors.slice(0, 3).map((l) => (
+                              <button
+                                key={l.id}
+                                type="button"
+                                onClick={() => handleSelectLuminor(l.id)}
+                                className="px-2.5 py-1 rounded-full text-[11px] border border-white/[0.05] text-white/30
+                                  hover:border-white/[0.12] hover:text-white/55 hover:bg-white/[0.03] transition-all"
+                                title={l.hint}
+                              >
+                                Go deeper with {l.id.charAt(0).toUpperCase() + l.id.slice(1)}
                               </button>
                             ))}
                           </div>

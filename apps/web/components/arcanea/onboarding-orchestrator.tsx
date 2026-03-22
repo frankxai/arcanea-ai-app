@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect, lazy, Suspense } from 'react'
 import { useRouter } from 'next/navigation'
+import { LazyMotion, domAnimation, AnimatePresence, m } from 'framer-motion'
 import { useAuth } from '@/lib/auth/context'
 import { createClient } from '@/lib/supabase/client'
 import { updateProfile } from '@/lib/database/services/profile-service'
@@ -15,7 +16,19 @@ const Step3Guardian = lazy(() => import('./step3-guardian'))
 const Step4Creation = lazy(() => import('./step4-creation'))
 const Step5YourUniverse = lazy(() => import('./step5-your-universe'))
 
-const STEP_LABELS = ['Welcome', 'Identity', 'Partner', 'Creation', 'Ready']
+const STEP_LABELS = ['Awaken', 'Identity', 'Intelligence', 'Creation', 'Launch']
+
+const stepVariants = {
+  enter: { opacity: 0, y: 16, scale: 0.98 },
+  center: { opacity: 1, y: 0, scale: 1 },
+  exit: { opacity: 0, y: -12, scale: 0.98 },
+}
+
+const stepTransition = {
+  type: 'tween' as const,
+  duration: 0.35,
+  ease: [0.22, 1, 0.36, 1],
+}
 
 const GUARDIAN_GATE_MAP: Record<string, string> = {
   Lyssandria: 'Foundation',
@@ -34,7 +47,7 @@ export default function ArcanealOnboarding() {
   const router = useRouter()
   const { user, isLoading: authLoading } = useAuth()
   const [step, setStep] = useState(1)
-  const [transitioning, setTransitioning] = useState(false)
+  const [direction, setDirection] = useState(1) // 1 = forward, -1 = back
   const [saving, setSaving] = useState(false)
   // null = unknown, true = needs onboarding, false = already done
   const [onboardingNeeded, setOnboardingNeeded] = useState<boolean | null>(null)
@@ -84,16 +97,14 @@ export default function ArcanealOnboarding() {
   const [firstCreationResponse, setFirstCreationResponse] = useState('')
   const [completed, setCompleted] = useState(false)
 
-  const goToStep = (target: number) => {
-    setTransitioning(true)
-    setTimeout(() => {
-      setStep(target)
-      setTransitioning(false)
-    }, 280)
+  const next = () => {
+    setDirection(1)
+    setStep((s) => s + 1)
   }
-
-  const next = () => goToStep(step + 1)
-  const back = () => goToStep(step - 1)
+  const back = () => {
+    setDirection(-1)
+    setStep((s) => s - 1)
+  }
 
   // Save onboarding data to Supabase profile
   const saveOnboardingData = useCallback(async () => {
@@ -157,18 +168,18 @@ export default function ArcanealOnboarding() {
             </svg>
           </div>
           <h1 className="font-serif text-4xl font-bold text-gold-gradient mb-3">
-            Welcome to Arcanea
+            Your Universe Awaits
           </h1>
           <p className="text-[#7c7c9a] font-sans text-sm">
-            {saving ? 'Setting things up...' : 'You are ready. Let us create.'}
+            {saving ? 'Initializing your creative intelligence...' : 'The First Gate is open. Let us create.'}
           </p>
           {matchedGuardian && (
             <p className="mt-3 text-sm font-sans" style={{ color: matchedGuardian.color }}>
-              {matchedGuardian.name} walks beside you.
+              {matchedGuardian.name} stands ready at your side.
             </p>
           )}
           <p className="mt-4 text-xs text-[#3a3a5a] font-sans animate-pulse">
-            Loading your workspace...
+            Preparing your creative workspace...
           </p>
         </div>
       </div>
@@ -176,6 +187,7 @@ export default function ArcanealOnboarding() {
   }
 
   return (
+    <LazyMotion features={domAnimation} strict>
     <main className="min-h-screen bg-[#0a0a0f] flex flex-col items-center justify-center px-4 py-8 relative overflow-hidden">
       {/* Background cosmic particles (subtle, behind everything) */}
       <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 0 }}>
@@ -188,16 +200,19 @@ export default function ArcanealOnboarding() {
 
       {/* Main wizard card */}
       <div className="relative w-full max-w-md" style={{ zIndex: 1 }}>
-        {/* Progress stepper — not shown on step 1 */}
-        {step > 1 && (
-          <div className="mb-10 px-2">
-            <ProgressStepper
-              currentStep={step}
-              totalSteps={5}
-              stepLabels={STEP_LABELS}
-            />
-          </div>
-        )}
+        {/* Progress stepper — visible on all steps */}
+        <m.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="mb-10 px-2"
+        >
+          <ProgressStepper
+            currentStep={step}
+            totalSteps={5}
+            stepLabels={STEP_LABELS}
+          />
+        </m.div>
 
         {/* Glass card container */}
         <div
@@ -213,56 +228,62 @@ export default function ArcanealOnboarding() {
           {/* Top edge shimmer */}
           <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#0d47a1]/40 to-transparent" />
 
-          {/* Step content with cross-fade */}
-          <div
-            className="p-6 md:p-8 transition-all duration-280"
-            style={{
-              opacity: transitioning ? 0 : 1,
-              transform: transitioning ? 'translateY(8px) scale(0.99)' : 'translateY(0) scale(1)',
-            }}
-          >
-            {step === 1 && <Step1Welcome onNext={next} />}
+          {/* Step content with AnimatePresence cross-fade */}
+          <div className="p-6 md:p-8">
+            <AnimatePresence mode="wait" custom={direction}>
+              <m.div
+                key={step}
+                custom={direction}
+                variants={stepVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={stepTransition}
+              >
+                {step === 1 && <Step1Welcome onNext={next} />}
 
-            <Suspense fallback={<div className="flex items-center justify-center py-16"><div className="w-8 h-8 border-2 border-[#0d47a1]/40 border-t-[#0d47a1] rounded-full animate-spin" /></div>}>
-              {step === 2 && (
-                <Step2CreatorType
-                  selected={selectedCreatorTypes}
-                  onSelect={setSelectedCreatorTypes}
-                  onNext={next}
-                  onBack={back}
-                />
-              )}
+                <Suspense fallback={<div className="flex items-center justify-center py-16"><div className="w-8 h-8 border-2 border-[#0d47a1]/40 border-t-[#0d47a1] rounded-full animate-spin" /></div>}>
+                  {step === 2 && (
+                    <Step2CreatorType
+                      selected={selectedCreatorTypes}
+                      onSelect={setSelectedCreatorTypes}
+                      onNext={next}
+                      onBack={back}
+                    />
+                  )}
 
-              {step === 3 && (
-                <Step3Guardian
-                  onGuardianMatched={(g) => setMatchedGuardian(g)}
-                  onNext={next}
-                  onBack={back}
-                />
-              )}
+                  {step === 3 && (
+                    <Step3Guardian
+                      onGuardianMatched={(g) => setMatchedGuardian(g)}
+                      onNext={next}
+                      onBack={back}
+                    />
+                  )}
 
-              {step === 4 && (
-                <Step4Creation
-                  guardian={matchedGuardian}
-                  onCreationSaved={(prompt, response) => {
-                    setFirstCreationPrompt(prompt)
-                    setFirstCreationResponse(response)
-                  }}
-                  onNext={next}
-                  onBack={back}
-                />
-              )}
+                  {step === 4 && (
+                    <Step4Creation
+                      guardian={matchedGuardian}
+                      onCreationSaved={(prompt, response) => {
+                        setFirstCreationPrompt(prompt)
+                        setFirstCreationResponse(response)
+                      }}
+                      onNext={next}
+                      onBack={back}
+                    />
+                  )}
 
-              {step === 5 && (
-                <Step5YourUniverse
-                  creatorTypes={selectedCreatorTypes}
-                  guardian={matchedGuardian}
-                  firstCreationPrompt={firstCreationPrompt}
-                  firstCreationResponse={firstCreationResponse}
-                  onEnter={handleComplete}
-                />
-              )}
-            </Suspense>
+                  {step === 5 && (
+                    <Step5YourUniverse
+                      creatorTypes={selectedCreatorTypes}
+                      guardian={matchedGuardian}
+                      firstCreationPrompt={firstCreationPrompt}
+                      firstCreationResponse={firstCreationResponse}
+                      onEnter={handleComplete}
+                    />
+                  )}
+                </Suspense>
+              </m.div>
+            </AnimatePresence>
           </div>
 
           {/* Bottom edge shimmer */}
@@ -270,12 +291,17 @@ export default function ArcanealOnboarding() {
         </div>
 
         {/* Step counter below card */}
-        {step > 1 && step < 5 && (
-          <p className="text-center text-[11px] text-[#3a3a5a] font-sans mt-4 tracking-widest uppercase">
-            Step {step} of 5 — {STEP_LABELS[step - 1]}
-          </p>
-        )}
+        <m.p
+          key={`counter-${step}`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          className="text-center text-[11px] text-[#3a3a5a] font-sans mt-4 tracking-widest uppercase"
+        >
+          Step {step} of 5 — {STEP_LABELS[step - 1]}
+        </m.p>
       </div>
     </main>
+    </LazyMotion>
   )
 }

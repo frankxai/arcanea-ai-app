@@ -147,7 +147,7 @@ export default async function TextPage({ params }: Props) {
           {/* Main Content */}
           <main id="main-content" className="min-w-0">
             {/* Text Header */}
-            <header className="mb-12">
+            <header className="mb-12 max-w-[720px]">
               <div className="mb-4 flex flex-wrap items-center gap-3">
                 <span className="text-3xl">{collection?.icon}</span>
                 <span className="rounded-full border border-atlantean-teal/40 bg-atlantean-teal/10 px-3 py-1 text-xs uppercase tracking-[0.2em] text-atlantean-teal">
@@ -164,7 +164,7 @@ export default async function TextPage({ params }: Props) {
                 {text.frontmatter.title}
               </h1>
 
-              <p className="mt-6 text-xl text-text-secondary leading-relaxed max-w-[65ch]">
+              <p className="mt-6 text-xl text-text-secondary leading-relaxed max-w-[720px]">
                 {text.frontmatter.excerpt}
               </p>
 

@@ -22,6 +22,8 @@ import { useReadingProgress } from '../../hooks/use-reading-progress';
 
 interface LibraryBrowseProps {
   collections: Collection[];
+  /** Per-collection estimated total reading time in minutes (keyed by slug) */
+  collectionReadingTimes?: Record<string, number>;
 }
 
 const SITUATIONS: { value: Situation; label: string; icon: string }[] = [
@@ -67,7 +69,7 @@ const GATE_FREQUENCIES: Record<string, { gate: string; guardian: string; collect
   '1111': { gate: 'Source', guardian: 'Shinkami', collections: ['legends-of-arcanea', 'book-of-shadows'] },
 };
 
-export function LibraryBrowse({ collections }: LibraryBrowseProps) {
+export function LibraryBrowse({ collections, collectionReadingTimes }: LibraryBrowseProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSituation, setSelectedSituation] = useState<Situation | null>(null);
 
@@ -79,8 +81,17 @@ export function LibraryBrowse({ collections }: LibraryBrowseProps) {
   const libraryLabel = getLabel('library', gatesOpen);
 
   // Reading progress for collection-level indicators
-  const { getCollectionProgress } = useReadingProgress(user?.id ?? null);
+  const { progress, getCollectionProgress } = useReadingProgress(user?.id ?? null);
   const totalCollections = collections.length;
+
+  // Build "Continue Reading" — recently read texts (most recent first, up to 4)
+  const recentlyRead = useMemo(() => {
+    const entries = Object.values(progress)
+      .filter((p) => p.completed_at)
+      .sort((a, b) => new Date(b.completed_at!).getTime() - new Date(a.completed_at!).getTime())
+      .slice(0, 4);
+    return entries;
+  }, [progress]);
 
   // Check if search query matches a Gate frequency
   const activeFrequency = useMemo(() => {
@@ -151,6 +162,47 @@ export function LibraryBrowse({ collections }: LibraryBrowseProps) {
           </blockquote>
         </div>
       </section>
+
+      {/* Continue Reading — shows recently read texts for logged-in users */}
+      {user && recentlyRead.length > 0 && (
+        <section>
+          <h2 className="mb-6 text-xs font-semibold uppercase tracking-[0.35em] text-atlantean-teal">
+            Continue Your Journey
+          </h2>
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {recentlyRead.map((entry) => {
+              const col = collections.find((c) => c.slug === entry.collection_slug);
+              // Derive a readable title from the text slug (e.g. "legends-of-arcanea/the-first-dawn" -> "The First Dawn")
+              const textTitle = entry.text_slug
+                .split('/')
+                .pop()
+                ?.replace(/-/g, ' ')
+                .replace(/\b\w/g, (c) => c.toUpperCase()) ?? entry.text_slug;
+
+              return (
+                <Link
+                  key={entry.text_slug}
+                  href={`/library/${entry.text_slug}`}
+                  className="group rounded-xl border border-cosmic-border bg-cosmic-surface p-4 transition-all hover:border-atlantean-teal/50 hover:shadow-[0_0_30px_rgba(0,188,212,0.1)]"
+                >
+                  <div className="mb-2 flex items-center gap-2">
+                    <span className="text-lg">{col?.icon ?? '📖'}</span>
+                    <span className="inline-flex items-center gap-1 rounded-full border border-atlantean-teal/40 bg-atlantean-teal/10 px-2 py-0.5 text-[0.65rem] text-atlantean-teal">
+                      Read
+                    </span>
+                  </div>
+                  <p className="font-display text-sm font-semibold text-text-primary group-hover:text-atlantean-teal transition-colors line-clamp-1">
+                    {textTitle}
+                  </p>
+                  <p className="mt-1 text-xs text-text-muted line-clamp-1">
+                    {col?.name ?? entry.collection_slug}
+                  </p>
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       {/* Situation Filter */}
       <section>
@@ -250,13 +302,14 @@ export function LibraryBrowse({ collections }: LibraryBrowseProps) {
         ) : (
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {filteredCollections.map((collection) => {
-              const progress = user ? getCollectionProgress(collection.slug, collection.textCount) : null;
+              const colProgress = user ? getCollectionProgress(collection.slug, collection.textCount) : null;
               return (
                 <CollectionCard
                   key={collection.slug}
                   collection={collection}
                   totalCollections={totalCollections}
-                  progress={progress}
+                  progress={colProgress}
+                  readingTime={collectionReadingTimes?.[collection.slug]}
                 />
               );
             })}
@@ -312,9 +365,10 @@ interface CollectionCardProps {
   collection: Collection;
   totalCollections: number;
   progress: { completed: number; total: number; percent: number } | null;
+  readingTime?: number;
 }
 
-function CollectionCard({ collection, totalCollections, progress }: CollectionCardProps) {
+function CollectionCard({ collection, totalCollections, progress, readingTime }: CollectionCardProps) {
   return (
     <Link
       href={`/library/${collection.slug}`}
@@ -349,7 +403,15 @@ function CollectionCard({ collection, totalCollections, progress }: CollectionCa
         </div>
 
         <div className="mt-4 flex items-center justify-between text-xs text-text-muted">
-          <span>{collection.textCount} {collection.textCount === 1 ? 'text' : 'texts'}</span>
+          <div className="flex items-center gap-2">
+            <span>{collection.textCount} {collection.textCount === 1 ? 'text' : 'texts'}</span>
+            {readingTime != null && readingTime > 0 && (
+              <>
+                <span className="h-3 w-px bg-cosmic-border" aria-hidden="true" />
+                <span>{readingTime} min</span>
+              </>
+            )}
+          </div>
           <span className="capitalize">{collection.format}</span>
         </div>
 

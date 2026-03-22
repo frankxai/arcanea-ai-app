@@ -83,8 +83,8 @@ export default function CreatorTypePage() {
           .from('profiles')
           .update({ metadata: { creator_type: type.id } })
           .eq('id', user.id);
-      } catch (err) {
-        console.error('Failed to save creator type to profile:', err);
+      } catch {
+        // Profile update failed silently — localStorage fallback is active
       } finally {
         setSaving(false);
       }
@@ -122,7 +122,7 @@ export default function CreatorTypePage() {
           What do you create?
         </h1>
         <p className="font-body text-xl text-text-secondary">
-          Pick one to get started. You can always change later.
+          Your superintelligence adapts to your craft. Pick one to begin.
         </p>
       </m.div>
 

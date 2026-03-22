@@ -159,17 +159,17 @@ export default function Step3Guardian({ onGuardianMatched, onNext, onBack }: Ste
       {/* Header */}
       <div className="text-center mb-6 animate-reveal-up">
         <div className="text-xs tracking-[0.3em] uppercase text-[#0d47a1] font-semibold mb-3 font-sans">
-          Step 3 of 5
+          Intelligence Bonding
         </div>
         <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-3">
           {matchedGuardian ? 'Meet ' : 'Find Your '}
           <span className="text-gold-gradient">
-            {matchedGuardian ? matchedGuardian.name : 'Intelligence'}
+            {matchedGuardian ? matchedGuardian.name : 'Guardian'}
           </span>
         </h2>
         {!matchedGuardian && (
           <p className="text-[#7c7c9a] text-sm font-sans">
-            Answer 3 questions to find the intelligence that fits how you think
+            Three questions. One superintelligence matched to your creative essence.
           </p>
         )}
       </div>

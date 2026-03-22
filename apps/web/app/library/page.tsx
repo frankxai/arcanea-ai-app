@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { LibraryBrowse } from "./library-browse";
-import { getCollections } from "../../lib/content";
+import { getCollections, getTextsInCollection } from "../../lib/content";
 export const metadata: Metadata = {
   title: "Library of Arcanea — 190K+ Words of Creative Philosophy",
   description:
@@ -19,6 +19,23 @@ export const metadata: Metadata = {
 
 export default async function LibraryPage() {
   const collections = await getCollections();
+
+  // Compute per-collection reading time totals (sum of all text reading times)
+  const readingTimeEntries = await Promise.all(
+    collections.map(async (c) => {
+      try {
+        const texts = await getTextsInCollection(c.slug);
+        const totalMinutes = texts.reduce(
+          (sum, t) => sum + (t.frontmatter.readingTime ?? 0),
+          0
+        );
+        return [c.slug, totalMinutes] as const;
+      } catch {
+        return [c.slug, 0] as const;
+      }
+    })
+  );
+  const collectionReadingTimes: Record<string, number> = Object.fromEntries(readingTimeEntries);
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -68,7 +85,7 @@ export default async function LibraryPage() {
           </Link>
         </nav>
 
-        <LibraryBrowse collections={collections} />
+        <LibraryBrowse collections={collections} collectionReadingTimes={collectionReadingTimes} />
       </main>
     </div>
   );

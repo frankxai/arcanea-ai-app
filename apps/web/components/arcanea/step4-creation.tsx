@@ -89,11 +89,11 @@ export default function Step4Creation({ guardian, onCreationSaved, onNext, onBac
         style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(18px)' }}
       >
         <div className="text-xs tracking-[0.3em] uppercase text-[#0d47a1] font-semibold mb-3 font-sans">
-          Step 4 of 5
+          First Creation
         </div>
         <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-3">
-          Your{' '}
-          <span className="text-gold-gradient">First Creation</span>
+          Forge{' '}
+          <span className="text-gold-gradient">Something New</span>
         </h2>
         {guardian && (
           <div className="flex items-center justify-center gap-2 mb-2">
@@ -113,7 +113,7 @@ export default function Step4Creation({ guardian, onCreationSaved, onNext, onBac
           </div>
         )}
         <p className="text-[#7c7c9a] text-sm font-sans">
-          Describe what you wish to bring into existence
+          Describe anything. Your intelligence will bring it to life.
         </p>
       </div>
 

@@ -703,6 +703,85 @@ export default function CommunityPage() {
           </div>
         </section>
 
+        {/* ── 5b. GitHub Stats ──────────────────────────────────────────────── */}
+        <section
+          className="py-16 border-t border-white/[0.04]"
+          aria-labelledby="github-stats-heading"
+        >
+          <div className="mb-12">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-crystal/20 bg-crystal/8 mb-5">
+              <PhGithubLogo className="w-3 h-3 text-crystal" />
+              <span className="text-xs font-mono tracking-widest uppercase text-crystal">
+                Open Source
+              </span>
+            </div>
+            <h2
+              id="github-stats-heading"
+              className="text-fluid-3xl font-display font-bold mb-4"
+            >
+              Built in the open
+            </h2>
+            <p className="text-text-secondary font-sans max-w-2xl">
+              Arcanea is fully open source. Explore the codebase, contribute
+              features, build skills, and help shape the platform.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+            {[
+              { value: "27", label: "Repositories", color: "#00bcd4" },
+              { value: "35", label: "npm Packages", color: "#ffd700" },
+              { value: "791", label: "Tests Passing", color: "#4a7c59" },
+              { value: "54", label: "Skills", color: "#9966ff" },
+            ].map((stat) => (
+              <div
+                key={stat.label}
+                className="relative card-3d liquid-glass rounded-2xl p-6 text-center overflow-hidden group hover-lift transition-all"
+              >
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"
+                  style={{
+                    background: `radial-gradient(ellipse at 50% 50%, ${stat.color}12, transparent 70%)`,
+                  }}
+                />
+                <div className="relative">
+                  <p
+                    className="text-4xl font-display font-bold mb-1"
+                    style={{ color: stat.color }}
+                  >
+                    {stat.value}
+                  </p>
+                  <p className="text-sm text-text-muted font-sans">
+                    {stat.label}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 flex flex-wrap gap-4 justify-center">
+            <a
+              href="https://github.com/frankxai/arcanea"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-crystal/10 border border-crystal/20 text-crystal font-semibold hover:bg-crystal/15 hover:border-crystal/30 transition-all btn-glow"
+            >
+              <PhGithubLogo className="w-4 h-4" />
+              Contribute on GitHub
+              <PhArrowUpRight className="w-3.5 h-3.5" />
+            </a>
+            <a
+              href="https://github.com/frankxai/arcanea/issues"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl liquid-glass border border-white/[0.06] text-text-secondary font-semibold hover:border-crystal/20 hover:text-text-primary transition-all"
+            >
+              <PhCode className="w-4 h-4" />
+              Browse Issues
+            </a>
+          </div>
+        </section>
+
         {/* ── 6. Newsletter CTA ─────────────────────────────────────────────── */}
         <section
           className="py-16 border-t border-white/[0.04]"

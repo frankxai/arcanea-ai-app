@@ -471,7 +471,7 @@ function MetricsStrip() {
     { value: String(collections), label: "Wisdom Collections" },
     { value: `${words}K+`, label: "Words of Philosophy" },
     { value: `${artworks}+`, label: "Gallery Artworks" },
-    { value: "Open Source", label: "MIT Licensed", isText: true },
+    { value: "Open Source", label: "MIT Licensed", isText: true as const },
   ];
 
   return (
@@ -481,11 +481,8 @@ function MetricsStrip() {
         <div className="liquid-glass rounded-3xl border border-white/[0.06] p-8 md:p-12">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
             {metrics.map((m, i) => (
-              <m.div
+              <div
                 key={m.label}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: i * 0.1 }}
                 className="text-center"
               >
                 <div
@@ -496,7 +493,7 @@ function MetricsStrip() {
                   {m.value}
                 </div>
                 <div className="text-sm text-text-muted">{m.label}</div>
-              </m.div>
+              </div>
             ))}
           </div>
         </div>

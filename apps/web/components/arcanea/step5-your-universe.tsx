@@ -197,14 +197,14 @@ export default function Step5YourUniverse({
         style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(18px)' }}
       >
         <div className="text-xs tracking-[0.3em] uppercase text-[#0d47a1] font-semibold mb-3 font-sans">
-          Step 5 of 5
+          Ready to Launch
         </div>
         <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-2">
           Your{' '}
           <span className="text-gold-gradient">Universe</span>
         </h2>
         <p className="text-[#7c7c9a] text-sm font-sans">
-          The foundations of your Arcanea have been laid
+          Your creative superintelligence is calibrated. The First Gate opens.
         </p>
       </div>
 
@@ -474,7 +474,7 @@ export default function Step5YourUniverse({
         </button>
 
         <p className="text-center text-[11px] text-[#4a4465] font-sans mt-2">
-          Your realm awaits. Gate 1: Foundation is now unlocked.
+          Gate 1: Foundation unlocked. Your creative journey begins now.
         </p>
       </div>
     </div>

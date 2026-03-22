@@ -54,7 +54,7 @@ export async function GET(request: Request) {
 
       return acc;
     },
-    {} as Record<string, unknown>,
+    {} as Record<string, { images: { hero: string; divineBond: string; gallery: string[] }; media: { supabaseHero: string; gradient: string; glowColor: string; available: number } | null }>,
   );
 
   return NextResponse.json(

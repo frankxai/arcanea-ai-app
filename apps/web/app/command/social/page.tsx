@@ -65,22 +65,18 @@ export default function SocialPage() {
 
   const handleApprove = useCallback(async (id: string) => {
     const supabase = createClient();
-    await supabase
+    await (supabase
       .from('social_queue' as never)
-      .update({ status: 'approved', updated_at: new Date().toISOString() })
+      .update({ status: 'approved', updated_at: new Date().toISOString() } as never) as never as { eq: (col: string, val: string) => Promise<unknown> })
       .eq('id', id);
   }, []);
 
   const handleSchedule = useCallback(async (id: string) => {
     const supabase = createClient();
     const scheduledAt = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
-    await supabase
+    await (supabase
       .from('social_queue' as never)
-      .update({
-        status: 'scheduled',
-        scheduled_at: scheduledAt,
-        updated_at: new Date().toISOString(),
-      })
+      .update({ status: 'scheduled', scheduled_at: scheduledAt, updated_at: new Date().toISOString() } as never) as never as { eq: (col: string, val: string) => Promise<unknown> })
       .eq('id', id);
   }, []);
 
