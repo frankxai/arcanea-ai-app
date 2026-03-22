@@ -155,5 +155,5 @@ export function useModelSelection() {
     setActiveModel(id);
   }, []);
 
-  return { modelId, setModelId, ...providerState };
+  return { ...providerState, modelId, setModelId };
 }

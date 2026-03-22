@@ -139,3 +139,84 @@ export const AI_SUGGESTIONS = [
     description: "Introduce an unexpected turn aligned with the Gate.",
   },
 ];
+
+// ---------------------------------------------------------------------------
+// Additional types used by creation panels
+// ---------------------------------------------------------------------------
+
+export interface AiMessage {
+  role: "user" | "ai";
+  text: string;
+}
+
+export interface GeneratedImageData {
+  id: string;
+  url: string;
+  prompt: string;
+}
+
+// ---------------------------------------------------------------------------
+// Code panel constants
+// ---------------------------------------------------------------------------
+
+export const CODE_LANGUAGES = [
+  "TypeScript",
+  "JavaScript",
+  "Python",
+  "Rust",
+  "Go",
+  "HTML",
+  "CSS",
+  "SQL",
+];
+
+export const CODE_SUGGESTIONS = [
+  {
+    title: "Generate a function",
+    description: "Describe what you need and get production-quality code.",
+  },
+  {
+    title: "Explain this code",
+    description: "Get a clear breakdown of what the current code does.",
+  },
+  {
+    title: "Refactor for clarity",
+    description: "Improve readability and maintainability.",
+  },
+  {
+    title: "Find bugs",
+    description: "Analyze code for potential issues and edge cases.",
+  },
+];
+
+// ---------------------------------------------------------------------------
+// Image panel constants
+// ---------------------------------------------------------------------------
+
+export const IMAGE_STYLES = [
+  "Fantasy Art",
+  "Photorealistic",
+  "Anime",
+  "Oil Painting",
+  "Watercolor",
+  "Pixel Art",
+  "Concept Art",
+  "Abstract",
+];
+
+export const ASPECT_RATIOS = ["1:1", "16:9", "9:16", "4:3", "3:4"];
+
+// ---------------------------------------------------------------------------
+// Music panel constants
+// ---------------------------------------------------------------------------
+
+export const MUSIC_MOODS = [
+  "Ethereal",
+  "Epic",
+  "Melancholic",
+  "Triumphant",
+  "Mysterious",
+  "Serene",
+  "Dark",
+  "Playful",
+];

@@ -49,7 +49,6 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
   const [style, setStyle] = useState('none');
   const [isExpanded, setIsExpanded] = useState(true);
   const [isEnhancing, setIsEnhancing] = useState(false);
-  const [showOptions, setShowOptions] = useState(false);
   const [aplFeedback, setAplFeedback] = useState<AplFeedback | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -179,8 +178,25 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
             onFocus={() => setIsExpanded(true)}
             placeholder="Describe what you want to see..."
             rows={hasResults ? 2 : 3}
-            className="w-full bg-transparent px-6 pt-5 pb-3 text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:ring-inset resize-none font-body text-base leading-relaxed"
+            className="w-full bg-transparent px-5 sm:px-6 pt-5 pb-3 text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:ring-inset resize-none font-body text-lg sm:text-base leading-relaxed"
           />
+
+          {/* Style preset pills */}
+          <div className="flex items-center gap-1.5 px-4 sm:px-5 py-2.5 overflow-x-auto scrollbar-hide border-t border-white/[0.04]">
+            {STYLE_PRESETS.map((s) => (
+              <button
+                key={s.id}
+                onClick={() => setStyle(s.id)}
+                className={`flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${
+                  style === s.id
+                    ? 'bg-[#00bcd4]/15 text-[#00bcd4] border border-[#00bcd4]/40 shadow-[0_0_8px_rgba(0,188,212,0.15)]'
+                    : 'text-text-muted hover:text-text-secondary hover:bg-white/[0.04] border border-white/[0.06]'
+                }`}
+              >
+                {s.label}
+              </button>
+            ))}
+          </div>
 
           {/* Controls bar */}
           <div className="flex items-center justify-between px-4 py-3 border-t border-white/[0.06]">
@@ -201,21 +217,6 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
                   </button>
                 ))}
               </div>
-
-              {/* More options toggle */}
-              <button
-                onClick={() => setShowOptions(!showOptions)}
-                className={`p-1.5 rounded-lg transition-all ${
-                  showOptions
-                    ? 'bg-white/[0.06] text-text-primary'
-                    : 'text-text-muted hover:text-text-secondary hover:bg-white/[0.04]'
-                }`}
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="3" />
-                  <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" />
-                </svg>
-              </button>
 
               {/* Enhance with APL button */}
               <button
@@ -239,7 +240,7 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
             <button
               onClick={handleSubmit}
               disabled={!prompt.trim() || isGenerating}
-              className="px-5 py-2 rounded-xl font-medium text-sm transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white hover:shadow-[0_0_24px_rgba(13,71,161,0.4)] active:scale-95"
+              className="px-5 py-2.5 rounded-xl font-medium text-sm transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white hover:shadow-[0_0_24px_rgba(13,71,161,0.4)] active:scale-95"
             >
               {isGenerating ? (
                 <span className="flex items-center gap-2">
@@ -251,41 +252,6 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
               )}
             </button>
           </div>
-
-          {/* Expanded options panel */}
-          <AnimatePresence>
-            {showOptions && (
-              <m.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: 'auto', opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="border-t border-white/[0.06] overflow-hidden"
-              >
-                <div className="px-4 py-3 space-y-3">
-                  {/* Style presets */}
-                  <div>
-                    <label className="text-xs text-text-muted uppercase tracking-wider mb-2 block">Style</label>
-                    <div className="flex flex-wrap gap-1.5">
-                      {STYLE_PRESETS.map((s) => (
-                        <button
-                          key={s.id}
-                          onClick={() => setStyle(s.id)}
-                          className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                            style === s.id
-                              ? 'bg-violet-600/20 text-violet-300 border border-violet-500/30'
-                              : 'text-text-muted hover:text-text-secondary hover:bg-white/[0.04] border border-transparent'
-                          }`}
-                        >
-                          {s.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </m.div>
-            )}
-          </AnimatePresence>
 
           {/* APL enhancement feedback */}
           <AnimatePresence>

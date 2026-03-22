@@ -38,7 +38,7 @@ export function useAssets(filter: InboxFilter) {
     const supabase = getSupabase();
 
     let query = supabase
-      .from('assets')
+      .from('asset_metadata' as never)
       .select('*', { count: 'exact' })
       .order('created_at', { ascending: false });
 
@@ -80,7 +80,7 @@ export function useAssets(filter: InboxFilter) {
       .channel('assets-realtime')
       .on(
         'postgres_changes',
-        { event: '*', schema: 'public', table: 'assets' },
+        { event: '*', schema: 'public', table: 'asset_metadata' },
         () => {
           fetchAssets();
         }
@@ -217,7 +217,7 @@ export function useCommandStats() {
 
     // Fetch all assets (lightweight — only the columns we need for stats)
     const { data: assets, error: assetsError } = await supabase
-      .from('assets')
+      .from('asset_metadata' as never)
       .select('status, guardian, element, quality_tier');
 
     const { data: agents, error: agentsError } = await supabase
@@ -303,7 +303,7 @@ export function useCommandStats() {
       .channel('stats-realtime')
       .on(
         'postgres_changes',
-        { event: '*', schema: 'public', table: 'assets' },
+        { event: '*', schema: 'public', table: 'asset_metadata' },
         () => fetchStats()
       )
       .on(
@@ -332,8 +332,8 @@ export function useApproveAsset() {
     setLoading(true);
     const supabase = getSupabase();
     const { error } = await supabase
-      .from('assets')
-      .update({ status: 'approved', updated_at: new Date().toISOString() })
+      .from('asset_metadata')
+      .update({ status: 'approved' as const, updated_at: new Date().toISOString() })
       .eq('id', id);
     setLoading(false);
     return { error };
@@ -349,8 +349,8 @@ export function useRejectAsset() {
     setLoading(true);
     const supabase = getSupabase();
     const { error } = await supabase
-      .from('assets')
-      .update({ status: 'rejected', updated_at: new Date().toISOString() })
+      .from('asset_metadata')
+      .update({ status: 'rejected' as const, updated_at: new Date().toISOString() })
       .eq('id', id);
     setLoading(false);
     return { error };
@@ -367,8 +367,8 @@ export function useBulkApprove() {
     setLoading(true);
     const supabase = getSupabase();
     const { error } = await supabase
-      .from('assets')
-      .update({ status: 'approved', updated_at: new Date().toISOString() })
+      .from('asset_metadata')
+      .update({ status: 'approved' as const, updated_at: new Date().toISOString() })
       .in('id', ids);
     setLoading(false);
     return { error };

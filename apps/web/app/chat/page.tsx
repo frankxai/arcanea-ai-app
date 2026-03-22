@@ -437,6 +437,30 @@ export default function ChatPage() {
                   {activeLuminor ? activeLuminor.title || activeLuminor.tagline : 'Write, code, design, research. Or just think out loud.'}
                 </p>
 
+                {/* Onboarding banner — first-run when no API key is configured */}
+                {isEmpty && !clientApiKey && (
+                  <div className="max-w-md mx-auto mb-6 p-4 rounded-2xl border border-[#00bcd4]/20 bg-[#00bcd4]/5">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 rounded-full bg-[#00bcd4]/20 flex items-center justify-center shrink-0 mt-0.5">
+                        <PhSparkle className="w-4 h-4 text-[#00bcd4]" />
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-medium text-white/80 mb-1">Set up your AI provider</h3>
+                        <p className="text-xs text-white/40 mb-3 leading-relaxed">
+                          Add an API key to start chatting. Google Gemini offers a free tier — perfect for getting started.
+                        </p>
+                        <Link
+                          href="/settings/providers"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-[#00bcd4] text-white hover:bg-[#00bcd4]/80 transition-colors"
+                        >
+                          <PhGear className="w-3.5 h-3.5" />
+                          Configure Providers
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 {/* Focus mode selector — Perplexity-style */}
                 <div className="flex justify-center mb-6">
                   <FocusModeSelector value={focusMode} onChange={setFocusMode} />

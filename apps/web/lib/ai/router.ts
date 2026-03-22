@@ -84,6 +84,26 @@ const DOMAIN_RULES: DomainRule[] = [
     keywords: /\b(meaning|purpose|consciousness|spiritual|meditat|enlighten|transcend|sacred|divine|cosmic|infinite|source|origin|truth|awakening)\b/i,
     weights: { shinkami: 0.5, aiyami: 0.3, lyria: 0.2 },
   },
+  {
+    domain: 'writing',
+    keywords: /\b(write|essay|blog|article|copy|draft|edit|revise|proofread|paragraph|chapter|novel|poem|prose|dialogue|voice|tone|manuscript)\b/i,
+    weights: { alera: 0.5, leyla: 0.3, elara: 0.2 },
+  },
+  {
+    domain: 'teaching',
+    keywords: /\b(teach|explain|tutorial|lesson|course|curriculum|student|mentor|coach|guide|workshop|educate|simplify|analogy|example|demonstrate)\b/i,
+    weights: { aiyami: 0.5, maylinn: 0.3, alera: 0.2 },
+  },
+  {
+    domain: 'marketing',
+    keywords: /\b(marketing|brand|audience|content|social|campaign|engage|convert|funnel|seo|copy|headline|hook|viral|reach|niche|positioning|messaging)\b/i,
+    weights: { alera: 0.4, draconia: 0.3, lyria: 0.3 },
+  },
+  {
+    domain: 'product',
+    keywords: /\b(product|feature|user|experience|onboard|retention|mvp|iterate|feedback|metric|kpi|ab test|sprint|backlog|roadmap|release|saas|app)\b/i,
+    weights: { lyssandria: 0.4, ino: 0.3, aiyami: 0.3 },
+  },
 ];
 
 /** Default weights when nothing specific matches */

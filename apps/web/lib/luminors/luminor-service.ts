@@ -145,7 +145,7 @@ export async function saveLuminor(spec: LuminorSpec, userId: string): Promise<Lu
 
   const { data, error } = await supabase
     .from('luminors')
-    .upsert(row, { onConflict: 'id' })
+    .upsert(row as never, { onConflict: 'id' })
     .select()
     .single();
 
@@ -252,7 +252,7 @@ export async function getPublishedLuminors(options: BrowseOptions = {}): Promise
 export async function incrementUsage(id: string): Promise<void> {
   const supabase = await createClient();
 
-  const { error } = await supabase.rpc('increment_luminor_usage', { luminor_id: id });
+  const { error } = await supabase.rpc('increment_luminor_usage', { p_luminor_id: id });
 
   // Fallback: if RPC doesn't exist, do a manual increment
   if (error) {

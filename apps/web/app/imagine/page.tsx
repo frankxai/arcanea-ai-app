@@ -38,6 +38,7 @@ export default function ImaginePage() {
   const [favCount, setFavCount] = useState(0);
 
   const sentinelRef = useRef<HTMLDivElement>(null);
+  const gridTopRef = useRef<HTMLDivElement>(null);
   const generationCounterRef = useRef(0);
   const isGeneratingRef = useRef(false);
 
@@ -119,6 +120,10 @@ export default function ImaginePage() {
       if (row) {
         setRows((prev) => prev.map((r) => r.id === loadingId ? row : r));
         setAutoScrollEnabled(true);
+        // Smooth scroll to show new images
+        requestAnimationFrame(() => {
+          gridTopRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong');
@@ -363,15 +368,15 @@ export default function ImaginePage() {
       </AnimatePresence>
 
       {/* Image grid */}
-      <div className={`max-w-7xl mx-auto px-4 sm:px-6 ${hasResults ? 'pt-4 pb-32' : ''}`}>
+      <div ref={gridTopRef} className={`max-w-7xl mx-auto px-1 sm:px-6 ${hasResults ? 'pt-4 pb-32' : ''}`}>
         {rows.map((row) => (
-          <div key={row.id} className="mb-6">
+          <div key={row.id} className="mb-1 sm:mb-4">
             {row.isLoading && (
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-0.5 md:gap-1">
                 {Array.from({ length: 4 }).map((_, i) => (
                   <div
                     key={i}
-                    className={`rounded-2xl border border-white/[0.04] relative overflow-hidden ${
+                    className={`rounded-lg sm:rounded-2xl border border-white/[0.04] relative overflow-hidden ${
                       row.aspectRatio === '16:9' ? 'aspect-video' :
                       row.aspectRatio === '9:16' ? 'aspect-[9/16]' :
                       row.aspectRatio === '4:3' ? 'aspect-[4/3]' :
@@ -380,16 +385,12 @@ export default function ImaginePage() {
                     }`}
                   >
                     {/* Shimmer gradient skeleton */}
-                    <div className="absolute inset-0 bg-cosmic-surface/60" />
-                    <div className="absolute inset-0 shimmer opacity-40" style={{ animationDelay: `${i * 0.2}s` }} />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="flex flex-col items-center gap-2.5">
-                        <div className="relative w-10 h-10">
-                          <div className="absolute inset-0 border-2 border-[#00bcd4]/20 rounded-full" />
-                          <div className="absolute inset-0 border-2 border-transparent border-t-[#00bcd4] rounded-full animate-spin" />
-                        </div>
-                        <span className="text-[11px] text-text-muted/70 font-body">Creating...</span>
-                      </div>
+                    <div className="absolute inset-0 bg-[#12121a]" />
+                    <div className="absolute inset-0 shimmer opacity-60" style={{ animationDelay: `${i * 0.3}s` }} />
+                    {/* Subtle pulse overlay for depth */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#00bcd4]/[0.03] to-violet-500/[0.03] animate-pulse" style={{ animationDuration: '2.5s' }} />
+                    <div className="absolute bottom-3 left-0 right-0 flex justify-center">
+                      <span className="text-[10px] text-text-muted/50 font-body tracking-wider uppercase">Creating...</span>
                     </div>
                   </div>
                 ))}
@@ -397,7 +398,7 @@ export default function ImaginePage() {
             )}
 
             {!row.isLoading && row.images.length > 0 && (
-              <div className={`grid gap-3 ${
+              <div className={`grid gap-0.5 md:gap-1 ${
                 row.images.length === 1
                   ? 'grid-cols-1 max-w-lg mx-auto'
                   : row.images.length === 2
