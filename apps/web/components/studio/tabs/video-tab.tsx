@@ -239,7 +239,7 @@ export function VideoTab({ generationState }: VideoTabProps) {
                   <div className="h-full w-[35%] rounded-full bg-[#0d47a1]" />
                 </div>
                 <span className="text-[10px] text-white/60 font-mono">0:03 / 0:{duration.toString().padStart(2, '0')}</span>
-                <button className="text-white/60 hover:text-white transition-colors">
+                <button className="text-white/60 hover:text-white transition-colors" aria-label="Toggle audio">
                   <SpeakerHigh size={14} />
                 </button>
               </div>

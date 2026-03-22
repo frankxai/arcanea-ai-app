@@ -334,7 +334,7 @@ export function MusicTab({ generationState }: MusicTabProps) {
                 <span className="text-[10px] text-muted-foreground font-mono w-8 shrink-0">
                   {Math.floor(duration / 60)}:{(duration % 60).toString().padStart(2, "0")}
                 </span>
-                <button className="text-muted-foreground hover:text-foreground transition-colors">
+                <button className="text-muted-foreground hover:text-foreground transition-colors" aria-label="Toggle audio">
                   <SpeakerHigh size={14} />
                 </button>
               </div>
