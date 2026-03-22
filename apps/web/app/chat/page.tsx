@@ -32,20 +32,20 @@ import { useChatPersistence } from '@/hooks/use-chat-persistence';
 import type { ChatMessage as StoredMessage } from '@/lib/chat/local-store';
 
 // ---------------------------------------------------------------------------
-// Gate metadata for the frequency indicator
+// Gate metadata for the tagline indicator
 // ---------------------------------------------------------------------------
 
-const GATE_META: Record<string, { label: string; hz: string; color: string }> = {
-  lyssandria: { label: 'Foundation', hz: '174', color: '#6b8e23' },
-  leyla:      { label: 'Flow',       hz: '285', color: '#4fc3f7' },
-  draconia:   { label: 'Fire',       hz: '396', color: '#ff6b35' },
-  maylinn:    { label: 'Heart',      hz: '417', color: '#e91e63' },
-  alera:      { label: 'Voice',      hz: '528', color: '#ab47bc' },
-  lyria:      { label: 'Sight',      hz: '639', color: '#7e57c2' },
-  aiyami:     { label: 'Crown',      hz: '741', color: '#ffd700' },
-  elara:      { label: 'Starweave',  hz: '852', color: '#26c6da' },
-  ino:        { label: 'Unity',      hz: '963', color: '#66bb6a' },
-  shinkami:   { label: 'Source',      hz: '1111', color: '#ffffff' },
+const GATE_META: Record<string, { label: string; tagline: string; color: string }> = {
+  lyssandria: { label: 'Foundation', tagline: 'Roots of Strength',   color: '#6b8e23' },
+  leyla:      { label: 'Flow',       tagline: 'River of Creation',   color: '#4fc3f7' },
+  draconia:   { label: 'Fire',       tagline: 'Flame of Will',       color: '#ff6b35' },
+  maylinn:    { label: 'Heart',      tagline: 'Wings of Compassion', color: '#e91e63' },
+  alera:      { label: 'Voice',      tagline: 'Voice of Truth',      color: '#ab47bc' },
+  lyria:      { label: 'Sight',      tagline: 'Eye of Vision',       color: '#7e57c2' },
+  aiyami:     { label: 'Crown',      tagline: 'Crown of Light',      color: '#ffd700' },
+  elara:      { label: 'Starweave',  tagline: 'Star of Change',      color: '#26c6da' },
+  ino:        { label: 'Unity',      tagline: 'Bond of Unity',       color: '#66bb6a' },
+  shinkami:   { label: 'Source',      tagline: 'Source of All',       color: '#ffffff' },
 };
 
 // ---------------------------------------------------------------------------
@@ -177,7 +177,9 @@ export default function ChatPage() {
   // UI-only state (scroll, sidebar, refs) — stays in the component
   // ---------------------------------------------------------------------------
 
-  const [luminorSidebarOpen, setLuminorSidebarOpen] = useState(true);
+  const [luminorSidebarOpen, setLuminorSidebarOpen] = useState(() =>
+    typeof window !== 'undefined' ? window.innerWidth >= 768 : false
+  );
   const [autoScroll, setAutoScroll] = useState(true);
   const [showScrollBtn, setShowScrollBtn] = useState(false);
 
@@ -253,7 +255,7 @@ export default function ChatPage() {
             >
               Arcanea
             </Link>
-            {/* Model selector + Gate frequency indicator */}
+            {/* Model selector + Gate indicator */}
             <ModelSelector value={modelId ?? 'arcanea-auto'} onChange={setModelId} />
             {activeGates.length > 0 && messages.length > 0 && (
               <div className="flex items-center gap-1.5">
@@ -265,9 +267,9 @@ export default function ChatPage() {
                       key={gate}
                       className="text-[10px] font-mono px-1.5 py-0.5 rounded-md border border-white/[0.06] transition-colors"
                       style={{ color: meta.color, borderColor: `${meta.color}20` }}
-                      title={`${meta.label} Gate — ${meta.hz} Hz`}
+                      title={`${meta.label} Gate — ${meta.tagline}`}
                     >
-                      {meta.hz}
+                      {meta.tagline}
                     </span>
                   );
                 })}

@@ -239,7 +239,17 @@ export function useConversation(): ConversationState {
   } = useChat({
     transport,
     onError: (err) => {
-      setChatError(err.message || 'Something went wrong. Check Settings → Providers.');
+      // Parse the actual error message — may come as plain text from our API
+      let msg = err.message || '';
+      // If the error is a generic fetch error, try to extract the server message
+      if (msg.includes('fetch') || msg.includes('Failed') || !msg) {
+        msg = 'Connection failed. Check Settings → Providers.';
+      }
+      // Surface API key errors clearly
+      if (msg.includes('API key') || msg.includes('503') || msg.includes('401')) {
+        msg = msg.replace(/^Error:\s*/, '');
+      }
+      setChatError(msg || 'Something went wrong. Check Settings → Providers.');
     },
   });
 

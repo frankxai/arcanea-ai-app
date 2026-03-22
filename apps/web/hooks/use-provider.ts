@@ -70,47 +70,58 @@ export interface ProviderState {
  * Supports both legacy provider mode (google/anthropic/openai/openrouter)
  * and Gateway model mode (arcanea-opus, arcanea-auto, etc.).
  */
-export function useProvider(): ProviderState {
-  const [state, setState] = useState<ProviderState>({
+function readProviderFromStorage(): ProviderState {
+  const fallback: ProviderState = {
     provider: 'google',
     modelId: null,
     clientApiKey: undefined,
     label: PROVIDER_LABELS.google,
     isGateway: false,
-  });
+  };
+  if (typeof window === 'undefined') return fallback;
+  try {
+    const modelId = localStorage.getItem(MODEL_STORAGE_KEY);
+    const provider = localStorage.getItem(PROVIDER_STORAGE_KEY) || 'google';
+    const keysRaw = localStorage.getItem(KEYS_STORAGE_KEY);
 
-  useEffect(() => {
-    try {
-      const modelId = localStorage.getItem(MODEL_STORAGE_KEY);
-      const provider = localStorage.getItem(PROVIDER_STORAGE_KEY) || 'google';
-      const keysRaw = localStorage.getItem(KEYS_STORAGE_KEY);
-
-      // Parse keys with corruption recovery
-      let keys: Record<string, string> = {};
-      if (keysRaw) {
-        try {
-          keys = JSON.parse(keysRaw);
-        } catch {
-          console.warn('[useProvider] Corrupted keys in localStorage, clearing');
-          localStorage.removeItem(KEYS_STORAGE_KEY);
-        }
+    let keys: Record<string, string> = {};
+    if (keysRaw) {
+      try {
+        keys = JSON.parse(keysRaw);
+      } catch {
+        console.warn('[useProvider] Corrupted keys in localStorage, clearing');
+        localStorage.removeItem(KEYS_STORAGE_KEY);
       }
-
-      if (modelId && MODEL_PROVIDERS[modelId]) {
-        // Gateway mode: use the selected model
-        const modelProvider = MODEL_PROVIDERS[modelId];
-        const clientApiKey = keys[modelProvider] || keys[provider] || undefined;
-        const label = MODEL_LABELS[modelId] || modelId;
-        setState({ provider: modelProvider, modelId, clientApiKey, label, isGateway: true });
-      } else {
-        // Legacy mode: use the selected provider
-        const clientApiKey = keys[provider] || undefined;
-        const label = PROVIDER_LABELS[provider] || PROVIDER_LABELS.google;
-        setState({ provider, modelId: null, clientApiKey, label, isGateway: false });
-      }
-    } catch {
-      // localStorage completely unavailable (private browsing, etc.)
     }
+
+    if (modelId && MODEL_PROVIDERS[modelId]) {
+      const modelProvider = MODEL_PROVIDERS[modelId];
+      const clientApiKey = keys[modelProvider] || keys[provider] || undefined;
+      const label = MODEL_LABELS[modelId] || modelId;
+      return { provider: modelProvider, modelId, clientApiKey, label, isGateway: true };
+    } else {
+      const clientApiKey = keys[provider] || undefined;
+      const label = PROVIDER_LABELS[provider] || PROVIDER_LABELS.google;
+      return { provider, modelId: null, clientApiKey, label, isGateway: false };
+    }
+  } catch {
+    return fallback;
+  }
+}
+
+export function useProvider(): ProviderState {
+  // Synchronous init prevents transport useMemo from capturing stale 'arcanea-auto'
+  const [state, setState] = useState<ProviderState>(readProviderFromStorage);
+
+  // Re-sync on storage events (e.g. settings page changes keys)
+  useEffect(() => {
+    function onStorage() { setState(readProviderFromStorage()); }
+    window.addEventListener('storage', onStorage);
+    window.addEventListener('arcanea-model-change', onStorage);
+    return () => {
+      window.removeEventListener('storage', onStorage);
+      window.removeEventListener('arcanea-model-change', onStorage);
+    };
   }, []);
 
   return state;

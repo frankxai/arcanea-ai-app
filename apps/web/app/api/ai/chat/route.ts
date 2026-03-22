@@ -126,7 +126,7 @@ export async function POST(req: NextRequest) {
     const { messages, systemPrompt, temperature, maxTokens, provider: requestedProvider, model: modelOverride, gatewayModel, focusHint, clientApiKey } = body;
 
     if (!messages || messages.length === 0) {
-      return NextResponse.json({ error: 'Messages are required' }, { status: 400 });
+      return new Response('Messages are required', { status: 400, headers: { 'Content-Type': 'text/plain' } });
     }
 
     // --- Resolve model/provider ---
@@ -135,7 +135,28 @@ export async function POST(req: NextRequest) {
     let label: string;
 
     // Gateway model path: arcanea-* model IDs
-    const resolvedGateway = gatewayModel && gatewayModel !== 'arcanea-auto' ? GATEWAY_MODELS[gatewayModel] : null;
+    let resolvedGateway = gatewayModel && gatewayModel !== 'arcanea-auto' ? GATEWAY_MODELS[gatewayModel] : null;
+
+    // Smart auto-routing: find the best available model when 'arcanea-auto' is selected
+    if (!resolvedGateway && (!gatewayModel || gatewayModel === 'arcanea-auto')) {
+      const AUTO_PRIORITY = [
+        'arcanea-gemini-flash', 'arcanea-sonnet', 'arcanea-gpt5',
+        'arcanea-deepseek', 'arcanea-grok', 'arcanea-haiku',
+        'arcanea-bolt', 'arcanea-lightning',
+      ];
+      for (const gwId of AUTO_PRIORITY) {
+        const gw = GATEWAY_MODELS[gwId];
+        if (!gw) continue;
+        const p = PROVIDERS[gw.provider] || null;
+        const ext = EXTENDED_PROVIDERS[gw.provider] || null;
+        const envKeys = p ? p.envKeys : ext ? ext.envKeys : [];
+        const hasServerKey = envKeys.some((k: string) => Boolean(process.env[k]));
+        if (hasServerKey || clientApiKey) {
+          resolvedGateway = gw;
+          break;
+        }
+      }
+    }
 
     if (resolvedGateway) {
       // Gateway mode: resolve the model from our curated catalog
@@ -155,8 +176,8 @@ export async function POST(req: NextRequest) {
 
       if (!gwApiKey) {
         return new Response(
-          JSON.stringify({ error: `No API key for ${gwProvider}. Set the key on Vercel or in Settings → Providers.` }),
-          { status: 503, headers: { 'Content-Type': 'application/json' } }
+          `No API key for ${gwProvider}. Set the key on Vercel or in Settings → Providers.`,
+          { status: 503, headers: { 'Content-Type': 'text/plain' } }
         );
       }
 
@@ -177,8 +198,8 @@ export async function POST(req: NextRequest) {
         model = openaiCompat(resolvedGateway.modelId);
       } else {
         return new Response(
-          JSON.stringify({ error: `Unsupported gateway provider: ${gwProvider}` }),
-          { status: 400, headers: { 'Content-Type': 'application/json' } }
+          `Unsupported gateway provider: ${gwProvider}`,
+          { status: 400, headers: { 'Content-Type': 'text/plain' } }
         );
       }
 
@@ -200,8 +221,8 @@ export async function POST(req: NextRequest) {
       const apiKey = resolveApiKey(providerConfig, clientApiKey);
       if (!apiKey) {
         return new Response(
-          JSON.stringify({ error: `No API key configured. Set ${providerConfig.envKeys[0]} on Vercel or add a key in Settings → Providers.` }),
-          { status: 503, headers: { 'Content-Type': 'application/json' } }
+          `No API key configured. Set ${providerConfig.envKeys[0]} on Vercel or add a key in Settings → Providers.`,
+          { status: 503, headers: { 'Content-Type': 'text/plain' } }
         );
       }
 
@@ -267,14 +288,14 @@ export async function POST(req: NextRequest) {
     // API key or auth issues
     if (message.includes('API key') || message.includes('401') || message.includes('403')) {
       return new Response(
-        JSON.stringify({ error: 'Invalid API key. Check your key in Settings → Providers.' }),
-        { status: 401, headers: { 'Content-Type': 'application/json' } }
+        'Invalid API key. Check your key in Settings → Providers.',
+        { status: 401, headers: { 'Content-Type': 'text/plain' } }
       );
     }
 
     return new Response(
-      JSON.stringify({ error: message }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
+      message,
+      { status: 500, headers: { 'Content-Type': 'text/plain' } }
     );
   }
 }

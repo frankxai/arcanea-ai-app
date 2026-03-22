@@ -57,8 +57,9 @@ export function LuminorSidebar({
     return (
       <button
         onClick={onToggle}
-        className="hidden md:flex w-10 flex-shrink-0 flex-col items-center pt-4
-          border-r border-white/[0.06] bg-[#09090b] hover:bg-white/[0.02] transition-colors"
+        className="flex w-10 flex-shrink-0 flex-col items-center pt-4
+          border-r border-white/[0.06] bg-[#09090b] hover:bg-white/[0.02] transition-colors
+          max-md:hidden"
         aria-label="Open Luminor sidebar"
       >
         <PhCaretRight className="w-4 h-4 text-white/30" />
@@ -67,7 +68,14 @@ export function LuminorSidebar({
   }
 
   return (
-    <aside className="hidden md:flex w-[280px] flex-shrink-0 flex-col border-r border-white/[0.06] bg-[#09090b]">
+    <>
+      {/* Mobile backdrop overlay */}
+      <div
+        className="md:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+        onClick={onToggle}
+        aria-hidden="true"
+      />
+    <aside className="md:relative md:z-auto fixed inset-y-0 left-0 z-50 w-[280px] flex-shrink-0 flex flex-col border-r border-white/[0.06] bg-[#09090b]">
       {/* Header */}
       <div className="flex items-center justify-between px-3 py-3 border-b border-white/[0.06]">
         <span className="text-xs font-medium text-white/50 uppercase tracking-wider">
@@ -182,5 +190,6 @@ export function LuminorSidebar({
         </Link>
       </div>
     </aside>
+    </>
   );
 }
