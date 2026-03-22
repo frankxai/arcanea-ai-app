@@ -1,310 +1,448 @@
-import { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
+'use client';
 
-export const metadata: Metadata = {
-  title: "The Arcanean Records",
-  description:
-    "Art, music, and chronicles from the universe of Arcanea. Guardian portraits, world imagery, and video chronicles from across the Ten Gates.",
-  openGraph: {
-    title: "The Arcanean Records",
-    description:
-      "Art, music, and chronicles from the universe of Arcanea.",
+import { useState } from 'react';
+import Link from 'next/link';
+import {
+  MusicNotes,
+  Play,
+  Pause,
+  Sparkle,
+  ArrowRight,
+  Fire,
+  Drop,
+  Leaf,
+  Wind,
+  Moon,
+  Sun,
+  Headphones,
+  SpotifyLogo,
+  Waveform,
+  VinylRecord,
+  MusicNote,
+  Lightning,
+} from '@phosphor-icons/react';
+import { MotionProvider, m } from '@/lib/motion';
+
+// ─── Types ──────────────────────────────────────────────────────────────────
+
+interface Release {
+  id: string;
+  title: string;
+  artist: string;
+  element: string;
+  elementIcon: React.ElementType;
+  gradient: string;
+  accent: string;
+  border: string;
+  tracks: number;
+  duration: string;
+  description: string;
+}
+
+interface Collection {
+  id: string;
+  name: string;
+  description: string;
+  icon: React.ElementType;
+  count: number;
+  accent: string;
+  gradient: string;
+}
+
+// ─── Data ───────────────────────────────────────────────────────────────────
+
+const FEATURED_RELEASES: Release[] = [
+  {
+    id: 'gate-frequencies',
+    title: 'Gate Frequencies Vol. I',
+    artist: 'FrankX',
+    element: 'Spirit',
+    elementIcon: Sun,
+    gradient: 'from-amber-500/30 via-yellow-600/20 to-orange-500/10',
+    accent: 'text-amber-400',
+    border: 'border-amber-500/30',
+    tracks: 10,
+    duration: '47:23',
+    description: 'Ten tracks aligned to each Gate frequency. Consciousness-expanding ambient compositions from 174 Hz to 1111 Hz.',
   },
+  {
+    id: 'guardian-anthems',
+    title: 'Guardian Anthems',
+    artist: 'FrankX',
+    element: 'Fire',
+    elementIcon: Fire,
+    gradient: 'from-red-600/30 via-orange-500/20 to-amber-400/10',
+    accent: 'text-orange-400',
+    border: 'border-orange-500/30',
+    tracks: 10,
+    duration: '52:10',
+    description: 'Each Guardian receives their anthem. Epic orchestral themes that capture the essence of every Gate keeper.',
+  },
+  {
+    id: 'void-meditations',
+    title: 'Void Meditations',
+    artist: 'FrankX',
+    element: 'Void',
+    elementIcon: Moon,
+    gradient: 'from-violet-600/30 via-purple-700/20 to-indigo-800/10',
+    accent: 'text-violet-400',
+    border: 'border-violet-500/30',
+    tracks: 7,
+    duration: '63:45',
+    description: 'Deep ambient journeys into the primordial darkness. Nero-aligned frequencies for meditation and inner exploration.',
+  },
+  {
+    id: 'elemental-battles',
+    title: 'Elemental Battles',
+    artist: 'FrankX',
+    element: 'Wind',
+    elementIcon: Wind,
+    gradient: 'from-sky-500/30 via-cyan-600/20 to-blue-700/10',
+    accent: 'text-sky-400',
+    border: 'border-sky-500/30',
+    tracks: 8,
+    duration: '38:56',
+    description: 'High-energy compositions for the arena. Where elemental forces collide in sonic warfare.',
+  },
+];
+
+const COLLECTIONS: Collection[] = [
+  {
+    id: 'gate-freq',
+    name: 'Gate Frequencies',
+    description: 'Ambient tracks aligned to each Gate\'s sacred frequency, from 174 Hz Foundation to 1111 Hz Source.',
+    icon: Waveform,
+    count: 10,
+    accent: 'text-[#7fffd4]',
+    gradient: 'from-[#7fffd4]/20 to-transparent',
+  },
+  {
+    id: 'guardian-anthems',
+    name: 'Guardian Anthems',
+    description: 'Epic orchestral themes for each of the ten Guardians. The sonic identity of Arcanea.',
+    icon: VinylRecord,
+    count: 10,
+    accent: 'text-[#ffd700]',
+    gradient: 'from-[#ffd700]/20 to-transparent',
+  },
+  {
+    id: 'meditation-journeys',
+    name: 'Meditation Journeys',
+    description: 'Extended ambient compositions for deep practice. Void-touched soundscapes for inner exploration.',
+    icon: Moon,
+    count: 7,
+    accent: 'text-violet-400',
+    gradient: 'from-violet-500/20 to-transparent',
+  },
+  {
+    id: 'battle-hymns',
+    name: 'Battle Hymns',
+    description: 'High-energy elemental compositions. Fire and Wind clash in sonic storms of creative intensity.',
+    icon: Lightning,
+    count: 12,
+    accent: 'text-orange-400',
+    gradient: 'from-orange-500/20 to-transparent',
+  },
+];
+
+const ELEMENT_BADGES: Record<string, { bg: string; text: string; border: string }> = {
+  Fire: { bg: 'bg-red-500/15', text: 'text-red-400', border: 'border-red-500/30' },
+  Water: { bg: 'bg-blue-500/15', text: 'text-blue-400', border: 'border-blue-500/30' },
+  Earth: { bg: 'bg-emerald-500/15', text: 'text-emerald-400', border: 'border-emerald-500/30' },
+  Wind: { bg: 'bg-sky-500/15', text: 'text-sky-400', border: 'border-sky-500/30' },
+  Void: { bg: 'bg-violet-500/15', text: 'text-violet-400', border: 'border-violet-500/30' },
+  Spirit: { bg: 'bg-amber-500/15', text: 'text-amber-400', border: 'border-amber-500/30' },
 };
 
-// ─── Types ─────────────────────────────────────────────────────────────────────
+// ─── Components ─────────────────────────────────────────────────────────────
 
-interface GuardianPortrait {
-  slug: string; name: string; gate: string; gateNumber: number;
-  frequency: string; element: string; gradient: string;
-  accent: string; border: string; bg: string; heroImage: string;
-}
-interface HeroImage {
-  id: string; title: string; guardianTag: string;
-  accent: string; border: string; src: string;
-}
-interface Chronicle {
-  id: string; title: string; guardian: string; guardianSlug: string;
-  description: string; gradient: string; accent: string; border: string; bg: string;
-}
+function ReleaseCard({ release, index }: { release: Release; index: number }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const badge = ELEMENT_BADGES[release.element];
+  const Icon = release.elementIcon;
 
-// ─── Data ──────────────────────────────────────────────────────────────────────
-
-const PORTRAITS: GuardianPortrait[] = [
-  { slug: "lyssandria", name: "Lyssandria", gate: "Foundation", gateNumber: 1, frequency: "She builds the ground beneath your feet", element: "Earth", gradient: "from-amber-700 via-yellow-600 to-stone-400", accent: "text-amber-400", border: "border-amber-500/30", bg: "bg-amber-500/10", heroImage: "/guardians/v3/lyssandria-hero-v3.webp" },
-  { slug: "leyla", name: "Leyla", gate: "Flow", gateNumber: 2, frequency: "Where feeling becomes creation", element: "Water", gradient: "from-blue-300 via-cyan-400 to-slate-300", accent: "text-cyan-300", border: "border-cyan-400/30", bg: "bg-cyan-400/10", heroImage: "/guardians/v3/leyla-hero-v3.webp" },
-  { slug: "draconia", name: "Draconia", gate: "Fire", gateNumber: 3, frequency: "The fire that forges your will", element: "Fire", gradient: "from-red-600 via-orange-500 to-amber-400", accent: "text-orange-400", border: "border-orange-500/30", bg: "bg-orange-500/10", heroImage: "/guardians/v3/draconia-hero-v3.webp" },
-  { slug: "maylinn", name: "Maylinn", gate: "Heart", gateNumber: 4, frequency: "Love fierce enough to heal", element: "Wind", gradient: "from-rose-300 via-pink-400 to-green-300", accent: "text-pink-300", border: "border-pink-400/30", bg: "bg-pink-400/10", heroImage: "/guardians/v3/maylinn-hero-v3.webp" },
-  { slug: "alera", name: "Alera", gate: "Voice", gateNumber: 5, frequency: "The voice that shapes reality", element: "Fire", gradient: "from-sky-400 via-blue-500 to-indigo-600", accent: "text-sky-300", border: "border-sky-400/30", bg: "bg-sky-400/10", heroImage: "/guardians/v3/alera-hero-v3.webp" },
-  { slug: "lyria", name: "Lyria", gate: "Sight", gateNumber: 6, frequency: "She sees what others cannot", element: "Void", gradient: "from-violet-500 via-purple-600 to-indigo-700", accent: "text-violet-300", border: "border-violet-500/30", bg: "bg-violet-500/10", heroImage: "/guardians/v3/lyria-hero-v3.webp" },
-  { slug: "aiyami", name: "Aiyami", gate: "Crown", gateNumber: 7, frequency: "Light beyond comprehension", element: "Void", gradient: "from-yellow-200 via-amber-300 to-white", accent: "text-amber-300", border: "border-amber-400/30", bg: "bg-amber-400/10", heroImage: "/guardians/v3/aiyami-hero-v3.webp" },
-  { slug: "elara", name: "Elara", gate: "Starweave", gateNumber: 8, frequency: "The weaver of perspective", element: "Wind", gradient: "from-emerald-400 via-green-500 to-teal-600", accent: "text-emerald-300", border: "border-emerald-400/30", bg: "bg-emerald-400/10", heroImage: "/guardians/v3/elara-hero-v3.webp" },
-  { slug: "ino", name: "Ino", gate: "Unity", gateNumber: 9, frequency: "Where two become infinite", element: "Earth", gradient: "from-pink-400 via-fuchsia-500 to-teal-400", accent: "text-fuchsia-300", border: "border-fuchsia-400/30", bg: "bg-fuchsia-400/10", heroImage: "/guardians/v3/ino-hero-v3.webp" },
-  { slug: "shinkami", name: "Shinkami", gate: "Source", gateNumber: 10, frequency: "The source of all creation", element: "Spirit", gradient: "from-neutral-900 via-yellow-400 to-white", accent: "text-yellow-200", border: "border-yellow-300/30", bg: "bg-yellow-300/10", heroImage: "/guardians/v3/shinkami-hero-v3.webp" },
-];
-
-const HERO_IMAGES: HeroImage[] = [
-  { id: "w1", title: "Arcanea — Cinematic City", guardianTag: "Shinkami", accent: "text-yellow-200", border: "border-yellow-300/30", src: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/shinkami-gallery-2.webp" },
-  { id: "w2", title: "Floating Islands of the Source", guardianTag: "Shinkami", accent: "text-yellow-200", border: "border-yellow-300/30", src: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/shinkami-gallery-4.webp" },
-  { id: "w3", title: "The Futuristic Cityscape", guardianTag: "Shinkami", accent: "text-yellow-200", border: "border-yellow-300/30", src: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/shinkami-gallery-5.webp" },
-  { id: "w4", title: "Trinity Fusion — Fire Gate", guardianTag: "Draconia", accent: "text-orange-400", border: "border-orange-400/30", src: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/draconia-gallery-4.webp" },
-  { id: "w5", title: "The Transformed World", guardianTag: "Elara", accent: "text-emerald-300", border: "border-emerald-400/30", src: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/elara-gallery-4.webp" },
-  { id: "w6", title: "Unified Civilization", guardianTag: "Ino", accent: "text-fuchsia-300", border: "border-fuchsia-400/30", src: "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/ino-gallery-4.webp" },
-];
-
-const CHRONICLES: Chronicle[] = [
-  { id: "c1", title: "Draconia's Fire Trial", guardian: "Draconia", guardianSlug: "draconia", description: "The moment Draconia descended into the Fire Gate and emerged transformed — the origin of the Draconic lineage.", gradient: "from-red-900 via-orange-800 to-amber-700", accent: "text-orange-400", border: "border-orange-500/30", bg: "bg-orange-500/10" },
-  { id: "c2", title: "Alera's Voice Awakening", guardian: "Alera", guardianSlug: "alera", description: "A silent Mage who could not speak her truth — and the moment Otome sang through her for the first time.", gradient: "from-sky-900 via-blue-800 to-indigo-700", accent: "text-sky-300", border: "border-sky-400/30", bg: "bg-sky-400/10" },
-  { id: "c3", title: "Lyssandria and the Deep Root", guardian: "Lyssandria", guardianSlug: "lyssandria", description: "Before the first Academy was built, Lyssandria walked alone through the world and laid the Foundation Gate.", gradient: "from-amber-900 via-yellow-800 to-stone-700", accent: "text-amber-400", border: "border-amber-500/30", bg: "bg-amber-500/10" },
-  { id: "c4", title: "The Source Remembers", guardian: "Shinkami", guardianSlug: "shinkami", description: "The Source-Light reveals itself only once in an age. This is the chronicle of Shinkami's first awakening at the Source Gate.", gradient: "from-neutral-900 via-yellow-900 to-amber-800", accent: "text-yellow-200", border: "border-yellow-400/30", bg: "bg-yellow-400/10" },
-  { id: "c5", title: "Leyla and the Silver Current", guardian: "Leyla", guardianSlug: "leyla", description: "Veloura surfaces only for those who stop swimming and let the current carry them. Leyla's chronicle of trust.", gradient: "from-blue-900 via-cyan-800 to-slate-700", accent: "text-cyan-300", border: "border-cyan-400/30", bg: "bg-cyan-400/10" },
-  { id: "c6", title: "Lyria Sees the Becoming", guardian: "Lyria", guardianSlug: "lyria", description: "Yumiko opened all nine tails at once. Lyria saw every timeline simultaneously — and chose this one.", gradient: "from-violet-900 via-purple-800 to-indigo-700", accent: "text-violet-300", border: "border-violet-500/30", bg: "bg-violet-500/10" },
-];
-
-// ─── Inline icons ──────────────────────────────────────────────────────────────
-
-function SparklesIcon() {
   return (
-    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z" />
-    </svg>
-  );
-}
-function ArrowRight({ className }: { className?: string }) {
-  return (
-    <svg className={className ?? "w-4 h-4"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
-    </svg>
-  );
-}
-function PlayIcon() {
-  return (
-    <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M8 5v14l11-7z" />
-    </svg>
+    <m.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.1, duration: 0.5 }}
+      className="group relative rounded-2xl overflow-hidden bg-white/[0.03] border border-white/[0.06] hover:border-white/[0.14] transition-all duration-300"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Cover art placeholder — gradient */}
+      <div className={`relative aspect-square bg-gradient-to-br ${release.gradient} overflow-hidden`}>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(255,255,255,0.06),transparent_60%)]" />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="relative">
+            <MusicNotes
+              className={`w-20 h-20 ${release.accent} opacity-20 transition-transform duration-500 ${isHovered ? 'scale-110' : ''}`}
+              weight="thin"
+            />
+          </div>
+        </div>
+
+        {/* Play button overlay */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <button className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-white/20 transition-colors">
+            <Play className="w-6 h-6 text-white ml-0.5" weight="fill" />
+          </button>
+        </div>
+
+        {/* Element badge */}
+        <div className="absolute top-3 right-3">
+          <span className={`inline-flex items-center gap-1.5 text-xs font-mono px-2.5 py-1 rounded-full ${badge.bg} ${badge.text} border ${badge.border} backdrop-blur-sm`}>
+            <Icon className="w-3 h-3" weight="fill" />
+            {release.element}
+          </span>
+        </div>
+      </div>
+
+      {/* Info */}
+      <div className="p-5">
+        <h3 className="font-display font-semibold text-white text-base mb-1 group-hover:text-[#7fffd4] transition-colors">
+          {release.title}
+        </h3>
+        <p className="text-sm text-white/50 font-mono mb-3">{release.artist}</p>
+        <p className="text-sm text-white/40 leading-relaxed mb-4">
+          {release.description}
+        </p>
+        <div className="flex items-center justify-between text-xs text-white/30 font-mono">
+          <span>{release.tracks} tracks</span>
+          <span>{release.duration}</span>
+        </div>
+      </div>
+    </m.div>
   );
 }
 
-// ─── Page ──────────────────────────────────────────────────────────────────────
+// ─── Page ───────────────────────────────────────────────────────────────────
 
 export default function RecordsPage() {
   return (
-    <div className="relative min-h-screen">
-      <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-cosmic-void" />
-        <div className="absolute inset-0 bg-cosmic-mesh" />
-        <div className="absolute inset-0 opacity-25 bg-[radial-gradient(ellipse_at_top_left,rgba(13,71,161,0.15),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(0,188,212,0.1),transparent_50%)]" />
-      </div>
+    <MotionProvider>
+      <div className="relative min-h-screen">
+        {/* Background */}
+        <div className="fixed inset-0 -z-10">
+          <div className="absolute inset-0 bg-black" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(127,255,212,0.04),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(120,166,255,0.04),transparent_50%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:60px_60px]" />
+        </div>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
-        {/* Header */}
-        <section className="mb-20">
-          <div className="relative liquid-glass rounded-3xl overflow-hidden px-8 py-14 sm:px-14">
-            <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/10 via-transparent to-crystal/8 pointer-events-none" />
-            <div className="absolute top-0 right-0 w-96 h-96 bg-brand-primary/6 rounded-full blur-3xl pointer-events-none" />
-            <div className="relative">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-gold/30 bg-brand-gold/10 mb-6">
-                <SparklesIcon />
-                <span className="text-xs font-mono tracking-widest uppercase text-brand-gold">The Arcanean Records</span>
+          {/* ── Hero ─────────────────────────────────────────────────── */}
+          <section className="mb-20">
+            <m.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="relative rounded-3xl overflow-hidden bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] px-8 py-16 sm:px-14 sm:py-20"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-[#7fffd4]/8 via-transparent to-[#78a6ff]/6 pointer-events-none" />
+              <div className="absolute top-0 right-0 w-96 h-96 bg-[#7fffd4]/5 rounded-full blur-[100px] pointer-events-none" />
+              <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#78a6ff]/5 rounded-full blur-[100px] pointer-events-none" />
+
+              <div className="relative max-w-3xl">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#7fffd4]/30 bg-[#7fffd4]/10 mb-8">
+                  <MusicNotes className="w-4 h-4 text-[#7fffd4]" weight="fill" />
+                  <span className="text-xs font-mono tracking-widest uppercase text-[#7fffd4]">
+                    Arcanea Records
+                  </span>
+                </div>
+
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold mb-6 leading-tight text-white">
+                  Frequency-aligned music
+                  <span className="block bg-gradient-to-r from-[#7fffd4] via-[#78a6ff] to-violet-400 bg-clip-text text-transparent">
+                    for consciousness evolution
+                  </span>
+                </h1>
+
+                <p className="text-lg text-white/50 leading-relaxed max-w-2xl mb-10">
+                  Original compositions tuned to the ten Gate frequencies. Each track is crafted
+                  to align with the Arcanean progression system — from the grounding 174 Hz of Foundation
+                  to the transcendent 1111 Hz of Source.
+                </p>
+
+                <div className="flex flex-wrap gap-4">
+                  <a
+                    href="https://open.spotify.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl bg-[#1DB954] text-white font-semibold hover:brightness-110 transition-all"
+                  >
+                    <SpotifyLogo className="w-5 h-5" weight="fill" />
+                    Listen on Spotify
+                  </a>
+                  <Link
+                    href="/studio/music"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 text-white font-semibold hover:bg-white/10 transition-all"
+                  >
+                    <Sparkle className="w-4 h-4 text-[#ffd700]" weight="fill" />
+                    Create Your Own
+                  </Link>
+                </div>
+
+                {/* Suno AI badge */}
+                <div className="mt-8 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.06] text-xs text-white/40">
+                  <Waveform className="w-3.5 h-3.5" />
+                  Powered by Suno AI
+                </div>
               </div>
-              <h1 className="text-5xl sm:text-6xl font-display font-bold mb-4 leading-none">
-                Art, Music &<span className="block text-gradient-brand">Chronicles</span>
-              </h1>
-              <p className="text-text-secondary font-body text-lg max-w-2xl leading-relaxed">
-                From the Ten Gates to the depths of the Source — the visual and sonic records of the Arcanean universe.
-                Guardian portraits, world imagery, and chronicles of the moments that shaped creation.
-              </p>
-            </div>
-          </div>
-        </section>
+            </m.div>
+          </section>
 
-        {/* Section 1 — Guardian Portraits */}
-        <section className="mb-20">
-          <div className="flex items-end justify-between mb-8">
-            <div>
-              <p className="text-xs font-mono text-text-muted uppercase tracking-widest mb-2">Section 01</p>
-              <h2 className="text-2xl font-display font-bold text-text-primary">Guardian Portraits</h2>
-              <p className="text-text-secondary font-sans text-sm mt-1">The ten Guardians of the Gates — keepers of Arcanea's creative frequencies</p>
-            </div>
-            <Link href="/lore/guardians" className="hidden sm:inline-flex items-center gap-2 text-sm font-sans text-text-muted hover:text-text-primary transition-colors">
-              View all Guardians <ArrowRight />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-            {PORTRAITS.map((g) => (
-              <Link key={g.slug} href={`/lore/guardians/${g.slug}`}
-                className="group relative rounded-2xl overflow-hidden card-3d liquid-glass border border-white/[0.04] hover:border-white/[0.12] transition-all hover-lift glow-card"
-                aria-label={`${g.name} — ${g.gate} Gate`}
+          {/* ── Featured Releases ────────────────────────────────────── */}
+          <section className="mb-20">
+            <div className="flex items-end justify-between mb-10">
+              <div>
+                <p className="text-xs font-mono text-white/30 uppercase tracking-widest mb-2">Section 01</p>
+                <h2 className="text-2xl font-display font-bold text-white">Featured Releases</h2>
+                <p className="text-white/40 text-sm mt-1">Original compositions from the Arcanea universe</p>
+              </div>
+              <Link
+                href="/records/all"
+                className="hidden sm:inline-flex items-center gap-2 text-sm text-white/40 hover:text-[#7fffd4] transition-colors"
               >
-                <div className="relative aspect-[3/4] overflow-hidden">
-                  {g.heroImage ? (
-                    <Image src={g.heroImage} alt={`${g.name}, Guardian of the ${g.gate} Gate`}
-                      fill className="object-cover transition-transform duration-500 group-hover:scale-105"
-                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw" />
-                  ) : (
-                    <div className={`absolute inset-0 bg-gradient-to-br ${g.gradient} opacity-50`} aria-hidden="true" />
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-cosmic-deep via-cosmic-deep/20 to-transparent" />
-                  <div className="absolute top-3 left-3">
-                    <span className={`text-xs font-mono font-bold px-2 py-1 rounded-lg ${g.bg} ${g.accent} border ${g.border}`}>
-                      {String(g.gateNumber).padStart(2, "0")}
-                    </span>
-                  </div>
-                </div>
-                <div className="p-3">
-                  <p className="font-display font-semibold text-text-primary text-sm group-hover:text-white transition-colors">{g.name}</p>
-                  <p className={`text-xs font-mono mt-0.5 ${g.accent}`}>{g.frequency}</p>
-                  <p className="text-xs text-text-muted font-sans mt-0.5">{g.element}</p>
-                </div>
+                View all releases <ArrowRight className="w-4 h-4" />
               </Link>
-            ))}
-          </div>
-        </section>
-
-        {/* Section 2 — World Imagery */}
-        <section className="mb-20">
-          <div className="mb-8">
-            <p className="text-xs font-mono text-text-muted uppercase tracking-widest mb-2">Section 02</p>
-            <h2 className="text-2xl font-display font-bold text-text-primary">World Imagery</h2>
-            <p className="text-text-secondary font-sans text-sm mt-1">Landscapes, councils, and scenes from across the Arcanean universe</p>
-          </div>
-
-          <div className="grid grid-cols-3 gap-3" style={{ gridTemplateRows: '200px 200px 160px' }}>
-            {/* Large feature: Arcanea Cinematic City */}
-            <div className="col-span-2 row-span-2 group relative rounded-2xl overflow-hidden card-3d liquid-glass border border-white/[0.04] hover:border-white/[0.10] transition-all">
-              <Image src={HERO_IMAGES[0].src} alt={HERO_IMAGES[0].title}
-                fill className="object-cover group-hover:scale-105 transition-transform duration-700"
-                sizes="(max-width: 640px) 100vw, 66vw" priority />
-              <div className="absolute inset-0 bg-gradient-to-t from-cosmic-deep/80 via-transparent to-transparent" />
-              <div className="absolute bottom-4 left-4">
-                <span className={`text-xs font-mono px-2 py-0.5 rounded-md border ${HERO_IMAGES[0].border} ${HERO_IMAGES[0].accent} bg-cosmic-deep/60 mb-1.5 inline-block`}>{HERO_IMAGES[0].guardianTag}</span>
-                <p className="text-base font-sans font-medium text-white mt-1">{HERO_IMAGES[0].title}</p>
-              </div>
             </div>
 
-            {/* Right column: Floating Islands + Futuristic Cityscape */}
-            {HERO_IMAGES.slice(1, 3).map((img) => (
-              <div key={img.id} className="col-span-1 row-span-1 group relative rounded-2xl overflow-hidden card-3d liquid-glass border border-white/[0.04] hover:border-white/[0.10] transition-all">
-                <Image src={img.src} alt={img.title}
-                  fill className="object-cover group-hover:scale-110 transition-transform duration-500"
-                  sizes="(max-width: 640px) 33vw, 33vw" />
-                <div className="absolute inset-0 bg-gradient-to-t from-cosmic-deep/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="absolute bottom-2 left-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <p className={`text-xs font-sans ${img.accent}`}>{img.title}</p>
-                </div>
-              </div>
-            ))}
-
-            {/* Row 3: Wide banner + 2 small */}
-            <div className="col-span-2 row-span-1 group relative rounded-2xl overflow-hidden card-3d liquid-glass border border-white/[0.04] hover:border-white/[0.10] transition-all">
-              <Image src={HERO_IMAGES[3].src} alt={HERO_IMAGES[3].title}
-                fill className="object-cover group-hover:scale-105 transition-transform duration-700"
-                sizes="(max-width: 640px) 100vw, 66vw" />
-              <div className="absolute inset-0 bg-gradient-to-r from-cosmic-deep/60 via-transparent to-transparent" />
-              <div className="absolute bottom-3 left-4">
-                <p className={`text-xs font-sans ${HERO_IMAGES[3].accent}`}>{HERO_IMAGES[3].title}</p>
-              </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {FEATURED_RELEASES.map((release, i) => (
+                <ReleaseCard key={release.id} release={release} index={i} />
+              ))}
             </div>
-            <div className="col-span-1 row-span-1 group relative rounded-2xl overflow-hidden card-3d liquid-glass border border-white/[0.04] hover:border-white/[0.10] transition-all">
-              <Image src={HERO_IMAGES[4].src} alt={HERO_IMAGES[4].title}
-                fill className="object-cover group-hover:scale-110 transition-transform duration-500"
-                sizes="(max-width: 640px) 33vw, 33vw" />
-              <div className="absolute inset-0 bg-gradient-to-t from-cosmic-deep/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+          </section>
+
+          {/* ── Collections ──────────────────────────────────────────── */}
+          <section className="mb-20">
+            <div className="mb-10">
+              <p className="text-xs font-mono text-white/30 uppercase tracking-widest mb-2">Section 02</p>
+              <h2 className="text-2xl font-display font-bold text-white">Collections</h2>
+              <p className="text-white/40 text-sm mt-1">Browse by genre and purpose</p>
             </div>
-          </div>
 
-          {/* Row below: Unified Civilization full-width strip */}
-          <div className="mt-3 group relative h-36 rounded-2xl overflow-hidden card-3d liquid-glass border border-white/[0.04] hover:border-white/[0.10] transition-all">
-            <Image src={HERO_IMAGES[5].src} alt={HERO_IMAGES[5].title}
-              fill className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
-              sizes="100vw" />
-            <div className="absolute inset-0 bg-gradient-to-r from-cosmic-deep/70 via-transparent to-cosmic-deep/70" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center">
-                <p className={`text-xs font-sans uppercase tracking-widest ${HERO_IMAGES[5].accent} opacity-0 group-hover:opacity-100 transition-opacity`}>{HERO_IMAGES[5].guardianTag}</p>
-                <p className="text-sm font-sans font-medium text-white/[0.60] mt-1 opacity-0 group-hover:opacity-100 transition-opacity">{HERO_IMAGES[5].title}</p>
-              </div>
-            </div>
-          </div>
-        </section>
+            <div className="grid sm:grid-cols-2 gap-5">
+              {COLLECTIONS.map((col, i) => {
+                const Icon = col.icon;
+                return (
+                  <m.div
+                    key={col.id}
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.08, duration: 0.4 }}
+                    className="group relative rounded-2xl overflow-hidden bg-white/[0.03] border border-white/[0.06] hover:border-white/[0.14] transition-all p-6"
+                  >
+                    <div className={`absolute inset-0 bg-gradient-to-br ${col.gradient} opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none`} />
 
-        {/* Section 3 — Chronicles */}
-        <section className="mb-20">
-          <div className="mb-8">
-            <p className="text-xs font-mono text-text-muted uppercase tracking-widest mb-2">Section 03</p>
-            <h2 className="text-2xl font-display font-bold text-text-primary">Arcanean Chronicles</h2>
-            <p className="text-text-secondary font-sans text-sm mt-1">Video records of the moments that shaped the universe — coming soon</p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {CHRONICLES.map((ch) => (
-              <Link key={ch.id} href={`/lore/guardians/${ch.guardianSlug}`}
-                className="group relative card-3d liquid-glass rounded-2xl overflow-hidden border border-white/[0.04] hover:border-white/[0.12] transition-all glow-card hover-lift"
-              >
-                <div className="relative aspect-video overflow-hidden">
-                  <div className={`absolute inset-0 bg-gradient-to-br ${ch.gradient}`} aria-hidden="true" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className={`w-16 h-16 rounded-full ${ch.bg} border ${ch.border} flex items-center justify-center ${ch.accent} opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all`}>
-                      <PlayIcon />
+                    <div className="relative flex items-start gap-4">
+                      <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/[0.06] flex items-center justify-center shrink-0">
+                        <Icon className={`w-6 h-6 ${col.accent}`} weight="duotone" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-3 mb-2">
+                          <h3 className="font-display font-semibold text-white group-hover:text-[#7fffd4] transition-colors">
+                            {col.name}
+                          </h3>
+                          <span className="text-xs font-mono text-white/25 px-2 py-0.5 rounded-full bg-white/[0.04]">
+                            {col.count} tracks
+                          </span>
+                        </div>
+                        <p className="text-sm text-white/40 leading-relaxed">{col.description}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="absolute top-3 right-3">
-                    <span className="text-xs font-mono px-2.5 py-1 rounded-full bg-cosmic-deep/80 text-text-muted border border-white/[0.06]">
-                      Coming Soon
-                    </span>
-                  </div>
-                  <div className="absolute top-3 left-3">
-                    <span className={`text-xs font-mono px-2 py-0.5 rounded-md border ${ch.border} ${ch.accent} bg-cosmic-deep/70`}>
-                      {ch.guardian}
-                    </span>
-                  </div>
-                </div>
-                <div className="p-5">
-                  <h3 className="font-display font-semibold text-text-primary mb-2 group-hover:text-white transition-colors leading-snug">{ch.title}</h3>
-                  <p className="text-sm font-sans text-text-muted leading-relaxed">{ch.description}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
+                  </m.div>
+                );
+              })}
+            </div>
+          </section>
 
-        {/* Section 4 — CTA */}
-        <section>
-          <div className="relative liquid-glass-elevated rounded-3xl overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/12 via-transparent to-crystal/10 pointer-events-none" />
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-crystal/30 to-transparent" />
-            <div className="absolute bottom-0 right-0 w-64 h-64 bg-brand-gold/8 rounded-full blur-3xl pointer-events-none" />
-            <div className="relative px-8 py-14 sm:px-14 text-center">
-              <div className="w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center bg-crystal/10 border border-crystal/20">
-                <SparklesIcon />
+          {/* ── Now Playing / Frequency Bar ───────────────────────────── */}
+          <section className="mb-20">
+            <m.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className="relative rounded-2xl overflow-hidden bg-white/[0.03] border border-white/[0.06] p-8"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-[#7fffd4]/5 via-transparent to-[#78a6ff]/5 pointer-events-none" />
+
+              <div className="relative">
+                <div className="flex items-center gap-3 mb-6">
+                  <Headphones className="w-5 h-5 text-[#7fffd4]" weight="duotone" />
+                  <h3 className="text-sm font-mono tracking-widest uppercase text-[#7fffd4]">
+                    Gate Frequency Guide
+                  </h3>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                  {[
+                    { gate: 'Foundation', hz: '174', color: 'bg-amber-500/20 text-amber-400 border-amber-500/20' },
+                    { gate: 'Flow', hz: '285', color: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/20' },
+                    { gate: 'Fire', hz: '396', color: 'bg-red-500/20 text-red-400 border-red-500/20' },
+                    { gate: 'Heart', hz: '417', color: 'bg-pink-500/20 text-pink-400 border-pink-500/20' },
+                    { gate: 'Voice', hz: '528', color: 'bg-sky-500/20 text-sky-400 border-sky-500/20' },
+                    { gate: 'Sight', hz: '639', color: 'bg-violet-500/20 text-violet-400 border-violet-500/20' },
+                    { gate: 'Crown', hz: '741', color: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/20' },
+                    { gate: 'Starweave', hz: '852', color: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/20' },
+                    { gate: 'Unity', hz: '963', color: 'bg-fuchsia-500/20 text-fuchsia-400 border-fuchsia-500/20' },
+                    { gate: 'Source', hz: '1111', color: 'bg-white/10 text-white/80 border-white/20' },
+                  ].map((g) => (
+                    <div key={g.gate} className={`rounded-lg border px-3 py-2.5 text-center ${g.color}`}>
+                      <p className="text-[10px] font-mono uppercase tracking-wider opacity-70">{g.gate}</p>
+                      <p className="text-lg font-display font-bold">{g.hz}</p>
+                      <p className="text-[10px] font-mono opacity-50">Hz</p>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-display font-bold text-text-primary mb-3">
-                Add your creation to the Records
-              </h2>
-              <p className="text-text-secondary font-body text-lg max-w-xl mx-auto mb-8 leading-relaxed">
-                Every creator who enters Arcanea leaves a record. Open the Creation Studio and begin yours.
-              </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Link href="/studio"
-                  className="group inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-sans font-semibold text-base transition-all hover:scale-[1.02] active:scale-[0.98] bg-gradient-to-r from-brand-primary to-crystal text-white shadow-elevation-3"
-                >
-                  <SparklesIcon />
-                  Open Creation Studio
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Link>
-                <Link href="/community"
-                  className="inline-flex items-center gap-2 px-6 py-4 rounded-2xl font-sans font-medium text-sm text-text-secondary border border-white/[0.06] hover:border-white/[0.12] hover:text-text-primary card-3d liquid-glass transition-all"
-                >
-                  Browse Community <ArrowRight />
-                </Link>
+            </m.div>
+          </section>
+
+          {/* ── CTA ──────────────────────────────────────────────────── */}
+          <section>
+            <div className="relative rounded-3xl overflow-hidden bg-white/[0.03] border border-white/[0.06]">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#7fffd4]/8 via-transparent to-violet-500/6 pointer-events-none" />
+              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#7fffd4]/30 to-transparent" />
+
+              <div className="relative px-8 py-16 sm:px-14 text-center">
+                <div className="w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center bg-[#7fffd4]/10 border border-[#7fffd4]/20">
+                  <MusicNote className="w-7 h-7 text-[#7fffd4]" weight="duotone" />
+                </div>
+
+                <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mb-4">
+                  Create your own frequency
+                </h2>
+                <p className="text-white/40 text-lg max-w-xl mx-auto mb-8 leading-relaxed">
+                  Every creator carries a unique frequency. Use the Arcanea Studio
+                  to compose music aligned with your creative journey through the Gates.
+                </p>
+
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                  <a
+                    href="https://open.spotify.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-[#1DB954] text-white font-semibold hover:brightness-110 transition-all"
+                  >
+                    <SpotifyLogo className="w-5 h-5" weight="fill" />
+                    Listen on Spotify
+                  </a>
+                  <Link
+                    href="/studio/music"
+                    className="inline-flex items-center gap-2 px-6 py-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 text-white font-semibold hover:bg-white/10 transition-all"
+                  >
+                    <Sparkle className="w-4 h-4 text-[#ffd700]" weight="fill" />
+                    Create Your Own
+                    <ArrowRight className="w-4 h-4 ml-1" />
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
-      </main>
-    </div>
+          </section>
+        </main>
+      </div>
+    </MotionProvider>
   );
 }

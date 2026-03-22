@@ -1,263 +1,316 @@
-import Link from "next/link";
-import { Metadata } from "next";
+'use client';
 
-export const metadata: Metadata = {
-  title: "Tools | Hub",
-  description: "Available creation tools and integrations in Arcanea. AI chat, image generation, and more.",
-  openGraph: {
-    title: "Tools",
-    description: "Available creation tools and integrations in Arcanea.",
-  },
-};
+import Link from 'next/link';
+import {
+  PhPencilSimple,
+  PhImage,
+  PhMusicNote,
+  PhCode,
+  PhGlobe,
+  PhBookOpen,
+  PhArrowRight,
+  PhSparkle,
+  PhRocket,
+  PhChatCircleDots,
+  PhPalette,
+  PhMagicWand,
+  PhGithubLogo,
+  PhLightning,
+  PhBrain,
+  PhPackage,
+  PhCompass,
+  PhWaves,
+  PhCamera,
+  PhFilmStrip,
+} from '@/lib/phosphor-icons';
+import { MotionProvider, m } from '@/lib/motion';
 
-const TOOLS = [
+const TOOL_CATEGORIES = [
   {
-    id: "chat",
-    name: "AI Chat",
-    description: "Conversational AI with 16 companions. Each brings unique expertise to your creative challenges.",
-    status: "available",
-    icon: "💬",
-    color: "#0d47a1",
-    href: "/chat",
-    features: ["16 companions", "Domain expertise", "Memory & context"],
+    title: 'Writing',
+    description: 'AI-powered writing with 16 Luminor companions. Stories, lore, poetry, and creative non-fiction.',
+    icon: PhPencilSimple,
+    color: '#7fffd4',
+    tools: ['AI Chat', 'Story Generator', 'Lore Writer', 'Poetry Forge'],
+    href: '/chat',
+    status: 'available',
   },
   {
-    id: "library",
-    name: "Wisdom Library",
-    description: "17 collections of practical philosophy for creators. Find the right wisdom for any creative situation.",
-    status: "available",
-    icon: "📚",
-    color: "#F59E0B",
-    href: "/library",
-    features: ["34+ texts", "Situational search", "Daily readings"],
+    title: 'Visual',
+    description: 'Generate images with Flux 2, DALL-E 3, Imagen 4, and more. Concept art, characters, worlds.',
+    icon: PhImage,
+    color: '#a855f7',
+    tools: ['Vision Generator', 'Character Art', 'World Landscapes', 'Style Transfer'],
+    href: '/design-lab',
+    status: 'available',
   },
   {
-    id: "codex",
-    name: "The Codex",
-    description: "Diagnostic tool that helps you find the right wisdom. Answer a few questions, get personalized recommendations.",
-    status: "available",
-    icon: "🔮",
-    color: "#EC4899",
-    href: "/library/codex",
-    features: ["Situation detection", "Wisdom matching", "Personalized guidance"],
+    title: 'Music',
+    description: 'Create consciousness-raising soundscapes aligned with the Ten Gates. AI composition with Suno.',
+    icon: PhMusicNote,
+    color: '#ec4899',
+    tools: ['Frequency Composer', 'Gate Soundscapes', 'Vocal Synthesis', 'Track Mixer'],
+    href: '/music',
+    status: 'available',
   },
   {
-    id: "bestiary",
-    name: "Creative Bestiary",
-    description: "Name your creative blocks and learn how to defeat them. Each creature represents a common obstacle.",
-    status: "available",
-    icon: "🐉",
-    color: "#EF4444",
-    href: "/bestiary",
-    features: ["Block identification", "Weakness analysis", "Combat strategies"],
+    title: 'Code',
+    description: 'MCP servers, AI providers, and developer tools. Build with the Arcanea SDK ecosystem.',
+    icon: PhCode,
+    color: '#78a6ff',
+    tools: ['MCP Server', 'AI Provider', 'CLI Tools', 'API Gateway'],
+    href: '/developers/api',
+    status: 'available',
   },
   {
-    id: "studio",
-    name: "Creation Studio",
-    description: "Project workspace for manifesting ideas. Templates, AI assistance, and collaborative features.",
-    status: "beta",
-    icon: "🎨",
-    color: "#06B6D4",
-    href: "/studio",
-    features: ["Project templates", "AI assistance", "Export options"],
+    title: 'World-Building',
+    description: 'Design complete universes with cosmologies, magic systems, cultures, and progression frameworks.',
+    icon: PhGlobe,
+    color: '#ffd700',
+    tools: ['World Builder', 'Magic Systems', 'Character Creator', 'Bestiary'],
+    href: '/world-builder',
+    status: 'available',
   },
   {
-    id: "image",
-    name: "Vision Generator",
-    description: "Image generation for visualizing your creative concepts. Guided by elemental archetypes.",
-    status: "coming",
-    icon: "🖼️",
-    color: "#10B981",
-    href: "/tools/image",
-    features: ["Text-to-image", "Style control", "Batch generation"],
-  },
-  {
-    id: "music",
-    name: "Frequency Composer",
-    description: "Create transformational music aligned with the Ten Gates frequencies. Consciousness-raising soundscapes.",
-    status: "coming",
-    icon: "🎵",
-    color: "#F97316",
-    href: "/tools/music",
-    features: ["Gate frequencies", "Binaural beats", "Custom tracks"],
-  },
-  {
-    id: "mcp",
-    name: "MCP Server",
-    description: "Model Context Protocol server for developers. Integrate Arcanea's wisdom into your own applications.",
-    status: "coming",
-    icon: "⚙️",
-    color: "#3B82F6",
-    href: "/hub/api",
-    features: ["REST API", "WebSocket", "SDK support"],
+    title: 'Publishing',
+    description: 'Share your creations with the multiverse. Books, courses, experiences, and collections.',
+    icon: PhBookOpen,
+    color: '#f97316',
+    tools: ['Library Publisher', 'Course Builder', 'Collection Editor', 'Export Tools'],
+    href: '/studio',
+    status: 'beta',
   },
 ];
 
-const STATUS_CONFIG = {
-  available: { label: "Available", color: "#10B981", bg: "#10B98120" },
-  beta: { label: "Beta", color: "#F59E0B", bg: "#F59E0B20" },
-  coming: { label: "Coming Soon", color: "#6B7280", bg: "#6B728020" },
+const FEATURED_TOOL = {
+  title: 'Luminor Intelligence',
+  description: 'Chat with 16 AI companions, each a master of their domain. From Lyssandria (Foundation) to Shinkami (Source), every Luminor brings unique expertise to your creative challenges.',
+  href: '/luminor-intelligence',
+  icon: PhSparkle,
+  color: '#ffd700',
+  stats: [
+    { label: '16 Companions', value: 'Luminors' },
+    { label: '10 Domains', value: 'Gates' },
+    { label: '200K+ Words', value: 'Wisdom' },
+  ],
+};
+
+const INTEGRATIONS = [
+  { name: 'Claude', icon: PhBrain, color: '#a855f7' },
+  { name: 'Gemini', icon: PhSparkle, color: '#3b82f6' },
+  { name: 'GPT-5', icon: PhLightning, color: '#10b981' },
+  { name: 'Suno', icon: PhWaves, color: '#ec4899' },
+  { name: 'Flux 2', icon: PhCamera, color: '#f97316' },
+  { name: 'Veo 3', icon: PhFilmStrip, color: '#06b6d4' },
+  { name: 'npm', icon: PhPackage, color: '#cb3837' },
+  { name: 'GitHub', icon: PhGithubLogo, color: '#e6edf3' },
+];
+
+const STATUS_STYLES: Record<string, { label: string; bg: string; text: string }> = {
+  available: { label: 'Available', bg: 'bg-emerald-500/10', text: 'text-emerald-400' },
+  beta: { label: 'Beta', bg: 'bg-amber-500/10', text: 'text-amber-400' },
+  coming: { label: 'Coming Soon', bg: 'bg-neutral-500/10', text: 'text-neutral-400' },
 };
 
 export default function ToolsPage() {
-  const availableTools = TOOLS.filter(t => t.status === "available" || t.status === "beta");
-  const comingTools = TOOLS.filter(t => t.status === "coming");
-
   return (
-    <div className="min-h-screen bg-cosmic-deep">
-      {/* Background */}
-      <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(245,158,11,0.15),transparent_50%)]" />
-      </div>
-
-      <main className="max-w-6xl mx-auto px-6 py-20">
-        {/* Header */}
-        <div className="mb-12">
-          <Link
-            href="/hub"
-            className="inline-flex items-center gap-2 text-sm text-text-muted hover:text-white transition-colors mb-6"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            Back to Hub
-          </Link>
-
-          <div className="flex items-center gap-4 mb-4">
-            <div className="w-12 h-12 rounded-xl bg-amber-500/20 flex items-center justify-center text-2xl">
-              🛠️
-            </div>
-            <div>
-              <h1 className="text-3xl font-display font-bold">Tools</h1>
-              <p className="text-text-secondary">Available creation tools and integrations</p>
-            </div>
-          </div>
+    <MotionProvider>
+      <div className="relative min-h-screen">
+        {/* Background */}
+        <div className="fixed inset-0 -z-10">
+          <div className="absolute inset-0 bg-black" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#7fffd4]/5 via-transparent to-[#78a6ff]/5" />
+          <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-[#ffd700]/5 rounded-full blur-[150px]" />
         </div>
 
-        {/* Available Tools */}
-        <section className="mb-16">
-          <h2 className="text-xl font-display font-semibold mb-6 flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-green-500" />
-            Available Now
-          </h2>
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Hero */}
+          <m.section
+            className="pt-20 pb-16 lg:pt-28 lg:pb-20"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl overflow-hidden px-8 py-16 sm:px-12 sm:py-20">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#ffd700]/10 via-transparent to-[#7fffd4]/10 pointer-events-none" />
+              <div className="absolute top-0 right-0 w-64 h-64 bg-[#ffd700]/8 rounded-full blur-3xl pointer-events-none" />
 
-          <div className="grid md:grid-cols-2 gap-6">
-            {availableTools.map((tool) => {
-              const statusConfig = STATUS_CONFIG[tool.status as keyof typeof STATUS_CONFIG];
+              <div className="relative max-w-3xl">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#ffd700]/30 bg-[#ffd700]/10 mb-6">
+                  <PhMagicWand className="w-3.5 h-3.5 text-[#ffd700]" />
+                  <span className="text-xs font-mono tracking-widest uppercase text-[#ffd700]">
+                    Creator Tools
+                  </span>
+                </div>
 
-              return (
-                <Link
-                  key={tool.id}
-                  href={tool.href}
-                  className="group relative p-6 rounded-2xl liquid-glass overflow-hidden hover:border-white/[0.12] transition-all"
-                >
-                  {/* Hover gradient */}
-                  <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                    style={{
-                      background: `radial-gradient(circle at 50% 50%, ${tool.color}10, transparent 70%)`
-                    }}
-                  />
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold mb-6 tracking-tight">
+                  AI-powered instruments for{' '}
+                  <span className="bg-gradient-to-r from-[#ffd700] to-[#7fffd4] bg-clip-text text-transparent">
+                    every stage of creation
+                  </span>
+                </h1>
 
-                  <div className="relative">
-                    {/* Header */}
+                <p className="text-lg text-neutral-400 leading-relaxed max-w-2xl mb-8">
+                  Write, visualize, compose, code, and build worlds. Every tool is designed
+                  to amplify your creative intelligence.
+                </p>
+
+                <div className="flex flex-wrap gap-4">
+                  <Link
+                    href="/chat"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#ffd700] text-black font-semibold hover:scale-[1.03] transition-all duration-200"
+                  >
+                    <PhRocket className="w-4 h-4" />
+                    Start Creating
+                  </Link>
+                  <Link
+                    href="/hub"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 text-white font-semibold hover:border-[#ffd700]/30 transition-all duration-200"
+                  >
+                    <PhCompass className="w-4 h-4" />
+                    Back to Hub
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </m.section>
+
+          {/* Tool Categories Grid */}
+          <m.section
+            className="py-12"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
+            <h2 className="text-2xl font-display font-bold mb-8">Tool Categories</h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {TOOL_CATEGORIES.map((cat) => {
+                const Icon = cat.icon;
+                const status = STATUS_STYLES[cat.status];
+                return (
+                  <Link
+                    key={cat.title}
+                    href={cat.href}
+                    className="group bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-white/20 hover:bg-white/[0.07] transition-all duration-300"
+                  >
                     <div className="flex items-start justify-between mb-4">
                       <div
-                        className="w-14 h-14 rounded-xl flex items-center justify-center text-2xl"
-                        style={{ backgroundColor: `${tool.color}20` }}
+                        className="w-12 h-12 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform"
+                        style={{ backgroundColor: `${cat.color}15` }}
                       >
-                        {tool.icon}
+                        <Icon className="w-5 h-5" style={{ color: cat.color }} />
                       </div>
-                      <span
-                        className="px-3 py-1 rounded-full text-xs font-medium"
-                        style={{
-                          backgroundColor: statusConfig.bg,
-                          color: statusConfig.color
-                        }}
-                      >
-                        {statusConfig.label}
+                      <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-medium ${status.bg} ${status.text}`}>
+                        {status.label}
                       </span>
                     </div>
-
-                    {/* Content */}
-                    <h3 className="text-lg font-display font-semibold mb-2 group-hover:text-atlantean-teal-aqua transition-colors">
-                      {tool.name}
+                    <h3 className="font-display text-lg font-semibold mb-2 group-hover:text-[#7fffd4] transition-colors">
+                      {cat.title}
                     </h3>
-                    <p className="text-sm text-text-secondary mb-4">
-                      {tool.description}
-                    </p>
-
-                    {/* Features */}
-                    <div className="flex flex-wrap gap-2">
-                      {tool.features.map((feature) => (
-                        <span
-                          key={feature}
-                          className="px-2 py-1 rounded-md text-xs bg-white/[0.04] text-text-muted"
-                        >
-                          {feature}
+                    <p className="text-sm text-neutral-400 mb-4">{cat.description}</p>
+                    <div className="flex flex-wrap gap-1.5 mb-4">
+                      {cat.tools.map((tool) => (
+                        <span key={tool} className="text-xs px-2 py-0.5 rounded-full bg-white/5 text-neutral-500">
+                          {tool}
                         </span>
                       ))}
                     </div>
-
-                    {/* Arrow */}
-                    <div className="mt-4 flex items-center gap-2 text-sm opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: tool.color }}>
-                      <span>Open tool</span>
-                      <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                      </svg>
+                    <div className="flex items-center gap-2 text-sm opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: cat.color }}>
+                      <span>Open tools</span>
+                      <PhArrowRight className="w-3.5 h-3.5" />
                     </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </m.section>
+
+          {/* Featured Tool Spotlight */}
+          <section className="py-12 border-t border-white/5">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#ffd700]/20 bg-[#ffd700]/8 mb-6">
+              <PhSparkle className="w-3 h-3 text-[#ffd700]" />
+              <span className="text-xs font-mono tracking-widest uppercase text-[#ffd700]">
+                Featured
+              </span>
+            </div>
+            <Link
+              href={FEATURED_TOOL.href}
+              className="group block bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:border-[#ffd700]/30 transition-all duration-300 overflow-hidden relative"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-[#ffd700]/5 via-transparent to-[#a855f7]/5 pointer-events-none" />
+              <div className="relative flex flex-col lg:flex-row gap-8">
+                <div className="flex-1">
+                  <div
+                    className="w-14 h-14 rounded-xl flex items-center justify-center mb-5"
+                    style={{ backgroundColor: `${FEATURED_TOOL.color}15` }}
+                  >
+                    <FEATURED_TOOL.icon className="w-6 h-6" style={{ color: FEATURED_TOOL.color }} />
                   </div>
-                </Link>
-              );
-            })}
-          </div>
-        </section>
-
-        {/* Coming Soon */}
-        <section>
-          <h2 className="text-xl font-display font-semibold mb-6 flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-gray-500" />
-            Coming Soon
-          </h2>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {comingTools.map((tool) => (
-              <div
-                key={tool.id}
-                className="p-6 rounded-2xl border border-white/[0.04] bg-cosmic-surface/20 opacity-60"
-              >
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center text-xl mb-4"
-                  style={{ backgroundColor: `${tool.color}10` }}
-                >
-                  {tool.icon}
+                  <h3 className="font-display text-2xl font-bold mb-3 group-hover:text-[#ffd700] transition-colors">
+                    {FEATURED_TOOL.title}
+                  </h3>
+                  <p className="text-neutral-400 leading-relaxed mb-6">{FEATURED_TOOL.description}</p>
+                  <div className="inline-flex items-center gap-2 text-[#ffd700]">
+                    <span className="font-semibold">Explore Luminors</span>
+                    <PhArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </div>
                 </div>
-                <h3 className="font-display font-semibold mb-2">{tool.name}</h3>
-                <p className="text-sm text-text-muted">{tool.description}</p>
+                <div className="flex lg:flex-col gap-4 lg:gap-3 lg:w-48">
+                  {FEATURED_TOOL.stats.map((stat) => (
+                    <div key={stat.label} className="bg-white/5 rounded-xl px-4 py-3 flex-1 lg:flex-none">
+                      <div className="text-lg font-display font-bold text-[#ffd700]">{stat.value}</div>
+                      <div className="text-xs text-neutral-500">{stat.label}</div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            ))}
-          </div>
-        </section>
+            </Link>
+          </section>
 
-        {/* Request Tool */}
-        <div className="mt-16 p-8 rounded-2xl liquid-glass text-center">
-          <h3 className="text-xl font-display font-semibold mb-2">Need something else?</h3>
-          <p className="text-text-secondary mb-6">
-            We're always building new tools. Let us know what would help your creative process.
-          </p>
-          <a
-            href="https://github.com/frankxai/arcanea/issues/new"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/[0.12] text-white hover:bg-white/[0.04] transition-all"
-          >
-            Request a Tool
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-            </svg>
-          </a>
-        </div>
-      </main>
-    </div>
+          {/* Integrations */}
+          <section className="py-12 border-t border-white/5 pb-20">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#78a6ff]/20 bg-[#78a6ff]/8 mb-6">
+              <PhLightning className="w-3 h-3 text-[#78a6ff]" />
+              <span className="text-xs font-mono tracking-widest uppercase text-[#78a6ff]">
+                Powered By
+              </span>
+            </div>
+            <h2 className="text-2xl font-display font-bold mb-8">Integrations</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              {INTEGRATIONS.map((int) => {
+                const Icon = int.icon;
+                return (
+                  <div
+                    key={int.name}
+                    className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 flex items-center gap-3"
+                  >
+                    <Icon className="w-5 h-5" style={{ color: int.color }} />
+                    <span className="font-mono text-sm text-neutral-300">{int.name}</span>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Request */}
+            <div className="mt-12 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 text-center">
+              <PhChatCircleDots className="w-8 h-8 text-neutral-500 mx-auto mb-4" />
+              <h3 className="text-xl font-display font-semibold mb-2">Need something else?</h3>
+              <p className="text-neutral-400 mb-6 max-w-lg mx-auto">
+                We are always building new tools. Let us know what would help your creative process.
+              </p>
+              <a
+                href="https://github.com/arcanea-ai/arcanea/issues/new"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/10 text-white hover:bg-white/5 transition-all"
+              >
+                <PhGithubLogo className="w-4 h-4" />
+                Request a Tool
+              </a>
+            </div>
+          </section>
+        </main>
+      </div>
+    </MotionProvider>
   );
 }
