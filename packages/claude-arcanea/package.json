@@ -6,7 +6,8 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "claude-arcanea": "./dist/cli.js"
+    "claude-arcanea": "./dist/cli.js",
+    "carc": "./dist/cli.js"
   },
   "exports": {
     ".": {
