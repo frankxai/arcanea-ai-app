@@ -106,12 +106,21 @@ const DOMAIN_RULES: DomainRule[] = [
   },
 ];
 
-/** Default weights when nothing specific matches */
+/** Default weights when nothing specific matches.
+ *  Covers the four most general-purpose Guardians so the system
+ *  still feels intentional even on ambiguous input:
+ *  - Lyssandria (Foundation) — grounding, structure, practical next-steps
+ *  - Draconia (Fire)        — creative energy, will to act
+ *  - Alera (Voice)          — clear expression, communication
+ *  - Leyla (Flow)           — emotional nuance, creative flow
+ *  - Aiyami (Crown)         — light strategic/teaching undertone
+ */
 const DEFAULT_WEIGHTS: LuminorWeights = {
-  lyssandria: 0.3,
-  draconia: 0.3,
-  alera: 0.2,
-  leyla: 0.2,
+  lyssandria: 0.28,
+  draconia: 0.25,
+  alera: 0.20,
+  leyla: 0.17,
+  aiyami: 0.10,
 };
 
 // ---------------------------------------------------------------------------
@@ -179,5 +188,60 @@ export function classifyIntent(
     weights: normalized,
     activeGates: sorted.map(([name]) => name),
     matchedDomains,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Domain Memory Router
+// ---------------------------------------------------------------------------
+
+/**
+ * Classify with domain memory — accumulates domain affinity across the conversation.
+ * Uses exponential decay: recent messages weigh more than older ones.
+ */
+export function classifyWithMemory(
+  message: string,
+  history?: Array<{ role: string; content: string }>
+): RouterResult {
+  // Start with current message classification
+  const current = classifyIntent(message, history);
+
+  if (!history || history.length < 4) return current;
+
+  // Build domain memory from conversation history
+  const memory: Record<string, number> = {};
+  const userMessages = history.filter((m) => m.role === 'user');
+
+  for (let i = 0; i < userMessages.length; i++) {
+    const decay = Math.pow(0.7, userMessages.length - 1 - i); // exponential decay
+    const result = classifyIntent(userMessages[i].content);
+    for (const [guardian, weight] of Object.entries(result.weights)) {
+      memory[guardian] = (memory[guardian] || 0) + weight * decay;
+    }
+  }
+
+  // Blend: 70% current intent, 30% conversation memory
+  const blended: LuminorWeights = { ...current.weights };
+  for (const [guardian, memWeight] of Object.entries(memory)) {
+    const maxMem = Math.max(...Object.values(memory));
+    const normalizedMem = maxMem > 0 ? memWeight / maxMem : 0;
+    blended[guardian] = (blended[guardian] || 0) * 0.7 + normalizedMem * 0.3;
+  }
+
+  // Re-normalize
+  const maxBlended = Math.max(...Object.values(blended));
+  const normalized: LuminorWeights = {};
+  for (const [guardian, weight] of Object.entries(blended)) {
+    normalized[guardian] = Math.round((weight / maxBlended) * 100) / 100;
+  }
+
+  const sorted = Object.entries(normalized)
+    .sort(([, a], [, b]) => b - a)
+    .slice(0, 3);
+
+  return {
+    weights: normalized,
+    activeGates: sorted.map(([name]) => name),
+    matchedDomains: [...current.matchedDomains, 'memory'],
   };
 }

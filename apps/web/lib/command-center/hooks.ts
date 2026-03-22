@@ -332,8 +332,8 @@ export function useApproveAsset() {
     setLoading(true);
     const supabase = getSupabase();
     const { error } = await supabase
-      .from('asset_metadata')
-      .update({ status: 'approved' as const, updated_at: new Date().toISOString() })
+      .from('asset_metadata' as never)
+      .update({ status: 'approved', updated_at: new Date().toISOString() })
       .eq('id', id);
     setLoading(false);
     return { error };
@@ -349,8 +349,8 @@ export function useRejectAsset() {
     setLoading(true);
     const supabase = getSupabase();
     const { error } = await supabase
-      .from('asset_metadata')
-      .update({ status: 'rejected' as const, updated_at: new Date().toISOString() })
+      .from('asset_metadata' as never)
+      .update({ status: 'rejected', updated_at: new Date().toISOString() })
       .eq('id', id);
     setLoading(false);
     return { error };
@@ -367,8 +367,8 @@ export function useBulkApprove() {
     setLoading(true);
     const supabase = getSupabase();
     const { error } = await supabase
-      .from('asset_metadata')
-      .update({ status: 'approved' as const, updated_at: new Date().toISOString() })
+      .from('asset_metadata' as never)
+      .update({ status: 'approved', updated_at: new Date().toISOString() })
       .in('id', ids);
     setLoading(false);
     return { error };

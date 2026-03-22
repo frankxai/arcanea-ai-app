@@ -14,7 +14,7 @@
  */
 
 import { buildRootPrompt } from './arcanea-code';
-import { classifyIntent, type RouterResult } from './router';
+import { classifyWithMemory, type RouterResult } from './router';
 import { blendPrompts } from './luminor-prompts';
 import {
   resolveSwarm,
@@ -94,7 +94,7 @@ export function createArcanea(
   const root = buildRootPrompt(personalCode);
 
   // 2. Route: classify intent → weighted Guardian activations
-  const router = classifyIntent(message, history);
+  const router = classifyWithMemory(message, history);
 
   // 3. Blend: top Guardian expert fragments
   const expertLayer = blendPrompts(router.weights);

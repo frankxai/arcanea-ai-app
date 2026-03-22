@@ -28,7 +28,7 @@ export async function GET(request: Request) {
         images: {
           hero: images.hero,
           divineBond: images.divineBond,
-          gallery: images.gallery,
+          gallery: [...images.gallery],
         },
         media: media
           ? {
