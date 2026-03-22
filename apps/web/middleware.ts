@@ -13,10 +13,28 @@ export async function middleware(request: NextRequest) {
   }
 
   return updateSession(request, {
-    protectedPrefixes: ['/profile', '/studio', '/onboarding', '/dashboard', '/settings'],
+    protectedPrefixes: [
+      '/profile', '/studio', '/onboarding', '/dashboard', '/settings',
+      '/chat', '/imagine', '/forge', '/workspace',
+    ],
+    protectedApiPrefixes: [
+      '/api/ai/', '/api/chat/', '/api/conversations/', '/api/creations/',
+      '/api/council/', '/api/collections/', '/api/likes', '/api/follows',
+      '/api/comments', '/api/bonds/', '/api/feedback', '/api/notifications/',
+      '/api/gates/', '/api/analytics/', '/api/studio/', '/api/storage/',
+      '/api/upload', '/api/luminors/', '/api/forge/', '/api/imagine/',
+      '/api/media/', '/api/create', '/api/command/', '/api/projects/',
+      '/api/profile/', '/api/arcs/', '/api/apl/', '/api/activity/',
+    ],
+    publicApiPrefixes: [
+      '/api/health', '/api/stripe/webhook', '/api/search/',
+      '/api/trending', '/api/leaderboard', '/api/gallery',
+      '/api/community/stats', '/api/guardians/', '/api/profiles/',
+      '/api/v1/',
+    ],
     authPrefixes: ['/auth/login', '/auth/signup'],
     loginPath: '/auth/login',
-    authenticatedRedirectPath: '/dashboard',
+    authenticatedRedirectPath: '/chat',
   });
 }
 

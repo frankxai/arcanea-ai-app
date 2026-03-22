@@ -11,6 +11,8 @@ import { getSupabaseEnv } from '@/lib/supabase/env';
 
 interface UpdateSessionOptions {
   protectedPrefixes?: string[];
+  protectedApiPrefixes?: string[];
+  publicApiPrefixes?: string[];
   authPrefixes?: string[];
   loginPath?: string;
   authenticatedRedirectPath?: string;
@@ -99,7 +101,23 @@ export async function updateSession(
   const authenticatedRedirectPath = options.authenticatedRedirectPath ?? '/chat';
   const isProtectedRoute = matchesPrefix(pathname, options.protectedPrefixes);
   const isAuthRoute = matchesPrefix(pathname, options.authPrefixes);
+  const isApiRoute = pathname.startsWith('/api/');
 
+  // API route auth: block unauthenticated access to protected API routes
+  if (isApiRoute && !user) {
+    const isPublicApi = matchesPrefix(pathname, options.publicApiPrefixes);
+    const isProtectedApi = matchesPrefix(pathname, options.protectedApiPrefixes);
+
+    // If explicitly protected, or if it's an API route not explicitly public → block
+    if (isProtectedApi || (!isPublicApi && pathname.startsWith('/api/'))) {
+      return NextResponse.json(
+        { success: false, error: { code: 'UNAUTHORIZED', message: 'Authentication required' } },
+        { status: 401 }
+      );
+    }
+  }
+
+  // Page route auth: redirect to login
   if (isProtectedRoute && !user) {
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.pathname = loginPath;
