@@ -24,6 +24,9 @@ function getSupabase() {
   return createClient();
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const ASSET_TABLE = 'asset_metadata' as any;
+
 // ---------------------------------------------------------------------------
 // useAssets — fetch + realtime subscribe to assets
 // ---------------------------------------------------------------------------
@@ -38,7 +41,7 @@ export function useAssets(filter: InboxFilter) {
     const supabase = getSupabase();
 
     let query = supabase
-      .from('asset_metadata' as never)
+      .from(ASSET_TABLE)
       .select('*', { count: 'exact' })
       .order('created_at', { ascending: false });
 
@@ -217,7 +220,7 @@ export function useCommandStats() {
 
     // Fetch all assets (lightweight — only the columns we need for stats)
     const { data: assets, error: assetsError } = await supabase
-      .from('asset_metadata' as never)
+      .from(ASSET_TABLE)
       .select('status, guardian, element, quality_tier');
 
     const { data: agents, error: agentsError } = await supabase
@@ -332,7 +335,7 @@ export function useApproveAsset() {
     setLoading(true);
     const supabase = getSupabase();
     const { error } = await supabase
-      .from('asset_metadata' as never)
+      .from(ASSET_TABLE)
       .update({ status: 'approved', updated_at: new Date().toISOString() })
       .eq('id', id);
     setLoading(false);
@@ -349,7 +352,7 @@ export function useRejectAsset() {
     setLoading(true);
     const supabase = getSupabase();
     const { error } = await supabase
-      .from('asset_metadata' as never)
+      .from(ASSET_TABLE)
       .update({ status: 'rejected', updated_at: new Date().toISOString() })
       .eq('id', id);
     setLoading(false);
@@ -367,7 +370,7 @@ export function useBulkApprove() {
     setLoading(true);
     const supabase = getSupabase();
     const { error } = await supabase
-      .from('asset_metadata' as never)
+      .from(ASSET_TABLE)
       .update({ status: 'approved', updated_at: new Date().toISOString() })
       .in('id', ids);
     setLoading(false);
