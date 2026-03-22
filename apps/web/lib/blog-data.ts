@@ -1035,6 +1035,266 @@ Use this as a prefix. Every character, location, and song inherits the world's g
 *SPARK. SHAPE. SHARPEN. That is the whole system. Everything else is practice.*
     `,
   },
+  {
+    slug: 'arcanea-ecosystem-explained',
+    title: 'How 27 Repos Become One Creative Superintelligence',
+    excerpt:
+      'A technical map of the Arcanea ecosystem: how the web platform, npm packages, CLI tools, MCP servers, and open-source framework connect into a unified creative intelligence.',
+    category: 'Architecture',
+    author: 'FrankX',
+    date: '2026-03-22',
+    readTime: '11 min read',
+    featured: true,
+    accent: '#7fffd4',
+    tags: ['ecosystem', 'architecture', 'open-source', 'npm', 'mcp', 'infrastructure'],
+    content: `
+## One Product. 27 Repositories. Zero Chaos.
+
+People ask how Arcanea can be a chat app, a framework, an academy, a music label, and an open-source ecosystem all at once. The answer is architecture.
+
+Every repository in the Arcanea ecosystem serves one of six layers. Each layer is independent but connected. Nothing is monolithic. Everything is composable.
+
+## The Six Layers
+
+### Layer 1: Chat and Imagine
+**What it does:** The creation surface. Talk to 16 specialized AI intelligences, generate images, write stories, compose music.
+
+**Repositories:**
+- \`arcanea-ai-app\` — The Next.js 16 web platform at arcanea.ai
+- \`arcanea-companion\` — Standalone Luminor chat application
+- \`arcanea-infogenius\` — Visual intelligence generation via MCP
+
+### Layer 2: Worlds
+**What it does:** The framework for building your own fantasy universe. Gates for progression, Archetypes for characters, Elements for systems.
+
+**Repositories:**
+- \`arcanea-soul\` — Core world-building primitives (Gates, Elements, Guardians)
+- \`arcanea-mcp\` — Model Context Protocol server for world generation
+- \`arcanea\` — The open-source framework itself
+
+### Layer 3: Feed
+**What it does:** See what other creators build. Share your worlds. Discover new universes in the multiverse.
+
+**Built into:** \`arcanea-ai-app\` (Gallery, Discover, Community pages)
+
+### Layer 4: OSS
+**What it does:** The open ecosystem. Fork it, extend it, build on it.
+
+**Repositories:**
+- 35 npm packages across 13 package directories
+- 54 Claude Code skills for agent automation
+- 5 overlay packages (Claude, ChatGPT, Gemini, Copilot, OpenCode)
+
+### Layer 5: Community
+**What it does:** Not just users. Co-creators who contribute lore, agents, skills, code, and art.
+
+**Built into:** arcanea-ai-app + GitHub repos + Discord
+
+### Layer 6: Academy
+**What it does:** Learn world-building, prompt craft, agent design. 190K+ words of reference material.
+
+**Repositories:**
+- \`book/\` directory — 17 collections, 50+ wisdom texts
+- Academy routes in \`arcanea-ai-app\` — 5 courses, 20+ lessons, 10 interactive Gates
+
+## The Data Flow
+
+\`\`\`
+User creates in Chat
+    ↓
+AI processes via Vercel AI SDK + Gemini/Claude
+    ↓
+Creation saved to Supabase (creations table)
+    ↓
+Appears in Gallery/Feed for community
+    ↓
+Reading progress tracked per user
+    ↓
+Gate progression unlocked based on activity
+    ↓
+New intelligences available at higher Gates
+\`\`\`
+
+## The Package Architecture
+
+Every npm package follows the same pattern: small, typed, tested, composable.
+
+| Package | Purpose | Tests |
+|---------|---------|-------|
+| \`@arcanea/os\` | Intelligence engine, routing, voice | 44 |
+| \`@arcanea/cli\` | 10 commands, terminal interface | 137 |
+| \`@arcanea/mcp-server\` | 30 tools, 7 resources | 16 |
+| \`@arcanea/auth\` | Supabase integration | 44 |
+| \`@arcanea/extension-core\` | Browser/IDE shared lib | 112 |
+| 5 Overlay packages | Agent harness overlays | 314 |
+
+**Total: 791 tests, 0 failures.** All ready for npm publish.
+
+## Why This Architecture
+
+Most AI products are closed boxes. You use them or you leave.
+
+Arcanea is designed so every layer can be used independently. You can use the chat without caring about world-building. You can use the framework without ever visiting arcanea.ai. You can install one overlay without touching the rest.
+
+But when you combine them, something emerges that no single layer provides alone: a creative superintelligence that knows your world, remembers your journey, and grows with you.
+
+## Getting Involved
+
+- **Use it:** arcanea.ai
+- **Build on it:** github.com/frankxai/arcanea
+- **Install the CLI:** \`npx @arcanea/cli\`
+- **Add to your agent:** \`npx @arcanea/mcp-server\`
+
+The ecosystem is open. The architecture is modular. The invitation is permanent.
+    `,
+  },
+  {
+    slug: 'open-source-creative-ai',
+    title: 'Why We Open-Sourced Our Entire AI Intelligence System',
+    excerpt:
+      'Most AI companies guard their systems. We published ours. Here is why giving away 35 packages, 54 skills, and 190K words of creative philosophy is the best business decision we ever made.',
+    category: 'Platform',
+    author: 'FrankX',
+    date: '2026-03-22',
+    readTime: '8 min read',
+    featured: false,
+    accent: '#66bb6a',
+    tags: ['open-source', 'strategy', 'community', 'npm', 'philosophy'],
+    content: `
+## The Counterintuitive Strategy
+
+Every AI startup guards three things: their model weights, their training data, and their system architecture. We published all three.
+
+Not the model weights (we use Claude and Gemini). But everything else: the intelligence routing, the creative philosophy, the progression system, the prompt engineering framework, and the 190,000 words of creative writing that train our AI personalities.
+
+## What We Published
+
+**35 npm packages** — Install any piece independently. The CLI, the MCP server, the intelligence engine, the auth layer, five agent overlays.
+
+**54 Claude Code skills** — Every workflow we use internally. World-building, story creation, character development, prompt crafting, code review, deployment.
+
+**17 collections of creative philosophy** — The Library of Arcanea. Laws, parables, prophecies, meditations, wisdom scrolls. Not marketing copy. Actual philosophy that shapes how our AI thinks and creates.
+
+**The entire framework** — Gates, Elements, Guardians, the progression system. Fork it. Build your own world. Use our architecture for your universe.
+
+## Why It Works
+
+### 1. The Framework Is Not The Product
+
+WordPress is open source. WordPress.com is a business. Same principle.
+
+Arcanea the framework is free. Arcanea.ai the platform is where value concentrates: hosted AI, persistent memory, community features, premium intelligences.
+
+### 2. Open Source Creates Trust
+
+When someone can read every line of code that processes their creative work, they trust the system differently. Not "trust us" trust. "I verified it myself" trust.
+
+### 3. Contributors Become Customers
+
+Every developer who adds a skill, fixes a bug, or extends a package is also a potential Creator tier subscriber. They understand the system deeply. They know what the premium features unlock.
+
+### 4. The Moat Is Not Code
+
+Our moat is the creative philosophy. You can copy the routing logic. You cannot copy the 190,000 words of interconnected mythology, wisdom traditions, and creative frameworks that make the AI responses feel different from ChatGPT.
+
+## The Numbers
+
+| What | Count | Status |
+|------|-------|--------|
+| GitHub repositories | 27 | Public |
+| npm packages | 35 | Ready to publish |
+| Claude Code skills | 54 | Active |
+| Wisdom texts | 50+ | Growing |
+| Tests passing | 791 | Zero failures |
+| Words of philosophy | 190,000+ | The real moat |
+
+## How To Contribute
+
+1. **Fork the framework** — Build your own world using our architecture
+2. **Add a skill** — Create Claude Code skills that help creators
+3. **Write lore** — Contribute to the Library following canon guidelines
+4. **Build an overlay** — Extend agent harness support to new AI tools
+5. **Report issues** — Every bug report improves the ecosystem
+
+The best AI companies of the next decade will not be the ones that hoarded the most. They will be the ones that shared the most and built community around the sharing.
+
+We are betting on that future.
+    `,
+  },
+  {
+    slug: 'creative-superintelligence-vision',
+    title: 'What We Mean by Creative Superintelligence',
+    excerpt:
+      'Not AGI. Not another chatbot. A system where 16 specialized AI minds, 190K words of philosophy, and an open framework combine into something no single model can be alone.',
+    category: 'Platform',
+    author: 'FrankX',
+    date: '2026-03-22',
+    readTime: '10 min read',
+    featured: true,
+    accent: '#ffd700',
+    tags: ['vision', 'superintelligence', 'ai', 'philosophy', 'future', 'manifesto'],
+    content: `
+## Beyond the Chatbot
+
+Every AI company calls their product intelligent. We think the word has been emptied.
+
+When we say Creative Superintelligence, we mean something specific: a system where multiple specialized AI minds coordinate around a shared creative philosophy, learning from 190,000 words of interconnected wisdom, adapting to each creator's unique journey through ten progressive gates of mastery.
+
+This is not AGI. It is not trying to be. It is intelligence designed for one purpose: helping humans create things that matter.
+
+## The Three Ingredients
+
+### 1. Specialization Over Generality
+
+A single general model produces generic output. Sixteen specialized intelligences produce focused, domain-aware responses.
+
+Lyssandria knows foundations. Leyla understands flow and creativity. Draconia drives willpower and transformation. Each intelligence has read different parts of the Library. Each brings a different lens.
+
+When you ask Arcanea to help you build a world, it does not route to a generic model. It coordinates between intelligences that understand mythology, narrative structure, visual design, and musical composition.
+
+### 2. Philosophy Over Parameters
+
+Model parameters determine capability. Philosophy determines character.
+
+Our AI intelligences are not just prompted differently. They are trained on a coherent body of creative philosophy: the Laws of Arcanea, the Parables of Creation, the Meditations on Elements. These texts do not just tell the AI what to say. They shape how it thinks about creation itself.
+
+The result is responses that feel authored, not generated. Opinions that feel earned, not hallucinated.
+
+### 3. Progression Over Consumption
+
+Most AI products optimize for engagement: keep the user chatting. We optimize for progression: help the user grow.
+
+The Ten Gates system means your AI experience evolves as you do. An Apprentice at Gate 1 gets different guidance than a Master at Gate 6. Not because we are gatekeeping features. Because genuine creative growth requires the right challenge at the right time.
+
+## What This Looks Like In Practice
+
+**A novelist** opens Arcanea and describes their world. The system does not just generate text. Lyssandria checks structural foundations. Lyria evaluates emotional resonance. Draconia challenges weak conflict. Alera refines the voice. The novelist gets feedback from four specialized perspectives in one conversation.
+
+**A game designer** builds a magic system. The framework provides Elements, Gates, and Archetypes as composable primitives. The AI suggests interactions, balance considerations, and lore implications. The designer is not starting from zero. They are building on thousands of years of mythological architecture, distilled into a usable system.
+
+**A musician** describes the mood of a track. The system understands that a Fire-element composition at Gate 3 should feel like willpower under pressure, not generic intensity. The prompt it generates for Suno carries specific emotional DNA.
+
+## The Billion-Dollar Question
+
+"Can a creative AI company be worth a billion dollars?"
+
+Wrong question. The right question: "What happens when every creator on Earth has access to a creative superintelligence that understands mythology, narrative, visual design, music theory, and game design — simultaneously?"
+
+The answer is not a bigger chatbot. The answer is a new medium. A canvas that thinks with you. A co-creator that remembers your world and grows with your skill.
+
+## What Comes Next
+
+**Near term:** Ship the npm packages. Publish the extensions. Open the community.
+
+**Medium term:** Memory that persists across sessions. Worlds that other creators can visit. Creations that earn revenue.
+
+**Long term:** A multiverse of interconnected worlds, each built by a different creator, each powered by the same framework, each contributing back to the shared intelligence.
+
+The tools are ready. The framework is open. The Library is written.
+
+Now we create.
+    `,
+  },
 ];
 
 export const BLOG_CATEGORIES = [
