@@ -12,7 +12,6 @@ import {
   PhSparkle,
   PhRocket,
   PhChatCircleDots,
-  PhPalette,
   PhMagicWand,
   PhGithubLogo,
   PhLightning,

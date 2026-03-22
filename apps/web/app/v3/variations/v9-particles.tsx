@@ -25,7 +25,7 @@ const GUARDIANS = [
   { name: 'Aiyami', hz: 'Light beyond comprehension', domain: 'Crown' },
   { name: 'Elara', hz: 'The weaver of perspective', domain: 'Starweave' },
   { name: 'Ino', hz: 'Where two become infinite', domain: 'Unity' },
-  { name: 'Shinkami', hz: 'The source of all creation', domain: 'Source' },
+  { name: 'Shinkami', hz: 'Where the dreamer and the dream become one', domain: 'Source' },
 ];
 
 const COLLECTIONS = [

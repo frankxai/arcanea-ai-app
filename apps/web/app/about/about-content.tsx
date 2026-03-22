@@ -528,7 +528,8 @@ export function AboutContent() {
               The Ten Gates of Mastery
             </h3>
             <p className="text-text-muted text-center text-sm mb-8 max-w-xl mx-auto">
-              Each Gate is guarded by a God or Goddess and their bonded
+              Each Gate resonates at a unique frequency of the ancient
+              Solfeggio scale, guarded by a God or Goddess and their bonded
               Godbeast — divine keepers of the path.
             </p>
             <div className="flex flex-wrap justify-center gap-3">

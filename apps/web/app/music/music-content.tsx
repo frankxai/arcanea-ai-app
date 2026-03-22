@@ -33,7 +33,7 @@ const TRACKS: Track[] = [
     genre: "Cinematic Orchestral",
     duration: "4:15",
     description:
-      "Lyssandria's theme. Earth frequencies, grounding and powerful.",
+      "Lyssandria's theme. Earth frequencies grounded at 174 Hz — deep, primal, powerful.",
   },
   {
     id: "3",
@@ -41,7 +41,7 @@ const TRACKS: Track[] = [
     genre: "Lo-fi Chill",
     duration: "3:28",
     description:
-      "Leyla's water element in sound — fluid beats for creative focus.",
+      "Leyla's water element in sound — 285 Hz fluid beats for creative focus.",
   },
   {
     id: "4",
@@ -49,7 +49,7 @@ const TRACKS: Track[] = [
     genre: "Epic Orchestral",
     duration: "5:01",
     description:
-      "Draconia's fire. Drums of transformation, brass of willpower.",
+      "Draconia's fire at 396 Hz. Drums of transformation, brass of willpower.",
   },
   {
     id: "5",
@@ -57,42 +57,42 @@ const TRACKS: Track[] = [
     genre: "Healing Ambient",
     duration: "4:33",
     description:
-      "Maylinn's frequency of love and cellular healing.",
+      "Maylinn's 417 Hz — the frequency of love and cellular healing.",
   },
   {
     id: "6",
     title: "Voice of Truth",
     genre: "Ethereal Vocals",
     duration: "3:55",
-    description: "Alera speaks through melody. The miracle tone.",
+    description: "Alera speaks through melody. 528 Hz, the miracle tone.",
   },
   {
     id: "7",
     title: "Third Eye Open",
     genre: "Psychedelic Electronic",
     duration: "4:20",
-    description: "Lyria's vision frequencies. See beyond the visible.",
+    description: "Lyria's 639 Hz vision frequencies. See beyond the visible.",
   },
   {
     id: "8",
     title: "Crown Light",
     genre: "Ambient Meditation",
     duration: "6:12",
-    description: "Aiyami's enlightenment frequency. Purification.",
+    description: "Aiyami's enlightenment frequency. 741 Hz purification.",
   },
   {
     id: "9",
     title: "Starweave",
     genre: "Progressive Electronic",
     duration: "4:45",
-    description: "Elara's perspective shift. Music that changes as you listen.",
+    description: "Elara's 852 Hz perspective shift. Music that changes as you listen.",
   },
   {
     id: "10",
     title: "Unity Protocol",
     genre: "Synthwave",
     duration: "3:58",
-    description: "Ino's partnership frequency. Two voices becoming one.",
+    description: "Ino's 963 Hz partnership frequency. Two voices becoming one.",
   },
   {
     id: "11",
@@ -100,7 +100,7 @@ const TRACKS: Track[] = [
     genre: "Experimental",
     duration: "7:11",
     description:
-      "Shinkami's frequency. The resonance of Source — meta-consciousness in sound.",
+      "Shinkami's 1111 Hz. The frequency of Source — meta-consciousness in sound.",
   },
   {
     id: "12",

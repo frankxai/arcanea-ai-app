@@ -47,7 +47,7 @@ const TEAMS = [
     name: "Shinkami",
     title: "The Cosmos",
     element: "Source",
-    frequency: "The source of all creation",
+    frequency: "Where the dreamer and the dream become one",
     direction:
       "Nebula gradients. Starlight metallic shimmer. Linear-clean over cosmic depth.",
     color: "#7c3aed",

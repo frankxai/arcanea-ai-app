@@ -247,7 +247,7 @@ export const GUARDIANS: Guardian[] = [
   {
     name: "Shinkami",
     gate: "Source",
-    frequency: "The source of all creation",
+    frequency: "Where the dreamer and the dream become one",
     domain: "Meta-consciousness",
     element: "All",
     color: "from-gold-bright/30 to-amber-700/20",

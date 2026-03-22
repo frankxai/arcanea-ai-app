@@ -116,7 +116,7 @@ const GUARDIANS = [
   {
     name: "Shinkami",
     gate: "Source",
-    freq: "The source of all creation",
+    freq: "Where the dreamer and the dream become one",
     element: "Spirit",
     quote:
       "You are not the vessel. You are the water and the pouring.",

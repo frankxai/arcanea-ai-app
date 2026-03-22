@@ -44,7 +44,7 @@ const GATE_FREQUENCIES: Record<string, string> = {
   Crown: 'Light beyond comprehension',
   Starweave: 'The weaver of perspective',
   Unity: 'Where two become infinite',
-  Source: 'The source of all creation',
+  Source: 'Where the dreamer and the dream become one',
 }
 
 interface FormData {

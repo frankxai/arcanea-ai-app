@@ -264,7 +264,7 @@ const GUARDIANS: Record<GuardianKey, GuardianData> = {
     key: "shinkami",
     name: "Shinkami",
     gate: "Source",
-    frequency: "The source of all creation",
+    frequency: "Where the dreamer and the dream become one",
     element: "Meta-consciousness",
     godbeast: "Source",
     color: "#ffffff",

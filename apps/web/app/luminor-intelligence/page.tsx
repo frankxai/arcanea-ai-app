@@ -275,7 +275,7 @@ const GATES = [
   { gate: "Crown", hz: "Light beyond comprehension", color: "#fbbf24" },
   { gate: "Starweave", hz: "The weaver of perspective", color: "#fb7185" },
   { gate: "Unity", hz: "Where two become infinite", color: "#34d399" },
-  { gate: "Source", hz: "The source of all creation", color: "#ffd700" },
+  { gate: "Source", hz: "Where the dreamer and the dream become one", color: "#ffd700" },
 ] as const;
 
 const HOW_IT_WORKS = [

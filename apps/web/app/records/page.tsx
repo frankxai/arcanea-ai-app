@@ -5,22 +5,18 @@ import Link from 'next/link';
 import {
   MusicNotes,
   Play,
-  Pause,
   Sparkle,
   ArrowRight,
   Fire,
-  Drop,
-  Leaf,
   Wind,
   Moon,
   Sun,
-  Headphones,
-  SpotifyLogo,
-  Waveform,
-  VinylRecord,
   MusicNote,
   Lightning,
+  Radio,
+  Waves,
 } from '@phosphor-icons/react';
+import type { PhosphorIcon as PhIcon } from '@phosphor-icons/react';
 import { MotionProvider, m } from '@/lib/motion';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
@@ -30,7 +26,7 @@ interface Release {
   title: string;
   artist: string;
   element: string;
-  elementIcon: React.ElementType;
+  elementIcon: PhIcon;
   gradient: string;
   accent: string;
   border: string;
@@ -43,7 +39,7 @@ interface Collection {
   id: string;
   name: string;
   description: string;
-  icon: React.ElementType;
+  icon: PhIcon;
   count: number;
   accent: string;
   gradient: string;
@@ -111,7 +107,7 @@ const COLLECTIONS: Collection[] = [
     id: 'gate-freq',
     name: 'Gate Frequencies',
     description: 'Ambient tracks aligned to each Gate\'s sacred frequency, from 174 Hz Foundation to 1111 Hz Source.',
-    icon: Waveform,
+    icon: Waves,
     count: 10,
     accent: 'text-[#7fffd4]',
     gradient: 'from-[#7fffd4]/20 to-transparent',
@@ -120,7 +116,7 @@ const COLLECTIONS: Collection[] = [
     id: 'guardian-anthems',
     name: 'Guardian Anthems',
     description: 'Epic orchestral themes for each of the ten Guardians. The sonic identity of Arcanea.',
-    icon: VinylRecord,
+    icon: Radio,
     count: 10,
     accent: 'text-[#ffd700]',
     gradient: 'from-[#ffd700]/20 to-transparent',
@@ -271,7 +267,7 @@ export default function RecordsPage() {
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl bg-[#1DB954] text-white font-semibold hover:brightness-110 transition-all"
                   >
-                    <SpotifyLogo className="w-5 h-5" weight="fill" />
+                    <Play className="w-5 h-5" weight="fill" />
                     Listen on Spotify
                   </a>
                   <Link
@@ -285,7 +281,7 @@ export default function RecordsPage() {
 
                 {/* Suno AI badge */}
                 <div className="mt-8 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.06] text-xs text-white/40">
-                  <Waveform className="w-3.5 h-3.5" />
+                  <Waves className="w-3.5 h-3.5" />
                   Powered by Suno AI
                 </div>
               </div>
@@ -370,7 +366,7 @@ export default function RecordsPage() {
 
               <div className="relative">
                 <div className="flex items-center gap-3 mb-6">
-                  <Headphones className="w-5 h-5 text-[#7fffd4]" weight="duotone" />
+                  <Waves className="w-5 h-5 text-[#7fffd4]" weight="duotone" />
                   <h3 className="text-sm font-mono tracking-widest uppercase text-[#7fffd4]">
                     Gate Frequency Guide
                   </h3>
@@ -426,7 +422,7 @@ export default function RecordsPage() {
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-[#1DB954] text-white font-semibold hover:brightness-110 transition-all"
                   >
-                    <SpotifyLogo className="w-5 h-5" weight="fill" />
+                    <Play className="w-5 h-5" weight="fill" />
                     Listen on Spotify
                   </a>
                   <Link

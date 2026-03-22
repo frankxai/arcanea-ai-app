@@ -6,7 +6,7 @@ import {
   Sparkle,
   ArrowRight,
   PaintBrush,
-  Cube,
+  Stack,
   FilmStrip,
   Compass,
   Clock,
@@ -19,9 +19,8 @@ import {
   Leaf,
   Wind,
   Moon,
-  Star,
-  Heart,
 } from '@phosphor-icons/react';
+import type { PhosphorIcon as PhIcon } from '@phosphor-icons/react';
 import { MotionProvider, m } from '@/lib/motion';
 
 // ─── Types ──────────────────────────────────────────────────────────────────
@@ -30,7 +29,7 @@ interface ArtStyle {
   id: string;
   name: string;
   description: string;
-  icon: React.ElementType;
+  icon: PhIcon;
   gradient: string;
   accent: string;
 }
@@ -46,7 +45,7 @@ interface CreationCard {
 
 interface ElementPalette {
   element: string;
-  icon: React.ElementType;
+  icon: PhIcon;
   colors: string[];
   accent: string;
 }
@@ -82,7 +81,7 @@ const ART_STYLES: ArtStyle[] = [
     id: '3d-render',
     name: '3D Render',
     description: 'Photorealistic materials, volumetric lighting, and dimensional depth',
-    icon: Cube,
+    icon: Stack,
     gradient: 'from-cyan-500/20 via-teal-600/10 to-transparent',
     accent: 'text-cyan-400',
   },

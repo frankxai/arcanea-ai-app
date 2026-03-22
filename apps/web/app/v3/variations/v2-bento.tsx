@@ -285,7 +285,7 @@ export function V2Bento() {
               >
                 1,111
               </p>
-              <p className="text-sm mt-1" style={{ color: MUTED }}>The source of all creation</p>
+              <p className="text-sm mt-1" style={{ color: MUTED }}>Where the dreamer and the dream become one</p>
             </Cell>
           </motion.div>
 

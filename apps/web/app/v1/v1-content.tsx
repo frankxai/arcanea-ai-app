@@ -49,7 +49,7 @@ const GUARDIANS = [
   { name: "Aiyami", gate: "Crown", frequency: "Light beyond comprehension", element: "Light" },
   { name: "Elara", gate: "Starweave", frequency: "The weaver of perspective", element: "Void" },
   { name: "Ino", gate: "Unity", frequency: "Where two become infinite", element: "Spirit" },
-  { name: "Shinkami", gate: "Source", frequency: "The source of all creation", element: "Arcane" },
+  { name: "Shinkami", gate: "Source", frequency: "Where the dreamer and the dream become one", element: "Arcane" },
 ];
 
 const CHAT_MESSAGES = [
