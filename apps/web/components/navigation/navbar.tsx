@@ -12,7 +12,7 @@ const navLinks = [
   { href: "/chat", label: "Create", also: ["/imagine", "/studio"] },
   { href: "/library", label: "Library", also: [] },
   { href: "/academy", label: "Academy", also: ["/academy/courses", "/academy/gates"] },
-  { href: "/gallery", label: "Gallery", also: ["/discover", "/feed", "/gallery/guardians", "/gallery/luminors"] },
+  { href: "/gallery", label: "Gallery", also: ["/discover", "/gallery/guardians", "/gallery/luminors"] },
   { href: "/lore", label: "Lore", also: ["/lore/guardians", "/lore/gates"] },
   { href: "/pricing", label: "Pricing", also: [] },
 ];
