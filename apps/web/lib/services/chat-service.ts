@@ -17,7 +17,7 @@ import { createClient } from '@/lib/supabase/server';
 export interface ChatSession {
   id: string;
   userId: string;
-  luminorId: string;
+  luminorId: string | null;
   title: string | null;
   createdAt: string;
   updatedAt: string;

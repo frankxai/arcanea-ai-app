@@ -24,12 +24,14 @@ import {
   PhImageSquare,
   PhSparkle,
   PhGear,
+  PhMicrophone,
 } from '@/lib/phosphor-icons';
 import { LuminorSidebar } from '@/components/chat/luminor-sidebar';
 import { getLuminor } from '@/lib/luminors/config';
 import { SessionSidebar } from '@/components/chat/session-sidebar';
 import { CreationIndicator } from '@/components/chat/creation-indicator';
 import { useAutoSave } from '@/lib/arc/auto-save';
+import { estimateTokens, formatTokenCount } from '@/lib/chat/token-estimate';
 import {
   useConversation,
   getMessageText,
@@ -230,6 +232,8 @@ export default function ChatPage() {
   const [showExport, setShowExport] = useState(false);
   const [attachments, setAttachments] = useState<File[]>([]);
   const [isDragOver, setIsDragOver] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
+  const recognitionRef = useRef<any>(null);
 
   // Auto-resize textarea
   useEffect(() => {
@@ -271,6 +275,35 @@ export default function ChatPage() {
       }
     }
   };
+
+  const startRecording = useCallback(() => {
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) return;
+    const recognition = new SpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = 'en-US';
+    recognition.onresult = (event: any) => {
+      let transcript = '';
+      for (let i = 0; i < event.results.length; i++) {
+        transcript += event.results[i][0].transcript;
+      }
+      setInput(transcript);
+    };
+    recognition.onerror = () => { setIsRecording(false); };
+    recognition.onend = () => { setIsRecording(false); };
+    recognition.start();
+    recognitionRef.current = recognition;
+    setIsRecording(true);
+  }, [setInput]);
+
+  const stopRecording = useCallback(() => {
+    if (recognitionRef.current) {
+      recognitionRef.current.stop();
+      recognitionRef.current = null;
+    }
+    setIsRecording(false);
+  }, []);
 
   return (
     <div className="flex h-screen bg-[#09090b]">
@@ -758,6 +791,12 @@ export default function ChatPage() {
                     ))}
                   </div>
                 )}
+                {isRecording && (
+                  <div className="flex items-center gap-2 px-4 py-2 text-xs text-red-400">
+                    <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+                    Listening... speak now
+                  </div>
+                )}
                 <textarea
                   ref={textareaRef}
                   value={input}
@@ -772,6 +811,18 @@ export default function ChatPage() {
                 />
 
                 <div className="absolute right-2 bottom-2 flex items-center gap-1.5">
+                  {!input.trim() && !isLoading && (
+                    <button
+                      type="button"
+                      onClick={isRecording ? stopRecording : startRecording}
+                      className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-150 ${
+                        isRecording ? 'bg-red-500/20 text-red-400 animate-pulse' : 'text-white/30 hover:text-white/60 hover:bg-white/[0.04]'
+                      }`}
+                      aria-label={isRecording ? 'Stop recording' : 'Start voice input'}
+                    >
+                      <PhMicrophone className="w-4 h-4" />
+                    </button>
+                  )}
                   <button
                     type="submit"
                     disabled={!input.trim() || isLoading}
@@ -792,7 +843,9 @@ export default function ChatPage() {
 
               <div className="flex items-center justify-between mt-2 px-1">
                 <span className="text-[11px] text-white/20">
-                  Enter to send · Shift+Enter for newline
+                  {input.trim()
+                    ? formatTokenCount(estimateTokens(input))
+                    : 'Enter to send · Shift+Enter for newline'}
                 </span>
                 <div className="flex items-center gap-2">
                   <CreationIndicator autoSave={autoSave} />

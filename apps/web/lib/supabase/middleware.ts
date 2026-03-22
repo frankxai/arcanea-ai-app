@@ -2,7 +2,7 @@
  * Supabase Middleware for Next.js
  *
  * Handles auth session refresh on every request
- * Should be used in middleware.ts at the root of your app
+ * Should be used in proxy.ts at the root of your app (Next.js 16+ convention)
  */
 
 import { createServerClient, type CookieOptions } from '@supabase/ssr';

@@ -59,6 +59,36 @@ export type Database = {
           },
         ]
       }
+      analytics_events: {
+        Row: {
+          created_at: string | null
+          event_data: Json | null
+          event_type: string
+          id: string
+          page_path: string | null
+          session_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          event_data?: Json | null
+          event_type: string
+          id?: string
+          page_path?: string | null
+          session_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          event_data?: Json | null
+          event_type?: string
+          id?: string
+          page_path?: string | null
+          session_id?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       analytics_snapshots: {
         Row: {
           created_at: string
@@ -172,6 +202,7 @@ export type Database = {
           created_at: string
           id: string
           role: string
+          search_vector: unknown
           session_id: string
         }
         Insert: {
@@ -179,6 +210,7 @@ export type Database = {
           created_at?: string
           id?: string
           role: string
+          search_vector?: unknown
           session_id: string
         }
         Update: {
@@ -186,6 +218,7 @@ export type Database = {
           created_at?: string
           id?: string
           role?: string
+          search_vector?: unknown
           session_id?: string
         }
         Relationships: [
@@ -202,7 +235,9 @@ export type Database = {
         Row: {
           created_at: string
           id: string
-          luminor_id: string
+          luminor_id: string | null
+          messages: Record<string, unknown>[]
+          model_id: string | null
           title: string | null
           updated_at: string
           user_id: string
@@ -210,7 +245,9 @@ export type Database = {
         Insert: {
           created_at?: string
           id?: string
-          luminor_id: string
+          luminor_id?: string | null
+          messages?: Record<string, unknown>[]
+          model_id?: string | null
           title?: string | null
           updated_at?: string
           user_id: string
@@ -218,7 +255,9 @@ export type Database = {
         Update: {
           created_at?: string
           id?: string
-          luminor_id?: string
+          luminor_id?: string | null
+          messages?: Record<string, unknown>[]
+          model_id?: string | null
           title?: string | null
           updated_at?: string
           user_id?: string
@@ -582,6 +621,51 @@ export type Database = {
             referencedColumns: ["user_id"]
           },
         ]
+      }
+      leaderboard_cache: {
+        Row: {
+          avatar_url: string | null
+          creation_count: number | null
+          display_name: string | null
+          gates_open: number | null
+          id: string
+          magic_rank: string | null
+          period: string | null
+          rank_position: number | null
+          streak_days: number | null
+          total_xp: number | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          creation_count?: number | null
+          display_name?: string | null
+          gates_open?: number | null
+          id?: string
+          magic_rank?: string | null
+          period?: string | null
+          rank_position?: number | null
+          streak_days?: number | null
+          total_xp?: number | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          creation_count?: number | null
+          display_name?: string | null
+          gates_open?: number | null
+          id?: string
+          magic_rank?: string | null
+          period?: string | null
+          rank_position?: number | null
+          streak_days?: number | null
+          total_xp?: number | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
       }
       likes: {
         Row: {
@@ -1355,6 +1439,9 @@ export type Database = {
           magic_rank: string
           metadata: Json | null
           streak_days: number
+          stripe_customer_id: string | null
+          subscription_ends_at: string | null
+          subscription_tier: string | null
           updated_at: string
           xp: number
         }
@@ -1373,6 +1460,9 @@ export type Database = {
           magic_rank?: string
           metadata?: Json | null
           streak_days?: number
+          stripe_customer_id?: string | null
+          subscription_ends_at?: string | null
+          subscription_tier?: string | null
           updated_at?: string
           xp?: number
         }
@@ -1391,6 +1481,9 @@ export type Database = {
           magic_rank?: string
           metadata?: Json | null
           streak_days?: number
+          stripe_customer_id?: string | null
+          subscription_ends_at?: string | null
+          subscription_tier?: string | null
           updated_at?: string
           xp?: number
         }

@@ -14,7 +14,36 @@ import {
 import { cn } from "@/lib/utils"
 
 interface VideoTabProps {
-  generationState: "idle" | "generating" | "complete" | "error"
+  generationState?: "idle" | "generating" | "complete" | "error"
+}
+
+async function generateVideo(params: {
+  prompt: string;
+  duration: number;
+  cameraMovement: string;
+  style: string;
+}): Promise<{ videoUrl?: string; error?: string }> {
+  try {
+    const res = await fetch('/api/ai/generate-video', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        prompt: `${params.prompt}. Style: ${params.style}. Camera: ${params.cameraMovement}`,
+        duration: params.duration,
+        cameraMovement: params.cameraMovement,
+        resolution: '720p',
+        quality: 'high',
+      }),
+    });
+    if (!res.ok) {
+      const text = await res.text();
+      return { error: text || `Generation failed (${res.status})` };
+    }
+    const data = await res.json();
+    return { videoUrl: data.videoUrl || data.url };
+  } catch (e: any) {
+    return { error: e.message || 'Network error' };
+  }
 }
 
 const cameraMovements = [
@@ -30,7 +59,7 @@ const cameraMovements = [
 
 const videoStyles = ["Cinematic", "Anime", "Documentary", "Epic Fantasy", "Dreamlike"]
 
-export function VideoTab({ generationState }: VideoTabProps) {
+export function VideoTab({ generationState: externalState }: VideoTabProps) {
   const [prompt, setPrompt] = useState(
     "A colossal dragon descending from storm clouds onto a burning Olympian temple, slow motion, cinematic light beams through smoke"
   )
@@ -38,6 +67,27 @@ export function VideoTab({ generationState }: VideoTabProps) {
   const [selectedCamera, setSelectedCamera] = useState("crane")
   const [selectedStyle, setSelectedStyle] = useState("Cinematic")
   const [isPlaying, setIsPlaying] = useState(false)
+  const [internalState, setInternalState] = useState<"idle" | "generating" | "complete" | "error">("idle")
+  const [videoUrl, setVideoUrl] = useState<string | null>(null)
+  const [genError, setGenError] = useState<string | null>(null)
+
+  const generationState = externalState || internalState
+
+  const handleGenerate = async () => {
+    setInternalState("generating")
+    setGenError(null)
+    const result = await generateVideo({ prompt, duration, cameraMovement: selectedCamera, style: selectedStyle })
+    if (result.error) {
+      setGenError(result.error)
+      setInternalState("error")
+    } else if (result.videoUrl) {
+      setVideoUrl(result.videoUrl)
+      setInternalState("complete")
+    } else {
+      setGenError("No video returned")
+      setInternalState("error")
+    }
+  }
 
   return (
     <div className="flex h-full overflow-hidden">
@@ -144,6 +194,20 @@ export function VideoTab({ generationState }: VideoTabProps) {
             <span className="text-[11px] text-muted-foreground font-mono">~{Math.ceil(duration * 3)}s</span>
           </div>
         </div>
+
+        {/* Generate button */}
+        <button
+          onClick={handleGenerate}
+          disabled={generationState === "generating" || !prompt.trim()}
+          className="w-full py-3 rounded-xl bg-gradient-to-r from-[#0d47a1] to-[#00bcd4] text-white text-sm font-medium
+            hover:from-[#0d47a1]/90 hover:to-[#00bcd4]/90 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+        >
+          {generationState === "generating" ? "Generating..." : "Generate Video"}
+        </button>
+
+        {genError && (
+          <p className="text-xs text-red-400 mt-1">{genError}</p>
+        )}
       </div>
 
       {/* Preview Area */}
@@ -217,11 +281,21 @@ export function VideoTab({ generationState }: VideoTabProps) {
             </div>
             {/* Video Player */}
             <div className="relative rounded-2xl overflow-hidden border border-[rgba(13,71,161,0.2)] bg-black group flex-1 max-h-80">
-              <img
-                src="/placeholder.svg?height=320&width=640"
-                alt="Generated video preview"
-                className="w-full h-full object-cover opacity-60"
-              />
+              {videoUrl ? (
+                <video
+                  src={videoUrl}
+                  autoPlay={isPlaying}
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover"
+                  onClick={() => setIsPlaying(!isPlaying)}
+                />
+              ) : (
+                <div className="w-full h-full bg-gradient-to-br from-[#0d47a1]/20 to-black flex items-center justify-center">
+                  <p className="text-sm text-white/30">Video ready</p>
+                </div>
+              )}
               <div className="absolute inset-0 flex items-center justify-center">
                 <button
                   onClick={() => setIsPlaying(!isPlaying)}

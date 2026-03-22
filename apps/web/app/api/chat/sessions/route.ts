@@ -25,7 +25,7 @@ export const runtime = 'nodejs';
 interface SessionResponse {
   id: string;
   title: string;
-  luminorId: string;
+  luminorId: string | null;
   createdAt: string;
   updatedAt: string;
   messageCount: number;
@@ -104,7 +104,7 @@ async function getAuthenticatedUserId(): Promise<string | null> {
 
 function toSessionResponse(session: {
   id: string;
-  luminorId: string;
+  luminorId: string | null;
   title: string;
   createdAt: string;
   updatedAt: string;

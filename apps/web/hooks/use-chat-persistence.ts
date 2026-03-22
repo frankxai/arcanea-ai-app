@@ -22,6 +22,7 @@ import {
   type ChatSession,
   type ChatSessionSummary,
 } from '@/lib/chat/local-store';
+import { saveSessionToCloud, deleteCloudSession } from '@/lib/chat/supabase-store';
 
 export interface ChatPersistenceState {
   /** List of all saved sessions (summaries only) */
@@ -73,6 +74,16 @@ export function useChatPersistence(): ChatPersistenceState {
       debounceRef.current = setTimeout(() => {
         saveChatSession(activeSessionId, messages, opts);
         refreshSessions();
+
+        // Cloud sync (fire-and-forget, non-blocking)
+        const title = generateSessionTitle(messages);
+        saveSessionToCloud({
+          id: activeSessionId,
+          title,
+          messages: messages as unknown as Record<string, unknown>[],
+          luminorId: opts?.luminorId ?? null,
+          modelId: opts?.modelId ?? null,
+        }).catch(() => {}); // silently ignore cloud sync failures
       }, 1000);
     },
     [activeSessionId, refreshSessions]
@@ -107,6 +118,7 @@ export function useChatPersistence(): ChatPersistenceState {
   const deleteSessionFn = useCallback(
     (id: string) => {
       deleteChatSession(id);
+      deleteCloudSession(id).catch(() => {}); // best-effort cloud delete
       refreshSessions();
 
       // If deleting the active session, start a new one

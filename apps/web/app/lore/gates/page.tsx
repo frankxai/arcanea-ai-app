@@ -161,7 +161,7 @@ const GATES = [
   {
     number: 10,
     name: 'Source',
-    frequency: 'The source of all creation',
+    frequency: 'Where the dreamer and the dream become one',
     guardian: 'Shinkami',
     godbeast: 'Source',
     domain: 'Meta-consciousness, creation itself',

@@ -178,7 +178,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            The Creative Superintelligence — 16 AI minds trained on 190K words of creative philosophy, ready to imagine, build, and create with you.
+            Not a chatbot. A creative superintelligence that thinks in systems, creates with passion, and evolves with you.
           </m.p>
 
           {/* Differentiator — what makes this different */}
@@ -188,7 +188,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.25 }}
           >
-            Where creators and AI build together &mdash; not generic chat, original creative intelligence.
+            Ten Guardians. Sixteen specialist minds. One intelligence that knows your domain.
           </m.p>
 
           {/* Chat box — THE hero element */}
@@ -208,7 +208,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.7 }}
           >
-            16 Creative Intelligences &middot; 190K+ Words of Philosophy &middot; 17 Knowledge Collections &middot; Open Source
+            190K+ Words of Creative Philosophy &middot; Open Source &middot; Free to Start
           </m.p>
         </div>
       </m.div>
