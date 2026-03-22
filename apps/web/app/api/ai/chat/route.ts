@@ -280,7 +280,7 @@ export async function POST(req: NextRequest) {
       maxOutputTokens: maxTokens ?? 8192,
     });
 
-    return result.toTextStreamResponse({
+    return result.toDataStreamResponse({
       headers: {
         'x-arcanea-model': label,
         'x-arcanea-gates': activeGates.join(','),
