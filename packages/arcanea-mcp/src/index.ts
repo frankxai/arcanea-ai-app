@@ -84,6 +84,16 @@ import {
   matchCreativeSkill,
 } from "./agents/index.js";
 
+// Guardian-Swarm Coordination
+import {
+  getAgentSwarmInfo,
+  resolveForMode,
+  GUARDIAN_LUMINOR_MAP,
+  LUMINOR_HINTS,
+  GUARDIANS,
+  type CoordinationMode,
+} from "./data/guardian-swarm/index.js";
+
 const server = new Server(
   { name: "arcanea-mcp", version: "0.3.0" },
   { capabilities: { tools: {}, resources: {}, prompts: {} } }
@@ -136,9 +146,9 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
     { name: "export_world", description: "Export your entire world graph for visualization", inputSchema: { type: "object", properties: { sessionId: { type: "string" } } } },
 
     // === AGENT ORCHESTRATION (oh-my-opencode inspired) ===
-    { name: "orchestrate", description: "Run a full creative session with multi-agent coordination", inputSchema: { type: "object", properties: { request: { type: "string", description: "What you want to create or explore" }, sessionId: { type: "string" } }, required: ["request"] } },
-    { name: "list_agents", description: "List all available creative agents and their capabilities", inputSchema: { type: "object", properties: {} } },
-    { name: "agent_info", description: "Get detailed information about a specific agent", inputSchema: { type: "object", properties: { agentId: { type: "string", enum: ["creator", "worldsmith", "luminor-council", "scribe", "seer"] } }, required: ["agentId"] } },
+    { name: "orchestrate", description: "Run a full creative session with multi-agent coordination and Guardian-swarm awareness", inputSchema: { type: "object", properties: { request: { type: "string", description: "What you want to create or explore" }, sessionId: { type: "string" }, coordinationMode: { type: "string", enum: ["solo", "council", "convergence"], description: "How Lumina coordinates: solo (one Guardian leads), council (2-3 Guardians collaborate), convergence (Shinkami mode, broad blend)" }, guardian: { type: "string", enum: ["lyssandria", "leyla", "draconia", "maylinn", "alera", "lyria", "aiyami", "elara", "ino", "shinkami"], description: "Primary Guardian to lead the session (optional)" } }, required: ["request"] } },
+    { name: "list_agents", description: "List all available creative agents and their Guardian-swarm affinities", inputSchema: { type: "object", properties: {} } },
+    { name: "agent_info", description: "Get detailed information about a specific agent including its Guardian hierarchy and Luminor team", inputSchema: { type: "object", properties: { agentId: { type: "string", enum: ["creator", "worldsmith", "luminor-council", "scribe", "seer"] } }, required: ["agentId"] } },
     { name: "assess_world", description: "Analyze your world's maturity and get strategic suggestions", inputSchema: { type: "object", properties: { sessionId: { type: "string" } } } },
     { name: "match_skill", description: "Find the best agent for a specific creative request", inputSchema: { type: "object", properties: { request: { type: "string" } }, required: ["request"] } },
     { name: "active_sessions", description: "List all currently running creative sessions", inputSchema: { type: "object", properties: {} } },
@@ -330,7 +340,15 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
     // Agent Orchestration
     case "orchestrate": {
+      const requestedMode = (args?.coordinationMode as CoordinationMode) || undefined;
+      const requestedGuardian = args?.guardian as string | undefined;
       const { session, result } = await orchestrateCreativeSession(args?.request as string, sessionId);
+
+      // Resolve Guardian-swarm coordination
+      const swarmResult = requestedMode
+        ? resolveForMode(requestedMode, requestedGuardian)
+        : resolveForMode('council', requestedGuardian);
+
       return { content: [{ type: "text", text: JSON.stringify({
         sessionId: session.id,
         goal: session.goal,
@@ -338,22 +356,44 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         agentsUsed: session.agents,
         taskCount: session.tasks.length,
         result,
-        message: `Creative session completed with ${session.agents.length} agent(s).`,
+        swarm: {
+          coordinationMode: swarmResult.coordinationMode,
+          leadGuardian: swarmResult.leadGuardian,
+          activeGuardians: swarmResult.activeGuardians.map(slug => {
+            const g = GUARDIANS.find(guard => guard.slug === slug);
+            return g ? { name: g.displayName, gate: g.gate, domain: g.domain, element: g.element } : { name: slug };
+          }),
+          activeLuminors: swarmResult.activeLuminors.map(l => ({
+            id: l.id,
+            team: l.team,
+            relevance: l.relevance,
+            hint: l.hint,
+            parentGuardian: l.parentGuardian,
+          })),
+        },
+        message: `Creative session completed with ${session.agents.length} agent(s) under ${swarmResult.coordinationMode} coordination.`,
       }, null, 2) }] };
     }
     case "list_agents": {
-      const agentList = Object.values(AGENTS).map(a => ({
-        id: a.id,
-        name: a.displayName,
-        role: a.role,
-        model: a.model,
-        capabilities: a.capabilities.map(c => c.name),
-        canParallelize: a.canParallelize,
-      }));
+      const agentList = Object.values(AGENTS).map(a => {
+        const swarmInfo = getAgentSwarmInfo(a.id);
+        return {
+          id: a.id,
+          name: a.displayName,
+          role: a.role,
+          model: a.model,
+          capabilities: a.capabilities.map(c => c.name),
+          canParallelize: a.canParallelize,
+          guardian: swarmInfo.primaryGuardian
+            ? { name: swarmInfo.primaryGuardian.displayName, domain: swarmInfo.primaryGuardian.domain }
+            : null,
+        };
+      });
       return { content: [{ type: "text", text: JSON.stringify({
         agents: agentList,
         totalAgents: agentList.length,
-        message: "Available creative agents in the Arcanea system.",
+        coordinationModes: ['solo', 'council', 'convergence'],
+        message: "Available creative agents in the Arcanea system with Guardian affinities.",
       }, null, 2) }] };
     }
     case "agent_info": {
@@ -361,9 +401,29 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       if (!agent) {
         return { content: [{ type: "text", text: JSON.stringify({ error: `Unknown agent: ${args?.agentId}` }) }] };
       }
+      const swarmInfo = getAgentSwarmInfo(agent.id);
       return { content: [{ type: "text", text: JSON.stringify({
         ...agent,
         description: `${agent.displayName} is a ${agent.role} agent using ${agent.model}.`,
+        swarm: {
+          guardianHierarchy: {
+            primary: swarmInfo.primaryGuardian ? {
+              name: swarmInfo.primaryGuardian.displayName,
+              gate: swarmInfo.primaryGuardian.gate,
+              domain: swarmInfo.primaryGuardian.domain,
+              element: swarmInfo.primaryGuardian.element,
+              godbeast: swarmInfo.primaryGuardian.godbeast,
+            } : null,
+            secondary: swarmInfo.secondaryGuardians.map(g => ({
+              name: g.displayName,
+              gate: g.gate,
+              domain: g.domain,
+              element: g.element,
+            })),
+          },
+          luminorTeam: swarmInfo.luminorTeam,
+          coordinationModes: swarmInfo.coordinationModes,
+        },
       }, null, 2) }] };
     }
     case "assess_world": {

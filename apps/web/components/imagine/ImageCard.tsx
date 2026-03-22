@@ -97,6 +97,24 @@ export function ImageCard({
     setTimeout(() => setCopied(false), 2000);
   }, [prompt]);
 
+  const [shared, setShared] = useState(false);
+  const handleShare = useCallback(async (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    const shareUrl = src.startsWith('data:') ? window.location.href : src;
+    const shareData = { title: 'Arcanea Imagine', text: prompt, url: shareUrl };
+    try {
+      if (navigator.share && !src.startsWith('data:')) {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(shareUrl);
+        setShared(true);
+        setTimeout(() => setShared(false), 2000);
+      }
+    } catch {
+      // Share cancelled or failed
+    }
+  }, [src, prompt]);
+
   // Heart SVG — filled when favorited, outline when not
   const HeartIcon = ({ size = 14, className = '' }: { size?: number; className?: string }) => (
     <svg
@@ -120,7 +138,7 @@ export function ImageCard({
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4, delay: index * 0.08 }}
-        className="group relative rounded-2xl overflow-hidden cursor-pointer"
+        className="group relative rounded-sm sm:rounded-2xl overflow-hidden cursor-pointer"
         onClick={() => setIsExpanded(true)}
       >
         {/* Image */}
@@ -209,6 +227,25 @@ export function ImageCard({
                 <polyline points="7 10 12 15 17 10" />
                 <line x1="12" y1="15" x2="12" y2="3" />
               </svg>
+            </button>
+            <button
+              onClick={handleShare}
+              className="p-2 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-all"
+              title={shared ? 'Link copied!' : 'Share'}
+            >
+              {shared ? (
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              ) : (
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="18" cy="5" r="3" />
+                  <circle cx="6" cy="12" r="3" />
+                  <circle cx="18" cy="19" r="3" />
+                  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                  <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                </svg>
+              )}
             </button>
           </div>
 
@@ -316,6 +353,19 @@ export function ImageCard({
                   className="px-4 py-2 rounded-xl text-sm font-medium bg-white/10 text-white hover:bg-white/20 transition-all backdrop-blur-sm"
                 >
                   {copied ? 'Copied!' : 'Copy Prompt'}
+                </button>
+                <button
+                  onClick={handleShare}
+                  className="px-4 py-2 rounded-xl text-sm font-medium bg-white/10 text-white hover:bg-white/20 transition-all backdrop-blur-sm flex items-center gap-2"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="18" cy="5" r="3" />
+                    <circle cx="6" cy="12" r="3" />
+                    <circle cx="18" cy="19" r="3" />
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                  </svg>
+                  {shared ? 'Shared!' : 'Share'}
                 </button>
                 <button
                   onClick={() => setIsExpanded(false)}
