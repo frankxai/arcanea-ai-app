@@ -433,6 +433,8 @@ export const PhWrench = Wrench;
 export const PhX = X;
 export const PhYoutubeLogo = YoutubeLogo;
 export const PhZap = Lightning;
+export const PhExport = ArrowSquareOut;
+export const PhTextAlignLeft = TextT;
 
 // Ph-prefixed alias for GearSix
 export const PhGearSix = GearSix;

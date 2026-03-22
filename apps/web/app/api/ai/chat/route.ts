@@ -242,6 +242,9 @@ export async function POST(req: NextRequest) {
     // use it directly. Otherwise, run the Arcanea intelligence router.
     let resolvedSystemPrompt: string;
     let activeGates: string[] = [];
+    let coordinationMode = '';
+    let leadGuardian: string | null = '';
+    let activeLuminorIds: string[] = [];
 
     if (systemPrompt) {
       // Direct companion prompt (legacy /chat/[luminorId] pages)
@@ -258,6 +261,9 @@ export async function POST(req: NextRequest) {
       const arcanea = createArcanea(messageText, historyForRouter);
       resolvedSystemPrompt = arcanea.systemPrompt;
       activeGates = arcanea.router.activeGates;
+      coordinationMode = arcanea.coordinationMode;
+      leadGuardian = arcanea.leadGuardian;
+      activeLuminorIds = arcanea.activeLuminors.map(l => l.id);
 
       // Inject focus mode hint if provided (guides the MoE router)
       if (focusHint) {
@@ -278,6 +284,9 @@ export async function POST(req: NextRequest) {
       headers: {
         'x-arcanea-model': label,
         'x-arcanea-gates': activeGates.join(','),
+        'x-arcanea-coordination': coordinationMode,
+        'x-arcanea-lead': leadGuardian || '',
+        'x-arcanea-luminors': activeLuminorIds.join(','),
       },
     });
   } catch (error) {

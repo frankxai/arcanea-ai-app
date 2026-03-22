@@ -7,6 +7,7 @@ import { ModelSelector } from '@/components/chat/model-selector';
 import { FocusModeSelector } from '@/components/chat/focus-modes';
 import { BeamMode } from '@/components/chat/beam-mode';
 import { CommandPalette } from '@/components/chat/command-palette';
+import { ExportDialog } from '@/components/chat/export-dialog';
 import {
   PhPaperPlane,
   PhPlus,
@@ -18,6 +19,9 @@ import {
   PhCopy,
   PhCheck,
   PhClockCounterClockwise,
+  PhPencilSimple,
+  PhExport,
+  PhImageSquare,
 } from '@/lib/phosphor-icons';
 import { LuminorSidebar } from '@/components/chat/luminor-sidebar';
 import { SessionSidebar } from '@/components/chat/session-sidebar';
@@ -64,6 +68,32 @@ const SUGGESTIONS = [
 ];
 
 // ---------------------------------------------------------------------------
+// Inline edit form for user messages
+// ---------------------------------------------------------------------------
+
+function EditMessageForm({ initialText, onSave, onCancel }: { initialText: string; onSave: (text: string) => void; onCancel: () => void }) {
+  const [text, setText] = React.useState(initialText);
+  const ref = React.useRef<HTMLTextAreaElement>(null);
+  React.useEffect(() => { ref.current?.focus(); ref.current?.select(); }, []);
+  return (
+    <div className="w-full">
+      <textarea
+        ref={ref}
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); if (text.trim()) onSave(text.trim()); } if (e.key === 'Escape') onCancel(); }}
+        className="w-full px-4 py-3 rounded-2xl bg-[#1a1a1f] border border-[#00bcd4]/30 text-white/90 text-[15px] leading-relaxed resize-none focus:outline-none focus:border-[#00bcd4]/50"
+        rows={Math.min(text.split('\n').length + 1, 8)}
+      />
+      <div className="flex justify-end gap-2 mt-2">
+        <button type="button" onClick={onCancel} className="px-3 py-1.5 text-xs text-white/40 hover:text-white/60 rounded-lg hover:bg-white/[0.04] transition-colors">Cancel</button>
+        <button type="button" onClick={() => { if (text.trim()) onSave(text.trim()); }} className="px-3 py-1.5 text-xs text-white bg-[#00bcd4] rounded-lg hover:bg-[#00bcd4]/80 transition-colors">Save &amp; Resend</button>
+      </div>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Chat Page
 // ---------------------------------------------------------------------------
 
@@ -103,6 +133,10 @@ export default function ChatPage() {
     handleRegenerate,
     startNewChat,
     lastMsg,
+    editingMessageId,
+    setEditingMessageId,
+    handleEditMessage,
+    handleRegenerateFrom,
   } = useConversation();
 
   // ---------------------------------------------------------------------------
@@ -182,6 +216,9 @@ export default function ChatPage() {
   );
   const [autoScroll, setAutoScroll] = useState(true);
   const [showScrollBtn, setShowScrollBtn] = useState(false);
+  const [showExport, setShowExport] = useState(false);
+  const [attachments, setAttachments] = useState<File[]>([]);
+  const [isDragOver, setIsDragOver] = useState(false);
 
   // Auto-resize textarea
   useEffect(() => {
@@ -293,6 +330,16 @@ export default function ChatPage() {
             </button>
             {messages.length > 0 && (
               <button
+                onClick={() => setShowExport(true)}
+                className="w-8 h-8 rounded-lg flex items-center justify-center text-white/30 hover:text-white/60 hover:bg-white/[0.04] transition-colors"
+                aria-label="Export conversation"
+                title="Export"
+              >
+                <PhExport className="w-4 h-4" />
+              </button>
+            )}
+            {messages.length > 0 && (
+              <button
                 onClick={handleStartNewChat}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs text-white/40 hover:text-white/70 hover:bg-white/[0.04] transition-colors"
               >
@@ -350,9 +397,25 @@ export default function ChatPage() {
         <div
           ref={containerRef}
           onScroll={handleScroll}
-          className="flex-1 overflow-y-auto"
+          onDragOver={(e) => { e.preventDefault(); setIsDragOver(true); }}
+          onDragLeave={() => setIsDragOver(false)}
+          onDrop={(e) => {
+            e.preventDefault();
+            setIsDragOver(false);
+            const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+            if (files.length > 0) setAttachments(prev => [...prev, ...files]);
+          }}
+          className="relative flex-1 overflow-y-auto"
           style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(255,255,255,0.08) transparent' }}
         >
+          {isDragOver && (
+            <div className="absolute inset-0 z-20 bg-[#00bcd4]/10 border-2 border-dashed border-[#00bcd4]/40 rounded-xl flex items-center justify-center backdrop-blur-sm">
+              <div className="text-center">
+                <PhImageSquare className="w-8 h-8 text-[#00bcd4] mx-auto mb-2" />
+                <p className="text-sm text-[#00bcd4]">Drop images here</p>
+              </div>
+            </div>
+          )}
           {isEmpty ? (
             <div className="flex flex-col items-center justify-center h-full px-4">
               <div className="max-w-[540px] w-full text-center">
@@ -386,10 +449,28 @@ export default function ChatPage() {
               {messages.map((msg) => (
                 <div key={msg.id} className={`mb-6 ${msg.role === 'user' ? 'flex justify-end' : ''}`}>
                   {msg.role === 'user' ? (
-                    <div className="max-w-[85%]">
-                      <div className="inline-block px-4 py-3 rounded-2xl rounded-br-md bg-[#1a1a1f] text-white/90 text-[15px] leading-relaxed whitespace-pre-wrap">
-                        {getMessageText(msg)}
-                      </div>
+                    <div className="max-w-[85%] group/user">
+                      {editingMessageId === msg.id ? (
+                        <EditMessageForm
+                          initialText={getMessageText(msg)}
+                          onSave={(text) => { handleEditMessage(msg.id, text); setEditingMessageId(null); }}
+                          onCancel={() => setEditingMessageId(null)}
+                        />
+                      ) : (
+                        <div className="relative">
+                          <div className="inline-block px-4 py-3 rounded-2xl rounded-br-md bg-[#1a1a1f] text-white/90 text-[15px] leading-relaxed whitespace-pre-wrap">
+                            {getMessageText(msg)}
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setEditingMessageId(msg.id)}
+                            className="absolute -left-8 top-1/2 -translate-y-1/2 w-6 h-6 rounded-md flex items-center justify-center text-white/0 group-hover/user:text-white/30 hover:!text-white/60 hover:bg-white/[0.04] transition-all"
+                            aria-label="Edit message"
+                          >
+                            <PhPencilSimple className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      )}
                     </div>
                   ) : (() => {
                     const rawText = getMessageText(msg);
@@ -458,17 +539,15 @@ export default function ChatPage() {
                                 <><PhCopy className="w-3.5 h-3.5" /><span>Copy</span></>
                               )}
                             </button>
-                            {msg.id === lastMsg?.id && (
-                              <button
-                                type="button"
-                                onClick={handleRegenerate}
-                                className="flex items-center gap-1 px-2 py-1 rounded-md text-[11px] text-white/30 hover:text-white/60 hover:bg-white/[0.04] transition-colors focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/40"
-                                aria-label="Regenerate response"
-                              >
-                                <PhArrowClockwise className="w-3.5 h-3.5" />
-                                <span>Regenerate</span>
-                              </button>
-                            )}
+                            <button
+                              type="button"
+                              onClick={() => handleRegenerateFrom(msg.id)}
+                              className="flex items-center gap-1 px-2 py-1 rounded-md text-[11px] text-white/30 hover:text-white/60 hover:bg-white/[0.04] transition-colors focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/40"
+                              aria-label="Regenerate response"
+                            >
+                              <PhArrowClockwise className="w-3.5 h-3.5" />
+                              <span>Regenerate</span>
+                            </button>
                           </div>
                         )}
                       </div>
@@ -531,6 +610,23 @@ export default function ChatPage() {
                   backgroundColor: '#111113',
                 }}
               >
+                {attachments.length > 0 && (
+                  <div className="flex gap-2 px-4 pt-3 pb-1 flex-wrap">
+                    {attachments.map((file, i) => (
+                      <div key={i} className="relative w-16 h-16 rounded-lg overflow-hidden border border-white/[0.1]">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={URL.createObjectURL(file)} alt="" className="w-full h-full object-cover" />
+                        <button
+                          type="button"
+                          onClick={() => setAttachments(prev => prev.filter((_, j) => j !== i))}
+                          className="absolute top-0.5 right-0.5 w-4 h-4 rounded-full bg-black/60 flex items-center justify-center text-white/60 hover:text-white"
+                        >
+                          <PhX className="w-3 h-3" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
                 <textarea
                   ref={textareaRef}
                   value={input}
@@ -605,6 +701,16 @@ export default function ChatPage() {
             setBeamPrompt(null);
           }}
           onClose={() => setBeamPrompt(null)}
+        />
+      )}
+
+      {/* Export dialog */}
+      {showExport && (
+        <ExportDialog
+          messages={messages}
+          luminorName={activeLuminor?.name}
+          modelLabel={providerLabel}
+          onClose={() => setShowExport(false)}
         />
       )}
     </div>

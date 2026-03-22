@@ -123,6 +123,12 @@ export interface ConversationState {
   commandPaletteOpen: boolean;
   setCommandPaletteOpen: (open: boolean) => void;
 
+  // Edit / Regenerate from any point
+  editingMessageId: string | null;
+  setEditingMessageId: (id: string | null) => void;
+  handleEditMessage: (messageId: string, newText: string) => void;
+  handleRegenerateFrom: (messageId: string) => void;
+
   // Actions
   handleSubmit: (e: React.FormEvent) => void;
   handleRetry: () => void;
@@ -154,6 +160,7 @@ export function useConversation(): ConversationState {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [chatError, setChatError] = useState<string | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
   const [initialSent, setInitialSent] = useState(false);
 
   // Active Luminor from Sanctum ("Use in Chat")
@@ -415,6 +422,41 @@ export function useConversation(): ConversationState {
   }, [messages, setMessages, sendMessage]);
 
   // ---------------------------------------------------------------------------
+  // Edit a user message: truncate history to that point, re-send with new text
+  // ---------------------------------------------------------------------------
+
+  const handleEditMessage = useCallback((messageId: string, newText: string) => {
+    const idx = messages.findIndex((m: any) => m.id === messageId);
+    if (idx < 0) return;
+    setMessages(messages.slice(0, idx));
+    setEditingMessageId(null);
+    sendMessage({ text: newText });
+  }, [messages, setMessages, sendMessage]);
+
+  // ---------------------------------------------------------------------------
+  // Regenerate from any assistant message (not just the last)
+  // ---------------------------------------------------------------------------
+
+  const handleRegenerateFrom = useCallback((messageId: string) => {
+    const idx = messages.findIndex((m: any) => m.id === messageId);
+    if (idx < 0) return;
+    // Find the user message immediately before this assistant message
+    let userIdx = -1;
+    for (let i = idx - 1; i >= 0; i--) {
+      if (messages[i].role === 'user') {
+        userIdx = i;
+        break;
+      }
+    }
+    if (userIdx < 0) return;
+    const userText = getMessageText(messages[userIdx]);
+    if (!userText) return;
+    // Truncate to include the user message, then re-send
+    setMessages(messages.slice(0, userIdx + 1));
+    sendMessage({ text: userText });
+  }, [messages, setMessages, sendMessage]);
+
+  // ---------------------------------------------------------------------------
   // Copy message text to clipboard
   // ---------------------------------------------------------------------------
 
@@ -503,6 +545,12 @@ export function useConversation(): ConversationState {
     // Command palette
     commandPaletteOpen,
     setCommandPaletteOpen,
+
+    // Edit / Regenerate from any point
+    editingMessageId,
+    setEditingMessageId,
+    handleEditMessage,
+    handleRegenerateFrom,
 
     // Actions
     handleSubmit,
