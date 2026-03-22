@@ -231,11 +231,24 @@ export async function POST(req: NextRequest) {
       label = created.label;
     }
 
-    // Normalize message roles: convert 'model' to 'assistant' for Vercel AI SDK
-    const normalizedMessages = messages.map((msg) => ({
-      role: (msg.role === 'model' ? 'assistant' : msg.role) as 'user' | 'assistant',
-      content: msg.content,
-    }));
+    // Normalize messages: AI SDK v6 UIMessages use `parts` array, not `content` string.
+    // Extract text from parts[].text, fall back to content for legacy format.
+    const normalizedMessages = messages.map((msg: any) => {
+      let text = '';
+      if (msg.parts && Array.isArray(msg.parts)) {
+        text = msg.parts
+          .filter((p: any) => p.type === 'text')
+          .map((p: any) => p.text ?? '')
+          .join('');
+      }
+      if (!text && typeof msg.content === 'string') {
+        text = msg.content;
+      }
+      return {
+        role: (msg.role === 'model' ? 'assistant' : msg.role) as 'user' | 'assistant',
+        content: text,
+      };
+    });
 
     // --- MoE Router: classify intent and blend expert fragments ---
     // If a specific systemPrompt is provided (e.g., from /chat/[luminorId]),
@@ -251,8 +264,15 @@ export async function POST(req: NextRequest) {
       resolvedSystemPrompt = systemPrompt;
     } else {
       // MoE Router: one intelligence, Luminor experts as hidden layer
-      const lastUserMessage = [...messages].reverse().find((m) => m.role === 'user');
-      const messageText = lastUserMessage?.content || '';
+      const lastUserMessage = [...messages].reverse().find((m: any) => m.role === 'user');
+      // Extract text from parts or content (AI SDK v6 UIMessage compat)
+      let messageText = '';
+      if (lastUserMessage?.parts && Array.isArray(lastUserMessage.parts)) {
+        messageText = lastUserMessage.parts.filter((p: any) => p.type === 'text').map((p: any) => p.text ?? '').join('');
+      }
+      if (!messageText && typeof lastUserMessage?.content === 'string') {
+        messageText = lastUserMessage.content;
+      }
       const historyForRouter = normalizedMessages.slice(0, -1).map((m) => ({
         role: m.role,
         content: m.content,
