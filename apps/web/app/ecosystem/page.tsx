@@ -280,6 +280,8 @@ const ConstellationNodeComponent = memo(function ConstellationNodeComponent({
       {/* Tooltip on hover */}
       {hovered && (
         <div
+          role="tooltip"
+          aria-label={`${label}: ${description}`}
           style={{
             position: 'absolute',
             bottom: size + 28,
@@ -544,6 +546,14 @@ export default function EcosystemConstellationPage() {
           </p>
         </div>
 
+        {/* Screen-reader accessible description */}
+        <h1 className="sr-only">Arcanea Ecosystem Map</h1>
+        <p className="sr-only">
+          Interactive constellation visualization showing 19 systems across 5 layers: the Arcanea
+          platform at center, 4 core systems, 4 CLI harnesses, 5 creative tools, and 5 extensions.
+          Hover or focus nodes for details. Use zoom controls to navigate.
+        </p>
+
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -556,6 +566,7 @@ export default function EcosystemConstellationPage() {
           fitView={false}
           proOptions={{ hideAttribution: true }}
           style={{ background: 'transparent' }}
+          aria-label="Arcanea ecosystem constellation map with 19 interconnected systems"
         >
           <MiniMap
             nodeColor={minimapNodeColor}
