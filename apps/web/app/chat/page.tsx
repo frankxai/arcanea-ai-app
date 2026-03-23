@@ -237,6 +237,18 @@ export default function ChatPage() {
   const autoSave = useAutoSave(messages, isLoading);
 
   // ---------------------------------------------------------------------------
+  // Server key detection — hide onboarding banner when server has API keys
+  // ---------------------------------------------------------------------------
+
+  const [serverHasKeys, setServerHasKeys] = useState(false);
+  useEffect(() => {
+    fetch('/api/ai/chat')
+      .then((r) => r.ok ? r.json() : null)
+      .then((data) => { if (data?.status === 'ok') setServerHasKeys(true); })
+      .catch(() => {});
+  }, []);
+
+  // ---------------------------------------------------------------------------
   // UI-only state (scroll, sidebar, refs) — stays in the component
   // ---------------------------------------------------------------------------
 
@@ -619,7 +631,7 @@ export default function ChatPage() {
                 </p>
 
                 {/* Onboarding banner — first-run when no API key is configured */}
-                {isEmpty && !clientApiKey && (
+                {isEmpty && !clientApiKey && !serverHasKeys && (
                   <div className="max-w-md mx-auto mb-6 p-4 rounded-2xl border border-[#00bcd4]/20 bg-[#00bcd4]/5">
                     <div className="flex items-start gap-3">
                       <div className="w-8 h-8 rounded-full bg-[#00bcd4]/20 flex items-center justify-center shrink-0 mt-0.5">
