@@ -842,24 +842,36 @@ export default function ChatPage() {
 
               {/* Thinking indicator */}
               {isThinking && (
-                <div className="mb-6 flex items-center gap-3">
-                  <div
-                    className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0 animate-pulse"
-                    style={{
-                      background: activeLuminor
-                        ? `linear-gradient(135deg, ${activeLuminor.color || '#00bcd4'}, ${activeLuminor.color || '#00bcd4'}80)`
-                        : 'linear-gradient(135deg, #00bcd4, #0d47a1)',
-                    }}
-                  >
-                    {activeLuminor?.avatar || 'A'}
-                  </div>
-                  <div className="flex items-center gap-2 text-white/30">
-                    <div className="flex gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#00bcd4] animate-bounce" style={{ animationDelay: '0ms' }} />
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#00bcd4] animate-bounce" style={{ animationDelay: '150ms' }} />
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#00bcd4] animate-bounce" style={{ animationDelay: '300ms' }} />
+                <div className="mb-6">
+                  <div className="flex gap-3">
+                    <div
+                      className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0"
+                      style={{
+                        background: activeLuminor
+                          ? `linear-gradient(135deg, ${activeLuminor.color || '#00bcd4'}, ${activeLuminor.color || '#00bcd4'}80)`
+                          : 'linear-gradient(135deg, #00bcd4, #0d47a1)',
+                      }}
+                    >
+                      {activeLuminor?.avatar || '\u2726'}
                     </div>
-                    <span className="text-xs font-light tracking-wide">Thinking</span>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1.5">
+                        <span className="text-xs font-medium" style={{ color: activeLuminor?.color || '#00bcd4' }}>
+                          {activeLuminor?.name || 'Arcanea'}
+                        </span>
+                        <span className="text-[10px] text-white/20 font-mono">{providerLabel}</span>
+                      </div>
+                      <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                        <div className="relative w-5 h-5">
+                          <div className="absolute inset-0 rounded-full border-2 border-[#00bcd4]/20" />
+                          <div className="absolute inset-0 rounded-full border-2 border-[#00bcd4] border-t-transparent animate-spin" />
+                        </div>
+                        <div className="flex flex-col gap-0.5">
+                          <span className="text-xs text-white/50 font-medium">Thinking</span>
+                          <span className="text-[10px] text-white/25">Analyzing your request...</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               )}
