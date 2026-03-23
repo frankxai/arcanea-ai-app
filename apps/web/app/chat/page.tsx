@@ -367,6 +367,9 @@ export default function ChatPage() {
             </Link>
             {/* Model selector + Gate indicator */}
             <ModelSelector value={modelId ?? 'arcanea-auto'} onChange={setModelId} />
+            {isEmpty && (
+              <span className="text-[10px] text-white/20 ml-1 hidden sm:inline">AI model</span>
+            )}
             {activeGates.length > 0 && messages.length > 0 && (
               <div className="flex items-center gap-1.5">
                 {/* Gate tagline chips — max 2 on mobile, 3 on desktop */}
@@ -480,7 +483,17 @@ export default function ChatPage() {
             <div className="max-w-[680px] mx-auto flex items-center justify-between">
               <div className="flex items-center gap-2 text-red-400/80 text-sm min-w-0">
                 <PhWarningCircle className="w-4 h-4 shrink-0" />
-                <span className="truncate">{chatError}</span>
+                <span className="truncate">
+                  {chatError.includes('UNAUTHORIZED') || chatError.includes('Authentication')
+                    ? 'Sign in to start chatting, or add an API key in Settings.'
+                    : chatError.includes('API key') || chatError.includes('503')
+                    ? 'No AI provider configured. Add a key in Settings \u2192 Providers.'
+                    : chatError.includes('fetch') || chatError.includes('Failed')
+                    ? 'Connection error. Check your internet and try again.'
+                    : chatError.length > 100
+                    ? 'Something went wrong. Try again or check Settings.'
+                    : chatError}
+                </span>
               </div>
               <div className="flex items-center gap-2 shrink-0">
                 <Link
@@ -530,6 +543,9 @@ export default function ChatPage() {
           {isEmpty ? (
             <div className="flex flex-col items-center justify-center h-full px-4">
               <div className="max-w-[540px] w-full text-center">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#00bcd4]/20 to-[#0d47a1]/20 border border-[#00bcd4]/10 flex items-center justify-center mb-5 mx-auto">
+                  <span className="text-2xl">&#10022;</span>
+                </div>
                 <h1 className="text-4xl md:text-5xl font-bold text-white mb-3 tracking-tight bg-gradient-to-b from-white via-white/90 to-white/50 bg-clip-text text-transparent">
                   {activeLuminor ? activeLuminor.name : 'What will you create?'}
                 </h1>

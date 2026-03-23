@@ -31,6 +31,9 @@ export async function middleware(request: NextRequest) {
       '/api/trending', '/api/leaderboard', '/api/gallery',
       '/api/community/stats', '/api/guardians/', '/api/profiles/',
       '/api/v1/',
+      // Core creation APIs — must work without auth (keys are client-side)
+      '/api/ai/', '/api/chat/', '/api/imagine/', '/api/luminors/',
+      '/api/media/', '/api/arcs/', '/api/apl/', '/api/studio/',
     ],
     authPrefixes: ['/auth/login', '/auth/signup'],
     loginPath: '/auth/login',
