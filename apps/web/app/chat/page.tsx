@@ -73,12 +73,10 @@ const TEAM_COLORS: Record<string, string> = {
 };
 
 const SUGGESTIONS = [
-  'Build me a magic system with five elements and a cost',
-  'Architect a real-time multiplayer backend in TypeScript',
-  'Write lyrics for a song about leaving everything behind',
+  'Design a magic system where power comes from forgotten memories',
+  'Architect a real-time collaborative canvas in TypeScript',
+  'Write the opening paragraph of a story I can\'t put down',
   'I have three ideas and can only ship one — help me decide',
-  'Design a brand identity for a fictional coffee shop on Mars',
-  'Explain quantum entanglement like I write fantasy novels',
 ];
 
 // ---------------------------------------------------------------------------
@@ -266,9 +264,7 @@ export default function ChatPage() {
     return () => document.removeEventListener('keydown', handleSearch);
   }, [searchOpen, messages.length]);
 
-  const [luminorSidebarOpen, setLuminorSidebarOpen] = useState(() =>
-    typeof window !== 'undefined' ? window.innerWidth >= 768 : false
-  );
+  const [luminorSidebarOpen, setLuminorSidebarOpen] = useState(false);
   const [autoScroll, setAutoScroll] = useState(true);
   const [showScrollBtn, setShowScrollBtn] = useState(false);
   const [showExport, setShowExport] = useState(false);
@@ -616,10 +612,10 @@ export default function ChatPage() {
                   <span className="text-2xl">&#10022;</span>
                 </div>
                 <h1 className="text-4xl md:text-5xl font-bold text-white mb-3 tracking-tight bg-gradient-to-b from-white via-white/90 to-white/50 bg-clip-text text-transparent">
-                  {activeLuminor ? activeLuminor.name : 'What will you create?'}
+                  {activeLuminor ? activeLuminor.name : 'What are you making?'}
                 </h1>
                 <p className="text-sm text-white/40 mb-8 max-w-sm mx-auto leading-relaxed">
-                  {activeLuminor ? activeLuminor.title || activeLuminor.tagline : 'Write, code, design, research. Or just think out loud.'}
+                  {activeLuminor ? activeLuminor.title || activeLuminor.tagline : 'Stories, code, worlds, music — bring me the problem you can\'t solve alone.'}
                 </p>
 
                 {/* Onboarding banner — first-run when no API key is configured */}
@@ -646,13 +642,8 @@ export default function ChatPage() {
                   </div>
                 )}
 
-                {/* Focus mode selector — Perplexity-style */}
-                <div className="flex justify-center mb-6">
-                  <FocusModeSelector value={focusMode} onChange={setFocusMode} />
-                </div>
-
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-w-lg mx-auto">
-                  {SUGGESTIONS.slice(0, 4).map((s) => (
+                  {SUGGESTIONS.map((s) => (
                     <button
                       key={s}
                       onClick={() => sendMessage({ text: s })}
@@ -864,12 +855,10 @@ export default function ChatPage() {
                       <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/[0.02] border border-white/[0.04]">
                         <div className="relative w-5 h-5">
                           <div className="absolute inset-0 rounded-full border-2 border-[#00bcd4]/20" />
-                          <div className="absolute inset-0 rounded-full border-2 border-[#00bcd4] border-t-transparent animate-spin" />
+                          <div className="absolute inset-0 rounded-full border-2 border-[#00bcd4] border-t-transparent animate-spin" style={{ animationDuration: '0.8s' }} />
+                          <div className="absolute inset-[3px] rounded-full bg-[#00bcd4]/10 animate-pulse" />
                         </div>
-                        <div className="flex flex-col gap-0.5">
-                          <span className="text-xs text-white/50 font-medium">Thinking</span>
-                          <span className="text-[10px] text-white/25">Analyzing your request...</span>
-                        </div>
+                        <span className="text-xs text-white/40 font-medium">Composing<span className="animate-pulse">...</span></span>
                       </div>
                     </div>
                   </div>
@@ -944,7 +933,7 @@ export default function ChatPage() {
                       setAttachments(prev => [...prev, ...files]);
                     }
                   }}
-                  placeholder={activeLuminor ? `Message ${activeLuminor.name}...` : "What would you like to create?"}
+                  placeholder={activeLuminor ? `Message ${activeLuminor.name}...` : "Describe what you're building..."}
                   aria-label="Message input"
                   disabled={isLoading}
                   rows={1}
