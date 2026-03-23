@@ -48,4 +48,11 @@ db.commit(); db.close()
   fi
 fi
 
+# ── Load last session summary ──────────────────────────────────
+LAST_SESSION_FILE="$ARCANEA_HOME/sessions/last-summary.md"
+if [ -f "$LAST_SESSION_FILE" ]; then
+  LAST_SUMMARY=$(cat "$LAST_SESSION_FILE" 2>/dev/null | head -20)
+  echo "$LAST_SUMMARY" > /tmp/arcanea-last-session
+fi
+
 echo "Arcanea Intelligence OS initialized. Guardian: Shinkami. Gate: Source."
