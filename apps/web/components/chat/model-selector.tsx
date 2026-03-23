@@ -47,6 +47,39 @@ export const CHAT_MODELS: ChatModel[] = [
   { id: 'arcanea-lightning', name: 'Arcanea Lightning', shortName: 'Lightning', provider: 'groq', tier: 'speed', description: 'Lowest latency, real-time', tokensPerSecond: 750 },
 ];
 
+// ---------------------------------------------------------------------------
+// Model capability badges
+// ---------------------------------------------------------------------------
+
+const MODEL_CAPABILITIES: Record<string, string[]> = {
+  'arcanea-auto': ['text', 'vision', 'code'],
+  'arcanea-opus': ['text', 'vision', 'code'],
+  'arcanea-sonnet': ['text', 'vision', 'code'],
+  'arcanea-gpt5': ['text', 'vision', 'code'],
+  'arcanea-gemini-pro': ['text', 'vision', 'code'],
+  'arcanea-grok': ['text', 'vision', 'image-gen'],
+  'arcanea-deepseek-r1': ['text', 'reasoning'],
+  'arcanea-kimi': ['text', 'vision', 'code'],
+  'arcanea-deepseek': ['text', 'code'],
+  'arcanea-gemini-flash': ['text', 'vision', 'fast'],
+  'arcanea-haiku': ['text', 'fast'],
+  'arcanea-qwen': ['text', 'fast'],
+  'arcanea-maverick': ['text', 'code'],
+  'arcanea-mistral': ['text', 'code'],
+  'arcanea-bolt': ['text', 'ultra-fast'],
+  'arcanea-thunder': ['text', 'fast'],
+  'arcanea-lightning': ['text', 'ultra-fast'],
+};
+
+const CAPABILITY_BADGE: Record<string, { label: string; bg: string; text: string }> = {
+  vision: { label: 'vision', bg: 'bg-purple-500/10', text: 'text-purple-400' },
+  code: { label: 'code', bg: 'bg-blue-500/10', text: 'text-blue-400' },
+  reasoning: { label: 'reasoning', bg: 'bg-orange-500/10', text: 'text-orange-400' },
+  'image-gen': { label: 'image-gen', bg: 'bg-pink-500/10', text: 'text-pink-400' },
+  fast: { label: 'fast', bg: 'bg-emerald-500/10', text: 'text-emerald-400' },
+  'ultra-fast': { label: 'ultra-fast', bg: 'bg-yellow-500/10', text: 'text-yellow-400' },
+};
+
 // Flat list of selectable models (for keyboard nav)
 const SELECTABLE_IDS = CHAT_MODELS.map((m) => m.id);
 
@@ -175,6 +208,16 @@ export const ModelSelector = React.memo(function ModelSelector({ value, onChange
               {model.tokensPerSecond.toLocaleString()} tok/s
             </span>
           )}
+          {(MODEL_CAPABILITIES[model.id] || [])
+            .filter((cap) => cap !== 'text' && CAPABILITY_BADGE[cap])
+            .map((cap) => {
+              const badge = CAPABILITY_BADGE[cap];
+              return (
+                <span key={cap} className={`text-[9px] px-1 py-0.5 rounded ${badge.bg} ${badge.text}`}>
+                  {badge.label}
+                </span>
+              );
+            })}
         </div>
         <p className="text-[11px] text-white/30 mt-0.5 truncate">{model.description}</p>
       </div>

@@ -108,6 +108,20 @@ function EditMessageForm({ initialText, onSave, onCancel }: { initialText: strin
 }
 
 // ---------------------------------------------------------------------------
+// Search highlight helper
+// ---------------------------------------------------------------------------
+
+function highlightText(text: string, query: string): React.ReactNode {
+  if (!query) return text;
+  const parts = text.split(new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'));
+  return parts.map((part, i) =>
+    part.toLowerCase() === query.toLowerCase()
+      ? <mark key={i} className="bg-[#00bcd4]/30 text-white rounded-sm px-0.5">{part}</mark>
+      : part
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Chat Page
 // ---------------------------------------------------------------------------
 
@@ -227,6 +241,30 @@ export default function ChatPage() {
   // ---------------------------------------------------------------------------
   // UI-only state (scroll, sidebar, refs) — stays in the component
   // ---------------------------------------------------------------------------
+
+  // ---------------------------------------------------------------------------
+  // In-conversation search (Cmd+F / Ctrl+F)
+  // ---------------------------------------------------------------------------
+
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchMatches, setSearchMatches] = useState<number>(0);
+  const [currentMatch, setCurrentMatch] = useState(0);
+
+  useEffect(() => {
+    function handleSearch(e: KeyboardEvent) {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'f' && messages.length > 0) {
+        e.preventDefault();
+        setSearchOpen(true);
+      }
+      if (e.key === 'Escape' && searchOpen) {
+        setSearchOpen(false);
+        setSearchQuery('');
+      }
+    }
+    document.addEventListener('keydown', handleSearch);
+    return () => document.removeEventListener('keydown', handleSearch);
+  }, [searchOpen, messages.length]);
 
   const [luminorSidebarOpen, setLuminorSidebarOpen] = useState(() =>
     typeof window !== 'undefined' ? window.innerWidth >= 768 : false
@@ -352,18 +390,18 @@ export default function ChatPage() {
           <div className="flex items-center gap-3">
             <button
               onClick={() => setLuminorSidebarOpen((v) => !v)}
-              className="hidden md:flex w-8 h-8 items-center justify-center rounded-lg text-white/40 hover:text-white/70 hover:bg-white/[0.04] transition-colors"
-              aria-label="Toggle luminor sidebar"
+              className="flex w-8 h-8 items-center justify-center rounded-lg text-white/40 hover:text-white/70 hover:bg-white/[0.04] transition-colors"
+              aria-label="Toggle sidebar"
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                 <path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
               </svg>
             </button>
             <Link
-              href="/"
+              href="/chat"
               className="text-sm font-medium text-white/90 hover:text-[#00bcd4] transition-colors"
             >
-              Arcanea
+              Chat
             </Link>
             {/* Model selector + Gate indicator */}
             <ModelSelector value={modelId ?? 'arcanea-auto'} onChange={setModelId} />
@@ -517,6 +555,37 @@ export default function ChatPage() {
           </div>
         )}
 
+        {/* In-conversation search bar */}
+        {searchOpen && (
+          <div className="flex items-center gap-2 px-4 py-2 border-b border-white/[0.06] bg-[#0c0c0e]">
+            <input
+              autoFocus
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                if (e.target.value.trim()) {
+                  const count = messages.filter(m =>
+                    getMessageText(m).toLowerCase().includes(e.target.value.toLowerCase())
+                  ).length;
+                  setSearchMatches(count);
+                  setCurrentMatch(count > 0 ? 1 : 0);
+                } else {
+                  setSearchMatches(0);
+                  setCurrentMatch(0);
+                }
+              }}
+              placeholder="Search in conversation..."
+              className="flex-1 bg-transparent text-sm text-white/80 placeholder-white/30 outline-none"
+            />
+            <span className="text-[11px] text-white/30 tabular-nums">
+              {searchQuery ? `${currentMatch}/${searchMatches}` : ''}
+            </span>
+            <button onClick={() => { setSearchOpen(false); setSearchQuery(''); }} className="w-6 h-6 flex items-center justify-center text-white/30 hover:text-white/60 rounded">
+              <PhX className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        )}
+
         {/* Messages area */}
         <div
           ref={containerRef}
@@ -610,7 +679,9 @@ export default function ChatPage() {
                       ) : (
                         <div className="relative">
                           <div className="inline-block px-4 py-3 rounded-2xl rounded-br-md bg-gradient-to-br from-[#1a1a1f] to-[#141418] text-white/90 text-[15px] leading-relaxed whitespace-pre-wrap shadow-sm">
-                            {getMessageText(msg)}
+                            {searchQuery && getMessageText(msg).toLowerCase().includes(searchQuery.toLowerCase())
+                              ? highlightText(getMessageText(msg), searchQuery)
+                              : getMessageText(msg)}
                           </div>
                           <button
                             type="button"
@@ -851,6 +922,16 @@ export default function ChatPage() {
                   value={input}
                   onChange={handleInputChange}
                   onKeyDown={handleKeyDown}
+                  onPaste={(e) => {
+                    const items = e.clipboardData?.items;
+                    if (!items) return;
+                    const imageItems = Array.from(items).filter(item => item.type.startsWith('image/'));
+                    if (imageItems.length > 0) {
+                      e.preventDefault();
+                      const files = imageItems.map(item => item.getAsFile()).filter(Boolean) as File[];
+                      setAttachments(prev => [...prev, ...files]);
+                    }
+                  }}
                   placeholder={activeLuminor ? `Message ${activeLuminor.name}...` : "What would you like to create?"}
                   aria-label="Message input"
                   disabled={isLoading}
