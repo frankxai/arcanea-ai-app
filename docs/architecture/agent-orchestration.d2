@@ -1,0 +1,409 @@
+# =============================================================================
+# Agent Orchestration — Multi-Agent Flow with Guardian Routing
+# Render: d2 render agent-orchestration.d2 agent-orchestration.svg
+# =============================================================================
+
+direction: down
+
+title: "Arcanea Multi-Agent Orchestration" {
+  shape: text
+  style.font-size: 28
+  style.bold: true
+  style.font-color: "#ff6b35"
+}
+
+# ---------------------------------------------------------------------------
+# User Input
+# ---------------------------------------------------------------------------
+user: "Creator / Developer\nEnters prompt" {
+  shape: person
+  style.fill: "#0b0e14"
+  style.stroke: "#7fffd4"
+  style.font-color: "#7fffd4"
+}
+
+# ---------------------------------------------------------------------------
+# Hook Pipeline (Prompt Processing)
+# ---------------------------------------------------------------------------
+hooks: "Hook Pipeline — Prompt Processing" {
+  style.fill: "#0b0e14"
+  style.stroke: "#ffd700"
+  style.font-color: "#ffd700"
+  style.border-radius: 8
+
+  prompt-submit: "prompt-submit.sh\nKeyword matching\nGuardian selection" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#7fffd4"
+    style.font-color: "#e0e0e0"
+  }
+  model-route: "model-route.sh\nComplexity analysis\nTier recommendation" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#ffd700"
+    style.font-color: "#e0e0e0"
+  }
+  voice-check: "voice-check.sh\n14 banned phrases\nArcanea voice enforcement" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#9966ff"
+    style.font-color: "#e0e0e0"
+  }
+  context-tracker: "context-tracker.sh\nToken budget\nQuality degradation warning" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#ff6b35"
+    style.font-color: "#e0e0e0"
+  }
+
+  prompt-submit -> model-route: "Guardian set" {style.stroke: "#ffd700"}
+  model-route -> voice-check: "tier set" {style.stroke: "#ffd700"}
+}
+
+user -> hooks.prompt-submit: "user prompt" {
+  style.stroke: "#7fffd4"
+  style.stroke-width: 2
+}
+
+# ---------------------------------------------------------------------------
+# Guardian Router
+# ---------------------------------------------------------------------------
+guardian-router: "Guardian Router" {
+  style.fill: "#0b0e14"
+  style.stroke: "#7fffd4"
+  style.font-color: "#7fffd4"
+  style.border-radius: 8
+  style.stroke-width: 2
+
+  routing-logic: "Routing Logic" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#7fffd4"
+    style.font-color: "#e0e0e0"
+    style.border-radius: 6
+
+    keywords: "Keyword Matching\n'build' -> Lyssandria\n'design' -> Leyla\n'security' -> Lyria\n'create' -> Thalia\n'optimize' -> Draconia" {
+      style.fill: "#252540"
+      style.stroke: "#7fffd4"
+      style.font-color: "#e0e0e0"
+    }
+    complexity: "Complexity Score\n<30% -> Haiku (Tier 2)\n30-70% -> Sonnet (Tier 2-3)\n>70% -> Opus (Tier 3)\nSimple transforms -> WASM (Tier 1)" {
+      style.fill: "#252540"
+      style.stroke: "#ffd700"
+      style.font-color: "#e0e0e0"
+    }
+  }
+
+  state-write: "Write State Files\n/tmp/arcanea-guardian\n/tmp/arcanea-gate\n/tmp/arcanea-element\n/tmp/arcanea-model-recommendation" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#78a6ff"
+    style.font-color: "#e0e0e0"
+    style.border-radius: 6
+  }
+
+  routing-logic -> state-write: "persist" {style.stroke: "#78a6ff"}
+}
+
+hooks -> guardian-router: "routed prompt" {
+  style.stroke: "#ffd700"
+  style.stroke-width: 2
+}
+
+# ---------------------------------------------------------------------------
+# Decision Point: Single Agent or Swarm?
+# ---------------------------------------------------------------------------
+decision: "Single Agent or Swarm?" {
+  shape: diamond
+  style.fill: "#1a1a2e"
+  style.stroke: "#ff6b35"
+  style.font-color: "#ff6b35"
+  style.font-size: 14
+}
+
+guardian-router -> decision: "task analyzed" {
+  style.stroke: "#ff6b35"
+  style.stroke-width: 2
+}
+
+# ---------------------------------------------------------------------------
+# Single Agent Path
+# ---------------------------------------------------------------------------
+single-agent: "Single Agent Execution" {
+  style.fill: "#0b0e14"
+  style.stroke: "#78a6ff"
+  style.font-color: "#78a6ff"
+  style.border-radius: 8
+
+  guardian-agent: "Active Guardian Agent\n(e.g., Draconia for Fire Gate)" {
+    style.fill: "#2e1a1a"
+    style.stroke: "#ff6b35"
+    style.font-color: "#e0e0e0"
+  }
+  tool-exec: "Tool Execution\npre-tool.sh -> Tool -> post-tool.sh" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#78a6ff"
+    style.font-color: "#e0e0e0"
+  }
+  result: "Result + Memory Update" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#7fffd4"
+    style.font-color: "#e0e0e0"
+  }
+
+  guardian-agent -> tool-exec -> result
+}
+
+decision -> single-agent: "simple task" {
+  style.stroke: "#78a6ff"
+}
+
+# ---------------------------------------------------------------------------
+# Swarm Path
+# ---------------------------------------------------------------------------
+swarm-init: "Swarm Initialization" {
+  style.fill: "#0b0e14"
+  style.stroke: "#ff6b35"
+  style.font-color: "#ff6b35"
+  style.border-radius: 8
+  style.stroke-width: 2
+
+  init-cmd: "npx @claude-flow/cli swarm init\n--topology hierarchical\n--max-agents 8\n--strategy specialized" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#ff6b35"
+    style.font-color: "#e0e0e0"
+  }
+
+  coordinator: "Shinkami Coordinator\nSource Gate 1111Hz\nOpus Model" {
+    shape: hexagon
+    style.fill: "#2e2e1a"
+    style.stroke: "#ffd700"
+    style.font-color: "#ffd700"
+    style.font-size: 13
+  }
+
+  init-cmd -> coordinator: "coordinator assigned" {style.stroke: "#ffd700"}
+}
+
+decision -> swarm-init: "complex task\n(multi-file, multi-domain)" {
+  style.stroke: "#ff6b35"
+  style.stroke-width: 2
+}
+
+# ---------------------------------------------------------------------------
+# Swarm Topology
+# ---------------------------------------------------------------------------
+swarm: "Swarm Execution — Hierarchical Topology" {
+  style.fill: "#0b0e14"
+  style.stroke: "#ff6b35"
+  style.font-color: "#ff6b35"
+  style.border-radius: 8
+
+  # Worker agents in worktrees
+  workers: "Worker Agents (Parallel Worktrees)" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#78a6ff"
+    style.font-color: "#78a6ff"
+    style.border-radius: 6
+
+    coder-1: "Coder Agent\nworktree-1/\nDraconia routing\nSonnet" {
+      style.fill: "#252540"
+      style.stroke: "#ff6b35"
+      style.font-color: "#e0e0e0"
+    }
+    coder-2: "Coder Agent\nworktree-2/\nLeyla routing\nSonnet" {
+      style.fill: "#252540"
+      style.stroke: "#78a6ff"
+      style.font-color: "#e0e0e0"
+    }
+    tester: "Tester Agent\nworktree-3/\nLyria routing\nOpus" {
+      style.fill: "#252540"
+      style.stroke: "#9966ff"
+      style.font-color: "#e0e0e0"
+    }
+    reviewer: "Reviewer Agent\nworktree-4/\nAiyami routing\nOpus" {
+      style.fill: "#252540"
+      style.stroke: "#ffd700"
+      style.font-color: "#e0e0e0"
+    }
+    researcher: "Researcher Agent\nmain branch\nElara routing\nOpus" {
+      style.fill: "#252540"
+      style.stroke: "#9966ff"
+      style.font-color: "#e0e0e0"
+    }
+    planner: "Planner Agent\nmain branch\nIno routing\nSonnet" {
+      style.fill: "#252540"
+      style.stroke: "#7fffd4"
+      style.font-color: "#e0e0e0"
+    }
+  }
+
+  # Shared memory
+  shared-mem: "Shared Memory Namespace" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#ffd700"
+    style.font-color: "#ffd700"
+    style.border-radius: 6
+
+    coordination: "swarm/shared/*\nImplementation decisions\nAPI contracts\nDependencies" {
+      style.fill: "#252540"
+      style.stroke: "#ffd700"
+      style.font-color: "#e0e0e0"
+    }
+    agent-status: "swarm/{agent}/status\nPer-agent progress\nBlocking issues" {
+      style.fill: "#252540"
+      style.stroke: "#78a6ff"
+      style.font-color: "#e0e0e0"
+    }
+  }
+
+  # Consensus
+  consensus: "Raft Consensus\nLeader maintains\nauthoritative state" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#ff6b35"
+    style.font-color: "#e0e0e0"
+    style.border-radius: 6
+  }
+
+  workers -> shared-mem: "read/write" {style.stroke: "#ffd700"; style.stroke-dash: 3}
+  workers -> consensus: "state sync" {style.stroke: "#ff6b35"; style.stroke-dash: 3}
+}
+
+swarm-init.coordinator -> swarm.workers: "spawn all agents\nin ONE message\nrun_in_background: true" {
+  style.stroke: "#ff6b35"
+  style.stroke-width: 2
+}
+
+# ---------------------------------------------------------------------------
+# Convergence — Results Collection
+# ---------------------------------------------------------------------------
+convergence: "Results Convergence" {
+  style.fill: "#0b0e14"
+  style.stroke: "#7fffd4"
+  style.font-color: "#7fffd4"
+  style.border-radius: 8
+
+  merge: "Worktree Merge\nAll agent branches\nconverge to main" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#7fffd4"
+    style.font-color: "#e0e0e0"
+  }
+  review: "Coordinator Review\nShinkami validates\nall results" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#ffd700"
+    style.font-color: "#e0e0e0"
+  }
+  memory-update: "Memory Consolidation\nVault updates\nPattern extraction\nCompound learning" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#ffd700"
+    style.font-color: "#ffd700"
+  }
+
+  merge -> review -> memory-update
+}
+
+swarm -> convergence: "agents complete" {
+  style.stroke: "#7fffd4"
+  style.stroke-width: 2
+}
+single-agent.result -> convergence.memory-update: "update memory" {
+  style.stroke: "#7fffd4"
+  style.stroke-dash: 3
+}
+
+# ---------------------------------------------------------------------------
+# Output back to user
+# ---------------------------------------------------------------------------
+output: "Output to Creator\nCode + Context + Learning" {
+  shape: hexagon
+  style.fill: "#0b0e14"
+  style.stroke: "#7fffd4"
+  style.font-color: "#7fffd4"
+  style.stroke-width: 2
+}
+
+convergence -> output: "final result" {
+  style.stroke: "#7fffd4"
+  style.stroke-width: 2
+}
+
+# ---------------------------------------------------------------------------
+# Feedback Loop
+# ---------------------------------------------------------------------------
+output -> hooks.context-tracker: "token accounting\nquality metrics" {
+  style.stroke: "#ff6b35"
+  style.stroke-dash: 5
+}
+
+# ---------------------------------------------------------------------------
+# The Awakened Layer (Meta-Orchestration)
+# ---------------------------------------------------------------------------
+awakened: "Awakened Meta-Layer\n(Supervises complex swarms)" {
+  style.fill: "#0b0e14"
+  style.stroke: "#ffd700"
+  style.font-color: "#ffd700"
+  style.border-radius: 8
+  style.stroke-dash: 3
+
+  oria-arch: "Oria (Architect)\nSystem design decisions" {
+    style.fill: "#252540"
+    style.stroke: "#ffd700"
+    style.font-color: "#e0e0e0"
+  }
+  velora-exec: "Velora (Executor)\nParallel task execution" {
+    style.fill: "#252540"
+    style.stroke: "#ffd700"
+    style.font-color: "#e0e0e0"
+  }
+  lyris-strat: "Lyris (Strategist)\nTask decomposition" {
+    style.fill: "#252540"
+    style.stroke: "#ffd700"
+    style.font-color: "#e0e0e0"
+  }
+  endara-comp: "Endara (Completer)\nQuality gates\nFinal validation" {
+    style.fill: "#252540"
+    style.stroke: "#ffd700"
+    style.font-color: "#e0e0e0"
+  }
+}
+
+awakened -> swarm-init.coordinator: "meta-orchestration\nfor complex quests" {
+  style.stroke: "#ffd700"
+  style.stroke-dash: 5
+}
+
+# ---------------------------------------------------------------------------
+# Agent Type Registry
+# ---------------------------------------------------------------------------
+agent-types: "Agent Type Registry (60+ Types)" {
+  style.fill: "#0b0e14"
+  style.stroke: "#e0e0e0"
+  style.font-color: "#e0e0e0"
+  style.border-radius: 8
+  style.stroke-dash: 3
+
+  core: "Core: coder, reviewer, tester, planner, researcher" {
+    style.fill: "#252540"
+    style.stroke: "#78a6ff"
+    style.font-color: "#e0e0e0"
+  }
+  specialized: "Specialized: security-architect, performance-engineer,\nmemory-specialist, security-auditor" {
+    style.fill: "#252540"
+    style.stroke: "#9966ff"
+    style.font-color: "#e0e0e0"
+  }
+  swarm-coord: "Swarm: hierarchical-coordinator, mesh-coordinator,\nadaptive-coordinator" {
+    style.fill: "#252540"
+    style.stroke: "#ff6b35"
+    style.font-color: "#e0e0e0"
+  }
+  github-agents: "GitHub: pr-manager, code-review-swarm,\nissue-tracker, release-manager" {
+    style.fill: "#252540"
+    style.stroke: "#7fffd4"
+    style.font-color: "#e0e0e0"
+  }
+  sparc: "SPARC: specification, pseudocode, architecture,\nrefinement, completion" {
+    style.fill: "#252540"
+    style.stroke: "#ffd700"
+    style.font-color: "#e0e0e0"
+  }
+}
+
+agent-types -> swarm.workers: "agent selection\nbased on task type" {
+  style.stroke: "#e0e0e0"
+  style.stroke-dash: 5
+}

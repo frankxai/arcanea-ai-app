@@ -1,0 +1,330 @@
+# =============================================================================
+# Arcanea Ecosystem Architecture — The Big Picture
+# Render: d2 render arcanea-ecosystem.d2 arcanea-ecosystem.svg
+# =============================================================================
+
+direction: right
+
+title: "Arcanea Ecosystem Architecture" {
+  shape: text
+  style.font-size: 28
+  style.bold: true
+  style.font-color: "#7fffd4"
+}
+
+# ---------------------------------------------------------------------------
+# Core Platform
+# ---------------------------------------------------------------------------
+platform: "arcanea.ai — Core Platform" {
+  style.fill: "#0b0e14"
+  style.stroke: "#7fffd4"
+  style.font-color: "#7fffd4"
+  style.border-radius: 8
+
+  web: "Next.js 16 Web App\nReact 19 + Tailwind" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#7fffd4"
+    style.font-color: "#e0e0e0"
+  }
+  api: "AI Chat API\nVercel AI SDK" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#78a6ff"
+    style.font-color: "#e0e0e0"
+  }
+  supabase: "Supabase\nPostgreSQL + Auth + Realtime" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#3ecf8e"
+    style.font-color: "#e0e0e0"
+  }
+  mcp-servers: "MCP Servers\nGitHub, Figma, Linear, Notion" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#ffd700"
+    style.font-color: "#e0e0e0"
+  }
+  library: "Library of Arcanea\n17 Collections, 200K+ Words" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#ff6b35"
+    style.font-color: "#e0e0e0"
+  }
+
+  web -> api: "AI requests"
+  api -> supabase: "persist"
+  api -> mcp-servers: "tool calls"
+  web -> library: "content loader"
+}
+
+# ---------------------------------------------------------------------------
+# Intelligence Layer (SIS + AIOS)
+# ---------------------------------------------------------------------------
+intelligence: "Intelligence Layer" {
+  style.fill: "#0b0e14"
+  style.stroke: "#ffd700"
+  style.font-color: "#ffd700"
+  style.border-radius: 8
+
+  sis: "Starlight Intelligence System\n5 Layers, 6 Vaults, 7 Agents" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#ffd700"
+    style.font-color: "#e0e0e0"
+  }
+  aios: "Intelligence OS (AIOS)\n10 Guardians, 10 Gate Skills\n7 Awakened Orchestrators" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#7fffd4"
+    style.font-color: "#e0e0e0"
+  }
+  acos: "Agentic Creator OS\n130+ Commands, 630+ Skills\n40+ Agents" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#78a6ff"
+    style.font-color: "#e0e0e0"
+  }
+  statusline: "Statusline v5\nGuardian + Gate + Element" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#9966ff"
+    style.font-color: "#e0e0e0"
+  }
+  hooks: "Session Hooks\n7 Lifecycle Scripts" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#9966ff"
+    style.font-color: "#e0e0e0"
+  }
+
+  sis -> aios: "context generation" {style.stroke: "#ffd700"}
+  sis -> acos: "intelligence downflow" {style.stroke: "#ffd700"}
+  aios -> statusline: "state" {style.stroke: "#9966ff"}
+  aios -> hooks: "lifecycle" {style.stroke: "#9966ff"}
+}
+
+# ---------------------------------------------------------------------------
+# Agent Harnesses (CLI Tools)
+# ---------------------------------------------------------------------------
+harnesses: "Agent Harnesses" {
+  style.fill: "#0b0e14"
+  style.stroke: "#78a6ff"
+  style.font-color: "#78a6ff"
+  style.border-radius: 8
+
+  claude-arcanea: "claude-arcanea\nClaude Code Overlay" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#78a6ff"
+    style.font-color: "#e0e0e0"
+  }
+  arcanea-code: "arcanea-code\nFlagship CLI" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#78a6ff"
+    style.font-color: "#e0e0e0"
+  }
+  oh-my-arcanea: "oh-my-arcanea\nOpenCode Overlay" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#78a6ff"
+    style.font-color: "#e0e0e0"
+  }
+  arcanea-opencode: "arcanea-opencode\nOpenCode Config" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#78a6ff"
+    style.font-color: "#e0e0e0"
+  }
+}
+
+# ---------------------------------------------------------------------------
+# Orchestration Layer
+# ---------------------------------------------------------------------------
+orchestration: "Orchestration Layer" {
+  style.fill: "#0b0e14"
+  style.stroke: "#ff6b35"
+  style.font-color: "#ff6b35"
+  style.border-radius: 8
+
+  arcanea-flow: "arcanea-flow\nSwarm Engine\nclaude-flow Integration" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#ff6b35"
+    style.font-color: "#e0e0e0"
+  }
+  arcanea-agents: "arcanea-agents\nAgent Templates\n60+ Agent Types" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#ff6b35"
+    style.font-color: "#e0e0e0"
+  }
+  arcanea-soul: "arcanea-soul\nAgent Identity\nVoice + Personality" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#ff6b35"
+    style.font-color: "#e0e0e0"
+  }
+}
+
+# ---------------------------------------------------------------------------
+# Creative Tools
+# ---------------------------------------------------------------------------
+creative: "Creative Tools" {
+  style.fill: "#0b0e14"
+  style.stroke: "#9966ff"
+  style.font-color: "#9966ff"
+  style.border-radius: 8
+
+  claw: "arcanea-claw\nMedia Engine\nImage + Music + Video" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#9966ff"
+    style.font-color: "#e0e0e0"
+  }
+  infogenius: "arcanea-infogenius\nVisual Intelligence\nChart + Diagram Generation" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#9966ff"
+    style.font-color: "#e0e0e0"
+  }
+  luminor: "arcanea-luminor\nCreative AI Assistant" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#9966ff"
+    style.font-color: "#e0e0e0"
+  }
+  lore: "arcanea-lore\nWorld-Building Engine\nCanon + Mythology" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#9966ff"
+    style.font-color: "#e0e0e0"
+  }
+}
+
+# ---------------------------------------------------------------------------
+# Extensions & Integrations
+# ---------------------------------------------------------------------------
+extensions: "Extensions & Integrations" {
+  style.fill: "#0b0e14"
+  style.stroke: "#3ecf8e"
+  style.font-color: "#3ecf8e"
+  style.border-radius: 8
+
+  vscode: "arcanea-vscode\nVS Code Extension" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#3ecf8e"
+    style.font-color: "#e0e0e0"
+  }
+  companion: "arcanea-companion\nStandalone Web App\nNext.js + Docker" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#3ecf8e"
+    style.font-color: "#e0e0e0"
+  }
+  mobile: "arcanea-mobile\nMobile App" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#3ecf8e"
+    style.font-color: "#e0e0e0"
+  }
+  onchain: "arcanea-onchain\nSolana + Base L2\nNFT + Creator IP" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#3ecf8e"
+    style.font-color: "#e0e0e0"
+  }
+  skills-oss: "arcanea-skills-opensource\n54+ Skills\nCommunity Contributions" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#3ecf8e"
+    style.font-color: "#e0e0e0"
+  }
+}
+
+# ---------------------------------------------------------------------------
+# OSS & Community
+# ---------------------------------------------------------------------------
+oss: "Open Source" {
+  style.fill: "#0b0e14"
+  style.stroke: "#e0e0e0"
+  style.font-color: "#e0e0e0"
+  style.border-radius: 8
+
+  oss-core: "oss/\n27 Repos, 35 npm Packages" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#e0e0e0"
+    style.font-color: "#e0e0e0"
+  }
+  starlight-protocol: "starlight-protocol\nOpen Intelligence Standard" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#e0e0e0"
+    style.font-color: "#e0e0e0"
+  }
+  nano-banana: "Nano-Banana-MCP\nImage Generation Server" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#e0e0e0"
+    style.font-color: "#e0e0e0"
+  }
+}
+
+# ---------------------------------------------------------------------------
+# Connections — Data Flow Between Systems
+# ---------------------------------------------------------------------------
+
+# Intelligence feeds everything
+intelligence.sis -> platform.api: "context + memory" {
+  style.stroke: "#ffd700"
+  style.stroke-dash: 3
+}
+intelligence.aios -> platform.web: "Guardian routing" {
+  style.stroke: "#7fffd4"
+  style.stroke-dash: 3
+}
+intelligence.acos -> harnesses: "commands + skills" {
+  style.stroke: "#78a6ff"
+  style.stroke-dash: 3
+}
+
+# Harnesses connect to platform
+harnesses.claude-arcanea -> platform.api: "Claude Code sessions" {
+  style.stroke: "#78a6ff"
+}
+harnesses.arcanea-code -> intelligence.aios: "CLI commands" {
+  style.stroke: "#78a6ff"
+}
+
+# Orchestration powers agents
+orchestration.arcanea-flow -> intelligence.aios: "swarm coordination" {
+  style.stroke: "#ff6b35"
+}
+orchestration.arcanea-agents -> harnesses: "agent templates" {
+  style.stroke: "#ff6b35"
+  style.stroke-dash: 3
+}
+orchestration.arcanea-soul -> intelligence.aios: "identity injection" {
+  style.stroke: "#ff6b35"
+  style.stroke-dash: 3
+}
+
+# Creative tools connect to platform
+creative.claw -> platform.api: "media generation" {
+  style.stroke: "#9966ff"
+}
+creative.infogenius -> platform.web: "visual intelligence" {
+  style.stroke: "#9966ff"
+  style.stroke-dash: 3
+}
+creative.lore -> platform.library: "canon validation" {
+  style.stroke: "#9966ff"
+}
+
+# Extensions connect outward
+extensions.vscode -> harnesses.claude-arcanea: "editor integration" {
+  style.stroke: "#3ecf8e"
+  style.stroke-dash: 3
+}
+extensions.companion -> platform.api: "standalone access" {
+  style.stroke: "#3ecf8e"
+}
+extensions.onchain -> platform.supabase: "on-chain state" {
+  style.stroke: "#3ecf8e"
+  style.stroke-dash: 3
+}
+extensions.skills-oss -> oss.oss-core: "community skills" {
+  style.stroke: "#3ecf8e"
+  style.stroke-dash: 3
+}
+
+# OSS feeds back
+oss.starlight-protocol -> intelligence.sis: "open standard" {
+  style.stroke: "#e0e0e0"
+  style.stroke-dash: 3
+}
+oss.nano-banana -> creative.claw: "image gen MCP" {
+  style.stroke: "#e0e0e0"
+  style.stroke-dash: 3
+}
+
+# Knowledge upflow
+platform -> intelligence.sis: "knowledge upflow\n(creative patterns, session data)" {
+  style.stroke: "#ffd700"
+  style.stroke-width: 2
+  style.stroke-dash: 5
+}

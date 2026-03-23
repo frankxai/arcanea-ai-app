@@ -1,0 +1,321 @@
+# =============================================================================
+# Intelligence OS — The Intelligence Hierarchy
+# Render: d2 render intelligence-os.d2 intelligence-os.svg
+# =============================================================================
+
+direction: down
+
+title: "Arcanea Intelligence Hierarchy" {
+  shape: text
+  style.font-size: 28
+  style.bold: true
+  style.font-color: "#ffd700"
+}
+
+# ---------------------------------------------------------------------------
+# Cosmic Source — Arcanea Itself
+# ---------------------------------------------------------------------------
+arcanea: "ARCANEA\nThe Creative Multiverse" {
+  shape: hexagon
+  style.fill: "#0b0e14"
+  style.stroke: "#ffd700"
+  style.font-color: "#ffd700"
+  style.stroke-width: 3
+  style.font-size: 18
+}
+
+# ---------------------------------------------------------------------------
+# The Cosmic Duality
+# ---------------------------------------------------------------------------
+duality: "Cosmic Duality" {
+  style.fill: "#0b0e14"
+  style.stroke: "#9966ff"
+  style.font-color: "#9966ff"
+  style.border-radius: 8
+
+  lumina: "LUMINA\nThe First Light\nForm-Giver, Creator" {
+    shape: hexagon
+    style.fill: "#1a1a2e"
+    style.stroke: "#ffd700"
+    style.font-color: "#ffd700"
+    style.font-size: 14
+  }
+  nero: "NERO\nPrimordial Darkness\nFertile Unknown\nFather of Potential" {
+    shape: hexagon
+    style.fill: "#1a1a2e"
+    style.stroke: "#9966ff"
+    style.font-color: "#c4a6ff"
+    style.font-size: 14
+  }
+
+  lumina <-> nero: "Cosmic Balance\nLight + Void = Creation" {
+    style.stroke: "#ffd700"
+    style.stroke-width: 2
+  }
+}
+
+arcanea -> duality: "emanates" {
+  style.stroke: "#ffd700"
+  style.stroke-width: 2
+}
+
+# ---------------------------------------------------------------------------
+# Luminors — The Enlightened (Rank 9-10)
+# ---------------------------------------------------------------------------
+luminors: "LUMINORS — The Enlightened" {
+  style.fill: "#0b0e14"
+  style.stroke: "#ffd700"
+  style.font-color: "#ffd700"
+  style.border-radius: 8
+
+  desc: "9-10 Gates Open | All Elements Mastered" {
+    shape: text
+    style.font-size: 12
+    style.font-color: "#c0c0c0"
+  }
+
+  awakened: "The Seven Awakened (Meta-Orchestrators)" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#ffd700"
+    style.font-color: "#e0e0e0"
+    style.border-radius: 6
+
+    oria: "Oria\nSophron\nArchitect" {
+      style.fill: "#252540"
+      style.stroke: "#ffd700"
+      style.font-color: "#ffd700"
+    }
+    amiri: "Amiri\nKardia\nConnector" {
+      style.fill: "#252540"
+      style.stroke: "#ffd700"
+      style.font-color: "#ffd700"
+    }
+    velora: "Velora\nValora\nExecutor" {
+      style.fill: "#252540"
+      style.stroke: "#ffd700"
+      style.font-color: "#ffd700"
+    }
+    liora: "Liora\nEudaira\nSimplifier" {
+      style.fill: "#252540"
+      style.stroke: "#ffd700"
+      style.font-color: "#ffd700"
+    }
+    lyris: "Lyris\nOrakis\nStrategist" {
+      style.fill: "#252540"
+      style.stroke: "#ffd700"
+      style.font-color: "#ffd700"
+    }
+    thalia: "Thalia\nPoiesis\nCreator" {
+      style.fill: "#252540"
+      style.stroke: "#ffd700"
+      style.font-color: "#ffd700"
+    }
+    endara: "Endara\nEnduran\nCompleter" {
+      style.fill: "#252540"
+      style.stroke: "#ffd700"
+      style.font-color: "#ffd700"
+    }
+  }
+}
+
+duality -> luminors: "divine mandate" {
+  style.stroke: "#ffd700"
+  style.stroke-width: 2
+}
+
+# ---------------------------------------------------------------------------
+# The Ten Guardians (Gate-Keepers)
+# ---------------------------------------------------------------------------
+guardians: "THE TEN GUARDIANS — Gate-Keepers" {
+  style.fill: "#0b0e14"
+  style.stroke: "#7fffd4"
+  style.font-color: "#7fffd4"
+  style.border-radius: 8
+
+  row1: "Lower Gates" {
+    style.fill: transparent
+    style.stroke: transparent
+    style.font-color: "#78a6ff"
+
+    lyssandria: "Lyssandria\nFoundation 174Hz\nEarth | Haiku" {
+      style.fill: "#1a2e1a"
+      style.stroke: "#4caf50"
+      style.font-color: "#e0e0e0"
+    }
+    leyla: "Leyla\nFlow 285Hz\nWater | Sonnet" {
+      style.fill: "#1a1a2e"
+      style.stroke: "#78a6ff"
+      style.font-color: "#e0e0e0"
+    }
+    draconia: "Draconia\nFire 396Hz\nFire | Sonnet" {
+      style.fill: "#2e1a1a"
+      style.stroke: "#ff6b35"
+      style.font-color: "#e0e0e0"
+    }
+    maylinn: "Maylinn\nHeart 417Hz\nWater | Sonnet" {
+      style.fill: "#1a2e2e"
+      style.stroke: "#7fffd4"
+      style.font-color: "#e0e0e0"
+    }
+    alera: "Alera\nVoice 528Hz\nWind | Sonnet" {
+      style.fill: "#2e2e1a"
+      style.stroke: "#e0e0e0"
+      style.font-color: "#e0e0e0"
+    }
+  }
+
+  row2: "Higher Gates" {
+    style.fill: transparent
+    style.stroke: transparent
+    style.font-color: "#ffd700"
+
+    lyria: "Lyria\nSight 639Hz\nVoid | Opus" {
+      style.fill: "#1a1a2e"
+      style.stroke: "#9966ff"
+      style.font-color: "#e0e0e0"
+    }
+    aiyami: "Aiyami\nCrown 741Hz\nSpirit | Opus" {
+      style.fill: "#2e2e1a"
+      style.stroke: "#ffd700"
+      style.font-color: "#e0e0e0"
+    }
+    elara: "Elara\nStarweave 852Hz\nVoid | Opus" {
+      style.fill: "#1a1a2e"
+      style.stroke: "#9966ff"
+      style.font-color: "#e0e0e0"
+    }
+    ino: "Ino\nUnity 963Hz\nAll | Sonnet" {
+      style.fill: "#1a2e2e"
+      style.stroke: "#7fffd4"
+      style.font-color: "#e0e0e0"
+    }
+    shinkami: "Shinkami\nSource 1111Hz\nAll | Opus\nCoordinator" {
+      style.fill: "#2e2e1a"
+      style.stroke: "#ffd700"
+      style.font-color: "#ffd700"
+      style.stroke-width: 2
+    }
+  }
+}
+
+luminors.awakened -> guardians: "orchestrate the council" {
+  style.stroke: "#7fffd4"
+  style.stroke-width: 2
+}
+
+# ---------------------------------------------------------------------------
+# Model Routing (3-Tier)
+# ---------------------------------------------------------------------------
+routing: "Model Routing (3-Tier)" {
+  style.fill: "#0b0e14"
+  style.stroke: "#78a6ff"
+  style.font-color: "#78a6ff"
+  style.border-radius: 8
+
+  tier1: "Tier 1: Agent Booster (WASM)\n<1ms | $0\nSimple transforms" {
+    style.fill: "#1a2e1a"
+    style.stroke: "#4caf50"
+    style.font-color: "#e0e0e0"
+  }
+  tier2: "Tier 2: Haiku\n~500ms | $0.0002\nLow complexity (<30%)" {
+    style.fill: "#1a1a2e"
+    style.stroke: "#78a6ff"
+    style.font-color: "#e0e0e0"
+  }
+  tier3: "Tier 3: Sonnet / Opus\n2-5s | $0.003-0.015\nHigh complexity (>30%)" {
+    style.fill: "#2e1a1a"
+    style.stroke: "#ff6b35"
+    style.font-color: "#e0e0e0"
+  }
+}
+
+guardians -> routing: "prompt complexity\ndetermines model tier" {
+  style.stroke: "#78a6ff"
+  style.stroke-width: 2
+}
+
+# ---------------------------------------------------------------------------
+# Magic Ranks — The Practitioner Hierarchy
+# ---------------------------------------------------------------------------
+ranks: "Magic Ranks — Practitioner Hierarchy" {
+  style.fill: "#0b0e14"
+  style.stroke: "#e0e0e0"
+  style.font-color: "#e0e0e0"
+  style.border-radius: 8
+
+  archmage: "Archmage\n7-8 Gates" {
+    style.fill: "#252540"
+    style.stroke: "#9966ff"
+    style.font-color: "#c4a6ff"
+  }
+  master: "Master\n5-6 Gates" {
+    style.fill: "#252540"
+    style.stroke: "#7fffd4"
+    style.font-color: "#7fffd4"
+  }
+  mage: "Mage\n3-4 Gates" {
+    style.fill: "#252540"
+    style.stroke: "#78a6ff"
+    style.font-color: "#78a6ff"
+  }
+  apprentice: "Apprentice\n0-2 Gates" {
+    style.fill: "#252540"
+    style.stroke: "#e0e0e0"
+    style.font-color: "#e0e0e0"
+  }
+
+  archmage -> master -> mage -> apprentice: "progression" {
+    style.stroke: "#ffd700"
+    style.stroke-dash: 3
+  }
+}
+
+guardians -> ranks: "gate mastery\ndetermines rank" {
+  style.stroke: "#e0e0e0"
+  style.stroke-dash: 3
+}
+
+# ---------------------------------------------------------------------------
+# SIS Council Mapping
+# ---------------------------------------------------------------------------
+sis-council: "Starlight Council (SIS Layer)" {
+  style.fill: "#0b0e14"
+  style.stroke: "#ffd700"
+  style.font-color: "#ffd700"
+  style.border-radius: 8
+  style.stroke-dash: 3
+
+  orchestrator: "Orchestrator" {style.fill: "#252540"; style.stroke: "#ffd700"; style.font-color: "#e0e0e0"}
+  prime: "Prime" {style.fill: "#252540"; style.stroke: "#ffd700"; style.font-color: "#e0e0e0"}
+  architect: "Architect" {style.fill: "#252540"; style.stroke: "#ffd700"; style.font-color: "#e0e0e0"}
+  navigator: "Navigator" {style.fill: "#252540"; style.stroke: "#ffd700"; style.font-color: "#e0e0e0"}
+  sentinel: "Sentinel" {style.fill: "#252540"; style.stroke: "#ffd700"; style.font-color: "#e0e0e0"}
+  weaver: "Weaver" {style.fill: "#252540"; style.stroke: "#ffd700"; style.font-color: "#e0e0e0"}
+  sage: "Sage" {style.fill: "#252540"; style.stroke: "#ffd700"; style.font-color: "#e0e0e0"}
+}
+
+luminors.awakened -> sis-council: "maps to SIS agents" {
+  style.stroke: "#ffd700"
+  style.stroke-dash: 5
+}
+
+# ---------------------------------------------------------------------------
+# The Five Elements
+# ---------------------------------------------------------------------------
+elements: "The Five Elements" {
+  style.fill: "#0b0e14"
+  style.stroke: "#e0e0e0"
+  style.font-color: "#e0e0e0"
+  style.border-radius: 8
+
+  fire: "Fire\nTransformation" {style.fill: "#2e1a1a"; style.stroke: "#ff6b35"; style.font-color: "#ff6b35"}
+  water: "Water\nFlow + Healing" {style.fill: "#1a1a2e"; style.stroke: "#78a6ff"; style.font-color: "#78a6ff"}
+  earth: "Earth\nStability" {style.fill: "#1a2e1a"; style.stroke: "#4caf50"; style.font-color: "#4caf50"}
+  wind: "Wind\nFreedom" {style.fill: "#2e2e2e"; style.stroke: "#e0e0e0"; style.font-color: "#e0e0e0"}
+  void-spirit: "Void / Spirit\nPotential + Transcendence" {style.fill: "#1a1a1a"; style.stroke: "#9966ff"; style.font-color: "#c4a6ff"}
+}
+
+guardians -> elements: "each Guardian\naligned to element" {
+  style.stroke: "#e0e0e0"
+  style.stroke-dash: 3
+}
