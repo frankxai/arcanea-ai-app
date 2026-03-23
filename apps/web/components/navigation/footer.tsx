@@ -37,6 +37,7 @@ const footerLinks = {
     label: "Build",
     links: [
       { href: "/ecosystem", label: "Ecosystem" },
+      { href: "/research", label: "Research" },
       { href: "/developers", label: "Developers" },
       { href: "/acos", label: "ACOS" },
       { href: "/arcanea-code", label: "Arcanea Code" },
