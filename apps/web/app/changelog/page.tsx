@@ -61,6 +61,42 @@ const CATEGORY_STYLES: Record<
 
 const CHANGELOG: ChangelogEntry[] = [
   {
+    date: "2026-03-23",
+    version: "2.7.0",
+    title: "Security & Auth Hardening",
+    category: "fix",
+    items: [
+      "Deny-by-default API auth — all routes require valid session",
+      "Protected page enforcement across authenticated routes",
+      "Refined auth boundaries with clear public/private split",
+      "Chat error messages improved with actionable guidance",
+      "Public API prefix trailing slash cleanup",
+    ],
+  },
+  {
+    date: "2026-03-22",
+    version: "2.6.0",
+    title: "Massive Platform Upgrade — 519 Files Changed",
+    category: "feature",
+    items: [
+      "Creative Superintelligence positioning across homepage, about, pricing",
+      "107 error boundaries + 23 loading states added (full route coverage)",
+      "72 canonical URLs for SEO across all layouts",
+      "LazyMotion migration: 33KB to 7KB per page (-78% bundle)",
+      "6 new blog posts (15 total) — ecosystem, OSS strategy, vision manifesto",
+      "6 stub pages upgraded to full production content",
+      "Onboarding flow polished with AnimatePresence transitions",
+      "Dashboard wired to real Supabase data + Quick Actions grid",
+      "Library reading time badges + Continue Your Journey section",
+      "Gallery element filters + floating Create button",
+      "Community GitHub stats section with 27 repos, 791 tests",
+      "Studio image generation wired to real API",
+      "Discover page with real Guardian v3 images + Supabase query",
+      "Supabase: 22 FK indexes + 4 function security fixes",
+      "Stripe payment infrastructure added",
+    ],
+  },
+  {
     date: "2026-03-22",
     version: "2.5.0",
     title: "Chat Revolution — AI SDK v6, Artifacts, Branching",
