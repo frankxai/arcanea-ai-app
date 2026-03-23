@@ -500,7 +500,7 @@ export default function ChatPage() {
                   href="/settings/providers"
                   className="px-2.5 py-1 rounded-md text-xs text-red-400/70 hover:text-red-300 hover:bg-red-500/10 transition-colors"
                 >
-                  Settings
+                  Add API Key
                 </Link>
                 <button
                   onClick={handleRetry}
@@ -582,12 +582,12 @@ export default function ChatPage() {
                   <FocusModeSelector value={focusMode} onChange={setFocusMode} />
                 </div>
 
-                <div className="flex flex-wrap justify-center gap-2">
-                  {SUGGESTIONS.map((s) => (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-w-lg mx-auto">
+                  {SUGGESTIONS.slice(0, 4).map((s) => (
                     <button
                       key={s}
                       onClick={() => sendMessage({ text: s })}
-                      className="px-4 py-2.5 rounded-2xl text-[13px] text-white/45 border border-white/[0.06] backdrop-blur-sm hover:border-[#00bcd4]/25 hover:text-white/75 hover:bg-[#00bcd4]/[0.04] hover:shadow-[0_0_20px_rgba(0,188,212,0.06)] transition-all duration-200"
+                      className="flex items-start gap-3 px-4 py-3 rounded-xl text-left text-[13px] text-white/50 border border-white/[0.06] backdrop-blur-sm hover:border-[#00bcd4]/25 hover:text-white/75 hover:bg-[#00bcd4]/[0.04] hover:shadow-[0_0_20px_rgba(0,188,212,0.06)] transition-all duration-200 group"
                     >
                       {s}
                     </button>
@@ -851,7 +851,7 @@ export default function ChatPage() {
                   value={input}
                   onChange={handleInputChange}
                   onKeyDown={handleKeyDown}
-                  placeholder="Message Arcanea..."
+                  placeholder={activeLuminor ? `Message ${activeLuminor.name}...` : "What would you like to create?"}
                   aria-label="Message input"
                   disabled={isLoading}
                   rows={1}
