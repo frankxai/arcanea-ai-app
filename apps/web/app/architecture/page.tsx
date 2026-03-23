@@ -25,9 +25,15 @@ import {
   agentNodes,
   agentEdges,
   agentLegend,
+  roadmapNodes,
+  roadmapEdges,
+  roadmapLegend,
+  businessNodes,
+  businessEdges,
+  businessLegend,
 } from './graph-data';
 
-type TabKey = 'ecosystem' | 'intelligence' | 'memory' | 'agents';
+type TabKey = 'ecosystem' | 'intelligence' | 'memory' | 'agents' | 'roadmap' | 'business';
 
 interface TabConfig {
   key: TabKey;
@@ -70,6 +76,22 @@ const TABS: TabConfig[] = [
     nodes: agentNodes,
     edges: agentEdges,
     legend: agentLegend,
+  },
+  {
+    key: 'roadmap',
+    label: 'Roadmap',
+    description: 'Current state vs future vision — what\'s built today and what we\'re working towards',
+    nodes: roadmapNodes,
+    edges: roadmapEdges,
+    legend: roadmapLegend,
+  },
+  {
+    key: 'business',
+    label: 'Business',
+    description: 'Creator journey from discovery to expansion, revenue tiers, and ecosystem flywheel',
+    nodes: businessNodes,
+    edges: businessEdges,
+    legend: businessLegend,
   },
 ];
 

@@ -610,3 +610,318 @@ export const agentLegend: Record<string, string> = {
   Memory: COLORS.memory,
   'Hive Mind': COLORS.guardian,
 };
+
+// ─── Roadmap: Now vs Next ───────────────────────────────────────────────────────
+
+const ROADMAP_NOW = '#10b981';
+const ROADMAP_NEXT = '#ffd700';
+
+export const roadmapNodes: Node[] = [
+  // Header labels
+  {
+    id: 'rm-title-now',
+    position: { x: 150, y: 20 },
+    data: { label: 'NOW — What\'s Built' },
+    style: nodeStyle(ROADMAP_NOW, { bold: true, large: true }),
+  },
+  {
+    id: 'rm-title-next',
+    position: { x: 700, y: 20 },
+    data: { label: 'NEXT — Working Towards' },
+    style: nodeStyle(ROADMAP_NEXT, { bold: true, large: true }),
+  },
+  // NOW column (left)
+  {
+    id: 'rm-now-site',
+    position: { x: 50, y: 110 },
+    data: { label: 'arcanea.ai\nDeployed · 200 response' },
+    style: nodeStyle(ROADMAP_NOW, { accent: true }),
+  },
+  {
+    id: 'rm-now-guardians',
+    position: { x: 250, y: 110 },
+    data: { label: '10 Guardians\nActive in hooks' },
+    style: nodeStyle(ROADMAP_NOW, { accent: true }),
+  },
+  {
+    id: 'rm-now-statusline',
+    position: { x: 50, y: 210 },
+    data: { label: 'Statusline v5\nRate limits · Dynamic routing' },
+    style: nodeStyle(ROADMAP_NOW, { accent: true }),
+  },
+  {
+    id: 'rm-now-skills',
+    position: { x: 250, y: 210 },
+    data: { label: '54+ Skills\nAuto-activating' },
+    style: nodeStyle(ROADMAP_NOW, { accent: true }),
+  },
+  {
+    id: 'rm-now-cli',
+    position: { x: 50, y: 310 },
+    data: { label: 'claude-arcanea CLI\nv2.0.0' },
+    style: nodeStyle(ROADMAP_NOW, { accent: true }),
+  },
+  {
+    id: 'rm-now-ohmyarcanea',
+    position: { x: 250, y: 310 },
+    data: { label: 'oh-my-arcanea\nv4.0.0' },
+    style: nodeStyle(ROADMAP_NOW, { accent: true }),
+  },
+  {
+    id: 'rm-now-orchestrator',
+    position: { x: 50, y: 410 },
+    data: { label: 'arcanea-orchestrator\nGuardian plugin' },
+    style: nodeStyle(ROADMAP_NOW, { accent: true }),
+  },
+  {
+    id: 'rm-now-session',
+    position: { x: 250, y: 410 },
+    data: { label: 'Session Continuity\nHooks wired' },
+    style: nodeStyle(ROADMAP_NOW, { accent: true }),
+  },
+  {
+    id: 'rm-now-memory',
+    position: { x: 50, y: 510 },
+    data: { label: '6 Memory Vaults\nFile-based' },
+    style: nodeStyle(ROADMAP_NOW, { accent: true }),
+  },
+  {
+    id: 'rm-now-library',
+    position: { x: 250, y: 510 },
+    data: { label: '200K+ Words Library\n20 collections' },
+    style: nodeStyle(ROADMAP_NOW, { accent: true }),
+  },
+  // NEXT column (right)
+  {
+    id: 'rm-next-starlight',
+    position: { x: 600, y: 110 },
+    data: { label: 'Starlight SDK\nPublish to npm' },
+    style: nodeStyle(ROADMAP_NEXT, { accent: true }),
+  },
+  {
+    id: 'rm-next-orchestrator',
+    position: { x: 800, y: 110 },
+    data: { label: 'arcanea-orchestrator\nReal agent spawning' },
+    style: nodeStyle(ROADMAP_NEXT, { accent: true }),
+  },
+  {
+    id: 'rm-next-statusline',
+    position: { x: 600, y: 210 },
+    data: { label: '@arcanea/statusline\nnpm package' },
+    style: nodeStyle(ROADMAP_NEXT, { accent: true }),
+  },
+  {
+    id: 'rm-next-mem0',
+    position: { x: 800, y: 210 },
+    data: { label: 'Mem0 Integration\nPersistent agent memory' },
+    style: nodeStyle(ROADMAP_NEXT, { accent: true }),
+  },
+  {
+    id: 'rm-next-comfyui',
+    position: { x: 600, y: 310 },
+    data: { label: 'ComfyUI Pipeline\nGuardian art generation' },
+    style: nodeStyle(ROADMAP_NEXT, { accent: true }),
+  },
+  {
+    id: 'rm-next-musicgen',
+    position: { x: 800, y: 310 },
+    data: { label: 'MusicGen Integration\nGate frequencies' },
+    style: nodeStyle(ROADMAP_NEXT, { accent: true }),
+  },
+  {
+    id: 'rm-next-vscode',
+    position: { x: 600, y: 410 },
+    data: { label: 'arcanea-vscode\nExtension' },
+    style: nodeStyle(ROADMAP_NEXT, { accent: true }),
+  },
+  {
+    id: 'rm-next-chrome',
+    position: { x: 800, y: 410 },
+    data: { label: 'arcanea-chrome\nExtension' },
+    style: nodeStyle(ROADMAP_NEXT, { accent: true }),
+  },
+  {
+    id: 'rm-next-swarms',
+    position: { x: 600, y: 510 },
+    data: { label: 'Multi-Agent Swarms\nCode + Lore + Art + Music' },
+    style: nodeStyle(ROADMAP_NEXT, { accent: true }),
+  },
+  {
+    id: 'rm-next-marketplace',
+    position: { x: 800, y: 510 },
+    data: { label: 'Community Marketplace\nSkills · Worlds · Agents' },
+    style: nodeStyle(ROADMAP_NEXT, { accent: true }),
+  },
+];
+
+const dashedEdge = (color: string) => ({
+  stroke: color + '50',
+  strokeDasharray: '6 4',
+});
+
+export const roadmapEdges: Edge[] = [
+  // NOW → NEXT progression (dashed)
+  { id: 'rm-e1', source: 'rm-now-site', target: 'rm-next-starlight', style: dashedEdge(ROADMAP_NEXT), type: 'smoothstep', label: 'SDK', labelStyle: { fill: '#666', fontSize: 9 } },
+  { id: 'rm-e2', source: 'rm-now-guardians', target: 'rm-next-orchestrator', style: dashedEdge(ROADMAP_NEXT), type: 'smoothstep' },
+  { id: 'rm-e3', source: 'rm-now-statusline', target: 'rm-next-statusline', style: dashedEdge(ROADMAP_NEXT), type: 'smoothstep', label: 'npm', labelStyle: { fill: '#666', fontSize: 9 } },
+  { id: 'rm-e4', source: 'rm-now-memory', target: 'rm-next-mem0', style: dashedEdge(ROADMAP_NEXT), type: 'smoothstep', label: 'upgrade', labelStyle: { fill: '#666', fontSize: 9 } },
+  { id: 'rm-e5', source: 'rm-now-skills', target: 'rm-next-comfyui', style: dashedEdge(ROADMAP_NEXT), type: 'smoothstep' },
+  { id: 'rm-e6', source: 'rm-now-library', target: 'rm-next-musicgen', style: dashedEdge(ROADMAP_NEXT), type: 'smoothstep' },
+  { id: 'rm-e7', source: 'rm-now-cli', target: 'rm-next-vscode', style: dashedEdge(ROADMAP_NEXT), type: 'smoothstep', label: 'extend', labelStyle: { fill: '#666', fontSize: 9 } },
+  { id: 'rm-e8', source: 'rm-now-ohmyarcanea', target: 'rm-next-chrome', style: dashedEdge(ROADMAP_NEXT), type: 'smoothstep' },
+  { id: 'rm-e9', source: 'rm-now-orchestrator', target: 'rm-next-swarms', style: dashedEdge(ROADMAP_NEXT), type: 'smoothstep' },
+  { id: 'rm-e10', source: 'rm-now-session', target: 'rm-next-marketplace', style: dashedEdge(ROADMAP_NEXT), type: 'smoothstep' },
+  // Internal NOW connections (subtle)
+  { id: 'rm-e11', source: 'rm-now-site', target: 'rm-now-guardians', style: edgeStyle(ROADMAP_NOW, '20') },
+  { id: 'rm-e12', source: 'rm-now-guardians', target: 'rm-now-session', style: edgeStyle(ROADMAP_NOW, '20') },
+  { id: 'rm-e13', source: 'rm-now-cli', target: 'rm-now-skills', style: edgeStyle(ROADMAP_NOW, '20') },
+  // Internal NEXT connections (subtle)
+  { id: 'rm-e14', source: 'rm-next-starlight', target: 'rm-next-marketplace', style: edgeStyle(ROADMAP_NEXT, '20'), type: 'smoothstep' },
+  { id: 'rm-e15', source: 'rm-next-swarms', target: 'rm-next-marketplace', style: edgeStyle(ROADMAP_NEXT, '20') },
+];
+
+export const roadmapLegend: Record<string, string> = {
+  'Built (Now)': ROADMAP_NOW,
+  'Planned (Next)': ROADMAP_NEXT,
+};
+
+// ─── Business: Creator Journey & Revenue ────────────────────────────────────────
+
+const BIZ_JOURNEY = '#7fffd4';   // Atlantean Teal
+const BIZ_REVENUE = '#ffd700';   // Gold
+const BIZ_FLYWHEEL = '#78a6ff';  // Cosmic Blue
+
+export const businessNodes: Node[] = [
+  // Creator Journey (top-to-bottom, left side)
+  {
+    id: 'biz-discover',
+    position: { x: 200, y: 30 },
+    data: { label: 'DISCOVER\nFind Arcanea via community or content' },
+    style: nodeStyle(BIZ_JOURNEY, { bold: true }),
+  },
+  {
+    id: 'biz-chat',
+    position: { x: 200, y: 130 },
+    data: { label: 'CHAT / IMAGINE\nTalk to AI · Generate images' },
+    style: nodeStyle(BIZ_JOURNEY),
+  },
+  {
+    id: 'biz-build',
+    position: { x: 200, y: 230 },
+    data: { label: 'BUILD WORLD\nGates · Archetypes · Elements' },
+    style: nodeStyle(BIZ_JOURNEY),
+  },
+  {
+    id: 'biz-create',
+    position: { x: 200, y: 330 },
+    data: { label: 'CREATE CONTENT\nStories · Art · Music · Agents' },
+    style: nodeStyle(BIZ_JOURNEY),
+  },
+  {
+    id: 'biz-publish',
+    position: { x: 200, y: 430 },
+    data: { label: 'PUBLISH\nShare to feed · List on marketplace' },
+    style: nodeStyle(BIZ_JOURNEY),
+  },
+  {
+    id: 'biz-earn',
+    position: { x: 200, y: 530 },
+    data: { label: 'EARN\nMonetize creations · Subscriptions' },
+    style: nodeStyle(BIZ_JOURNEY, { bold: true }),
+  },
+  {
+    id: 'biz-expand',
+    position: { x: 200, y: 630 },
+    data: { label: 'EXPAND\nGrow multiverse · Collaborate' },
+    style: nodeStyle(BIZ_JOURNEY, { bold: true }),
+  },
+  // Revenue Streams (right side)
+  {
+    id: 'biz-rev-title',
+    position: { x: 600, y: 30 },
+    data: { label: 'Revenue Streams' },
+    style: nodeStyle(BIZ_REVENUE, { bold: true, large: true }),
+  },
+  {
+    id: 'biz-free',
+    position: { x: 550, y: 130 },
+    data: { label: 'Free Tier\nChat · Basic imagine · Library access' },
+    style: nodeStyle(BIZ_REVENUE, { dim: true }),
+  },
+  {
+    id: 'biz-pro',
+    position: { x: 550, y: 230 },
+    data: { label: 'Pro — $19/mo\nAdvanced AI · Custom Guardians\nPriority generation' },
+    style: nodeStyle(BIZ_REVENUE),
+  },
+  {
+    id: 'biz-creator',
+    position: { x: 550, y: 350 },
+    data: { label: 'Creator — $49/mo\nPublishing tools · Analytics\nMonetization' },
+    style: nodeStyle(BIZ_REVENUE, { bold: true }),
+  },
+  {
+    id: 'biz-enterprise',
+    position: { x: 550, y: 470 },
+    data: { label: 'Enterprise — Custom\nWhite-label · API access\nDedicated support' },
+    style: nodeStyle(BIZ_REVENUE, { accent: true }),
+  },
+  // Ecosystem Flywheel (bottom center)
+  {
+    id: 'biz-fly-title',
+    position: { x: 350, y: 720 },
+    data: { label: 'Ecosystem Flywheel' },
+    style: nodeStyle(BIZ_FLYWHEEL, { bold: true, large: true }),
+  },
+  {
+    id: 'biz-fly-create',
+    position: { x: 150, y: 820 },
+    data: { label: 'Creators make\ncontent' },
+    style: nodeStyle(BIZ_FLYWHEEL, { accent: true }),
+  },
+  {
+    id: 'biz-fly-attract',
+    position: { x: 400, y: 820 },
+    data: { label: 'Content attracts\nusers' },
+    style: nodeStyle(BIZ_FLYWHEEL, { accent: true }),
+  },
+  {
+    id: 'biz-fly-convert',
+    position: { x: 650, y: 820 },
+    data: { label: 'Users become\ncreators' },
+    style: nodeStyle(BIZ_FLYWHEEL, { accent: true }),
+  },
+];
+
+export const businessEdges: Edge[] = [
+  // Creator Journey flow (top to bottom)
+  { id: 'biz-e1', source: 'biz-discover', target: 'biz-chat', animated: true, style: edgeStyle(BIZ_JOURNEY, '60') },
+  { id: 'biz-e2', source: 'biz-chat', target: 'biz-build', animated: true, style: edgeStyle(BIZ_JOURNEY, '60') },
+  { id: 'biz-e3', source: 'biz-build', target: 'biz-create', animated: true, style: edgeStyle(BIZ_JOURNEY, '60') },
+  { id: 'biz-e4', source: 'biz-create', target: 'biz-publish', animated: true, style: edgeStyle(BIZ_JOURNEY, '60') },
+  { id: 'biz-e5', source: 'biz-publish', target: 'biz-earn', animated: true, style: edgeStyle(BIZ_JOURNEY, '60') },
+  { id: 'biz-e6', source: 'biz-earn', target: 'biz-expand', animated: true, style: edgeStyle(BIZ_JOURNEY, '60') },
+  // Expand loops back to discover
+  { id: 'biz-e7', source: 'biz-expand', target: 'biz-discover', style: { stroke: BIZ_JOURNEY + '30', strokeDasharray: '6 4' }, type: 'smoothstep' },
+  // Revenue tiers connected
+  { id: 'biz-e8', source: 'biz-rev-title', target: 'biz-free', style: edgeStyle(BIZ_REVENUE, '40') },
+  { id: 'biz-e9', source: 'biz-free', target: 'biz-pro', style: edgeStyle(BIZ_REVENUE, '40') },
+  { id: 'biz-e10', source: 'biz-pro', target: 'biz-creator', style: edgeStyle(BIZ_REVENUE, '50') },
+  { id: 'biz-e11', source: 'biz-creator', target: 'biz-enterprise', style: edgeStyle(BIZ_REVENUE, '40') },
+  // Journey to Revenue connections
+  { id: 'biz-e12', source: 'biz-chat', target: 'biz-free', style: edgeStyle(BIZ_REVENUE, '20'), type: 'smoothstep', label: 'free', labelStyle: { fill: '#666', fontSize: 9 } },
+  { id: 'biz-e13', source: 'biz-build', target: 'biz-pro', style: edgeStyle(BIZ_REVENUE, '20'), type: 'smoothstep', label: 'upgrade', labelStyle: { fill: '#666', fontSize: 9 } },
+  { id: 'biz-e14', source: 'biz-publish', target: 'biz-creator', style: edgeStyle(BIZ_REVENUE, '20'), type: 'smoothstep', label: 'monetize', labelStyle: { fill: '#666', fontSize: 9 } },
+  // Flywheel circular connections
+  { id: 'biz-e15', source: 'biz-fly-create', target: 'biz-fly-attract', animated: true, style: edgeStyle(BIZ_FLYWHEEL, '60') },
+  { id: 'biz-e16', source: 'biz-fly-attract', target: 'biz-fly-convert', animated: true, style: edgeStyle(BIZ_FLYWHEEL, '60') },
+  { id: 'biz-e17', source: 'biz-fly-convert', target: 'biz-fly-create', animated: true, style: edgeStyle(BIZ_FLYWHEEL, '60'), type: 'smoothstep' },
+  // Flywheel connects to journey
+  { id: 'biz-e18', source: 'biz-expand', target: 'biz-fly-title', style: edgeStyle(BIZ_FLYWHEEL, '30') },
+];
+
+export const businessLegend: Record<string, string> = {
+  'Creator Journey': BIZ_JOURNEY,
+  Revenue: BIZ_REVENUE,
+  Flywheel: BIZ_FLYWHEEL,
+};
