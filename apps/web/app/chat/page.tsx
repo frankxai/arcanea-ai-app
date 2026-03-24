@@ -32,6 +32,7 @@ import { LuminorSidebar } from '@/components/chat/luminor-sidebar';
 import { getLuminor } from '@/lib/luminors/config';
 import { SessionSidebar } from '@/components/chat/session-sidebar';
 import { CreationIndicator } from '@/components/chat/creation-indicator';
+import { SaveCreationButton } from '@/components/chat/save-creation-button';
 import { useAutoSave } from '@/lib/arc/auto-save';
 import { estimateTokens, formatTokenCount } from '@/lib/chat/token-estimate';
 import {
@@ -72,12 +73,42 @@ const TEAM_COLORS: Record<string, string> = {
   research: '#69f0ae',
 };
 
-const SUGGESTIONS = [
+const DEFAULT_SUGGESTIONS = [
   'Design a magic system where power comes from forgotten memories',
   'Architect a real-time collaborative canvas in TypeScript',
   'Write the opening paragraph of a story I can\'t put down',
   'I have three ideas and can only ship one — help me decide',
 ];
+
+const MORNING_SUGGESTIONS = [
+  'What should I build today? Help me pick a project.',
+  'Write the opening scene of something I\'ll finish by tonight',
+  'Architect the MVP for an idea I had last night',
+  'Design a character who wakes up and discovers they can...',
+];
+
+const EVENING_SUGGESTIONS = [
+  'I\'m stuck on something — help me see it differently',
+  'Write a poem for when the day is done and the mind is quiet',
+  'Review this code / story / design and tell me what\'s missing',
+  'I want to build something weird. Surprise me.',
+];
+
+function getTimeSuggestions(): string[] {
+  if (typeof window === 'undefined') return DEFAULT_SUGGESTIONS;
+  const hour = new Date().getHours();
+  if (hour >= 5 && hour < 12) return MORNING_SUGGESTIONS;
+  if (hour >= 20 || hour < 5) return EVENING_SUGGESTIONS;
+  return DEFAULT_SUGGESTIONS;
+}
+
+function getTimeGreeting(): string {
+  if (typeof window === 'undefined') return 'What are you making?';
+  const hour = new Date().getHours();
+  if (hour >= 5 && hour < 12) return 'What are you making today?';
+  if (hour >= 20 || hour < 5) return 'Late night creation mode.';
+  return 'What are you making?';
+}
 
 // ---------------------------------------------------------------------------
 // Inline edit form for user messages
@@ -624,7 +655,7 @@ export default function ChatPage() {
                   <span className="text-2xl">&#10022;</span>
                 </div>
                 <h1 className="text-4xl md:text-5xl font-bold text-white mb-3 tracking-tight bg-gradient-to-b from-white via-white/90 to-white/50 bg-clip-text text-transparent">
-                  {activeLuminor ? activeLuminor.name : 'What are you making?'}
+                  {activeLuminor ? activeLuminor.name : getTimeGreeting()}
                 </h1>
                 <p className="text-sm text-white/40 mb-8 max-w-sm mx-auto leading-relaxed">
                   {activeLuminor ? activeLuminor.title || activeLuminor.tagline : 'Stories, code, worlds, music — bring me the problem you can\'t solve alone.'}
@@ -655,7 +686,17 @@ export default function ChatPage() {
                 )}
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-w-lg mx-auto">
-                  {SUGGESTIONS.map((s) => (
+                  {/* Continue last session chip — if user has history */}
+                  {persistence.sessions.length > 0 && persistence.sessions[0].title !== 'New Chat' && (
+                    <button
+                      onClick={() => handleLoadSession(persistence.sessions[0].id)}
+                      className="sm:col-span-2 flex items-center gap-3 px-4 py-3 rounded-xl text-left text-[13px] border border-[#00bcd4]/15 bg-[#00bcd4]/[0.03] text-[#00bcd4]/70 hover:border-[#00bcd4]/30 hover:text-[#00bcd4] hover:bg-[#00bcd4]/[0.06] transition-all duration-200"
+                    >
+                      <PhArrowClockwise className="w-3.5 h-3.5 shrink-0" />
+                      <span className="truncate">Continue: {persistence.sessions[0].title}</span>
+                    </button>
+                  )}
+                  {getTimeSuggestions().map((s) => (
                     <button
                       key={s}
                       onClick={() => sendMessage({ text: s })}
@@ -731,6 +772,14 @@ export default function ChatPage() {
                             <span className="inline-block w-2 h-2 rounded-full bg-[#00bcd4] animate-pulse ml-1 align-middle shadow-[0_0_8px_rgba(0,188,212,0.6)]" />
                           )}
                         </div>
+
+                        {/* Creation saved notification — inline on the message */}
+                        {!isLoading && msg.id === lastMsg?.id && autoSave.notification && (
+                          <div className="flex items-center gap-2 mt-3 px-3 py-2 rounded-lg bg-[#00bcd4]/5 border border-[#00bcd4]/15 text-xs animate-in fade-in slide-in-from-bottom-1 duration-300">
+                            <span className="w-2 h-2 rounded-full bg-[#00bcd4] shrink-0 shadow-[0_0_6px_rgba(0,188,212,0.4)]" />
+                            <span className="text-[#00bcd4]/70">{autoSave.notification}</span>
+                          </div>
+                        )}
 
                         {/* Follow-up suggestions (Perplexity pattern) */}
                         {followUps.length > 0 && !isLoading && (
@@ -818,6 +867,7 @@ export default function ChatPage() {
                               <PhArrowClockwise className="w-3.5 h-3.5" />
                               <span>Regenerate</span>
                             </button>
+                            <SaveCreationButton content={clean} />
                             {branches.has(msg.id) && (
                               <div className="flex items-center gap-1 ml-2">
                                 <span className="text-[10px] text-white/25">|</span>
