@@ -7,180 +7,19 @@ import {
   useNodesState,
   useEdgesState,
   type Node,
-  type Edge,
   type NodeProps,
   Handle,
   Position,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
-// ─── Constants ───────────────────────────────────────────────────────────────
-
-const GOLD = '#ffd700';
-const TEAL = '#7fffd4';
-const BLUE = '#78a6ff';
-const VIOLET = '#a855f7';
-const PINK = '#f472b6';
-const GREEN = '#34d399';
-const AMBER = '#fbbf24';
-const RED = '#f87171';
-const CYAN = '#22d3ee';
-const WHITE = '#e2e8f0';
-
-// ─── Node data ───────────────────────────────────────────────────────────────
-
-interface ConstellationNodeData {
-  label: string;
-  description: string;
-  color: string;
-  size: number;
-  ring: 'center' | 'inner' | 'middle' | 'outer' | 'far';
-  [key: string]: unknown;
-}
-
-type ConstellationNode = Node<ConstellationNodeData>;
-
-// Center coordinates for radial layout
-const CX = 600;
-const CY = 450;
-
-function radial(cx: number, cy: number, radius: number, angleDeg: number) {
-  const rad = (angleDeg * Math.PI) / 180;
-  return { x: cx + radius * Math.cos(rad), y: cy + radius * Math.sin(rad) };
-}
-
-const initialNodes: ConstellationNode[] = [
-  // ── Center ──
-  {
-    id: 'arcanea',
-    type: 'constellation',
-    position: { x: CX - 36, y: CY - 36 },
-    data: {
-      label: 'Arcanea',
-      description: 'The creative superintelligence platform. Chat, imagine, build, publish.',
-      color: GOLD,
-      size: 72,
-      ring: 'center',
-    },
-  },
-
-  // ── Inner Ring: Core Systems (radius ~160) ──
-  ...[
-    { id: 'intelligence-os', label: 'Intelligence OS', description: 'Multi-model orchestration, routing, and persona management.', color: BLUE, angle: 0 },
-    { id: 'memory-vaults', label: 'Memory Vaults', description: 'AgentDB, HNSW search, cross-session horizon layer.', color: VIOLET, angle: 90 },
-    { id: 'guardian-council', label: 'Guardian Council', description: 'AI governance, quality gates, and consensus protocols.', color: GOLD, angle: 180 },
-    { id: 'statusline', label: 'Statusline', description: 'Real-time system health, agent monitoring, and diagnostics.', color: GREEN, angle: 270 },
-  ].map((n) => {
-    const pos = radial(CX, CY, 170, n.angle);
-    return {
-      id: n.id,
-      type: 'constellation' as const,
-      position: { x: pos.x - 24, y: pos.y - 24 },
-      data: { label: n.label, description: n.description, color: n.color, size: 48, ring: 'inner' as const },
-    };
-  }),
-
-  // ── Middle Ring: CLI Harnesses (radius ~320) ──
-  ...[
-    { id: 'claude-arcanea', label: 'claude-arcanea', description: '54 skills overlay for Claude Code. MCP server and agent harness.', color: TEAL, angle: 30 },
-    { id: 'arcanea-code', label: 'arcanea-code', description: 'Code intelligence agent with semantic analysis and refactoring.', color: BLUE, angle: 120 },
-    { id: 'oh-my-arcanea', label: 'oh-my-arcanea', description: 'Shell integration and terminal experience enhancement.', color: GREEN, angle: 210 },
-    { id: 'arcanea-orchestrator', label: 'Orchestrator', description: 'Multi-agent swarm coordination with hierarchical topology.', color: VIOLET, angle: 300 },
-  ].map((n) => {
-    const pos = radial(CX, CY, 320, n.angle);
-    return {
-      id: n.id,
-      type: 'constellation' as const,
-      position: { x: pos.x - 20, y: pos.y - 20 },
-      data: { label: n.label, description: n.description, color: n.color, size: 40, ring: 'middle' as const },
-    };
-  }),
-
-  // ── Outer Ring: Creative Tools (radius ~470) ──
-  ...[
-    { id: 'arcanea-claw', label: 'Arcanea Claw', description: 'Media generation CLI. Image, video, and audio pipelines.', color: PINK, angle: 0 },
-    { id: 'arcanea-infogenius', label: 'InfoGenius', description: 'Research synthesis agent. Web search, analysis, visual reports.', color: CYAN, angle: 72 },
-    { id: 'author-os', label: 'Author OS', description: 'Book publishing pipeline. 17 collections, 200K+ words of lore.', color: AMBER, angle: 144 },
-    { id: 'suno-mcp', label: 'Suno MCP', description: 'Music creation via Suno AI. Frequency-aligned compositions.', color: RED, angle: 216 },
-    { id: 'arcanea-vault', label: 'Arcanea Vault', description: 'Knowledge capture and archival with semantic search.', color: GREEN, angle: 288 },
-  ].map((n) => {
-    const pos = radial(CX, CY, 470, n.angle);
-    return {
-      id: n.id,
-      type: 'constellation' as const,
-      position: { x: pos.x - 18, y: pos.y - 18 },
-      data: { label: n.label, description: n.description, color: n.color, size: 36, ring: 'outer' as const },
-    };
-  }),
-
-  // ── Far Ring: Extensions (radius ~620) ──
-  ...[
-    { id: 'vscode', label: 'VS Code', description: 'Visual Studio Code extension with embedded agent panels.', color: BLUE, angle: 20 },
-    { id: 'chrome', label: 'Chrome', description: 'Browser extension for web research and content capture.', color: TEAL, angle: 92 },
-    { id: 'open-webui', label: 'Open WebUI', description: 'Self-hosted chat interface with Arcanea personality layer.', color: WHITE, angle: 164 },
-    { id: 'lobechat', label: 'LobeChat', description: 'LobeChat provider integration for multi-model routing.', color: VIOLET, angle: 236 },
-    { id: 'mobile', label: 'Mobile', description: 'Companion app for iOS and Android with offline support.', color: PINK, angle: 308 },
-  ].map((n) => {
-    const pos = radial(CX, CY, 620, n.angle);
-    return {
-      id: n.id,
-      type: 'constellation' as const,
-      position: { x: pos.x - 14, y: pos.y - 14 },
-      data: { label: n.label, description: n.description, color: n.color, size: 28, ring: 'far' as const },
-    };
-  }),
-];
-
-// ─── Edges ───────────────────────────────────────────────────────────────────
-
-function constellationEdge(source: string, target: string, color: string): Edge {
-  return {
-    id: `${source}-${target}`,
-    source,
-    target,
-    style: { stroke: color, strokeWidth: 1, opacity: 0.35 },
-    type: 'straight',
-  };
-}
-
-const initialEdges: Edge[] = [
-  // Center -> Inner
-  constellationEdge('arcanea', 'intelligence-os', BLUE),
-  constellationEdge('arcanea', 'memory-vaults', VIOLET),
-  constellationEdge('arcanea', 'guardian-council', GOLD),
-  constellationEdge('arcanea', 'statusline', GREEN),
-
-  // Inner -> Middle
-  constellationEdge('intelligence-os', 'claude-arcanea', TEAL),
-  constellationEdge('intelligence-os', 'arcanea-code', BLUE),
-  constellationEdge('memory-vaults', 'arcanea-orchestrator', VIOLET),
-  constellationEdge('guardian-council', 'oh-my-arcanea', GOLD),
-  constellationEdge('statusline', 'arcanea-orchestrator', GREEN),
-
-  // Inner cross-connections
-  constellationEdge('intelligence-os', 'memory-vaults', `${BLUE}80`),
-  constellationEdge('guardian-council', 'statusline', `${GOLD}80`),
-
-  // Middle -> Outer
-  constellationEdge('claude-arcanea', 'arcanea-claw', PINK),
-  constellationEdge('claude-arcanea', 'arcanea-infogenius', CYAN),
-  constellationEdge('arcanea-code', 'author-os', AMBER),
-  constellationEdge('arcanea-orchestrator', 'suno-mcp', RED),
-  constellationEdge('oh-my-arcanea', 'arcanea-vault', GREEN),
-
-  // Outer -> Far
-  constellationEdge('arcanea-claw', 'chrome', TEAL),
-  constellationEdge('arcanea-infogenius', 'open-webui', WHITE),
-  constellationEdge('arcanea-code', 'vscode', BLUE),
-  constellationEdge('arcanea-orchestrator', 'lobechat', VIOLET),
-  constellationEdge('arcanea-vault', 'mobile', PINK),
-
-  // Some cross-ring connections for visual richness
-  constellationEdge('arcanea', 'claude-arcanea', `${TEAL}60`),
-  constellationEdge('arcanea', 'arcanea-claw', `${PINK}40`),
-  constellationEdge('memory-vaults', 'arcanea-vault', `${VIOLET}50`),
-  constellationEdge('intelligence-os', 'arcanea-infogenius', `${CYAN}50`),
-];
+import {
+  initialNodes,
+  initialEdges,
+  RING_LEGEND,
+  type ConstellationNode,
+  type ConstellationNodeData,
+} from './constellation-data';
 
 // ─── Custom Node Component ──────────────────────────────────────────────────
 
@@ -334,16 +173,6 @@ function minimapNodeColor(node: Node): string {
   const data = node.data as ConstellationNodeData;
   return data?.color || '#333';
 }
-
-// ─── Ring Legend ──────────────────────────────────────────────────────────────
-
-const RING_LEGEND = [
-  { label: 'Platform', color: GOLD },
-  { label: 'Core Systems', color: BLUE },
-  { label: 'CLI Harnesses', color: TEAL },
-  { label: 'Creative Tools', color: PINK },
-  { label: 'Extensions', color: WHITE },
-];
 
 // ─── Page Component ──────────────────────────────────────────────────────────
 
@@ -583,4 +412,3 @@ export default function EcosystemConstellationPage() {
     </>
   );
 }
-
