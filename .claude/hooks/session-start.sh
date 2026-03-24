@@ -4,8 +4,8 @@
 set +e
 
 ARCANEA_HOME="${ARCANEA_HOME:-$HOME/.arcanea}"
-SESSION_DIR="/tmp/arcanea-session"
-DB_PATH="${ARCANEA_DB:-/tmp/arcanea-agentdb.sqlite3}"
+SESSION_DIR="${ARCANEA_HOME}/sessions/current"
+DB_PATH="${ARCANEA_DB:-${ARCANEA_HOME}/agentdb.sqlite3}"
 HOOK_DIR="$(cd "$(dirname "$0")" && pwd)"
 AGENTDB_DIR="$(cd "$HOOK_DIR/../agentdb" 2>/dev/null && pwd)"
 

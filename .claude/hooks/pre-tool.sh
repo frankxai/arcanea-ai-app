@@ -12,15 +12,9 @@ TIMESTAMP="$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
 # Ensure session directory exists
 mkdir -p "$SESSION_DIR"
 
-# Increment tool count
+# Read current tool count (do NOT increment here — post-tool.sh increments)
 COUNT_FILE="$SESSION_DIR/tool-count"
-if [ -f "$COUNT_FILE" ]; then
-  COUNT=$(cat "$COUNT_FILE" 2>/dev/null || echo "0")
-else
-  COUNT=0
-fi
-COUNT=$((COUNT + 1))
-echo "$COUNT" > "$COUNT_FILE"
+COUNT=$(cat "$COUNT_FILE" 2>/dev/null || echo "0")
 
 # Log tool invocation (truncate input to prevent huge logs)
 INPUT_PREVIEW="${TOOL_INPUT:0:120}"

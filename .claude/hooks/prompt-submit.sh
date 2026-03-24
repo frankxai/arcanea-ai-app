@@ -4,8 +4,9 @@
 set +e
 
 PROMPT="${1:-}"
-SESSION_DIR="/tmp/arcanea-session"
-DB_PATH="${ARCANEA_DB:-/tmp/arcanea-agentdb.sqlite3}"
+ARCANEA_HOME="${ARCANEA_HOME:-$HOME/.arcanea}"
+SESSION_DIR="${ARCANEA_HOME}/sessions/current"
+DB_PATH="${ARCANEA_DB:-${ARCANEA_HOME}/agentdb.sqlite3}"
 HOOK_DIR="$(cd "$(dirname "$0")" && pwd)"
 TIMESTAMP="$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
 
@@ -26,7 +27,7 @@ elif echo "$PROMPT_LOWER" | grep -qE 'debug|bug|error|fix|broken|crash|undefined
   GUARDIAN="Elara"; GATE="Starweave"; KEYWORDS="debug/fix/error"
 elif echo "$PROMPT_LOWER" | grep -qE 'review|audit|security|quality|inspect|verify|lint'; then
   GUARDIAN="Alera"; GATE="Voice"; KEYWORDS="review/audit/quality"
-elif echo "$PROMPT_LOWER" | grep -qE 'github|merge|pr\b|pull.*request|commit|push|branch'; then
+elif echo "$PROMPT_LOWER" | grep -qE 'github|merge|pull.*request|commit|push|branch| pr '; then
   GUARDIAN="Ino"; GATE="Unity"; KEYWORDS="github/merge/pr"
 elif echo "$PROMPT_LOWER" | grep -qE 'architect|schema|foundation|database|supabase|migration|data.*model'; then
   GUARDIAN="Lyssandria"; GATE="Foundation"; KEYWORDS="architect/schema/foundation"
@@ -36,7 +37,7 @@ elif echo "$PROMPT_LOWER" | grep -qE 'deploy|build|implement|code|compile|compon
   GUARDIAN="Draconia"; GATE="Fire"; KEYWORDS="implement/build/code"
 elif echo "$PROMPT_LOWER" | grep -qE 'refactor|migrate|restructure|transform|modernize'; then
   GUARDIAN="Elara"; GATE="Starweave"; KEYWORDS="refactor/migrate/transform"
-elif echo "$PROMPT_LOWER" | grep -qE 'test|accessibility|wellness|ux\b|css|tailwind|design.*system'; then
+elif echo "$PROMPT_LOWER" | grep -qE 'test|accessibility|wellness| ux |css|tailwind|design.*system'; then
   GUARDIAN="Maylinn"; GATE="Heart"; KEYWORDS="test/ux/design"
 elif echo "$PROMPT_LOWER" | grep -qE 'visual|image|world.*build|infographic|generate.*image'; then
   GUARDIAN="Aiyami"; GATE="Crown"; KEYWORDS="visual/world/image"
