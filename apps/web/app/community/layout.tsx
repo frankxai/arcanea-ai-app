@@ -2,11 +2,28 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Arcanea Community — Join the Creative Civilization',
-  description: 'Connect with creators, share your work, and build together in the Arcanea community. Join a civilization of creative minds shaping the future.',
+  description:
+    'Not just users — co-creators. Contribute lore, agents, skills, code, art, music. 27 repos, 35 npm packages, 54 skills, 200K+ words of lore. Built in the open.',
   openGraph: {
     title: 'Arcanea Community — Join the Creative Civilization',
-    description: 'Connect with creators, share your work, and build together in the Arcanea community. Join a civilization of creative minds shaping the future.',
+    description:
+      'Not just users — co-creators. Contribute lore, agents, skills, code, art, music. 27 repos, 35 npm packages, 54 skills, 200K+ words of lore.',
     type: 'website',
+    images: [
+      {
+        url: '/guardians/v3/elara-hero-v3.webp',
+        width: 1024,
+        height: 1024,
+        alt: 'Elara — Guardian of the Starweave Gate',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Join the Creative Civilization — Arcanea Community',
+    description:
+      'Not just users — co-creators. 27 repos, 35 npm packages, 54 skills, 200K+ words. Built in the open.',
+    images: ['/guardians/v3/elara-hero-v3.webp'],
   },
   alternates: { canonical: '/community' },
 };
@@ -16,7 +33,7 @@ const jsonLd = {
   "@type": "WebPage",
   name: "Arcanea Community — Join the Creative Civilization",
   description:
-    "Connect with creators, share your work, and build together in the Arcanea community. Join a civilization of creative minds shaping the future.",
+    "Not just users — co-creators. Contribute lore, agents, skills, code, art, music. 27 repos, 35 npm packages, 54 skills, 200K+ words of lore.",
   url: "https://arcanea.ai/community",
   publisher: {
     "@type": "Organization",

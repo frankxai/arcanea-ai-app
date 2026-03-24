@@ -1,5 +1,3 @@
-'use client';
-
 import Link from "next/link";
 import {
   PhChatCircle,
@@ -23,6 +21,12 @@ import {
   PhFlame,
   PhDrop,
   PhLeaf,
+  PhGitBranch,
+  PhCrown,
+  PhPackage,
+  PhRocket,
+  PhHeart,
+  PhShieldStar,
 } from '@/lib/phosphor-icons';
 import { NewsletterForm } from "@/components/community/newsletter-form";
 
@@ -64,7 +68,7 @@ const COMMUNITY_SPACES = [
       "Star the repository",
       "Fork and experiment freely",
     ],
-    href: "https://github.com/frankxai/arcanea",
+    href: "https://github.com/frankxai",
     cta: "View on GitHub",
     badge: "Open Source",
     icon: PhGithubLogo,
@@ -77,18 +81,18 @@ const COMMUNITY_SPACES = [
   {
     id: "twitter",
     name: "X / Twitter",
-    tagline: "@arcanea_ai — daily signal from the cosmos",
+    tagline: "@frankxai — daily signal from the cosmos",
     description:
-      "Daily wisdom threads, creation showcases from the community, platform updates, and the ongoing mythology of Arcanea—broadcast in real time.",
+      "Daily wisdom threads, creation showcases from the community, platform updates, and the ongoing mythology of Arcanea — broadcast in real time.",
     highlights: [
       "Daily wisdom from the Library",
       "Community creation showcases",
       "Platform releases and updates",
       "Creator spotlights and threads",
     ],
-    href: "https://twitter.com/arcanea_ai",
-    cta: "Follow @arcanea_ai",
-    badge: "@arcanea_ai",
+    href: "https://twitter.com/frankxai",
+    cta: "Follow @frankxai",
+    badge: "@frankxai",
     icon: PhTwitterLogo,
     accentClass: "from-water/20 to-water/5",
     borderHoverClass: "hover:border-water/40",
@@ -117,6 +121,88 @@ const COMMUNITY_SPACES = [
     glowColor: "rgba(255,107,53,0.12)",
     iconColor: "text-fire",
     badgeBg: "bg-fire/20 text-fire border-fire/30",
+  },
+];
+
+const WAYS_TO_CONTRIBUTE = [
+  {
+    title: "Build",
+    subtitle: "Fork repos, submit PRs, create skills",
+    description:
+      "The entire platform is open source. Pick an issue, build a feature, craft an agent skill, or extend the intelligence layer. Your code ships to creators worldwide.",
+    icon: PhCode,
+    color: "#00bcd4",
+    highlights: ["Fork & contribute code", "Create agent skills", "Build platform features"],
+  },
+  {
+    title: "Create",
+    subtitle: "Write lore, compose music, design characters",
+    description:
+      "Expand the mythology, compose frequency-aligned music, illustrate Guardians and Godbeasts, or write Library texts. Every form of creative work deepens the world.",
+    icon: PhPaintBrush,
+    color: "#ffd700",
+    highlights: ["Write Library texts", "Design character art", "Compose Gate music"],
+  },
+  {
+    title: "Share",
+    subtitle: "Publish to the marketplace, help others learn",
+    description:
+      "Share your creations with the community, mentor new creators, write tutorials, and publish skills and content to the marketplace for others to build upon.",
+    icon: PhHeart,
+    color: "#ff6b35",
+    highlights: ["Publish skills & content", "Write guides & tutorials", "Mentor new creators"],
+  },
+  {
+    title: "Govern",
+    subtitle: "Inner circle earns governance through contribution",
+    description:
+      "Sustained contribution earns governance rights. Shape the platform's direction, vote on canonical decisions, and help steer the creative civilization toward its future.",
+    icon: PhCrown,
+    color: "#9966ff",
+    highlights: ["Earn governance rights", "Shape platform direction", "Vote on canon decisions"],
+  },
+];
+
+const FEATURED_REPOS = [
+  {
+    name: "arcanea",
+    fullName: "frankxai/arcanea",
+    description:
+      "The main Arcanea monorepo — Next.js platform, AI services, design system, and the Library of 200K+ words.",
+    href: "https://github.com/frankxai/arcanea",
+    tags: ["monorepo", "next.js", "ai"],
+    color: "#00bcd4",
+    icon: PhRocket,
+  },
+  {
+    name: "@arcanea/skills",
+    fullName: "frankxai/arcanea-skills-opensource",
+    description:
+      "54 open-source Claude Code skills — world-building, agent design, creative workflows, and development tools.",
+    href: "https://github.com/frankxai/arcanea-skills-opensource",
+    tags: ["skills", "claude", "agents"],
+    color: "#9966ff",
+    icon: PhSparkle,
+  },
+  {
+    name: "claude-arcanea",
+    fullName: "frankxai/claude-arcanea",
+    description:
+      "The Claude Code integration layer — MCP servers, memory, vector search, and intelligence orchestration.",
+    href: "https://github.com/frankxai/claude-arcanea",
+    tags: ["mcp", "vectors", "intelligence"],
+    color: "#ffd700",
+    icon: PhCpu,
+  },
+  {
+    name: "oh-my-arcanea",
+    fullName: "frankxai/oh-my-arcanea",
+    description:
+      "Community-contributed Arcanea overlays, themes, and configurations for Claude Code, Cursor, and other AI-native editors.",
+    href: "https://github.com/frankxai/oh-my-arcanea",
+    tags: ["overlays", "themes", "community"],
+    color: "#ff6b35",
+    icon: PhPackage,
   },
 ];
 
@@ -199,60 +285,9 @@ const SPOTLIGHTS = [
     gate: "Foundation",
     type: "Audio Creation",
     description:
-      "Original compositions built around the Extended Solfeggio frequencies, one piece per Gate—designed to open creative states before a session.",
+      "Original compositions built around the Extended Solfeggio frequencies, one piece per Gate — designed to open creative states before a session.",
     accent: "#9966ff",
     gateColor: "text-void-el",
-  },
-];
-
-const CONTRIBUTIONS = [
-  {
-    title: "Write Library Texts",
-    description:
-      "Expand the 17 collections with your own wisdom. The Library is a living document—your voice belongs in it.",
-    icon: PhBookOpen,
-    color: "crystal",
-    hex: "#00bcd4",
-  },
-  {
-    title: "Create Arcanea Skills",
-    description:
-      "Build procedural skills that equip creators and developers. Published skills become part of the intelligence layer.",
-    icon: PhCpu,
-    color: "brand-primary",
-    hex: "#0d47a1",
-  },
-  {
-    title: "Design Character Art",
-    description:
-      "Bring the Guardians, Godbeasts, and cosmic landscapes to visual life. Your art may become canonical.",
-    icon: PhPaintBrush,
-    color: "brand-gold",
-    hex: "#ffd700",
-  },
-  {
-    title: "Build Features",
-    description:
-      "The platform is open source. Pick an issue, build something real, and ship features that serve creators everywhere.",
-    icon: PhCode,
-    color: "water",
-    hex: "#00bcd4",
-  },
-  {
-    title: "Write Narrative Content",
-    description:
-      "Parables, prophecies, chronicles—every form of Arcanean fiction grows the mythology and serves the community.",
-    icon: PhPen,
-    color: "fire",
-    hex: "#ff6b35",
-  },
-  {
-    title: "Translate Content",
-    description:
-      "Make the Library, Academy, and platform accessible to creators in every language. Translation is a sacred act.",
-    icon: PhTranslate,
-    color: "earth",
-    hex: "#4a7c59",
   },
 ];
 
@@ -272,14 +307,13 @@ export default function CommunityPage() {
         {/* ── 1. Hero ───────────────────────────────────────────────────────── */}
         <section className="pt-12 pb-20 lg:pt-20 lg:pb-28">
           <div className="relative liquid-glass rounded-3xl overflow-hidden px-8 py-16 sm:px-16 sm:py-20 lg:px-20 lg:py-24">
-            {/* Elara hunter+wolf — Starweave Gate, perspective and the bonds beyond dimension */}
+            {/* Elara hero bg */}
             <img
               src="/guardians/v3/elara-hero-v3.webp"
               alt=""
               aria-hidden="true"
               className="absolute inset-0 w-full h-full object-cover opacity-[0.11] pointer-events-none object-right"
             />
-            {/* Inner aurora gradient */}
             <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/12 via-transparent to-crystal/10 pointer-events-none" />
             <div className="absolute top-0 left-0 w-64 h-64 bg-brand-primary/8 rounded-full blur-3xl pointer-events-none" />
             <div className="absolute bottom-0 right-0 w-80 h-80 bg-crystal/6 rounded-full blur-3xl pointer-events-none" />
@@ -294,14 +328,13 @@ export default function CommunityPage() {
 
               <h1 className="text-fluid-hero font-display font-bold mb-6 leading-none tracking-tight">
                 Join the
-                <span className="block text-gradient-brand">Creation</span>
+                <span className="block text-gradient-brand">Creative Civilization</span>
               </h1>
 
               <p className="text-fluid-lg text-text-secondary leading-relaxed max-w-2xl font-body mb-10">
-                Arcanea is not just a platform—it is a living ecosystem of
-                creators, builders, and dreamers aligned by the same conviction:
-                that imagining a good future is the first act of building one.
-                This is where you find your people.
+                Not just users — co-creators. Contribute lore, agents, skills,
+                code, art, music. Shape a living ecosystem where imagination
+                becomes infrastructure and every creator has a voice.
               </p>
 
               <div className="flex flex-wrap gap-4">
@@ -315,7 +348,7 @@ export default function CommunityPage() {
                   Join Discord
                 </a>
                 <a
-                  href="https://github.com/frankxai/arcanea"
+                  href="https://github.com/frankxai"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200"
@@ -328,7 +361,253 @@ export default function CommunityPage() {
           </div>
         </section>
 
-        {/* ── 2. Community Spaces ───────────────────────────────────────────── */}
+        {/* ── 2. Open Source Stats ─────────────────────────────────────────── */}
+        <section
+          className="py-16 border-t border-white/[0.04]"
+          aria-labelledby="oss-stats-heading"
+        >
+          <div className="mb-12">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-crystal/20 bg-crystal/8 mb-5">
+              <PhGithubLogo className="w-3 h-3 text-crystal" />
+              <span className="text-xs font-mono tracking-widest uppercase text-crystal">
+                Open Source
+              </span>
+            </div>
+            <h2
+              id="oss-stats-heading"
+              className="text-fluid-3xl font-display font-bold mb-4"
+            >
+              Built in the open
+            </h2>
+            <p className="text-text-secondary font-sans max-w-2xl">
+              Arcanea is fully open source. Explore the codebase, contribute
+              features, build skills, and help shape the platform.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-5">
+            {[
+              { value: "27", label: "Repositories", color: "#00bcd4" },
+              { value: "35", label: "npm Packages", color: "#ffd700" },
+              { value: "54", label: "Skills", color: "#9966ff" },
+              { value: "791", label: "Tests Passing", color: "#4a7c59" },
+              { value: "200K+", label: "Words of Lore", color: "#ff6b35" },
+            ].map((stat) => (
+              <div
+                key={stat.label}
+                className="relative card-3d liquid-glass rounded-2xl p-6 text-center overflow-hidden group hover-lift transition-all"
+              >
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"
+                  style={{
+                    background: `radial-gradient(ellipse at 50% 50%, ${stat.color}12, transparent 70%)`,
+                  }}
+                />
+                <div className="relative">
+                  <p
+                    className="text-3xl md:text-4xl font-display font-bold mb-1"
+                    style={{ color: stat.color }}
+                  >
+                    {stat.value}
+                  </p>
+                  <p className="text-sm text-text-muted font-sans">
+                    {stat.label}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ── 3. Ways to Contribute ───────────────────────────────────────── */}
+        <section
+          className="py-16 border-t border-white/[0.04]"
+          aria-labelledby="contribute-heading"
+        >
+          <div className="mb-12">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-earth/30 bg-earth/10 mb-5">
+              <PhLeaf className="w-3 h-3 text-earth" />
+              <span className="text-xs font-mono tracking-widest uppercase text-earth-bright">
+                Contribute
+              </span>
+            </div>
+            <h2
+              id="contribute-heading"
+              className="text-fluid-3xl font-display font-bold mb-4"
+            >
+              Ways to shape Arcanea
+            </h2>
+            <p className="text-text-secondary font-sans max-w-2xl">
+              The platform, the mythology, and the intelligence layer are all
+              open to contribution. Every form of creative work is welcome here.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {WAYS_TO_CONTRIBUTE.map((way) => {
+              const Icon = way.icon;
+              return (
+                <div
+                  key={way.title}
+                  className="group relative card-3d liquid-glass rounded-2xl p-7 overflow-hidden glow-card hover-lift transition-all"
+                >
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"
+                    style={{
+                      background: `radial-gradient(ellipse at 30% 20%, ${way.color}15, transparent 65%)`,
+                    }}
+                  />
+
+                  <div className="relative">
+                    <div
+                      className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 transition-all group-hover:scale-110"
+                      style={{ backgroundColor: `${way.color}18` }}
+                    >
+                      <Icon
+                        className="w-5 h-5"
+                        style={{ color: way.color }}
+                      />
+                    </div>
+
+                    <h3 className="text-xl font-display font-bold mb-1">
+                      {way.title}
+                    </h3>
+                    <p
+                      className="text-sm font-mono mb-3 opacity-80"
+                      style={{ color: way.color }}
+                    >
+                      {way.subtitle}
+                    </p>
+                    <p className="text-text-secondary text-sm leading-relaxed font-sans mb-5">
+                      {way.description}
+                    </p>
+
+                    <ul className="space-y-1.5" role="list">
+                      {way.highlights.map((item) => (
+                        <li
+                          key={item}
+                          className="flex items-start gap-2 text-xs text-text-muted font-sans"
+                        >
+                          <span
+                            className="mt-1 w-1 h-1 rounded-full shrink-0"
+                            style={{ backgroundColor: way.color }}
+                          />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* ── 4. Featured Repos ───────────────────────────────────────────── */}
+        <section
+          className="py-16 border-t border-white/[0.04]"
+          aria-labelledby="repos-heading"
+        >
+          <div className="mb-12">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand-gold/20 bg-brand-gold/8 mb-5">
+              <PhGitBranch className="w-3 h-3 text-brand-gold" />
+              <span className="text-xs font-mono tracking-widest uppercase text-brand-gold">
+                Featured Repos
+              </span>
+            </div>
+            <h2
+              id="repos-heading"
+              className="text-fluid-3xl font-display font-bold mb-4"
+            >
+              Explore the ecosystem
+            </h2>
+            <p className="text-text-secondary font-sans max-w-2xl">
+              The Arcanea ecosystem spans multiple repositories. Start with any
+              of these to contribute, learn, or build something new.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-6">
+            {FEATURED_REPOS.map((repo) => {
+              const RepoIcon = repo.icon;
+              return (
+                <a
+                  key={repo.name}
+                  href={repo.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative card-3d liquid-glass rounded-2xl p-7 overflow-hidden glow-card hover-lift transition-all"
+                  aria-label={`${repo.name} — ${repo.description}`}
+                >
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"
+                    style={{
+                      background: `radial-gradient(ellipse at 30% 30%, ${repo.color}12, transparent 65%)`,
+                    }}
+                  />
+
+                  <div className="relative">
+                    <div className="flex items-start justify-between mb-4">
+                      <div
+                        className="w-11 h-11 rounded-xl flex items-center justify-center"
+                        style={{ backgroundColor: `${repo.color}18` }}
+                      >
+                        <RepoIcon
+                          className="w-5 h-5"
+                          style={{ color: repo.color }}
+                        />
+                      </div>
+                      <PhArrowUpRight
+                        className="w-4 h-4 text-text-muted opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"
+                      />
+                    </div>
+
+                    <h3 className="font-mono font-semibold text-lg mb-1">
+                      {repo.name}
+                    </h3>
+                    <p className="text-xs text-text-muted font-mono mb-3">
+                      {repo.fullName}
+                    </p>
+                    <p className="text-text-secondary text-sm leading-relaxed font-sans mb-5">
+                      {repo.description}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2">
+                      {repo.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="text-xs font-mono px-2.5 py-1 rounded-full border"
+                          style={{
+                            backgroundColor: `${repo.color}10`,
+                            color: repo.color,
+                            borderColor: `${repo.color}25`,
+                          }}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </a>
+              );
+            })}
+          </div>
+
+          <div className="mt-8 flex flex-wrap gap-4 justify-center">
+            <a
+              href="https://github.com/frankxai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-crystal/10 border border-crystal/20 text-crystal font-semibold hover:bg-crystal/15 hover:border-crystal/30 transition-all btn-glow"
+            >
+              <PhGithubLogo className="w-4 h-4" />
+              View all repositories
+              <PhArrowUpRight className="w-3.5 h-3.5" />
+            </a>
+          </div>
+        </section>
+
+        {/* ── 5. Community Spaces ─────────────────────────────────────────── */}
         <section
           className="py-16 border-t border-white/[0.04]"
           aria-labelledby="spaces-heading"
@@ -363,7 +642,6 @@ export default function CommunityPage() {
                   className={`group relative card-3d liquid-glass rounded-2xl p-8 overflow-hidden glow-card hover-lift transition-all ${space.borderHoverClass}`}
                   aria-label={`${space.name} — ${space.tagline}`}
                 >
-                  {/* Hover glow overlay */}
                   <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"
                     style={{
@@ -372,7 +650,6 @@ export default function CommunityPage() {
                   />
 
                   <div className="relative">
-                    {/* Header row */}
                     <div className="flex items-start justify-between mb-5">
                       <div
                         className={`w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br ${space.accentClass}`}
@@ -386,7 +663,6 @@ export default function CommunityPage() {
                       </span>
                     </div>
 
-                    {/* Name + tagline */}
                     <h3 className="text-xl font-display font-semibold mb-1">
                       {space.name}
                     </h3>
@@ -399,7 +675,6 @@ export default function CommunityPage() {
                       {space.description}
                     </p>
 
-                    {/* Highlights */}
                     <ul className="space-y-1.5 mb-6" role="list">
                       {space.highlights.map((item) => (
                         <li
@@ -414,7 +689,6 @@ export default function CommunityPage() {
                       ))}
                     </ul>
 
-                    {/* CTA row */}
                     <div className="flex items-center gap-2 text-sm font-semibold opacity-70 group-hover:opacity-100 transition-opacity">
                       <span className={space.iconColor}>{space.cta}</span>
                       <PhArrowUpRight
@@ -428,7 +702,7 @@ export default function CommunityPage() {
           </div>
         </section>
 
-        {/* ── 3. Events ─────────────────────────────────────────────────────── */}
+        {/* ── 6. Events ───────────────────────────────────────────────────── */}
         <section
           className="py-16 border-t border-white/[0.04]"
           aria-labelledby="events-heading"
@@ -448,7 +722,7 @@ export default function CommunityPage() {
             </h2>
             <p className="text-text-secondary font-sans max-w-2xl">
               The Arc turns in cycles. These gatherings mark the moments where
-              the community converges—to celebrate, to create, to advance
+              the community converges — to celebrate, to create, to advance
               together.
             </p>
           </div>
@@ -467,7 +741,6 @@ export default function CommunityPage() {
                   )}
 
                   <div className="relative">
-                    {/* Icon */}
                     <div
                       className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
                       style={{ backgroundColor: `${event.accentHex}18` }}
@@ -478,7 +751,6 @@ export default function CommunityPage() {
                       />
                     </div>
 
-                    {/* Badge */}
                     <div className="flex items-center gap-2 mb-3">
                       <span
                         className="text-xs font-mono px-2 py-0.5 rounded-full border"
@@ -496,7 +768,6 @@ export default function CommunityPage() {
                       {event.title}
                     </h3>
 
-                    {/* Format line */}
                     <div className="flex items-center gap-1.5 text-xs text-text-muted mb-3">
                       <FormatIcon className="w-3 h-3 shrink-0" />
                       <span>{event.format}</span>
@@ -525,7 +796,7 @@ export default function CommunityPage() {
           </div>
         </section>
 
-        {/* ── 4. Creator Spotlight ─────────────────────────────────────────── */}
+        {/* ── 7. Creator Spotlight ─────────────────────────────────────────── */}
         <section
           className="py-16 border-t border-white/[0.04]"
           aria-labelledby="spotlight-heading"
@@ -563,7 +834,6 @@ export default function CommunityPage() {
                 />
 
                 <div className="relative">
-                  {/* Type badge */}
                   <div
                     className="inline-flex items-center gap-1.5 text-xs font-mono px-2.5 py-1 rounded-full border mb-5"
                     style={{
@@ -575,7 +845,6 @@ export default function CommunityPage() {
                     {work.type}
                   </div>
 
-                  {/* Placeholder visual block */}
                   <div
                     className="w-full h-28 rounded-xl mb-5 flex items-center justify-center"
                     style={{
@@ -629,160 +898,86 @@ export default function CommunityPage() {
           </p>
         </section>
 
-        {/* ── 5. Contribution Guide ────────────────────────────────────────── */}
+        {/* ── 8. Community Links ──────────────────────────────────────────── */}
         <section
           className="py-16 border-t border-white/[0.04]"
-          aria-labelledby="contribute-heading"
+          aria-labelledby="links-heading"
         >
           <div className="mb-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-earth/30 bg-earth/10 mb-5">
-              <PhLeaf className="w-3 h-3 text-earth" />
-              <span className="text-xs font-mono tracking-widest uppercase text-earth-bright">
-                Contribute
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-brand-primary/20 bg-brand-primary/8 mb-5">
+              <PhShieldStar className="w-3 h-3 text-brand-primary" />
+              <span className="text-xs font-mono tracking-widest uppercase text-brand-primary">
+                Connect
               </span>
             </div>
             <h2
-              id="contribute-heading"
+              id="links-heading"
               className="text-fluid-3xl font-display font-bold mb-4"
             >
-              How to shape Arcanea
+              Find us everywhere
             </h2>
-            <p className="text-text-secondary font-sans max-w-2xl">
-              The platform, the mythology, and the intelligence layer are all
-              open to contribution. Every form of creative work is welcome here.
-            </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {CONTRIBUTIONS.map((item) => {
-              const ContribIcon = item.icon;
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              {
+                label: "GitHub",
+                href: "https://github.com/frankxai",
+                icon: PhGithubLogo,
+                detail: "github.com/frankxai",
+                color: "#00bcd4",
+              },
+              {
+                label: "Discord",
+                href: "https://discord.gg/arcanea",
+                icon: PhChatCircle,
+                detail: "discord.gg/arcanea",
+                color: "#0d47a1",
+              },
+              {
+                label: "X / Twitter",
+                href: "https://twitter.com/frankxai",
+                icon: PhTwitterLogo,
+                detail: "@frankxai",
+                color: "#78a6ff",
+              },
+              {
+                label: "YouTube",
+                href: "https://youtube.com/@arcanea_ai",
+                icon: PhYoutubeLogo,
+                detail: "@arcanea_ai",
+                color: "#ff6b35",
+              },
+            ].map((link) => {
+              const LinkIcon = link.icon;
               return (
-                <div
-                  key={item.title}
-                  className="group card-3d liquid-glass rounded-2xl p-6 glow-card hover-lift transition-all"
-                  style={{ "--hover-accent": item.hex } as React.CSSProperties}
+                <a
+                  key={link.label}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-4 liquid-glass rounded-xl p-5 hover-lift transition-all"
                 >
                   <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 transition-all group-hover:scale-110"
-                    style={{ backgroundColor: `${item.hex}18` }}
+                    className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 transition-transform group-hover:scale-110"
+                    style={{ backgroundColor: `${link.color}18` }}
                   >
-                    <ContribIcon
-                      className="w-4 h-4"
-                      style={{ color: item.hex }}
-                    />
+                    <LinkIcon className="w-4.5 h-4.5" style={{ color: link.color }} />
                   </div>
-                  <h3 className="font-display font-semibold mb-2">
-                    {item.title}
-                  </h3>
-                  <p className="text-text-secondary text-sm leading-relaxed font-sans">
-                    {item.description}
-                  </p>
-                </div>
+                  <div className="min-w-0">
+                    <p className="font-semibold text-sm">{link.label}</p>
+                    <p className="text-xs text-text-muted font-mono truncate">
+                      {link.detail}
+                    </p>
+                  </div>
+                  <PhArrowUpRight className="w-3.5 h-3.5 text-text-muted opacity-0 group-hover:opacity-100 ml-auto shrink-0 transition-opacity" />
+                </a>
               );
             })}
           </div>
-
-          <div className="mt-8 flex flex-wrap gap-4">
-            <a
-              href="https://github.com/frankxai/arcanea"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl liquid-glass border border-crystal/20 text-crystal text-sm font-semibold hover:bg-crystal/5 hover:border-crystal/40 transition-all btn-glow"
-            >
-              <PhGithubLogo className="w-4 h-4" />
-              Start on GitHub
-              <PhArrowUpRight className="w-3.5 h-3.5" />
-            </a>
-            <Link
-              href="/library"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl liquid-glass border border-white/[0.06] text-text-secondary text-sm font-semibold hover:border-crystal/20 hover:text-text-primary transition-all"
-            >
-              <PhBookOpen className="w-4 h-4" />
-              Read the Library
-            </Link>
-          </div>
         </section>
 
-        {/* ── 5b. GitHub Stats ──────────────────────────────────────────────── */}
-        <section
-          className="py-16 border-t border-white/[0.04]"
-          aria-labelledby="github-stats-heading"
-        >
-          <div className="mb-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-crystal/20 bg-crystal/8 mb-5">
-              <PhGithubLogo className="w-3 h-3 text-crystal" />
-              <span className="text-xs font-mono tracking-widest uppercase text-crystal">
-                Open Source
-              </span>
-            </div>
-            <h2
-              id="github-stats-heading"
-              className="text-fluid-3xl font-display font-bold mb-4"
-            >
-              Built in the open
-            </h2>
-            <p className="text-text-secondary font-sans max-w-2xl">
-              Arcanea is fully open source. Explore the codebase, contribute
-              features, build skills, and help shape the platform.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-            {[
-              { value: "27", label: "Repositories", color: "#00bcd4" },
-              { value: "35", label: "npm Packages", color: "#ffd700" },
-              { value: "791", label: "Tests Passing", color: "#4a7c59" },
-              { value: "54", label: "Skills", color: "#9966ff" },
-            ].map((stat) => (
-              <div
-                key={stat.label}
-                className="relative card-3d liquid-glass rounded-2xl p-6 text-center overflow-hidden group hover-lift transition-all"
-              >
-                <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"
-                  style={{
-                    background: `radial-gradient(ellipse at 50% 50%, ${stat.color}12, transparent 70%)`,
-                  }}
-                />
-                <div className="relative">
-                  <p
-                    className="text-4xl font-display font-bold mb-1"
-                    style={{ color: stat.color }}
-                  >
-                    {stat.value}
-                  </p>
-                  <p className="text-sm text-text-muted font-sans">
-                    {stat.label}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-8 flex flex-wrap gap-4 justify-center">
-            <a
-              href="https://github.com/frankxai/arcanea"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-crystal/10 border border-crystal/20 text-crystal font-semibold hover:bg-crystal/15 hover:border-crystal/30 transition-all btn-glow"
-            >
-              <PhGithubLogo className="w-4 h-4" />
-              Contribute on GitHub
-              <PhArrowUpRight className="w-3.5 h-3.5" />
-            </a>
-            <a
-              href="https://github.com/frankxai/arcanea/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl liquid-glass border border-white/[0.06] text-text-secondary font-semibold hover:border-crystal/20 hover:text-text-primary transition-all"
-            >
-              <PhCode className="w-4 h-4" />
-              Browse Issues
-            </a>
-          </div>
-        </section>
-
-        {/* ── 6. Newsletter CTA ─────────────────────────────────────────────── */}
+        {/* ── 9. Newsletter CTA ───────────────────────────────────────────── */}
         <section
           className="py-16 border-t border-white/[0.04]"
           aria-labelledby="newsletter-heading"
@@ -822,14 +1017,12 @@ export default function CommunityPage() {
           </div>
         </section>
 
-        {/* ── 7. Philosophy Banner ──────────────────────────────────────────── */}
+        {/* ── 10. Philosophy Banner ─────────────────────────────────────────── */}
         <section className="py-16 pb-24 border-t border-white/[0.04]">
           <div className="relative overflow-hidden rounded-3xl">
-            {/* Elemental bar */}
             <div className="h-0.5 w-full bg-gradient-to-r from-fire via-brand-primary via-crystal via-water to-earth" />
 
             <div className="px-8 py-16 sm:px-14 sm:py-20 text-center">
-              {/* Element icons */}
               <div
                 className="flex justify-center gap-5 mb-10"
                 aria-hidden="true"
@@ -889,7 +1082,6 @@ export default function CommunityPage() {
               </div>
             </div>
 
-            {/* Bottom element bar */}
             <div className="h-0.5 w-full bg-gradient-to-r from-earth via-crystal via-water via-brand-primary to-fire" />
           </div>
         </section>
