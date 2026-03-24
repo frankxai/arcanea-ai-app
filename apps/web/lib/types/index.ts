@@ -86,6 +86,29 @@ export { VALIDATION_RULES } from './database';
 // Profile types (re-exported for backward compatibility)
 export type { UserProfile, UserStats, UserSettings } from './profile';
 
+// Credits system types
+export type {
+  PricingTierId,
+  PricingTier,
+  CreditPack,
+  CreationType,
+  CreationCost,
+  CreditBalance,
+  TransactionType,
+  CreditTransaction,
+  EntitlementResult,
+  CheckoutRequest,
+  CheckoutSession,
+  ForgeStatus,
+  ForgeSubscription,
+  CreditBalanceResponse,
+  CreditTransactionListResponse,
+  SpendCreditRequest,
+  SpendCreditResponse,
+} from './credits';
+
+export { CREDIT_PACKS, CREATION_COSTS, FREE_DAILY_CREDITS } from './credits';
+
 // Component prop types
 export interface BaseComponentProps {
   className?: string;
