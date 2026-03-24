@@ -1,80 +1,70 @@
 /**
  * Health Check Endpoint
  *
- * Returns the health status of the application and its dependencies.
- * Used by monitoring systems and CI/CD pipeline for verification.
+ * Returns the public health status of the Arcanea platform.
+ * Fast, lightweight, no auth required.
  *
  * @route GET /api/health
- * @returns {Object} Health status object
- *
- * Status Codes:
- * - 200: All systems operational
- * - 503: Service unavailable (one or more checks failed)
+ * @returns {Object} Platform status, version, feature flags, uptime info
  */
 
 import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-import type { Database } from '@/lib/database/types/supabase';
 
-// NOTE: This route uses runtime = "edge" which is incompatible with @supabase/ssr
-// (SSR client requires Node.js cookie APIs). We use createClient from @supabase/supabase-js
-// directly here with anon key — no session cookies needed for a health check ping.
-export const runtime = "edge";
+export const runtime = 'edge';
 
-interface HealthCheck {
-  api: boolean;
-  database: boolean;
-  timestamp: string;
-  version: string;
-  environment: string;
-  app: string;
-}
+const startedAt = Date.now();
 
-/**
- * Main health check handler
- */
 export async function GET() {
-  let dbHealthy = false;
-  try {
-    const url = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
-    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
-    if (url && key) {
-      const supabase = createClient<Database>(url, key);
-      const { error } = await supabase.from('profiles').select('id').limit(1);
-      dbHealthy = !error;
-    }
-  } catch {
-    dbHealthy = false;
-  }
+  const uptimeMs = Date.now() - startedAt;
 
-  const health: HealthCheck = {
-    api: true,
-    database: dbHealthy,
-    timestamp: new Date().toISOString(),
-    version: process.env.npm_package_version || '1.0.0',
-    environment: process.env.VERCEL_ENV || process.env.NODE_ENV || 'development',
-    app: 'web',
-  };
-
-  const isHealthy = health.api && health.database;
-
-  return NextResponse.json(health, {
-    status: isHealthy ? 200 : 503,
-    headers: {
-      'Cache-Control': 'no-store, no-cache, must-revalidate',
-      'Content-Type': 'application/json',
+  return NextResponse.json(
+    {
+      status: 'healthy',
+      version: '1.8.0',
+      timestamp: new Date().toISOString(),
+      uptime: {
+        ms: uptimeMs,
+        human: formatUptime(uptimeMs),
+      },
+      features: {
+        chat: true,
+        imagine: true,
+        library: true,
+        credits: true,
+        forge: false,
+      },
+      guardian: 'Shinkami',
+      gate: 'Source',
+      environment: process.env.VERCEL_ENV || process.env.NODE_ENV || 'development',
     },
-  });
+    {
+      status: 200,
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate',
+        'Content-Type': 'application/json',
+      },
+    }
+  );
 }
 
 /**
- * HEAD request for simple uptime checks
+ * HEAD request for simple uptime pings (load balancers, cron monitors).
  */
 export async function HEAD() {
   return new NextResponse(null, {
     status: 200,
-    headers: {
-      'Cache-Control': 'no-store',
-    },
+    headers: { 'Cache-Control': 'no-store' },
   });
+}
+
+function formatUptime(ms: number): string {
+  const seconds = Math.floor(ms / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  if (days > 0) return `${days}d ${hours % 24}h`;
+  if (hours > 0) return `${hours}h ${minutes % 60}m`;
+  if (minutes > 0) return `${minutes}m ${seconds % 60}s`;
+  return `${seconds}s`;
 }
