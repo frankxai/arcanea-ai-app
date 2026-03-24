@@ -23,8 +23,14 @@ import {
   type SpendCreditResponse,
 } from "@/lib/types/credits";
 
+/** Derive valid creation types from the canonical CREATION_COSTS array */
+const VALID_CREATION_TYPES = CREATION_COSTS.map((c) => c.type) as [
+  CreationType,
+  ...CreationType[],
+];
+
 const spendSchema = z.object({
-  creationType: z.enum(["image", "music", "story", "character", "world", "lore"]),
+  creationType: z.enum(VALID_CREATION_TYPES),
   metadata: z.record(z.unknown()).optional(),
 });
 
@@ -72,7 +78,15 @@ export async function POST(req: NextRequest) {
     }
 
     // ── Validate request body ──────────────────────────────────────────────
-    const body = await req.json();
+    let body: unknown;
+    try {
+      body = await req.json();
+    } catch {
+      return NextResponse.json(
+        { error: "Invalid JSON in request body" },
+        { status: 400 },
+      );
+    }
     const parsed = spendSchema.safeParse(body);
 
     if (!parsed.success) {
@@ -170,7 +184,7 @@ export async function POST(req: NextRequest) {
       success: true,
       transaction,
       balance,
-      source: entitlement.source!,
+      source: entitlement.source as "forge" | "daily" | "purchased",
     };
 
     return NextResponse.json(response);

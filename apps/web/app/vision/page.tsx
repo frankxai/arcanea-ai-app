@@ -415,7 +415,7 @@ export default function VisionPage() {
               <div className="grid grid-cols-3 gap-6 mb-8">
                 <div className="text-center">
                   <div className="text-2xl md:text-3xl font-display font-bold text-[#00bcd4]">
-                    119
+                    54
                   </div>
                   <div className="text-xs text-text-muted mt-1">Skills</div>
                 </div>
@@ -510,7 +510,7 @@ export default function VisionPage() {
                 Explore the Library
               </Link>
 
-              <Link
+              <a
                 href="https://github.com/frankxai/arcanea"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -518,7 +518,7 @@ export default function VisionPage() {
               >
                 View the Source
                 <IconExternalLink className="w-3.5 h-3.5 opacity-60" />
-              </Link>
+              </a>
             </div>
           </div>
         </section>

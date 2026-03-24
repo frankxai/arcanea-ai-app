@@ -14,8 +14,11 @@ import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { CREDIT_PACKS } from "@/lib/types/credits";
 
+/** Derive valid pack IDs from the canonical CREDIT_PACKS array */
+const VALID_PACK_IDS = CREDIT_PACKS.map((p) => p.id) as [string, ...string[]];
+
 const checkoutSchema = z.object({
-  packId: z.enum(["pack-50", "pack-250", "pack-750"]),
+  packId: z.enum(VALID_PACK_IDS),
   successUrl: z.string().url().optional(),
   cancelUrl: z.string().url().optional(),
 });
@@ -32,7 +35,15 @@ export async function POST(req: NextRequest) {
     }
 
     // ── Validate request body ──────────────────────────────────────────────
-    const body = await req.json();
+    let body: unknown;
+    try {
+      body = await req.json();
+    } catch {
+      return NextResponse.json(
+        { error: "Invalid JSON in request body" },
+        { status: 400 },
+      );
+    }
     const parsed = checkoutSchema.safeParse(body);
 
     if (!parsed.success) {

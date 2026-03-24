@@ -401,26 +401,26 @@ export const memoryNodes: Node[] = [
   // State files detail
   {
     id: 'guardian-state',
-    position: { x: 340, y: 340 },
+    position: { x: 420, y: 340 },
     data: { label: 'arcanea-guardian\nActive Guardian name' },
     style: nodeStyle(COLORS.guardian, { dim: true }),
   },
   {
     id: 'context-state',
-    position: { x: 480, y: 340 },
+    position: { x: 570, y: 340 },
     data: { label: 'arcanea-context-status\nToken tracking' },
     style: nodeStyle(COLORS.core, { dim: true }),
   },
   // Vault operations
   {
     id: 'vault-remember',
-    position: { x: 590, y: 340 },
+    position: { x: 720, y: 340 },
     data: { label: 'vault_remember\nStore with embeddings' },
     style: nodeStyle(COLORS.agent, { dim: true }),
   },
   {
     id: 'vault-recall',
-    position: { x: 730, y: 340 },
+    position: { x: 870, y: 340 },
     data: { label: 'vault_recall\nSemantic search' },
     style: nodeStyle(COLORS.agent, { dim: true }),
   },
@@ -849,15 +849,15 @@ export const businessNodes: Node[] = [
     style: nodeStyle(BIZ_REVENUE, { dim: true }),
   },
   {
-    id: 'biz-pro',
+    id: 'biz-credits',
     position: { x: 550, y: 230 },
-    data: { label: 'Pro — $19/mo\nAdvanced AI · Custom Guardians\nPriority generation' },
+    data: { label: 'Credits — From $5\nPay per creation · Never expire\n50 / 250 / 750 packs' },
     style: nodeStyle(BIZ_REVENUE),
   },
   {
-    id: 'biz-creator',
+    id: 'biz-forge',
     position: { x: 550, y: 350 },
-    data: { label: 'Creator — $49/mo\nPublishing tools · Analytics\nMonetization' },
+    data: { label: 'Forge — $29/mo\nUnlimited creation · Priority GPU\nCustom Guardians' },
     style: nodeStyle(BIZ_REVENUE, { bold: true }),
   },
   {
@@ -905,13 +905,13 @@ export const businessEdges: Edge[] = [
   { id: 'biz-e7', source: 'biz-expand', target: 'biz-discover', style: { stroke: BIZ_JOURNEY + '30', strokeDasharray: '6 4' }, type: 'smoothstep' },
   // Revenue tiers connected
   { id: 'biz-e8', source: 'biz-rev-title', target: 'biz-free', style: edgeStyle(BIZ_REVENUE, '40') },
-  { id: 'biz-e9', source: 'biz-free', target: 'biz-pro', style: edgeStyle(BIZ_REVENUE, '40') },
-  { id: 'biz-e10', source: 'biz-pro', target: 'biz-creator', style: edgeStyle(BIZ_REVENUE, '50') },
-  { id: 'biz-e11', source: 'biz-creator', target: 'biz-enterprise', style: edgeStyle(BIZ_REVENUE, '40') },
+  { id: 'biz-e9', source: 'biz-free', target: 'biz-credits', style: edgeStyle(BIZ_REVENUE, '40') },
+  { id: 'biz-e10', source: 'biz-credits', target: 'biz-forge', style: edgeStyle(BIZ_REVENUE, '50') },
+  { id: 'biz-e11', source: 'biz-forge', target: 'biz-enterprise', style: edgeStyle(BIZ_REVENUE, '40') },
   // Journey to Revenue connections
   { id: 'biz-e12', source: 'biz-chat', target: 'biz-free', style: edgeStyle(BIZ_REVENUE, '20'), type: 'smoothstep', label: 'free', labelStyle: { fill: '#666', fontSize: 9 } },
-  { id: 'biz-e13', source: 'biz-build', target: 'biz-pro', style: edgeStyle(BIZ_REVENUE, '20'), type: 'smoothstep', label: 'upgrade', labelStyle: { fill: '#666', fontSize: 9 } },
-  { id: 'biz-e14', source: 'biz-publish', target: 'biz-creator', style: edgeStyle(BIZ_REVENUE, '20'), type: 'smoothstep', label: 'monetize', labelStyle: { fill: '#666', fontSize: 9 } },
+  { id: 'biz-e13', source: 'biz-build', target: 'biz-credits', style: edgeStyle(BIZ_REVENUE, '20'), type: 'smoothstep', label: 'buy credits', labelStyle: { fill: '#666', fontSize: 9 } },
+  { id: 'biz-e14', source: 'biz-publish', target: 'biz-forge', style: edgeStyle(BIZ_REVENUE, '20'), type: 'smoothstep', label: 'go unlimited', labelStyle: { fill: '#666', fontSize: 9 } },
   // Flywheel circular connections
   { id: 'biz-e15', source: 'biz-fly-create', target: 'biz-fly-attract', animated: true, style: edgeStyle(BIZ_FLYWHEEL, '60') },
   { id: 'biz-e16', source: 'biz-fly-attract', target: 'biz-fly-convert', animated: true, style: edgeStyle(BIZ_FLYWHEEL, '60') },
