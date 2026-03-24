@@ -26,6 +26,28 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "Arcanea Ecosystem",
+  description:
+    "Interactive constellation map of the Arcanea ecosystem. 27 repos, 35 packages, 54 skills powering creative intelligence across code, lore, art, and music.",
+  url: "https://arcanea.ai/ecosystem",
+  publisher: {
+    "@type": "Organization",
+    name: "Arcanea",
+    url: "https://arcanea.ai",
+  },
+};
+
 export default function EcosystemLayout({ children }: { children: React.ReactNode }) {
-  return children;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      {children}
+    </>
+  );
 }

@@ -11,10 +11,32 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  name: "System Architecture — Arcanea Intelligence OS",
+  description:
+    "Interactive visualization of the Arcanea ecosystem: Intelligence OS hierarchy, Guardian routing, memory architecture, and agent orchestration.",
+  url: "https://arcanea.ai/architecture",
+  publisher: {
+    "@type": "Organization",
+    name: "Arcanea",
+    url: "https://arcanea.ai",
+  },
+};
+
 export default function ArchitectureLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      {children}
+    </>
+  );
 }
