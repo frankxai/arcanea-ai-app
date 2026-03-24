@@ -18,6 +18,25 @@ import { GATEWAY_MODELS, EXTENDED_PROVIDERS } from '@/lib/gateway/catalog';
 export const runtime = 'edge';
 
 // ---------------------------------------------------------------------------
+// Library wisdom — curated passages keyed by Guardian gate
+// Injected into system prompt when the MoE router activates a gate.
+// These are hand-selected from the Library of Arcanea (/book/).
+// ---------------------------------------------------------------------------
+
+const GATE_WISDOM: Record<string, string> = {
+  lyssandria: 'The foundation is not the flashiest part of a structure. It is the part that lets everything else be flashy. Build your roots before you reach for the sky.',
+  leyla: 'Creation is water — it finds its own path if you stop forcing direction. The muse arrives when the hands are already moving.',
+  draconia: 'Fire does not ask permission to transform. It acts. The difference between dreaming and making is one verb: start.',
+  maylinn: 'Every creation worth making was born from something the creator cared about more than comfort. Follow the ache — it knows where the real work is.',
+  alera: 'Speak what you see, not what they want to hear. The creator who names their shadow honestly has already begun to master it.',
+  lyria: 'Intuition is pattern recognition running faster than language. Trust the image that arrives before the explanation.',
+  aiyami: 'Mastery is not knowing everything. It is knowing which one thing matters right now and giving it your full attention.',
+  elara: 'Perspective shifts are not gentle. They feel like losing your grip. But the view from the new angle is always worth the vertigo.',
+  ino: 'No great work was made alone. Even the solitary creator stands on the shoulders of every book they read, every conversation that changed their mind.',
+  shinkami: 'The source of all creation is the willingness to be incomplete. Perfection is a wall. Imperfection that creates endlessly is indistinguishable from God.',
+};
+
+// ---------------------------------------------------------------------------
 // Provider configuration (legacy — used when no Gateway model specified)
 // ---------------------------------------------------------------------------
 
@@ -358,6 +377,14 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
     } catch (e) {
       // Non-fatal: continue without context if profile load fails
       console.warn('Failed to load creator context:', e);
+    }
+
+    // --- Inject Library wisdom based on active gate ---
+    if (activeGates.length > 0 && !systemPrompt) {
+      const wisdom = GATE_WISDOM[activeGates[0]];
+      if (wisdom) {
+        resolvedSystemPrompt += `\n\n[LIBRARY WISDOM]\nFrom the Library of Arcanea:\n"${wisdom}"\nReference this naturally if it enriches the creator's work. Do not quote it unless asked about Arcanea's teachings.\n[/LIBRARY WISDOM]`;
+      }
     }
 
     // --- Stream response ---

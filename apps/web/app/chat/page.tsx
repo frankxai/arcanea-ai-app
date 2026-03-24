@@ -75,24 +75,40 @@ const TEAM_COLORS: Record<string, string> = {
 };
 
 const DEFAULT_SUGGESTIONS = [
-  'Design a magic system where power comes from forgotten memories',
-  'Architect a real-time collaborative canvas in TypeScript',
-  'Write the opening paragraph of a story I can\'t put down',
+  'Build me a character with one fatal contradiction',
+  'Architect a real-time collab canvas — start with the data model',
+  'Write an opening scene where the reader learns the rules by breaking one',
   'I have three ideas and can only ship one — help me decide',
 ];
 
 const MORNING_SUGGESTIONS = [
-  'What should I build today? Help me pick a project.',
-  'Write the opening scene of something I\'ll finish by tonight',
-  'Architect the MVP for an idea I had last night',
-  'Design a character who wakes up and discovers they can...',
+  'Design a progression system for a creative tool',
+  'Write a cold open that hooks in the first three lines',
+  'Architect the MVP for the idea I can\'t stop thinking about',
+  'Build me a world where one element is forbidden',
 ];
 
 const EVENING_SUGGESTIONS = [
-  'I\'m stuck on something — help me see it differently',
-  'Write a poem for when the day is done and the mind is quiet',
-  'Review this code / story / design and tell me what\'s missing',
-  'I want to build something weird. Surprise me.',
+  'I wrote 500 words today and hate all of them — help me salvage',
+  'Surprise me with a world I\'ve never seen before',
+  'Review what I have and tell me the one thing that would double its impact',
+  'Write a bedtime parable about a creator who almost quit',
+];
+
+const SUBTITLES = [
+  'Stories, code, worlds, music — bring me the problem you can\'t solve alone.',
+  'I think in systems and ship in specifics. What\'s the idea?',
+  'Better at the second draft. Show me what you\'ve got.',
+  'I\'d rather ask one sharp question than list five options.',
+  'I see game theory in magic systems and contradiction in characters.',
+  'Built for makers. Not a general assistant.',
+];
+
+const CAPABILITY_DOMAINS = [
+  { label: 'World-Building', icon: '\u2726', hint: 'Design a magic system for my novel' },
+  { label: 'Code', icon: '\u2318', hint: 'Architect a production-grade TypeScript system' },
+  { label: 'Writing', icon: '\u270E', hint: 'Write an opening scene that hooks immediately' },
+  { label: 'Music', icon: '\u266B', hint: 'Compose a melody that feels like longing' },
 ];
 
 function getTimeSuggestions(): string[] {
@@ -109,6 +125,13 @@ function getTimeGreeting(): string {
   if (hour >= 5 && hour < 12) return 'What are you making today?';
   if (hour >= 20 || hour < 5) return 'Late night creation mode.';
   return 'What are you making?';
+}
+
+function getSubtitle(): string {
+  if (typeof window === 'undefined') return SUBTITLES[0];
+  // Stable within a session (hour-based hash), varies across visits
+  const idx = (new Date().getHours() * 7 + new Date().getDate()) % SUBTITLES.length;
+  return SUBTITLES[idx];
 }
 
 // ---------------------------------------------------------------------------
@@ -659,9 +682,26 @@ export default function ChatPage() {
                 <h1 className="text-4xl md:text-5xl font-bold text-white mb-3 tracking-tight bg-gradient-to-b from-white via-white/90 to-white/50 bg-clip-text text-transparent">
                   {activeLuminor ? activeLuminor.name : getTimeGreeting()}
                 </h1>
-                <p className="text-sm text-white/40 mb-8 max-w-sm mx-auto leading-relaxed">
-                  {activeLuminor ? activeLuminor.title || activeLuminor.tagline : 'Stories, code, worlds, music — bring me the problem you can\'t solve alone.'}
+                <p className="text-sm text-white/40 mb-6 max-w-sm mx-auto leading-relaxed">
+                  {activeLuminor ? activeLuminor.title || activeLuminor.tagline : getSubtitle()}
                 </p>
+
+                {/* Capability domain chips */}
+                {!activeLuminor && (
+                  <div className="flex flex-wrap justify-center gap-2 mb-6">
+                    {CAPABILITY_DOMAINS.map((d) => (
+                      <button
+                        key={d.label}
+                        type="button"
+                        onClick={() => { setInput(d.hint); textareaRef.current?.focus(); }}
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] text-white/35 border border-white/[0.06] hover:border-[#00bcd4]/20 hover:text-white/55 hover:bg-[#00bcd4]/[0.03] transition-all"
+                      >
+                        <span className="text-sm" aria-hidden="true">{d.icon}</span>
+                        {d.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
 
                 {/* Onboarding banner — first-run when no API key is configured */}
                 {isEmpty && !clientApiKey && !serverHasKeys && (
@@ -775,11 +815,16 @@ export default function ChatPage() {
                           )}
                         </div>
 
-                        {/* Creation saved notification — inline on the message */}
-                        {!isLoading && msg.id === lastMsg?.id && autoSave.notification && (
-                          <div className="flex items-center gap-2 mt-3 px-3 py-2 rounded-lg bg-[#00bcd4]/5 border border-[#00bcd4]/15 text-xs animate-in fade-in slide-in-from-bottom-1 duration-300">
-                            <span className="w-2 h-2 rounded-full bg-[#00bcd4] shrink-0 shadow-[0_0_6px_rgba(0,188,212,0.4)]" />
-                            <span className="text-[#00bcd4]/70">{autoSave.notification}</span>
+                        {/* Creation detected — inline card with save action */}
+                        {!isLoading && msg.id === lastMsg?.id && autoSave.lastDetection && (
+                          <div className="flex items-center justify-between gap-3 mt-3 px-3 py-2.5 rounded-lg bg-[#00bcd4]/5 border border-[#00bcd4]/15 text-sm animate-in fade-in slide-in-from-bottom-1 duration-300">
+                            <div className="flex items-center gap-2 min-w-0">
+                              <span className="w-2 h-2 rounded-full bg-[#00bcd4] shrink-0 shadow-[0_0_6px_rgba(0,188,212,0.4)]" aria-hidden="true" />
+                              <span className="text-[#00bcd4]/80 text-xs truncate">
+                                {autoSave.notification || `${autoSave.lastDetection.type} detected`}
+                              </span>
+                            </div>
+                            <SaveCreationButton content={clean} />
                           </div>
                         )}
 
