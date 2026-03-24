@@ -73,4 +73,19 @@ if [ -d "$SESSION_DIR" ]; then
   cp -r "$SESSION_DIR" "$ARCHIVE_DIR" 2>/dev/null
 fi
 
+# ── Write session to memory vault for cross-session recall ──
+VAULT_DIR="$HOME/.arcanea/memory/vaults/operational"
+mkdir -p "$VAULT_DIR"
+SESSION_FILE="$VAULT_DIR/session-$(date +%Y%m%d-%H%M%S).md"
+cat > "$SESSION_FILE" << VAULTEOF
+---
+guardian: $GUARDIAN
+gate: $(cat /tmp/arcanea-gate 2>/dev/null || echo "Source")
+type: session-summary
+created: $TIMESTAMP
+---
+
+$SUMMARY
+VAULTEOF
+
 echo "Session archived. $SUMMARY"
