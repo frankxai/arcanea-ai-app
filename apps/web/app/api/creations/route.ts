@@ -102,8 +102,11 @@ export async function POST(request: NextRequest) {
       return errorResponse('INVALID_INPUT', 'Invalid request body', 400);
     }
 
+    // Derive userId from auth session; fall back to body for backward compat
+    const { data: { user } } = await supabaseServer.auth.getUser();
+
     const createSchema = z.object({
-      userId: z.string().uuid(),
+      userId: z.string().uuid().optional(),
       title: z.string().min(VALIDATION_RULES.title.minLength).max(VALIDATION_RULES.title.maxLength),
       description: z.string().max(VALIDATION_RULES.description.maxLength).optional(),
       content: z.record(z.any()).optional(),
@@ -125,7 +128,12 @@ export async function POST(request: NextRequest) {
       return errorResponse('VALIDATION_ERROR', 'Invalid input', 400, { errors: validation.error.errors });
     }
 
-    const { userId, ...creationData } = validation.data;
+    const { userId: bodyUserId, ...creationData } = validation.data;
+    const userId = user?.id ?? bodyUserId;
+
+    if (!userId) {
+      return errorResponse('UNAUTHORIZED', 'Authentication required', 401);
+    }
 
     const creation = await createCreation(supabaseServer, userId, creationData);
 

@@ -291,6 +291,75 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    // --- Inject creator context into system prompt ---
+    try {
+      const { createClient: createSupabaseClient } = await import('@supabase/supabase-js');
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+      const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+      if (supabaseUrl && supabaseAnonKey) {
+        // Extract auth token from cookies
+        const cookieHeader = req.headers.get('cookie') ?? '';
+        const accessToken = cookieHeader
+          .split(';')
+          .map(c => c.trim())
+          .find(c => c.startsWith('sb-') && c.includes('-auth-token'))
+          ?.split('=')
+          .slice(1)
+          .join('=');
+
+        if (accessToken) {
+          // Try to parse the base64 JSON token to get the actual JWT
+          let jwt = accessToken;
+          try {
+            const decoded = JSON.parse(decodeURIComponent(accessToken));
+            if (decoded?.access_token) jwt = decoded.access_token;
+            else if (Array.isArray(decoded) && decoded[0]?.access_token) jwt = decoded[0].access_token;
+          } catch {
+            // Token is already a raw JWT string — use as-is
+          }
+
+          const sb = createSupabaseClient(supabaseUrl, supabaseAnonKey, {
+            global: { headers: { Authorization: `Bearer ${jwt}` } },
+          });
+
+          const [profileRes, creationsRes] = await Promise.all([
+            sb.from('profiles').select('display_name, magic_rank, gates_open, active_gate, guardian, academy_house, xp, level, streak_days, bio').single(),
+            sb.from('creations').select('title, type, element, gate, guardian, like_count, created_at').order('created_at', { ascending: false }).limit(5),
+          ]);
+
+          if (profileRes.data) {
+            const p = profileRes.data;
+            const creations = creationsRes.data ?? [];
+            const creationSummary = creations.length > 0
+              ? creations.map((c: Record<string, unknown>) => `- "${c.title}" (${c.type}, ${c.element || 'unaligned'}, ${c.like_count} likes)`).join('\n')
+              : 'No creations yet — this creator is just beginning.';
+
+            const contextBlock = `[CREATOR CONTEXT]
+Name: ${p.display_name || 'Creator'}
+Rank: ${p.magic_rank || 'Apprentice'} (${p.gates_open || 0}/10 Gates open)
+Active Gate: ${p.active_gate || 'Foundation'}
+Guardian Affinity: ${p.guardian || 'None yet'}
+Academy House: ${p.academy_house || 'Unassigned'}
+XP: ${p.xp || 0} · Level: ${p.level || 1} · Streak: ${p.streak_days || 0} days
+Bio: ${p.bio || 'No bio set'}
+
+Recent Creations:
+${creationSummary}
+
+Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor needs different guidance than an Apprentice. Reference their creations and journey when relevant. If they seem stuck, suggest practices aligned with their active Gate.
+[/CREATOR CONTEXT]
+
+`;
+            resolvedSystemPrompt = contextBlock + resolvedSystemPrompt;
+          }
+        }
+      }
+    } catch (e) {
+      // Non-fatal: continue without context if profile load fails
+      console.warn('Failed to load creator context:', e);
+    }
+
     // --- Stream response ---
     const result = await streamText({
       model,
