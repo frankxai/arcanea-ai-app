@@ -47,6 +47,7 @@ const footerLinks = {
     label: "Company",
     links: [
       { href: "/about", label: "About" },
+      { href: "/vision", label: "Vision" },
       { href: "/blog", label: "Blog" },
       { href: "/pricing", label: "Pricing" },
       { href: "/roadmap", label: "Roadmap" },
