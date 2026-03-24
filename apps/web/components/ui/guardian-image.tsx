@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { getGuardianAlt } from "@/lib/guardian-alt-texts";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -94,8 +95,17 @@ function resolveSrc(
 function resolveAlt(
   name: string,
   version: GuardianVersion,
-  godbeastName?: string
+  godbeastName?: string,
+  galleryNum = 2
 ): string {
+  // Derive the path and try the canonical alt text mapping first
+  const src = resolveSrc(name, version, godbeastName, galleryNum);
+  const mapped = getGuardianAlt(src);
+  if (!mapped.startsWith('Guardian artwork:')) {
+    return mapped;
+  }
+
+  // Fallback to generated alt text
   const label = name.charAt(0).toUpperCase() + name.slice(1);
   switch (version) {
     case "v3":
@@ -159,7 +169,7 @@ export function GuardianImage({
 
   const { width, height, sizes } = SIZE_MAP[size];
   const src = resolveSrc(name, version, godbeastName, galleryNum);
-  const resolvedAlt = alt ?? resolveAlt(name, version, godbeastName);
+  const resolvedAlt = alt ?? resolveAlt(name, version, godbeastName, galleryNum);
 
   // sm size is always square; use fill=false with fixed w/h
   const isThumbnail = size === "sm";

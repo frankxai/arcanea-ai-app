@@ -4,6 +4,7 @@ import { useState, useMemo, useCallback } from "react";
 import Link from "next/link";
 import { m, LazyMotion, domAnimation, AnimatePresence } from "framer-motion";
 import { PhX, PhArrowLeft, PhFunnel } from "@/lib/phosphor-icons";
+import { getGuardianAlt } from "@/lib/guardian-alt-texts";
 
 // ---------------------------------------------------------------------------
 // Data — Guardian canon from CLAUDE.md / CANON_LOCKED.md
@@ -28,19 +29,24 @@ export interface GuardianData {
 }
 
 function heroV3(name: string, label: string): GuardianImage {
-  return { src: `/guardians/v3/${name}-hero-v3.webp`, alt: `${label} — ultra-quality portrait v3`, type: "hero-v3", label: "Hero v3" };
+  const src = `/guardians/v3/${name}-hero-v3.webp`;
+  return { src, alt: getGuardianAlt(src), type: "hero-v3", label: "Hero v3" };
 }
 function divineBond(name: string, label: string): GuardianImage {
-  return { src: `/guardians/v2/${name}-divine-bond.webp`, alt: `${label} — divine bond art`, type: "divine-bond", label: "Divine Bond" };
+  const src = `/guardians/v2/${name}-divine-bond.webp`;
+  return { src, alt: getGuardianAlt(src), type: "divine-bond", label: "Divine Bond" };
 }
 function heroV1(name: string, label: string): GuardianImage {
-  return { src: `/guardians/${name}-hero.webp`, alt: `${label} — original hero portrait`, type: "hero-v1", label: "Hero v1" };
+  const src = `/guardians/${name}-hero.webp`;
+  return { src, alt: getGuardianAlt(src), type: "hero-v1", label: "Hero v1" };
 }
 function godbeast(beastName: string, guardianLabel: string, beastLabel: string): GuardianImage {
-  return { src: `/guardians/v2/${beastName}-godbeast.webp`, alt: `${beastLabel} — Godbeast of ${guardianLabel}`, type: "godbeast", label: `${beastLabel} (Godbeast)` };
+  const src = `/guardians/v2/${beastName}-godbeast.webp`;
+  return { src, alt: getGuardianAlt(src), type: "godbeast", label: `${beastLabel} (Godbeast)` };
 }
 function gallery(name: string, label: string, n: number): GuardianImage {
-  return { src: `/guardians/gallery/${name}-gallery-${n}.webp`, alt: `${label} — gallery art ${n}`, type: "gallery", label: `Gallery ${n}` };
+  const src = `/guardians/gallery/${name}-gallery-${n}.webp`;
+  return { src, alt: getGuardianAlt(src), type: "gallery", label: `Gallery ${n}` };
 }
 
 // Build gallery images for each guardian — numbers vary by availability

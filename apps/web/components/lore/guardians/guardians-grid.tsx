@@ -4,6 +4,7 @@ import { m, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import Link from 'next/link';
 import { PhArrowRight, PhShield } from '@/lib/phosphor-icons';
+import { getGuardianAlt } from '@/lib/guardian-alt-texts';
 
 const GUARDIANS = [
   {
@@ -216,7 +217,7 @@ export function GuardiansGrid() {
                 <div className="absolute inset-0 overflow-hidden">
                   <img
                     src={guardian.heroImage}
-                    alt=""
+                    alt={getGuardianAlt(guardian.heroImage)}
                     className="w-full h-full object-cover object-top opacity-15 group-hover:opacity-25 transition-opacity duration-500 scale-105 group-hover:scale-110 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-cosmic-deep/80 via-cosmic-deep/40 to-transparent" />
