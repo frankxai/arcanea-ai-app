@@ -57,9 +57,12 @@ export function SaveCreationButton({ content, onSaved }: SaveCreationButtonProps
 
   if (content.length < 50) return null
 
+  const [errorMsg, setErrorMsg] = useState('')
+
   const handleSave = async () => {
     if (!title.trim()) return
     setState('saving')
+    setErrorMsg('')
 
     const element = detectElement(content)
     const gate = detectGate(content)
@@ -81,14 +84,25 @@ export function SaveCreationButton({ content, onSaved }: SaveCreationButtonProps
         }),
       })
 
+      if (!res.ok) {
+        const msg = res.status === 401 ? 'Sign in to save'
+          : res.status === 400 ? 'Try a shorter title'
+          : 'Server error — try again'
+        setErrorMsg(msg)
+        setState('error')
+        return
+      }
+
       const data = await res.json()
       if (data.success) {
         setState('saved')
         onSaved?.(data.data?.creation?.id)
       } else {
+        setErrorMsg(data.error || 'Save failed')
         setState('error')
       }
     } catch {
+      setErrorMsg('Connection failed — try again')
       setState('error')
     }
   }
@@ -136,7 +150,12 @@ export function SaveCreationButton({ content, onSaved }: SaveCreationButtonProps
       <button onClick={() => setShowForm(false)} className="text-white/30 hover:text-white/50 text-xs">
         Cancel
       </button>
-      {state === 'error' && <span className="text-[10px] text-red-400/70">Failed</span>}
+      {state === 'error' && (
+        <span className="flex items-center gap-1.5 text-[10px] text-red-400/70">
+          {errorMsg || 'Failed'}
+          <button onClick={() => { setState('idle'); setErrorMsg(''); }} className="underline hover:text-red-300">Retry</button>
+        </span>
+      )}
     </div>
   )
 }

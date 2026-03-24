@@ -108,8 +108,8 @@ export function BeamMode({ prompt, provider, clientApiKey, focusHint, onSelectRe
         });
 
         if (!res.ok) {
-          const errData = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
-          throw new Error(errData.error || `HTTP ${res.status}`);
+          const errText = await res.text().catch(() => `HTTP ${res.status}`);
+          throw new Error(errText || `HTTP ${res.status}`);
         }
 
         // Read streaming response
@@ -176,8 +176,8 @@ ${doneResponses.map((r, i) => `--- RESPONSE ${i + 1} (${r.shortName}) ---\n${r.t
       });
 
       if (!res.ok) {
-        const errData = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
-        throw new Error(errData.error || `HTTP ${res.status}`);
+        const errText = await res.text().catch(() => `HTTP ${res.status}`);
+        throw new Error(errText || `HTTP ${res.status}`);
       }
 
       const reader = res.body?.getReader();

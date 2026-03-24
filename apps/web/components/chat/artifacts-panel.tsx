@@ -37,9 +37,14 @@ export function ArtifactsPanel({ artifact, onClose }: ArtifactsPanelProps) {
   };
 
   return (
+    <>
+    {/* Mobile backdrop */}
+    <div className="fixed inset-0 z-40 bg-black/50 md:hidden" onClick={onClose} aria-hidden="true" />
     <div
       className={`${
-        fullscreen ? 'fixed inset-0 z-50' : 'w-[480px] shrink-0'
+        fullscreen
+          ? 'fixed inset-0 z-50'
+          : 'fixed inset-y-0 right-0 z-50 w-full sm:w-[400px] md:relative md:inset-auto md:z-auto md:w-[480px] md:shrink-0'
       } flex flex-col border-l border-white/[0.06] bg-[#0c0c0e] transition-all duration-200`}
     >
       {/* Header */}
@@ -100,6 +105,7 @@ export function ArtifactsPanel({ artifact, onClose }: ArtifactsPanelProps) {
         )}
       </div>
     </div>
+    </>
   );
 }
 

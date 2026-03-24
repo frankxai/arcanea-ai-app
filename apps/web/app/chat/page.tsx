@@ -598,7 +598,7 @@ export default function ChatPage() {
 
         {/* In-conversation search bar */}
         {searchOpen && (
-          <div className="flex items-center gap-2 px-4 py-2 border-b border-white/[0.06] bg-[#0c0c0e]">
+          <div className="flex items-center gap-2 px-4 py-2 border-b border-white/[0.06] bg-[#0c0c0e]" role="search" aria-label="Search conversation">
             <input
               autoFocus
               value={searchQuery}
@@ -687,7 +687,7 @@ export default function ChatPage() {
                   </div>
                 )}
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-w-lg mx-auto">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-w-lg mx-auto" role="list" aria-label="Suggested prompts">
                   {/* Continue last session chip — if user has history */}
                   {persistence.sessions.length > 0 && persistence.sessions[0].title !== 'New Chat' && (
                     <button
@@ -771,7 +771,7 @@ export default function ChatPage() {
                         <div className="prose prose-invert prose-sm max-w-none text-[15px] leading-[1.75] text-white/85 prose-headings:text-white/90 prose-headings:font-semibold prose-code:text-[#00bcd4]/80 prose-a:text-[#00bcd4] prose-strong:text-white/90">
                           <ChatMarkdown content={clean} isStreaming={isStreaming && msg.id === lastMsg?.id} />
                           {isStreaming && msg.id === lastMsg?.id && (
-                            <span className="inline-block w-2 h-2 rounded-full bg-[#00bcd4] animate-pulse ml-1 align-middle shadow-[0_0_8px_rgba(0,188,212,0.6)]" />
+                            <span className="inline-block w-2 h-2 rounded-full bg-[#00bcd4] animate-pulse ml-1 align-middle shadow-[0_0_8px_rgba(0,188,212,0.6)]" aria-hidden="true" />
                           )}
                         </div>
 
@@ -897,7 +897,7 @@ export default function ChatPage() {
 
               {/* Thinking indicator */}
               {isThinking && (
-                <div className="mb-6">
+                <div className="mb-6" role="status" aria-label="Arcanea is composing a response">
                   <div className="flex gap-3">
                     <div
                       className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0"
