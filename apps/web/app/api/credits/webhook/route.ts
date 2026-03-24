@@ -1,0 +1,284 @@
+/**
+ * Stripe Webhook Handler
+ *
+ * Handles payment and subscription lifecycle events from Stripe:
+ *   - checkout.session.completed  (one-time credit pack purchase)
+ *   - customer.subscription.created / updated / deleted  (Forge subscription)
+ *
+ * Stripe sends raw body + signature header. We MUST read the raw body
+ * before any JSON parsing — Next.js App Router gives us a Request with
+ * an unconsumed body, which is exactly what Stripe needs.
+ *
+ * Environment variables required:
+ *   STRIPE_SECRET_KEY          — Stripe API key (sk_live_... or sk_test_...)
+ *   STRIPE_WEBHOOK_SECRET      — Webhook signing secret (whsec_...)
+ */
+
+import { headers } from "next/headers";
+import { NextResponse } from "next/server";
+import { CREDIT_PACKS } from "@/lib/types/credits";
+
+// ─── Stripe event type subset we care about ─────────────────────────────────
+
+type RelevantEvent =
+  | "checkout.session.completed"
+  | "customer.subscription.created"
+  | "customer.subscription.updated"
+  | "customer.subscription.deleted";
+
+const RELEVANT_EVENTS = new Set<string>([
+  "checkout.session.completed",
+  "customer.subscription.created",
+  "customer.subscription.updated",
+  "customer.subscription.deleted",
+]);
+
+// ─── Handler ─────────────────────────────────────────────────────────────────
+
+export async function POST(req: Request) {
+  const stripeKey = process.env.STRIPE_SECRET_KEY;
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+  if (!stripeKey || !webhookSecret) {
+    console.error("Stripe webhook: missing STRIPE_SECRET_KEY or STRIPE_WEBHOOK_SECRET");
+    return NextResponse.json(
+      { error: "Webhook not configured" },
+      { status: 500 },
+    );
+  }
+
+  // ── Verify Stripe signature ──────────────────────────────────────────────
+  const Stripe = (await import("stripe")).default;
+  const stripe = new Stripe(stripeKey);
+
+  const body = await req.text();
+  const headersList = await headers();
+  const signature = headersList.get("stripe-signature");
+
+  if (!signature) {
+    return NextResponse.json({ error: "Missing stripe-signature header" }, { status: 400 });
+  }
+
+  let event: Stripe.Event;
+
+  try {
+    event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Signature verification failed";
+    console.error("Stripe webhook signature error:", message);
+    return NextResponse.json({ error: message }, { status: 400 });
+  }
+
+  // ── Ignore irrelevant event types ────────────────────────────────────────
+  if (!RELEVANT_EVENTS.has(event.type)) {
+    return NextResponse.json({ received: true, ignored: true });
+  }
+
+  try {
+    switch (event.type as RelevantEvent) {
+      // ────────────────────────────────────────────────────────────────────
+      // Credit pack purchase completed
+      // ────────────────────────────────────────────────────────────────────
+      case "checkout.session.completed": {
+        const session = event.data.object as Stripe.Checkout.Session;
+
+        // Only process one-time payments (not subscription checkouts)
+        if (session.mode !== "payment") break;
+
+        const userId = session.metadata?.user_id;
+        const packId = session.metadata?.pack_id;
+        const creditsStr = session.metadata?.credits;
+
+        if (!userId || !packId) {
+          console.error("Stripe webhook: checkout.session.completed missing user_id or pack_id metadata");
+          break;
+        }
+
+        // Validate pack
+        const pack = CREDIT_PACKS.find((p) => p.id === packId);
+        const credits = pack?.credits ?? (creditsStr ? parseInt(creditsStr, 10) : 0);
+
+        if (!credits || credits <= 0) {
+          console.error(`Stripe webhook: invalid credits for pack ${packId}`);
+          break;
+        }
+
+        const paymentIntentId =
+          typeof session.payment_intent === "string"
+            ? session.payment_intent
+            : session.payment_intent?.id ?? null;
+
+        console.log(
+          `Stripe webhook: crediting ${credits} credits to user ${userId} (pack: ${packId}, pi: ${paymentIntentId})`,
+        );
+
+        // TODO: Supabase — credit the user's balance and log transaction
+        //
+        // const supabase = createAdminClient();
+        //
+        // // 1. Upsert balance row (create if first purchase)
+        // const { data: existing } = await supabase
+        //   .from('credit_balances')
+        //   .select('purchased')
+        //   .eq('user_id', userId)
+        //   .single();
+        //
+        // const newPurchased = (existing?.purchased ?? 0) + credits;
+        //
+        // await supabase
+        //   .from('credit_balances')
+        //   .upsert({
+        //     user_id: userId,
+        //     purchased: newPurchased,
+        //     updated_at: new Date().toISOString(),
+        //   }, { onConflict: 'user_id' });
+        //
+        // // 2. Log transaction
+        // await supabase.from('credit_transactions').insert({
+        //   user_id: userId,
+        //   type: 'purchase',
+        //   amount: credits,
+        //   balance_after: newPurchased,
+        //   stripe_payment_id: paymentIntentId,
+        //   pack_id: packId,
+        //   description: `Purchased ${credits} credits (${packId})`,
+        // });
+
+        break;
+      }
+
+      // ────────────────────────────────────────────────────────────────────
+      // Forge subscription created
+      // ────────────────────────────────────────────────────────────────────
+      case "customer.subscription.created": {
+        const subscription = event.data.object as Stripe.Subscription;
+        const userId = subscription.metadata?.user_id;
+
+        if (!userId) {
+          console.error("Stripe webhook: subscription.created missing user_id metadata");
+          break;
+        }
+
+        console.log(`Stripe webhook: Forge subscription created for user ${userId} (sub: ${subscription.id})`);
+
+        // TODO: Supabase — create forge_subscriptions row + set is_forge on balance
+        //
+        // const supabase = createAdminClient();
+        //
+        // await supabase.from('forge_subscriptions').upsert({
+        //   user_id: userId,
+        //   status: subscription.status,
+        //   stripe_subscription_id: subscription.id,
+        //   current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
+        //   current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+        //   cancel_at_period_end: subscription.cancel_at_period_end,
+        //   updated_at: new Date().toISOString(),
+        // }, { onConflict: 'user_id' });
+        //
+        // await supabase
+        //   .from('credit_balances')
+        //   .upsert({
+        //     user_id: userId,
+        //     is_forge: true,
+        //     forge_expires_at: new Date(subscription.current_period_end * 1000).toISOString(),
+        //     updated_at: new Date().toISOString(),
+        //   }, { onConflict: 'user_id' });
+
+        break;
+      }
+
+      // ────────────────────────────────────────────────────────────────────
+      // Forge subscription updated (renewal, payment method change, etc.)
+      // ────────────────────────────────────────────────────────────────────
+      case "customer.subscription.updated": {
+        const subscription = event.data.object as Stripe.Subscription;
+        const userId = subscription.metadata?.user_id;
+
+        if (!userId) {
+          console.error("Stripe webhook: subscription.updated missing user_id metadata");
+          break;
+        }
+
+        const isActive = ["active", "trialing"].includes(subscription.status);
+
+        console.log(
+          `Stripe webhook: Forge subscription updated for user ${userId} — status: ${subscription.status}, active: ${isActive}`,
+        );
+
+        // TODO: Supabase — update forge_subscriptions row + balance flag
+        //
+        // const supabase = createAdminClient();
+        //
+        // await supabase
+        //   .from('forge_subscriptions')
+        //   .update({
+        //     status: subscription.status,
+        //     current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
+        //     current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+        //     cancel_at_period_end: subscription.cancel_at_period_end,
+        //     updated_at: new Date().toISOString(),
+        //   })
+        //   .eq('user_id', userId);
+        //
+        // await supabase
+        //   .from('credit_balances')
+        //   .update({
+        //     is_forge: isActive,
+        //     forge_expires_at: isActive
+        //       ? new Date(subscription.current_period_end * 1000).toISOString()
+        //       : null,
+        //     updated_at: new Date().toISOString(),
+        //   })
+        //   .eq('user_id', userId);
+
+        break;
+      }
+
+      // ────────────────────────────────────────────────────────────────────
+      // Forge subscription deleted (cancelled, expired, or payment failed)
+      // ────────────────────────────────────────────────────────────────────
+      case "customer.subscription.deleted": {
+        const subscription = event.data.object as Stripe.Subscription;
+        const userId = subscription.metadata?.user_id;
+
+        if (!userId) {
+          console.error("Stripe webhook: subscription.deleted missing user_id metadata");
+          break;
+        }
+
+        console.log(`Stripe webhook: Forge subscription deleted for user ${userId} (sub: ${subscription.id})`);
+
+        // TODO: Supabase — mark subscription canceled + remove forge flag
+        //
+        // const supabase = createAdminClient();
+        //
+        // await supabase
+        //   .from('forge_subscriptions')
+        //   .update({
+        //     status: 'canceled',
+        //     cancel_at_period_end: true,
+        //     updated_at: new Date().toISOString(),
+        //   })
+        //   .eq('user_id', userId);
+        //
+        // await supabase
+        //   .from('credit_balances')
+        //   .update({
+        //     is_forge: false,
+        //     forge_expires_at: null,
+        //     updated_at: new Date().toISOString(),
+        //   })
+        //   .eq('user_id', userId);
+
+        break;
+      }
+    }
+
+    return NextResponse.json({ received: true });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Webhook handler error";
+    console.error("Stripe webhook processing error:", message);
+    // Return 200 to prevent Stripe from retrying — log the error for investigation
+    return NextResponse.json({ received: true, error: message });
+  }
+}

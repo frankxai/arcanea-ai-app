@@ -32,6 +32,7 @@ import { LuminorSidebar } from '@/components/chat/luminor-sidebar';
 import { getLuminor } from '@/lib/luminors/config';
 import { SessionSidebar } from '@/components/chat/session-sidebar';
 import { CreationIndicator } from '@/components/chat/creation-indicator';
+import { CreditBalance } from '@/components/credits/credit-balance';
 import { SaveCreationButton } from '@/components/chat/save-creation-button';
 import { useAutoSave } from '@/lib/arc/auto-save';
 import { estimateTokens, formatTokenCount } from '@/lib/chat/token-estimate';
@@ -506,6 +507,7 @@ export default function ChatPage() {
           </div>
 
           <div className="flex items-center gap-2">
+            <CreditBalance className="hidden sm:inline-flex" />
             <button
               onClick={() => { persistence.refreshSessions(); setHistorySidebarOpen((v) => !v); }}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-colors ${

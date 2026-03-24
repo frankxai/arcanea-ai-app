@@ -5,7 +5,7 @@
   "license": "SEE LICENSE IN LICENSE",
   "scripts": {
     "dev": "next dev -p 3001",
-    "build": "TMPDIR=/tmp next build",
+    "build": "next build",
     "build:check": "pnpm run check:env && pnpm run type-check && pnpm run build",
     "start": "next start -p 3001",
     "lint": "eslint . --max-warnings=0",

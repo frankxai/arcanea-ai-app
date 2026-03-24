@@ -59,6 +59,29 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
     }
 
+    // ── Credit check: spend 1 credit before generating ─────────────────
+    const spendRes = await fetch(new URL('/api/credits/spend', req.url), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        cookie: req.headers.get('cookie') ?? '',
+        authorization: authHeader,
+      },
+      body: JSON.stringify({ creationType: 'image' }),
+    });
+
+    if (!spendRes.ok) {
+      const spendErr = await spendRes.json().catch(() => ({}));
+      const status = spendRes.status === 402 ? 402 : spendRes.status;
+      return NextResponse.json(
+        {
+          error: (spendErr as { error?: string }).error ?? 'Credit check failed',
+          reason: (spendErr as { reason?: string }).reason ?? 'unknown',
+        },
+        { status },
+      );
+    }
+
     // Rate limiting
     const userId = user.id;
     const now = Date.now();

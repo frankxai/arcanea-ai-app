@@ -1,7 +1,7 @@
 # Arcanea Master Plan — Central Orchestrator
 
-> **Last Updated**: 2026-03-10
-> **Version**: 1.7.0
+> **Last Updated**: 2026-03-24
+> **Version**: 1.8.0
 > **Guardian**: Shinkami (Source Gate, 1111 Hz)
 > **Status**: Active
 
@@ -18,7 +18,7 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
 | Pages with loading.tsx | ~81 (+32) | 100% of dynamic pages |
 | Milestones Active | 11 (M001-M010 + M006) | M001 (Auth) → M008 (Onboarding) → M006 (Creator Tools) → M009 (Polish) |
 | Vercel Build | PASSING | Maintain green |
-| Last Deploy | 2026-03-10 | 4d9cd969 — naming v2 + companion forge + cleanup |
+| Last Deploy | 2026-03-24 | Mega-session: Intelligence OS + Credits + Architecture + 5 new pages |
 | Live URL | arcanea.ai | arcanea.ai |
 
 ---
@@ -497,10 +497,13 @@ packages/              → 37 workspace packages
 
 | Route | Status | Needs |
 |-------|--------|-------|
+| `/research` | LIVE | NEW (2026-03-24): Ecosystem showcase, tech stack, Intelligence OS |
+| `/ecosystem` | LIVE | UPDATED (constellation map with 19 interactive nodes) |
+| `/vision` | LIVE | NEW (2026-03-24): Six Layers, Creator Journey, Guardians, Open Source Philosophy |
+| `/architecture` | LIVE | NEW (2026-03-24): 6-tab interactive ReactFlow (ecosystem, intelligence, memory, agents, roadmap, business) |
 | `/about` | LIVE | None |
-| `/pricing` | LIVE | None |
+| `/pricing` | LIVE | UPDATED (credits model: Free / Credits $5-49 / Forge $29/mo) |
 | `/faq` | LIVE | None |
-| `/ecosystem` | LIVE | None |
 | `/changelog` | LIVE | None |
 | `/developers` | LIVE | None |
 | `/glossary` | LIVE | None |

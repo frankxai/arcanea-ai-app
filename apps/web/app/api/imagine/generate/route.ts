@@ -118,6 +118,30 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Prompt is required' }, { status: 400 });
     }
 
+    // ── Credit check: spend 1 credit per generation request ──────────────
+    // Forward cookies so the spend endpoint can authenticate the user.
+    const cookieHeader = req.headers.get('cookie') ?? '';
+    const spendRes = await fetch(new URL('/api/credits/spend', req.url), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        cookie: cookieHeader,
+      },
+      body: JSON.stringify({ creationType: 'image' }),
+    });
+
+    if (!spendRes.ok) {
+      const spendErr = await spendRes.json().catch(() => ({}));
+      const status = spendRes.status === 402 ? 402 : spendRes.status;
+      return NextResponse.json(
+        {
+          error: (spendErr as { error?: string }).error ?? 'Credit check failed',
+          reason: (spendErr as { reason?: string }).reason ?? 'unknown',
+        },
+        { status },
+      );
+    }
+
     // Try Grok first (primary), fall back to Gemini
     try {
       const result = await generateWithGrok(prompt, count, aspectRatio);
