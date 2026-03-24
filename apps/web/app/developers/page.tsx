@@ -1,4 +1,3 @@
-import { Metadata } from "next";
 import Link from "next/link";
 
 // ─── Inline SVG Icons ───────────────────────────────────────────────────────────
@@ -312,17 +311,6 @@ const Icons: Record<string, React.FC<InlineSvgProps>> = {
       <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
     </svg>
   ),
-};
-
-export const metadata: Metadata = {
-  title: "Developers",
-  description:
-    "Build on Arcanea — the intelligence layer, MCP tools, packages, and open source contributions. Create skills and extend the platform.",
-  openGraph: {
-    title: "Developers",
-    description:
-      "Build on Arcanea — the intelligence layer, MCP tools, packages, and open source contributions.",
-  },
 };
 
 const PACKAGES = [
