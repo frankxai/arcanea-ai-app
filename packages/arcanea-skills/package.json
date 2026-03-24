@@ -1,0 +1,48 @@
+{
+  "name": "@arcanea/skills",
+  "version": "1.0.0",
+  "description": "97 Claude Code skills for creative intelligence — worldbuilding, coding, writing, design, and more",
+  "main": "index.js",
+  "bin": {
+    "arcanea-skills": "bin/install.js"
+  },
+  "files": [
+    "skills/",
+    "bin/",
+    "index.js",
+    "README.md"
+  ],
+  "scripts": {
+    "install-skills": "node bin/install.js",
+    "list": "node -e \"const s = require('./index.js'); console.log(s.skills.join('\\n'));\""
+  },
+  "keywords": [
+    "claude-code",
+    "skills",
+    "ai",
+    "creative",
+    "worldbuilding",
+    "arcanea",
+    "claude",
+    "agents",
+    "writing",
+    "design",
+    "coding",
+    "tdd",
+    "code-review"
+  ],
+  "author": "FrankX <frank@arcanea.ai>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frankxai/arcanea.git",
+    "directory": "packages/arcanea-skills"
+  },
+  "homepage": "https://arcanea.ai",
+  "bugs": {
+    "url": "https://github.com/frankxai/arcanea/issues"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
