@@ -634,7 +634,17 @@ export const TEAMS: Record<Team, { name: string; color: string; icon: string; de
 
 // Helper functions
 export function getLuminor(id: string): LuminorConfig | undefined {
-  return LUMINORS[id];
+  // Check standard Luminors first, then Living Lore crew members
+  if (LUMINORS[id]) return LUMINORS[id];
+  if (id.startsWith('crew-')) {
+    try {
+      const { getCrewLuminorConfig } = require('../living-lore/crew-prompts');
+      return getCrewLuminorConfig(id);
+    } catch {
+      return undefined;
+    }
+  }
+  return undefined;
 }
 
 export function getLuminorsByTeam(team: Team): LuminorConfig[] {

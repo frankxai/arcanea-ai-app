@@ -13,6 +13,7 @@ const navLinks = [
   { href: "/library", label: "Library", also: [] },
   { href: "/academy", label: "Academy", also: ["/academy/courses", "/academy/gates"] },
   { href: "/gallery", label: "Gallery", also: ["/discover", "/gallery/guardians", "/gallery/luminors"] },
+  { href: "/living-lore", label: "Living Lore", also: ["/living-lore/crew", "/living-lore/chronicle", "/living-lore/encounters", "/living-lore/journal"] },
   { href: "/lore", label: "Lore", also: ["/lore/guardians", "/lore/gates"] },
   { href: "/pricing", label: "Pricing", also: [] },
 ];

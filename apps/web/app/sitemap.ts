@@ -48,6 +48,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/academy/courses/voice-and-truth`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/academy/courses/creative-vision`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
 
+    // ── Living Lore ─────────────────────────────────────────
+    { url: `${baseUrl}/living-lore`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.85 },
+    { url: `${baseUrl}/living-lore/crew`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${baseUrl}/living-lore/chronicle`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.85 },
+    { url: `${baseUrl}/living-lore/journal`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
+
     // ── Lore ────────────────────────────────────────────────
     { url: `${baseUrl}/lore`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/lore/guardians`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
