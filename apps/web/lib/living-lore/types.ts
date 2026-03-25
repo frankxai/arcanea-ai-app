@@ -79,6 +79,32 @@ export interface EpisodeMeta {
   connectedLore: string[];
 }
 
+// ---------------------------------------------------------------------------
+// Choice System
+// ---------------------------------------------------------------------------
+
+export interface StoryChoice {
+  id: string;
+  encounterId: string;
+  prompt: string; // "Who do you sit beside at the campfire?"
+  options: ChoiceOption[];
+  consequence: string; // What this choice affects
+}
+
+export interface ChoiceOption {
+  id: string;
+  label: string;
+  crewMemberId?: string; // If choosing a character
+  bondEffect?: { memberId: string; change: number }[];
+  description?: string;
+}
+
+export interface UserCrewConfig {
+  selectedCompanion: string; // Chosen during onboarding
+  partyOrder: string[]; // Preferred crew order
+  favoriteMembers: string[]; // Most interacted with
+}
+
 export const ELEMENT_COLORS: Record<CrewElement, string> = {
   Fire: '#FF6B35',
   Water: '#4169E1',

@@ -13,12 +13,15 @@ import { useChat } from '@ai-sdk/react';
 import { TextStreamChatTransport } from 'ai';
 import { LazyMotion, domMax, m, AnimatePresence } from 'framer-motion';
 import { staggerContainer, staggerItem, transitions, springs } from '@/lib/design/motion';
-import type { Encounter, CrewMember } from '@/lib/living-lore/types';
+import type { Encounter, CrewMember, StoryChoice as StoryChoiceType } from '@/lib/living-lore/types';
 import { getCrewMember } from '@/lib/living-lore/crew-data';
+import { StoryChoice } from './story-choice';
+import { getPreChatChoices, getPostChatChoices } from '@/lib/living-lore/encounter-choices';
 
 interface EncounterSceneProps {
   encounter: Encounter;
   crewMembers: CrewMember[];
+  choices?: StoryChoiceType[];
 }
 
 function getMessageText(msg: { parts?: Array<{ type: string; text?: string }> }): string {
@@ -26,12 +29,43 @@ function getMessageText(msg: { parts?: Array<{ type: string; text?: string }> })
   return msg.parts.filter((p) => p.type === 'text').map((p) => p.text ?? '').join('');
 }
 
-export function EncounterScene({ encounter, crewMembers }: EncounterSceneProps) {
+export function EncounterScene({ encounter, crewMembers, choices = [] }: EncounterSceneProps) {
   const router = useRouter();
   const [sceneStarted, setSceneStarted] = useState(false);
   const [sceneComplete, setSceneComplete] = useState(false);
   const [input, setInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Choice state
+  const preChatChoices = choices.length > 0 ? getPreChatChoices(encounter.slug) : [];
+  const postChatChoices = choices.length > 0 ? getPostChatChoices(encounter.slug) : [];
+  const [selectedChoices, setSelectedChoices] = useState<Record<string, string>>({});
+  const [preChatDone, setPreChatDone] = useState(preChatChoices.length === 0);
+
+  const handleChoiceSelect = useCallback((choiceId: string, optionId: string) => {
+    setSelectedChoices((prev) => ({ ...prev, [choiceId]: optionId }));
+  }, []);
+
+  // Mark pre-chat done when all pre-chat choices are answered
+  useEffect(() => {
+    if (preChatChoices.length === 0) return;
+    const allAnswered = preChatChoices.every((c) => selectedChoices[c.id]);
+    if (allAnswered) {
+      const timer = setTimeout(() => setPreChatDone(true), 800);
+      return () => clearTimeout(timer);
+    }
+  }, [selectedChoices, preChatChoices]);
+
+  // Build choice context string for the AI prompt
+  const choiceContext = Object.entries(selectedChoices)
+    .map(([choiceId, optionId]) => {
+      const choice = choices.find((c) => c.id === choiceId);
+      const option = choice?.options.find((o) => o.id === optionId);
+      if (!choice || !option) return '';
+      return `[Player chose: "${option.label}" in response to "${choice.prompt}"]`;
+    })
+    .filter(Boolean)
+    .join('\n');
 
   const crewMap = new Map<string, CrewMember>();
   for (const id of encounter.presentCrew) {
@@ -46,6 +80,7 @@ export function EncounterScene({ encounter, crewMembers }: EncounterSceneProps) 
       body: {
         presentCrew: encounter.presentCrew,
         sceneContext: encounter.sceneContext,
+        choiceContext,
       },
     }),
   });
@@ -154,10 +189,25 @@ export function EncounterScene({ encounter, crewMembers }: EncounterSceneProps) 
               ))}
             </m.div>
 
+            {/* Pre-chat choices */}
+            {preChatChoices.length > 0 && (
+              <div className="mb-6">
+                {preChatChoices.map((choice) => (
+                  <StoryChoice
+                    key={choice.id}
+                    choice={choice}
+                    onSelect={(optionId) => handleChoiceSelect(choice.id, optionId)}
+                    selectedId={selectedChoices[choice.id]}
+                  />
+                ))}
+              </div>
+            )}
+
             <div className="border-t border-white/[0.06] pt-6">
               <button
                 onClick={() => setSceneStarted(true)}
-                className="animate-pulse-glow font-cinzel text-sm font-semibold px-6 py-3 rounded-xl border border-atlantean-teal-aqua/30 bg-atlantean-teal-aqua/10 text-atlantean-teal-aqua hover:bg-atlantean-teal-aqua/20 transition-all duration-300"
+                disabled={!preChatDone}
+                className="animate-pulse-glow font-cinzel text-sm font-semibold px-6 py-3 rounded-xl border border-atlantean-teal-aqua/30 bg-atlantean-teal-aqua/10 text-atlantean-teal-aqua hover:bg-atlantean-teal-aqua/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300"
               >
                 Enter the Scene
               </button>
@@ -313,17 +363,77 @@ export function EncounterScene({ encounter, crewMembers }: EncounterSceneProps) 
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={springs.bouncy}
-                className="px-4 py-6 border-t border-white/[0.06] text-center"
+                className="px-4 py-6 border-t border-white/[0.06]"
               >
-                <m.p
-                  initial={{ scale: 0.8 }}
-                  animate={{ scale: [0.8, 1.2, 1] }}
-                  transition={{ duration: 0.6 }}
-                  className="font-cinzel text-lg font-semibold text-gold-bright text-glow-soft"
-                >
-                  Scene Complete
-                </m.p>
-                <p className="text-sm text-atlantean-teal-aqua mt-2">+{encounter.xpReward} XP</p>
+                {/* Post-chat choices */}
+                {postChatChoices.length > 0 && (
+                  <div className="mb-6">
+                    {postChatChoices.map((choice) => (
+                      <StoryChoice
+                        key={choice.id}
+                        choice={choice}
+                        onSelect={(optionId) => handleChoiceSelect(choice.id, optionId)}
+                        selectedId={selectedChoices[choice.id]}
+                      />
+                    ))}
+                  </div>
+                )}
+
+                <div className="text-center">
+                  <m.p
+                    initial={{ scale: 0.8 }}
+                    animate={{ scale: [0.8, 1.2, 1] }}
+                    transition={{ duration: 0.6 }}
+                    className="font-cinzel text-lg font-semibold text-gold-bright text-glow-soft"
+                  >
+                    Scene Complete
+                  </m.p>
+                  <p className="text-sm text-atlantean-teal-aqua mt-2">+{encounter.xpReward} XP</p>
+
+                  {/* Bond effects summary */}
+                  {Object.keys(selectedChoices).length > 0 && (
+                    <m.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4, ...transitions.smooth }}
+                      className="mt-4 flex flex-wrap justify-center gap-2"
+                    >
+                      {(() => {
+                        // Aggregate bond effects from all selected choices
+                        const bondMap = new Map<string, number>();
+                        for (const [choiceId, optionId] of Object.entries(selectedChoices)) {
+                          const choice = choices.find((c) => c.id === choiceId);
+                          const option = choice?.options.find((o) => o.id === optionId);
+                          if (option?.bondEffect) {
+                            for (const effect of option.bondEffect) {
+                              bondMap.set(
+                                effect.memberId,
+                                (bondMap.get(effect.memberId) ?? 0) + effect.change
+                              );
+                            }
+                          }
+                        }
+                        return Array.from(bondMap.entries()).map(([memberId, change]) => {
+                          const member = crewMembers.find((m) => m.id === memberId) ?? getCrewMember(memberId);
+                          if (!member || change === 0) return null;
+                          return (
+                            <span
+                              key={memberId}
+                              className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-xs"
+                              style={{
+                                backgroundColor: `${member.color}15`,
+                                color: member.color,
+                              }}
+                            >
+                              {member.avatar} {member.name}{' '}
+                              {change > 0 ? `+${change}` : change}
+                            </span>
+                          );
+                        });
+                      })()}
+                    </m.div>
+                  )}
+                </div>
               </m.div>
             )}
           </>

@@ -21,6 +21,46 @@ export default async function LivingLorePage() {
 
   return (
     <main className="mx-auto max-w-7xl px-6 pb-24 pt-8">
+      {/* Meet the Crew Banner */}
+      <section className="mb-8">
+        <Link
+          href="/living-lore/meet"
+          className="group block liquid-glass-elevated rounded-2xl p-6 md:p-8 hover:border-atlantean-teal-aqua/20 transition-all duration-300 relative overflow-hidden"
+        >
+          <div className="absolute top-0 right-0 w-[300px] h-[300px] rounded-full bg-[radial-gradient(circle,rgba(127,255,212,0.06)_0%,transparent_70%)] blur-3xl pointer-events-none" />
+          <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <p className="text-xs uppercase tracking-[0.25em] text-atlantean-teal-aqua mb-2">
+                New &mdash; Start Here
+              </p>
+              <h2 className="font-cinzel text-xl md:text-2xl text-text-primary mb-1">
+                Meet the Crew
+              </h2>
+              <p className="text-sm text-text-muted max-w-md">
+                Seven beings. Ten Gates. Choose your companion and begin
+                the journey.
+              </p>
+            </div>
+            <div className="flex items-center gap-2 text-atlantean-teal-aqua text-sm font-semibold group-hover:translate-x-1 transition-transform">
+              Begin
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"
+                />
+              </svg>
+            </div>
+          </div>
+        </Link>
+      </section>
+
       {/* Hero */}
       <LivingLoreHero />
 

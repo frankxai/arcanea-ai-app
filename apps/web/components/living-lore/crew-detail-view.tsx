@@ -11,7 +11,9 @@ import {
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import { BondMeter } from './bond-meter';
+import { CrewPortrait } from './crew-portrait';
 import type { CrewMember, Encounter } from '@/lib/living-lore/types';
+import { getCrewVisual } from '@/lib/living-lore/crew-visuals';
 
 interface Props {
   member: CrewMember;
@@ -29,6 +31,8 @@ export function CrewDetailView({
   connectedTexts,
   encounters,
 }: Props) {
+  const visual = getCrewVisual(member.id);
+
   return (
     <LazyMotion features={domMax} strict>
       <main className="mx-auto max-w-3xl px-6 pb-24 pt-8">
@@ -67,18 +71,27 @@ export function CrewDetailView({
             background: `linear-gradient(to bottom, ${member.color}0A, transparent)`,
           }}
         >
-          {/* Avatar + Identity */}
-          <div className="flex items-start gap-6">
-            <div
-              className="flex h-24 w-24 shrink-0 animate-float-slow items-center justify-center rounded-2xl text-4xl"
-              style={{
-                background: `linear-gradient(135deg, ${member.color}15, ${member.color}08)`,
-                boxShadow: `0 0 30px ${member.color}25`,
-              }}
-            >
-              {member.avatar}
-            </div>
-            <div>
+          {/* Portrait + Identity */}
+          <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
+            {visual ? (
+              <CrewPortrait
+                member={member}
+                visual={visual}
+                size="xl"
+                className="shrink-0 animate-float-slow"
+              />
+            ) : (
+              <div
+                className="flex h-24 w-24 shrink-0 animate-float-slow items-center justify-center rounded-2xl text-4xl"
+                style={{
+                  background: `linear-gradient(135deg, ${member.color}15, ${member.color}08)`,
+                  boxShadow: `0 0 30px ${member.color}25`,
+                }}
+              >
+                {member.avatar}
+              </div>
+            )}
+            <div className="text-center sm:text-left">
               <h1
                 className="font-cinzel text-4xl font-semibold text-text-primary text-glow-soft"
                 style={{ textShadow: `0 0 20px ${member.color}40` }}

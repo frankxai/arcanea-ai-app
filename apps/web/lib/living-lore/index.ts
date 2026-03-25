@@ -15,3 +15,6 @@ export * from './crew-prompts';
 export * from './episode-loader';
 export * from './lore-connections';
 export * from './progression';
+export * from './crew-visuals';
+export * from './crew-audio';
+export * from './encounter-choices';

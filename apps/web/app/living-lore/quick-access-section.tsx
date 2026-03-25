@@ -14,7 +14,7 @@ export function QuickAccessSection() {
         whileInView="visible"
         viewport={{ once: true, margin: '-80px' }}
       >
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <m.div variants={staggerItem}>
             <Link
               href="/living-lore/chronicle"
@@ -38,6 +38,19 @@ export function QuickAccessSection() {
               </p>
               <p className="text-xs text-text-muted mt-1">
                 Chat with characters. Build bonds.
+              </p>
+            </Link>
+          </m.div>
+          <m.div variants={staggerItem}>
+            <Link
+              href="/living-lore/gallery"
+              className="group block rounded-2xl liquid-glass p-6 hover:border-atlantean-teal-aqua/20 hover:shadow-[0_0_20px_rgba(127,255,212,0.12)] transition-all duration-300"
+            >
+              <p className="font-cinzel text-sm font-semibold text-text-primary group-hover:text-atlantean-teal-aqua transition-colors">
+                Gallery
+              </p>
+              <p className="text-xs text-text-muted mt-1">
+                See the crew. Visual portraits and specs.
               </p>
             </Link>
           </m.div>
