@@ -115,6 +115,9 @@ export interface Challenge {
   teamRequired: boolean;
   maxTeamSize: number;
 
+  // Commerce
+  entryFee?: number; // Mana cost to enter (0 or undefined = free)
+
   // Stats
   totalSubmissions: number;
   totalParticipants: number;
