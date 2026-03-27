@@ -1,5 +1,7 @@
 'use client';
 
+import type { ComponentType } from 'react';
+
 /**
  * Phosphor Icons Compatibility Layer
  *
@@ -31,6 +33,7 @@ export {
   Leaf, Lightbulb, Lightning, Link, List, ListDashes, ListNumbers, Lock,
   MagicWand, MagnifyingGlass, MapPin, MapTrifold,
   Microphone, Minus, Moon, Mountains, MusicNote, MusicNotes, Notebook,
+  SpeakerHigh, Stop,
   Package, PaintBrush, Palette, PaperPlane, Paperclip, Pen, Pencil,
   PencilSimple, Planet, Play, Plus, PushPin, Question, Quotes, Radio,
   Rocket, Scales, Scroll, Share, Shield, ShieldStar, Shuffle, SignOut,
@@ -158,6 +161,8 @@ import {
   MusicNote,
   MusicNotes,
   Notebook,
+  SpeakerHigh,
+  Stop,
   Package,
   PaintBrush,
   Palette,
@@ -227,10 +232,9 @@ import {
   YoutubeLogo,
 } from '@phosphor-icons/react';
 
-import type { IconProps, PhosphorIcon as IconComponent } from '@phosphor-icons/react';
+import type { IconProps } from '@phosphor-icons/react';
 
-// Fallback for icons that don't exist in Phosphor but are used in the codebase
-const Fallback = (() => null) as unknown as IconComponent;
+type IconComponent = ComponentType<IconProps>;
 
 // Ph-prefixed aliases — maps PhXxx to the real Phosphor icon Xxx
 export const PhActivity = Heartbeat;
@@ -435,6 +439,8 @@ export const PhYoutubeLogo = YoutubeLogo;
 export const PhZap = Lightning;
 export const PhExport = ArrowSquareOut;
 export const PhTextAlignLeft = TextT;
+export const PhSpeakerHigh = SpeakerHigh;
+export const PhStop = Stop;
 
 // Ph-prefixed alias for GearSix
 export const PhGearSix = GearSix;

@@ -11,9 +11,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { createAnthropic } from '@ai-sdk/anthropic';
 import { createOpenAI } from '@ai-sdk/openai';
-import { streamText } from 'ai';
+import { convertToModelMessages, streamText, type UIMessage } from 'ai';
 import { createArcanea } from '@/lib/ai/arcanea-intelligence';
 import { GATEWAY_MODELS, EXTENDED_PROVIDERS } from '@/lib/gateway/catalog';
+import { createChatTools } from '@/lib/chat/tools';
 
 export const runtime = 'edge';
 
@@ -75,7 +76,8 @@ const PROVIDERS: Record<string, ProviderConfig> = {
 
 interface ChatMessage {
   role: 'user' | 'assistant' | 'model' | 'system';
-  content: string;
+  content?: string;
+  parts?: Array<Record<string, unknown> & { type: string; text?: string }>;
 }
 
 interface ChatRequest {
@@ -93,6 +95,24 @@ interface ChatRequest {
   focusHint?: string;
   /** Client-side API key (fallback when no server env var is set) */
   clientApiKey?: string;
+  /** Enabled tool categories (e.g. ['image']) — omit for pure text chat */
+  enabledTools?: string[];
+}
+
+function extractMessageText(message: {
+  parts?: Array<{ type: string; text?: string }>;
+  content?: string;
+}): string {
+  if (Array.isArray(message.parts)) {
+    const text = message.parts
+      .filter((part) => part.type === 'text')
+      .map((part) => part.text ?? '')
+      .join('');
+
+    if (text) return text;
+  }
+
+  return typeof message.content === 'string' ? message.content : '';
 }
 
 /**
@@ -142,7 +162,7 @@ export async function POST(req: NextRequest) {
   try {
     // --- Parse request ---
     const body: ChatRequest = await req.json();
-    const { messages, systemPrompt, temperature, maxTokens, provider: requestedProvider, model: modelOverride, gatewayModel, focusHint, clientApiKey } = body;
+    const { messages, systemPrompt, temperature, maxTokens, provider: requestedProvider, model: modelOverride, gatewayModel, focusHint, clientApiKey, enabledTools } = body;
 
     if (!messages || messages.length === 0) {
       return new Response('Messages are required', { status: 400, headers: { 'Content-Type': 'text/plain' } });
@@ -250,24 +270,19 @@ export async function POST(req: NextRequest) {
       label = created.label;
     }
 
-    // Normalize messages: AI SDK v6 UIMessages use `parts` array, not `content` string.
-    // Extract text from parts[].text, fall back to content for legacy format.
-    const normalizedMessages = messages.map((msg: any) => {
-      let text = '';
-      if (msg.parts && Array.isArray(msg.parts)) {
-        text = msg.parts
-          .filter((p: any) => p.type === 'text')
-          .map((p: any) => p.text ?? '')
-          .join('');
-      }
-      if (!text && typeof msg.content === 'string') {
-        text = msg.content;
-      }
-      return {
-        role: (msg.role === 'model' ? 'assistant' : msg.role) as 'user' | 'assistant',
-        content: text,
-      };
-    });
+    const normalizedMessages = messages.map((msg) => ({
+      role: (msg.role === 'model' ? 'assistant' : msg.role) as 'user' | 'assistant',
+      content: extractMessageText(msg),
+    }));
+
+    const uiMessages = messages.map((msg) => ({
+      role: (msg.role === 'model' ? 'assistant' : msg.role) as 'user' | 'assistant' | 'system',
+      parts: msg.parts ?? (msg.content ? [{ type: 'text' as const, text: msg.content }] : []),
+    }));
+
+    const modelMessages = await convertToModelMessages(
+      uiMessages as Array<Omit<UIMessage, 'id'>>,
+    );
 
     // --- MoE Router: classify intent and blend expert fragments ---
     // If a specific systemPrompt is provided (e.g., from /chat/[luminorId]),
@@ -283,15 +298,9 @@ export async function POST(req: NextRequest) {
       resolvedSystemPrompt = systemPrompt;
     } else {
       // MoE Router: one intelligence, Luminor experts as hidden layer
-      const lastUserMessage: any = [...messages].reverse().find((m: any) => m.role === 'user');
+      const lastUserMessage = [...messages].reverse().find((message) => message.role === 'user');
       // Extract text from parts or content (AI SDK v6 UIMessage compat)
-      let messageText = '';
-      if (lastUserMessage?.parts && Array.isArray(lastUserMessage.parts)) {
-        messageText = lastUserMessage.parts.filter((p: any) => p.type === 'text').map((p: any) => p.text ?? '').join('');
-      }
-      if (!messageText && typeof lastUserMessage?.content === 'string') {
-        messageText = lastUserMessage.content;
-      }
+      const messageText = lastUserMessage ? extractMessageText(lastUserMessage) : '';
       const historyForRouter = normalizedMessages.slice(0, -1).map((m) => ({
         role: m.role,
         content: m.content,
@@ -310,14 +319,17 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // --- Inject creator context into system prompt ---
+    // --- Supabase client setup (shared across context, memories, tools) ---
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let sbClient: any = undefined;
+    let sbUserId: string | undefined;
+
     try {
       const { createClient: createSupabaseClient } = await import('@supabase/supabase-js');
       const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
       const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
       if (supabaseUrl && supabaseAnonKey) {
-        // Extract auth token from cookies
         const cookieHeader = req.headers.get('cookie') ?? '';
         const accessToken = cookieHeader
           .split(';')
@@ -328,7 +340,6 @@ export async function POST(req: NextRequest) {
           .join('=');
 
         if (accessToken) {
-          // Try to parse the base64 JSON token to get the actual JWT
           let jwt = accessToken;
           try {
             const decoded = JSON.parse(decodeURIComponent(accessToken));
@@ -338,23 +349,37 @@ export async function POST(req: NextRequest) {
             // Token is already a raw JWT string — use as-is
           }
 
-          const sb = createSupabaseClient(supabaseUrl, supabaseAnonKey, {
+          sbClient = createSupabaseClient(supabaseUrl, supabaseAnonKey, {
             global: { headers: { Authorization: `Bearer ${jwt}` } },
           });
 
-          const [profileRes, creationsRes] = await Promise.all([
-            sb.from('profiles').select('display_name, magic_rank, gates_open, active_gate, guardian, academy_house, xp, level, streak_days, bio').single(),
-            sb.from('creations').select('title, type, element, gate, guardian, like_count, created_at').order('created_at', { ascending: false }).limit(5),
-          ]);
+          // Resolve user ID once
+          try {
+            const { data: authData } = await sbClient.auth.getUser();
+            sbUserId = authData?.user?.id;
+          } catch { /* non-fatal */ }
+        }
+      }
+    } catch {
+      // Non-fatal: continue without Supabase
+    }
 
-          if (profileRes.data) {
-            const p = profileRes.data;
-            const creations = creationsRes.data ?? [];
-            const creationSummary = creations.length > 0
-              ? creations.map((c: Record<string, unknown>) => `- "${c.title}" (${c.type}, ${c.element || 'unaligned'}, ${c.like_count} likes)`).join('\n')
-              : 'No creations yet — this creator is just beginning.';
+    // --- Inject creator context into system prompt ---
+    try {
+      if (sbClient) {
+        const [profileRes, creationsRes] = await Promise.all([
+          sbClient.from('profiles').select('display_name, magic_rank, gates_open, active_gate, guardian, academy_house, xp, level, streak_days, bio').single(),
+          sbClient.from('creations').select('title, type, element, gate, guardian, like_count, created_at').order('created_at', { ascending: false }).limit(5),
+        ]);
 
-            const contextBlock = `[CREATOR CONTEXT]
+        if (profileRes.data) {
+          const p = profileRes.data;
+          const creations = creationsRes.data ?? [];
+          const creationSummary = creations.length > 0
+            ? creations.map((c: Record<string, unknown>) => `- "${c.title}" (${c.type}, ${c.element || 'unaligned'}, ${c.like_count} likes)`).join('\n')
+            : 'No creations yet — this creator is just beginning.';
+
+          const contextBlock = `[CREATOR CONTEXT]
 Name: ${p.display_name || 'Creator'}
 Rank: ${p.magic_rank || 'Apprentice'} (${p.gates_open || 0}/10 Gates open)
 Active Gate: ${p.active_gate || 'Foundation'}
@@ -370,8 +395,7 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
 [/CREATOR CONTEXT]
 
 `;
-            resolvedSystemPrompt = contextBlock + resolvedSystemPrompt;
-          }
+          resolvedSystemPrompt = contextBlock + resolvedSystemPrompt;
         }
       }
     } catch (e) {
@@ -387,24 +411,64 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
       }
     }
 
-    // --- Stream response ---
-    const result = await streamText({
-      model,
-      system: resolvedSystemPrompt,
-      messages: normalizedMessages as Array<{ role: 'user' | 'assistant'; content: string }>,
-      temperature: temperature ?? 0.7,
-      maxOutputTokens: maxTokens ?? 8192,
+    // --- Inject user memories into system prompt ---
+    try {
+      if (sbClient && sbUserId) {
+        const { data: memories } = await sbClient
+          .from('user_memories')
+          .select('content, category')
+          .eq('user_id', sbUserId)
+          .order('created_at', { ascending: false })
+          .limit(20);
+
+        if (memories && memories.length > 0) {
+          const memoryBlock = memories.map((m: { content: string; category: string }) => `- [${m.category}] ${m.content}`).join('\n');
+          resolvedSystemPrompt = `[USER MEMORIES]\nFacts about this creator from previous conversations:\n${memoryBlock}\nUse these naturally when relevant. Don't list them.\n[/USER MEMORIES]\n\n` + resolvedSystemPrompt;
+        }
+      }
+    } catch (e) {
+      // Non-fatal: continue without memories
+      console.warn('Failed to load user memories:', e);
+    }
+
+    // --- Resolve tools (opt-in via enabledTools) ---
+    const chatToolSet = createChatTools({
+      supabaseClient: sbClient ?? undefined,
+      userId: sbUserId,
     });
 
-    return result.toTextStreamResponse({
-      headers: {
-        'x-arcanea-model': label,
-        'x-arcanea-gates': activeGates.join(','),
-        'x-arcanea-coordination': coordinationMode,
-        'x-arcanea-lead': leadGuardian || '',
-        'x-arcanea-luminors': activeLuminorIds.join(','),
-      },
+    const toolsToUse = (() => {
+      if (!enabledTools || enabledTools.length === 0) return undefined;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const selected: Record<string, any> = {};
+      if (enabledTools.includes('image') && chatToolSet.image_generate) selected.image_generate = chatToolSet.image_generate;
+      if (enabledTools.includes('search') && chatToolSet.web_search) selected.web_search = chatToolSet.web_search;
+      if ((enabledTools.includes('think') || enabledTools.includes('research')) && chatToolSet.deep_research) {
+        selected.deep_research = chatToolSet.deep_research;
+      }
+      if (enabledTools.includes('memory') && chatToolSet.memory_store) selected.memory_store = chatToolSet.memory_store;
+      return Object.keys(selected).length > 0 ? selected : undefined;
+    })();
+
+    // --- Stream response ---
+    const result = streamText({
+      model,
+      system: resolvedSystemPrompt,
+      messages: modelMessages,
+      temperature: temperature ?? 0.7,
+      maxOutputTokens: maxTokens ?? 8192,
+      ...(toolsToUse ? { tools: toolsToUse, maxSteps: 5 } : {}),
     });
+
+    const responseHeaders: Record<string, string> = {
+      'x-arcanea-model': label,
+      'x-arcanea-gates': activeGates.join(','),
+      'x-arcanea-coordination': coordinationMode,
+      'x-arcanea-lead': leadGuardian || '',
+      'x-arcanea-luminors': activeLuminorIds.join(','),
+    };
+
+    return result.toUIMessageStreamResponse({ headers: responseHeaders });
   } catch (error) {
     console.error('Chat API error:', error);
 

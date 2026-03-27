@@ -8,16 +8,20 @@
  * follow-up parsing, and conversation lifecycle.
  */
 
-import { useState, useCallback, useEffect, useMemo } from 'react';
+import { useState, useCallback, useEffect, useMemo, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useChat } from '@ai-sdk/react';
-import { TextStreamChatTransport } from 'ai';
+import {
+  DefaultChatTransport,
+  type FileUIPart,
+  type UIMessage,
+} from 'ai';
 import { useModelSelection } from './use-provider';
 import { getFocusModeById } from '@/components/chat/focus-modes';
 import { classifyIntent } from '@/lib/ai/router';
 import { resolveSwarm, type SwarmResult } from '@/lib/ai/guardian-swarm';
 import { CHAT_MODELS } from '@/components/chat/model-selector';
-import { getLuminor, type LuminorConfig } from '@/lib/luminors/config';
+import { getLuminor, getLuminorIds, type LuminorConfig } from '@/lib/luminors/config';
 
 // ---------------------------------------------------------------------------
 // Helpers (pure functions, co-located with their consumer)
@@ -58,6 +62,45 @@ export function parseFollowUps(text: string): { clean: string; followUps: string
 }
 
 // ---------------------------------------------------------------------------
+// @mention parsing: models first (higher priority), then Luminors
+// ---------------------------------------------------------------------------
+
+const MODEL_MENTION_ALIASES = ['opus', 'sonnet', 'gemini', 'grok', 'gpt5', 'haiku', 'flash'] as const;
+
+export interface MentionParseResult {
+  cleanText: string;
+  mentionedLuminor?: string;
+  mentionedModel?: string;
+}
+
+export function parseMention(text: string): MentionParseResult {
+  // Check for model mentions first (higher priority)
+  const modelPattern = new RegExp(`^@(${MODEL_MENTION_ALIASES.join('|')})\\s+`, 'i');
+  const modelMatch = text.match(modelPattern);
+  if (modelMatch) {
+    return {
+      cleanText: text.replace(modelPattern, '').trim(),
+      mentionedModel: modelMatch[1].toLowerCase(),
+    };
+  }
+
+  // Check for Luminor mentions
+  const luminorIds = getLuminorIds();
+  const luminorPattern = new RegExp(`^@(${luminorIds.join('|')})\\s+`, 'i');
+  const luminorMatch = text.match(luminorPattern);
+  if (luminorMatch) {
+    const name = luminorMatch[1];
+    const matched = luminorIds.find((n) => n.toLowerCase() === name.toLowerCase());
+    return {
+      cleanText: text.replace(luminorPattern, '').trim(),
+      mentionedLuminor: matched,
+    };
+  }
+
+  return { cleanText: text };
+}
+
+// ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
 
@@ -74,11 +117,11 @@ export interface ActiveLuminor {
 
 export interface ConversationState {
   // Messages
-  messages: any[];
+  messages: UIMessage[];
   status: string;
   error: Error | undefined;
-  sendMessage: (opts: { text: string }) => void;
-  setMessages: (msgs: any[]) => void;
+  sendMessage: (opts: { text: string; files?: FileUIPart[] }) => void;
+  setMessages: (msgs: UIMessage[]) => void;
 
   // Input
   input: string;
@@ -92,7 +135,7 @@ export interface ConversationState {
   provider: string;
   clientApiKey: string | undefined;
 
-  // Focus
+  // Focus (deprecated — auto-routing replaces manual focus selection)
   focusMode: string;
   setFocusMode: (mode: string) => void;
   focusHint: string;
@@ -100,6 +143,13 @@ export interface ConversationState {
   // Luminor
   activeLuminor: ActiveLuminor | null;
   handleSelectLuminor: (luminor: LuminorConfig) => void;
+  /** Which Luminor(s) responded, read from x-arcanea-luminors response header */
+  respondingLuminor: string | null;
+
+  // Tools
+  enabledTools: Set<string>;
+  setEnabledTools: (tools: Set<string>) => void;
+  toggleTool: (tool: string) => void;
 
   // State
   isLoading: boolean;
@@ -132,7 +182,7 @@ export interface ConversationState {
   handleRegenerateFrom: (messageId: string) => void;
 
   // Branching
-  branches: Map<string, any[]>;
+  branches: Map<string, UIMessage[][]>;
   loadBranch: (messageId: string, branchIndex: number) => void;
 
   // Actions
@@ -142,7 +192,7 @@ export interface ConversationState {
   startNewChat: () => void;
 
   // Derived
-  lastMsg: any;
+  lastMsg: UIMessage | undefined;
 }
 
 // ---------------------------------------------------------------------------
@@ -168,11 +218,22 @@ export function useConversation(): ConversationState {
   const [chatError, setChatError] = useState<string | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
-  const [initialSent, setInitialSent] = useState(false);
-  const [branches, setBranches] = useState<Map<string, any[]>>(new Map());
+  const initialPromptSentRef = useRef(false);
+  const [branches, setBranches] = useState<Map<string, UIMessage[][]>>(new Map());
 
   // Active Luminor from Sanctum ("Use in Chat")
   const [activeLuminor, setActiveLuminor] = useState<ActiveLuminor | null>(null);
+
+  // Which Luminor responded (read from x-arcanea-luminors header).
+  // TODO: TextStreamChatTransport does not expose response headers.
+  // To read x-arcanea-luminors, either:
+  //   1. Wrap fetch in the transport's `fetch` option to intercept headers, or
+  //   2. Have the backend embed luminor info in the stream metadata.
+  // For now this is set by @mention activation; backend header support pending.
+  const [respondingLuminor, setRespondingLuminor] = useState<string | null>(null);
+
+  // Enabled tool categories (e.g. 'image', 'think', 'search')
+  const [enabledTools, setEnabledTools] = useState<Set<string>>(new Set());
 
   // ---------------------------------------------------------------------------
   // Resolve Luminor from URL param — use local config for Chosen, API for custom
@@ -182,6 +243,8 @@ export function useConversation(): ConversationState {
     if (!luminorId) return;
     const chosen = getLuminor(luminorId);
     if (chosen) {
+      // This effect hydrates conversation state from route params.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setActiveLuminor({
         id: chosen.id,
         name: chosen.name,
@@ -197,6 +260,7 @@ export function useConversation(): ConversationState {
       .then((r) => r.ok ? r.json() : null)
       .then((data) => {
         if (data) {
+          // This effect hydrates conversation state from route params.
           setActiveLuminor({
             id: data.id,
             name: data.name,
@@ -224,6 +288,22 @@ export function useConversation(): ConversationState {
   }, []);
 
   // ---------------------------------------------------------------------------
+  // Tool toggle
+  // ---------------------------------------------------------------------------
+
+  const toggleTool = useCallback((tool: string) => {
+    setEnabledTools((prev) => {
+      const next = new Set(prev);
+      if (next.has(tool)) {
+        next.delete(tool);
+      } else {
+        next.add(tool);
+      }
+      return next;
+    });
+  }, []);
+
+  // ---------------------------------------------------------------------------
   // Focus mode hint
   // ---------------------------------------------------------------------------
 
@@ -233,23 +313,18 @@ export function useConversation(): ConversationState {
   // Transport + useChat
   // ---------------------------------------------------------------------------
 
-  const transport = useMemo(
-    () => new TextStreamChatTransport({
+  const transport = useMemo(() => {
+    return new DefaultChatTransport({
       api: '/api/ai/chat',
-      body: {
-        provider, clientApiKey, gatewayModel: modelId, focusHint,
-        ...(activeLuminor ? { systemPrompt: activeLuminor.systemPrompt } : {}),
-      },
       headers: { 'Content-Type': 'application/json' },
-    }),
-    [provider, clientApiKey, modelId, focusHint, activeLuminor]
-  );
+    });
+  }, []);
 
   const {
     messages,
     status,
     error,
-    sendMessage,
+    sendMessage: sendSdkMessage,
     setMessages,
   } = useChat({
     transport,
@@ -268,11 +343,28 @@ export function useConversation(): ConversationState {
     },
   });
 
+  const buildRequestBody = useCallback(() => {
+    const currentEnabledTools = Array.from(enabledTools).sort();
+
+    return {
+      provider,
+      clientApiKey,
+      gatewayModel: modelId,
+      focusHint,
+      ...(activeLuminor ? { systemPrompt: activeLuminor.systemPrompt } : {}),
+      ...(currentEnabledTools.length > 0 ? { enabledTools: currentEnabledTools } : {}),
+    };
+  }, [provider, clientApiKey, modelId, focusHint, activeLuminor, enabledTools]);
+
+  const sendMessage = useCallback((opts: { text: string; files?: FileUIPart[] }) => {
+    sendSdkMessage(opts, { body: buildRequestBody() });
+  }, [sendSdkMessage, buildRequestBody]);
+
   // ---------------------------------------------------------------------------
-  // Select a Luminor from the sidebar (Chosen — no API needed)
+  // Activate a Luminor (shared by @mention + sidebar selection)
   // ---------------------------------------------------------------------------
 
-  const handleSelectLuminor = useCallback((luminor: LuminorConfig) => {
+  const activateLuminor = useCallback((luminor: LuminorConfig) => {
     setActiveLuminor({
       id: luminor.id,
       name: luminor.name,
@@ -282,10 +374,19 @@ export function useConversation(): ConversationState {
       color: luminor.color,
       avatar: luminor.avatar,
     });
+  }, []);
+
+  // ---------------------------------------------------------------------------
+  // Select a Luminor from the sidebar (Chosen — no API needed)
+  // ---------------------------------------------------------------------------
+
+  const handleSelectLuminor = useCallback((luminor: LuminorConfig) => {
+    activateLuminor(luminor);
     setMessages([]);
     setActiveGates([]);
     setSwarmResult(null);
-  }, [setMessages]);
+    setRespondingLuminor(null);
+  }, [setMessages, activateLuminor]);
 
   // ---------------------------------------------------------------------------
   // Sync SDK error state into our local error state
@@ -293,6 +394,8 @@ export function useConversation(): ConversationState {
 
   useEffect(() => {
     if (error) {
+      // This mirrors SDK transport failures into the local banner state.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setChatError(error.message || 'Connection failed');
     }
   }, [error]);
@@ -319,6 +422,8 @@ export function useConversation(): ConversationState {
       const text = getMessageText(lastUser);
       if (text) {
         const result = classifyIntent(text);
+        // These values are derived from the last settled user turn.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setActiveGates(result.activeGates);
         setSwarmResult(resolveSwarm(result.weights, result.activeGates));
       }
@@ -330,11 +435,11 @@ export function useConversation(): ConversationState {
   // ---------------------------------------------------------------------------
 
   useEffect(() => {
-    if (initialPrompt && !initialSent && messages.length === 0) {
+    if (initialPrompt && !initialPromptSentRef.current && messages.length === 0) {
       sendMessage({ text: initialPrompt });
-      setInitialSent(true);
+      initialPromptSentRef.current = true;
     }
-  }, [initialPrompt, initialSent, messages.length, sendMessage]);
+  }, [initialPrompt, messages.length, sendMessage]);
 
   // ---------------------------------------------------------------------------
   // Cmd+K command palette
@@ -352,24 +457,76 @@ export function useConversation(): ConversationState {
   }, []);
 
   // ---------------------------------------------------------------------------
-  // Parse @ commands: @opus, @gemini, @grok etc. switch model for that message
+  // Auto-enable search tool when Research focus mode is active
   // ---------------------------------------------------------------------------
 
-  const parseAtCommand = useCallback((text: string): { cleanText: string; overrideModel: string | null } => {
-    const match = text.match(/^@(\w+)\s+/);
-    if (!match) return { cleanText: text, overrideModel: null };
-
-    const alias = match[1].toLowerCase();
-    const model = CHAT_MODELS.find((m) =>
-      m.shortName.toLowerCase() === alias ||
-      m.id === `arcanea-${alias}` ||
-      m.provider === alias
-    );
-
-    if (model) {
-      return { cleanText: text.slice(match[0].length), overrideModel: model.id };
+  useEffect(() => {
+    if (focusMode === 'research') {
+      // Research mode implies these tool capabilities.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setEnabledTools((prev) => {
+        if (prev.has('search') && prev.has('think')) return prev;
+        const next = new Set(prev);
+        next.add('search');
+        next.add('think');
+        return next;
+      });
     }
-    return { cleanText: text, overrideModel: null };
+  }, [focusMode]);
+
+  // ---------------------------------------------------------------------------
+  // Parse @ commands: models (@opus, @gemini, etc.) and Luminors (@Logicus, etc.)
+  // Models are checked first (higher priority via parseMention), then Luminors.
+  // Falls back to legacy CHAT_MODELS matching for aliases like provider names.
+  // ---------------------------------------------------------------------------
+
+  const resolveAtMention = useCallback((text: string): {
+    cleanText: string;
+    overrideModel: string | null;
+    overrideLuminor: LuminorConfig | null;
+  } => {
+    // First: try the unified parseMention (handles model aliases + Luminor IDs)
+    const mention = parseMention(text);
+
+    if (mention.mentionedModel) {
+      // Map alias to a CHAT_MODELS entry
+      const alias = mention.mentionedModel;
+      const model = CHAT_MODELS.find((m) =>
+        m.shortName.toLowerCase() === alias ||
+        m.id === `arcanea-${alias}` ||
+        m.provider === alias
+      );
+      return {
+        cleanText: mention.cleanText,
+        overrideModel: model?.id ?? null,
+        overrideLuminor: null,
+      };
+    }
+
+    if (mention.mentionedLuminor) {
+      const luminor = getLuminor(mention.mentionedLuminor);
+      return {
+        cleanText: mention.cleanText,
+        overrideModel: null,
+        overrideLuminor: luminor ?? null,
+      };
+    }
+
+    // Legacy fallback: match @alias against CHAT_MODELS directly
+    const match = text.match(/^@(\w+)\s+/);
+    if (match) {
+      const alias = match[1].toLowerCase();
+      const model = CHAT_MODELS.find((m) =>
+        m.shortName.toLowerCase() === alias ||
+        m.id === `arcanea-${alias}` ||
+        m.provider === alias
+      );
+      if (model) {
+        return { cleanText: text.slice(match[0].length), overrideModel: model.id, overrideLuminor: null };
+      }
+    }
+
+    return { cleanText: text, overrideModel: null, overrideLuminor: null };
   }, []);
 
   // ---------------------------------------------------------------------------
@@ -388,17 +545,23 @@ export function useConversation(): ConversationState {
         return;
       }
 
-      const { cleanText, overrideModel } = parseAtCommand(trimmed);
+      const { cleanText, overrideModel, overrideLuminor } = resolveAtMention(trimmed);
 
-      // If @ command detected, temporarily switch model for this message
+      // If @model detected, switch model for this message
       if (overrideModel) {
         setModelId(overrideModel);
+      }
+
+      // If @Luminor detected, activate that Luminor for the conversation
+      if (overrideLuminor) {
+        activateLuminor(overrideLuminor);
+        setRespondingLuminor(overrideLuminor.id);
       }
 
       sendMessage({ text: cleanText });
       setInput('');
     }
-  }, [input, isLoading, sendMessage, parseAtCommand, setModelId]);
+  }, [input, isLoading, sendMessage, resolveAtMention, setModelId, activateLuminor]);
 
   // ---------------------------------------------------------------------------
   // Retry last message on error
@@ -438,7 +601,7 @@ export function useConversation(): ConversationState {
   // ---------------------------------------------------------------------------
 
   const handleEditMessage = useCallback((messageId: string, newText: string) => {
-    const idx = messages.findIndex((m: any) => m.id === messageId);
+    const idx = messages.findIndex((m) => m.id === messageId);
     if (idx < 0) return;
     setMessages(messages.slice(0, idx));
     setEditingMessageId(null);
@@ -450,7 +613,7 @@ export function useConversation(): ConversationState {
   // ---------------------------------------------------------------------------
 
   const handleRegenerateFrom = useCallback((messageId: string) => {
-    const idx = messages.findIndex((m: any) => m.id === messageId);
+    const idx = messages.findIndex((m) => m.id === messageId);
     if (idx < 0) return;
 
     // Save the current branch from this point forward
@@ -487,7 +650,7 @@ export function useConversation(): ConversationState {
   const loadBranch = useCallback((messageId: string, branchIndex: number) => {
     const branchList = branches.get(messageId);
     if (!branchList || !branchList[branchIndex]) return;
-    const idx = messages.findIndex((m: any) => m.id === messageId);
+    const idx = messages.findIndex((m) => m.id === messageId);
     if (idx < 0) return;
     // Replace from this point with the saved branch
     const before = messages.slice(0, idx);
@@ -527,6 +690,7 @@ export function useConversation(): ConversationState {
     setInput('');
     setActiveGates([]);
     setSwarmResult(null);
+    setRespondingLuminor(null);
   }, [setMessages]);
 
   // ---------------------------------------------------------------------------
@@ -561,6 +725,12 @@ export function useConversation(): ConversationState {
     // Luminor
     activeLuminor,
     handleSelectLuminor,
+    respondingLuminor,
+
+    // Tools
+    enabledTools,
+    setEnabledTools,
+    toggleTool,
 
     // State
     isLoading,
