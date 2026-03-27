@@ -132,6 +132,45 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Check for duplicate/similar memories before inserting
+    const { data: existing } = await supabase
+      .from('user_memories')
+      .select('id, content')
+      .eq('user_id', user.id)
+      .eq('category', validation.data.category);
+
+    if (existing) {
+      const newContentLower = validation.data.content.toLowerCase();
+      const duplicate = existing.find((m) => {
+        const existingLower = m.content.toLowerCase();
+        const snippet = newContentLower.slice(0, 50);
+        return (
+          existingLower.includes(snippet) ||
+          newContentLower.includes(existingLower.slice(0, 50))
+        );
+      });
+      if (duplicate) {
+        // Update existing memory instead of creating a duplicate
+        await supabase
+          .from('user_memories')
+          .update({
+            content: validation.data.content,
+            updated_at: new Date().toISOString(),
+          })
+          .eq('id', duplicate.id);
+
+        // Fire-and-forget: re-embed the updated memory
+        import('@/lib/memory/semantic').then(({ embedMemory }) => {
+          embedMemory(supabase, duplicate.id, validation.data.content).catch(() => {});
+        });
+
+        return successResponse(
+          { memory: { ...duplicate, content: validation.data.content }, updated: true },
+          200,
+        );
+      }
+    }
+
     const { data: memory, error: insertError } = await supabase
       .from('user_memories')
       .insert({
@@ -145,6 +184,13 @@ export async function POST(request: NextRequest) {
     if (insertError) {
       console.error('Failed to insert memory:', insertError);
       return errorResponse('INTERNAL_ERROR', 'Failed to save memory', 500);
+    }
+
+    // Fire-and-forget: embed the new memory for semantic search
+    if (memory?.id) {
+      import('@/lib/memory/semantic').then(({ embedMemory }) => {
+        embedMemory(supabase, memory.id, validation.data.content).catch(() => {});
+      });
     }
 
     return successResponse({ memory }, 201);

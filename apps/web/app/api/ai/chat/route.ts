@@ -97,6 +97,8 @@ interface ChatRequest {
   clientApiKey?: string;
   /** Enabled tool categories (e.g. ['image']) — omit for pure text chat */
   enabledTools?: string[];
+  /** BYOK search API key (Tavily/Brave — from client localStorage) */
+  searchApiKey?: string;
 }
 
 function extractMessageText(message: {
@@ -162,7 +164,7 @@ export async function POST(req: NextRequest) {
   try {
     // --- Parse request ---
     const body: ChatRequest = await req.json();
-    const { messages, systemPrompt, temperature, maxTokens, provider: requestedProvider, model: modelOverride, gatewayModel, focusHint, clientApiKey, enabledTools } = body;
+    const { messages, systemPrompt, temperature, maxTokens, provider: requestedProvider, model: modelOverride, gatewayModel, focusHint, clientApiKey, enabledTools, searchApiKey } = body;
 
     if (!messages || messages.length === 0) {
       return new Response('Messages are required', { status: 400, headers: { 'Content-Type': 'text/plain' } });
@@ -411,19 +413,28 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
       }
     }
 
-    // --- Inject user memories into system prompt ---
+    // --- Inject relevant user memories into system prompt (semantic recall) ---
     try {
       if (sbClient && sbUserId) {
-        const { data: memories } = await sbClient
-          .from('user_memories')
-          .select('content, category')
-          .eq('user_id', sbUserId)
-          .order('created_at', { ascending: false })
-          .limit(20);
+        // Build context from the last few messages for semantic relevance
+        const recentContext = messages
+          .slice(-3)
+          .map((m: { parts?: Array<{ type: string; text?: string }>; content?: string }) => {
+            if (typeof m.content === 'string') return m.content;
+            if (Array.isArray(m.parts)) return m.parts.filter((p) => p.type === 'text').map((p) => p.text ?? '').join(' ');
+            return '';
+          })
+          .join(' ')
+          .slice(0, 500);
 
-        if (memories && memories.length > 0) {
-          const memoryBlock = memories.map((m: { content: string; category: string }) => `- [${m.category}] ${m.content}`).join('\n');
-          resolvedSystemPrompt = `[USER MEMORIES]\nFacts about this creator from previous conversations:\n${memoryBlock}\nUse these naturally when relevant. Don't list them.\n[/USER MEMORIES]\n\n` + resolvedSystemPrompt;
+        const { recallRelevantMemories } = await import('@/lib/memory/semantic');
+        const memories = await recallRelevantMemories(sbClient, sbUserId, recentContext, 15);
+
+        if (memories.length > 0) {
+          const memoryBlock = memories
+            .map((m) => `- [${m.category}] ${m.content}`)
+            .join('\n');
+          resolvedSystemPrompt = `[USER MEMORIES]\nFacts about this creator (ranked by relevance to current conversation):\n${memoryBlock}\nUse these naturally when relevant. Don't list them.\n[/USER MEMORIES]\n\n` + resolvedSystemPrompt;
         }
       }
     } catch (e) {
@@ -435,6 +446,7 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
     const chatToolSet = createChatTools({
       supabaseClient: sbClient ?? undefined,
       userId: sbUserId,
+      searchApiKey: searchApiKey || undefined,
     });
 
     const toolsToUse = (() => {

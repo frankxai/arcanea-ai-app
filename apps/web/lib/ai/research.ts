@@ -11,6 +11,7 @@
  */
 
 import { generateText } from 'ai';
+import { executeSearch, type SearchResponse } from '@/lib/search/providers';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -67,18 +68,13 @@ export async function conductResearch(
   question: string,
   maxSearches: number = 5
 ): Promise<ResearchResult> {
-  const tavilyKey = process.env.TAVILY_API_KEY;
-  if (!tavilyKey) {
-    throw new Error('TAVILY_API_KEY required for deep research');
-  }
-
   const clampedMax = Math.min(Math.max(maxSearches, 1), 10);
 
   // Step 1 --- Decompose into sub-queries
   const subQueries = await generateSubQueries(question, clampedMax);
 
-  // Step 2 --- Parallel web searches
-  const searchResults = await runParallelSearches(subQueries, tavilyKey);
+  // Step 2 --- Parallel web searches (uses multi-provider abstraction)
+  const searchResults = await runParallelSearches(subQueries);
 
   // Step 3 --- Synthesise report
   const report = await synthesizeReport(question, searchResults);
@@ -140,26 +136,22 @@ async function generateSubQueries(
 }
 
 async function runParallelSearches(
-  queries: string[],
-  apiKey: string
+  queries: string[]
 ): Promise<SearchBucket[]> {
   const promises = queries.map(async (query): Promise<SearchBucket> => {
     try {
-      const res = await fetch('https://api.tavily.com/search', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          api_key: apiKey,
-          query,
-          max_results: 5,
-          search_depth: 'advanced',
-          include_answer: false,
-          include_raw_content: false,
-        }),
+      const response: SearchResponse = await executeSearch(query, {
+        maxResults: 5,
       });
-      if (!res.ok) return { query, results: [] };
-      const data = await res.json();
-      return { query, results: data.results || [] };
+      return {
+        query,
+        results: response.results.map((r) => ({
+          title: r.title,
+          url: r.url,
+          content: r.content,
+          score: r.score,
+        })),
+      };
     } catch {
       return { query, results: [] };
     }

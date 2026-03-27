@@ -15,6 +15,7 @@
 import { tool } from 'ai';
 import { z } from 'zod';
 import { generateImages } from '@/lib/imagine/generate';
+import { executeSearch } from '@/lib/search/providers';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 // ---------------------------------------------------------------------------
@@ -79,6 +80,7 @@ type MemoryStoreInput = z.infer<typeof memoryStoreInputSchema>;
 interface ChatToolOptions {
   supabaseClient?: SupabaseClient;
   userId?: string;
+  searchApiKey?: string;
 }
 
 /**
@@ -113,56 +115,21 @@ export function createChatTools(options?: ChatToolOptions) {
         'Search the web for current information, recent events, facts, or up-to-date data. Use when the user asks about something that requires current knowledge beyond your training data.',
       inputSchema: webSearchInputSchema,
       execute: async ({ query, maxResults }: WebSearchInput) => {
-        const apiKey = process.env.TAVILY_API_KEY;
-        if (!apiKey) {
-          return {
-            type: 'search' as const,
-            error: 'Web search is not configured. Add TAVILY_API_KEY to enable.',
-            query,
-            results: [],
-          };
-        }
-
         try {
-          const response = await fetch('https://api.tavily.com/search', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              api_key: apiKey,
-              query,
-              max_results: maxResults,
-              search_depth: 'basic',
-              include_answer: true,
-              include_raw_content: false,
-            }),
+          const result = await executeSearch(query, {
+            apiKey: options?.searchApiKey,
+            maxResults,
           });
-
-          if (!response.ok) {
-            throw new Error(`Tavily API error: ${response.status}`);
-          }
-
-          const data = await response.json();
-
           return {
             type: 'search' as const,
-            query,
-            answer: data.answer || null,
-            results: (data.results || []).map(
-              (r: { title: string; url: string; content: string; score: number }) => ({
-                title: r.title,
-                url: r.url,
-                content: r.content,
-                score: r.score,
-              })
-            ),
+            query: result.query,
+            answer: result.answer,
+            provider: result.provider,
+            results: result.results,
           };
-        } catch {
-          return {
-            type: 'search' as const,
-            error: 'Search failed. Please try again.',
-            query,
-            results: [],
-          };
+        } catch (error: unknown) {
+          const msg = error instanceof Error ? error.message : 'Search failed';
+          return { type: 'search' as const, error: msg, query, results: [] };
         }
       },
     }),
@@ -241,9 +208,18 @@ export function createChatTools(options?: ChatToolOptions) {
             };
           }
 
-          await options.supabaseClient
+          const { data: memory } = await options.supabaseClient
             .from('user_memories')
-            .insert({ user_id: options.userId, content, category });
+            .insert({ user_id: options.userId, content, category })
+            .select('id')
+            .single();
+
+          if (memory?.id) {
+            // Fire-and-forget embedding generation (don't block the response)
+            import('@/lib/memory/semantic').then(({ embedMemory }) => {
+              embedMemory(options.supabaseClient!, memory.id, content).catch(() => {});
+            });
+          }
 
           return { type: 'memory_saved' as const, content, category, saved: true };
         } catch {

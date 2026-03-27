@@ -121,6 +121,29 @@ const PROVIDERS: Provider[] = [
   },
 ];
 
+const SEARCH_PROVIDERS_UI: Provider[] = [
+  {
+    id: 'tavily',
+    name: 'Tavily Search',
+    description: 'AI-optimized search — best results, $5 per 1K queries',
+    color: '#00bcd4',
+    envKey: 'TAVILY_API_KEY',
+    placeholder: 'tvly-...',
+    docsUrl: 'https://tavily.com',
+    testEndpoint: '/api/search/web',
+  },
+  {
+    id: 'brave',
+    name: 'Brave Search',
+    description: 'Privacy-focused — 2,000 free searches/month',
+    color: '#fb542b',
+    envKey: 'BRAVE_API_KEY',
+    placeholder: 'BSA...',
+    docsUrl: 'https://brave.com/search/api/',
+    testEndpoint: '/api/search/web',
+  },
+];
+
 // ---------------------------------------------------------------------------
 // localStorage helpers
 // ---------------------------------------------------------------------------
@@ -399,6 +422,147 @@ export default function ProvidersPage() {
               </div>
             );
           })}
+        </div>
+
+        {/* Search Providers */}
+        <div className="mt-10 mb-2">
+          <h2 className="text-lg font-semibold text-white">Search Providers</h2>
+          <p className="text-sm text-white/40 mt-1">
+            Power web search in chat. DuckDuckGo is always available as a free fallback — no key needed.
+          </p>
+        </div>
+
+        <div className="space-y-4">
+          {SEARCH_PROVIDERS_UI.map((provider) => {
+            const key = keys[provider.id] || '';
+            const isVisible = visibility[provider.id] || false;
+            const status = testStatus[provider.id] || 'idle';
+            const error = testError[provider.id] || '';
+            const hasKey = key.length > 0;
+
+            return (
+              <div
+                key={provider.id}
+                className="bg-black/40 border border-white/[0.06] rounded-2xl p-5 transition-colors"
+              >
+                {/* Provider header */}
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs font-bold"
+                      style={{ backgroundColor: provider.color }}
+                    >
+                      {provider.name.charAt(0)}
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-medium text-white">{provider.name}</h3>
+                      <p className="text-[11px] text-white/30">{provider.description}</p>
+                    </div>
+                  </div>
+                  {hasKey && (
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                      <span className="text-[11px] text-emerald-400/70">Connected</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* API Key input */}
+                <div className="relative mb-3">
+                  <input
+                    type={isVisible ? 'text' : 'password'}
+                    value={isVisible ? key : (hasKey ? maskKey(key) : '')}
+                    onChange={(e) => handleKeyChange(provider.id, e.target.value)}
+                    placeholder={provider.placeholder}
+                    className="w-full px-4 py-2.5 pr-20 rounded-xl bg-white/[0.04] border border-white/[0.06] text-white/90 text-sm font-mono placeholder-white/20 focus:outline-none focus:border-[#00bcd4]/40 transition-colors"
+                    onFocus={() => setVisibility((prev) => ({ ...prev, [provider.id]: true }))}
+                  />
+                  <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
+                    {hasKey && (
+                      <button
+                        type="button"
+                        onClick={() => toggleVisibility(provider.id)}
+                        className="p-1.5 rounded-md text-white/30 hover:text-white/60 transition-colors"
+                        aria-label={isVisible ? 'Hide key' : 'Show key'}
+                      >
+                        {isVisible ? <PhEyeSlash className="w-4 h-4" /> : <PhEye className="w-4 h-4" />}
+                      </button>
+                    )}
+                    {hasKey && (
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveKey(provider.id)}
+                        className="p-1.5 rounded-md text-white/30 hover:text-red-400 transition-colors"
+                        aria-label="Remove key"
+                      >
+                        <PhTrash className="w-4 h-4" />
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                {/* Actions row */}
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
+                  <a
+                    href={provider.docsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[11px] text-[#00bcd4]/60 hover:text-[#00bcd4] transition-colors"
+                  >
+                    Get API key
+                  </a>
+
+                  <div className="flex items-center gap-2">
+                    {status === 'success' && (
+                      <span className="flex items-center gap-1 text-[11px] text-emerald-400">
+                        <PhCheck className="w-3.5 h-3.5" />
+                        Connected
+                      </span>
+                    )}
+                    {status === 'error' && (
+                      <span className="flex items-center gap-1 text-[11px] text-red-400" title={error}>
+                        <PhWarningCircle className="w-3.5 h-3.5" />
+                        Failed
+                      </span>
+                    )}
+
+                    <button
+                      type="button"
+                      onClick={() => testConnection(provider)}
+                      disabled={!hasKey || status === 'testing'}
+                      className="px-3 py-2 sm:py-1.5 rounded-lg text-[11px] font-medium text-white/50 border border-white/[0.08] hover:text-white/70 hover:border-white/[0.15] disabled:opacity-30 disabled:cursor-not-allowed transition-all min-h-[44px] sm:min-h-0"
+                    >
+                      {status === 'testing' ? (
+                        <span className="flex items-center gap-1.5">
+                          <PhCircleNotch className="w-3 h-3 animate-spin" />
+                          Testing...
+                        </span>
+                      ) : (
+                        'Test Connection'
+                      )}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+
+          {/* DuckDuckGo free fallback note */}
+          <div className="bg-black/40 border border-white/[0.06] rounded-2xl p-5">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs font-bold bg-[#de5833]">
+                D
+              </div>
+              <div>
+                <h3 className="text-sm font-medium text-white">DuckDuckGo</h3>
+                <p className="text-[11px] text-white/30">Free instant answers — always available, no key needed</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-1.5 mt-3">
+              <span className="w-2 h-2 rounded-full bg-emerald-400" />
+              <span className="text-[11px] text-emerald-400/70">Always available</span>
+            </div>
+          </div>
         </div>
 
         {/* Save button */}

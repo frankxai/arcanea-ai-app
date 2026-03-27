@@ -346,6 +346,18 @@ export function useConversation(): ConversationState {
   const buildRequestBody = useCallback(() => {
     const currentEnabledTools = Array.from(enabledTools).sort();
 
+    // Resolve BYOK search key from localStorage (tavily > brave)
+    let searchApiKey: string | undefined;
+    try {
+      const keysRaw = localStorage.getItem('arcanea-provider-keys');
+      if (keysRaw) {
+        const keys = JSON.parse(keysRaw) as Record<string, string>;
+        searchApiKey = keys.tavily || keys.brave || undefined;
+      }
+    } catch {
+      // Ignore parse errors
+    }
+
     return {
       provider,
       clientApiKey,
@@ -353,6 +365,7 @@ export function useConversation(): ConversationState {
       focusHint,
       ...(activeLuminor ? { systemPrompt: activeLuminor.systemPrompt } : {}),
       ...(currentEnabledTools.length > 0 ? { enabledTools: currentEnabledTools } : {}),
+      ...(searchApiKey ? { searchApiKey } : {}),
     };
   }, [provider, clientApiKey, modelId, focusHint, activeLuminor, enabledTools]);
 
