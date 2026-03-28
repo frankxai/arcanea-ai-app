@@ -367,47 +367,42 @@ export default function ImaginePage() {
         )}
       </AnimatePresence>
 
-      {/* Image grid */}
+      {/* Image grid — masonry layout */}
       <div ref={gridTopRef} className={`max-w-7xl mx-auto px-1 sm:px-6 ${hasResults ? 'pt-4 pb-32' : ''}`}>
-        {rows.map((row) => (
+        {/* Loading skeletons for in-progress rows */}
+        {rows.filter((r) => r.isLoading).map((row) => (
           <div key={row.id} className="mb-1 sm:mb-4">
-            {row.isLoading && (
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-0.5 md:gap-1">
-                {Array.from({ length: 4 }).map((_, i) => (
-                  <div
-                    key={i}
-                    className={`rounded-lg sm:rounded-2xl border border-white/[0.04] relative overflow-hidden ${
-                      row.aspectRatio === '16:9' ? 'aspect-video' :
-                      row.aspectRatio === '9:16' ? 'aspect-[9/16]' :
-                      row.aspectRatio === '4:3' ? 'aspect-[4/3]' :
-                      row.aspectRatio === '3:4' ? 'aspect-[3/4]' :
-                      'aspect-square'
-                    }`}
-                  >
-                    {/* Shimmer gradient skeleton */}
-                    <div className="absolute inset-0 bg-[#12121a]" />
-                    <div className="absolute inset-0 shimmer opacity-60" style={{ animationDelay: `${i * 0.3}s` }} />
-                    {/* Subtle pulse overlay for depth */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#00bcd4]/[0.03] to-violet-500/[0.03] animate-pulse" style={{ animationDuration: '2.5s' }} />
-                    <div className="absolute bottom-3 left-0 right-0 flex justify-center">
-                      <span className="text-[10px] text-text-muted/50 font-body tracking-wider uppercase">Creating...</span>
-                    </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-0.5 md:gap-1">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div
+                  key={i}
+                  className={`rounded-lg sm:rounded-2xl border border-white/[0.04] relative overflow-hidden ${
+                    row.aspectRatio === '16:9' ? 'aspect-video' :
+                    row.aspectRatio === '9:16' ? 'aspect-[9/16]' :
+                    row.aspectRatio === '4:3' ? 'aspect-[4/3]' :
+                    row.aspectRatio === '3:4' ? 'aspect-[3/4]' :
+                    'aspect-square'
+                  }`}
+                >
+                  <div className="absolute inset-0 bg-[#12121a]" />
+                  <div className="absolute inset-0 shimmer opacity-60" style={{ animationDelay: `${i * 0.3}s` }} />
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#00bcd4]/[0.03] to-violet-500/[0.03] animate-pulse" style={{ animationDuration: '2.5s' }} />
+                  <div className="absolute bottom-3 left-0 right-0 flex justify-center">
+                    <span className="text-[10px] text-text-muted/50 font-body tracking-wider uppercase">Creating...</span>
                   </div>
-                ))}
-              </div>
-            )}
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
 
-            {!row.isLoading && row.images.length > 0 && (
-              <div className={`grid gap-0.5 md:gap-1 ${
-                row.images.length === 1
-                  ? 'grid-cols-1 max-w-lg mx-auto'
-                  : row.images.length === 2
-                    ? 'grid-cols-2 max-w-2xl mx-auto'
-                    : 'grid-cols-2 md:grid-cols-4'
-              }`}>
-                {row.images.map((img, i) => (
+        {/* Masonry layout for completed images */}
+        {rows.some((r) => !r.isLoading && r.images.length > 0) && (
+          <div className="columns-2 md:columns-3 lg:columns-4 gap-3">
+            {rows.filter((r) => !r.isLoading && r.images.length > 0).flatMap((row) =>
+              row.images.map((img, i) => (
+                <div key={img.id} className="break-inside-avoid mb-3">
                   <ImageCard
-                    key={img.id}
                     id={img.id}
                     src={img.url}
                     prompt={img.prompt}
@@ -419,11 +414,11 @@ export default function ImaginePage() {
                     onFavoriteChange={refreshFavorites}
                     isAnimating={animatingIds.has(img.id)}
                   />
-                ))}
-              </div>
+                </div>
+              )),
             )}
           </div>
-        ))}
+        )}
 
         {autoScrollEnabled && <div ref={sentinelRef} className="h-px" />}
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 
 const ASPECT_RATIOS = [
@@ -20,6 +20,41 @@ const STYLE_PRESETS = [
   { id: 'cosmic', label: 'Cosmic' },
   { id: 'cinematic', label: 'Cinematic' },
 ] as const;
+
+const STYLE_CHIPS = [
+  'Cinematic',
+  'Anime',
+  'Oil Painting',
+  '3D Render',
+  'Photograph',
+  'Concept Art',
+  'Watercolor',
+  'Pixel Art',
+] as const;
+
+const HISTORY_KEY = 'arcanea-imagine-history';
+const HISTORY_MAX = 30;
+
+function loadHistory(): string[] {
+  if (typeof window === 'undefined') return [];
+  try {
+    const raw = localStorage.getItem(HISTORY_KEY);
+    return raw ? (JSON.parse(raw) as string[]).slice(0, HISTORY_MAX) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveToHistory(prompt: string): void {
+  if (typeof window === 'undefined') return;
+  try {
+    const history = loadHistory().filter((p) => p !== prompt);
+    history.unshift(prompt);
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(history.slice(0, HISTORY_MAX)));
+  } catch {
+    // localStorage quota or disabled — silently ignore
+  }
+}
 
 const QUICK_PROMPTS = [
   'A cosmic library floating in nebula clouds, ancient knowledge glowing with starlight',
@@ -50,7 +85,42 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
   const [isExpanded, setIsExpanded] = useState(true);
   const [isEnhancing, setIsEnhancing] = useState(false);
   const [aplFeedback, setAplFeedback] = useState<AplFeedback | null>(null);
+  const [history, setHistory] = useState<string[]>([]);
+  const [showHistory, setShowHistory] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const historyRef = useRef<HTMLDivElement>(null);
+
+  // Load history on mount
+  useEffect(() => {
+    setHistory(loadHistory());
+  }, []);
+
+  // Close history dropdown on outside click
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (historyRef.current && !historyRef.current.contains(e.target as Node)) {
+        setShowHistory(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, []);
+
+  const handleStyleChip = useCallback((chipLabel: string) => {
+    const suffix = `, ${chipLabel.toLowerCase()} style`;
+    setPrompt((prev) => {
+      // Avoid duplicate style suffixes
+      if (prev.toLowerCase().includes(suffix)) return prev;
+      return prev.trim() + suffix;
+    });
+    textareaRef.current?.focus();
+  }, []);
+
+  const handleHistorySelect = useCallback((item: string) => {
+    setPrompt(item);
+    setShowHistory(false);
+    textareaRef.current?.focus();
+  }, []);
 
   const buildPrompt = useCallback(() => {
     let finalPrompt = prompt.trim();
@@ -71,6 +141,8 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
   const handleSubmit = useCallback(() => {
     if (!prompt.trim() || isGenerating) return;
     const finalPrompt = buildPrompt();
+    saveToHistory(prompt.trim());
+    setHistory(loadHistory());
     onGenerate(finalPrompt, 4, aspectRatio);
     if (hasResults) setIsExpanded(false);
   }, [prompt, aspectRatio, isGenerating, onGenerate, hasResults, buildPrompt]);
@@ -169,17 +241,68 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
         <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-violet-600/20 via-fuchsia-500/15 to-violet-600/20 blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-500" />
 
         <div className="relative liquid-glass rounded-3xl overflow-hidden">
+          {/* Style chips */}
+          <div className="flex items-center gap-1.5 px-4 sm:px-5 pt-3 pb-1 overflow-x-auto scrollbar-hide">
+            {STYLE_CHIPS.map((chip) => (
+              <button
+                key={chip}
+                onClick={() => handleStyleChip(chip)}
+                className="flex-shrink-0 px-3 py-1 rounded-full text-[11px] font-medium transition-all text-text-muted hover:text-text-secondary hover:bg-white/[0.06] border border-white/[0.06] hover:border-white/[0.12]"
+              >
+                {chip}
+              </button>
+            ))}
+          </div>
+
           {/* Textarea */}
           <textarea
             ref={textareaRef}
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             onKeyDown={handleKeyDown}
-            onFocus={() => setIsExpanded(true)}
+            onFocus={() => { setIsExpanded(true); if (history.length > 0) setShowHistory(true); }}
+            onBlur={() => { /* history closes via outside click */ }}
             placeholder="Describe what you want to see..."
             rows={hasResults ? 2 : 3}
             className="w-full bg-transparent px-5 sm:px-6 pt-5 pb-3 text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:ring-inset resize-none font-body text-lg sm:text-base leading-relaxed"
           />
+
+          {/* Prompt history dropdown */}
+          <AnimatePresence>
+            {showHistory && history.length > 0 && (
+              <m.div
+                ref={historyRef}
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.15 }}
+                className="border-t border-white/[0.04] overflow-hidden"
+              >
+                <div className="px-4 py-2">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-[10px] uppercase tracking-wider text-text-muted/60 font-medium">Recent</span>
+                    <button
+                      onClick={() => setShowHistory(false)}
+                      className="text-[10px] text-text-muted/40 hover:text-text-muted transition-colors"
+                    >
+                      Hide
+                    </button>
+                  </div>
+                  <div className="max-h-32 overflow-y-auto space-y-0.5 scrollbar-hide">
+                    {history.slice(0, 10).map((item, i) => (
+                      <button
+                        key={`${item}-${i}`}
+                        onClick={() => handleHistorySelect(item)}
+                        className="w-full text-left px-2.5 py-1.5 rounded-lg text-xs text-text-muted hover:text-text-secondary hover:bg-white/[0.04] transition-all truncate"
+                      >
+                        {item}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </m.div>
+            )}
+          </AnimatePresence>
 
           {/* Style preset pills */}
           <div className="flex items-center gap-1.5 px-4 sm:px-5 py-2.5 overflow-x-auto scrollbar-hide border-t border-white/[0.04]">
