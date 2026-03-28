@@ -305,7 +305,7 @@ export function HeroV2({ stats }: HeroV2Props) {
             transition={{ duration: 4, repeat: Infinity }}
           >
             <span className="text-atlantean-teal-aqua">34+</span>
-            <span className="text-text-muted ml-1">sacred texts</span>
+            <span className="text-text-muted ml-1">original texts</span>
           </motion.div>
 
           <motion.div

@@ -5,19 +5,19 @@ import { useRef } from "react";
 import Link from "next/link";
 import { PhScroll, PhMusicNote, PhFlame, PhArrowRight } from '@/lib/phosphor-icons';
 
-// ─── Frequency orb data ────────────────────────────────────────────────────
+// ─── Gate orb data ────────────────────────────────────────────────────────
 
-const FREQUENCY_ORBS = [
-  { hz: 174, label: "Foundation", color: "#6b7280", gate: "Foundation" },
-  { hz: 285, label: "Flow", color: "#f97316", gate: "Flow" },
-  { hz: 396, label: "Fire", color: "#ef4444", gate: "Fire" },
-  { hz: 417, label: "Heart", color: "#22c55e", gate: "Heart" },
-  { hz: 528, label: "Voice", color: "#06b6d4", gate: "Voice" },
-  { hz: 639, label: "Sight", color: "#0d47a1", gate: "Sight" },
-  { hz: 741, label: "Crown", color: "#ffd700", gate: "Crown" },
-  { hz: 852, label: "Starweave", color: "#a855f7", gate: "Starweave" },
-  { hz: 963, label: "Unity", color: "#3b82f6", gate: "Unity" },
-  { hz: 1111, label: "Source", color: "#ffffff", gate: "Source" },
+const GATE_ORBS = [
+  { label: "Foundation", color: "#6b7280", gate: "Foundation" },
+  { label: "Flow", color: "#f97316", gate: "Flow" },
+  { label: "Fire", color: "#ef4444", gate: "Fire" },
+  { label: "Heart", color: "#22c55e", gate: "Heart" },
+  { label: "Voice", color: "#06b6d4", gate: "Voice" },
+  { label: "Sight", color: "#0d47a1", gate: "Sight" },
+  { label: "Crown", color: "#ffd700", gate: "Crown" },
+  { label: "Starweave", color: "#a855f7", gate: "Starweave" },
+  { label: "Unity", color: "#3b82f6", gate: "Unity" },
+  { label: "Source", color: "#ffffff", gate: "Source" },
 ] as const;
 
 // ─── Three-pillar data ─────────────────────────────────────────────────────
@@ -45,7 +45,7 @@ const PILLARS = [
     iconBgClass: "from-brand-gold/20 to-brand-gold/5",
     iconColorClass: "text-brand-gold",
     description:
-      "Solfeggio frequencies. Guardian-guided sonic creation. Sound as a path to mastery.",
+      "Original music for each Gate. AI-guided sonic creation. Sound as a creative tool.",
   },
   {
     icon: PhFlame,
@@ -101,9 +101,9 @@ const ARC_MILESTONES = [
   },
 ] as const;
 
-// ─── Sub-component: Frequency Spine ────────────────────────────────────────
+// ─── Sub-component: Gate Spine ─────────────────────────────────────────────
 
-function FrequencySpine() {
+function GateSpine() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
@@ -120,9 +120,9 @@ function FrequencySpine() {
 
       {/* Orbs */}
       <div className="relative z-10 flex items-center justify-between w-full max-w-3xl mx-auto px-4">
-        {FREQUENCY_ORBS.map((orb, index) => (
+        {GATE_ORBS.map((orb, index) => (
           <m.div
-            key={orb.hz}
+            key={orb.gate}
             initial={{ opacity: 0, scale: 0, y: 20 }}
             animate={
               isInView
@@ -153,15 +153,12 @@ function FrequencySpine() {
               />
             </div>
 
-            {/* Hz label — visible on hover and on larger screens */}
+            {/* Gate label — visible on hover */}
             <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-center">
               <span
                 className="text-[10px] font-mono font-semibold block leading-tight"
                 style={{ color: orb.color }}
               >
-                {orb.hz}Hz
-              </span>
-              <span className="text-[9px] text-text-muted block leading-tight">
                 {orb.label}
               </span>
             </div>
@@ -383,7 +380,7 @@ export function IntelligenceOverlay() {
             Ten Gods. Ten Gates. Each governs a domain of creation.
           </m.p>
 
-          {/* Frequency spine */}
+          {/* Gate spine */}
           <m.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -391,7 +388,7 @@ export function IntelligenceOverlay() {
             transition={{ duration: 0.8, delay: 0.35 }}
             className="mb-6"
           >
-            <FrequencySpine />
+            <GateSpine />
           </m.div>
 
           {/* Spine caption */}
@@ -447,7 +444,7 @@ export function IntelligenceOverlay() {
               <span className="text-gradient-gold">From Foundation to Source.</span>
             </h3>
             <p className="text-text-secondary font-body italic text-lg">
-              A frequency journey through ten gates to creative sovereignty.
+              Ten gates of creative mastery. From Foundation to Source.
             </p>
           </m.div>
 

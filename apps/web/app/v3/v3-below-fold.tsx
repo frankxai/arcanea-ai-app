@@ -130,7 +130,7 @@ const FEATURES = [
     icon: Scroll,
     title: "Intelligence Library",
     description:
-      "190K words of proprietary creative intelligence — not generic AI writing, original philosophy grounded in consciousness, creativity, and transformation. 17 collections, 34+ texts.",
+      "190K words of proprietary creative intelligence — not generic AI writing, original philosophy for makers who build worlds, write stories, and design systems. 17 collections, 34+ texts.",
     href: "/library",
     accentHex: "#ffd700",
     glowColor: "rgba(255, 215, 0, 0.12)",

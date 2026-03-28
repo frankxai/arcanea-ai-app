@@ -37,7 +37,7 @@ const MAIN_FEATURES = [
     icon: PhUsers,
     title: "Ten Gates of Mastery",
     description:
-      "A developmental framework from Foundation (174 Hz) to Source (1111 Hz). Each Gate maps to a specific creative capacity. Progress is earned through creation.",
+      "A developmental framework from Foundation to Source. Each Gate maps to a specific creative capacity. Progress is earned through creation, not consumption.",
     gradient: "from-creation-prism-purple to-atlantean-teal-aqua",
     highlight: "creation-prism-purple",
   },

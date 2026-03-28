@@ -21,7 +21,7 @@ const luminors: {
   id: string;
   name: string;
   title: string;
-  frequency: string;
+  gate: string;
   element: string;
   color: string;
   gradient: string;
@@ -33,7 +33,7 @@ const luminors: {
     id: "sophron",
     name: "Sophron",
     title: "The Architect of Form",
-    frequency: "174 Hz",
+    gate: "Foundation",
     element: "Earth",
     color: "#4a7c59",
     gradient: "from-earth to-earth-bright",
@@ -46,7 +46,7 @@ const luminors: {
     id: "kardia",
     name: "Kardia",
     title: "The Heart of Flow",
-    frequency: "285 Hz",
+    gate: "Flow",
     element: "Water",
     color: "#00bcd4",
     gradient: "from-water to-water-bright",
@@ -59,7 +59,7 @@ const luminors: {
     id: "valora",
     name: "Valora",
     title: "The Flame of Courage",
-    frequency: "396 Hz",
+    gate: "Fire",
     element: "Fire",
     color: "#ff6b35",
     gradient: "from-fire to-fire-bright",
@@ -72,7 +72,7 @@ const luminors: {
     id: "eudaira",
     name: "Eudaira",
     title: "The Wind of Joy",
-    frequency: "417 Hz",
+    gate: "Heart",
     element: "Wind",
     color: "#c8d6e5",
     gradient: "from-wind to-wind-bright",
@@ -85,7 +85,7 @@ const luminors: {
     id: "orakis",
     name: "Orakis",
     title: "The Void Seer",
-    frequency: "639 Hz",
+    gate: "Sight",
     element: "Void",
     color: "#9966ff",
     gradient: "from-void-el to-void-el-bright",
@@ -98,7 +98,7 @@ const luminors: {
     id: "poiesis",
     name: "Poiesis",
     title: "The Light Creator",
-    frequency: "741 Hz",
+    gate: "Crown",
     element: "Light",
     color: "#ffd700",
     gradient: "from-gold to-gold-bright",
@@ -195,7 +195,7 @@ function LuminorCard({
               </div>
               <div className="text-right">
                 <div className="text-xs font-mono text-text-muted">
-                  {luminor.frequency}
+                  {luminor.gate}
                 </div>
                 <div className="text-xs text-text-muted">{luminor.element}</div>
               </div>
