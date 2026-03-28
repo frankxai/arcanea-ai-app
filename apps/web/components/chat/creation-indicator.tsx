@@ -120,10 +120,10 @@ export function CreationIndicator({ autoSave }: CreationIndicatorProps) {
               Saved Creations
             </span>
             <Link
-              href="/arcs"
+              href="/creations"
               className="text-[10px] text-[#00bcd4] hover:text-[#00bcd4]/80 transition-colors"
             >
-              View all
+              View all creations
             </Link>
           </div>
 

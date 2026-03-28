@@ -22,6 +22,28 @@ declare module 'react-syntax-highlighter' {
   export default SyntaxHighlighter;
 }
 
+declare module 'react-syntax-highlighter/dist/esm/prism' {
+  import { ComponentType } from 'react';
+
+  interface SyntaxHighlighterProps {
+    children?: string;
+    style?: Record<string, React.CSSProperties>;
+    language?: string;
+    showLineNumbers?: boolean;
+    wrapLines?: boolean;
+    wrapLongLines?: boolean;
+    customStyle?: React.CSSProperties;
+    codeTagProps?: React.HTMLAttributes<HTMLElement>;
+    PreTag?: string | ComponentType;
+    CodeTag?: string | ComponentType;
+    className?: string;
+    [key: string]: unknown;
+  }
+
+  const SyntaxHighlighter: ComponentType<SyntaxHighlighterProps>;
+  export default SyntaxHighlighter;
+}
+
 declare module 'react-syntax-highlighter/dist/esm/styles/prism' {
   const vscDarkPlus: Record<string, React.CSSProperties>;
   const oneDark: Record<string, React.CSSProperties>;

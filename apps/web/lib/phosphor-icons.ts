@@ -10,8 +10,9 @@ import type { ComponentType } from 'react';
  * This module re-exports all icons with both naming conventions.
  */
 
-// Re-export everything from the real package (non-Ph names still work)
-export * from '@phosphor-icons/react';
+// NOTE: We intentionally do NOT `export * from '@phosphor-icons/react'` to avoid
+// pulling the entire 200+ icon library into every bundle chunk. Instead, we
+// individually export each icon used in the codebase below.
 
 // CRITICAL: The local `import { X }` below shadows `export *` for those names.
 // We must explicitly re-export every locally-imported icon so bare names work.
@@ -33,7 +34,9 @@ export {
   Leaf, Lightbulb, Lightning, Link, List, ListDashes, ListNumbers, Lock,
   MagicWand, MagnifyingGlass, MapPin, MapTrifold,
   Microphone, Minus, Moon, Mountains, MusicNote, MusicNotes, Notebook,
-  SpeakerHigh, Stop,
+  SpeakerHigh,
+  Pause, ThumbsUp, ThumbsDown, Coins, Robot, Waveform, FolderSimple,
+  DotsThree, MagnifyingGlassPlus, Metronome, TextUnderline, ListBullets, TextH,
   Package, PaintBrush, Palette, PaperPlane, Paperclip, Pen, Pencil,
   PencilSimple, Planet, Play, Plus, PushPin, Question, Quotes, Radio,
   Rocket, Scales, Scroll, Share, Shield, ShieldStar, Shuffle, SignOut,
@@ -162,7 +165,19 @@ import {
   MusicNotes,
   Notebook,
   SpeakerHigh,
-  Stop,
+  Pause,
+  ThumbsUp,
+  ThumbsDown,
+  Coins,
+  Robot,
+  Waveform,
+  FolderSimple,
+  DotsThree,
+  MagnifyingGlassPlus,
+  Metronome,
+  TextUnderline,
+  ListBullets,
+  TextH,
   Package,
   PaintBrush,
   Palette,
@@ -233,6 +248,10 @@ import {
 } from '@phosphor-icons/react';
 
 import type { IconProps } from '@phosphor-icons/react';
+// StopIcon has an unusual export pattern in @phosphor-icons/react that confuses TS resolution
+// @ts-ignore TS2614 - StopIcon IS a named export but TS misreads the re-export chain
+import { StopIcon } from '@phosphor-icons/react';
+export { StopIcon };
 
 type IconComponent = ComponentType<IconProps>;
 
@@ -440,7 +459,8 @@ export const PhZap = Lightning;
 export const PhExport = ArrowSquareOut;
 export const PhTextAlignLeft = TextT;
 export const PhSpeakerHigh = SpeakerHigh;
-export const PhStop = Stop;
+export const PhStop = StopIcon;
+export { StopIcon as Stop };
 
 // Ph-prefixed alias for GearSix
 export const PhGearSix = GearSix;

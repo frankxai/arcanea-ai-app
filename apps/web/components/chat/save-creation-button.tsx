@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 
 interface SaveCreationButtonProps {
   content: string
@@ -111,7 +112,10 @@ export function SaveCreationButton({ content, onSaved }: SaveCreationButtonProps
     return (
       <span className="inline-flex items-center gap-1.5 text-[11px] text-[#00bcd4]/70">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 6L9 17l-5-5"/></svg>
-        Saved to your creations
+        Saved!{' '}
+        <Link href="/creations" className="underline text-teal-400 hover:text-teal-300 transition-colors">
+          View in library
+        </Link>
       </span>
     )
   }

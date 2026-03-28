@@ -11,7 +11,7 @@ interface ChatMarkdownProps {
 
 export default function ChatMarkdown({ content, isStreaming }: ChatMarkdownProps) {
   return (
-    <div className={isStreaming ? 'streaming-text' : undefined}>
+    <div className={`max-w-full overflow-hidden ${isStreaming ? 'streaming-text' : ''}`}>
     <ReactMarkdown
       components={{
         // Code blocks with syntax highlighting + copy

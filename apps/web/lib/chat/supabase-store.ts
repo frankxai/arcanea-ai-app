@@ -1,6 +1,7 @@
 'use client';
 
 import { createClient } from '@/lib/supabase/client';
+import type { ChatSession } from '@/lib/chat/local-store';
 
 export interface CloudSession {
   id: string;
@@ -73,6 +74,37 @@ export async function loadCloudSessions(): Promise<CloudSession[]> {
   } catch {
     return [];
   }
+}
+
+export async function renameCloudSession(sessionId: string, title: string): Promise<boolean> {
+  try {
+    const supabase = createClient();
+    const { error } = await supabase
+      .from('chat_sessions')
+      .update({
+        title,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', sessionId);
+
+    return !error;
+  } catch {
+    return false;
+  }
+}
+
+export function cloudSessionToLocalSession(session: CloudSession): ChatSession {
+  return {
+    id: session.id,
+    title: session.title || 'New Chat',
+    messages: Array.isArray(session.messages)
+      ? (session.messages as unknown as ChatSession['messages'])
+      : [],
+    luminorId: session.luminor_id,
+    modelId: session.model_id,
+    createdAt: session.created_at,
+    updatedAt: session.updated_at,
+  };
 }
 
 /**
