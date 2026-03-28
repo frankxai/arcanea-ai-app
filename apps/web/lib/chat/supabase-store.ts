@@ -87,3 +87,34 @@ export async function deleteCloudSession(sessionId: string): Promise<boolean> {
     return false;
   }
 }
+
+/**
+ * Rename a chat session in Supabase.
+ */
+export async function renameCloudSession(sessionId: string, title: string): Promise<boolean> {
+  try {
+    const supabase = createClient();
+    const { error } = await supabase
+      .from('chat_sessions')
+      .update({ title, updated_at: new Date().toISOString() })
+      .eq('id', sessionId);
+    return !error;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Convert a Supabase cloud session to the local ChatSession shape.
+ */
+export function cloudSessionToLocalSession(cloud: CloudSession) {
+  return {
+    id: cloud.id,
+    title: cloud.title || 'Untitled',
+    messages: cloud.messages as unknown[],
+    luminorId: cloud.luminor_id,
+    modelId: cloud.model_id,
+    createdAt: cloud.created_at,
+    updatedAt: cloud.updated_at,
+  };
+}
