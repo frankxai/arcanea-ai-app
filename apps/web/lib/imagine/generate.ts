@@ -90,7 +90,14 @@ export const OPENROUTER_IMAGE_MODELS = [
     provider: 'OpenAI',
   },
   {
-    id: 'google/gemini-2.5-flash-image',
+    id: 'openai/gpt-5-image-mini',
+    name: 'GPT-5 Image Mini',
+    label: 'GPT-5 Image Mini',
+    tier: 'fast' as const,
+    provider: 'OpenAI',
+  },
+  {
+    id: 'google/gemini-2.5-flash-image-preview',
     name: 'Gemini 2.5 Flash Image',
     label: 'Nano Banana',
     tier: 'fast' as const,
