@@ -7,7 +7,29 @@ import { useRef, useState, useEffect } from "react";
 import navLogo from "@/assets/brand/arcanea-mark.jpg";
 import type { V3BelowFoldProps } from "./v3-below-fold";
 import { HeroChangingWords } from "./hero-changing-words";
-import { HeroChatBox } from "./hero-chat-box";
+
+// ---------------------------------------------------------------------------
+// Lazy-load the chat box — it pulls in useRouter + phosphor icons which are
+// not needed until the user interacts. Deferring them trims ~15-20 kB from
+// the initial JS that blocks LCP.
+// ---------------------------------------------------------------------------
+
+const HeroChatBox = dynamic(
+  () => import("./hero-chat-box").then((mod) => mod.HeroChatBox),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="w-full max-w-2xl mx-auto">
+        <div className="h-14 rounded-2xl bg-white/[0.025] animate-pulse" />
+        <div className="flex justify-center gap-2 mt-5">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="h-10 w-28 rounded-full bg-white/[0.02] animate-pulse" />
+          ))}
+        </div>
+      </div>
+    ),
+  },
+);
 
 // ---------------------------------------------------------------------------
 // Lazy-load all below-fold sections as a single dynamic chunk.
