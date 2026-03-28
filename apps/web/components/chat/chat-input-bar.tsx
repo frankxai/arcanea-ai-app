@@ -27,6 +27,12 @@ interface ChatInputBarProps {
   onStop?: () => void;
   enabledTools: Set<string>;
   onToggleTool: (tool: string) => void;
+  /** External value to inject into the input (e.g. from starter chips). Cleared after consumption. */
+  externalMessage?: string;
+  /** Called after the component has consumed externalMessage */
+  onExternalMessageConsumed?: () => void;
+  /** Ref forwarded to the internal textarea for external focus control */
+  textareaRef?: React.RefObject<HTMLTextAreaElement | null>;
 }
 
 // ---------------------------------------------------------------------------
@@ -35,6 +41,13 @@ interface ChatInputBarProps {
 
 const MAX_CHARS = 4000;
 const CHAR_WARN_THRESHOLD = 3000;
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+
+function formatFileSize(bytes: number): string {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
 
 // ---------------------------------------------------------------------------
 // Compact model picker (inline in toggles row)
@@ -86,7 +99,7 @@ function CompactModelPicker({
         <div
           role="listbox"
           aria-label="Select model"
-          className="absolute bottom-full left-0 mb-2 w-64 max-h-[320px] overflow-y-auto rounded-xl border border-white/[0.08] bg-[#0d0d14]/95 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] z-50 animate-scale-in"
+          className="absolute bottom-full left-0 sm:left-0 mb-2 w-64 max-w-[min(320px,calc(100vw-2rem))] max-h-[60vh] sm:max-h-[320px] overflow-y-auto rounded-xl border border-white/[0.08] bg-[#0d0d14]/95 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] z-50 animate-scale-in"
           style={{ scrollbarWidth: 'thin' }}
         >
           {CHAT_MODELS.map((model) => (
@@ -135,23 +148,30 @@ function ToolToggle({
   onClick: () => void;
 }) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={disabled}
-      title={tooltip ?? label}
-      aria-label={label}
-      aria-pressed={active}
-      className={`relative flex items-center justify-center w-8 h-8 min-h-[44px] min-w-[44px] rounded-md text-xs transition-all focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none ${
-        disabled
-          ? 'opacity-30 cursor-not-allowed'
-          : active
-            ? 'bg-[#00bcd4]/10 border border-[#00bcd4]/25 text-[#00bcd4] shadow-[0_0_8px_rgba(0,188,212,0.1)]'
-            : 'bg-white/[0.03] border border-white/[0.06] text-white/40 hover:text-white/60 hover:bg-white/[0.06]'
-      }`}
-    >
-      <Icon className="w-4 h-4" />
-    </button>
+    <div className="relative group/toggle">
+      <button
+        type="button"
+        onClick={onClick}
+        disabled={disabled}
+        title={tooltip ?? label}
+        aria-label={label}
+        aria-pressed={active}
+        className={`relative flex items-center justify-center w-8 h-8 min-h-[44px] min-w-[44px] rounded-md text-xs transition-all focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none ${
+          disabled
+            ? 'opacity-30 cursor-not-allowed'
+            : active
+              ? 'bg-[#00bcd4]/10 border border-[#00bcd4]/25 text-[#00bcd4] shadow-[0_0_8px_rgba(0,188,212,0.1)]'
+              : 'bg-white/[0.03] border border-white/[0.06] text-white/40 hover:text-white/60 hover:bg-white/[0.06]'
+        }`}
+      >
+        <Icon className="w-4 h-4" />
+      </button>
+      {tooltip && (
+        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 rounded-md bg-[#1a1a2e] text-white/70 text-[10px] whitespace-nowrap opacity-0 group-hover/toggle:opacity-100 transition-opacity pointer-events-none border border-white/[0.06] shadow-lg z-30">
+          {tooltip}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -167,21 +187,39 @@ export function ChatInputBar({
   onStop,
   enabledTools,
   onToggleTool,
+  externalMessage,
+  onExternalMessageConsumed,
+  textareaRef: externalTextareaRef,
 }: ChatInputBarProps) {
   const [message, setMessage] = useState('');
   const [attachments, setAttachments] = useState<File[]>([]);
   const [isDragOver, setIsDragOver] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  const [validationToast, setValidationToast] = useState<string | null>(null);
 
   // @mention state
   const [mentionVisible, setMentionVisible] = useState(false);
   const [mentionQuery, setMentionQuery] = useState('');
   const [mentionStart, setMentionStart] = useState(-1);
 
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const internalTextareaRef = useRef<HTMLTextAreaElement>(null);
+  const textareaRef = externalTextareaRef || internalTextareaRef;
+
+  // Consume external message when it changes (e.g. from starter chip click)
+  useEffect(() => {
+    if (externalMessage !== undefined && externalMessage !== '') {
+      setMessage(externalMessage);
+      onExternalMessageConsumed?.();
+      // Focus the textarea so the user can edit or press Enter
+      requestAnimationFrame(() => {
+        textareaRef.current?.focus();
+      });
+    }
+  }, [externalMessage, onExternalMessageConsumed, textareaRef]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
+  const voiceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // -------------------------------------------------------------------------
   // Auto-resize textarea
@@ -297,18 +335,37 @@ export function ChatInputBar({
   // Paste images from clipboard
   // -------------------------------------------------------------------------
 
+  const showValidationToast = useCallback((msg: string) => {
+    setValidationToast(msg);
+    setTimeout(() => setValidationToast(null), 4000);
+  }, []);
+
+  const filterFilesBySize = useCallback((files: File[]): File[] => {
+    const valid: File[] = [];
+    for (const file of files) {
+      if (file.size > MAX_FILE_SIZE) {
+        showValidationToast(`"${file.name}" exceeds 10MB limit`);
+      } else {
+        valid.push(file);
+      }
+    }
+    return valid;
+  }, [showValidationToast]);
+
   const handlePaste = useCallback((e: React.ClipboardEvent<HTMLTextAreaElement>) => {
     const items = e.clipboardData?.items;
     if (!items) return;
     const imageItems = Array.from(items).filter((item) => item.type.startsWith('image/'));
     if (imageItems.length > 0) {
       e.preventDefault();
-      const files = imageItems
-        .map((item) => item.getAsFile())
-        .filter((f): f is File => f !== null);
-      setAttachments((prev) => [...prev, ...files]);
+      const files = filterFilesBySize(
+        imageItems.map((item) => item.getAsFile()).filter((f): f is File => f !== null),
+      );
+      if (files.length > 0) {
+        setAttachments((prev) => [...prev, ...files]);
+      }
     }
-  }, []);
+  }, [filterFilesBySize]);
 
   // -------------------------------------------------------------------------
   // Drag and drop
@@ -326,23 +383,25 @@ export function ChatInputBar({
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     setIsDragOver(false);
-    const files = Array.from(e.dataTransfer.files).filter((f) => f.type.startsWith('image/'));
+    const files = filterFilesBySize(
+      Array.from(e.dataTransfer.files).filter((f) => f.type.startsWith('image/')),
+    );
     if (files.length > 0) {
       setAttachments((prev) => [...prev, ...files]);
     }
-  }, []);
+  }, [filterFilesBySize]);
 
   // -------------------------------------------------------------------------
   // File input
   // -------------------------------------------------------------------------
 
   const handleFileSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
+    const files = filterFilesBySize(Array.from(e.target.files || []));
     if (files.length > 0) {
       setAttachments((prev) => [...prev, ...files]);
     }
     if (e.target) e.target.value = '';
-  }, []);
+  }, [filterFilesBySize]);
 
   const removeAttachment = useCallback((index: number) => {
     setAttachments((prev) => prev.filter((_, i) => i !== index));
@@ -351,6 +410,17 @@ export function ChatInputBar({
   // -------------------------------------------------------------------------
   // Voice recording
   // -------------------------------------------------------------------------
+
+  const stopRecording = useCallback(() => {
+    if (voiceTimeoutRef.current) {
+      clearTimeout(voiceTimeoutRef.current);
+      voiceTimeoutRef.current = null;
+    }
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+      mediaRecorderRef.current.stop();
+    }
+    setIsRecording(false);
+  }, []);
 
   const startRecording = useCallback(async () => {
     if (typeof navigator === 'undefined' || !navigator.mediaDevices?.getUserMedia) return;
@@ -387,17 +457,16 @@ export function ChatInputBar({
       mediaRecorder.start();
       mediaRecorderRef.current = mediaRecorder;
       setIsRecording(true);
+
+      // Auto-stop after 60 seconds
+      voiceTimeoutRef.current = setTimeout(() => {
+        stopRecording();
+      }, 60_000);
     } catch (e) {
       console.warn('Microphone access denied:', e);
+      showValidationToast('Microphone access denied. Check browser permissions.');
     }
-  }, []);
-
-  const stopRecording = useCallback(() => {
-    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
-      mediaRecorderRef.current.stop();
-    }
-    setIsRecording(false);
-  }, []);
+  }, [stopRecording, showValidationToast]);
 
   // -------------------------------------------------------------------------
   // Derived state
@@ -418,6 +487,16 @@ export function ChatInputBar({
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
     >
+      {/* Validation toast */}
+      {validationToast && (
+        <div className="absolute -top-12 left-4 right-4 flex items-center justify-center z-20">
+          <div className="px-3 py-1.5 rounded-lg bg-red-500/90 text-white text-xs font-medium shadow-lg backdrop-blur-sm flex items-center gap-2">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" strokeWidth="1.5"/><path d="M8 5v3.5M8 10.5v.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+            {validationToast}
+          </div>
+        </div>
+      )}
+
       {/* Drag overlay */}
       {isDragOver && (
         <div className="absolute inset-0 z-20 bg-[#00bcd4]/10 border-2 border-dashed border-[#00bcd4]/40 rounded-2xl flex items-center justify-center backdrop-blur-sm pointer-events-none">
@@ -448,7 +527,7 @@ export function ChatInputBar({
             {attachments.map((file, i) => (
               <div
                 key={`${file.name}-${i}`}
-                className="relative group w-16 h-16 rounded-lg overflow-hidden border border-white/[0.08] bg-white/[0.04] backdrop-blur-sm"
+                className="relative group/attach w-16 h-16 rounded-lg overflow-hidden border border-white/[0.08] bg-white/[0.04] backdrop-blur-sm"
               >
                 {file.type.startsWith('image/') ? (
                   /* eslint-disable-next-line @next/next/no-img-element */
@@ -465,10 +544,15 @@ export function ChatInputBar({
                     </span>
                   </div>
                 )}
+                {/* Filename + size overlay on hover */}
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover/attach:opacity-100 transition-opacity rounded-lg flex flex-col items-center justify-center p-1">
+                  <span className="text-[9px] text-white/80 truncate max-w-full">{file.name}</span>
+                  <span className="text-[8px] text-white/40">{formatFileSize(file.size)}</span>
+                </div>
                 <button
                   type="button"
                   onClick={() => removeAttachment(i)}
-                  className="absolute top-0.5 right-0.5 w-4 h-4 rounded-full bg-black/60 flex items-center justify-center text-white/60 hover:text-white opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute top-0.5 right-0.5 w-4 h-4 rounded-full bg-black/60 flex items-center justify-center text-white/60 hover:text-white opacity-0 group-hover/attach:opacity-100 transition-opacity z-10"
                   aria-label={`Remove ${file.name}`}
                 >
                   <PhX className="w-3 h-3" />
@@ -600,6 +684,7 @@ export function ChatInputBar({
             <ToolToggle
               icon={PhImage}
               label="Image generation"
+              tooltip="Generate images from text descriptions"
               active={enabledTools.has('image')}
               onClick={() => onToggleTool('image')}
             />
@@ -608,6 +693,7 @@ export function ChatInputBar({
             <ToolToggle
               icon={PhBrain}
               label="Extended thinking"
+              tooltip="Extended reasoning for complex problems"
               active={enabledTools.has('think')}
               onClick={() => onToggleTool('think')}
             />
@@ -616,8 +702,8 @@ export function ChatInputBar({
             <ToolToggle
               icon={PhMagnifyingGlass}
               label="Web search"
+              tooltip="Search the web for current information"
               active={enabledTools.has('search')}
-              tooltip="Web search"
               onClick={() => onToggleTool('search')}
             />
           </div>

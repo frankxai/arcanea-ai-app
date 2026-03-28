@@ -35,6 +35,7 @@ export interface MessageBubbleProps {
     role: 'user' | 'assistant';
     parts?: MessagePart[];
     content?: string;
+    createdAt?: Date | string | number;
   };
   isStreaming?: boolean;
   isLast?: boolean;
@@ -56,6 +57,20 @@ function getMessageText(msg: { parts?: Array<{ type: string; text?: string }>; c
     return msg.parts.filter((p) => p.type === 'text').map((p) => p.text ?? '').join('');
   }
   return msg.content ?? '';
+}
+
+function formatRelativeTime(date?: Date | string | number): string {
+  if (!date) return '';
+  const now = Date.now();
+  const then = new Date(date).getTime();
+  if (Number.isNaN(then)) return '';
+  const diff = now - then;
+
+  if (diff < 60_000) return 'just now';
+  if (diff < 3_600_000) return `${Math.floor(diff / 60_000)}m ago`;
+  if (diff < 86_400_000) return `${Math.floor(diff / 3_600_000)}h ago`;
+  if (diff < 604_800_000) return `${Math.floor(diff / 86_400_000)}d ago`;
+  return new Date(date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
 }
 
 function highlightSearch(text: string, query: string): React.ReactNode {
@@ -153,8 +168,30 @@ export function MessageBubble({
 }: MessageBubbleProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [showCopyToast, setShowCopyToast] = useState(false);
   const [liked, setLiked] = useState<'up' | 'down' | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+
+  // Persist reaction to backend (fire-and-forget)
+  const handleReaction = useCallback(
+    (type: 'up' | 'down') => {
+      const newReaction = liked === type ? null : type;
+      setLiked(newReaction);
+
+      if (newReaction) {
+        fetch('/api/feedback/reactions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messageId: message.id, reaction: newReaction }),
+        }).catch(() => {});
+      } else {
+        fetch(`/api/feedback/reactions?messageId=${encodeURIComponent(message.id)}`, {
+          method: 'DELETE',
+        }).catch(() => {});
+      }
+    },
+    [liked, message.id],
+  );
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const text = getMessageText(message);
 
@@ -191,16 +228,20 @@ export function MessageBubble({
   });
 
   // Copy handler
-  const handleCopy = useCallback(() => {
-    if (onCopy) {
-      onCopy(text);
-    } else {
-      navigator.clipboard.writeText(text).catch(() => {});
+  const handleCopy = useCallback(async () => {
+    const content = getMessageText(message);
+    if (!content) return;
+    try {
+      await navigator.clipboard.writeText(content);
+    } catch {
+      // fallback — onCopy may handle differently
     }
     setCopied(true);
-    const timer = setTimeout(() => setCopied(false), 2000);
-    return () => clearTimeout(timer);
-  }, [text, onCopy]);
+    setShowCopyToast(true);
+    setTimeout(() => setCopied(false), 2000);
+    setTimeout(() => setShowCopyToast(false), 2000);
+    onCopy?.(content);
+  }, [message, onCopy]);
 
   // TTS handler
   const handleSpeak = useCallback(async () => {
@@ -287,6 +328,10 @@ export function MessageBubble({
                   <PencilSimple className="w-3.5 h-3.5" />
                 </button>
               )}
+              {/* Timestamp — visible on hover */}
+              <span className="block text-right text-[10px] text-white/20 opacity-0 group-hover/user:opacity-100 transition-opacity select-none mt-1">
+                {formatRelativeTime(message.createdAt)}
+              </span>
             </div>
           )}
         </div>
@@ -371,9 +416,25 @@ export function MessageBubble({
             />
           )}
 
+          {/* Streaming progress indicator */}
+          {isStreaming && isLast && text && (
+            <div className="flex items-center gap-2 mt-2">
+              <div className="h-0.5 flex-1 bg-white/[0.04] rounded-full overflow-hidden">
+                <div className="h-full bg-[#00bcd4]/30 rounded-full animate-pulse" style={{ width: '60%' }} />
+              </div>
+              <span className="text-[10px] text-white/20 select-none">generating...</span>
+            </div>
+          )}
+
           {/* Actions bar (hover) */}
           {!isStreaming && text && (
-            <div className="flex items-center gap-2 mt-2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity">
+            <div className="relative flex items-center gap-2 mt-2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity">
+              {/* Copy toast */}
+              {showCopyToast && (
+                <div className="absolute -top-7 left-0 px-2.5 py-1 rounded-full bg-emerald-500/90 text-white text-[10px] font-medium shadow-lg z-10 animate-in fade-in slide-in-from-bottom-2 duration-200 pointer-events-none">
+                  Copied to clipboard
+                </div>
+              )}
               <button
                 type="button"
                 onClick={handleCopy}
@@ -428,13 +489,13 @@ export function MessageBubble({
 
               <button
                 type="button"
-                onClick={() => setLiked(liked === 'up' ? null : 'up')}
+                onClick={() => handleReaction('up')}
                 className={`min-w-[36px] min-h-[36px] rounded-md flex items-center justify-center transition-colors focus-visible:ring-2 focus-visible:ring-[#00bcd4]/30 focus-visible:outline-none ${
                   liked === 'up'
                     ? 'text-emerald-400 bg-emerald-400/10'
                     : 'text-white/30 hover:text-[#00bcd4] hover:bg-[#00bcd4]/5'
                 }`}
-                aria-label="Like response"
+                aria-label="Good response"
                 aria-pressed={liked === 'up'}
               >
                 <ThumbsUp className="w-3.5 h-3.5" weight={liked === 'up' ? 'fill' : 'regular'} />
@@ -442,18 +503,25 @@ export function MessageBubble({
 
               <button
                 type="button"
-                onClick={() => setLiked(liked === 'down' ? null : 'down')}
+                onClick={() => handleReaction('down')}
                 className={`min-w-[36px] min-h-[36px] rounded-md flex items-center justify-center transition-colors focus-visible:ring-2 focus-visible:ring-[#00bcd4]/30 focus-visible:outline-none ${
                   liked === 'down'
                     ? 'text-red-400 bg-red-400/10'
                     : 'text-white/30 hover:text-[#00bcd4] hover:bg-[#00bcd4]/5'
                 }`}
-                aria-label="Dislike response"
+                aria-label="Bad response"
                 aria-pressed={liked === 'down'}
               >
                 <ThumbsDown className="w-3.5 h-3.5" weight={liked === 'down' ? 'fill' : 'regular'} />
               </button>
             </div>
+          )}
+
+          {/* Timestamp — visible on hover */}
+          {!isStreaming && (
+            <span className="text-[10px] text-white/20 opacity-0 group-hover:opacity-100 transition-opacity select-none mt-1 block">
+              {formatRelativeTime(message.createdAt)}
+            </span>
           )}
         </div>
       </div>

@@ -31,6 +31,7 @@ export interface ChatSession {
   messages: ChatMessage[];
   luminorId?: string | null;
   modelId?: string | null;
+  pinned?: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -41,6 +42,7 @@ export interface ChatSessionSummary {
   messageCount: number;
   lastMessage: string | null;
   luminorId: string | null;
+  pinned?: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -68,6 +70,16 @@ function writeSessions(sessions: ChatSession[]): void {
   } catch {
     // localStorage full or blocked — silently fail
   }
+}
+
+function normalizeSession(session: ChatSession): ChatSession {
+  return {
+    ...session,
+    title: session.title || 'New Chat',
+    messages: Array.isArray(session.messages) ? session.messages : [],
+    luminorId: session.luminorId ?? null,
+    modelId: session.modelId ?? null,
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -104,7 +116,22 @@ export function saveChatSession(
   const now = new Date().toISOString();
 
   const existingIdx = sessions.findIndex((s) => s.id === id);
-  const title = opts?.title || generateSessionTitle(messages);
+
+  // Preserve a manually-set title: if the session already exists and its
+  // current title differs from what generateSessionTitle would produce,
+  // the user renamed it — keep the custom title unless an explicit override
+  // is provided via opts.title.
+  let title: string;
+  if (opts?.title) {
+    title = opts.title;
+  } else if (existingIdx >= 0) {
+    const existing = sessions[existingIdx];
+    const autoTitle = generateSessionTitle(messages);
+    const existingIsCustom = existing.title !== 'New Chat' && existing.title !== autoTitle;
+    title = existingIsCustom ? existing.title : autoTitle;
+  } else {
+    title = generateSessionTitle(messages);
+  }
 
   const session: ChatSession = {
     id,
@@ -156,10 +183,106 @@ export function listChatSessions(): ChatSessionSummary[] {
       messageCount: s.messages.length,
       lastMessage: lastContent ? (lastContent.length > 80 ? lastContent.slice(0, 80) + '...' : lastContent) : null,
       luminorId: s.luminorId ?? null,
+      pinned: s.pinned || false,
       createdAt: s.createdAt,
       updatedAt: s.updatedAt,
     };
   });
+}
+
+/**
+ * Replace the entire session store with a normalized list.
+ * Intended for canonical sync flows that merge local and cloud sessions first.
+ */
+export function replaceChatSessions(sessions: ChatSession[]): void {
+  const deduped = new Map<string, ChatSession>();
+
+  for (const session of sessions) {
+    deduped.set(session.id, normalizeSession(session));
+  }
+
+  const normalized = Array.from(deduped.values())
+    .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
+    .slice(0, MAX_SESSIONS);
+
+  writeSessions(normalized);
+}
+
+/**
+ * Merge incoming sessions into the local store, preferring the most recently
+ * updated copy of each session.
+ */
+export function mergeChatSessions(incoming: ChatSession[]): void {
+  const merged = new Map<string, ChatSession>();
+
+  for (const session of readSessions()) {
+    merged.set(session.id, normalizeSession(session));
+  }
+
+  for (const session of incoming) {
+    const normalized = normalizeSession(session);
+    const existing = merged.get(normalized.id);
+
+    if (!existing) {
+      merged.set(normalized.id, normalized);
+      continue;
+    }
+
+    if (new Date(normalized.updatedAt).getTime() >= new Date(existing.updatedAt).getTime()) {
+      merged.set(normalized.id, normalized);
+    }
+  }
+
+  replaceChatSessions(Array.from(merged.values()));
+}
+
+/**
+ * Search sessions by query — matches title or message content.
+ * Returns summaries sorted by updatedAt descending.
+ */
+export function searchSessions(query: string): ChatSessionSummary[] {
+  if (!query.trim()) return listChatSessions();
+
+  const lowerQuery = query.toLowerCase();
+  const sessions = readSessions();
+
+  const matched = sessions.filter((s) => {
+    // Match title
+    if (s.title.toLowerCase().includes(lowerQuery)) return true;
+    // Match message content
+    return s.messages.some((m) => m.content.toLowerCase().includes(lowerQuery));
+  });
+
+  // Already sorted by updatedAt from readSessions/saveChatSession, but ensure it
+  matched.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+
+  return matched.map((s) => {
+    const lastAssistant = [...s.messages].reverse().find((m) => m.role === 'assistant');
+    const lastContent = lastAssistant?.content || null;
+
+    return {
+      id: s.id,
+      title: s.title,
+      messageCount: s.messages.length,
+      lastMessage: lastContent ? (lastContent.length > 80 ? lastContent.slice(0, 80) + '...' : lastContent) : null,
+      luminorId: s.luminorId ?? null,
+      pinned: s.pinned || false,
+      createdAt: s.createdAt,
+      updatedAt: s.updatedAt,
+    };
+  });
+}
+
+/**
+ * Rename a chat session by ID.
+ */
+export function renameChatSession(id: string, title: string): void {
+  const sessions = readSessions();
+  const session = sessions.find((s) => s.id === id);
+  if (!session) return;
+  session.title = title;
+  session.updatedAt = new Date().toISOString();
+  writeSessions(sessions);
 }
 
 /**
@@ -168,6 +291,17 @@ export function listChatSessions(): ChatSessionSummary[] {
 export function deleteChatSession(id: string): void {
   const sessions = readSessions();
   writeSessions(sessions.filter((s) => s.id !== id));
+}
+
+/**
+ * Toggle the pinned state of a chat session by ID.
+ */
+export function togglePinSession(id: string): void {
+  const sessions = readSessions();
+  const session = sessions.find((s) => s.id === id);
+  if (!session) return;
+  session.pinned = !session.pinned;
+  writeSessions(sessions);
 }
 
 /**
