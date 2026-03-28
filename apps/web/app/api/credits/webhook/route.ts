@@ -6,41 +6,48 @@
  *   - customer.subscription.created / updated / deleted  (Forge subscription)
  *
  * Stripe sends raw body + signature header. We MUST read the raw body
- * before any JSON parsing — Next.js App Router gives us a Request with
+ * before any JSON parsing -- Next.js App Router gives us a Request with
  * an unconsumed body, which is exactly what Stripe needs.
  *
  * Environment variables required:
- *   STRIPE_SECRET_KEY          — Stripe API key (sk_live_... or sk_test_...)
- *   STRIPE_WEBHOOK_SECRET      — Webhook signing secret (whsec_...)
+ *   STRIPE_SECRET_KEY          -- Stripe API key (sk_live_... or sk_test_...)
+ *   STRIPE_WEBHOOK_SECRET      -- Webhook signing secret (whsec_...)
+ *
+ * Note: credit_balances, credit_transactions, and forge_subscriptions tables
+ * are not yet in the generated Supabase types. The admin client is cast to
+ * `any` for `.from()` calls until types are regenerated.
  */
 
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
+import { createAdminClient } from "@/lib/supabase/server";
 import { CREDIT_PACKS } from "@/lib/types/credits";
 
-// ─── Stripe type stubs (avoids importing stripe types as dev dependency) ─────
+// ─── Local type shapes for Stripe objects we handle ─────────────────────────
 // These match the Stripe SDK shapes we actually use. Replace with
 // `import type Stripe from 'stripe'` when stripe types are installed.
-declare namespace Stripe {
-  interface Event {
-    type: string;
-    data: { object: Record<string, unknown> };
-  }
-  interface Checkout {
-    Session: {
-      metadata?: Record<string, string> | null;
-      customer?: string | null;
-      subscription?: string | null;
-    };
-  }
-  interface Subscription {
-    id: string;
-    customer: string;
-    status: string;
-    current_period_start: number;
-    current_period_end: number;
-    cancel_at_period_end: boolean;
-  }
+
+interface StripeCheckoutSession {
+  mode?: string;
+  metadata?: Record<string, string> | null;
+  customer?: string | null;
+  subscription?: string | null;
+  payment_intent?: string | { id: string } | null;
+}
+
+interface StripeSubscription {
+  id: string;
+  customer: string;
+  status: string;
+  metadata?: Record<string, string> | null;
+  current_period_start: number;
+  current_period_end: number;
+  cancel_at_period_end: boolean;
+}
+
+interface StripeEvent {
+  type: string;
+  data: { object: Record<string, unknown> };
 }
 
 // ─── Stripe event type subset we care about ─────────────────────────────────
@@ -67,8 +74,8 @@ export async function POST(req: Request) {
   if (!stripeKey || !webhookSecret) {
     console.error("Stripe webhook: missing STRIPE_SECRET_KEY or STRIPE_WEBHOOK_SECRET");
     return NextResponse.json(
-      { error: "Webhook not configured" },
-      { status: 500 },
+      { error: "Stripe not configured" },
+      { status: 503 },
     );
   }
 
@@ -84,10 +91,14 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Missing stripe-signature header" }, { status: 400 });
   }
 
-  let event: Stripe.Event;
+  let event: StripeEvent;
 
   try {
-    event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
+    event = stripe.webhooks.constructEvent(
+      body,
+      signature,
+      webhookSecret,
+    ) as unknown as StripeEvent;
   } catch (err) {
     const message = err instanceof Error ? err.message : "Signature verification failed";
     console.error("Stripe webhook signature error:", message);
@@ -105,7 +116,7 @@ export async function POST(req: Request) {
       // Credit pack purchase completed
       // ────────────────────────────────────────────────────────────────────
       case "checkout.session.completed": {
-        const session = event.data.object as Stripe.Checkout.Session;
+        const session = event.data.object as unknown as StripeCheckoutSession;
 
         // Only process one-time payments (not subscription checkouts)
         if (session.mode !== "payment") break;
@@ -137,37 +148,40 @@ export async function POST(req: Request) {
           `Stripe webhook: crediting ${credits} credits to user ${userId} (pack: ${packId}, pi: ${paymentIntentId})`,
         );
 
-        // TODO: Supabase — credit the user's balance and log transaction
-        //
-        // const supabase = createAdminClient();
-        //
-        // // 1. Upsert balance row (create if first purchase)
-        // const { data: existing } = await supabase
-        //   .from('credit_balances')
-        //   .select('purchased')
-        //   .eq('user_id', userId)
-        //   .single();
-        //
-        // const newPurchased = (existing?.purchased ?? 0) + credits;
-        //
-        // await supabase
-        //   .from('credit_balances')
-        //   .upsert({
-        //     user_id: userId,
-        //     purchased: newPurchased,
-        //     updated_at: new Date().toISOString(),
-        //   }, { onConflict: 'user_id' });
-        //
-        // // 2. Log transaction
-        // await supabase.from('credit_transactions').insert({
-        //   user_id: userId,
-        //   type: 'purchase',
-        //   amount: credits,
-        //   balance_after: newPurchased,
-        //   stripe_payment_id: paymentIntentId,
-        //   pack_id: packId,
-        //   description: `Purchased ${credits} credits (${packId})`,
-        // });
+        // Credit the user's balance and log transaction
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const adminCheckout = createAdminClient() as any;
+
+        // 1. Upsert balance row (create if first purchase)
+        const { data: existing } = await adminCheckout
+          .from("credit_balances")
+          .select("purchased")
+          .eq("user_id", userId)
+          .single();
+
+        const newPurchased = (existing?.purchased ?? 0) + credits;
+
+        await adminCheckout
+          .from("credit_balances")
+          .upsert(
+            {
+              user_id: userId,
+              purchased: newPurchased,
+              updated_at: new Date().toISOString(),
+            },
+            { onConflict: "user_id" },
+          );
+
+        // 2. Log transaction
+        await adminCheckout.from("credit_transactions").insert({
+          user_id: userId,
+          type: "purchase",
+          amount: credits,
+          balance_after: newPurchased,
+          stripe_payment_id: paymentIntentId,
+          pack_id: packId,
+          description: `Purchased ${credits} credits (${packId})`,
+        });
 
         break;
       }
@@ -176,7 +190,7 @@ export async function POST(req: Request) {
       // Forge subscription created
       // ────────────────────────────────────────────────────────────────────
       case "customer.subscription.created": {
-        const subscription = event.data.object as Stripe.Subscription;
+        const subscription = event.data.object as unknown as StripeSubscription;
         const userId = subscription.metadata?.user_id;
 
         if (!userId) {
@@ -186,28 +200,34 @@ export async function POST(req: Request) {
 
         console.log(`Stripe webhook: Forge subscription created for user ${userId} (sub: ${subscription.id})`);
 
-        // TODO: Supabase — create forge_subscriptions row + set is_forge on balance
-        //
-        // const supabase = createAdminClient();
-        //
-        // await supabase.from('forge_subscriptions').upsert({
-        //   user_id: userId,
-        //   status: subscription.status,
-        //   stripe_subscription_id: subscription.id,
-        //   current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
-        //   current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
-        //   cancel_at_period_end: subscription.cancel_at_period_end,
-        //   updated_at: new Date().toISOString(),
-        // }, { onConflict: 'user_id' });
-        //
-        // await supabase
-        //   .from('credit_balances')
-        //   .upsert({
-        //     user_id: userId,
-        //     is_forge: true,
-        //     forge_expires_at: new Date(subscription.current_period_end * 1000).toISOString(),
-        //     updated_at: new Date().toISOString(),
-        //   }, { onConflict: 'user_id' });
+        // Create forge_subscriptions row + set is_forge on balance
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const adminSubCreate = createAdminClient() as any;
+
+        await adminSubCreate.from("forge_subscriptions").upsert(
+          {
+            user_id: userId,
+            status: subscription.status,
+            stripe_subscription_id: subscription.id,
+            current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
+            current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+            cancel_at_period_end: subscription.cancel_at_period_end,
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: "user_id" },
+        );
+
+        await adminSubCreate
+          .from("credit_balances")
+          .upsert(
+            {
+              user_id: userId,
+              is_forge: true,
+              forge_expires_at: new Date(subscription.current_period_end * 1000).toISOString(),
+              updated_at: new Date().toISOString(),
+            },
+            { onConflict: "user_id" },
+          );
 
         break;
       }
@@ -216,7 +236,7 @@ export async function POST(req: Request) {
       // Forge subscription updated (renewal, payment method change, etc.)
       // ────────────────────────────────────────────────────────────────────
       case "customer.subscription.updated": {
-        const subscription = event.data.object as Stripe.Subscription;
+        const subscription = event.data.object as unknown as StripeSubscription;
         const userId = subscription.metadata?.user_id;
 
         if (!userId) {
@@ -230,31 +250,31 @@ export async function POST(req: Request) {
           `Stripe webhook: Forge subscription updated for user ${userId} — status: ${subscription.status}, active: ${isActive}`,
         );
 
-        // TODO: Supabase — update forge_subscriptions row + balance flag
-        //
-        // const supabase = createAdminClient();
-        //
-        // await supabase
-        //   .from('forge_subscriptions')
-        //   .update({
-        //     status: subscription.status,
-        //     current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
-        //     current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
-        //     cancel_at_period_end: subscription.cancel_at_period_end,
-        //     updated_at: new Date().toISOString(),
-        //   })
-        //   .eq('user_id', userId);
-        //
-        // await supabase
-        //   .from('credit_balances')
-        //   .update({
-        //     is_forge: isActive,
-        //     forge_expires_at: isActive
-        //       ? new Date(subscription.current_period_end * 1000).toISOString()
-        //       : null,
-        //     updated_at: new Date().toISOString(),
-        //   })
-        //   .eq('user_id', userId);
+        // Update forge_subscriptions row + balance flag
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const adminSubUpdate = createAdminClient() as any;
+
+        await adminSubUpdate
+          .from("forge_subscriptions")
+          .update({
+            status: subscription.status,
+            current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
+            current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+            cancel_at_period_end: subscription.cancel_at_period_end,
+            updated_at: new Date().toISOString(),
+          })
+          .eq("user_id", userId);
+
+        await adminSubUpdate
+          .from("credit_balances")
+          .update({
+            is_forge: isActive,
+            forge_expires_at: isActive
+              ? new Date(subscription.current_period_end * 1000).toISOString()
+              : null,
+            updated_at: new Date().toISOString(),
+          })
+          .eq("user_id", userId);
 
         break;
       }
@@ -263,7 +283,7 @@ export async function POST(req: Request) {
       // Forge subscription deleted (cancelled, expired, or payment failed)
       // ────────────────────────────────────────────────────────────────────
       case "customer.subscription.deleted": {
-        const subscription = event.data.object as Stripe.Subscription;
+        const subscription = event.data.object as unknown as StripeSubscription;
         const userId = subscription.metadata?.user_id;
 
         if (!userId) {
@@ -273,27 +293,27 @@ export async function POST(req: Request) {
 
         console.log(`Stripe webhook: Forge subscription deleted for user ${userId} (sub: ${subscription.id})`);
 
-        // TODO: Supabase — mark subscription canceled + remove forge flag
-        //
-        // const supabase = createAdminClient();
-        //
-        // await supabase
-        //   .from('forge_subscriptions')
-        //   .update({
-        //     status: 'canceled',
-        //     cancel_at_period_end: true,
-        //     updated_at: new Date().toISOString(),
-        //   })
-        //   .eq('user_id', userId);
-        //
-        // await supabase
-        //   .from('credit_balances')
-        //   .update({
-        //     is_forge: false,
-        //     forge_expires_at: null,
-        //     updated_at: new Date().toISOString(),
-        //   })
-        //   .eq('user_id', userId);
+        // Mark subscription canceled + remove forge flag
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const adminSubDelete = createAdminClient() as any;
+
+        await adminSubDelete
+          .from("forge_subscriptions")
+          .update({
+            status: "canceled",
+            cancel_at_period_end: true,
+            updated_at: new Date().toISOString(),
+          })
+          .eq("user_id", userId);
+
+        await adminSubDelete
+          .from("credit_balances")
+          .update({
+            is_forge: false,
+            forge_expires_at: null,
+            updated_at: new Date().toISOString(),
+          })
+          .eq("user_id", userId);
 
         break;
       }
@@ -303,7 +323,7 @@ export async function POST(req: Request) {
   } catch (error) {
     const message = error instanceof Error ? error.message : "Webhook handler error";
     console.error("Stripe webhook processing error:", message);
-    // Return 200 to prevent Stripe from retrying — log the error for investigation
+    // Return 200 to prevent Stripe from retrying -- log the error for investigation
     return NextResponse.json({ received: true, error: message });
   }
 }

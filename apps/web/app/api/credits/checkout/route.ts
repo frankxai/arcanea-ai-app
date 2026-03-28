@@ -104,19 +104,8 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // TODO: After Stripe webhook confirms payment, grant credits:
-    //   await supabase.from('credit_balances')
-    //     .update({ purchased: purchased + pack.credits })
-    //     .eq('user_id', user.id);
-    //   await supabase.from('credit_transactions').insert({
-    //     user_id: user.id,
-    //     type: 'purchase',
-    //     amount: pack.credits,
-    //     balance_after: purchased + pack.credits,
-    //     stripe_payment_id: session.payment_intent,
-    //     pack_id: packId,
-    //     description: `Purchased ${pack.credits} credits (${packId})`,
-    //   });
+    // Credit granting happens in the Stripe webhook handler
+    // (checkout.session.completed) after payment is confirmed.
 
     return NextResponse.json({
       url: session.url,
