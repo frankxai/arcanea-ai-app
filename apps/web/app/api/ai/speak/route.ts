@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
   try {
     const { text, voice = 'nova', model = 'tts-1' } = await req.json();
 
-    if (!text || typeof text !== 'string') {
+    if (!text || typeof text !== 'string' || text.trim().length === 0) {
       return NextResponse.json(
         { error: 'Text is required' },
         { status: 400 },
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Limit text length (TTS has a 4096 char limit)
-    const trimmedText = text.slice(0, 4096);
+    const trimmedText = text.trim().slice(0, 4096);
 
     if (!VOICES.includes(voice as Voice)) {
       return NextResponse.json(
@@ -61,9 +61,10 @@ export async function POST(req: NextRequest) {
 
     if (!response.ok) {
       const err = await response.text();
+      console.error('OpenAI TTS error:', response.status, err);
       return NextResponse.json(
-        { error: 'TTS generation failed', detail: err },
-        { status: response.status },
+        { error: 'TTS generation failed' },
+        { status: 502 },
       );
     }
 

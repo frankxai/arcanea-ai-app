@@ -78,9 +78,8 @@ export async function POST(req: NextRequest) {
 
         controller.enqueue(encoder.encode('data: [DONE]\n\n'));
       } catch (error: unknown) {
-        const message =
-          error instanceof Error ? error.message : 'Research failed';
-        send({ step: 'error', detail: message });
+        console.error('Research stream error:', error);
+        send({ step: 'error', detail: 'Research failed. Please try again.' });
       } finally {
         controller.close();
       }
@@ -91,7 +90,6 @@ export async function POST(req: NextRequest) {
     headers: {
       'Content-Type': 'text/event-stream',
       'Cache-Control': 'no-cache, no-transform',
-      Connection: 'keep-alive',
     },
   });
 }

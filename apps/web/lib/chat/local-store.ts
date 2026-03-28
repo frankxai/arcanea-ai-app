@@ -139,6 +139,7 @@ export function saveChatSession(
     messages,
     luminorId: opts?.luminorId ?? null,
     modelId: opts?.modelId ?? null,
+    pinned: existingIdx >= 0 ? sessions[existingIdx].pinned : false,
     createdAt: existingIdx >= 0 ? sessions[existingIdx].createdAt : now,
     updatedAt: now,
   };
@@ -152,8 +153,10 @@ export function saveChatSession(
   // Sort by updatedAt descending so most recent is first
   sessions.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
 
-  // FIFO eviction — drop oldest beyond MAX_SESSIONS
-  const trimmed = sessions.slice(0, MAX_SESSIONS);
+  // FIFO eviction — drop oldest beyond MAX_SESSIONS, but protect pinned sessions
+  const pinned = sessions.filter((s) => s.pinned);
+  const unpinned = sessions.filter((s) => !s.pinned);
+  const trimmed = [...pinned, ...unpinned].slice(0, MAX_SESSIONS);
 
   writeSessions(trimmed);
 }

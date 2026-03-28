@@ -193,6 +193,19 @@ export function MessageBubble({
     [liked, message.id],
   );
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Clean up audio on unmount to prevent setState on unmounted component
+  useEffect(() => {
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.onended = null;
+        audioRef.current.onerror = null;
+        audioRef.current = null;
+      }
+    };
+  }, []);
+
   const text = getMessageText(message);
 
   // Tool result parts
@@ -367,10 +380,15 @@ export function MessageBubble({
             </span>
             <span className="text-[10px] text-white/20">&middot;</span>
             <span className="text-[10px] text-white/20 font-mono">
-              {new Date().toLocaleTimeString([], {
-                hour: '2-digit',
-                minute: '2-digit',
-              })}
+              {message.createdAt
+                ? new Date(message.createdAt).toLocaleTimeString([], {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  })
+                : new Date().toLocaleTimeString([], {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  })}
             </span>
           </div>
 

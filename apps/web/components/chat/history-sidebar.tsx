@@ -99,6 +99,14 @@ function SessionItem({ session, isActive, onSelect, onDelete, onRename, onToggle
   const [editing, setEditing] = useState(false);
   const [editValue, setEditValue] = useState(session.title);
   const inputRef = useRef<HTMLInputElement>(null);
+  const deleteTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Clean up delete confirmation timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (deleteTimerRef.current) clearTimeout(deleteTimerRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     if (editing && inputRef.current) {
@@ -129,12 +137,14 @@ function SessionItem({ session, isActive, onSelect, onDelete, onRename, onToggle
     (e: React.MouseEvent) => {
       e.stopPropagation();
       if (confirmDelete) {
+        if (deleteTimerRef.current) clearTimeout(deleteTimerRef.current);
         onDelete();
         setConfirmDelete(false);
       } else {
         setConfirmDelete(true);
         // Auto-reset confirm after 5s
-        setTimeout(() => setConfirmDelete(false), 5000);
+        if (deleteTimerRef.current) clearTimeout(deleteTimerRef.current);
+        deleteTimerRef.current = setTimeout(() => setConfirmDelete(false), 5000);
       }
     },
     [confirmDelete, onDelete]
@@ -497,7 +507,7 @@ function ExpandedPanel({
                     Clear search
                   </button>
                 </div>
-              ) : sessions.length === 0 ? (
+              ) : (
                 <div className="text-center py-8">
                   <ChatCircleDots className="w-6 h-6 text-white/10 mx-auto mb-2" />
                   <p className="text-[11px] text-white/20">
@@ -506,16 +516,6 @@ function ExpandedPanel({
                   <p className="text-[10px] text-white/10 mt-1">
                     Start a chat to begin
                   </p>
-                </div>
-              ) : (
-                /* Loading skeleton */
-                <div className="space-y-3 animate-pulse">
-                  {[1, 2, 3].map((i) => (
-                    <div key={i} className="px-2">
-                      <div className="h-3 bg-white/[0.06] rounded w-3/4 mb-1.5" />
-                      <div className="h-2 bg-white/[0.04] rounded w-1/3" />
-                    </div>
-                  ))}
                 </div>
               )}
             </div>

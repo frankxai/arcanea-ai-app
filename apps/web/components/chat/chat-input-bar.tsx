@@ -221,6 +221,19 @@ export function ChatInputBar({
   const audioChunksRef = useRef<Blob[]>([]);
   const voiceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Cleanup voice recording on unmount to prevent timeout firing on unmounted component
+  useEffect(() => {
+    return () => {
+      if (voiceTimeoutRef.current) {
+        clearTimeout(voiceTimeoutRef.current);
+        voiceTimeoutRef.current = null;
+      }
+      if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+        mediaRecorderRef.current.stop();
+      }
+    };
+  }, []);
+
   // -------------------------------------------------------------------------
   // Auto-resize textarea
   // -------------------------------------------------------------------------
@@ -342,12 +355,18 @@ export function ChatInputBar({
 
   const filterFilesBySize = useCallback((files: File[]): File[] => {
     const valid: File[] = [];
+    const oversized: string[] = [];
     for (const file of files) {
       if (file.size > MAX_FILE_SIZE) {
-        showValidationToast(`"${file.name}" exceeds 10MB limit`);
+        oversized.push(file.name);
       } else {
         valid.push(file);
       }
+    }
+    if (oversized.length === 1) {
+      showValidationToast(`"${oversized[0]}" exceeds 10MB limit`);
+    } else if (oversized.length > 1) {
+      showValidationToast(`${oversized.length} files exceed 10MB limit`);
     }
     return valid;
   }, [showValidationToast]);
@@ -423,7 +442,10 @@ export function ChatInputBar({
   }, []);
 
   const startRecording = useCallback(async () => {
-    if (typeof navigator === 'undefined' || !navigator.mediaDevices?.getUserMedia) return;
+    if (typeof navigator === 'undefined' || !navigator.mediaDevices?.getUserMedia) {
+      showValidationToast('Voice input is not supported in this browser.');
+      return;
+    }
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const mimeType = MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : 'audio/mp4';

@@ -262,6 +262,13 @@ async function searchDuckDuckGo(
     }
   }
 
+  // If DDG returned no useful results, throw so the auto-fallback
+  // reports "No search provider available" instead of silently
+  // returning an empty response.
+  if (results.length === 0) {
+    throw new Error('DuckDuckGo: no results');
+  }
+
   return {
     query,
     provider: 'duckduckgo',

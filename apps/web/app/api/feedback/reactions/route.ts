@@ -21,7 +21,12 @@ export async function POST(req: NextRequest) {
       reaction?: string;
     };
 
-    if (!messageId || !['up', 'down'].includes(reaction ?? '')) {
+    if (
+      !messageId ||
+      typeof messageId !== 'string' ||
+      messageId.length > 200 ||
+      !['up', 'down'].includes(reaction ?? '')
+    ) {
       return NextResponse.json({ error: 'Invalid input' }, { status: 400 });
     }
 
@@ -47,7 +52,9 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: 'Failed to save reaction' }, { status: 500 });
       }
     } else {
-      // Anonymous: simple insert (no uniqueness enforcement)
+      // Anonymous: simple insert — no uniqueness enforcement because
+      // SQL NULL != NULL so the (user_id, message_id) unique constraint
+      // cannot deduplicate rows where user_id is NULL.
       const { error } = await supabase.from('message_reactions').insert({
         message_id: messageId,
         session_id: sessionId || null,
@@ -77,7 +84,7 @@ export async function DELETE(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const messageId = searchParams.get('messageId');
 
-    if (!messageId) {
+    if (!messageId || typeof messageId !== 'string' || messageId.length > 200) {
       return NextResponse.json({ error: 'messageId required' }, { status: 400 });
     }
 
