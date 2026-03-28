@@ -52,7 +52,7 @@ export type GateName =
   | 'voice'
   | 'sight'
   | 'crown'
-  | 'shift'
+  | 'starweave'
   | 'unity'
   | 'source';
 
@@ -117,7 +117,7 @@ export type GodbeastName =
   | 'sol'
   | 'vaelith'
   | 'kyuro'
-  | 'amaterasu';
+  | 'source-godbeast';
 
 export interface Godbeast {
   name: GodbeastName;

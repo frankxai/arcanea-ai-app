@@ -90,7 +90,7 @@ export const GATES: Gate[] = [
   { name: 'crown', number: 7, frequency: 741, guardian: 'aiyami', godbeast: 'sol', domain: 'Enlightenment, cosmic connection', element: 'void' },
   { name: 'starweave', number: 8, frequency: 852, guardian: 'elara', godbeast: 'vaelith', domain: 'Perspective, transformation', element: 'void' },
   { name: 'unity', number: 9, frequency: 963, guardian: 'ino', godbeast: 'kyuro', domain: 'Partnership, collaboration', element: 'void' },
-  { name: 'source', number: 10, frequency: 1111, guardian: 'shinkami', godbeast: 'amaterasu', domain: 'Meta-consciousness, origin', element: 'void' },
+  { name: 'source', number: 10, frequency: 1111, guardian: 'shinkami', godbeast: 'source-godbeast', domain: 'Meta-consciousness, origin', element: 'void' },
 ];
 
 // ============================================
