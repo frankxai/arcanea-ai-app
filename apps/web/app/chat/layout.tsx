@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 export default function ChatLayout({ children }: { children: React.ReactNode }) {
   // Full-screen chat overlay — covers navbar/footer for immersive experience
   return (
-    <div className="fixed inset-0 z-[60] bg-[#09090b]">
+    <div className="fixed inset-0 z-[100] bg-[#09090b] isolate">
       {children}
     </div>
   );
