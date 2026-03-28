@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import ChatMarkdown from './chat-markdown';
 import { ToolResultBlock } from './tool-result-block';
+import { SaveCreationButton } from './save-creation-button';
 import {
   Copy,
   Check,
@@ -13,51 +14,85 @@ import {
   PhSpeakerHigh,
   PhStop,
 } from '@/lib/phosphor-icons';
+import { getMessageText, parseFollowUps } from '@/hooks/use-conversation';
+import {
+  generateFallbackSuggestions,
+  type ContentType,
+} from '@/lib/chat/suggestion-engine';
 
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
 
-interface MessagePart {
-  type: string;
-  text?: string;
-  toolCallId?: string;
-  toolName?: string;
-  result?: unknown;
-  output?: unknown;
-  state?: string;
-  errorText?: string;
+interface SwarmLuminor {
+  id: string;
+  team: string;
+  hint: string;
+}
+
+interface AutoSaveState {
+  lastDetection: { type: string } | null;
+  notification: string | null;
 }
 
 export interface MessageBubbleProps {
   message: {
     id: string;
-    role: 'user' | 'assistant';
-    parts?: MessagePart[];
+    role: 'user' | 'assistant' | 'system';
+    parts?: Array<Record<string, unknown> & { type: string; text?: string }>;
     content?: string;
     createdAt?: Date | string | number;
   };
   isStreaming?: boolean;
   isLast?: boolean;
+  /** Whether the AI is still loading (waiting for completion) */
+  isLoading?: boolean;
   luminorName?: string;
   luminorAvatar?: string;
   luminorColor?: string;
+  /** Luminor title (e.g. "Guardian of Fire") */
+  luminorTitle?: string;
+  /** Provider label (e.g. "gemini-2.5-flash") */
+  providerLabel?: string;
   onRegenerate?: () => void;
   onEdit?: (id: string, newContent: string) => void;
   onCopy?: (text: string) => void;
   searchQuery?: string;
+  /** Follow-up suggestion handler — fills input instead of auto-sending */
+  onSendMessage?: (opts: { text: string }) => void;
+  /** Set the input field value (for follow-up chips) */
+  onSetInput?: (value: string) => void;
+  /** Focus the input textarea */
+  onFocusInput?: () => void;
+  /** Auto-save state for creation detection */
+  autoSave?: AutoSaveState;
+  /** Swarm luminor suggestions */
+  swarmLuminors?: SwarmLuminor[];
+  /** Handler for selecting a luminor */
+  onSelectLuminor?: (id: string) => void;
+  /** Branch navigation */
+  branches?: unknown[];
+  onLoadBranch?: (branchIndex: number) => void;
+  /** Luminor ID for fallback suggestion generation */
+  luminorId?: string;
 }
+
+// ---------------------------------------------------------------------------
+// Constants
+// ---------------------------------------------------------------------------
+
+const ACCENT = '#00bcd4';
+
+const TEAM_COLORS: Record<string, string> = {
+  development: '#00bcd4',
+  creative: '#e040fb',
+  writing: '#ffab40',
+  research: '#69f0ae',
+};
 
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
-
-function getMessageText(msg: { parts?: Array<{ type: string; text?: string }>; content?: string }): string {
-  if (msg.parts?.length) {
-    return msg.parts.filter((p) => p.type === 'text').map((p) => p.text ?? '').join('');
-  }
-  return msg.content ?? '';
-}
 
 function formatRelativeTime(date?: Date | string | number): string {
   if (!date) return '';
@@ -158,13 +193,25 @@ export function MessageBubble({
   message,
   isStreaming = false,
   isLast = false,
+  isLoading = false,
   luminorName,
   luminorAvatar,
   luminorColor,
+  luminorTitle,
+  providerLabel,
   onRegenerate,
   onEdit,
   onCopy,
   searchQuery,
+  onSendMessage,
+  onSetInput,
+  onFocusInput,
+  autoSave,
+  swarmLuminors,
+  onSelectLuminor,
+  branches,
+  onLoadBranch,
+  luminorId,
 }: MessageBubbleProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -218,22 +265,25 @@ export function MessageBubble({
     }
 
     const toolName = isDynamicToolPart
-      ? part.toolName || 'tool'
+      ? (typeof part.toolName === 'string' ? part.toolName : 'tool')
       : part.type.replace(/^tool-/, '');
 
-    if (part.state === 'output-available') {
+    const state = typeof part.state === 'string' ? part.state : '';
+    const toolCallId = typeof part.toolCallId === 'string' ? part.toolCallId : `${toolName}-${index}`;
+
+    if (state === 'output-available') {
       return [{
-        key: part.toolCallId ?? `${toolName}-${index}`,
+        key: toolCallId,
         toolName,
         result: part.output,
       }];
     }
 
-    if (part.state === 'output-error') {
+    if (state === 'output-error') {
       return [{
-        key: part.toolCallId ?? `${toolName}-${index}`,
+        key: toolCallId,
         toolName,
-        result: { error: part.errorText || 'Tool execution failed' },
+        result: { error: (typeof part.errorText === 'string' ? part.errorText : '') || 'Tool execution failed' },
       }];
     }
 
@@ -308,7 +358,11 @@ export function MessageBubble({
     [message.id, onEdit],
   );
 
-  const accentColor = luminorColor || '#00bcd4';
+  const accentColor = luminorColor || ACCENT;
+  const isComplete = !isLoading;
+  const { clean, followUps } = isComplete
+    ? parseFollowUps(text)
+    : { clean: text, followUps: [] as string[] };
 
   // -------------------------------------------------------------------------
   // User message
@@ -326,7 +380,7 @@ export function MessageBubble({
             />
           ) : (
             <div className="relative">
-              <div className="inline-block px-4 py-3 rounded-2xl rounded-br-sm bg-white/[0.04] backdrop-blur-sm border border-white/[0.06] hover:border-white/[0.08] text-white text-[15px] leading-relaxed whitespace-pre-wrap shadow-sm transition-colors">
+              <div className="inline-block px-4 py-3 rounded-2xl rounded-br-md bg-gradient-to-br from-[#1a1a1f] to-[#141418] text-white/90 text-[15px] leading-relaxed whitespace-pre-wrap shadow-sm">
                 {searchQuery && text.toLowerCase().includes(searchQuery.toLowerCase())
                   ? highlightSearch(text, searchQuery)
                   : text}
@@ -335,7 +389,7 @@ export function MessageBubble({
                 <button
                   type="button"
                   onClick={() => setIsEditing(true)}
-                  className="absolute -top-1 -right-1 min-h-[36px] min-w-[36px] rounded-md flex items-center justify-center text-white/0 group-hover/user:text-white/30 hover:!text-[#00bcd4] hover:bg-[#00bcd4]/5 transition-all focus-visible:ring-2 focus-visible:ring-[#00bcd4]/30 focus-visible:outline-none"
+                  className="absolute -left-8 top-1/2 -translate-y-1/2 w-6 h-6 rounded-md flex items-center justify-center text-white/0 group-hover/user:text-white/30 hover:!text-white/60 hover:bg-white/[0.04] transition-all focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
                   aria-label="Edit message"
                 >
                   <PencilSimple className="w-3.5 h-3.5" />
@@ -361,7 +415,7 @@ export function MessageBubble({
       <div className="mr-auto max-w-[85%] flex gap-3">
         {/* Avatar */}
         <div
-          className="w-6 h-6 rounded-full flex items-center justify-center text-white text-[10px] font-bold shrink-0 mt-0.5 shadow-[0_0_8px_rgba(0,188,212,0.15)]"
+          className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0 mt-0.5"
           style={{
             background: `linear-gradient(135deg, ${accentColor}, ${accentColor}80)`,
           }}
@@ -369,7 +423,7 @@ export function MessageBubble({
           {luminorAvatar || 'A'}
         </div>
 
-        <div className="min-w-0 flex-1 border-l-2 border-[#00bcd4]/20 pl-3">
+        <div className="min-w-0 flex-1">
           {/* Header row */}
           <div className="flex items-center gap-2 mb-1">
             <span
@@ -378,26 +432,24 @@ export function MessageBubble({
             >
               {luminorName || 'Arcanea'}
             </span>
-            <span className="text-[10px] text-white/20">&middot;</span>
-            <span className="text-[10px] text-white/20 font-mono">
-              {message.createdAt
-                ? new Date(message.createdAt).toLocaleTimeString([], {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  })
-                : new Date().toLocaleTimeString([], {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  })}
-            </span>
+            {luminorTitle && (
+              <span className="text-[10px] text-white/25">
+                {luminorTitle}
+              </span>
+            )}
+            {providerLabel && (
+              <span className="text-[10px] text-white/20 font-mono">
+                {providerLabel}
+              </span>
+            )}
           </div>
 
           {/* Tool results */}
           {toolParts.length > 0 && (
-            <div className="space-y-2 mb-2">
+            <div className="space-y-2 mb-3">
               {toolParts.map((part, i) => (
                 <ToolResultBlock
-                  key={part.key ?? i}
+                  key={String(part.key ?? i)}
                   toolName={part.toolName}
                   result={part.result}
                   isLoading={false}
@@ -407,18 +459,20 @@ export function MessageBubble({
           )}
 
           {/* Message content */}
-          {text && (
-            <div className="prose prose-invert prose-sm max-w-none text-[15px] leading-[1.75] text-white/85 prose-headings:text-white/90 prose-headings:font-semibold prose-code:text-[#00bcd4]/80 prose-a:text-[#00bcd4] prose-strong:text-white/90">
-              {searchQuery && text.toLowerCase().includes(searchQuery.toLowerCase()) ? (
-                <div>{highlightSearch(text, searchQuery)}</div>
-              ) : (
-                <ChatMarkdown content={text} isStreaming={isStreaming && isLast} />
+          {clean && (
+            <div className="prose prose-invert prose-sm max-w-none text-[15px] leading-[1.75] text-white/85 prose-headings:text-white/90 prose-headings:font-semibold prose-code:text-[#00bcd4]/80 prose-a:text-[#00bcd4] prose-strong:text-white/90 overflow-hidden">
+              <ChatMarkdown content={clean} isStreaming={isStreaming && isLast} />
+              {isStreaming && isLast && (
+                <span
+                  className="inline-block w-2 h-2 rounded-full bg-[#00bcd4] animate-pulse ml-1 align-middle shadow-[0_0_8px_rgba(0,188,212,0.6)]"
+                  aria-hidden="true"
+                />
               )}
             </div>
           )}
 
-          {/* Streaming indicator */}
-          {isStreaming && isLast && !text && (
+          {/* Streaming indicator — no text yet */}
+          {isStreaming && isLast && !clean && (
             <div className="flex items-center gap-1.5 py-2" role="status" aria-label="Generating response">
               <span className="w-1.5 h-1.5 rounded-full bg-[#00bcd4] animate-pulse shadow-[0_0_6px_rgba(0,188,212,0.4)]" style={{ animationDelay: '0ms' }} />
               <span className="w-1.5 h-1.5 rounded-full bg-[#00bcd4] animate-pulse shadow-[0_0_6px_rgba(0,188,212,0.4)]" style={{ animationDelay: '150ms' }} />
@@ -426,26 +480,134 @@ export function MessageBubble({
             </div>
           )}
 
-          {/* Streaming cursor on text */}
-          {isStreaming && isLast && text && (
-            <span
-              className="inline-block w-2 h-2 rounded-full bg-[#00bcd4] animate-pulse ml-1 align-middle shadow-[0_0_8px_rgba(0,188,212,0.6)]"
-              aria-hidden="true"
-            />
-          )}
-
-          {/* Streaming progress indicator */}
-          {isStreaming && isLast && text && (
+          {/* Indeterminate streaming progress */}
+          {isStreaming && isLast && clean && (
             <div className="flex items-center gap-2 mt-2">
               <div className="h-0.5 flex-1 bg-white/[0.04] rounded-full overflow-hidden">
-                <div className="h-full bg-[#00bcd4]/30 rounded-full animate-pulse" style={{ width: '60%' }} />
+                <div
+                  className="h-full w-1/3 bg-[#00bcd4]/20 rounded-full"
+                  style={{
+                    animation: 'slide 1.5s ease-in-out infinite',
+                  }}
+                />
               </div>
               <span className="text-[10px] text-white/20 select-none">generating...</span>
             </div>
           )}
 
+          {/* Creation detected — inline card with save action */}
+          {isComplete &&
+            isLast &&
+            autoSave?.lastDetection && (
+              <div className="flex items-center justify-between gap-3 mt-3 px-3 py-2.5 rounded-lg bg-[#00bcd4]/5 border border-[#00bcd4]/15 text-sm animate-in fade-in slide-in-from-bottom-1 duration-300">
+                <div className="flex items-center gap-2 min-w-0">
+                  <span
+                    className="w-2 h-2 rounded-full bg-[#00bcd4] shrink-0 shadow-[0_0_6px_rgba(0,188,212,0.4)]"
+                    aria-hidden="true"
+                  />
+                  <span className="text-[#00bcd4]/80 text-xs truncate">
+                    {autoSave.notification || `${autoSave.lastDetection.type} detected`}
+                  </span>
+                </div>
+                <SaveCreationButton content={clean} />
+              </div>
+            )}
+
+          {/* Follow-up suggestions — fill input on click, never auto-send */}
+          {isComplete && (onSetInput || onSendMessage) && (() => {
+            const allSuggestions = followUps.length > 0
+              ? followUps
+              : generateFallbackSuggestions(
+                  clean,
+                  luminorId,
+                  autoSave?.lastDetection?.type as ContentType | undefined,
+                );
+            // Cap at 3 chips max
+            const suggestions = allSuggestions.slice(0, 3);
+            if (suggestions.length === 0) return null;
+            return (
+              <nav aria-label="Suggested follow-ups" className="flex flex-wrap gap-2 mt-3">
+                {suggestions.map((suggestion, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => {
+                      if (onSetInput) {
+                        onSetInput(suggestion);
+                        onFocusInput?.();
+                      } else {
+                        onSendMessage?.({ text: suggestion });
+                      }
+                    }}
+                    className="group/fu flex items-center gap-2 px-3 py-2 rounded-xl bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] hover:border-[#00bcd4]/20 hover:bg-white/[0.05] text-white/50 hover:text-white/80 text-[12px] transition-all duration-200 animate-luminor-fade-in focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
+                    style={{ animationDelay: `${i * 80}ms` }}
+                  >
+                    <span className="text-[#00bcd4]/50 group-hover/fu:text-[#00bcd4] text-[11px] shrink-0">{'\u2192'}</span>
+                    <span>{suggestion}</span>
+                  </button>
+                ))}
+              </nav>
+            );
+          })()}
+
+          {/* Swarm luminor suggestions */}
+          {isComplete &&
+            isLast &&
+            swarmLuminors &&
+            swarmLuminors.length > 0 &&
+            onSelectLuminor && (
+              <div className="flex flex-wrap gap-1.5 mt-2">
+                {swarmLuminors.slice(0, 3).map((l, idx) => {
+                  const teamColor = TEAM_COLORS[l.team] || ACCENT;
+                  const displayName = l.id.charAt(0).toUpperCase() + l.id.slice(1);
+                  return (
+                    <button
+                      key={l.id}
+                      type="button"
+                      onClick={() => onSelectLuminor(l.id)}
+                      aria-label={`Ask ${displayName}`}
+                      className="group/lum flex items-center gap-2 pl-1 pr-3 py-1 rounded-full text-[11px] border border-white/[0.06] text-white/35 hover:text-white/65 hover:bg-white/[0.03] transition-all duration-200 animate-luminor-fade-in"
+                      style={{
+                        borderLeftWidth: '2px',
+                        borderLeftColor: `${teamColor}50`,
+                        animationDelay: `${idx * 50}ms`,
+                      }}
+                      onMouseEnter={(e) => {
+                        const el = e.currentTarget as HTMLElement;
+                        el.style.boxShadow = `0 0 12px ${teamColor}15, inset 0 0 12px ${teamColor}08`;
+                        el.style.borderLeftColor = teamColor;
+                      }}
+                      onMouseLeave={(e) => {
+                        const el = e.currentTarget as HTMLElement;
+                        el.style.boxShadow = 'none';
+                        el.style.borderLeftColor = `${teamColor}50`;
+                      }}
+                      title={l.hint}
+                    >
+                      <span
+                        className="w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold shrink-0"
+                        style={{
+                          background: `${teamColor}20`,
+                          color: teamColor,
+                        }}
+                      >
+                        {displayName.charAt(0)}
+                      </span>
+                      <span>
+                        <span className="font-medium" style={{ color: `${teamColor}cc` }}>
+                          {displayName}
+                        </span>
+                        <span className="text-white/20 mx-1">{'\u00B7'}</span>
+                        <span className="text-white/30">{l.hint}</span>
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+
           {/* Actions bar (hover) */}
-          {!isStreaming && text && (
+          {isComplete && clean && (
             <div className="relative flex items-center gap-2 mt-2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity">
               {/* Copy toast */}
               {showCopyToast && (
@@ -472,7 +634,7 @@ export function MessageBubble({
                 )}
               </button>
 
-              {text.length >= 10 && (
+              {clean.length >= 10 && (
                 <button
                   type="button"
                   onClick={handleSpeak}
@@ -505,6 +667,8 @@ export function MessageBubble({
                 </button>
               )}
 
+              <SaveCreationButton content={clean} />
+
               <button
                 type="button"
                 onClick={() => handleReaction('up')}
@@ -532,11 +696,29 @@ export function MessageBubble({
               >
                 <ThumbsDown className="w-3.5 h-3.5" weight={liked === 'down' ? 'fill' : 'regular'} />
               </button>
+
+              {/* Branch navigation */}
+              {branches && branches.length > 0 && onLoadBranch && (
+                <div className="flex items-center gap-1 ml-2">
+                  <span className="text-[10px] text-white/25">|</span>
+                  {branches.map((_: unknown, i: number) => (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => onLoadBranch(i)}
+                      className="px-1.5 py-0.5 rounded text-[10px] text-white/30 hover:text-white/60 hover:bg-white/[0.04] transition-colors font-mono"
+                      title={`Load branch ${i + 1}`}
+                    >
+                      v{i + 1}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 
           {/* Timestamp — visible on hover */}
-          {!isStreaming && (
+          {isComplete && (
             <span className="text-[10px] text-white/20 opacity-0 group-hover:opacity-100 transition-opacity select-none mt-1 block">
               {formatRelativeTime(message.createdAt)}
             </span>

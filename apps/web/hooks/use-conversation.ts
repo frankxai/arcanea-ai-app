@@ -329,17 +329,21 @@ export function useConversation(): ConversationState {
   } = useChat({
     transport,
     onError: (err) => {
-      // Parse the actual error message — may come as plain text from our API
+      // The AI SDK wraps HTTP errors. The server returns plain text for 4xx/5xx.
+      // err.message often contains the response body for non-200 responses.
       let msg = err.message || '';
-      // If the error is a generic fetch error, try to extract the server message
-      if (msg.includes('fetch') || msg.includes('Failed') || !msg) {
-        msg = 'Connection failed. Check Settings → Providers.';
+
+      // Strip "Error:" prefix if present
+      msg = msg.replace(/^Error:\s*/, '');
+
+      // Pass through the server message directly — getErrorMessage() in
+      // chat-area.tsx will map it to a user-friendly title + action.
+      // Only fall back to a generic message if we have nothing useful.
+      if (!msg || msg === 'undefined') {
+        msg = 'Something went wrong. Try again or check Settings.';
       }
-      // Surface API key errors clearly
-      if (msg.includes('API key') || msg.includes('503') || msg.includes('401')) {
-        msg = msg.replace(/^Error:\s*/, '');
-      }
-      setChatError(msg || 'Something went wrong. Check Settings → Providers.');
+
+      setChatError(msg);
     },
   });
 
@@ -370,6 +374,8 @@ export function useConversation(): ConversationState {
   }, [provider, clientApiKey, modelId, focusHint, activeLuminor, enabledTools]);
 
   const sendMessage = useCallback((opts: { text: string; files?: FileUIPart[] }) => {
+    // Clear any previous error when the user sends a new message
+    setChatError(null);
     sendSdkMessage(opts, { body: buildRequestBody() });
   }, [sendSdkMessage, buildRequestBody]);
 
@@ -404,14 +410,19 @@ export function useConversation(): ConversationState {
   // ---------------------------------------------------------------------------
   // Sync SDK error state into our local error state
   // ---------------------------------------------------------------------------
+  // NOTE: The onError callback in useChat already sets chatError with the
+  // parsed server response. This effect is a safety net for edge cases where
+  // the SDK sets `error` without calling onError (e.g. transport-level failures).
+  // We guard against overwriting a more detailed message from onError by only
+  // setting if chatError is currently null.
+  // ---------------------------------------------------------------------------
 
   useEffect(() => {
-    if (error) {
-      // This mirrors SDK transport failures into the local banner state.
+    if (error && !chatError) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setChatError(error.message || 'Connection failed');
     }
-  }, [error]);
+  }, [error, chatError]);
 
   // ---------------------------------------------------------------------------
   // Derived state

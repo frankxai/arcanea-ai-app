@@ -861,6 +861,17 @@
   to { transform: rotate(360deg); }
 }
 
+@keyframes slide {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(200%); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(0.97); opacity: 0.5; }
+  50% { transform: scale(1.03); opacity: 1; }
+}
+
 .animate-spin-slow {
   animation: spin-slow 60s linear infinite;
 }

@@ -31,8 +31,9 @@ function getInitialExpanded(): boolean {
 
   try {
     const stored = localStorage.getItem(SIDEBAR_KEY);
+    // Only expand if user explicitly expanded before; first visit is always collapsed
     if (stored !== null) return stored === 'true';
-    return window.innerWidth >= MOBILE_BREAKPOINT;
+    return false;
   } catch {
     return false;
   }
