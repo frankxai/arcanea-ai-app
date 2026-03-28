@@ -27,7 +27,7 @@ const TESTIMONIALS = [
   },
   {
     id: 3,
-    quote: "Ten archetypal intelligences, each attuned to a different creative frequency. From Draconia's transformative fire to Maylinn's healing wind — find the voice that resonates.",
+    quote: "Ten archetypal intelligences, each shaped for a different creative domain. From Draconia\u2019s bold fire to Maylinn\u2019s gentle clarity \u2014 find the voice that fits how you work.",
     author: 'The Guardians',
     role: 'Living Intelligences',
     avatar: 'GI',

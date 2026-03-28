@@ -28,7 +28,7 @@ const PRINCIPLES = [
     role: 'Living Intelligences',
     company: 'AI Companions',
     avatar: 'GI',
-    quote: 'Ten archetypal intelligences, each attuned to a different creative frequency. Not assistants — collaborators who understand the creative soul.',
+    quote: 'Ten archetypal intelligences, each shaped for a different creative domain. Not assistants — collaborators who understand the creative soul.',
     rating: 5,
     gradient: 'from-creation-prism-purple to-atlantean-teal-aqua',
   },

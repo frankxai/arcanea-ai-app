@@ -18,7 +18,7 @@ const FEATURES = [
   {
     title: "Read Arcanean Books",
     description:
-      "17 wisdom collections. 34+ sacred texts. A philosophy library for the creative life \u2014 not self-help, but equipment for mastery.",
+      "17 wisdom collections. 34+ original texts. A philosophy library for the creative life \u2014 not self-help, but equipment for mastery.",
     symbol: "\uD800\uDF00",
     href: "/library",
     gradient: "from-[#ffd700]/15 to-[#f59e0b]/15",
@@ -38,17 +38,17 @@ const FEATURES = [
   {
     title: "Listen to Arcanean Music",
     description:
-      "Solfeggio frequencies from 174 Hz to 1111 Hz. Guardian-guided sonic creation. Sound as a path to creative mastery.",
+      "Original music composed for each Gate of mastery. AI-guided sonic creation. Sound as a creative tool, not background noise.",
     symbol: "\u266C",
     href: "/studio",
     gradient: "from-[#06b6d4]/15 to-[#3b82f6]/15",
     borderGradient: "from-[#06b6d4] to-[#3b82f6]",
-    stats: "10 Frequencies",
+    stats: "10 Gates",
   },
   {
     title: "Enter the Academy",
     description:
-      "Seven Houses. Ten Gates of mastery. Each Gate unlocks a new creative frequency \u2014 from Foundation to Source.",
+      "Seven Houses. Ten Gates of mastery. Each Gate unlocks a new creative domain \u2014 from Foundation to Source.",
     symbol: "\u29BF",
     href: "/academy",
     gradient: "from-[#a855f7]/15 to-[#0d47a1]/15",
