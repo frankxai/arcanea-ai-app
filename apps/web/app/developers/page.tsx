@@ -427,7 +427,7 @@ const QUICK_STARTS = [
   },
   {
     title: "Contribute to Packages",
-    description: "Open source contributions welcome",
+    description: "Contribute to the public developer ecosystem",
     href: "https://github.com/frankxai/arcanea",
     icon: Icons.Github,
     color: "#ffd700",
@@ -556,8 +556,8 @@ export default function DevelopersPage() {
 
               <p className="text-text-secondary font-body text-lg leading-relaxed mb-8 max-w-2xl">
                 The Arcanea platform is built on a foundation of intelligent
-                packages. Build creative skills, contribute to our open source
-                packages, and extend the platform with the MCP server.
+                packages. Build creative skills, explore the public developer
+                ecosystem, and extend the platform with the MCP server.
               </p>
 
               <div className="flex flex-wrap gap-4">
@@ -995,14 +995,14 @@ export default function DevelopersPage() {
           </div>
         </section>
 
-        {/* Open Source */}
+        {/* Developer Ecosystem */}
         <section className="mb-16" aria-labelledby="oss-heading">
           <div className="mb-8">
             <h2
               id="oss-heading"
               className="text-xs font-mono tracking-[0.35em] uppercase text-earth mb-2"
             >
-              Open Source
+              Developer Ecosystem
             </h2>
             <h3 className="text-fluid-2xl font-display font-bold">
               Build with us

@@ -1,85 +1,106 @@
-<div align="center">
-
 # Arcanea
 
-**The imagination layer for AI.**
-Superintelligent prompts that make every model feel like magic.
+[![Build](https://github.com/frankxai/arcanea-ai-app/actions/workflows/quality-gate.yml/badge.svg)](https://github.com/frankxai/arcanea-ai-app/actions/workflows/quality-gate.yml)
+[![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org/)
+[![License](https://img.shields.io/badge/License-See%20LICENSE-green)](./LICENSE)
+[![npm](https://img.shields.io/npm/v/arcanea?label=arcanea&color=7fffd4)](https://www.npmjs.com/package/arcanea)
+[![npm](https://img.shields.io/npm/v/claude-arcanea?label=claude-arcanea&color=ffd700)](https://www.npmjs.com/package/claude-arcanea)
+[![Packages](https://img.shields.io/badge/@arcanea-21%20packages-purple)](https://www.npmjs.com/org/arcanea)
 
-[![arcanea.ai](https://img.shields.io/badge/arcanea.ai-live-00bcd4?style=flat-square)](https://arcanea.ai)
-[![npm](https://img.shields.io/badge/npm-@arcanea-00bcd4?style=flat-square&logo=npm)](https://www.npmjs.com/org/arcanea)
-[![License](https://img.shields.io/badge/License-Proprietary-gray?style=flat-square)](./LICENSE)
+**Arcanea is a creative intelligence platform for builders, authors, and world-makers.**
 
-</div>
+It brings product, ecosystem, and philosophy into one system: a creator workspace, a developer/tooling layer, and a deep library of canon, Academy structure, and long-form creative thought.
 
----
+## What Arcanea is
 
-## Use Arcanea now
+- A creator-facing platform at `arcanea.ai` for chat, research, creation, and world-building
+- A developer ecosystem of packages, MCP surfaces, prompts, overlays, and shared tooling
+- A long-form library of philosophy, canon, and Academy systems that gives Arcanea depth and continuity
+- A monorepo that acts as the control plane for the wider Arcanea ecosystem
 
-| How | What you get |
-|:----|:-------------|
-| **[arcanea.ai](https://arcanea.ai)** | Chat, create images, write stories, compose music — free |
-| **Claude Code** | `claude mcp add arcanea -- npx -y @arcanea/mcp-server` |
-| **Any AI** | Copy a prompt from [arcanea.ai/sanctum](https://arcanea.ai/sanctum) |
-| **Authors** | `npx author-os-cli init` — AI-native book production |
+## Core experience
 
-## What's inside
+- `Chat`: the canonical AI workspace for asking, thinking, researching, and creating
+- `Imagine`: visual generation with provider-backed image creation
+- `Library`: Arcanea's philosophy and canon surfaced as usable creative context
+- `Academy`: the progression and learning layer
+- `Community`: gallery, discovery, and living-lore participation
 
+## System model
+
+- `Platform`: the product surface people use every day on `arcanea.ai`
+- `Protocols and Tooling`: packages, MCP servers, prompts, overlays, and developer surfaces
+- `Philosophy and Canon`: the texts, mythology, and Academy structures that differentiate the system
+
+## Monorepo shape
+
+```text
+apps/web/         Canonical product surface for arcanea.ai
+apps/premium-web/ Premium and experimental web surface in progress
+packages/         Shared libraries, tooling, overlays, MCP, and runtime packages
+book/             Arcanea's long-form philosophy and creative texts
+docs/             Product, architecture, and strategy documentation
+.github/          CI, deployment, and release workflows
 ```
-apps/web/          The platform — Next.js 16, Supabase, Vercel
-packages/          42 shared libraries, VS Code extension, MCP server
-book/              200K+ words of original creative philosophy
-.arcanea/lore/     The canon — mythology that doubles as architecture
-prompts/           Arcanean Prompt Language spec + templates
+
+## Architecture
+
+```text
+User
+  -> apps/web
+     -> /api/ai/chat          Canonical chat transport
+     -> /api/imagine/generate Canonical image generation route
+     -> Supabase              Auth, persistence, profiles, creations
+     -> Model providers       OpenAI, Anthropic, Google, xAI, others
+     -> Library content       Arcanea philosophy, lore, Academy context
 ```
 
-## The philosophy
+## Stack
 
-Arcanea is a creative multiverse where mythology *is* methodology. Every character, location, and progression system in the world is also an architectural pattern you can use to build your own.
+- Next.js 16
+- React 19
+- TypeScript
+- Supabase
+- Vercel
+- Vercel AI SDK
+- Multi-provider model routing across OpenAI, Anthropic, Google, and xAI
 
-Think **Unreal Engine** (not a game — the engine for making games), **D&D** (not a story — the system for infinite stories). Arcanea's world is both real content people engage with *and* templates anyone can fork for their own universe.
-
-**The creator journey:** Imagine a world → Build AI agents that live in it → Create consistent content → Publish → Earn → Expand as your fans become creators too.
-
-## Build with Arcanea
-
-| Package | What it does |
-|:--------|:-------------|
-| [`@arcanea/mcp-server`](https://www.npmjs.com/package/@arcanea/mcp-server) | MCP server — add Arcanea to Claude Code, Cursor, or any MCP client |
-| [`author-os-cli`](https://www.npmjs.com/package/author-os-cli) | AI-native book production pipeline |
-| [`arcanea-claw`](./arcanea-claw/) | 24/7 media processing daemon |
-| [`@arcanea/vscode`](./packages/vscode/) | VS Code extension with Guardian-powered AI modes |
-
-## For developers
+## Local development
 
 ```bash
 git clone https://github.com/frankxai/arcanea.git
-cd arcanea && pnpm install
+cd arcanea
+pnpm install
 cp .env.example .env.local
-pnpm dev
+pnpm --filter @arcanea/web dev
 ```
 
-**Stack:** Next.js 16 · React 19 · TypeScript (strict) · Supabase · Vercel AI SDK · Gemini + Claude
+## Quality bar
 
-## The Library
+- Runtime target: Node `20.x`
+- Canonical deploy target: `apps/web`
+- Primary checks for the web app:
+  - `pnpm --filter @arcanea/web type-check`
+  - `pnpm --filter @arcanea/web lint`
+  - `pnpm --filter @arcanea/web build`
+  - `pnpm --filter @arcanea/web test:e2e`
 
-> *"These books are not entertainment. They are equipment for living."*
+## Stable vs experimental
 
-17 collections of creative philosophy in [`book/`](./book/) — Laws, Legends, Meditations, an Academy Handbook, and more. Not content to consume, but frameworks to practice.
+**Stable direction**
 
-## Contributing
+- `apps/web` as the main product
+- Chat + imagine + library + academy as the core user journey
+- Monorepo package publishing through Changesets
 
-We welcome contributions from creators and developers. See [CONTRIBUTING.md](./CONTRIBUTING.md).
+**Experimental / evolving**
+
+- Some secondary routes and older marketing/versioned surfaces
+- Billing and credit flows still being hardened
+- Memory and some persistence surfaces where schema alignment is still in progress
+- Premium and parallel app surfaces outside the canonical `apps/web` path
 
 ## License
 
-Proprietary. See [LICENSE](./LICENSE). Source is viewable for transparency; viewing does not grant usage rights.
-
----
-
-<div align="center">
-
-*"Enter seeking, leave transformed, return whenever needed."*
-
-**[arcanea.ai](https://arcanea.ai)** · Built by [FrankX](https://github.com/frankxai)
-
-</div>
+Proprietary. See [LICENSE](./LICENSE).

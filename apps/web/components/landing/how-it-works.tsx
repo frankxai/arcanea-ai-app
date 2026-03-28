@@ -6,30 +6,30 @@ import { m, useInView } from "framer-motion";
 const STEPS = [
   {
     number: "01",
-    title: "Imagine",
+    title: "Start in Chat",
     description:
-      "Chat with creative AI partners who specialize in writing, art, music, and world-building. Describe your vision and watch it take shape.",
+      "Open a conversation, define the problem, and work with specialist intelligences across writing, research, design, code, and world-building.",
     accent: "#00bcd4",
   },
   {
     number: "02",
-    title: "Build",
+    title: "Create",
     description:
-      "Create worlds, stories, and code in Studio. Use the Academy to master the craft, and the Library for 190K+ words of creative philosophy.",
+      "Turn ideas into stories, images, structures, and systems. Use Studio, Imagine, and world-building flows to move from concept to output.",
     accent: "#7c4dff",
   },
   {
     number: "03",
-    title: "Share",
+    title: "Build Context",
     description:
-      "Publish your creations to the Feed. Get discovered by other world-builders. Contribute to a growing multiverse of shared imagination.",
+      "Use the Library and Academy to keep work coherent over time. The mythology is not fluff; it is structured context for stronger creative decisions.",
     accent: "#f59e0b",
   },
   {
     number: "04",
-    title: "Grow",
+    title: "Extend",
     description:
-      "Advance through the Ten Gates. Unlock new creative powers, earn recognition, and evolve from Apprentice to Luminor.",
+      "Go deeper through packages, MCP surfaces, prompts, and the wider developer ecosystem when you want Arcanea inside your own workflow.",
     accent: "#00897b",
   },
 ];
@@ -56,10 +56,10 @@ export function HowItWorks() {
             How It Works
           </p>
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
-            A stronger creation loop
+            One system, four moves
           </h2>
           <p className="text-lg text-white/40 max-w-2xl mx-auto">
-            From first idea to a world of your own.
+            Start with the product. Go deeper through context, tooling, and ecosystem.
           </p>
         </m.div>
 

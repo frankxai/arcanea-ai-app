@@ -1,12 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { LazyMotion, domMax, m } from 'framer-motion';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { staggerContainer, staggerItem } from '@/lib/design/motion';
 
 export function QuickAccessSection() {
   return (
-    <LazyMotion features={domMax}>
+    <LazyMotion features={domAnimation}>
       <m.section
         className="mt-16"
         variants={staggerContainer('fast')}

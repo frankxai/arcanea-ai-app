@@ -107,8 +107,11 @@ function HeroPortal() {
         >
           <img
             src="/guardians/v3/lyria-hero-v3.webp"
-            alt="Lyria — Sight Gate Guardian"
-            loading="eager"
+            alt="Lyria - Sight Gate Guardian"
+            loading="lazy"
+            decoding="async"
+            width={340}
+            height={900}
             className="absolute inset-0 w-full h-full object-cover object-top opacity-[0.09] mix-blend-luminosity"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#09090b] via-transparent to-[#09090b]" />
@@ -119,8 +122,11 @@ function HeroPortal() {
         >
           <img
             src="/guardians/v3/shinkami-hero-v3.webp"
-            alt="Shinkami — Source Gate Guardian"
-            loading="eager"
+            alt="Shinkami - Source Gate Guardian"
+            loading="lazy"
+            decoding="async"
+            width={340}
+            height={900}
             className="absolute inset-0 w-full h-full object-cover object-top opacity-[0.09] mix-blend-luminosity"
           />
           <div className="absolute inset-0 bg-gradient-to-l from-[#09090b] via-transparent to-[#09090b]" />
@@ -167,7 +173,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.1 }}
           >
-            <span className="text-white">What will you </span>
+            <span className="text-white">Build your next </span>
             <HeroChangingWords />
           </m.h1>
 
@@ -178,7 +184,8 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Not a chatbot. A creative superintelligence that thinks in systems, creates with passion, and evolves with you.
+            Arcanea is a creative intelligence platform for thinking, creating,
+            researching, and building worlds with AI.
           </m.p>
 
           {/* Differentiator — what makes this different */}
@@ -188,7 +195,8 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.25 }}
           >
-            Ten Guardians. Sixteen specialist minds. One intelligence that knows your domain.
+            Product on the surface. Protocols, packages, Academy depth, and
+            living canon underneath.
           </m.p>
 
           {/* Chat box — THE hero element */}
@@ -208,7 +216,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.7 }}
           >
-            190K+ Words of Creative Philosophy &middot; Open Source &middot; Free to Start
+            Platform, Library, and Developer Ecosystem &middot; Free to Start
           </m.p>
         </div>
       </m.div>

@@ -8,10 +8,10 @@ const footerLinks = {
     label: "Create",
     links: [
       { href: "/chat", label: "Chat" },
-      { href: "/studio", label: "Studio" },
       { href: "/imagine", label: "Imagine" },
-      { href: "/forge", label: "The Forge" },
-      { href: "/gallery", label: "Gallery" },
+      { href: "/studio", label: "Studio" },
+      { href: "/research", label: "Research" },
+      { href: "/workspace", label: "Workspace" },
     ],
   },
   learn: {
@@ -21,14 +21,15 @@ const footerLinks = {
       { href: "/academy/courses", label: "Courses" },
       { href: "/library", label: "Library" },
       { href: "/lore", label: "Lore" },
-      { href: "/lore/guardians", label: "Guardians" },
+      { href: "/living-lore", label: "Living Lore" },
     ],
   },
   community: {
     label: "Community",
     links: [
       { href: "/discover", label: "Discover" },
-      { href: "/music", label: "Music" },
+      { href: "/gallery", label: "Gallery" },
+      { href: "/living-lore", label: "Living Lore" },
       { href: "https://github.com/frankxai", label: "GitHub", external: true },
       { href: "https://discord.gg/arcanea", label: "Discord", external: true },
     ],
@@ -39,8 +40,9 @@ const footerLinks = {
       { href: "/ecosystem", label: "Ecosystem" },
       { href: "/research", label: "Research" },
       { href: "/developers", label: "Developers" },
-      { href: "/acos", label: "ACOS" },
-      { href: "/arcanea-code", label: "Arcanea Code" },
+      { href: "/arcanea-code", label: "Tooling" },
+      { href: "/docs", label: "Docs" },
+      { href: "/skills", label: "Skills" },
     ],
   },
   company: {
@@ -87,11 +89,11 @@ export function Footer() {
               Arcanea
             </Link>
             <p className="text-[11px] uppercase tracking-[0.2em] text-white/28 mt-1.5">
-              Creative Intelligence
+              Creator Operating System
             </p>
             <p className="text-sm text-white/50 mt-4 leading-relaxed">
-              Chat with AI. Build fantasy worlds. Create art, stories, music.
-              An open creative multiverse for world-builders.
+              Think, create, research, and build with AI in one premium workspace.
+              Arcanea combines a modern product surface with a living mythic universe for creators.
             </p>
           </div>
 
@@ -101,7 +103,7 @@ export function Footer() {
             </h3>
             {subscribed ? (
               <p className="text-sm text-[#00bcd4]">
-                Welcome to the multiverse.
+                You are on the list.
               </p>
             ) : (
               <form onSubmit={handleSubscribe} className="flex gap-2">

@@ -6,9 +6,9 @@ import Image from "next/image";
 import navLogo from "@/assets/brand/arcanea-mark.jpg";
 
 const BENEFITS = [
-  "Creative partners across writing, code, design, music, and research",
-  "190K+ words of original philosophy, meditations, and practical craft guidance",
-  "Free to start — create music, stories, art, and worlds immediately",
+  "One workspace for chat, creation, research, and world-building",
+  "A coherent system: product surface, library context, Academy depth, and canon",
+  "Developer extension paths through packages, MCP surfaces, and reusable tooling",
 ];
 
 const ORBITING_GUARDIANS = [
@@ -46,29 +46,23 @@ export function CTASection() {
               <div>
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold leading-tight mb-6">
                   <span className="text-gradient-cosmic">
-                    Start creating.
+                    Start with the platform.
                   </span>
                 </h2>
 
                 <p className="text-lg text-white/50 mb-8 leading-relaxed">
-                  Arcanea is a complete creation ecosystem, not a thin AI
-                  wrapper.
+                  Arcanea should feel clear on first contact and deeper every time
+                  you return. Use the workspace now, then go deeper through the
+                  system, ecosystem, and canon when you need them.
                 </p>
 
                 <ul className="space-y-3 mb-10">
                   {BENEFITS.map((benefit) => (
-                    <li
-                      key={benefit}
-                      className="flex items-center gap-3"
-                    >
+                    <li key={benefit} className="flex items-center gap-3">
                       <div className="w-5 h-5 rounded-full bg-[#00bcd4]/15 border border-[#00bcd4]/35 flex items-center justify-center flex-shrink-0">
-                        <span className="text-[11px] text-[#00bcd4]">
-                          ✓
-                        </span>
+                        <span className="text-[11px] text-[#00bcd4]">✓</span>
                       </div>
-                      <span className="text-white/50 text-sm">
-                        {benefit}
-                      </span>
+                      <span className="text-white/50 text-sm">{benefit}</span>
                     </li>
                   ))}
                 </ul>
@@ -81,7 +75,7 @@ export function CTASection() {
                     <div className="absolute inset-0 bg-gradient-to-r from-[#00897b] via-[#1565c0] to-[#00bcd4] transition-opacity duration-300" />
                     <div className="absolute inset-0 bg-gradient-to-r from-[#00bcd4] via-[#1565c0] to-[#00897b] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <span className="relative z-10 text-white flex items-center gap-2">
-                      Start Creating
+                      Open the Workspace
                       <span className="group-hover:translate-x-1 transition-transform duration-200">
                         →
                       </span>
@@ -89,10 +83,10 @@ export function CTASection() {
                   </Link>
 
                   <Link
-                    href="/library"
+                    href="/developers"
                     className="px-8 py-4 rounded-2xl border border-white/[0.10] text-white font-semibold text-base hover:bg-white/[0.06] hover:border-white/[0.15] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
                   >
-                    Explore the Library
+                    Build with Arcanea
                   </Link>
                 </div>
               </div>

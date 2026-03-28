@@ -13,6 +13,7 @@ export type ErrorCode =
   | 'INVALID_INPUT'
   | 'METHOD_NOT_ALLOWED'
   | 'CONFLICT'
+  | 'LIMIT_EXCEEDED'
 
 export interface ApiError {
   code: ErrorCode

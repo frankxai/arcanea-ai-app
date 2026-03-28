@@ -10,7 +10,7 @@ const ECOSYSTEM_ITEMS = [
   { name: 'TypeScript', label: 'Language' },
   { name: 'React 19', label: 'UI' },
   { name: '37 Packages', label: 'Ecosystem' },
-  { name: 'Source Available', label: 'Open Source' },
+  { name: 'Source Available', label: 'Developer Access' },
   { name: '10 Guardians', label: 'Archetypes' },
 ];
 

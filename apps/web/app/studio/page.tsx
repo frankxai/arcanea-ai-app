@@ -26,6 +26,7 @@ import {
   Gear,
   Brain,
 } from "@/lib/phosphor-icons";
+import type { ImagineGenerationResponse } from "@/lib/imagine/contracts";
 // ---------------------------------------------------------------------------
 // Constants
 // ---------------------------------------------------------------------------
@@ -384,7 +385,7 @@ function ImageCreationPanel({
         throw new Error(data.error || `Generation failed (${res.status})`);
       }
 
-      const data = await res.json();
+      const data = (await res.json()) as ImagineGenerationResponse;
       const images: GeneratedImageData[] = (data.images || []).map(
         (img: { url?: string; data?: string; mimeType?: string; prompt?: string }, i: number) => ({
           id: `studio_img_${Date.now()}_${i}`,
@@ -585,7 +586,7 @@ in the style of epic fantasy concept art."
                           : "border-white/[0.06] hover:border-white/[0.12]"
                       }`}
                     >
-                      <img src={img.url} alt="" className="w-full h-full object-cover" />
+                      <img src={img.url} alt="" width={80} height={80} className="w-full h-full object-cover" loading="lazy" />
                     </button>
                   ))}
                 </div>

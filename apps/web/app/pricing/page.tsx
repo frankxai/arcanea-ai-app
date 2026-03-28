@@ -115,7 +115,7 @@ const FAQs = [
   {
     question: "What is open source?",
     answer:
-      "Everything: the code, skills, agents, CLIs, and MCP servers. Arcanea's entire creative infrastructure is open source. You can fork it, extend it, build on it, or contribute back. The open-source tools are free regardless of your plan.",
+      "Arcanea has a developer ecosystem with public tooling, packages, and integrations, but the main pricing on this page is for the creator platform experience. Think of the open tooling as the build layer and arcanea.ai as the creator-facing product layer.",
   },
   {
     question: "Can I switch between Credits and Forge?",

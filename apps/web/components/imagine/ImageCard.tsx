@@ -22,6 +22,7 @@ interface ImageCardProps {
   data?: string;
   mimeType?: string;
   aspectRatio?: string;
+  providerLabel?: string;
   onAnimate?: (id: string, imageUrl: string) => void;
   onFavoriteChange?: () => void;
   isAnimating?: boolean;
@@ -36,6 +37,7 @@ export function ImageCard({
   data,
   mimeType,
   aspectRatio = '1:1',
+  providerLabel,
   onAnimate,
   onFavoriteChange,
   isAnimating,
@@ -64,7 +66,7 @@ export function ImageCard({
 
     setIsSaving(true);
     try {
-      await addFavorite({ id, url: src, prompt, data, mimeType });
+      await addFavorite({ id, url: src, prompt, data, mimeType, aspectRatio, provider: providerLabel });
       setFavorited(true);
       onFavoriteChange?.();
     } catch {
@@ -72,7 +74,7 @@ export function ImageCard({
     } finally {
       setIsSaving(false);
     }
-  }, [id, src, prompt, data, mimeType, favorited, isSaving, onFavoriteChange]);
+  }, [id, src, prompt, data, mimeType, aspectRatio, providerLabel, favorited, isSaving, onFavoriteChange]);
 
   const handleDownload = useCallback(async () => {
     try {
@@ -156,6 +158,7 @@ export function ImageCard({
             }}
           />
         ) : (
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             src={src}
             alt={prompt}
@@ -309,6 +312,7 @@ export function ImageCard({
                 className="max-w-full max-h-[80vh] mx-auto object-contain rounded-2xl"
               />
             ) : (
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={src}
                 alt={prompt}
@@ -321,6 +325,11 @@ export function ImageCard({
               <p className="text-sm text-white/70 font-body mb-4 max-w-2xl">
                 {prompt}
               </p>
+              {providerLabel && (
+                <p className="text-[11px] uppercase tracking-[0.14em] text-white/45 mb-4">
+                  {providerLabel} {aspectRatio ? `· ${aspectRatio}` : ''}
+                </p>
+              )}
               <div className="flex gap-2 flex-wrap items-center">
                 {/* Favorite in lightbox */}
                 <button

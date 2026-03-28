@@ -192,7 +192,7 @@ export function HeroV3() {
             <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full liquid-glass border border-white/[0.06] mb-8 md:mb-10">
               <PhSparkle className="w-3.5 h-3.5 text-atlantean-teal-aqua" />
               <span className="text-[11px] font-mono tracking-[0.25em] uppercase text-atlantean-teal-aqua/90">
-                Creative Intelligence
+                Creator Operating System
               </span>
               <motion.span
                 className="w-1.5 h-1.5 rounded-full bg-atlantean-teal-aqua"
@@ -224,10 +224,10 @@ export function HeroV3() {
             className="max-w-2xl mx-auto mb-10 md:mb-14"
           >
             <p className="text-base sm:text-lg md:text-xl text-white/[0.55] leading-relaxed font-light">
-              A creation platform built on original mythology and philosophy.
+              One workspace to chat, research, build, and create with AI.
             </p>
             <p className="text-base sm:text-lg md:text-xl text-white/[0.75] mt-1.5 font-normal">
-              Sixteen intelligences. A library of 34 texts. Tools that think with you.
+              Premium product clarity on the surface. Original mythology, Academy depth, and living lore underneath.
             </p>
           </motion.div>
 
@@ -250,7 +250,7 @@ export function HeroV3() {
                 transition={{ duration: 0.5 }}
               />
               <span className="relative z-10 text-cosmic-deep flex items-center justify-center gap-2">
-                Start Creating
+                Open Workspace
                 <PhArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </span>
             </Link>
@@ -259,7 +259,7 @@ export function HeroV3() {
               href="/library"
               className="w-full sm:w-auto px-10 py-4 rounded-2xl liquid-glass border border-white/[0.06] hover:border-atlantean-teal-aqua/30 hover:bg-white/[0.06] transition-all duration-300 text-white font-semibold text-lg hover:shadow-[0_0_30px_rgba(0,188,212,0.1)] text-center"
             >
-              Explore the Library
+              Explore Library
             </Link>
           </motion.div>
         </div>

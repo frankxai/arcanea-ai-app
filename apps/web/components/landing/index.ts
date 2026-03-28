@@ -7,3 +7,5 @@ export { LogosSection } from './logos-section';
 export { HowItWorks } from './how-it-works';
 export { PricingSection } from './pricing-section';
 export { FAQSection } from './faq-section';
+export { LivingLoreCTA } from './living-lore-cta';
+export { ThreeLayersSection } from './three-layers-section';

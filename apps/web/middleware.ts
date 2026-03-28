@@ -3,13 +3,15 @@ import { NextResponse } from 'next/server';
 import { updateSession } from '@/lib/supabase/middleware';
 
 export async function middleware(request: NextRequest) {
-  // Redirect non-www to www (permanent 308) so all client-side fetches
-  // (including streamed POST requests to /api/ai/chat) go directly to
-  // the canonical origin without an extra 307 hop.
-  if (request.headers.get('host') === 'arcanea.ai') {
+  // Redirect non-www to www (permanent 301) so search engines and browsers
+  // cache the canonical origin. Using 301 instead of 308 avoids redirect
+  // chain issues — 301 is universally cached by browsers and CDNs.
+  const host = request.headers.get('host');
+  if (host === 'arcanea.ai') {
     const url = request.nextUrl.clone();
     url.host = 'www.arcanea.ai';
-    return NextResponse.redirect(url, 308);
+    url.protocol = 'https';
+    return NextResponse.redirect(url, 301);
   }
 
   return updateSession(request, {
@@ -24,7 +26,7 @@ export async function middleware(request: NextRequest) {
       '/api/gates/', '/api/analytics/', '/api/storage/',
       '/api/upload', '/api/forge/',
       '/api/create', '/api/command/', '/api/projects/',
-      '/api/profile/', '/api/activity/',
+      '/api/profile/', '/api/activity/', '/api/memories/',
     ],
     publicApiPrefixes: [
       '/api/health', '/api/stripe/webhook', '/api/search/',

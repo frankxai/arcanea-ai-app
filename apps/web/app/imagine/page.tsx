@@ -2,9 +2,14 @@
 
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { m, AnimatePresence, LazyMotion, domAnimation } from 'framer-motion';
-import { PromptInput } from '@/components/imagine/PromptInput';
+import { PromptInput, type VariationMode } from '@/components/imagine/PromptInput';
 import { ImageCard } from '@/components/imagine/ImageCard';
 import { getFavorites, removeFavorite, getFavoriteCount, type FavoriteImage } from '@/lib/imagine-favorites';
+import type { ImagineGenerationResponse } from '@/lib/imagine/contracts';
+import { analytics } from '@/lib/analytics/events';
+
+const IMAGINE_WORKSPACE_KEY = 'arcanea-imagine-workspace-v1';
+const MAX_PERSISTED_ROWS = 18;
 
 interface GeneratedImage {
   id: string;
@@ -12,15 +17,40 @@ interface GeneratedImage {
   prompt: string;
   data?: string;
   mimeType?: string;
+  videoUrl?: string;
+  providerLabel?: string;
 }
 
 interface GenerationRow {
   id: string;
   images: GeneratedImage[];
   prompt: string;
+  requestPrompt: string;
   aspectRatio: string;
   createdAt: string;
+  provider?: string;
+  model?: string;
+  batchNumber: number;
+  requestedCount: number;
+  variationMode: VariationMode;
+  durationMs?: number;
+  fallbackUsed?: boolean;
+  generationId?: string;
   isLoading?: boolean;
+}
+
+interface ImagineWorkspaceSnapshot {
+  rows: GenerationRow[];
+  activePrompt: string;
+  activeAspectRatio: string;
+  activeBatchSize: number;
+  activeVariationMode: VariationMode;
+  draftPrompt: string;
+  draftAspectRatio: string;
+  draftBatchSize: number;
+  draftVariationMode: VariationMode;
+  autoScrollEnabled: boolean;
+  batchCount: number;
 }
 
 export default function ImaginePage() {
@@ -29,8 +59,16 @@ export default function ImaginePage() {
   const [error, setError] = useState<string | null>(null);
   const [currentPrompt, setCurrentPrompt] = useState('');
   const [currentAspectRatio, setCurrentAspectRatio] = useState('1:1');
+  const [currentBatchSize, setCurrentBatchSize] = useState(4);
+  const [currentVariationMode, setCurrentVariationMode] = useState<VariationMode>('exploratory');
+  const [draftPrompt, setDraftPrompt] = useState('');
+  const [draftAspectRatio, setDraftAspectRatio] = useState('1:1');
+  const [draftBatchSize, setDraftBatchSize] = useState(4);
+  const [draftVariationMode, setDraftVariationMode] = useState<VariationMode>('exploratory');
   const [autoScrollEnabled, setAutoScrollEnabled] = useState(false);
   const [animatingIds, setAnimatingIds] = useState<Set<string>>(new Set());
+  const [batchCount, setBatchCount] = useState(0);
+  const [consecutiveErrors, setConsecutiveErrors] = useState(0);
 
   // Favorites state
   const [showFavorites, setShowFavorites] = useState(false);
@@ -41,11 +79,84 @@ export default function ImaginePage() {
   const gridTopRef = useRef<HTMLDivElement>(null);
   const generationCounterRef = useRef(0);
   const isGeneratingRef = useRef(false);
+  const hasHydratedWorkspaceRef = useRef(false);
+
+  const formatDuration = useCallback((durationMs?: number) => {
+    if (!durationMs) return null;
+    if (durationMs < 1000) return `${durationMs}ms`;
+    return `${(durationMs / 1000).toFixed(1)}s`;
+  }, []);
+
+  const normalizeLabel = useCallback((value?: string | null) => {
+    if (!value) return null;
+    return value.replace(/Â·/g, '·').replace(/\s+/g, ' ').trim();
+  }, []);
 
   // Load favorites count on mount
   useEffect(() => {
     setFavCount(getFavoriteCount());
   }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    try {
+      const rawSnapshot = localStorage.getItem(IMAGINE_WORKSPACE_KEY);
+      if (!rawSnapshot) {
+        hasHydratedWorkspaceRef.current = true;
+        return;
+      }
+
+      const snapshot = JSON.parse(rawSnapshot) as ImagineWorkspaceSnapshot;
+      if (Array.isArray(snapshot.rows)) setRows(snapshot.rows);
+      if (typeof snapshot.activePrompt === 'string') setCurrentPrompt(snapshot.activePrompt);
+      if (typeof snapshot.activeAspectRatio === 'string') setCurrentAspectRatio(snapshot.activeAspectRatio);
+      if (typeof snapshot.activeBatchSize === 'number') setCurrentBatchSize(snapshot.activeBatchSize);
+      if (snapshot.activeVariationMode) setCurrentVariationMode(snapshot.activeVariationMode);
+      if (typeof snapshot.draftPrompt === 'string') setDraftPrompt(snapshot.draftPrompt);
+      if (typeof snapshot.draftAspectRatio === 'string') setDraftAspectRatio(snapshot.draftAspectRatio);
+      if (typeof snapshot.draftBatchSize === 'number') setDraftBatchSize(snapshot.draftBatchSize);
+      if (snapshot.draftVariationMode) setDraftVariationMode(snapshot.draftVariationMode);
+      if (typeof snapshot.autoScrollEnabled === 'boolean') setAutoScrollEnabled(snapshot.autoScrollEnabled);
+      if (typeof snapshot.batchCount === 'number') setBatchCount(snapshot.batchCount);
+    } catch {
+      // Ignore corrupted snapshots and start fresh.
+    } finally {
+      hasHydratedWorkspaceRef.current = true;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !hasHydratedWorkspaceRef.current) return;
+
+    const snapshot: ImagineWorkspaceSnapshot = {
+      rows: rows.slice(0, MAX_PERSISTED_ROWS),
+      activePrompt: currentPrompt,
+      activeAspectRatio: currentAspectRatio,
+      activeBatchSize: currentBatchSize,
+      activeVariationMode: currentVariationMode,
+      draftPrompt,
+      draftAspectRatio,
+      draftBatchSize,
+      draftVariationMode,
+      autoScrollEnabled,
+      batchCount,
+    };
+
+    localStorage.setItem(IMAGINE_WORKSPACE_KEY, JSON.stringify(snapshot));
+  }, [
+    rows,
+    currentPrompt,
+    currentAspectRatio,
+    currentBatchSize,
+    currentVariationMode,
+    draftPrompt,
+    draftAspectRatio,
+    draftBatchSize,
+    draftVariationMode,
+    autoScrollEnabled,
+    batchCount,
+  ]);
 
   const refreshFavorites = useCallback(() => {
     setFavorites(getFavorites());
@@ -63,13 +174,33 @@ export default function ImaginePage() {
   }, [refreshFavorites]);
 
   // Generate a single row of images
-  const generateRow = useCallback(async (prompt: string, aspectRatio: string, rowId?: string): Promise<GenerationRow | null> => {
+  const buildVariationPrompt = useCallback((prompt: string, batchNumber: number, variationMode: VariationMode) => {
+    if (batchNumber <= 1) return prompt;
+
+    const variationInstructions: Record<VariationMode, string> = {
+      subtle: 'Create a close sibling variation with modest changes in crop, camera distance, lighting emphasis, and composition while preserving the same overall identity.',
+      exploratory: 'Create a distinct variation with noticeably different composition, framing, palette, focal subject emphasis, and visual rhythm while preserving the core concept.',
+      wild: 'Create a bold reinterpretation with a dramatically different point of view, palette, atmosphere, and scene storytelling while preserving only the central concept.',
+    };
+
+    return `${prompt}. Batch ${batchNumber}: ${variationInstructions[variationMode]}`;
+  }, []);
+
+  const generateRow = useCallback(async (
+    prompt: string,
+    aspectRatio: string,
+    batchNumber: number,
+    count: number,
+    variationMode: VariationMode,
+    rowId?: string,
+  ): Promise<GenerationRow | null> => {
     const id = rowId || `row_${Date.now()}_${generationCounterRef.current++}`;
+    const requestPrompt = buildVariationPrompt(prompt, batchNumber, variationMode);
 
     const res = await fetch('/api/imagine/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt, count: 4, aspectRatio }),
+      body: JSON.stringify({ prompt: requestPrompt, count, aspectRatio }),
     });
 
     if (!res.ok) {
@@ -77,26 +208,41 @@ export default function ImaginePage() {
       throw new Error(data.error || 'Generation failed');
     }
 
-    const data = await res.json();
+    const data = (await res.json()) as ImagineGenerationResponse;
+    const normalizedProvider = `${data.provider} - ${data.model}`;
     const images: GeneratedImage[] = (data.images || []).map((img: { url?: string; data?: string; mimeType?: string; prompt?: string }, i: number) => ({
       id: `${id}_img_${i}`,
       url: img.url || (img.data ? `data:${img.mimeType || 'image/png'};base64,${img.data}` : ''),
       prompt: img.prompt || prompt,
       data: img.data,
       mimeType: img.mimeType,
+      providerLabel: normalizedProvider,
     }));
 
     return {
       id,
       images,
       prompt,
+      requestPrompt,
       aspectRatio,
       createdAt: new Date().toISOString(),
+      provider: normalizedProvider,
+      batchNumber,
+      requestedCount: count,
+      variationMode,
+      durationMs: data.timing?.durationMs,
+      fallbackUsed: data.safety?.fallbackUsed,
+      generationId: data.generationId,
     };
-  }, []);
+  }, [buildVariationPrompt]);
 
   // Handle initial generation from prompt input
-  const handleGenerate = useCallback(async (prompt: string, _count: number, aspectRatio: string) => {
+  const handleGenerate = useCallback(async (
+    prompt: string,
+    count: number,
+    aspectRatio: string,
+    variationMode: VariationMode,
+  ) => {
     if (isGeneratingRef.current) return;
 
     setIsGenerating(true);
@@ -104,22 +250,36 @@ export default function ImaginePage() {
     setError(null);
     setCurrentPrompt(prompt);
     setCurrentAspectRatio(aspectRatio);
+    setCurrentBatchSize(count);
+    setCurrentVariationMode(variationMode);
+    setDraftPrompt(prompt);
+    setDraftAspectRatio(aspectRatio);
+    setDraftBatchSize(count);
+    setDraftVariationMode(variationMode);
+    setBatchCount(1);
+    setConsecutiveErrors(0);
 
     const loadingId = `row_${Date.now()}_loading`;
     setRows((prev) => [{
       id: loadingId,
       images: [],
       prompt,
+      requestPrompt: prompt,
       aspectRatio,
       createdAt: new Date().toISOString(),
+      batchNumber: 1,
+      requestedCount: count,
+      variationMode,
       isLoading: true,
     }, ...prev]);
 
     try {
-      const row = await generateRow(prompt, aspectRatio, loadingId);
+      const row = await generateRow(prompt, aspectRatio, 1, count, variationMode, loadingId);
       if (row) {
+        analytics.imageGenerated(row.model);
         setRows((prev) => prev.map((r) => r.id === loadingId ? row : r));
         setAutoScrollEnabled(true);
+        setConsecutiveErrors(0);
         // Smooth scroll to show new images
         requestAnimationFrame(() => {
           gridTopRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -140,30 +300,50 @@ export default function ImaginePage() {
 
     setIsGenerating(true);
     isGeneratingRef.current = true;
+    const nextBatchNumber = batchCount + 1;
 
     const loadingId = `row_${Date.now()}_scroll`;
     setRows((prev) => [...prev, {
       id: loadingId,
       images: [],
       prompt: currentPrompt,
+      requestPrompt: currentPrompt,
       aspectRatio: currentAspectRatio,
       createdAt: new Date().toISOString(),
+      batchNumber: nextBatchNumber,
+      requestedCount: currentBatchSize,
+      variationMode: currentVariationMode,
       isLoading: true,
     }]);
 
     try {
-      const row = await generateRow(currentPrompt, currentAspectRatio, loadingId);
+      const row = await generateRow(
+        currentPrompt,
+        currentAspectRatio,
+        nextBatchNumber,
+        currentBatchSize,
+        currentVariationMode,
+        loadingId,
+      );
       if (row) {
         setRows((prev) => prev.map((r) => r.id === loadingId ? row : r));
+        setBatchCount(nextBatchNumber);
+        setConsecutiveErrors(0);
       }
     } catch {
       setRows((prev) => prev.filter((r) => r.id !== loadingId));
-      setAutoScrollEnabled(false);
+      setConsecutiveErrors((prev) => {
+        const next = prev + 1;
+        if (next >= 2) {
+          setAutoScrollEnabled(false);
+        }
+        return next;
+      });
     } finally {
       setIsGenerating(false);
       isGeneratingRef.current = false;
     }
-  }, [currentPrompt, currentAspectRatio, autoScrollEnabled, generateRow]);
+  }, [currentPrompt, currentAspectRatio, currentBatchSize, currentVariationMode, autoScrollEnabled, generateRow, batchCount]);
 
   // IntersectionObserver
   useEffect(() => {
@@ -183,6 +363,83 @@ export default function ImaginePage() {
     observer.observe(sentinel);
     return () => observer.disconnect();
   }, [autoScrollEnabled, generateMoreRows]);
+
+  const handleReuseRow = useCallback((row: GenerationRow) => {
+    setDraftPrompt(row.prompt);
+    setDraftAspectRatio(row.aspectRatio);
+    setDraftBatchSize(row.requestedCount);
+    setDraftVariationMode(row.variationMode);
+    setError(null);
+    setAutoScrollEnabled(false);
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }, []);
+
+  const handleResumeFromRow = useCallback((row: GenerationRow) => {
+    setCurrentPrompt(row.prompt);
+    setCurrentAspectRatio(row.aspectRatio);
+    setCurrentBatchSize(row.requestedCount);
+    setCurrentVariationMode(row.variationMode);
+    setDraftPrompt(row.prompt);
+    setDraftAspectRatio(row.aspectRatio);
+    setDraftBatchSize(row.requestedCount);
+    setDraftVariationMode(row.variationMode);
+    setBatchCount(row.batchNumber);
+    setConsecutiveErrors(0);
+    setError(null);
+    setAutoScrollEnabled(true);
+  }, []);
+
+  const handleRegenerateRow = useCallback(async (rowId: string) => {
+    const row = rows.find((candidate) => candidate.id === rowId);
+    if (!row || isGeneratingRef.current) return;
+
+    setIsGenerating(true);
+    isGeneratingRef.current = true;
+    setError(null);
+    setRows((prev) => prev.map((candidate) => candidate.id === rowId ? { ...candidate, images: [], isLoading: true } : candidate));
+
+    try {
+      const nextRow = await generateRow(
+        row.prompt,
+        row.aspectRatio,
+        row.batchNumber,
+        row.requestedCount,
+        row.variationMode,
+        rowId,
+      );
+      if (nextRow) {
+        setRows((prev) => prev.map((candidate) => candidate.id === rowId ? nextRow : candidate));
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not regenerate this batch');
+      setRows((prev) => prev.map((candidate) => candidate.id === rowId ? { ...row, isLoading: false } : candidate));
+    } finally {
+      setIsGenerating(false);
+      isGeneratingRef.current = false;
+    }
+  }, [generateRow, rows]);
+
+  const handleClearWorkspace = useCallback(() => {
+    setRows([]);
+    setError(null);
+    setCurrentPrompt('');
+    setCurrentAspectRatio('1:1');
+    setCurrentBatchSize(4);
+    setCurrentVariationMode('exploratory');
+    setDraftPrompt('');
+    setDraftAspectRatio('1:1');
+    setDraftBatchSize(4);
+    setDraftVariationMode('exploratory');
+    setAutoScrollEnabled(false);
+    setBatchCount(0);
+    setConsecutiveErrors(0);
+
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem(IMAGINE_WORKSPACE_KEY);
+    }
+  }, []);
 
   // Handle animation
   const handleAnimate = useCallback(async (imageId: string, imageUrl: string) => {
@@ -242,6 +499,9 @@ export default function ImaginePage() {
 
   const totalImages = rows.reduce((sum, r) => sum + r.images.length, 0);
   const hasResults = rows.length > 0;
+  const activeFeedSummary = currentPrompt
+    ? `${currentBatchSize} outputs | ${currentVariationMode} variations | ${currentAspectRatio}`
+    : null;
 
   return (
     <LazyMotion features={domAnimation}>
@@ -268,7 +528,7 @@ export default function ImaginePage() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="mt-3 text-lg text-text-secondary font-body"
             >
-              Describe your vision. Watch it materialize.
+              Build the image stream, then steer it.
             </m.p>
           </m.div>
         )}
@@ -283,6 +543,20 @@ export default function ImaginePage() {
               <span className="text-xs text-text-muted bg-white/[0.04] px-2.5 py-1 rounded-full">
                 {totalImages} image{totalImages !== 1 ? 's' : ''}
               </span>
+              {activeFeedSummary && (
+                <span className="hidden md:inline text-xs text-text-muted bg-white/[0.04] px-2.5 py-1 rounded-full">
+                  {activeFeedSummary}
+                </span>
+              )}
+              <span
+                className={`hidden lg:inline text-xs px-2.5 py-1 rounded-full border ${
+                  autoScrollEnabled
+                    ? 'text-emerald-300 border-emerald-400/20 bg-emerald-500/10'
+                    : 'text-text-muted border-white/[0.06] bg-white/[0.03]'
+                }`}
+              >
+                {autoScrollEnabled ? 'Feed live' : 'Feed paused'}
+              </span>
             </div>
             <div className="flex items-center gap-2">
               {autoScrollEnabled && (
@@ -290,7 +564,7 @@ export default function ImaginePage() {
                   onClick={() => setAutoScrollEnabled(false)}
                   className="text-xs text-text-muted hover:text-text-secondary px-3 py-1.5 rounded-lg hover:bg-white/[0.04] transition-all"
                 >
-                  Stop auto-generate
+                  Pause feed
                 </button>
               )}
               {!autoScrollEnabled && currentPrompt && (
@@ -298,7 +572,15 @@ export default function ImaginePage() {
                   onClick={() => setAutoScrollEnabled(true)}
                   className="text-xs text-[#00bcd4] hover:text-[#00acc1] px-3 py-1.5 rounded-lg hover:bg-[#00bcd4]/10 transition-all"
                 >
-                  Resume infinite scroll
+                  Resume feed
+                </button>
+              )}
+              {hasResults && (
+                <button
+                  onClick={handleClearWorkspace}
+                  className="text-xs text-text-muted hover:text-text-secondary px-3 py-1.5 rounded-lg hover:bg-white/[0.04] transition-all"
+                >
+                  Clear workspace
                 </button>
               )}
               {/* Favorites button */}
@@ -342,6 +624,14 @@ export default function ImaginePage() {
           onGenerate={handleGenerate}
           isGenerating={isGenerating}
           hasResults={hasResults}
+          promptSeed={draftPrompt}
+          aspectRatioSeed={draftAspectRatio}
+          countSeed={draftBatchSize}
+          variationSeed={draftVariationMode}
+          onPromptDraftChange={setDraftPrompt}
+          onAspectRatioDraftChange={setDraftAspectRatio}
+          onCountDraftChange={setDraftBatchSize}
+          onVariationDraftChange={setDraftVariationMode}
         />
       </div>
 
@@ -371,9 +661,57 @@ export default function ImaginePage() {
       <div ref={gridTopRef} className={`max-w-7xl mx-auto px-1 sm:px-6 ${hasResults ? 'pt-4 pb-32' : ''}`}>
         {rows.map((row) => (
           <div key={row.id} className="mb-1 sm:mb-4">
+            {!row.isLoading && (
+              <div className="flex items-center justify-between gap-3 px-2 sm:px-0 mb-2">
+                <div className="min-w-0">
+                  <p className="text-[11px] sm:text-xs text-text-secondary">
+                    Batch {row.batchNumber}
+                    {' - '}
+                    {new Date(row.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    {row.durationMs ? ` - ${formatDuration(row.durationMs)}` : ''}
+                    {row.fallbackUsed ? ' - fallback' : ''}
+                  </p>
+                  <p className="text-[11px] text-text-muted truncate max-w-[70vw] sm:max-w-[520px]">
+                    {row.prompt}
+                  </p>
+                  {normalizeLabel(row.provider) && (
+                    <p className="text-[10px] text-text-muted/70 truncate max-w-[70vw] sm:max-w-[520px]">
+                      Model: {normalizeLabel(row.provider)}
+                    </p>
+                  )}
+                  <p className="text-[10px] text-text-muted/70 truncate max-w-[70vw] sm:max-w-[520px]">
+                    Request: {row.requestedCount} outputs | {row.variationMode} variation | {row.aspectRatio}
+                  </p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => handleReuseRow(row)}
+                    className="text-[10px] uppercase tracking-[0.12em] text-text-muted hover:text-text-secondary"
+                  >
+                    Remix
+                  </button>
+                  <button
+                    onClick={() => handleResumeFromRow(row)}
+                    className="text-[10px] uppercase tracking-[0.12em] text-[#00bcd4] hover:text-[#00acc1]"
+                  >
+                    Continue
+                  </button>
+                  <button
+                    onClick={() => handleRegenerateRow(row.id)}
+                    className="text-[10px] uppercase tracking-[0.12em] text-text-muted hover:text-text-secondary"
+                  >
+                    Retry batch
+                  </button>
+                  <span className="text-[10px] uppercase tracking-[0.14em] text-text-muted">
+                    {row.aspectRatio}
+                  </span>
+                </div>
+              </div>
+            )}
+
             {row.isLoading && (
               <div className="grid grid-cols-2 md:grid-cols-4 gap-0.5 md:gap-1">
-                {Array.from({ length: 4 }).map((_, i) => (
+                {Array.from({ length: row.requestedCount }).map((_, i) => (
                   <div
                     key={i}
                     className={`rounded-lg sm:rounded-2xl border border-white/[0.04] relative overflow-hidden ${
@@ -414,6 +752,7 @@ export default function ImaginePage() {
                     data={img.data}
                     mimeType={img.mimeType}
                     aspectRatio={row.aspectRatio}
+                    providerLabel={normalizeLabel(img.providerLabel) ?? normalizeLabel(row.provider) ?? undefined}
                     index={i}
                     onAnimate={handleAnimate}
                     onFavoriteChange={refreshFavorites}
@@ -429,11 +768,16 @@ export default function ImaginePage() {
 
         {hasResults && !autoScrollEnabled && !isGenerating && currentPrompt && (
           <div className="text-center py-8">
+            {consecutiveErrors > 0 && (
+              <p className="text-xs text-text-muted mb-3">
+                The live feed paused after repeated provider errors. Resume when you want Arcanea to keep exploring from this direction.
+              </p>
+            )}
             <button
               onClick={() => generateMoreRows()}
               className="px-6 py-3 rounded-2xl text-sm font-medium bg-white/[0.04] text-text-secondary hover:text-text-primary hover:bg-white/[0.08] border border-white/[0.06] hover:border-white/[0.12] transition-all"
             >
-              Generate more variations
+              Generate the next batch
             </button>
           </div>
         )}
@@ -442,7 +786,7 @@ export default function ImaginePage() {
       {/* Empty state */}
       {!hasResults && !isGenerating && (
         <div className="text-center py-12 px-6">
-          <div className="max-w-md mx-auto">
+          <div className="max-w-2xl mx-auto">
             <div className="w-20 h-20 rounded-3xl bg-[#00bcd4]/10 flex items-center justify-center mx-auto mb-6">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="hsl(262, 83%, 66%)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="opacity-60">
                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
@@ -450,8 +794,24 @@ export default function ImaginePage() {
                 <polyline points="21 15 16 10 5 21" />
               </svg>
             </div>
-            <p className="text-text-secondary font-body text-lg mb-1">Start creating</p>
-            <p className="text-text-muted text-sm">Enter a prompt above to begin creating</p>
+            <p className="text-text-secondary font-body text-xl mb-2">Start with one prompt. Keep only the batches that earn it.</p>
+            <p className="text-text-muted text-sm max-w-xl mx-auto">
+              Arcanea Imagine is a live generation workspace: launch the first batch, remix the strong rows, resume the feed, and save permanent favorites when something lands.
+            </p>
+            <div className="mt-6 grid gap-2 sm:grid-cols-3 text-left">
+              <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] px-4 py-3">
+                <p className="text-xs uppercase tracking-[0.14em] text-[#00bcd4]">Shape</p>
+                <p className="mt-1 text-sm text-text-secondary">Set output count, aspect ratio, and variation intensity before the first batch goes out.</p>
+              </div>
+              <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] px-4 py-3">
+                <p className="text-xs uppercase tracking-[0.14em] text-violet-300">Steer</p>
+                <p className="mt-1 text-sm text-text-secondary">Remix any strong row into the composer or resume the feed from the exact settings that worked.</p>
+              </div>
+              <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] px-4 py-3">
+                <p className="text-xs uppercase tracking-[0.14em] text-pink-300">Keep</p>
+                <p className="mt-1 text-sm text-text-secondary">Favorite images worth keeping. Arcanea saves a permanent copy instead of leaving them to expire.</p>
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -512,7 +872,7 @@ export default function ImaginePage() {
                     </div>
                     <p className="text-text-secondary font-body mb-1">No favorites yet</p>
                     <p className="text-xs text-text-muted max-w-[240px]">
-                      Heart images you love and they&apos;ll be saved here permanently
+                      Heart anything worth keeping. Arcanea saves a permanent copy here so your best generations do not vanish with a temporary provider URL.
                     </p>
                   </div>
                 ) : (
@@ -526,6 +886,7 @@ export default function ImaginePage() {
                         exit={{ opacity: 0, scale: 0.9 }}
                         className="group relative rounded-xl overflow-hidden"
                       >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={fav.blobUrl}
                           alt={fav.prompt}
@@ -537,6 +898,9 @@ export default function ImaginePage() {
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                           <div className="absolute bottom-0 left-0 right-0 p-3">
                             <p className="text-[10px] text-white/60 line-clamp-2 mb-2">{fav.prompt}</p>
+                            <p className="text-[9px] uppercase tracking-[0.14em] text-white/40 mb-2">
+                              {[fav.provider, fav.aspectRatio].filter(Boolean).join(' · ')}
+                            </p>
                             <div className="flex gap-1.5">
                               <button
                                 onClick={() => handleRemoveFavorite(fav.id)}

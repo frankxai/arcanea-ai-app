@@ -4,32 +4,39 @@ import { AboutContent } from "./about-content";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Arcanea is a creative multiverse — chat with AI, build fantasy worlds, share what you make, and turn imagination into products. Six layers, one ecosystem.",
+    "Arcanea is a creator platform for chat, world-building, creative output, and a deep philosophy library. Mythology is the depth layer, not the barrier to entry.",
   openGraph: {
-    title: "About Arcanea — The Creative Multiverse",
+    title: "About Arcanea",
     description:
-      "Chat with AI. Build fantasy worlds. Share what you make. Turn imagination into products. Six layers, one creative multiverse.",
-    images: [{ url: '/guardians/v3/shinkami-hero-v3.webp', width: 1024, height: 1024, alt: 'Shinkami — Guardian of the Source Gate' }],
+      "Arcanea helps creators chat with AI, build coherent worlds, and turn imagination into output with a richer underlying philosophy.",
+    images: [
+      {
+        url: "/guardians/v3/shinkami-hero-v3.webp",
+        width: 1024,
+        height: 1024,
+        alt: "Shinkami - Guardian of the Source Gate",
+      },
+    ],
   },
   twitter: {
-    card: 'summary_large_image',
-    images: ['/guardians/v3/shinkami-hero-v3.webp'],
+    card: "summary_large_image",
+    images: ["/guardians/v3/shinkami-hero-v3.webp"],
   },
 };
 
 const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'AboutPage',
-  name: 'About Arcanea',
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  name: "About Arcanea",
   description:
-    'A creative multiverse where creators chat with AI, build fantasy worlds, contribute to an open-source civilization, and turn imagination into products.',
-  url: 'https://arcanea.ai/about',
+    "Arcanea is a creator platform for chat, world-building, and creative output, shaped by a deep library of philosophy and lore.",
+  url: "https://arcanea.ai/about",
   mainEntity: {
-    '@type': 'Organization',
-    name: 'Arcanea',
-    url: 'https://arcanea.ai',
+    "@type": "Organization",
+    name: "Arcanea",
+    url: "https://arcanea.ai",
     description:
-      'Creative multiverse platform. Six layers: Chat, Worlds, Feed, OSS, Community, Academy. 190K+ words of creative philosophy. Open source.',
+      "Creative intelligence platform for world-builders, with AI partners, creation tools, and a philosophy library.",
   },
 };
 

@@ -16,32 +16,13 @@
 
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
+import type Stripe from "stripe";
 import { CREDIT_PACKS } from "@/lib/types/credits";
 
 // ─── Stripe type stubs (avoids importing stripe types as dev dependency) ─────
 // These match the Stripe SDK shapes we actually use. Replace with
 // `import type Stripe from 'stripe'` when stripe types are installed.
-declare namespace Stripe {
-  interface Event {
-    type: string;
-    data: { object: Record<string, unknown> };
-  }
-  interface Checkout {
-    Session: {
-      metadata?: Record<string, string> | null;
-      customer?: string | null;
-      subscription?: string | null;
-    };
-  }
-  interface Subscription {
-    id: string;
-    customer: string;
-    status: string;
-    current_period_start: number;
-    current_period_end: number;
-    cancel_at_period_end: boolean;
-  }
-}
+
 
 // ─── Stripe event type subset we care about ─────────────────────────────────
 

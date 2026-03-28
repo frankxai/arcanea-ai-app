@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: 'Arcanea',
     short_name: 'Arcanea',
     description:
-      'Creative intelligence platform — 16 Luminors, a philosophy library, and studio tools for modern creators.',
+      'Creator operating system for AI-native work: chat, research, memory, image creation, and a living library in one workspace.',
     start_url: '/',
     display: 'standalone',
     background_color: '#09090b',

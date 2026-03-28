@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 
 const ASPECT_RATIOS = [
@@ -21,6 +21,15 @@ const STYLE_PRESETS = [
   { id: 'cinematic', label: 'Cinematic' },
 ] as const;
 
+const OUTPUT_COUNTS = [2, 4, 6] as const;
+const VARIATION_MODES = [
+  { id: 'subtle', label: 'Subtle' },
+  { id: 'exploratory', label: 'Exploratory' },
+  { id: 'wild', label: 'Wild' },
+] as const;
+
+export type VariationMode = (typeof VARIATION_MODES)[number]['id'];
+
 const QUICK_PROMPTS = [
   'A cosmic library floating in nebula clouds, ancient knowledge glowing with starlight',
   'Crystal dragon emerging from volcanic glass, iridescent scales catching moonlight',
@@ -38,19 +47,57 @@ interface AplFeedback {
 }
 
 interface PromptInputProps {
-  onGenerate: (prompt: string, count: number, aspectRatio: string) => void;
+  onGenerate: (prompt: string, count: number, aspectRatio: string, variationMode: VariationMode) => void;
   isGenerating: boolean;
   hasResults: boolean;
+  promptSeed?: string;
+  aspectRatioSeed?: string;
+  countSeed?: number;
+  variationSeed?: VariationMode;
+  onPromptDraftChange?: (prompt: string) => void;
+  onAspectRatioDraftChange?: (aspectRatio: string) => void;
+  onCountDraftChange?: (count: number) => void;
+  onVariationDraftChange?: (variationMode: VariationMode) => void;
 }
 
-export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInputProps) {
+export function PromptInput({
+  onGenerate,
+  isGenerating,
+  hasResults,
+  promptSeed,
+  aspectRatioSeed,
+  countSeed,
+  variationSeed,
+  onPromptDraftChange,
+  onAspectRatioDraftChange,
+  onCountDraftChange,
+  onVariationDraftChange,
+}: PromptInputProps) {
   const [prompt, setPrompt] = useState('');
   const [aspectRatio, setAspectRatio] = useState('1:1');
+  const [count, setCount] = useState<number>(4);
+  const [variationMode, setVariationMode] = useState<VariationMode>('exploratory');
   const [style, setStyle] = useState('none');
   const [isExpanded, setIsExpanded] = useState(true);
   const [isEnhancing, setIsEnhancing] = useState(false);
   const [aplFeedback, setAplFeedback] = useState<AplFeedback | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (typeof promptSeed === 'string') setPrompt(promptSeed);
+  }, [promptSeed]);
+
+  useEffect(() => {
+    if (aspectRatioSeed) setAspectRatio(aspectRatioSeed);
+  }, [aspectRatioSeed]);
+
+  useEffect(() => {
+    if (countSeed) setCount(countSeed);
+  }, [countSeed]);
+
+  useEffect(() => {
+    if (variationSeed) setVariationMode(variationSeed);
+  }, [variationSeed]);
 
   const buildPrompt = useCallback(() => {
     let finalPrompt = prompt.trim();
@@ -71,9 +118,9 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
   const handleSubmit = useCallback(() => {
     if (!prompt.trim() || isGenerating) return;
     const finalPrompt = buildPrompt();
-    onGenerate(finalPrompt, 4, aspectRatio);
+    onGenerate(finalPrompt, count, aspectRatio, variationMode);
     if (hasResults) setIsExpanded(false);
-  }, [prompt, aspectRatio, isGenerating, onGenerate, hasResults, buildPrompt]);
+  }, [prompt, count, aspectRatio, variationMode, isGenerating, onGenerate, hasResults, buildPrompt]);
 
   const handleEnhance = useCallback(async () => {
     if (!prompt.trim() || isEnhancing) return;
@@ -89,6 +136,7 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
         const data = await res.json();
         if (data.enhanced) {
           setPrompt(data.enhanced);
+          onPromptDraftChange?.(data.enhanced);
           setAplFeedback({
             qualityBefore: data.qualityBefore ?? 0,
             qualityAfter: data.qualityAfter ?? 0,
@@ -107,7 +155,10 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
         });
         if (fallbackRes.ok) {
           const fallbackData = await fallbackRes.json();
-          if (fallbackData.enhanced) setPrompt(fallbackData.enhanced);
+          if (fallbackData.enhanced) {
+            setPrompt(fallbackData.enhanced);
+            onPromptDraftChange?.(fallbackData.enhanced);
+          }
         }
       }
     } catch {
@@ -115,7 +166,7 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
     } finally {
       setIsEnhancing(false);
     }
-  }, [prompt, isEnhancing]);
+  }, [prompt, isEnhancing, onPromptDraftChange]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -173,13 +224,19 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
           <textarea
             ref={textareaRef}
             value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
+            onChange={(e) => {
+              setPrompt(e.target.value);
+              onPromptDraftChange?.(e.target.value);
+            }}
             onKeyDown={handleKeyDown}
             onFocus={() => setIsExpanded(true)}
-            placeholder="Describe what you want to see..."
+            placeholder="Describe the image direction, mood, subject, and camera language..."
             rows={hasResults ? 2 : 3}
             className="w-full bg-transparent px-5 sm:px-6 pt-5 pb-3 text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:ring-inset resize-none font-body text-lg sm:text-base leading-relaxed"
           />
+          <div className="px-5 sm:px-6 pb-2 text-[11px] text-text-muted/70">
+            Enter to imagine. Shift+Enter for line breaks.
+          </div>
 
           {/* Style preset pills */}
           <div className="flex items-center gap-1.5 px-4 sm:px-5 py-2.5 overflow-x-auto scrollbar-hide border-t border-white/[0.04]">
@@ -198,6 +255,52 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
             ))}
           </div>
 
+          <div className="flex items-center justify-between gap-3 px-4 sm:px-5 py-2.5 overflow-x-auto scrollbar-hide border-t border-white/[0.04]">
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] uppercase tracking-[0.14em] text-text-muted">Outputs</span>
+              <div className="flex gap-1">
+                {OUTPUT_COUNTS.map((outputCount) => (
+                  <button
+                    key={outputCount}
+                    onClick={() => {
+                      setCount(outputCount);
+                      onCountDraftChange?.(outputCount);
+                    }}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-all ${
+                      count === outputCount
+                        ? 'bg-[#00bcd4]/15 text-[#00bcd4] border border-[#00bcd4]/40'
+                        : 'text-text-muted hover:text-text-secondary hover:bg-white/[0.04]'
+                    }`}
+                  >
+                    {outputCount}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] uppercase tracking-[0.14em] text-text-muted">Variation</span>
+              <div className="flex gap-1">
+                {VARIATION_MODES.map((mode) => (
+                  <button
+                    key={mode.id}
+                    onClick={() => {
+                      setVariationMode(mode.id);
+                      onVariationDraftChange?.(mode.id);
+                    }}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-all ${
+                      variationMode === mode.id
+                        ? 'bg-violet-600/20 text-violet-300 border border-violet-500/30'
+                        : 'text-text-muted hover:text-text-secondary hover:bg-white/[0.04]'
+                    }`}
+                  >
+                    {mode.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
           {/* Controls bar */}
           <div className="flex items-center justify-between px-4 py-3 border-t border-white/[0.06]">
             <div className="flex items-center gap-2">
@@ -206,7 +309,10 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
                 {ASPECT_RATIOS.map((ar) => (
                   <button
                     key={ar.id}
-                    onClick={() => setAspectRatio(ar.id)}
+                    onClick={() => {
+                      setAspectRatio(ar.id);
+                      onAspectRatioDraftChange?.(ar.id);
+                    }}
                     className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-all ${
                       aspectRatio === ar.id
                         ? 'bg-violet-600/20 text-violet-300 border border-violet-500/30'
@@ -309,7 +415,10 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
           {QUICK_PROMPTS.map((suggestion) => (
             <button
               key={suggestion}
-              onClick={() => setPrompt(suggestion)}
+              onClick={() => {
+                setPrompt(suggestion);
+                onPromptDraftChange?.(suggestion);
+              }}
               className="px-3.5 py-2 rounded-xl text-xs text-text-muted border border-white/[0.06] hover:border-violet-500/30 hover:text-violet-300 hover:bg-violet-500/5 transition-all"
             >
               {suggestion.length > 50 ? suggestion.slice(0, 50) + '...' : suggestion}

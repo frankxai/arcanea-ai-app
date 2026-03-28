@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { LazyMotion, domMax, m } from 'framer-motion';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { slideUp, staggerContainer, staggerItem } from '@/lib/design/motion';
 import { getCrewMember } from '@/lib/living-lore/crew-data';
 import type { ActInfo } from '@/lib/living-lore/types';
@@ -28,7 +28,7 @@ export function ChronicleContent({ acts, allActs }: ChronicleContentProps) {
   const actMap = new Map(acts.map((a) => [a.number, a]));
 
   return (
-    <LazyMotion features={domMax}>
+    <LazyMotion features={domAnimation}>
       <main className="mx-auto max-w-5xl px-6 pb-24 pt-8">
         {/* Breadcrumb */}
         <nav className="mb-8 text-sm" aria-label="Breadcrumb">

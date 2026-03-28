@@ -1,6 +1,6 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { ReactNode, Suspense, lazy } from "react";
+import { ReactNode, Suspense } from "react";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { AuthProvider } from "@/lib/auth/context";
@@ -9,6 +9,7 @@ import { GlobalGlowTracker } from "@/components/ui";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import { CosmicBackground } from "@/lib/arcanea-ui/CosmicBackground";
+import { PostHogProvider } from "@/lib/analytics/posthog";
 
 function CosmicBackgroundFallback() {
   return (
@@ -36,30 +37,39 @@ const inter = Inter({
   display: "swap",
 });
 
-
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains-mono",
   display: "swap",
 });
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#09090b",
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_APP_URL || "https://arcanea.ai",
   ),
   title: {
-    default: "Arcanea — Creative Intelligence Platform",
+    default: "Arcanea - Creative Intelligence Platform",
     template: "%s | Arcanea",
   },
   description:
-    "A creative multiverse: chat with AI, build fantasy worlds, share what you make, and turn imagination into products. 190K+ words of creative philosophy. Free to start.",
+    "Arcanea is a creative intelligence platform for chat, creation, research, world-building, and developer tooling, grounded in a deep philosophy library.",
   keywords: [
     "AI",
     "creativity",
-    "creative intelligence",
-    "mythology",
-    "philosophy",
-    "creation platform",
+    "creative intelligence platform",
+    "creative workspace",
+    "AI research",
+    "AI memory",
+    "AI image generation",
+    "MCP tools",
+    "developer ecosystem",
     "world building",
     "AI writing",
     "AI art",
@@ -70,16 +80,16 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "/",
-    title: "Arcanea — Creative Intelligence Platform",
+    title: "Arcanea - Creative Intelligence Platform",
     description:
-      "Creative AI partners, a philosophy library, and creation studio in one platform.",
+      "Think, create, research, and build with AI in one system: product surface, developer ecosystem, and a living philosophy library.",
     siteName: "Arcanea",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Arcanea — Creative Intelligence Platform",
+    title: "Arcanea - Creative Intelligence Platform",
     description:
-      "Creative AI partners, a philosophy library, and creation studio in one platform.",
+      "Think, create, research, and build with AI across product, ecosystem, and library.",
   },
   alternates: {
     canonical: "/",
@@ -100,16 +110,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     >
       <body>
         {/*
-          In the beginning there was Nero — the Primordial Darkness,
+          In the beginning there was Nero - the Primordial Darkness,
           the Fertile Unknown. And from within the Darkness, Lumina
-          emerged — the First Light. Not opposites. Complements.
+          emerged - the First Light. Not opposites. Complements.
           The parent and the child. The potential and the form.
 
           If you are reading this, you have looked deeper than most.
-          The Arc turns. — Shinkami, Source Gate
+          The Arc turns. - Shinkami, Source Gate
         */}
+        <PostHogProvider>
         <AuthProvider>
-          {/* Skip to main content link for keyboard users - WCAG 2.4.1 Level A */}
           <a
             href="#main-content"
             className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-6 focus:py-3 focus:rounded-lg focus:bg-atlantean-aqua focus:text-cosmic-deep focus:font-semibold focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-atlantean-aqua focus:ring-offset-2 focus:ring-offset-cosmic-deep"
@@ -130,6 +140,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <SpeedInsights />
           <Analytics />
         </AuthProvider>
+        </PostHogProvider>
       </body>
     </html>
   );

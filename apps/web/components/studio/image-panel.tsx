@@ -10,6 +10,7 @@ import {
 } from "@/lib/phosphor-icons";
 import { IMAGE_STYLES, ASPECT_RATIOS } from "./studio-types";
 import type { GeneratedImageData } from "./studio-types";
+import type { ImagineGenerationResponse } from "@/lib/imagine/contracts";
 
 // ---------------------------------------------------------------------------
 // Image Creation Panel
@@ -54,7 +55,7 @@ export function ImageCreationPanel({
         throw new Error(data.error || `Generation failed (${res.status})`);
       }
 
-      const data = await res.json();
+      const data = (await res.json()) as ImagineGenerationResponse;
       const images: GeneratedImageData[] = (data.images || []).map(
         (
           img: {

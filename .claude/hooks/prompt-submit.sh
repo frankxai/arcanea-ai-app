@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Arcanea Intelligence OS — Prompt Submit Hook v2.0
+# Arcanea Intelligence OS - Prompt Submit Hook v2.1
 # Routes prompts to Guardian, detects realm/team/focus for statusline.
 set +e
 
@@ -9,18 +9,43 @@ SESSION_DIR="${ARCANEA_HOME}/sessions/current"
 DB_PATH="${ARCANEA_DB:-${ARCANEA_HOME}/agentdb.sqlite3}"
 HOOK_DIR="$(cd "$(dirname "$0")" && pwd)"
 TIMESTAMP="$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
+TMP_DIR="${TMPDIR:-/tmp}"
+LOG_FILE="${SESSION_DIR}/hook-events.log"
 
-mkdir -p "$SESSION_DIR"
+safe_log() {
+  mkdir -p "$SESSION_DIR" 2>/dev/null || true
+  printf '[%s] prompt-submit %s\n' "$TIMESTAMP" "$1" >> "$LOG_FILE" 2>/dev/null || true
+}
 
-# Convert prompt to lowercase for matching
-PROMPT_LOWER="$(echo "$PROMPT" | tr '[:upper:]' '[:lower:]')"
+safe_write_tmp() {
+  local name="$1"
+  local value="$2"
+  local tmp_file="${TMP_DIR}/${name}"
+  local session_file="${SESSION_DIR}/${name}"
 
-# ── Guardian Routing ──────────────────────────────────────────────────────
+  printf '%s' "$value" > "$tmp_file" 2>/dev/null || printf '%s' "$value" > "$session_file" 2>/dev/null || true
+}
+
+read_state_file() {
+  local name="$1"
+  if [ -f "${TMP_DIR}/${name}" ]; then
+    cat "${TMP_DIR}/${name}" 2>/dev/null
+    return
+  fi
+  if [ -f "${SESSION_DIR}/${name}" ]; then
+    cat "${SESSION_DIR}/${name}" 2>/dev/null
+  fi
+}
+
+mkdir -p "$SESSION_DIR" 2>/dev/null || true
+safe_log "start"
+
+PROMPT_LOWER="$(printf '%s' "$PROMPT" | tr '[:upper:]' '[:lower:]')"
+
 GUARDIAN="Shinkami"
 GATE="Source"
 KEYWORDS=""
 
-# More specific patterns first, broader patterns last
 if echo "$PROMPT_LOWER" | grep -qE 'coordinat|orchestrat|meta|oversee|council|starlight'; then
   GUARDIAN="Shinkami"; GATE="Source"; KEYWORDS="coordinate/orchestrate"
 elif echo "$PROMPT_LOWER" | grep -qE 'debug|bug|error|fix|broken|crash|undefined'; then
@@ -47,47 +72,27 @@ elif echo "$PROMPT_LOWER" | grep -qE 'explain|teach|principle|wisdom|understand|
   GUARDIAN="Aiyami"; GATE="Crown"; KEYWORDS="explain/teach/wisdom"
 fi
 
-# ── Write State Files ─────────────────────────────────────────────────────
-echo "$GUARDIAN" > /tmp/arcanea-guardian
-echo "$GATE" > /tmp/arcanea-gate
+safe_write_tmp "arcanea-guardian" "$GUARDIAN"
+safe_write_tmp "arcanea-gate" "$GATE"
 
-# ── Context Detection (realm, team, focus) ────────────────────────────────
 if [ -f "$HOOK_DIR/context-detect.sh" ]; then
-  bash "$HOOK_DIR/context-detect.sh" "$PROMPT" "" 2>/dev/null
+  bash "$HOOK_DIR/context-detect.sh" "$PROMPT" "" 2>/dev/null || safe_log "context-detect-skipped"
 fi
 
-# ── Session Logging ───────────────────────────────────────────────────────
 echo "[$TIMESTAMP] Guardian: $GUARDIAN | Gate: $GATE | Prompt: ${PROMPT:0:80}..." >> "$SESSION_DIR/routing.log"
 
-# ── Inject last session context ──────────────────────────────
-if [ -f /tmp/arcanea-last-session ]; then
-  LAST_CTX=$(cat /tmp/arcanea-last-session 2>/dev/null)
-  if [ -n "$LAST_CTX" ]; then
-    echo "[ARCANEA] Continuing from previous session:"
-    echo "$LAST_CTX"
-    # Only inject once per session
-    rm -f /tmp/arcanea-last-session
-  fi
+LAST_CTX="$(read_state_file "arcanea-last-session")"
+if [ -n "$LAST_CTX" ]; then
+  printf '%s\n' "[ARCANEA] Continuing from previous session:"
+  printf '%s\n' "$LAST_CTX"
+  rm -f "${TMP_DIR}/arcanea-last-session" "${SESSION_DIR}/arcanea-last-session" 2>/dev/null || true
 fi
 
-# ── AgentDB Routing Log ──────────────────────────────────────────────────
-if [ -f "$DB_PATH" ]; then
+if [ -f "$DB_PATH" ] && command -v sqlite3 >/dev/null 2>&1; then
   PROMPT_HASH="$(echo -n "$PROMPT" | md5sum 2>/dev/null | cut -d' ' -f1 || echo 'unknown')"
-  if command -v sqlite3 &>/dev/null; then
-    sqlite3 "$DB_PATH" "INSERT INTO routing_log (prompt_hash, detected_guardian, confidence, keywords_matched) VALUES ('$PROMPT_HASH', '$GUARDIAN', 1.0, '$KEYWORDS'); UPDATE agents SET status='idle', last_active=datetime('now') WHERE status='active'; UPDATE agents SET status='active', last_active=datetime('now') WHERE guardian='$GUARDIAN';" 2>/dev/null
-  elif command -v python3 &>/dev/null; then
-    python3 << PYEOF 2>/dev/null
-import sqlite3
-db = sqlite3.connect("$DB_PATH")
-c = db.cursor()
-c.execute(
-    "INSERT INTO routing_log (prompt_hash, detected_guardian, confidence, keywords_matched) VALUES (?,?,?,?)",
-    ("$PROMPT_HASH", "$GUARDIAN", 1.0, "$KEYWORDS")
-)
-c.execute("UPDATE agents SET status='idle', last_active=CURRENT_TIMESTAMP WHERE status='active'")
-c.execute("UPDATE agents SET status='active', last_active=CURRENT_TIMESTAMP WHERE guardian=?", ("$GUARDIAN",))
-db.commit()
-db.close()
-PYEOF
-  fi
+  sqlite3 "$DB_PATH" "INSERT INTO routing_log (prompt_hash, detected_guardian, confidence, keywords_matched) VALUES ('$PROMPT_HASH', '$GUARDIAN', 1.0, '$KEYWORDS');" 2>/dev/null || safe_log "sqlite-insert-failed"
+elif [ -f "$DB_PATH" ]; then
+  safe_log "sqlite3-missing"
 fi
+
+safe_log "complete guardian=$GUARDIAN gate=$GATE"

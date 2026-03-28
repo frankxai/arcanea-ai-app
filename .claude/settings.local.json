@@ -1,8 +1,4 @@
 {
-  "statusLine": {
-    "type": "command",
-    "command": "node --input-type=module \"$HOME/Arcanea/.claude/statusline.mjs\""
-  },
   "permissions": {
     "allow": [
       "Bash(git:*)",
@@ -12,7 +8,17 @@
       "Bash(python3:*)",
       "Bash(bash .claude/*:*)",
       "Bash(cat:*)",
-      "Bash(where:*)"
+      "Bash(where:*)",
+      "Bash(ls -d .claude/skills/*/)",
+      "Bash(ls -d .claude/commands/*/)",
+      "Bash(find .claude/skills -name *.md -exec wc -l {})",
+      "Bash(2)",
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(pnpm --dir apps/web build,)",
+      "Bash(pnpm --dir apps/web build)",
+      "Bash(echo EXIT:$?)",
+      "Bash(echo \"TSC:$?\")",
+      "Bash(echo \"CHAT_IMAGINE:$?\")"
     ]
   },
   "enableAllProjectMcpServers": true,
@@ -33,8 +39,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$HOME/Arcanea/.claude/hooks/session-start.sh\"",
-            "timeout": 5000
+            "command": "bash .claude/hooks/session-start.sh",
+            "timeout": 10
           }
         ]
       }
@@ -44,66 +50,15 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$HOME/Arcanea/.claude/hooks/prompt-submit.sh\" \"$USER_PROMPT\"",
-            "timeout": 3000
-          },
-          {
-            "type": "command",
-            "command": "bash \"$HOME/Arcanea/.claude/hooks/model-route.sh\" \"$USER_PROMPT\"",
-            "timeout": 3000
-          }
-        ]
-      }
-    ],
-    "PreToolUse": [
-      {
-        "matcher": "Task|Bash|Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash \"$HOME/Arcanea/.claude/hooks/pre-tool.sh\" \"$TOOL_NAME\"",
-            "timeout": 3000
-          }
-        ]
-      },
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash \"$HOME/Arcanea/.claude/hooks/voice-check.sh\" \"$TOOL_INPUT\"",
-            "timeout": 3000
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Task|Bash|Write|Edit|Read|Grep|Glob|WebFetch|WebSearch",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash \"$HOME/Arcanea/.claude/hooks/post-tool.sh\" \"$TOOL_NAME\"",
-            "timeout": 3000
-          },
-          {
-            "type": "command",
-            "command": "bash \"$HOME/Arcanea/.claude/hooks/context-tracker.sh\" \"$TOOL_NAME\"",
-            "timeout": 3000
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash \"$HOME/Arcanea/.claude/hooks/session-end.sh\"",
-            "timeout": 5000
+            "command": "bash .claude/hooks/prompt-submit.sh",
+            "timeout": 5
           }
         ]
       }
     ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "node .claude/statusline.mjs"
   }
 }

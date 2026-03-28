@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { LazyMotion, domMax, m } from 'framer-motion';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
 import {
   slideUp,
   staggerContainer,
@@ -115,7 +115,7 @@ export default function GalleryPage() {
   const visuals = getAllCrewVisuals();
 
   return (
-    <LazyMotion features={domMax} strict>
+    <LazyMotion features={domAnimation} strict>
       <main className="mx-auto max-w-7xl px-6 pb-24 pt-8">
         {/* Breadcrumb */}
         <nav className="mb-8 text-sm" aria-label="Breadcrumb">

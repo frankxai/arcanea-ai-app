@@ -15,7 +15,17 @@ import {
   PhSparkle,
   PhUsers,
 } from "@/lib/phosphor-icons";
-import { V4Scene } from "./v4-scene";
+import dynamic from "next/dynamic";
+
+const V4Scene = dynamic(
+  () => import("./v4-scene").then((mod) => mod.V4Scene),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="h-[400px] w-full animate-pulse rounded-2xl bg-white/[0.02]" />
+    ),
+  },
+);
 
 const guardians = [
   { name: "Lyssandria", philosophy: "Structure. Patience. Foundation.", image: "/guardians/v3/lyssandria-hero-v3.webp" },
@@ -129,7 +139,7 @@ export function V4Content({
           {guardians.map((guardian) => (
             <Link key={guardian.name} href={`/lore/guardians/${guardian.name.toLowerCase()}`} className="rounded-2xl overflow-hidden border border-white/10 bg-white/[0.03] hover:bg-white/[0.05] transition">
               <div className="aspect-[3/4] bg-black/30">
-                <img src={guardian.image} alt={guardian.name} className="w-full h-full object-cover object-top" loading="lazy" />
+                <img src={guardian.image} alt={guardian.name} width={300} height={400} className="w-full h-full object-cover object-top" loading="lazy" />
               </div>
               <div className="p-4">
                 <h3 className="text-lg font-semibold">{guardian.name}</h3>

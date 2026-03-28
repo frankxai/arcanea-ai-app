@@ -4,11 +4,11 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "FAQ",
   description:
-    "Frequently asked questions about Arcanea, companions, pricing, and how it works.",
+    "Frequently asked questions about Arcanea, creative partners, pricing, and how the platform works.",
   openGraph: {
     title: "FAQ",
     description:
-      "Frequently asked questions about Arcanea, companions, pricing, and how it works.",
+      "Frequently asked questions about Arcanea, creative partners, pricing, and how the platform works.",
   },
 };
 
@@ -19,19 +19,19 @@ const FAQ_CATEGORIES = [
     questions: [
       {
         q: "What is Arcanea?",
-        a: "Arcanea is a creative multiverse — a living ecosystem where you chat with AI, build fantasy worlds, share what you make, and turn imagination into products. It includes creative partners across development, design, writing, and research, a Library of 190K+ words of creative philosophy, an Academy for world-building, and a Studio for generating art, music, and code.",
+        a: "Arcanea is a creator platform for chat, world-building, and creative output. You can use it to think with AI, build coherent worlds, create stories and assets, and learn from a deep philosophy library that gives the product its distinct point of view.",
       },
       {
         q: "How do I get started?",
-        a: "Simply create a free account at arcanea.ai. You'll immediately have access to 3 companions and 100 messages per month. From there, you can explore the Library, start Academy training, or upgrade for access to the full creative team.",
+        a: "Create a free account at arcanea.ai, start with chat or the library, and then move into studio or world-building when you are ready. The goal is to let you get useful output quickly without forcing you to understand the whole Arcanea universe first.",
       },
       {
         q: "How are Arcanea's companions different from regular AI?",
-        a: "Arcanea is not just a chat interface — it is a creative framework. The companions are domain-specialized creative partners, but they are one layer of a six-layer ecosystem that also includes world-building tools, a social feed, an open-source foundation, a learning Academy, and a community of co-creators.",
+        a: "Arcanea is not just a chat box. The companions are specialized creative partners inside a larger system that also includes structured creation tools, world-building surfaces, a learning layer, and a philosophy library that helps your work stay coherent over time.",
       },
       {
-        q: "What are the Seven Wisdoms?",
-        a: "The Seven Wisdoms are practical mental models for creative work: Sophron (Structure), Kardia (Heart), Valora (Courage), Eudaira (Play), Orakis (Vision), Poiesis (Creation), and Enduran (Endurance). Every companion applies these lenses when approaching your work, giving you proven frameworks for any creative challenge.",
+        q: "Do I need to understand the lore first?",
+        a: "No. Arcanea should work as a clear product before the mythology becomes important. The lore is there to deepen the experience, not to block first-time understanding.",
       },
     ],
   },
@@ -41,19 +41,19 @@ const FAQ_CATEGORIES = [
     questions: [
       {
         q: "How many companions are there?",
-        a: "There are 16 companions organized into 4 teams: Development, Creative, Writing, and Research. Each has a distinct philosophy, expertise, and conversational style. You can explore them all on the Companions page.",
+        a: "Arcanea includes multiple specialist intelligences for different kinds of creative work. The exact lineup can evolve, but the product promise is consistent: you should be able to work with AI partners that are stronger than a one-size-fits-all assistant.",
       },
       {
         q: "Which companion should I use?",
-        a: "It depends on your creative challenge. Need to architect a system? Start with System Architect. Writing a story? Try Narrative Architect. Need research? Deep Analyst or Knowledge Keeper. You can also chat with multiple companions and let them collaborate on complex projects.",
+        a: "Start with the one closest to your current task. Use story-oriented partners for narrative work, research-oriented partners for synthesis and planning, and more technical partners for systems, workflows, or implementation.",
       },
       {
         q: "Can companions work together?",
-        a: "Yes. One of Arcanea's most powerful features is multi-companion collaboration. You can bring in different domain experts for different aspects of a project, or have them review and enhance each other's work. The system is designed for this kind of creative collaboration.",
+        a: "Yes. Arcanea is designed around compound creative work. Different intelligences should be able to contribute to different parts of a project rather than forcing every task through the same interface or voice.",
       },
       {
-        q: "How do companions learn and improve?",
-        a: "Companions improve through the SONA learning system, which records trajectories of successful creative sessions and identifies patterns that lead to better outcomes. They also learn from your feedback — every interaction helps them better understand your creative style and preferences.",
+        q: "What do Guardians, Luminors, and Gates mean?",
+        a: "They are Arcanea's mythic vocabulary for specialist intelligences, AI partners, and creative modes. Publicly, you can think of them as structured ways to organize capability rather than lore you need to memorize.",
       },
     ],
   },
@@ -62,42 +62,42 @@ const FAQ_CATEGORIES = [
     icon: "💎",
     questions: [
       {
-        q: "What's included in the free plan?",
-        a: "The Spark (free) plan includes 3 creative companions, 100 messages per month, full Library access, and Gallery browsing. It's everything you need to explore the platform and see if Arcanea fits your creative workflow.",
+        q: "What is included in the free experience?",
+        a: "The free experience is meant to be a real on-ramp, not just a teaser. You should be able to explore the library, use core chat flows, and understand what kind of creative system Arcanea is before paying.",
       },
       {
-        q: "What do the paid plans include?",
-        a: "The Creator plan ($19/month) unlocks all creative partners with 5,000 messages per month, full Studio creation tools, complete Academy access, and custom prompt templates. The Studio plan ($49/month) adds API access, priority support, custom partner training, and team collaboration features.",
+        q: "What do paid plans unlock?",
+        a: "Paid plans are for creators who want more generation capacity, stronger creation workflows, and higher-agency use of the platform. The details can evolve, but the principle is simple: free lets you explore, paid lets you build seriously.",
       },
       {
         q: "Can I switch plans later?",
-        a: "Yes. You can upgrade or downgrade at any time. Changes take effect immediately, and we prorate any payments. Your conversations and progress are always preserved.",
+        a: "Yes. Arcanea should support moving from exploration to committed use without making your work feel trapped or disposable.",
       },
       {
-        q: "Do you offer team or enterprise plans?",
-        a: "Yes. The enterprise plan ($99/month) includes team collaboration, custom companion deployment, dedicated support, SLA guarantees, custom integrations, and white-label options. Contact us for custom solutions.",
+        q: "Do you offer team or enterprise options?",
+        a: "Yes. Arcanea has both creator-facing plans and a developer or organizational layer for people who want deeper integration, more control, or custom workflows.",
       },
     ],
   },
   {
-    name: "Technical",
+    name: "Technical & Platform",
     icon: "⚙️",
     questions: [
       {
         q: "What technologies power Arcanea?",
-        a: "Arcanea is built on a modern stack: Next.js 16 for the frontend, TypeScript throughout, Supabase for data, and Vercel AI SDK for AI integration. The platform uses advanced consensus algorithms, vector search, and reinforcement learning for the intelligence layer.",
+        a: "Arcanea is built with a modern TypeScript stack centered on Next.js, Supabase, and AI integrations. The product also includes a package ecosystem for MCP, overlays, memory systems, and creator tooling.",
       },
       {
         q: "Is my data secure?",
-        a: "Security is paramount. All conversations are encrypted at rest and in transit. We never use your conversations to train public models. Your creative work remains yours, and you can delete it at any time.",
+        a: "Security is a baseline expectation. Arcanea should protect creator work, limit unnecessary data exposure, and make the boundaries between product data, tooling, and experimentation clearer over time.",
       },
       {
-        q: "Can I use Arcanea via API?",
-        a: "Yes. Studio and Enterprise plans include API access. You can integrate Arcanea's companions into your own applications, workflows, and tools. See the Developers page for details.",
+        q: "What is open source?",
+        a: "Arcanea includes developer-facing tools and packages that support the wider ecosystem, but the main creator platform at arcanea.ai is not the same thing as the entire open tooling surface. Public packages and repo details live on the developer side of Arcanea, while the consumer product remains the main entrypoint for creators.",
       },
       {
         q: "Do you offer self-hosting?",
-        a: "Arcanea is available as a CLI tool that you can run locally. Enterprise customers can also explore custom deployment options. Contact us for details.",
+        a: "Some Arcanea tooling is designed for developers and advanced workflows, but the main platform experience is hosted. If you need deeper integration or custom deployment paths, use the developer surfaces first and contact us for advanced options.",
       },
     ],
   },
@@ -106,26 +106,27 @@ const FAQ_CATEGORIES = [
 export default function FAQPage() {
   const allQuestions = FAQ_CATEGORIES.flatMap((cat) => cat.questions);
   const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
     mainEntity: allQuestions.map((faq) => ({
-      '@type': 'Question',
+      "@type": "Question",
       name: faq.q,
-      acceptedAnswer: { '@type': 'Answer', text: faq.a },
+      acceptedAnswer: { "@type": "Answer", text: faq.a },
     })),
   };
 
   return (
     <div className="relative min-h-screen">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      {/* Background */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-cosmic-deep" />
         <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_left,rgba(0,188,212,0.15),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(13,71,161,0.15),transparent_50%)]" />
       </div>
 
       <main className="max-w-4xl mx-auto px-6">
-        {/* Hero */}
         <section className="pt-20 pb-16 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-atlantean-teal/30 bg-atlantean-teal/10 mb-8">
             <span className="w-2 h-2 rounded-full bg-atlantean-teal animate-pulse" />
@@ -142,12 +143,11 @@ export default function FAQPage() {
           </h1>
 
           <p className="text-xl text-text-secondary max-w-2xl mx-auto mb-8 leading-relaxed">
-            Everything you need to know about Arcanea.
-            Can't find the answer? Reach out to our support team.
+            Everything you need to know about Arcanea as a creator platform.
+            If you need a deeper technical answer, start on the developer side.
           </p>
         </section>
 
-        {/* Search */}
         <div className="py-8">
           <div className="relative">
             <input
@@ -173,7 +173,6 @@ export default function FAQPage() {
           </div>
         </div>
 
-        {/* FAQ Categories */}
         <div className="space-y-16 py-8">
           {FAQ_CATEGORIES.map((category) => (
             <section key={category.name}>
@@ -220,73 +219,32 @@ export default function FAQPage() {
           ))}
         </div>
 
-        {/* Still Have Questions */}
-        <section className="py-16 border-t border-white/[0.04]">
-          <div className="p-8 rounded-2xl border border-white/[0.06] bg-gradient-to-br from-[#00bcd4]/10 to-atlantean-teal/10 text-center">
-            <h3 className="text-xl font-display font-semibold mb-2">
+        <section className="py-16 text-center">
+          <div className="liquid-glass rounded-3xl p-10">
+            <h2 className="text-3xl font-display font-bold mb-4">
               Still have questions?
-            </h3>
-            <p className="text-text-secondary mb-6">
-              Can't find what you're looking for? Our support team is here to
-              help.
+            </h2>
+            <p className="text-text-secondary max-w-xl mx-auto mb-8">
+              Explore the platform, review pricing, or head to the developer
+              surfaces if you want to understand the wider Arcanea ecosystem.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link
-                href="/contact"
-                className="px-6 py-3 rounded-xl bg-atlantean-teal text-cosmic-deep font-semibold hover:shadow-[0_0_20px_rgba(0,188,212,0.4)] transition-all"
+                href="/pricing"
+                className="px-6 py-3 rounded-xl bg-atlantean-teal/15 border border-atlantean-teal/30 text-atlantean-teal font-semibold hover:bg-atlantean-teal/20 transition-colors"
               >
-                Contact Support
+                View Pricing
               </Link>
-              <a
-                href="https://discord.gg/arcanea"
-                className="px-6 py-3 rounded-xl border border-white/[0.12] text-white font-semibold hover:bg-white/[0.04] transition-all"
+              <Link
+                href="/developers"
+                className="px-6 py-3 rounded-xl liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-atlantean-teal/30 transition-colors"
               >
-                Join Discord
-              </a>
+                Developer Surface
+              </Link>
             </div>
           </div>
         </section>
-
-        {/* Quick Links */}
-        <section className="py-16 border-t border-white/[0.04]">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-display font-bold mb-4">
-              Explore More
-            </h2>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                title: "Companions",
-                desc: "Meet the 16 companions across 4 teams",
-                href: "/companions",
-              },
-              {
-                title: "Library",
-                desc: "Browse wisdom collections",
-                href: "/library",
-              },
-              {
-                title: "Academy",
-                desc: "Start your progression",
-                href: "/academy",
-              },
-            ].map((link) => (
-              <Link
-                key={link.title}
-                href={link.href}
-                className="p-6 rounded-xl liquid-glass hover:border-atlantean-teal/30 transition-all"
-              >
-                <h3 className="font-display font-semibold mb-1">
-                  {link.title}
-                </h3>
-                <p className="text-text-secondary text-sm">{link.desc}</p>
-              </Link>
-            ))}
-          </div>
-        </section>
       </main>
-
     </div>
   );
 }

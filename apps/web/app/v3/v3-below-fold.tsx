@@ -22,6 +22,8 @@ import {
 import { GlowCard } from "@/components/ui/glow-card";
 import { HowItWorks } from "@/components/landing/how-it-works";
 import { CTASection } from "@/components/landing/cta-section";
+import { LivingLoreCTA } from "@/components/landing/living-lore-cta";
+import { ThreeLayersSection } from "@/components/landing/three-layers-section";
 import crystalImage from "@/assets/brand/arcanea-crystal.jpg";
 import { getFeaturedLuminors } from "@/lib/luminor-images";
 
@@ -1404,7 +1406,12 @@ export function V3BelowFold({
         {/* 2. How it works — 4 clear steps */}
         <HowItWorks />
 
-        {/* 3. FAQ — objection handling */}
+        <AtmosphericDivider variant="gold" />
+
+        {/* 3. Product hierarchy — explicit staging */}
+        <ThreeLayersSection />
+
+        {/* 4. FAQ — objection handling */}
         <FAQInline />
 
         {/* 4. Built With — tech trust strip */}
@@ -1429,9 +1436,16 @@ export function V3BelowFold({
           </div>
         </section>
 
+        {/* 5. Living Lore — interactive narrative CTA */}
+        <section className="py-12 md:py-16">
+          <div className="max-w-4xl mx-auto px-6">
+            <LivingLoreCTA />
+          </div>
+        </section>
+
         <AtmosphericDivider variant="purple" />
 
-        {/* 5. Final CTA */}
+        {/* 6. Final CTA */}
         <CTASection />
       </>
     </MotionProvider>

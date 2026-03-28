@@ -1,0 +1,16 @@
+{
+  "ci": {
+    "collect": {
+      "url": ["https://arcanea.ai", "https://arcanea.ai/chat", "https://arcanea.ai/imagine"],
+      "numberOfRuns": 1
+    },
+    "assert": {
+      "assertions": {
+        "categories:performance": ["warn", { "minScore": 0.5 }],
+        "categories:accessibility": ["warn", { "minScore": 0.8 }],
+        "first-contentful-paint": ["warn", { "maxNumericValue": 3000 }],
+        "largest-contentful-paint": ["warn", { "maxNumericValue": 5000 }]
+      }
+    }
+  }
+}

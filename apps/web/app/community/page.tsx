@@ -29,6 +29,8 @@ import {
   PhShieldStar,
 } from '@/lib/phosphor-icons';
 import { NewsletterForm } from "@/components/community/newsletter-form";
+import { ActivityFeedSection } from "./sections/activity-feed-section";
+import { CreatorDiscoverySection } from "./sections/creator-discovery-section";
 
 // ─── Data ──────────────────────────────────────────────────────────────────────
 
@@ -359,6 +361,35 @@ export default function CommunityPage() {
               </div>
             </div>
           </div>
+        </section>
+
+        {/* ── 1b. Creator Discovery ──────────────────────────────────────── */}
+        <CreatorDiscoverySection />
+
+        {/* ── 1c. Activity Feed ────────────────────────────────────────────── */}
+        <ActivityFeedSection />
+
+        {/* ── 1d. Discussions CTA ────────────────────────────────────────────── */}
+        <section className="py-12 border-t border-white/[0.04]">
+          <Link
+            href="/community/discussions"
+            className="group flex items-center justify-between p-6 rounded-2xl liquid-glass border border-white/[0.04] hover:border-crystal/30 transition-all"
+          >
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-crystal/10 flex items-center justify-center">
+                <PhChatCircle className="w-6 h-6 text-crystal" />
+              </div>
+              <div>
+                <h3 className="font-display font-semibold text-base mb-0.5">
+                  Community Discussions
+                </h3>
+                <p className="text-sm text-text-secondary font-sans">
+                  Share ideas, ask lore questions, discuss techniques, and connect with fellow creators.
+                </p>
+              </div>
+            </div>
+            <PhArrowRight className="w-5 h-5 text-text-muted group-hover:text-crystal group-hover:translate-x-1 transition-all shrink-0" />
+          </Link>
         </section>
 
         {/* ── 2. Open Source Stats ─────────────────────────────────────────── */}

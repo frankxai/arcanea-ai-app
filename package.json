@@ -1,7 +1,7 @@
 {
   "name": "arcanea",
   "version": "1.0.0",
-  "description": "AI-powered creative ecosystem empowering the next generation of creators",
+  "description": "Creator operating system for AI-native work across chat, research, memory, image creation, and publishing",
   "private": true,
   "workspaces": [
     "apps/*",

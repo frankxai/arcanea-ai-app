@@ -16,8 +16,8 @@ import {
   PhTree,
   PhUsers,
 } from "@/lib/phosphor-icons";
-import { EvolutionScene } from "./evolution-scene";
 import { SplinePreview } from "./spline-preview";
+import { EvolutionSceneLoader } from "./evolution-scene-loader";
 
 export const metadata: Metadata = {
   title: "3D Evolution Lab",
@@ -188,7 +188,7 @@ export default function ThreeDEvolutionPage() {
   return (
     <main className="min-h-screen bg-[#070b16] text-white">
       <section className="relative overflow-hidden border-b border-white/10">
-        <EvolutionScene />
+        <EvolutionSceneLoader />
         <div className="relative mx-auto flex min-h-[88vh] w-full max-w-7xl flex-col justify-end px-6 pb-14 pt-24 md:pb-20">
           <div className="inline-flex w-fit items-center gap-2 rounded-full border border-cyan-200/20 bg-cyan-200/10 px-4 py-1.5 text-[11px] uppercase tracking-[0.24em] text-cyan-100">
             <PhSparkle className="h-3.5 w-3.5" />

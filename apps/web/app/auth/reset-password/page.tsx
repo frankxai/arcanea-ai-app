@@ -29,10 +29,11 @@ export default function ResetPasswordPage() {
 
   useEffect(() => {
     let mounted = true;
+    const supabase = createClient();
 
+    // Check existing session first (covers the case where callback already exchanged the code)
     async function checkRecoverySession() {
       try {
-        const supabase = createClient();
         const {
           data: { session },
         } = await supabase.auth.getSession();
@@ -48,8 +49,18 @@ export default function ResetPasswordPage() {
 
     void checkRecoverySession();
 
+    // Also listen for PASSWORD_RECOVERY event (covers implicit flow with hash tokens)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event) => {
+        if (event === 'PASSWORD_RECOVERY' && mounted) {
+          setHasRecoverySession(true);
+        }
+      }
+    );
+
     return () => {
       mounted = false;
+      subscription.unsubscribe();
     };
   }, []);
 

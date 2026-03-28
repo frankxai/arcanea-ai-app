@@ -9,12 +9,12 @@ import { NotificationBell } from "@/components/notifications/notification-bell";
 import { SearchBar } from "@/components/search/search-bar";
 
 const navLinks = [
-  { href: "/chat", label: "Create", also: ["/imagine", "/studio"] },
+  { href: "/chat", label: "Chat", also: ["/workspace"] },
+  { href: "/imagine", label: "Imagine", also: ["/studio", "/studio/image"] },
   { href: "/library", label: "Library", also: [] },
   { href: "/academy", label: "Academy", also: ["/academy/courses", "/academy/gates"] },
-  { href: "/gallery", label: "Gallery", also: ["/discover", "/gallery/guardians", "/gallery/luminors"] },
-  { href: "/living-lore", label: "Living Lore", also: ["/living-lore/crew", "/living-lore/chronicle", "/living-lore/encounters", "/living-lore/journal"] },
-  { href: "/lore", label: "Lore", also: ["/lore/guardians", "/lore/gates"] },
+  { href: "/gallery", label: "Community", also: ["/discover", "/gallery/guardians", "/gallery/luminors", "/living-lore"] },
+  { href: "/developers", label: "Developers", also: ["/docs", "/skills", "/ecosystem"] },
   { href: "/pricing", label: "Pricing", also: [] },
 ];
 

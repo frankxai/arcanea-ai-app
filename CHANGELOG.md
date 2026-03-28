@@ -7,6 +7,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+### Added (2026-03-25 to 2026-03-27)
+- Living Lore interactive narrative: 7-character crew, serialized episodes, AI encounters, progression
+- Core Web Vitals optimization (Three.js lazy load, domAnimation, image dimensions)
+- GitHub OAuth support on login/signup
+- Community activity feed with real-time Supabase subscriptions
+- Creator discovery with element/gate/house filters
+- Community discussions forum
+- Sentry error tracking
+- PostHog product analytics
+- 11 new loading states, 8 error boundaries
+- AgentDB with 10 Guardians seeded
+- OSS credibility signals: README badges, CODEOWNERS, dependabot, changelog
+
+### Fixed (2026-03-25 to 2026-03-27)
+- Session-start hook sqlite3 error
+- Statusline octal parsing bug
+- Password reset flow routing through callback
+- OAuth callback error handling (denied consent)
+- Redirect chain (308 to 301)
+- Chat CLS (0.563 to <0.15)
+- Phosphor icons barrel re-export tree-shaking
+
+### Changed (2026-03-25 to 2026-03-27)
+- Statusline upgraded from basic .sh to v5.0 .mjs (Guardian wisdom, Arc phases, rate limits)
+- framer-motion domMax to domAnimation on 16 components
+- oh-my-arcanea designated as canonical harness
+
+---
+
 ## [Unreleased] - 2026-03-22 to 2026-03-24
 
 ### Mega-Session: Intelligence OS + Credits System + Architecture Visualization
