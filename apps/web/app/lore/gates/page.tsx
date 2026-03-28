@@ -177,6 +177,19 @@ const GATES = [
   },
 ];
 
+const GATE_HZ: Record<number, string> = {
+  1: '174 Hz',
+  2: '285 Hz',
+  3: '396 Hz',
+  4: '417 Hz',
+  5: '528 Hz',
+  6: '639 Hz',
+  7: '741 Hz',
+  8: '852 Hz',
+  9: '963 Hz',
+  10: '1111 Hz',
+};
+
 const RANKS = [
   { gates: '0-2', rank: 'Apprentice', description: 'Beginning the journey', color: 'text-text-muted' },
   { gates: '3-4', rank: 'Mage', description: 'Claiming personal power', color: 'text-blue-400' },
@@ -370,6 +383,7 @@ export default function GatesPage() {
                         <div className="flex-1">
                           <div className="flex items-center gap-3 mb-1">
                             <h3 className="text-xl font-display font-bold">{gate.name}</h3>
+                            <span className="text-xs font-mono text-crystal">{GATE_HZ[gate.number]}</span>
                           </div>
                           <p className="text-text-secondary">{gate.domain}</p>
                         </div>

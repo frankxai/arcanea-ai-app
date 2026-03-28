@@ -28,7 +28,7 @@ const EXPLORATIONS = [
   {
     href: '/lore/gates',
     title: 'The Ten Gates',
-    description: 'The journey from Foundation to Source — 174 Hz to 1111 Hz',
+    description: 'The journey from Foundation to Source through the ten Gates of creation',
     icon: PhCompass,
     gradient: 'from-gold-bright/20 to-amber-500/10',
     accentColor: 'text-gold-bright',
