@@ -1,0 +1,33 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": [
+    "next-env.d.ts",
+    "types/**/*.d.ts",
+    "app/api/ai/chat/route.ts",
+    "app/api/imagine/generate/route.ts",
+    "app/chat/page.tsx",
+    "app/chat/[luminorId]/page.tsx",
+    "app/imagine/page.tsx",
+    "components/chat/chat-area.tsx",
+    "components/chat/chat-input-bar.tsx",
+    "components/chat/chat-layout.tsx",
+    "components/chat/chat-markdown.tsx",
+    "components/chat/code-block.tsx",
+    "components/chat/history-sidebar.tsx",
+    "components/chat/inline-image.tsx",
+    "components/chat/mention-popup.tsx",
+    "components/chat/message-bubble.tsx",
+    "components/chat/tool-result-block.tsx",
+    "components/imagine/ImageCard.tsx",
+    "components/imagine/PromptInput.tsx",
+    "hooks/use-chat-sessions.ts",
+    "hooks/use-conversation.ts",
+    "lib/chat/local-store.ts",
+    "lib/chat/supabase-store.ts",
+    "lib/imagine-favorites.ts",
+    "lib/imagine/generate.ts"
+  ]
+}

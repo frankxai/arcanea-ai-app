@@ -4,7 +4,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { ChatMessage } from './message';
 import { StreamingMessage } from './streaming-message';
 import { PhArrowDown, PhCircleNotch } from '@/lib/phosphor-icons';
-import { EmotionalTone } from '@/hooks/use-chat';
+import { EmotionalTone } from './types';
 
 interface Message {
   id: string;
@@ -105,14 +105,15 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
           {hasMore && (
             <div className="flex justify-center py-4">
               {isLoadingMore ? (
-                <div className="flex items-center gap-2 text-gray-400">
+                <div className="flex items-center gap-2 text-white/40">
                   <PhCircleNotch className="w-4 h-4 animate-spin" />
                   <span className="text-sm">Loading more messages...</span>
                 </div>
               ) : (
                 <button
                   onClick={onLoadMore}
-                  className="px-4 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300 text-sm transition-colors"
+                  aria-label="Load earlier messages"
+                  className="px-4 py-2 rounded-lg bg-white/[0.06] hover:bg-white/[0.1] text-white/50 hover:text-white/70 text-sm transition-colors"
                 >
                   Load earlier messages
                 </button>
@@ -149,7 +150,7 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
                 >
                   What will you create?
                 </h3>
-                <p className="text-gray-400 max-w-md">
+                <p className="text-white/40 max-w-md">
                   {luminorName} is ready. Describe a world, debug a system, write something
                   that matters — or just think out loud.
                 </p>
@@ -188,6 +189,7 @@ export const ChatContainer: React.FC<ChatContainerProps> = ({
       {showScrollButton && (
         <button
           onClick={scrollToBottom}
+          aria-label="Scroll to latest message"
           className="absolute bottom-6 right-6 w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
           style={{
             backgroundColor: luminorColor,

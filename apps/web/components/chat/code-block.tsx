@@ -1,8 +1,38 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import type { ComponentType } from 'react';
+import dynamic from 'next/dynamic';
+
+interface SyntaxHighlighterProps {
+  children?: string;
+  style?: Record<string, React.CSSProperties>;
+  language?: string;
+  showLineNumbers?: boolean;
+  wrapLines?: boolean;
+  wrapLongLines?: boolean;
+  customStyle?: React.CSSProperties;
+  codeTagProps?: React.HTMLAttributes<HTMLElement>;
+  PreTag?: string | ComponentType;
+  className?: string;
+  [key: string]: unknown;
+}
+
+const SyntaxHighlighter = dynamic<SyntaxHighlighterProps>(
+  () => import('react-syntax-highlighter/dist/esm/prism').then((mod) => mod.default),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="p-4 bg-[#111113] text-[13px] font-mono text-white/60 animate-pulse">
+        Loading...
+      </div>
+    ),
+  },
+);
+
+const stylePromise = import('react-syntax-highlighter/dist/esm/styles/prism').then(
+  (mod) => mod.vscDarkPlus,
+);
 
 interface CodeBlockProps {
   language: string;
@@ -11,6 +41,12 @@ interface CodeBlockProps {
 
 export default function CodeBlock({ language, children }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
+  const [style, setStyle] = useState<Record<string, React.CSSProperties> | null>(null);
+
+  // Load style lazily on first render
+  React.useEffect(() => {
+    stylePromise.then((s) => setStyle(s as Record<string, React.CSSProperties>));
+  }, []);
 
   const handleCopy = async () => {
     try {
@@ -31,7 +67,7 @@ export default function CodeBlock({ language, children }: CodeBlockProps) {
   };
 
   return (
-    <div className="relative group rounded-xl overflow-hidden my-3 border border-white/[0.06] shadow-lg shadow-black/20">
+    <div className="relative group rounded-xl overflow-hidden my-3 border border-white/[0.06] shadow-lg shadow-black/20 max-w-full">
       {/* Header bar */}
       <div className="flex items-center justify-between px-4 py-2 bg-[#1e1e1e] border-t-2 border-t-[#00bcd4]/30 border-b border-b-white/[0.06]">
         <span className="text-[11px] text-[#00bcd4]/60 font-mono uppercase tracking-wider select-none">
@@ -61,23 +97,36 @@ export default function CodeBlock({ language, children }: CodeBlockProps) {
         </button>
       </div>
 
-      <SyntaxHighlighter
-        style={vscDarkPlus as Record<string, React.CSSProperties>}
-        language={language}
-        PreTag="div"
-        customStyle={{
-          margin: 0,
-          padding: '16px',
-          background: '#111113',
-          fontSize: '13px',
-          lineHeight: '1.6',
-        }}
-        codeTagProps={{
-          style: { fontFamily: 'var(--font-mono, "JetBrains Mono", monospace)' },
-        }}
-      >
-        {children}
-      </SyntaxHighlighter>
+      {style && (
+        <SyntaxHighlighter
+          style={style}
+          language={language}
+          PreTag="div"
+          wrapLongLines={false}
+          customStyle={{
+            margin: 0,
+            padding: '16px',
+            background: '#111113',
+            fontSize: '13px',
+            lineHeight: '1.6',
+            overflowX: 'auto',
+            maxWidth: '100%',
+          }}
+          codeTagProps={{
+            style: { fontFamily: 'var(--font-mono, "JetBrains Mono", monospace)' },
+          }}
+        >
+          {children}
+        </SyntaxHighlighter>
+      )}
+
+      {!style && (
+        <pre className="p-4 bg-[#111113] text-[13px] leading-[1.6] overflow-x-auto max-w-full">
+          <code style={{ fontFamily: 'var(--font-mono, "JetBrains Mono", monospace)' }} className="text-white/80">
+            {children}
+          </code>
+        </pre>
+      )}
     </div>
   );
 }

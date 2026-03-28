@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { ChatMessage } from './message';
-import { EmotionalTone } from '@/hooks/use-chat';
+import { EmotionalTone } from './types';
 
 interface StreamingMessageProps {
   content: string;

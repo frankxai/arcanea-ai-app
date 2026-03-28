@@ -1,3 +1,15 @@
+export type EmotionalTone =
+  | 'warm'
+  | 'enthusiastic'
+  | 'contemplative'
+  | 'encouraging'
+  | 'curious'
+  | 'playful'
+  | 'wise'
+  | 'empathetic'
+  | 'challenging'
+  | 'celebratory';
+
 export type ElementType = 'fire' | 'water' | 'earth' | 'void' | 'celestial'
 
 export interface Guardian {

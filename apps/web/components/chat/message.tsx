@@ -2,7 +2,7 @@
 
 import React, { Suspense, lazy } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { EmotionalTone } from '@/hooks/use-chat';
+import { EmotionalTone } from './types';
 
 const LazyCodeBlock = lazy(() => import('./code-block'));
 
@@ -72,10 +72,10 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
 
   const emotionalColorClass = emotionalTone
     ? emotionalColors[emotionalTone]
-    : 'text-gray-400';
+    : 'text-white/40';
   const emotionalGradient = emotionalTone
     ? emotionalGradients[emotionalTone]
-    : 'from-gray-500/10 to-gray-600/10';
+    : 'from-white/[0.04] to-white/[0.02]';
 
   return (
     <div
@@ -137,7 +137,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
             ${
               isUser
                 ? 'bg-gradient-to-br from-blue-500 to-indigo-600 text-white'
-                : `bg-gradient-to-br ${emotionalGradient} bg-gray-800/80 text-gray-100 border border-gray-700/50`
+                : `bg-gradient-to-br ${emotionalGradient} bg-white/[0.06] text-white/90 border border-white/[0.04]`
             }
             ${isStreaming ? 'pr-8' : ''}
           `}
@@ -159,7 +159,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
                   const match = /language-(\w+)/.exec(className || '');
                   const isBlock = match && String(children).includes('\n');
                   return isBlock ? (
-                    <Suspense fallback={<pre className="p-3 rounded bg-gray-900 text-sm overflow-x-auto"><code>{String(children).replace(/\n$/, '')}</code></pre>}>
+                    <Suspense fallback={<pre className="p-3 rounded bg-[#0d0d14] text-sm overflow-x-auto"><code>{String(children).replace(/\n$/, '')}</code></pre>}>
                       <LazyCodeBlock language={match[1]}>
                         {String(children).replace(/\n$/, '')}
                       </LazyCodeBlock>
@@ -178,7 +178,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
                 h2: ({ children }) => <h2 className="text-lg font-bold mb-2">{children}</h2>,
                 h3: ({ children }) => <h3 className="text-base font-bold mb-2">{children}</h3>,
                 blockquote: ({ children }) => (
-                  <blockquote className="border-l-4 border-gray-500 pl-4 italic my-2">
+                  <blockquote className="border-l-4 border-white/[0.12] pl-4 italic my-2">
                     {children}
                   </blockquote>
                 ),
@@ -204,7 +204,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
               {media.map((item, index) => (
                 <div
                   key={index}
-                  className="rounded-lg overflow-hidden border border-gray-700/50"
+                  className="rounded-lg overflow-hidden border border-white/[0.04]"
                 >
                   {item.type === 'image' && (
                     <img
@@ -224,7 +224,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
                     <audio src={item.url} controls className="w-full" />
                   )}
                   {item.caption && (
-                    <div className="px-3 py-2 bg-gray-900/50 text-xs text-gray-400">
+                    <div className="px-3 py-2 bg-black/40 text-xs text-white/40">
                       {item.caption}
                     </div>
                   )}
@@ -236,9 +236,9 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
 
         {/* Timestamp and Status */}
         <div className="flex items-center gap-2 px-1">
-          <span className="text-xs text-gray-500">{formattedTime}</span>
+          <span className="text-xs text-white/30">{formattedTime}</span>
           {isUser && status && (
-            <span className="text-xs text-gray-500">
+            <span className="text-xs text-white/30">
               {status === 'sending' && '⏳'}
               {status === 'sent' && '✓'}
               {status === 'error' && '⚠'}

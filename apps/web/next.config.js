@@ -1,8 +1,14 @@
+const path = require('path');
+const { withSentryConfig } = require("@sentry/nextjs");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   poweredByHeader: false,
+  trailingSlash: false,
+  skipTrailingSlashRedirect: false,
   serverExternalPackages: ['@opentelemetry/api'],
   turbopack: {
+    root: path.join(__dirname, '../../'),
     resolveAlias: {
       '@opentelemetry/api': { browser: './empty-module.js' },
     },
@@ -32,9 +38,17 @@ const nextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
   },
   typescript: {
-    // Temporary: @ai-sdk/react v3.0.118 has many breaking changes.
-    // Enable while migrating to prevent cascading ERROR deploys.
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
+  },
+  async redirects() {
+    return [
+      // Eliminate trailing slash redirect chain
+      {
+        source: '/:path+/',
+        destination: '/:path+',
+        permanent: true,
+      },
+    ];
   },
   async headers() {
     return [
@@ -49,8 +63,30 @@ const nextConfig = {
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()' },
         ],
       },
+      {
+        source: '/guardians/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+      {
+        source: '/:path*.webp',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+      {
+        source: '/:path*.woff2',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
     ];
   },
 }
 
-module.exports = nextConfig
+module.exports = withSentryConfig(nextConfig, {
+  silent: true,
+  org: "arcanea",
+  project: "arcanea-web",
+});
