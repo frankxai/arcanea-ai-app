@@ -3,7 +3,7 @@
 import { m, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import Link from 'next/link';
-import { PhArrowRight, PhShield } from '@/lib/phosphor-icons';
+import { PhArrowRight } from '@/lib/phosphor-icons';
 import { getGuardianAlt } from '@/lib/guardian-alt-texts';
 
 const GUARDIANS = [
@@ -255,6 +255,10 @@ export function GuardiansGrid() {
 
                     {/* Meta */}
                     <div className="flex flex-wrap gap-4 text-sm">
+                      <div>
+                        <span className="text-text-muted">Hz:</span>
+                        <span className="ml-2 text-crystal">{guardian.frequency}</span>
+                      </div>
                       <div>
                         <span className="text-text-muted">Element:</span>
                         <span className="ml-2 text-white">{guardian.element}</span>

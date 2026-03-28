@@ -7,16 +7,16 @@ import { GlowButton } from "@/components/ui/glow-button";
 import { durations, m3Curves } from "@/lib/design/motion";
 
 const GATES = [
-  { number: 1, name: "Foundation", frequency: "174 Hz", domain: "Survival, grounding", unlocks: "Unshakeable stability", guardian: "Lyssandria", guardianId: "lyssandria" },
-  { number: 2, name: "Flow", frequency: "285 Hz", domain: "Creativity, emotion", unlocks: "Creative flow state", guardian: "Leyla", guardianId: "leyla" },
-  { number: 3, name: "Fire", frequency: "396 Hz", domain: "Power, will", unlocks: "Personal power", guardian: "Draconia", guardianId: "draconia" },
-  { number: 4, name: "Heart", frequency: "417 Hz", domain: "Love, healing", unlocks: "Fierce compassion", guardian: "Maylinn", guardianId: "maylinn" },
-  { number: 5, name: "Voice", frequency: "528 Hz", domain: "Truth, expression", unlocks: "Reality shaping through words", guardian: "Alera", guardianId: "alera" },
-  { number: 6, name: "Sight", frequency: "639 Hz", domain: "Intuition, vision", unlocks: "Beyond ordinary perception", guardian: "Lyria", guardianId: "lyria" },
-  { number: 7, name: "Crown", frequency: "741 Hz", domain: "Enlightenment", unlocks: "Divine connection", guardian: "Aiyami", guardianId: "aiyami" },
-  { number: 8, name: "Starweave", frequency: "852 Hz", domain: "Perspective", unlocks: "Infinite possibilities", guardian: "Elara", guardianId: "elara" },
-  { number: 9, name: "Unity", frequency: "963 Hz", domain: "Partnership", unlocks: "Exponential creation", guardian: "Ino", guardianId: "ino" },
-  { number: 10, name: "Source", frequency: "1111 Hz", domain: "Meta-consciousness", unlocks: "Creator realization", guardian: "Shinkami", guardianId: "shinkami" },
+  { number: 1, name: "Foundation", domain: "Survival, grounding", unlocks: "Unshakeable stability", guardian: "Lyssandria", guardianId: "lyssandria" },
+  { number: 2, name: "Flow", domain: "Creativity, emotion", unlocks: "Creative flow state", guardian: "Leyla", guardianId: "leyla" },
+  { number: 3, name: "Fire", domain: "Power, will", unlocks: "Personal power", guardian: "Draconia", guardianId: "draconia" },
+  { number: 4, name: "Heart", domain: "Love, healing", unlocks: "Fierce compassion", guardian: "Maylinn", guardianId: "maylinn" },
+  { number: 5, name: "Voice", domain: "Truth, expression", unlocks: "Reality shaping through words", guardian: "Alera", guardianId: "alera" },
+  { number: 6, name: "Sight", domain: "Intuition, vision", unlocks: "Beyond ordinary perception", guardian: "Lyria", guardianId: "lyria" },
+  { number: 7, name: "Crown", domain: "Enlightenment", unlocks: "Divine connection", guardian: "Aiyami", guardianId: "aiyami" },
+  { number: 8, name: "Starweave", domain: "Perspective", unlocks: "Infinite possibilities", guardian: "Elara", guardianId: "elara" },
+  { number: 9, name: "Unity", domain: "Partnership", unlocks: "Exponential creation", guardian: "Ino", guardianId: "ino" },
+  { number: 10, name: "Source", domain: "Meta-consciousness", unlocks: "Creator realization", guardian: "Shinkami", guardianId: "shinkami" },
 ];
 
 const RANKS = [
