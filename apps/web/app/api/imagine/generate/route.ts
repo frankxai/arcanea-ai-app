@@ -7,7 +7,7 @@ export const maxDuration = 60;
 export async function POST(req: NextRequest) {
   const startedAt = new Date();
   try {
-    const { prompt, count = 4, aspectRatio = '1:1' } = await req.json();
+    const { prompt, count = 4, aspectRatio = '1:1', provider, model } = await req.json();
 
     if (!prompt || typeof prompt !== 'string') {
       return NextResponse.json({ error: 'Prompt is required' }, { status: 400 });
@@ -40,19 +40,21 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Generate images via shared lib (Grok first, Gemini fallback)
+    // Generate images via shared lib (Grok → OpenRouter → Gemini fallback)
     try {
-      const result = await generateImages({ prompt, count, aspectRatio });
+      const result = await generateImages({
+        prompt,
+        count,
+        aspectRatio,
+        forceProvider: provider || undefined,
+        openrouterModel: model || undefined,
+      });
       const completedAt = new Date();
 
       // Map to the existing response shape for backwards compatibility.
-      // Grok returns external URLs; Gemini returns base64 data URLs.
-      // The shared lib normalises Gemini to data URLs, but the original
-      // route also returned `data` + `mimeType` fields for Gemini.
-      // We preserve both shapes so existing clients keep working.
+      // Grok returns external URLs; Gemini/OpenRouter return base64 data URLs.
       const images = result.images.map((img) => {
-        if (result.provider === 'gemini' && img.url.startsWith('data:')) {
-          // Parse the data URL back into the legacy Gemini shape
+        if (img.url.startsWith('data:')) {
           const match = img.url.match(/^data:([^;]+);base64,(.+)$/);
           if (match) {
             return {
@@ -94,7 +96,7 @@ export async function POST(req: NextRequest) {
         },
         safety: {
           providerConfigured: true,
-          fallbackUsed: result.provider === 'gemini',
+          fallbackUsed: result.provider !== 'grok',
         },
         saveState: {
           canSave: images.length > 0,
