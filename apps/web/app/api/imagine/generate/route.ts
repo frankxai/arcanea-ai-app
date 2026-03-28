@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { generateImages } from '@/lib/imagine/generate';
+import { applyStyle } from '@/lib/imagine/styles';
 import type { ImagineGenerationResponse } from '@/lib/imagine/contracts';
 
 export const maxDuration = 60;
@@ -7,11 +8,14 @@ export const maxDuration = 60;
 export async function POST(req: NextRequest) {
   const startedAt = new Date();
   try {
-    const { prompt, count = 4, aspectRatio = '1:1', provider, model } = await req.json();
+    const { prompt, count = 4, aspectRatio = '1:1', provider, model, style } = await req.json();
 
     if (!prompt || typeof prompt !== 'string') {
       return NextResponse.json({ error: 'Prompt is required' }, { status: 400 });
     }
+
+    // Apply Arcanean style if specified
+    const { prompt: styledPrompt, style: appliedStyle } = applyStyle(prompt, style || 'none');
 
     // ── Credit check: spend 1 credit per generation request ──────────────
     // Forward cookies so the spend endpoint can authenticate the user.
@@ -43,7 +47,7 @@ export async function POST(req: NextRequest) {
     // Generate images via shared lib (Grok → OpenRouter → Gemini fallback)
     try {
       const result = await generateImages({
-        prompt,
+        prompt: styledPrompt,
         count,
         aspectRatio,
         forceProvider: provider || undefined,

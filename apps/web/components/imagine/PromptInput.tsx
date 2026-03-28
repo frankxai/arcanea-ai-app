@@ -13,12 +13,16 @@ const ASPECT_RATIOS = [
 
 const STYLE_PRESETS = [
   { id: 'none', label: 'None' },
-  { id: 'fantasy', label: 'Fantasy Art' },
-  { id: 'photorealistic', label: 'Photorealistic' },
+  { id: 'arcanean-fantasy', label: 'Arcanean' },
+  { id: 'photorealistic', label: 'Photo' },
   { id: 'anime', label: 'Anime' },
-  { id: 'concept', label: 'Concept Art' },
-  { id: 'cosmic', label: 'Cosmic' },
-  { id: 'cinematic', label: 'Cinematic' },
+  { id: 'guardian-portrait', label: 'Guardian' },
+  { id: 'concept-art', label: 'Concept' },
+  { id: 'cosmic-void', label: 'Cosmic' },
+  { id: 'cinematic', label: 'Cinema' },
+  { id: 'forge-fire', label: 'Forge' },
+  { id: 'tide-crystal', label: 'Tide' },
+  { id: 'ink-wash', label: 'Ink' },
 ] as const;
 
 const STYLE_CHIPS = [
@@ -73,7 +77,7 @@ interface AplFeedback {
 }
 
 interface PromptInputProps {
-  onGenerate: (prompt: string, count: number, aspectRatio: string) => void;
+  onGenerate: (prompt: string, count: number, aspectRatio: string, style?: string) => void;
   isGenerating: boolean;
   hasResults: boolean;
 }
@@ -123,29 +127,19 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
   }, []);
 
   const buildPrompt = useCallback(() => {
-    let finalPrompt = prompt.trim();
-    if (style !== 'none') {
-      const styleMap: Record<string, string> = {
-        fantasy: 'Fantasy art style, magical ethereal atmosphere, rich mystical details',
-        photorealistic: 'Photorealistic, ultra-high detail, natural lighting',
-        anime: 'Anime style, vibrant colors, expressive composition',
-        concept: 'Professional concept art, cinematic composition, detailed environments',
-        cosmic: 'Cosmic theme, deep space, nebulae, stellar phenomena, vast scale',
-        cinematic: 'Cinematic still frame, dramatic lighting, film color grading, shallow depth of field',
-      };
-      finalPrompt += `. ${styleMap[style] || ''}`;
-    }
-    return finalPrompt;
-  }, [prompt, style]);
+    // Style application is now handled server-side by the Arcanean Style Engine.
+    // We just return the raw prompt here; the style ID is passed separately.
+    return prompt.trim();
+  }, [prompt]);
 
   const handleSubmit = useCallback(() => {
     if (!prompt.trim() || isGenerating) return;
     const finalPrompt = buildPrompt();
     saveToHistory(prompt.trim());
     setHistory(loadHistory());
-    onGenerate(finalPrompt, 4, aspectRatio);
+    onGenerate(finalPrompt, 4, aspectRatio, style !== 'none' ? style : undefined);
     if (hasResults) setIsExpanded(false);
-  }, [prompt, aspectRatio, isGenerating, onGenerate, hasResults, buildPrompt]);
+  }, [prompt, aspectRatio, style, isGenerating, onGenerate, hasResults, buildPrompt]);
 
   const handleEnhance = useCallback(async () => {
     if (!prompt.trim() || isEnhancing) return;

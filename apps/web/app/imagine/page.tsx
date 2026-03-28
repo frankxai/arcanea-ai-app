@@ -63,13 +63,13 @@ export default function ImaginePage() {
   }, [refreshFavorites]);
 
   // Generate a single row of images
-  const generateRow = useCallback(async (prompt: string, aspectRatio: string, rowId?: string): Promise<GenerationRow | null> => {
+  const generateRow = useCallback(async (prompt: string, aspectRatio: string, rowId?: string, style?: string): Promise<GenerationRow | null> => {
     const id = rowId || `row_${Date.now()}_${generationCounterRef.current++}`;
 
     const res = await fetch('/api/imagine/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt, count: 4, aspectRatio }),
+      body: JSON.stringify({ prompt, count: 4, aspectRatio, style }),
     });
 
     if (!res.ok) {
@@ -96,8 +96,11 @@ export default function ImaginePage() {
   }, []);
 
   // Handle initial generation from prompt input
-  const handleGenerate = useCallback(async (prompt: string, _count: number, aspectRatio: string) => {
+  const currentStyleRef = useRef<string | undefined>();
+
+  const handleGenerate = useCallback(async (prompt: string, _count: number, aspectRatio: string, style?: string) => {
     if (isGeneratingRef.current) return;
+    currentStyleRef.current = style;
 
     setIsGenerating(true);
     isGeneratingRef.current = true;
@@ -116,7 +119,7 @@ export default function ImaginePage() {
     }, ...prev]);
 
     try {
-      const row = await generateRow(prompt, aspectRatio, loadingId);
+      const row = await generateRow(prompt, aspectRatio, loadingId, style);
       if (row) {
         setRows((prev) => prev.map((r) => r.id === loadingId ? row : r));
         setAutoScrollEnabled(true);
@@ -152,7 +155,7 @@ export default function ImaginePage() {
     }]);
 
     try {
-      const row = await generateRow(currentPrompt, currentAspectRatio, loadingId);
+      const row = await generateRow(currentPrompt, currentAspectRatio, loadingId, currentStyleRef.current);
       if (row) {
         setRows((prev) => prev.map((r) => r.id === loadingId ? row : r));
       }
