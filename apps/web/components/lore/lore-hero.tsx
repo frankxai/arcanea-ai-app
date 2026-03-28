@@ -1,12 +1,10 @@
 "use client";
 
-import { m, useScroll, useTransform } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { m } from "framer-motion";
+import { useState, useEffect } from "react";
 import { useMouseStore } from "@/hooks/use-mouse-store";
-import { durations, m3Curves } from "@/lib/design/motion";
 
 export function LoreHero() {
-  const containerRef = useRef<HTMLDivElement>(null);
   const mouse = useMouseStore();
   const [windowSize, setWindowSize] = useState({ w: 1, h: 1 });
 
@@ -14,24 +12,12 @@ export function LoreHero() {
     setWindowSize({ w: window.innerWidth || 1, h: window.innerHeight || 1 });
   }, []);
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
-  });
-
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
-  const y = useTransform(scrollYProgress, [0, 0.5], [0, 100]);
-
   // Normalized mouse position (0-1), safe for SSR.
   const mx = mouse.x / windowSize.w;
   const my = mouse.y / windowSize.h;
 
   return (
-    <section
-      ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-    >
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
         <div className="absolute inset-0 stars-ambient" />
 
@@ -80,10 +66,7 @@ export function LoreHero() {
         <div className="absolute inset-0 bg-gradient-to-b from-cosmic-deep via-transparent to-cosmic-deep" />
       </div>
 
-      <m.div
-        style={{ opacity, scale, y }}
-        className="relative z-10 text-center px-4 sm:px-6 max-w-5xl mx-auto"
-      >
+      <div className="relative z-10 text-center px-4 sm:px-6 max-w-5xl mx-auto">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full liquid-glass border border-gold-bright/20 mb-8">
           <svg className="w-4 h-4 text-gold-bright" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z" />
@@ -125,20 +108,15 @@ export function LoreHero() {
           ))}
         </div>
 
-        <m.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          className="flex flex-col items-center gap-2"
-        >
+        <div className="flex flex-col items-center gap-2">
           <span className="text-sm text-text-muted">Descend into the lore</span>
           <m.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity }}>
             <svg className="w-6 h-6 text-text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="6 9 12 15 18 9" />
             </svg>
           </m.div>
-        </m.div>
-      </m.div>
+        </div>
+      </div>
     </section>
   );
 }

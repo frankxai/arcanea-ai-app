@@ -2,8 +2,10 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import { useAuth } from '@/lib/auth/context'
 
 export function NotificationBell() {
+  const { user, isLoading: authLoading } = useAuth()
   const [count, setCount] = useState(0)
   const [prevCount, setPrevCount] = useState(0)
   const [open, setOpen] = useState(false)
@@ -17,8 +19,19 @@ export function NotificationBell() {
 
   // Fetch unread count
   const fetchCount = useCallback(async () => {
+    if (!user) {
+      setPrevCount(0)
+      setCount(0)
+      return
+    }
+
     try {
       const res = await fetch('/api/notifications/unread-count')
+      if (res.status === 401) {
+        setPrevCount(0)
+        setCount(0)
+        return
+      }
       const data = await res.json()
       const newCount = data.count ?? 0
       setPrevCount(count)
@@ -26,13 +39,14 @@ export function NotificationBell() {
     } catch {
       // Silently fail — count stays at last known value
     }
-  }, [count])
+  }, [count, user])
 
   useEffect(() => {
+    if (!user) return
     fetchCount()
     const interval = setInterval(fetchCount, 30000)
     return () => clearInterval(interval)
-  }, [fetchCount])
+  }, [fetchCount, user])
 
   // Trigger ring animation when count increases
   useEffect(() => {
@@ -46,6 +60,7 @@ export function NotificationBell() {
 
   // Realtime subscription for instant updates on new notifications
   useEffect(() => {
+    if (!user) return
     const supabase = createClient()
     const channel = supabase
       .channel('notifications-realtime')
@@ -61,7 +76,7 @@ export function NotificationBell() {
     return () => {
       supabase.removeChannel(channel)
     }
-  }, [fetchCount])
+  }, [fetchCount, user])
 
   // Click outside to close
   useEffect(() => {
@@ -104,10 +119,14 @@ export function NotificationBell() {
   }, [open])
 
   const fetchNotifications = async () => {
-    if (loading) return
+    if (!user || loading) return
     setLoading(true)
     try {
       const res = await fetch('/api/notifications?page=1&pageSize=20')
+      if (res.status === 401) {
+        setNotifications([])
+        return
+      }
       const data = await res.json()
       if (data.success) {
         setNotifications(data.data?.notifications ?? [])
@@ -178,6 +197,10 @@ export function NotificationBell() {
 
   // Group notifications by date
   const grouped = groupByDate(notifications)
+
+  if (authLoading || !user) {
+    return null
+  }
 
   return (
     <>
