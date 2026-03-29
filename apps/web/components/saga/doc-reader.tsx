@@ -1,9 +1,15 @@
 'use client';
 
-export function DocReader({ slug }: { slug: string }) {
+export interface TocHeading {
+  id: string;
+  text: string;
+  level: number;
+}
+
+export function SagaDocReader({ content, headings }: { content: string; headings: TocHeading[] }) {
   return (
-    <div className="min-h-[60vh] flex items-center justify-center">
-      <p className="text-text-muted text-sm">Document loading...</p>
+    <div className="max-w-3xl mx-auto px-6 py-12">
+      <div className="prose prose-invert prose-sm" dangerouslySetInnerHTML={{ __html: content }} />
     </div>
   );
 }

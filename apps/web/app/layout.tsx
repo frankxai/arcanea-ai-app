@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ReactNode, Suspense, lazy } from "react";
-import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
+import { Space_Grotesk, Inter, JetBrains_Mono, Newsreader } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { AuthProvider } from "@/lib/auth/context";
 import { Navbar, Footer } from "@/components/navigation";
@@ -40,6 +40,14 @@ const inter = Inter({
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains-mono",
+  display: "swap",
+});
+
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-serif",
   display: "swap",
 });
 
@@ -96,6 +104,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         spaceGrotesk.variable,
         inter.variable,
         jetbrainsMono.variable,
+        newsreader.variable,
       )}
     >
       <body>

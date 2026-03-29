@@ -87,6 +87,20 @@
     --creation-wave-medium: 190 70% 60%;
     --creation-wave-deep: 190 75% 45%;
 
+    /* === PEACOCK JEWEL PALETTE (Iridescent brand identity) === */
+    --peacock-blue-deep: 200 85% 18%;
+    --peacock-blue: 195 80% 38%;
+    --peacock-blue-bright: 192 75% 55%;
+    --peacock-green-deep: 170 70% 20%;
+    --peacock-green: 168 65% 36%;
+    --peacock-green-bright: 165 60% 50%;
+    --peacock-purple-deep: 270 65% 22%;
+    --peacock-purple: 265 55% 42%;
+    --peacock-purple-bright: 262 60% 62%;
+    --aquamarine: 160 100% 75%;
+    --aquamarine-soft: 162 60% 65%;
+    --aquamarine-deep: 165 80% 42%;
+
     /* === SEMANTIC COLORS === */
     --success-light: 145 70% 75%;
     --success: 145 75% 50%;
@@ -377,6 +391,88 @@
   }
 
   /* === GLASS MODIFIERS === */
+
+  /* --- Peacock Starlight Glass (liquid starlight, warm prismatic refraction) --- */
+  .glass-starlight {
+    background: linear-gradient(
+      145deg,
+      rgba(18, 18, 24, 0.85) 0%,
+      rgba(12, 14, 20, 0.90) 40%,
+      rgba(16, 18, 26, 0.88) 100%
+    );
+    backdrop-filter: blur(48px) saturate(1.9);
+    -webkit-backdrop-filter: blur(48px) saturate(1.9);
+    border: 1px solid rgba(127, 255, 212, 0.10);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      inset 0 0 60px rgba(127, 255, 212, 0.03),
+      0 0 40px rgba(0, 150, 136, 0.06),
+      0 16px 48px rgba(0, 0, 0, 0.35);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass-starlight::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      transparent 0%,
+      rgba(127, 255, 212, 0.03) 20%,
+      rgba(100, 255, 218, 0.04) 40%,
+      rgba(124, 77, 255, 0.03) 60%,
+      rgba(0, 119, 182, 0.03) 80%,
+      transparent 100%
+    );
+    opacity: 0.6;
+    transition: opacity 600ms ease;
+    pointer-events: none;
+  }
+
+  .glass-starlight:hover::before {
+    opacity: 1;
+  }
+
+  /* --- Cosmic Metal Glass (dark chrome with blue reflection) --- */
+  .glass-cosmic-metal {
+    background: linear-gradient(
+      160deg,
+      rgba(14, 14, 20, 0.92) 0%,
+      rgba(10, 12, 18, 0.95) 50%,
+      rgba(16, 16, 24, 0.92) 100%
+    );
+    backdrop-filter: blur(32px) saturate(1.4);
+    -webkit-backdrop-filter: blur(32px) saturate(1.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.04),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+      0 8px 32px rgba(0, 0, 0, 0.5);
+  }
+
+  /* --- Iridescent Depth Glass (peacock shimmer with 3D layering) --- */
+  .glass-iridescent-depth {
+    background: linear-gradient(
+      145deg,
+      rgba(0, 77, 122, 0.06) 0%,
+      rgba(0, 105, 92, 0.05) 25%,
+      rgba(127, 255, 212, 0.03) 50%,
+      rgba(124, 77, 255, 0.04) 75%,
+      rgba(0, 77, 122, 0.05) 100%
+    );
+    backdrop-filter: blur(44px) saturate(2.0);
+    -webkit-backdrop-filter: blur(44px) saturate(2.0);
+    border: 1px solid rgba(127, 255, 212, 0.12);
+    box-shadow:
+      inset 0 1px 0 rgba(127, 255, 212, 0.08),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+      0 4px 24px rgba(0, 105, 92, 0.08),
+      0 16px 48px rgba(0, 0, 0, 0.3),
+      0 0 0 1px rgba(127, 255, 212, 0.04);
+    position: relative;
+    overflow: hidden;
+  }
 
   /* Noise texture overlay (adds premium grain) */
   .glass-noise::after {

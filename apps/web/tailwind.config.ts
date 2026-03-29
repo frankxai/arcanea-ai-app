@@ -124,6 +124,30 @@ const config: Config = {
           'wave-medium': 'hsl(var(--creation-wave-medium))',
           'wave-deep': 'hsl(var(--creation-wave-deep))',
         },
+        // Peacock Jewel Palette (iridescent brand colors)
+        peacock: {
+          'blue-deep': 'hsl(var(--peacock-blue-deep))',
+          blue: 'hsl(var(--peacock-blue))',
+          'blue-bright': 'hsl(var(--peacock-blue-bright))',
+          'green-deep': 'hsl(var(--peacock-green-deep))',
+          green: 'hsl(var(--peacock-green))',
+          'green-bright': 'hsl(var(--peacock-green-bright))',
+          'purple-deep': 'hsl(var(--peacock-purple-deep))',
+          purple: 'hsl(var(--peacock-purple))',
+          'purple-bright': 'hsl(var(--peacock-purple-bright))',
+        },
+        aquamarine: {
+          DEFAULT: 'hsl(var(--aquamarine))',
+          soft: 'hsl(var(--aquamarine-soft))',
+          deep: 'hsl(var(--aquamarine-deep))',
+        },
+        // Brand accent (iridescent shift)
+        brand: {
+          primary: 'hsl(var(--aquamarine))',
+          hover: 'hsl(var(--peacock-blue))',
+          active: 'hsl(var(--peacock-green))',
+          focus: 'hsl(var(--peacock-purple-bright))',
+        },
         // Semantic Colors
         success: {
           light: 'hsl(var(--success-light))',
@@ -153,6 +177,11 @@ const config: Config = {
         'draconic-gradient': 'linear-gradient(135deg, hsl(var(--draconic-crimson)) 0%, hsl(var(--draconic-gold)) 50%, hsl(var(--draconic-sky)) 100%)',
         'creation-gradient': 'linear-gradient(135deg, hsl(var(--creation-gold)) 0%, hsl(var(--creation-prism-blue)) 50%, hsl(var(--creation-prism-purple)) 100%)',
         'prism-gradient': 'linear-gradient(90deg, hsl(var(--creation-prism-red)), hsl(var(--creation-prism-orange)), hsl(var(--creation-prism-yellow)), hsl(var(--creation-prism-green)), hsl(var(--creation-prism-cyan)), hsl(var(--creation-prism-blue)), hsl(var(--creation-prism-purple)))',
+        'peacock-gradient': 'linear-gradient(135deg, hsl(var(--peacock-blue)) 0%, hsl(var(--aquamarine)) 33%, hsl(var(--peacock-green)) 66%, hsl(var(--peacock-purple)) 100%)',
+        'iridescent-gradient': 'linear-gradient(135deg, hsl(var(--peacock-blue-bright)) 0%, hsl(var(--aquamarine)) 25%, hsl(var(--peacock-green-bright)) 50%, hsl(var(--peacock-purple-bright)) 75%, hsl(var(--peacock-blue-bright)) 100%)',
+      },
+      fontFamily: {
+        serif: ['var(--font-serif)', 'Newsreader', 'Georgia', 'ui-serif', 'serif'],
       },
       borderRadius: {
         lg: 'var(--radius)',
