@@ -10,6 +10,7 @@ import {
   PhArrowDown,
   PhArrowClockwise,
 } from '@/lib/phosphor-icons';
+import { ArcaneanMarkGlow, ArcaneanMarkSmall } from '@/components/brand/arcanea-mark';
 
 // ---------------------------------------------------------------------------
 // Constants (ported from page.tsx)
@@ -285,8 +286,8 @@ export function ChatArea({
           <div className="flex flex-col items-center justify-center h-full px-4">
             <div className="max-w-[480px] w-full text-center">
               {/* Arcanea icon */}
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#00bcd4]/20 to-[#0d47a1]/20 border border-[#00bcd4]/10 flex items-center justify-center mb-6 mx-auto shadow-[0_0_24px_rgba(0,188,212,0.12)] animate-empty-fade-in">
-                <span className="text-2xl">{'\u2726'}</span>
+              <div className="mb-6 mx-auto animate-empty-fade-in">
+                <ArcaneanMarkGlow animate="breathe" />
               </div>
 
               {/* Time-aware greeting — single line */}
@@ -410,16 +411,20 @@ export function ChatArea({
             {isThinking && (
               <div className="mb-6" role="status" aria-label="Arcanea is composing a response">
                 <div className="flex gap-3">
-                  <div
-                    className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0"
-                    style={{
-                      background: activeLuminor
-                        ? `linear-gradient(135deg, ${activeLuminor.color || ACCENT}, ${activeLuminor.color || ACCENT}80)`
-                        : `linear-gradient(135deg, ${ACCENT}, #0d47a1)`,
-                    }}
-                  >
-                    {activeLuminor?.avatar || '\u2726'}
-                  </div>
+                  {activeLuminor?.avatar ? (
+                    <div
+                      className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0"
+                      style={{
+                        background: `linear-gradient(135deg, ${activeLuminor.color || ACCENT}, ${activeLuminor.color || ACCENT}80)`,
+                      }}
+                    >
+                      {activeLuminor.avatar}
+                    </div>
+                  ) : (
+                    <div className="w-8 h-8 rounded-full bg-[#00bcd4]/5 flex items-center justify-center shrink-0 shadow-[0_0_8px_rgba(0,188,212,0.12)]">
+                      <ArcaneanMarkSmall className="animate-[breathe_2s_ease-in-out_infinite]" />
+                    </div>
+                  )}
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1.5">
                       <span

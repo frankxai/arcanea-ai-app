@@ -7,6 +7,7 @@ import { LazyMotion, domMax, m, AnimatePresence } from "framer-motion";
 import { UserNav } from "@/components/auth";
 import { NotificationBell } from "@/components/notifications/notification-bell";
 import { SearchBar } from "@/components/search/search-bar";
+import { ArcaneanMark } from "@/components/brand/arcanea-mark";
 
 const navLinks = [
   { href: "/chat", label: "Create", also: ["/imagine", "/studio"] },
@@ -42,9 +43,10 @@ export function Navbar() {
           <div className="flex items-center justify-between gap-4">
             <Link
               href="/"
-              className="text-base font-display font-semibold text-white/90 tracking-tight hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/30 rounded"
+              className="flex items-center gap-2 text-base font-display font-semibold text-white/90 tracking-tight hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/30 rounded"
             >
-              Arcanea
+              <ArcaneanMark size={22} />
+              <span>Arcanea</span>
             </Link>
 
             <div className="hidden md:flex items-center gap-1.5">

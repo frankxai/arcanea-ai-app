@@ -19,6 +19,7 @@ import {
   generateFallbackSuggestions,
   type ContentType,
 } from '@/lib/chat/suggestion-engine';
+import { ArcaneanMarkSmall } from '@/components/brand/arcanea-mark';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -414,14 +415,20 @@ export function MessageBubble({
     <div className="mb-6 group">
       <div className="mr-auto max-w-[85%] flex gap-3">
         {/* Avatar */}
-        <div
-          className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0 mt-0.5"
-          style={{
-            background: `linear-gradient(135deg, ${accentColor}, ${accentColor}80)`,
-          }}
-        >
-          {luminorAvatar || 'A'}
-        </div>
+        {luminorAvatar ? (
+          <div
+            className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0 mt-0.5"
+            style={{
+              background: `linear-gradient(135deg, ${accentColor}, ${accentColor}80)`,
+            }}
+          >
+            {luminorAvatar}
+          </div>
+        ) : (
+          <div className="w-8 h-8 rounded-full bg-[#00bcd4]/5 flex items-center justify-center shrink-0 mt-0.5 shadow-[0_0_8px_rgba(0,188,212,0.12)]">
+            <ArcaneanMarkSmall />
+          </div>
+        )}
 
         <div className="min-w-0 flex-1">
           {/* Header row */}
