@@ -80,13 +80,19 @@ interface AplFeedback {
 }
 
 interface PromptInputProps {
-  onGenerate: (prompt: string, count: number, aspectRatio: string, style?: string, model?: string, enhance?: boolean) => void;
+  onGenerate: (prompt: string, count: number, aspectRatio: string, style?: string, model?: string, enhance?: boolean, negativePrompt?: string) => void;
   isGenerating: boolean;
   hasResults: boolean;
+  /** Pre-fill the prompt (e.g. from Vary button) */
+  externalPrompt?: string;
+  /** Current generation progress: "Creating 2 of 4..." */
+  generationProgress?: { current: number; total: number; estimatedSecondsLeft?: number } | null;
 }
 
-export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInputProps) {
+export function PromptInput({ onGenerate, isGenerating, hasResults, externalPrompt, generationProgress }: PromptInputProps) {
   const [prompt, setPrompt] = useState('');
+  const [negativePrompt, setNegativePrompt] = useState('');
+  const [showAdvanced, setShowAdvanced] = useState(false);
   const [aspectRatio, setAspectRatio] = useState('1:1');
   const [style, setStyle] = useState('none');
   const [model, setModel] = useState('auto');
@@ -100,6 +106,15 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
   const [tooltipAnchor, setTooltipAnchor] = useState<{ top: number; left: number; width: number } | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const historyRef = useRef<HTMLDivElement>(null);
+
+  // Accept external prompt changes (e.g. from Vary button)
+  useEffect(() => {
+    if (externalPrompt !== undefined && externalPrompt !== '') {
+      setPrompt(externalPrompt);
+      setIsExpanded(true);
+      setTimeout(() => textareaRef.current?.focus(), 100);
+    }
+  }, [externalPrompt]);
 
   // Load history on mount
   useEffect(() => {
@@ -149,9 +164,10 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
       style !== 'none' ? style : undefined,
       model !== 'auto' ? model : undefined,
       autoEnhance || undefined,
+      negativePrompt.trim() || undefined,
     );
     if (hasResults) setIsExpanded(false);
-  }, [prompt, aspectRatio, style, model, autoEnhance, isGenerating, onGenerate, hasResults, buildPrompt]);
+  }, [prompt, negativePrompt, aspectRatio, style, model, autoEnhance, isGenerating, onGenerate, hasResults, buildPrompt]);
 
   const handleEnhance = useCallback(async () => {
     if (!prompt.trim() || isEnhancing) return;
@@ -305,6 +321,82 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
                       </button>
                     ))}
                   </div>
+                </div>
+              </m.div>
+            )}
+          </AnimatePresence>
+
+          {/* Advanced options (negative prompt) */}
+          <div className="border-t border-white/[0.04]">
+            <button
+              onClick={() => setShowAdvanced(!showAdvanced)}
+              className="w-full flex items-center gap-1.5 px-5 py-2 text-[11px] text-text-muted/60 hover:text-text-muted transition-colors"
+            >
+              <svg
+                width="10"
+                height="10"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className={`transition-transform duration-200 ${showAdvanced ? 'rotate-90' : ''}`}
+              >
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+              Advanced
+            </button>
+            <AnimatePresence>
+              {showAdvanced && (
+                <m.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.15 }}
+                  className="overflow-hidden"
+                >
+                  <div className="px-5 pb-3">
+                    <textarea
+                      value={negativePrompt}
+                      onChange={(e) => setNegativePrompt(e.target.value)}
+                      placeholder="Things to avoid: blurry, low quality, watermark, text, extra limbs..."
+                      rows={2}
+                      className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl px-4 py-2.5 text-xs text-text-secondary placeholder:text-text-muted/40 focus:outline-none focus:border-[#00bcd4]/30 focus:ring-1 focus:ring-[#00bcd4]/20 resize-none font-body"
+                    />
+                  </div>
+                </m.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Generation progress bar */}
+          <AnimatePresence>
+            {isGenerating && generationProgress && (
+              <m.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="border-t border-white/[0.04] overflow-hidden"
+              >
+                <div className="px-5 py-2.5 flex items-center gap-3">
+                  <span className="text-xs text-[#00bcd4] font-medium whitespace-nowrap">
+                    Creating {generationProgress.current} of {generationProgress.total}...
+                  </span>
+                  <div className="flex-1 h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
+                    <m.div
+                      className="h-full rounded-full bg-gradient-to-r from-[#00bcd4] to-violet-500"
+                      initial={{ width: '0%' }}
+                      animate={{ width: `${(generationProgress.current / generationProgress.total) * 100}%` }}
+                      transition={{ duration: 0.5, ease: 'easeOut' }}
+                    />
+                  </div>
+                  {generationProgress.estimatedSecondsLeft != null && generationProgress.estimatedSecondsLeft > 0 && (
+                    <span className="text-[10px] text-text-muted whitespace-nowrap">
+                      ~{generationProgress.estimatedSecondsLeft}s left
+                    </span>
+                  )}
                 </div>
               </m.div>
             )}

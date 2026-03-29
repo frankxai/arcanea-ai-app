@@ -10,6 +10,7 @@ import {
   PhShield,
   PhArrowRight,
   PhCompass,
+  PhDiamond,
 } from '@/lib/phosphor-icons';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
@@ -75,6 +76,16 @@ const EXPLORATIONS = [
     borderColor: 'border-red-400/20 hover:border-red-400/40',
     bgImage: null,
     darkGradient: true,
+  },
+  {
+    href: '/codex/materials',
+    title: 'Arcanean Materials',
+    description: 'Crystals, metals, and shards born from the Luminor Fallout',
+    icon: PhDiamond,
+    gradient: 'from-teal-400/20 to-emerald-500/10',
+    accentColor: 'text-[#7fffd4]',
+    borderColor: 'border-[#7fffd4]/20 hover:border-[#7fffd4]/40',
+    bgImage: null,
   },
 ];
 

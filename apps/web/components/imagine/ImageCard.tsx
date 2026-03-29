@@ -23,6 +23,7 @@ interface ImageCardProps {
   mimeType?: string;
   aspectRatio?: string;
   onAnimate?: (id: string, imageUrl: string) => void;
+  onVary?: (prompt: string) => void;
   onFavoriteChange?: () => void;
   isAnimating?: boolean;
   videoUrl?: string;
@@ -37,6 +38,7 @@ export function ImageCard({
   mimeType,
   aspectRatio = '1:1',
   onAnimate,
+  onVary,
   onFavoriteChange,
   isAnimating,
   videoUrl,
@@ -254,25 +256,46 @@ export function ImageCard({
             <p className="text-xs text-white/70 line-clamp-2 font-body leading-relaxed">
               {prompt}
             </p>
-            {onAnimate && !videoUrl && (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onAnimate(id, src);
-                }}
-                disabled={isAnimating}
-                className="mt-2 px-3 py-1.5 rounded-lg text-xs font-medium bg-violet-600/80 text-white hover:bg-violet-500 transition-all disabled:opacity-50 backdrop-blur-sm"
-              >
-                {isAnimating ? (
-                  <span className="flex items-center gap-1.5">
-                    <span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    Animating
-                  </span>
-                ) : (
-                  'Animate'
-                )}
-              </button>
-            )}
+            <div className="flex items-center gap-1.5 mt-2">
+              {onVary && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onVary(prompt);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium bg-[#00bcd4]/80 text-white hover:bg-[#00bcd4] transition-all backdrop-blur-sm flex items-center gap-1.5"
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M16 3h5v5" />
+                    <path d="M8 3H3v5" />
+                    <path d="M12 22v-8.3a4 4 0 0 0-1.172-2.872L3 3" />
+                    <path d="m15 9 6-6" />
+                  </svg>
+                  Vary
+                </button>
+              )}
+              {onAnimate && !videoUrl && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (isAnimating) return;
+                    onAnimate(id, src);
+                  }}
+                  disabled={isAnimating}
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium bg-violet-600/80 text-white hover:bg-violet-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-sm"
+                >
+                  {isAnimating ? (
+                    <span className="flex items-center gap-1.5">
+                      <span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      Animating
+                    </span>
+                  ) : (
+                    'Animate'
+                  )}
+                </button>
+              )}
+            </div>
           </div>
         </div>
 

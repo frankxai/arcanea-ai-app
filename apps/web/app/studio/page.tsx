@@ -25,6 +25,9 @@ import {
   Link,
   Gear,
   Brain,
+  ArrowRight,
+  Clock,
+  Lightning,
 } from "@/lib/phosphor-icons";
 // ---------------------------------------------------------------------------
 // Constants
@@ -84,6 +87,69 @@ const MODES: ModeConfig[] = [
     elementColor: "#3b82f6",
     description: "Compose original music and soundscapes.",
   },
+];
+
+// ---------------------------------------------------------------------------
+// Quick-start cards for the landing view
+// ---------------------------------------------------------------------------
+
+const QUICK_START_CARDS = [
+  {
+    mode: "text" as CreationMode,
+    title: "Write a Story",
+    subtitle: "Prose, poetry, scripts",
+    gradient: "from-emerald-500/20 via-emerald-600/10 to-teal-500/5",
+    borderHover: "hover:border-emerald-500/30",
+    iconBg: "bg-emerald-500/15",
+    iconColor: "text-emerald-400",
+  },
+  {
+    mode: "image" as CreationMode,
+    title: "Generate Image",
+    subtitle: "Art, concepts, portraits",
+    gradient: "from-red-500/20 via-orange-500/10 to-amber-500/5",
+    borderHover: "hover:border-red-500/30",
+    iconBg: "bg-red-500/15",
+    iconColor: "text-red-400",
+  },
+  {
+    mode: "code" as CreationMode,
+    title: "Write Code",
+    subtitle: "Build with AI pair programming",
+    gradient: "from-amber-500/20 via-yellow-500/10 to-orange-500/5",
+    borderHover: "hover:border-amber-500/30",
+    iconBg: "bg-amber-500/15",
+    iconColor: "text-amber-400",
+  },
+  {
+    mode: "music" as CreationMode,
+    title: "Compose Music",
+    subtitle: "Soundscapes and melodies",
+    gradient: "from-blue-500/20 via-indigo-500/10 to-cyan-500/5",
+    borderHover: "hover:border-blue-500/30",
+    iconBg: "bg-blue-500/15",
+    iconColor: "text-blue-400",
+  },
+];
+
+// ---------------------------------------------------------------------------
+// Recent creation mock data
+// ---------------------------------------------------------------------------
+
+interface RecentCreation {
+  id: string;
+  title: string;
+  mode: CreationMode;
+  timeAgo: string;
+  preview?: string;
+}
+
+const RECENT_CREATIONS: RecentCreation[] = [
+  { id: "1", title: "The Starweave Chronicles — Ch. 7", mode: "text", timeAgo: "2h ago", preview: "In the age before fracture..." },
+  { id: "2", title: "Guardian of the Void Gate", mode: "image", timeAgo: "5h ago" },
+  { id: "3", title: "Runic Cipher Engine", mode: "code", timeAgo: "1d ago", preview: "SerpentCipher class" },
+  { id: "4", title: "Battle Hymn of the Olympians", mode: "music", timeAgo: "2d ago" },
+  { id: "5", title: "Meditation on the Five Elements", mode: "text", timeAgo: "3d ago", preview: "The Arc turns..." },
 ];
 
 const AI_SUGGESTIONS = [
@@ -1221,79 +1287,191 @@ export default function StudioPage() {
   }, [textContent, imagePrompt, generatedImages, codeContent, codeLanguage, activeMode, currentMode.element, currentMode.gate, currentMode.guardian, user]);
 
 
+  const modeIconMap: Record<CreationMode, React.ElementType> = {
+    text: Pen,
+    image: Image,
+    code: Code,
+    music: MusicNote,
+  };
+
   return (
     <div className="relative min-h-screen">
       {/* Background */}
       <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-cosmic-void" />
+        <div className="absolute inset-0 bg-[#09090b]" />
         <div
-          className="absolute inset-0 opacity-20 transition-colors duration-700"
+          className="absolute inset-0 opacity-30 transition-colors duration-700"
           style={{
-            background: `radial-gradient(ellipse at top right, ${currentMode.elementColor}12, transparent 55%), radial-gradient(ellipse at bottom left, rgba(0,188,212,0.06), transparent 55%)`,
+            background: `radial-gradient(ellipse 80% 50% at 20% 0%, ${currentMode.elementColor}18, transparent), radial-gradient(ellipse 60% 40% at 80% 100%, rgba(0,188,212,0.08), transparent)`,
+          }}
+        />
+        {/* Subtle grid */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)`,
+            backgroundSize: "64px 64px",
           }}
         />
       </div>
 
-      <main className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-6 flex flex-col min-h-screen">
-        {/* ── Top Bar: Mode Selector + Title ── */}
-        <header className="mb-4">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-            {/* Mode Tabs */}
-            <div className="flex items-center gap-1 p-1 rounded-xl liquid-glass border border-white/[0.06]">
-              {MODES.map((mode) => {
-                const ModeIcon = mode.icon as React.ComponentType<any>;
-                const isActive = activeMode === mode.id;
-                return (
-                  <button
-                    key={mode.id}
-                    onClick={() => setActiveMode(mode.id)}
-                    className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-medium transition-all ${
-                      isActive
-                        ? "bg-white/[0.06] text-text-primary shadow-sm"
-                        : "text-text-muted hover:text-text-secondary hover:bg-white/[0.04]"
-                    }`}
-                    title={mode.description}
-                  >
-                    <ModeIcon
-                      size={16}
-                      weight={isActive ? "fill" : "regular"}
-                      style={isActive ? { color: mode.elementColor } : undefined}
-                    />
-                    <span className="hidden sm:inline">{mode.label}</span>
-                  </button>
-                );
-              })}
-            </div>
+      <main className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-6 flex flex-col min-h-screen">
+        {/* ── Premium Hero Header ── */}
+        <header className="mb-6">
+          <div className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl">
+            {/* Header gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#00bcd4]/8 via-[#0d47a1]/5 to-emerald-500/6" />
+            <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-[#00bcd4]/10 to-transparent rounded-full -translate-y-1/2 translate-x-1/3 blur-3xl" />
 
-            <div className="flex-1 flex items-center gap-3">
-              <div className="hidden md:block">
-                <h1 className="text-sm font-semibold text-text-primary">
-                  Creation Studio
-                </h1>
-                <p className="text-[11px] text-text-muted">
-                  {currentMode.description}
-                </p>
+            <div className="relative px-6 sm:px-8 py-6 sm:py-8">
+              <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#00bcd4] to-[#0d47a1] flex items-center justify-center">
+                      <Sparkle size={16} weight="fill" className="text-white" />
+                    </div>
+                    <span className="text-[10px] uppercase tracking-[0.2em] font-mono text-[#00bcd4]/70">
+                      Arcanea Studio
+                    </span>
+                  </div>
+                  <h1 className="font-display text-2xl sm:text-3xl lg:text-4xl font-bold">
+                    <span className="bg-gradient-to-r from-white via-white/90 to-white/70 bg-clip-text text-transparent">
+                      Creation Studio
+                    </span>
+                  </h1>
+                  <p className="text-sm text-white/40 mt-1.5 max-w-md">
+                    Write, generate, compose, and build. Four modes of creation, one unified workspace.
+                  </p>
+                </div>
+
+                {/* Stats pills */}
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.06] text-xs text-white/50">
+                    <Lightning size={12} weight="fill" className="text-[#00bcd4]" />
+                    <span>4 modes</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.06] text-xs text-white/50">
+                    <Clock size={12} className="text-white/40" />
+                    <span>{RECENT_CREATIONS.length} recent</span>
+                  </div>
+                </div>
               </div>
             </div>
-
-            {/* Mode indicator */}
-            <div
-              className="w-2 h-2 rounded-full hidden sm:block"
-              style={{ backgroundColor: currentMode.elementColor }}
-            />
           </div>
         </header>
 
+        {/* ── Tab Navigation ── */}
+        <nav className="mb-4">
+          <div className="flex items-center gap-1 p-1 rounded-xl bg-white/[0.02] backdrop-blur-md border border-white/[0.06]">
+            {MODES.map((mode) => {
+              const ModeIcon = mode.icon as React.ComponentType<any>;
+              const isActive = activeMode === mode.id;
+              return (
+                <button
+                  key={mode.id}
+                  onClick={() => setActiveMode(mode.id)}
+                  className={`relative flex items-center gap-2.5 px-5 py-3 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    isActive
+                      ? "text-white"
+                      : "text-white/40 hover:text-white/60 hover:bg-white/[0.04]"
+                  }`}
+                  title={mode.description}
+                >
+                  {/* Active background glow */}
+                  {isActive && (
+                    <div
+                      className="absolute inset-0 rounded-lg transition-all duration-300"
+                      style={{
+                        background: `linear-gradient(135deg, ${mode.elementColor}20, ${mode.elementColor}08)`,
+                        border: `1px solid ${mode.elementColor}30`,
+                        boxShadow: `0 0 20px ${mode.elementColor}10, inset 0 1px 0 rgba(255,255,255,0.06)`,
+                      }}
+                    />
+                  )}
+                  <ModeIcon
+                    size={18}
+                    weight={isActive ? "fill" : "regular"}
+                    className="relative z-10"
+                    style={isActive ? { color: mode.elementColor } : undefined}
+                  />
+                  <span className="relative z-10 hidden sm:inline">{mode.label}</span>
+                  {/* Active indicator dot */}
+                  {isActive && (
+                    <div
+                      className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full"
+                      style={{ backgroundColor: mode.elementColor, boxShadow: `0 0 6px ${mode.elementColor}` }}
+                    />
+                  )}
+                </button>
+              );
+            })}
+
+            <div className="flex-1" />
+
+            {/* Title in tab bar */}
+            <div className="hidden lg:flex items-center gap-2 pr-2 text-xs text-white/30">
+              <span>{currentMode.guardian}</span>
+              <div className="w-1 h-1 rounded-full bg-white/20" />
+              <span>{currentMode.element}</span>
+            </div>
+          </div>
+        </nav>
+
+        {/* ── Quick-Start Cards (shown above workspace) ── */}
+        {!textContent && !imagePrompt && !codeContent && generatedImages.length === 0 && (
+          <div className="mb-4 grid grid-cols-2 lg:grid-cols-4 gap-3">
+            {QUICK_START_CARDS.map((card) => {
+              const CardIcon = MODES.find((m) => m.id === card.mode)!.icon as React.ComponentType<any>;
+              return (
+                <button
+                  key={card.mode}
+                  onClick={() => setActiveMode(card.mode)}
+                  className={`group relative overflow-hidden rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm p-4 text-left transition-all duration-300 hover:bg-white/[0.04] hover:border-white/[0.10] hover:scale-[1.02] ${card.borderHover}`}
+                >
+                  {/* Gradient background on hover */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${card.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+
+                  <div className="relative z-10">
+                    <div className={`w-10 h-10 rounded-xl ${card.iconBg} flex items-center justify-center mb-3 transition-transform duration-300 group-hover:scale-110`}>
+                      <CardIcon size={20} weight="duotone" className={card.iconColor} />
+                    </div>
+                    <h3 className="text-sm font-semibold text-white/90 mb-0.5">{card.title}</h3>
+                    <p className="text-[11px] text-white/40">{card.subtitle}</p>
+                  </div>
+
+                  {/* Arrow on hover */}
+                  <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-1 group-hover:translate-x-0">
+                    <ArrowRight size={14} className="text-white/30" />
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        )}
+
         {/* ── Workspace ── */}
-        <div className="flex-1 flex flex-col rounded-2xl liquid-glass border border-white/[0.06] overflow-hidden min-h-[500px]">
+        <div className="flex-1 flex flex-col rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl overflow-hidden min-h-[500px]"
+          style={{ boxShadow: "0 0 0 1px rgba(255,255,255,0.03), 0 8px 40px rgba(0,0,0,0.3)" }}
+        >
           {/* Workspace Header */}
           <div className="flex items-center gap-3 px-4 py-2.5 border-b border-white/[0.08] bg-white/[0.02]">
-            {/* Model Selector — Intelligence Gateway */}
+            {/* Model Selector -- Intelligence Gateway */}
             {(activeMode === "text" || activeMode === "code") && (
               <ModelSelector
                 value={selectedModel}
                 onChange={setSelectedModel}
               />
+            )}
+
+            {/* Mode label for image/music */}
+            {(activeMode === "image" || activeMode === "music") && (
+              <div className="flex items-center gap-2">
+                <div
+                  className="w-2 h-2 rounded-full"
+                  style={{ backgroundColor: currentMode.elementColor }}
+                />
+                <span className="text-xs text-white/50 font-medium">{currentMode.label} Studio</span>
+              </div>
             )}
 
             <div className="flex-1" />
@@ -1308,14 +1486,14 @@ export default function StudioPage() {
                     activeMode === 'image' ? imagePrompt : '';
                   if (copyContent) navigator.clipboard.writeText(copyContent);
                 }}
-                className="p-2 rounded-lg text-text-muted hover:text-text-primary hover:bg-white/[0.08] transition-colors"
+                className="p-2 rounded-lg text-white/30 hover:text-white/70 hover:bg-white/[0.06] transition-colors"
                 title="Copy to clipboard"
                 aria-label="Copy to clipboard"
               >
                 <Copy size={14} />
               </button>
               <button
-                className="p-2 rounded-lg text-text-muted hover:text-text-primary hover:bg-white/[0.08] transition-colors"
+                className="p-2 rounded-lg text-white/30 hover:text-white/70 hover:bg-white/[0.06] transition-colors"
                 title="Download"
                 aria-label="Download"
               >
@@ -1327,7 +1505,7 @@ export default function StudioPage() {
                   else if (activeMode === 'code') { setCodeContent(""); }
                   else if (activeMode === 'image') { setImagePrompt(""); setGeneratedImages([]); }
                 }}
-                className="p-2 rounded-lg text-text-muted hover:text-red-400 hover:bg-red-400/10 transition-colors"
+                className="p-2 rounded-lg text-white/30 hover:text-red-400 hover:bg-red-400/10 transition-colors"
                 title="Clear"
                 aria-label="Clear content"
               >
@@ -1369,20 +1547,20 @@ export default function StudioPage() {
 
         {/* ── Bottom Action Bar ── */}
         <div className="mt-4 flex items-center gap-4">
-          <div className="flex items-center gap-2 text-xs text-text-muted">
+          <div className="flex items-center gap-2 text-xs text-white/30">
             <div
               className="w-2 h-2 rounded-full"
-              style={{ backgroundColor: currentMode.elementColor }}
+              style={{ backgroundColor: currentMode.elementColor, boxShadow: `0 0 6px ${currentMode.elementColor}60` }}
             />
-            <span>
-              {currentMode.label}
-            </span>
+            <span>{currentMode.label}</span>
+            <span className="text-white/15">|</span>
+            <span className="text-white/20">{currentMode.guardian}</span>
           </div>
 
           <div className="flex-1" />
 
           <button
-            className="px-3 py-2 rounded-lg border border-white/[0.06] bg-white/[0.04] text-xs text-text-muted hover:text-text-primary hover:bg-white/[0.08] transition-colors flex items-center gap-2"
+            className="px-3 py-2 rounded-lg border border-white/[0.06] bg-white/[0.03] text-xs text-white/40 hover:text-white/70 hover:bg-white/[0.06] transition-colors flex items-center gap-2"
           >
             <Gear size={14} />
             Settings
@@ -1406,9 +1584,60 @@ export default function StudioPage() {
               <Star size={16} weight="fill" />
               Save
             </span>
-            <div className="absolute inset-0 bg-white/0 group-hover:bg-white/[0.06] transition-colors" />
+            <div className="absolute inset-0 bg-white/0 group-hover:bg-white/[0.08] transition-colors" />
           </button>
         </div>
+
+        {/* ── Recent Creations Section ── */}
+        <section className="mt-6 mb-2">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-sm font-semibold text-white/60 flex items-center gap-2">
+              <Clock size={14} className="text-white/30" />
+              Recent Creations
+            </h2>
+            <button className="text-[11px] text-[#00bcd4]/60 hover:text-[#00bcd4] transition-colors flex items-center gap-1">
+              View all
+              <ArrowRight size={10} />
+            </button>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5">
+            {RECENT_CREATIONS.map((creation) => {
+              const CreationIcon = modeIconMap[creation.mode];
+              const modeConfig = MODES.find((m) => m.id === creation.mode)!;
+              return (
+                <button
+                  key={creation.id}
+                  onClick={() => setActiveMode(creation.mode)}
+                  className="group relative rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm p-3.5 text-left transition-all duration-200 hover:bg-white/[0.04] hover:border-white/[0.10]"
+                >
+                  <div className="flex items-start gap-2.5">
+                    <div
+                      className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
+                      style={{ backgroundColor: `${modeConfig.elementColor}15` }}
+                    >
+                      <CreationIcon
+                        size={14}
+                        weight="duotone"
+                        style={{ color: modeConfig.elementColor }}
+                      />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs font-medium text-white/70 truncate group-hover:text-white/90 transition-colors">
+                        {creation.title}
+                      </p>
+                      <p className="text-[10px] text-white/25 mt-0.5">{creation.timeAgo}</p>
+                    </div>
+                  </div>
+                  {creation.preview && (
+                    <p className="text-[10px] text-white/20 mt-2 line-clamp-1 italic">
+                      {creation.preview}
+                    </p>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </section>
       </main>
     </div>
   );

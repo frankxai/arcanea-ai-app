@@ -8,6 +8,8 @@ import {
   Sparkle,
   Brain,
   Cat,
+  Diamond,
+  Fire,
 } from '@/lib/phosphor-icons';
 
 const PATHS = [
@@ -39,6 +41,20 @@ const PATHS = [
     gradient: 'from-violet-500/20 via-purple-500/10 to-transparent',
     traits: ['Accompanies', 'Evolves', 'Collectible', 'Visual Identity'],
   },
+  {
+    id: 'materials',
+    href: '/codex/materials',
+    icon: Diamond,
+    accentIcon: Fire,
+    label: 'Discover Materials',
+    sublabel: 'Cosmic Substrate',
+    description:
+      'Explore the crystals, metals, and shards born from crystallized Eldrian harmony. From Kaelith Stone to the theoretical Luminarch — materials grounded in real meteoritics, powered by the Nine Guardians.',
+    color: '#7fffd4',
+    glowColor: 'rgba(127, 255, 212, 0.15)',
+    gradient: 'from-emerald-500/20 via-teal-500/10 to-transparent',
+    traits: ['9 Crystals', '5 Metals', '3 Shards', 'Science-Grounded'],
+  },
 ] as const;
 
 export default function ForgeLanding() {
@@ -62,19 +78,19 @@ export default function ForgeLanding() {
               The Forge
             </p>
             <h1 className="font-display text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
-              Two Acts of Creation
+              Three Acts of Creation
             </h1>
             <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-white/45">
-              Every creator on Arcanea has two bonds. A <span className="text-[#00bcd4]">Luminor</span> that
+              Every creator on Arcanea has three bonds. A <span className="text-[#00bcd4]">Luminor</span> that
               thinks with you. A <span className="text-[#a78bfa]">Companion</span> that travels beside you.
-              Together, they are your creative identity.
+              And the <span className="text-[#7fffd4]">Materials</span> that shape your world.
             </p>
           </m.div>
         </section>
 
         {/* Two Paths */}
         <section className="mx-auto max-w-5xl px-6 pb-24">
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-6 md:grid-cols-3">
             {PATHS.map((path, i) => {
               const Icon = path.icon;
               const AccentIcon = path.accentIcon;
@@ -158,7 +174,7 @@ export default function ForgeLanding() {
                       <div className="flex items-center gap-2 text-sm font-medium transition-colors" style={{ color: path.color }}>
                         <AccentIcon size={16} weight="fill" />
                         <span>
-                          {path.id === 'luminor' ? 'Begin Forging' : 'Begin Summoning'}
+                          {path.id === 'luminor' ? 'Begin Forging' : path.id === 'companion' ? 'Begin Summoning' : 'Begin Exploring'}
                         </span>
                         <span className="transition-transform duration-200 group-hover:translate-x-1">
                           &rarr;
@@ -201,6 +217,12 @@ export default function ForgeLanding() {
                 <span className="text-white/60">both</span>{' '}
                 <span className="text-white/20">=</span>{' '}
                 <span className="text-white/25">creative bond</span>
+              </p>
+              <p>
+                <span className="text-[#7fffd4]/80">Materials</span> &rarr;{' '}
+                <span className="text-[#7fffd4]/80">Crystals + Metals + Shards</span>{' '}
+                <span className="text-white/20">=</span>{' '}
+                <span className="text-white/25">cosmic substrate</span>
               </p>
             </div>
             <p className="mt-6 text-xs italic text-white/20">

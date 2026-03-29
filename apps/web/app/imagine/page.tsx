@@ -32,6 +32,9 @@ export default function ImaginePage() {
   const [currentAspectRatio, setCurrentAspectRatio] = useState('1:1');
   const [autoScrollEnabled, setAutoScrollEnabled] = useState(false);
   const [animatingIds, setAnimatingIds] = useState<Set<string>>(new Set());
+  const [externalPrompt, setExternalPrompt] = useState('');
+  const [generationProgress, setGenerationProgress] = useState<{ current: number; total: number; estimatedSecondsLeft?: number } | null>(null);
+  const generationTimesRef = useRef<number[]>([]);
 
   // Favorites state
   const [showFavorites, setShowFavorites] = useState(false);
@@ -101,17 +104,34 @@ export default function ImaginePage() {
   const currentModelRef = useRef<string | undefined>();
   const currentEnhanceRef = useRef<boolean | undefined>();
 
-  const handleGenerate = useCallback(async (prompt: string, _count: number, aspectRatio: string, style?: string, model?: string, enhance?: boolean) => {
+  const currentNegativePromptRef = useRef<string | undefined>();
+
+  const handleGenerate = useCallback(async (prompt: string, _count: number, aspectRatio: string, style?: string, model?: string, enhance?: boolean, negativePrompt?: string) => {
     if (isGeneratingRef.current) return;
     currentStyleRef.current = style;
     currentModelRef.current = model;
     currentEnhanceRef.current = enhance;
+    currentNegativePromptRef.current = negativePrompt;
 
     setIsGenerating(true);
     isGeneratingRef.current = true;
     setError(null);
     setCurrentPrompt(prompt);
     setCurrentAspectRatio(aspectRatio);
+
+    // Start progress tracking
+    const avgTime = generationTimesRef.current.length > 0
+      ? generationTimesRef.current.reduce((a, b) => a + b, 0) / generationTimesRef.current.length
+      : 12000; // default 12s estimate
+    setGenerationProgress({ current: 1, total: 4, estimatedSecondsLeft: Math.round(avgTime / 1000) });
+    const progressInterval = setInterval(() => {
+      setGenerationProgress((prev) => {
+        if (!prev || prev.current >= prev.total) return prev;
+        const nextCurrent = Math.min(prev.current + 1, prev.total);
+        const remaining = Math.max(0, Math.round((prev.estimatedSecondsLeft ?? 0) - 3));
+        return { ...prev, current: nextCurrent, estimatedSecondsLeft: remaining };
+      });
+    }, 3000);
 
     const loadingId = `row_${Date.now()}_loading`;
     setRows((prev) => [{
@@ -123,11 +143,22 @@ export default function ImaginePage() {
       isLoading: true,
     }, ...prev]);
 
+    const startTime = Date.now();
     try {
-      const row = await generateRow(prompt, aspectRatio, loadingId, style, model, enhance);
+      // If negative prompt is provided, append it to the prompt for the API
+      const fullPrompt = negativePrompt
+        ? `${prompt}. Avoid: ${negativePrompt}`
+        : prompt;
+      const row = await generateRow(fullPrompt, aspectRatio, loadingId, style, model, enhance);
       if (row) {
+        // Store original prompt (without negative) for display
+        row.prompt = prompt;
+        row.images = row.images.map((img) => ({ ...img, prompt }));
         setRows((prev) => prev.map((r) => r.id === loadingId ? row : r));
         setAutoScrollEnabled(true);
+        // Track generation time for ETA
+        generationTimesRef.current.push(Date.now() - startTime);
+        if (generationTimesRef.current.length > 5) generationTimesRef.current.shift();
         // Smooth scroll to show new images
         requestAnimationFrame(() => {
           gridTopRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -137,6 +168,8 @@ export default function ImaginePage() {
       setError(err instanceof Error ? err.message : 'Something went wrong');
       setRows((prev) => prev.filter((r) => r.id !== loadingId));
     } finally {
+      clearInterval(progressInterval);
+      setGenerationProgress(null);
       setIsGenerating(false);
       isGeneratingRef.current = false;
     }
@@ -160,8 +193,13 @@ export default function ImaginePage() {
     }]);
 
     try {
-      const row = await generateRow(currentPrompt, currentAspectRatio, loadingId, currentStyleRef.current, currentModelRef.current, currentEnhanceRef.current);
+      const negPrompt = currentNegativePromptRef.current;
+      const fullPrompt = negPrompt ? `${currentPrompt}. Avoid: ${negPrompt}` : currentPrompt;
+      const row = await generateRow(fullPrompt, currentAspectRatio, loadingId, currentStyleRef.current, currentModelRef.current, currentEnhanceRef.current);
       if (row) {
+        // Keep display prompt clean (without negative prompt suffix)
+        row.prompt = currentPrompt;
+        row.images = row.images.map((img) => ({ ...img, prompt: currentPrompt }));
         setRows((prev) => prev.map((r) => r.id === loadingId ? row : r));
       }
     } catch {
@@ -246,6 +284,11 @@ export default function ImaginePage() {
         return next;
       });
     }
+  }, []);
+
+  // Vary: pre-fill prompt with variation suffix and scroll to top
+  const handleVary = useCallback((originalPrompt: string) => {
+    setExternalPrompt(originalPrompt + ' \u2014 variation');
   }, []);
 
   const totalImages = rows.reduce((sum, r) => sum + r.images.length, 0);
@@ -355,6 +398,8 @@ export default function ImaginePage() {
           onGenerate={handleGenerate}
           isGenerating={isGenerating}
           hasResults={hasResults}
+          externalPrompt={externalPrompt}
+          generationProgress={generationProgress}
         />
       </div>
 
@@ -437,6 +482,7 @@ export default function ImaginePage() {
                     aspectRatio={row.aspectRatio}
                     index={i}
                     onAnimate={handleAnimate}
+                    onVary={handleVary}
                     onFavoriteChange={refreshFavorites}
                     isAnimating={animatingIds.has(img.id)}
                   />
