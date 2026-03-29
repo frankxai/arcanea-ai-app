@@ -41,6 +41,19 @@ supabase db reset
 supabase db push
 ```
 
+### Project Graph Rollout
+
+Arcanea's project graph rollout uses these migrations:
+
+1. `20260329000001_chat_projects_graph.sql`
+2. `20260329000002_project_graph_enrichment.sql`
+
+Use the activation runbook for the exact order and type regeneration steps:
+
+- [`docs/ops/PROJECT_GRAPH_ACTIVATION.md`](../docs/ops/PROJECT_GRAPH_ACTIVATION.md)
+- `pnpm supabase:project-graph:plan`
+- `pnpm supabase:project-graph:apply`
+
 ## Migrations
 
 ### Migration Files

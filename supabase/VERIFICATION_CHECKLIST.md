@@ -516,6 +516,23 @@ const channel = supabase
 
 ---
 
+## Project Graph Verification
+
+After the project graph rollout migrations are applied and the generated types are refreshed:
+
+- [ ] `chat_projects` exists and is RLS-enabled
+- [ ] `project_memory_links` exists and is RLS-enabled
+- [ ] `project_graph_summaries` exists and is RLS-enabled
+- [ ] `project_graph_edges` exists and is RLS-enabled
+- [ ] `chat_sessions.project_id` exists
+- [ ] `creations.project_id` exists
+- [ ] `creations.source_session_id` exists
+- [ ] `pnpm --dir apps/web test:projects` passes
+- [ ] `pnpm --dir apps/web type-check` passes
+- [ ] `pnpm --dir apps/web build` passes with preview env values
+
+---
+
 ## 📝 Documentation Verification
 
 ### All Files Exist
