@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 // Layout & area components (new)
 import { ChatLayout } from '@/components/chat/chat-layout';
@@ -85,6 +86,7 @@ export default function ChatPage() {
   const chatSessions = useChatSessions();
   const conversation = useConversation({ activeProject: chatSessions.activeProject });
   const autoSave = useAutoSave(conversation.messages, conversation.isLoading);
+  const searchParams = useSearchParams();
 
   // -------------------------------------------------------------------------
   // Local UI state
@@ -94,6 +96,22 @@ export default function ChatPage() {
   const [activeArtifact, setActiveArtifact] = useState<Artifact | null>(null);
   const [serverHasKeys, setServerHasKeys] = useState(false);
   const [pendingInput, setPendingInput] = useState('');
+
+  // -------------------------------------------------------------------------
+  // Hero prompt handoff — read ?prompt= from URL and auto-populate input
+  // -------------------------------------------------------------------------
+
+  const promptConsumed = useRef(false);
+  useEffect(() => {
+    if (promptConsumed.current) return;
+    const prompt = searchParams.get('prompt');
+    if (prompt && prompt.trim()) {
+      promptConsumed.current = true;
+      setPendingInput(prompt.trim());
+      // Clean the URL without triggering a navigation
+      window.history.replaceState(null, '', '/chat');
+    }
+  }, [searchParams]);
 
   // In-conversation search state
   const [showSearch, setShowSearch] = useState(false);

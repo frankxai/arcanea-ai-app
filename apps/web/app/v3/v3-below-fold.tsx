@@ -218,7 +218,7 @@ const PATHWAYS = [
     title: "Write with AI",
     description:
       "Co-author stories, chapters, and series with an AI writing partner.",
-    href: "/chat/chronica",
+    href: "/chat",
     image: "/guardians/v3/maylinn-hero-v3.webp",
   },
 ];

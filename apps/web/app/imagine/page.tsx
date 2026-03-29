@@ -369,12 +369,25 @@ export default function ImaginePage() {
           >
             <div className="rounded-2xl border border-red-500/20 bg-red-500/5 px-5 py-3 text-sm text-red-300 flex items-center justify-between backdrop-blur-sm">
               <span>{error}</span>
-              <button onClick={() => setError(null)} className="text-red-400 hover:text-red-300 ml-3 p-1">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="18" y1="6" x2="6" y2="18" />
-                  <line x1="6" y1="6" x2="18" y2="18" />
-                </svg>
-              </button>
+              <div className="flex items-center gap-2 ml-3">
+                {currentPrompt && (
+                  <button
+                    onClick={() => {
+                      setError(null);
+                      handleGenerate(currentPrompt, 4, currentAspectRatio, currentStyleRef.current, currentModelRef.current, currentEnhanceRef.current);
+                    }}
+                    className="px-3 py-1 text-xs rounded-lg bg-[#00bcd4]/15 text-[#00bcd4] border border-[#00bcd4]/20 hover:bg-[#00bcd4]/25 transition-colors"
+                  >
+                    Retry
+                  </button>
+                )}
+                <button onClick={() => setError(null)} className="text-red-400 hover:text-red-300 p-1">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
+                </button>
+              </div>
             </div>
           </m.div>
         )}
