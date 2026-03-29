@@ -1171,6 +1171,10 @@ export default function StudioPage() {
 
     try {
       let res: Response;
+      const activeProjectId =
+        typeof window !== 'undefined' ? localStorage.getItem('arcanea_active_chat_project') : null;
+      const activeSessionId =
+        typeof window !== 'undefined' ? localStorage.getItem('arcanea_active_chat_session') : null;
 
       if (activeMode === 'image') {
         // Upload the first generated image to Supabase Storage via studio/save
@@ -1185,6 +1189,8 @@ export default function StudioPage() {
             element: currentMode.element,
             gate: currentMode.gate,
             guardian: currentMode.guardian,
+            ...(activeProjectId ? { projectId: activeProjectId } : {}),
+            ...(activeSessionId ? { sourceSessionId: activeSessionId } : {}),
           }),
         });
       } else {
@@ -1202,6 +1208,8 @@ export default function StudioPage() {
             element: currentMode.element as 'Fire' | 'Water' | 'Earth' | 'Wind' | 'Void' | 'Spirit',
             gate: currentMode.gate as 'Foundation' | 'Flow' | 'Fire' | 'Heart' | 'Voice' | 'Sight' | 'Crown' | 'Starweave' | 'Unity' | 'Source',
             guardian: currentMode.guardian,
+            ...(activeProjectId ? { projectId: activeProjectId } : {}),
+            ...(activeSessionId ? { sourceSessionId: activeSessionId } : {}),
           }),
         });
       }

@@ -58,6 +58,8 @@ export async function POST(request: NextRequest) {
       element,
       gate,
       guardian,
+      projectId,
+      sourceSessionId,
     } = body as {
       imageUrl: string;
       prompt?: string;
@@ -66,6 +68,8 @@ export async function POST(request: NextRequest) {
       element?: string;
       gate?: string;
       guardian?: string;
+      projectId?: string;
+      sourceSessionId?: string;
     };
 
     // Resolve image bytes + mime type
@@ -159,6 +163,8 @@ export async function POST(request: NextRequest) {
       element: element as Parameters<typeof createCreation>[2]['element'],
       gate: gate as Parameters<typeof createCreation>[2]['gate'],
       guardian: guardian as Parameters<typeof createCreation>[2]['guardian'],
+      projectId,
+      sourceSessionId,
       content: {
         mode: 'image',
         prompt,
