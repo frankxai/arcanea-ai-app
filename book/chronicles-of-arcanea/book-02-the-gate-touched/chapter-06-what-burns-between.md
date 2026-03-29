@@ -17,43 +17,43 @@ Other places had mornings because they had sunrises, and sunrises required a hor
 
 Ash woke at the first bell and did not stop moving until the sixth.
 
-That was how she had always worked. Not discipline, exactly — not the kind of discipline the Forge's instructors talked about, the deliberate cultivation of will, the conscious shaping of habit. More like: the only time she stopped moving, she thought about things she had not finished deciding. So she did not stop.
+That was how he had always worked. Not discipline, exactly — not the kind of discipline the Forge's instructors talked about, the deliberate cultivation of will, the conscious shaping of habit. More like: the only time he stopped moving, he thought about things he had not finished deciding. So he did not stop.
 
-The training sequence she had been working for two weeks was called the Channel. It was not in the Forge's formal curriculum. She had found it in an advanced manual that was technically available to third-year students and above and had taken it from the shelf when the librarian had her back turned, which was close enough to available. The Channel was the technique that preceded Dragon-bonding — not the bonding itself, but the preparation for it, the practice that was supposed to make you the kind of vessel a Dragon could consider. The practice that required you to stop directing fire and simply let it move through you.
+The training sequence he had been working for two weeks was called the Channel. It was not in the Forge's formal curriculum. She had found it in an advanced manual that was technically available to third-year students and above and had taken it from the shelf when the librarian had her back turned, which was close enough to available. The Channel was the technique that preceded Dragon-bonding — not the bonding itself, but the preparation for it, the practice that was supposed to make you the kind of vessel a Dragon could consider. The practice that required you to stop directing fire and simply let it move through you.
 
-She was not planning to bond a Dragon. She was seventeen. She was not stupid.
+He was not planning to bond a Dragon. He was seventeen. He was not stupid.
 
-But she was trying to understand what it felt like when fire moved through a person rather than from one, and the manual said this required a specific kind of opening, a specific quality of non-resistance, and she had been failing at it for two weeks because non-resistance was not something she had ever been particularly good at.
+But he was trying to understand what it felt like when fire moved through a person rather than from one, and the manual said this required a specific kind of opening, a specific quality of non-resistance, and he had been failing at it for two weeks because non-resistance was not something he had ever been particularly good at.
 
 The training arena at the sixth bell was empty. She liked it empty. The arena was a cavern off the Forge's main corridor, high-ceilinged enough to accommodate fire at full range, with a sand floor that had been treated for heat-resistance and walls that had absorbed several hundred years of student fire and were consequently the kind of walls that held heat the way good stone held memory — not passively but with intention, giving it back when you needed it.
 
-She stood in the center of the sand. She breathed.
+He stood in the center of the sand. He breathed.
 
-The first part of the Channel was easy for her: opening the Fire Gate to its full width. She had been doing this since the Hollow Root, since the moment in the fifth floor when something that had been locked inside her had unlocked, and the fire had stopped being a thing she controlled and had started being a thing she was. The Gate opened cleanly, the way well-maintained doors opened — smoothly, fully, without catching on anything.
+The first part of the Channel was easy for him: opening the Fire Gate to its full width. He had been doing this since the Hollow Root, since the moment in the fifth floor when something that had been locked inside him had unlocked, and the fire had stopped being a thing he controlled and had started being a thing he was. The Gate opened cleanly, the way well-maintained doors opened — smoothly, fully, without catching on anything.
 
 The fire came.
 
-It rose from her hands first, the way it always did: the familiar copper and red of her specific frequency, Draconia's Fire Gate resonance at 396 Hz, the particular quality that other Fire-trained students had told her was unusual — not the raging full-spectrum of the Forge's best students but something older, as if her fire was drawing from a deeper source than most. It spread up her arms. She let it. It reached her shoulders and the base of her neck and she let it. It was warm the way standing in the sun was warm on a day before a thunderstorm — the quality of warmth that carried pressure inside it.
+It rose from her hands first, the way it always did: the familiar copper and red of her specific frequency, Draconia's Fire Gate resonance at 396 Hz, the particular quality that other Fire-trained students had told her was unusual — not the raging full-spectrum of the Forge's best students but something older, as if her fire was drawing from a deeper source than most. It spread up his arms. He let it. It reached his shoulders and the base of his neck and he let it. It was warm the way standing in the sun was warm on a day before a thunderstorm — the quality of warmth that carried pressure inside it.
 
-This was where she always got stuck.
+This was where he always got stuck.
 
-The Channel required the next step: not drawing the fire but releasing the direction. Letting go of the part of her that managed where the fire went and what shape it took and when it stopped. The part that had been managing that since she was ten years old and the fire had first arrived without her permission and she had made the decision, alone, that no one was ever going to see her be uncontrolled again.
+The Channel required the next step: not drawing the fire but releasing the direction. Letting go of the part of him that managed where the fire went and what shape it took and when it stopped. The part that had been managing that since he was ten years old and the fire had first arrived without his permission and he had made the decision, alone, that no one was ever going to see him be uncontrolled again.
 
-She tried.
+He tried.
 
 The trying was the problem. You could not reach for non-resistance. That was like grabbing water to stop it moving.
 
-She stood in the center of the sand and the fire moved through its familiar patterns and she was, as she had been for two weeks, precisely as controlled as she had always been.
+He stood in the center of the sand and the fire moved through its familiar patterns and he was, as he had been for two weeks, precisely as controlled as he had always been.
 
 ---
 
-She went at it from a different angle.
+He went at it from a different angle.
 
-She closed her eyes. She thought about the Hollow Root — not the fifth floor, which she was not ready to think about, but the fourth floor, the moment just before the fifth when the Dungeon had put a wall of fire between her and the others and she had looked at it and had felt, for a fraction of a second, completely still. Not calm. Still. The way a spinning thing was still at its axis. She had felt, for that fraction, the fire not as a thing she did but as a thing that was doing her, and she had made herself reach for it and her Gate had opened in a way it had not opened before and the Dungeon's fire and her fire had become the same fire and the wall had gone down.
+He closed his eyes. He thought about the Hollow Root — not the fifth floor, which he was not ready to think about, but the fourth floor, the moment just before the fifth when the Dungeon had put a wall of fire between him and the others and he had looked at it and had felt, for a fraction of a second, completely still. Not calm. Still. The way a spinning thing was still at its axis. He had felt, for that fraction, the fire not as a thing he did but as a thing that was doing him, and he had made himself reach for it and his Gate had opened in a way it had not opened before and the Dungeon's fire and his fire had become the same fire and the wall had gone down.
 
-She reached for that stillness now.
+He reached for that stillness now.
 
-She found an edge of it. The ghost of it, the shape of the place where it had been. She extended herself into the edge and the fire moved differently — not controlled, not shaped, just moving through her the way wind moved through a gap in a fence rather than over a fence, finding the path of least resistance, following the channel.
+He found an edge of it. The ghost of it, the shape of the place where it had been. He extended himself into the edge and the fire moved differently — not controlled, not shaped, just moving through her the way wind moved through a gap in a fence rather than over a fence, finding the path of least resistance, following the channel.
 
 She was not managing it.
 

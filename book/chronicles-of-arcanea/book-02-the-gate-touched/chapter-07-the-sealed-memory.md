@@ -3,7 +3,7 @@ title: "The Sealed Memory"
 chapter: 7
 book: "Chronicles of Arcanea, Book 2: The Gate-Touched"
 pov: Sable Luminaire
-gate: Crown (741 Hz — Aiyami's domain)
+gate: Void (Nero's domain)
 approximate_word_count: 4200
 ---
 
@@ -57,7 +57,7 @@ The wax seal was warm now. Not from her body heat. It had been warming since the
 
 She held the vial at eye level. The wax was translucent at this temperature. Inside: liquid. Not water. Something denser, bluer, with the faintest internal luminescence — a glow so faint it was visible only because the chamber was dark.
 
-She pressed her thumb against the seal. Her Crown Gate — the frequency that saw structure, that illuminated without heating, that organized without imposing — met the wax.
+She pressed her thumb against the seal. Her Void Gate — the frequency that perceived boundaries, that found the edges of things, that organized without imposing — met the wax.
 
 The seal dissolved.
 

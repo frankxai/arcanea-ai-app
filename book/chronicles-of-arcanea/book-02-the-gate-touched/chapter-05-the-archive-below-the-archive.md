@@ -3,7 +3,7 @@ title: "The Archive Below the Archive"
 chapter: 5
 book: "Chronicles of Arcanea, Book 2: The Gate-Touched"
 pov: Sable Luminaire (primary) / Mira Tidecrest (sections)
-gate: Crown (741 Hz — Aiyami's domain) / Flow (285 Hz — Leyla's domain)
+gate: Void (Nero's domain) / Flow (285 Hz — Leyla's domain)
 approximate_word_count: 4300
 ---
 

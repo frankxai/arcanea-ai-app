@@ -79,11 +79,11 @@ Still bright. Still too much. But steady.
 
 "Ash," Mira said, without looking.
 
-"Already on it." Ash's voice was behind her, and the temperature in the room had shifted — not toward fire but away from cold, the particular warmth of someone who had learned to use Fire Gate as a thermostat rather than a weapon, drawing the excess energy in the room's air toward herself rather than letting it scatter. Mira heard her breathing: slow, deliberate, the rhythm of the Forge's foundational discipline — not forcing, receiving.
+"Already on it." Ash's voice was behind her, and the temperature in the room had shifted — not toward fire but away from cold, the particular warmth of someone who had learned to use Fire Gate as a thermostat rather than a weapon, drawing the excess energy in the room's air toward himself rather than letting it scatter. Mira heard his breathing: slow, deliberate, the rhythm of the Forge's foundational discipline — not forcing, receiving.
 
 That left Sable.
 
-Sable was standing at the edge of the hall, completely still, and she was not doing anything visible, which was exactly what Sable's element required. Light did not channel. Light revealed. Sable's Gate was open — Mira felt the frequency of it, the particular cool clarity of 741 Hz, the Crown Gate, the intelligence that organized without imposing, that lit a space without heating it — and she was watching Fen with the full force of her attention, tracking the exact pattern of his opening, the way an archivist tracked a manuscript: not to intervene, but to understand, so that the record would exist.
+Sable was standing at the edge of the hall, completely still, and she was not doing anything visible, which was exactly what Sable's element required. Void did not channel. Void contained. Sable's Gate was open — Mira felt the frequency of it, the particular cool stillness of Nero's domain, the Void Gate, the intelligence that organized without imposing, that held a space without filling it — and she was watching Fen with the full force of her attention, tracking the exact pattern of his opening, the way an archivist tracked a manuscript: not to intervene, but to understand, so that the record would exist.
 
 So that afterward, they would know what had happened.
 
