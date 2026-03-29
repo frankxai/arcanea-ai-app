@@ -426,6 +426,60 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
       resolvedSystemPrompt = `${projectBlock}\n${resolvedSystemPrompt}`;
     }
 
+    if (projectContext?.id && sbClient && sbUserId) {
+      try {
+        const [sessionsRes, creationsRes, memoryLinkRes] = await Promise.all([
+          sbClient
+            .from('chat_sessions')
+            .select('id, title')
+            .eq('user_id', sbUserId)
+            .eq('project_id', projectContext.id)
+            .order('updated_at', { ascending: false })
+            .limit(4),
+          sbClient
+            .from('creations')
+            .select('id, title, type')
+            .eq('user_id', sbUserId)
+            .eq('project_id', projectContext.id)
+            .order('created_at', { ascending: false })
+            .limit(4),
+          sbClient
+            .from('project_memory_links')
+            .select('memory_id')
+            .eq('user_id', sbUserId)
+            .eq('project_id', projectContext.id)
+            .order('created_at', { ascending: false })
+            .limit(8),
+        ]);
+
+        const memoryIds = ((memoryLinkRes.data as Array<{ memory_id: string }> | null) ?? []).map((row) => row.memory_id);
+        const memoryRes = memoryIds.length > 0
+          ? await sbClient
+            .from('user_memories')
+            .select('id, content, category')
+            .in('id', memoryIds)
+            .limit(8)
+          : { data: [] };
+
+        const graphLines = [
+          '[PROJECT GRAPH]',
+          `Related sessions: ${sessionsRes.data?.length ?? 0}`,
+          ...(((sessionsRes.data as Array<{ title: string | null }> | null) ?? []).map((session) => `- Session: ${session.title || 'Untitled conversation'}`)),
+          `Related creations: ${creationsRes.data?.length ?? 0}`,
+          ...(((creationsRes.data as Array<{ title: string | null; type: string | null }> | null) ?? []).map((creation) => `- Creation: ${creation.title || 'Untitled creation'} (${creation.type || 'unknown'})`)),
+          `Linked memories: ${memoryIds.length}`,
+          ...(((memoryRes.data as Array<{ category: string; content: string }> | null) ?? []).map((memory) => `- Memory [${memory.category}]: ${memory.content}`)),
+          'Use this graph to keep continuity across the active project instead of treating the current turn as isolated.',
+          '[/PROJECT GRAPH]',
+          '',
+        ];
+
+        resolvedSystemPrompt = `${graphLines.join('\n')}\n${resolvedSystemPrompt}`;
+      } catch (e) {
+        console.warn('Failed to load project graph:', e);
+      }
+    }
+
     // --- Inject Library wisdom based on active gate ---
     if (activeGates.length > 0 && !systemPrompt) {
       const wisdom = GATE_WISDOM[activeGates[0]];

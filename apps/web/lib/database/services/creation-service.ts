@@ -87,6 +87,8 @@ export async function createCreation(
     thumbnailUrl?: string
     aiModel?: string
     aiPrompt?: string
+    projectId?: string
+    sourceSessionId?: string
   }
 ): Promise<Creation | null> {
   const { data, error } = await client
@@ -105,6 +107,8 @@ export async function createCreation(
       thumbnail_url: creation.thumbnailUrl,
       ai_model: creation.aiModel,
       ai_prompt: creation.aiPrompt,
+      project_id: creation.projectId,
+      source_session_id: creation.sourceSessionId,
       user_id: userId,
     })
     .select()

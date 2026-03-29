@@ -45,6 +45,7 @@ const createMemorySchema = z.object({
     .min(1, 'Content is required')
     .max(500, 'Content must be 500 characters or fewer'),
   category: z.enum(VALID_CATEGORIES).default('general'),
+  projectId: z.string().uuid().optional(),
 });
 
 /**
@@ -172,6 +173,16 @@ export async function POST(request: NextRequest) {
           })
           .eq('id', duplicate.id);
 
+        if (validation.data.projectId) {
+          await supabase
+            .from('project_memory_links')
+            .upsert({
+              project_id: validation.data.projectId,
+              user_id: user.id,
+              memory_id: duplicate.id,
+            }, { onConflict: 'project_id,memory_id' });
+        }
+
         // Fire-and-forget: re-embed the updated memory
         import('@/lib/memory/semantic').then(({ embedMemory }) => {
           embedMemory(supabase, duplicate.id, validation.data.content).catch(() => {});
@@ -201,6 +212,16 @@ export async function POST(request: NextRequest) {
 
     // Fire-and-forget: embed the new memory for semantic search
     if (memory?.id) {
+      if (validation.data.projectId) {
+        await supabase
+          .from('project_memory_links')
+          .upsert({
+            project_id: validation.data.projectId,
+            user_id: user.id,
+            memory_id: memory.id,
+          }, { onConflict: 'project_id,memory_id' });
+      }
+
       import('@/lib/memory/semantic').then(({ embedMemory }) => {
         embedMemory(supabase, memory.id, validation.data.content).catch(() => {});
       });

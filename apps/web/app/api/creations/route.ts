@@ -120,6 +120,8 @@ export async function POST(request: NextRequest) {
       thumbnailUrl: z.string().url().optional(),
       aiModel: z.string().max(100).optional(),
       aiPrompt: z.string().max(5000).optional(),
+      projectId: z.string().uuid().optional(),
+      sourceSessionId: z.string().min(1).max(255).optional(),
     });
 
     const validation = createSchema.safeParse(body);

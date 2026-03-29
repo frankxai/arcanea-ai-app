@@ -18,12 +18,16 @@ import {
 } from '@/lib/chat/local-store';
 import {
   createChatProject,
+  assignCloudSessionToProject,
+  deleteProjectFromCloud,
   deleteChatProject,
   getActiveChatProjectId,
   listChatProjects,
   loadChatProject,
   renameChatProject,
+  saveProjectToCloud,
   setActiveChatProject,
+  syncProjectsFromCloud,
   type ChatProject,
 } from '@/lib/chat/project-store';
 import {
@@ -115,6 +119,7 @@ export function useChatSessions(): UseChatSessionsReturn {
 
     async function hydrate() {
       await syncCloudSessions();
+      await syncProjectsFromCloud();
       if (!cancelled) {
         setRefreshTick((tick) => tick + 1);
         setIsHydrating(false);
@@ -131,7 +136,8 @@ export function useChatSessions(): UseChatSessionsReturn {
   useEffect(() => {
     function handleFocus() {
       void syncCloudSessions()
-        .then(() => {
+        .then(async () => {
+          await syncProjectsFromCloud();
           setRefreshTick((tick) => tick + 1);
         })
         .catch(() => {});
@@ -190,6 +196,7 @@ export function useChatSessions(): UseChatSessionsReturn {
         messages: messages as unknown as Record<string, unknown>[],
         luminorId: opts?.luminorId ?? null,
         modelId: opts?.modelId ?? null,
+        projectId: resolvedProjectId,
       });
     }, 600);
   }, [activeProjectId, activeSessionId, refreshSessions]);
@@ -229,6 +236,7 @@ export function useChatSessions(): UseChatSessionsReturn {
     const project = createChatProject({ title });
     if (project) {
       setActiveProjectId(project.id);
+      void saveProjectToCloud(project);
       refreshSessions();
     }
     return project;
@@ -238,11 +246,16 @@ export function useChatSessions(): UseChatSessionsReturn {
     const trimmed = title.trim();
     if (!trimmed) return;
     renameChatProject(id, trimmed);
+    const project = loadChatProject(id);
+    if (project) {
+      void saveProjectToCloud(project);
+    }
     refreshSessions();
   }, [refreshSessions]);
 
   const deleteProjectHandler = useCallback((id: string) => {
     deleteChatProject(id);
+    void deleteProjectFromCloud(id);
     if (activeProjectId === id) {
       setActiveProjectId(null);
     }
@@ -251,6 +264,7 @@ export function useChatSessions(): UseChatSessionsReturn {
 
   const assignSessionProject = useCallback((sessionId: string, projectId: string | null) => {
     assignSessionToProject(sessionId, projectId);
+    void assignCloudSessionToProject(sessionId, projectId);
 
     if (sessionId === activeSessionId) {
       setActiveProjectId(projectId);
