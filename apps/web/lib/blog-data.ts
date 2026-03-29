@@ -14,6 +14,68 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: 'arcanean-code-agentic-engineering',
+    title: 'The Arcanean Code of Agentic Engineering',
+    excerpt:
+      'Ten battle-tested principles for human-AI collaboration on production software. A manifesto for agentic engineering from the team that builds with agents every day.',
+    category: 'Technology',
+    author: 'FrankX',
+    date: '2026-03-29',
+    readTime: '14 min read',
+    featured: true,
+    accent: '#7fffd4',
+    tags: ['agentic-engineering', 'ai-development', 'manifesto', 'best-practices', 'software-engineering', 'multi-agent', 'devops', 'thought-leadership'],
+    content: `
+## Ten Principles. Zero Negotiation.
+
+Software engineering is being rewritten. Not by a new framework, not by a new language, but by a fundamental shift in **who writes the code**. AI agents are no longer autocomplete tools that suggest the next line. They are autonomous contributors that read codebases, make architectural decisions, spawn parallel workers, and ship pull requests.
+
+This changes everything about how we build software — and most teams are getting it wrong. The Arcanean Code of Agentic Engineering is our answer. These ten principles emerged from building Arcanea — a production platform where AI agents routinely generate thousands of lines of code per session across dozens of parallel workers.
+
+## 1. Read Before Write
+
+Never modify code you haven't read. The single most common failure mode in AI-assisted development is blind mutation. An agent receives an instruction and immediately begins generating code — inventing function signatures that don't match, duplicating utilities that already exist, introducing naming conventions that contradict the project. The agent that reads first writes code that belongs. The agent that writes first generates code that belongs in a tutorial.
+
+## 2. Build Clean, Ship Clean
+
+Every commit must build. Every push must deploy. A broken build is not a minor inconvenience — it is a full stop for every developer on the team and every agent in the swarm. An agent that ships broken code is not saving time. It is borrowing time from the future at predatory interest rates.
+
+## 3. Parallel by Default
+
+Independent operations run simultaneously. Sequential execution is the default mode of most AI-assisted workflows, and it is a catastrophic waste of time. If two operations don't depend on each other's output, they run at the same time. The teams that ship fastest are not the ones with the fastest agents — they're the ones that never run two things sequentially when they could run them concurrently.
+
+## 4. Measure Everything
+
+No change without before/after metrics. Performance optimization without measurement is superstition. Before you change anything for performance, record the current state. Then make the change. Then measure again. If the number didn't improve, the change didn't work, and it should not land.
+
+## 5. Feedback is Gold
+
+Every correction is a pattern. Store it. When a human developer reviews AI-generated code and says "we don't use default exports in this project," that correction contains a rule. If that rule lives only in the conversation where it was spoken, it will be violated again in the next session. Every correction gets stored. Every stored correction gets consulted.
+
+## 6. Guard the Gates
+
+Security scan on every commit. Quality gate on every PR. The speed of agentic development is both its greatest strength and its most dangerous liability. An agent can generate a complete API endpoint in thirty seconds — including the SQL injection vulnerability. Speed without guardrails does not produce software faster. It produces vulnerabilities faster.
+
+## 7. Document the Why
+
+Commit messages explain intent, not mechanics. The diff tells you what changed. The message tells you why it changed. Six months from now, when someone is debugging a regression, the diff will show the code. Only the message will tell them the reasoning that produced it.
+
+## 8. Respect the Canon
+
+Brand guidelines are not suggestions. Every project has a canon — naming conventions, architecture patterns, component structures, error handling approaches. If the canon is not written down, the agent will violate it constantly and confidently. Projects that succeed with agentic engineering invest heavily in explicit documentation of their conventions.
+
+## 9. Ship > Perfect
+
+A deployed feature beats a perfect branch. Perfectionism is the most expensive bug in software development, and AI agents make it worse by making iteration cheap. Define what "done" means before you start, and stop when you reach it. A feature behind a feature flag in production teaches you more in one day than a feature on a branch teaches you in a month.
+
+## 10. The Arc Turns
+
+Every session leaves the codebase better. This is the meta-principle that contains all the others. Every interaction with the codebase — whether a five-minute bug fix or a five-hour feature build — should leave the code in a better state than it was found. Not through grand rewrites, but through the accumulated discipline of every session leaving things better.
+
+> The Arc turns: Potential becomes Manifestation becomes Experience becomes Dissolution becomes Evolved Potential. Every session leaves the codebase better than it was found.
+    `,
+  },
+  {
     slug: 'chronicles-of-arcanea',
     title: 'Chronicles of Arcanea: 257,000 Words in One Night',
     excerpt:

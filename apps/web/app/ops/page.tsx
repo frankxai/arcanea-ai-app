@@ -766,9 +766,9 @@ function SystemHealthCard({ system }: { system: SystemStatus }) {
         </span>
       </div>
 
-      <p className="text-xs text-white/50 mb-1">{system.detail}</p>
+      <p className="text-xs text-white/60 mb-1">{system.detail}</p>
       {system.metric && (
-        <p className="text-xs font-mono text-white/30 mb-3">{system.metric}</p>
+        <p className="text-xs font-mono text-white/50 mb-3">{system.metric}</p>
       )}
 
       {/* Expanded metrics */}
@@ -776,8 +776,8 @@ function SystemHealthCard({ system }: { system: SystemStatus }) {
         <div className="mt-3 pt-3 border-t border-white/[0.06] space-y-1.5">
           {system.metrics.map((m) => (
             <div key={m.label} className="flex items-center justify-between text-xs">
-              <span className="text-white/40">{m.label}</span>
-              <span className="text-white/70 font-mono">
+              <span className="text-white/55">{m.label}</span>
+              <span className="text-white/80 font-mono">
                 {m.value}{m.unit ? ` ${m.unit}` : ""}
               </span>
             </div>
@@ -854,7 +854,14 @@ function RepoRow({ repo }: { repo: Repo }) {
       {/* Health Score */}
       <td className="px-4 py-3">
         <div className="flex items-center justify-end gap-2">
-          <div className="h-1.5 w-12 rounded-full bg-white/5 overflow-hidden">
+          <div
+            className="h-1.5 w-12 rounded-full bg-white/5 overflow-hidden"
+            role="progressbar"
+            aria-valuenow={repo.healthScore}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label={`Health score: ${repo.healthScore} out of 100`}
+          >
             <div
               className={`h-full rounded-full transition-all ${healthBarColor(repo.health)}`}
               style={{ width: `${repo.healthScore}%` }}
@@ -1002,7 +1009,7 @@ function RepoTableSection({
       }}
     >
       <div className="overflow-x-auto">
-        <table className="w-full text-sm">
+        <table className="w-full text-sm" aria-label={`${category} repositories`}>
           <thead>
             <tr className="border-b border-white/[0.06]">
               <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-white/40">
@@ -1108,7 +1115,7 @@ export default async function OpsPage({
 
   return (
     <div className="min-h-screen">
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-10">
         {/* ── Header ──────────────────────────────────────────────── */}
         <header>
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
@@ -1212,7 +1219,7 @@ export default async function OpsPage({
 
           {/* Tab bar + sort */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <nav className="flex flex-wrap gap-1.5">
+            <nav aria-label="Repository categories" className="flex flex-wrap gap-1.5">
               {CATEGORY_TABS.map((tab) => {
                 const isActive = tab.key === activeTab;
                 const count =
@@ -1223,19 +1230,20 @@ export default async function OpsPage({
                   <Link
                     key={tab.key}
                     href={`/ops?tab=${tab.key}&sort=${sortKey}`}
+                    aria-current={isActive ? "page" : undefined}
                     className={`
                       inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium
                       transition-all duration-200
                       ${
                         isActive
                           ? "bg-[#7fffd4]/15 text-[#7fffd4] border border-[#7fffd4]/20"
-                          : "bg-white/[0.04] text-white/40 border border-transparent hover:bg-white/[0.06] hover:text-white/60"
+                          : "bg-white/[0.04] text-white/60 border border-transparent hover:bg-white/[0.06] hover:text-white/80"
                       }
                     `}
                   >
                     {tab.label}
                     <span
-                      className={`text-[10px] ${isActive ? "text-[#7fffd4]/60" : "text-white/20"}`}
+                      className={`text-[10px] ${isActive ? "text-[#7fffd4]/60" : "text-white/40"}`}
                     >
                       {count}
                     </span>
@@ -1244,20 +1252,21 @@ export default async function OpsPage({
               })}
             </nav>
 
-            <div className="flex items-center gap-1.5">
-              <span className="text-[10px] uppercase tracking-wider text-white/20 mr-1">
+            <div className="flex items-center gap-1.5" role="group" aria-label="Sort repositories">
+              <span className="text-[10px] uppercase tracking-wider text-white/40 mr-1" aria-hidden="true">
                 Sort
               </span>
               {(["activity", "health", "name"] as const).map((s) => (
                 <Link
                   key={s}
                   href={`/ops?tab=${activeTab}&sort=${s}`}
+                  aria-current={s === sortKey ? "true" : undefined}
                   className={`
                     px-2.5 py-1 rounded text-[11px] font-medium transition-colors
                     ${
                       s === sortKey
-                        ? "bg-white/[0.08] text-white/70"
-                        : "text-white/30 hover:text-white/50"
+                        ? "bg-white/[0.08] text-white/80"
+                        : "text-white/50 hover:text-white/70"
                     }
                   `}
                 >
@@ -1366,7 +1375,7 @@ export default async function OpsPage({
             Arcanea Ops Dashboard -- Data from GitHub API -- Cached 5 min
           </p>
         </div>
-      </main>
+      </div>
     </div>
   );
 }

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LazyMotion, domMax, m, AnimatePresence } from "framer-motion";
+import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
 import { UserNav } from "@/components/auth";
 import { NotificationBell } from "@/components/notifications/notification-bell";
 import { SearchBar } from "@/components/search/search-bar";
@@ -31,7 +31,7 @@ export function Navbar() {
   }, []);
 
   return (
-    <LazyMotion features={domMax}>
+    <LazyMotion features={domAnimation}>
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled

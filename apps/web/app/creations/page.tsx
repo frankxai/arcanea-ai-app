@@ -95,13 +95,17 @@ export default function CreationsPage() {
             href="/chat"
             className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#00bcd4]/15 to-[#00897b]/10 text-[#00bcd4] text-sm font-medium border border-[#00bcd4]/20 hover:border-[#00bcd4]/30 hover:shadow-[0_0_16px_rgba(0,188,212,0.1)] transition-all"
           >
-            <PhPlus className="w-4 h-4" />
+            <PhPlus className="w-4 h-4" aria-hidden="true" />
             Create New
           </Link>
         </div>
 
         {/* Filter tabs */}
-        <div className="flex items-center gap-1.5 mb-8 p-1 rounded-xl bg-white/[0.03] border border-white/[0.05] w-fit">
+        <div
+          className="flex items-center gap-1.5 mb-8 p-1 rounded-xl bg-white/[0.03] border border-white/[0.05] w-fit"
+          role="group"
+          aria-label="Filter creations by type"
+        >
           {TYPE_FILTERS.map((f) => {
             const Icon = f.icon;
             const isActive = filter === f.key;
@@ -109,13 +113,14 @@ export default function CreationsPage() {
               <button
                 key={f.key}
                 onClick={() => setFilter(f.key)}
+                aria-pressed={isActive}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                   isActive
                     ? 'bg-gradient-to-r from-[#00bcd4]/15 to-transparent text-[#00bcd4] shadow-[inset_0_0_0_1px_rgba(0,188,212,0.2)]'
-                    : 'text-white/35 hover:text-white/55'
+                    : 'text-white/55 hover:text-white/75'
                 }`}
               >
-                <Icon className="w-3.5 h-3.5" />
+                <Icon className="w-3.5 h-3.5" aria-hidden="true" />
                 {f.label}
               </button>
             );
@@ -131,10 +136,10 @@ export default function CreationsPage() {
           </div>
         ) : filtered.length === 0 ? (
           <div className="text-center py-20">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-white/[0.04] flex items-center justify-center">
-              <PhFunnel className="w-6 h-6 text-white/15" />
+            <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-white/[0.04] flex items-center justify-center" aria-hidden="true">
+              <PhFunnel className="w-6 h-6 text-white/40" />
             </div>
-            <p className="text-white/30 text-sm mb-2">
+            <p className="text-white/60 text-sm mb-2">
               {filter === 'all' ? 'No creations yet' : `No ${filter} creations yet`}
             </p>
             <Link href="/chat" className="text-[#00bcd4] text-sm hover:underline">
@@ -170,19 +175,21 @@ export default function CreationsPage() {
                 {/* Info */}
                 <div className="p-4">
                   <h3 className="text-sm font-medium text-white/80 truncate">{creation.title}</h3>
-                  <p className="text-[11px] text-white/25 mt-1">{formatDate(creation.createdAt)}</p>
+                  <p className="text-[11px] text-white/50 mt-1">{formatDate(creation.createdAt)}</p>
 
                   {/* Stats */}
                   <div className="flex items-center gap-3 mt-3">
-                    <span className="flex items-center gap-1 text-[11px] text-white/20">
-                      <PhEye className="w-3 h-3" />
+                    <span className="flex items-center gap-1 text-[11px] text-white/50">
+                      <PhEye className="w-3 h-3" aria-hidden="true" />
+                      <span className="sr-only">Views:</span>
                       {creation.viewCount ?? 0}
                     </span>
-                    <span className="flex items-center gap-1 text-[11px] text-white/20">
-                      <PhHeart className="w-3 h-3" />
+                    <span className="flex items-center gap-1 text-[11px] text-white/50">
+                      <PhHeart className="w-3 h-3" aria-hidden="true" />
+                      <span className="sr-only">Likes:</span>
                       {creation.likeCount ?? 0}
                     </span>
-                    <span className="text-[10px] text-white/15 px-1.5 py-0.5 rounded bg-white/[0.04]">
+                    <span className="text-[10px] text-white/50 px-1.5 py-0.5 rounded bg-white/[0.04]">
                       {creation.type}
                     </span>
                   </div>
@@ -192,10 +199,10 @@ export default function CreationsPage() {
                 <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                   <button
                     onClick={() => handleDelete(creation.id)}
-                    className="w-7 h-7 rounded-lg bg-black/60 backdrop-blur-sm flex items-center justify-center text-white/40 hover:text-red-400 transition-colors"
-                    title="Delete"
+                    className="w-7 h-7 rounded-lg bg-black/60 backdrop-blur-sm flex items-center justify-center text-white/40 hover:text-red-400 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400"
+                    aria-label={`Delete ${creation.title}`}
                   >
-                    <PhTrash className="w-3.5 h-3.5" />
+                    <PhTrash className="w-3.5 h-3.5" aria-hidden="true" />
                   </button>
                 </div>
               </div>

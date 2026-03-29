@@ -7,6 +7,23 @@ const nextConfig = {
       '@opentelemetry/api': { browser: './empty-module.js' },
     },
   },
+  experimental: {
+    // Tree-shake barrel exports from large packages — reduces client JS significantly
+    optimizePackageImports: [
+      '@phosphor-icons/react',
+      '@radix-ui/react-accordion',
+      '@radix-ui/react-alert-dialog',
+      '@radix-ui/react-dialog',
+      '@radix-ui/react-dropdown-menu',
+      '@radix-ui/react-popover',
+      '@radix-ui/react-select',
+      '@radix-ui/react-tabs',
+      '@radix-ui/react-toast',
+      '@radix-ui/react-tooltip',
+      'framer-motion',
+      'react-syntax-highlighter',
+    ],
+  },
   images: {
     remotePatterns: [
       {

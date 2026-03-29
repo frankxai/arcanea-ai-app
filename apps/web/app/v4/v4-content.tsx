@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import {
   PhArrowRight,
   PhBooks,
@@ -128,8 +129,8 @@ export function V4Content({
         <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
           {guardians.map((guardian) => (
             <Link key={guardian.name} href={`/lore/guardians/${guardian.name.toLowerCase()}`} className="rounded-2xl overflow-hidden border border-white/10 bg-white/[0.03] hover:bg-white/[0.05] transition">
-              <div className="aspect-[3/4] bg-black/30">
-                <img src={guardian.image} alt={guardian.name} className="w-full h-full object-cover object-top" loading="lazy" />
+              <div className="aspect-[3/4] bg-black/30 relative">
+                <Image src={guardian.image} alt={guardian.name} fill sizes="(max-width: 640px) 50vw, 20vw" className="object-cover object-top" loading="lazy" />
               </div>
               <div className="p-4">
                 <h3 className="text-lg font-semibold">{guardian.name}</h3>

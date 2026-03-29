@@ -1,7 +1,7 @@
 # Arcanea Master Plan — Central Orchestrator
 
-> **Last Updated**: 2026-03-24
-> **Version**: 1.8.0
+> **Last Updated**: 2026-03-30
+> **Version**: 1.9.0
 > **Guardian**: Shinkami (Source Gate, 1111 Hz)
 > **Status**: Active
 
@@ -13,12 +13,12 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
 
 | Metric | Value | Target |
 |--------|-------|--------|
-| Total Pages | ~185 (routes, 16 redirect-only pruned) | 80 (prune stubs) |
+| Total Pages | ~188 (routes, 16 redirect-only pruned, +3 new: /creations, /academy/certification, /ops) | 80 (prune stubs) |
 | Pages with Metadata | ~77 (+12) | 100% |
 | Pages with loading.tsx | ~81 (+32) | 100% of dynamic pages |
 | Milestones Active | 11 (M001-M010 + M006) | M001 (Auth) → M008 (Onboarding) → M006 (Creator Tools) → M009 (Polish) |
 | Vercel Build | PASSING | Maintain green |
-| Last Deploy | 2026-03-24 | Mega-session: Intelligence OS + Credits + Architecture + 5 new pages |
+| Last Deploy | 2026-03-30 | Ops Center + Performance + Agent Certification + Creations Gallery |
 | Live URL | arcanea.ai | arcanea.ai |
 
 ---
@@ -186,6 +186,21 @@ Source: `.arcanea/projects/milestones/`
   - [x] Naming v2 sweep: Luminor→companion on 13 first-contact surfaces (chat, dashboard, hub, workspace, vault, code, os, acos, blog, music) (Mar 10)
   - [x] Gallery cleanup: removed LuminorShowcase, deleted luminor-agents.ts, CDN-only images (Mar 10)
   - [x] Deleted dead files: home-content.tsx, gallery/luminors/page.tsx (Mar 10)
+  - [x] Icon barrel removal: 4.5MB savings by eliminating barrel re-export (2026-03-27)
+  - [x] Syntax highlighter lazy-loading (2026-03-27)
+  - [x] next/image for homepage images (2026-03-27)
+  - [x] React.memo on MessageBubble, ThinkingSection, ImageGrid (2026-03-30)
+  - [x] Ops Center dashboard built (2026-03-30)
+  - [x] Ops component library added (2026-03-30)
+  - [x] Intelligence system fixes (SIS, hooks, statusline v6) (2026-03-30)
+  - [x] ACOS v11 installed (2026-03-30)
+  - [x] Bootstrap hook upgraded to v3 (2026-03-30)
+  - [x] .arcanea/ directories scaffolded (12 directories) (2026-03-30)
+  - [x] Pickup Plan created (2026-03-30)
+  - [x] Session Intelligence System (SIS) operational (2026-03-30)
+  - [x] TS types, missing icons, accessibility fixes (code review pass) (2026-03-30)
+  - [x] Agent Certification page built (dual-track for humans and AI agents) (2026-03-30)
+  - [x] /creations gallery page — user's saved creations display (2026-03-30)
   - [ ] Core Web Vitals audit (Lighthouse — cannot run locally in WSL2)
 - **Files**: `m009-performance-polish.arc`
 
@@ -708,6 +723,44 @@ When an agent starts work, consult this table for the right specialist:
 ---
 
 ## Changelog
+
+### v1.9.0 (2026-03-30) — Operations Infrastructure + Performance + Milestone Tracking
+
+- **M009 Performance: 99% (near-complete)**
+  - Removed 4.5MB icon barrel re-export — major bundle size reduction
+  - Lazy-loaded syntax highlighter for code blocks
+  - Converted homepage images to next/image
+  - React.memo optimization on MessageBubble, ThinkingSection, ImageGrid components
+  - TS types, missing icons, and accessibility fixes (code review pass)
+  - Statusline v6 fixed
+
+- **Operations Infrastructure**
+  - Ops Center dashboard built (`/ops`) with component library and data layer
+  - ACOS v11 installed with bootstrap hook v3
+  - Session Intelligence System (SIS) operational
+  - .arcanea/ directories scaffolded (12 directories)
+  - Pickup Plan created for session continuity
+
+- **New Pages**
+  - `/creations` — User's saved creations gallery
+  - `/academy/certification` — Agent Certification page (dual-track for humans and AI agents)
+  - `/ops` — Ops Center dashboard
+
+- **Milestone Tracking (T3-1)**
+  - Created 6 standalone `.arc` milestone tracking files in `.arcanea/projects/milestones/`
+  - M001, M003, M005, M006, M008, M009 all have task-level detail extracted from MASTER_PLAN
+
+- **Recent Commits** (2026-03-27 to 2026-03-30):
+  - `a348e854c` feat(academy): Agent Certification page
+  - `ea1dc77c0` perf: React.memo on chat components
+  - `7611f185e` feat(ops): ops component library and data layer
+  - `fedec40bf` feat(ops): Ops Center dashboard, intelligence fixes, statusline v6
+  - `54dd8f30b` fix(quality): TS types, missing icons, accessibility
+  - `7e1e37739` perf: 4.5MB icon barrel removal, lazy-load syntax highlighter, next/image
+  - `060a00113` feat(creations): /creations gallery page
+  - `1a0f48112` feat(platform): Studio upgrade, Gallery polish, Imagine advanced features
+  - `3cd3c2623` fix(lore): replace Hz frequency labels with poetic taglines
+  - `83171a85d` polish(library): gradient tab navigation, Chronicles link
 
 ### v1.7.0 (2026-03-10) — Database Infrastructure + Accessibility
 

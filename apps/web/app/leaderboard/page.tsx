@@ -107,7 +107,8 @@ function PodiumCard({ entry, place }: { entry: LeaderboardEntry; place: 1 | 2 | 
         <div className={`absolute inset-0 rounded-full bg-gradient-radial ${config.gradient} blur-xl scale-150`} />
         <div className={`relative ${config.avatarSize} rounded-full ring-2 ${config.ring} overflow-hidden bg-gradient-to-br from-[#00bcd4]/30 to-purple-500/30 flex items-center justify-center ${config.glow} ${place === 1 ? 'animate-[shimmer_3s_ease-in-out_infinite]' : ''}`}>
           {entry.avatar_url ? (
-            <img src={entry.avatar_url} alt={entry.display_name || 'Creator'} className="w-full h-full object-cover" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={entry.avatar_url} alt={entry.display_name || 'Creator'} width={80} height={80} className="w-full h-full object-cover" loading="lazy" />
           ) : (
             <span className="text-2xl font-bold" style={{ fontFamily: 'var(--font-display, Cinzel, serif)' }}>
               {(entry.display_name || '?')[0].toUpperCase()}
@@ -279,7 +280,8 @@ export default function LeaderboardPage() {
                       <span className={`w-8 text-center font-bold ${colors.badgeColor}`}>{colors.badge}</span>
                       <div className="w-12 h-12 rounded-full ring-1 ring-white/10 overflow-hidden bg-gradient-to-br from-[#00bcd4]/30 to-purple-500/30 flex items-center justify-center">
                         {entry.avatar_url ? (
-                          <img src={entry.avatar_url} alt={entry.display_name || 'Creator'} className="w-full h-full object-cover" />
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={entry.avatar_url} alt={entry.display_name || 'Creator'} width={80} height={80} className="w-full h-full object-cover" loading="lazy" />
                         ) : (
                           <span className="text-lg font-bold">{(entry.display_name || '?')[0].toUpperCase()}</span>
                         )}
@@ -319,7 +321,8 @@ export default function LeaderboardPage() {
                       {/* Avatar */}
                       <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#00bcd4]/20 to-purple-500/20 flex items-center justify-center overflow-hidden ring-1 ring-white/[0.06]">
                         {entry.avatar_url ? (
-                          <img src={entry.avatar_url} alt={entry.display_name || 'Creator'} className="w-full h-full object-cover" />
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={entry.avatar_url} alt={entry.display_name || 'Creator'} width={80} height={80} className="w-full h-full object-cover" loading="lazy" />
                         ) : (
                           <span className="text-sm font-medium text-white/70">{(entry.display_name || '?')[0].toUpperCase()}</span>
                         )}
