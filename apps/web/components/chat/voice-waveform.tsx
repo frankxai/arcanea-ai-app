@@ -165,6 +165,8 @@ export function VoiceWaveform({ stream, onStop }: VoiceWaveformProps) {
       <canvas
         ref={canvasRef}
         className="flex-1 h-10"
+        aria-label="Voice recording waveform visualization"
+        role="img"
         style={{ imageRendering: 'auto' }}
       />
 

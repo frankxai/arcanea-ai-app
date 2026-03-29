@@ -24,7 +24,7 @@ const TYPE_FILTERS: { key: CreationType | 'all'; label: string; icon: typeof PhG
   { key: 'all', label: 'All', icon: PhGridFour },
   { key: 'text', label: 'Text', icon: PhFileText },
   { key: 'image', label: 'Image', icon: PhImage },
-  { key: 'music', label: 'Music', icon: PhMusicNote },
+  { key: 'audio', label: 'Music', icon: PhMusicNote },
   { key: 'code', label: 'Code', icon: PhCode },
 ];
 
@@ -69,7 +69,7 @@ export default function CreationsPage() {
   const handleDelete = async (id: string) => {
     if (!confirm('Delete this creation?')) return;
     try {
-      await deleteCreation(createClient(), id);
+      await deleteCreation(createClient(), id, user?.id ?? '');
       setCreations((prev) => prev.filter((c) => c.id !== id));
     } catch {
       console.warn('Delete failed');
@@ -149,11 +149,11 @@ export default function CreationsPage() {
                 className="group relative rounded-xl bg-gradient-to-br from-white/[0.04] to-white/[0.02] border border-white/[0.06] hover:border-[#00bcd4]/20 hover:shadow-[0_0_20px_rgba(0,188,212,0.06)] transition-all duration-300 overflow-hidden"
               >
                 {/* Preview */}
-                {creation.thumbnail_url ? (
+                {creation.thumbnailUrl ? (
                   <div className="aspect-video bg-white/[0.02]">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={creation.thumbnail_url}
+                      src={creation.thumbnailUrl}
                       alt={creation.title}
                       className="w-full h-full object-cover"
                     />
@@ -162,7 +162,7 @@ export default function CreationsPage() {
                   <div className="aspect-video bg-gradient-to-br from-white/[0.03] to-white/[0.01] flex items-center justify-center">
                     {creation.type === 'image' && <PhImage className="w-8 h-8 text-white/10" />}
                     {creation.type === 'text' && <PhFileText className="w-8 h-8 text-white/10" />}
-                    {creation.type === 'music' && <PhMusicNote className="w-8 h-8 text-white/10" />}
+                    {creation.type === 'audio' && <PhMusicNote className="w-8 h-8 text-white/10" />}
                     {creation.type === 'code' && <PhCode className="w-8 h-8 text-white/10" />}
                   </div>
                 )}
@@ -170,17 +170,17 @@ export default function CreationsPage() {
                 {/* Info */}
                 <div className="p-4">
                   <h3 className="text-sm font-medium text-white/80 truncate">{creation.title}</h3>
-                  <p className="text-[11px] text-white/25 mt-1">{formatDate(creation.created_at)}</p>
+                  <p className="text-[11px] text-white/25 mt-1">{formatDate(creation.createdAt)}</p>
 
                   {/* Stats */}
                   <div className="flex items-center gap-3 mt-3">
                     <span className="flex items-center gap-1 text-[11px] text-white/20">
                       <PhEye className="w-3 h-3" />
-                      {creation.view_count ?? 0}
+                      {creation.viewCount ?? 0}
                     </span>
                     <span className="flex items-center gap-1 text-[11px] text-white/20">
                       <PhHeart className="w-3 h-3" />
-                      {creation.like_count ?? 0}
+                      {creation.likeCount ?? 0}
                     </span>
                     <span className="text-[10px] text-white/15 px-1.5 py-0.5 rounded bg-white/[0.04]">
                       {creation.type}
