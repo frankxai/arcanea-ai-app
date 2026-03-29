@@ -99,6 +99,13 @@ interface ChatRequest {
   enabledTools?: string[];
   /** BYOK search API key (Tavily/Brave — from client localStorage) */
   searchApiKey?: string;
+  /** Active project/workspace context from the canonical chat shell */
+  projectContext?: {
+    id: string;
+    title: string;
+    description?: string;
+    goal?: string;
+  };
 }
 
 function extractMessageText(message: {
@@ -164,7 +171,7 @@ export async function POST(req: NextRequest) {
   try {
     // --- Parse request ---
     const body: ChatRequest = await req.json();
-    const { messages, systemPrompt, temperature, maxTokens, provider: requestedProvider, model: modelOverride, gatewayModel, focusHint, clientApiKey, enabledTools, searchApiKey } = body;
+    const { messages, systemPrompt, temperature, maxTokens, provider: requestedProvider, model: modelOverride, gatewayModel, focusHint, clientApiKey, enabledTools, searchApiKey, projectContext } = body;
 
     if (!messages || messages.length === 0) {
       return new Response('Messages are required', { status: 400, headers: { 'Content-Type': 'text/plain' } });
@@ -403,6 +410,20 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
     } catch (e) {
       // Non-fatal: continue without context if profile load fails
       console.warn('Failed to load creator context:', e);
+    }
+
+    if (projectContext?.title) {
+      const projectBlock = [
+        '[ACTIVE PROJECT]',
+        `Title: ${projectContext.title}`,
+        ...(projectContext.goal ? [`Goal: ${projectContext.goal}`] : []),
+        ...(projectContext.description ? [`Context: ${projectContext.description}`] : []),
+        'Treat this as the active workspace. Keep continuity, planning, and suggestions aligned to it unless the creator clearly changes direction.',
+        '[/ACTIVE PROJECT]',
+        '',
+      ].join('\n');
+
+      resolvedSystemPrompt = `${projectBlock}\n${resolvedSystemPrompt}`;
     }
 
     // --- Inject Library wisdom based on active gate ---

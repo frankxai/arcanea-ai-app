@@ -22,6 +22,7 @@ import { classifyIntent } from '@/lib/ai/router';
 import { resolveSwarm, type SwarmResult } from '@/lib/ai/guardian-swarm';
 import { CHAT_MODELS } from '@/components/chat/model-selector';
 import { getLuminor, getLuminorIds, type LuminorConfig } from '@/lib/luminors/config';
+import type { ChatProject } from '@/lib/chat/project-store';
 
 // ---------------------------------------------------------------------------
 // Helpers (pure functions, co-located with their consumer)
@@ -195,11 +196,15 @@ export interface ConversationState {
   lastMsg: UIMessage | undefined;
 }
 
+interface UseConversationOptions {
+  activeProject?: ChatProject | null;
+}
+
 // ---------------------------------------------------------------------------
 // Hook
 // ---------------------------------------------------------------------------
 
-export function useConversation(): ConversationState {
+export function useConversation(options?: UseConversationOptions): ConversationState {
   const searchParams = useSearchParams();
   const initialPrompt = searchParams.get('prompt');
   const luminorId = searchParams.get('luminor');
@@ -367,11 +372,21 @@ export function useConversation(): ConversationState {
       clientApiKey,
       gatewayModel: modelId,
       focusHint,
+      ...(options?.activeProject
+        ? {
+            projectContext: {
+              id: options.activeProject.id,
+              title: options.activeProject.title,
+              description: options.activeProject.description,
+              goal: options.activeProject.goal,
+            },
+          }
+        : {}),
       ...(activeLuminor ? { systemPrompt: activeLuminor.systemPrompt } : {}),
       ...(currentEnabledTools.length > 0 ? { enabledTools: currentEnabledTools } : {}),
       ...(searchApiKey ? { searchApiKey } : {}),
     };
-  }, [provider, clientApiKey, modelId, focusHint, activeLuminor, enabledTools]);
+  }, [provider, clientApiKey, modelId, focusHint, activeLuminor, enabledTools, options?.activeProject]);
 
   const sendMessage = useCallback((opts: { text: string; files?: FileUIPart[] }) => {
     // Clear any previous error when the user sends a new message
