@@ -61,6 +61,53 @@ const CATEGORY_STYLES: Record<
 
 const CHANGELOG: ChangelogEntry[] = [
   {
+    date: "2026-03-29",
+    version: "3.2.0",
+    title: "Chronicles of Arcanea — 257,000 Words of Original Canon",
+    category: "feature",
+    items: [
+      "Book 1: The Three Academies — 10 chapters, 38,000 words (COMPLETE)",
+      "Book 2: The Gate-Touched — 3 opening chapters, 12,300 words",
+      "Series Bible: 10 documents including World Architecture (12K words), Character Bible, Dragon Codex, Dungeon Compendium, Academy Curriculum, Companion Bestiary, Songs & Hymns, The Prophecy of Five Fractures",
+      "The Fall of Malachar — tragic antagonist origin story",
+      "Three Great Academies: The Luminary (Light), Draconis Forge (Fire), Abyssal Athenaeum (Water)",
+      "Gate-Touched classification: Sparked, Kindled, Blazing, Transcendent, Luminor-Born",
+      "12 named Dragons with full profiles and bond mechanics",
+      "10 Dungeons — corrupted Gate temples with unique mechanics",
+      "20 Companion creatures in naturalist field guide format",
+      "Parallel expansion: deep lore, world atlas, founding myths (148K words)",
+    ],
+  },
+  {
+    date: "2026-03-28",
+    version: "3.1.0",
+    title: "Product Excellence — Chat, Imagine, Credits, Performance",
+    category: "feature",
+    items: [
+      "Imagine: masonry layout for mixed aspect ratios, prompt history (last 30), 8 style preset chips",
+      "Credits system activated — real Supabase queries replace mock data (balance, spend, webhook, checkout)",
+      "Chat: Arcanea personality system — 'You are not helpful. You are generative.'",
+      "Imagine: OpenRouter provider with 8 models, GPT-5 Image Mini, Gemini 2.5 fix",
+      "Arcanean Style Engine: 12 canonical visual styles wired to /imagine",
+      "Brand mark wired into navbar, chat header, and message thinking state",
+    ],
+  },
+  {
+    date: "2026-03-28",
+    version: "3.0.1",
+    title: "Hz Depth-Only Policy + Homepage Performance",
+    category: "performance",
+    items: [
+      "Removed all Hz/frequency numbers from marketing surfaces (8 files, 24+ edits)",
+      "Hz visible only on deep lore pages (/lore/gates, /lore/guardians)",
+      "Homepage LCP: HeroChatBox deferred via dynamic() import (~20-40kB saved)",
+      "hero-v3: motion → m + LazyMotion domAnimation (~26kB framer savings)",
+      "hero-chat-box: useRouter replaced with window.location.href",
+      "Replaced wellness language with maker-focused copy across all landing components",
+      "All 25 footer links verified pointing to real pages",
+    ],
+  },
+  {
     date: "2026-03-23",
     version: "2.7.0",
     title: "Security & Auth Hardening",

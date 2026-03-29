@@ -14,6 +14,108 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
   {
+    slug: 'chronicles-of-arcanea',
+    title: 'Chronicles of Arcanea: 257,000 Words in One Night',
+    excerpt:
+      'We built an entire fantasy novel, a complete series bible, and the deepest world architecture Arcanea has ever seen — all in a single overnight session with AI-native book production.',
+    category: 'Announcement',
+    author: 'FrankX',
+    date: '2026-03-29',
+    readTime: '7 min read',
+    featured: true,
+    accent: '#ffd700',
+    tags: ['chronicles', 'lore', 'book', 'world-building', 'announcement', 'living-lore'],
+    content: `
+## One Night. Ten Chapters. Three Academies. One Complete World.
+
+Last night we did something we've never done before: we used Arcanea's multi-agent authoring system to write an entire fantasy novel in a single session.
+
+Not an outline. Not notes. **257,243 words** of original, canon-aligned fiction, worldbuilding, and series architecture — produced by parallel AI writing agents coordinated through Arcanea's superintelligence framework.
+
+The result is **Chronicles of Arcanea** — a 10-book epic fantasy series set in the Arcanea universe.
+
+## Book 1: The Three Academies (Complete)
+
+Ten chapters. 38,000 words. Five protagonists you haven't met yet:
+
+**Kael Thornfield** — a blacksmith's apprentice whose Foundation Gate opened and collapsed half his village. He thinks his power is a weapon. He's wrong.
+
+**Mira Tidecrest** — a fisher's daughter who hears memories in rainwater. She came to the Abyssal Athenaeum to make it stop, not to become a scholar.
+
+**Ash** (no surname — he burned it) — a street kid whose fire destroyed a garrison. He thinks destruction is all he is.
+
+**Sable Luminaire** — daughter of Archmages, born with the most feared element: Void. She wears composure like armor.
+
+**Elio Songwright** — a musician whose empathy is so strong he feels everyone's pain. Three Academies rejected him. None could handle what he carries.
+
+They find each other through a shared dream. They enter a Dungeon together. They discover something about the Dark Lord that changes everything.
+
+## The Three Great Academies
+
+The world-building runs deep:
+
+**The Luminary** — A crystalline citadel floating above the Veil Mountains. Where artists, healers, and visionaries train. Students paint with starlight and write stories that literally come to life.
+
+**The Draconis Forge** — Carved into an active volcano. Where warriors and smiths train by walking through fire. Deep beneath it, something from Malachar's era is still sealed.
+
+**The Abyssal Athenaeum** — A sunken city beneath the Sapphire Sea. Where memory-keepers dive into the actual past. Built atop a civilization that drowned itself to keep a prophecy silent.
+
+## The Series Bible
+
+Ten documents totaling 60,000+ words of series architecture:
+
+- **World Architecture** (12,000 words) — full continental geography, magic system with hard rules, political structure, culture, creature ecology, timeline spanning eight ages
+- **Character Bible** — five protagonists with full psychological profiles, speech patterns, fatal flaws, and ten-book arcs
+- **Dragon Codex** — 12 named dragons, four breeds, bond mechanics that change both human and dragon forever
+- **Dungeon Compendium** — 10 corrupted Gate temples, each a sentient predator with unique trials
+- **The Prophecy** — 9 stanzas of verse with three layers of interpretation, each more terrifying than the last
+- **Academy Curriculum** — 7-year programs for all three institutions
+- **Companion Bestiary** — 20 magical creatures in naturalist field guide format
+- **Songs & Hymns** — 10 poems that carry the emotional architecture of the world
+
+## How We Built It
+
+This wasn't one person typing for 7 hours. This was Arcanea's multi-agent system operating at full capacity:
+
+1. **Series Bible written first** — the architectural foundation
+2. **Three parallel writing agents** launched simultaneously — one for chapters, one for characters, one for worldbuilding
+3. **Each wave committed and pushed** before the next launched
+4. **Canon verification** against \`.arcanea/lore/CANON_LOCKED.md\` at every step
+5. **Five waves of parallel creation** over 7 hours
+
+The system wrote at an average rate of **~36,700 words per hour**. Not by sacrificing quality — by parallelizing the work the way a real author team would.
+
+## What's Next
+
+Book 1 is complete. Book 2 has three chapters. The series bible supports all ten volumes.
+
+**Immediate next steps:**
+- Editorial pass (Seven-Pass revision ritual)
+- Visual art for each chapter (character portraits, Academy environments, Dungeon maps)
+- Audio adaptation (Suno-composed music for each chapter and character)
+- Web reading experience on arcanea.ai
+
+**The bigger picture:**
+Chronicles of Arcanea is not just a book series. It's the proof that Arcanea's creative framework works at scale. The Three Academies, the Gate-Touched, the Dragons, the Dungeons — these are all built on the same architectural patterns that any creator can use to build their own world.
+
+The framework made the world. The world proves the framework.
+
+## Read It Now
+
+The full manuscript is available in the Arcanea repository:
+
+- **Book 1**: \`book/chronicles-of-arcanea/book-01-the-three-academies/\`
+- **Book 2**: \`book/chronicles-of-arcanea/book-02-the-gate-touched/\`
+- **Series Bible**: \`book/chronicles-of-arcanea/series-bible/\`
+
+Or explore it through the Library at [arcanea.ai/library](/library).
+
+---
+
+*"The First Light said: Let there be creation. The Primordial Dark replied: Let there be the space where creation can breathe. And between them, Arcanea was born."*
+`,
+  },
+  {
     slug: 'what-is-arcanea',
     title: 'What Is Arcanea? A Creator\'s Guide to AI-Powered World Building',
     excerpt:
