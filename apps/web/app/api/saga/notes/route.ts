@@ -12,6 +12,10 @@ import { createClient } from '@/lib/supabase/server';
 
 export const dynamic = 'force-dynamic';
 
+// chapter_notes table exists at runtime but isn't in generated Supabase types
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type UntypedClient = any;
+
 // ── Helpers ────────────────────────────────────────
 
 function jsonOk<T>(data: T, status = 200) {
@@ -42,7 +46,7 @@ const createNoteSchema = z.object({
 
 export async function GET(request: NextRequest) {
   try {
-    const supabase = await createClient();
+    const supabase = (await createClient()) as UntypedClient;
     const { searchParams } = new URL(request.url);
     const bookId = searchParams.get('bookId');
     const chapter = searchParams.get('chapter');
@@ -82,7 +86,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const supabase = await createClient();
+    const supabase = (await createClient()) as UntypedClient;
 
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
@@ -132,7 +136,7 @@ export async function POST(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   try {
-    const supabase = await createClient();
+    const supabase = (await createClient()) as UntypedClient;
 
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
