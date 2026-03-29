@@ -1,0 +1,192 @@
+name: Quality Gate
+
+# Runs on every push and PR - fast feedback loop
+on:
+  push:
+    branches: [main, develop, 'feature/**']
+  pull_request:
+    branches: [main, develop]
+
+concurrency:
+  group: quality-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: '20'
+  PNPM_VERSION: '8.15.0'
+
+jobs:
+  # ============================================
+  # FAST QUALITY CHECKS (< 2 min)
+  # ============================================
+  quality:
+    name: TypeScript & Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: TypeScript Check
+        run: pnpm --filter @arcanea/web type-check
+        continue-on-error: false
+
+      - name: ESLint
+        run: pnpm --filter @arcanea/web lint
+        continue-on-error: false
+
+      - name: Security Audit
+        run: pnpm audit --audit-level=critical
+
+  # ============================================
+  # RELEASE INTEGRITY — no per-package publish workflows
+  # ============================================
+  release-integrity:
+    name: No Split-Brain Publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check for forbidden per-package publish workflows
+        run: |
+          FOUND=$(find . -path "./.github/workflows/*" -prune -o -name "publish.yml" -path "*/.github/workflows/publish.yml" -print)
+          if [ -n "$FOUND" ]; then
+            echo "::error::Per-package publish.yml found — monorepo uses Changesets only."
+            echo "Forbidden files:"
+            echo "$FOUND"
+            echo ""
+            echo "Delete these and use 'pnpm changeset' instead."
+            exit 1
+          fi
+          echo "Release integrity check passed — no split-brain publish workflows."
+
+  # ============================================
+  # BUILD VERIFICATION
+  # ============================================
+  build:
+    name: Production Build
+    runs-on: ubuntu-latest
+    needs: quality
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm --filter @arcanea/web build
+        env:
+          # Provide dummy env vars for build
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key' }}
+
+      - name: Build Summary
+        if: success()
+        run: |
+          echo "## Build Successful" >> $GITHUB_STEP_SUMMARY
+          echo "- TypeScript: Strict mode, 0 errors" >> $GITHUB_STEP_SUMMARY
+          echo "- Build: Production ready" >> $GITHUB_STEP_SUMMARY
+
+      - name: Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          configPath: './lighthouserc.json'
+          uploadArtifacts: true
+        continue-on-error: true
+
+  e2e-smoke:
+    name: E2E Smoke
+    runs-on: ubuntu-latest
+    needs: build
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'pnpm'
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browsers
+        run: pnpm --filter @arcanea/web exec playwright install --with-deps chromium
+
+      - name: Build app for smoke test
+        run: pnpm --filter @arcanea/web build
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key' }}
+
+      - name: Run E2E smoke
+        run: pnpm --filter @arcanea/web test:e2e -- --grep @smoke
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co' }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key' }}
+
+  # ============================================
+  # STATUS CHECK FOR BRANCH PROTECTION
+  # ============================================
+  status:
+    name: Quality Status
+    runs-on: ubuntu-latest
+    needs: [quality, build, e2e-smoke, release-integrity]
+    if: always()
+
+    steps:
+      - name: Check Results
+        run: |
+          if [ "${{ needs.quality.result }}" == "success" ] && [ "${{ needs.build.result }}" == "success" ] && [ "${{ needs.e2e-smoke.result }}" == "success" ]; then
+            echo "All quality checks passed!"
+            exit 0
+          else
+            echo "Quality checks failed"
+            echo "TypeScript/Lint: ${{ needs.quality.result }}"
+            echo "Build: ${{ needs.build.result }}"
+            echo "E2E: ${{ needs.e2e-smoke.result }}"
+            exit 1
+          fi
