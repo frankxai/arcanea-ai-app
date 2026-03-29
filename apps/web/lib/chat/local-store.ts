@@ -31,6 +31,7 @@ export interface ChatSession {
   messages: ChatMessage[];
   luminorId?: string | null;
   modelId?: string | null;
+  projectId?: string | null;
   pinned?: boolean;
   createdAt: string;
   updatedAt: string;
@@ -42,6 +43,7 @@ export interface ChatSessionSummary {
   messageCount: number;
   lastMessage: string | null;
   luminorId: string | null;
+  projectId: string | null;
   pinned?: boolean;
   createdAt: string;
   updatedAt: string;
@@ -79,6 +81,7 @@ function normalizeSession(session: ChatSession): ChatSession {
     messages: Array.isArray(session.messages) ? session.messages : [],
     luminorId: session.luminorId ?? null,
     modelId: session.modelId ?? null,
+    projectId: session.projectId ?? null,
   };
 }
 
@@ -110,7 +113,7 @@ export function generateSessionTitle(messages: ChatMessage[]): string {
 export function saveChatSession(
   id: string,
   messages: ChatMessage[],
-  opts?: { luminorId?: string | null; modelId?: string | null; title?: string }
+  opts?: { luminorId?: string | null; modelId?: string | null; projectId?: string | null; title?: string }
 ): void {
   const sessions = readSessions();
   const now = new Date().toISOString();
@@ -139,6 +142,7 @@ export function saveChatSession(
     messages,
     luminorId: opts?.luminorId ?? null,
     modelId: opts?.modelId ?? null,
+    projectId: opts?.projectId ?? (existingIdx >= 0 ? sessions[existingIdx].projectId ?? null : null),
     pinned: existingIdx >= 0 ? sessions[existingIdx].pinned : false,
     createdAt: existingIdx >= 0 ? sessions[existingIdx].createdAt : now,
     updatedAt: now,
@@ -186,6 +190,7 @@ export function listChatSessions(): ChatSessionSummary[] {
       messageCount: s.messages.length,
       lastMessage: lastContent ? (lastContent.length > 80 ? lastContent.slice(0, 80) + '...' : lastContent) : null,
       luminorId: s.luminorId ?? null,
+      projectId: s.projectId ?? null,
       pinned: s.pinned || false,
       createdAt: s.createdAt,
       updatedAt: s.updatedAt,
@@ -232,7 +237,10 @@ export function mergeChatSessions(incoming: ChatSession[]): void {
     }
 
     if (new Date(normalized.updatedAt).getTime() >= new Date(existing.updatedAt).getTime()) {
-      merged.set(normalized.id, normalized);
+      merged.set(normalized.id, {
+        ...normalized,
+        projectId: normalized.projectId ?? existing.projectId ?? null,
+      });
     }
   }
 
@@ -269,6 +277,7 @@ export function searchSessions(query: string): ChatSessionSummary[] {
       messageCount: s.messages.length,
       lastMessage: lastContent ? (lastContent.length > 80 ? lastContent.slice(0, 80) + '...' : lastContent) : null,
       luminorId: s.luminorId ?? null,
+      projectId: s.projectId ?? null,
       pinned: s.pinned || false,
       createdAt: s.createdAt,
       updatedAt: s.updatedAt,
@@ -304,6 +313,30 @@ export function togglePinSession(id: string): void {
   const session = sessions.find((s) => s.id === id);
   if (!session) return;
   session.pinned = !session.pinned;
+  writeSessions(sessions);
+}
+
+/**
+ * Assign a chat session to a project or clear the assignment.
+ */
+export function assignSessionToProject(id: string, projectId: string | null): void {
+  const sessions = readSessions();
+  const session = sessions.find((s) => s.id === id);
+  if (!session) return;
+  session.projectId = projectId;
+  session.updatedAt = new Date().toISOString();
+  writeSessions(sessions);
+}
+
+/**
+ * Remove a deleted project from all sessions.
+ */
+export function clearProjectFromSessions(projectId: string): void {
+  const sessions = readSessions().map((session) => (
+    session.projectId === projectId
+      ? { ...session, projectId: null }
+      : session
+  ));
   writeSessions(sessions);
 }
 

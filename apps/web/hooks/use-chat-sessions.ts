@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
+  assignSessionToProject,
   deleteChatSession,
   listChatSessions,
   loadChatSession,
@@ -15,6 +16,16 @@ import {
   type ChatSession,
   type ChatSessionSummary,
 } from '@/lib/chat/local-store';
+import {
+  createChatProject,
+  deleteChatProject,
+  getActiveChatProjectId,
+  listChatProjects,
+  loadChatProject,
+  renameChatProject,
+  setActiveChatProject,
+  type ChatProject,
+} from '@/lib/chat/project-store';
 import {
   cloudSessionToLocalSession,
   deleteCloudSession,
@@ -50,28 +61,38 @@ function persistExpanded(value: boolean): void {
 }
 
 export interface UseChatSessionsReturn {
+  allSessions: ChatSessionSummary[];
   sessions: ChatSessionSummary[];
+  projects: ChatProject[];
+  activeProject: ChatProject | null;
+  activeProjectId: string | null;
   activeSessionId: string;
   isSidebarExpanded: boolean;
   searchQuery: string;
   isHydrating: boolean;
   setSearchQuery: (query: string) => void;
   toggleSidebar: () => void;
+  setActiveProject: (projectId: string | null) => void;
   setActiveSession: (sessionId: string) => void;
   loadSession: (id: string) => ChatSession | null;
   saveMessages: (
     messages: ChatMessage[],
-    opts?: { luminorId?: string | null; modelId?: string | null },
+    opts?: { luminorId?: string | null; modelId?: string | null; projectId?: string | null },
   ) => void;
   newSession: () => string;
   deleteSession: (id: string) => void;
   renameSession: (id: string, title: string) => void;
   togglePin: (id: string) => void;
+  createProject: (title: string) => ChatProject | null;
+  renameProject: (id: string, title: string) => void;
+  deleteProject: (id: string) => void;
+  assignSessionProject: (sessionId: string, projectId: string | null) => void;
   refreshSessions: () => Promise<void>;
 }
 
 export function useChatSessions(): UseChatSessionsReturn {
   const [activeSessionId, setActiveSessionId] = useState<string>(() => newSessionId());
+  const [activeProjectId, setActiveProjectId] = useState<string | null>(() => getActiveChatProjectId());
   const [isSidebarExpanded, setIsSidebarExpanded] = useState<boolean>(() => getInitialExpanded());
   const [searchQuery, setSearchQuery] = useState('');
   const [isHydrating, setIsHydrating] = useState(true);
@@ -130,24 +151,37 @@ export function useChatSessions(): UseChatSessionsReturn {
     setActiveSessionId(sessionId);
   }, []);
 
+  const setProject = useCallback((projectId: string | null) => {
+    setActiveProjectId(projectId);
+    setActiveChatProject(projectId);
+    refreshSessions();
+  }, [refreshSessions]);
+
   const loadSession = useCallback((id: string): ChatSession | null => {
     const session = loadChatSession(id);
     if (session) {
       setActiveSessionId(id);
+      setActiveProjectId(session.projectId ?? null);
+      setActiveChatProject(session.projectId ?? null);
     }
     return session;
   }, []);
 
   const saveMessages = useCallback((
     messages: ChatMessage[],
-    opts?: { luminorId?: string | null; modelId?: string | null },
+    opts?: { luminorId?: string | null; modelId?: string | null; projectId?: string | null },
   ) => {
     if (messages.length === 0) return;
 
     if (debounceRef.current) clearTimeout(debounceRef.current);
 
     debounceRef.current = setTimeout(() => {
-      saveChatSession(activeSessionId, messages, opts);
+      const resolvedProjectId = opts?.projectId ?? loadChatSession(activeSessionId)?.projectId ?? activeProjectId;
+
+      saveChatSession(activeSessionId, messages, {
+        ...opts,
+        projectId: resolvedProjectId,
+      });
       refreshSessions();
 
       void saveSessionToCloud({
@@ -158,7 +192,7 @@ export function useChatSessions(): UseChatSessionsReturn {
         modelId: opts?.modelId ?? null,
       });
     }, 600);
-  }, [activeSessionId, refreshSessions]);
+  }, [activeProjectId, activeSessionId, refreshSessions]);
 
   const newSession = useCallback(() => {
     const id = newSessionId();
@@ -191,6 +225,41 @@ export function useChatSessions(): UseChatSessionsReturn {
     refreshSessions();
   }, [refreshSessions]);
 
+  const createProjectHandler = useCallback((title: string) => {
+    const project = createChatProject({ title });
+    if (project) {
+      setActiveProjectId(project.id);
+      refreshSessions();
+    }
+    return project;
+  }, [refreshSessions]);
+
+  const renameProjectHandler = useCallback((id: string, title: string) => {
+    const trimmed = title.trim();
+    if (!trimmed) return;
+    renameChatProject(id, trimmed);
+    refreshSessions();
+  }, [refreshSessions]);
+
+  const deleteProjectHandler = useCallback((id: string) => {
+    deleteChatProject(id);
+    if (activeProjectId === id) {
+      setActiveProjectId(null);
+    }
+    refreshSessions();
+  }, [activeProjectId, refreshSessions]);
+
+  const assignSessionProject = useCallback((sessionId: string, projectId: string | null) => {
+    assignSessionToProject(sessionId, projectId);
+
+    if (sessionId === activeSessionId) {
+      setActiveProjectId(projectId);
+      setActiveChatProject(projectId);
+    }
+
+    refreshSessions();
+  }, [activeSessionId, refreshSessions]);
+
   const toggleSidebar = useCallback(() => {
     setIsSidebarExpanded((prev) => {
       const next = !prev;
@@ -199,21 +268,42 @@ export function useChatSessions(): UseChatSessionsReturn {
     });
   }, []);
 
-  const stableSessions = useMemo<ChatSessionSummary[]>(() => {
+  const allSessions = useMemo<ChatSessionSummary[]>(() => {
     void refreshTick;
     return searchQuery.trim()
       ? searchSessions(searchQuery)
       : listChatSessions();
   }, [refreshTick, searchQuery]);
 
+  const stableSessions = useMemo<ChatSessionSummary[]>(() => {
+    return activeProjectId
+      ? allSessions.filter((session) => session.projectId === activeProjectId)
+      : allSessions;
+  }, [activeProjectId, allSessions]);
+
+  const stableProjects = useMemo<ChatProject[]>(() => {
+    void refreshTick;
+    return listChatProjects();
+  }, [refreshTick]);
+
+  const activeProject = useMemo(
+    () => (activeProjectId ? loadChatProject(activeProjectId) : null),
+    [activeProjectId, refreshTick],
+  );
+
   return {
+    allSessions,
     sessions: stableSessions,
+    projects: stableProjects,
+    activeProject,
+    activeProjectId,
     activeSessionId,
     isSidebarExpanded,
     searchQuery,
     isHydrating,
     setSearchQuery,
     toggleSidebar,
+    setActiveProject: setProject,
     setActiveSession,
     loadSession,
     saveMessages,
@@ -221,6 +311,10 @@ export function useChatSessions(): UseChatSessionsReturn {
     deleteSession,
     renameSession,
     togglePin,
+    createProject: createProjectHandler,
+    renameProject: renameProjectHandler,
+    deleteProject: deleteProjectHandler,
+    assignSessionProject,
     refreshSessions,
   };
 }

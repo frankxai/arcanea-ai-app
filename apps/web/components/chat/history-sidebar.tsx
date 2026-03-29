@@ -17,6 +17,7 @@ import {
   FolderOpen,
 } from '@/lib/phosphor-icons';
 import type { ChatSessionSummary } from '@/lib/chat/local-store';
+import type { ChatProject } from '@/lib/chat/project-store';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -25,15 +26,23 @@ import type { ChatSessionSummary } from '@/lib/chat/local-store';
 interface HistorySidebarProps {
   expanded: boolean;
   onToggle: () => void;
+  allSessions: ChatSessionSummary[];
   sessions: ChatSessionSummary[];
+  projects: ChatProject[];
   searchQuery: string;
   onSearchQueryChange: (query: string) => void;
+  activeProjectId?: string | null;
   activeSessionId?: string;
   onNewChat: () => void;
   onSelectSession: (id: string) => void;
   onDeleteSession: (id: string) => void;
   onRenameSession: (id: string, title: string) => void;
   onTogglePin?: (id: string) => void;
+  onSelectProject: (id: string | null) => void;
+  onCreateProject: (title: string) => void;
+  onRenameProject: (id: string, title: string) => void;
+  onDeleteProject: (id: string) => void;
+  onAssignActiveSessionToProject?: (projectId: string | null) => void;
 }
 
 interface TimeGroups {
@@ -78,6 +87,193 @@ function relativeTime(iso: string): string {
   if (days === 1) return 'yesterday';
   if (days < 7) return `${days}d ago`;
   return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+interface ProjectSectionProps {
+  projects: ChatProject[];
+  allSessions: ChatSessionSummary[];
+  activeProjectId?: string | null;
+  activeSessionId?: string;
+  onSelectProject: (id: string | null) => void;
+  onCreateProject: (title: string) => void;
+  onRenameProject: (id: string, title: string) => void;
+  onDeleteProject: (id: string) => void;
+  onAssignActiveSessionToProject?: (projectId: string | null) => void;
+}
+
+function ProjectSection({
+  projects,
+  allSessions,
+  activeProjectId,
+  activeSessionId,
+  onSelectProject,
+  onCreateProject,
+  onRenameProject,
+  onDeleteProject,
+  onAssignActiveSessionToProject,
+}: ProjectSectionProps) {
+  const [creating, setCreating] = useState(false);
+  const [draftTitle, setDraftTitle] = useState('');
+  const [editingProjectId, setEditingProjectId] = useState<string | null>(null);
+  const [editValue, setEditValue] = useState('');
+
+  const commitCreate = useCallback(() => {
+    const trimmed = draftTitle.trim();
+    if (!trimmed) {
+      setCreating(false);
+      setDraftTitle('');
+      return;
+    }
+
+    onCreateProject(trimmed);
+    setDraftTitle('');
+    setCreating(false);
+  }, [draftTitle, onCreateProject]);
+
+  const activeSession = activeSessionId
+    ? allSessions.find((session) => session.id === activeSessionId) ?? null
+    : null;
+
+  return (
+    <div className="px-3 pb-2">
+      <div className="mb-2 flex items-center justify-between">
+        <span className="text-[10px] uppercase tracking-[0.08em] font-medium text-white/25">
+          Projects
+        </span>
+        <button
+          onClick={() => setCreating((prev) => !prev)}
+          className="text-[10px] text-[#00bcd4]/70 hover:text-[#00bcd4] transition-colors"
+        >
+          + Project
+        </button>
+      </div>
+
+      {creating && (
+        <div className="mb-2 flex items-center gap-1">
+          <input
+            type="text"
+            value={draftTitle}
+            onChange={(e) => setDraftTitle(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') commitCreate();
+              if (e.key === 'Escape') {
+                setCreating(false);
+                setDraftTitle('');
+              }
+            }}
+            placeholder="Project name"
+            className="w-full rounded-lg border border-white/[0.08] bg-white/[0.04] px-2 py-1.5 text-[11px] text-white/80 outline-none focus:border-[#00bcd4]/30"
+          />
+          <button
+            onClick={commitCreate}
+            className="w-6 h-6 flex items-center justify-center rounded text-teal-400/80 hover:text-teal-400"
+            aria-label="Create project"
+          >
+            <Check className="w-3 h-3" />
+          </button>
+        </div>
+      )}
+
+      <div className="flex flex-col gap-1">
+        <button
+          onClick={() => onSelectProject(null)}
+          className={`flex items-center justify-between rounded-lg px-2.5 py-2 text-[11px] transition-colors ${
+            !activeProjectId
+              ? 'bg-[#00bcd4]/10 text-white'
+              : 'text-white/45 hover:bg-white/[0.04] hover:text-white/70'
+          }`}
+        >
+          <span>All chats</span>
+          <span className="text-[10px] text-white/25">{allSessions.length}</span>
+        </button>
+
+        {projects.map((project) => {
+          const sessionCount = allSessions.filter((session) => session.projectId === project.id).length;
+          const isActive = activeProjectId === project.id;
+          const isEditing = editingProjectId === project.id;
+
+          return (
+            <div key={project.id} className={`rounded-lg border ${isActive ? 'border-[#00bcd4]/20 bg-[#00bcd4]/8' : 'border-transparent bg-white/[0.02]'}`}>
+              <div className="flex items-center gap-2 px-2.5 py-2">
+                <button
+                  onClick={() => onSelectProject(project.id)}
+                  className="min-w-0 flex-1 text-left"
+                >
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      value={editValue}
+                      onChange={(e) => setEditValue(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          onRenameProject(project.id, editValue);
+                          setEditingProjectId(null);
+                        }
+                        if (e.key === 'Escape') {
+                          setEditingProjectId(null);
+                          setEditValue('');
+                        }
+                      }}
+                      onBlur={() => {
+                        onRenameProject(project.id, editValue);
+                        setEditingProjectId(null);
+                      }}
+                      className="w-full rounded border border-white/[0.08] bg-white/[0.04] px-1.5 py-0.5 text-[11px] text-white/90 outline-none"
+                    />
+                  ) : (
+                    <>
+                      <div className={`truncate text-[11px] ${isActive ? 'text-white' : 'text-white/65'}`}>
+                        {project.title}
+                      </div>
+                      <div className="text-[9px] text-white/25">
+                        {sessionCount} chat{sessionCount === 1 ? '' : 's'}
+                      </div>
+                    </>
+                  )}
+                </button>
+
+                {!isEditing && (
+                  <div className="flex items-center gap-0.5">
+                    <button
+                      onClick={() => {
+                        setEditingProjectId(project.id);
+                        setEditValue(project.title);
+                      }}
+                      className="w-5 h-5 flex items-center justify-center rounded text-white/20 hover:text-white/55"
+                      aria-label={`Rename project ${project.title}`}
+                    >
+                      <PencilSimple className="w-3 h-3" />
+                    </button>
+                    <button
+                      onClick={() => onDeleteProject(project.id)}
+                      className="w-5 h-5 flex items-center justify-center rounded text-white/20 hover:text-red-400/70"
+                      aria-label={`Delete project ${project.title}`}
+                    >
+                      <Trash className="w-3 h-3" />
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {isActive && onAssignActiveSessionToProject && (
+                <div className="px-2.5 pb-2">
+                  <button
+                    onClick={() => onAssignActiveSessionToProject(project.id)}
+                    disabled={!activeSession || activeSession.projectId === project.id}
+                    className="w-full rounded-md border border-white/[0.08] bg-white/[0.03] px-2 py-1.5 text-[10px] text-white/65 transition-colors hover:bg-white/[0.05] disabled:opacity-40 disabled:hover:bg-white/[0.03]"
+                  >
+                    {activeSession?.projectId === project.id
+                      ? 'Current chat is in this project'
+                      : 'Move current chat here'}
+                  </button>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
 }
 
 // ---------------------------------------------------------------------------
@@ -409,27 +605,43 @@ function CollapsedRail({ onToggle, onNewChat }: CollapsedRailProps) {
 interface ExpandedPanelProps {
   onToggle: () => void;
   onNewChat: () => void;
+  allSessions: ChatSessionSummary[];
   sessions: ChatSessionSummary[];
+  projects: ChatProject[];
   searchQuery: string;
   onSearchQueryChange: (query: string) => void;
+  activeProjectId?: string | null;
   activeSessionId?: string;
   onSelectSession: (id: string) => void;
   onDeleteSession: (id: string) => void;
   onRenameSession: (id: string, title: string) => void;
   onTogglePin?: (id: string) => void;
+  onSelectProject: (id: string | null) => void;
+  onCreateProject: (title: string) => void;
+  onRenameProject: (id: string, title: string) => void;
+  onDeleteProject: (id: string) => void;
+  onAssignActiveSessionToProject?: (projectId: string | null) => void;
 }
 
 function ExpandedPanel({
   onToggle,
   onNewChat,
+  allSessions,
   sessions,
+  projects,
   searchQuery,
   onSearchQueryChange,
+  activeProjectId,
   activeSessionId,
   onSelectSession,
   onDeleteSession,
   onRenameSession,
   onTogglePin,
+  onSelectProject,
+  onCreateProject,
+  onRenameProject,
+  onDeleteProject,
+  onAssignActiveSessionToProject,
 }: ExpandedPanelProps) {
   // Separate pinned from unpinned, then group unpinned by time
   const pinnedSessions = sessions.filter((s) => s.pinned);
@@ -485,6 +697,18 @@ function ExpandedPanel({
             />
           </div>
         </div>
+
+        <ProjectSection
+          projects={projects}
+          allSessions={allSessions}
+          activeProjectId={activeProjectId}
+          activeSessionId={activeSessionId}
+          onSelectProject={onSelectProject}
+          onCreateProject={onCreateProject}
+          onRenameProject={onRenameProject}
+          onDeleteProject={onDeleteProject}
+          onAssignActiveSessionToProject={onAssignActiveSessionToProject}
+        />
 
         {/* Session list */}
         <nav
@@ -629,15 +853,23 @@ function ExpandedPanel({
 export function HistorySidebar({
   expanded,
   onToggle,
+  allSessions,
   sessions,
+  projects,
   searchQuery,
   onSearchQueryChange,
+  activeProjectId,
   activeSessionId,
   onNewChat,
   onSelectSession,
   onDeleteSession,
   onRenameSession,
   onTogglePin,
+  onSelectProject,
+  onCreateProject,
+  onRenameProject,
+  onDeleteProject,
+  onAssignActiveSessionToProject,
 }: HistorySidebarProps) {
   if (!expanded) {
     return <CollapsedRail onToggle={onToggle} onNewChat={onNewChat} />;
@@ -647,14 +879,22 @@ export function HistorySidebar({
     <ExpandedPanel
       onToggle={onToggle}
       onNewChat={onNewChat}
+      allSessions={allSessions}
       sessions={sessions}
+      projects={projects}
       searchQuery={searchQuery}
       onSearchQueryChange={onSearchQueryChange}
+      activeProjectId={activeProjectId}
       activeSessionId={activeSessionId}
       onSelectSession={onSelectSession}
       onDeleteSession={onDeleteSession}
       onRenameSession={onRenameSession}
       onTogglePin={onTogglePin}
+      onSelectProject={onSelectProject}
+      onCreateProject={onCreateProject}
+      onRenameProject={onRenameProject}
+      onDeleteProject={onDeleteProject}
+      onAssignActiveSessionToProject={onAssignActiveSessionToProject}
     />
   );
 }

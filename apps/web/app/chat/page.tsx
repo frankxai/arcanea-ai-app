@@ -45,6 +45,7 @@ import {
   PhExport,
   PhPlus,
   PhList,
+  FolderOpen,
 } from '@/lib/phosphor-icons';
 
 // Hooks
@@ -116,8 +117,8 @@ export default function ChatPage() {
   // Core hooks
   // -------------------------------------------------------------------------
 
-  const conversation = useConversation();
   const chatSessions = useChatSessions();
+  const conversation = useConversation({ activeProject: chatSessions.activeProject });
   const autoSave = useAutoSave(conversation.messages, conversation.isLoading);
 
   // -------------------------------------------------------------------------
@@ -163,10 +164,11 @@ export default function ChatPage() {
       chatSessions.saveMessages(serializeMessages(conversation.messages), {
         luminorId: conversation.activeLuminor?.id ?? null,
         modelId: conversation.modelId,
+        projectId: chatSessions.activeProjectId ?? null,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [conversation.messages, conversation.isLoading]);
+  }, [chatSessions.activeProjectId, conversation.messages, conversation.isLoading]);
 
   // -------------------------------------------------------------------------
   // Artifact detection from latest assistant message
@@ -325,15 +327,27 @@ export default function ChatPage() {
           <HistorySidebar
             expanded={chatSessions.isSidebarExpanded}
             onToggle={chatSessions.toggleSidebar}
+            allSessions={chatSessions.allSessions}
             sessions={chatSessions.sessions}
+            projects={chatSessions.projects}
             searchQuery={chatSessions.searchQuery}
             onSearchQueryChange={chatSessions.setSearchQuery}
+            activeProjectId={chatSessions.activeProjectId}
             activeSessionId={chatSessions.activeSessionId}
             onNewChat={handleNewChat}
             onSelectSession={handleLoadSession}
             onDeleteSession={chatSessions.deleteSession}
             onRenameSession={chatSessions.renameSession}
             onTogglePin={chatSessions.togglePin}
+            onSelectProject={chatSessions.setActiveProject}
+            onCreateProject={(title) => {
+              chatSessions.createProject(title);
+            }}
+            onRenameProject={chatSessions.renameProject}
+            onDeleteProject={chatSessions.deleteProject}
+            onAssignActiveSessionToProject={(projectId) => {
+              chatSessions.assignSessionProject(chatSessions.activeSessionId, projectId);
+            }}
           />
         }
       >
@@ -350,6 +364,12 @@ export default function ChatPage() {
               <PhList className="w-4.5 h-4.5" />
             </button>
             <ChatImagineTabs />
+            {chatSessions.activeProject && (
+              <div className="hidden md:flex items-center gap-1 rounded-full border border-[#00bcd4]/20 bg-[#00bcd4]/8 px-2.5 py-1 text-[11px] text-[#9be7f2]">
+                <FolderOpen className="w-3 h-3" />
+                <span className="max-w-[180px] truncate">{chatSessions.activeProject.title}</span>
+              </div>
+            )}
           </div>
 
           <div className="flex items-center gap-1.5 sm:gap-2">
