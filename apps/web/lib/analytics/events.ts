@@ -1,41 +1,63 @@
-import posthog from "posthog-js";
+type AnalyticsPayload = Record<string, unknown>;
+
+type PostHogLike = {
+  capture: (event: string, properties?: AnalyticsPayload) => void;
+  identify: (userId: string, traits?: AnalyticsPayload) => void;
+};
+
+function getPosthog(): PostHogLike | null {
+  if (typeof window === 'undefined') return null;
+
+  const candidate = (window as Window & { posthog?: PostHogLike }).posthog;
+  if (!candidate) return null;
+
+  return candidate;
+}
+
+function capture(event: string, properties?: AnalyticsPayload) {
+  getPosthog()?.capture(event, properties);
+}
+
+function identifyUser(userId: string, traits?: AnalyticsPayload) {
+  getPosthog()?.identify(userId, traits);
+}
 
 export const analytics = {
   // Chat events
-  chatSent: (luminorId?: string) => posthog.capture("chat_sent", { luminor: luminorId }),
-  chatCreationSaved: (type: string) => posthog.capture("creation_saved_from_chat", { type }),
+  chatSent: (luminorId?: string) => capture("chat_sent", { luminor: luminorId }),
+  chatCreationSaved: (type: string) => capture("creation_saved_from_chat", { type }),
 
   // Imagine events
-  imageGenerated: (model?: string) => posthog.capture("image_generated", { model }),
-  imageSaved: () => posthog.capture("image_saved"),
+  imageGenerated: (model?: string) => capture("image_generated", { model }),
+  imageSaved: () => capture("image_saved"),
 
   // Creation events
-  creationSaved: (type: string) => posthog.capture("creation_saved", { type }),
-  creationShared: (method: string) => posthog.capture("creation_shared", { method }),
+  creationSaved: (type: string) => capture("creation_saved", { type }),
+  creationShared: (method: string) => capture("creation_shared", { method }),
 
   // Community events
-  creatorFollowed: () => posthog.capture("creator_followed"),
-  discussionCreated: () => posthog.capture("discussion_created"),
+  creatorFollowed: () => capture("creator_followed"),
+  discussionCreated: () => capture("discussion_created"),
 
   // Academy events
-  courseStarted: (courseSlug: string) => posthog.capture("course_started", { course: courseSlug }),
-  gateUnlocked: (gate: string) => posthog.capture("gate_unlocked", { gate }),
+  courseStarted: (courseSlug: string) => capture("course_started", { course: courseSlug }),
+  gateUnlocked: (gate: string) => capture("gate_unlocked", { gate }),
 
   // Auth events
-  signedUp: (method: string) => posthog.capture("signed_up", { method }),
-  signedIn: (method: string) => posthog.capture("signed_in", { method }),
+  signedUp: (method: string) => capture("signed_up", { method }),
+  signedIn: (method: string) => capture("signed_in", { method }),
 
   // Credit events
-  creditsPurchased: (amount: number) => posthog.capture("credits_purchased", { amount }),
-  creditsSpent: (action: string, cost: number) => posthog.capture("credits_spent", { action, cost }),
+  creditsPurchased: (amount: number) => capture("credits_purchased", { amount }),
+  creditsSpent: (action: string, cost: number) => capture("credits_spent", { action, cost }),
 
   // Library events
-  textRead: (collection: string, text: string) => posthog.capture("text_read", { collection, text }),
+  textRead: (collection: string, text: string) => capture("text_read", { collection, text }),
 
   // Engagement
-  pageViewed: (page: string) => posthog.capture("page_viewed", { page }),
-  featureUsed: (feature: string) => posthog.capture("feature_used", { feature }),
+  pageViewed: (page: string) => capture("page_viewed", { page }),
+  featureUsed: (feature: string) => capture("feature_used", { feature }),
 
   // User identification
-  identify: (userId: string, traits?: Record<string, unknown>) => posthog.identify(userId, traits),
+  identify: (userId: string, traits?: Record<string, unknown>) => identifyUser(userId, traits),
 };

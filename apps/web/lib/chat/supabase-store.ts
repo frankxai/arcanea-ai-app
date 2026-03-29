@@ -1,6 +1,7 @@
 'use client';
 
 import { createClient } from '@/lib/supabase/client';
+import type { ChatMessage, ChatSession } from '@/lib/chat/local-store';
 
 export interface CloudSession {
   id: string;
@@ -10,6 +11,40 @@ export interface CloudSession {
   model_id: string | null;
   created_at: string;
   updated_at: string;
+}
+
+function normalizeCloudMessage(message: Record<string, unknown>): ChatMessage | null {
+  if (typeof message.id !== 'string') return null;
+  if (message.role !== 'user' && message.role !== 'assistant') return null;
+
+  const normalized: ChatMessage = {
+    id: message.id,
+    role: message.role,
+    content: typeof message.content === 'string' ? message.content : '',
+  };
+
+  if (typeof message.createdAt === 'string') {
+    normalized.createdAt = message.createdAt;
+  }
+
+  if (Array.isArray(message.parts)) {
+    normalized.parts = message.parts
+      .filter((part): part is { type: string; text?: string } =>
+        typeof part === 'object' &&
+        part !== null &&
+        typeof (part as { type?: unknown }).type === 'string' &&
+        (
+          (part as { text?: unknown }).text === undefined ||
+          typeof (part as { text?: unknown }).text === 'string'
+        )
+      )
+      .map((part) => ({
+        type: part.type,
+        ...(part.text !== undefined ? { text: part.text } : {}),
+      }));
+  }
+
+  return normalized;
 }
 
 /**
@@ -107,11 +142,13 @@ export async function renameCloudSession(sessionId: string, title: string): Prom
 /**
  * Convert a Supabase cloud session to the local ChatSession shape.
  */
-export function cloudSessionToLocalSession(cloud: CloudSession) {
+export function cloudSessionToLocalSession(cloud: CloudSession): ChatSession {
   return {
     id: cloud.id,
     title: cloud.title || 'Untitled',
-    messages: cloud.messages as unknown[],
+    messages: cloud.messages
+      .map(normalizeCloudMessage)
+      .filter((message): message is ChatMessage => message !== null),
     luminorId: cloud.luminor_id,
     modelId: cloud.model_id,
     createdAt: cloud.created_at,

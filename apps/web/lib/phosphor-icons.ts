@@ -33,7 +33,7 @@ export {
   Leaf, Lightbulb, Lightning, Link, List, ListDashes, ListNumbers, Lock,
   MagicWand, MagnifyingGlass, MapPin, MapTrifold,
   Microphone, Minus, Moon, Mountains, MusicNote, MusicNotes, Notebook,
-  SpeakerHigh, Stop,
+  SpeakerHigh,
   Package, PaintBrush, Palette, PaperPlane, Paperclip, Pen, Pencil,
   PencilSimple, Planet, Play, Plus, PushPin, Question, Quotes, Radio,
   Rocket, Scales, Scroll, Share, Shield, ShieldStar, Shuffle, SignOut,
@@ -162,7 +162,6 @@ import {
   MusicNotes,
   Notebook,
   SpeakerHigh,
-  Stop,
   Package,
   PaintBrush,
   Palette,
@@ -440,6 +439,7 @@ export const PhZap = Lightning;
 export const PhExport = ArrowSquareOut;
 export const PhTextAlignLeft = TextT;
 export const PhSpeakerHigh = SpeakerHigh;
+export const Stop = X;
 export const PhStop = Stop;
 
 // Ph-prefixed alias for GearSix
