@@ -17,8 +17,20 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
+import { getProjectWorkspaceForCurrentUser } from '@/lib/projects/server';
+import { enrichProjectGraph } from '@/lib/projects/enrichment';
+import { recordProjectTrace } from '@/lib/projects/trace';
 
 const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB
+
+const uploadMetadataSchema = z.object({
+  title: z.string().optional(),
+  tags: z.array(z.string()).optional(),
+  isPublic: z.boolean().optional(),
+  projectId: z.string().uuid().optional(),
+  sourceSessionId: z.string().min(1).max(255).optional(),
+});
 
 export async function POST(request: NextRequest) {
   try {
@@ -34,7 +46,15 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'File too large (max 100MB)' }, { status: 413 });
     }
 
-    const metadata = metadataStr ? JSON.parse(metadataStr) : {};
+    let metadata: z.infer<typeof uploadMetadataSchema> = {};
+    if (metadataStr) {
+      const parsed = JSON.parse(metadataStr);
+      const validation = uploadMetadataSchema.safeParse(parsed);
+      if (!validation.success) {
+        return NextResponse.json({ error: 'Invalid metadata payload' }, { status: 400 });
+      }
+      metadata = validation.data;
+    }
 
     // Check if Supabase is configured
     const supabaseUrl =
@@ -107,6 +127,8 @@ export async function POST(request: NextRequest) {
         tags: metadata.tags || [],
         visibility: metadata.isPublic === false ? 'private' : 'public',
         status: 'published',
+        ...(metadata.projectId ? { project_id: metadata.projectId } : {}),
+        ...(metadata.sourceSessionId ? { source_session_id: metadata.sourceSessionId } : {}),
       })
       .select()
       .single();
@@ -116,6 +138,25 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: insertError.message }, { status: 500 });
     }
 
+    if (metadata.projectId && creation) {
+      await recordProjectTrace(supabase as any, {
+        userId: user.id,
+        projectId: metadata.projectId,
+        action: 'project_creation_linked',
+        metadata: {
+          creationId: creation.id,
+          type: creation.type,
+          sourceSessionId: metadata.sourceSessionId ?? null,
+          origin: 'creations_upload',
+        },
+      });
+
+      const workspace = await getProjectWorkspaceForCurrentUser(metadata.projectId);
+      if (workspace) {
+        await enrichProjectGraph(supabase as any, user.id, workspace);
+      }
+    }
+
     return NextResponse.json({
       data: {
         id: creation.id,
@@ -123,6 +164,8 @@ export async function POST(request: NextRequest) {
         title: creation.title,
         type: creation.type,
         createdAt: creation.created_at,
+        projectId: metadata.projectId ?? null,
+        sourceSessionId: metadata.sourceSessionId ?? null,
       },
     });
   } catch (error) {

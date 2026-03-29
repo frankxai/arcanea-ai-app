@@ -1,11 +1,13 @@
-/**
- * Project Step API Route
- * POST /api/projects/[id]/step
- *
- * Note: This route is currently stubbed. Full implementation requires ai-core integration.
- */
+import { NextRequest } from 'next/server';
+import { z } from 'zod';
+import { errorResponse, handleApiError, successResponse } from '@/lib/api-utils';
+import { buildProjectStepGuidance } from '@/lib/projects/progress';
+import { getProjectAuthContext, getProjectWorkspaceForCurrentUser } from '@/lib/projects/server';
+import { recordProjectTrace } from '@/lib/projects/trace';
 
-import { NextRequest, NextResponse } from 'next/server';
+const requestSchema = z.object({
+  userInput: z.string().trim().min(1).max(2000),
+});
 
 export async function POST(
   request: NextRequest,
@@ -13,29 +15,42 @@ export async function POST(
 ) {
   try {
     const { id: projectId } = await params;
-    const body = await request.json();
-    const { userInput } = body;
-
-    if (!userInput) {
-      return NextResponse.json(
-        { error: 'Missing required field: userInput' },
-        { status: 400 }
-      );
+    const { supabase, user } = await getProjectAuthContext();
+    if (!user) {
+      return errorResponse('UNAUTHORIZED', 'Authentication required', 401);
     }
 
-    // Placeholder response - full implementation requires ai-core
-    return NextResponse.json({
+    const body = await request.json().catch(() => null);
+    const validation = requestSchema.safeParse(body);
+    if (!validation.success) {
+      return errorResponse('VALIDATION_ERROR', 'Missing required field: userInput', 400, {
+        errors: validation.error.errors,
+      });
+    }
+
+    const workspace = await getProjectWorkspaceForCurrentUser(projectId);
+    if (!workspace) {
+      return errorResponse('NOT_FOUND', 'Project not found', 404);
+    }
+
+    const guidance = buildProjectStepGuidance(workspace, validation.data.userInput);
+
+    await recordProjectTrace(supabase, {
+      userId: user.id,
       projectId,
-      status: 'in_progress',
-      message: 'Project flow engine not yet implemented',
-      currentStep: 1,
-      totalSteps: 5,
+      action: 'project_graph_eval',
+      metadata: {
+        type: 'step_guidance',
+        currentStep: guidance.currentStep,
+        completionPercent: guidance.progress.completionPercent,
+      },
+    });
+
+    return successResponse({
+      projectId,
+      ...guidance,
     });
   } catch (error) {
-    console.error('Error in project step:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return handleApiError(error);
   }
 }

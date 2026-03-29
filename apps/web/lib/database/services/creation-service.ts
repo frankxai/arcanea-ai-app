@@ -136,6 +136,8 @@ export async function updateCreation(
   if (updates.gate !== undefined) payload.gate = updates.gate
   if (updates.guardian !== undefined) payload.guardian = updates.guardian
   if (updates.tags !== undefined) payload.tags = updates.tags
+  if (updates.projectId !== undefined) payload.project_id = updates.projectId
+  if (updates.sourceSessionId !== undefined) payload.source_session_id = updates.sourceSessionId
 
   const { data, error } = await client
     .from('creations')

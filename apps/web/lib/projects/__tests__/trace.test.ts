@@ -4,18 +4,16 @@ import { recordProjectTrace } from '../trace';
 let passed = 0;
 let failed = 0;
 
-function test(name: string, fn: () => void | Promise<void>) {
-  Promise.resolve()
-    .then(fn)
-    .then(() => {
-      passed += 1;
-      console.log(`PASS  ${name}`);
-    })
-    .catch((error) => {
-      failed += 1;
-      console.error(`FAIL  ${name}`);
-      console.error(error);
-    });
+async function test(name: string, fn: () => void | Promise<void>) {
+  try {
+    await fn();
+    passed += 1;
+    console.log(`PASS  ${name}`);
+  } catch (error) {
+    failed += 1;
+    console.error(`FAIL  ${name}`);
+    console.error(error);
+  }
 }
 
 class ActivityInsertBuilder {
@@ -55,7 +53,7 @@ function createSupabaseStub(log: Array<{ table: string; payload: unknown }>, sho
       if (shouldFail) {
         throw new Error('activity_log unavailable');
       }
-      return new ActivityInsertBuilder(log, shouldFail);
+      return new ActivityInsertBuilder(log);
     },
   };
 }
