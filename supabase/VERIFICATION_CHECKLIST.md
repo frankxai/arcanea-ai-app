@@ -2,6 +2,13 @@
 
 Use this checklist to verify the database setup is complete and working correctly.
 
+For the project graph rollout, use:
+
+- [`docs/ops/PROJECT_GRAPH_ACTIVATION.md`](../docs/ops/PROJECT_GRAPH_ACTIVATION.md)
+- [`docs/ops/PROJECT_GRAPH_OVERNIGHT_HANDOFF.md`](../docs/ops/PROJECT_GRAPH_OVERNIGHT_HANDOFF.md)
+- `pnpm supabase:project-graph:plan`
+- `pnpm supabase:project-graph:apply`
+
 ---
 
 ## 📋 Pre-Deployment Checklist

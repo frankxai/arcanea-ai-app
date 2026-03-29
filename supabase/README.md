@@ -51,6 +51,7 @@ Arcanea's project graph rollout uses these migrations:
 Use the activation runbook for the exact order and type regeneration steps:
 
 - [`docs/ops/PROJECT_GRAPH_ACTIVATION.md`](../docs/ops/PROJECT_GRAPH_ACTIVATION.md)
+- [`docs/ops/PROJECT_GRAPH_OVERNIGHT_HANDOFF.md`](../docs/ops/PROJECT_GRAPH_OVERNIGHT_HANDOFF.md)
 - `pnpm supabase:project-graph:plan`
 - `pnpm supabase:project-graph:apply`
 
