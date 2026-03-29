@@ -63,13 +63,13 @@ export default function ImaginePage() {
   }, [refreshFavorites]);
 
   // Generate a single row of images
-  const generateRow = useCallback(async (prompt: string, aspectRatio: string, rowId?: string, style?: string): Promise<GenerationRow | null> => {
+  const generateRow = useCallback(async (prompt: string, aspectRatio: string, rowId?: string, style?: string, model?: string, enhance?: boolean): Promise<GenerationRow | null> => {
     const id = rowId || `row_${Date.now()}_${generationCounterRef.current++}`;
 
     const res = await fetch('/api/imagine/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt, count: 4, aspectRatio, style }),
+      body: JSON.stringify({ prompt, count: 4, aspectRatio, style, model, enhance }),
     });
 
     if (!res.ok) {
@@ -97,10 +97,14 @@ export default function ImaginePage() {
 
   // Handle initial generation from prompt input
   const currentStyleRef = useRef<string | undefined>();
+  const currentModelRef = useRef<string | undefined>();
+  const currentEnhanceRef = useRef<boolean | undefined>();
 
-  const handleGenerate = useCallback(async (prompt: string, _count: number, aspectRatio: string, style?: string) => {
+  const handleGenerate = useCallback(async (prompt: string, _count: number, aspectRatio: string, style?: string, model?: string, enhance?: boolean) => {
     if (isGeneratingRef.current) return;
     currentStyleRef.current = style;
+    currentModelRef.current = model;
+    currentEnhanceRef.current = enhance;
 
     setIsGenerating(true);
     isGeneratingRef.current = true;
@@ -119,7 +123,7 @@ export default function ImaginePage() {
     }, ...prev]);
 
     try {
-      const row = await generateRow(prompt, aspectRatio, loadingId, style);
+      const row = await generateRow(prompt, aspectRatio, loadingId, style, model, enhance);
       if (row) {
         setRows((prev) => prev.map((r) => r.id === loadingId ? row : r));
         setAutoScrollEnabled(true);
@@ -155,7 +159,7 @@ export default function ImaginePage() {
     }]);
 
     try {
-      const row = await generateRow(currentPrompt, currentAspectRatio, loadingId, currentStyleRef.current);
+      const row = await generateRow(currentPrompt, currentAspectRatio, loadingId, currentStyleRef.current, currentModelRef.current, currentEnhanceRef.current);
       if (row) {
         setRows((prev) => prev.map((r) => r.id === loadingId ? row : r));
       }

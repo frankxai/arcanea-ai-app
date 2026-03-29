@@ -8,14 +8,34 @@ export const maxDuration = 60;
 export async function POST(req: NextRequest) {
   const startedAt = new Date();
   try {
-    const { prompt, count = 4, aspectRatio = '1:1', provider, model, style } = await req.json();
+    const { prompt, count = 4, aspectRatio = '1:1', provider, model, style, enhance: shouldEnhance } = await req.json();
 
     if (!prompt || typeof prompt !== 'string') {
       return NextResponse.json({ error: 'Prompt is required' }, { status: 400 });
     }
 
-    // Apply Arcanean style if specified
-    const { prompt: styledPrompt, style: appliedStyle } = applyStyle(prompt, style || 'none');
+    // ── Pipeline: raw prompt → APL enhance (optional) → Style wrap ──────
+    let processedPrompt = prompt;
+
+    if (shouldEnhance) {
+      try {
+        const enhanceRes = await fetch(new URL('/api/apl/enhance', req.url), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt: processedPrompt, mode: 'image' }),
+        });
+        if (enhanceRes.ok) {
+          const enhanceData = await enhanceRes.json();
+          if (enhanceData.enhanced) {
+            processedPrompt = enhanceData.enhanced;
+          }
+        }
+      } catch {
+        // Enhancement is optional — continue with original prompt
+      }
+    }
+
+    const { prompt: styledPrompt } = applyStyle(processedPrompt, style || 'none');
 
     // ── Credit check: spend 1 credit per generation request ──────────────
     // Forward cookies so the spend endpoint can authenticate the user.

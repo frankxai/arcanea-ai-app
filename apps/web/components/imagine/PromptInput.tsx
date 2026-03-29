@@ -2,6 +2,9 @@
 
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
+import { ImageModelSelector } from './ImageModelSelector';
+import { StyleTooltip } from './StyleTooltip';
+import { ARCANEAN_STYLES } from '@/lib/imagine/styles';
 
 const ASPECT_RATIOS = [
   { id: '1:1', label: '1:1' },
@@ -77,7 +80,7 @@ interface AplFeedback {
 }
 
 interface PromptInputProps {
-  onGenerate: (prompt: string, count: number, aspectRatio: string, style?: string) => void;
+  onGenerate: (prompt: string, count: number, aspectRatio: string, style?: string, model?: string, enhance?: boolean) => void;
   isGenerating: boolean;
   hasResults: boolean;
 }
@@ -86,11 +89,15 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
   const [prompt, setPrompt] = useState('');
   const [aspectRatio, setAspectRatio] = useState('1:1');
   const [style, setStyle] = useState('none');
+  const [model, setModel] = useState('auto');
+  const [autoEnhance, setAutoEnhance] = useState(false);
   const [isExpanded, setIsExpanded] = useState(true);
   const [isEnhancing, setIsEnhancing] = useState(false);
   const [aplFeedback, setAplFeedback] = useState<AplFeedback | null>(null);
   const [history, setHistory] = useState<string[]>([]);
   const [showHistory, setShowHistory] = useState(false);
+  const [hoveredStyle, setHoveredStyle] = useState<string | null>(null);
+  const [tooltipAnchor, setTooltipAnchor] = useState<{ top: number; left: number; width: number } | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const historyRef = useRef<HTMLDivElement>(null);
 
@@ -137,9 +144,14 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
     const finalPrompt = buildPrompt();
     saveToHistory(prompt.trim());
     setHistory(loadHistory());
-    onGenerate(finalPrompt, 4, aspectRatio, style !== 'none' ? style : undefined);
+    onGenerate(
+      finalPrompt, 4, aspectRatio,
+      style !== 'none' ? style : undefined,
+      model !== 'auto' ? model : undefined,
+      autoEnhance || undefined,
+    );
     if (hasResults) setIsExpanded(false);
-  }, [prompt, aspectRatio, style, isGenerating, onGenerate, hasResults, buildPrompt]);
+  }, [prompt, aspectRatio, style, model, autoEnhance, isGenerating, onGenerate, hasResults, buildPrompt]);
 
   const handleEnhance = useCallback(async () => {
     if (!prompt.trim() || isEnhancing) return;
@@ -304,6 +316,13 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
               <button
                 key={s.id}
                 onClick={() => setStyle(s.id)}
+                onMouseEnter={(e) => {
+                  if (s.id === 'none') return;
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  setTooltipAnchor({ top: rect.top, left: rect.left, width: rect.width });
+                  setHoveredStyle(s.id);
+                }}
+                onMouseLeave={() => { setHoveredStyle(null); setTooltipAnchor(null); }}
                 className={`flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${
                   style === s.id
                     ? 'bg-[#00bcd4]/15 text-[#00bcd4] border border-[#00bcd4]/40 shadow-[0_0_8px_rgba(0,188,212,0.15)]'
@@ -314,6 +333,10 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
               </button>
             ))}
           </div>
+          <StyleTooltip
+            style={hoveredStyle ? ARCANEAN_STYLES.find((s) => s.id === hoveredStyle) ?? null : null}
+            anchor={tooltipAnchor}
+          />
 
           {/* Controls bar */}
           <div className="flex items-center justify-between px-4 py-3 border-t border-white/[0.06]">
@@ -349,8 +372,26 @@ export function PromptInput({ onGenerate, isGenerating, hasResults }: PromptInpu
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                   </svg>
                 )}
-                <span className="hidden sm:inline">Enhance with APL</span>
+                <span className="hidden sm:inline">Enhance</span>
               </button>
+
+              {/* Auto-enhance toggle */}
+              <button
+                onClick={() => setAutoEnhance(!autoEnhance)}
+                className={`px-2 py-1 rounded-lg text-[10px] font-medium transition-all ${
+                  autoEnhance
+                    ? 'bg-violet-600/20 text-violet-300 border border-violet-500/30'
+                    : 'text-text-muted/40 hover:text-text-muted border border-transparent'
+                }`}
+                title="Auto-enhance prompts with APL on every generation"
+              >
+                Auto
+              </button>
+
+              <div className="w-px h-4 bg-white/[0.06] mx-1 hidden sm:block" />
+
+              {/* Image model selector */}
+              <ImageModelSelector value={model} onChange={setModel} />
             </div>
 
             {/* Generate button */}
