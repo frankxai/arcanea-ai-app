@@ -1,0 +1,181 @@
+import { strict as assert } from 'node:assert';
+import { enrichProjectGraph, evaluateProjectWorkspace } from '../enrichment';
+import type { ProjectWorkspaceSnapshot } from '../server';
+
+let passed = 0;
+let failed = 0;
+
+async function test(name: string, fn: () => void | Promise<void>) {
+  try {
+    await fn();
+    passed += 1;
+    console.log(`PASS  ${name}`);
+  } catch (error) {
+    failed += 1;
+    console.error(`FAIL  ${name}`);
+    console.error(error);
+  }
+}
+
+function createSnapshot(overrides?: Partial<ProjectWorkspaceSnapshot>): ProjectWorkspaceSnapshot {
+  return {
+    project: {
+      id: 'project_1',
+      title: 'Atlas Worldbuilding',
+      description: 'A science-fantasy setting with floating cities and relic engines.',
+      goal: 'Turn the Atlas setting into a playable story world.',
+      createdAt: '2026-03-29T10:00:00.000Z',
+      updatedAt: '2026-03-29T10:00:00.000Z',
+    },
+    sessions: [
+      {
+        id: 'session_1',
+        title: 'Atlas lore session',
+        updatedAt: '2026-03-29T10:10:00.000Z',
+        luminorId: 'alera',
+        modelId: 'claude-sonnet-4',
+      },
+      {
+        id: 'session_2',
+        title: 'Relic engine mechanics',
+        updatedAt: '2026-03-29T10:20:00.000Z',
+        luminorId: 'lyssandria',
+        modelId: 'gpt-5',
+      },
+    ],
+    creations: [
+      {
+        id: 'creation_1',
+        title: 'Atlas city map',
+        type: 'image',
+        status: 'published',
+        thumbnailUrl: null,
+        createdAt: '2026-03-29T11:00:00.000Z',
+        sourceSessionId: 'session_1',
+      },
+      {
+        id: 'creation_2',
+        title: 'Relic engine spec',
+        type: 'text',
+        status: 'draft',
+        thumbnailUrl: null,
+        createdAt: '2026-03-29T11:05:00.000Z',
+        sourceSessionId: null,
+      },
+    ],
+    memories: [
+      {
+        id: 'memory_1',
+        content: 'Atlas uses relic engines powered by harmonic crystal cores.',
+        createdAt: '2026-03-29T11:10:00.000Z',
+      },
+    ],
+    stats: {
+      sessionCount: 2,
+      creationCount: 2,
+      memoryCount: 1,
+    },
+    ...overrides,
+  };
+}
+
+class StubQuery {
+  constructor(
+    private readonly table: string,
+    private readonly log: Array<{ table: string; operation: string; payload: unknown }>,
+  ) {}
+
+  update(payload: unknown) {
+    this.log.push({ table: this.table, operation: 'update', payload });
+    return this;
+  }
+
+  upsert(payload: unknown) {
+    this.log.push({ table: this.table, operation: 'upsert', payload });
+    return this;
+  }
+
+  eq() {
+    return this;
+  }
+}
+
+function createSupabaseStub(log: Array<{ table: string; operation: string; payload: unknown }>) {
+  return {
+    from(table: string) {
+      return new StubQuery(table, log);
+    },
+  };
+}
+
+async function main() {
+  await test('evaluateProjectWorkspace scores a fully linked workspace', () => {
+    const snapshot = createSnapshot();
+    const evaluation = evaluateProjectWorkspace(snapshot);
+
+    assert.equal(evaluation.score, 100);
+    assert.equal(evaluation.checks.every((check) => check.passed), true);
+  });
+
+  await test('evaluateProjectWorkspace highlights missing source links and memories', () => {
+    const snapshot = createSnapshot({
+      creations: [
+        {
+          id: 'creation_2',
+          title: 'Relic engine spec',
+          type: 'text',
+          status: 'draft',
+          thumbnailUrl: null,
+          createdAt: '2026-03-29T11:05:00.000Z',
+          sourceSessionId: null,
+        },
+      ],
+      memories: [],
+      stats: {
+        sessionCount: 2,
+        creationCount: 1,
+        memoryCount: 0,
+      },
+    });
+
+    const evaluation = evaluateProjectWorkspace(snapshot);
+    const missingMemory = evaluation.checks.find((check) => check.name === 'has_memory_layer');
+    const missingSourceLink = evaluation.checks.find((check) => check.name === 'has_source_links');
+
+    assert.equal(missingMemory?.passed, false);
+    assert.equal(missingSourceLink?.passed, false);
+    assert.equal(evaluation.score, 60);
+  });
+
+  await test('enrichProjectGraph derives tags, summaries, and edges from the workspace snapshot', async () => {
+    const snapshot = createSnapshot();
+    const writes: Array<{ table: string; operation: string; payload: unknown }> = [];
+    const supabase = createSupabaseStub(writes);
+
+    const result = await enrichProjectGraph(supabase as never, 'user_1', snapshot);
+
+    assert.equal(result.evaluation.score, 100);
+    assert.equal(result.factCount >= 4, true);
+    assert.equal(result.edgeCount, 6);
+    assert.equal(result.tags.includes('atlas'), true);
+    assert.equal(result.summary.includes('Atlas Worldbuilding is an active Arcanea project workspace.'), true);
+
+    const touchedTables = writes.map((entry) => entry.table).sort();
+    assert.deepEqual(touchedTables, ['chat_projects', 'project_graph_edges', 'project_graph_summaries']);
+
+    const edgeWrite = writes.find((entry) => entry.table === 'project_graph_edges');
+    assert.ok(edgeWrite);
+    const edgePayload = edgeWrite?.payload as Array<{ relation: string }>;
+    assert.equal(edgePayload.some((edge) => edge.relation === 'derived_from'), true);
+    assert.equal(edgePayload.some((edge) => edge.relation === 'relevant_to'), true);
+  });
+
+  if (failed > 0) {
+    console.error(`\n${failed} project enrichment test(s) failed`);
+    process.exit(1);
+  }
+
+  console.log(`\n${passed} project enrichment test(s) passed`);
+}
+
+void main();
