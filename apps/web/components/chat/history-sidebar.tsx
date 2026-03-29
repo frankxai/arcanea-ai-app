@@ -359,10 +359,10 @@ function SessionItem({ session, isActive, onSelect, onDelete, onRename, onToggle
       onClick={handleSelect}
       onDoubleClick={handleDoubleClick}
       aria-current={isActive ? 'page' : undefined}
-      className={`group w-full flex items-center gap-2 px-2.5 py-2.5 min-h-[44px] rounded-lg text-left transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none ${
+      className={`group w-full flex items-center gap-2 px-2.5 py-2.5 min-h-[44px] rounded-lg text-left transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none ${
         isActive
-          ? 'bg-[#00bcd4]/8 border-l-2 border-[#00bcd4]'
-          : 'border-l-2 border-transparent hover:bg-white/[0.06]'
+          ? 'bg-gradient-to-r from-[#00bcd4]/10 to-transparent border-l-2 border-[#00bcd4] shadow-[inset_0_0_16px_rgba(0,188,212,0.05)]'
+          : 'border-l-2 border-transparent hover:bg-white/[0.04] hover:border-white/[0.1]'
       }`}
     >
       <div className="min-w-0 flex-1">
@@ -497,10 +497,12 @@ function TimeGroup({ label, sessions, activeSessionId, onSelect, onDelete, onRen
 
   return (
     <div className="mb-1">
-      <div className="px-3 py-1.5">
+      <div className="px-3 py-1.5 flex items-center gap-2">
         <span className={`text-[10px] uppercase tracking-[0.08em] font-medium ${labelClassName || 'text-white/25'}`}>
           {label}
         </span>
+        <div className="flex-1 h-px bg-gradient-to-r from-white/[0.06] to-transparent" />
+        <span className="text-[9px] text-white/15 tabular-nums">{sessions.length}</span>
       </div>
       <div className="px-1.5 flex flex-col gap-0.5">
         {sessions.map((session) => (
@@ -663,11 +665,11 @@ function ExpandedPanel({
         className="flex flex-col w-full h-full bg-cosmic-deep/90 backdrop-blur-xl transition-[width] duration-200 ease-in-out"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-3 py-3 border-b border-white/[0.06]">
+        <div className="flex items-center justify-between px-3 py-3 border-b border-white/[0.05] bg-gradient-to-r from-transparent via-white/[0.01] to-transparent">
           <button
             onClick={onNewChat}
             aria-label="Start new conversation"
-            className="flex items-center gap-1.5 px-2.5 py-1.5 min-h-[44px] rounded-lg text-xs font-medium text-[#00bcd4] hover:bg-[#00bcd4]/10 transition-colors focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
+            className="flex items-center gap-1.5 px-3 py-1.5 min-h-[44px] rounded-lg text-xs font-medium bg-gradient-to-r from-[#00bcd4]/15 to-[#00897b]/10 text-[#00bcd4] border border-[#00bcd4]/20 hover:border-[#00bcd4]/30 hover:shadow-[0_0_12px_rgba(0,188,212,0.1)] transition-all focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
           >
             <Plus className="w-3.5 h-3.5" />
             New Chat
@@ -714,8 +716,12 @@ function ExpandedPanel({
         <nav
           role="navigation"
           aria-label="Conversation history"
-          className="flex-1 overflow-y-auto"
-          style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(255,255,255,0.08) transparent' }}
+          className="relative flex-1 overflow-y-auto"
+          style={{
+            scrollbarWidth: 'thin',
+            scrollbarColor: 'rgba(255,255,255,0.08) transparent',
+            maskImage: 'linear-gradient(to bottom, transparent 0px, black 8px, black calc(100% - 8px), transparent 100%)',
+          }}
         >
           {sessions.length === 0 ? (
             <div className="px-3 py-4">
@@ -805,12 +811,14 @@ function ExpandedPanel({
         {/* Cross-route links */}
         <div className="flex items-center gap-3 px-3 py-2 border-t border-white/[0.04]">
           <Link href="/gallery" className="text-[11px] text-white/30 hover:text-[#00bcd4]/60 transition-colors">Gallery</Link>
+          <span className="text-white/10">·</span>
           <Link href="/academy" className="text-[11px] text-white/30 hover:text-[#00bcd4]/60 transition-colors">Academy</Link>
+          <span className="text-white/10">·</span>
           <Link href="/library" className="text-[11px] text-white/30 hover:text-[#00bcd4]/60 transition-colors">Library</Link>
         </div>
 
         {/* Footer nav */}
-        <div className="border-t border-white/[0.06] px-3 py-2 flex items-center gap-1">
+        <div className="border-t border-white/[0.05] bg-gradient-to-t from-[#08080d] to-transparent px-3 py-2 flex items-center gap-1">
           <Link
             href="/"
             className="flex items-center gap-1.5 px-2 py-1.5 min-h-[44px] rounded-lg text-[11px] text-white/40 hover:text-white/70 hover:bg-white/[0.06] hover:shadow-glow-sm/20 transition-all focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"

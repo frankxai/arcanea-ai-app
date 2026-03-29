@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import ChatMarkdown from './chat-markdown';
+import { ThinkingSection } from './thinking-section';
 import { ToolResultBlock } from './tool-result-block';
 import { SaveCreationButton } from './save-creation-button';
 import {
@@ -115,7 +116,7 @@ function highlightSearch(text: string, query: string): React.ReactNode {
   const parts = text.split(new RegExp(`(${escaped})`, 'gi'));
   return parts.map((part, i) =>
     part.toLowerCase() === query.toLowerCase() ? (
-      <mark key={i} className="bg-amber-400/30 text-white rounded-sm px-0.5">
+      <mark key={i} className="bg-[#00bcd4]/25 text-white rounded-sm px-0.5">
         {part}
       </mark>
     ) : (
@@ -255,6 +256,15 @@ export function MessageBubble({
   }, []);
 
   const text = getMessageText(message);
+
+  // Reasoning / thinking parts (e.g. from extended thinking, o-series reasoning)
+  const reasoningParts = (message.parts ?? []).filter(
+    (p) => p.type === 'reasoning' || p.type === 'thinking',
+  );
+  const reasoningText = reasoningParts
+    .map((p) => (typeof p.text === 'string' ? p.text : ''))
+    .join('\n')
+    .trim();
 
   // Tool result parts
   const toolParts = (message.parts ?? []).flatMap((part, index) => {
@@ -413,7 +423,7 @@ export function MessageBubble({
 
   return (
     <div className="mb-6 group">
-      <div className="mr-auto max-w-[85%] flex gap-3">
+      <div className="mr-auto flex gap-3">
         {/* Avatar */}
         {luminorAvatar ? (
           <div
@@ -465,13 +475,29 @@ export function MessageBubble({
             </div>
           )}
 
+          {/* Thinking / reasoning section */}
+          {reasoningText && (
+            <ThinkingSection
+              content={reasoningText}
+              isStreaming={isStreaming && isLast}
+              duration={
+                // If the message has a thinking_duration field, use it; otherwise estimate 0
+                typeof (message as Record<string, unknown>).thinking_duration === 'number'
+                  ? (message as Record<string, unknown>).thinking_duration as number
+                  : 0
+              }
+              defaultExpanded={isStreaming && isLast ? true : undefined}
+            />
+          )}
+
           {/* Message content */}
           {clean && (
             <div className="prose prose-invert prose-sm max-w-none text-[15px] leading-[1.75] text-white/85 prose-headings:text-white/90 prose-headings:font-semibold prose-code:text-[#00bcd4]/80 prose-a:text-[#00bcd4] prose-strong:text-white/90 overflow-hidden">
               <ChatMarkdown content={clean} isStreaming={isStreaming && isLast} />
               {isStreaming && isLast && (
                 <span
-                  className="inline-block w-2 h-2 rounded-full bg-[#00bcd4] animate-pulse ml-1 align-middle shadow-[0_0_8px_rgba(0,188,212,0.6)]"
+                  className="inline-block w-[2px] h-[1.1em] bg-[#00bcd4] ml-0.5 align-text-bottom shadow-[0_0_6px_rgba(0,188,212,0.5)]"
+                  style={{ animation: 'cursorBlink 1s steps(2) infinite' }}
                   aria-hidden="true"
                 />
               )}
@@ -480,10 +506,12 @@ export function MessageBubble({
 
           {/* Streaming indicator — no text yet */}
           {isStreaming && isLast && !clean && (
-            <div className="flex items-center gap-1.5 py-2" role="status" aria-label="Generating response">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#00bcd4] animate-pulse shadow-[0_0_6px_rgba(0,188,212,0.4)]" style={{ animationDelay: '0ms' }} />
-              <span className="w-1.5 h-1.5 rounded-full bg-[#00bcd4] animate-pulse shadow-[0_0_6px_rgba(0,188,212,0.4)]" style={{ animationDelay: '150ms' }} />
-              <span className="w-1.5 h-1.5 rounded-full bg-[#00bcd4] animate-pulse shadow-[0_0_6px_rgba(0,188,212,0.4)]" style={{ animationDelay: '300ms' }} />
+            <div className="flex items-center gap-2 py-2" role="status" aria-label="Generating response">
+              <span
+                className="inline-block w-[2px] h-5 bg-[#00bcd4] shadow-[0_0_8px_rgba(0,188,212,0.6)]"
+                style={{ animation: 'cursorBlink 1s steps(2) infinite' }}
+              />
+              <span className="text-xs text-white/25">Composing...</span>
             </div>
           )}
 
@@ -679,10 +707,10 @@ export function MessageBubble({
               <button
                 type="button"
                 onClick={() => handleReaction('up')}
-                className={`min-w-[36px] min-h-[36px] rounded-md flex items-center justify-center transition-colors focus-visible:ring-2 focus-visible:ring-[#00bcd4]/30 focus-visible:outline-none ${
+                className={`min-w-[36px] min-h-[36px] rounded-md flex items-center justify-center transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#00bcd4]/30 focus-visible:outline-none ${
                   liked === 'up'
-                    ? 'text-emerald-400 bg-emerald-400/10'
-                    : 'text-white/30 hover:text-[#00bcd4] hover:bg-[#00bcd4]/5'
+                    ? 'text-emerald-400 bg-emerald-400/10 shadow-[0_0_12px_rgba(52,211,153,0.2)] scale-110'
+                    : 'text-white/30 hover:text-emerald-400 hover:bg-emerald-400/5 active:scale-125'
                 }`}
                 aria-label="Good response"
                 aria-pressed={liked === 'up'}
@@ -693,10 +721,10 @@ export function MessageBubble({
               <button
                 type="button"
                 onClick={() => handleReaction('down')}
-                className={`min-w-[36px] min-h-[36px] rounded-md flex items-center justify-center transition-colors focus-visible:ring-2 focus-visible:ring-[#00bcd4]/30 focus-visible:outline-none ${
+                className={`min-w-[36px] min-h-[36px] rounded-md flex items-center justify-center transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#00bcd4]/30 focus-visible:outline-none ${
                   liked === 'down'
-                    ? 'text-red-400 bg-red-400/10'
-                    : 'text-white/30 hover:text-[#00bcd4] hover:bg-[#00bcd4]/5'
+                    ? 'text-red-400 bg-red-400/10 shadow-[0_0_12px_rgba(248,113,113,0.2)]'
+                    : 'text-white/30 hover:text-red-400 hover:bg-red-400/5 active:scale-125'
                 }`}
                 aria-label="Bad response"
                 aria-pressed={liked === 'down'}

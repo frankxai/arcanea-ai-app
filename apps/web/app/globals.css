@@ -968,6 +968,43 @@
   50% { transform: scale(1.03); opacity: 1; }
 }
 
+@keyframes tabSlideIn {
+  from { opacity: 0; transform: scaleX(0.92) scaleY(0.95); }
+  to { opacity: 1; transform: scaleX(1) scaleY(1); }
+}
+
+@keyframes cursorBlink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Thinking section — animated gradient text */
+@keyframes thinkingGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes thinkingPulse {
+  0%, 100% { opacity: 0.4; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+.thinking-gradient-text {
+  background: linear-gradient(90deg, #00bcd4, #78a6ff, #e040fb, #00bcd4);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: thinkingGradient 2s ease-in-out infinite;
+}
+
 .animate-spin-slow {
   animation: spin-slow 60s linear infinite;
 }

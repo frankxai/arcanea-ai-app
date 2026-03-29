@@ -101,6 +101,7 @@ const KEYBOARD_SHORTCUTS = [
   ['Shift + Enter', 'New line'],
   ['Cmd/Ctrl + N', 'New chat'],
   ['Cmd/Ctrl + Shift + S', 'Toggle sidebar'],
+  ['Cmd/Ctrl + F', 'Search messages'],
   ['?', 'Show shortcuts'],
   ['Esc', 'Close dialog'],
 ] as const;
@@ -174,6 +175,8 @@ interface ChatAreaProps {
   /** Continue-last-session data */
   lastSessionTitle: string | null;
   onContinueLastSession: (() => void) | null;
+  /** Optional search overlay rendered at top of chat area */
+  searchOverlay?: React.ReactNode;
   /** Children slot — renders at the bottom for the input bar */
   children: React.ReactNode;
 }
@@ -210,6 +213,7 @@ export function ChatArea({
   serverHasKeys,
   lastSessionTitle,
   onContinueLastSession,
+  searchOverlay,
   children,
 }: ChatAreaProps) {
   // -------------------------------------------------------------------------
@@ -270,6 +274,9 @@ export function ChatArea({
 
   return (
     <div className="relative flex-1 flex flex-col min-w-0 overflow-hidden">
+      {/* Search overlay */}
+      {searchOverlay}
+
       {/* Messages area */}
       <div
         ref={containerRef}
@@ -283,17 +290,28 @@ export function ChatArea({
           /* ============================================================= */
           /* Empty state — clean, centered, inviting                        */
           /* ============================================================= */
-          <div className="flex flex-col items-center justify-center h-full px-4">
-            <div className="max-w-[480px] w-full text-center">
+          <div className="relative flex flex-col items-center justify-center h-full px-4">
+            {/* Subtle aurora gradient behind empty state */}
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full bg-[radial-gradient(ellipse,rgba(0,188,212,0.04)_0%,rgba(13,71,161,0.03)_40%,transparent_70%)] blur-2xl" />
+              <div className="absolute bottom-1/3 left-1/3 w-[300px] h-[300px] rounded-full bg-[radial-gradient(circle,rgba(0,137,123,0.03)_0%,transparent_60%)] blur-xl" />
+            </div>
+
+            <div className="relative max-w-[480px] w-full text-center">
               {/* Arcanea icon */}
               <div className="mb-6 mx-auto animate-empty-fade-in">
                 <ArcaneanMarkGlow animate="breathe" />
               </div>
 
-              {/* Time-aware greeting — single line */}
-              <h1 className="text-2xl sm:text-3xl font-semibold text-white/90 mb-8 tracking-tight animate-empty-fade-in" style={{ animationDelay: '60ms' }}>
+              {/* Time-aware greeting — gradient text */}
+              <h1 className="text-2xl sm:text-3xl font-semibold mb-3 tracking-tight animate-empty-fade-in bg-gradient-to-r from-white via-white/95 to-[#00bcd4]/80 bg-clip-text text-transparent" style={{ animationDelay: '60ms' }}>
                 {activeLuminor ? activeLuminor.name : getTimeGreeting()}
               </h1>
+
+              {/* Rotating subtitle */}
+              <p className="text-sm text-white/30 mb-8 animate-empty-fade-in font-light" style={{ animationDelay: '100ms' }}>
+                {getSubtitle()}
+              </p>
 
               {/* 4 creative starter chips in a 2x2 grid */}
               <div
@@ -309,18 +327,20 @@ export function ChatArea({
                       onSetInput(starter.text);
                       onFocusInput();
                     }}
-                    className="flex flex-col items-start gap-1.5 px-4 py-3.5 rounded-xl text-left bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm hover:border-[#00bcd4]/20 hover:bg-white/[0.05] hover:shadow-[0_0_20px_rgba(0,188,212,0.06)] transition-all duration-200 group animate-empty-fade-in focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
-                    style={{ animationDelay: `${120 + i * 80}ms` }}
+                    className="relative flex flex-col items-start gap-1.5 px-4 py-3.5 rounded-xl text-left bg-gradient-to-br from-white/[0.04] to-white/[0.02] border border-white/[0.07] backdrop-blur-sm hover:border-[#00bcd4]/25 hover:bg-gradient-to-br hover:from-[#00bcd4]/[0.06] hover:to-transparent hover:shadow-[0_0_24px_rgba(0,188,212,0.08)] transition-all duration-300 group focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
+                    style={{
+                      animation: `fadeInUp 400ms cubic-bezier(0.22, 1, 0.36, 1) ${150 + i * 60}ms both`,
+                    }}
                   >
                     <div className="flex items-center gap-2">
-                      <span className="text-sm text-white/25 group-hover:text-[#00bcd4]/50 transition-colors" aria-hidden="true">
+                      <span className="text-sm text-white/25 group-hover:text-[#00bcd4]/60 transition-colors duration-300" aria-hidden="true">
                         {starter.icon}
                       </span>
-                      <span className="text-[13px] text-white/60 group-hover:text-white/80 transition-colors font-medium">
+                      <span className="text-[13px] text-white/60 group-hover:text-white/85 transition-colors duration-300 font-medium">
                         {starter.text}
                       </span>
                     </div>
-                    <span className="text-[11px] text-white/25 group-hover:text-white/35 transition-colors leading-snug pl-6">
+                    <span className="text-[11px] text-white/25 group-hover:text-white/40 transition-colors duration-300 leading-snug pl-6">
                       {starter.hint}
                     </span>
                   </button>
@@ -435,7 +455,7 @@ export function ChatArea({
                       </span>
                       <span className="text-[10px] text-white/20 font-mono">{providerLabel}</span>
                     </div>
-                    <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/[0.02] border border-white/[0.04] shadow-[0_0_12px_rgba(0,188,212,0.08)]" aria-live="assertive">
+                    <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-[#00bcd4]/[0.04] via-white/[0.02] to-[#00897b]/[0.03] border border-[#00bcd4]/[0.08] shadow-[0_0_16px_rgba(0,188,212,0.1)]" aria-live="assertive">
                       <div className="relative w-5 h-5">
                         <div className="absolute inset-0 rounded-full border-2 border-[#00bcd4]/20" />
                         <div
@@ -469,7 +489,7 @@ export function ChatArea({
           <button
             onClick={scrollToBottom}
             aria-label="Scroll to latest message"
-            className="w-9 h-9 rounded-full bg-[#1a1a1f] border border-white/[0.1] shadow-lg flex items-center justify-center text-white/50 hover:text-white/80 transition-colors focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
+            className="w-9 h-9 rounded-full bg-gradient-to-b from-[#1e1e28] to-[#14141c] border border-white/[0.1] shadow-[0_4px_16px_rgba(0,0,0,0.4),0_0_1px_rgba(255,255,255,0.06)] flex items-center justify-center text-white/50 hover:text-[#00bcd4] hover:border-[#00bcd4]/20 hover:shadow-[0_4px_16px_rgba(0,188,212,0.15)] transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
           >
             <PhArrowDown className="w-4 h-4" />
           </button>
@@ -482,14 +502,15 @@ export function ChatArea({
       {/* Keyboard shortcuts overlay */}
       {showShortcuts && (
         <div
-          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center"
+          className="fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center"
           onClick={() => setShowShortcuts(false)}
         >
           <div
-            className="bg-[#12121a] rounded-2xl border border-white/[0.06] p-6 max-w-sm w-full mx-4 shadow-2xl"
+            className="bg-gradient-to-b from-[#14141e] to-[#0e0e16] rounded-2xl border border-white/[0.08] p-6 max-w-sm w-full mx-4 shadow-[0_24px_80px_rgba(0,0,0,0.6),0_0_1px_rgba(255,255,255,0.06)]"
             onClick={(e) => e.stopPropagation()}
+            style={{ animation: 'fadeInUp 200ms cubic-bezier(0.22, 1, 0.36, 1)' }}
           >
-            <h2 className="text-sm font-semibold text-white mb-4">
+            <h2 className="text-sm font-semibold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent mb-4">
               Keyboard Shortcuts
             </h2>
             <div className="space-y-2 text-xs">

@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { m, AnimatePresence, LazyMotion, domAnimation } from 'framer-motion';
+import { ChatImagineTabs } from '@/components/chat/chat-imagine-tabs';
 import { PromptInput } from '@/components/imagine/PromptInput';
 import { ImageCard } from '@/components/imagine/ImageCard';
 import { getFavorites, removeFavorite, getFavoriteCount, type FavoriteImage } from '@/lib/imagine-favorites';
@@ -253,13 +254,18 @@ export default function ImaginePage() {
   return (
     <LazyMotion features={domAnimation}>
     <div className="min-h-screen bg-[#09090b]">
+      {/* Chat/Imagine tabs */}
+      <div className="fixed top-[72px] left-1/2 -translate-x-1/2 z-40">
+        <ChatImagineTabs />
+      </div>
+
       {/* Hero — only visible when no results */}
       <AnimatePresence>
         {!hasResults && (
           <m.div
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, y: -40 }}
-            className="pt-20 pb-6 px-6 text-center"
+            className="pt-28 pb-6 px-6 text-center"
           >
             <m.h1
               initial={{ opacity: 0, y: 20 }}

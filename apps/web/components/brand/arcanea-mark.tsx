@@ -1,11 +1,14 @@
 'use client';
 
 /**
- * Arcanea Brand Mark — the crystalline "A" gate.
+ * Arcanea Brand Mark — the crystalline angular "A" gate.
  *
- * Used everywhere: navbar, chat avatar, thinking indicator, empty state.
- * Single source of truth for the brand icon.
+ * Uses the actual arcanea-mark.jpg brand asset (the premium crystalline A).
+ * Single source of truth for the brand icon throughout the app.
  */
+
+import Image from 'next/image';
+import markSrc from '@/assets/brand/arcanea-mark.jpg';
 
 interface ArcaneanMarkProps {
   size?: number;
@@ -22,37 +25,31 @@ export function ArcaneanMark({ size = 24, className = '', glow = false, animate 
       : '';
 
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 40 40"
-      fill="none"
-      width={size}
-      height={size}
-      className={`${animClass} ${className}`}
+    <div
+      className={`relative inline-flex items-center justify-center shrink-0 ${animClass} ${className}`}
+      style={{ width: size, height: size }}
       aria-hidden="true"
     >
-      <defs>
-        <linearGradient id={`arcGrad-${size}`} x1="4" y1="4" x2="36" y2="36" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#00bcd4" />
-          <stop offset="48%" stopColor="#0d47a1" />
-          <stop offset="100%" stopColor="#00897b" />
-        </linearGradient>
-        {glow && (
-          <radialGradient id={`arcGlow-${size}`} cx="50%" cy="35%" r="55%">
-            <stop offset="0%" stopColor="#00bcd4" stopOpacity="0.18" />
-            <stop offset="100%" stopColor="#00bcd4" stopOpacity="0" />
-          </radialGradient>
-        )}
-      </defs>
-      {glow && <ellipse cx="20" cy="18" rx="16" ry="14" fill={`url(#arcGlow-${size})`} />}
-      <path
-        fillRule="evenodd"
-        d="M 4 37 L 4 18 Q 4 4 20 4 Q 36 4 36 18 L 36 37 L 30 37 L 30 19 Q 30 10 20 10 Q 10 10 10 19 L 10 37 Z"
-        fill={`url(#arcGrad-${size})`}
+      {glow && (
+        <div
+          className="absolute inset-[-4px] rounded-full"
+          style={{
+            background: 'radial-gradient(circle, rgba(0,188,212,0.2) 0%, rgba(0,188,212,0.06) 50%, transparent 70%)',
+            filter: 'blur(3px)',
+          }}
+        />
+      )}
+      <Image
+        src={markSrc}
+        alt=""
+        width={size}
+        height={size}
+        className="relative rounded-[3px] object-cover"
+        style={{ width: size, height: size }}
+        priority={size >= 40}
+        unoptimized={size <= 24}
       />
-      <rect x="4" y="24" width="32" height="4" rx="2" fill={`url(#arcGrad-${size})`} />
-      <circle cx="20" cy="4" r="2.5" fill="#ffffff" opacity="0.75" />
-    </svg>
+    </div>
   );
 }
 

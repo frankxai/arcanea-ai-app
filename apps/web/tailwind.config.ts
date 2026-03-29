@@ -308,6 +308,10 @@ const config: Config = {
           '0%': { transform: 'scale(0.9)', opacity: '0' },
           '100%': { transform: 'scale(1)', opacity: '1' },
         },
+        'search-slide-in': {
+          '0%': { transform: 'translateX(-50%) translateY(-12px)', opacity: '0' },
+          '100%': { transform: 'translateX(-50%) translateY(0)', opacity: '1' },
+        },
       },
       animation: {
         // Cosmic
@@ -342,6 +346,7 @@ const config: Config = {
         'slide-in-from-left': 'slide-in-from-left 0.3s ease-out',
         'slide-in-from-right': 'slide-in-from-right 0.3s ease-out',
         'scale-in': 'scale-in 0.2s ease-out',
+        'search-slide-in': 'search-slide-in 0.2s ease-out both',
       },
       fontFamily: {
         // Display — Space Grotesk for bold, modern headings

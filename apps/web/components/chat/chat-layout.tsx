@@ -115,7 +115,23 @@ export function ChatLayout({ sidebar, children, sidebarExpanded, onToggleSidebar
         {/* Main content                                                      */}
         {/* ----------------------------------------------------------------- */}
 
-        <main className="flex-1 flex flex-col min-w-0 min-h-0" aria-label="Chat">
+        <main
+          className="flex-1 flex flex-col min-w-0 min-h-0"
+          aria-label="Chat"
+          onTouchStart={(e) => {
+            if (isMobile && !sidebarExpanded && e.touches[0].clientX < 24) {
+              touchStartX.current = e.touches[0].clientX;
+            }
+          }}
+          onTouchEnd={(e) => {
+            if (isMobile && !sidebarExpanded) {
+              const deltaX = e.changedTouches[0].clientX - touchStartX.current;
+              if (touchStartX.current < 24 && deltaX > 60) {
+                onToggleSidebar();
+              }
+            }
+          }}
+        >
           {children}
         </main>
       </div>

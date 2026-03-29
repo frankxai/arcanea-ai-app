@@ -1,15 +1,43 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import CodeBlock from './code-block';
+import { ImageLightbox, type LightboxImage } from './image-lightbox';
+import { ArrowsOut } from '@/lib/phosphor-icons';
 
 interface ChatMarkdownProps {
   content: string;
   isStreaming?: boolean;
 }
 
+// ---------------------------------------------------------------------------
+// Helper — extract all image URLs from markdown content for lightbox nav
+// ---------------------------------------------------------------------------
+
+const IMG_REGEX = /!\[([^\]]*)\]\(([^)]+)\)/g;
+
+function extractImages(content: string): LightboxImage[] {
+  const results: LightboxImage[] = [];
+  let match: RegExpExecArray | null;
+  while ((match = IMG_REGEX.exec(content)) !== null) {
+    results.push({ src: match[2], alt: match[1] || undefined });
+  }
+  return results;
+}
+
 export default function ChatMarkdown({ content, isStreaming }: ChatMarkdownProps) {
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  // Memoize image list so lightbox navigation works across all images in the message
+  const allImages = useMemo(() => extractImages(content), [content]);
+
+  // When a markdown <img> is clicked, find its index in the extracted list
+  const openLightbox = (src: string) => {
+    const idx = allImages.findIndex((img) => img.src === src);
+    setLightboxIndex(idx >= 0 ? idx : 0);
+  };
+
   return (
     <div className={isStreaming ? 'streaming-text' : undefined}>
     <ReactMarkdown
@@ -36,6 +64,30 @@ export default function ChatMarkdown({ content, isStreaming }: ChatMarkdownProps
             >
               {children}
             </code>
+          );
+        },
+
+        // Clickable images that open lightbox
+        img({ src, alt }) {
+          if (!src) return null;
+          return (
+            <button
+              type="button"
+              className="block max-w-[400px] w-full rounded-xl overflow-hidden border border-white/[0.06] cursor-pointer group/mdimg hover:shadow-[0_0_16px_rgba(0,188,212,0.1)] transition-all my-2 focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
+              onClick={() => openLightbox(src)}
+              aria-label={alt ? `View ${alt}` : 'Open image in lightbox'}
+            >
+              <div className="relative overflow-hidden">
+                <img
+                  src={src}
+                  alt={alt || 'Image'}
+                  className="w-full h-auto transition-transform duration-300 group-hover/mdimg:scale-[1.02]"
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover/mdimg:bg-black/20 transition-colors flex items-center justify-center">
+                  <ArrowsOut className="w-5 h-5 text-white/0 group-hover/mdimg:text-white/80 transition-colors" />
+                </div>
+              </div>
+            </button>
           );
         },
 
@@ -135,6 +187,15 @@ export default function ChatMarkdown({ content, isStreaming }: ChatMarkdownProps
     >
       {content}
     </ReactMarkdown>
+
+    {/* Shared lightbox for all images in this markdown block */}
+    {lightboxIndex !== null && allImages.length > 0 && (
+      <ImageLightbox
+        images={allImages}
+        initialIndex={lightboxIndex}
+        onClose={() => setLightboxIndex(null)}
+      />
+    )}
     </div>
   );
 }

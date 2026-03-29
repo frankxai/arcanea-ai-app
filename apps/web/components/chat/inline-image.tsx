@@ -5,8 +5,8 @@ import {
   Download,
   ArrowsClockwise,
   ArrowsOut,
-  X,
 } from '@/lib/phosphor-icons';
+import { ImageLightbox } from './image-lightbox';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -40,14 +40,8 @@ export function InlineImage({
   // Download handler — works for both base64 and HTTP URLs
   const handleDownload = useCallback(async () => {
     try {
-      let blob: Blob;
-      if (src.startsWith('data:')) {
-        const response = await fetch(src);
-        blob = await response.blob();
-      } else {
-        const response = await fetch(src);
-        blob = await response.blob();
-      }
+      const response = await fetch(src);
+      const blob = await response.blob();
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -145,27 +139,13 @@ export function InlineImage({
         )}
       </div>
 
-      {/* Lightbox overlay */}
+      {/* Full-featured lightbox with zoom, download, and spring animation */}
       {lightboxOpen && (
-        <div
-          className="fixed inset-0 z-50 bg-black/90 sm:bg-black/80 sm:backdrop-blur-md flex items-center justify-center p-2 sm:p-4"
-          onClick={() => setLightboxOpen(false)}
-        >
-          <button
-            type="button"
-            onClick={() => setLightboxOpen(false)}
-            className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 hover:shadow-[0_0_12px_rgba(0,188,212,0.2)] flex items-center justify-center text-white transition-all z-10 focus-visible:ring-2 focus-visible:ring-[#00bcd4]/30 focus-visible:outline-none"
-            aria-label="Close lightbox"
-          >
-            <X className="w-5 h-5" />
-          </button>
-          <img
-            src={src}
-            alt={displayPrompt || 'AI-generated image'}
-            className="max-w-full max-h-full object-contain rounded-lg"
-            onClick={(e) => e.stopPropagation()}
-          />
-        </div>
+        <ImageLightbox
+          images={[{ src, alt: displayPrompt || 'AI-generated image' }]}
+          initialIndex={0}
+          onClose={() => setLightboxOpen(false)}
+        />
       )}
     </>
   );

@@ -2,8 +2,6 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { cn } from '@/lib/utils';
 
 // Layout & area components (new)
 import { ChatLayout } from '@/components/chat/chat-layout';
@@ -37,6 +35,7 @@ const CreditBalance = dynamic(
   { ssr: false, loading: () => <span className="text-xs text-white/20">---</span> },
 );
 import { CreationIndicator } from '@/components/chat/creation-indicator';
+import { SearchOverlay } from '@/components/chat/search-overlay';
 
 // Icons
 import {
@@ -71,42 +70,8 @@ function toUiMessage(sessionMessage: StoredMessage): UIMessage {
   };
 }
 
-function ChatImagineTabs() {
-  const pathname = usePathname();
-  const isChat = pathname === '/chat' || pathname?.startsWith('/chat/');
-  const isImagine = pathname === '/imagine';
-
-  return (
-    <nav className="flex items-center gap-1" role="tablist">
-      <Link
-        href="/chat"
-        role="tab"
-        aria-selected={isChat}
-        className={cn(
-          "px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-200",
-          isChat
-            ? "text-white bg-white/[0.06]"
-            : "text-white/40 hover:text-white/60 hover:bg-white/[0.03]"
-        )}
-      >
-        Chat
-      </Link>
-      <Link
-        href="/imagine"
-        role="tab"
-        aria-selected={isImagine}
-        className={cn(
-          "px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-200",
-          isImagine
-            ? "text-white bg-white/[0.06]"
-            : "text-white/40 hover:text-white/60 hover:bg-white/[0.03]"
-        )}
-      >
-        Imagine
-      </Link>
-    </nav>
-  );
-}
+// Chat/Imagine tabs — shared component
+import { ChatImagineTabs } from '@/components/chat/chat-imagine-tabs';
 
 // ---------------------------------------------------------------------------
 // Chat Page — thin composition shell
@@ -130,7 +95,58 @@ export default function ChatPage() {
   const [serverHasKeys, setServerHasKeys] = useState(false);
   const [pendingInput, setPendingInput] = useState('');
 
+  // In-conversation search state
+  const [showSearch, setShowSearch] = useState(false);
+  const [inConvoSearchQuery, setInConvoSearchQuery] = useState('');
+  const [currentMatchIndex, setCurrentMatchIndex] = useState(0);
+
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // -------------------------------------------------------------------------
+  // In-conversation search — match counting
+  // -------------------------------------------------------------------------
+
+  const totalMatches = React.useMemo(() => {
+    if (!inConvoSearchQuery.trim()) return 0;
+    const q = inConvoSearchQuery.toLowerCase();
+    let count = 0;
+    for (const msg of conversation.messages) {
+      const text = getMessageText(msg).toLowerCase();
+      let idx = 0;
+      while ((idx = text.indexOf(q, idx)) !== -1) {
+        count++;
+        idx += q.length;
+      }
+    }
+    return count;
+  }, [inConvoSearchQuery, conversation.messages]);
+
+  // Reset match index when query changes or total changes
+  useEffect(() => {
+    setCurrentMatchIndex(0);
+  }, [inConvoSearchQuery, totalMatches]);
+
+  const handleSearchQueryChange = useCallback((query: string) => {
+    setInConvoSearchQuery(query);
+  }, []);
+
+  const handleSearchNext = useCallback(() => {
+    if (totalMatches > 0) {
+      setCurrentMatchIndex((prev) => (prev + 1) % totalMatches);
+    }
+  }, [totalMatches]);
+
+  const handleSearchPrev = useCallback(() => {
+    if (totalMatches > 0) {
+      setCurrentMatchIndex((prev) => (prev - 1 + totalMatches) % totalMatches);
+    }
+  }, [totalMatches]);
+
+  const handleSearchClose = useCallback(() => {
+    setShowSearch(false);
+    setInConvoSearchQuery('');
+    setCurrentMatchIndex(0);
+  }, []);
 
   // -------------------------------------------------------------------------
   // Server key detection
@@ -305,8 +321,7 @@ export default function ChatPage() {
       // Cmd+F — in-conversation search
       if (mod && e.key === 'f' && conversation.messages.length > 0) {
         e.preventDefault();
-        // TODO: Wire in-conversation search UI (search bar overlay)
-        // For now, the searchQuery state is passed to ChatArea
+        setShowSearch((prev) => !prev);
       }
     }
 
@@ -352,7 +367,7 @@ export default function ChatPage() {
         }
       >
         {/* -------- Top bar (fixed height to prevent CLS) -------- */}
-        <div className="flex items-center justify-between px-3 sm:px-4 py-2 border-b border-white/[0.06] shrink-0 h-[52px] min-h-[52px]">
+        <div className="flex items-center justify-between px-3 sm:px-4 py-2 border-b border-white/[0.05] bg-gradient-to-r from-transparent via-white/[0.01] to-transparent shrink-0 h-[52px] min-h-[52px]">
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Mobile sidebar toggle */}
             <button
@@ -464,14 +479,27 @@ export default function ChatPage() {
           onLoadBranch={conversation.loadBranch}
           lastMsg={conversation.lastMsg ?? null}
           autoSave={autoSave}
-          searchQuery={chatSessions.searchQuery}
+          searchQuery={inConvoSearchQuery}
           clientApiKey={conversation.clientApiKey ?? null}
           serverHasKeys={serverHasKeys}
           lastSessionTitle={lastSessionTitle}
           onContinueLastSession={lastSessionTitle ? handleContinueLastSession : null}
+          searchOverlay={
+            showSearch ? (
+              <SearchOverlay
+                open={showSearch}
+                totalMatches={totalMatches}
+                currentMatchIndex={currentMatchIndex}
+                onQueryChange={handleSearchQueryChange}
+                onNext={handleSearchNext}
+                onPrev={handleSearchPrev}
+                onClose={handleSearchClose}
+              />
+            ) : undefined
+          }
         >
           {/* Input bar — rendered at the bottom of ChatArea */}
-          <div className="border-t border-white/[0.06] bg-[#0a0a0f] shrink-0 min-h-[88px]" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
+          <div className="border-t border-white/[0.05] bg-gradient-to-t from-[#08080d] via-[#0a0a10] to-[#0c0c14] shrink-0 min-h-[88px]" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
             <div className="max-w-[720px] mx-auto px-4 py-3">
               <ChatInputBar
                 onSend={handleSend}

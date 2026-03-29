@@ -172,14 +172,17 @@ function HeroPortal() {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="mb-10 md:mb-14"
           >
-            <Image
-              src={navLogo}
-              alt="Arcanea"
-              width={56}
-              height={56}
-              className="rounded-xl ring-1 ring-white/[0.08] shadow-[0_4px_20px_rgba(0,0,0,0.4)]"
-              priority
-            />
+            <div className="relative">
+              <div className="absolute inset-[-8px] rounded-2xl bg-[radial-gradient(circle,rgba(0,188,212,0.15)_0%,rgba(255,215,0,0.06)_40%,transparent_70%)] blur-sm animate-[breathe_3s_ease-in-out_infinite]" />
+              <Image
+                src={navLogo}
+                alt="Arcanea"
+                width={64}
+                height={64}
+                className="relative rounded-xl ring-1 ring-white/[0.1] shadow-[0_4px_24px_rgba(0,188,212,0.2),0_8px_40px_rgba(0,0,0,0.4)]"
+                priority
+              />
+            </div>
           </m.div>
 
           {/* Headline — clean, large, confident */}

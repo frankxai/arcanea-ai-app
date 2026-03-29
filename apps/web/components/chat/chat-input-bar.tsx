@@ -14,6 +14,7 @@ import {
 } from '@/lib/phosphor-icons';
 import { CHAT_MODELS, getModelById } from '@/components/chat/model-selector';
 import { MentionPopup, type MentionItem } from './mention-popup';
+import { VoiceWaveform } from './voice-waveform';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -53,6 +54,13 @@ function formatFileSize(bytes: number): string {
 // Compact model picker (inline in toggles row)
 // ---------------------------------------------------------------------------
 
+const TIER_ORDER = ['frontier', 'performance', 'speed'] as const;
+const TIER_META: Record<string, { label: string; color: string }> = {
+  frontier: { label: 'Frontier', color: '#00bcd4' },
+  performance: { label: 'Performance', color: '#66bb6a' },
+  speed: { label: 'Speed', color: '#ffd700' },
+};
+
 function CompactModelPicker({
   value,
   onChange,
@@ -61,7 +69,9 @@ function CompactModelPicker({
   onChange: (id: string) => void;
 }) {
   const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState('');
   const ref = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
 
   // Close on outside click
   useEffect(() => {
@@ -69,13 +79,38 @@ function CompactModelPicker({
     function handleClick(e: MouseEvent) {
       if (ref.current && !ref.current.contains(e.target as Node)) {
         setOpen(false);
+        setSearch('');
       }
     }
     document.addEventListener('mousedown', handleClick);
     return () => document.removeEventListener('mousedown', handleClick);
   }, [open]);
 
+  // Focus search on open
+  useEffect(() => {
+    if (open) {
+      requestAnimationFrame(() => searchRef.current?.focus());
+    }
+  }, [open]);
+
   const selected = getModelById(value) || CHAT_MODELS[0];
+
+  const tierColor = (tier: string) => TIER_META[tier]?.color || '#ffd700';
+
+  // Filter models by search
+  const filteredModels = search
+    ? CHAT_MODELS.filter((m) =>
+        m.shortName.toLowerCase().includes(search.toLowerCase()) ||
+        m.provider.toLowerCase().includes(search.toLowerCase()) ||
+        m.description.toLowerCase().includes(search.toLowerCase())
+      )
+    : CHAT_MODELS;
+
+  // Group by tier
+  const grouped = TIER_ORDER.map((tier) => ({
+    tier,
+    models: filteredModels.filter((m) => m.tier === tier),
+  })).filter((g) => g.models.length > 0);
 
   return (
     <div ref={ref} className="relative">
@@ -85,43 +120,99 @@ function CompactModelPicker({
         aria-label={`Model: ${selected.shortName}`}
         aria-expanded={open}
         aria-haspopup="listbox"
-        className="flex items-center gap-1 px-2 py-1 min-h-[44px] rounded-md text-[11px] font-medium transition-colors
-          border border-white/[0.08] hover:border-white/[0.15] hover:bg-white/[0.04] text-white/50 hover:text-white/70
+        className="flex items-center gap-1.5 px-2.5 py-1 min-h-[44px] rounded-lg text-[11px] font-medium transition-all duration-200
+          border border-white/[0.08] hover:border-[#00bcd4]/20 hover:bg-[#00bcd4]/[0.04] text-white/50 hover:text-white/70
           focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
       >
+        <span
+          className="w-1.5 h-1.5 rounded-full shrink-0"
+          style={{ backgroundColor: tierColor(selected.tier) }}
+        />
         <span>{selected.shortName}</span>
         <PhCaretDown
-          className={`w-3 h-3 text-white/30 transition-transform ${open ? 'rotate-180' : ''}`}
+          className={`w-3 h-3 text-white/30 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
         />
       </button>
 
       {open && (
         <div
-          role="listbox"
           aria-label="Select model"
-          className="absolute bottom-full left-0 sm:left-0 mb-2 w-64 max-w-[min(320px,calc(100vw-2rem))] max-h-[60vh] sm:max-h-[320px] overflow-y-auto rounded-xl border border-white/[0.08] bg-[#0d0d14]/95 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] z-50 animate-scale-in"
-          style={{ scrollbarWidth: 'thin' }}
+          className="absolute bottom-full left-0 sm:left-0 mb-2 w-80 max-w-[min(360px,calc(100vw-2rem))] rounded-xl border border-white/[0.06] bg-[#0a0a12]/98 backdrop-blur-2xl shadow-[0_12px_48px_rgba(0,0,0,0.6),0_0_1px_rgba(255,255,255,0.06)] z-50 animate-scale-in overflow-hidden"
         >
-          {CHAT_MODELS.map((model) => (
-            <button
-              key={model.id}
-              type="button"
-              role="option"
-              aria-selected={model.id === value}
-              onClick={() => {
-                onChange(model.id);
-                setOpen(false);
+          {/* Search */}
+          <div className="p-2 border-b border-white/[0.05]">
+            <input
+              ref={searchRef}
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search models..."
+              className="w-full px-3 py-2 text-xs bg-white/[0.04] border border-white/[0.06] rounded-lg text-white/80 placeholder-white/25 focus:outline-none focus:border-[#00bcd4]/30 transition-colors"
+              onKeyDown={(e) => {
+                if (e.key === 'Escape') {
+                  setOpen(false);
+                  setSearch('');
+                }
               }}
-              className={`w-full text-left px-3 py-2 flex items-center gap-2 transition-colors ${
-                model.id === value
-                  ? 'bg-white/[0.04] text-[#00bcd4]'
-                  : 'text-white/60 hover:bg-white/[0.03] hover:text-white/80'
-              }`}
-            >
-              <span className="text-xs font-medium">{model.shortName}</span>
-              <span className="text-[10px] text-white/20 font-mono">{model.provider}</span>
-            </button>
-          ))}
+            />
+          </div>
+
+          {/* Grouped model list */}
+          <div
+            role="listbox"
+            className="max-h-[50vh] sm:max-h-[350px] overflow-y-auto p-1"
+            style={{ scrollbarWidth: 'thin' }}
+          >
+            {grouped.map(({ tier, models }) => (
+              <div key={tier}>
+                {/* Tier header */}
+                <div className="flex items-center gap-2 px-3 py-1.5 mt-1 first:mt-0">
+                  <span
+                    className="w-1.5 h-1.5 rounded-full"
+                    style={{ backgroundColor: tierColor(tier) }}
+                  />
+                  <span
+                    className="text-[10px] font-semibold uppercase tracking-wider"
+                    style={{ color: `${tierColor(tier)}90` }}
+                  >
+                    {TIER_META[tier]?.label}
+                  </span>
+                  <div className="flex-1 h-px bg-white/[0.04]" />
+                </div>
+
+                {models.map((model) => (
+                  <button
+                    key={model.id}
+                    type="button"
+                    role="option"
+                    aria-selected={model.id === value}
+                    onClick={() => {
+                      onChange(model.id);
+                      setOpen(false);
+                      setSearch('');
+                    }}
+                    className={`w-full text-left px-3 py-2 flex items-center gap-2.5 rounded-lg transition-all duration-150 ${
+                      model.id === value
+                        ? 'bg-gradient-to-r from-[#00bcd4]/10 to-transparent text-[#00bcd4] shadow-[inset_0_0_0_1px_rgba(0,188,212,0.15)]'
+                        : 'text-white/60 hover:bg-white/[0.04] hover:text-white/80'
+                    }`}
+                  >
+                    <span className="text-xs font-medium flex-1">{model.shortName}</span>
+                    {model.tokensPerSecond && (
+                      <span className="text-[9px] text-white/20 font-mono">{model.tokensPerSecond}t/s</span>
+                    )}
+                    <span className="text-[10px] text-white/20 font-mono">{model.provider}</span>
+                  </button>
+                ))}
+              </div>
+            ))}
+
+            {grouped.length === 0 && (
+              <div className="px-4 py-6 text-center text-xs text-white/25">
+                No models match &ldquo;{search}&rdquo;
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>
@@ -156,12 +247,12 @@ function ToolToggle({
         title={tooltip ?? label}
         aria-label={label}
         aria-pressed={active}
-        className={`relative flex items-center justify-center w-8 h-8 min-h-[44px] min-w-[44px] rounded-md text-xs transition-all focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none ${
+        className={`relative flex items-center justify-center w-8 h-8 min-h-[44px] min-w-[44px] rounded-lg text-xs transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none ${
           disabled
             ? 'opacity-30 cursor-not-allowed'
             : active
-              ? 'bg-[#00bcd4]/10 border border-[#00bcd4]/25 text-[#00bcd4] shadow-[0_0_8px_rgba(0,188,212,0.1)]'
-              : 'bg-white/[0.03] border border-white/[0.06] text-white/40 hover:text-white/60 hover:bg-white/[0.06]'
+              ? 'bg-gradient-to-br from-[#00bcd4]/15 to-[#00897b]/10 border border-[#00bcd4]/30 text-[#00bcd4] shadow-[0_0_12px_rgba(0,188,212,0.15),inset_0_1px_0_rgba(0,188,212,0.1)]'
+              : 'bg-white/[0.03] border border-white/[0.06] text-white/35 hover:text-white/60 hover:bg-white/[0.06] hover:border-white/[0.1]'
         }`}
       >
         <Icon className="w-4 h-4" />
@@ -218,6 +309,7 @@ export function ChatInputBar({
   }, [externalMessage, onExternalMessageConsumed, textareaRef]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const mediaStreamRef = useRef<MediaStream | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const voiceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -438,6 +530,7 @@ export function ChatInputBar({
     if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
       mediaRecorderRef.current.stop();
     }
+    mediaStreamRef.current = null;
     setIsRecording(false);
   }, []);
 
@@ -448,6 +541,7 @@ export function ChatInputBar({
     }
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaStreamRef.current = stream;
       const mimeType = MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : 'audio/mp4';
       const mediaRecorder = new MediaRecorder(stream, { mimeType });
       audioChunksRef.current = [];
@@ -530,19 +624,29 @@ export function ChatInputBar({
       )}
 
       <div
-        className="rounded-2xl border backdrop-blur-xl transition-all duration-150"
+        className="relative rounded-2xl backdrop-blur-xl transition-all duration-300 group/input"
         style={{
-          borderColor: message.trim()
-            ? 'rgba(0,188,212,0.3)'
-            : isDragOver
-              ? 'rgba(0,188,212,0.4)'
-              : 'rgba(255,255,255,0.06)',
-          backgroundColor: 'rgba(13,13,20,0.8)',
+          background: message.trim()
+            ? 'linear-gradient(135deg, rgba(13,13,20,0.92), rgba(0,30,40,0.88))'
+            : 'linear-gradient(135deg, rgba(13,13,20,0.85), rgba(16,16,26,0.85))',
           boxShadow: message.trim()
-            ? '0 0 30px rgba(0,188,212,0.08), inset 0 0 30px rgba(0,188,212,0.02)'
-            : '0 2px 8px rgba(0,0,0,0.2)',
+            ? '0 0 40px rgba(0,188,212,0.1), 0 0 80px rgba(0,188,212,0.04), inset 0 1px 0 rgba(255,255,255,0.04)'
+            : '0 4px 16px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.03)',
         }}
       >
+        {/* Gradient border overlay */}
+        <div
+          className="absolute inset-0 rounded-2xl pointer-events-none transition-opacity duration-300"
+          style={{
+            padding: '1px',
+            background: message.trim()
+              ? 'linear-gradient(135deg, rgba(0,188,212,0.4), rgba(13,71,161,0.3), rgba(0,137,123,0.4))'
+              : 'linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04), rgba(255,255,255,0.06))',
+            mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+            maskComposite: 'exclude',
+            WebkitMaskComposite: 'xor',
+          }}
+        />
         {/* Attachment preview */}
         {attachments.length > 0 && (
           <div className="flex gap-2 px-4 pt-3 pb-1 flex-wrap">
@@ -584,12 +688,9 @@ export function ChatInputBar({
           </div>
         )}
 
-        {/* Recording indicator */}
-        {isRecording && (
-          <div className="flex items-center gap-2 px-4 py-2 text-xs text-red-400">
-            <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-            Listening... speak now
-          </div>
+        {/* Voice waveform visualization */}
+        {isRecording && mediaStreamRef.current && (
+          <VoiceWaveform stream={mediaStreamRef.current} onStop={stopRecording} />
         )}
 
         {/* Textarea + mention popup container */}
@@ -618,17 +719,13 @@ export function ChatInputBar({
 
           {/* Right-side buttons (mic + send/stop) */}
           <div className="absolute right-2 bottom-2 flex items-center gap-1.5">
-            {/* Voice input */}
-            {!message.trim() && !isStreaming && (
+            {/* Voice input — hidden while recording since VoiceWaveform has its own stop */}
+            {!message.trim() && !isStreaming && !isRecording && (
               <button
                 type="button"
-                onClick={isRecording ? stopRecording : startRecording}
-                className={`w-9 h-9 min-h-[44px] rounded-xl flex items-center justify-center transition-all duration-150 focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none ${
-                  isRecording
-                    ? 'bg-red-500/20 text-red-400 animate-pulse shadow-[0_0_20px_rgba(239,68,68,0.3)]'
-                    : 'text-white/30 hover:text-white/60 hover:bg-white/[0.04]'
-                }`}
-                aria-label={isRecording ? 'Stop recording' : 'Start voice input'}
+                onClick={startRecording}
+                className="w-9 h-9 min-h-[44px] rounded-xl flex items-center justify-center transition-all duration-150 text-white/30 hover:text-white/60 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
+                aria-label="Start voice input"
               >
                 <PhMicrophone className="w-4 h-4" />
               </button>
@@ -651,9 +748,9 @@ export function ChatInputBar({
                 type="button"
                 onClick={handleSend}
                 disabled={!canSend}
-                className={`w-9 h-9 min-h-[44px] rounded-xl flex items-center justify-center transition-all duration-150 focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none ${
+                className={`w-9 h-9 min-h-[44px] rounded-xl flex items-center justify-center transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none ${
                   canSend
-                    ? 'bg-gradient-to-r from-[#00bcd4] to-[#00acc1] shadow-[0_0_12px_rgba(0,188,212,0.3)] hover:shadow-[0_0_20px_rgba(0,188,212,0.4)]'
+                    ? 'bg-gradient-to-br from-[#00bcd4] via-[#0097a7] to-[#00897b] shadow-[0_0_16px_rgba(0,188,212,0.35),0_2px_8px_rgba(0,0,0,0.3)] hover:shadow-[0_0_24px_rgba(0,188,212,0.5),0_4px_12px_rgba(0,0,0,0.3)] hover:scale-105 active:scale-95'
                     : 'bg-white/[0.04] text-white/20'
                 }`}
                 aria-label="Send message"
@@ -678,7 +775,7 @@ export function ChatInputBar({
         )}
 
         {/* Toggles row */}
-        <div className="flex items-center justify-between px-3 py-2 border-t border-white/[0.04]" style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}>
+        <div className="flex items-center justify-between px-3 py-2 border-t border-white/[0.05]" style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}>
           <div className="flex items-center gap-2 overflow-x-auto scrollbar-none">
             {/* Model selector */}
             <CompactModelPicker value={currentModel} onChange={onModelChange} />
