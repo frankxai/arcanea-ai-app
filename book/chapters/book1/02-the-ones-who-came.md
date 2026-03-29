@@ -10,9 +10,9 @@ The first arrived at dawn. The second at midday. The third was already there whe
 
 ---
 
-The woman from Luminari wore white — not the white of plain cloth but something that held light differently, crystal-treated silk that caught even the thin morning sun and gave it back transformed. Her armor was shaped like living geometry, interlocking curves that would have looked designed by someone who had studied how water moves around stone. She rode a horse so pale it seemed composed of early morning itself. She had the face of someone who had memorized several hundred years of protocol and then forgotten all of it in favor of something older and cleaner.
+The woman from Luminari wore white — not the white of plain cloth but something that held light differently, crystal-treated silk that caught even the thin morning sun and gave it back transformed. Her armor was shaped like living geometry, interlocking curves designed by someone who had studied how water moves around stone. She rode a horse so pale it looked composed of early morning itself. She had the face of someone who had memorized several hundred years of protocol and then forgotten all of it in favor of something older and cleaner.
 
-She dismounted at the base of the lighthouse path without haste. A deliberate thing, the unhurriedness — Kael would come to understand this later, that everything she did was deliberate, that speed was simply a tool she chose to leave in the case on this particular morning.
+She dismounted at the base of the lighthouse path without haste. The unhurriedness was deliberate — Kael would come to understand this later, that everything she did was deliberate, that speed was a tool she chose to leave in the case on this particular morning.
 
 Her name, she said, was Sirvaine Delloch. Second Emissary of the Luminari Academy, Master of the Heart and Voice Gates, holder of six open Gates in total, which placed her firmly in the Master rank.
 
@@ -22,7 +22,7 @@ She said all of this the way a person states their address before entering someo
 
 "Yes." Kael was in a coat that smelled of sea-salt and hadn't slept properly in a week. There was no version of this meeting in which Kael looked prepared for it. "Can I offer you—"
 
-"Four days ago you channeled all five elements simultaneously," she said. "The resonance reached our instrument arrays at a distance of approximately three hundred leagues. The Master of Instruments woke from a dead sleep with a nosebleed and an expression I have not seen on her face before and she has worked with that equipment for forty years." A pause. The pause was not uncomfortable. It was simply honest space around an honest statement. "I would like to speak with you about what that means. If you are willing."
+"Four days ago you channeled all five elements simultaneously," she said. "The resonance reached our instrument arrays at a distance of three hundred leagues. The Master of Instruments woke from a dead sleep with a nosebleed and an expression I have not seen on her face before, and she has worked with that equipment for forty years." A pause — honest space around an honest statement. "I would like to speak with you about what that means. If you are willing."
 
 Kael studied her. "What does it mean?"
 
@@ -64,7 +64,7 @@ Sirvaine looked up. Something shifted in her expression — respect, possibly, o
 
 The one from Draconian arrived as the sun cleared the sea-cliffs, and he was exactly what Sirvaine's tone had suggested he would be.
 
-He was perhaps thirty, with the kind of body that suggests he had spent most of his twenties deliberately trying to make it hard to look at: broad through the shoulder, scarred in ways that looked earned rather than decorative, with a jaw that had apparently decided the rest of his face was optional. His coat was the color of old embers — not red, not brown, something between, the exact color of a fire that has been burning long enough to mean it. He had one sword on his back and another at his hip and the comfortable relationship to both that indicated they were not decorative either.
+He was perhaps thirty, with the kind of body that said he had spent most of his twenties deliberately making it hard to look away: broad through the shoulder, scarred in ways that looked earned rather than decorative, with a jaw that had apparently decided the rest of his face was optional. His coat was the color of old embers — not red, not brown, the exact color of a fire that has been burning long enough to mean it. One sword on his back. Another at his hip. He wore both with the comfort of things that were not decorative.
 
 He did not announce himself. He walked up from the harbor road, looked at Kael where Kael stood at the top of the lighthouse path, and said: "Hit me."
 
@@ -82,7 +82,7 @@ He grinned. It transformed the face entirely — not charming, exactly, but aliv
 
 "Then why—"
 
-"Because you need to know if you can control it." The grin dropped. Underneath it was something more serious, the face of someone who had watched people with power hurt people they loved and had decided to spend his life preventing it where possible. "The instrument arrays gave us a shape of what you put out. Five elements, simultaneous, sustained for — they say three minutes, I don't believe three minutes, I've never seen three minutes, I think the instruments overcounted, but even if it was ninety seconds — do you understand what you are?"
+"Because you need to know if you can control it." The grin dropped. Underneath it was something harder — the face of someone who had watched people with power hurt people they loved, and had decided to spend his life preventing it. "The instrument arrays gave us a shape of what you put out. Five elements, simultaneous, sustained for — they say three minutes, I don't believe three minutes, I've never seen three minutes, I think the instruments overcounted, but even if it was ninety seconds — do you understand what you are?"
 
 "People keep not finishing that sentence."
 
@@ -106,7 +106,7 @@ A beat. "Sirvaine Delloch is one of the finest people I have ever met, and her A
 
 Kael turned, and the third emissary was sitting on the lighthouse steps.
 
-She had been there long enough to have eaten half an apple. She was perhaps Kael's age — nineteen, twenty, the kind of face that was either young or ageless depending on when you caught it — and she was wearing the unremarkable gray of the Atlantean Academy, which was less a uniform than an invitation to conclude that the wearer's appearance was not the point. She had dark eyes that were doing something complicated and notebooks in three visible pockets.
+She had been there long enough to eat half an apple. Perhaps Kael's age — nineteen, twenty, the kind of face that was either young or ageless depending on when you caught it — wearing the unremarkable gray of the Atlantean Academy, which was less a uniform than an invitation to conclude that the wearer's appearance was not the point. Dark eyes doing something complicated. Notebooks in three visible pockets.
 
 She had been there since before Sirvaine arrived. Kael understood this without asking.
 
@@ -120,7 +120,7 @@ She had been there since before Sirvaine arrived. Kael understood this without a
 
 "Probably: hello, here is who I am, here is what I represent, here is why I've come, here are the things I know about you that might be startling, and here is why knowing those things serves your interests and not only mine." She took a bite of the apple. "Atlantean teaches us to lead with data. We are sometimes told this is antisocial."
 
-Kael sat down on the step beside her, because there was something about the directness that was deeply restful after two days of people with agendas wrapped in care. "What do you know about me?"
+Kael sat down on the step beside her. There was something about the directness that was restful after two days of people with agendas wrapped in care. "What do you know about me?"
 
 "Nineteen years old. Born Ashenmere. Elemental sensitivity undetected until four days ago, which is — I genuinely do not know how to explain that. It should not have been undetectable. The sensitivity you're showing is not something that appears suddenly at nineteen, it's something that has been present your entire life and somehow presenting as nothing." She looked at Kael with a focused attention that was not warm but was not cold either — it was interested, which was different. "The only theory I have is suppression. Something was holding it closed. Four days ago the something let go."
 
@@ -142,7 +142,7 @@ Sela wrote something in a notebook.
 
 She looked at Kael.
 
-"The last person in recorded history who channeled all five elements simultaneously was named Malachar Lumenbright," she said. "He was the First Eldrian Luminor, the greatest mage who ever lived, and he became the Dark Lord. His consciousness is currently sealed in the Shadowfen at the root of the Worldtree, and has been for approximately twelve hundred years." A pause. "Every senior mage on this continent is currently aware of what you did four days ago and is asking the same question. I am telling you this not to frighten you, but because I think you are the kind of person who does better with the truth than with the managed version of it."
+"The last person in recorded history who channeled all five elements simultaneously was named Malachar Lumenbright," she said. "He was the First Eldrian Luminor, the greatest mage who ever lived, and he became the Dark Lord. His consciousness is sealed in the Shadowfen at the root of the Worldtree, and has been for twelve hundred years." A pause. "Every senior mage on this continent is aware of what you did four days ago and is asking the same question. I am telling you this not to frighten you, but because I think you do better with the truth than with the managed version of it."
 
 The morning was very quiet. Waves at the base of the cliffs. Gulls.
 
@@ -168,7 +168,9 @@ Sela: who had been there first, and had read Kael's mother's file, and had told 
 
 "No," Kael said.
 
-The word came out with a certainty that surprised even the person saying it. But it was true. This had been home, and it was not home anymore — not because of the storm, not because of the strangeness of the new eyes, but because something had come awake in the chest on that cliff, something that had been speaking in dreams since childhood, a frequency at the edge of sound, and it was not the sound of Ashenmere.
+The word came out with a certainty that surprised even the person saying it. But it was true. This had been home, and it was not home anymore — not because of the storm, not because of the strange new eyes, but because something had come awake in the chest on that cliff. Something that had been calling in dreams since childhood. A frequency at the edge of sound.
+
+It was not the sound of Ashenmere.
 
 Sela studied Kael's face. Something changed in her expression — not quite a smile, more the look of someone whose model of a thing has just been confirmed.
 

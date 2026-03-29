@@ -1,5 +1,5 @@
 ---
-title: "The Forge Below"
+title: "Mount Pyralis"
 chapter: 4
 book: "Chronicles of Arcanea, Book 1: The Three Academies"
 pov: Ash
@@ -7,35 +7,35 @@ gate: Fire
 approximate_word_count: 3600
 ---
 
-# Chapter Four: The Forge Below
+# Chapter Four: Mount Pyralis
 
-The first week at the Forge was an education in how many ways heat could be unpleasant.
+The first week at the Forge taught Ash how many ways heat could hurt that had nothing to do with temperature.
 
-Ash had thought he knew heat. The Ember Quarter's trash fires. The city watch garrison, the moment his hands had stopped being hands and become something he didn't have words for. He'd thought heat was a thing he understood.
+He'd thought he knew heat. The Ember Quarter's trash fires. The garrison, the moment his hands stopped being hands and became something he didn't have words for. He'd thought heat was a thing he understood.
 
-The Forge taught him otherwise on the first morning and kept teaching him every day after.
+The Forge corrected him on the first morning and kept correcting him every day after.
 
-It was not the temperature, specifically. Obsidian corridors ran at temperatures that would have been dangerous to ordinary people, and by the third day Ash had stopped noticing them — his body running warm since the garrison incident, since before that probably, since childhood if he was honest, which he rarely was. The heat that got to him was different. It was the heat of expectation.
+Not the temperature. The obsidian corridors ran hot enough to blister ordinary skin, and by the third day Ash had stopped noticing them — his body running warm since the garrison, since before that probably, since childhood if he was honest, which he rarely was. The heat that got to him was different. Expectation. That ran hotter than magma.
 
-Eighteen new students. Sixteen of them from families with histories here — combat lineages, forge dynasties, the kind of people who said things like *my grandmother opened her third Gate at twelve* as a casual way of establishing conversational dominance. One boy from a merchant family who had manifested fire in a counting house and burned a ledger and three chairs and been brought here more out of civic concern than actual assessment. And Ash.
+Eighteen new students. Sixteen from families with histories here — combat lineages, forge dynasties, the kind of people who said things like *my grandmother opened her third Gate at twelve* as casual conversational dominance. One boy from a merchant family who'd manifested fire in a counting house and burned a ledger and three chairs and been sent here out of civic concern more than assessment. And Ash.
 
-The Ember Quarter. A magistrate's stamp on a conscription paper. A city watch report that described him as *a potential public hazard with demonstrated incendiary capacity.*
+The Ember Quarter. A magistrate's stamp on a conscription paper. A city watch report that called him *a potential public hazard with demonstrated incendiary capacity.*
 
-He'd read his own file on the intake officer's desk while the officer's back was turned. He hadn't been embarrassed by it. He'd been surprised by how thin it was.
+He'd read his own file on the intake officer's desk while the officer's back was turned. Not embarrassed by it. Surprised by how thin it was.
 
-Commander Voss ran morning formation at fifth hour, which was before dawn in any part of the world Ash had ever lived in. She stood at the base of the main stairs in the obsidian hall and watched them assemble with the expression of someone who had already calculated exactly what each of them would struggle with and was waiting for the struggles to manifest on schedule.
+Commander Voss ran morning formation at fifth hour, which was before dawn in any part of the world Ash had lived in. She stood at the base of the main stairs in the obsidian hall and watched them assemble the way you watched a pot you already knew would boil — patience without surprise, calculation without impatience.
 
 "Brenn," she said, on the first morning, before he'd done anything at all. "Move up."
 
 He moved up. The other students watched him shift to the front of the formation with a mix of reactions he read without effort: curiosity from some, calculation from most, contempt from the pair on the far right who'd established within the first six hours that they intended to be contemptuous about everything.
 
-Their names were Cassin and Deran. They were fifteen and sixteen respectively, from one of the old forge dynasties, the kind where fire was a birthright and everyone else was borrowing it. By the end of the first day they'd made their assessment of Ash known through a series of comments delivered just loud enough to be heard, just quiet enough to require plausible deniability. *Quarter-boy. Charity case. Doesn't know which end of a forge hammer is for hitting.*
+Their names were Cassin and Deran. Fifteen and sixteen, from one of the old forge dynasties, the kind where fire was a birthright and everyone else was borrowing it. By the end of the first day they'd made their assessment of Ash known through comments delivered just loud enough to hear, just quiet enough to deny. *Quarter-boy. Charity case. Doesn't know which end of a forge hammer is for hitting.*
 
-He'd said nothing, which was the right call. Commander Voss had heard them. She hadn't intervened. She'd watched to see what he would do, and what he did was nothing, and after a day she'd given him a single short nod that he was fairly sure counted as approval.
+He'd said nothing. The right call. Voss had heard them. She hadn't intervened — she'd watched to see what he would do, and what he did was nothing, and after a day she'd given him a single short nod.
 
-He didn't do anything with the approval. It was useful information, not a relationship.
+He filed the nod. Useful information. Not a relationship.
 
-The formal training was less interesting than he'd expected and harder than he'd feared. The Forge didn't teach fire as projection — not the blunt outward throwing of it, the thing he'd done without thinking in the garrison. That, Voss told them during the second morning session, standing at the center of the main arena with the lava lake visible through the iron lattice below, was the least interesting application of fire affinity and the one most likely to get them and everyone around them killed.
+The formal training was less interesting than he'd expected and harder than he'd feared. The Forge didn't teach fire as projection — not the blunt outward throw, the thing he'd done without thinking in the garrison. That, Voss told them during the second morning session, standing at the center of the main arena with the lava lake visible through the lattice below, was the least interesting application of fire affinity and the one most likely to kill everyone in the room including themselves.
 
 "Fire projects outward," she said. "That's its nature. You can't change that. What you can change is the precision. The intention. The question is never *can I throw fire* — you already can. The question is *can I throw it exactly here and not one inch to either side.*"
 
@@ -47,7 +47,7 @@ Ash practiced the sphere exercise for three hours every morning. He was worse at
 
 He was better at it than he should have been for someone with no training, which Voss noticed and didn't comment on and filed somewhere. He filed the fact that she'd filed it.
 
-What he didn't tell anyone, and what he didn't fully understand himself: holding fire still felt like relief. Like he'd been carrying something at arm's length for three years and someone had finally told him he could put it down, that it wouldn't burn him if he stopped tensing against it.
+What he didn't tell anyone — what he didn't fully understand himself — was that holding fire still felt like relief. Like he'd been carrying something at arm's length for three years and someone had finally told him he could set it down. It wouldn't burn him if he stopped tensing against it.
 
 He practiced.
 
@@ -57,7 +57,7 @@ On the fourth day, the assignment: orientation descent.
 
 Mandatory for all first-weeks. Every new student went down to the lower levels of the Forge — the training halls and workshops and, at the bottom, the Crucible — as orientation. You didn't enter the Crucible in first week. You stood outside it and understood what was coming.
 
-Voss led them down. The corridors narrowed as they descended, the magma channels in the walls running higher, the heat climbing from uncomfortable to extraordinary. The other students had varying responses. Cassin and Deran performed indifference with the practiced ease of people who'd been told they weren't supposed to be impressed and had internalized the instruction. Three of the forge-family students moved with obvious familiarity, like they'd visited before, which they probably had. The merchant's son turned grey by the third landing and was breathing through his mouth with the concentration of someone solving a math problem.
+Voss led them down. The corridors narrowed, the magma channels in the walls running higher, the heat climbing from uncomfortable to extraordinary. Ash catalogued responses. Cassin and Deran performed indifference — told they weren't supposed to be impressed, and they'd internalized the instruction. Three forge-family students moved with obvious familiarity. The merchant's son turned grey by the third landing and was breathing through his mouth with the concentration of someone counting backward from a hundred.
 
 Ash felt the heat as a kind of welcome. His body ran into it the way water found downhill.
 
@@ -67,11 +67,11 @@ He stopped.
 
 He'd seen working forges. The Ember Quarter had a metal district, furnaces running round-the-clock for tools and parts and the city's constant hunger for cheap ironwork. He'd slept near those forges in the worst winters, close enough to absorb their heat without touching, close enough to watch what the smiths did when they thought no one was looking.
 
-This was not a working forge in that sense. The scale was different — the furnaces built into the mountain itself, drawing directly from the volcanic heat below, so large that individual structures were dwarfed by them. But it wasn't the size that stopped him. It was the work hanging on the walls.
+This was not a working forge in that sense. The scale was different — furnaces built into the mountain itself, drawing directly from the volcanic heat below, so large that individual structures were dwarfed by them. But the size wasn't what stopped him. It was the work hanging on the walls.
 
-Armor, yes. Weapons, yes. But also: shapes he didn't have names for. Constructions that appeared to be architectural, like pieces of larger structures. Forms that seemed to have no practical purpose at all except to be beautiful — elaborate spiraling things made of layered metals, colors achieved through heat treatment that Ash had no technical language for yet, blue-black grades into copper-rose into a silver that held light differently than silver should.
+Armor, yes. Weapons, yes. But also: shapes he had no names for. Constructions that looked architectural, like pieces of larger structures. And forms with no practical purpose at all except to exist — elaborate spiraling things made of layered metals, blue-black grading into copper-rose into a silver that held light differently than silver should.
 
-He didn't move for longer than he'd have liked. He was aware of it and couldn't stop it.
+He didn't move. He was aware he wasn't moving and couldn't make himself start.
 
 Voss, beside him without him noticing her approach: "Forge arts. Not combat. The upper training halls are for weapons work. Down here is where students who find other purposes for fire come to work." She spoke quietly, for him alone. "It's an elective track. Third-semester minimum. Some students never come here at all."
 
@@ -93,13 +93,15 @@ The merchant's son had several. Two of the forge-family students had phrased ass
 
 He was looking at the wall to the right of the Crucible door.
 
-The rock there was different. It looked the same — obsidian, like everything else in the lower Forge — but the way the heat moved across it was wrong. Heat moved by convection, rising, following its own logic. Against this section of wall it moved *sideways*, drawn toward something, as if the rock were pulling at it.
+The rock there was different. It looked the same — obsidian, like everything else in the lower Forge — but the way the heat moved across it was wrong. Heat moved by convection, rising, following its own logic. Against this section of wall it moved *sideways*, drawn toward something, the way iron filings moved toward a lodestone.
 
-He put his hand near the wall without touching it and felt — not heat. Something that used heat the way hands used water, as a medium, as a way of reaching.
+He put his hand near the wall without touching it.
 
-Something old. Something that had been down here a very long time, reaching very slowly, reaching as if it hadn't needed to rush because it had nowhere else to be.
+Not heat. Something that *used* heat the way hands used water — as a medium. As a way of reaching. The air between his palm and the rock tasted different: copper and old ash and something underneath that was almost alive, almost breathing, the smell of a banked fire that had been burning since before the Forge existed. His skin prickled from wrist to shoulder.
 
-He pulled his hand back.
+Something old. Something that had been down here a very long time, reaching slowly, reaching the way roots reached — no rush, no urgency, just the blind patient certainty that what it wanted was close enough to wait for.
+
+He pulled his hand back. His fingers tingled for three breaths after.
 
 He thought of the Forge's founding. Of Draconia and Draconis building this place into the mountain. Of the mountain itself, which had existed before the Forge, which had been something before the Forge was here to name it.
 
@@ -153,15 +155,15 @@ He held it for ten seconds. Extinguished it.
 
 "There," he said.
 
-Cassin looked at the empty palm. Something crossed his face that wasn't contempt — something with more information in it than contempt.
+Cassin looked at the empty palm. Something moved across his face that wasn't contempt. Something with more data in it.
 
 "Street fire," he said. "Uncontrolled origin. Anyone can hold a marble for ten seconds with basic talent."
 
 "Yes," Ash agreed.
 
-He walked past them up the stairs to the morning formation. He heard Cassin say something behind him, directed at the others, but not at him specifically. He filed that distinction.
+He walked past them. Cassin said something behind him — directed at the others, not at him. He filed the distinction.
 
-The fourth student — the neutral one — caught up with him on the third step. She was fourteen, Foundation and Fire dual-Gate, which was unusual. Her name was Oryn.
+The fourth student caught up with him on the third step. Fourteen, Foundation and Fire dual-Gate — unusual. Her name was Oryn. She walked like someone who took notes on everything and stored them for later.
 
 "He was hoping you'd lose your temper," she said quietly.
 
@@ -171,9 +173,9 @@ The fourth student — the neutral one — caught up with him on the third step.
 
 He hadn't thought of it as a call. It had been the honest answer. He'd been able to hold a marble-sized sphere for ten seconds; he'd held a marble-sized sphere for ten seconds. Making it smaller to seem less threatening or larger to make a point would both have been lies, and lies in his position were expensive.
 
-He didn't say any of this. He nodded and went to formation.
+He didn't say any of this. Nodded. Went to formation.
 
-By the end of the week, Oryn had started saving him a spot in morning formation. He wasn't sure what to do with that either. He filed it in the same category as Voss's nod: useful information, not a relationship.
+By the end of the week, Oryn had started saving him a spot in morning formation. He filed it in the same category as Voss's nod: useful information, not a relationship.
 
 Not yet.
 
@@ -183,21 +185,23 @@ He went back on the seventh night.
 
 Fifth hour, when the corridors were empty of students and the night-watch shift changed over and there was a twenty-minute gap in the rotation that he'd mapped by listening. He carried nothing. He went down alone.
 
-The sixth level smelled different at night. More honest — the artificial arrangement of smells that came with sixty students and cooking fires and oil lamps stripped away, leaving only volcanic rock and deep heat and something else. Old. Dense. The smell of something that had been a long time in a sealed place.
+The sixth level smelled different at night. Honest. The artificial arrangement of smells that came with sixty students and cooking fires and oil lamps stripped away, leaving only volcanic rock and deep heat and something else — old, dense, the smell of a sealed kiln that had been cooling for centuries and hadn't finished yet.
 
 He stood before the right-hand wall, next to the Crucible door, and put his palm flat against the obsidian.
 
-The pull was immediate. Not toward him — he'd been wrong about the direction. It was pulling *at* his fire. At the heat in him, the affinity, the thing he'd carried locked in his chest since he was small. It reached for that specific quality the way a hand reached for something it had been looking for.
+The pull was immediate.
+
+Not toward him — he'd been wrong about the direction. It was pulling at his fire. At the heat in him, the affinity, the thing he'd carried locked in his chest since he was small. It reached for that specific quality the way a hand reached for something it recognized.
 
 He didn't pull back.
 
-He let it touch the edge of his fire. Just the edge. Just enough contact to feel what was touching.
+He let it touch the edge of his fire. Just the edge. Just enough contact to feel what was touching him.
 
-It was not malevolent. That was the first thing. He'd braced for menace and found instead something that reminded him, strangely, of the shapes in the workshop above. Layered. Complex. Something that had taken a long time to become what it was. Something that had been made with care by someone who understood fire as more than destruction.
+Not malevolent. That was the first thing. He'd braced for menace and found instead something that reminded him, strangely, of the shapes in the workshop above. Layered. Complex. Something that had taken a long time to become what it was. He could feel textures in it — not physical textures, but the heat-equivalent: smooth planes and folded edges and deep pockets where the warmth was oldest and densest, the way old metalwork held the memory of every time it had been heated and cooled.
 
-It was also sealed. He could feel the seal from the inside, now — the lines of it running through the rock, old binding-work, layers of it, the kind of work that took generations to build up to the thickness it had reached. Whatever was here, it had been sealed intentionally and the sealing had been maintained.
+It was also sealed. He could feel the seal from the inside now — lines of binding-work running through the rock, layer upon layer, the kind of work that took generations to build up to this thickness. Whatever was here had been sealed deliberately, and the sealing had been maintained.
 
-He pulled his hand back. His fire settled.
+He pulled his hand back. His fire settled. The obsidian was warm where his palm had been, fading slowly, a handprint of heat that would be gone in minutes.
 
 He stood in the dark and thought about what he'd felt: the thing beneath the Forge that reached like something that had been waiting for something specific, and him, standing here with fire in his hands, having apparently been the specific thing.
 
@@ -223,10 +227,10 @@ He thought: *I have been called what I destroy my whole life.*
 
 He thought: *I want to see what else.*
 
-Somewhere far below the mountain, something old and sealed breathed slow against the rock and waited with the particular patience of something that had learned there was no point rushing.
+Somewhere far below, the sealed thing breathed slow against the rock. Patient. It had been patient longer than the Forge had existed. It could wait longer still.
 
-And Ash, in the bunk room above, closed his eyes and felt — for the first time since the garrison — like the thing he was carrying might have a use he hadn't been shown yet.
+Ash closed his eyes. For the first time since the garrison, the fire in his chest felt like something other than a weapon.
 
 He slept.
 
-In his dream, he was in the workshop, and every shape on the wall was something he had made.
+In his dream, he was in the workshop. Every shape on the wall was something he had made.

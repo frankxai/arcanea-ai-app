@@ -1,5 +1,5 @@
 ---
-title: "The First Spark"
+title: "Ironhold"
 chapter: 1
 book: "Chronicles of Arcanea, Book 1: The Three Academies"
 pov: Kael
@@ -7,7 +7,7 @@ gate: Foundation
 approximate_word_count: 3800
 ---
 
-# Chapter One: The First Spark
+# Chapter One: Ironhold
 
 The stone moved before he touched it.
 
@@ -15,11 +15,11 @@ Kael had his hammer raised, ready to drive the wedge into the fault line he'd fo
 
 The stone moved again.
 
-Not the mountain. Not a rockslide. This block, specifically — the one he'd been hired to split for Master Aldric's hearth surround — vibrating at a frequency he felt in his molars and behind his eyes. He pressed his palm against it and snatched the hand back immediately. Hot. Not fire-hot. Something older, deeper, like the heat at the center of things.
+Not the mountain. Not a rockslide. This block — the one he'd been hired to split for Master Aldric's hearth surround — vibrating at a frequency he felt in his molars and behind his eyes. He pressed his palm against it and snatched the hand back. Hot. Not fire-hot. Something older, deeper, like the heat at the center of things.
 
 "Kael." His father's voice from the workshop below. "I need you down here before dark."
 
-He stared at the stone a moment longer. It had gone still. He told himself the trembling had been something settling, some underground water moving, the ordinary business of mountains. He told himself this because the alternative — that something had come from *him*, from the rage he'd been swallowing all day since Master Aldric called his work rough and graceless and good enough only for field walls — was a thought he didn't know what to do with.
+He stared at the stone. It had gone still. He told himself the trembling had been something settling, some underground water moving, the ordinary business of mountains. He told himself this because the alternative — that something had come from *him*, from the rage he'd been swallowing all day since Master Aldric called his work rough and graceless and good enough only for field walls — was a thought he didn't know what to do with.
 
 He picked up his hammer and went down.
 
@@ -37,7 +37,7 @@ He wasn't angry anymore. The anger had burned through during the walk and left s
 
 He was nineteen years old and he was very tired of already knowing what he was.
 
-The stone wall began to hum.
+The wall began to hum.
 
 Not the vibration from before — that had been subtle, possible to explain away. This was audible. A resonance moving through the wall under his hands, through the ground under his boots, up through his spine. Every stone in the wall. Every stone in the workshop foundation. He stood up and it followed him, the hum intensifying, and he could feel it now in his chest like a second heartbeat that didn't know its own rhythm yet.
 
@@ -61,13 +61,17 @@ Because the workshop wall was only the beginning.
 
 Six walls cracked that night. The old mill foundation developed three new fissures. The stone path running through the center of Stonethatch heaved up in a ragged line as if something were pushing from below. Kael stood in the middle of it, in the center of the village, and watched forty-three people come out of their homes with lanterns and looks on their faces that he would remember for the rest of his life.
 
+Not anger. Not yet. Something worse.
+
+*Recognition.*
+
 His father came last. Stood in the doorway of their home looking at the cracked lane and the tilting walls and then at his son, and Kael waited for him to say something that made sense of it. To name it. To tell him what he was supposed to do.
 
 His father said: "Go inside."
 
-He meant it as protection. Kael understood that, later. At the time it felt like the door closing on a room he'd never been allowed to leave anyway.
+He meant it as protection. Kael understood that, later. At the time it felt like the door closing on a room he'd never been allowed to leave.
 
-He didn't go inside. He sat on the cracked lane until well past midnight, when the woman arrived.
+He sat on the cracked lane until well past midnight, when the woman arrived.
 
 ---
 
@@ -91,19 +95,21 @@ She said all of this the way she might explain a weather pattern. No alarm in he
 
 "What happens if I don't get training?" he asked.
 
-She paused just long enough that he knew the answer wasn't good. "The Gate-touched who don't learn to manage their affinity become Unraveled," she said. "It's a slow process, usually. The energy keeps pushing through you, looking for release. Your dreams start affecting the physical world. Then your waking moments. The stone around you fractures. Walls fall. Eventually—" She stopped. "Eventually you become a catastrophe that moves through the world, and then you stop."
+She paused. Just long enough.
 
-Kael looked at the cracked lane under his hands.
+"The Gate-touched who don't learn to manage their affinity become Unraveled," she said. "It's a slow process, usually. The energy keeps pushing through you, looking for release. Your dreams start affecting the physical world. Then your waking moments. The stone around you fractures. Walls fall. Eventually—" She stopped. "Eventually you become a catastrophe that moves through the world, and then you stop."
+
+Kael looked at the cracked lane under his hands. Cold stone. His knees ached where they pressed against it, and the ache felt honest — the only honest thing left in the night.
 
 "The Luminary can teach you to hear that voice without letting it come through unchecked," Sera said. "That's what the Academies do. Not make you powerful. Make you safe to be near yourself."
 
-He laughed. It came out strange — not funny, just pressure releasing.
+He laughed. It came out wrong — not funny, just pressure releasing.
 
 "Safe to be near myself," he repeated.
 
 "It's a reasonable first goal."
 
-Behind him, he heard his father step out of the house. He heard Sera turn and say, quietly, that she needed to speak with his parents, that there were arrangements to be made, papers to review, that the Luminary had provisions for families in Kael's situation. He didn't listen to the conversation. He looked up at the mountain.
+Behind him, he heard his father step out of the house. He heard Sera turn and say, quietly, that she needed to speak with his parents, that there were arrangements to be made, papers to review, that the Luminary had provisions for families in Kael's situation. He didn't listen. He looked up at the mountain.
 
 The Crystalpeak. He'd heard that on clear days you could see it from the high passes — a crystalline structure catching light above the cloud layer, throwing aurora colors across the sky like a permanent dawn. He'd never been high enough to see it. He'd never had a reason.
 
@@ -127,7 +133,7 @@ He packed light. Tools, mostly — force of habit. Three changes of clothes. A s
 
 "When you've learned what you need to learn, come back."
 
-This was the most his father had said about it. Kael turned and looked at him — the same angular face he saw in his own reflection, the same shoulders built for carrying stone, the eyes that never quite landed anywhere. He felt the complicated weight of being this man's son: everything given, nothing easy, love expressed through kept roofs and steady work and absolutely no acknowledgment that any of it was love.
+This was the most his father had said about it. Kael turned and looked at him — the same angular face he saw in his own reflection, the same shoulders built for carrying stone, the eyes that never quite landed anywhere. He felt the whole complicated mass of being this man's son: everything given, nothing easy, love expressed through kept roofs and steady work and absolutely no acknowledgment that any of it was love.
 
 "I'll come back," Kael said.
 
@@ -143,20 +149,22 @@ He'd expected to be prepared for it. He'd heard descriptions his whole life, and
 
 He was not prepared.
 
-It rose from the cloud layer like something that had always been there and the clouds were the recent addition. Crystal spires — not one but dozens, different heights and angles, catching the late sun and splitting it into aurora colors that moved and shifted across the snow and the cliff faces below. The light was not reflected but transformed. What entered as ordinary afternoon sun left as something older and stranger, colors he didn't have names for, colors that felt like they were saying something if he could only hear the frequency.
+It rose from the cloud layer like something that had always been there and the clouds were the recent addition. Crystal spires — not one but dozens, different heights and angles, catching the late sun and splitting it into aurora colors that moved and shifted across the snow and the cliff faces below. The light was not reflected but *transformed*. What entered as ordinary afternoon sun left as something older and stranger, colors he didn't have names for, colors that pressed against his skin like warm air from an open door.
 
-He stood on the cliff path and looked at it for a very long time.
+He stopped walking. His pack straps cut his shoulders. Wind moved across the cliff face and tasted of cold metal and altitude and something faintly sweet he couldn't place — crystal dust, maybe, or the particular chemistry of air that had passed through whatever those spires were made of. Below, the clouds moved in slow rotation around the mountain's base, and the aurora light played across them in bands of violet and green and a gold so deep it was nearly red.
 
-He'd thought, somewhere in the back of his mind, that he was going to a school. That this would be something like a school, with teachers and schedules and the daily small indignities of learning things you hadn't chosen to learn.
+He stood there a long time. The cold didn't touch him. He forgot to breathe, remembered, breathed.
 
-The Crystalpeak was not a school. It was a statement.
+He'd thought, somewhere in the back of his mind, that he was going to a school. Teachers and schedules and the daily small indignities of learning things you hadn't chosen to learn.
+
+The Crystalpeak was not a school.
 
 Whatever was up there, it had been built by people who believed completely in what they were doing. People who looked at a mountain and thought: not a barrier. A foundation. And who put something extraordinary on top of it.
 
-Kael shifted his pack and looked up at the light refracting through the crystal spires, aurora colors playing across the clouds below, and felt — for the first time since the walls cracked — something that was not dread.
+Kael shifted his pack. The straps bit his shoulders and the cold pressed against his face and neither thing mattered because up there, above the clouds, someone had built light into stone and it was still burning.
 
-He started up the last stretch of path, the mountain cold around him, the distant impossible light above, and behind him Stonethatch disappeared into the valley shadow, smaller than he'd ever seen it, his whole life suddenly rearranged into the category of *before*.
+He started up the last stretch of path. Behind him, Stonethatch disappeared into the valley shadow, smaller than he'd ever seen it, his whole life rearranged into the category of *before*.
 
-He didn't know what came next. That was the first genuinely new feeling he'd had in years.
+He didn't know what came next.
 
-He kept climbing.
+The not-knowing felt clean.

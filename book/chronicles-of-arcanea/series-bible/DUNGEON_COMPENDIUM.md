@@ -390,3 +390,268 @@ The Guild does not discuss its eighteenth Core attempt, which is currently in th
 *"The Dungeons will be cleansed. Not today. Not by me. But someone will walk into the dark and bring the light back out. I've seen enough brave fools to believe it."*
 
 -- Brennan Ashmark, Founder of the Dungeon Delvers Guild, in his final address to the Guild
+
+---
+
+## Part VI: Dungeon Profiles — Deep Documentation
+
+*The following entries expand the summary profiles in Part IV into full operational intelligence documents. These are compiled from Guild survey records, survivor debriefs, Athenaeum magical resonance scans, and — in several cases — the journals of people who did not return, recovered from Dungeon surface floors by retrieval teams.*
+
+---
+
+### Profile 1: The Hollow Root — Foundation Gate Dungeon
+
+**Full Designation:** The Hollow Root, formerly the Temple of Lyssandria's Foundation
+**Gate Corruption:** Foundation (stability, survival, belonging) → Quicksand (dissolution, collapse, the ground betraying you)
+**Estimated Current Depth:** Seven floors confirmed. Survey teams report acoustic anomalies below Floor 7 suggesting an eighth floor in formation.
+**Temperature:** Increases with depth. Surface floors are cool, approximately 12°C. By Floor 5, the ambient temperature reaches 28°C. Floor 7 is measured at 38°C. Cinereth the Dragon sleeps somewhere below, and her dream-fire heats the Dungeon's lower foundations in ways the corruption cannot fully control.
+
+**Floor-by-Floor Breakdown:**
+
+**Floor 1 — The Antechamber of Roots.**
+A natural cave system, or what appears to be one. The walls are packed earth threaded with root structures from the Ironwood Forest above. The roots are alive. They move — not quickly enough to see, but quickly enough to notice. A rest stop that was clear when you sat down will have root tendrils crossing it when you stand. The air smells of loam and something sweeter underneath, like rot that hasn't started yet. Corrupted elementals on this floor are Rootlings: knee-high figures of compacted earth and fiber that emerge from the walls and attempt to trip, entangle, and drag. Individually manageable. In groups of eight or more, which is their preferred configuration, they are a genuine threat to unprepared teams. The floor's real purpose is calibration. The Dungeon is measuring your weight, your movement patterns, the way you distribute force when you walk. It is learning how you stand so it can later teach the ground to make you fall.
+
+**Floor 2 — The Fossil Gallery.**
+The cave system opens into a long, low-ceilinged corridor whose walls are embedded with what appear to be fossils — bones, shells, leaf-impressions in stone. They are not real fossils. They are memory-fossils: impressions left by the temple's original supplicants, pilgrims who walked these halls when they were sacred and the walls recorded their passage. The corruption has weaponized the recordings. Challengers who touch the fossil-impressions experience the memory directly — the pilgrim's hope, their fear, their prayer — and the Dungeon uses the emotional resonance to identify which feelings the challenger is most vulnerable to. The elementals here are Memory-Stones: boulder-sized formations that roll slowly through the corridor, herding challengers toward fossil clusters that contain the most psychologically effective memories. A standard Guild technique is to traverse this floor without touching the walls. This is significantly harder than it sounds. The corridor is narrow, the ceiling is low, and the Memory-Stones do not leave much room.
+
+**Floor 3 — The Sinking Hall.**
+Described in summary in Part IV. Additional detail from the most recent deep survey (four years ago, team of five Delvers, one casualty): the gravity-shapers on this floor have evolved. Earlier survey records describe them as ambush predators — they lurk beneath the stone floor and strike when a challenger stands still. The current generation coordinates. During the most recent survey, four gravity-shapers positioned themselves at the cardinal points around the team and compressed gravity simultaneously, creating a localized zone of approximately 6x normal weight in which all five team members were pinned. The team's Earth-mage broke the compression by channeling Foundation energy into the floor, which is the correct counter but carries a specific risk in this Dungeon: using Foundation energy feeds the corruption. The mage reported that after the channel, the floor felt more alive beneath her feet. More aware. She had taught it something.
+
+**Floor 4 — The Ironhold.**
+A chamber constructed from black iron — walls, floor, ceiling — that predates the temple. Geological surveys suggest the iron structure was here before Lyssandria built the Foundation Temple above it, which raises questions that the Athenaeum has not answered. The floor's challenge is weight: the iron chamber amplifies gravitational pull to 3x baseline, and the corrupted elementals are Ironborn — humanoid figures of black metal that move at normal speed in the enhanced gravity while challengers struggle to lift their feet. The Ironhold is where the Dungeon first became personal during Kael's trial — the chamber projected the sound of his childhood home, the Ironhold district of Cinderwall, and the walls displayed his memories of it. Not the good memories. The memories of inadequacy. The sound of his mother's voice telling him to be careful, which the Dungeon replayed until the word "careful" meant "you are not strong enough." Kael broke through the floor by refusing the memory's frame. He was strong enough. The Dungeon had to concede the point. It did not concede gracefully — the Ironborn attacked in force during his exit. He carries a scar on his left forearm from the engagement.
+
+**Floor 5 — The Root Cathedral.**
+Described in summary. Additional intelligence: the Rootwalkers on this floor have been documented communicating with each other through subsurface root networks — a form of coordination that earlier survey teams did not observe. The current hypothesis is that the Dungeon's learning process has reached a stage where its minions share tactical information between encounters. This is an escalation. Guild tactical advisors have flagged the Root Cathedral as the floor most likely to produce a team-loss event in the next five years if current trends continue. The Cathedral's central feature — a massive root structure that descends from the ceiling like a pillar — has been observed pulsing. The pulse is rhythmic, approximately once per minute, and corresponds to Lyssandria's Foundation frequency (174 Hz) inverted. It is the heartbeat of the corruption.
+
+**Floor 6 — The Grave Soil.**
+A flat, featureless plain of dark soil that extends in all directions beyond the limits of torchlight. There are no walls. There are no elementals. There is only the soil and the sound of digging — coming from below, constant, unhurried, getting louder the longer you stay. The challenge is navigation: there is no visible exit. The floor must be crossed, but the soil is uniform and there are no landmarks. Challengers who walk in circles (which the Dungeon encourages through subtle gravitational manipulation) hear the digging get closer. The implication — that something below the soil is digging toward you — is the trial. You must walk forward, in a straight line, by dead reckoning, trusting your own sense of direction against a Dungeon that is specifically designed to erode trust in foundations. The exit appears when you have walked far enough in one direction without turning. The distance varies per challenger. The Dungeon is measuring conviction.
+
+**Floor 7 — The Weight Room.**
+Described in summary. The gravity escalation on this floor has been measured at 11x baseline at the corridor's terminus. The human skeleton begins to fracture under sustained exposure to loads above 8x. Challengers who reach the door do so with broken feet, compressed vertebrae, and hemorrhaging in the lower extremities. The door is at the point where the body fails. The trial is continuing past that point. Medical teams stationed at the Dungeon entrance have documented seventeen challengers who reached the door. Eleven made it through. Six collapsed within arm's reach and had to be extracted by retrieval teams, a process that itself carries significant risk.
+
+**The Core — The Cracked Sphere.**
+A stone sphere, approximately two meters in diameter, hovering in a cavern of absolute geological silence — no tectonic vibration, no groundwater movement, no subsurface sound of any kind. The silence is wrong. The earth is never this quiet. The sphere is covered in cracks that glow with Malachar's amber light, and from the cracks comes his voice — calm, paternal, disappointed. It speaks in the voice of your parents, your teachers, the people whose approval you sought. It tells you that your foundations were always compromised. That the things you built were built on sand. That collapse is not a risk but a certainty, already in motion, and everything you love will fall because you were never solid enough to hold it up.
+
+The Core's defense is gravity itself. Within ten meters of the sphere, gravity increases to approximately 15x baseline — enough to kill an unprotected human in minutes. The sphere rotates slowly, and the gravitational field rotates with it, creating zones of varying intensity that shift unpredictably. Approaching the Core requires either extraordinary Earth-element mastery (to create a counter-field) or extraordinary physical resilience (to survive long enough to reach it). No one has done either for long enough to make contact with the sphere's surface.
+
+Guild Master Thessaly Vane has studied this Core for seven years. Her theory — unshared with anyone, recorded only in a sealed document at the Threshold — involves using the Core's own gravitational field against it, turning the sphere's rotation into a vulnerability rather than a defense. She has not attempted it. She is waiting for something. She has not said what.
+
+**Notable Challengers:**
+- **Brennan Ashmark** (Founder): Reached Floor 5, retrieved a Foundation-era surveying instrument from the Root Cathedral. His journal notes that the Cathedral's root-pillar "noticed" him and that he left faster than he intended.
+- **The Ashford Twins** (active Delvers): Reached Floor 6. Kira walked the Grave Soil in a straight line for eleven hours. Daven walked beside her. Neither turned. They exited within three minutes of each other from different points on the floor's perimeter, which should not be geometrically possible. They have not attempted Floor 7.
+- **Kael** (main narrative): Reached Floor 4. The Ironhold memory trial. He was fourteen. The Guild does not officially acknowledge his run because he entered without Guild sanction, which is a violation of the Delver's Code that Guild Master Vane has elected to address through a private conversation rather than formal discipline. The content of that conversation has not been disclosed.
+
+---
+
+### Profile 2: The Weeping Halls — Flow Gate Dungeon
+
+**Full Designation:** The Weeping Halls, formerly the Temple of Leyla's Flow
+**Gate Corruption:** Flow (creativity, emotion, adaptability) → Drowning (overwhelm, emotional paralysis, the current that pulls you under)
+**Estimated Current Depth:** Seven floors confirmed, with evidence of tidal variation — the Dungeon's lower floors appear to expand and contract with the ocean tides, suggesting the corruption has integrated itself into the natural tidal system of the Sapphire coastline.
+**Water Temperature:** Warm throughout. Surface floors maintain approximately 22°C. Deeper floors rise to 28-30°C. The warmth is deliberate. Cold water triggers survival instincts. Warm water triggers comfort. Comfort is more dangerous in the Weeping Halls than any monster.
+
+**Floor-by-Floor Breakdown:**
+
+**Floor 1 — The Grotto of Welcome.**
+A beautiful cave of blue-white limestone, knee-deep in clear, warm water, illuminated by bioluminescent algae that paint the walls in shifting patterns of soft green and pale gold. The sound of water — dripping, flowing, lapping against stone — is constant and musical. It is the most beautiful room in any Dungeon. It is a trap at the sensory level: the sound, the warmth, the light are calibrated to lower cortisol and reduce threat-vigilance. Teams that spend more than thirty minutes on this floor begin to relax. Teams that relax begin to talk. When they talk, the water listens. There are no visible elementals on Floor 1. The water itself is the elemental — a single, distributed, patient intelligence that occupies every surface and records every word, every emotional resonance, every vulnerability disclosed. Everything you say on Floor 1, the Dungeon knows on Floor 4.
+
+**Floor 2 — The Mirror Pools.**
+Described in summary. Additional intelligence: the Memory-Drowners have developed a new tactic in the last decade. Rather than pulling challengers under by force, they now create localized warm currents that guide challengers toward specific pools — the pools containing their worst memories. The guidance is subtle: a slightly warmer current on the left ankle, drawing the foot in that direction. Challengers do not notice they are being steered until they are standing over the pool that contains the memory the Dungeon has selected for them. The selection is precise. It is always the memory that the challenger has spent the most energy suppressing. The Dungeon knows this because the suppression itself creates a signature that the water reads — a kind of emotional scar tissue that is more visible, not less, for the effort spent hiding it.
+
+**Floor 3 — The Undertow.**
+A long, flooded corridor where the water rises from knee-deep to chest-deep over approximately 200 meters. The current is gentle but persistent, flowing in the direction you came from. Walking forward requires constant effort against the pull. The effort is the trial's surface layer — the real trial is the undertow's emotional component. The current carries feelings: sadness, nostalgia, the specific ache of missing something you cannot name. The feelings intensify the deeper the water gets. By the corridor's midpoint, challengers are wading through chest-deep water while experiencing grief for things they did not know they had lost. The corrupted elementals here are Rip-Currents — invisible forces that seize a challenger's legs and drag them backward, toward the floor entrance, toward the beautiful grotto, toward the warmth and the safety and the giving up. Resisting the Rip-Currents requires not strength but the specific emotional capacity to feel grief and keep moving. Many people cannot do both at the same time.
+
+**Floor 4 — The Sympathy Chamber.**
+Described in summary. This is the floor the Guild fears most in the Weeping Halls — not for its lethality (Floor 7 kills more) but for its precision. The water-figure that sits in the chair knows what you said on Floor 1. It knows the memories the Mirror Pools surfaced on Floor 2. It knows the grief the Undertow dragged out of you on Floor 3. It has been assembling a psychological profile since you entered, and on Floor 4, it uses it.
+
+The figure takes the form of whoever you miss most. The impersonation is perfect — voice, mannerisms, the specific way they held their shoulders, the words they would use. It says the things you have been waiting to hear. If your mother died before she could tell you she was proud of you, the figure says it. If your partner left and you never understood why, the figure explains. If your friend died and the last conversation between you was an argument, the figure apologizes.
+
+It is patient. It will talk for as long as you are willing to listen. The longest documented Sympathy Chamber session lasted eleven days. The challenger was found by a retrieval team, sitting in the chair, emaciated, eyes open, listening to a water-figure shaped like his dead son tell him it wasn't his fault. He survived the retrieval. He did not speak for four months afterward.
+
+**Floor 5 — The Current.**
+An open underwater chamber — the first fully submerged floor. Challengers must swim or drown. The chamber is criss-crossed with currents that shift direction every few minutes, creating a constantly changing navigational puzzle. The currents are warm, strong, and — critically — each one carries an emotional charge. Swim through a current of joy and you feel euphoric, reckless, inclined to take risks. Swim through a current of fear and you panic, lose coordination, breathe too fast. The skill required is emotional navigation: choosing which currents to enter and which to avoid based on what you can handle, while also making physical progress toward the exit. Challengers who cannot swim are given a choice on this floor: turn back, or drown. The Dungeon does not provide alternatives. Water does not negotiate.
+
+**Floor 6 — The Still Room.**
+A dry chamber — the only dry space below Floor 1. The silence after five floors of constant water-sound is disorienting. The room contains nothing: bare stone walls, a flat floor, a ceiling you can touch if you reach up. No water. No elementals. No trial, apparently. The door on the far side is unlocked. Challengers walk through.
+
+This is the most dangerous floor in the Weeping Halls.
+
+The Still Room removes the water's influence — and with it, every emotion the water has been amplifying since Floor 1. Challengers who have spent hours or days being manipulated by emotional currents suddenly feel nothing. The contrast is devastating. After the intensity of the previous floors, the absence of feeling is experienced not as relief but as emptiness — a void where emotion used to be. Challengers report that the Still Room makes them feel dead. Not dying. Already dead. And the door on the far side leads back to the water, which means choosing to feel again, knowing that the feeling will be used against you.
+
+Some challengers cannot make that choice. They stay in the Still Room. They prefer the nothing.
+
+**Floor 7 — The Flood.**
+Described in summary. The sedative in the water has been analyzed by Athenaeum alchemists and identified as a naturally occurring compound found in deep-ocean thermal vents — a substance that induces profound muscular relaxation and a sensation of warmth that mimics the experience of being held. The compound enters through the skin and cannot be blocked by conventional alchemical preparation. The only defense is awareness: knowing that the desire to stop swimming is chemical, not personal. This defense is less effective than it sounds. Knowing that a feeling is artificial does not make the feeling less real.
+
+**The Core — The Weeping Stone.**
+A tear-shaped stone, approximately the size of a human head, suspended at the center of a chamber filled with warm, ankle-deep water. The stone weeps continuously — a slow, constant flow of dark water from a crack that runs its length. The water pools around the Core and flows outward, warming as it goes.
+
+The Core does not attack. It does not threaten. It sympathizes. In a voice that sounds like warm water, like rain on a roof at night, like the sound of someone breathing beside you in the dark, it tells you how tired you must be. How much you've carried. How unfair it has been. It tells you that you have done enough. That nobody could ask more of you. That rest is not weakness — rest is earned, and you have earned it. Just sit down. Just stop. The water is warm. You can stop fighting now.
+
+The psychological defense against this Core is, theoretically, the recognition that rest offered by something that wants to destroy you is not rest. In practice, by the time a challenger reaches the Core, they have been emotionally processed by seven floors of manipulation, and the offer of genuine compassion — even false compassion — is almost impossible to refuse.
+
+Maren Solwright, Core-Witness, spent six hours in the Core's presence. She has never spoken about what happened during those hours. Her medical records from the post-run evaluation note only: "Patient is physically unharmed. Patient is not okay. Do not press."
+
+**Sable's Encounter (foreshadowed):**
+Sable's relationship with the Weeping Halls is not yet documented in the primary narrative, but Guild intelligence suggests it is inevitable. The Flow Gate is central to Sable's magical development. The Dungeon knows this — it has been preparing. Water-readers in the Sapphire Archipelago report that the tidal patterns near the Weeping Halls' entrance have shifted subtly in the last two years, in a configuration that the Athenaeum's oldest Tide-Reader described as "anticipatory." The Dungeon is waiting for someone specific. Whether that someone is Sable, or someone Sable will become, is a distinction the Dungeon may not recognize.
+
+---
+
+### Profile 3: The Ember Labyrinth — Fire Gate Dungeon
+
+**Full Designation:** The Ember Labyrinth, formerly the Temple of Draconia's Fire
+**Gate Corruption:** Fire (will, transformation, courage) → Consumption (rage, burnout, the fire that eats itself)
+**Estimated Current Depth:** Eight floors confirmed. The deepest floors intersect with natural volcanic chambers and with pre-Fall structures that predate even the temple.
+**Temperature:** Extreme. Surface floors average 35°C. By Floor 4, ambient temperature reaches 55°C — survivable with preparation but physically debilitating over time. Floor 8 has been measured at temperatures that should not be survivable at all, and yet challengers survive there, which suggests the Dungeon maintains a thin layer of habitable conditions around active challengers. It wants you alive. It wants you suffering.
+
+**The Forge Connection:**
+The Ember Labyrinth sits directly beneath the Draconis Forge. This is not a coincidence — the Forge was built on the temple's ruins, deliberately, by Draconia herself, as both a seal and a statement. The statement: we will train here, above the corruption, and we will not be afraid. The seal: the Forge's wards suppress the Dungeon's influence from reaching the surface.
+
+The suppression is imperfect. Forge students sometimes feel the heat from below — not in the training halls, where the volcanic environment provides plausible explanation, but in the dormitories, the libraries, the dining hall. A warmth that comes from the floor, that fades when you notice it, that tastes like anger if you pay close enough attention. Senior students learn to recognize the taste. First-years do not, and the infirmary treats approximately fifteen cases per year of unexplained rage episodes among new arrivals that the medical staff attributes, quietly, to "environmental bleed."
+
+The Crucible — the Forge's signature training exercise, the chamber where Dragon Bonding is tested — is a sanitized version of the Ember Labyrinth's Floor 1. This is not widely known. The Crucible's design was based on Draconia's memory of the original temple trial, rebuilt with safety wards and scaled difficulty. Students who complete the Crucible have, in a real sense, survived the first trial of the Ember Labyrinth. Students who fail the Crucible have been shown what the Dungeon would do to them, gently.
+
+**Floor-by-Floor Breakdown:**
+
+**Floor 1 — The Furnace Gate.**
+A long corridor of black volcanic stone, lit by veins of magma visible through translucent rock. The heat is immediate and aggressive — the air burns the inside of the nose, the lungs adjust slowly, sweat evaporates before it can cool. The corrupted elementals are Cinder-Wraiths: humanoid shapes of ash and ember that move through walls and floors, emerging to strike and retreating before counterattack. They are testing you. Like all first floors, the Furnace Gate is calibration — the Dungeon learning your heat tolerance, your combat reflexes, your anger threshold. But the Ember Labyrinth calibrates more aggressively than other Dungeons. The Cinder-Wraiths do not just measure your anger — they provoke it. They attack from behind. They retreat when you advance. They single out the weakest member. Every tactic is designed to make you frustrated, and frustration is the first step toward rage, and rage is what the Labyrinth feeds on.
+
+**Floor 2 — The Ash Garden.**
+An open cavern filled with the remains of what was once a garden — stone planters, irrigation channels carved into rock, the fossilized roots of plants that grew in volcanic soil. Before the Fall, this was the temple's contemplation space, where supplicants rested between trials. Now the ash-covered garden produces a different crop: the ground sprouts flame-flowers — beautiful, slow-burning structures of blue and white fire that release a pollen of fine ash. The pollen, inhaled, lowers impulse control. Not dramatically — not enough to notice — but enough that reactions become faster, tempers become shorter, and the considered response is replaced by the instinctive one. Teams crossing the Ash Garden arrive at Floor 3 slightly less patient, slightly more reactive, slightly more ready to burn. The Dungeon is preheating them.
+
+**Floor 3 — The Rage Furnace.**
+Described in summary. Additional intelligence: the flame elementals' herding behavior has become more sophisticated. In the most recent survey run, the elementals positioned themselves to create corridors of movement that forced the team into physical proximity — shoulder to shoulder, unable to spread out — while the Dungeon's rage amplification was at peak intensity. The team leader, a veteran Deep-Delver named Rosh Kavan, recognized the configuration from animal husbandry: the elementals were using livestock-driving techniques, channeling the team like cattle through a chute. Kavan ordered the team to stop, sit down, and breathe. The elementals circled them for two hours. The rage faded. The elementals eventually dispersed. Kavan's report notes: "The Dungeon expects you to keep moving when you're angry. Sitting down is the last thing it plans for."
+
+**Floor 4 — The Forge of the Self.**
+A chamber containing a single anvil, a hammer, and a supply of raw metal. The chamber is hot — 60°C — and the corrupted elementals are absent. There are no monsters on Floor 4. There is only the anvil and the instruction, carved into the wall in pre-Fall script: MAKE SOMETHING. The trial is creation under duress. The metal is real. The tools are functional. The heat is extreme. And the thing you forge — whatever it is, blade or tool or sculpture — comes out imbued with whatever you were feeling when you made it. If you forged in rage, it carries rage. If you forged in grief, it carries grief. If you forged with genuine creative will — the Fire Gate's true virtue — it carries that instead, and the Dungeon recoils from it. The objects made on Floor 4 are among the most studied Dungeon artifacts in the Guild's collection. They are also among the most dangerous, because most challengers who reach Floor 4 are carrying three floors of accumulated rage and what they forge reflects it.
+
+**Floor 5 — The Corridor of Names.**
+A narrow passage whose walls are carved with names. Thousands of names. They are the names of everyone who has died in the Ember Labyrinth. The carvings are the Dungeon's work — it remembers every death and records it with what researchers have described as "meticulous spite." Walking the corridor, challengers see the names of people they knew, people they trained with, people they loved. The psychological impact is cumulative: by the corridor's end, you are carrying the weight of the Dungeon's history, and the weight feels personal. The rage amplification on this floor is inverted — rather than stoking anger, the corridor induces guilt. You are alive and they are dead. Why you? What makes you different? The answer the Dungeon suggests: nothing. You are next. Your name will be carved here beside theirs.
+
+**Floor 6 — The Crucible Mirror.**
+Described in summary. Additional detail: the Crucible Mirror targets specifically those challengers who aspire to Dragon Bonding, because they are the ones most vulnerable to seeing themselves fail at the thing they want most. But the Mirror is adaptive — for challengers without Dragon Bond aspirations, it shows other failures. Always the personal worst case. Always the thing you are most afraid of not being good enough for. The Mirror does not show you failing at something you don't care about. It shows you failing at the thing that defines you. This is surgical. This is Malachar's understanding of the Fire Gate — that fire is will, and the most efficient way to extinguish will is to show it that it was never going to be enough.
+
+**Floor 7 — The Dragon Boneyard.**
+A vast natural cavern beneath the volcano's magma chamber, filled with bones. Dragon bones. The remains of Sleeper Dragons — the ancient ones who entered hibernation in the volcanic depths and did not survive the corruption's passage through the ley lines. The bones are enormous: ribcages the size of buildings, skulls that a team can walk through upright. They are not inert. The corruption has soaked into the marrow, and the bones emit a low vibration — a parody of Dragon-speech — that carries a single repeating message. The message varies by challenger, but the content is consistent: you are too late. What was here is gone. The fire went out. The great ones died in the dark, alone, and you were not here to help them.
+
+The Dragon Boneyard is the Ember Labyrinth's deepest psychological weapon. For challengers from the Forge — who revere Dragons, who orient their lives around the possibility of Bonding — walking through the graveyard of Dragons who died in corruption is annihilating. Several teams have turned back at this floor, not from danger but from despair. The bones do not attack. They do not need to. They are a monument to Malachar's success, and they make the Dungeon's victory feel inevitable.
+
+**Floor 8 — The Black Forge.**
+Described in summary. Malachar's original research chamber. The room is preserved exactly as he left it — workbenches, tools, notes in his handwriting, half-finished projects of staggering ambition. The artifacts on the workbenches are real. They radiate power and corruption in equal measure. Picking one up would grant capabilities that most practitioners spend lifetimes pursuing. The cost would be paid later, in ways the artifacts do not advertise but that Malachar's notes — readable, if you have the nerve to stand still long enough — describe in clinical detail. He knew what the cost was. He paid it willingly. That is the floor's true horror: not the temptation of power, but the documentation, in Malachar's own hand, of a brilliant mind rationally choosing corruption because the math worked out in his favor. The notes make it make sense. That is what makes them dangerous.
+
+**The Core — The Black Flame.**
+A flame. Black, cold, producing no light and no heat. It hovers in the center of the Black Forge, above Malachar's primary workbench, like a pilot light that was never extinguished. Standing near it, challengers feel their inner fire dimming — not their magical reserves but their motivation, their care, the part of them that wants to try. The Black Flame does not threaten. It does not tempt. It shows you a truth that is worse than either: that entropy is real, that all fires go out, that every act of creation ends in ash, and that the energy you spend building, fighting, caring is energy that the universe will reclaim with interest. It offers nothing because nothing is the point. The Black Flame is Malachar's nihilism made physical — the conviction that because everything ends, nothing matters — and it is, by most accounts, the most devastating psychological weapon in any Dungeon.
+
+The flame cannot be extinguished by water, by smothering, by magical suppression, or by any technique the Guild has attempted. It does not respond to Fire-element manipulation. The current theory is that the Black Flame is not fire at all — it is the absence of fire given form, the void left when Malachar's inner fire consumed itself. Destroying it may require reigniting it — giving it something to burn that it cannot consume. What that something might be is the subject of considerable speculation and no experimental progress.
+
+**Known Death Toll (expanded):** 3,100 confirmed. The memorial plaques in the Forge's halls list every name. First-year students walk past them daily. Some students touch the plaques as they pass, a gesture that is not instructed and not required and has never stopped.
+
+---
+
+### Profile 4: The Garden of Thorns — Heart Gate Dungeon
+
+**Full Designation:** The Garden of Thorns, formerly the Temple of Maylinn's Heart
+**Gate Corruption:** Heart (love, healing, compassion) → Obsession (love weaponized, compassion as vulnerability, the wound that opens when you care)
+**Estimated Current Depth:** Six floors confirmed. The Garden is the shallowest Dungeon by floor count. It does not need more floors. Six is enough.
+**Temperature:** Pleasant. Constant 20°C, mild humidity, a breeze that carries flower-scent. The Garden of Thorns is the most physically comfortable Dungeon in Arcanea. This is the worst thing about it.
+
+**The Psychological Architecture:**
+
+The Garden of Thorns does not try to kill you. It tries to break your heart so thoroughly that living becomes worse than dying.
+
+Every other Dungeon uses fear, despair, rage, or existential dissolution as its primary weapon. The Garden uses love. Not corrupted love, not false love — your love, the real thing, weaponized against you with a precision that suggests Malachar understood the Heart Gate better than anyone except Maylinn herself. The Garden does not create fake emotions. It uses your real ones. It takes the truest, most genuine feelings in your life and shows you, floor by floor, how they can destroy you.
+
+The Delvers' Guild classifies the Garden of Thorns as "psychologically lethal" — a designation shared with no other Dungeon — and Guild policy requires a mandatory six-month post-run psychological evaluation for any team that enters, regardless of how deep they go. The evaluation is not optional. Guild Master Thessaly Vane, who has stood before the Garden's Core, enforces this policy personally and without exception.
+
+**Floor-by-Floor Breakdown:**
+
+**Floor 1 — The Welcome Garden.**
+Described in summary. Additional intelligence: the euphoria-pollen has been analyzed and found to contain no alchemical compounds. It is not a drug. It is a magical resonance carrier — the pollen transmits a fragment of what the temple felt like before the Fall, when Maylinn's presence filled these gardens with genuine warmth, genuine safety, genuine love. The euphoria is real. The trust it induces is rational, because the thing you are responding to — the echo of divine love — is genuine. The corruption is not in the feeling. The corruption is in what happens after: you opened up because the feeling was real, and now the Dungeon knows everything you disclosed.
+
+**Floor 2 — The Memory Bower.**
+A grove of flowering trees whose blossoms release a mist that induces specific, vivid memories — not worst memories, as on other floors, but best ones. Your happiest moments. The day you fell in love. The morning your child was born. The afternoon you sat with your grandmother and she told you she was proud of you. The memories are perfect, complete, and immersive. Challengers weep with joy in the Memory Bower. The weeping is the Dungeon's harvest: each tear carries emotional energy that the corruption absorbs and catalogs. By the time you leave the Bower, the Dungeon knows not just what you love, but how you love — the specific frequencies, the particular qualities, the textures of your attachments. It knows this better than you do.
+
+**Floor 3 — The Portrait Hall.**
+A long gallery hung with portraits — oil paintings, beautifully executed, of everyone the challenger has ever loved. Parents, partners, children, friends, mentors, the person who was kind to you once in a way you never forgot. The portraits are alive: the eyes follow you, the mouths move, the figures breathe. As you walk the gallery, the portraits begin to speak. They tell you what they really think of you. Not cruelty — something worse: honesty as the Dungeon interprets it. The version of your loved ones that notices your flaws, your failures, your moments of selfishness, and names them without anger, with the gentle disappointment that is worse than anger because it comes from love. The portraits do not say anything untrue. That is the devastation. They say the things you've always feared your loved ones think but are too kind to say.
+
+**Floor 4 — The Thorn Maze.**
+Described in summary. Additional detail: the illusions of loved ones trapped in the maze are not merely visual. They are multisensory — you can hear them, smell them, feel their hand if you reach through the thorns. The thorns cut, drawing blood, and the maze uses the blood as a focusing medium: the more blood you shed reaching for the illusion, the more real it becomes. Teams that attempt to rescue every illusory loved one leave the maze lacerated, exhausted, and carrying the knowledge that they could not save everyone. Teams that choose not to reach through the thorns — that recognize the illusions for what they are — exit physically unharmed and emotionally gutted, because recognizing that a perfect simulation of someone you love is not real requires acknowledging, on some level, that you could be wrong about the real thing too.
+
+**Floor 5 — The Nursery.**
+A room containing a cradle. In the cradle is a child — a baby, perfectly rendered, with features that combine the challenger's face with the face of whoever they love most. The child is not real. The child is the most real thing the Dungeon has ever made. It cries, and the crying triggers every parental instinct, every protective impulse, every deep-wired response to a vulnerable being that needs you. The trial is walking past the cradle. The Dungeon does not make this easy. The child reaches for you. The child knows your name. The child is afraid, and it wants you, specifically you, and you must leave it behind. Challengers who cannot leave the Nursery do not die there. They stay. They stay for days, holding a child made of light and thorn-magic, unable to put down something that needs them, refusing to acknowledge that it is a weapon shaped like the thing they would die for.
+
+**Floor 6 — The Bond-Breaker.**
+Described in summary. The white room. The projection. The worst moment of your life, displayed for your companions to see. There is nothing to add to the summary that would make this floor more comprehensible. It is either survivable or it is not, and the variable is not strength or skill or preparation. The variable is whether your companions, having seen the worst thing about you, choose to stay.
+
+**The Core — The Thorn-Heart.**
+A beating heart of crystal wrapped in living thorns, suspended in air at the center of a chamber that smells of every flower you have ever loved. The heart beats at approximately 60 beats per minute — resting heart rate, the rhythm of sleep, the cadence of safety. It does not whisper. It sings — a lullaby, in the voice of whoever first loved you, the first person who made the world safe by being in it. The song makes you remember what it felt like to be held when you were small enough that being held was all you needed. And then the voice asks, softly, between verses: why did you leave? Why did you risk this? Why are you here, in the dark, when you could be where someone loves you? Don't the people you love deserve better than your absence? Don't they worry? Aren't you being selfish, coming here, risking yourself, when the people who love you need you alive?
+
+The Core does not attack. It does not need to attack. It asks the question that every person who has ever walked into danger for a cause has asked themselves in the dark: is this worth it? Is what I'm doing more important than going home? And the Garden of Thorns, with six floors of accumulated emotional intelligence about exactly who you love and how you love them, frames the question in terms so personal and so precise that the honest answer, for most challengers, is: I don't know. I genuinely don't know.
+
+That uncertainty is the Garden's weapon. Not despair. Not rage. Doubt, aimed at the one thing you were sure about.
+
+**Known Death Toll (expanded):** 900 dead. Approximately 2,400 living survivors with documented post-Dungeon psychological conditions ranging from relationship dysfunction to complete emotional withdrawal. The Garden of Thorns has a phrase in the Guild's operational lexicon: "Garden-touched." It means: this person went in whole and came out with a crack in them that may never close.
+
+---
+
+### Profile 5: The Void Gate — Source Gate Dungeon
+
+**Full Designation:** The Void Gate, formerly the Temple of Shinkami's Source
+**Gate Corruption:** Source (meta-consciousness, unity, the origin point) → Annihilation (the end of self, the dissolution of meaning, the nothing that is not absence but negation)
+**Estimated Current Depth:** Unknown.
+**Temperature:** Unknown.
+**Floor Count:** Unknown.
+**Monster Types:** Unknown.
+**Corruption Signature:** Unknown.
+
+**What Is Known:**
+
+The Void Gate has no fixed location. It does not sit in a place. It appears — in rooms, in forests, in dreams, in the corner of your vision while you are doing something else entirely — and when it appears, there is a door. The door is always different. The one constant is that the person who sees it knows, with a certainty that bypasses thought entirely and lands in the body like a physical sensation, that the door is for them. That it has always been for them. That everything in their life has been, in some way they cannot articulate, preparation for walking through it.
+
+The Void Gate appears only to those who have opened nine Gates. In four thousand years of Arcanean history, the number of individuals who have opened nine Gates can be counted without running out of fingers. Of those, an unknown number were found by the Void Gate. Of those, three returned.
+
+**The Exterior:**
+
+The three survivors describe different exteriors:
+
+*Survivor One (name withheld by Guild protocol, Third Age):* "A door in a wall that had no door. The wall was in my bedroom. I had lived in that room for thirty years. The door had not been there that morning. It was made of stone that looked older than the mountain the room was built into. There were no markings. No handle. I touched it and it opened inward, into darkness that was not dark. It was the color of a question."
+
+*Survivor Two (name withheld, Fifth Age):* "A staircase. In the floor of the Library of the Athenaeum, in the restricted collection. The floor opened and there were stairs going down and I could see that the stairs went down further than the building's foundation, further than the bedrock, further than geography could account for. I walked down. The stairs did not end. At some point I was no longer walking down stairs. I was inside."
+
+*Survivor Three (name withheld, current era):* "I woke up and I was there. I do not remember entering. I do not remember a door or a threshold or a transition. I was in my bed, and then I was not in my bed, and the place where I was instead was the Void Gate. I knew this the way you know your own name. It was not information. It was identity."
+
+**The Interior:**
+
+The three survivors describe three different interiors. There is no reconciling their accounts. The Athenaeum has tried. The accounts are internally consistent, externally contradictory, and each survivor maintains their description with calm certainty and without defensiveness when confronted with the discrepancies. They do not argue. They do not explain. They each know what they experienced. The possibility that all three accounts are simultaneously true is the least comfortable hypothesis and the one that the Athenaeum's Void-studies researchers consider most likely.
+
+No floor count. No tactical analysis. No monster documentation. The Void Gate cannot be mapped because mapping requires consistent geometry, and the three accounts suggest that the interior of the Void Gate is not geometrically consistent — that it may not be a space in the physical sense, that the very concept of "inside" may be a concession the Gate makes to human cognition, the way an adult simplifies a concept for a child who does not yet have the framework to understand the full version.
+
+**The Core:**
+
+*Survivor One:* Claims to have seen the Core. Describes it as a point of absolute blackness, smaller than a fist, floating in a space that contained nothing else. Not darkness — the active absence of everything. The point contained, according to Survivor One, everything Malachar was before his fall. All his potential. All his hope. His love for Lumina, for creation, for the craft of magic, for the world he wanted to build. All of it compressed into a singularity of grief so dense that standing near it felt like standing at the edge of a gravity well that pulled at meaning rather than matter. Survivor One spent an unknown duration in the Core's presence (time, like geometry, does not appear to behave consistently inside the Void Gate) and retreated. Not from danger. From the understanding that destroying the Core would require fully comprehending what Malachar lost, and that comprehension, at the depth the Core demanded, might be indistinguishable from experiencing the loss yourself.
+
+*Survivor Two:* Claims the Core does not exist. That the Void Gate is a Dungeon without a heart — a temple so thoroughly corrupted that the corruption has consumed the very thing that anchors it, leaving a structure that runs on momentum and memory rather than on a fragment of Malachar's will. If this is true, the Void Gate cannot be cleansed by the method that theoretically applies to the other nine Dungeons, because there is nothing left to cleanse. Survivor Two considers this the Void Gate's true horror: not danger, but purposelessness. A wound that has forgotten what caused it.
+
+*Survivor Three:* Refuses to speak of the Core. Refuses to confirm or deny its existence. Refuses to describe any aspect of their experience beyond the entrance. Has answered every question on the subject with the same sentence, delivered without inflection: "I came back. That is what I can give you."
+
+**The Death Toll:**
+
+The Delvers' Guild maintains a list of approximately four hundred names. These are individuals confirmed to have entered the Void Gate (or confirmed to have been in the Void Gate's vicinity when they disappeared, which may be the same thing). The list spans four thousand years. Some names are recent. Some are ancient. All share a single notation: MISSING.
+
+Not dead. Missing.
+
+The distinction is maintained by Guild protocol and by something less formal — a feeling shared by the surviving Delvers and the Athenaeum researchers who study the Gate, a feeling that none of them can fully justify but that all of them share: the four hundred are not dead. They are somewhere. The Void Gate took them somewhere. Whether that somewhere is a place they can return from, or a place that has replaced them, or a place that they have become, is a question that cannot be answered from this side of the door.
+
+**Kael's Destination:**
+
+The Void Gate is where Kael will go. Not now. Not soon. At the end — in Book 10, when the story has brought him through nine Gates and nine Dungeons and nine transformations, when he has become whatever he is going to become. He will find the door, or the door will find him, and he will walk through it, and what happens on the other side is the story's final question.
+
+It has not been written yet.
+
+Some stories have to be earned.
+
+---
+
+*"We do not know what is in there. We do not know if 'in there' is a meaningful phrase. We know that it exists, that it waits, and that when it opens, it opens for someone who is ready. Or who thinks they are. We cannot yet determine which."*
+
+-- Athenaeum Void-Studies Archive, introductory notation, updated annually, unchanged since the Third Age

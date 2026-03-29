@@ -12,7 +12,7 @@ Not a letter — a summoning. The Atlantean kind: a disc of compressed water-vel
 
 *Report to the Grand Atrium of the Luminari Academy at the seventh bell of the morning. Your presence has been requested by the Convocation of Masters. This is not optional. This is also not a punishment. We understand how this reads. We apologize for the ambiguity.*
 
-That last sentence had the particular quality of institutional language that had been drafted by a committee and then reluctantly softened by one person who remembered what it was like to be nineteen.
+That last sentence had the unmistakable quality of committee language reluctantly softened by one person who remembered what it was like to be nineteen.
 
 Ryn was in the corridor outside, already dressed, already holding his own dissolving disc at arm's length as though it might bite. His expression suggested that his copy had not included the apology.
 
@@ -62,11 +62,11 @@ Kael stepped through.
 
 The Luminari Academy sat in perpetual dawn.
 
-This was not a metaphor. This was a technical fact with theological implications that the Academy's sixteen hundred years of scholars had argued about in print and in person and showed no signs of resolving: the wards that held the mountain campus aloft — Mount Solaris, a peak that cleared the cloudline and kept going, an aberration of elevation that the surrounding range had apparently decided to simply have — also refracted the sun in its rising angle and held it there. Not frozen. Turning. The campus existed in the first forty minutes of morning, endlessly, the sky always in that particular gold-rose register that belonged to the moment before full light committed.
+This was not a metaphor. This was a technical fact with theological implications the Academy's sixteen hundred years of scholars had argued about in print and in person and showed no signs of resolving: the wards that held the mountain campus aloft — Mount Solaris, a peak that cleared the cloudline and kept going, an aberration of elevation the surrounding range had apparently decided to have — also refracted the sun in its rising angle and held it there. Not frozen. Turning. The campus existed in the first forty minutes of morning, endlessly, the sky always in that gold-rose register that belonged to the moment before full light committed.
 
 Kael stepped out of the arrival mirror and stopped.
 
-The atrium was at the Academy's heart — a hall the size of a cathedral and not at all like a cathedral. Cathedrals worked by enclosing space. This worked by expanding it: the ceiling was not a ceiling but a geometry, an interlocking lattice of crystal arches rising to a point far above that was either a very high ceiling or simply open sky, and in the lattice — in the struts themselves — something hummed. Not mechanically. The crystal was alive in the way that tuning forks are alive — it was made to receive, and it received constantly, and what it sang back was the particular frequency of each element moving through the building's structure.
+The atrium was at the Academy's heart — a hall the size of a cathedral and nothing like a cathedral. Cathedrals worked by enclosing space. This worked by expanding it: the ceiling was not a ceiling but a geometry, an interlocking lattice of crystal arches rising to a point far above that was either a very high ceiling or open sky, and in the lattice — in the struts themselves — something hummed. Not mechanically. The crystal was alive the way tuning forks are alive — made to receive, receiving constantly, singing back the frequency of each element moving through the building's structure.
 
 Kael heard it before seeing it. Felt it, specifically: a chord struck in the body's own architecture, resonating with the building's stone and crystal the way two strings at the same pitch resonate across a room. Fire in the copper veins of the columns. Water in the morning dew collected in the reservoir basins along the walls. Earth in the mountain rock the Academy had been grown from, patient and enormous beneath the floor. Wind in the open shafts pulling air down from the stratosphere, cool and distant-smelling. And Void — Void was everywhere here, in the space between the crystal lattice, in the absence that made the presence of the other four elements visible. The fifth element, here, was the grammar the others were written in.
 
@@ -76,11 +76,11 @@ Kael closed it.
 
 The speaker was leaning against a crystal column with the ease of someone who had been standing in this specific spot for long enough that it had become their column. He was perhaps twenty, with Wind-mage coloration — the faint luminescence in the scar along his jaw that the morning light caught and turned faintly silver. His coat was Luminari white but he wore it with the unconscious precision of someone who had not had to think about dressing correctly since childhood, which was its own kind of information. He had his arms folded and was regarding Kael with an expression that was not unwelcoming but was not warm either. More like an assessment. The kind that comes before a decision has been reached.
 
-"Riven Ashkara," he said. Not an introduction. A statement of fact, offered as a courtesy to someone who had not yet been informed.
+"Riven Ashkara," he said. Not an introduction. A fact, offered as courtesy to someone not yet informed.
 
 "Kael." It came out the way it had started coming out in the last week — short, adjusted for the context of being in places where something was expected from it. "Of — previously. Ashenmere."
 
-Something moved in Riven's expression at that. Quick, controlled. "I know where you're from." He pushed off the column. He moved precisely, which was different from moving efficiently: it was efficiency with awareness of form, which was a Luminari training quality. "I've known where you're from since the instrument arrays measured the resonance event eleven days ago." He studied Kael's eyes — the colors there, the five-fold depth — with no more reaction than a person confirming a thing they had already verified through secondary sources. "You're shorter than I expected."
+Something moved in Riven's expression. Quick, controlled. "I know where you're from." He pushed off the column. He moved precisely, which was different from moving efficiently — efficiency with awareness of form, a Luminari training quality. "I've known since the instrument arrays measured the resonance event eleven days ago." He studied Kael's eyes — the colors there, the five-fold depth — with no more reaction than a person confirming something they had already verified through secondary sources. "You're shorter than I expected."
 
 "Is that relevant?"
 
@@ -152,7 +152,7 @@ What the Rector was proposing was different in structure and identical in name. 
 
 "We said we'd be honest with the child." Ashcroft looked at Kael. "We are all doing this for different reasons. Some of those reasons are genuinely about your welfare. Some of them are about what you represent for our respective institutional interests. I am telling you this not because it makes us trustworthy but because it makes us honest. I find honesty more useful than the performance of trustworthiness."
 
-Kael looked at the six of them. The room had the particular quality of a space where several large things were happening simultaneously — political negotiation, genuine care, institutional anxiety, and something else underneath all of it, something that felt like relief. As though each of these people had been waiting for the situation to be named, because named things were at least addressable.
+Kael looked at the six of them. The room had the charged quality of a space where several large things were happening at once — political negotiation, genuine care, institutional anxiety, and something else underneath all of it, something that felt like relief. As though each of these people had been waiting for the situation to be named, because named things were at least addressable.
 
 "I'll do it," Kael said.
 
@@ -168,7 +168,7 @@ The Rector studied him for a moment. "Beginning tomorrow. You will be introduced
 
 The meeting ended. On the way out, the person who had been standing at the window turned.
 
-She looked about sixteen. She had the kind of face that would look sixteen at forty if she got there, which Kael somehow doubted, though he couldn't have said why. Her element was visible in her coloring — Water, clearly, the faint silver in the dark eyes that Sela had explained was a Water-affinity tell in high-sensitivity channelers. But underneath the Water, something else. Something Kael felt in the way he felt the ley-note beneath the ground: deep, patient, and very old.
+She looked about sixteen. The kind of face that would look sixteen at forty if she got there, which Kael doubted, though he couldn't have said why. Her element was visible in her coloring — Water, clearly, the faint silver in the dark eyes that marked high-sensitivity channelers. But underneath the Water, something else. Something Kael felt the way he felt the ley-note beneath the ground: deep, patient, and very old.
 
 She said nothing to him. She was looking at his hands.
 
@@ -190,9 +190,9 @@ Riven said, after a measured pause: "I don't know. Which is, for me, an unusual 
 
 ---
 
-The orientation session happened the next morning in the Atrium, in front of two hundred Luminari students who had arranged themselves in the precise, slightly theatrical way of people who had been pretending not to have been waiting to see the person they had been told not to ask about.
+The orientation session happened the next morning in the Atrium, in front of two hundred Luminari students who had arranged themselves in the precise, slightly theatrical way of people pretending they had not been waiting to see the person they had been told not to ask about.
 
-The Rector introduced Kael briefly — special circumstances, Triennium program, unprecedented situation — and there was the particular silence of a group of people deciding what expression to adopt.
+The Rector introduced Kael briefly — special circumstances, Triennium program, unprecedented situation — and there was the loaded silence of a group of people deciding what expression to adopt.
 
 Kael had expected hostility. The hostility was there, but it was more complex than simple. It was the hostility of people who had worked very hard for something and had just been handed evidence that the thing they worked for could be rendered irrelevant by accident of nature. It was not personal yet. It would become personal.
 
@@ -266,7 +266,7 @@ He filed it. He went back to the Earth.
 
 Something went wrong at the end of the session.
 
-Not catastrophically. Not in a way that broke anything. But wrong in the specific way that wrong things at the beginning of stories tend to be: quietly, and in a way that could be explained away, if you preferred to explain things away.
+Not catastrophically. Not in a way that broke anything. But wrong in the specific way that wrong things at the beginning tend to be wrong: quietly, and in a way that could be explained away, if you preferred explanations over truth.
 
 They were releasing the root-contact, the standard closing for Foundation practice — a careful withdrawal of awareness back up through the layers of rock, a thanking of the stone for the contact, which Cors maintained was both a courtesy and a technique. Kael was doing this correctly. He had been doing it correctly for twenty minutes.
 

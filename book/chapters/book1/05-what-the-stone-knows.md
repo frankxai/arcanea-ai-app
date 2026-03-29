@@ -14,7 +14,7 @@ They were in one of the upper practice rooms — a smaller space, lit by the eve
 
 "I don't know what that means," Kael said.
 
-"It means the Atlantean calibration work trained you to receive elements the way Sela receives them — carefully, in sequence, with each element introduced formally and acknowledged individually. That works for Sela because Sela has one primary element and one very faint secondary affinity." Cors set her notes down. "For you, receiving them in sequence is like asking a river to come out of the tap one water-molecule at a time. Your nature is simultaneous. Training yourself away from your nature in the name of control is producing suppression, not control."
+"It means the Atlantean calibration work trained you to receive elements the way Sela receives them — carefully, in sequence, each element introduced formally and acknowledged individually. That works for Sela because Sela has one primary element and one faint secondary affinity." Cors set her notes down. "For you, receiving them in sequence is like asking a river to come out of the tap one molecule at a time. Your nature is simultaneous. Training yourself away from your nature in the name of control produces suppression, not control."
 
 "If I don't suppress them, they all come through at once."
 
@@ -48,7 +48,7 @@ Kael waited.
 
 "I am telling you what I know. What you do is not—" She stopped herself. Something moved in her expression. "I have been an instructor for thirty years. I have never told a student that something is in a restricted archive and then said 'what you do is not my concern.' That is not something I do." She looked at her notes. "Go to sleep. Come back tomorrow. Do not go into the mountain alone."
 
-That last sentence was not a prohibition. It was something else. It had the quality of a statement that was technically a prohibition and actually an acknowledgment that prohibitions were insufficient.
+That last sentence was not a prohibition. It was technically a prohibition and actually an acknowledgment that prohibitions were insufficient.
 
 Kael went to sleep.
 
@@ -56,13 +56,13 @@ Kael went to sleep.
 
 The next morning brought the Draconian delegation.
 
-They arrived at the seventh bell by the same mirror-road Kael had used, and they arrived in a way that suggested the Draconian Academy had a different relationship with arrivals than the Luminari did. The Luminari arrivals — the handful of late-joining students Kael had observed in the three days since the Convocation — tended to come through the arrival mirrors quietly and integrate with minimal surface-level disturbance.
+They arrived at the seventh bell by the same mirror-road Kael had used, and they arrived in a way that made clear the Draconian Academy had a different relationship with arrivals. The Luminari arrivals — the handful of late-joining students Kael had observed since the Convocation — tended to come through the mirrors quietly and integrate with minimal disturbance.
 
-The Draconian students came through in a group, talking, and the talking was the kind that filled space rather than simply occupying it.
+The Draconian students came through in a group, talking, and the talking was the kind that filled space rather than occupied it.
 
 There were four of them, representing the Forge in the Triennium's cross-training element. Three were introduced to the assembled Luminari cohort by Warden Ashcroft with the economy of someone who did not see names as particularly important information ("Kindlings, Luminari. Luminari, Kindlings."). The fourth introduced himself.
 
-He was taller than Kael had expected from the cast-bible's description — broader, denser, with the body of someone who had been building it through specific work for years. Deep brown skin, scarred hands, eyes that were very slightly the wrong color in a way that resolved, when you looked at it properly, into godbeast-bloodline: the faint ember-dark of Draconis ancestry, showing through in the irises when the light caught them at an angle. He had a sword on his back and another at his hip and wore them the way other people wore coats — not decoration, just the appropriate covering for the weather.
+He was taller than expected — broader, denser, with the body of someone who had been building it through specific work for years. Deep brown skin, scarred hands, eyes that were slightly the wrong color in a way that resolved, when you looked properly, into godbeast-bloodline: the faint ember-dark of Draconis ancestry, showing through in the irises when the light caught them at an angle. Sword on his back. Another at his hip. He wore them the way other people wore coats — not decoration, just the appropriate covering for the weather.
 
 He looked at the assembled students. He looked at Kael.
 
@@ -206,11 +206,13 @@ Taelis was quiet.
 
 "Is the end of everything," Taelis said. "Yes." He looked at Kael carefully. "How old were you when someone first died because of your power?"
 
-The question arrived like a hand pressed flat against a bruise. The training yard was very still.
+The question arrived like a hand pressed flat against a bruise.
+
+The training yard was very still.
 
 "Eleven," Kael said.
 
-Taelis nodded. Once. Slow. Not sympathy — recognition. The look of someone who was making a map.
+Taelis nodded. Once. Slow. Not sympathy — recognition. The look of someone making a map.
 
 "Then you understand something most of these students don't." He picked up the last training block. Reset it in its place. "Come back tomorrow. We'll work on the standing some more."
 
@@ -226,13 +228,13 @@ Riven did not look up. "You can come in," he said, with a tone that meant he had
 
 Kael came in.
 
-The table was scattered with texts on Foundation Gate theory, two on Void-node geology, and one — slightly under the edge of the nearest pile, as though it had been moved there rather than placed — a slim volume titled *On the Integration of Simultaneous Elemental Channeling*, published in the Second Age and written, according to the spine, by a mage whose name Kael did not recognize.
+The table was scattered with texts on Foundation Gate theory, two on Void-node geology, and one — tucked under the edge of the nearest pile, as though it had been moved there rather than placed — a slim volume titled *On the Integration of Simultaneous Elemental Channeling*, published in the Second Age by a mage whose name Kael did not recognize.
 
 "Is that about what I think it's about?" Kael asked.
 
 "It predates the last Five-Fold event by about four hundred years." Riven did not look up. "Someone was thinking about it before there was someone to think about."
 
-Kael sat down across from him. The libraries in the Luminari Academy smelled different from the ones at Atlantean — drier, with the particular tang of stonework at altitude. The books here were older on average and handled with the casual familiarity of objects in regular use rather than preserved artifacts.
+Kael sat down across from him. The libraries in the Luminari Academy smelled different from the ones at Atlantean — drier, with the tang of stonework at altitude. The books here were older on average and handled with the casual familiarity of objects in regular use rather than preserved artifacts.
 
 "Your technique improved this afternoon," Riven said. Still not looking up.
 
@@ -298,9 +300,9 @@ The mountain breathed.
 
 ---
 
-Not the Void-node. Not the familiar voice. Something older than both.
+Not the Void-node. Not the familiar voice. Older than both.
 
-Under the node, under the ley-core, under the geological strata of eight hundred years of Academy-history — something that had been asleep for longer than recorded time. He felt it the way you feel the presence of a vast creature in dark water: not by seeing it but by the displacement around it, the way the other elements moved around the space it occupied.
+Under the node, under the ley-core, under the geological strata of eight hundred years of Academy-history — something asleep for longer than recorded time. He felt it the way you feel a vast creature in dark water: not by seeing it but by displacement, the way the other elements bent around the space it occupied.
 
 It was not aware of him.
 

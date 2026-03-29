@@ -11,7 +11,7 @@ approximate_word_count: 3700
 
 The first rule of the Abyssal Athenaeum: never touch anything without asking what it remembers.
 
-Scholar Ondine told her this on the second morning, sitting across from her in the small tidal classroom they'd assigned to Gate-touched students who needed slower intake. The classroom was carved from pale limestone and the walls were bare — no art, no tapestries, nothing that held accumulated human attention. Ondine had requested the room specifically. She was a narrow woman in her sixties with close-cropped white hair and the particular stillness of someone who had learned to make no unnecessary movements in spaces full of memories.
+Scholar Ondine told her this on the second morning, sitting across from her in the small tidal classroom they'd assigned to Gate-touched students who needed slower intake. The classroom was carved from pale limestone, the walls bare — no art, no hangings, nothing that held accumulated human attention. Ondine had requested the room specifically. She was a narrow woman in her sixties with close-cropped white hair who moved the way you moved in a room full of sleeping people: carefully, deliberately, nothing wasted.
 
 "The stone here is recent work," Ondine said. "Carved six years ago. No emotional residue. The furniture is new-made from driftwood that spent its life at depth, not near human settlement. You should be able to sit comfortably."
 
@@ -19,7 +19,7 @@ Mira had been sitting comfortably for the first time since arriving. She hadn't 
 
 "You thought of everything," she said.
 
-"I had a student three years ago with stronger Flow sensitivity than yours. I learned quickly." Ondine folded her hands on the table. "Tell me what you're experiencing right now."
+"I had a student three years ago with stronger sensitivity than yours. I learned quickly." Ondine folded her hands on the table. "Tell me what you're experiencing right now."
 
 Mira did an honest scan. The chair: nothing. The walls: nothing. The table surface: a faint sense of smoothness that was purely physical, no memory attached. Ondine herself, across the table: a controlled containment, like water held in cupped hands, feeling present but not pressing.
 
@@ -29,23 +29,25 @@ Mira did an honest scan. The chair: nothing. The walls: nothing. The table surfa
 
 The corridor. Mira breathed through the recollection. "The east passage is older construction — I could feel it through my boots. Stone that's been walked by students for generations. Everyone who ever walked that corridor afraid of an examination, excited about a new discovery, grieving someone they left at home. It layers." She paused. "It's like standing in a room where everyone is talking at once but no one is talking to you."
 
-"Yes." Ondine's voice held something that wasn't quite sympathy and wasn't quite recognition — a third thing, specific to someone who had spent decades studying a condition from outside it. "The layering is the first challenge. The second challenge is that your Gate doesn't distinguish between past and present emotional impression. A memory from a hundred years ago registers with the same urgency as something that happened yesterday. Your nervous system has no filter."
+"Yes." Ondine's voice held something that was neither sympathy nor recognition — a third thing, harder to name, belonging to someone who had spent decades studying a condition she didn't share. "The layering is the first challenge. The second is that your Gate doesn't distinguish between old and new. A memory from a hundred years ago registers with the same urgency as something that happened yesterday. Your nervous system has no filter."
 
 "No," Mira said. "It doesn't."
 
-She'd tried to explain this to her mother, once, before the recruiters came. Her mother was a fisherman who thought of feelings as weather — real, significant, to be respected and adapted to, but ultimately passing through. She'd listened to Mira's description with the face of someone trying to understand a color they'd never seen.
+She'd tried to explain this to her mother, once, before the recruiters came. Her mother was a fisherman who thought of feelings as weather — real, significant, worth respecting, but ultimately passing through. She'd listened to Mira with the face of someone trying to see a color their eyes couldn't register.
 
 *But surely you can just not pay attention to them,* her mother had said.
 
-Mira had looked at her for a long time before answering. She'd been fourteen. *Can you just not pay attention to the wind?* she'd said. *While you're out in it?*
+Mira had been fourteen. *Can you not pay attention to the wind?* she'd said. *While you're standing in it?*
 
-Her mother had been quiet after that. She'd been, in her own way, trying.
+Her mother had gone quiet. She'd been trying, in her way.
 
 Ondine set a small bowl on the table between them. The bowl held water — simple, clear, still.
 
 "We begin here," Ondine said. "Not the Memory Pool. Not the deep archives. Here. This water was drawn this morning from the surface basin. It has spent its life at depth, then a morning in the basin, then five minutes being carried here. Nothing dramatic has happened near it. Nothing has left a strong impression." She pushed the bowl toward Mira. "Touch it. Tell me what you feel."
 
-Mira put two fingers in the water and felt — the morning. Grey light coming down through water. The pressure of depth giving way to the pressure of surface, a different kind of pressure but not less. The hands of the student who'd drawn the water, a boy, something in him that was low-grade and familiar: homesickness. Not acute, not recent. Just present, the way homesickness usually was — not a wound but a weather.
+Mira put two fingers in the water.
+
+The morning. Grey light pressing down through water. The pressure of depth giving way to the pressure of surface — a different kind, but not less. Then: the hands of the student who'd drawn the water. A boy. Something in him that was low-grade and familiar. Homesickness. Not acute, not recent. Just present, the way homesickness was — not a wound but a weather.
 
 She pulled her fingers out.
 
@@ -83,9 +85,9 @@ She'd found a corner in the lower library that was almost completely neutral and
 
 Ondine had been teaching her filtering with increasing precision. She could hold a water sample now and receive impressions without being overwhelmed — not always comfortably, but controllably. She could walk the residential corridor without her hands over her ears. She'd shaken hands with four other students and managed it, each time cataloguing what she received and filing it separately from herself and releasing it, the way you released water through a net when you wanted to keep the fish.
 
-She was not grateful for her Gate. She hadn't arrived at that. But she'd stopped wanting it to not exist, which felt like progress.
+She was not grateful for her Gate. She hadn't arrived there. But she'd stopped wanting it gone, which felt like progress.
 
-Wren, the second-year who'd met her on arrival day, had taken to leaving small notes on her library corner table. Practical information, mostly: which corridors ran hot, which cafeteria shift was quietest, where the night-swimming pool was that most students didn't know about. She never left the notes with explanation or return address, though Mira had seen her handwriting on other documents and recognized it.
+Wren, the second-year from arrival day, had taken to leaving small notes on her library corner table. Practical intelligence: which corridors ran hot, which cafeteria shift was quietest, where the night-swimming pool was that most students didn't know about. No explanation, no return address, though Mira recognized the handwriting from other documents.
 
 She'd left a note back once, on the table for Wren to find: *The archive basement. Don't go before eighth hour. Why.*
 
@@ -97,7 +99,7 @@ Mira had read this and understood she'd made a friend, which surprised her more 
 
 On the fourteenth day, Ondine brought her to the Pool.
 
-They descended through the Athenaeum's lower levels at midday, when the water pressure outside the coral walls was highest and the bioluminescent organisms that lit the deeper chambers burned at full output. The corridor smelled of mineral-cold and something beneath it that Mira couldn't categorize — not biological, not stone, something in between, like the smell of time if time had a smell.
+They descended through the Athenaeum's lower levels at midday, when the water pressure outside the coral walls was highest and the bioluminescent organisms that lit the deeper chambers burned at their brightest. The corridor smelled of mineral-cold and wet stone and something under both that Mira couldn't name — not biological, not geological, something in between, like what you'd smell if you cracked open a century and put your nose to it.
 
 "Three rules," Ondine said, walking beside her. "You do not dive. You stand at the edge and receive only what comes to the surface. You do not reach for anything specific — let it come to you. And if I say come back, you come back immediately, without question or pause."
 
@@ -107,17 +109,19 @@ They descended through the Athenaeum's lower levels at midday, when the water pr
 
 "Have students gone too deep?"
 
-"Yes." Ondine said it simply. "They were fine. Eventually. But fine eventually is not the goal in a structured learning environment."
+"Yes." Flat. Simple. "They were fine. Eventually. But *fine eventually* is not the goal."
 
 The Pool door was unornamented. Just a circular frame carved from dark stone with a single glyph above it that Mira had enough Old Thalmarish by now to read: *What the water remembers.*
 
-Inside, the air changed. Cool, not cold. Still in a way that wasn't absence of movement but deliberate holding. The Pool itself was a circular basin perhaps thirty feet across, set into the floor, the water inside it neither still nor moving — held in some middle state, like breath halfway exhaled.
+Inside, the air changed. Cool, not cold. Still — not the absence of movement but deliberate holding, the way a singer held a note before releasing it. The Pool itself was a circular basin perhaps thirty feet across, set into the floor, the water inside it neither still nor moving. Held in some middle state, like breath halfway exhaled.
 
-It was lit from below. Not by bioluminescence. By memory.
+It was lit from below.
 
-The light had a quality she'd never encountered in physical light. It moved the way thinking moved — not predictably, following no law she could name, responses she could almost trace to causes but couldn't quite hold onto before they shifted. She stood at the edge and looked at it for a long time before she understood that she was already receiving something.
+Not by bioluminescence. By memory.
 
-Not overwhelming. Not the corridor's layered shouting. More like... a voice in another language that she almost spoke. Almost. The words not quite resolving, but the cadence familiar, the emotional register clear enough to feel without understanding the content.
+The light moved the way thinking moved — not predictably, following no law she could name. She could almost trace responses to causes, almost hold the pattern, but it shifted before she could close her hand around it. She stood at the edge and looked for a long time before she understood she was already receiving something.
+
+Not overwhelming. Not the corridor's layered shouting. More like a voice in a language she almost spoke. The words not quite resolving. The cadence familiar. The emotional register clear enough to feel without understanding the content.
 
 "The Pool remembers everything that has happened in the Athenaeum," Ondine said from behind her. "Every lecture, every argument, every discovery, every student who stood where you're standing. The water is a medium — it holds impression the way paper holds ink. What you're feeling now is the surface layer. Recent years. You can stay there as long as you need."
 
@@ -129,19 +133,23 @@ She stayed with it for a long time. No individual impression overwhelmed her. Th
 
 Then she touched the water.
 
-She hadn't planned to. Her fingers slipped from the stone rim — not far, an inch, enough — and her fingertips broke the surface and the Pool *pulled*, gentle and absolute, the way deep water pulled, and she felt the layers below the recent surface come up to meet her: older, slower, denser, decades becoming a century becoming centuries, and she was still managing it, still herself, still above the depth Ondine had warned her about, when she saw the face.
+She hadn't planned to. Her fingers slipped from the stone rim — not far, an inch — and her fingertips broke the surface and the Pool *pulled*, gentle and absolute, the way deep water pulled, and she felt the layers below the recent surface come up to meet her: older, slower, denser, decades becoming a century becoming centuries, and she was still managing it, still herself, still above the depth Ondine had warned her about —
+
+Then the face.
 
 Not a memory from the Athenaeum.
 
-A face she had never seen, in a place she had never been: a corridor of dark stone, lit by magma-channels, the heat in the image palpable even through the water's medium. A boy standing at a wall, one hand pressed flat against the obsidian. Dark-haired. Still in a way that meant he was paying attention to something internal, something only he could feel.
+A corridor of dark stone, lit by magma-channels. She could feel the heat through the water's medium — dry and close and tasting of sulfur. A boy standing at a wall, one hand pressed flat against the obsidian. Dark-haired. Shoulders built for carrying weight. Still in a way that meant he was listening to something sealed in the rock, something only he could feel. The air around him shimmered with heat he didn't seem to notice.
 
-She had never met him. She was certain of this. She had a strong memory for faces and she had never encountered this one.
+She had never met him. She was certain. She had a strong memory for faces.
 
-But she knew, with the Floor-Gate's specific certainty that bypassed all doubt: his name was Kael. And what he was doing hadn't happened yet.
+But she knew — with the Flow Gate's specific certainty, the kind that bypassed doubt and landed in the body like a bell struck — his name was Kael.
 
-Not the past. The Pool had shown her the future.
+And what he was doing hadn't happened yet.
 
-She pulled back. The surface closed. She sat on the floor beside the Pool with her hands in her lap and her heart doing something complicated and Ondine's hand on her shoulder, already there, she wasn't sure when it had arrived.
+The Pool had shown her the future.
+
+She pulled back. The surface closed. She was sitting on the floor beside the Pool — when had she sat down? — with her hands in her lap, her pulse loud in her ears, her fingers cold from the water, and Ondine's hand on her shoulder, already there, already steady.
 
 "Tell me," Ondine said quietly.
 
@@ -149,17 +157,17 @@ Mira told her. The face. The corridor. The heat. The name she had never heard sp
 
 Ondine's hand was very still on her shoulder.
 
-She waited until Mira had finished. Then she said: "You touched the water."
+She waited until Mira had finished. Then: "You touched the water."
 
 "I didn't mean to."
 
-"No." Ondine stood. She moved around to stand in front of Mira, and her face had a quality in it that Mira hadn't seen before — not alarm, but something in the family of alarm. Attention pointed inward, some calculation happening behind her eyes. "Mira. What I'm about to say — I need you to receive it as instruction. Not explanation."
+"No." Ondine stood. Moved around to face her. Her expression had shifted into something Mira hadn't seen before — not alarm, but alarm's neighbor. Attention turned inward, calculation running fast behind her eyes. "Mira. What I'm about to say — receive it as instruction. Not explanation."
 
 Mira looked up at her.
 
 "Tell no one what you saw."
 
-Not *this will become clearer in time.* Not *I'll explain when you understand more.* An instruction, direct, with the weight of someone who knew exactly how much they were asking.
+Not *this will become clearer in time.* Not *I'll explain later.* An instruction, direct, carrying the full weight of someone who knew exactly how much she was asking.
 
 "Why?" Mira said.
 
@@ -169,32 +177,30 @@ Mira thought about all the things she'd been holding in her whole life. Other pe
 
 "Yes," she said.
 
-"Good." Ondine moved to the door. She paused with her hand on the frame. "The Pool showed you a face. Faces mean connections. The Flow Gate is not only about the past — it moves in all directions, including toward what's coming." Her voice was careful, each word placed. "The Athenaeum was founded on the principle that memory is the deepest ocean. Those who dive find treasures that time forgot to bury." A pause that had weight in it. "Sometimes the ocean brings up things that were buried deliberately."
+"Good." Ondine moved to the door. Paused with her hand on the frame. "The Pool showed you a face. Faces mean connections. The Flow Gate doesn't only move backward — it moves in all directions, including toward what's coming." Each word placed carefully, like stones in a wall. "The Athenaeum was founded on the principle that memory is the deepest ocean. Those who dive find things that time forgot to bury." A pause. "Sometimes the ocean brings up things that were buried on purpose."
 
 She opened the door and waited.
 
-Mira stood. Her legs were steadier than she expected. She walked to the door and paused beside Ondine.
+Mira stood. Her legs were steadier than she expected. She walked to the door.
 
 "The boy," Mira said. "Kael. Is he real?"
 
-Ondine's expression held its carefulness for three seconds. Then: "I believe so."
+Ondine's expression held for three seconds. Then: "I believe so."
 
-She walked through the door and didn't look back.
+She walked through the door.
 
 Mira followed. The corridor outside was warm and ordinary and full of the layered impressions of everyone who had walked it before her, and she filtered it automatically now, without effort, the way you breathed without deciding to.
 
-She thought about the face against the dark stone wall. The stillness of him, listening to something sealed in the rock. She thought about the name she'd known without being told and the place she'd never been and the certainty that it was coming, was moving toward her through time the way a current moved toward shore whether the shore was ready or not.
+She thought about the face against the dark stone wall. His stillness. The way he'd pressed his hand flat against the rock as if asking it a question. She thought about the name she'd known without being told and the place she'd never been and the certainty that it was coming — moving toward her through time the way a tide moved toward shore whether the shore was ready or not.
 
-She thought: *tell no one.*
+*Tell no one.*
 
-She thought: *I have been carrying other people's secrets my whole life. One more won't break me.*
+*I have been carrying other people's secrets my whole life. One more won't break me.*
 
-She walked through the coral cathedral corridors and let the building's accumulated centuries wash past her, filtering, reading, holding what was hers and releasing what wasn't.
-
-In her library corner that evening, she didn't read. She sat with the image of the boy at the dark wall and thought about connections and what the Flow Gate meant by them, and whether the future it had shown her was warning or invitation or simply what was coming regardless of what she decided.
+In her library corner that evening, she didn't read. She sat with the image of the boy at the dark wall and turned it over and over — warning or invitation or simply what was coming, regardless.
 
 She didn't know yet.
 
-But she knew this: the Pool had pulled her down past where Ondine had told her to stay, and she hadn't fought it.
+But the Pool had pulled her past where Ondine told her to stay.
 
-Some part of her had wanted to see.
+And she hadn't fought it.

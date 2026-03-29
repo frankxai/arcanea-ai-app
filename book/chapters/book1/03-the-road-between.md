@@ -6,13 +6,13 @@
 
 # Chapter Three: The Road Between
 
-The road east climbed away from Ashenmere in three long switchbacks before it gave up pretending to be a coastal road and became an inland road in earnest. The sea disappeared behind the last volcanic ridge and then there was only the high country: chalky upland, wind-bent thorn, the occasional village that had arranged itself around a well and a hope.
+The road east climbed away from Ashenmere in three long switchbacks before it gave up pretending to be coastal and became inland in earnest. The sea disappeared behind the last volcanic ridge and then there was only the high country: chalky upland, wind-bent thorn, the occasional village arranged around a well and a hope.
 
 Kael had chosen Atlantean.
 
 Or rather: Kael had told Sela yes, had spent a morning in the lighthouse listening to the sea from below rather than above for the last time, and had walked out the door with a pack and a lighthouse keeper's long coat and eyes that still held all five colors. Sirvaine had accepted the decision with a grace that felt genuine — had pressed a small white card into Kael's hand, *For when you have questions they cannot answer,* and ridden west without apparent hurry. Bren had been more direct: he'd clapped Kael on the shoulder with a force that suggested structural concern for the shoulder, said "When you're ready to learn to fight, you know where I am," and walked back to whatever he'd ridden in on.
 
-Sela had apparently been packed since the previous night. She set off east the moment Kael stepped outside with the pack, as though departure were a thing she'd been patiently waiting to execute and was only now being permitted.
+Sela had been packed since the previous night. She set off east the moment Kael stepped outside with the pack, as though departure were something she'd been waiting to execute and was only now permitted.
 
 "You walk fast," Kael said, catching up.
 
@@ -38,7 +38,7 @@ The road followed the spine of the Ashmore uplands for two days before descendin
 
 "In the Archives? Yes. In the real world?" A beat. "No."
 
-The landscape that first morning was volcanic coast country — harsh and beautiful in the way of places where the earth is honest about its violence. Basalt columns stood in the cliff faces like organ pipes, black and shining. The gorse was in bloom — a yellow so aggressive it looked intentional. The path went through a village where the houses had roofs made of the same dark stone as the cliffs and the people looked at Kael's eyes with expressions ranging from alarmed to intrigued to the carefully neutral face of people who have decided that someone else's strange is not their business.
+The landscape that first morning was volcanic coast country — harsh and beautiful in the way of places where the earth is honest about its violence. Basalt columns stood in the cliff faces like organ pipes, black and shining. The gorse was in bloom, a yellow so aggressive it looked intentional. They passed through a village where the houses had roofs of the same dark stone as the cliffs and the people looked at Kael's eyes with expressions ranging from alarmed to intrigued to the carefully neutral face of people who have decided that someone else's strange is not their business.
 
 The second day was moorland, open and wind-blown, the sky enormous in all directions. Kael had not left Ashenmere in three years — had not left the lighthouse grounds for more than a day at a stretch in eighteen months, because Torven had needed the help and the help had been necessary. The openness of it was disorienting at first and then was not. The wind came from the southwest and smelled of distance.
 
@@ -70,13 +70,13 @@ Kael thought about this for a while. The moor spread out to the north, pale and 
 
 ---
 
-They came down off the moor on the third afternoon into a country of pale limestone and slow rivers and woods where the trees were old enough to have opinions. The road widened here — a proper road, smooth-stoned, maintained — and there was traffic on it: carts, travelers, the occasional liveried rider moving fast in one direction or another with the particular urgency of official messages.
+They came down off the moor on the third afternoon into a country of pale limestone and slow rivers and woods where the trees were old enough to have opinions. The road widened — a proper road, smooth-stoned, maintained — and there was traffic on it: carts, travelers, the occasional liveried rider moving fast with the urgency of official messages.
 
 Kael had been watching the light change on the road for an hour when there was a sound from the roadside ditch.
 
-Not a distressed sound. More of a — mathematical sound. A very quiet *hmm* of something that had encountered an unexpected problem and was engaging with it.
+Not a distressed sound. A mathematical sound. A very quiet *hmm* of something that had encountered an unexpected problem and was engaging with it.
 
-In the ditch, sitting cross-legged in a patch of mud with what appeared to be an astronomical instrument disassembled around them in seventeen pieces and a notebook balanced on one knee, was a boy. He looked about seventeen. He had the particular quality of someone who had been sitting in that ditch for some time and intended to remain there until the problem was solved, which might be indefinitely.
+In the ditch, sitting cross-legged in a patch of mud with an astronomical instrument disassembled around him in seventeen pieces and a notebook balanced on one knee, was a boy. He looked about seventeen. He had the quality of someone who had been sitting in that ditch for some time and intended to remain there until the problem was solved, which might be indefinitely.
 
 "Excuse me," he said, without looking up. "Could you tell me if the sun is currently approximately twelve degrees above the horizon, or whether it has already crossed thirteen?"
 
@@ -150,7 +150,7 @@ They went in.
 
 ---
 
-The passage was narrow enough that they had to turn sideways, and the limestone walls were cold and damp with the particular seeping cold of deep rock. Ten steps in and the daylight behind them was gone — not faded, gone, as though the entrance had sealed without sound. Ryn lit a small lamp from his bag. The flame burned orange-white and threw shadows that didn't quite correspond to the shapes in the passage.
+The passage was narrow enough that they had to turn sideways, the limestone walls cold and damp with the seeping cold of deep rock. Ten steps in and the daylight behind them was gone — not faded, gone, as though the entrance had sealed without sound. Ryn lit a small lamp from his bag. The flame burned orange-white and threw shadows that didn't quite correspond to the shapes in the passage.
 
 Then the floor went even, and the passage opened, and they were in a chamber.
 
@@ -192,7 +192,7 @@ The word went through the chest like the bass note of a bell. Not a command — 
 
 The room was silent. The lamp burned. The pool reflected the ceiling's carved gates.
 
-Kael thought about what had been taken. About a father walking into the sea. About four years of gray porridge and lamp-polishing and the particular discipline of a life organized around other people's need for light. About the reaching on the cliff edge, the elements coming awake, the thing that had been hidden learning to be unhidden. About the dream-voice speaking in frequencies. About walking out of the lighthouse and not looking back.
+Kael thought about what had been taken. A father walking into the sea. Four years of gray porridge and lamp-polishing and the discipline of a life organized around other people's need for light. The reaching on the cliff edge, the elements coming awake. The thing that had been hidden learning to be unhidden. The dream-voice. Walking out of the lighthouse and not looking back.
 
 *What remains?*
 
@@ -200,9 +200,9 @@ The answer arrived without drama. It was, in its way, the simplest thing Kael ha
 
 *I do. I remain.*
 
-Not the grief, not the loneliness, not the practiced smallness of a person who learned early to take up less space — those were things that had happened, and they were real, but they were not the foundation. Under them was something that had been present at the cliff edge, that had been present every morning at the high window, that had been present even in the fever dreams after Kael had fallen ill at twelve and lain in the lighthouse keeper's spare room believing fairly seriously in the possibility of dying.
+Not the grief, not the loneliness, not the practiced smallness of a person who learned early to take up less space — those were things that had happened, real things, but they were not the foundation. Under them was something that had been present at the cliff edge, present every morning at the high window, present even in the fever dreams at twelve when Kael had lain in the lighthouse keeper's spare room believing seriously in the possibility of dying.
 
-A willingness to be here. To remain. To persist not from endurance but from a genuine and unreasonable love of being present for what comes next.
+A willingness to be here. To remain. Not from endurance. From a genuine and unreasonable love of being present for what comes next.
 
 The pool shimmered.
 
@@ -242,11 +242,11 @@ Ryn saw it first, because he was looking. Sela was writing. Kael was watching th
 
 "Oh," Ryn said.
 
-The Academy sat at the valley's eastern end against a rise of pale stone, and it was nothing like Kael had imagined and exactly like it should have been. Not a fortress. Not a tower. Not the grandiose pile of the story-books. It had grown — that was the only word — from the limestone itself, as though someone had asked the rock what it wanted to be and the rock had said: *this.* Walls and arches and windows and colonnades, all pale stone, all slightly more alive-looking than stone ought to be, all covered in the small white flowers from the roadside as though the starspire had followed the walls home.
+The Academy sat at the valley's eastern end against a rise of pale stone, and it was nothing like Kael had imagined and exactly like it should have been. Not a fortress. Not a tower. Not the grandiose pile of the story-books. It had grown — that was the only word — from the limestone itself, as though someone had asked the rock what it wanted to be and the rock had said: *this.* Walls and arches and windows and colonnades, all pale stone, all slightly more alive than stone ought to be, covered in the small white flowers from the roadside as though the starspire had followed the walls home.
 
 There were lights in the windows. The warm yellow of lamps, a few blue-white flickers of working magic, one orange blaze from what appeared to be a kitchen. The sound of voices — not a crowd, not a hall, but the layered ambient sound of many people doing many separate things.
 
-At the main gate, two students in gray were arguing about something in a language Kael didn't speak, with the comfortable intensity of people who had been arguing about that specific thing for weeks and expected to continue for weeks more. One of them looked up, clocked the new arrivals, elbowed the other, and they both straightened in the particular way of people deciding whether to be professional or welcoming and settling on both.
+At the main gate, two students in gray were arguing in a language Kael didn't speak, with the comfortable intensity of people who had been arguing about that specific thing for weeks and expected to continue. One looked up, clocked the new arrivals, elbowed the other, and they both straightened in the way of people deciding whether to be professional or welcoming and settling on both.
 
 "You must be the new intake," said the one who had done the elbowing. She had braids pinned with small blue stones and an accent from somewhere far south. "Sela. Good, you made it. We've been watching the leyline maps." She looked at Kael. She did not react to the eyes — or rather, she reacted with the controlled non-reaction of someone who had been briefed and was professionally committed to treating the briefed information as unremarkable. "You are Kael."
 

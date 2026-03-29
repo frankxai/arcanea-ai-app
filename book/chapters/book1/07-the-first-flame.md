@@ -8,7 +8,7 @@
 
 The Draconian Forge was the loudest place Kael had ever been in his life.
 
-Not loud the way storms were loud — not the undifferentiated roar that overwhelmed thought. This was organized noise. The particular percussion of a place where significant things were being made: hammer on metal, metal on stone, the sustained rush of channeled Fire being held at precise temperatures, the back-and-forth shout of people working together at close quarters on problems that required immediate communication. Layered over all of it, from somewhere deeper in the mountain — the Forge was also a mountain, the Caldera of Ignis dormant and enormous around the campus's inner-ring structure — the low, continuous, bone-felt vibration of magma.
+Not loud the way storms were loud — not the undifferentiated roar that overwhelmed thought. This was organized noise. The percussion of a place where things were being made: hammer on metal, metal on stone, the sustained rush of channeled Fire held at precise temperatures, the back-and-forth shout of people working together at close quarters on problems that required immediate communication. Layered over all of it, from somewhere deeper in the mountain — the Forge was also a mountain, the Caldera of Ignis dormant and enormous around the campus's inner-ring structure — the low, continuous, bone-felt vibration of magma.
 
 "You'll get used to it," Taelis said, from beside Kael, in a tone that suggested this was a factual claim and not a comfort.
 
@@ -28,7 +28,7 @@ They were on the second ring of the Forge — the exterior ring of training hall
 
 ---
 
-Warden Theron Ashcroft met them at the entrance to his office, which was adjacent to the deep forge — the actual smithing heart of the campus, where the heat was physical and the air tasted of iron. He was shorter in person than his reputation suggested but denser, in the way that very concentrated things were dense. His face was what happened when strategic intelligence spent twenty-five years living in a body trained for combat: all the softness reduced to its essential components, which turned out to be sharper than the softness had concealed.
+Warden Theron Ashcroft met them at the entrance to his office, which was adjacent to the deep forge — the actual smithing heart of the campus, where the heat was physical and the air tasted of iron. He was shorter than his reputation suggested but denser, the way concentrated things are dense. His face was what happened when strategic intelligence spent twenty-five years in a body trained for combat: all the softness reduced to its essentials, which turned out to be sharper than the softness had concealed.
 
 He looked at Kael the way he had looked at Kael in the Convocation — not with warmth, not with hostility, but with the specific quality of someone who was performing an ongoing evaluation and had not reached a conclusion.
 
@@ -70,7 +70,7 @@ The attention here was different from the Luminari attention. Less wary, more di
 
 "That's him," said a voice from across the room. Not particularly quiet. Not intended to be.
 
-A girl — no, a woman, she was perhaps twenty-two, with the height and the scarred hands of someone who had been in Draconian training for years — was leaning against the far wall with a practice sword across her knees and an expression that was not hostile but was very deliberately not friendly either. She was looking at Kael with the focused attention of an archer before a release: not yet a decision, but preparation for one.
+A woman — perhaps twenty-two, with the height and scarred hands of someone who had been in Draconian training for years — was leaning against the far wall with a practice sword across her knees and an expression that was not hostile but was deliberately not friendly either. She was looking at Kael with the focused attention of an archer before release. Not yet a decision. Preparation for one.
 
 "Sera Vant," Taelis said quietly. "Third year. She holds the current Foundation Gate record for single-element Earth channeling under combat conditions. She will challenge you."
 
@@ -128,9 +128,9 @@ Kael had Fire affinity. He had known this in the abstract since Sela had explain
 
 He found the body's Fire and it came up like a house fire.
 
-Not painful. Enormous. The metabolic heat in the core expanded outward with a speed that was not destructive but was certainly not what he had intended, a radius of heat that dried the moisture from the air in a four-foot sphere around him and made the nearest student step back reflexively.
+Not painful. Enormous. The metabolic heat in the core expanded outward with a speed that was not destructive but was not what he had intended — a radius of heat that dried the moisture from the air in a four-foot sphere around him and made the nearest student step back.
 
-He damped it. Too hard, as he had in the Earth practice — the Fire didn't snap back this time, it dove inward, compressing into the sternum with a sensation that was not pain but was closely related to pain, the way the moment before pain is not the pain itself but is also not nothing.
+He damped it. Too hard, as he had in the Earth practice — the Fire didn't snap back this time, it dove inward, compressing into the sternum with a sensation not quite pain but closely related. The moment before pain. Not the pain itself, but not nothing.
 
 Hael was beside him. "What did you do wrong?"
 
@@ -148,13 +148,15 @@ He let it expand.
 
 Then he shaped it. Not clamping — the way water gets directed by a channel rather than a dam. He had the foundation work now, the standing-method Taelis had given him. He had the mountain under his feet, the center of gravity, the understanding of the body as architecture. He let the Fire expand upward rather than outward, drawing it along the spine and out through the hands.
 
-A column of flame rose from his palms. Steady, controlled, gold-orange at the center with a violet edge that was — he knew what that was. He closed the Void before it could add itself to the column and the violet edge disappeared and the column was clean.
+A column of flame rose from his palms. Steady, controlled, gold-orange at the center with a violet edge that was — he knew what that was. He closed the Void before it could add itself to the column. The violet disappeared. The column burned clean.
 
-Six seconds. Seven. The Fire moved through him rather than from him, the way water moved through a pipe — not the pipe's water, just using the pipe's shape.
+Six seconds. Seven.
+
+The Fire moved through him rather than from him, the way water moved through a pipe — not the pipe's water, just using the pipe's shape.
 
 He let it go. It went cleanly. No snap-back.
 
-He was sweating. The air around him smelled of scorched salt.
+He was sweating. The air smelled of scorched salt.
 
 Hael said nothing. She moved to the next student.
 
@@ -294,33 +296,31 @@ He closed it. Immediately. Hard.
 
 But not before the arena floor shimmered.
 
-One second. The basalt floor of the Draconian arena became, for one second, the color of deep space and then snapped back. A visible pulse of dark energy moved outward from Kael's feet in a ring, not damaging anything, not touching anyone. Just: there, then gone.
+One second. The basalt floor of the Draconian arena became the color of deep space and snapped back. A pulse of dark energy moved outward from Kael's feet in a ring, touching nothing, damaging nothing.
+
+There. Then gone.
 
 Sera broke her contact.
 
-Not from displacement. From a decision: she stepped back, deliberately, and as her feet broke from the active connection she raised her right hand in the formal acknowledgment that ended a Draconian duel. Not a concession. Something else. Kael would learn the gesture later. It meant: I see what you are.
+Not from displacement. From a decision. She stepped back, deliberately, and as her feet broke from the active connection she raised her right hand in the formal acknowledgment that ended a Draconian duel. Not a concession. Kael would learn the gesture later. It meant: *I see what you are.*
 
 Hael called the end.
 
 The arena was very quiet.
 
-Kael stood on the basalt floor and breathed. His hands were shaking inside the gloves. His palms — the silver-white scar-lines left from the village event at eleven years old — were hot. He could feel them through the leather.
+Kael stood on the basalt floor and breathed. His hands shook inside the gloves. His palms — the silver-white scar-lines from the village event at eleven — burned. He could feel them through the leather.
 
 He looked up.
 
 Thirty people looking at him.
 
-Some of the expressions were recognizable: alarm, recalibration, the look of people revising a model. But most of the expressions were new to him — not the wary assessment of the Luminari campus or the cautious institutional management of the Convocation. The Draconian expressions were more direct than that.
+Some expressions were recognizable: alarm, recalibration, people revising a model. Most were new — not the wary assessment of the Luminari campus, not the cautious management of the Convocation. The Draconian expressions were more direct.
 
-They were looking at him the way you looked at something that had just shown you something true.
-
-Even that was not quite right.
-
-They were looking at him the way you looked at something that had scared you, and that you found yourself unable to look away from, and that was not the same as looking away.
+They were looking at him the way you look at something that has shown you a truth. That has scared you. That you cannot look away from.
 
 Taelis crossed the arena floor to Kael without hurry. He stood beside him and looked at the floor where the ring of dark energy had moved.
 
-"The Void came through," Kael said. His voice was very controlled. He had control of his voice because it was the easiest thing left to control.
+"The Void came through," Kael said. His voice was controlled. It was the easiest thing left to control.
 
 "Yes."
 

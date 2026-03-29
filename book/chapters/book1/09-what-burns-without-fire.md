@@ -20,7 +20,7 @@ The seventh level was different from all of those. It was not oppressive. It was
 
 Nerissa Pelagius was sitting at a stone table that was not a table but a natural shelf in the limestone, worn smooth by the same long-ago water. She was reading. She did not look up when Kael came in.
 
-She looked, in the blue-white light of the single bioluminescent lamp she had set on the shelf beside her, like the world's oldest academic. This was not a kindly impression. It was a precise one: the face of someone who had been reading for four hundred years and had not stopped being interested, who had absorbed so much that the absorption showed not as fullness but as a quality of depth, the way very old water shows its depth not by surface but by the time it takes to read what is below.
+In the blue-white light of a single bioluminescent lamp, she looked like the world's oldest academic. Not a kindly impression. A precise one: the face of someone who had been reading for four hundred years and had not stopped being interested, who had absorbed so much that the absorption showed not as fullness but as depth — the way very old water shows its depth not by surface but by the time it takes to see what is below.
 
 She turned a page. The page did not dissolve. These were private documents, not official communications.
 
@@ -40,7 +40,7 @@ Kael sat down across from her. The limestone was cold through the fabric of his 
 
 He thought about this for a moment. "Tessara Vole."
 
-Something happened in her expression — not pain exactly, but the memory of pain, the way a scar site responds to weather. "Yes."
+Something happened in her expression — not pain, but the memory of pain, the way a scar site responds to weather. "Yes."
 
 "She asked not to be followed."
 
@@ -78,7 +78,7 @@ The lamp light pulsed. In the water far above, something moved.
 
 "Why?" Kael asked.
 
-"Because he was running out of time." She said this in the tone of someone who had spent twelve hundred years finding a way to say a true thing clearly. "Not literally — he was Eldrian, he had millennia left. Running out of time in the way that people who have seen the worst outcomes across infinite timelines run out of time. Every year he waited, more people suffered from things he had the power to prevent if he was strong enough. He believed that at the Source Gate he could become strong enough. He believed that strength, past a certain threshold, would allow him to reach all the suffering simultaneously and address it all at once." She was quiet for a moment. "He told me this. I told him that what he was describing was not healing. That healing required the healer to be present in the specific wound. That omnipotent healing from a great height was not healing — it was surgery without consent, which was violence with good intentions." She looked at the journal. "He thanked me for the conversation. He left this on my desk the next morning and went north."
+"Because he was running out of time." She said this in the tone of someone who had spent twelve hundred years finding the words. "Not literally — he was Eldrian, he had millennia left. Running out of time the way people who have seen the worst outcomes across infinite timelines run out of time. Every year he waited, more people suffered from things he had the power to prevent if he was strong enough. He believed that at the Source Gate he could become strong enough. He believed that strength, past a certain threshold, would allow him to reach all the suffering simultaneously and address it all at once." She was quiet for a moment. "He told me this. I told him that what he was describing was not healing. That healing required the healer to be present in the specific wound. That omnipotent healing from a great height was not healing — it was surgery without consent, which was violence with good intentions." She looked at the journal. "He thanked me for the conversation. He left this on my desk the next morning and went north."
 
 Kael looked at the journal. "What does it say?"
 
@@ -146,13 +146,13 @@ Kael looked at the journal on the table. The evidence of twelve hundred years of
 
 He went to find Solvane Dresh.
 
-He had known, from the moment Sela mentioned the instructor's name three weeks into the Luminari rotation, that there was a conversation he was going to have to have. Sela had said it neutrally — "Instructor Dresh teaches the advanced theory seminars, you won't need them until next year" — but the neutrality had been the specific neutrality of someone choosing not to inflect a name. The name had weight. Kael had filed it.
+He had known, from the moment Sela mentioned the instructor's name three weeks into the Luminari rotation, that a conversation was coming. She had said it neutrally — "Instructor Dresh teaches the advanced theory seminars, you won't need them until next year" — but the neutrality was the kind of someone choosing not to inflect a name. The name had weight. Kael had filed it.
 
 He found Solvane Dresh the way you found most things in the Depths: by following the connection until it led somewhere. Solvane was a Luminari instructor on sabbatical to the Atlantean Depths, which was unusual enough that the dormitory attendant had given Kael a room number and a warning: "He doesn't enjoy being interrupted. He'll see you anyway, but he won't enjoy it."
 
 He knocked.
 
-Solvane Dresh was perhaps sixty, which for a Master-rank mage meant he was probably closer to a hundred and twenty. He had the build of someone who had been thin his whole life and had stopped apologizing for it around middle age. His element was evident in his coloring — Wind, the faint luminescence in the scar along his left cheekbone, the way his coat moved slightly in the still air of the room, as if the breeze he carried internally was trying to escape. His face was the face of someone who had been feeling things carefully and at length for a very long time.
+Solvane Dresh was perhaps sixty, which for a Master-rank mage meant he was probably closer to a hundred and twenty. He had the build of someone who had been thin his whole life and had stopped apologizing for it around middle age. His element showed in the coloring — Wind, the faint glow in the scar along his left cheekbone, the way his coat moved in the still air as if the breeze he carried internally was trying to escape. His face was the face of someone who had been feeling things carefully, and at length, for a very long time.
 
 He looked at Kael in the doorway.
 
@@ -186,7 +186,7 @@ Solvane looked at him. "Corenne told me," he said. "She tells me most things abo
 
 "What are you?"
 
-"I was his friend." The words came out flat, in the way that true things came out flat when they had been stated many times in the mind before being stated aloud. "For forty years. The forty years before the fall. I was at the Luminari Academy for all of them, and he was at the Luminari Academy for most of them, and we were — the word is complicated and I will use it anyway. Friends. He talked to me. I talked to him. We argued about almost everything and agreed about the fundamental things and it was, while it lasted, the kind of—" He stopped.
+"I was his friend." The words came out flat, the way true things come out flat when they have been stated many times in the mind and rarely aloud. "For forty years. The forty years before the fall. I was at the Luminari Academy for all of them, and he was there for most of them, and we were — the word is complicated and I will use it anyway. Friends. He talked to me. I talked to him. We argued about almost everything and agreed about the fundamental things and it was, while it lasted, the kind of—" He stopped.
 
 Kael waited.
 
@@ -194,7 +194,7 @@ Kael waited.
 
 Not as an accusation. Not as a warning. As grief.
 
-The distinction arrived in Kael's chest the same way all true things arrived — not as a conclusion he had reached but as something that had always been there becoming visible. The man across the desk was not afraid of Kael. He was not managing an institutional risk. He was sitting in a room with a person who wore a face he had not seen in twelve hundred years on someone he had not expected to lose, and he was telling the truth about what that felt like.
+The distinction arrived in Kael's chest the way true things always did — not as a conclusion reached but as something that had always been there becoming visible. The man across the desk was not afraid of Kael. He was not managing an institutional risk. He was sitting with a person who wore a face he had not seen in twelve hundred years on someone he had not expected to lose, and he was telling the truth about what that felt like.
 
 "In what way?" Kael asked.
 
@@ -234,7 +234,7 @@ The Gates had opened under moral urgency, Sela had said. Not under power or trai
 
 "He needed someone to keep him small," Kael said. "Not lesser. Small. Specific. Present in one place at a time."
 
-Solvane looked at him. The expression was not quite grief anymore. It was the expression of someone who had been holding a weight for a very long time and had just been told, quietly and without drama, that someone else's hands were available to help hold it.
+Solvane looked at him. The expression was no longer grief. It was the expression of someone who had been holding a weight for a very long time and had just been told, quietly, that someone else's hands were available to help hold it.
 
 "Yes," he said. "That is the thing I could not give him enough of. I tried. But I was one person, and the timeline-sight was everywhere, and he was — he was very persuasive about the arithmetic of suffering." He paused. "He could always produce more examples of people who needed help than I could produce reasons for doing less than everything. The arithmetic always won."
 
@@ -250,11 +250,11 @@ Solvane was very still.
 
 The room was very still.
 
-"I should have stayed closer," Solvane said. Not a confession. A fact. Four hundred years of accumulated weight behind it, the specific heaviness of a thing that could not be changed.
+"I should have stayed closer," Solvane said. Not a confession. A fact, with four hundred years of accumulated weight behind it. The heaviness of a thing that could not be changed.
 
 "He should have let you," Kael said.
 
-Solvane looked at him. Something in the old face shifted — broke, a little, in the precise way that things break when they are very old and very carefully maintained and the maintenance is allowed to stop being necessary.
+Solvane looked at him. Something in the old face shifted — broke, a little, in the way that very old and carefully maintained things break when the maintenance is allowed to stop being necessary.
 
 They sat in the seventh-level dark for a while without speaking.
 
@@ -272,7 +272,7 @@ Kael waited.
 
 "I am afraid of it," Riven said.
 
-The word came out with enormous effort — not the effort of courage, the effort of someone dismantling a structure they had built carefully over years. Not performance. The real statement of a real thing.
+The word came out with enormous effort — not the effort of courage but of someone dismantling a structure built carefully over years. Not performance. The real statement of a real thing.
 
 "What specifically?" Kael said.
 

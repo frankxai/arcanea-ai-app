@@ -12,7 +12,7 @@ He had grown up with the sea. He had spent four years at the lighthouse above As
 
 He had known its surface.
 
-The Atlantean mirror deposited them in a descending chamber — not underwater yet, just deep, a limestone shaft that went down through the ocean floor the way a well goes down through a field, except the well shaft here was a hundred yards across and lined with the coral formations that the Atlantean architects had been growing into structural purpose for centuries. The air was different. Not the clean salt smell of open sea but something older and more mineral: the particular cold of depth, of pressure, of water that had been the same temperature for longer than civilizations.
+The Atlantean mirror deposited them in a descending chamber — not underwater yet, just deep, a limestone shaft that went down through the ocean floor the way a well goes down through a field, except this well was a hundred yards across and lined with coral formations the Atlantean architects had been growing into structure for centuries. The air was different. Not the clean salt smell of open sea but something older and more mineral: the cold of depth, of pressure, of water that had been the same temperature longer than civilizations.
 
 Sela was waiting at the bottom of the shaft.
 
@@ -54,21 +54,23 @@ Below the ocean floor, the world changed.
 
 ---
 
-The Atlantean Depths were a city the way the ocean was water — technically accurate and inadequate in every important way.
+The Atlantean Depths were a city the way the ocean was water — technically accurate, inadequate in every important way.
 
 The Depths occupied a section of the Meridian Trench that nature had, over geological time, produced as a series of enormous interconnected caverns in the seafloor limestone. The Atlanteans had been living there for twelve hundred years, and the twelve hundred years of habitation showed not as construction but as growth: the coral architecture that made up the building stock was alive, continually growing, shaped by generations of Water-mages into forms that served human needs while remaining functionally oceanic. The walls breathed. The floors grew. The light — cold blue and silver and the deep teal that Kael would later understand was bioluminescence from a species of coral cultivated for nothing else — moved with the slow pulsation of living things.
 
 The first level was the widest. Commerce, housing, the ordinary infrastructure of a community of several thousand people who had collectively decided the middle of the ocean floor was an appropriate place to live. Kael had expected the oppressive quality of deep enclosed spaces. He had not expected the openness of it — the Atlantean architects had been solving the problem of limited space for twelve hundred years, and their solutions produced the paradox of an underground city that felt lighter than the sky: high ceilings shaped to bounce light upward, corridors that opened onto sudden drops revealing deeper levels, vistas through the glass walls to the open water beyond where the trench extended beyond sight into dark.
 
-Things moved in the dark beyond the glass. Very large things, moving slowly, lights traveling along their edges like lamps carried by something vast and unhurried.
+Things moved in the dark beyond the glass. Very large things, slow, lights traveling along their edges like lamps carried by something vast and unhurried.
 
 "What are those?" Ryn asked.
 
 "The greater whales," Sela said. "The ones that have been here since before the Academy was built. They're not hostile. They're not friendly either. They're—" She considered. "Contemporary. They were here when we arrived, and they understand that we're here, and they have decided this is an acceptable arrangement."
 
-One of the lights paused at the glass wall. An eye resolved out of the dark — enormous, pale, ancient in the way that living things rarely were. It looked at Kael.
+One of the lights paused at the glass wall. An eye resolved out of the dark — enormous, pale, ancient in a way that living things rarely were.
 
-Or it looked at the space where Kael was. Kael had the sense that whatever the whale was perceiving, it was not exactly him in the way that most observers perceived him.
+It looked at Kael.
+
+Or it looked at the space where Kael was. Whatever the whale was perceiving, it was not exactly him the way most observers perceived him.
 
 The eye moved away, back into the dark, carrying its small light.
 
@@ -82,7 +84,7 @@ The eye moved away, back into the dark, carrying its small light.
 
 Corenne guided them to the third level, which was where the Archives began.
 
-The Tide Archives were the Atlantean Depths' primary reason for existing, which was its own kind of institutional logic: the city had grown around the library rather than the other way. The building stock of the third level was entirely devoted to storage and scholarship. The coral walls here were dry — or as dry as anything got at this depth, which was considerably dryer than the upper levels, maintained by a continuous low-level channeling that pulled moisture out of the air and directed it into the floor drainage. The effect was a dryness that felt unnatural in context, like finding a room-temperature space inside a glacier.
+The Tide Archives were the Depths' primary reason for existing, which was its own kind of institutional logic: the city had grown around the library rather than the other way. The third level was devoted entirely to storage and scholarship. The coral walls here were dry — or as dry as anything got at this depth, maintained by a continuous low-level channeling that pulled moisture from the air and directed it into the floor drainage. The effect was a dryness that felt unnatural in context, like finding a warm room inside a glacier.
 
 The Archives themselves were not arranged by subject, which had struck every outside scholar who had ever visited as a significant organizational failure, and which the Atlanteans had been defending as a deliberate philosophical position for six hundred years. "Knowledge is not a tree," Tidecaller Pelagius had written, in the official response to the last Luminari request for a categorical index. "It is a current. You cannot separate a current into labeled segments without killing it. You can only learn to navigate."
 
@@ -120,7 +122,7 @@ That was not what the Archives said.
 
 "What happened to them?" Ryn asked. He had positioned himself at the other end of the reading shelf with a notebook and was taking notes in the three-column format he used for research he considered significant.
 
-Sela was quiet for a moment, her hand still on the tablet. "Four died young. Two were killed in what the records describe as 'containment incidents' — which is Archives language for things that cannot be called accidents without being misleading." She moved her hand. "One reached Archmage rank and died in the Shadowfen Breach at age thirty-four. One—" She stopped.
+Sela was quiet for a moment, her hand still on the tablet. "Four died young. Two were killed in what the records describe as 'containment incidents' — Archives language for things that cannot be called accidents without being misleading." She moved her hand. "One reached Archmage rank and died in the Shadowfen Breach at thirty-four. One—" She stopped.
 
 Kael was watching her. "What about the one?"
 
@@ -198,7 +200,7 @@ Sela said nothing for a moment. Then: "No. None of them had Void. The strongest 
 
 "And the one you can still study," Kael said, "keeps not dying."
 
-"Yes." Something moved in her expression — not quite humor, more the quality of someone who has been waiting for a fact to be stated clearly and is relieved to hear it. "You keep not dying. This is, professionally speaking, very useful."
+"Yes." Something moved in her expression — not quite humor, more the relief of someone who has been waiting for a fact to be stated plainly. "You keep not dying. This is, professionally speaking, very useful."
 
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "The Crystalpeak"
+title: "Crystalpeak"
 chapter: 3
 book: "Chronicles of Arcanea, Book 1: The Three Academies"
 pov: Kael
@@ -7,13 +7,13 @@ gate: Foundation
 approximate_word_count: 3900
 ---
 
-# Chapter Three: The Crystalpeak
+# Chapter Three: Crystalpeak
 
-He woke up to aurora light on the ceiling.
+He woke to aurora light on the ceiling and forgot where he was.
 
-The room they'd given him was small and bare and the walls were crystal and the first light of morning came through them already transformed — not the grey-white of mountain dawn but something tinted, layered, a soft progression of colors that moved as the sun moved. He lay on his back and watched it and tried to hold onto the feeling of the previous night, the first moment he'd walked through the main gates and the full scale of the Crystalpeak had resolved into reality around him.
+The room they'd given him was small and bare and the walls were crystal and the first light of morning came through them already changed — not the grey-white of mountain dawn but something tinted, layered, a slow progression of colors that moved as the sun moved. He lay on his back and watched it and tried to hold onto the feeling from the previous night, the first moment he'd walked through the main gates and the full scale of the Crystalpeak had resolved into reality around him.
 
-He'd lost the thread of that feeling somewhere around the third orientation lecture. It had been a long night.
+He'd lost the thread somewhere around the third orientation lecture. Long night.
 
 The Crystalpeak was not floating, exactly — he'd been wrong about that. It sat atop an actual mountain, but the crystal spires and structures extended so far above the rock base that from below they appeared to float. The internal architecture was bewildering: corridors that opened into spaces too large for their exteriors, pocket libraries that were smaller on the inside than the outside but somehow held more books, staircases that went up and arrived below. He'd been given a room on the residential tier and told the dining hall was on the eastern spiral and handed a map that he suspected was only loosely correlated with actual geography.
 
@@ -25,7 +25,7 @@ Sixty new students ate breakfast in a room lit by refracted sunlight that fell i
 
 There were patterns, visible quickly. Students from Academy families had found each other within the first hour and formed their gravitational clusters. Students from cities moved differently than students from villages. Everyone was watching everyone else's hands, which was where the affinity usually showed — small involuntary gestures, light gathering in palms, sparks in fingers — the half-controlled tells of people who'd been managing their Gifts outside of proper training.
 
-A girl sat down across from him without asking. She was about his age, brown-skinned, dark-haired, with the kind of face that had already made up its mind about most things. Her academic robe was standard issue but she'd removed the House insignia patch — he could see the thread marks where it had been — and sewn nothing in its place.
+A girl sat down across from him without asking. About his age, brown-skinned, dark-haired, with a face that had already made up its mind about most things. Her academic robe was standard issue but she'd removed the House insignia patch — he could see the thread marks where it had been — and sewn nothing in its place.
 
 "You climbed up," she said. It wasn't a question.
 
@@ -79,7 +79,7 @@ The Weaving Hall was a tall room, circular, with no apparent light source. Light
 
 The instructor arrived precisely at the hour.
 
-Master Toren was compact and grey-haired and had the particular stillness of someone who'd had decades to decide what to do with their hands. He wore no House insignia either — just a plain robe, the grey of old slate. He walked to the center of the room and looked at the assembled students with a gaze that moved quickly but landed precisely.
+Master Toren was compact, grey-haired, and still the way old stone was still — not inert but settled, decades of movement compressed into a man who'd decided exactly what to do with his hands. He wore no House insignia. Just a plain robe, the grey of old slate. He walked to the center of the room and looked at the assembled students with a gaze that moved quickly but landed precisely.
 
 "Light-weaving," he said. "That's what this course is called. Before we start, I want everyone to attempt something for me." He held up his right hand, palm up. "Focus on producing light. Any amount. Don't strain. Just reach toward it."
 
@@ -87,13 +87,15 @@ Around the room, hands came up. Light happened. Small blooms of it, varying colo
 
 Kael held up his hand and reached.
 
-Nothing happened. He was very clear on the reaching — he could feel the attempt, the outward gesture of attention, the same direction you aimed when you wanted something external to respond. He'd done it with stone. Stone had responded immediately. This — nothing. Like pushing against air.
+Nothing happened. He was clear on the reaching — he could feel the attempt, the outward gesture of attention, the same direction you aimed when you wanted something external to respond. He'd done it with stone. Stone had answered immediately. This — nothing. Pushing against air.
 
 He lowered his hand.
 
-He'd been the only one. He looked around to confirm this and confirmed it and looked back at his empty palm and tried to identify what he was feeling. Not embarrassment, exactly. Something more fundamental — the specific quality of being wrong about where you fit.
+Empty palm. He looked around the room. Every other hand held light.
 
-Master Toren had watched all of it without comment. Now he moved through the room, pausing at each student. Adjusting an elbow here, redirecting an intention there. When he reached Kael he looked at the empty palm and then at Kael's face.
+Not embarrassment, exactly. Something more fundamental. The precise feeling of being wrong about where you fit.
+
+Toren had watched all of it without comment. Now he moved through the room, pausing at each student. Adjusting an elbow here, redirecting an intention there. When he reached Kael he looked at the empty palm, then at Kael's face.
 
 "What's your Gate?" he asked.
 
@@ -101,7 +103,7 @@ Master Toren had watched all of it without comment. Now he moved through the roo
 
 Toren said nothing for a moment. Then: "Come with me."
 
-He led Kael to the side of the room while the other students continued their attempts. Up close, the instructor's face had the texture of someone who had lived interestingly — not just aged, but *accumulated*, experiences having left their marks deliberately.
+He led Kael to the side of the room while the other students continued. Up close, Toren's face had the texture of someone who had lived interestingly — not just aged, but *accumulated*, each line placed deliberately by whatever had put it there.
 
 "You can't do this," Toren said. It was not unkind.
 
@@ -135,9 +137,21 @@ Toren said nothing, which was confirmation.
 
 "Someone with Foundation magic built this."
 
-"Someone with Foundation magic built the permanent light matrix into the crystal lattice of the walls, which is why the light here has no source. They understood stone and crystal as living systems, not static materials. They could speak to what the stone wanted to be and guide it there." Toren's voice carried something careful in it — not reverence, but respect for precision. "You won't learn Light-weaving this semester, or possibly ever. You will learn something that very few people in this Academy know how to teach, because very few people here have ever needed to learn it." A pause. "That's either a problem or an opportunity. Which one it is depends on you."
+"Someone with Foundation magic built the permanent light matrix into the crystal lattice of the walls." Toren pressed his palm flat against the nearest wall. The light beneath his hand shifted, brightened, as if responding to the contact. "That's why the light here has no source. She understood stone and crystal as living systems, not static materials. She could speak to what the stone wanted to be and guide it there."
 
-Kael thought about the granite block at the quarry, split along a dozen natural fault lines, smooth as glass. *The stone had wanted to come apart cleanly.*
+Kael looked at the wall. Looked at Toren's hand against it, and the light pooling around his fingers like water finding a low point. He could feel something — faint, just at the edge of perception — the crystal humming the way the quarry granite had hummed. The same language. He pressed his own hand against the wall.
+
+The hum sharpened. Not louder. Clearer. Like a voice coming into focus across a crowded room.
+
+Toren watched him. Said nothing for three full breaths.
+
+"You feel that," Toren said. Not a question.
+
+Kael nodded. His palm was warm where it touched the crystal. The warmth went deep, past skin, past bone, into whatever part of him had cracked six walls in Stonethatch.
+
+"You won't learn Light-weaving this semester, or possibly ever," Toren said. "You will learn something very few people in this Academy know how to teach, because very few people here have ever needed to learn it." He paused. "That's either a problem or an opportunity. Which one it is depends on you."
+
+Kael pulled his hand away. The hum faded. He thought about the granite block at the quarry, split along a dozen natural fault lines, smooth as glass. *The stone had wanted to come apart cleanly.*
 
 He thought about what Toren had said: *guide it there.*
 
@@ -197,7 +211,7 @@ Sable's expression shifted fractionally. "You know about her?"
 
 "I don't. You mentioned yesterday — the ones who transferred or withdrew." He paused. "The one who stayed."
 
-She watched him with the particular attention of someone recalibrating a first impression. He got the feeling she didn't recalibrate often.
+She watched him — recalibrating. He got the feeling she didn't recalibrate often.
 
 "Fen," she said. "Her name is Fen. She's a third-year." Sable looked back at her book. "She told me not to expect her to hold my hand. I respect that. I'm going to find her anyway."
 
@@ -209,7 +223,7 @@ He almost smiled. "I meant I agree with it. Knowing the person who survived the 
 
 Sable turned another page, which might have been dismissal, and then said without looking up: "Toren's seventh-hour session. Tell me how it goes."
 
-Not a question. Not exactly a request. But not nothing.
+Not a question. Not a request. But not nothing, either.
 
 "I will," he said.
 
@@ -219,7 +233,7 @@ The library turned out to be through the door he'd been avoiding because the dim
 
 Then he found the architecture shelf. He pulled three volumes.
 
-He sat down under a light that came from everywhere and nowhere and began to read about foundations.
+He sat down under a light that came from everywhere and nowhere and read about foundations.
 
 ---
 
@@ -249,10 +263,12 @@ Toren looked at him for a long time.
 
 "That," he said quietly, "is exactly the right question."
 
-He clasped his hands behind his back and turned toward the walls, toward the light that had been living in crystal for centuries, and began to speak.
+He clasped his hands behind his back and turned toward the walls, toward the light that had been living in crystal for centuries, and spoke.
 
-And in the Inkwell Gardens, two floors below, Sable Naethe turned the last page of her reading and sat with the silence of the Void — not absence but potential, not emptiness but the space where something had not yet been decided — and thought about the third-year student she needed to find, and the Luminary's oldest dark secret locked beneath the Crystalpeak, and the paper her parents had published before she was born that had concluded, very carefully, very thoroughly, that people like her were something to be afraid of.
+Two floors below, in the Inkwell Gardens, Sable Naethe turned the last page of her reading and sat with the silence of the Void — not absence but potential, the space where something had not yet been decided.
 
-She intended to prove them wrong.
+She thought about the third-year student she needed to find. She thought about what might be locked beneath the Crystalpeak that no one talked about. She thought about her parents' paper.
 
-She just needed to find someone to show her how.
+She intended to prove it wrong.
+
+She just needed to find someone who'd show her how.

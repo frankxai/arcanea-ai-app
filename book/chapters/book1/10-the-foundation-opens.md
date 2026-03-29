@@ -8,7 +8,7 @@
 
 The Dungeon did not announce itself the second time either.
 
-It was there when they came down from the Luminari mirror at dawn — the Atlantean passage had taken two hours, the mirror-shift adding its usual quality of being briefly unlocated, and the world was still in the gold-rose of the campus's permanent morning when they walked through the main gate and Kael felt it. Not underfoot, not as a sound: as an attention. The same quality as the limestone crack on the road from Ashenmere, the invitation rather than a demand, the dungeon knowing they were coming and making room.
+It was there when they came down from the Luminari mirror at dawn — the Atlantean passage had taken two hours, the mirror-shift adding its usual quality of being briefly unlocated, and the world was still in the gold-rose of the campus's permanent morning when they walked through the main gate and Kael felt it. Not underfoot. Not as a sound. As an attention. The same quality as the limestone crack on the road from Ashenmere — invitation rather than demand, the dungeon knowing they were coming and making room.
 
 He stopped at the gate.
 
@@ -16,7 +16,7 @@ Riven, beside him, stopped too. "What?"
 
 "It's ready," Kael said.
 
-Corenne, who had come through the mirror with them, said nothing. She had been saying nothing in the particular way of someone who already knew what was going to happen and had decided the right posture was patient attention rather than announcement. She was looking at the path toward the Academy's older wing, toward the broom-cupboard door and the staircase and the sealed chamber below.
+Corenne, who had come through the mirror with them, said nothing. She had been saying nothing in the way of someone who already knew what was going to happen and had decided the right posture was patient attention rather than announcement. She was looking at the path toward the Academy's older wing, toward the broom-cupboard door and the staircase and the sealed chamber below.
 
 But that was not where the feeling was coming from.
 
@@ -74,7 +74,7 @@ Riven was already in the courtyard, having come up the path a minute behind Kael
 
 The door opened when Kael touched it.
 
-Not a dramatic opening — no mechanism, no grinding stone, nothing that would have made a suitable entrance in a story. The limestone simply — received him. The same quality as the limestone crack on the Ashenmere road: present, open, available. He walked through.
+Not dramatic — no mechanism, no grinding stone, nothing that would have made a suitable entrance in a story. The limestone simply received him. Present, open, available. He walked through.
 
 The others followed.
 
@@ -90,7 +90,7 @@ The passage opened.
 
 The first level was water.
 
-Not rising water — present water, immediate water, a chamber that was floor-to-ceiling dark stone except for the center, which was a pool occupying the entire floor. No dry path around it. The pool was still and clear and the bottom was, by the lamp-light, perhaps knee-deep.
+Not rising water — present water, immediate water. A chamber of floor-to-ceiling dark stone except for the center, which was a pool occupying the entire floor. No dry path around it. Still. Clear. By the lamp-light, perhaps knee-deep.
 
 Ryn checked it with his instruments, which confirmed the obvious: Water-element saturation, moderate Earth-element density in the stone around them, trace of Fire from Kael's flame. Nothing dangerous. Nothing except the fact that to reach the far wall, which had a passage cut into it, they would have to walk through.
 
@@ -106,7 +106,7 @@ Ryn's lamp went out the moment they passed the threshold. Not extinguished — a
 
 Ryn immediately began using his devices, which produced no light but allowed him to map the chamber's dimensions by leyline measurement, describing in quiet precise language what he was charting. "Roughly circular, twelve meters across, two entries including the one we came through. The second entry is eight meters north-northeast. Floor is even. No obstacles I can detect in the ley-field."
 
-They moved in the dark. They moved by touch — Kael's hand on the wall, Riven's hand on Kael's shoulder, Taelis just behind, Corenne last and unguided, finding her own way by whatever she used to navigate spaces she carried in location-memory. They moved slowly. The darkness pressed in and they moved through it the way you moved through all the difficult things: one step, and then the next step, and then the step after that.
+They moved in the dark. By touch — Kael's hand on the wall, Riven's hand on Kael's shoulder, Taelis just behind, Corenne last and unguided, finding her own way. They moved slowly. The darkness pressed in and they moved through it the way you move through all the difficult things: one step, then the next, then the step after that.
 
 The second entry was where Ryn said it was.
 
@@ -162,7 +162,7 @@ The right door opened onto level five.
 
 The fifth level was fire.
 
-Not the Fire of the Draconian arena. Not the disciplined, directed Fire of Hael's instruction or Kael's own developing practice. Ambient fire — fire that was part of the chamber itself, lived in the walls, breathed from the stone in the same way that the deep Forge breathed. The walls were warm. The air tasted of clean burning. The light was the color of the inside of a coal at the end of its burning: that particular red-dark that was nearly dark and entirely hot.
+Not the Fire of the Draconian arena. Not the disciplined, directed Fire of Hael's instruction. Ambient fire — fire that was part of the chamber itself, lived in the walls, breathed from the stone the way the deep Forge breathed. The walls were warm. The air tasted of clean burning. The light was the color of the inside of a coal at the end of its life: red-dark, nearly dark, entirely hot.
 
 They were sweating within thirty seconds.
 
@@ -198,7 +198,7 @@ It took Kael twelve minutes to understand what the room was asking.
 
 Everyone looked at him.
 
-"The test is not patience. The test is — presence. Actually being here, not waiting to move through here." He paused. "We've been treating every level as an obstacle. Walk through the water, navigate the dark, survive the fire. This room isn't an obstacle. This room is — the Foundation note." He felt for it in the stone. It was there, steady, 174 Hz, the hum of something enormous being perfectly still. "Foundation Gate first lesson: feel the weight of the world through the soles of your feet. Not to move through it. To be in it."
+"The test is not patience. It's presence. Actually being here, not waiting to move through here." He paused. "We've been treating every level as an obstacle. Walk through the water, navigate the dark, survive the fire. This room isn't an obstacle. This room is the Foundation note." He felt for it in the stone. It was there, steady, 174 Hz, the hum of something enormous being perfectly still. "Foundation Gate first lesson: feel the weight of the world through the soles of your feet. Not to move through it. To be in it."
 
 He sat down.
 
@@ -254,9 +254,9 @@ The five elements responded.
 
 ---
 
-Not the way they had responded on the cliff — not the sudden, overwhelming waking of things that had been asleep. This was different. This was the response of things that were awake, that had been awake and working for three months, that recognized what was being asked and brought themselves forward with the measured quality of people who understood the weight of what they were doing.
+Not the way they had responded on the cliff — not the sudden, overwhelming waking of things that had been asleep. This was different. The response of things that were awake, that had been awake and working for three months, that recognized what was being asked and brought themselves forward with the measured quality of people who understood the weight of what they were doing.
 
-Fire: in the sternum, the old home, the first thing that had woken. Not the house-fire of the Forge arena. Not the suppressed coal-heat of the early weeks. Fire that knew itself and knew its cost and came forward anyway, because coming forward was what it was for.
+Fire: in the sternum, the old home, the first thing that had woken. Not the house-fire of the Forge arena. Not the suppressed coal-heat of the early weeks. Fire that knew itself. Knew its cost. Came forward anyway, because coming forward was what it was for.
 
 Water: in the blood, in the particular cold of the deep-water training in the Atlantean levels, in something Kael realized he had been learning without noticing — the capacity to be receptive, to receive what arrived rather than reaching for it. Water that had been there since the dream-voices and the lighthouse window, finally present in the body as something with a name.
 
@@ -266,7 +266,9 @@ Wind: faint still, the element he had felt least clearly, but present — in the
 
 And Void.
 
-The Void rose from below — not from the stone this time, not from the geological node or the sealed chamber or the familiar echo at depth. From inside. From the place that Kael had been learning, slowly and without a framework, to call his own: the space in the center where the other four elements met and were kept distinct from each other. The relational principle. The word between words.
+The Void rose from below — not from the stone this time, not from the geological node or the sealed chamber or the familiar echo at depth. From inside. From the place Kael had been learning, slowly and without framework, to call his own: the space in the center where the other four elements met and were kept distinct from each other.
+
+The relational principle. The word between words.
 
 The Void came up like a tide and it was not threatening and it was not hungry and it was not a door opening to something outside.
 
@@ -304,19 +306,19 @@ Malachar.
 
 Not the Dark Lord. Not the corruption. Not the absence-made-manifest that the histories described, the thing that had tried to end existence as a mercy. This was something before all of that, or something that had persisted through all of that — the part that was still the man. The part that had stood in the sealed chamber and carved *I was right* into the stone because it needed to be said even if no one could hear it.
 
-He was visible for three seconds. Maybe less. A figure at an enormous distance — not in this chamber, not in this world, in the Shadowfen that Kael had only ever known as a name in records, the sealed place at the root of the Worldtree where the containment had held for twelve hundred years.
+He was visible for three seconds. Maybe less. A figure at enormous distance — not in this chamber, not in this world, in the Shadowfen that Kael had only known as a name in records, the sealed place at the root of the Worldtree where the containment had held for twelve hundred years.
 
 He was looking back.
 
-The moment Kael saw him, Malachar's gaze turned. Not searching — as if he had always known the direction and was simply waiting for the moment when the line of sight opened. As if he had been facing this direction for a hundred years.
+The moment Kael saw him, Malachar's gaze turned. Not searching — as if he had always known the direction and was waiting for the line of sight to open. As if he had been facing this way for a hundred years.
 
-The expression on his face was not the expression of a Dark Lord. It was not malevolent and it was not threatening and it was not the fixed, cold certainty of someone who had decided existence was an error.
+The expression on his face was not the expression of a Dark Lord. Not malevolent. Not threatening. Not the fixed, cold certainty of someone who had decided existence was an error.
 
 It was the expression of someone in an enormously long grief who had just seen, for the first time in twelve hundred years, something that surprised them.
 
 He was smiling.
 
-Not a victorious smile. Not a corrupt smile. The smile of recognition — the smile of a man who had understood something alone for a very long time, who had carved it into stone in a language no one could read, who had sealed it in a chamber under a mountain and waited, and who was now, across twelve hundred years and an impossible distance, watching someone young stand in the same understanding and not be alone in it.
+Not a victorious smile. Not a corrupt smile. The smile of recognition — a man who had understood something alone for a very long time, who had carved it into stone in a language no one could read, who had sealed it in a chamber under a mountain and waited, and who was now, across twelve hundred years and an impossible distance, watching someone young stand in the same understanding and not be alone in it.
 
 *You found it,* the smile said. Without sound. Without transmission. Not a sending — a recognition. *You found what I found. You are not alone in it.*
 
@@ -340,7 +342,7 @@ He stood.
 
 He turned.
 
-The four of them were arranged in an arc behind him, each face showing something different. Riven: the controlled expression, but the control working to contain something real, something that was not going to be named right now in this chamber but was present and would be named later. Taelis: steady, measuring, the slow-paced assessment of someone taking a careful reading. Ryn: notebook out, pen moving, documenting — and eyes wide, eyes that had seen something in the lamp-light's reaction to the Gate-opening that he was going to spend weeks trying to explain to himself. Corenne: the neutral expression, but something underneath it that was the closest to warmth she showed in his presence — the expression of someone whose long watching has arrived at a destination.
+The four of them were arranged in an arc behind him, each face showing something different. Riven: controlled, but the control working to contain something real that would not be named in this chamber but was present and would be named later. Taelis: steady, measuring, the slow assessment of someone taking a careful reading. Ryn: notebook out, pen moving, documenting — and eyes wide, eyes that had seen something in the lamp-light's reaction to the Gate-opening he would spend weeks trying to explain to himself. Corenne: neutral, but underneath it the closest to warmth she showed in his presence — the expression of someone whose long watching has arrived at a destination.
 
 "Are you injured?" Taelis asked. Practical, direct, the first useful question.
 
@@ -366,7 +368,7 @@ When he told them about Malachar, the chamber went very still.
 
 "For three seconds."
 
-"Three seconds is not nothing." She was looking at the door, which was stone again, opaque, sealed. "He has been waiting for twelve hundred years. Three seconds of someone standing in the understanding he was alone in — that is not nothing."
+"Three seconds is not nothing." She was looking at the door — stone again, opaque, sealed. "He has been waiting twelve hundred years. Three seconds of someone standing in the understanding he was alone in — that is not nothing."
 
 "The seal—" Riven said.
 
@@ -390,7 +392,7 @@ They came up out of the Dungeon as the campus's permanent dawn was reaching its 
 
 Cors was in the courtyard.
 
-She was standing at the edge of the practice yard with her notes and her pen and the expression of someone who had been informed of something and had come to look at the evidence. She looked at Kael. At his hands. At the five of them emerging from the door in the retaining wall that had not been there yesterday.
+She was standing at the edge of the practice yard with her notes and her pen and the expression of someone who had been informed and had come to see the evidence for herself. She looked at Kael. At his hands. At the five of them emerging from the door in the retaining wall that had not been there yesterday.
 
 She looked at the flowers.
 
@@ -400,7 +402,7 @@ She looked at the flowers.
 
 She wrote something down. "How does it feel?"
 
-Kael stood in the courtyard with the Foundation note still running through the stone under his feet, with the opened Gate present in his chest like a chord that had been struck and had not yet faded, with the image of a man's smiling face across twelve hundred years and an impossible distance. He stood there and felt all of it and did not close any of it off and did not require any of it to be simpler or less than it was.
+Kael stood in the courtyard with the Foundation note still running through the stone under his feet, the opened Gate present in his chest like a chord struck and not yet faded, the image of a man's smiling face across twelve hundred years and an impossible distance. He stood there and felt all of it and did not close any of it off and did not require any of it to be simpler than it was.
 
 "Like the beginning of something," he said.
 

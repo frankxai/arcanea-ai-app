@@ -183,7 +183,7 @@ Before the Academies, each Gate had a physical temple where mortals could attemp
 **Core Cast**: A Dragon clutch hatches for the first time in centuries. Nations scramble to claim them.
 **Conflict**: Embera's awakening triggers ancient Dragon politics. Pyralith stirs in its sleep.
 
-### Book 4: The Heart of the Storm
+### Book 4: The Garden of Thorns
 **Gate**: Heart
 **Theme**: Love as a weapon, love as a shield, love as the thing that breaks you open
 **Core Cast**: Relationships tested as the political cost of Gate-touched power becomes clear
@@ -195,7 +195,7 @@ Before the Academies, each Gate had a physical temple where mortals could attemp
 **Core Cast**: A hidden history of Arcanea surfaces — the Gods were not always Gods
 **Conflict**: Alera's temple reveals a truth the Gods tried to erase. The Academy councils fracture.
 
-### Book 6: The Sight Beyond
+### Book 6: The Mirror Depths
 **Gate**: Sight
 **Theme**: Seeing too much too soon, and the courage to look anyway
 **Core Cast**: A seer among the Gate-touched begins dreaming Malachar's memories

@@ -6,9 +6,9 @@
 
 # Chapter Six: The Depth Below
 
-Finding Corenne Narveth proved to be straightforward in a way that felt like it should be suspicious.
+Finding Corenne Narveth was straightforward in a way that should have been suspicious.
 
-Kael came down to breakfast in the Academy's communal hall and she was already at a table near the window. Not waiting for him, exactly — more as though she had arrived at the same destination by a different route and had been there long enough to have finished most of a bowl of something warm.
+Kael came down to breakfast in the communal hall and she was already at a table near the window. Not waiting for him, exactly — more as though she had arrived at the same destination by a different route and had been there long enough to finish most of a bowl of something warm.
 
 He sat down across from her.
 
@@ -40,11 +40,13 @@ Corenne set down her spoon. She had small hands and held things with unnecessary
 
 ---
 
-The lower passages were accessed through a door in the Academy's oldest wing — the wing that predated the current building by several centuries, that the Academy had grown around rather than through, that the architectural records categorized as "original substrate" with the tone of documents that had made peace with not understanding what they were describing. The door looked like it belonged to a broom cupboard. There was a broom inside. There was also a staircase behind the broom.
+The lower passages were accessed through a door in the Academy's oldest wing — the wing that predated the current building by centuries, that the Academy had grown around rather than through, that the architectural records categorized as "original substrate" with the tone of documents that had made peace with not understanding what they described. The door looked like it belonged to a broom cupboard. There was a broom inside.
+
+There was also a staircase behind the broom.
 
 Corenne moved the broom without ceremony. She did not appear to need a light. She went down.
 
-Kael produced a small flame — not combat-channeling, not anything structured; just the thread of Fire that Taelis had spent yesterday showing him how to hold without thought, a candle-worth of light between the first two fingers. It came easily. It startled him how easily it came when he stopped organizing it into something formal.
+Kael produced a small flame — not combat-channeling, nothing structured. Just the thread of Fire that Taelis had shown him how to hold without thought, a candle-worth of light between the first two fingers. It came easily. It startled him how easily it came when he stopped trying to make it formal.
 
 The passage smelled of old water and older stone. The walls were the same limestone as the exterior of the mountain but uncut here, natural and irregular, with the fossil texture of rock that had been formed under a sea long before the sea retreated. At intervals, the walls were marked with things: not decorative carvings, not inscriptions. More like the marks made by fire held against stone for a long time, a kind of thermal writing, faint with age.
 
@@ -86,9 +88,11 @@ The ley-note here was different. Higher in the elemental density but lower in th
 
 And Void.
 
-Void here was not the Void of open space or philosophical potential. It was the Void of depth — the kind that accumulated at the bottoms of wells and in the hearts of mountain ranges and in the second year after a loss, when the first year's grief has passed and you discover that what is underneath it is not recovery but simply — more of the floor. Concentrated not-ness. The stone form of silence.
+Void here was not the Void of open space or philosophical potential. It was the Void of depth — the kind that accumulated at the bottoms of wells and in the hearts of mountain ranges and in the second year after a loss, when the first year's grief has passed and you discover that underneath it is not recovery but simply more of the floor.
 
-Something had been done here. Something careful, and old, and not quite finished.
+Concentrated not-ness. The stone form of silence.
+
+Something had been done here. Careful, old, and not quite finished.
 
 "The sealing," Kael said. Not a question.
 
@@ -96,7 +100,7 @@ Something had been done here. Something careful, and old, and not quite finished
 
 The wall, here, showed the thermal marks Kael had seen in the passage above — the marks of fire held against stone for a long time. But here they were not faint with age. They were clear. Deliberate. Seven sets of them, at head-height, the distance between them suggesting that seven people had stood at intervals around this chamber and pressed fire or light or channeled energy into the rock in a specific, coordinated pattern.
 
-Between the marks, the wall had a different quality. Not sealed — sealed was too mechanical a word. The rock here had been convinced of something. Persuaded to hold an additional density. Given a function it had not originally possessed.
+Between the marks, the wall was different. Not sealed — sealed was too mechanical. The rock here had been convinced of something. Persuaded to hold additional density. Given a function it had not originally possessed.
 
 "What was sealed?" Kael asked.
 
@@ -270,7 +274,7 @@ The five elements settled around them. The Void pulsed. The chamber breathed in 
 
 Kael stood. He looked at the inscription one more time. *I was right.* Three words, certain and alone, left in a language only he could read, in a place only the three people who had come down here in four hundred years would find.
 
-He reached out and put his gloved hand on the stone beside the inscription. Not channeling anything — just touch. Contact. Acknowledgment of what had been here before him, what had tried to understand itself in this same dark, what had been right about enough and wrong about enough and had not found the difference in time.
+He reached out and put his gloved hand on the stone beside the inscription. Not channeling. Just touch. Contact with what had been here before him, what had tried to understand itself in this same dark, what had been right about enough and wrong about enough and had not found the difference in time.
 
 The mountain was still.
 
@@ -284,7 +288,7 @@ The mountain was still.
 
 "What is it?"
 
-She looked at him. The not-quite-readable expression had something in it now that was as close to emotion as she came in his limited experience of her — not warmth, not worry, something more fundamental. The expression of someone looking at a truth they have known for a while and watching someone else arrive at it.
+She looked at him. The not-quite-readable expression held something now that was as close to emotion as she came — not warmth, not worry, something more fundamental. The expression of someone watching another person arrive at a truth they have carried alone.
 
 "Resonance," she said. "You and he are in resonance. Not the same. Not similar. Resonant — meaning that certain frequencies in his expression find corresponding frequencies in yours and respond to them. The way this chamber responds to Five-Fold channeling." She paused. "He left those words here because no one else could read them. And that was true for four hundred and thirty years. And then you came."
 

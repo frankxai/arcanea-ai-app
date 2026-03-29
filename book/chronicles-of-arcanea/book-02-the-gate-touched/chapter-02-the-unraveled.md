@@ -13,11 +13,11 @@ approximate_word_count: 3900
 
 He heard her before he saw her.
 
-Cinderwall's Embers Quarter was loud at the best of times — tanneries, smithies, a district that ran on fire and noise and the specific aggressive energy of people who had chosen to live next to heat for economic reasons and had gradually stopped noticing it. He had grown up three streets over. He knew the ambient temperature of the place the way most people knew the sound of their own heartbeat, and he knew the ambient emotional temperature too, which was something the Forge had given him a name for but which he'd always had: the particular combination of exhaustion and defiance and low-grade resentment that was the Embers Quarter's permanent weather.
+Cinderwall's Embers Quarter was loud at the best of times — tanneries, smithies, a district that ran on fire and noise and the blunt aggression of people who had chosen to live next to heat for economic reasons and had gradually stopped noticing it. He had grown up three streets over. He knew the ambient temperature of the place the way most people knew the sound of their own heartbeat, and he knew the emotional temperature too, which was something the Forge had given him a name for but which he'd always had: exhaustion and defiance and low-grade resentment, braided together. The Embers Quarter's permanent weather.
 
 He heard her at the end of Kiln Street.
 
-The sound was wrong before he could have said why — a frequency in the air that didn't belong, not a sound exactly, more like the feeling of a sound pressed against a frequency he ran on. His fire moved inside him. He had not told it to.
+The sound was wrong before he could have said why — a frequency in the air that didn't belong, not a sound exactly, more like pressure against a frequency he ran on. His fire moved inside him. Unbidden. Rising toward something it recognized.
 
 He found her in the narrow space between a tannery and a brickwork yard, in a passageway that dead-ended at a drainage wall. She was sixteen if she was anything, crouched against the bricks with her knees pulled up, and she was cracking.
 
@@ -29,9 +29,9 @@ Emotional amplification. He had read Voss's clinical notes on it. Reading clinic
 
 He could feel it at the edge of his range: a pressure, a heat that wasn't temperature. Fear and pain and something rawer than either, something pre-verbal, the feeling of a body that was experiencing something too large for it to contain. It was pressing outward from her in waves and it was finding everything in ten feet that had anywhere to go, and it was going there.
 
-He did not feel afraid. He noted this because it was the kind of thing that was worth noting — he was inside a radius of active Stage Two Unraveling, the kind of scenario that every instructor at the Forge had said, in one form or another, *do not approach alone* — and he felt none of the cold-stomach fear that had been his default response to fire-situations for the three years before the Forge.
+He did not feel afraid. Worth noting — he was inside a radius of active Stage Two Unraveling, the kind of scenario every instructor at the Forge had said, in one form or another, *do not approach alone* — and he felt none of the cold-stomach dread that had been his default for three years before the Forge.
 
-He felt a specific thing that he had been feeling more often in the past six months and had not yet managed to give a name to, which was something like *no, I don't think so* directed at a situation rather than a person.
+What he felt was closer to refusal. A flat, quiet *no, I don't think so* directed at the situation itself.
 
 He crouched down at the entry of the passageway — at the edge of the radius, just inside it — and felt the pressure against his own fire, which responded with the unhelpful immediacy of fire near fire, wanting to climb. He told it to stay. It stayed. The discipline was six months newer than it felt.
 
@@ -43,7 +43,7 @@ She didn't look at him. The cracks pulsed.
 
 Nothing.
 
-He was aware, in his peripheral awareness, of noise at the end of Kiln Street. City guard. He had been in enough situations involving city guard to read the sound of their approach — the specific rhythm of boots on cobblestone when they were moving with purpose toward a location someone had reported.
+At the end of Kiln Street: noise. City guard. He knew the sound — boots on cobblestone with purpose behind them, moving toward a location someone had reported.
 
 Someone had reported her.
 
@@ -55,13 +55,13 @@ The pressure doubled the moment he crossed fully into the radius. He felt it not
 
 "My name is Ash," he said. "I don't have a last name. I'm from three streets over. I went to the Forge six months ago and they told me what I have is a Fire Gate and I need to learn to not set things on fire by accident, and I believed them because I set a lot of things on fire by accident." He was talking to fill the space, to give her sound to orient toward. "I came back to the Quarter to check on some things, which is how I know there are city guard at the end of that street, and I'm going to be honest with you — they don't know what to do with you and the people who don't know what to do with things like this tend to make decisions that are bad for you."
 
-A pulse of light through the cracks in her forearms. The pressure against him spiked again, in a frequency that carried fear underneath the pain, and for a moment he felt it through his own chest like a struck chord — a completely unwelcome sensation that told him her fear of whatever was coming up the street was acute and specific and not abstract.
+A pulse of light through the cracks in her forearms. The pressure spiked — fear under the pain this time, sharp, and for a moment he felt it through his own sternum like a struck chord. Her fear of whatever was coming up the street was not abstract.
 
-She had seen city guard before, or something that moved like them.
+It was memory. She had seen city guard before, or something that moved like them.
 
 He crouched down lower. "What's your name?"
 
-The light in the cracks shifted color — cooler for a moment, then back to orange-white. Something had changed in her; she had heard something. He had learned, in six months at the Forge and six months before that on the streets, that a question asked at the right pitch could do work that force couldn't. Not manipulation — he had precise feelings about manipulation, a specific dislike of it that had everything to do with having been on the receiving end. Just: the correct address. The right door.
+The light in the cracks shifted color — cooler for a moment, then back to orange-white. Something had changed in her; she had heard something. He knew from six months at the Forge and six months before that on the streets that a question asked at the right pitch could do work that force couldn't. Not manipulation — he had a precise and personal hatred of manipulation, born entirely from the receiving end. Just: the correct address. The right door.
 
 He had picked up the phrase from Voss, who was Instructor Voss at the Forge and was also the person who had looked at Ash on his third day and said, with the blunt diagnostic clarity of someone who had been teaching Gate-touched students for thirty years: *you've been managing fire like it's a problem you inherited. Stop that.* He had hated this observation. He had spent four months proving it wrong. Somewhere around month five he had accepted that it was correct.
 
@@ -87,31 +87,43 @@ He reached toward her.
 
 Not physically. He had no adequate language for what it was, which was a problem he was continuing to have about his Gate. He reached with the part of him that was fire and not his body, the thing that ran on the same frequency as everything burning, and he found her.
 
-He found her the way you found a structural failure in the dark by feel — by the specific quality of the wrong that greeted him, the heat coming off her Gate in uncontrolled waves, the frequency oscillating without the dampening effect of any trained pattern. She hadn't been trained. This had opened itself and kept going. She had been managing it by pure will for — he couldn't be certain, the feel of it was not precise enough for measurement, but the exhaustion he felt when he found her power was the exhaustion of days, not hours.
+He found her the way you found a structural failure in the dark by feel — by the wrongness of it, immediate and total, the heat coming off her Gate in uncontrolled waves, the frequency oscillating without the dampening effect of any trained pattern. She hadn't been trained. This had opened itself and kept going. She had been managing it by pure will for — he couldn't be certain, the feel of it was not precise enough for measurement, but the exhaustion he felt when he found her power was the exhaustion of days, not hours.
 
 He reached further in and found the overflow.
 
 It was enormous.
 
-He had siphoned heat from Embera twice when she was agitated — juvenile fire dragon agitation was a specific and impressive phenomenon and his Forge training for it amounted to *don't.* He had done it anyway, both times, because Embera was his and he'd figured out how. Both times it had been like cupping water from a stream: manageable volume, familiar substance.
+He had siphoned heat from Embera twice when she was agitated — juvenile fire dragon agitation was an impressive and dangerous phenomenon and his Forge training for it amounted to *don't.* He had done it anyway, both times, because Embera was his and he'd figured out how. Both times it had been like cupping water from a stream: manageable volume, familiar substance.
 
 This was a river with no banks, running on terror and pain and the body's desperate inability to contain what the Gate was pouring through it.
 
-He opened himself to it and it hit him like stepping into the direct path of a forge blast.
+He opened himself to it.
 
-He heard — distantly — his own voice making a sound that he would, later, refuse to call a sound at all. He felt his fire take the overflow the way fire took fuel: immediately, completely, without asking. The heat came into him and his body registered it as pressure first, then pain, then something past pain, a category his nervous system had no appropriate name for because there was no protocol in any training for this volume at this speed.
+It hit him like stepping into the direct path of a forge blast — heat so dense it had weight, so immediate it bypassed every trained response and went straight to the animal core of him. His vision whited. He tasted copper. He heard, distantly, his own voice making a sound he would later refuse to name.
+
+His fire took the overflow the way fire took fuel: immediately, completely, without asking. The heat poured into him and his body registered it as pressure first, then pain, then something past pain — a bright blank space where language stopped working and there was only the sensation of being a vessel filled past capacity, his skin too thin, his bones conducting heat like iron left in coals.
 
 He held on.
 
-He held on because Lark's skin was showing less light, the cracks dimming slightly as the pressure equalized, and because he could hear the city guard boots on the cobblestones and the Embers Quarter was his and he was not going to let something like this happen in it with him present and standing aside.
+The cracks in Lark's forearms dimmed. Slightly. Just slightly.
 
-He held on until he felt her power settle — not controlled, not managed, but contained, held in the brief suspension of someone who has stopped being overwhelmed because the overwhelming has found somewhere else to go. Her eyes came back.
+He held on because the city guard boots were on the cobblestones now, close, and because the Embers Quarter was his — had always been his — and he was not going to let something like this happen in it with him present and standing aside.
+
+The overflow kept coming. His hands were shaking. He could smell singed hair — his own. Somewhere behind his ribs his fire was screaming in a register that was not pain and not pleasure but the pure overwhelming fact of too much, and he held the sphere drill, the most basic exercise, the one thing you could always do when everything else stopped working, and he held it and held it and —
+
+Her power settled. Not controlled. Not managed. But contained — held in the brief suspension of someone who has stopped drowning because the water has found somewhere else to go.
+
+Her eyes came back.
 
 She looked at him.
 
 He let go.
 
-The fire left him in a rush and took something with it — he sat for a moment understanding nothing at all, feeling the empty space where his heat had been, feeling his vision go strange at the edges. He put a hand on the stone floor. The stone was real. He counted that as progress.
+The fire left him in a rush and took something with it. He sat for a moment understanding nothing at all, hollow, the space where his heat had been ringing like a struck bell with no sound. His vision went strange at the edges. He put a hand on the stone floor.
+
+Cold. Real. Solid.
+
+He counted that as progress.
 
 "I need a minute," he said to no one in particular.
 
@@ -119,7 +131,7 @@ Lark reached out and put her hand over his on the stone, without words, which wa
 
 ---
 
-The city guard took one look at the passageway and the girl crouching in it and the young man sitting beside her and made the assessment he had expected: two Gate-touched, potential containment situation, call for Academy enforcement. The lead guard — a woman he'd have placed around thirty, with the specific careful manner of someone who had read a protocol recently and was applying it in real time — stopped at the entry of the passageway and held up her hand to stop the others.
+The city guard took one look at the passageway — girl crouching, young man beside her, the air still thick with residual heat — and made the assessment he had expected: two Gate-touched, containment situation, call for Academy enforcement. The lead guard, a woman around thirty with the stiff posture of someone applying a protocol she'd read recently, stopped at the entry and held up her hand.
 
 "Gate-touched," she said. "Protocol Four."
 
@@ -143,15 +155,15 @@ She looked back at Ash.
 
 "One hour is enough."
 
-He turned back to Lark, who was watching him with those amber eyes, the lit quality faded now, just dark irises with a gold note in them. She looked like someone who had been underwater for too long and had surfaced in an unfamiliar place and was deciding whether to breathe.
+He turned back to Lark. The amber was faded now — just dark irises with a gold note in them, like embers banked under ash. She looked like someone who had surfaced in an unfamiliar place and was deciding whether to breathe.
 
 "There's an inn," he said. "The Crossroads. Three streets north. Someone I trust is already there." He thought about saying more. He thought about the clinical language for what had happened to her in that passageway and what would happen again if she didn't get training. He thought about the Registry notice and the word *measures.*
 
 He picked his words carefully.
 
-"You're going to need help," he said. "Not because you're dangerous. Because what you have is real and it's strong and you've been trying to hold it alone, and you can't. Nobody can hold Fire alone." A pause. "I tried for three years. There's a reason I've got burn scars on my arm from when I was twelve."
+"You're going to need help," he said. "Not because you're dangerous. Because what you have is real and it's strong and you've been holding it alone, and you can't. Nobody holds Fire alone." He turned his forearm over. "I tried for three years. That's where the scars came from. I was twelve."
 
-She looked at the scars. She looked at her own forearms, where the crack lines had faded. She was holding herself carefully, the way you held yourself when standing was effortful.
+She looked at the scars. Then at her own forearms, where the crack lines had faded to faint shadows. She was holding herself the way you held yourself when standing cost something.
 
 "The inn," she said.
 
@@ -159,19 +171,19 @@ She looked at the scars. She looked at her own forearms, where the crack lines h
 
 "This person you trust." Her voice was doing something complicated. "Do they know anything about — about what this is?"
 
-"One of them does," he said. "Heart Gate. He'll feel what you're feeling before you say it and he won't make it strange. Another one is Water Gate — she's the smartest person I know who isn't a dragon." He paused. "The dragon agrees with me on that, for what it's worth."
+"One of them does," he said. "Heart Gate. He'll feel what you're feeling before you say it and he won't make it strange. Another one is Water — she's the smartest person I know who isn't a dragon." He paused. "The dragon agrees with me on that, for what it's worth."
 
-Something shifted in Lark's expression. Not exactly a smile. The proximity to one.
+Something shifted in Lark's expression. Not a smile. The ghost of where a smile would go.
 
 "There's a dragon."
 
 "Yes. She's not here right now, but she's — she asks a lot of questions and she hates being left out of things, so she'll probably arrive by tomorrow."
 
-The something-proximate-to-a-smile reached her eyes, briefly, and left. She was exhausted. He could see it now that the Gate pressure had eased — she was bone-tired, the specific depletion of someone who had been managing a Gate manifestation with no training and no support for however long this had been happening.
+It reached her eyes, briefly, and left. She was exhausted — he could see it clearly now that the Gate pressure had eased. Bone-tired. The hollowed-out depletion of someone who had been fighting her own power with nothing but will for however long this had been happening.
 
 "Okay," she said.
 
-He started walking, which was how he had always indicated that a decision had been made — he moved and things resolved themselves around the movement. It was a habit from the streets, where hesitation was read as weakness and where the grammar of intention was physical. He had been told, twice, by separate instructors at the Forge, that this quality was simultaneously useful and alarming. He had taken this as a mixed compliment and continued.
+He started walking. That was how he'd always marked a decision — move, and let everything else resolve around the movement. A street habit. Hesitation read as weakness; the grammar of intention was physical. Two separate instructors at the Forge had called this quality simultaneously useful and alarming. He'd taken the mixed compliment and continued.
 
 She followed. Her walk was careful, the kind of careful that came from a body that had been doing something it wasn't built for and was now taking stock. He matched her pace without commenting on it.
 
@@ -183,13 +195,13 @@ He thought about Lark's hand on his in the passageway, the instinctive gesture o
 
 He thought about three new Gate-touched in the Embers Quarter in one month. Elio had told him that number and he had not known what to do with it, and now he was walking a girl whose skin had been lit from the inside through the streets where he'd grown up.
 
-The Crossroads Inn was three stories of sagging competence — not comfortable exactly, but clean, and the owner had known his name since he was eight years old and had the specific ethical structure of someone who did not ask questions about people's reasons for being places. He pushed open the door.
+The Crossroads Inn was three stories of sagging competence — not comfortable, but clean, and the owner had known his name since he was eight years old and possessed the ironclad ethics of someone who did not ask questions about people's reasons for being places. He pushed open the door.
 
 Elio was at a corner table with a pot of tea, two cups already set out, a third being placed by a server who looked at Ash with no particular surprise. He looked up when Ash came in, and his expression did the thing it always did — the brief, complete read, the scan that wasn't sight, the Heart Gate receiving what the room was putting out.
 
 He looked at Lark.
 
-He didn't say anything dramatic. He didn't stand or express urgency or treat her as a situation. He picked up the third cup and filled it from the pot and pushed it gently across the table to the empty seat beside him.
+He didn't stand. Didn't express urgency. Didn't treat her as a situation. He picked up the third cup, filled it from the pot, and pushed it across the table to the empty seat beside him.
 
 "Sit down," he said, in the voice he used when he meant it. "You've been on your feet long enough."
 
@@ -207,7 +219,7 @@ Ash kept his hands flat on the table and watched his fire come back to him, degr
 
 He would say them later. To the right people. In the right order.
 
-First: this. The inn. The tea. A girl named Lark, whose power had been eating her alive, who had said *try* with the particular bravery of someone who had decided that no longer being alone was worth the risk of what trying might cost.
+First: this. The inn. The tea. A girl named Lark, whose power had been eating her alive, who had said *try* with the raw bravery of someone who had decided that no longer being alone was worth whatever trying might cost.
 
 He knew something about that.
 
