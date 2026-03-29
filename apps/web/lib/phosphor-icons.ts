@@ -10,14 +10,11 @@ import type { ComponentType } from 'react';
  * This module re-exports all icons with both naming conventions.
  */
 
-// Re-export everything from the real package (non-Ph names still work)
-export * from '@phosphor-icons/react';
-
-// CRITICAL: The local `import { X }` below shadows `export *` for those names.
-// We must explicitly re-export every locally-imported icon so bare names work.
+// Named exports only — DO NOT use `export *` as it pulls all 1,300 icons (~4.5MB).
+// Every icon used in the codebase is explicitly listed below.
 export {
   Heartbeat, ArrowBendUpLeft, ArrowCircleDown, ArrowCounterClockwise,
-  ArrowDown, ArrowLeft, ArrowRight, ArrowSquareOut, ArrowUp, ArrowUpRight,
+  Atom, ArrowDown, ArrowLeft, ArrowRight, ArrowSquareOut, ArrowUp, ArrowUpRight,
   ArrowsClockwise, ArrowsDownUp, ArrowsOut, Bell, Bird, Book, BookOpen,
   Bookmark, Books, BracketsSquare, BracketsCurly, Brain, Browser, Bug,
   Buildings, Calendar, CalendarDots, Camera, CaretDown, CaretLeft,
@@ -27,7 +24,7 @@ export {
   CloudSlash, Code, CodeBlock, Command, Compass, Copy, ArrowBendDownLeft,
   Cpu, Crown, Database, Diamond, DotsSixVertical, DotsThreeVertical,
   Download, Drop, Envelope, Eye, EyeSlash, Feather, File, FileCode,
-  FileText, FilmStrip, Fire, Fish, Flame, FloppyDisk, FolderOpen, Funnel,
+  FileText, FilmStrip, Fire, Fish, Flame, Flask, FloppyDisk, FolderOpen, Funnel,
   GameController, Gear, GearSix, GitBranch, GithubLogo, Globe, GraduationCap,
   GridFour, GridNine, Heart, House, Image, ImageSquare, Info, Keyboard,
   Leaf, Lightbulb, Lightning, Link, List, ListDashes, ListNumbers, Lock,
@@ -40,8 +37,8 @@ export {
   Skull, SlidersHorizontal, SortAscending, SortDescending, Sparkle,
   Spinner, Spiral, SplitHorizontal, SquaresFour, Stack, Star, Sun, Sword,
   Tag, Target, Terminal, TextAa, TextB, TextHOne, TextHTwo, TextItalic,
-  TextT, Translate, Trash, Tree, TrendDown, TrendUp, Trophy, TwitterLogo,
-  Upload, User, UserCircle, UserPlus, Users, VideoCamera, Warning,
+  TextT, ThumbsDown, ThumbsUp, Translate, Trash, Tree, TrendDown, TrendUp, Trophy, TwitterLogo,
+  Upload, User, UserCircle, UserPlus, Users, Video, VideoCamera, Warning,
   WarningCircle, Waves, WifiHigh, WifiSlash, Wind, Wrench, X, YoutubeLogo,
   Infinity as PhosphorInfinity,
 } from '@phosphor-icons/react';
@@ -104,6 +101,7 @@ import {
   Compass,
   Copy,
   ArrowBendDownLeft,
+  Atom,
   Cpu,
   Crown,
   Database,
@@ -123,6 +121,7 @@ import {
   Fire,
   Fish,
   Flame,
+  Flask,
   FloppyDisk,
   FolderOpen,
   Funnel,
@@ -208,6 +207,8 @@ import {
   TextItalic,
   TextT,
   Translate,
+  ThumbsDown,
+  ThumbsUp,
   Trash,
   Tree,
   TrendDown,
@@ -219,6 +220,7 @@ import {
   UserCircle,
   UserPlus,
   Users,
+  Video,
   VideoCamera,
   Warning,
   WarningCircle,

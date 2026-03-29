@@ -1,8 +1,13 @@
 'use client';
 
-import React, { useState, useMemo, useCallback } from 'react';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import dynamic from 'next/dynamic';
+
+// Lazy-load syntax highlighter (~280KB) — only rendered when code blocks appear
+const SyntaxHighlighter = dynamic(
+  () => import('react-syntax-highlighter').then((mod) => mod.Prism),
+  { ssr: false, loading: () => null }
+);
 
 // ---------------------------------------------------------------------------
 // Language metadata: display name, icon color, and a tiny SVG icon per lang
@@ -64,22 +69,32 @@ function getLangMeta(lang: string) {
 }
 
 // ---------------------------------------------------------------------------
-// Custom style overrides built on top of vscDarkPlus
+// Custom style — loads lazily alongside SyntaxHighlighter
 // ---------------------------------------------------------------------------
 const CODE_BG = '#0d0d14';
 
-const customStyle: Record<string, React.CSSProperties> = {
-  ...vscDarkPlus as Record<string, React.CSSProperties>,
-  'pre[class*="language-"]': {
-    ...(vscDarkPlus as Record<string, React.CSSProperties>)['pre[class*="language-"]'],
-    background: CODE_BG,
-    margin: 0,
-  },
-  'code[class*="language-"]': {
-    ...(vscDarkPlus as Record<string, React.CSSProperties>)['code[class*="language-"]'],
-    background: CODE_BG,
-  },
-};
+// Style loaded on demand, cached after first load
+let cachedStyle: Record<string, React.CSSProperties> | null = null;
+const stylePromise = typeof window !== 'undefined'
+  ? import('react-syntax-highlighter/dist/esm/styles/prism/vsc-dark-plus').then((mod) => {
+      const base = (mod.default || mod) as Record<string, React.CSSProperties>;
+      cachedStyle = {
+        ...base,
+        'pre[class*="language-"]': { ...base['pre[class*="language-"]'], background: CODE_BG, margin: 0 },
+        'code[class*="language-"]': { ...base['code[class*="language-"]'], background: CODE_BG },
+      };
+      return cachedStyle;
+    })
+  : Promise.resolve(null);
+
+function useHighlightStyle() {
+  const [style, setStyle] = useState<Record<string, React.CSSProperties> | null>(cachedStyle);
+  useEffect(() => {
+    if (cachedStyle) { setStyle(cachedStyle); return; }
+    stylePromise.then((s) => { if (s) setStyle(s); });
+  }, []);
+  return style;
+}
 
 // ---------------------------------------------------------------------------
 // Icons
@@ -138,6 +153,7 @@ export default function CodeBlock({
   showLineNumbers: showLineNumbersProp,
 }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
+  const highlightStyle = useHighlightStyle();
 
   const code = children.replace(/\n$/, '');
   const lineCount = code.split('\n').length;
@@ -218,8 +234,13 @@ export default function CodeBlock({
 
       {/* ---- Code body ---- */}
       <div className="code-block-body overflow-auto" style={{ maxHeight: '500px' }}>
+        {!highlightStyle ? (
+          <pre className="p-4 text-[13px] text-white/70 font-mono whitespace-pre-wrap leading-[1.65]" style={{ background: CODE_BG }}>
+            <code>{code}</code>
+          </pre>
+        ) : (
         <SyntaxHighlighter
-          style={customStyle}
+          style={highlightStyle}
           language={language || 'text'}
           PreTag="div"
           showLineNumbers={showLineNumbers}
@@ -250,6 +271,7 @@ export default function CodeBlock({
         >
           {code}
         </SyntaxHighlighter>
+        )}
       </div>
 
       {/* ---- Inline styles for custom scrollbars ---- */}

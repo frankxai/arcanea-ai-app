@@ -127,11 +127,12 @@ function HeroPortal() {
           className="hidden xl:block absolute left-0 top-0 bottom-0 w-[340px] pointer-events-none"
           style={{ maskImage: "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.55) 35%, rgba(0,0,0,0.55) 70%, transparent 100%)" }}
         >
-          <img
+          <Image
             src="/guardians/v3/lyria-hero-v3.webp"
             alt="Lyria — Sight Gate Guardian"
-            loading="eager"
-            className="absolute inset-0 w-full h-full object-cover object-top opacity-[0.09] mix-blend-luminosity"
+            fill
+            sizes="340px"
+            className="object-cover object-top opacity-[0.09] mix-blend-luminosity"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#09090b] via-transparent to-[#09090b]" />
         </div>
@@ -139,11 +140,12 @@ function HeroPortal() {
           className="hidden xl:block absolute right-0 top-0 bottom-0 w-[340px] pointer-events-none"
           style={{ maskImage: "linear-gradient(to left, transparent 0%, rgba(0,0,0,0.55) 35%, rgba(0,0,0,0.55) 70%, transparent 100%)" }}
         >
-          <img
+          <Image
             src="/guardians/v3/shinkami-hero-v3.webp"
             alt="Shinkami — Source Gate Guardian"
-            loading="eager"
-            className="absolute inset-0 w-full h-full object-cover object-top opacity-[0.09] mix-blend-luminosity"
+            fill
+            sizes="340px"
+            className="object-cover object-top opacity-[0.09] mix-blend-luminosity"
           />
           <div className="absolute inset-0 bg-gradient-to-l from-[#09090b] via-transparent to-[#09090b]" />
         </div>
