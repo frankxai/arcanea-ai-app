@@ -10,7 +10,7 @@
     "start": "next start -p 3001",
     "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix",
-    "test:projects": "tsx lib/projects/__tests__/enrichment.test.ts && tsx lib/chat/__tests__/local-store-projects.test.ts",
+    "test:projects": "tsx lib/projects/__tests__/enrichment.test.ts && tsx lib/projects/__tests__/trace.test.ts && tsx lib/chat/__tests__/local-store-projects.test.ts && tsx lib/analytics/__tests__/events-projects.test.ts",
     "type-check": "tsc --noEmit",
     "check:env": "tsx ../../scripts/check-env.ts",
     "db:push": "echo 'Use Supabase CLI for migrations'",
