@@ -126,6 +126,8 @@ export interface Creation {
   likeCount: number
   aiModel?: string | null
   aiPrompt?: string | null
+  projectId?: string | null
+  sourceSessionId?: string | null
   userId: string
   metadata?: Record<string, unknown> | null
   createdAt: string

@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { analytics } from '@/lib/analytics/events';
 import {
   assignSessionToProject,
   deleteChatSession,
@@ -163,6 +164,7 @@ export function useChatSessions(): UseChatSessionsReturn {
   const setProject = useCallback((projectId: string | null) => {
     setActiveProjectId(projectId);
     setActiveChatProject(projectId);
+    analytics.projectSelected(projectId);
     refreshSessions();
   }, [refreshSessions]);
 
@@ -243,6 +245,7 @@ export function useChatSessions(): UseChatSessionsReturn {
     const project = createChatProject({ title });
     if (project) {
       setActiveProjectId(project.id);
+      analytics.projectCreated(project.id);
       void saveProjectToCloud(project);
       refreshSessions();
     }
@@ -271,6 +274,7 @@ export function useChatSessions(): UseChatSessionsReturn {
 
   const assignSessionProject = useCallback((sessionId: string, projectId: string | null) => {
     assignSessionToProject(sessionId, projectId);
+    analytics.projectSessionLinked(projectId, sessionId);
     void assignCloudSessionToProject(sessionId, projectId);
 
     if (sessionId === activeSessionId) {

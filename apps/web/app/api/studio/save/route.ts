@@ -23,6 +23,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { createCreation } from '@/lib/database/services/creation-service';
+import { getProjectWorkspaceForCurrentUser } from '@/lib/projects/server';
+import { enrichProjectGraph } from '@/lib/projects/enrichment';
+import { recordProjectTrace } from '@/lib/projects/trace';
 
 const MAX_IMAGE_BYTES = 20 * 1024 * 1024; // 20 MB
 
@@ -178,6 +181,24 @@ export async function POST(request: NextRequest) {
         { error: { message: 'Failed to save creation record.' } },
         { status: 500 }
       );
+    }
+
+    if (projectId) {
+      await recordProjectTrace(supabase as any, {
+        userId: user.id,
+        projectId,
+        action: 'project_creation_linked',
+        metadata: {
+          creationId: creation.id,
+          type: creation.type,
+          sourceSessionId: sourceSessionId ?? null,
+        },
+      });
+
+      const workspace = await getProjectWorkspaceForCurrentUser(projectId);
+      if (workspace) {
+        await enrichProjectGraph(supabase as any, user.id, workspace);
+      }
     }
 
     return NextResponse.json({ creation, imageUrl: publicUrl }, { status: 201 });

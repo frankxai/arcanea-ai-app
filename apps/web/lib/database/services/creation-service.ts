@@ -187,6 +187,8 @@ function mapCreation(data: Record<string, unknown>): Creation {
     likeCount: (data.like_count || 0) as number,
     aiModel: data.ai_model as string | null,
     aiPrompt: data.ai_prompt as string | null,
+    projectId: data.project_id as string | null,
+    sourceSessionId: data.source_session_id as string | null,
     userId: data.user_id as string,
     metadata: data.metadata as Record<string, unknown> | null,
     createdAt: data.created_at as string,

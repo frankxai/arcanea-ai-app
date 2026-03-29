@@ -2,10 +2,12 @@ import { NextRequest } from 'next/server';
 import { z } from 'zod';
 import { errorResponse, handleApiError, successResponse } from '@/lib/api-utils';
 import {
+  getProjectAuthContext,
   deleteProjectForCurrentUser,
   getProjectForCurrentUser,
   updateProjectForCurrentUser,
 } from '@/lib/projects/server';
+import { recordProjectTrace } from '@/lib/projects/trace';
 
 const updateProjectSchema = z.object({
   title: z.string().trim().min(1).max(120).optional(),
@@ -48,10 +50,22 @@ export async function PATCH(
       });
     }
 
+    const { supabase, user } = await getProjectAuthContext();
+    if (!user) {
+      return errorResponse('UNAUTHORIZED', 'Authentication required', 401);
+    }
+
     const project = await updateProjectForCurrentUser(id, validation.data);
     if (!project) {
       return errorResponse('NOT_FOUND', 'Project not found', 404);
     }
+
+    await recordProjectTrace(supabase, {
+      userId: user.id,
+      projectId: project.id,
+      action: 'project_updated',
+      metadata: validation.data,
+    });
 
     return successResponse({ project });
   } catch (error) {
@@ -65,10 +79,21 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params;
+    const { supabase, user } = await getProjectAuthContext();
+    if (!user) {
+      return errorResponse('UNAUTHORIZED', 'Authentication required', 401);
+    }
+
     const deleted = await deleteProjectForCurrentUser(id);
     if (!deleted) {
       return errorResponse('NOT_FOUND', 'Project not found', 404);
     }
+
+    await recordProjectTrace(supabase, {
+      userId: user.id,
+      projectId: id,
+      action: 'project_deleted',
+    });
 
     return successResponse({ deleted: true });
   } catch (error) {

@@ -6,6 +6,7 @@ import {
   getProjectAuthContext,
   listProjectsForCurrentUser,
 } from '@/lib/projects/server';
+import { recordProjectTrace } from '@/lib/projects/trace';
 
 const createProjectSchema = z.object({
   title: z.string().trim().min(1).max(120),
@@ -40,10 +41,24 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    const project = await createProjectForCurrentUser(validation.data);
-    if (!project) {
+    const { supabase, user } = await getProjectAuthContext();
+    if (!user) {
       return errorResponse('UNAUTHORIZED', 'Authentication required', 401);
     }
+
+    const project = await createProjectForCurrentUser(validation.data);
+    if (!project) {
+      return errorResponse('INTERNAL_ERROR', 'Failed to create project', 500);
+    }
+
+    await recordProjectTrace(supabase, {
+      userId: user.id,
+      projectId: project.id,
+      action: 'project_created',
+      metadata: {
+        title: project.title,
+      },
+    });
 
     return successResponse({ project }, 201);
   } catch (error) {
