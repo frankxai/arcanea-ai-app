@@ -1,8 +1,4 @@
 {
-  "statusLine": {
-    "type": "command",
-    "command": "node --input-type=module \"$HOME/Arcanea/.claude/statusline.mjs\""
-  },
   "permissions": {
     "allow": [
       "Bash(git:*)",
@@ -10,9 +6,16 @@
       "Bash(npx:*)",
       "Bash(node:*)",
       "Bash(python3:*)",
+      "Bash(python:*)",
       "Bash(bash .claude/*:*)",
       "Bash(cat:*)",
-      "Bash(where:*)"
+      "Bash(where:*)",
+      "Bash(grep:*)",
+      "Bash(wc:*)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(claude-flow:*)",
+      "Bash(bash C:/Users/frank/Arcanea/.claude/hooks/session-start.sh)"
     ]
   },
   "enableAllProjectMcpServers": true,
@@ -35,6 +38,11 @@
             "type": "command",
             "command": "bash \"$HOME/Arcanea/.claude/hooks/session-start.sh\"",
             "timeout": 5000
+          },
+          {
+            "type": "command",
+            "command": "bash \"$HOME/Arcanea/.claude/hooks/ops-heartbeat.sh\"",
+            "timeout": 3000
           }
         ]
       }
@@ -57,7 +65,7 @@
     ],
     "PreToolUse": [
       {
-        "matcher": "Task|Bash|Write|Edit",
+        "matcher": "^(Task|Bash|Write|Edit)$",
         "hooks": [
           {
             "type": "command",
@@ -67,7 +75,7 @@
         ]
       },
       {
-        "matcher": "Write|Edit",
+        "matcher": "^(Write|Edit)$",
         "hooks": [
           {
             "type": "command",
@@ -79,7 +87,7 @@
     ],
     "PostToolUse": [
       {
-        "matcher": "Task|Bash|Write|Edit|Read|Grep|Glob|WebFetch|WebSearch",
+        "matcher": "^(Task|Bash|Write|Edit)$",
         "hooks": [
           {
             "type": "command",
@@ -105,5 +113,9 @@
         ]
       }
     ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "node \"$HOME/Arcanea/.claude/statusline.mjs\""
   }
 }

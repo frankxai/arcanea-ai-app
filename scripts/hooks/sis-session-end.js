@@ -13,8 +13,9 @@
 const fs = require('fs');
 const path = require('path');
 
-const MEMORY_DIR = path.join(process.env.HOME || '', '.arcanea', 'memory');
-const SESSION_DIR = path.join(MEMORY_DIR, 'sessions');
+// Unified path: ~/.arcanea/sessions/ (matches bash hooks)
+const ARCANEA_HOME = path.join(process.env.HOME || process.env.USERPROFILE || '', '.arcanea');
+const SESSION_DIR = path.join(ARCANEA_HOME, 'sessions', 'archive');
 
 function ensureDirs() {
   [MEMORY_DIR, SESSION_DIR].forEach(dir => {

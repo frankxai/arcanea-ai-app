@@ -12,9 +12,10 @@
 const fs = require('fs');
 const path = require('path');
 
-const MEMORY_DIR = path.join(process.env.HOME || '', '.arcanea', 'memory');
-const COMPACT_LOG = path.join(MEMORY_DIR, 'compaction-log.jsonl');
-const SESSION_DIR = path.join(MEMORY_DIR, 'sessions');
+// Unified path: ~/.arcanea/ (matches bash hooks)
+const ARCANEA_HOME = path.join(process.env.HOME || process.env.USERPROFILE || '', '.arcanea');
+const COMPACT_LOG = path.join(ARCANEA_HOME, 'memory', 'compaction-log.jsonl');
+const SESSION_DIR = path.join(ARCANEA_HOME, 'sessions', 'archive');
 
 function ensureDirs() {
   [MEMORY_DIR, SESSION_DIR].forEach(dir => {
