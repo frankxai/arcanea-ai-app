@@ -143,9 +143,9 @@ export function MentionPopup({ query, visible, onSelect, onDismiss }: MentionPop
           e.preventDefault(); // Prevent textarea blur
           onSelect(item);
         }}
-        className={`w-full text-left px-3 py-2.5 min-h-[44px] flex items-center gap-3 transition-colors duration-150 ${
+        className={`w-full text-left px-3 py-2.5 min-h-[44px] flex items-center gap-3 transition-all duration-150 ${
           isFocused
-            ? 'bg-[#00bcd4]/8 text-white'
+            ? 'bg-gradient-to-r from-[#00bcd4]/10 to-transparent text-white shadow-[inset_0_0_0_1px_rgba(0,188,212,0.1)]'
             : 'text-white/70 hover:bg-white/[0.03]'
         }`}
       >
