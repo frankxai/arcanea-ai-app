@@ -125,7 +125,7 @@ The Foundation resonance was off. Not dramatically — nothing that a student wi
 
 Two frequencies. Not three.
 
-Foundation — the Crystalpeak's own deep signature, the 174 Hz of Lyssandria's domain, as familiar to him as his own pulse. He knew that frequency the way he knew the calluses on his hands.
+Foundation — the Crystalpeak's own deep signature, Lyssandria's domain, as familiar to him as his own pulse. He knew that frequency the way he knew the calluses on his hands.
 
 And beneath it, something else. Not conflicting. Running parallel. A lower register, without the clean mathematical order of a Gate frequency. It was the sound a building made before it failed — not the crack or the groan, but the subsound, the frequency below hearing that you felt in your teeth and behind your eyes and only recognized when it stopped and you realized how long you'd been bracing.
 

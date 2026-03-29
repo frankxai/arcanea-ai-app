@@ -133,7 +133,7 @@ The ground vibrated.
 
 Kael felt it first. Not the Foundation frequency. Not the cold containment seal four hundred meters down. Something between the two — a third frequency, one he'd never felt, that ran through the substrate with the particular quality of a chord being completed. The addition of a missing note. The sound a key made when it found its lock.
 
-He pressed his boot sole to the crystal floor and the vibration sharpened. 174 Hz — his frequency, the Foundation note. But harmonics above it, layering: 285, 396, 417, 528. Five frequencies in ascending progression.
+He pressed his boot sole to the crystal floor and the vibration sharpened. Foundation — his frequency, the deep structural note. But harmonics above it, layering: Flow, Fire, Heart, Voice. Five frequencies in ascending progression.
 
 Five Gates. Their Gates. Five frequencies in alignment, pressing into the Crystalpeak's substrate simultaneously, the same configuration that the sealed text described, the same pattern the water kept remembering, the same circuit that Ondine had said could do things only the Gods could do.
 

@@ -23,7 +23,7 @@ He'd been in the lower practice chambers — solo work, late, the kind of sessio
 
 He pressed his palms to the practice chamber floor, which was forty meters below the atrium and twenty meters below the Crystalpeak's habitable levels, and he listened.
 
-The Foundation frequency was present and familiar — 174 Hz, Lyssandria's domain, the deep structural note of the mountain. He knew it the way he knew his own heartbeat, and like his heartbeat he'd learned to hear around it, to pick up the smaller frequencies that lived in the substrate alongside it.
+The Foundation frequency was present and familiar — Lyssandria's domain, the deep structural note of the mountain. He knew it the way he knew his own heartbeat, and like his heartbeat he'd learned to hear around it, to pick up the smaller frequencies that lived in the substrate alongside it.
 
 The other frequency was there.
 
@@ -135,7 +135,7 @@ Mira was looking at the table with the expression she wore when the Memory Pool 
 
 No one spoke.
 
-Outside the window the aurora pulsed — one of the irregular beats that had been happening more frequently since the Hollow Root. Kael could feel the foundation stone through his boot soles, the two-frequency vibration that was always there now when he was paying attention. The familiar 174 Hz and the cold parallel thing that ran beneath it.
+Outside the window the aurora pulsed — one of the irregular beats that had been happening more frequently since the Hollow Root. Kael could feel the foundation stone through his boot soles, the two-frequency vibration that was always there now when he was paying attention. The familiar Foundation note and the cold parallel thing that ran beneath it.
 
 He thought about all the Foundation masters who had pressed their palms to this substrate. Every one of them, from the first Luminary class to this morning's practice sessions. Every student who had pressed their hands to this ground and thought they were learning. He thought about his own months of structural listening — the hours he'd spent in the lower chambers because the stone was the only kind of quiet that helped. Every session had been doing something he hadn't known it was doing.
 

@@ -159,7 +159,7 @@ The trial proctor had said: *the trial ends when you exit the descent chamber.* 
 
 He pressed his palms to the floor.
 
-The Foundation frequency was here. 174 Hz. Lyssandria's domain — the deep structural note of everything that endured. He'd known it since his first day, felt it since the quarry, lived with it as his personal harmonic since the night the walls cracked.
+The Foundation frequency was here. Lyssandria's domain — the deep structural note of everything that endured. He'd known it since his first day, felt it since the quarry, lived with it as his personal harmonic since the night the walls cracked.
 
 He pressed deeper.
 
@@ -205,7 +205,7 @@ She made a note. He didn't ask what she wrote.
 
 The four of them were waiting outside the staging area.
 
-Ash leaned against the crystal wall with his arms folded and his fire steady in his eyes. Sable stood with her notebook closed, her pen in her hand, not writing. Mira had her fishing cord between her fingers, the water-listening position, but her head was tilted toward him rather than the ground. Elio was sitting on the floor with his instrument in his lap, and when Kael came through the door he played a single note — one note, low and resonant, the Foundation note, 174 Hz.
+Ash leaned against the crystal wall with his arms folded and his fire steady in his eyes. Sable stood with her notebook closed, her pen in her hand, not writing. Mira had her fishing cord between her fingers, the water-listening position, but her head was tilted toward him rather than the ground. Elio was sitting on the floor with his instrument in his lap, and when Kael came through the door he played a single note — one note, low and resonant, the Foundation note.
 
 Kael felt it in his sternum. The same feeling as the chamber. Bedrock. Solidity. The willingness to hold.
 

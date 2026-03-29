@@ -265,7 +265,7 @@ Toren looked at him for a long time.
 
 He clasped his hands behind his back and turned toward the walls, toward the light that had been living in crystal for centuries, and spoke.
 
-Two floors below, in the Inkwell Gardens, Sable Naethe turned the last page of her reading and sat with the silence of the Void — not absence but potential, the space where something had not yet been decided.
+Two floors below, in the Inkwell Gardens, Sable Luminaire turned the last page of her reading and sat with the silence of the Void — not absence but potential, the space where something had not yet been decided.
 
 She thought about the third-year student she needed to find. She thought about what might be locked beneath the Crystalpeak that no one talked about. She thought about her parents' paper.
 
