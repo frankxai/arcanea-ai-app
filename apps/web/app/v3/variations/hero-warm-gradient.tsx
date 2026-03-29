@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
 import {
   PhArrowRight,
   PhPaintBrush,
@@ -27,7 +27,7 @@ interface FeatureCardProps {
 
 function FeatureCard({ icon, title, description, delay }: FeatureCardProps) {
   return (
-    <motion.div
+    <m.div
       className="group relative overflow-hidden rounded-3xl border border-white/[0.06] p-6 backdrop-blur-md md:p-8"
       style={{
         background:
@@ -58,7 +58,7 @@ function FeatureCard({ icon, title, description, delay }: FeatureCardProps) {
       <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.55)' }}>
         {description}
       </p>
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -77,6 +77,7 @@ const fadeUp = {
 
 export function HeroWarmGradient() {
   return (
+    <LazyMotion features={domAnimation}>
     <section
       className="relative flex min-h-[100dvh] w-full flex-col items-center justify-center overflow-hidden"
       style={{ backgroundColor: '#09090b' }}
@@ -101,7 +102,7 @@ export function HeroWarmGradient() {
       {/* ── Content ── */}
       <div className="relative z-10 mx-auto w-full max-w-5xl px-6 pb-20 pt-32 md:px-8 md:pt-36">
         {/* Trending pill */}
-        <motion.div
+        <m.div
           className="mb-8 flex justify-center md:justify-start"
           custom={0}
           initial="hidden"
@@ -118,10 +119,10 @@ export function HeroWarmGradient() {
             <span className="text-xs">&#10022;</span>
             AI Creation Platform
           </span>
-        </motion.div>
+        </m.div>
 
         {/* Headline with gradient text */}
-        <motion.h1
+        <m.h1
           className="font-display text-center text-4xl font-bold leading-[1.08] tracking-[-0.02em] md:text-left md:text-6xl lg:text-7xl"
           custom={1}
           initial="hidden"
@@ -137,10 +138,10 @@ export function HeroWarmGradient() {
           >
             AI that gets you.
           </span>
-        </motion.h1>
+        </m.h1>
 
         {/* Subtitle */}
-        <motion.p
+        <m.p
           className="mx-auto mt-5 max-w-lg text-center text-base leading-relaxed md:mx-0 md:text-left md:text-lg"
           style={{ color: 'rgba(255, 255, 255, 0.55)' }}
           custom={2}
@@ -150,17 +151,17 @@ export function HeroWarmGradient() {
         >
           10 specialized AI minds for writing, design, code, music, and research
           &mdash; all in one place.
-        </motion.p>
+        </m.p>
 
         {/* CTA Button */}
-        <motion.div
+        <m.div
           className="mt-10 flex justify-center md:justify-start"
           custom={3}
           initial="hidden"
           animate="visible"
           variants={fadeUp}
         >
-          <motion.a
+          <m.a
             href="/create"
             className="group inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-base font-semibold text-white shadow-lg md:text-lg"
             style={{
@@ -180,11 +181,11 @@ export function HeroWarmGradient() {
               weight="bold"
               className="transition-transform group-hover:translate-x-0.5"
             />
-          </motion.a>
-        </motion.div>
+          </m.a>
+        </m.div>
 
         {/* Trust line */}
-        <motion.p
+        <m.p
           className="mt-5 text-center text-sm md:text-left"
           style={{ color: 'rgba(255, 255, 255, 0.28)' }}
           custom={4}
@@ -193,7 +194,7 @@ export function HeroWarmGradient() {
           variants={fadeUp}
         >
           No credit card required &middot; Free to start &middot; 34+ original texts
-        </motion.p>
+        </m.p>
 
         {/* ── Feature cards ── */}
         <div className="mt-16 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -218,5 +219,6 @@ export function HeroWarmGradient() {
         </div>
       </div>
     </section>
+    </LazyMotion>
   );
 }

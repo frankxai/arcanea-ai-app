@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { PhArrowRight } from '@/lib/phosphor-icons';
 
 /* ─────────────────────────────────────────────
@@ -27,13 +27,14 @@ const fadeUp = {
 
 export function HeroVoid() {
   return (
+    <LazyMotion features={domAnimation}>
     <section
       className="relative flex min-h-[100dvh] w-full items-center justify-center overflow-hidden"
       style={{ backgroundColor: '#000000' }}
     >
       <div className="relative z-10 mx-auto w-full max-w-5xl px-6 py-24 md:px-8">
         {/* Headline */}
-        <motion.h1
+        <m.h1
           className="font-display font-bold leading-[0.95] tracking-[-0.03em] text-white"
           style={{
             fontSize: 'clamp(3.5rem, 8vw, 8rem)',
@@ -46,10 +47,10 @@ export function HeroVoid() {
           Creative intelligence,
           <br />
           <span style={{ color: CYAN }}>specialized.</span>
-        </motion.h1>
+        </m.h1>
 
         {/* Subtitle */}
-        <motion.p
+        <m.p
           className="mt-6 max-w-xl text-lg leading-relaxed md:mt-8 md:text-xl"
           style={{ color: 'rgba(255, 255, 255, 0.55)' }}
           custom={1}
@@ -58,10 +59,10 @@ export function HeroVoid() {
           variants={fadeUp}
         >
           16 Luminors for writing, design, code, music, and research.
-        </motion.p>
+        </m.p>
 
         {/* CTA */}
-        <motion.div
+        <m.div
           className="mt-10 md:mt-12"
           custom={2}
           initial="hidden"
@@ -80,10 +81,10 @@ export function HeroVoid() {
               className="transition-transform group-hover:translate-x-0.5"
             />
           </a>
-        </motion.div>
+        </m.div>
 
         {/* Trust strip */}
-        <motion.p
+        <m.p
           className="mt-8 text-sm tracking-wide md:mt-10"
           style={{ color: 'rgba(255, 255, 255, 0.22)' }}
           custom={3}
@@ -92,8 +93,9 @@ export function HeroVoid() {
           variants={fadeUp}
         >
           Free &middot; No credit card &middot; 34+ original texts
-        </motion.p>
+        </m.p>
       </div>
     </section>
+    </LazyMotion>
   );
 }

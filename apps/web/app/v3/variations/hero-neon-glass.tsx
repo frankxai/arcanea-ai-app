@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
 import Image from 'next/image';
 import { PhArrowRight } from '@/lib/phosphor-icons';
 import navLogo from '@/assets/brand/arcanea-mark.jpg';
@@ -46,7 +46,7 @@ const fadeUp = {
 
 function FloatingPill({ label, tint, delay, x, y }: PillProps) {
   return (
-    <motion.div
+    <m.div
       className="absolute hidden md:block"
       style={{ left: x, top: y }}
       initial={{ opacity: 0, scale: 0.8 }}
@@ -57,7 +57,7 @@ function FloatingPill({ label, tint, delay, x, y }: PillProps) {
         delay,
       }}
     >
-      <motion.div
+      <m.div
         className="cursor-default rounded-full border px-4 py-2 text-xs font-medium backdrop-blur-md transition-all duration-300"
         style={{
           background: `${tint}08`,
@@ -82,20 +82,21 @@ function FloatingPill({ label, tint, delay, x, y }: PillProps) {
         }}
       >
         {label}
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   );
 }
 
 export function HeroNeonGlass() {
   return (
+    <LazyMotion features={domAnimation}>
     <section
       className="relative flex min-h-[100dvh] w-full items-center justify-center overflow-hidden"
       style={{ backgroundColor: BG }}
     >
       {/* ── Animated gradient mesh ── */}
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-        <motion.div
+        <m.div
           className="absolute h-[700px] w-[700px] rounded-full blur-[120px]"
           style={{
             background: 'rgba(0, 229, 255, 0.06)',
@@ -112,7 +113,7 @@ export function HeroNeonGlass() {
             ease: 'easeInOut',
           }}
         />
-        <motion.div
+        <m.div
           className="absolute h-[500px] w-[500px] rounded-full blur-[100px]"
           style={{
             background: 'rgba(99, 102, 241, 0.05)',
@@ -129,7 +130,7 @@ export function HeroNeonGlass() {
             ease: 'easeInOut',
           }}
         />
-        <motion.div
+        <m.div
           className="absolute h-[400px] w-[400px] rounded-full blur-[90px]"
           style={{
             background: 'rgba(192, 132, 252, 0.04)',
@@ -224,7 +225,7 @@ export function HeroNeonGlass() {
 
       {/* ── Central glass card ── */}
       <div className="relative z-10 mx-auto w-full max-w-2xl px-6 md:px-8">
-        <motion.div
+        <m.div
           className="relative rounded-2xl border p-8 backdrop-blur-xl md:p-12"
           style={{
             background: 'rgba(255, 255, 255, 0.04)',
@@ -249,7 +250,7 @@ export function HeroNeonGlass() {
           }}
         >
           {/* Brand mark */}
-          <motion.div
+          <m.div
             className="mb-8"
             custom={0}
             initial="hidden"
@@ -263,10 +264,10 @@ export function HeroNeonGlass() {
               height={36}
               className="rounded-lg"
             />
-          </motion.div>
+          </m.div>
 
           {/* Headline */}
-          <motion.h1
+          <m.h1
             className="font-sans text-4xl font-bold leading-[1.1] tracking-[-0.03em] text-white md:text-5xl lg:text-6xl"
             custom={1}
             initial="hidden"
@@ -276,10 +277,10 @@ export function HeroNeonGlass() {
             Creative
             <br />
             Intelligence
-          </motion.h1>
+          </m.h1>
 
           {/* Subtitle */}
-          <motion.p
+          <m.p
             className="mt-4 text-base font-normal leading-relaxed md:text-lg"
             style={{ color: 'rgba(255, 255, 255, 0.55)' }}
             custom={2}
@@ -288,17 +289,17 @@ export function HeroNeonGlass() {
             variants={fadeUp}
           >
             10 specialized AI models for everything you create.
-          </motion.p>
+          </m.p>
 
           {/* CTA */}
-          <motion.div
+          <m.div
             className="mt-8"
             custom={3}
             initial="hidden"
             animate="visible"
             variants={fadeUp}
           >
-            <motion.a
+            <m.a
               href="/create"
               className="group inline-flex items-center gap-2.5 rounded-lg px-6 py-3 text-sm font-semibold text-black"
               style={{
@@ -330,11 +331,11 @@ export function HeroNeonGlass() {
                 weight="bold"
                 className="transition-transform group-hover:translate-x-0.5"
               />
-            </motion.a>
-          </motion.div>
+            </m.a>
+          </m.div>
 
           {/* Trust line */}
-          <motion.p
+          <m.p
             className="mt-5 text-xs"
             style={{ color: 'rgba(255, 255, 255, 0.25)' }}
             custom={4}
@@ -343,16 +344,16 @@ export function HeroNeonGlass() {
             variants={fadeUp}
           >
             Free &middot; No credit card &middot; 34+ original texts
-          </motion.p>
+          </m.p>
 
           {/* ── Floating pills (positioned relative to card) ── */}
           {PILLS.map((pill) => (
             <FloatingPill key={pill.label} {...pill} />
           ))}
-        </motion.div>
+        </m.div>
 
         {/* ── Mobile pills (stacked row below card) ── */}
-        <motion.div
+        <m.div
           className="mt-6 flex flex-wrap justify-center gap-2 md:hidden"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -371,8 +372,9 @@ export function HeroNeonGlass() {
               {pill.label}
             </span>
           ))}
-        </motion.div>
+        </m.div>
       </div>
     </section>
+    </LazyMotion>
   );
 }

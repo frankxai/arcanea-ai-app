@@ -317,6 +317,221 @@ export async function getSagaDocuments(
   return docs;
 }
 
+// ============================================
+// MULTI-SERIES LOADER
+// ============================================
+
+export interface BookSeries {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  status: 'active' | 'in-progress' | 'planned';
+  contentType: 'novel' | 'novella' | 'serial' | 'anthology' | 'standalone';
+  books: SeriesBook[];
+  totalWordCount: number;
+  totalChapters: number;
+}
+
+export interface SeriesBook {
+  id: string;
+  title: string;
+  firstChapterSlug: string | null;
+  chapterCount: number;
+  wordCount: number;
+}
+
+/** Read all .md files directly in a directory (flat structure like Gate-Touched Files, Companions). */
+async function loadFlatChapters(dir: string): Promise<{ count: number; wordCount: number; firstSlug: string | null }> {
+  if (!(await dirExists(dir))) return { count: 0, wordCount: 0, firstSlug: null };
+  const files = await readdir(dir);
+  const mdFiles = files.filter(f => f.endsWith('.md') && f !== 'README.md' && f !== 'PITCH.md' && f !== 'CLAUDE.md').sort();
+  if (mdFiles.length === 0) return { count: 0, wordCount: 0, firstSlug: null };
+  let totalWords = 0;
+  for (const f of mdFiles) {
+    const raw = await readFile(join(dir, f), 'utf-8');
+    totalWords += countWords(raw);
+  }
+  return { count: mdFiles.length, wordCount: totalWords, firstSlug: mdFiles[0].replace(/\.md$/, '') };
+}
+
+/** Read chapters inside a single book subdirectory. */
+async function loadBookDir(bookDir: string): Promise<{ count: number; wordCount: number; firstSlug: string | null; title: string }> {
+  if (!(await dirExists(bookDir))) return { count: 0, wordCount: 0, firstSlug: null, title: '' };
+  const files = await readdir(bookDir);
+  const mdFiles = files.filter(f => f.endsWith('.md') && f !== 'README.md' && f !== 'PITCH.md' && f !== 'CLAUDE.md').sort();
+  if (mdFiles.length === 0) return { count: 0, wordCount: 0, firstSlug: null, title: '' };
+  let totalWords = 0;
+  let title = '';
+  for (const f of mdFiles) {
+    const raw = await readFile(join(bookDir, f), 'utf-8');
+    totalWords += countWords(raw);
+    if (!title) title = extractTitle(raw, f);
+  }
+  return { count: mdFiles.length, wordCount: totalWords, firstSlug: mdFiles[0].replace(/\.md$/, ''), title };
+}
+
+/** Scan a series directory for book subdirectories, returning one SeriesBook per subdir. */
+async function loadSeriesBooks(seriesDir: string): Promise<SeriesBook[]> {
+  if (!(await dirExists(seriesDir))) return [];
+  const entries = await readdir(seriesDir, { withFileTypes: true });
+  const bookDirs = entries.filter(e => e.isDirectory()).map(e => e.name).sort();
+  if (bookDirs.length === 0) return [];
+  const books: SeriesBook[] = [];
+  for (const dirName of bookDirs) {
+    const fullPath = join(seriesDir, dirName);
+    const info = await loadBookDir(fullPath);
+    books.push({
+      id: dirName,
+      title: info.title || dirName.replace(/^book-\d+-/, '').replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
+      firstChapterSlug: info.firstSlug,
+      chapterCount: info.count,
+      wordCount: info.wordCount,
+    });
+  }
+  return books;
+}
+
+/**
+ * Return metadata for all eight series in the Arcanea multiverse.
+ * Each entry includes live chapter/word counts read from disk.
+ */
+export async function getAllSeries(): Promise<BookSeries[]> {
+  const SERIES_CONFIGS: Array<{
+    id: string;
+    dir: string;
+    title: string;
+    subtitle: string;
+    description: string;
+    status: BookSeries['status'];
+    contentType: BookSeries['contentType'];
+    /** 'books' = has book subdirectories; 'flat' = .md files directly in dir; 'sagas' = sagas subdir with episode subdirs */
+    layout: 'books' | 'flat' | 'sagas';
+  }> = [
+    {
+      id: 'chronicles',
+      dir: join(BOOK_DIR, 'chronicles-of-arcanea'),
+      title: 'Chronicles of Arcanea',
+      subtitle: 'The main series',
+      description: 'A ten-book epic following Kael and the Five-Fold Five through every Academy, Gate, and the shadow of Malachar.',
+      status: 'active',
+      contentType: 'novel',
+      layout: 'books',
+    },
+    {
+      id: 'starbound',
+      dir: join(BOOK_DIR, 'starbound'),
+      title: 'Starbound',
+      subtitle: 'Crew missions across Arcanea',
+      description: 'A series of novellas following specialist crews as they take on missions across the Arcanean world — monster hunts, Dungeon dives, diplomatic escorts, and the strange cases that fall between.',
+      status: 'in-progress',
+      contentType: 'novella',
+      layout: 'books',
+    },
+    {
+      id: 'dragonborne',
+      dir: join(BOOK_DIR, 'dragonborne'),
+      title: 'Dragonborne',
+      subtitle: 'The dragon bond series',
+      description: 'Stories from inside the bond between a dragon and the person who earned their trust. Each novella follows a different rider navigating loyalty, instinct, and the weight of being chosen by fire.',
+      status: 'in-progress',
+      contentType: 'novella',
+      layout: 'books',
+    },
+    {
+      id: 'dungeon-scrolls',
+      dir: join(BOOK_DIR, 'dungeon-scrolls'),
+      title: 'The Dungeon Scrolls',
+      subtitle: 'Corrupted Gate temples',
+      description: 'An anthology of stories set inside the Dungeons — ancient Gate temples warped by millennia of corrupted magic. Each story is a descent into a different ruin, a different kind of broken.',
+      status: 'in-progress',
+      contentType: 'anthology',
+      layout: 'books',
+    },
+    {
+      id: 'gate-touched-files',
+      dir: join(BOOK_DIR, 'gate-touched-files'),
+      title: 'Gate-Touched Files',
+      subtitle: 'Street-level mutant stories',
+      description: 'A serial following Gate-Touched people — those whose channels manifested wrong, too early, or outside any Academy — as they navigate a world that does not have a category for what they are.',
+      status: 'active',
+      contentType: 'serial',
+      layout: 'flat',
+    },
+    {
+      id: 'void-ascending',
+      dir: join(BOOK_DIR, 'void-ascending'),
+      title: 'Void Ascending',
+      subtitle: 'The other side of the story',
+      description: 'Told entirely from the perspective of those who serve the Hungry Void — not as villains, but as believers. A literary counterpoint to the Chronicles that complicates every easy answer.',
+      status: 'in-progress',
+      contentType: 'novel',
+      layout: 'books',
+    },
+    {
+      id: 'companions',
+      dir: join(BOOK_DIR, 'companions'),
+      title: 'Companions of Arcanea',
+      subtitle: 'Stories from the bond',
+      description: 'Short stories told from the perspective of the bonded creatures — familiars, mounts, companions — who share the journey but rarely get to tell their side of it.',
+      status: 'in-progress',
+      contentType: 'anthology',
+      layout: 'flat',
+    },
+    {
+      id: 'sagas',
+      dir: join(BOOK_DIR, 'chronicles-of-arcanea', 'sagas'),
+      title: 'Standalone Sagas',
+      subtitle: 'Luminor Falling, The Drowned Archive, Pyralis',
+      description: 'Three standalone novellas set in the Chronicles universe — each complete in itself, each illuminating a corner of Arcanea that the main series glimpses but never fully enters.',
+      status: 'active',
+      contentType: 'standalone',
+      layout: 'sagas',
+    },
+  ];
+
+  const result: BookSeries[] = [];
+
+  for (const cfg of SERIES_CONFIGS) {
+    let books: SeriesBook[] = [];
+
+    if (cfg.layout === 'flat') {
+      // Files sit directly in the series dir
+      const info = await loadFlatChapters(cfg.dir);
+      books = [{
+        id: cfg.id,
+        title: cfg.title,
+        firstChapterSlug: info.firstSlug,
+        chapterCount: info.count,
+        wordCount: info.wordCount,
+      }];
+    } else if (cfg.layout === 'sagas') {
+      // Each subdir is a standalone saga with its own chapter files
+      books = await loadSeriesBooks(cfg.dir);
+    } else {
+      // 'books' — subdirectories named book-01-*, book-02-*, etc.
+      books = await loadSeriesBooks(cfg.dir);
+    }
+
+    const totalChapters = books.reduce((sum, b) => sum + b.chapterCount, 0);
+    const totalWordCount = books.reduce((sum, b) => sum + b.wordCount, 0);
+
+    result.push({
+      id: cfg.id,
+      title: cfg.title,
+      subtitle: cfg.subtitle,
+      description: cfg.description,
+      status: cfg.status,
+      contentType: cfg.contentType,
+      books,
+      totalChapters,
+      totalWordCount,
+    });
+  }
+
+  return result;
+}
+
 /**
  * Get a single document with full content.
  */

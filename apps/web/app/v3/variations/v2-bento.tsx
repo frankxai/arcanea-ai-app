@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { ChatCircleDots, Books, Sparkle, GithubLogo, ArrowRight, Fire, Drop, Leaf, Wind, Planet } from '@/lib/phosphor-icons';
 
 /* ─────────────────────────────────────────────
@@ -72,7 +72,7 @@ function Cell({
   accent?: string;
 }) {
   return (
-    <motion.div
+    <m.div
       className={`group relative overflow-hidden rounded-[20px] p-6 transition-all duration-300 ${className}`}
       style={{
         background: `linear-gradient(135deg, ${CARD} 0%, rgba(24,24,27,0.8) 100%)`,
@@ -86,7 +86,7 @@ function Cell({
       transition={{ duration: 0.25 }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -116,6 +116,7 @@ function ChatMockup() {
 // ── main component ───────────────────────────
 export function V2Bento() {
   return (
+    <LazyMotion features={domAnimation}>
     <div className="min-h-screen w-full" style={{ backgroundColor: BG, color: TEXT }}>
       {/* ── Hero ── */}
       <section className="relative flex items-center justify-center overflow-hidden" style={{ minHeight: '60vh' }}>
@@ -124,7 +125,7 @@ export function V2Bento() {
           style={{ background: `radial-gradient(ellipse 60% 50% at 50% 0%, ${VIOLET}12 0%, transparent 70%)` }}
         />
         <div className="relative z-10 mx-auto w-full max-w-6xl px-6 py-20 text-center md:py-28">
-          <motion.h1
+          <m.h1
             className="mx-auto max-w-4xl font-bold leading-[1.05] tracking-[-0.04em]"
             style={{ fontSize: 'clamp(2.5rem, 5.5vw, 4rem)', fontFamily: 'Inter, system-ui, sans-serif' }}
             custom={0}
@@ -136,8 +137,8 @@ export function V2Bento() {
             <span style={{ background: `linear-gradient(90deg, ${VIOLET}, ${TEAL}, ${GOLD})`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
               for Creators
             </span>
-          </motion.h1>
-          <motion.p
+          </m.h1>
+          <m.p
             className="mx-auto mt-5 max-w-lg text-base md:text-lg"
             style={{ color: MUTED, lineHeight: 1.7 }}
             custom={1}
@@ -146,8 +147,8 @@ export function V2Bento() {
             variants={fadeUp}
           >
             10 AI companions. 62 wisdom texts. One creative universe.
-          </motion.p>
-          <motion.div
+          </m.p>
+          <m.div
             className="mt-8 flex flex-wrap items-center justify-center gap-4"
             custom={2}
             initial="hidden"
@@ -169,13 +170,13 @@ export function V2Bento() {
             >
               API Docs
             </a>
-          </motion.div>
+          </m.div>
         </div>
       </section>
 
       {/* ── Bento Grid ── */}
       <section className="mx-auto w-full max-w-6xl px-6 pb-24">
-        <motion.div
+        <m.div
           className="grid gap-4"
           style={{ gridTemplateColumns: 'repeat(4, 1fr)', gridAutoRows: 'minmax(180px, auto)' }}
           initial="hidden"
@@ -183,7 +184,7 @@ export function V2Bento() {
           viewport={{ once: true, margin: '-60px' }}
         >
           {/* AI Chat — 2x2 */}
-          <motion.div className="col-span-2 row-span-2" custom={0} variants={fadeUp}>
+          <m.div className="col-span-2 row-span-2" custom={0} variants={fadeUp}>
             <Cell className="h-full" accent={VIOLET}>
               <div className="mb-4 flex items-center gap-2">
                 <ChatCircleDots size={20} weight="duotone" style={{ color: VIOLET }} />
@@ -191,10 +192,10 @@ export function V2Bento() {
               </div>
               <ChatMockup />
             </Cell>
-          </motion.div>
+          </m.div>
 
           {/* 10 Guardians — 1x2 */}
-          <motion.div className="col-span-1 row-span-2" custom={1} variants={fadeUp}>
+          <m.div className="col-span-1 row-span-2" custom={1} variants={fadeUp}>
             <Cell className="h-full" accent={GOLD}>
               <p className="text-sm font-semibold tracking-wide uppercase mb-4" style={{ color: MUTED }}>10 Guardians</p>
               <ul className="flex flex-col gap-2">
@@ -206,10 +207,10 @@ export function V2Bento() {
                 ))}
               </ul>
             </Cell>
-          </motion.div>
+          </m.div>
 
           {/* Intelligence Gateway — 2x1 (remaining top-right) */}
-          <motion.div className="col-span-1 row-span-2" custom={2} variants={fadeUp}>
+          <m.div className="col-span-1 row-span-2" custom={2} variants={fadeUp}>
             <Cell className="h-full flex flex-col justify-between" accent={TEAL}>
               <div>
                 <p className="text-sm font-semibold tracking-wide uppercase mb-3" style={{ color: MUTED }}>Intelligence Gateway</p>
@@ -225,10 +226,10 @@ export function V2Bento() {
                 ))}
               </div>
             </Cell>
-          </motion.div>
+          </m.div>
 
           {/* Library — 1x1 */}
-          <motion.div className="col-span-1 row-span-1" custom={3} variants={fadeUp}>
+          <m.div className="col-span-1 row-span-1" custom={3} variants={fadeUp}>
             <Cell className="h-full flex flex-col justify-between" accent={GOLD}>
               <Books size={28} weight="duotone" style={{ color: GOLD }} />
               <div className="mt-auto">
@@ -237,10 +238,10 @@ export function V2Bento() {
                 <p className="text-xs" style={{ color: MUTED }}>wisdom texts</p>
               </div>
             </Cell>
-          </motion.div>
+          </m.div>
 
           {/* Create — 1x1 */}
-          <motion.div className="col-span-1 row-span-1" custom={4} variants={fadeUp}>
+          <m.div className="col-span-1 row-span-1" custom={4} variants={fadeUp}>
             <Cell className="h-full flex flex-col justify-between" accent={VIOLET}>
               <Sparkle size={28} weight="duotone" style={{ color: VIOLET }} />
               <div className="mt-auto">
@@ -248,10 +249,10 @@ export function V2Bento() {
                 <p className="text-xs mt-1.5" style={{ color: 'rgba(255,255,255,0.6)' }}>Forge your vision with AI</p>
               </div>
             </Cell>
-          </motion.div>
+          </m.div>
 
           {/* Five Elements — 2x1 */}
-          <motion.div className="col-span-2 row-span-1" custom={5} variants={fadeUp}>
+          <m.div className="col-span-2 row-span-1" custom={5} variants={fadeUp}>
             <Cell className="h-full" accent={ELEMENT_COLORS.Fire}>
               <p className="text-sm font-semibold tracking-wide uppercase mb-5" style={{ color: MUTED }}>The Five Elements</p>
               <div className="flex items-center justify-between gap-3">
@@ -274,10 +275,10 @@ export function V2Bento() {
                 ))}
               </div>
             </Cell>
-          </motion.div>
+          </m.div>
 
           {/* Source — 1x1 */}
-          <motion.div className="col-span-1 row-span-1" custom={6} variants={fadeUp}>
+          <m.div className="col-span-1 row-span-1" custom={6} variants={fadeUp}>
             <Cell className="h-full flex flex-col justify-center items-center text-center" accent={VIOLET}>
               <p
                 className="text-4xl font-bold"
@@ -287,10 +288,10 @@ export function V2Bento() {
               </p>
               <p className="text-sm mt-1" style={{ color: MUTED }}>Where the dreamer and the dream become one</p>
             </Cell>
-          </motion.div>
+          </m.div>
 
           {/* Open Source — 1x1 */}
-          <motion.div className="col-span-1 row-span-1" custom={7} variants={fadeUp}>
+          <m.div className="col-span-1 row-span-1" custom={7} variants={fadeUp}>
             <Cell className="h-full flex flex-col justify-between" accent="rgba(255,255,255,0.3)">
               <GithubLogo size={28} weight="duotone" style={{ color: TEXT }} />
               <div className="mt-auto">
@@ -298,13 +299,13 @@ export function V2Bento() {
                 <p className="text-xs mt-1" style={{ color: MUTED }}>MIT Licensed</p>
               </div>
             </Cell>
-          </motion.div>
-        </motion.div>
+          </m.div>
+        </m.div>
       </section>
 
       {/* ── How It Works ── */}
       <section className="mx-auto w-full max-w-6xl px-6 pb-24">
-        <motion.h2
+        <m.h2
           className="text-center text-3xl font-bold tracking-tight mb-14"
           style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
           initial={{ opacity: 0, y: 12 }}
@@ -313,10 +314,10 @@ export function V2Bento() {
           transition={{ duration: 0.5 }}
         >
           How It Works
-        </motion.h2>
+        </m.h2>
         <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
           {STEPS.map((s, i) => (
-            <motion.div
+            <m.div
               key={s.n}
               className="flex flex-col items-center text-center"
               initial={{ opacity: 0, y: 16 }}
@@ -337,14 +338,14 @@ export function V2Bento() {
               </div>
               <p className="mt-4 text-sm font-semibold">{s.label}</p>
               <p className="mt-1.5 text-xs" style={{ color: MUTED }}>{s.desc}</p>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </section>
 
       {/* ── Quote ── */}
       <section className="mx-auto w-full max-w-3xl px-6 pb-24 text-center">
-        <motion.blockquote
+        <m.blockquote
           className="text-2xl font-light italic leading-relaxed md:text-3xl"
           style={{ fontFamily: 'Crimson Pro, Georgia, serif', color: 'rgba(255,255,255,0.65)' }}
           initial={{ opacity: 0 }}
@@ -353,8 +354,8 @@ export function V2Bento() {
           transition={{ duration: 0.8 }}
         >
           &ldquo;Enter seeking, leave transformed, return whenever needed.&rdquo;
-        </motion.blockquote>
-        <motion.p
+        </m.blockquote>
+        <m.p
           className="mt-4 text-sm"
           style={{ color: MUTED }}
           initial={{ opacity: 0 }}
@@ -363,12 +364,12 @@ export function V2Bento() {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           The Library of Arcanea
-        </motion.p>
+        </m.p>
       </section>
 
       {/* ── Final CTA ── */}
       <section className="mx-auto w-full max-w-6xl px-6 pb-32 text-center">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -385,8 +386,9 @@ export function V2Bento() {
           <p className="mt-4 text-sm" style={{ color: MUTED }}>
             Free to start &middot; No credit card required
           </p>
-        </motion.div>
+        </m.div>
       </section>
     </div>
+    </LazyMotion>
   );
 }

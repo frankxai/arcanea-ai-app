@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
 import Image from 'next/image';
 import heroImage from '@/assets/brand/arcanea-hero.jpg';
 
@@ -87,6 +87,7 @@ const DRIFT_ANIMATIONS = [
 
 export function HeroImmersiveCanvas() {
   return (
+    <LazyMotion features={domAnimation}>
     <section
       className="relative flex min-h-[100dvh] w-full flex-col items-center justify-center overflow-hidden"
       style={{ backgroundColor: '#000000' }}
@@ -103,7 +104,7 @@ export function HeroImmersiveCanvas() {
       />
 
       {/* ── Main canvas area ── */}
-      <motion.div
+      <m.div
         className="relative z-10 mx-auto w-full max-w-4xl px-6 py-20 md:px-8 md:py-24"
         initial="hidden"
         animate="visible"
@@ -114,7 +115,7 @@ export function HeroImmersiveCanvas() {
           {/* Floating tags — desktop: absolute around image */}
           <div className="pointer-events-none absolute inset-0 hidden md:block" aria-hidden="true">
             {TAGS.map((tag, i) => (
-              <motion.span
+              <m.span
                 key={tag.label}
                 className="pointer-events-auto absolute inline-flex cursor-default items-center rounded-full border border-white/[0.08] px-3 py-1.5 text-xs font-medium backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:border-white/20 hover:text-white/80"
                 style={{
@@ -134,12 +135,12 @@ export function HeroImmersiveCanvas() {
                 variants={tagFade}
               >
                 {tag.label}
-              </motion.span>
+              </m.span>
             ))}
           </div>
 
           {/* Glass-framed image */}
-          <motion.div
+          <m.div
             className="relative overflow-hidden rounded-3xl"
             style={{
               padding: '1px',
@@ -164,12 +165,12 @@ export function HeroImmersiveCanvas() {
                 placeholder="blur"
               />
             </div>
-          </motion.div>
+          </m.div>
 
           {/* Mobile tag strip — horizontal scroll */}
           <div className="mt-6 flex gap-2 overflow-x-auto pb-2 md:hidden scrollbar-hide">
             {TAGS.map((tag, i) => (
-              <motion.span
+              <m.span
                 key={tag.label}
                 className="inline-flex shrink-0 items-center rounded-full border border-white/[0.08] px-3 py-1.5 text-xs font-medium backdrop-blur-sm"
                 style={{
@@ -182,14 +183,14 @@ export function HeroImmersiveCanvas() {
                 variants={tagFade}
               >
                 {tag.label}
-              </motion.span>
+              </m.span>
             ))}
           </div>
         </div>
 
         {/* ── Title block beneath the image ── */}
         <div className="mt-10 flex flex-col items-center gap-3 text-center md:mt-14">
-          <motion.h1
+          <m.h1
             className="font-display text-3xl font-bold tracking-[-0.02em] text-white md:text-4xl"
             custom={1.0}
             initial="hidden"
@@ -197,9 +198,9 @@ export function HeroImmersiveCanvas() {
             variants={textFade}
           >
             Arcanea
-          </motion.h1>
+          </m.h1>
 
-          <motion.p
+          <m.p
             className="font-mono text-xs uppercase tracking-[0.25em]"
             style={{ color: 'rgba(255,255,255,0.35)' }}
             custom={1.2}
@@ -208,11 +209,11 @@ export function HeroImmersiveCanvas() {
             variants={textFade}
           >
             Creative Intelligence Platform
-          </motion.p>
+          </m.p>
         </div>
 
         {/* ── CTA ── */}
-        <motion.div
+        <m.div
           className="mt-10 flex justify-center md:mt-12"
           custom={1.5}
           initial="hidden"
@@ -231,8 +232,9 @@ export function HeroImmersiveCanvas() {
               &rarr;
             </span>
           </a>
-        </motion.div>
-      </motion.div>
+        </m.div>
+      </m.div>
     </section>
+    </LazyMotion>
   );
 }

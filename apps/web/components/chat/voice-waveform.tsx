@@ -87,6 +87,8 @@ export function VoiceWaveform({ stream, onStop }: VoiceWaveformProps) {
 
     // High-DPI support
     const dpr = window.devicePixelRatio || 1;
+    let prevWidth = 0;
+    let prevHeight = 0;
 
     function draw() {
       if (!ctx || !canvas) return;
@@ -94,9 +96,17 @@ export function VoiceWaveform({ stream, onStop }: VoiceWaveformProps) {
       const rect = canvas.getBoundingClientRect();
       const width = rect.width;
       const height = rect.height;
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
-      ctx.scale(dpr, dpr);
+
+      // Only resize canvas when dimensions actually change to avoid per-frame reallocation
+      const scaledWidth = width * dpr;
+      const scaledHeight = height * dpr;
+      if (canvas.width !== Math.round(scaledWidth) || canvas.height !== Math.round(scaledHeight)) {
+        canvas.width = scaledWidth;
+        canvas.height = scaledHeight;
+        ctx.scale(dpr, dpr);
+        prevWidth = width;
+        prevHeight = height;
+      }
 
       analyser.getByteFrequencyData(dataArray);
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, type ComponentType } from 'react';
-import { motion } from 'framer-motion';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { PhArrowRight, PhEye } from '@/lib/phosphor-icons';
 
 import { HeroVoid } from './hero-void';
@@ -93,11 +93,12 @@ export function VariationsShowcase() {
   }, []);
 
   return (
+    <LazyMotion features={domAnimation}>
     <div className="min-h-screen" style={{ backgroundColor: '#09090b' }}>
       {/* ── Header & Index ── */}
       <header className="relative mx-auto w-full max-w-6xl px-6 pb-16 pt-20 md:px-8 md:pt-28">
         {/* Title */}
-        <motion.div
+        <m.div
           className="mb-4 flex items-center gap-3"
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
@@ -113,18 +114,18 @@ export function VariationsShowcase() {
           >
             Design Arena
           </span>
-        </motion.div>
+        </m.div>
 
-        <motion.h1
+        <m.h1
           className="font-display text-4xl font-bold tracking-[-0.02em] text-white md:text-5xl lg:text-6xl"
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.1 }}
         >
           Homepage Variations
-        </motion.h1>
+        </m.h1>
 
-        <motion.p
+        <m.p
           className="mt-4 max-w-lg text-base leading-relaxed md:text-lg"
           style={{ color: 'rgba(255,255,255,0.5)' }}
           initial={{ opacity: 0, y: 12 }}
@@ -132,12 +133,12 @@ export function VariationsShowcase() {
           transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.2 }}
         >
           20 competing designs across 2 waves. Each a different philosophy. Scroll to explore, or jump directly.
-        </motion.p>
+        </m.p>
 
         {/* ── Variation index cards ── */}
         <div className="mt-12 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
           {VARIATIONS.map((v, i) => (
-            <motion.button
+            <m.button
               key={v.id}
               onClick={() => scrollToVariation(v.id)}
               className="group relative overflow-hidden rounded-xl border border-white/[0.06] p-4 text-left transition-all duration-300 hover:border-white/[0.12]"
@@ -183,7 +184,7 @@ export function VariationsShowcase() {
                 View Full
                 <PhArrowRight size={10} weight="bold" />
               </span>
-            </motion.button>
+            </m.button>
           ))}
         </div>
 
@@ -209,7 +210,7 @@ export function VariationsShowcase() {
 
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
           {FULL_PAGE.map((v, i) => (
-            <motion.button
+            <m.button
               key={v.id}
               onClick={() => scrollToVariation(v.id)}
               className="group relative overflow-hidden rounded-xl border border-violet-500/[0.12] p-4 text-left transition-all duration-300 hover:border-violet-500/[0.25]"
@@ -248,7 +249,7 @@ export function VariationsShowcase() {
                 View Full
                 <PhArrowRight size={10} weight="bold" />
               </span>
-            </motion.button>
+            </m.button>
           ))}
         </div>
       </header>
@@ -380,5 +381,6 @@ export function VariationsShowcase() {
         </p>
       </footer>
     </div>
+    </LazyMotion>
   );
 }

@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import { getSagaBooks } from '@/lib/saga/loader';
-import type { SagaBook } from '@/lib/saga/loader';
+import { getSagaBooks, getAllSeries } from '@/lib/saga/loader';
+import type { SagaBook, BookSeries } from '@/lib/saga/loader';
 
 // ============================================================
 // STATIC DATA
@@ -53,8 +53,8 @@ const CHRONICLE_BOOKS: ChronicleBook[] = [
     description:
       'A stonemason\'s apprentice discovers they can channel all five elements — something unseen since the Dark Lord\'s fall ten thousand years ago. Recruited into an unprecedented joint session across all three Academies, Kael must navigate rivalries, ancient secrets, and the sealed darkness that seems to recognize them.',
     status: 'in-progress',
-    chapterCount: 10,
-    wordCount: '~95K',
+    chapterCount: 20,
+    wordCount: '~75K',
     firstChapter: '/books/book1/chapter-01-the-first-spark',
     gateSymbol: '◈',
   },
@@ -63,45 +63,100 @@ const CHRONICLE_BOOKS: ChronicleBook[] = [
     title: 'The Gate-Touched',
     subtitle: 'Book Two',
     description:
-      'The Registry tracks every channeler in the realm — but not everyone wants to be found. As Kael and the Five navigate the politics of a world that feared them before it knew them, someone is quietly erasing the evidence that multi-element channelers have existed before.',
-    status: 'outlined',
-    chapterCount: 3,
-    wordCount: '~28K',
+      'The Registry tracks every channeler in the realm — but not everyone wants to be found. As Gate-Touched manifest across Arcanea, Sable uncovers an Eldrian memory-vial that rewrites everything, Orin runs an underground railroad, and someone is erasing the evidence that Five-Fold channelers have existed before.',
+    status: 'in-progress',
+    chapterCount: 13,
+    wordCount: '~50K',
     firstChapter: '/books/book2/chapter-01-the-registry',
     gateSymbol: '◇',
   },
   {
     id: 'book3',
-    title: 'The Drowned Archive',
+    title: 'The Dragon War',
     subtitle: 'Book Three',
-    description: 'The Atlantean Depths hold secrets that predate the Academies themselves.',
-    status: 'planned',
-    chapterCount: 0,
-    wordCount: 'Planned',
-    firstChapter: '/books',
-    gateSymbol: '〜',
-  },
-  {
-    id: 'book4',
-    title: 'The Burning Compact',
-    subtitle: 'Book Four',
-    description: 'Old alliances fracture when the Draconic Forge uncovers a buried covenant.',
-    status: 'planned',
-    chapterCount: 0,
-    wordCount: 'Planned',
-    firstChapter: '/books',
+    description: 'A Dragon egg sings for the first time in a thousand years. Nations scramble to claim the hatching. Kael journeys to the Draconis Forge as Malachar\'s voice grows louder in the deep. What emerges from the egg is something no one predicted.',
+    status: 'in-progress',
+    chapterCount: 5,
+    wordCount: '~20K',
+    firstChapter: '/books/book3/chapter-01-the-egg-that-sang',
     gateSymbol: '△',
   },
   {
+    id: 'book4',
+    title: 'The Heart of the Abyss',
+    subtitle: 'Book Four',
+    description: 'The Academy War erupts. Vesper discovers she is Malachar\'s descendant. Kael descends into the Shadowfen to confront what the Dark Lord left behind — and the Heart Gate demands the hardest thing: compassion for the unforgivable.',
+    status: 'outlined',
+    chapterCount: 0,
+    wordCount: 'Outlined',
+    firstChapter: '/books',
+    gateSymbol: '♡',
+  },
+  {
     id: 'book5',
-    title: 'The Void Between',
+    title: 'The Voice Unheard',
     subtitle: 'Book Five',
-    description: 'Into the space that Nero left — the fertile dark where potential lives unformed.',
+    description: 'Darin reveals the Accord Conspiracy — the truth about the Ashwalker genocide that the Academies have hidden for ten thousand years. The Luminary falls. Kael gains the cursed gift of seeing across probability.',
+    status: 'outlined',
+    chapterCount: 0,
+    wordCount: 'Outlined',
+    firstChapter: '/books',
+    gateSymbol: '◎',
+  },
+  {
+    id: 'book6',
+    title: 'The Sight Beyond',
+    subtitle: 'Book Six',
+    description: 'A seer dreams Malachar\'s memories. The prophecy beneath the Athenaeum surfaces. The cast must choose: know the future, or shape it blind.',
     status: 'planned',
     chapterCount: 0,
     wordCount: 'Planned',
     firstChapter: '/books',
-    gateSymbol: '◯',
+    gateSymbol: '◐',
+  },
+  {
+    id: 'book7',
+    title: 'The Crown of Ashes',
+    subtitle: 'Book Seven',
+    description: 'The Throne of Shadows Dungeon offers Malachar\'s crown. In a refugee camp made from rubble, a child tugs Kael\'s sleeve and asks: "Can you fix it?" The Crown Gate opens. Not in glory. In exhaustion.',
+    status: 'planned',
+    chapterCount: 0,
+    wordCount: 'Planned',
+    firstChapter: '/books',
+    gateSymbol: '♛',
+  },
+  {
+    id: 'book8',
+    title: 'The Starweave',
+    subtitle: 'Book Eight',
+    description: 'Malachar speaks his version of history. It is different. Terrifyingly plausible. The Gods\' greatest secret: what really happened at the Source Gate.',
+    status: 'planned',
+    chapterCount: 0,
+    wordCount: 'Planned',
+    firstChapter: '/books',
+    gateSymbol: '✧',
+  },
+  {
+    id: 'book9',
+    title: 'The Unity War',
+    subtitle: 'Book Nine',
+    description: 'Malachar breaks free. The three Academies must unite for the first time in history. But it is not a war of armies — it is a war of ideas, and Malachar is the most eloquent being alive.',
+    status: 'planned',
+    chapterCount: 0,
+    wordCount: 'Planned',
+    firstChapter: '/books',
+    gateSymbol: '⊕',
+  },
+  {
+    id: 'book10',
+    title: 'The Source',
+    subtitle: 'Book Ten',
+    description: 'At the end of all things, Kael stands before the Source Gate — the threshold that broke Malachar ten thousand years ago. Shinkami asks: "What do you seek?" The answer the entire series has been building toward.',
+    status: 'planned',
+    chapterCount: 0,
+    wordCount: 'Planned',
+    firstChapter: '/books',
+    gateSymbol: '∞',
   },
 ];
 
@@ -239,6 +294,216 @@ const READING_PATHS = [
     icon: '◉',
   },
 ];
+
+// ============================================================
+// MULTIVERSE SERIES CONFIG (accent colors per series)
+// ============================================================
+
+interface SeriesAccent {
+  border: string;
+  hover: string;
+  badge: string;
+  badgeText: string;
+  glow: string;
+  symbol: string;
+  topEdge: string;
+}
+
+const SERIES_ACCENTS: Record<string, SeriesAccent> = {
+  starbound: {
+    border: 'border-cyan-500/15 hover:border-cyan-400/30',
+    hover: 'hover:shadow-[0_0_40px_rgba(6,182,212,0.08)]',
+    badge: 'bg-cyan-500/10 border-cyan-500/25',
+    badgeText: 'text-cyan-400',
+    glow: 'via-cyan-500/[0.03]',
+    symbol: '✦',
+    topEdge: 'from-transparent via-cyan-400/30 to-transparent',
+  },
+  dragonborne: {
+    border: 'border-red-500/15 hover:border-red-400/30',
+    hover: 'hover:shadow-[0_0_40px_rgba(239,68,68,0.08)]',
+    badge: 'bg-red-500/10 border-red-500/25',
+    badgeText: 'text-red-400',
+    glow: 'via-red-900/[0.03]',
+    symbol: '◈',
+    topEdge: 'from-transparent via-red-400/30 to-transparent',
+  },
+  'dungeon-scrolls': {
+    border: 'border-purple-500/15 hover:border-purple-400/30',
+    hover: 'hover:shadow-[0_0_40px_rgba(168,85,247,0.08)]',
+    badge: 'bg-purple-500/10 border-purple-500/25',
+    badgeText: 'text-purple-400',
+    glow: 'via-purple-900/[0.03]',
+    symbol: '◎',
+    topEdge: 'from-transparent via-purple-400/30 to-transparent',
+  },
+  'gate-touched-files': {
+    border: 'border-emerald-500/15 hover:border-emerald-400/30',
+    hover: 'hover:shadow-[0_0_40px_rgba(16,185,129,0.08)]',
+    badge: 'bg-emerald-500/10 border-emerald-500/25',
+    badgeText: 'text-emerald-400',
+    glow: 'via-emerald-900/[0.03]',
+    symbol: '◇',
+    topEdge: 'from-transparent via-emerald-400/30 to-transparent',
+  },
+  'void-ascending': {
+    border: 'border-violet-500/15 hover:border-violet-400/30',
+    hover: 'hover:shadow-[0_0_40px_rgba(139,92,246,0.08)]',
+    badge: 'bg-violet-500/10 border-violet-500/25',
+    badgeText: 'text-violet-400',
+    glow: 'via-violet-900/[0.03]',
+    symbol: '◐',
+    topEdge: 'from-transparent via-violet-400/30 to-transparent',
+  },
+  companions: {
+    border: 'border-amber-500/15 hover:border-amber-400/30',
+    hover: 'hover:shadow-[0_0_40px_rgba(245,158,11,0.08)]',
+    badge: 'bg-amber-500/10 border-amber-500/25',
+    badgeText: 'text-amber-400',
+    glow: 'via-amber-900/[0.03]',
+    symbol: '◉',
+    topEdge: 'from-transparent via-amber-400/30 to-transparent',
+  },
+  sagas: {
+    border: 'border-yellow-500/15 hover:border-yellow-400/30',
+    hover: 'hover:shadow-[0_0_40px_rgba(234,179,8,0.08)]',
+    badge: 'bg-yellow-500/10 border-yellow-500/25',
+    badgeText: 'text-yellow-400',
+    glow: 'via-yellow-900/[0.03]',
+    symbol: '✧',
+    topEdge: 'from-transparent via-yellow-400/30 to-transparent',
+  },
+};
+
+const DEFAULT_ACCENT: SeriesAccent = {
+  border: 'border-white/8 hover:border-white/18',
+  hover: '',
+  badge: 'bg-white/5 border-white/15',
+  badgeText: 'text-white/45',
+  glow: '',
+  symbol: '◈',
+  topEdge: 'from-transparent via-white/20 to-transparent',
+};
+
+const CONTENT_TYPE_LABELS: Record<BookSeries['contentType'], string> = {
+  novel: 'Novel Series',
+  novella: 'Novella Series',
+  serial: 'Serial',
+  anthology: 'Anthology',
+  standalone: 'Standalones',
+};
+
+const SERIES_STATUS_STYLES: Record<BookSeries['status'], { bg: string; text: string; label: string }> = {
+  active: { bg: 'bg-emerald-500/10 border border-emerald-500/25', text: 'text-emerald-400', label: 'Active' },
+  'in-progress': { bg: 'bg-[#00bcd4]/10 border border-[#00bcd4]/25', text: 'text-[#00bcd4]', label: 'In Progress' },
+  planned: { bg: 'bg-white/5 border border-white/10', text: 'text-white/35', label: 'Coming Soon' },
+};
+
+function SeriesCard({ series }: { series: BookSeries }) {
+  const accent = SERIES_ACCENTS[series.id] ?? DEFAULT_ACCENT;
+  const statusStyle = SERIES_STATUS_STYLES[series.status];
+  const hasContent = series.totalChapters > 0;
+
+  // Build first-chapter href: find the first book that has a chapter
+  let firstChapterHref: string | null = null;
+  for (const book of series.books) {
+    if (book.firstChapterSlug) {
+      if (series.books.length === 1 && series.id !== 'sagas') {
+        // flat / single-book — link directly via series id
+        firstChapterHref = `/books/${series.id}/${book.firstChapterSlug}`;
+      } else {
+        // multi-book — link via book subdir
+        firstChapterHref = `/books/${series.id}/${book.id}/${book.firstChapterSlug}`;
+      }
+      break;
+    }
+  }
+
+  return (
+    <div
+      className={`group relative overflow-hidden rounded-xl border bg-white/[0.025] transition-all duration-300 ${accent.border} ${accent.hover}`}
+    >
+      {/* Top edge glow */}
+      {hasContent && (
+        <div
+          className={`pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r ${accent.topEdge}`}
+          aria-hidden="true"
+        />
+      )}
+
+      <div className="p-6">
+        {/* Header row */}
+        <div className="mb-4 flex items-start justify-between gap-3">
+          <span className={`font-mono text-2xl ${accent.badgeText}/40`} aria-hidden="true">
+            {accent.symbol}
+          </span>
+          <span
+            className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] ${statusStyle.bg} ${statusStyle.text}`}
+          >
+            {statusStyle.label}
+          </span>
+        </div>
+
+        {/* Content type */}
+        <p className="mb-1 font-mono text-[10px] uppercase tracking-[0.2em] text-white/25">
+          {CONTENT_TYPE_LABELS[series.contentType]}
+        </p>
+
+        {/* Title */}
+        <h3 className="font-display text-lg font-bold tracking-tight text-white/90">
+          {series.title}
+        </h3>
+        <p className={`mt-0.5 text-[11px] ${accent.badgeText}/60`}>
+          {series.subtitle}
+        </p>
+
+        {/* Description */}
+        <p className="mt-3 text-sm leading-relaxed text-white/45">
+          {series.description}
+        </p>
+
+        {/* Stats */}
+        <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-white/25">
+          {hasContent ? (
+            <>
+              <span>{series.totalChapters} chapter{series.totalChapters !== 1 ? 's' : ''}</span>
+              <span className="text-white/10">|</span>
+              <span>~{Math.round(series.totalWordCount / 1000)}K words</span>
+            </>
+          ) : (
+            <span>Coming soon</span>
+          )}
+        </div>
+
+        {/* CTA */}
+        <div className="mt-5">
+          {hasContent && firstChapterHref ? (
+            <Link
+              href={firstChapterHref}
+              className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-medium transition-all ${accent.badge} ${accent.badgeText} hover:opacity-80`}
+            >
+              Read Now
+              <svg
+                className="h-3 w-3"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+                aria-hidden="true"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          ) : (
+            <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-xs font-medium text-white/25">
+              Coming Soon
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 // ============================================================
 // STATUS BADGE
@@ -397,6 +662,17 @@ export default async function BooksPage() {
     // Filesystem may not be available in all environments
   }
 
+  // Load all series for the multiverse section
+  let allSeries: BookSeries[] = [];
+  try {
+    allSeries = await getAllSeries();
+  } catch {
+    // Filesystem may not be available in all environments
+  }
+
+  // Exclude the main Chronicles series from the multiverse grid (it has its own section)
+  const multiverseSeries = allSeries.filter(s => s.id !== 'chronicles');
+
   // Merge real word counts into CHRONICLE_BOOKS if available
   const enrichedBooks = CHRONICLE_BOOKS.map((cb) => {
     const real = realBooks.find((r) => r.id === cb.id);
@@ -542,6 +818,37 @@ export default async function BooksPage() {
           Books 6–10 in development
         </p>
       </section>
+
+      {/* ================================================================
+          THE ARCANEA MULTIVERSE — all other series
+      ================================================================ */}
+      {multiverseSeries.length > 0 && (
+        <section id="multiverse" className="relative mx-auto max-w-6xl px-6 py-24">
+          {/* Subtle section divider */}
+          <div className="mb-16 flex items-center gap-4" aria-hidden="true">
+            <span className="h-px flex-1 bg-white/6" />
+            <div className="text-center">
+              <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.3em] text-[#00bcd4]/40">
+                Expanded Universe
+              </p>
+              <h2 className="font-display text-3xl font-bold tracking-tight text-white/90 md:text-4xl">
+                The Arcanea Multiverse
+              </h2>
+              <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-white/40">
+                Beyond the Chronicles, the world keeps expanding. Crews, dragon-riders, Dungeon divers,
+                Gate-Touched survivors, and the voices of those the main story calls enemies.
+              </p>
+            </div>
+            <span className="h-px flex-1 bg-white/6" />
+          </div>
+
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {multiverseSeries.map(series => (
+              <SeriesCard key={series.id} series={series} />
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* ================================================================
           FEATURED PASSAGE — rotating quotes

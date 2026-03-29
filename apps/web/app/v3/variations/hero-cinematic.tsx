@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
 import Image from 'next/image';
 import { PhArrowRight, PhCaretDown } from '@/lib/phosphor-icons';
 import heroImage from '@/assets/brand/arcanea-hero.jpg';
@@ -39,6 +39,7 @@ const chevronBounce = {
 
 export function HeroCinematic() {
   return (
+    <LazyMotion features={domAnimation}>
     <section className="relative flex min-h-[100dvh] w-full items-center justify-center overflow-hidden bg-black">
       {/* ── Hero image ── */}
       <div className="absolute inset-0 z-0">
@@ -99,7 +100,7 @@ export function HeroCinematic() {
       {/* ── Content overlay ── */}
       <div className="relative z-10 mx-auto flex w-full max-w-3xl flex-col items-center px-6 py-24 text-center md:px-8">
         {/* Headline — movie-poster style */}
-        <motion.h1
+        <m.h1
           className="font-display text-5xl font-bold leading-[1.0] tracking-[-0.04em] text-white md:text-6xl lg:text-7xl"
           custom={0}
           initial="hidden"
@@ -109,10 +110,10 @@ export function HeroCinematic() {
           Where imagination
           <br />
           becomes real
-        </motion.h1>
+        </m.h1>
 
         {/* Subtitle */}
-        <motion.p
+        <m.p
           className="mt-6 max-w-md text-base leading-relaxed md:mt-8 md:text-lg"
           style={{ color: 'rgba(255, 255, 255, 0.55)' }}
           custom={1}
@@ -123,17 +124,17 @@ export function HeroCinematic() {
           16 Luminors. Writing, design, code, music, research.
           <br className="hidden md:block" />
           One platform for everything you create.
-        </motion.p>
+        </m.p>
 
         {/* CTA — outline with glow */}
-        <motion.div
+        <m.div
           className="mt-10 md:mt-12"
           custom={2}
           initial="hidden"
           animate="visible"
           variants={fadeUp}
         >
-          <motion.a
+          <m.a
             href="/create"
             className="group inline-flex items-center gap-2.5 rounded-md border px-7 py-3.5 text-base font-semibold transition-colors md:text-lg"
             style={{
@@ -154,11 +155,11 @@ export function HeroCinematic() {
               weight="bold"
               className="transition-transform group-hover:translate-x-0.5"
             />
-          </motion.a>
-        </motion.div>
+          </m.a>
+        </m.div>
 
         {/* Trust line */}
-        <motion.p
+        <m.p
           className="mt-6 text-sm"
           style={{ color: 'rgba(255, 255, 255, 0.22)' }}
           custom={3}
@@ -167,11 +168,11 @@ export function HeroCinematic() {
           variants={fadeUp}
         >
           Free &middot; No credit card &middot; 34+ original texts
-        </motion.p>
+        </m.p>
       </div>
 
       {/* ── Scroll indicator ── */}
-      <motion.div
+      <m.div
         className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -183,14 +184,15 @@ export function HeroCinematic() {
         >
           Scroll to explore
         </span>
-        <motion.div animate={chevronBounce}>
+        <m.div animate={chevronBounce}>
           <PhCaretDown
             size={18}
             weight="bold"
             style={{ color: 'rgba(255, 255, 255, 0.22)' }}
           />
-        </motion.div>
-      </motion.div>
+        </m.div>
+      </m.div>
     </section>
+    </LazyMotion>
   );
 }

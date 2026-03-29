@@ -17,19 +17,19 @@ import type { Artifact } from '@/components/chat/artifacts-panel';
 
 const CommandPalette = dynamic(
   () => import('@/components/chat/command-palette').then((m) => m.CommandPalette),
-  { ssr: false },
+  { ssr: false, loading: () => <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm" /> },
 );
 const ExportDialog = dynamic(
   () => import('@/components/chat/export-dialog').then((m) => m.ExportDialog),
-  { ssr: false },
+  { ssr: false, loading: () => <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm" /> },
 );
 const ArtifactsPanel = dynamic(
   () => import('@/components/chat/artifacts-panel').then((m) => m.ArtifactsPanel),
-  { ssr: false },
+  { ssr: false, loading: () => <div className="fixed right-0 top-0 h-full w-80 bg-[#0a0a10] border-l border-white/[0.06] animate-pulse" /> },
 );
 const BeamMode = dynamic(
   () => import('@/components/chat/beam-mode').then((m) => m.BeamMode),
-  { ssr: false },
+  { ssr: false, loading: () => <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center"><span className="text-white/40 text-sm">Loading Beam Mode...</span></div> },
 );
 const CreditBalance = dynamic(
   () => import('@/components/credits/credit-balance').then((m) => m.CreditBalance),
