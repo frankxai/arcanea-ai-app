@@ -76,12 +76,25 @@ export function HeroChatBox() {
       <div
         className={`relative rounded-2xl transition-all duration-300 ${
           isFocused
-            ? "shadow-[0_0_0_1px_rgba(0,188,212,0.25),0_8px_40px_rgba(0,0,0,0.4),0_0_60px_rgba(0,188,212,0.06)]"
+            ? "shadow-[0_0_0_1px_rgba(0,188,212,0.3),0_8px_40px_rgba(0,0,0,0.4),0_0_80px_rgba(0,188,212,0.08)]"
             : "shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_4px_24px_rgba(0,0,0,0.4)]"
         }`}
       >
-        {/* Glass fill */}
-        <div className="absolute inset-0 rounded-2xl bg-white/[0.025] backdrop-blur-2xl" />
+        {/* Glass fill with gradient */}
+        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/[0.035] via-white/[0.02] to-white/[0.025] backdrop-blur-2xl" />
+        {/* Gradient border overlay */}
+        <div
+          className="absolute inset-0 rounded-2xl pointer-events-none transition-opacity duration-300"
+          style={{
+            padding: '1px',
+            background: isFocused
+              ? 'linear-gradient(135deg, rgba(0,188,212,0.35), rgba(13,71,161,0.2), rgba(0,137,123,0.35))'
+              : 'linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03), rgba(255,255,255,0.06))',
+            mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+            maskComposite: 'exclude',
+            WebkitMaskComposite: 'xor',
+          }}
+        />
 
         <div className="relative flex items-end">
           <textarea
@@ -102,9 +115,9 @@ export function HeroChatBox() {
             <button
               onClick={() => goToChat(message)}
               disabled={!hasText}
-              className={`p-2 rounded-lg transition-all duration-200 ${
+              className={`p-2.5 rounded-xl transition-all duration-200 ${
                 hasText
-                  ? "bg-[#00bcd4] shadow-[0_2px_12px_rgba(0,188,212,0.3)] hover:shadow-[0_4px_20px_rgba(0,188,212,0.4)] hover:scale-105 active:scale-95"
+                  ? "bg-gradient-to-br from-[#00bcd4] via-[#0097a7] to-[#00897b] shadow-[0_2px_16px_rgba(0,188,212,0.35)] hover:shadow-[0_4px_24px_rgba(0,188,212,0.5)] hover:scale-105 active:scale-95"
                   : "bg-white/[0.04] cursor-default"
               }`}
               aria-label="Start creating"
@@ -130,7 +143,7 @@ export function HeroChatBox() {
             <button
               key={card.label}
               onClick={() => goToChat(card.prompt)}
-              className="group flex items-center gap-2 px-4 py-2.5 rounded-full text-[13px] text-white/30 hover:text-white/60 bg-white/[0.02] hover:bg-white/[0.05] border border-white/[0.04] hover:border-white/[0.10] hover:scale-[1.03] active:scale-[0.97] transition-all duration-200"
+              className="group flex items-center gap-2 px-4 py-2.5 rounded-full text-[13px] text-white/30 hover:text-white/65 bg-white/[0.02] hover:bg-gradient-to-r hover:from-[#00bcd4]/[0.06] hover:to-transparent border border-white/[0.04] hover:border-[#00bcd4]/20 hover:shadow-[0_0_16px_rgba(0,188,212,0.06)] hover:scale-[1.03] active:scale-[0.97] transition-all duration-300"
             >
               <Icon className="w-3.5 h-3.5 text-white/20 group-hover:text-[#00bcd4]/70 transition-colors" />
               {card.label}

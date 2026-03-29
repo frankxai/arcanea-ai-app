@@ -289,10 +289,10 @@ export default function ImaginePage() {
 
       {/* Stats bar — when results exist */}
       {hasResults && (
-        <div className="sticky top-0 z-30 border-b border-white/[0.06] liquid-glass">
+        <div className="sticky top-0 z-30 border-b border-white/[0.05] liquid-glass bg-gradient-to-r from-transparent via-white/[0.01] to-transparent">
           <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <h1 className="text-lg font-display font-semibold text-text-primary">Imagine</h1>
+              <ChatImagineTabs />
               <span className="text-xs text-text-muted bg-white/[0.04] px-2.5 py-1 rounded-full">
                 {totalImages} image{totalImages !== 1 ? 's' : ''}
               </span>
