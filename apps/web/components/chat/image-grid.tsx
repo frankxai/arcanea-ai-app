@@ -15,7 +15,7 @@ export interface ImageGridProps {
 // ImageGrid — masonry-style grid for multiple images in a chat message
 // ---------------------------------------------------------------------------
 
-export function ImageGrid({ images }: ImageGridProps) {
+export const ImageGrid = React.memo(function ImageGrid({ images }: ImageGridProps) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   if (images.length === 0) return null;
@@ -85,6 +85,7 @@ export function ImageGrid({ images }: ImageGridProps) {
       )}
     </>
   );
-}
+});
 
+ImageGrid.displayName = 'ImageGrid';
 export default ImageGrid;

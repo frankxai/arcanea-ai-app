@@ -191,7 +191,7 @@ function EditForm({
 // MessageBubble — main component
 // ---------------------------------------------------------------------------
 
-export function MessageBubble({
+export const MessageBubble = React.memo(function MessageBubble({
   message,
   isStreaming = false,
   isLast = false,
@@ -762,6 +762,7 @@ export function MessageBubble({
       </div>
     </div>
   );
-}
+});
 
+MessageBubble.displayName = 'MessageBubble';
 export default MessageBubble;

@@ -21,7 +21,7 @@ export interface ThinkingSectionProps {
 // ThinkingSection — collapsible reasoning display for AI messages
 // ---------------------------------------------------------------------------
 
-export function ThinkingSection({
+export const ThinkingSection = React.memo(function ThinkingSection({
   content,
   isStreaming,
   duration,
@@ -156,6 +156,7 @@ export function ThinkingSection({
       </div>
     </div>
   );
-}
+});
 
+ThinkingSection.displayName = 'ThinkingSection';
 export default ThinkingSection;
