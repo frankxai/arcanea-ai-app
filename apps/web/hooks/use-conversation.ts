@@ -309,6 +309,25 @@ export function useConversation(options?: UseConversationOptions): ConversationS
   }, []);
 
   // ---------------------------------------------------------------------------
+  // Auto-tool detection — suggest tools based on message content
+  // ---------------------------------------------------------------------------
+
+  const detectToolIntent = useCallback((message: string): string[] => {
+    const detected: string[] = [];
+    const lower = message.toLowerCase();
+    if (/\b(generate|draw|create|make|design)\b.*\b(image|picture|photo|illustration|art|logo|icon)\b/i.test(message)) {
+      detected.push('image');
+    }
+    if (/\b(think|analyze|reason|step by step|complex|deep dive|break down)\b/i.test(message)) {
+      detected.push('think');
+    }
+    if (/\b(search|find|latest|news|current|today|recent|look up|google)\b/i.test(message)) {
+      detected.push('search');
+    }
+    return detected;
+  }, []);
+
+  // ---------------------------------------------------------------------------
   // Focus mode hint
   // ---------------------------------------------------------------------------
 
@@ -770,6 +789,7 @@ export function useConversation(options?: UseConversationOptions): ConversationS
     enabledTools,
     setEnabledTools,
     toggleTool,
+    detectToolIntent,
 
     // State
     isLoading,
