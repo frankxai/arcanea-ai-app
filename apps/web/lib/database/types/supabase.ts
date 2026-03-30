@@ -238,6 +238,7 @@ export type Database = {
           luminor_id: string | null
           messages: Record<string, unknown>[]
           model_id: string | null
+          project_id: string | null
           title: string | null
           updated_at: string
           user_id: string
@@ -248,6 +249,7 @@ export type Database = {
           luminor_id?: string | null
           messages?: Record<string, unknown>[]
           model_id?: string | null
+          project_id?: string | null
           title?: string | null
           updated_at?: string
           user_id: string
@@ -258,11 +260,68 @@ export type Database = {
           luminor_id?: string | null
           messages?: Record<string, unknown>[]
           model_id?: string | null
+          project_id?: string | null
           title?: string | null
           updated_at?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "chat_sessions_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "chat_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      chat_projects: {
+        Row: {
+          created_at: string
+          description: string | null
+          goal: string | null
+          id: string
+          metadata: Json
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          goal?: string | null
+          id?: string
+          metadata?: Json
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          goal?: string | null
+          id?: string
+          metadata?: Json
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_projects_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "chat_projects_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_engagement"
+            referencedColumns: ["user_id"]
+          },
+        ]
       }
       collection_items: {
         Row: {
@@ -474,7 +533,9 @@ export type Database = {
           id: string
           like_count: number
           metadata: Json | null
+          project_id: string | null
           search_vector: unknown
+          source_session_id: string | null
           status: string
           tags: string[] | null
           thumbnail_url: string | null
@@ -497,7 +558,9 @@ export type Database = {
           id?: string
           like_count?: number
           metadata?: Json | null
+          project_id?: string | null
           search_vector?: unknown
+          source_session_id?: string | null
           status?: string
           tags?: string[] | null
           thumbnail_url?: string | null
@@ -520,7 +583,9 @@ export type Database = {
           id?: string
           like_count?: number
           metadata?: Json | null
+          project_id?: string | null
           search_vector?: unknown
+          source_session_id?: string | null
           status?: string
           tags?: string[] | null
           thumbnail_url?: string | null
@@ -545,6 +610,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "user_engagement"
             referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "creations_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "chat_projects"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -1489,6 +1561,135 @@ export type Database = {
         }
         Relationships: []
       }
+      project_graph_edges: {
+        Row: {
+          created_at: string
+          id: string
+          metadata: Json
+          project_id: string
+          relation: string
+          source_id: string
+          source_type: string
+          target_id: string
+          target_type: string
+          updated_at: string
+          user_id: string
+          weight: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          metadata?: Json
+          project_id: string
+          relation: string
+          source_id: string
+          source_type: string
+          target_id: string
+          target_type: string
+          updated_at?: string
+          user_id: string
+          weight?: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          metadata?: Json
+          project_id?: string
+          relation?: string
+          source_id?: string
+          source_type?: string
+          target_id?: string
+          target_type?: string
+          updated_at?: string
+          user_id?: string
+          weight?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_graph_edges_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "chat_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      project_graph_summaries: {
+        Row: {
+          checks: Json
+          created_at: string
+          facts: Json
+          project_id: string
+          score: number
+          summary: string
+          tags: string[]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          checks?: Json
+          created_at?: string
+          facts?: Json
+          project_id: string
+          score?: number
+          summary?: string
+          tags?: string[]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          checks?: Json
+          created_at?: string
+          facts?: Json
+          project_id?: string
+          score?: number
+          summary?: string
+          tags?: string[]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_graph_summaries_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: true
+            referencedRelation: "chat_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      project_memory_links: {
+        Row: {
+          created_at: string
+          id: string
+          memory_id: string
+          project_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          memory_id: string
+          project_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          memory_id?: string
+          project_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_memory_links_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "chat_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       reading_progress: {
         Row: {
           collection_slug: string
@@ -1530,6 +1731,51 @@ export type Database = {
           },
           {
             foreignKeyName: "reading_progress_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_engagement"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
+      user_memories: {
+        Row: {
+          category: string
+          content: string
+          created_at: string
+          embedding: number[] | null
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          category?: string
+          content: string
+          created_at?: string
+          embedding?: number[] | null
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          category?: string
+          content?: string
+          created_at?: string
+          embedding?: number[] | null
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_memories_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_memories_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "user_engagement"

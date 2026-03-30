@@ -1,51 +1,44 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const baseURL = 'http://127.0.0.1:3011';
-const shouldSkipWebServer = process.env.PLAYWRIGHT_SKIP_WEB_SERVER === '1';
+const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? 'http://localhost:3001';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ?? 'https://example.supabase.co';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? 'example-anon-key';
+const shouldRunWebServer = !process.env.PLAYWRIGHT_NO_WEB_SERVER;
 
 export default defineConfig({
   testDir: './e2e',
-  fullyParallel: true,
+  fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
-  reporter: process.env.CI
-    ? [['line'], ['html', { open: 'never' }]]
-    : [['list']],
+  workers: process.env.CI ? 1 : 2,
+  reporter: process.env.CI ? 'github' : 'list',
   use: {
     baseURL,
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-    viewport: { width: 1440, height: 960 },
   },
+  ...(shouldRunWebServer
+    ? {
+        webServer: {
+          command:
+            process.env.PLAYWRIGHT_WEB_SERVER_COMMAND ??
+            (process.platform === 'win32' ? 'cmd.exe /c pnpm run dev' : 'pnpm run dev'),
+          url: baseURL,
+          reuseExistingServer: !process.env.CI,
+          timeout: 300000,
+          env: {
+            NEXT_PUBLIC_SUPABASE_URL: supabaseUrl,
+            NEXT_PUBLIC_SUPABASE_ANON_KEY: supabaseAnonKey,
+            NEXT_TELEMETRY_DISABLED: '1',
+          },
+        },
+      }
+    : {}),
   projects: [
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
   ],
-  ...(shouldSkipWebServer
-    ? {}
-    : {
-        webServer: {
-          command: 'pnpm exec tsx e2e/serve-playwright.ts',
-          url: baseURL,
-          reuseExistingServer: !process.env.CI,
-          timeout: 120000,
-          env: {
-            PORT: '3011',
-            HOSTNAME: '127.0.0.1',
-            NEXT_TELEMETRY_DISABLED: '1',
-            NEXT_PUBLIC_SUPABASE_URL: 'http://127.0.0.1:54321',
-            NEXT_PUBLIC_SUPABASE_ANON_KEY: 'playwright-anon-key',
-            SUPABASE_URL: 'http://127.0.0.1:54321',
-            SUPABASE_ANON_KEY: 'playwright-anon-key',
-            PLAYWRIGHT_DEV_SERVER: process.env.PLAYWRIGHT_DEV_SERVER ?? '0',
-          },
-        },
-      }),
-  expect: {
-    timeout: 5000,
-  },
 });

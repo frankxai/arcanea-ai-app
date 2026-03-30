@@ -68,6 +68,11 @@ export function SaveCreationButton({ content, onSaved }: SaveCreationButtonProps
     const gate = detectGate(content)
 
     try {
+      const activeProjectId =
+        typeof window !== 'undefined'
+          ? window.localStorage.getItem('arcanea_active_chat_project')
+          : null
+
       const res = await fetch('/api/creations', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -81,6 +86,7 @@ export function SaveCreationButton({ content, onSaved }: SaveCreationButtonProps
           element,
           gate,
           tags: ['from-chat', element?.toLowerCase(), gate?.toLowerCase()].filter(Boolean),
+          ...(activeProjectId ? { projectId: activeProjectId } : {}),
         }),
       })
 

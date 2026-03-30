@@ -15,10 +15,18 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { z } from "zod";
 import type { Database } from "@/lib/database/types/supabase";
+import { getProjectWorkspaceForCurrentUser } from "@/lib/projects/server";
+import { enrichProjectGraph } from "@/lib/projects/enrichment";
+import { recordProjectTrace } from "@/lib/projects/trace";
 
 const BUCKET = "arcanea-gallery";
 const MAX_SIZE = 10 * 1024 * 1024; // 10MB
+const uploadMetadataSchema = z.object({
+  projectId: z.string().uuid().optional(),
+  sourceSessionId: z.string().min(1).max(255).optional(),
+});
 
 const VALID_GUARDIANS = new Set([
   "Aiyami", "Alera", "Draconia", "Elara", "Ino",
@@ -59,6 +67,14 @@ export async function POST(request: NextRequest) {
   const file = formData.get("file") as File | null;
   const guardian = formData.get("guardian") as string | null;
   const title = formData.get("title") as string | null;
+  const metadataValidation = uploadMetadataSchema.safeParse({
+    projectId: (formData.get("projectId") as string | null) ?? undefined,
+    sourceSessionId: (formData.get("sourceSessionId") as string | null) ?? undefined,
+  });
+
+  if (!metadataValidation.success) {
+    return NextResponse.json({ error: "Invalid project metadata" }, { status: 400 });
+  }
 
   if (!file) {
     return NextResponse.json({ error: "No file provided" }, { status: 400 });
@@ -112,6 +128,8 @@ export async function POST(request: NextRequest) {
     status: "published",
     visibility: "public",
     tags: guardian ? [guardian.toLowerCase(), "community-gallery"] : ["community-gallery"],
+    ...(metadataValidation.data.projectId ? { project_id: metadataValidation.data.projectId } : {}),
+    ...(metadataValidation.data.sourceSessionId ? { source_session_id: metadataValidation.data.sourceSessionId } : {}),
   });
 
   if (dbError) {
@@ -119,10 +137,31 @@ export async function POST(request: NextRequest) {
     // Image uploaded but DB record failed — non-fatal
   }
 
+  if (metadataValidation.data.projectId) {
+    await recordProjectTrace(supabase as any, {
+      userId: user.id,
+      projectId: metadataValidation.data.projectId,
+      action: "project_creation_linked",
+      metadata: {
+        origin: "gallery_upload",
+        guardian: guardian ?? null,
+        sourceSessionId: metadataValidation.data.sourceSessionId ?? null,
+        storagePath,
+      },
+    });
+
+    const workspace = await getProjectWorkspaceForCurrentUser(metadataValidation.data.projectId);
+    if (workspace) {
+      await enrichProjectGraph(supabase as any, user.id, workspace);
+    }
+  }
+
   return NextResponse.json({
     url: urlData.publicUrl,
     storagePath,
     guardian: guardian ?? "Unknown",
+    projectId: metadataValidation.data.projectId ?? null,
+    sourceSessionId: metadataValidation.data.sourceSessionId ?? null,
     message: "Creation added to gallery",
   });
 }

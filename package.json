@@ -24,6 +24,8 @@
     "lint": "turbo run lint",
     "type-check": "turbo run type-check",
     "clean": "turbo run clean",
+    "supabase:project-graph:plan": "tsx scripts/project-graph-activate.ts --plan",
+    "supabase:project-graph:apply": "tsx scripts/project-graph-activate.ts --apply",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,md,json}\"",
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,md,json}\"",
     "changeset": "changeset",

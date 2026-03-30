@@ -14,6 +14,9 @@ import {
   errorResponse,
   handleApiError,
 } from '@/lib/api-utils';
+import { getProjectWorkspaceForCurrentUser } from '@/lib/projects/server';
+import { enrichProjectGraph } from '@/lib/projects/enrichment';
+import { recordProjectTrace } from '@/lib/projects/trace';
 
 const MAX_MEMORIES_PER_USER = 100;
 // The user_memories table exists at runtime but is currently missing from the
@@ -45,6 +48,7 @@ const createMemorySchema = z.object({
     .min(1, 'Content is required')
     .max(500, 'Content must be 500 characters or fewer'),
   category: z.enum(VALID_CATEGORIES).default('general'),
+  projectId: z.string().uuid().optional(),
 });
 
 /**
@@ -172,6 +176,32 @@ export async function POST(request: NextRequest) {
           })
           .eq('id', duplicate.id);
 
+        if (validation.data.projectId) {
+          await supabase
+            .from('project_memory_links')
+            .upsert({
+              project_id: validation.data.projectId,
+              user_id: user.id,
+              memory_id: duplicate.id,
+            }, { onConflict: 'project_id,memory_id' });
+
+          await recordProjectTrace(supabase, {
+            userId: user.id,
+            projectId: validation.data.projectId,
+            action: 'project_memory_linked',
+            metadata: {
+              memoryId: duplicate.id,
+              updated: true,
+              category: validation.data.category,
+            },
+          });
+
+          const workspace = await getProjectWorkspaceForCurrentUser(validation.data.projectId);
+          if (workspace) {
+            await enrichProjectGraph(supabase, user.id, workspace);
+          }
+        }
+
         // Fire-and-forget: re-embed the updated memory
         import('@/lib/memory/semantic').then(({ embedMemory }) => {
           embedMemory(supabase, duplicate.id, validation.data.content).catch(() => {});
@@ -201,6 +231,32 @@ export async function POST(request: NextRequest) {
 
     // Fire-and-forget: embed the new memory for semantic search
     if (memory?.id) {
+      if (validation.data.projectId) {
+        await supabase
+          .from('project_memory_links')
+          .upsert({
+            project_id: validation.data.projectId,
+            user_id: user.id,
+            memory_id: memory.id,
+          }, { onConflict: 'project_id,memory_id' });
+
+        await recordProjectTrace(supabase, {
+          userId: user.id,
+          projectId: validation.data.projectId,
+          action: 'project_memory_linked',
+          metadata: {
+            memoryId: memory.id,
+            updated: false,
+            category: validation.data.category,
+          },
+        });
+
+        const workspace = await getProjectWorkspaceForCurrentUser(validation.data.projectId);
+        if (workspace) {
+          await enrichProjectGraph(supabase, user.id, workspace);
+        }
+      }
+
       import('@/lib/memory/semantic').then(({ embedMemory }) => {
         embedMemory(supabase, memory.id, validation.data.content).catch(() => {});
       });

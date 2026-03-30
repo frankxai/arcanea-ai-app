@@ -9,6 +9,7 @@
  */
 
 const STORAGE_KEY = 'arcanea_chat_sessions';
+const ACTIVE_SESSION_KEY = 'arcanea_active_chat_session';
 const MAX_SESSIONS = 50;
 const TITLE_MAX_LENGTH = 60;
 
@@ -172,6 +173,28 @@ export function saveChatSession(
 export function loadChatSession(id: string): ChatSession | null {
   const sessions = readSessions();
   return sessions.find((s) => s.id === id) ?? null;
+}
+
+export function getActiveChatSessionId(): string | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    return localStorage.getItem(ACTIVE_SESSION_KEY);
+  } catch {
+    return null;
+  }
+}
+
+export function setActiveChatSessionId(id: string | null): void {
+  if (typeof window === 'undefined') return;
+  try {
+    if (id) {
+      localStorage.setItem(ACTIVE_SESSION_KEY, id);
+    } else {
+      localStorage.removeItem(ACTIVE_SESSION_KEY);
+    }
+  } catch {
+    // ignore storage failures
+  }
 }
 
 /**

@@ -23,6 +23,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { createCreation } from '@/lib/database/services/creation-service';
+import { getProjectWorkspaceForCurrentUser } from '@/lib/projects/server';
+import { enrichProjectGraph } from '@/lib/projects/enrichment';
+import { recordProjectTrace } from '@/lib/projects/trace';
 
 const MAX_IMAGE_BYTES = 20 * 1024 * 1024; // 20 MB
 
@@ -58,6 +61,8 @@ export async function POST(request: NextRequest) {
       element,
       gate,
       guardian,
+      projectId,
+      sourceSessionId,
     } = body as {
       imageUrl: string;
       prompt?: string;
@@ -66,6 +71,8 @@ export async function POST(request: NextRequest) {
       element?: string;
       gate?: string;
       guardian?: string;
+      projectId?: string;
+      sourceSessionId?: string;
     };
 
     // Resolve image bytes + mime type
@@ -159,6 +166,8 @@ export async function POST(request: NextRequest) {
       element: element as Parameters<typeof createCreation>[2]['element'],
       gate: gate as Parameters<typeof createCreation>[2]['gate'],
       guardian: guardian as Parameters<typeof createCreation>[2]['guardian'],
+      projectId,
+      sourceSessionId,
       content: {
         mode: 'image',
         prompt,
@@ -172,6 +181,24 @@ export async function POST(request: NextRequest) {
         { error: { message: 'Failed to save creation record.' } },
         { status: 500 }
       );
+    }
+
+    if (projectId) {
+      await recordProjectTrace(supabase as any, {
+        userId: user.id,
+        projectId,
+        action: 'project_creation_linked',
+        metadata: {
+          creationId: creation.id,
+          type: creation.type,
+          sourceSessionId: sourceSessionId ?? null,
+        },
+      });
+
+      const workspace = await getProjectWorkspaceForCurrentUser(projectId);
+      if (workspace) {
+        await enrichProjectGraph(supabase as any, user.id, workspace);
+      }
     }
 
     return NextResponse.json({ creation, imageUrl: publicUrl }, { status: 201 });

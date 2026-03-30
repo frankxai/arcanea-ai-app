@@ -87,6 +87,8 @@ export async function createCreation(
     thumbnailUrl?: string
     aiModel?: string
     aiPrompt?: string
+    projectId?: string
+    sourceSessionId?: string
   }
 ): Promise<Creation | null> {
   const { data, error } = await client
@@ -105,6 +107,8 @@ export async function createCreation(
       thumbnail_url: creation.thumbnailUrl,
       ai_model: creation.aiModel,
       ai_prompt: creation.aiPrompt,
+      project_id: creation.projectId,
+      source_session_id: creation.sourceSessionId,
       user_id: userId,
     })
     .select()
@@ -132,6 +136,8 @@ export async function updateCreation(
   if (updates.gate !== undefined) payload.gate = updates.gate
   if (updates.guardian !== undefined) payload.guardian = updates.guardian
   if (updates.tags !== undefined) payload.tags = updates.tags
+  if (updates.projectId !== undefined) payload.project_id = updates.projectId
+  if (updates.sourceSessionId !== undefined) payload.source_session_id = updates.sourceSessionId
 
   const { data, error } = await client
     .from('creations')
@@ -183,6 +189,8 @@ function mapCreation(data: Record<string, unknown>): Creation {
     likeCount: (data.like_count || 0) as number,
     aiModel: data.ai_model as string | null,
     aiPrompt: data.ai_prompt as string | null,
+    projectId: data.project_id as string | null,
+    sourceSessionId: data.source_session_id as string | null,
     userId: data.user_id as string,
     metadata: data.metadata as Record<string, unknown> | null,
     createdAt: data.created_at as string,

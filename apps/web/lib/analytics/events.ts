@@ -26,6 +26,10 @@ export const analytics = {
   // Chat events
   chatSent: (luminorId?: string) => capture("chat_sent", { luminor: luminorId }),
   chatCreationSaved: (type: string) => capture("creation_saved_from_chat", { type }),
+  projectSelected: (projectId: string | null) => capture("project_selected", { projectId }),
+  projectCreated: (projectId: string) => capture("project_created", { projectId }),
+  projectSessionLinked: (projectId: string | null, sessionId: string) =>
+    capture("project_session_linked", { projectId, sessionId }),
 
   // Imagine events
   imageGenerated: (model?: string) => capture("image_generated", { model }),

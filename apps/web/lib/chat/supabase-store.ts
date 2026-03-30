@@ -9,6 +9,7 @@ export interface CloudSession {
   messages: Record<string, unknown>[];
   luminor_id: string | null;
   model_id: string | null;
+  project_id: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -57,6 +58,7 @@ export async function saveSessionToCloud(session: {
   messages: Record<string, unknown>[];
   luminorId: string | null;
   modelId: string | null;
+  projectId?: string | null;
 }): Promise<boolean> {
   try {
     const supabase = createClient();
@@ -72,6 +74,7 @@ export async function saveSessionToCloud(session: {
         messages: session.messages,
         luminor_id: session.luminorId ?? undefined,
         model_id: session.modelId,
+        project_id: session.projectId ?? undefined,
         updated_at: new Date().toISOString(),
       }, { onConflict: 'id' });
 
@@ -151,6 +154,7 @@ export function cloudSessionToLocalSession(cloud: CloudSession): ChatSession {
       .filter((message): message is ChatMessage => message !== null),
     luminorId: cloud.luminor_id,
     modelId: cloud.model_id,
+    projectId: cloud.project_id,
     createdAt: cloud.created_at,
     updatedAt: cloud.updated_at,
   };

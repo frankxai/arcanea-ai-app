@@ -20,6 +20,9 @@ import {
   parsePaginationParams,
 } from '@/lib/api-utils';
 import { VALIDATION_RULES, type CreationFilters } from '@/lib/database/types/api-responses';
+import { getProjectWorkspaceForCurrentUser } from '@/lib/projects/server';
+import { enrichProjectGraph } from '@/lib/projects/enrichment';
+import { recordProjectTrace } from '@/lib/projects/trace';
 
 /**
  * GET /api/creations
@@ -120,6 +123,8 @@ export async function POST(request: NextRequest) {
       thumbnailUrl: z.string().url().optional(),
       aiModel: z.string().max(100).optional(),
       aiPrompt: z.string().max(5000).optional(),
+      projectId: z.string().uuid().optional(),
+      sourceSessionId: z.string().min(1).max(255).optional(),
     });
 
     const validation = createSchema.safeParse(body);
@@ -136,6 +141,24 @@ export async function POST(request: NextRequest) {
     }
 
     const creation = await createCreation(supabaseServer, userId, creationData);
+
+    if (creation && validation.data.projectId) {
+      await recordProjectTrace(supabaseServer as any, {
+        userId,
+        projectId: validation.data.projectId,
+        action: 'project_creation_linked',
+        metadata: {
+          creationId: creation.id,
+          type: creation.type,
+          sourceSessionId: validation.data.sourceSessionId ?? null,
+        },
+      });
+
+      const workspace = await getProjectWorkspaceForCurrentUser(validation.data.projectId);
+      if (workspace) {
+        await enrichProjectGraph(supabaseServer as any, userId, workspace);
+      }
+    }
 
     return successResponse({ creation }, 201);
   } catch (error) {

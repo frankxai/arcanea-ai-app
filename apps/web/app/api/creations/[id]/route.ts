@@ -90,6 +90,8 @@ export async function PATCH(
       gate: z.enum(['Foundation', 'Flow', 'Fire', 'Heart', 'Voice', 'Sight', 'Crown', 'Starweave', 'Unity', 'Source']).optional(),
       guardian: z.enum(['Lyssandria', 'Leyla', 'Draconia', 'Maylinn', 'Alera', 'Lyria', 'Aiyami', 'Elara', 'Ino', 'Shinkami']).optional(),
       tags: z.array(z.string().max(VALIDATION_RULES.tags.maxLength)).max(VALIDATION_RULES.tags.maxCount).optional(),
+      projectId: z.string().uuid().nullable().optional(),
+      sourceSessionId: z.string().min(1).nullable().optional(),
     });
 
     const validation = updateSchema.safeParse(body);

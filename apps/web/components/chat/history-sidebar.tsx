@@ -11,6 +11,7 @@ import {
   Trash,
   CaretLeft,
   PencilSimple,
+  ArrowSquareOut,
   Check,
   X,
   UserCircle,
@@ -234,6 +235,14 @@ function ProjectSection({
 
                 {!isEditing && (
                   <div className="flex items-center gap-0.5">
+                    <Link
+                      href={`/projects/${project.id}`}
+                      className="flex h-5 w-5 items-center justify-center rounded text-white/20 hover:text-white/60"
+                      aria-label={`Open project workspace for ${project.title}`}
+                      onClick={(event) => event.stopPropagation()}
+                    >
+                      <ArrowSquareOut className="h-3 w-3" />
+                    </Link>
                     <button
                       onClick={() => {
                         setEditingProjectId(project.id);

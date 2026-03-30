@@ -1,9 +1,11 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { analytics } from '@/lib/analytics/events';
 import {
   assignSessionToProject,
   deleteChatSession,
+  getActiveChatSessionId,
   listChatSessions,
   loadChatSession,
   mergeChatSessions,
@@ -11,6 +13,7 @@ import {
   renameChatSession,
   saveChatSession,
   searchSessions,
+  setActiveChatSessionId,
   togglePinSession,
   type ChatMessage,
   type ChatSession,
@@ -18,12 +21,16 @@ import {
 } from '@/lib/chat/local-store';
 import {
   createChatProject,
+  assignCloudSessionToProject,
+  deleteProjectFromCloud,
   deleteChatProject,
   getActiveChatProjectId,
   listChatProjects,
   loadChatProject,
   renameChatProject,
+  saveProjectToCloud,
   setActiveChatProject,
+  syncProjectsFromCloud,
   type ChatProject,
 } from '@/lib/chat/project-store';
 import {
@@ -91,7 +98,7 @@ export interface UseChatSessionsReturn {
 }
 
 export function useChatSessions(): UseChatSessionsReturn {
-  const [activeSessionId, setActiveSessionId] = useState<string>(() => newSessionId());
+  const [activeSessionId, setActiveSessionId] = useState<string>(() => getActiveChatSessionId() ?? newSessionId());
   const [activeProjectId, setActiveProjectId] = useState<string | null>(() => getActiveChatProjectId());
   const [isSidebarExpanded, setIsSidebarExpanded] = useState<boolean>(() => getInitialExpanded());
   const [searchQuery, setSearchQuery] = useState('');
@@ -115,6 +122,7 @@ export function useChatSessions(): UseChatSessionsReturn {
 
     async function hydrate() {
       await syncCloudSessions();
+      await syncProjectsFromCloud();
       if (!cancelled) {
         setRefreshTick((tick) => tick + 1);
         setIsHydrating(false);
@@ -131,7 +139,8 @@ export function useChatSessions(): UseChatSessionsReturn {
   useEffect(() => {
     function handleFocus() {
       void syncCloudSessions()
-        .then(() => {
+        .then(async () => {
+          await syncProjectsFromCloud();
           setRefreshTick((tick) => tick + 1);
         })
         .catch(() => {});
@@ -149,11 +158,13 @@ export function useChatSessions(): UseChatSessionsReturn {
 
   const setActiveSession = useCallback((sessionId: string) => {
     setActiveSessionId(sessionId);
+    setActiveChatSessionId(sessionId);
   }, []);
 
   const setProject = useCallback((projectId: string | null) => {
     setActiveProjectId(projectId);
     setActiveChatProject(projectId);
+    analytics.projectSelected(projectId);
     refreshSessions();
   }, [refreshSessions]);
 
@@ -161,6 +172,7 @@ export function useChatSessions(): UseChatSessionsReturn {
     const session = loadChatSession(id);
     if (session) {
       setActiveSessionId(id);
+      setActiveChatSessionId(id);
       setActiveProjectId(session.projectId ?? null);
       setActiveChatProject(session.projectId ?? null);
     }
@@ -190,6 +202,7 @@ export function useChatSessions(): UseChatSessionsReturn {
         messages: messages as unknown as Record<string, unknown>[],
         luminorId: opts?.luminorId ?? null,
         modelId: opts?.modelId ?? null,
+        projectId: resolvedProjectId,
       });
     }, 600);
   }, [activeProjectId, activeSessionId, refreshSessions]);
@@ -197,6 +210,7 @@ export function useChatSessions(): UseChatSessionsReturn {
   const newSession = useCallback(() => {
     const id = newSessionId();
     setActiveSessionId(id);
+    setActiveChatSessionId(id);
     return id;
   }, []);
 
@@ -205,7 +219,9 @@ export function useChatSessions(): UseChatSessionsReturn {
     void deleteCloudSession(id);
 
     if (id === activeSessionId) {
-      setActiveSessionId(newSessionId());
+      const nextSessionId = newSessionId();
+      setActiveSessionId(nextSessionId);
+      setActiveChatSessionId(nextSessionId);
     }
 
     refreshSessions();
@@ -229,6 +245,8 @@ export function useChatSessions(): UseChatSessionsReturn {
     const project = createChatProject({ title });
     if (project) {
       setActiveProjectId(project.id);
+      analytics.projectCreated(project.id);
+      void saveProjectToCloud(project);
       refreshSessions();
     }
     return project;
@@ -238,11 +256,16 @@ export function useChatSessions(): UseChatSessionsReturn {
     const trimmed = title.trim();
     if (!trimmed) return;
     renameChatProject(id, trimmed);
+    const project = loadChatProject(id);
+    if (project) {
+      void saveProjectToCloud(project);
+    }
     refreshSessions();
   }, [refreshSessions]);
 
   const deleteProjectHandler = useCallback((id: string) => {
     deleteChatProject(id);
+    void deleteProjectFromCloud(id);
     if (activeProjectId === id) {
       setActiveProjectId(null);
     }
@@ -251,6 +274,8 @@ export function useChatSessions(): UseChatSessionsReturn {
 
   const assignSessionProject = useCallback((sessionId: string, projectId: string | null) => {
     assignSessionToProject(sessionId, projectId);
+    analytics.projectSessionLinked(projectId, sessionId);
+    void assignCloudSessionToProject(sessionId, projectId);
 
     if (sessionId === activeSessionId) {
       setActiveProjectId(projectId);
