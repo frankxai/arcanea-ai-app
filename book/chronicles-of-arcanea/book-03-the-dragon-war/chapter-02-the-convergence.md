@@ -252,7 +252,7 @@ He said: "The Primordial's communication requires additional analysis before for
 
 Sable, standing beside Ash, did not visibly react. She also did not write anything down.
 
-The Commandant said: "The five students summoned under joint protocol — Thornfield, Velay, Ashgrove, Cinder, and Voss — are brought together for a purpose separate from the hatching event itself, which has been managed under standard Dragon activity protocols."
+The Commandant said: "The five students summoned under joint protocol — Thornfield, Velay, Luminaire, Cinder, and Voss — are brought together for a purpose separate from the hatching event itself, which has been managed under standard Dragon activity protocols."
 
 She thought: managed. That's a word.
 

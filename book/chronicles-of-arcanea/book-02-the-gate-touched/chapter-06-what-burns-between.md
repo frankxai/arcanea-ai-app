@@ -55,13 +55,13 @@ He reached for that stillness now.
 
 He found an edge of it. The ghost of it, the shape of the place where it had been. He extended himself into the edge and the fire moved differently — not controlled, not shaped, just moving through her the way wind moved through a gap in a fence rather than over a fence, finding the path of least resistance, following the channel.
 
-She was not managing it.
+He was not managing it.
 
-She was not — for six uninterrupted seconds — managing anything.
+He was not — for six uninterrupted seconds — managing anything.
 
 The fire spread.
 
-Not explosion. The fire spread the way water spread when a container tipped — not violence, not force, the simple movement of a thing released from the shape imposed on it. She felt it in her ribcage first, the heat behind her sternum, and then lower, deeper, in the places she did not usually let fire be because they were the places where she held the things she did not let fire reach.
+Not explosion. The fire spread the way water spread when a container tipped — not violence, not force, the simple movement of a thing released from the shape imposed on it. He felt it in his ribcage first, the heat behind his sternum, and then lower, deeper, in the places he did not usually let fire be because they were the places where he held the things he did not let fire reach.
 
 And below those places.
 

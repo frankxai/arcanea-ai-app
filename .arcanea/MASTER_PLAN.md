@@ -1,9 +1,9 @@
 # Arcanea Master Plan — Central Orchestrator
 
-> **Last Updated**: 2026-03-30
-> **Version**: 1.9.0
-> **Guardian**: Shinkami (Source Gate, 1111 Hz)
-> **Status**: Active
+> **Last Updated**: 2026-03-30 (Session 2)
+> **Version**: 2.0.0
+> **Guardian**: Shinkami (Source Gate)
+> **Status**: Active — 7-Gap Execution Sprint
 
 This is the **single source of truth** for the entire Arcanea platform. Every agent, skill, command, and session MUST consult this document before making architectural decisions. It aggregates state from `.arcanea/projects/`, `task_plan.md`, `progress.md`, and live deployment data.
 
@@ -13,13 +13,18 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
 
 | Metric | Value | Target |
 |--------|-------|--------|
-| Total Pages | ~188 (routes, 16 redirect-only pruned, +3 new: /creations, /academy/certification, /ops) | 80 (prune stubs) |
-| Pages with Metadata | ~77 (+12) | 100% |
+| Total Pages | ~190 (+2 new: /ops/agents, /contribute) | 80 (prune stubs) |
+| Pages with Metadata | ~79 (+2) | 100% |
 | Pages with loading.tsx | ~81 (+32) | 100% of dynamic pages |
 | Milestones Active | 11 (M001-M010 + M006) | M001 (Auth) → M008 (Onboarding) → M006 (Creator Tools) → M009 (Polish) |
-| Vercel Build | PASSING | Maintain green |
+| Vercel Build | PASSING (3 build bugs fixed: layout dynamic, phosphor Stop dup, leaderboard JSX) | Maintain green |
 | Last Deploy | 2026-03-30 | Ops Center + Performance + Agent Certification + Creations Gallery |
 | Live URL | arcanea.ai | arcanea.ai |
+| 7-Gap Status | 5/7 closed, 2 blocked (npm publish needs creds, Supabase needs dashboard) | 7/7 |
+| Agent Framework | NEW: evaluation-framework.ts, agent-registry.ts (38 agents), reasoning-bank.ts | Learning loop |
+| Studio Decomposition | 1644L → 496L main + 6 components (all < 300L) | Under 500L |
+| Quality Gates | CI workflow + pre-commit hooks + quality-check script | Automated |
+| Cross-Repo | repos.json registry (7 repos) + sync script + health check | Multi-repo ops |
 
 ---
 

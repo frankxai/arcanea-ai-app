@@ -33,7 +33,7 @@ The Roosts were already occupied when he arrived.
 
 Vesper was there. She stood at the entrance to the egg's alcove, her arms wrapped around herself, her eyes fixed on the egg with the expression of someone watching a door they have been standing outside of for a very long time begin to open. She had not been summoned. She had felt it the same way Kael had — through the stone, through the silence, through the ten-frequency chord that was now broadcasting at a volume that the Forge's monitoring instruments would have registered if the Forge's monitoring instruments were designed to measure things this old.
 
-Ash was there. He stood ten feet back from the alcove with Embera at his side — the young Dragon pressed against him, her enormous body radiating a heat that had nothing to do with temperature and everything to do with attention. Embera's head was lowered, her enormous amber eyes fixed on the egg, and the smoke rising from between her scales had formed patterns — geometric, precise, shapes that Kael's Foundation sense read as structural diagrams of something he didn't have a name for.
+Ash was there. She stood ten feet back from the alcove with Embera at her side — the young Dragon pressed against her, her enormous body radiating a heat that had nothing to do with temperature and everything to do with attention. Embera's head was lowered, her enormous amber eyes fixed on the egg, and the smoke rising from between her scales had formed patterns — geometric, precise, shapes that Kael's Foundation sense read as structural diagrams of something he didn't have a name for.
 
 And Nim was there.
 
@@ -45,7 +45,7 @@ She had come to the Roosts in her sleep. Orin, standing at the corridor entrance
 
 "She's in a trance state," Vesper said. She had moved closer while Kael was cataloguing the room. Her Void sight was active — Kael couldn't see what she saw, but her pupils had dilated to near-circles and she was tracking something invisible in the air between Nim and the egg. "Her Fire is synchronized with the egg's frequency. I've never seen — her energy is flowing toward the egg through channels that aren't physical. Like the egg has extended roots into her and is drawing from her, but gently. Not taking. Receiving."
 
-"The egg is ready," Ash said. His voice was different — lower, resonant, carrying an undertone that was not entirely human. The Bond with Embera was changing him. Kael had noticed it over the past two weeks: the amber flecks in Ash's eyes spreading, the faint luminous lines along his forearms becoming less faint, his speech occasionally carrying frequencies that vibrated in the stone. "Embera knows. She says the egg's fire-pattern has completed its composition. The last frequency was — she doesn't have a word for it. She says it's the sound fire made before it learned what burning was."
+"The egg is ready," Ash said. Her voice was different — lower, resonant, carrying an undertone that was not entirely human. The Bond with Embera was changing her. Kael had noticed it over the past two weeks: the amber flecks in Ash's eyes spreading, the faint luminous lines along her forearms becoming less faint, her speech occasionally carrying frequencies that vibrated in the stone. "Embera knows. She says the egg's fire-pattern has completed its composition. The last frequency was — she doesn't have a word for it. She says it's the sound fire made before it learned what burning was."
 
 The egg pulsed.
 
@@ -89,7 +89,7 @@ The eyes moved through the crowd of people who had gathered. More had arrived wh
 
 The hatchling looked at them and they were not what it was looking for.
 
-It looked at Embera. The young Dragon rumbled — a deep, resonant sound that Ash felt in his chest through the Bond channel, accompanied by a heat-impression of *recognition-caution-wonder*. Embera had never seen a Luminarch. No living Dragon had. But something in Embera's fire-memory — the deep bone-level archive that all Dragons carried, heat-encoded memories stretching back to the Kindling — recognized the hatchling's frequency signature and responded with the particular quality of something remembering a dream it had never had.
+It looked at Embera. The young Dragon rumbled — a deep, resonant sound that Ash felt in her chest through the Bond channel, accompanied by a heat-impression of *recognition-caution-wonder*. Embera had never seen a Luminarch. No living Dragon had. But something in Embera's fire-memory — the deep bone-level archive that all Dragons carried, heat-encoded memories stretching back to the Kindling — recognized the hatchling's frequency signature and responded with the particular quality of something remembering a dream it had never had.
 
 The hatchling considered Embera. Then it turned to the gathered humans.
 
@@ -97,15 +97,15 @@ It looked at Kael. The Foundation mage had gone completely still — the stillne
 
 It looked at Vesper. She was standing with her arms at her sides, her Void sight wide open, tears running down her face that she either didn't notice or didn't care about. Through the Bond's peripheral, Ash felt the Void frequency — the absence-with-intention that Vesper carried — resonate with something inside the hatchling, and the hatchling's scales went briefly translucent in the pattern of Vesper's frequency, a ripple of recognition that moved across its body like light across water.
 
-It looked at Nim. The girl's eyes had opened. She was looking at the hatchling with an expression that Ash recognized because he had felt it himself, nine months ago, when Embera had opened one enormous eye and said *you smell like Cinderwall and fear and fire*. The expression of being seen by something that didn't care about your history or your damage or the things you'd burned. The expression of being seen as a frequency rather than a person, and finding that the frequency was enough.
+It looked at Nim. The girl's eyes had opened. She was looking at the hatchling with an expression that Ash recognized because she had felt it herself, nine months ago, when Embera had opened one enormous eye and said *you smell like Cinderwall and fear and fire*. The expression of being seen by something that didn't care about your history or your damage or the things you'd burned. The expression of being seen as a frequency rather than a person, and finding that the frequency was enough.
 
 It looked at Ash.
 
-The hatchling's cycling eyes settled, for one beat, on a color that was pure amber — Embera's color, Fire's color — and through the Bond channel Ash felt Embera's response: a heat-impression so complex it took him a full second to process. Not *threat*. Not *rival*. Something more like *child of a different fire*. The recognition of something that was and was not Dragon, that spoke fire's language but spoke it with an accent that even Embera's two-hundred-year-old memory could not place.
+The hatchling's cycling eyes settled, for one beat, on a color that was pure amber — Embera's color, Fire's color — and through the Bond channel Ash felt Embera's response: a heat-impression so complex it took her a full second to process. Not *threat*. Not *rival*. Something more like *child of a different fire*. The recognition of something that was and was not Dragon, that spoke fire's language but spoke it with an accent that even Embera's two-hundred-year-old memory could not place.
 
-Then the hatchling's eyes shifted to a color that was not in Ash's vocabulary. A frequency that bypassed his fire-sense entirely and arrived somewhere deeper — in the place where the Bond lived, in the overlap between his consciousness and Embera's, in the space that was neither human nor Dragon but the thing that emerged where both met.
+Then the hatchling's eyes shifted to a color that was not in Ash's vocabulary. A frequency that bypassed her fire-sense entirely and arrived somewhere deeper — in the place where the Bond lived, in the overlap between her consciousness and Embera's, in the space that was neither human nor Dragon but the thing that emerged where both met.
 
-The hatchling was reading him. Not his fire. Not his Bond. The *overlap*. The space between.
+The hatchling was reading her. Not her fire. Not her Bond. The *overlap*. The space between.
 
 Then it looked away, and the cycling resumed, and the moment passed.
 
@@ -181,7 +181,7 @@ So he stayed. He sat on the volcanic stone floor of the Dragon Roosts with a hat
 
 Vesper stayed too. She did not speak. She sat with her back against the alcove wall and her eyes open and her Void sight doing whatever it did — reading the hatchling, or reading the space around the hatchling, or reading the absence that the hatchling occupied in a way that made absence feel like the most important thing in the room.
 
-Ash stayed. He sat further back, with Embera, and he was quiet in a way that Kael had learned to read: the quiet of someone processing something through a channel that was not entirely his own. The Bond. Embera was telling him things — fire-impressions, heat-encoded memories, the Dragon's deep understanding of what this hatchling meant — and Ash was receiving them with the focused stillness of someone holding a cup that was filling faster than he could drink.
+Ash stayed. She sat further back, with Embera, and she was quiet in a way that Kael had learned to read: the quiet of someone processing something through a channel that was not entirely her own. The Bond. Embera was telling her things — fire-impressions, heat-encoded memories, the Dragon's deep understanding of what this hatchling meant — and Ash was receiving them with the focused stillness of someone holding a cup that was filling faster than she could drink.
 
 Nim stayed. She had not moved from her cross-legged position on the floor. Her eyes were open now, watching the hatchling with an expression that Kael could only describe as homecoming. The air around her was still — no shimmer, no heat distortion. Her fire was calm. For the first time, according to Orin (who stood at the corridor entrance, watching everything, trusting nothing), for the first time since her Gate opened, Nim's fire was not fighting her.
 
