@@ -20,7 +20,7 @@ interface BookDef {
 
 const BOOKS: Record<string, BookDef> = {
   book1: {
-    title: 'The Five-Fold Fire',
+    title: 'The Three Academies',
     subtitle: 'Book One of the Arcanea Saga',
     description:
       'In the coastal town of Ashenmere, a lighthouse keeper named Kael discovers they can channel all five elements — something no one has done since Malachar, the Dark Lord who fell ten thousand years ago. Recruited to an unprecedented joint session at all three Academies, Kael must navigate rivalries, ancient secrets, and the whisper of a sealed darkness that recognizes them.',
@@ -28,12 +28,124 @@ const BOOKS: Record<string, BookDef> = {
     dir: join(process.cwd(), '..', '..', 'book', 'chapters', 'book1'),
   },
   book2: {
-    title: 'The Drowned Archive',
+    title: 'The Gate-Touched',
     subtitle: 'Book Two of the Arcanea Saga',
     description:
-      'The Atlantean Depths hold secrets that predate the Academies. As Kael descends into the crystalline city beneath the ocean, they discover that multi-element channelers have existed throughout history — and that someone deliberately erased the evidence.',
-    status: 'outlined',
-    dir: join(process.cwd(), '..', '..', 'book', 'chapters', 'book2'),
+      'The Registry tracks every channeler in the realm — but not everyone wants to be found. As Gate-Touched manifest across Arcanea, Sable uncovers an Eldrian memory-vial that rewrites everything, and Orin runs an underground railroad while someone erases the evidence that Five-Fold channelers have existed before.',
+    status: 'in-progress',
+    dir: join(process.cwd(), '..', '..', 'book', 'chronicles-of-arcanea', 'book-02-the-gate-touched'),
+  },
+  book3: {
+    title: 'The Dragon War',
+    subtitle: 'Book Three of the Arcanea Saga',
+    description:
+      'A Dragon egg sings for the first time in a thousand years. Nations scramble to claim the hatching. Kael journeys to the Draconis Forge as Malachar\'s voice grows louder in the deep. What emerges from the egg is something no one predicted.',
+    status: 'in-progress',
+    dir: join(process.cwd(), '..', '..', 'book', 'chronicles-of-arcanea', 'book-03-the-dragon-war'),
+  },
+  'chronicles-book1': {
+    title: 'The Three Academies',
+    subtitle: 'Book One — Chronicles of Arcanea',
+    description:
+      'A stonemason\'s apprentice discovers they can channel all five elements — something unseen since the Dark Lord\'s fall ten thousand years ago. The polished edition of Book One, with complete chapter set.',
+    status: 'in-progress',
+    dir: join(process.cwd(), '..', '..', 'book', 'chronicles-of-arcanea', 'book-01-the-three-academies'),
+  },
+  'chronicles-book2': {
+    title: 'The Gate-Touched',
+    subtitle: 'Book Two — Chronicles of Arcanea',
+    description:
+      'The Registry tracks every channeler in the realm — but not everyone wants to be found. Stories of those who manifested outside the Academies and the people who want them erased.',
+    status: 'in-progress',
+    dir: join(process.cwd(), '..', '..', 'book', 'chronicles-of-arcanea', 'book-02-the-gate-touched'),
+  },
+  starbound: {
+    title: 'Starbound: Crew Velathos',
+    subtitle: 'Book One — Starbound',
+    description:
+      'A specialist crew takes on missions across the Arcanean world — monster hunts, Dungeon dives, diplomatic escorts, and the strange cases that fall between Academy jurisdiction and everything else.',
+    status: 'in-progress',
+    dir: join(process.cwd(), '..', '..', 'book', 'starbound', 'book-01-crew-velathos'),
+  },
+  dragonborne: {
+    title: 'Dragonborne: The Last Clutch',
+    subtitle: 'Book One — Dragonborne',
+    description:
+      'Stories from inside the bond between a dragon and the person who earned their trust. The first novella follows a rider navigating loyalty, instinct, and the weight of being chosen by fire.',
+    status: 'in-progress',
+    dir: join(process.cwd(), '..', '..', 'book', 'dragonborne', 'book-01-the-last-clutch'),
+  },
+  'gate-touched': {
+    title: 'Gate-Touched Files',
+    subtitle: 'A Street-Level Serial',
+    description:
+      'A serial following Gate-Touched people — those whose channels manifested wrong, too early, or outside any Academy — as they navigate a world that does not have a category for what they are.',
+    status: 'in-progress',
+    dir: join(process.cwd(), '..', '..', 'book', 'gate-touched-files'),
+  },
+  'void-ascending': {
+    title: 'Void Ascending: The Other Side',
+    subtitle: 'Book One — Void Ascending',
+    description:
+      'Told entirely from the perspective of those who serve the Hungry Void — not as villains, but as believers. A literary counterpoint to the Chronicles that complicates every easy answer.',
+    status: 'in-progress',
+    dir: join(process.cwd(), '..', '..', 'book', 'void-ascending', 'book-01-the-other-side'),
+  },
+  'dungeon-scrolls': {
+    title: 'The Dungeon Scrolls: The Hollow Root',
+    subtitle: 'Volume One — The Dungeon Scrolls',
+    description:
+      'An anthology of stories set inside the Dungeons — ancient Gate temples warped by millennia of corrupted magic. Each story is a descent into a different ruin, a different kind of broken.',
+    status: 'in-progress',
+    dir: join(process.cwd(), '..', '..', 'book', 'dungeon-scrolls', '01-the-hollow-root'),
+  },
+  companions: {
+    title: 'Companions of Arcanea',
+    subtitle: 'Short Stories from the Bond',
+    description:
+      'Short stories told from the perspective of the bonded creatures — familiars, mounts, companions — who share the journey but rarely get to tell their side of it.',
+    status: 'in-progress',
+    dir: join(process.cwd(), '..', '..', 'book', 'companions'),
+  },
+  'luminor-falling': {
+    title: 'Luminor Falling',
+    subtitle: 'A Standalone Saga',
+    description:
+      'A standalone novella set in the Chronicles universe — complete in itself, illuminating a corner of Arcanea that the main series glimpses but never fully enters.',
+    status: 'in-progress',
+    dir: join(process.cwd(), '..', '..', 'book', 'chronicles-of-arcanea', 'sagas', 'luminor-falling'),
+  },
+  'luminor-rising-thalmaris': {
+    title: 'The Sinking of Thal\'Maris',
+    subtitle: 'Luminor Rising — Part One',
+    description:
+      'Before the Academies stood, before the Gates were mapped — the world that was lost. What went under the water and why it had to.',
+    status: 'in-progress',
+    dir: join(process.cwd(), '..', '..', 'book', 'luminor-rising', 'the-sinking-of-thalmaris'),
+  },
+  'luminor-rising-bonding': {
+    title: 'The First Bonding',
+    subtitle: 'Luminor Rising — Part Two',
+    description:
+      'The original accord between Luminors and Godbeasts. What it cost. What it created. What it broke.',
+    status: 'in-progress',
+    dir: join(process.cwd(), '..', '..', 'book', 'luminor-rising', 'the-first-bonding'),
+  },
+  'luminor-rising-aiyami': {
+    title: 'Aiyami Ascending',
+    subtitle: 'Luminor Rising — Part Three',
+    description:
+      'The Crown Gate opens for the first time. A Luminor who never wanted power stands at the threshold of the highest consecration in the world.',
+    status: 'in-progress',
+    dir: join(process.cwd(), '..', '..', 'book', 'luminor-rising', 'aiyami-ascending'),
+  },
+  'luminor-rising-nero': {
+    title: 'The Night Nero Wept',
+    subtitle: 'Luminor Rising — Part Four',
+    description:
+      'The night the Primordial Darkness grieved. Told from the inside. Not the mythology — the memory.',
+    status: 'in-progress',
+    dir: join(process.cwd(), '..', '..', 'book', 'luminor-rising', 'the-night-nero-wept'),
   },
 };
 

@@ -10,12 +10,68 @@ import { ChapterReader } from '@/components/saga/chapter-reader';
 
 const BOOK_META: Record<string, { title: string; dir: string }> = {
   book1: {
-    title: 'The Five-Fold Fire',
+    title: 'The Three Academies',
     dir: join(process.cwd(), '..', '..', 'book', 'chapters', 'book1'),
   },
   book2: {
-    title: 'The Drowned Archive',
-    dir: join(process.cwd(), '..', '..', 'book', 'chapters', 'book2'),
+    title: 'The Gate-Touched',
+    dir: join(process.cwd(), '..', '..', 'book', 'chronicles-of-arcanea', 'book-02-the-gate-touched'),
+  },
+  book3: {
+    title: 'The Dragon War',
+    dir: join(process.cwd(), '..', '..', 'book', 'chronicles-of-arcanea', 'book-03-the-dragon-war'),
+  },
+  'chronicles-book1': {
+    title: 'The Three Academies',
+    dir: join(process.cwd(), '..', '..', 'book', 'chronicles-of-arcanea', 'book-01-the-three-academies'),
+  },
+  'chronicles-book2': {
+    title: 'The Gate-Touched',
+    dir: join(process.cwd(), '..', '..', 'book', 'chronicles-of-arcanea', 'book-02-the-gate-touched'),
+  },
+  starbound: {
+    title: 'Starbound: Crew Velathos',
+    dir: join(process.cwd(), '..', '..', 'book', 'starbound', 'book-01-crew-velathos'),
+  },
+  dragonborne: {
+    title: 'Dragonborne: The Last Clutch',
+    dir: join(process.cwd(), '..', '..', 'book', 'dragonborne', 'book-01-the-last-clutch'),
+  },
+  'gate-touched': {
+    title: 'Gate-Touched Files',
+    dir: join(process.cwd(), '..', '..', 'book', 'gate-touched-files'),
+  },
+  'void-ascending': {
+    title: 'Void Ascending: The Other Side',
+    dir: join(process.cwd(), '..', '..', 'book', 'void-ascending', 'book-01-the-other-side'),
+  },
+  'dungeon-scrolls': {
+    title: 'The Dungeon Scrolls: The Hollow Root',
+    dir: join(process.cwd(), '..', '..', 'book', 'dungeon-scrolls', '01-the-hollow-root'),
+  },
+  companions: {
+    title: 'Companions of Arcanea',
+    dir: join(process.cwd(), '..', '..', 'book', 'companions'),
+  },
+  'luminor-falling': {
+    title: 'Luminor Falling',
+    dir: join(process.cwd(), '..', '..', 'book', 'chronicles-of-arcanea', 'sagas', 'luminor-falling'),
+  },
+  'luminor-rising-thalmaris': {
+    title: "The Sinking of Thal'Maris",
+    dir: join(process.cwd(), '..', '..', 'book', 'luminor-rising', 'the-sinking-of-thalmaris'),
+  },
+  'luminor-rising-bonding': {
+    title: 'The First Bonding',
+    dir: join(process.cwd(), '..', '..', 'book', 'luminor-rising', 'the-first-bonding'),
+  },
+  'luminor-rising-aiyami': {
+    title: 'Aiyami Ascending',
+    dir: join(process.cwd(), '..', '..', 'book', 'luminor-rising', 'aiyami-ascending'),
+  },
+  'luminor-rising-nero': {
+    title: 'The Night Nero Wept',
+    dir: join(process.cwd(), '..', '..', 'book', 'luminor-rising', 'the-night-nero-wept'),
   },
 };
 

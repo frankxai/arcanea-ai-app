@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { getSagaBooks, getAllSeries } from '@/lib/saga/loader';
 import type { SagaBook, BookSeries } from '@/lib/saga/loader';
+import { GlowCard } from '@/components/saga/glow-card';
 
 // ============================================================
 // STATIC DATA
@@ -55,7 +56,7 @@ const CHRONICLE_BOOKS: ChronicleBook[] = [
     status: 'in-progress',
     chapterCount: 20,
     wordCount: '~75K',
-    firstChapter: '/books/book1/chapter-01-the-first-spark',
+    firstChapter: '/books/book1/the-storm-that-remembered',
     gateSymbol: '◈',
   },
   {
@@ -78,7 +79,7 @@ const CHRONICLE_BOOKS: ChronicleBook[] = [
     status: 'in-progress',
     chapterCount: 5,
     wordCount: '~20K',
-    firstChapter: '/books/book3/chapter-01-the-egg-that-sang',
+    firstChapter: '/books/book3/chapter-01-embera',
     gateSymbol: '△',
   },
   {
@@ -272,7 +273,7 @@ const READING_PATHS = [
   {
     label: 'Start the Journey',
     description: 'Begin from the very first page.',
-    href: '/books/book1/chapter-01-the-first-spark',
+    href: '/books/book1/the-storm-that-remembered',
     icon: '◈',
   },
   {
@@ -399,29 +400,38 @@ const SERIES_STATUS_STYLES: Record<BookSeries['status'], { bg: string; text: str
   planned: { bg: 'bg-white/5 border border-white/10', text: 'text-white/60', label: 'Coming Soon' },
 };
 
+/**
+ * Maps a series ID to the [bookId] route segment used in /books/[bookId]/[chapterId].
+ * Only needed when the series id differs from the registered bookId, or when a
+ * multi-book series needs to route to one canonical entry-point bookId.
+ */
+const SERIES_BOOKID_MAP: Record<string, string> = {
+  // 'sagas' series contains multiple standalone sagas; route to luminor-falling
+  sagas: 'luminor-falling',
+  // gate-touched-files loader uses 'gate-touched-files' as series id; bookId is 'gate-touched'
+  'gate-touched-files': 'gate-touched',
+};
+
 function SeriesCard({ series }: { series: BookSeries }) {
   const accent = SERIES_ACCENTS[series.id] ?? DEFAULT_ACCENT;
   const statusStyle = SERIES_STATUS_STYLES[series.status];
   const hasContent = series.totalChapters > 0;
 
-  // Build first-chapter href: find the first book that has a chapter
+  // Build first-chapter href using the registered [bookId] for this series.
+  // Single-book series: /books/<bookId>/<firstChapterSlug>
+  // Multi-book or remapped series: use SERIES_BOOKID_MAP to find the correct bookId.
   let firstChapterHref: string | null = null;
+  const bookId = SERIES_BOOKID_MAP[series.id] ?? series.id;
   for (const book of series.books) {
     if (book.firstChapterSlug) {
-      if (series.books.length === 1 && series.id !== 'sagas') {
-        // flat / single-book — link directly via series id
-        firstChapterHref = `/books/${series.id}/${book.firstChapterSlug}`;
-      } else {
-        // multi-book — link via book subdir
-        firstChapterHref = `/books/${series.id}/${book.id}/${book.firstChapterSlug}`;
-      }
+      firstChapterHref = `/books/${bookId}/${book.firstChapterSlug}`;
       break;
     }
   }
 
   return (
-    <div
-      className={`group relative overflow-hidden rounded-xl border bg-white/[0.025] transition-all duration-300 ${accent.border} ${accent.hover}`}
+    <GlowCard
+      className={`group overflow-hidden rounded-xl border bg-white/[0.025] transition-all duration-300 ${accent.border} ${accent.hover}`}
     >
       {/* Top edge glow */}
       {hasContent && (
@@ -501,7 +511,7 @@ function SeriesCard({ series }: { series: BookSeries }) {
           )}
         </div>
       </div>
-    </div>
+    </GlowCard>
   );
 }
 
@@ -555,7 +565,7 @@ function BookCard({ book, isFeature = false }: { book: ChronicleBook; isFeature?
 
   if (!isFeature && book.status === 'planned') {
     return (
-      <div className="group relative overflow-hidden rounded-xl border border-white/6 bg-white/[0.02] p-5 transition-all">
+      <GlowCard className="group overflow-hidden rounded-xl border border-white/6 bg-white/[0.02] p-5 transition-all">
         <div className="mb-3 flex items-start justify-between gap-3">
           <span className="font-mono text-2xl text-white/10" aria-hidden="true">
             {book.gateSymbol}
@@ -565,13 +575,13 @@ function BookCard({ book, isFeature = false }: { book: ChronicleBook; isFeature?
         <h3 className="mb-1 text-sm font-semibold text-white/60">{book.title}</h3>
         <p className="text-[11px] text-white/50">{book.subtitle}</p>
         <p className="mt-3 text-xs leading-relaxed text-white/50">{book.description}</p>
-      </div>
+      </GlowCard>
     );
   }
 
   return (
-    <div
-      className={`group relative overflow-hidden rounded-xl border bg-white/[0.03] transition-all duration-300 ${
+    <GlowCard
+      className={`group overflow-hidden rounded-xl border bg-white/[0.03] transition-all duration-300 ${
         isFeature
           ? 'border-[#00bcd4]/15 hover:border-[#00bcd4]/30 hover:bg-white/[0.05] hover:shadow-[0_0_50px_rgba(0,188,212,0.08)]'
           : 'border-white/8 hover:border-white/15 hover:bg-white/[0.05]'
@@ -645,7 +655,7 @@ function BookCard({ book, isFeature = false }: { book: ChronicleBook; isFeature?
           </div>
         )}
       </div>
-    </div>
+    </GlowCard>
   );
 }
 
