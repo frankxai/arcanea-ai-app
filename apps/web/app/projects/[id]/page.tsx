@@ -6,8 +6,13 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { createClient } from '@/lib/supabase/server';
+import { buildProjectGraphView } from '@/lib/projects/enrichment';
 import { buildProjectCompletionSummary } from '@/lib/projects/progress';
-import { getProjectWorkspaceForCurrentUser } from '@/lib/projects/server';
+import {
+  getProjectGraphSummaryForCurrentUser,
+  getProjectWorkspaceForCurrentUser,
+  listProjectActivityForCurrentUser,
+} from '@/lib/projects/server';
 import { OpenProjectChatButton } from './open-project-chat-button';
 
 interface PageProps {
@@ -20,6 +25,14 @@ function formatTimestamp(value: string): string {
 
 function statusLabel(value: string): string {
   return value
+    .split('_')
+    .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
+    .join(' ');
+}
+
+function actionLabel(value: string): string {
+  return value
+    .replace(/^project_/, '')
     .split('_')
     .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
     .join(' ');
@@ -60,13 +73,23 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
     notFound();
   }
 
+  const [persistedGraph, activity] = await Promise.all([
+    getProjectGraphSummaryForCurrentUser(id),
+    listProjectActivityForCurrentUser(id, 8),
+  ]);
+
   const completion = buildProjectCompletionSummary(workspace);
+  const { graph } = buildProjectGraphView(
+    workspace,
+    persistedGraph,
+    persistedGraph ? 'stored' : 'derived',
+  );
   const progress = completion.progress;
   const stats = [
     { label: 'Chats', value: workspace.stats.sessionCount },
     { label: 'Creations', value: workspace.stats.creationCount },
     { label: 'Memories', value: workspace.stats.memoryCount },
-    { label: 'Completion', value: `${progress.completionPercent}%` },
+    { label: 'Graph Score', value: `${graph.score}` },
   ];
   const remainingSteps = progress.steps.filter((step) => !step.completed);
 
@@ -147,13 +170,32 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
                   <p className="text-[11px] uppercase tracking-[0.18em] text-white/35">Next action</p>
                   <p className="mt-2 text-sm leading-6 text-white/75">{progress.nextRecommendedAction}</p>
                 </div>
-                <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
-                  <p className="text-[11px] uppercase tracking-[0.18em] text-white/35">Graph health</p>
-                  <p className="mt-2 text-sm leading-6 text-white/75">
-                    {progress.completionPercent === 100
-                      ? 'Frame, sessions, creations, memory, and provenance are all connected.'
-                      : `Graph is ${progress.completionPercent}% complete and still missing ${remainingSteps.length} step(s).`}
-                  </p>
+              <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
+                <p className="text-[11px] uppercase tracking-[0.18em] text-white/35">Graph health</p>
+                <p className="mt-2 text-sm leading-6 text-white/75">
+                  {progress.completionPercent === 100
+                    ? 'Frame, sessions, creations, memory, and provenance are all connected.'
+                    : `Graph is ${progress.completionPercent}% complete and still missing ${remainingSteps.length} step(s).`}
+                </p>
+              </div>
+              </div>
+
+              <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
+                <p className="text-[11px] uppercase tracking-[0.18em] text-white/35">Semantic summary</p>
+                <p className="mt-2 text-sm leading-6 text-white/75">{graph.summary}</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {graph.tags.length > 0 ? (
+                    graph.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-[11px] uppercase tracking-[0.12em] text-white/55"
+                      >
+                        {tag}
+                      </span>
+                    ))
+                  ) : (
+                    <span className="text-xs text-white/40">No graph tags yet.</span>
+                  )}
                 </div>
               </div>
 
@@ -232,7 +274,7 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
                           {session.title || 'Untitled chat'}
                         </p>
                         <p className="mt-1 text-xs text-white/45">
-                          {session.luminorId || 'No luminor'} · {session.modelId || 'default model'}
+                          {session.luminorId || 'No luminor'} / {session.modelId || 'default model'}
                         </p>
                       </div>
                       <span className="text-[11px] text-white/35">
@@ -278,11 +320,106 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
                       <div className="min-w-0 flex-1">
                         <p className="truncate text-sm font-medium text-white">{creation.title}</p>
                         <p className="mt-1 text-xs text-white/45">
-                          {creation.type} · {creation.status}
-                          {creation.sourceSessionId ? ` · from ${creation.sourceSessionId.slice(0, 8)}` : ' · unlinked'}
+                          {creation.type} / {creation.status}
+                          {creation.sourceSessionId ? ` / from ${creation.sourceSessionId.slice(0, 8)}` : ' / unlinked'}
                         </p>
                       </div>
                     </div>
+                  </div>
+                ))
+              )}
+            </CardContent>
+          </Card>
+        </section>
+
+        <section className="mt-6 grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
+          <Card variant="liquid-glass">
+            <CardHeader>
+              <CardTitle>Graph Facts & Checks</CardTitle>
+              <CardDescription>
+                Stored or derived facts Arcanea is using to understand this workspace.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">
+              <div className="space-y-3">
+                <p className="text-[11px] uppercase tracking-[0.18em] text-white/35">
+                  Fact inventory / {graph.source}
+                </p>
+                {graph.facts.length === 0 ? (
+                  <p className="text-sm text-white/50">
+                    No durable facts recorded yet. Arcanea will infer them as the workspace gains activity.
+                  </p>
+                ) : (
+                  graph.facts.map((fact) => (
+                    <div
+                      key={fact}
+                      className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm leading-6 text-white/75"
+                    >
+                      {fact}
+                    </div>
+                  ))
+                )}
+              </div>
+
+              <div className="space-y-3">
+                <p className="text-[11px] uppercase tracking-[0.18em] text-white/35">Evaluation checks</p>
+                {graph.checks.map((check) => (
+                  <div
+                    key={check.name}
+                    className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3"
+                  >
+                    <div className="flex items-center justify-between gap-4">
+                      <p className="text-sm font-medium text-white">
+                        {check.name.replace(/_/g, ' ')}
+                      </p>
+                      <span
+                        className={`rounded-full px-2.5 py-1 text-[11px] uppercase tracking-[0.12em] ${
+                          check.passed
+                            ? 'border border-emerald-400/20 bg-emerald-400/10 text-emerald-200'
+                            : 'border border-amber-400/20 bg-amber-400/10 text-amber-200'
+                        }`}
+                      >
+                        {check.passed ? 'Pass' : 'Open'}
+                      </span>
+                    </div>
+                    <p className="mt-2 text-sm leading-6 text-white/60">{check.detail}</p>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card variant="liquid-glass-subtle" className="self-start">
+            <CardHeader>
+              <CardTitle>Project Activity</CardTitle>
+              <CardDescription>
+                Recent project-level events Arcanea recorded for this workspace.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {activity.length === 0 ? (
+                <p className="text-sm text-white/50">
+                  No recent project activity yet. It will appear as Arcanea records project actions and graph updates.
+                </p>
+              ) : (
+                activity.map((item) => (
+                  <div
+                    key={item.id}
+                    className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3"
+                  >
+                    <div className="flex items-center justify-between gap-4">
+                      <p className="text-sm font-medium text-white">{actionLabel(item.action)}</p>
+                      <span className="text-[11px] text-white/35">
+                        {new Date(item.createdAt).toLocaleDateString()}
+                      </span>
+                    </div>
+                    {item.metadata && Object.keys(item.metadata).length > 0 ? (
+                      <p className="mt-2 text-sm leading-6 text-white/55">
+                        {JSON.stringify(item.metadata)}
+                      </p>
+                    ) : (
+                      <p className="mt-2 text-sm leading-6 text-white/45">No extra metadata.</p>
+                    )}
                   </div>
                 ))
               )}
