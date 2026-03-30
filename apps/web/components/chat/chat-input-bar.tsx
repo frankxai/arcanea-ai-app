@@ -229,6 +229,8 @@ function ToolToggle({
   active,
   disabled,
   tooltip,
+  shortLabel,
+  activeColor,
   onClick,
 }: {
   icon: React.ComponentType<{ className?: string }>;
@@ -236,8 +238,11 @@ function ToolToggle({
   active: boolean;
   disabled?: boolean;
   tooltip?: string;
+  shortLabel?: string;
+  activeColor?: string;
   onClick: () => void;
 }) {
+  const color = activeColor ?? '#00bcd4';
   return (
     <div className="relative group/toggle">
       <button
@@ -247,17 +252,28 @@ function ToolToggle({
         title={tooltip ?? label}
         aria-label={label}
         aria-pressed={active}
-        className={`relative flex items-center justify-center w-8 h-8 min-h-[44px] min-w-[44px] rounded-lg text-xs transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none ${
+        className={`relative flex items-center justify-center gap-1.5 h-8 min-h-[44px] rounded-lg text-xs transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none ${
+          active ? 'px-3 min-w-[44px]' : 'w-8 min-w-[44px]'
+        } ${
           disabled
             ? 'opacity-30 cursor-not-allowed'
             : active
-              ? 'bg-gradient-to-br from-[#00bcd4]/15 to-[#00897b]/10 border border-[#00bcd4]/30 text-[#00bcd4] shadow-[0_0_12px_rgba(0,188,212,0.15),inset_0_1px_0_rgba(0,188,212,0.1)]'
+              ? `border text-white/90 shadow-[0_0_16px_${color}30,inset_0_1px_0_${color}20]`
               : 'bg-white/[0.03] border border-white/[0.06] text-white/35 hover:text-white/60 hover:bg-white/[0.06] hover:border-white/[0.1]'
         }`}
+        style={active ? {
+          background: `linear-gradient(135deg, ${color}20, ${color}08)`,
+          borderColor: `${color}50`,
+          color: color,
+          boxShadow: `0 0 16px ${color}25, inset 0 1px 0 ${color}15`,
+        } : undefined}
       >
         <Icon className="w-4 h-4" />
+        {active && shortLabel && (
+          <span className="text-[11px] font-medium">{shortLabel}</span>
+        )}
       </button>
-      {tooltip && (
+      {tooltip && !active && (
         <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 rounded-md bg-[#1a1a2e] text-white/70 text-[10px] whitespace-nowrap opacity-0 group-hover/toggle:opacity-100 transition-opacity pointer-events-none border border-white/[0.06] shadow-lg z-30">
           {tooltip}
         </div>
@@ -693,6 +709,30 @@ export function ChatInputBar({
           <VoiceWaveform stream={mediaStreamRef.current} onStop={stopRecording} />
         )}
 
+        {/* Active tools indicator */}
+        {enabledTools.size > 0 && (
+          <div className="flex items-center gap-2 px-4 py-1.5">
+            {enabledTools.has('image') && (
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-[#ef4444]/10 text-[#ef4444] border border-[#ef4444]/20 animate-[fadeIn_0.2s_ease-out]">
+                <PhImage className="w-3 h-3" />
+                Image generation on
+              </span>
+            )}
+            {enabledTools.has('think') && (
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-[#a78bfa]/10 text-[#a78bfa] border border-[#a78bfa]/20 animate-[fadeIn_0.2s_ease-out]">
+                <PhBrain className="w-3 h-3" />
+                Extended thinking on
+              </span>
+            )}
+            {enabledTools.has('search') && (
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-[#22c55e]/10 text-[#22c55e] border border-[#22c55e]/20 animate-[fadeIn_0.2s_ease-out]">
+                <PhMagnifyingGlass className="w-3 h-3" />
+                Web search on
+              </span>
+            )}
+          </div>
+        )}
+
         {/* Textarea + mention popup container */}
         <div className="relative">
           {/* @mention popup */}
@@ -709,7 +749,15 @@ export function ChatInputBar({
             onChange={handleChange}
             onKeyDown={handleKeyDown}
             onPaste={handlePaste}
-            placeholder="Type a message... (@mention for agents)"
+            placeholder={
+              enabledTools.has('image')
+                ? 'Describe the image you want to create...'
+                : enabledTools.has('search')
+                  ? 'Ask anything — I\'ll search the web for answers...'
+                  : enabledTools.has('think')
+                    ? 'Ask a complex question — I\'ll think deeply...'
+                    : 'Type a message... (@mention for agents)'
+            }
             aria-label="Message input"
             disabled={isStreaming}
             rows={1}
@@ -804,6 +852,8 @@ export function ChatInputBar({
               icon={PhImage}
               label="Image generation"
               tooltip="Generate images from text descriptions"
+              shortLabel="Image"
+              activeColor="#ef4444"
               active={enabledTools.has('image')}
               onClick={() => onToggleTool('image')}
             />
@@ -813,6 +863,8 @@ export function ChatInputBar({
               icon={PhBrain}
               label="Extended thinking"
               tooltip="Extended reasoning for complex problems"
+              shortLabel="Think"
+              activeColor="#a78bfa"
               active={enabledTools.has('think')}
               onClick={() => onToggleTool('think')}
             />
@@ -822,6 +874,8 @@ export function ChatInputBar({
               icon={PhMagnifyingGlass}
               label="Web search"
               tooltip="Search the web for current information"
+              shortLabel="Search"
+              activeColor="#22c55e"
               active={enabledTools.has('search')}
               onClick={() => onToggleTool('search')}
             />
