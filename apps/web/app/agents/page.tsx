@@ -6,6 +6,7 @@ import { CosmicParticles } from "@/components/magic/particles";
 import { TextReveal, AuroraText, GradientText } from "@/components/magic/text-reveal";
 import { AgentCard, type AgentCardProps } from "@/components/agents/agent-card";
 import { CreditBadge } from "@/components/agents/credit-badge";
+import { PremiumCard, PREMIUM_PRODUCTS } from "@/components/agents/premium-card";
 
 // ---------------------------------------------------------------------------
 // Catalog — inline until @/lib/agents/marketplace/catalog is available
@@ -457,6 +458,65 @@ export default function AgentsMarketplacePage() {
             </m.div>
           </div>
         </section>
+
+        {/* ── Premium Experiences ─────────────────────────────────── */}
+        <section className="py-16 relative" aria-labelledby="premium-heading">
+          {/* Subtle background wash */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(127,255,212,0.03) 0%, transparent 70%)",
+            }}
+            aria-hidden="true"
+          />
+
+          <div className="relative z-10 max-w-5xl mx-auto px-6">
+            <m.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-10"
+            >
+              <p className="text-[#ffd700] font-mono text-xs tracking-widest uppercase mb-3">
+                Premium Experiences
+              </p>
+              <h2
+                id="premium-heading"
+                className="text-3xl md:text-4xl font-display font-bold text-white mb-3"
+              >
+                Beyond the Agent Grid
+              </h2>
+              <p className="text-white/50 max-w-xl mx-auto">
+                Full-service creative intelligence for creators who want more than a single run.
+              </p>
+            </m.div>
+
+            <div className="flex flex-col gap-5">
+              {PREMIUM_PRODUCTS.map((product, i) => (
+                <m.div
+                  key={product.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
+                >
+                  <PremiumCard {...product} />
+                </m.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── Divider ─────────────────────────────────────────────── */}
+        <div className="max-w-5xl mx-auto px-6 py-4" role="separator" aria-hidden="true">
+          <div className="flex items-center gap-4">
+            <div className="flex-1 h-px bg-white/[0.06]" />
+            <span className="text-white/30 text-sm font-medium whitespace-nowrap">
+              Or run individual agents
+            </span>
+            <div className="flex-1 h-px bg-white/[0.06]" />
+          </div>
+        </div>
 
         {/* ── Featured agents ─────────────────────────────────────── */}
         {featuredAgents.length > 0 && (
