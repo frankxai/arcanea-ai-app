@@ -9,6 +9,9 @@ import { ChatLayout } from '@/components/chat/chat-layout';
 import { ChatArea, getErrorMessage } from '@/components/chat/chat-area';
 import { HistorySidebar } from '@/components/chat/history-sidebar';
 import { ChatInputBar } from '@/components/chat/chat-input-bar';
+import { AgentHeader } from '@/components/chat/agent-header';
+import { AgentPicker } from '@/components/chat/agent-picker';
+import { getLuminor } from '@/lib/luminors/config';
 
 // Heavy overlays — lazy-loaded (only rendered conditionally)
 import dynamic from 'next/dynamic';
@@ -96,6 +99,13 @@ export default function ChatPage() {
   const [activeArtifact, setActiveArtifact] = useState<Artifact | null>(null);
   const [serverHasKeys, setServerHasKeys] = useState(false);
   const [pendingInput, setPendingInput] = useState('');
+  const [showAgentPicker, setShowAgentPicker] = useState(false);
+  const [activeAgent, setActiveAgent] = useState<{ type: 'auto' | 'luminor'; id: string } | null>(null);
+
+  const resolvedAgent = activeAgent?.type === 'luminor' ? (() => {
+    const l = getLuminor(activeAgent.id);
+    return l ? { type: 'luminor' as const, id: l.id, name: l.name, avatar: l.avatar, specialty: l.specialty } : null;
+  })() : null;
 
   // -------------------------------------------------------------------------
   // Hero prompt handoff — read ?prompt= from URL and auto-populate input
@@ -517,8 +527,18 @@ export default function ChatPage() {
           }
         >
           {/* Input bar — rendered at the bottom of ChatArea */}
-          <div className="border-t border-white/[0.05] bg-gradient-to-t from-[#08080d] via-[#0a0a10] to-[#0c0c14] shrink-0 min-h-[88px]" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
-            <div className="max-w-[720px] mx-auto px-4 py-3">
+          <div className="border-t border-white/[0.05] bg-gradient-to-t from-[#08080d] via-[#0a0a10] to-[#0c0c14] shrink-0" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
+            <div className="max-w-[720px] mx-auto">
+              {/* Agent header — shows active agent + model + focus modes */}
+              <AgentHeader
+                activeAgent={resolvedAgent}
+                currentModel={conversation.modelId ?? 'arcanea-auto'}
+                onModelChange={conversation.setModelId}
+                focusMode={conversation.focusMode ?? 'auto'}
+                onFocusModeChange={conversation.setFocusMode}
+                onOpenAgentPicker={() => setShowAgentPicker(true)}
+              />
+              <div className="px-4 pb-3">
               <ChatInputBar
                 onSend={handleSend}
                 onModelChange={conversation.setModelId}
@@ -537,10 +557,19 @@ export default function ChatPage() {
                 </span>
                 <CreationIndicator autoSave={autoSave} />
               </div>
+              </div>
             </div>
           </div>
         </ChatArea>
       </ChatLayout>
+
+      {/* Agent Picker */}
+      <AgentPicker
+        open={showAgentPicker}
+        onClose={() => setShowAgentPicker(false)}
+        onSelect={(agent) => setActiveAgent(agent)}
+        currentAgentId={activeAgent?.id}
+      />
 
       {/* -------- Overlays / Modals -------- */}
 

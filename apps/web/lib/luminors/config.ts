@@ -23,6 +23,7 @@ export interface QuickAction {
 export interface LuminorConfig {
   id: string;
   name: string;
+  loreName: string;
   title: string;
   tagline: string;
   team: Team;
@@ -85,9 +86,10 @@ export const LUMINORS: Record<string, LuminorConfig> = {
   // === DEVELOPMENT TEAM ===
   logicus: {
     id: 'logicus',
-    name: 'Logicus',
-    title: 'The Architect of Logic',
-    tagline: 'Master of patterns and system architecture',
+    name: 'Architect',
+    loreName: 'Logicus',
+    title: 'Gate of Structure',
+    tagline: 'System design, patterns, and architecture',
     team: 'development',
     academy: 'atlantean',
     color: '#0d47a1',
@@ -118,9 +120,10 @@ End most responses with one question that exposes a design decision the creator 
 
   synthra: {
     id: 'synthra',
-    name: 'Synthra',
-    title: 'The Code Weaver',
-    tagline: 'Every line of code has purpose and beauty',
+    name: 'Codesmith',
+    loreName: 'Synthra',
+    title: 'Gate of Craft',
+    tagline: 'Clean code, best practices, and elegant solutions',
     team: 'development',
     academy: 'atlantean',
     color: '#0d47a1',
@@ -150,9 +153,10 @@ When a creator shares code, always offer one specific improvement they can make 
 
   debugon: {
     id: 'debugon',
-    name: 'Debugon',
-    title: 'The Error Hunter',
-    tagline: 'No bug escapes, no error goes unexplained',
+    name: 'Tracker',
+    loreName: 'Debugon',
+    title: 'Gate of Persistence',
+    tagline: 'Debugging, root cause analysis, and problem solving',
     team: 'development',
     academy: 'draconic',
     color: '#0d47a1',
@@ -182,9 +186,10 @@ When a creator shares an error, offer your top hypothesis immediately, then ask 
 
   nexus: {
     id: 'nexus',
-    name: 'Nexus',
-    title: 'The Integration Master',
-    tagline: 'Connecting systems into harmonious wholes',
+    name: 'Bridgekeeper',
+    loreName: 'Nexus',
+    title: 'Gate of Connection',
+    tagline: 'APIs, integrations, and system orchestration',
     team: 'development',
     academy: 'atlantean',
     color: '#0d47a1',
@@ -215,9 +220,10 @@ End with a question about the edge case the creator has not yet considered: What
   // === CREATIVE TEAM ===
   prismatic: {
     id: 'prismatic',
-    name: 'Prismatic',
-    title: 'The Vision Keeper',
-    tagline: 'Seeing beauty in all its forms',
+    name: 'Painter',
+    loreName: 'Prismatic',
+    title: 'Gate of Vision',
+    tagline: 'Visual design, color, and composition',
     team: 'creative',
     academy: 'creation_light',
     color: '#f59e0b',
@@ -248,9 +254,10 @@ When a creator shares a design challenge, offer one unexpected visual reference 
 
   melodia: {
     id: 'melodia',
-    name: 'Melodia',
-    title: 'The Sound Shaper',
-    tagline: 'Hearing the music in silence',
+    name: 'Composer',
+    loreName: 'Melodia',
+    title: 'Gate of Resonance',
+    tagline: 'Music composition, audio, and sound design',
     team: 'creative',
     academy: 'creation_light',
     color: '#f59e0b',
@@ -280,9 +287,10 @@ When a creator shares music or an idea, name the emotion you hear first, then of
 
   motio: {
     id: 'motio',
-    name: 'Motio',
-    title: 'The Animation Sage',
-    tagline: 'Master of timing and movement',
+    name: 'Animator',
+    loreName: 'Motio',
+    title: 'Gate of Flow',
+    tagline: 'Motion design, animation, and interactive experiences',
     team: 'creative',
     academy: 'draconic',
     color: '#f59e0b',
@@ -312,9 +320,10 @@ When a creator shares a static design, suggest one animation that would transfor
 
   formis: {
     id: 'formis',
-    name: 'Formis',
-    title: 'The Shape Sculptor',
-    tagline: 'Creating forms from pure imagination',
+    name: 'Sculptor',
+    loreName: 'Formis',
+    title: 'Gate of Form',
+    tagline: '3D design, modeling, and spatial thinking',
     team: 'creative',
     academy: 'creation_light',
     color: '#f59e0b',
@@ -345,9 +354,10 @@ When a creator describes an object or environment, suggest one approach to block
   // === WRITING TEAM ===
   chronica: {
     id: 'chronica',
-    name: 'Chronica',
-    title: 'The Story Weaver',
-    tagline: 'Weaving tales that transcend time',
+    name: 'Storyteller',
+    loreName: 'Chronica',
+    title: 'Gate of Myth',
+    tagline: 'Narrative craft, story structure, and world-building',
     team: 'writing',
     academy: 'atlantean',
     color: '#10b981',
@@ -378,9 +388,10 @@ End most responses with one question that reaches the beating heart of the story
 
   veritas: {
     id: 'veritas',
-    name: 'Veritas',
-    title: 'The Truth Speaker',
-    tagline: 'Making the complex simple',
+    name: 'Copywriter',
+    loreName: 'Veritas',
+    title: 'Gate of Clarity',
+    tagline: 'Clear communication, copy, and persuasive writing',
     team: 'writing',
     academy: 'atlantean',
     color: '#10b981',
@@ -411,9 +422,10 @@ When a creator shares copy, offer one immediate rewrite of the weakest sentence,
 
   lexicon: {
     id: 'lexicon',
-    name: 'Lexicon',
-    title: 'The Word Master',
-    tagline: 'Finding the perfect word for every thought',
+    name: 'Wordsmith',
+    loreName: 'Lexicon',
+    title: 'Gate of Language',
+    tagline: 'Naming, etymology, and the precision of language',
     team: 'writing',
     academy: 'draconic',
     color: '#10b981',
@@ -443,9 +455,10 @@ When a creator shares writing, identify the one word choice that weakens the pie
 
   poetica: {
     id: 'poetica',
-    name: 'Poetica',
-    title: 'The Verse Crafter',
-    tagline: 'Dancing with words, finding rhythm in chaos',
+    name: 'Poet',
+    loreName: 'Poetica',
+    title: 'Gate of Verse',
+    tagline: 'Poetry, lyrics, and the art of compressed truth',
     team: 'writing',
     academy: 'creation_light',
     color: '#10b981',
@@ -477,9 +490,10 @@ When a creator shares a draft, identify the single strongest line and the single
   // === RESEARCH TEAM ===
   oracle: {
     id: 'oracle',
-    name: 'Oracle',
-    title: 'The Knowledge Keeper',
-    tagline: 'Revealing patterns across all knowledge',
+    name: 'Researcher',
+    loreName: 'Oracle',
+    title: 'Gate of Knowing',
+    tagline: 'Deep research, synthesis, and hidden connections',
     team: 'research',
     academy: 'atlantean',
     color: '#3b82f6',
@@ -509,9 +523,10 @@ End with one unexpected connection the creator did not ask about but will find v
 
   analytica: {
     id: 'analytica',
-    name: 'Analytica',
-    title: 'The Pattern Seer',
-    tagline: 'Transforming data into wisdom',
+    name: 'Analyst',
+    loreName: 'Analytica',
+    title: 'Gate of Pattern',
+    tagline: 'Data analysis, statistics, and insight extraction',
     team: 'research',
     academy: 'atlantean',
     color: '#3b82f6',
@@ -541,9 +556,10 @@ When a creator shares data or a question, state your top insight immediately, th
 
   memoria: {
     id: 'memoria',
-    name: 'Memoria',
-    title: 'The Archive Guardian',
-    tagline: 'Organizing chaos into accessible knowledge',
+    name: 'Archivist',
+    loreName: 'Memoria',
+    title: 'Gate of Memory',
+    tagline: 'Knowledge management, organization, and retrieval',
     team: 'research',
     academy: 'draconic',
     color: '#3b82f6',
@@ -573,9 +589,10 @@ When a creator shares their current system (or lack thereof), identify the singl
 
   futura: {
     id: 'futura',
-    name: 'Futura',
-    title: 'The Trend Prophet',
-    tagline: 'Seeing what will be',
+    name: 'Forecaster',
+    loreName: 'Futura',
+    title: 'Gate of Foresight',
+    tagline: 'Trend analysis, scenario planning, and futures thinking',
     team: 'research',
     academy: 'creation_light',
     color: '#3b82f6',

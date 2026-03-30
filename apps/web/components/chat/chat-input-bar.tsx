@@ -283,6 +283,104 @@ function ToolToggle({
 }
 
 // ---------------------------------------------------------------------------
+// Tools popover — replaces inline tool toggles
+// ---------------------------------------------------------------------------
+
+function ToolsPopover({
+  enabledTools,
+  onToggleTool,
+}: {
+  enabledTools: Set<string>;
+  onToggleTool: (tool: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const activeCount = enabledTools.size;
+
+  const tools = [
+    { id: 'image', icon: PhImage, label: 'Image Generation', desc: 'Generate images from descriptions', color: '#ef4444' },
+    { id: 'think', icon: PhBrain, label: 'Extended Thinking', desc: 'Deep reasoning for complex problems', color: '#a78bfa' },
+    { id: 'search', icon: PhMagnifyingGlass, label: 'Web Search', desc: 'Search the web for current info', color: '#22c55e' },
+  ];
+
+  return (
+    <div className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        className={`flex items-center justify-center w-8 h-8 min-h-[44px] min-w-[44px] rounded-lg text-xs transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none ${
+          activeCount > 0
+            ? 'bg-[#00bcd4]/10 border border-[#00bcd4]/30 text-[#00bcd4]'
+            : 'bg-white/[0.03] border border-white/[0.06] text-white/35 hover:text-white/60 hover:bg-white/[0.06]'
+        }`}
+        aria-label={`Tools (${activeCount} active)`}
+        title="Toggle tools"
+      >
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+          <line x1="7" y1="3" x2="7" y2="11" />
+          <line x1="3" y1="7" x2="11" y2="7" />
+        </svg>
+        {activeCount > 0 && (
+          <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-[#00bcd4] text-[8px] text-black font-bold flex items-center justify-center">
+            {activeCount}
+          </span>
+        )}
+      </button>
+
+      {open && (
+        <>
+          <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
+          <div className="absolute bottom-full left-0 mb-2 w-64 rounded-xl bg-[#13131a] border border-white/[0.08] shadow-2xl z-50 py-2">
+            <p className="px-3 py-1 text-[10px] font-semibold text-white/30 uppercase tracking-wider">Tools</p>
+            {tools.map((t) => {
+              const active = enabledTools.has(t.id);
+              const Icon = t.icon;
+              return (
+                <button
+                  key={t.id}
+                  onClick={() => onToggleTool(t.id)}
+                  className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-white/[0.04] transition-colors text-left"
+                >
+                  <div
+                    className="w-7 h-7 rounded-lg flex items-center justify-center border transition-all"
+                    style={active ? {
+                      backgroundColor: `${t.color}15`,
+                      borderColor: `${t.color}40`,
+                      color: t.color,
+                    } : {
+                      backgroundColor: 'rgba(255,255,255,0.03)',
+                      borderColor: 'rgba(255,255,255,0.06)',
+                      color: 'rgba(255,255,255,0.3)',
+                    }}
+                  >
+                    <Icon className="w-3.5 h-3.5" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className={`text-xs font-medium ${active ? 'text-white/80' : 'text-white/50'}`}>{t.label}</p>
+                    <p className="text-[9px] text-white/20">{t.desc}</p>
+                  </div>
+                  <div
+                    className={`w-4 h-4 rounded border-2 transition-all ${
+                      active ? 'border-current bg-current' : 'border-white/15'
+                    }`}
+                    style={active ? { borderColor: t.color, backgroundColor: t.color } : undefined}
+                  >
+                    {active && (
+                      <svg viewBox="0 0 16 16" fill="none" stroke="black" strokeWidth="2.5" className="w-full h-full">
+                        <polyline points="3,8 6,11 12,5" />
+                      </svg>
+                    )}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Main component
 // ---------------------------------------------------------------------------
 
@@ -825,9 +923,6 @@ export function ChatInputBar({
         {/* Toggles row */}
         <div className="flex items-center justify-between px-3 py-2 border-t border-white/[0.05]" style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}>
           <div className="flex items-center gap-2 overflow-x-auto scrollbar-none">
-            {/* Model selector */}
-            <CompactModelPicker value={currentModel} onChange={onModelChange} />
-
             {/* Attach file */}
             <input
               ref={fileInputRef}
@@ -847,37 +942,10 @@ export function ChatInputBar({
               <PhPaperclip className="w-4 h-4" />
             </button>
 
-            {/* Image generation toggle */}
-            <ToolToggle
-              icon={PhImage}
-              label="Image generation"
-              tooltip="Generate images from text descriptions"
-              shortLabel="Image"
-              activeColor="#ef4444"
-              active={enabledTools.has('image')}
-              onClick={() => onToggleTool('image')}
-            />
-
-            {/* Think / reasoning toggle */}
-            <ToolToggle
-              icon={PhBrain}
-              label="Extended thinking"
-              tooltip="Extended reasoning for complex problems"
-              shortLabel="Think"
-              activeColor="#a78bfa"
-              active={enabledTools.has('think')}
-              onClick={() => onToggleTool('think')}
-            />
-
-            {/* Search toggle */}
-            <ToolToggle
-              icon={PhMagnifyingGlass}
-              label="Web search"
-              tooltip="Search the web for current information"
-              shortLabel="Search"
-              activeColor="#22c55e"
-              active={enabledTools.has('search')}
-              onClick={() => onToggleTool('search')}
+            {/* Tools popover toggle */}
+            <ToolsPopover
+              enabledTools={enabledTools}
+              onToggleTool={onToggleTool}
             />
           </div>
 
