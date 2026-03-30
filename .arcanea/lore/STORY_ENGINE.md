@@ -439,7 +439,7 @@ THE HOLLOW STARS ←→ FLAGSHIP TEAM
 | When | Event | Significance |
 |------|-------|-------------|
 | **~22 years ago** | Thessaly Corwen's Gate erupts after Crew Solstice is killed. The Corps discharges her. The file is sealed. | The institutional failure that creates the Herald of Hunger. |
-| **~20 years ago** | Veshenka Solari bonds with Vaelith, the Godbeast of the Shift Gate. | The rarest bond in Arcanea — and the one that will be taken without explanation. |
+| **~20 years ago** | Veshenka Solari bonds with Vaelith, the Godbeast of the Starweave Gate. | The rarest bond in Arcanea — and the one that will be taken without explanation. |
 | **~17 years ago** | Veshenka's bond is severed by Elara without explanation. She screams for three days. | The wound that creates the Herald of Passage. |
 | **~12 years ago** | Construct Seven (later Caelum Ironfaith) achieves sapience in the Forge construction bay. Says "please stop." The technician recalibrates. | The wound that creates the Herald of Memory. |
 | **~11 years ago** | The Cinderwall Gate Crisis. Seven Foundation Gates open simultaneously. Crew Solara is founded by Seravyn Duskmere. | The precedent for cross-origin crew composition. |
@@ -497,7 +497,7 @@ Books 3-5: Dragon War, Garden of Thorns,    Arc 3: The Herald War
       fracture. Hidden histories surface.
 
 Books 6-8: Mirror Depths, Crown of          Arc 4: The Broken Seal
-  Shadows, Starweave (Sight, Crown, Shift)   └── The seal mechanism revealed.
+  Shadows, Starweave (Sight, Crown, Starweave)   └── The seal mechanism revealed.
   └── Malachar speaks. His version.              The paradox of reform.
       What really happened at Source.            The ideological war.
 

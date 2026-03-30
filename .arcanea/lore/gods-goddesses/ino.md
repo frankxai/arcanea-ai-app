@@ -20,7 +20,7 @@ Ino governs the ninth Gate, the penultimate threshold. By this point, the seeker
 
 - **Partnership sovereignty**: Dominion over the bonds between beings -- not the bonds of love (Maylinn's domain) but the bonds of shared purpose, mutual recognition, and chosen alliance.
 - **Frequency absorption**: Through Kyuro Void Crystal, Ino's power absorbs all frequency -- creating the silence in which true connection becomes possible. She does not broadcast. She receives.
-- **Binding force**: The Unity Gate holds things together. When Aethervane (Shift+Unity alloy) needs perfect stillness to stabilize, it is Ino's frequency that provides the anchor.
+- **Binding force**: The Unity Gate holds things together. When Aethervane (Starweave+Unity alloy) needs perfect stillness to stabilize, it is Ino's frequency that provides the anchor.
 
 ## Teaching Style
 
@@ -37,7 +37,7 @@ Book 9 (The Unity War) centers on Ino's Gate. The three Academies must unite for
 ## Relationships
 
 - **Kyuro** (bonded Godbeast): The perfectly silent being that watches without participating. Kyuro is Ino's nature made physical -- the absolute receptivity that makes true partnership possible.
-- **Elara**: Shift and Unity share the Aethervane alloy. Elara's multiplicity of perspectives and Ino's binding force create the conditions in which difference does not dissolve into chaos.
+- **Elara**: Starweave and Unity share the Aethervane alloy. Elara's multiplicity of perspectives and Ino's binding force create the conditions in which difference does not dissolve into chaos.
 - **Shinkami**: Unity precedes Source. Ino's Gate is the last test before transcendence. Her partnership principle is Shinkami's precondition -- you do not ascend alone.
 
 ## Key Quotes from Canon
@@ -48,4 +48,4 @@ No direct quotes from Ino appear in current canonical sources. Canon details pen
 
 **Kyuro Void Crystal**: Perfectly silent. Absorbs all frequency. The material that watches without participating. In the agent architecture, maps to pure observation/logging -- never intervenes.
 
-**Aethervane** (alloy): Shift+Unity frequencies. Probability-state metal. Only perfect stillness stabilizes it.
+**Aethervane** (alloy): Starweave+Unity frequencies. Probability-state metal. Only perfect stillness stabilizes it.

@@ -29,7 +29,7 @@ The original trial tested the quality of wisdom. The corrupted trial tests wheth
 
 **Wisdom that imposes is not wisdom. It is conquest.**
 
-The Crown Gate is the last Gate the seeker walks alone. Beyond it lie Shift (perspective), Unity (partnership), and Source (transcendence) -- gates that require more than individual mastery. Aiyami's lesson is the capstone of the personal journey: you are ready. You understand. And the final test of understanding is knowing that understanding is not enough.
+The Crown Gate is the last Gate the seeker walks alone. Beyond it lie Starweave (perspective), Unity (partnership), and Source (transcendence) -- gates that require more than individual mastery. Aiyami's lesson is the capstone of the personal journey: you are ready. You understand. And the final test of understanding is knowing that understanding is not enough.
 
 Malachar passed through the Crown Gate. He achieved enlightenment. And his enlightenment led him to attempt forced entry to the Source Gate. The Crown Gate should have been enough. The tragedy is that it was not.
 

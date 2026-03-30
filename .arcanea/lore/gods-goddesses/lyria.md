@@ -36,7 +36,7 @@ Lyria holds the sixth Gate -- the first of the upper Gates, where mastery begins
 
 - **Yumiko** (bonded Godbeast): A creature whose Prism refracts perception, not light. Yumiko sees things-as-they-are, and Lyria's bond with this being reflects her own commitment to unfiltered truth.
 - **Alera**: Voice and Sight are linked -- Alera names what is true, Lyria sees what is real. Together they form the perceptive capacity of the divine pantheon.
-- **Elara**: Sight and Shift are the two Gates of perception -- Lyria sees from one clear perspective, Elara shifts that perspective entirely. They are complementary and sometimes contradictory.
+- **Elara**: Sight and Starweave are the two Gates of perception -- Lyria sees from one clear perspective, Elara shifts that perspective entirely. They are complementary and sometimes contradictory.
 
 ## Key Quotes from Canon
 

@@ -603,11 +603,11 @@ limitation: Gate Disruption requires proximity to active Gate usage. She cannot 
 
 ```yaml
 desire: To prove that the Gods are not worthy of worship. That the divine bond — the most sacred relationship in Arcanea — is a form of dependency designed to keep mortals subservient. She wants to break every bond, open every Gate, and demonstrate that mortals do not need divine intermediaries to access their own power.
-wound: At twenty, Veshenka achieved the rarest bond in Arcanea: a soul-link with Vaelith, the Godbeast of the Shift Gate, Elara's companion. The bond was ecstatic — the most complete experience of connection available to a mortal being. For three years, she and Vaelith moved through the world as one, and Veshenka experienced perception beyond anything she had imagined possible.
+wound: At twenty, Veshenka achieved the rarest bond in Arcanea: a soul-link with Vaelith, the Godbeast of the Starweave Gate, Elara's companion. The bond was ecstatic — the most complete experience of connection available to a mortal being. For three years, she and Vaelith moved through the world as one, and Veshenka experienced perception beyond anything she had imagined possible.
 
 Then Vaelith was recalled.
 
-Elara, God of the Shift Gate, summoned her Godbeast back for reasons that were never explained to Veshenka. The bond was severed. Not gradually — instantaneously. One moment Veshenka was part of a consciousness that spanned the space between stars. The next she was alone in her own skull, in a body that felt like a coffin, drowning in the silence where a god's companion had been.
+Elara, God of the Starweave Gate, summoned her Godbeast back for reasons that were never explained to Veshenka. The bond was severed. Not gradually — instantaneously. One moment Veshenka was part of a consciousness that spanned the space between stars. The next she was alone in her own skull, in a body that felt like a coffin, drowning in the silence where a god's companion had been.
 
 She screamed for three days. The silence did not answer.
 

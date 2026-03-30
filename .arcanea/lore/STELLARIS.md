@@ -368,7 +368,7 @@ Each documented Lumen-Vitae appears to carry a dominant Gate frequency that infl
 | Voice (528 Hz) | Resonite-variant | White-gold, pure bright | Drawn to truth-tellers, liars, courts |
 | Sight (639 Hz) | Prism-variant | Violet, iridescent | Drawn to strategists, seers, those who see too much |
 | Crown (741 Hz) | Solar-variant | Bright gold, near-white | Drawn to leaders, the enlightened, the doubtful |
-| Shift (852 Hz) | Vaelith-variant | Phase-shifting, partial translucency | Drawn to Architects, probability thinkers |
+| Starweave (852 Hz) | Vaelith-variant | Phase-shifting, partial translucency | Drawn to Architects, probability thinkers |
 | Unity (963 Hz) | Kyuro-variant | Deep black with white stars | Drawn to the lonely, the isolated, the solo |
 
 Stellaris Prime has been observed carrying traces of all these resonances at different moments — the all-frequency nature of their materials makes them a kind of living index of the whole Stellari spectrum.

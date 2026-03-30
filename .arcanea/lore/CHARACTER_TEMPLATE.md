@@ -42,7 +42,7 @@ sector:         # Solar | Ember | Oceanic | Dream | Void Frontier | Celestial (i
 ### 3. POWER PROFILE
 
 ```yaml
-gate_primary:       # Which Gate dominates (Foundation, Flow, Fire, Heart, Voice, Sight, Crown, Shift, Unity, Source)
+gate_primary:       # Which Gate dominates (Foundation, Flow, Fire, Heart, Voice, Sight, Crown, Starweave, Unity, Source)
 gates_open:         # Number (0-10+)
 element:            # Fire | Water | Earth | Wind | Void | Spirit | Multiple
 power_source:       # Arcane | Song | Mana | Anima | Frequency | Shadow | Weave | Code

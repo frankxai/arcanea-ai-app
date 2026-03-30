@@ -26,15 +26,15 @@ The faction documents represent a substantial, high-quality expansion of the Arc
 
 ### 1.1 Gate Names and Frequencies
 
-**STATUS: ONE VIOLATION**
+**STATUS: RESOLVED (2026-03-30)**
 
-CANON_LOCKED.md (Tier 2) names the eighth Gate **"Shift"** at 852 Hz, with God/Goddess **Elara** and Godbeast **Vaelith**. The system prompt summary of CANON_LOCKED (in .claude/CLAUDE.md) calls the same gate **"Starweave"**, but the actual locked document uses **"Shift"**. The CANON_LOCKED document is the source of truth.
+The eighth Gate at 852 Hz was previously named "Shift" in CANON_LOCKED.md but "Starweave" in .claude/CLAUDE.md. Frank resolved this on 2026-03-30: the canonical name is **"Starweave"**. CANON_LOCKED.md has been updated accordingly.
 
 **Issue found in VOID_ASCENDANTS.md:**
-Veshenka Dawnfallen is described as having been bonded to **Vaelith, the Godbeast of the Shift Gate, Elara's companion.** This is correct per CANON_LOCKED. No violation here.
+Veshenka Dawnfallen is described as having been bonded to **Vaelith, the Godbeast of the Starweave Gate, Elara's companion.** This is correct per CANON_LOCKED. No violation here.
 
 **Issue found in CHARACTER_TEMPLATE.md:**
-The `gate_primary` field lists gates as: `Foundation, Flow, Fire, Heart, Voice, Sight, Crown, Shift, Unity, Source`. This is consistent with CANON_LOCKED. Correct.
+The `gate_primary` field lists gates as: `Foundation, Flow, Fire, Heart, Voice, Sight, Crown, Starweave, Unity, Source`. This is consistent with CANON_LOCKED. Correct.
 
 **No frequency-level violations detected across documents.** All gate references checked:
 - Foundation: 174 Hz / Lyssandria — used correctly in FLAGSHIP_TEAM, STARBOUND_CREWS, VOID_ASCENDANTS, STARLIGHT_CORPS_CODEX
@@ -44,7 +44,7 @@ The `gate_primary` field lists gates as: `Foundation, Flow, Fire, Heart, Voice, 
 - Voice: 528 Hz / Alera — used correctly in Serevyn Ashvale profile
 - Sight: 639 Hz / Lyria — used correctly in Kaelindra, Lymareth, Lorien profiles
 - Crown: 741 Hz / Aiyami — used correctly in Seravyn Duskmere, Velindris profiles
-- Shift: 852 Hz / Elara — used correctly in Veshenka profile
+- Starweave: 852 Hz / Elara — used correctly in Veshenka profile
 - Unity: 963 Hz / Ino — used correctly in Veshenka profile
 - Source: 1111 Hz / Shinkami — used correctly
 
@@ -160,7 +160,7 @@ Checks across all faction documents:
 - FACTIONS.md lists all ten correctly in the Bonded section
 - Kaelindra Voss carries "Yumiko Prism" — correct (Lyria's Godbeast)
 - Ryn is hurt by "Otome Resonite" — correct (Alera's Godbeast)
-- Veshenka was bonded to "Vaelith" — correct (Elara's Godbeast, Shift Gate)
+- Veshenka was bonded to "Vaelith" — correct (Elara's Godbeast, Starweave Gate)
 - Seravyn's companion is named "Solenne" (a light-construct falcon) — this is a character-created elemental, NOT Godbeast Sol. This is clearly differentiated in the text. No confusion.
 - Thessaly Vel's Mana source is "Laeylinn Jade bio-interface" — correct material usage
 
@@ -178,7 +178,7 @@ Correct usages found:
 - **Shael** (Foundation+Voice, "The Honest Armor"): Kaelindra's coat clasps; Seravyn carries a Shael disc; Shael rank-batons in STARLIGHT_CORPS_CODEX; FACTIONS.md correctly describes Shael-framed Synths
 - **Veloura Glass** (Flow+Sight, "Memory Silver"): Referenced in STARLIGHT_CORPS_CODEX Archon weapons correctly
 - **Draconite** (Fire+Crown): FACTIONS.md correctly notes Draconite-cored Synths are powerful but costly
-- **Aethervane/Ghost Steel** (Shift+Unity): Veshenka's armor in VOID_ASCENDANTS; Dawnspire ship construction in STARBOUND_CREWS — both correct
+- **Aethervane/Ghost Steel** (Starweave+Unity): Veshenka's armor in VOID_ASCENDANTS; Dawnspire ship construction in STARBOUND_CREWS — both correct
 - **Kyuro Void Crystal**: Correctly described as "perfectly silent" in relevant contexts
 - **Laeylinn Jade**: Correctly used as bio-interface material; Caelum Ironfaith's jade integration; healing properties in GATE_TOUCHED_UNDERGROUND
 - **Vaelith Obsidian**: Lymareth's navigation shard in STARBOUND_CREWS — correct ("exists partially outside spacetime")

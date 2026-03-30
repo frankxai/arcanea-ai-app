@@ -177,7 +177,7 @@ The greatest coordinated Void Ascendant assault in recorded history. Over a span
 
 Three wards fell in the first week. A fourth was destabilized to the point of requiring continuous maintenance by rotating teams of five Master-rank mages to prevent collapse. The Starlight Corps, outnumbered and exhausted, fought a defensive action across seven simultaneous fronts for thirty-three days.
 
-On Day 34, something unprecedented happened: three Godbeast-bonded warriors arrived at Wardkeep without being summoned, without explanation, and without formal affiliation with any institution. Draconis, Vaelith, and Kyuro — the Godbeasts of Fire, Shift, and Unity — were present at the three weakest wards within twelve hours. The Heralds who had been winning at those positions withdrew.
+On Day 34, something unprecedented happened: three Godbeast-bonded warriors arrived at Wardkeep without being summoned, without explanation, and without formal affiliation with any institution. Draconis, Vaelith, and Kyuro — the Godbeasts of Fire, Starweave, and Unity — were present at the three weakest wards within twelve hours. The Heralds who had been winning at those positions withdrew.
 
 Nobody has ever satisfactorily explained why the Godbeasts came. The Gods have not commented.
 

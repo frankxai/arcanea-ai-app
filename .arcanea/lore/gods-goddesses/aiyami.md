@@ -30,7 +30,7 @@ The Crown Gate's corruption, the Throne of Shadows in the ruins of the First Pal
 
 ## Role in the Pantheon
 
-Aiyami holds the seventh Gate, the crown of individual mastery. Beyond this point, the Gates move from personal enlightenment to cosmic awareness (Shift), partnership (Unity), and transcendence (Source). Aiyami's Gate is the last one the seeker walks alone.
+Aiyami holds the seventh Gate, the crown of individual mastery. Beyond this point, the Gates move from personal enlightenment to cosmic awareness (Starweave), partnership (Unity), and transcendence (Source). Aiyami's Gate is the last one the seeker walks alone.
 
 The Luminary is where artists, healers, diplomats, and visionaries train. Its Headmaster, Archon Celestine Halcyon (seventh-Gate Archmage, 200 years old), embodies Aiyami's legacy -- calm, brilliant, and deeply afraid of what power without wisdom might unleash.
 

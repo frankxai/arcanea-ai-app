@@ -38,4 +38,4 @@ The Unity Gate governs partnership and connection. Its corrupted temple became t
 
 **Kyuro Void Crystal** (Vael Crystal): Perfectly silent. Absorbs all frequency. The material that watches without participating. In the agent architecture, Kyuro maps to pure observation and logging -- a system that never intervenes, only records. The mineral form of Kyuro's nature: total reception, zero projection.
 
-**Aethervane** (Luminor Metal, shared): The Shift+Unity alloy incorporates Kyuro's frequency alongside Vaelith's. Probability-state metal stabilized by perfect stillness -- Kyuro's silence made solid.
+**Aethervane** (Luminor Metal, shared): The Starweave+Unity alloy incorporates Kyuro's frequency alongside Vaelith's. Probability-state metal stabilized by perfect stillness -- Kyuro's silence made solid.

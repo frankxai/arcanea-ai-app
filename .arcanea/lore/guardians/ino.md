@@ -41,6 +41,6 @@ The Unity Gate is the ninth Gate on the path:
 - **Core lesson**: Partnership, connection, the willingness to share the journey with an equal.
 - **Element mastery**: Spirit -- Lumina's aspect. Transcendence, consciousness, soul.
 - **Dungeon**: The Severed Hall. Abandoned meeting ground. Isolation, breaking of bonds.
-- **Alloy connection**: Aethervane (Shift+Unity) -- probability-state metal. Ino's binding force stabilizes Elara's multiplicity.
+- **Alloy connection**: Aethervane (Starweave+Unity) -- probability-state metal. Ino's binding force stabilizes Elara's multiplicity.
 - **Book connection**: Book 9 (The Unity War). The three Academies must unite for the first time. Malachar breaks free. The final war is not a war of armies -- it is a war of ideas.
 - **Structural note**: The Unity Gate is the precondition for the Source Gate. Shinkami cannot be reached alone. This is the design, not the limitation.
