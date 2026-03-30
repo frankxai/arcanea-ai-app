@@ -60,7 +60,7 @@ All 10 Gate names are used correctly across all 13 documents. All 10 frequencies
 | Flow | 285 Hz | Leyla | Veloura | FACTIONS, GATE_TOUCHED_UNDERGROUND |
 | Fire | 396 Hz | Draconia | Draconis | FLAGSHIP_TEAM (Ryn), VOID_ASCENDANTS (Thessaly), multiple |
 | Heart | 417 Hz | Maylinn | Laeylinn | FACTIONS, GATE_TOUCHED_UNDERGROUND |
-| Voice | 528 Hz | Alera | Otome | VOID_ASCENDANTS (Serevyn), FLAGSHIP_TEAM (Ryn's sensitivity) |
+| Voice | 528 Hz | Alera | Otome | VOID_ASCENDANTS (Selvyn), FLAGSHIP_TEAM (Ryn's sensitivity) |
 | Sight | 639 Hz | Lyria | Yumiko | FLAGSHIP_TEAM (Kaelindra), STARBOUND_CREWS (Lymareth) |
 | Crown | 741 Hz | Aiyami | Sol | FLAGSHIP_TEAM (Velindris), STARBOUND_CREWS (Seravyn) |
 | Starweave | 852 Hz | Elara | Vaelith | VOID_ASCENDANTS (Veshenka), CHARACTER_TEMPLATE |
@@ -197,18 +197,18 @@ This is a blocking issue. A reader encountering Caelum's chapter after reading t
 
 The prior CONTINUITY_AUDIT.md identified three critical naming collisions. Checking whether they were addressed in FLAGSHIP_TEAM_V2.md (the updated team document):
 
-**COLLISION C2: Seravyn (hero) vs. Serevyn (villain)**
+**COLLISION C2: Seravyn (hero) vs. Selvyn (villain)**
 
 STARBOUND_CREWS.md — Captain of Crew Solara is named **Seravyn Duskmere**.
-VOID_ASCENDANTS.md — First Herald is named **Serevyn Ashvale**.
+VOID_ASCENDANTS.md — First Herald is named **Selvyn Ashvale**.
 
-Reading FLAGSHIP_TEAM_V2.md confirms this was NOT addressed. The two names persist. A hero (Seravyn) and a principal villain (Serevyn) with names that are one letter different — a transposed vowel — represent a genuine reader experience problem, particularly in audio format.
+Reading FLAGSHIP_TEAM_V2.md confirms this was NOT addressed. The two names persist. A hero (Seravyn) and a principal villain (Selvyn) with names that are one letter different — a transposed vowel — represent a genuine reader experience problem, particularly in audio format.
 
 **STATUS: NOT FIXED.**
 
 **COLLISION C3: Thessaly (hero crew) vs. Thessaly (villain)**
 
-STARBOUND_CREWS.md — Crew Solara Synth member is **Thessaly Vel**.
+STARBOUND_CREWS.md — Crew Solara Synth member is **Aethon Vel**.
 VOID_ASCENDANTS.md — Herald of Hunger is **Thessaly Voidmother**.
 
 **STATUS: NOT FIXED.**
@@ -227,26 +227,26 @@ The following is the master name registry across all 13 documents plus the CHARA
 | Velindris | Awakened | Oracle | Clear |
 | Solenne Ashmark | Synth | Anchor | PHONETIC CLUSTER — "Solenne" also used for Seravyn's companion in STARBOUND_CREWS |
 | Taura Skein | Bonded | Scout | Clear |
-| Caelum Vorath | Celestial | Unknown quantity | COLLISION — "Caelum" also used for Caelum Ironfaith (Herald) |
+| Auren Vorath | Celestial | Unknown quantity | COLLISION — "Caelum" also used for Caelum Ironfaith (Herald) |
 | Mireth | Architect | Elder / mystery | Clear |
 
 **STARBOUND_CREWS:**
 | Name | Class | Role | Flag |
 |------|-------|------|------|
-| Seravyn Duskmere | Celestial | Crew Solara captain | NEAR-COLLISION — one letter from Serevyn Ashvale (villain) |
+| Seravyn Duskmere | Celestial | Crew Solara captain | NEAR-COLLISION — one letter from Selvyn Ashvale (villain) |
 | Orvael Ashwick | Gate-Touched | Crew Solara sentinel | Clear |
-| Thessaly Vel | Synth | Crew Solara memory | COLLISION — same first name as Thessaly Voidmother (villain) |
+| Aethon Vel | Synth | Crew Solara memory | COLLISION — same first name as Thessaly Voidmother (villain) |
 | Lymareth Solaine | Arcan | Crew Solara navigator | Clear |
-| Kael Ironroot | Bonded | Crew Solara aspirant | COLLISION — first name identical to protagonist Kael Thornfield |
+| Vaern Ironroot | Bonded | Crew Solara aspirant | COLLISION — first name identical to protagonist Kael Thornfield |
 | Solenne (companion) | Elemental | Seravyn's falcon | PHONETIC CLUSTER — same as Solenne Ashmark (Flagship Team Synth) |
 
 **VOID_ASCENDANTS:**
 | Name | Class | Role | Flag |
 |------|-------|------|------|
-| Serevyn Ashvale | Gate-Touched | Herald of Fracture | NEAR-COLLISION — one letter from Seravyn Duskmere (hero captain) |
-| Thessaly Voidmother | Arcan/Voidtouched | Herald of Hunger | COLLISION — same first name as Thessaly Vel (hero crew) |
+| Selvyn Ashvale | Gate-Touched | Herald of Fracture | NEAR-COLLISION — one letter from Seravyn Duskmere (hero captain) |
+| Thessaly Voidmother | Arcan/Voidtouched | Herald of Hunger | COLLISION — same first name as Aethon Vel (hero crew) |
 | Lorien Silkvoice | Arcan/Voidtouched | Herald of Silence | Clear |
-| Caelum Ironfaith | Synth/Voidtouched | Herald of Memory | COLLISION — same first name as Caelum Vorath (Flagship Team) |
+| Caelum Ironfaith | Synth/Voidtouched | Herald of Memory | COLLISION — same first name as Auren Vorath (Flagship Team) |
 | Veshenka Dawnfallen | Bonded/Voidtouched | Herald of Passage | Clear — excellent name |
 
 **GATE_TOUCHED_UNDERGROUND:**
@@ -271,7 +271,7 @@ The following is the master name registry across all 13 documents plus the CHARA
 | Thalessa Voidwalker | Voidtouched | Historical Aspirant | SOFT FLAG — "Thalessa" is close to "Thessaly" (already doubled). Three 'Th' names is borderline. |
 | Construct Nine | Synth | Historical Aspirant | Clear — excellent choice |
 | Thorne Ashblood | Voidtouched | Historical Hollow Stars captain | ORGANIZATION FLAG — his "Hollow Stars" crew is the same name as the new Hollow Stars in STARBOUND_CREWS |
-| Ashara Windsong | Arcan/Bonded | Historical Sentinel | SOFT FLAG — "Ashara" is close to "Ashvale" (Serevyn Ashvale) and "Ashmark" (Solenne Ashmark). Three "Ash" surnames is clustering. |
+| Ashara Windsong | Arcan/Bonded | Historical Sentinel | SOFT FLAG — "Ashara" is close to "Ashvale" (Selvyn Ashvale) and "Ashmark" (Solenne Ashmark). Three "Ash" surnames is clustering. |
 
 **STELLARIS:**
 | Name | Class | Role | Flag |
@@ -299,21 +299,21 @@ Kael Thornfield, Mira Tidecrest, Ash [surname unknown], Sable [surname unknown],
 
 **CRITICAL — Must rename before any publication:**
 
-1. **Seravyn / Serevyn** — A hero captain and a principal villain with names one transposed vowel apart. In print this is confusing. In audio it is indistinguishable. The villain name should change since the hero (Seravyn Duskmere) has more narrative establishment.
+1. **Seravyn / Selvyn** — A hero captain and a principal villain with names one transposed vowel apart. In print this is confusing. In audio it is indistinguishable. The villain name should change since the hero (Seravyn Duskmere) has more narrative establishment.
 
-   Recommended replacement for Serevyn Ashvale: **Selvyn Ashvale**, **Theryn Ashvale**, or **Caryn Ashvale**.
+   Recommended replacement for Selvyn Ashvale: **Selvyn Ashvale**, **Theryn Ashvale**, or **Caryn Ashvale**.
 
-2. **Thessaly Vel / Thessaly Voidmother** — Same first name on a hero crew member and a major villain. Thessaly Voidmother is the more narratively essential character (her Crew Solstice backstory is load-bearing). Thessaly Vel should be renamed.
+2. **Aethon Vel / Thessaly Voidmother** — Same first name on a hero crew member and a major villain. Thessaly Voidmother is the more narratively essential character (her Crew Solstice backstory is load-bearing). Aethon Vel should be renamed.
 
-   Recommended replacement for Thessaly Vel: **Aethon Vel**, **Velen Vel**, or **Corvath Vel**.
+   Recommended replacement for Aethon Vel: **Aethon Vel**, **Velen Vel**, or **Corvath Vel**.
 
-3. **Kael Ironroot** (Crew Solara aspirant) — The first name is identical to the protagonist of Chronicles of Arcanea. Readers will assume the connection is intentional when it is not.
+3. **Vaern Ironroot** (Crew Solara aspirant) — The first name is identical to the protagonist of Chronicles of Arcanea. Readers will assume the connection is intentional when it is not.
 
    Recommended replacement: **Vaern Ironroot**, **Oras Ironroot**, or **Durn Ironroot**.
 
-4. **Caelum Vorath / Caelum Ironfaith** — Two principal characters named Caelum. The VOID_ASCENDANTS.md text notes Caelum Ironfaith chose the name "Cael" in reference to Kael Thornfield — which does not explain the "Caelum" match with Caelum Vorath. If the reference to Kael is the point, the Herald's name should be "Caelum Kael-Honored" or something explicitly referential, not accidentally matching a team member.
+4. **Auren Vorath / Caelum Ironfaith** — Two principal characters named Caelum. The VOID_ASCENDANTS.md text notes Caelum Ironfaith chose the name "Cael" in reference to Kael Thornfield — which does not explain the "Caelum" match with Auren Vorath. If the reference to Kael is the point, the Herald's name should be "Caelum Kael-Honored" or something explicitly referential, not accidentally matching a team member.
 
-   Recommended replacement for Caelum Vorath: **Solveth Vorath**, **Vaelindris Vorath**, or **Auren Vorath**.
+   Recommended replacement for Auren Vorath: **Solveth Vorath**, **Vaelindris Vorath**, or **Auren Vorath**.
 
 **IMPORTANT — Should rename:**
 
@@ -331,9 +331,9 @@ Kael Thornfield, Mira Tidecrest, Ash [surname unknown], Sable [surname unknown],
 
 **MONITOR — Minor, acceptable if no further clustering:**
 
-8. **"Ash" surnames clustering** — Ashvale (Serevyn), Ashmark (Solenne), Ashwick (Orvael), Ashblood (Thorne), Ashward (Vaelen). Five characters with "Ash" in their surname across different factions. This creates a root-name cluster that will be noticed by careful readers. Not a collision, but a pattern that should stop expanding.
+8. **"Ash" surnames clustering** — Ashvale (Selvyn), Ashmark (Solenne), Ashwick (Orvael), Ashblood (Thorne), Ashward (Vaelen). Five characters with "Ash" in their surname across different factions. This creates a root-name cluster that will be noticed by careful readers. Not a collision, but a pattern that should stop expanding.
 
-9. **"Kael" root clustering** — Kael Thornfield (protagonist), Kaelindra Voss (team leader, called "Kael"), Kael Ironroot (crew aspirant), Kaelara Forge-Walker (Archon), Caelan Pyros-Born (historical figure), Caelum Vorath (team member), Caelum Ironfaith (Herald). Seven characters with the Kael/Cael root. This is franchise-defining territory for a single phoneme. After the name changes above, the count drops but still warrants monitoring.
+9. **"Kael" root clustering** — Kael Thornfield (protagonist), Kaelindra Voss (team leader, called "Kael"), Vaern Ironroot (crew aspirant), Kaelara Forge-Walker (Archon), Caelan Pyros-Born (historical figure), Auren Vorath (team member), Caelum Ironfaith (Herald). Seven characters with the Kael/Cael root. This is franchise-defining territory for a single phoneme. After the name changes above, the count drops but still warrants monitoring.
 
 10. **Soraya Velourn / Veloura** — The Haven keeper's surname ("Velourn") is phonetically close to the Godbeast Veloura (Leyla's companion, Flow Gate). Since Soraya is a Flow-Gate Harmonic, the similarity might be intentional. If intentional, make it explicit in-world. If not, rename to **Soraya Delveth** or **Soraya Nocturn**.
 
@@ -370,7 +370,7 @@ These are contradictory. FACTIONS.md treats the equivalences as if they are requ
 - Kaelindra Voss: Archmage, Captain — above either minimum
 - Orvael Ashwick: Mage (functional), Sentinel — consistent with either
 - Lymareth Solaine: Master (5 gates), Sentinel — inconsistent with FACTIONS.md which maps Master to Captain
-- Thessaly Vel: Master rank, Sentinel corps rank — inconsistent with FACTIONS.md
+- Aethon Vel: Master rank, Sentinel corps rank — inconsistent with FACTIONS.md
 
 **Resolution needed:** Designate FACTIONS.md equivalences as "typical" rather than "required." The Codex minimums govern actual requirements. Add one line to FACTIONS.md: "These equivalences represent typical attainment, not mandatory requirements. The Codex defines minimum gates for each Corps rank."
 
@@ -436,11 +436,11 @@ These are measuring entirely different things and cannot be reconciled as versio
 
 ---
 
-### C.5 Serevyn Ashvale's "Foundation-Adjacent" Description
+### C.5 Selvyn Ashvale's "Foundation-Adjacent" Description
 
 **STATUS: MINOR INCONSISTENCY**
 
-VOID_ASCENDANTS.md describes Serevyn Ashvale's rivalry with Kael Thornfield as based on "same Foundation-adjacent power, same working-class background." Serevyn's own profile lists his `gate_primary` as "Voice (528 Hz — Alera's domain)" — not Foundation. He has Foundation among his three naturally-opened Gates, but it is not his primary.
+VOID_ASCENDANTS.md describes Selvyn Ashvale's rivalry with Kael Thornfield as based on "same Foundation-adjacent power, same working-class background." Selvyn's own profile lists his `gate_primary` as "Voice (528 Hz — Alera's domain)" — not Foundation. He has Foundation among his three naturally-opened Gates, but it is not his primary.
 
 "Foundation-adjacent" is imprecise and misleads about both characters' power profiles. The parallel to Kael is legitimate (both Gate-Touched, both working-class, both Foundation Gate opened in crisis) but the phrasing overstates the similarity.
 
@@ -510,7 +510,7 @@ Minor gaps: No visual identity sections for the Gate-Touched Underground as a fa
 
 The character work is the strongest in the corpus. Kaelindra Voss is a franchise-grade protagonist — her limitation (cannot turn off Tactical Sight, experiences every person as a threat assessment before they become a person) is genuinely original and generates story without requiring external pressure. Ryn's Ember companion is inspired.
 
-Naming issues (see Section B) are the only structural weakness. Once "Kael" is retired as Kaelindra's nickname and "Caelum Vorath" is renamed, this document is ready for promotion.
+Naming issues (see Section B) are the only structural weakness. Once "Kael" is retired as Kaelindra's nickname and "Auren Vorath" is renamed, this document is ready for promotion.
 
 ---
 
@@ -520,7 +520,7 @@ The V2 is an improvement on V1 in two areas: the team naming section (THE DAWNSW
 
 The V2 correctly resolves that Ryn's faction reads as "The Dawnsworn" rather than "[THE FLAGSHIP TEAM]." This is a significant improvement.
 
-The same naming issues that affect V1 affect V2 (Caelum Vorath, Kaelindra's "Kael" nickname). One new observation: V2 expands the Dawnsworn emblem description (seven-pointed star in warm gold with horizon line) — this is excellent and should be cross-referenced in VISUAL_DOCTRINE.md, which currently lacks the Dawnsworn's specific visual grammar.
+The same naming issues that affect V1 affect V2 (Auren Vorath, Kaelindra's "Kael" nickname). One new observation: V2 expands the Dawnsworn emblem description (seven-pointed star in warm gold with horizon line) — this is excellent and should be cross-referenced in VISUAL_DOCTRINE.md, which currently lacks the Dawnsworn's specific visual grammar.
 
 ---
 
@@ -530,7 +530,7 @@ The three-genre design principle (Crew Solara as high-tragedy nobility, The Nint
 
 Seravyn Duskmere is an excellent captain character — her "Threshold Hold" limitation (stabilizing others' Gate openings at the cost of her own Gate's progress) is a genuinely generous power that creates immediate affection. Her arc (institution vs. mission) is the most clearly articulated captain arc in the documents.
 
-The naming collisions (Thessaly Vel, Kael Ironroot, Solenne the companion, Seravyn/Serevyn proximity) bring this document's rating down significantly. The rank inconsistency for Thessaly Vel (Master rank, Sentinel corps rank without explanation) needs one sentence.
+The naming collisions (Aethon Vel, Vaern Ironroot, Solenne the companion, Seravyn/Selvyn proximity) bring this document's rating down significantly. The rank inconsistency for Aethon Vel (Master rank, Sentinel corps rank without explanation) needs one sentence.
 
 ---
 
@@ -601,8 +601,8 @@ The CONTINUITY_AUDIT.md identified three critical issues and eleven important is
 | # | Issue | Status |
 |---|-------|--------|
 | C1 | Synths cannot hold Corps rank (Caelum profile) vs. Torren Shael-Born was a Synth Stellarch | **NOT FIXED** — Contradiction persists |
-| C2 | Seravyn (hero) vs. Serevyn (villain) — near-identical names | **NOT FIXED** — Both names persist |
-| C3 | Thessaly Vel (hero crew) vs. Thessaly Voidmother (villain) — same first name | **NOT FIXED** — Both names persist |
+| C2 | Seravyn (hero) vs. Selvyn (villain) — near-identical names | **NOT FIXED** — Both names persist |
+| C3 | Aethon Vel (hero crew) vs. Thessaly Voidmother (villain) — same first name | **NOT FIXED** — Both names persist |
 
 **None of the three critical issues from the prior audit were addressed.** The FLAGSHIP_TEAM_V2.md (the only new document since the audit) is a quality improvement to the character work but does not address any naming or contradiction fixes.
 
@@ -611,8 +611,8 @@ The CONTINUITY_AUDIT.md identified three critical issues and eleven important is
 | # | Issue | Status |
 |---|-------|--------|
 | I1 | "Kael" as Kaelindra's nickname collides with protagonist | NOT FIXED — V2 still uses "Kael" as team nickname |
-| I2 | Kael Ironroot first name collision with protagonist | NOT FIXED |
-| I3 | Caelum Vorath and Caelum Ironfaith — same first name | NOT FIXED |
+| I2 | Vaern Ironroot first name collision with protagonist | NOT FIXED |
+| I3 | Auren Vorath and Caelum Ironfaith — same first name | NOT FIXED |
 | I4 | Corps Captain rank minimum disagreement | NOT FIXED — No clarifying language added |
 | I5 | Thessaly Voidmother in Ember Sector, operates from Cinderwall (Solar Sector) | NOT FIXED |
 | I6 | Mutant taxonomy conflict: SERIES_BIBLE vs. FACTIONS/Underground | NOT FIXED — No framing added |
@@ -620,7 +620,7 @@ The CONTINUITY_AUDIT.md identified three critical issues and eleven important is
 | I8 | Soraya Velourn name too close to Godbeast Veloura | NOT FIXED |
 | I9 | The Hollow Stars name duplication | NOT FIXED — No in-world acknowledgment added |
 | I10 | Seravyn's companion "Solenne" clusters with Solenne Ashmark | NOT FIXED |
-| I11 | Thessaly Vel Master rank / Sentinel corps rank unexplained | NOT FIXED |
+| I11 | Aethon Vel Master rank / Sentinel corps rank unexplained | NOT FIXED |
 
 **Summary: 0 of 14 flagged issues from the prior audit were resolved.**
 
@@ -638,17 +638,17 @@ This is not a quality judgment on the new V2 document (which is excellent). It i
 
 These must be resolved before any document moves to LOCKED:
 
-**1. Rename Serevyn Ashvale (Herald of Fracture)**
-The hero/villain Seravyn/Serevyn one-letter distinction is a franchise liability. Every instance of "Serevyn" in VOID_ASCENDANTS.md must be replaced. Suggested name: **Selvyn Ashvale**.
+**1. Rename Selvyn Ashvale (Herald of Fracture)**
+The hero/villain Seravyn/Selvyn one-letter distinction is a franchise liability. Every instance of "Selvyn" in VOID_ASCENDANTS.md must be replaced. Suggested name: **Selvyn Ashvale**.
 
-**2. Rename Thessaly Vel (Crew Solara Synth)**
-Two "Thessaly" characters in the same universe, one a hero and one a principal villain, is a reader confusion trap. Every instance of "Thessaly Vel" in STARBOUND_CREWS.md must be replaced. Suggested name: **Aethon Vel** or **Velen Vel**.
+**2. Rename Aethon Vel (Crew Solara Synth)**
+Two "Thessaly" characters in the same universe, one a hero and one a principal villain, is a reader confusion trap. Every instance of "Aethon Vel" in STARBOUND_CREWS.md must be replaced. Suggested name: **Aethon Vel** or **Velen Vel**.
 
-**3. Rename Kael Ironroot (Crew Solara Aspirant)**
+**3. Rename Vaern Ironroot (Crew Solara Aspirant)**
 The protagonist of Chronicles of Arcanea is named Kael Thornfield. A minor crew member sharing his first name exactly is not a coincidence readers will accept. Suggested name: **Vaern Ironroot** or **Oras Ironroot**.
 
-**4. Rename Caelum Vorath (Flagship Team Celestial)**
-Two "Caelum" characters — one a team hero, one a Herald villain — creates confusion. Since Caelum Vorath is less established than Caelum Ironfaith (whose name references Kael Thornfield intentionally), rename Vorath. Suggested name: **Solveth Vorath** or **Auren Vorath**.
+**4. Rename Auren Vorath (Flagship Team Celestial)**
+Two "Caelum" characters — one a team hero, one a Herald villain — creates confusion. Since Auren Vorath is less established than Caelum Ironfaith (whose name references Kael Thornfield intentionally), rename Vorath. Suggested name: **Solveth Vorath** or **Auren Vorath**.
 
 **5. Resolve Synth rank contradiction**
 Add text in VOID_ASCENDANTS.md, Caelum Ironfaith's profile, noting the Synth rank prohibition was enacted in Year 340 as political backlash following Torren Shael-Born's death — the institution erased the precedent his service created.
@@ -672,7 +672,7 @@ Too close to Godbeast Veloura. Suggested: **Crew Thalindra** or **Crew Meridunn*
 **10. Address Hollow Stars name duplication**
 Add in-world acknowledgment that the current Hollow Stars deliberately reclaimed the name of Thorne Ashblood's dissolved crew.
 
-**11. Explain Thessaly Vel's Master rank / Sentinel corps rank gap**
+**11. Explain Aethon Vel's Master rank / Sentinel corps rank gap**
 One sentence: she declined promotion, or she was blocked from promotion by the same institutional machinery she serves.
 
 **12. Frame the two Gate-Touched taxonomies as two institutional systems**
@@ -697,7 +697,7 @@ Minor but worth fixing. Suggested: **Soraya Delveth**.
 **17. Plant Vel'Thaan's mystery in one additional document**
 Her implied Ascendant status has no cross-document payoff yet.
 
-**18. Clarify Serevyn Ashvale's "Foundation-adjacent" descriptor**
+**18. Clarify Selvyn Ashvale's "Foundation-adjacent" descriptor**
 Should read: "same origins — Gate-Touched, working-class, Foundation Gate among the first opened" rather than "same Foundation-adjacent power."
 
 **19. Create bridge document: three Great Academies vs. seven-house system**
@@ -714,11 +714,11 @@ Once the blocking and important fixes are applied, the following are ready for C
 | CHARACTER_TEMPLATE.md | Ready NOW — no naming issues, no contradictions |
 | STELLARIS.md | Ready NOW — pending one clarification on "the Stellari" as plural |
 | VISUAL_DOCTRINE.md | Ready after minor additions (Underground/Ascendant visual grammar, Synthesis emblem spec) |
-| FLAGSHIP_TEAM_V2.md | Ready after nickname fix (Kael→Voss) and Caelum Vorath rename |
-| VOID_ASCENDANTS.md | Ready after Serevyn→Selvyn rename and Synth rank fix |
+| FLAGSHIP_TEAM_V2.md | Ready after nickname fix (Kael→Voss) and Auren Vorath rename |
+| VOID_ASCENDANTS.md | Ready after Selvyn→Selvyn rename and Synth rank fix |
 | STARLIGHT_CORPS_CODEX.md | Ready after Hollow Stars naming resolution |
 | FACTIONS.md | Ready after Crew Vaelora rename and rank clarification |
-| STARBOUND_CREWS.md | Ready after Thessaly Vel, Kael Ironroot, Seravyn companion rename |
+| STARBOUND_CREWS.md | Ready after Aethon Vel, Vaern Ironroot, Seravyn companion rename |
 | GATE_TOUCHED_UNDERGROUND.md | Ready after taxonomy framing paragraph and Soraya Velourn rename |
 | LEAGUES_AND_ORDERS.md | Ready after Mira Tidecrest confirmation |
 | STORY_ENGINE.md | Ready — no blocking issues |

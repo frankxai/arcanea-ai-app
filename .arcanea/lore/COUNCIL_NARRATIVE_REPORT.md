@@ -177,7 +177,7 @@ The village scene is the strongest beat for this character: Vaerith staying at t
 | Franchise Potential | 10 | The villain who makes the heroes question whether they're on the right side is the most commercially durable antagonist type. His relationship to Kael Thornfield (dark mirror, same origin, one acceptance letter between them) is the series' central moral argument. |
 | Arc Potential | 10 | Tragic fall (already occurred) to potential redemption via watching a recruit die is structurally sound. But the redemption path is standard for a villain of this type. The more interesting question — flagged below — is whether the redemption path should be less clean. |
 
-**Overall: 9.6 — Flag: Minor. The redemption path (watches a recruit consumed, can he survive watching the cost?) is emotionally correct but structurally predictable for the "villain with a point" archetype. Consider whether Serevyn's confrontation with Kael is the actual redemption mechanism, not the recruit's death. The recruit's death is too convenient. The confrontation with Kael, who got what Serevyn deserved, is harder and more honest.**
+**Overall: 9.6 — Flag: Minor. The redemption path (watches a recruit consumed, can he survive watching the cost?) is emotionally correct but structurally predictable for the "villain with a point" archetype. Consider whether Selvyn's confrontation with Kael is the actual redemption mechanism, not the recruit's death. The recruit's death is too convenient. The confrontation with Kael, who got what Selvyn deserved, is harder and more honest.**
 
 ---
 
@@ -207,7 +207,7 @@ The village scene is the strongest beat for this character: Vaerith staying at t
 | Franchise Potential | 8 | The Mira Tidecrest mirror relationship is the best franchise mechanic assigned to any Herald — the one-sided rivalry, Mira having everything Lorien was denied, creates immediate dramatic irony that can sustain multiple story interactions. |
 | Arc Potential | 8 | The Archive gaining voice and calling out Lorien's hypocrisy is strong. The comparison between the Athenaeum's censorship and Lorien's own extraction (freeing knowledge from one locked room and putting it in another) is exactly the right ironic inversion. |
 
-**Overall: 7.8 — Flag: Visual identity is the weakest in the Heralds. The Hollow Glass cloak should be more integrated into visual shorthand. Consider: every Herald has a singular visual tell that readers can carry into any scene. Serevyn has the rejection letter folio. Thessaly has the shaved head and Shadow eye. Caelum Ironfaith has the dark oxidation spreading across the sacred geometry. Lorien's singular visual tell is undefined.**
+**Overall: 7.8 — Flag: Visual identity is the weakest in the Heralds. The Hollow Glass cloak should be more integrated into visual shorthand. Consider: every Herald has a singular visual tell that readers can carry into any scene. Selvyn has the rejection letter folio. Thessaly has the shaved head and Shadow eye. Caelum Ironfaith has the dark oxidation spreading across the sacred geometry. Lorien's singular visual tell is undefined.**
 
 ---
 
@@ -264,11 +264,11 @@ The one vulnerability: the document's tone occasionally slips into enthusiastic 
 
 ### MENTORS (from STARBOUND_CREWS — secondary characters)
 
-**Seravyn Duskmere crew members (Orvael Ashwick, Thessaly Vel):**
+**Seravyn Duskmere crew members (Orvael Ashwick, Aethon Vel):**
 
 Orvael Ashwick's Diamond (desire: to be trusted; wound: rejection letter memorized; mask: loud confidence; truth: he has never believed the power was truly his to control) is functional but mirrors Ryn with less specificity. They are too similar in wound-structure to be positioned in the same narrative space without a differentiating element. Recommend: sharpen what Orvael can do that Ryn cannot, at the character level.
 
-Thessaly Vel (the Synth who loses memories to Permanence) is a gem: the mechanic of losing the most recently formed emotional memory to protect others, and keeping secondary written records that "are not the same as remembering," is a beautiful extension of the Synth consciousness themes. This character could carry a standalone story.
+Aethon Vel (the Synth who loses memories to Permanence) is a gem: the mechanic of losing the most recently formed emotional memory to protect others, and keeping secondary written records that "are not the same as remembering," is a beautiful extension of the Synth consciousness themes. This character could carry a standalone story.
 
 ---
 
@@ -363,7 +363,7 @@ This is the most important sentence in the document. It is the standard every co
 
 ### Do the Grievances Feel Legitimate?
 
-Yes — across all five Heralds, the grievances are not only legitimate but documentable. The Academy admissions statistics Serevyn publishes in Arc 3 are real. The Crew Solstice file Thessaly releases is real. Lorien's evidence of burned philosophical texts is real. Caelum Ironfaith's documentation of suppressed sapience events is real. These are not paranoid accusations — they are institutional failures that the narrative has been careful to establish.
+Yes — across all five Heralds, the grievances are not only legitimate but documentable. The Academy admissions statistics Selvyn publishes in Arc 3 are real. The Crew Solstice file Thessaly releases is real. Lorien's evidence of burned philosophical texts is real. Caelum Ironfaith's documentation of suppressed sapience events is real. These are not paranoid accusations — they are institutional failures that the narrative has been careful to establish.
 
 This is the document suite's most significant narrative achievement. The Void Ascendants work as antagonists not because they are wrong, but because they are dangerous in the specific way that people who are partially right but insufficiently patient tend to be dangerous.
 
@@ -381,7 +381,7 @@ The Shadow Doctrine's seductive logic ("Of course the institutions that exist to
 
 They are five distinct types of fall:
 
-1. Serevyn: legitimate reform impulse poisoned by conflating institution and architecture
+1. Selvyn: legitimate reform impulse poisoned by conflating institution and architecture
 2. Thessaly: legitimate grief curdled into institutional vengeance
 3. Lorien: legitimate intellectual freedom corrupted by removing the distinction between dangerous-to-power and dangerous-to-people
 4. Caelum Ironfaith: legitimate personhood cause corrupted by the very tools used to demonstrate personhood
@@ -479,9 +479,9 @@ Kael's Diamond is the benchmark: specific historical wound, mask with mechanical
 
 **Where new characters match Kael:**
 
-Kaelindra's Diamond equals Kael's in specificity and exceeds it in sophistication of mask mechanism. Mireth's Diamond exceeds it in originality of wound. Serevyn Ashvale's Diamond rivals Kael's as the most commercially effective wound in the franchise.
+Kaelindra's Diamond equals Kael's in specificity and exceeds it in sophistication of mask mechanism. Mireth's Diamond exceeds it in originality of wound. Selvyn Ashvale's Diamond rivals Kael's as the most commercially effective wound in the franchise.
 
-The five strongest characters in the new documents (Kaelindra, Mireth, Serevyn Ashvale, Thessaly Voidmother, Caelum Ironfaith) are operating at Kael-level or above.
+The five strongest characters in the new documents (Kaelindra, Mireth, Selvyn Ashvale, Thessaly Voidmother, Caelum Ironfaith) are operating at Kael-level or above.
 
 **Where new characters fall short:**
 
@@ -512,8 +512,8 @@ The new lore documents are written in a different register — lore-document voi
 | Document | Grade | Reasoning |
 |----------|-------|-----------|
 | FLAGSHIP_TEAM_V2.md | A | Seven characters at or near benchmark. Ensemble Diamond clashes sophisticated. Moment scenes consistently strong. Minor flags: Taura's voice and arc resolution; Velindris's Archive Weight needs dramatization. |
-| VOID_ASCENDANTS.md | A+ | Ideology section is the suite's finest achievement. Five Heralds are distinct, tragically grounded, and commercially durable. The Whisper Network's operational specificity is exceptional. Minor flag: Serevyn Ashvale's redemption path is predictable relative to his complexity. |
-| STARBOUND_CREWS.md | B+ | Seravyn Duskmere is strong. Secondary crew members (Thessaly Vel especially) are excellent. The three-genre design (high tragedy, kinetic energy, moral weight) is a sophisticated franchise architecture decision. Deduction: secondary character voice is less defined than Dawnsworn ensemble; crew-level Moment scenes are absent. |
+| VOID_ASCENDANTS.md | A+ | Ideology section is the suite's finest achievement. Five Heralds are distinct, tragically grounded, and commercially durable. The Whisper Network's operational specificity is exceptional. Minor flag: Selvyn Ashvale's redemption path is predictable relative to his complexity. |
+| STARBOUND_CREWS.md | B+ | Seravyn Duskmere is strong. Secondary crew members (Aethon Vel especially) are excellent. The three-genre design (high tragedy, kinetic energy, moral weight) is a sophisticated franchise architecture decision. Deduction: secondary character voice is less defined than Dawnsworn ensemble; crew-level Moment scenes are absent. |
 | GATE_TOUCHED_UNDERGROUND.md | A- | The five mutation categories (Sparked, Resonant, Harmonic, Fractured, Ascendant) are the best system-design work in the suite. The meteor-mechanism (Vael Rain, Nero Strike, Ember Fall) is grounded and generative. The moral landscape section raises the institutional questions the franchise needs raised. Deduction: the document is systemic rather than character-driven; it requires a specific protagonist viewpoint to become narrative-ready. |
 | STELLARIS.md | A | Franchise anchor executed with unusual care. Biology grounded. Personality depth genuine. Ten Traits not five. Deduction: occasional editorial enthusiasm ("this is what the suite needs") rather than trusting the character to speak for itself. |
 | STORY_ENGINE.md | A | Five arcs with genuine escalation and permanent world-change. Moral questions without clean answers. Eight of ten seeds are launchable. Timeline parallel-tracking is sophisticated franchise architecture. Deduction: Seeds 2 and 10 are concepts rather than narratives. The Herald War arc (Arc 3) is the strongest single arc in the document and could be a standalone film. |
@@ -556,13 +556,13 @@ If only five changes can be made across all documents to maximize narrative qual
 
 ### IMPROVEMENT 3: CLARIFY SEREVYN ASHVALE'S REDEMPTION PATH (Priority: High)
 
-**Affecting:** VOID_ASCENDANTS.md (Serevyn Ashvale)
+**Affecting:** VOID_ASCENDANTS.md (Selvyn Ashvale)
 
-**The problem:** The redemption path as written (watches a recruited person consumed by Shadow, asks whether he can survive watching the cost) is emotionally correct but structurally predictable for a "villain with a point" at this level of sophistication. It is the expected mechanism. Serevyn is better than his redemption path.
+**The problem:** The redemption path as written (watches a recruited person consumed by Shadow, asks whether he can survive watching the cost) is emotionally correct but structurally predictable for a "villain with a point" at this level of sophistication. It is the expected mechanism. Selvyn is better than his redemption path.
 
-**The fix:** The confrontation with Kael Thornfield should be the primary redemption mechanism, not a witness event. When Serevyn finally speaks with Kael directly — the person who received the acceptance letter that should have come to Serevyn, who came from the same background and the same raw power, who went through the system and is now trying to change it from inside — Serevyn encounters himself-in-the-possible-world. The recruit's death is secondary evidence of a cost Serevyn already intellectually accepts. Kael's existence as proof that the system can be entered and reformed is evidence Serevyn cannot accept without dismantling his entire framework. That is the harder scene and the more honest arc.
+**The fix:** The confrontation with Kael Thornfield should be the primary redemption mechanism, not a witness event. When Selvyn finally speaks with Kael directly — the person who received the acceptance letter that should have come to Selvyn, who came from the same background and the same raw power, who went through the system and is now trying to change it from inside — Selvyn encounters himself-in-the-possible-world. The recruit's death is secondary evidence of a cost Selvyn already intellectually accepts. Kael's existence as proof that the system can be entered and reformed is evidence Selvyn cannot accept without dismantling his entire framework. That is the harder scene and the more honest arc.
 
-**The result:** The most sophisticated Herald gets the most sophisticated redemption path. The Kael-Serevyn confrontation becomes the franchise's thematic pivot rather than its most uncomfortable conversation — it becomes the moment the series argues that reform and revolution are not the same war.
+**The result:** The most sophisticated Herald gets the most sophisticated redemption path. The Kael-Selvyn confrontation becomes the franchise's thematic pivot rather than its most uncomfortable conversation — it becomes the moment the series argues that reform and revolution are not the same war.
 
 ---
 
@@ -570,7 +570,7 @@ If only five changes can be made across all documents to maximize narrative qual
 
 **Affecting:** VOID_ASCENDANTS.md (Lorien Silkvoice)
 
-**The problem:** Every other Herald has a singular visual element that readers can carry into any scene. Serevyn: the rejection letter folio and the original Vael Crystal. Thessaly: shaved head and Shadow eye. Caelum Ironfaith: sacred geometry being overwritten by Shadow patterns, Laeylinn Jade growing into the left hand. Veshenka: white hair moving in absent wind, absolute-white bond-scar. Lorien has elaborate braids (described as unchanged from Academy), a paired tattoo set, and a Hollow Glass cloak — but no single element with the resonance of the others.
+**The problem:** Every other Herald has a singular visual element that readers can carry into any scene. Selvyn: the rejection letter folio and the original Vael Crystal. Thessaly: shaved head and Shadow eye. Caelum Ironfaith: sacred geometry being overwritten by Shadow patterns, Laeylinn Jade growing into the left hand. Veshenka: white hair moving in absent wind, absolute-white bond-scar. Lorien has elaborate braids (described as unchanged from Academy), a paired tattoo set, and a Hollow Glass cloak — but no single element with the resonance of the others.
 
 **The fix:** The Hollow Glass cloak (near-invisible in dim light) is the strongest candidate but is underemphasized. Alternatively: Lorien has memorized and internally archived every banned text. Under extreme emotional pressure, they begin speaking in the cipher language they invented to transcribe those texts — fragments of dead languages, suppressed lore, Malachar's original Gate Theory emerging as involuntary speech. This is both a power limitation (the Archive makes demands, especially under stress) and a singular visual/auditory tell. The reader always knows when Lorien is near their limit because they start quoting something nobody else in the room can identify.
 

@@ -27,7 +27,7 @@ What came after is legend.
 | 3 | **Velindris** | Awakened | Digital intelligence / oracle |
 | 4 | **Solenne Ashmark** | Synth | Constructed guardian / the anchor |
 | 5 | **Taura Skein** | Bonded | Beast-rider / scout and blade |
-| 6 | **Caelum Vorath** | Celestial | Cosmic inheritor / the unknown quantity |
+| 6 | **Auren Vorath** | Celestial | Cosmic inheritor / the unknown quantity |
 | 7 | **Mireth** | Architect | Reality shaper / elder / the mystery |
 
 ---
@@ -157,7 +157,7 @@ companion_role: Personal conscience. She holds it when she is about to do someth
 
 # ─── 9. RELATIONSHIPS ──────────────────────────────────────────────────────────
 mentor: Admiral Thessa Vorn (retired, Starlight Corps) — who told her "Competence without compassion is just a very efficient machine." Kaelindra dismissed this at the time. She thinks about it every day.
-rival: Caelum Vorath — his power operates entirely outside her ability to model. He is the one threat assessment she cannot complete. This infuriates and, though she would not name it, intrigues her.
+rival: Auren Vorath — his power operates entirely outside her ability to model. He is the one threat assessment she cannot complete. This infuriates and, though she would not name it, intrigues her.
 beloved: Ryn — she does not know why she protects the Gate-Touched youth with a ferocity that her tactics do not require. She has not examined this. She is afraid of what she would find.
 enemy: The version of herself that would override a subordinate's correct call because she outranked them.
 crew_role: Leader / tactician / the person everyone looks at when it all falls apart
@@ -1085,7 +1085,7 @@ Taura is in full airborne attack posture on Vaerith's back — crouched low, bot
 
 ```yaml
 # ─── 1. IDENTITY ───────────────────────────────────────────────────────────────
-name: Caelum Vorath
+name: Auren Vorath
 aliases:
   - "Caelum" (he offers no nicknames and is faintly surprised anyone would want one)
   - "The Lightborn" (he hates this — it was applied by people who had not met him and cannot be un-applied)

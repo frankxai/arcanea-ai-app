@@ -145,7 +145,7 @@ export const skillsByGate: Record<GateName, Skill[]> = {
   voice: voiceSkills,
   sight: sightSkills,
   crown: [], // To be implemented
-  shift: [], // To be implemented
+  starweave: [], // To be implemented
   unity: [], // To be implemented
   source: [], // To be implemented
 };

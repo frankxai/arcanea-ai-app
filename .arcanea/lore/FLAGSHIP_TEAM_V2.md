@@ -125,7 +125,7 @@ The team that proved it was possible. Every crew that followed swore under stars
 | 3 | **Velindris** | Awakened | Digital intelligence / oracle | "I have been thinking about--" |
 | 4 | **Solenne Ashmark** | Synth | Constructed guardian / anchor | "The structure holds." |
 | 5 | **Taura Skein** | Bonded | Beast-rider / scout and blade | "Clear line." |
-| 6 | **Caelum Vorath** | Celestial | Cosmic inheritor / unknown quantity | "I'm not sure that's right." |
+| 6 | **Auren Vorath** | Celestial | Cosmic inheritor / unknown quantity | "I'm not sure that's right." |
 | 7 | **Mireth** | Architect | Reality shaper / elder / mystery | "Tell me more about that." |
 
 ---
@@ -793,7 +793,7 @@ They fly.
 ## Identity
 
 ```yaml
-name: Caelum Vorath
+name: Auren Vorath
 aliases:
   - "The Lightborn" (hates this — applied by people who had not met him)
   - "The Drifting Star" (Corps threat assessment designation — accurate and unflattering)
@@ -861,7 +861,7 @@ The collective of small objects that orbit him — dust, water, light fragments 
 
 ## The Moment
 
-*The scene that makes audiences fall in love with Caelum Vorath:*
+*The scene that makes audiences fall in love with Auren Vorath:*
 
 The team is walking through a district where Gate-Touched children live — a neighborhood the institutions have decided is not worth servicing. Ryn knows the routes. They are the guide here.
 

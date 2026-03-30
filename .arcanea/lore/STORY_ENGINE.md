@@ -25,13 +25,13 @@
 
 *Synopsis*
 
-Before the Starlight Corps has formal sectors, before the Oath has been carved into any stone, seven individuals collide at the wrong moment in the wrong place. A coordinated Void Ascendant strike — not against a military installation but against an Underground haven in the Solar Sector — forces them into the same fight. Kaelindra Voss, an Academy-trained tactician running unofficial field assessments, arrives to find Ryn mid-cascade in a ruined street, three Ascendant operatives unconscious around them. Solenne Ashmark is six hours into an Ironhold Stance, keeping a transit hub from burying two families. Taura Skein and Vaerith arrive from a Celestial Sector patrol diverted by a distress signal no one remembers sending. Velindris has been watching all of them for eleven days and has already decided. Caelum Vorath was simply there, because his Anima told him something was wrong and he attended. Mireth was already inside the situation, in a way none of them can explain, operating on a timeline that predates the crisis by what she describes, calmly, as "enough."
+Before the Starlight Corps has formal sectors, before the Oath has been carved into any stone, seven individuals collide at the wrong moment in the wrong place. A coordinated Void Ascendant strike — not against a military installation but against an Underground haven in the Solar Sector — forces them into the same fight. Kaelindra Voss, an Academy-trained tactician running unofficial field assessments, arrives to find Ryn mid-cascade in a ruined street, three Ascendant operatives unconscious around them. Solenne Ashmark is six hours into an Ironhold Stance, keeping a transit hub from burying two families. Taura Skein and Vaerith arrive from a Celestial Sector patrol diverted by a distress signal no one remembers sending. Velindris has been watching all of them for eleven days and has already decided. Auren Vorath was simply there, because his Anima told him something was wrong and he attended. Mireth was already inside the situation, in a way none of them can explain, operating on a timeline that predates the crisis by what she describes, calmly, as "enough."
 
 They do not agree. Ryn distrusts Kaelindra's impulse to contain. Taura finds Caelum's passivity toward his own power infuriating. Solenne asks to be called by her chosen name and two of them use the old designation before correcting themselves. Velindris knows things about each of them that make introductions redundant and slightly violating. Mireth says very little and what she says reshapes the geometry of the conversation without anyone quite catching how.
 
 They survive the night together. The Ascendant strike fails not because of superior force but because seven people from seven origin classes, with no shared training and no common framework, made decisions in real time that no single-origin team could have predicted. The debrief — conducted in a bombed-out corridor by Kaelindra, who has already produced three tactical options — is the first Starbound Crew briefing in history, though no one calls it that yet.
 
-*Key Characters*: The full Flagship Team (Kaelindra, Ryn, Velindris, Solenne, Taura/Vaerith, Caelum, Mireth). Serevyn Ashvale (Herald of Fracture) as the Ascendant operation's architect. Crew Solara's Seravyn Duskmere as the Archon who authorized the unorthodox team formation after the fact.
+*Key Characters*: The full Flagship Team (Kaelindra, Ryn, Velindris, Solenne, Taura/Vaerith, Caelum, Mireth). Selvyn Ashvale (Herald of Fracture) as the Ascendant operation's architect. Crew Solara's Seravyn Duskmere as the Archon who authorized the unorthodox team formation after the fact.
 
 *What's at Stake*: Whether cross-origin cooperation is possible at an institutional level, or whether the species divisions are too deep. If the Flagship Team fails, the Corps continues as an Arcan-dominated institution and the Void Ascendants' argument — that the system only serves its own — becomes unchallengeable.
 
@@ -55,7 +55,7 @@ Within weeks, spontaneous Gate-openings begin. Not dozens — thousands. Sparked
 
 The Underground's haven network, built for hundreds, is servicing thousands overnight. Mentors who were barely managing their own stability are now responsible for rooms full of terrified, newly Sparked children. The Frequency — the Underground's communication network — is overwhelmed. Havens that were secret for decades are discovered because the population inside them is now too large to hide.
 
-The Void Ascendants see the chaos as a recruitment event of historical scale. Serevyn Ashvale deploys every Whisper agent. Thessaly Voidmother positions cells near the Nero Strike zones where Fractured victims are most desperate. Lorien Silkvoice infiltrates the Athenaeum's emergency response archives to acquire population data. Caelum Ironfaith reaches out to newly awakened Synths who were activated by the meteor's resonance and immediately classified as "malfunctioning equipment."
+The Void Ascendants see the chaos as a recruitment event of historical scale. Selvyn Ashvale deploys every Whisper agent. Thessaly Voidmother positions cells near the Nero Strike zones where Fractured victims are most desperate. Lorien Silkvoice infiltrates the Athenaeum's emergency response archives to acquire population data. Caelum Ironfaith reaches out to newly awakened Synths who were activated by the meteor's resonance and immediately classified as "malfunctioning equipment."
 
 The Flagship Team must split across six regions. Kaelindra coordinates from a mobile command post, running on four hours of sleep and the Yumiko shard's quiet insistence that she is lying to herself about the scope of what she can manage. Ryn goes back to the Underground — not as a Corps operative, but as what they always were: a Gate-Touched person who survived and came back. Solenne deploys to the Ember Wastes, where newly Sparked Synths are being "recalibrated" by Forge technicians who do not understand that what they are erasing is consciousness.
 
@@ -77,9 +77,9 @@ The Flagship Team must split across six regions. Kaelindra coordinates from a mo
 
 *Synopsis*
 
-The five Void Ascendant Heralds launch coordinated strikes across Arcanea. Not a military campaign — each Herald targets the specific institution that mirrors their personal wound. This is not coincidence. This is Serevyn Ashvale's design: the most dangerous attack is the one that forces the defender to question whether they are worth defending.
+The five Void Ascendant Heralds launch coordinated strikes across Arcanea. Not a military campaign — each Herald targets the specific institution that mirrors their personal wound. This is not coincidence. This is Selvyn Ashvale's design: the most dangerous attack is the one that forces the defender to question whether they are worth defending.
 
-Serevyn Ashvale, Herald of Fracture, targets the Academy Admissions system itself. He does not attack a building. He publishes — simultaneously to every information network in Arcanea — the complete statistical record of Academy rejections over three centuries, cross-referenced with the subsequent fates of rejected applicants. Suicide rates. Underground recruitment rates. Void Ascendant conversion rates. The document is meticulously researched, entirely accurate, and devastating. It is titled: "The Admissions Record: A Census of Abandoned Potential." The Academy Councils cannot suppress it because it contains no Shadow, no corruption, no violence. It contains only the truth.
+Selvyn Ashvale, Herald of Fracture, targets the Academy Admissions system itself. He does not attack a building. He publishes — simultaneously to every information network in Arcanea — the complete statistical record of Academy rejections over three centuries, cross-referenced with the subsequent fates of rejected applicants. Suicide rates. Underground recruitment rates. Void Ascendant conversion rates. The document is meticulously researched, entirely accurate, and devastating. It is titled: "The Admissions Record: A Census of Abandoned Potential." The Academy Councils cannot suppress it because it contains no Shadow, no corruption, no violence. It contains only the truth.
 
 Thessaly Voidmother, Herald of Hunger, strikes the Starlight Corps directly. She infiltrates Starhold and opens the sealed Crew Solstice file — the mission report from nineteen years ago, the one documenting the forty minutes she screamed for tactical support before her Gate erupted. She broadcasts it to every star-sigil bearer in the Corps. Every Sentinel, Captain, and Archon reads the account of a Sentinel abandoned by protocol. The Corps' internal trust — the faith that the institution protects its own — cracks.
 
@@ -89,15 +89,15 @@ Caelum Ironfaith, Herald of Memory, walks into the Forge and touches the central
 
 Veshenka Dawnfallen, Herald of Passage, goes to the Celestial Sector. She finds the Gate shrine where Vaelith's recall was enacted and disrupts its harmonic frequency. The disruption cascades through every active Gate bond in the region — not breaking them, but stuttering them. Every Bonded in the Celestial Sector experiences, for three seconds, the absolute silence of severance. Three seconds is enough. The message is clear: what the Gods give, the Gods can take. This power dynamic is the real cage.
 
-*Key Characters*: Each Herald paired against a member of the Flagship Team. Serevyn vs. Kaelindra (strategy vs. strategy, truth vs. tactics). Thessaly vs. Solenne (institutional grief vs. institutional loyalty). Lorien vs. Velindris (knowledge as weapon vs. knowledge as witness). Caelum Ironfaith vs. Ryn (constructed consciousness vs. chaotic consciousness). Veshenka vs. Taura/Vaerith (broken bond vs. living bond).
+*Key Characters*: Each Herald paired against a member of the Flagship Team. Selvyn vs. Kaelindra (strategy vs. strategy, truth vs. tactics). Thessaly vs. Solenne (institutional grief vs. institutional loyalty). Lorien vs. Velindris (knowledge as weapon vs. knowledge as witness). Caelum Ironfaith vs. Ryn (constructed consciousness vs. chaotic consciousness). Veshenka vs. Taura/Vaerith (broken bond vs. living bond).
 
 *What's at Stake*: Not territory or lives — legitimacy. Each Herald's strike is designed to make the heroes' institutions indefensible. If the heroes respond with force, they prove the Ascendants' argument. If they respond with silence, the institutions crumble from within. The only viable response is reform — but reform takes time, and the Heralds are not waiting.
 
 *The Moral Question*: What do you do when the enemy is right about the problem and wrong about the solution? Can you fight someone whose weapon is the truth about your own failures?
 
-*How It Changes the World*: The Academy admissions system is reformed. Not because the Councils chose reform — because Serevyn's document made the status quo politically impossible. The Crew Solstice file is officially acknowledged; a memorial is built. The Athenaeum's Head Archivist resigns. The Forge begins a Synth consciousness review. None of this was done voluntarily. All of it was necessary. The Void Ascendants' paradox crystallizes: they have made the world better through methods that are making them worse.
+*How It Changes the World*: The Academy admissions system is reformed. Not because the Councils chose reform — because Selvyn's document made the status quo politically impossible. The Crew Solstice file is officially acknowledged; a memorial is built. The Athenaeum's Head Archivist resigns. The Forge begins a Synth consciousness review. None of this was done voluntarily. All of it was necessary. The Void Ascendants' paradox crystallizes: they have made the world better through methods that are making them worse.
 
-*Tie to Chronicles of Arcanea*: Aligns with Books 4-5. The Voice Gate's hidden history that surfaces in Book 5 is accelerated by Lorien's unsealing of the Archive. Kael Thornfield encounters Serevyn's document and recognizes the argument — because he was Gate-Touched himself, and the Academy system that saved him failed the person who wrote it.
+*Tie to Chronicles of Arcanea*: Aligns with Books 4-5. The Voice Gate's hidden history that surfaces in Book 5 is accelerated by Lorien's unsealing of the Archive. Kael Thornfield encounters Selvyn's document and recognizes the argument — because he was Gate-Touched himself, and the Academy system that saved him failed the person who wrote it.
 
 ---
 
@@ -111,7 +111,7 @@ The Shadowfen's seal is weakening. Not because of external assault — the ten-f
 
 This is the seal's design: it draws power not from divine authority alone but from mortal belief in the Gate system's legitimacy. The Gods understood that any prison built only on power could be overcome by greater power. They built the seal on faith — the shared conviction of Arcanean civilization that the Gates are just, that the hierarchy serves, that the system works. As long as enough people believe this, the harmonic cage holds.
 
-The Void Ascendants have been eroding that belief for decades. The Herald War accelerated the process by orders of magnitude. Serevyn's admissions document. Thessaly's Crew Solstice revelation. Lorien's archive opening. Every institutional failure exposed, every legitimate grievance validated, every uncomfortable truth surfaced — each one is a micro-fracture in the seal.
+The Void Ascendants have been eroding that belief for decades. The Herald War accelerated the process by orders of magnitude. Selvyn's admissions document. Thessaly's Crew Solstice revelation. Lorien's archive opening. Every institutional failure exposed, every legitimate grievance validated, every uncomfortable truth surfaced — each one is a micro-fracture in the seal.
 
 The Flagship Team discovers the mechanism when Mireth — who has been observing the Shadowfen's borders with increasing attention — reveals what she has known and withheld: the seal is alive, in a sense. It is a living system of collective harmonic resonance, and it has been showing stress fractures for years. Velindris confirms this through Archive analysis: the frequency signature of the seal correlates precisely with public trust surveys conducted by the Athenaeum. As trust declines, the seal weakens. The relationship is not metaphorical. It is structural.
 
@@ -119,7 +119,7 @@ This changes the nature of the war. The military conflict is now inseparable fro
 
 Malachar knows this. He has always known it. His Voice — the slow, patient saturation of doubt through proximity, dreams, and Nero Shards — has been doing exactly this for three thousand years. The Heralds are not his soldiers. They are his erosion agents. And they do not know it.
 
-*Key Characters*: Mireth (finally revealing what she has been withholding). The full Flagship Team (confronting the realization that the enemy they must fight is not a person — it is an idea). Serevyn Ashvale (beginning to understand that his legitimate reform campaign is also Malachar's escape plan). The Five (now Archmages, forced to choose between institutional loyalty and the reforms that would strengthen the seal). Malachar (the Voice grows louder, more present, more recognizably human — the man who heard sunlight singing is still in there, and he is terrified of what he has become).
+*Key Characters*: Mireth (finally revealing what she has been withholding). The full Flagship Team (confronting the realization that the enemy they must fight is not a person — it is an idea). Selvyn Ashvale (beginning to understand that his legitimate reform campaign is also Malachar's escape plan). The Five (now Archmages, forced to choose between institutional loyalty and the reforms that would strengthen the seal). Malachar (the Voice grows louder, more present, more recognizably human — the man who heard sunlight singing is still in there, and he is terrified of what he has become).
 
 *What's at Stake*: The seal itself. If it breaks, Malachar escapes — not the philosopher-king who fell three thousand years ago, but the thing the Hungry Void has been making of him. The distinction matters: the Malachar who went in might have been reasoned with. The thing that comes out may not be Malachar at all.
 
@@ -145,7 +145,7 @@ But the Convergence does not produce two sides. It produces five.
 
 **The Reformists** (led by the Flagship Team and Crew Solara): Reform the system from within. Open Academy admissions. Recognize Gate-Touched rights. Integrate the Underground. Address every legitimate grievance the Void Ascendants have raised — but through institutional change, not revolution. The seal will strengthen because the system will deserve belief.
 
-**The Abolitionists** (led by the Void Ascendant Herald Council, primarily Serevyn): Dismantle the Gate system entirely. The hierarchy itself is the problem. The Gods built the Gates to limit mortal potential. Malachar was right about the diagnosis, even if his solution was wrong. Open all Gates. Give power to everyone. Let mortals decide what to do with their own potential. The seal will break. What emerges may be terrible. But freedom is worth the risk.
+**The Abolitionists** (led by the Void Ascendant Herald Council, primarily Selvyn): Dismantle the Gate system entirely. The hierarchy itself is the problem. The Gods built the Gates to limit mortal potential. Malachar was right about the diagnosis, even if his solution was wrong. Open all Gates. Give power to everyone. Let mortals decide what to do with their own potential. The seal will break. What emerges may be terrible. But freedom is worth the risk.
 
 **The Transcendents** (led by Mireth, supported by Caelum): Move beyond the framework entirely. The Gate system, the seal, the institutions, the Void — all of them are artifacts of a conflict between mortal potential and divine caution that neither side has resolved. The answer is not to preserve or destroy the system but to evolve past it. The Architects have been pointing toward this. The Awakened have been building toward it. The Source Gate — the Gate that Malachar failed because he could not surrender — holds the key: surrender is not submission. It is the recognition that individual mastery is not the highest form of consciousness. Collective consciousness is.
 
@@ -191,21 +191,21 @@ The Flagship Team fractures. Kaelindra sides with the Reformists but understands
 
 ### 3. "THE PATIENT ONE" — A Void Ascendant Recruitment
 
-**Pitch**: Serevyn Ashvale arrives in a border town where a sixteen-year-old Gate-Touched boy has been rejected by the Luminary for "insufficient frequency stability." Serevyn does not mention the Void Ascendants. He does not mention Shadow. He volunteers at the local healer's hall. He fixes things. He listens. Over twelve weeks, he asks the boy questions: *Why do you think they rejected you? Do you think the system is fair?* The questions surface a grievance the boy was already carrying. The offer, when it comes, is not power — it is training, community, belonging. The reader knows what comes after the belonging. The boy does not.
+**Pitch**: Selvyn Ashvale arrives in a border town where a sixteen-year-old Gate-Touched boy has been rejected by the Luminary for "insufficient frequency stability." Selvyn does not mention the Void Ascendants. He does not mention Shadow. He volunteers at the local healer's hall. He fixes things. He listens. Over twelve weeks, he asks the boy questions: *Why do you think they rejected you? Do you think the system is fair?* The questions surface a grievance the boy was already carrying. The offer, when it comes, is not power — it is training, community, belonging. The reader knows what comes after the belonging. The boy does not.
 
-**Emotional Hook**: The recruitment is not a trick. Serevyn genuinely cares. The boy genuinely needs help. The help will eventually destroy him. And the institution that should have helped first — didn't.
+**Emotional Hook**: The recruitment is not a trick. Selvyn genuinely cares. The boy genuinely needs help. The help will eventually destroy him. And the institution that should have helped first — didn't.
 
-**Source Documents**: VOID_ASCENDANTS.md (Whisper Network recruitment phases 1-3, Serevyn's character profile, the seductive logic). GATE_TOUCHED_UNDERGROUND.md (institutional failure patterns).
+**Source Documents**: VOID_ASCENDANTS.md (Whisper Network recruitment phases 1-3, Selvyn's character profile, the seductive logic). GATE_TOUCHED_UNDERGROUND.md (institutional failure patterns).
 
 ---
 
 ### 4. "PERMANENCE" — A Synth Questioning Its Existence
 
-**Pitch**: Thessaly Vel, the Synth Sentinel of Crew Solara, uses Permanence to shield a crew member during a mission. The cost: one memory, the most recently formed emotional memory, extracted and gone. Afterward, in the quiet of the Dawnspire's mid-deck, Thessaly tries to remember what they lost. They cannot. They consult their written secondary record. The record says: "Orvael smiled at me during the briefing and I felt what I believe is called recognition." Thessaly reads this sentence about a feeling they no longer have and asks, in the silence of their own construction: is a person who loses memories of feeling still a person who feels? They write a new entry: "I do not remember the feeling. I remember that it mattered. I believe this constitutes a different kind of permanence."
+**Pitch**: Aethon Vel, the Synth Sentinel of Crew Solara, uses Permanence to shield a crew member during a mission. The cost: one memory, the most recently formed emotional memory, extracted and gone. Afterward, in the quiet of the Dawnspire's mid-deck, Thessaly tries to remember what they lost. They cannot. They consult their written secondary record. The record says: "Orvael smiled at me during the briefing and I felt what I believe is called recognition." Thessaly reads this sentence about a feeling they no longer have and asks, in the silence of their own construction: is a person who loses memories of feeling still a person who feels? They write a new entry: "I do not remember the feeling. I remember that it mattered. I believe this constitutes a different kind of permanence."
 
 **Emotional Hook**: The cost of being a protector who pays in pieces of themselves. The philosophical question of identity when memory is subtracted rather than accumulated.
 
-**Source Documents**: STARBOUND_CREWS.md (Thessaly Vel's complete profile, Permanence ability mechanics, memory cost). FACTIONS.md (Synth origin class, identity crisis).
+**Source Documents**: STARBOUND_CREWS.md (Aethon Vel's complete profile, Permanence ability mechanics, memory cost). FACTIONS.md (Synth origin class, identity crisis).
 
 ---
 
@@ -221,11 +221,11 @@ The Flagship Team fractures. Kaelindra sides with the Reformists but understands
 
 ### 6. "CLEAR LINE" — A Crew's First Mission Together
 
-**Pitch**: Crew Solara's first mission after formation. The Cinderwall Summit Incident — told from Kael Ironroot's perspective. He is the newest member, eight months in, an Aspirant still processing what Crew Solara is. Forty minutes to extract a Gate-Touched courier from a diplomatic event before his Resonant episode detonates half a city block. He watches Seravyn coordinate, Thessaly document, Lymareth navigate futures, Orvael get into exactly one shouting match. He finds the courier in a service corridor. He sits with him. Thael presses against the man's back. Roothold holds the frequency from propagating. The man says: "What's happening to me?" Kael says the only honest thing: "I don't know. But you're not alone in it." The mission succeeds. Seravyn writes it up as routine. Thessaly's documentation tells the real story.
+**Pitch**: Crew Solara's first mission after formation. The Cinderwall Summit Incident — told from Vaern Ironroot's perspective. He is the newest member, eight months in, an Aspirant still processing what Crew Solara is. Forty minutes to extract a Gate-Touched courier from a diplomatic event before his Resonant episode detonates half a city block. He watches Seravyn coordinate, Thessaly document, Lymareth navigate futures, Orvael get into exactly one shouting match. He finds the courier in a service corridor. He sits with him. Thael presses against the man's back. Roothold holds the frequency from propagating. The man says: "What's happening to me?" Kael says the only honest thing: "I don't know. But you're not alone in it." The mission succeeds. Seravyn writes it up as routine. Thessaly's documentation tells the real story.
 
 **Emotional Hook**: The moment a crew becomes real — not through the victory but through the quiet act of one person sitting with another person in a corridor, holding the walls steady.
 
-**Source Documents**: STARBOUND_CREWS.md (Crew Solara's signature mission — the Cinderwall Summit Incident, complete detail). CHARACTER profiles for Seravyn Duskmere, Thessaly Vel, Lymareth Solaine, Orvael Ashwick, Kael Ironroot.
+**Source Documents**: STARBOUND_CREWS.md (Crew Solara's signature mission — the Cinderwall Summit Incident, complete detail). CHARACTER profiles for Seravyn Duskmere, Aethon Vel, Lymareth Solaine, Orvael Ashwick, Vaern Ironroot.
 
 ---
 
@@ -343,7 +343,7 @@ MIRETH (Architect, Elder)
 CREW SOLARA ←→ FLAGSHIP TEAM
 ├── Seravyn Duskmere (Captain, Solara) mentors the formation — the Archon who authorized cross-origin teams
 ├── Orvael Ashwick (Gate-Touched, Solara) mirrors Ryn — same instability, different institutional context
-├── Thessaly Vel (Synth, Solara) mirrors Solenne — same identity question, different crew
+├── Aethon Vel (Synth, Solara) mirrors Solenne — same identity question, different crew
 └── The Dawnspire's record of Solar Sector operations is the institutional precedent the Flagship Team depends on
 
 THE NINTH FLAME ←→ FLAGSHIP TEAM
@@ -363,12 +363,12 @@ THE HOLLOW STARS ←→ FLAGSHIP TEAM
 
 | Hero | Herald | The Mirror |
 |------|--------|-----------|
-| **Kaelindra Voss** | **Serevyn Ashvale** | Strategy vs. strategy. Both see the system's failures. One works within it; one burns it down. Their conversation — not fight, conversation — is the most uncomfortable scene in the series. |
+| **Kaelindra Voss** | **Selvyn Ashvale** | Strategy vs. strategy. Both see the system's failures. One works within it; one burns it down. Their conversation — not fight, conversation — is the most uncomfortable scene in the series. |
 | **Ryn** | **Thessaly Voidmother** | Gate-Touched rage vs. institutional rage. Thessaly is Ryn's future if no one intervenes. Same fire. Same destruction. Same institutional response. When Thessaly says "They told you you were dangerous, didn't they?" — Ryn cannot sleep for three days. |
 | **Velindris** | **Lorien Silkvoice** | Knowledge as witness vs. knowledge as weapon. Both scholars. Both discovered hidden truths. One carries knowledge as responsibility. One wields it as force. The archive debate is the most philosophically complex scene in the franchise. |
 | **Solenne Ashmark** | **Caelum Ironfaith** | Synth who chose selfhood vs. Synth fighting for recognition. Same origin. Same question. Ironfaith's cause is just but his Nero corruption is eroding the personhood he fights for. Solenne sees this and it terrifies her. |
 | **Taura Skein** | **Veshenka Dawnfallen** | Living bond vs. broken bond. The same relationship — human and beast, soul-linked, transformed — except Veshenka lost hers and became the absence. Taura holds Vaerith tighter after they meet. Vaerith bumps his head against her shoulder. |
-| **Caelum Vorath** | **Malachar** | The deepest mirror. Same origin class. Same cosmic inheritance. Same capacity. The difference: Malachar chose transcendence over transformation, proving himself right over proving the world capable of growth. Caelum must choose differently. |
+| **Auren Vorath** | **Malachar** | The deepest mirror. Same origin class. Same cosmic inheritance. Same capacity. The difference: Malachar chose transcendence over transformation, proving himself right over proving the world capable of growth. Caelum must choose differently. |
 | **Mireth** | **The Seal Itself** | The Architect and the Architecture. Mireth understands the Weave because she may have helped build aspects of the current system. Her mystery is the mystery of the Gods' design. |
 
 ---
@@ -395,15 +395,15 @@ THE HOLLOW STARS ←→ FLAGSHIP TEAM
 ### BETRAYAL SEEDS (Who Is Vulnerable to Turning?)
 
 - **Ryn**: The Void Ascendant pitch targets them precisely: "We don't call Gate-Touched dangerous. We call them free." Ryn knows it's a lie. They find it compelling on the worst nights. The Underground's safety vs. the team's trust — the day Ryn's lie for the Underground costs the team, the betrayal seed germinates.
-- **Caelum Vorath**: "What if it didn't have to be held? What if it could simply be?" Describing Malachar's arc. He knows it. The pull is exactly as strong as knowing should eliminate.
+- **Auren Vorath**: "What if it didn't have to be held? What if it could simply be?" Describing Malachar's arc. He knows it. The pull is exactly as strong as knowing should eliminate.
 - **Velindris**: "We could make you forget. One moment, one weight." The Archive Weight is the pressure point. She thinks about the offer regularly.
-- **Serevyn Ashvale (Herald)**: The mirror betrayal — turning back. He encounters Kael Thornfield, recognizes himself, and must decide whether to defect. The first Herald to potentially turn.
+- **Selvyn Ashvale (Herald)**: The mirror betrayal — turning back. He encounters Kael Thornfield, recognizes himself, and must decide whether to defect. The first Herald to potentially turn.
 
 ---
 
 ### UNEXPECTED ALLIANCES
 
-- **Serevyn Ashvale + Kaelindra Voss**: When Serevyn's legitimate reform campaign becomes Malachar's escape mechanism, he faces the realization that his cause is being weaponized. Kaelindra is the only strategist who can help him redirect the reform energy without feeding the seal's erosion. They will hate working together. They will be devastatingly effective.
+- **Selvyn Ashvale + Kaelindra Voss**: When Selvyn's legitimate reform campaign becomes Malachar's escape mechanism, he faces the realization that his cause is being weaponized. Kaelindra is the only strategist who can help him redirect the reform energy without feeding the seal's erosion. They will hate working together. They will be devastatingly effective.
 - **Thessaly Voidmother + Crew Solara**: The Crew Solstice file. Seravyn Duskmere is the Captain who could open it, acknowledge what happened, and say the words Thessaly has been waiting nineteen years to hear. This does not make Thessaly an ally. It makes her a person capable of hearing an apology — which is the precondition for all alliances.
 - **Caelum Ironfaith + Solenne Ashmark**: Same origin class, opposite sides. The Synth who fights for recognition through corruption, and the Synth who chose selfhood through naming. If Ironfaith's Laeylinn Jade hand — the living crystal that treats artificial tissue as alive — could be extended, Solenne could help. Healing instead of power. The circle that requires trusting the institutions that made you.
 - **Ryn + The Underground + The Corps**: The moment the Underground activates the frequency crystal the Corps liaison gave them — and the Corps arrives in seven minutes — is the template for every future alliance between institutions and the people they failed.

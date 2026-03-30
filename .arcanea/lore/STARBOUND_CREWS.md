@@ -365,7 +365,7 @@ Broad-shouldered, forward-leaning, no armor plates at the forearms (destroyed to
 
 **IDENTITY:**
 ```yaml
-name: Thessaly Vel
+name: Aethon Vel
 age: 55 | apparent age: ageless (Synth — constructed 55 years ago)
 pronouns: they/them
 origin_class: Synth (The Forged)
@@ -483,7 +483,7 @@ Lean and precise, always positioned with a clear sightline to everything. Hair i
 
 **IDENTITY:**
 ```yaml
-name: Kael Ironroot
+name: Vaern Ironroot
 age: 26 | pronouns: he/him
 origin_class: Bonded (field-forged bond — not Godbeast-linked)
 ```

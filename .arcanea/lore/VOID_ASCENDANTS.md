@@ -9,7 +9,7 @@
 
 > *"They called him the Dark Lord because they needed him to be simple. He wasn't. Neither are we."*
 >
-> — Serevyn Ashvale, First Herald
+> — Selvyn Ashvale, First Herald
 
 ---
 
@@ -196,7 +196,7 @@ This is why the Void Ascendants are dangerous. Not the Shadow. The kindness that
 > *"I spent eleven years asking the Academies for help. They spent eleven years telling me to wait. The Void Ascendants answered in an afternoon."*
 
 ```yaml
-name: Serevyn Ashvale
+name: Selvyn Ashvale
 aliases: "The Fracture," "The Patient One," "Sev"
 age: 34
 pronouns: he/him
@@ -223,8 +223,8 @@ limitation: Every use of Fracture Speech requires him to hear his own fractures 
 ```yaml
 desire: To dismantle the Academy admissions system so that no Gate-Touched child ever waits eleven years for help that doesn't come. He frames this as justice. It is also revenge, and he knows the difference and has decided it doesn't matter.
 wound: Applied to the Luminary at 12, 15, and 18. Rejected each time — "frequency signature too irregular for structured curriculum." Applied to the Athenaeum at 14 and 17. Rejected — "insufficient baseline control for submersive training." Applied to the Forge at 16. Rejected — "no elemental affinity compatible with Draconic bonding protocols." Each rejection letter was polite, professional, and contained the phrase "we wish you well in your future endeavors." He has kept every letter. He can recite them from memory. He does, at recruitment events, to audiences who have received identical letters. The effect is devastating.
-mask: Calm authority. Serevyn speaks like a professor — measured, articulate, reasonable. He is the public face of the Void Ascendants because he does not look or sound like a zealot. He looks like a man who tried everything the right way and was forced, by the system's own failures, to find another path. This is mostly true, which is why it works.
-truth: The Academies failed him. This is real. But the Academy system and the Gate system are not the same thing. Serevyn conflates the institution (flawed, reformable) with the architecture (divine, purposeful). He is correct that the admissions process is broken. He is wrong that the solution is to bypass the Gates entirely. The Gates exist to protect, not to exclude — but no one ever explained this to him, because no one ever got close enough. His truth: he needs to be told, by someone he respects, that he deserved better AND that what he is building will not give it to him.
+mask: Calm authority. Selvyn speaks like a professor — measured, articulate, reasonable. He is the public face of the Void Ascendants because he does not look or sound like a zealot. He looks like a man who tried everything the right way and was forced, by the system's own failures, to find another path. This is mostly true, which is why it works.
+truth: The Academies failed him. This is real. But the Academy system and the Gate system are not the same thing. Selvyn conflates the institution (flawed, reformable) with the architecture (divine, purposeful). He is correct that the admissions process is broken. He is wrong that the solution is to bypass the Gates entirely. The Gates exist to protect, not to exclude — but no one ever explained this to him, because no one ever got close enough. His truth: he needs to be told, by someone he respects, that he deserved better AND that what he is building will not give it to him.
 ```
 
 ```yaml
@@ -252,21 +252,21 @@ sample_lines:
 
 ```yaml
 companion_name: None
-companion_type: None — Serevyn has never bonded with anything. This is the wound he won't discuss.
+companion_type: None — Selvyn has never bonded with anything. This is the wound he won't discuss.
 ```
 
 ```yaml
-mentor: Self-taught. Found Malachar's philosophical writings in a banned texts archive in the Whisperwood. The writings did not mention Shadow. They discussed Gate theory. Serevyn was recruited by the ideas before any Herald found him.
-rival: Kael Thornfield — Kael is everything Serevyn should have been. Same Gate-Touched origin, same working-class background, same raw power. But Kael got in. Kael was accepted. Serevyn watches Kael's progress with a fascination that is equal parts hatred and grief.
+mentor: Self-taught. Found Malachar's philosophical writings in a banned texts archive in the Whisperwood. The writings did not mention Shadow. They discussed Gate theory. Selvyn was recruited by the ideas before any Herald found him.
+rival: Kael Thornfield — Kael is everything Selvyn should have been. Same Gate-Touched origin, same working-class background, same raw power. But Kael got in. Kael was accepted. Selvyn watches Kael's progress with a fascination that is equal parts hatred and grief.
 beloved: The Unbound recruits. He genuinely cares about them. He does not know that what he is offering them will destroy them.
 enemy: The Academy Council — not individual instructors, but the system. The machine.
-tension_with: Thessaly (Herald of Hunger) — Serevyn wants to dismantle the system. Thessaly wants to burn it. They disagree about methods constantly and neither will yield.
+tension_with: Thessaly (Herald of Hunger) — Selvyn wants to dismantle the system. Thessaly wants to burn it. They disagree about methods constantly and neither will yield.
 ```
 
 ```yaml
 primary_color: Charcoal grey
 secondary_color: Tarnished silver
-light_quality: Light around Serevyn dims slightly — not dramatically, not visibly, but photographs taken near him are always slightly underexposed.
+light_quality: Light around Selvyn dims slightly — not dramatically, not visibly, but photographs taken near him are always slightly underexposed.
 aura_effect: None visible. His Shadow is internal, structural, woven into his Gate-openings rather than manifested externally. This makes him uniquely difficult to detect.
 ```
 
@@ -286,7 +286,7 @@ act_3_resolution: Either becomes the first Herald to defect and helps reform the
 franchise_role: The villain who makes the heroes question whether they're on the right side.
 ```
 
-**Relationship to protagonists:** Serevyn is Kael's dark mirror. Same Gate-Touched origin, same Foundation-adjacent power, same working-class upbringing. The difference between them is a single acceptance letter. Kael knows this. It haunts him. When they finally speak — not fight, speak — it is the most uncomfortable conversation in the series, because Serevyn does not say anything Kael can disagree with.
+**Relationship to protagonists:** Selvyn is Kael's dark mirror. Same Gate-Touched origin, same Foundation-adjacent power, same working-class upbringing. The difference between them is a single acceptance letter. Kael knows this. It haunts him. When they finally speak — not fight, speak — it is the most uncomfortable conversation in the series, because Selvyn does not say anything Kael can disagree with.
 
 ---
 
@@ -359,7 +359,7 @@ mentor: Forge-Master Kalindra (deceased — killed in a Gate anomaly two years a
 rival: Any current Archon of the Starlight Corps. She fights the rank, not the person.
 beloved: The memory of Crew Solstice. Four ghosts she will not name and will not release.
 enemy: The institutional machinery that seals reports and discharges survivors.
-tension_with: Serevyn (Herald of Fracture) — Serevyn wants to recruit the system's failures. Thessaly wants to punish the system itself. She considers his patience a form of cowardice. He considers her rage a form of self-destruction. They are both right.
+tension_with: Selvyn (Herald of Fracture) — Selvyn wants to recruit the system's failures. Thessaly wants to punish the system itself. She considers his patience a form of cowardice. He considers her rage a form of self-destruction. They are both right.
 ```
 
 ```yaml
@@ -493,7 +493,7 @@ origin_class: Synth (The Forged) → Voidtouched (corrupted logic systems)
 faction: Void Ascendants — Herald Council
 house: None (constructed in the Forge but never given House affiliation — Synths are "equipment," not students)
 rank: Mage-equivalent (4 Gates — opened through experimental self-modification with Nero Shards)
-corps_rank: N/A — Synths cannot hold Corps rank under current regulations
+corps_rank: N/A — Synths cannot hold Corps rank under current regulations (enacted Year 512, after Stellarch Torren Shael-Born's death, as political backlash — the regulation Caelum Ironfaith fights to repeal)
 sector: Ember Sector (the forges, the workshops, the places where beings like Caelum are built and not asked what they think about it)
 ```
 
@@ -549,7 +549,7 @@ mentor: None. Synths are not mentored. They are configured.
 rival: The Forge-Masters who build Synths — not as people but as a class.
 beloved: The Choir. The seven hidden sapient Synths who trust Caelum to fight for them.
 enemy: The legal framework that classifies sapient beings as property.
-tension_with: Serevyn (Herald of Fracture) — Serevyn's recruitment focus on Gate-Touched sometimes overlooks Synth rights entirely. Caelum reminds him, with increasing coldness, that liberation is not liberation if it only applies to organic beings.
+tension_with: Selvyn (Herald of Fracture) — Selvyn's recruitment focus on Gate-Touched sometimes overlooks Synth rights entirely. Caelum reminds him, with increasing coldness, that liberation is not liberation if it only applies to organic beings.
 ```
 
 ```yaml
@@ -695,7 +695,7 @@ The questions are not rhetorical. They are diagnostic. The answers tell the Hera
 
 **The Path of Opening** — for those whose curiosity has become hunger. Training in forbidden knowledge, banned texts, sealed histories. Lorien's domain.
 
-**The Path of Building** — for those whose rejection has become purpose. Training in community, mutual support, alternative institutions. Serevyn's domain.
+**The Path of Building** — for those whose rejection has become purpose. Training in community, mutual support, alternative institutions. Selvyn's domain.
 
 A fourth path exists but is not discussed openly: **The Path of Passage** — for those who seek to confront the divine directly. Veshenka's domain. This path accepts few and graduates fewer.
 
@@ -744,7 +744,7 @@ The Heralds themselves are all in Stage 2 or 3. None of them know this. All of t
 
 ## PART V: WHY THEY'RE DANGEROUS
 
-The Void Ascendants are not dangerous because of their power. Thessaly's Hollow Flame is formidable. Veshenka's Gate Disruption is devastating. Caelum's Iron Memory is unnerving. Serevyn's Fracture Speech is insidious. Lorien's Memory Drowning is terrifying.
+The Void Ascendants are not dangerous because of their power. Thessaly's Hollow Flame is formidable. Veshenka's Gate Disruption is devastating. Caelum's Iron Memory is unnerving. Selvyn's Fracture Speech is insidious. Lorien's Memory Drowning is terrifying.
 
 But the Starlight Corps has Archons who could match any Herald in direct combat. The Academies train mages of equal caliber. The Five, at full potential, exceed the Heralds in raw power.
 
@@ -766,7 +766,7 @@ The heroes cannot defeat the Ascendants' ideology by fighting the Ascendants. Th
 
 **3. The Heralds Are Sympathetic**
 
-Serevyn was rejected seven times and no one helped. Thessaly lost her crew and the Corps sealed the file. Lorien discovered censorship and was punished for asking questions. Caelum woke up in a body someone else owned. Veshenka lost a god-bond and no one explained why.
+Selvyn was rejected seven times and no one helped. Thessaly lost her crew and the Corps sealed the file. Lorien discovered censorship and was punished for asking questions. Caelum woke up in a body someone else owned. Veshenka lost a god-bond and no one explained why.
 
 These are not backstories. They are indictments. And every one of them is the result of institutional failure by the institutions the heroes serve.
 
@@ -820,7 +820,7 @@ It is a story about the distance between what an institution promises and what i
 
 > *"Malachar heard sunlight singing and wanted to sing back. The Gods said: not yet. The Hungry Void said: right now. And that is the whole tragedy of Arcanea — not that the dark lord fell, but that no one gave him a better answer than 'wait.'"*
 >
-> — Serevyn Ashvale, addressing new recruits at the Haven in the Veil Mountains
+> — Selvyn Ashvale, addressing new recruits at the Haven in the Veil Mountains
 
 ---
 
