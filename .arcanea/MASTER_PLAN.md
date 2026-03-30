@@ -1,9 +1,9 @@
 # Arcanea Master Plan — Central Orchestrator
 
-> **Last Updated**: 2026-03-30 (Session 2)
-> **Version**: 2.0.0
+> **Last Updated**: 2026-03-30 (Session 3 — Faction Architecture Sprint)
+> **Version**: 2.1.0
 > **Guardian**: Shinkami (Source Gate)
-> **Status**: Active — 7-Gap Execution Sprint
+> **Status**: Active — Faction Architecture Complete, Shipping Sprint Next
 
 This is the **single source of truth** for the entire Arcanea platform. Every agent, skill, command, and session MUST consult this document before making architectural decisions. It aggregates state from `.arcanea/projects/`, `task_plan.md`, `progress.md`, and live deployment data.
 
@@ -21,10 +21,85 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
 | Last Deploy | 2026-03-30 | Ops Center + Performance + Agent Certification + Creations Gallery |
 | Live URL | arcanea.ai | arcanea.ai |
 | 7-Gap Status | 5/7 closed, 2 blocked (npm publish needs creds, Supabase needs dashboard) | 7/7 |
-| Agent Framework | NEW: evaluation-framework.ts, agent-registry.ts (38 agents), reasoning-bank.ts | Learning loop |
+| Agent Framework | evaluation-framework.ts, agent-registry.ts (38 agents), reasoning-bank.ts | Learning loop |
 | Studio Decomposition | 1644L → 496L main + 6 components (all < 300L) | Under 500L |
-| Quality Gates | CI workflow + pre-commit hooks + quality-check script | Automated |
+| Quality Gates | CI workflow + canon-lint + pre-commit hooks | Automated |
 | Cross-Repo | repos.json registry (7 repos) + sync script + health check | Multi-repo ops |
+| **Faction Architecture** | **22 docs, 202K words, 80+ characters, 42/42 build** | **COMPLETE** |
+| **Naming Audit** | **4/4 critical collisions FIXED, pushed to main** | **CLEAN** |
+| **Council Grade** | **A- overall (A+ characters, A+ villains, C naming → FIXED)** | **Franchise-ready** |
+
+---
+
+## NEW: Faction Architecture Sprint Results (2026-03-30)
+
+### Lore Documents (`.arcanea/lore/`)
+| Document | Words | Grade | Status |
+|----------|-------|-------|--------|
+| FACTIONS.md | 4,500 | A | 8 origin classes, org hierarchy |
+| CHARACTER_TEMPLATE.md | 2,500 | A+ | Ready for LOCKED promotion |
+| VISUAL_DOCTRINE.md | 3,500 | A | Faction aesthetics, all houses |
+| FLAGSHIP_TEAM.md + V2 | 12,000 | A | THE DAWNSWORN — 7 heroes |
+| STARBOUND_CREWS.md | 8,000 | A- | 3 crews (Solara, Ninth Flame, Hollow Stars) |
+| VOID_ASCENDANTS.md | 7,000 | A+ | 5 Heralds, Shadow Doctrine |
+| GATE_TOUCHED_UNDERGROUND.md | 14,000 | A | 7 Havens, 15 mutant powers |
+| STARLIGHT_CORPS_CODEX.md | 10,000 | A | 800 years of history, 6 sectors |
+| STELLARIS.md | 7,000 | A+ | Franchise mascot, ready for LOCKED |
+| LEAGUES_AND_ORDERS.md | 10,000 | A | 7 Leagues, 7 Radiant Orders |
+| STORY_ENGINE.md | 8,000 | A | 5 arcs, 10 seeds, timeline |
+
+### Strategy Documents (`.arcanea/strategy/`)
+| Document | Grade | Status |
+|----------|-------|--------|
+| FRANCHISE_PRODUCTS.md | B+ | Product architecture, needs acquisition strategy |
+| ECOSYSTEM_MAP.md | B- | 90-day roadmap too ambitious |
+| OPS_ARCHITECTURE.md | A- | Immediately implementable |
+| ACADEMY_AND_COMMUNITY.md | B | Needs existing community first |
+| INTERCONNECTION_MAP.md | C+ | Reclassify as marketing/pitch material |
+
+### Infrastructure
+- `.github/workflows/ci.yml` — CI pipeline (lint, typecheck, build)
+- `.github/workflows/canon-lint.yml` — Lore validation, blocks merge on canon violations
+- 10 packages fixed: `@arcanea/core` dep `^0.1.0` → `workspace:*`
+- `claude-arcanea` skills: `shift` → `starweave` (GateName alignment)
+- Build: **42/42 packages PASS**
+
+---
+
+## WEEK SPRINT: March 31 — April 6
+
+### P0: SHIP (blocks everything)
+- [ ] **Supabase Dashboard config** — 15 min, Frank does manually
+  - Site URL → `https://arcanea.ai`
+  - Redirect URL → `https://arcanea.ai/auth/callback`
+  - Enable Google + GitHub OAuth
+- [ ] **E2E auth test** — verify full flow on production
+- [ ] **Sentry + PostHog** — set API keys on Vercel (code already installed)
+
+### P0: BUILD (highest leverage products)
+- [ ] **Origin Class Quiz** — `/quiz` page, 8 origin classes, viral mechanic
+  - Inputs: FACTIONS.md origin classes
+  - Output: shareable result card with faction assignment
+  - Conversion: quiz result → account creation
+- [ ] **Factions Codex page** — `/factions` or `/codex/factions`
+  - Display 8 origin classes with VISUAL_DOCTRINE aesthetics
+  - Link to CHARACTER_TEMPLATE for "create your character"
+
+### P1: CONTENT (faction launch sequence)
+- [ ] **Faction reveal social campaign** — 1 origin class per day for 8 days
+  - Sequence: Arcans → Gate-Touched → Bonded → Synths → Awakened → Celestials → Voidtouched → Architects
+  - Each: image + 3-line description + "Which one are you?"
+- [ ] **Stellaris reveal** — standalone visual + origin story excerpt
+- [ ] **Dawnsworn team reveal** — lineup poster concept
+
+### P1: OPS
+- [ ] **npm publish** — 13 packages (needs npm credentials)
+- [ ] **Promote to LOCKED** — CHARACTER_TEMPLATE.md, STELLARIS.md
+
+### P2: NEXT WAVE
+- [ ] Build Starbound Crews V2 (5 crews expanded — was blocked by usage limit)
+- [ ] Fix voice-under-pressure progressions (Narrative audit top recommendation)
+- [ ] Merge INTERCONNECTION_MAP into ECOSYSTEM_MAP (redundancy fix)
 
 ---
 
