@@ -11,6 +11,7 @@ import { ArcaneanMark } from "@/components/brand/arcanea-mark";
 
 const navLinks = [
   { href: "/chat", label: "Create", also: ["/imagine", "/studio"] },
+  { href: "/agents", label: "Agents", also: [] },
   { href: "/library", label: "Library", also: [] },
   { href: "/academy", label: "Academy", also: ["/academy/courses", "/academy/gates"] },
   { href: "/gallery", label: "Gallery", also: ["/discover", "/gallery/guardians", "/gallery/luminors"] },
