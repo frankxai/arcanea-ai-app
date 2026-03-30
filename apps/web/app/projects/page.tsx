@@ -1,20 +1,17 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { ArrowRight, ClockCounterClockwise, FolderOpen, Plus } from '@/lib/phosphor-icons';
+import { FolderOpen, Plus } from '@/lib/phosphor-icons';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { createClient } from '@/lib/supabase/server';
 import { listProjectsForCurrentUser } from '@/lib/projects/server';
+import { ProjectsIndexShell } from './projects-index-shell';
 
 export const metadata: Metadata = {
   title: 'Projects | Arcanea',
   description: 'Browse Arcanea workspaces that connect chats, creations, memories, and graph context.',
 };
-
-function formatTimestamp(value: string): string {
-  return new Date(value).toLocaleString();
-}
 
 export default async function ProjectsIndexPage() {
   const supabase = await createClient();
@@ -59,64 +56,7 @@ export default async function ProjectsIndexPage() {
           </div>
         </div>
 
-        {projects.length === 0 ? (
-          <Card variant="liquid-glass" className="mx-auto max-w-3xl">
-            <CardHeader>
-              <CardTitle>No projects yet</CardTitle>
-              <CardDescription>
-                Start in chat, move a session into a project, or save work from studio to begin
-                building a durable workspace graph.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="flex flex-wrap gap-3">
-              <Button asChild>
-                <Link href="/chat">Open chat</Link>
-              </Button>
-              <Button asChild variant="ghost">
-                <Link href="/studio">Open studio</Link>
-              </Button>
-            </CardContent>
-          </Card>
-        ) : (
-          <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {projects.map((project) => (
-              <Card key={project.id} variant="liquid-glass" className="flex h-full flex-col">
-                <CardHeader className="gap-3">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                      <CardTitle className="truncate text-white">{project.title}</CardTitle>
-                      <CardDescription className="mt-2 line-clamp-3 text-white/60">
-                        {project.description || project.goal || 'No description yet.'}
-                      </CardDescription>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent className="mt-auto space-y-4">
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
-                    <p className="text-[11px] uppercase tracking-[0.18em] text-white/35">Updated</p>
-                    <p className="mt-2 flex items-center gap-2 text-sm text-white/65">
-                      <ClockCounterClockwise size={14} />
-                      {formatTimestamp(project.updatedAt)}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center justify-between gap-3">
-                    <Button asChild variant="ghost">
-                      <Link href={`/projects/${project.id}`}>Open workspace</Link>
-                    </Button>
-                    <Link
-                      href={`/projects/${project.id}`}
-                      className="inline-flex items-center gap-2 text-sm font-medium text-atlantean-teal-aqua transition hover:text-atlantean-teal-aqua/80"
-                    >
-                      View graph
-                      <ArrowRight size={14} />
-                    </Link>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </section>
-        )}
+        <ProjectsIndexShell initialProjects={projects} />
       </div>
     </main>
   );
