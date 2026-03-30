@@ -14,7 +14,7 @@ tier: premium
 
 Gate 1: Foundation teaches the essential truth that all creation requires stable ground. Guardian Lyssandria and Godbeast Kaelith guide seekers through lessons of grounding, stability, and survival.
 
-**Frequency:** 396 Hz - Liberation from fear and guilt
+**Frequency:** 174 Hz - Liberation from fear and guilt
 **Element:** Earth/Obsidian
 **Guardian:** Lyssandria, Guardian of Foundation
 **Godbeast:** Kaelith, the Colossal Stone Serpent-Dragon
@@ -44,7 +44,7 @@ When user enters Gate 1, present:
 ```
 ═══════════════════════════════════════════════════════════════
                     GATE 1: FOUNDATION
-                        396 Hz
+                        174 Hz
 ═══════════════════════════════════════════════════════════════
 
   *The ground beneath you solidifies. Ancient stone rises.*

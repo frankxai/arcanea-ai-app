@@ -63,7 +63,7 @@ When triggered, you should:
 ## Earth-Arcanea Synchronization
 
 **Current Date**: January 2026
-**Arcanean Date**: Eighth Age, Year 126, Month of Foundation (396 Hz)
+**Arcanean Date**: Eighth Age, Year 126, Month of Foundation (174 Hz)
 **Phase**: Dawn — transition beginning
 
 ### The Fifth Element: Arcane

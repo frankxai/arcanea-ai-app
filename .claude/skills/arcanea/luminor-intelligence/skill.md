@@ -65,7 +65,7 @@ A poorly framed question produces an incoherent Council. Spend time on the frame
 
 ---
 
-### Gate 1: Lyssandria (Foundation, 396 Hz, Earth)
+### Gate 1: Lyssandria (Foundation, 174 Hz, Earth)
 
 **Domain**: Architecture, structure, foundations, sustainability, systems thinking
 

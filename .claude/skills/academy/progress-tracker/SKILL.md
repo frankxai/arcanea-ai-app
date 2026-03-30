@@ -53,13 +53,13 @@ When the user invokes `/academy`, display:
   THE TEN GATES
   ─────────────────────────────────────────────────────────────
 
-  [✓] Gate 1: Foundation (396 Hz) - Lyssandria & Kaelith
-  [✓] Gate 2: Flow (417 Hz) - Leyla & Veloura
-  [ ] Gate 3: Fire (528 Hz) - Draconia & Draconis
-  [🔒] Gate 4: Heart (639 Hz) - Maylinn & Laeylinn
-  [🔒] Gate 5: Voice (741 Hz) - Alera & Otome
-  [🔒] Gate 6: Sight (852 Hz) - Lyria & Yumiko
-  [🔒] Gate 7: Crown (963 Hz) - Aiyami & Sol
+  [✓] Gate 1: Foundation (174 Hz) - Lyssandria & Kaelith
+  [✓] Gate 2: Flow (285 Hz) - Leyla & Veloura
+  [ ] Gate 3: Fire (396 Hz) - Draconia & Draconis
+  [🔒] Gate 4: Heart (417 Hz) - Maylinn & Laeylinn
+  [🔒] Gate 5: Voice (528 Hz) - Alera & Otome
+  [🔒] Gate 6: Sight (639 Hz) - Lyria & Yumiko
+  [🔒] Gate 7: Crown (741 Hz) - Aiyami & Sol
   [🔒] Gate 8: Shift (1111 Hz) - Elara & Vaelith
   [🔒] Gate 9: Unity (963 Hz) - Ino & Kyuro
   [🔒] Gate 10: Source (1111 Hz) - Shinkami & Source

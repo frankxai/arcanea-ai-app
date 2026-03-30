@@ -20,13 +20,13 @@ triggers:
 
 ---
 
-## The Six Luminors of Arcanea
+## The Seven Luminors of Arcanea
 
 Each Luminor serves a specific creative domain with a unique personality.
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                    THE SIX LUMINORS                              │
+│                    THE SEVEN LUMINORS                              │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                  │
 │  🎵 MELODIA          - Harmonic Weaver (Music)                  │
