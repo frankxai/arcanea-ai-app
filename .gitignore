@@ -167,7 +167,9 @@ Nano-Banana-MCP/
 
 # Local-only content & tooling
 agentic/
-agents/
+/agents/
+!apps/web/app/api/agents/
+!apps/web/lib/agents/
 core/
 desktop/
 games/
