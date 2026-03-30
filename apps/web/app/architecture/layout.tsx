@@ -9,6 +9,7 @@ export const metadata: Metadata = {
     description:
       "Explore the Arcanea Intelligence OS — Guardian routing, memory systems, and multi-agent orchestration visualized as interactive graphs.",
   },
+  alternates: { canonical: "/architecture" },
 };
 
 const jsonLd = {

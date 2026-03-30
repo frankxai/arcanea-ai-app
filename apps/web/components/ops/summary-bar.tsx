@@ -72,7 +72,7 @@ export function SummaryBar({ summary, fetchedAt }: SummaryBarProps) {
       </div>
 
       {/* Fetch timestamp */}
-      <div className="mt-4 pt-3 border-t border-white/[0.04] flex items-center justify-between text-xs text-white/25">
+      <div className="mt-4 pt-3 border-t border-white/[0.04] flex items-center justify-between text-xs text-white/60">
         <span>
           Data fetched at {fetchTime} -- Cached for 5 minutes
         </span>
@@ -98,9 +98,9 @@ function SummaryStat({ value, label, color, suffix }: SummaryStatProps) {
     <div className="flex flex-col gap-1">
       <span className={cn("text-2xl font-bold font-mono tabular-nums", color)}>
         {value}
-        {suffix && <span className="text-sm text-white/30">{suffix}</span>}
+        {suffix && <span className="text-sm text-white/60">{suffix}</span>}
       </span>
-      <span className="text-xs text-white/40">{label}</span>
+      <span className="text-xs text-white/65">{label}</span>
     </div>
   );
 }

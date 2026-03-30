@@ -87,7 +87,7 @@ export default function CreationsPage() {
             <h1 className="text-2xl font-display font-bold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
               Your Creations
             </h1>
-            <p className="text-sm text-white/30 mt-1">
+            <p className="text-sm text-white/60 mt-1">
               {creations.length} creation{creations.length !== 1 ? 's' : ''} saved
             </p>
           </div>
@@ -117,7 +117,7 @@ export default function CreationsPage() {
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                   isActive
                     ? 'bg-gradient-to-r from-[#00bcd4]/15 to-transparent text-[#00bcd4] shadow-[inset_0_0_0_1px_rgba(0,188,212,0.2)]'
-                    : 'text-white/55 hover:text-white/75'
+                    : 'text-white/65 hover:text-white/85'
                 }`}
               >
                 <Icon className="w-3.5 h-3.5" aria-hidden="true" />
@@ -139,7 +139,7 @@ export default function CreationsPage() {
             <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-white/[0.04] flex items-center justify-center" aria-hidden="true">
               <PhFunnel className="w-6 h-6 text-white/40" />
             </div>
-            <p className="text-white/60 text-sm mb-2">
+            <p className="text-white/70 text-sm mb-2">
               {filter === 'all' ? 'No creations yet' : `No ${filter} creations yet`}
             </p>
             <Link href="/chat" className="text-[#00bcd4] text-sm hover:underline">
@@ -174,22 +174,22 @@ export default function CreationsPage() {
 
                 {/* Info */}
                 <div className="p-4">
-                  <h3 className="text-sm font-medium text-white/80 truncate">{creation.title}</h3>
-                  <p className="text-[11px] text-white/50 mt-1">{formatDate(creation.createdAt)}</p>
+                  <h3 className="text-sm font-medium text-white/90 truncate">{creation.title}</h3>
+                  <p className="text-[11px] text-white/60 mt-1">{formatDate(creation.createdAt)}</p>
 
                   {/* Stats */}
                   <div className="flex items-center gap-3 mt-3">
-                    <span className="flex items-center gap-1 text-[11px] text-white/50">
+                    <span className="flex items-center gap-1 text-[11px] text-white/60">
                       <PhEye className="w-3 h-3" aria-hidden="true" />
                       <span className="sr-only">Views:</span>
                       {creation.viewCount ?? 0}
                     </span>
-                    <span className="flex items-center gap-1 text-[11px] text-white/50">
+                    <span className="flex items-center gap-1 text-[11px] text-white/60">
                       <PhHeart className="w-3 h-3" aria-hidden="true" />
                       <span className="sr-only">Likes:</span>
                       {creation.likeCount ?? 0}
                     </span>
-                    <span className="text-[10px] text-white/50 px-1.5 py-0.5 rounded bg-white/[0.04]">
+                    <span className="text-[10px] text-white/65 px-1.5 py-0.5 rounded bg-white/[0.06]">
                       {creation.type}
                     </span>
                   </div>

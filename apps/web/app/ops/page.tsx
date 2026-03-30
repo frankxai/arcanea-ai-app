@@ -535,7 +535,7 @@ const BUILD_COLORS: Record<BuildStatus, string> = {
   success: "text-emerald-400",
   failure: "text-red-400",
   pending: "text-amber-400",
-  no_status: "text-white/25",
+  no_status: "text-white/45",
   error: "text-red-400",
 };
 
@@ -744,7 +744,7 @@ function SystemHealthCard({ system }: { system: SystemStatus }) {
             {system.label}
           </span>
           {system.version && (
-            <span className="ml-2 text-xs text-white/30 font-mono">v{system.version}</span>
+            <span className="ml-2 text-xs text-white/60 font-mono">v{system.version}</span>
           )}
         </div>
         <span
@@ -803,14 +803,14 @@ function RepoRow({ repo }: { repo: Repo }) {
             {repo.name}
             <IconExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
           </a>
-          <span className="text-xs text-white/35 line-clamp-1">
+          <span className="text-xs text-white/55 line-clamp-1">
             {repo.description}
           </span>
         </div>
       </td>
 
       {/* Last Push */}
-      <td className="px-4 py-3 text-xs text-white/50 whitespace-nowrap">
+      <td className="px-4 py-3 text-xs text-white/65 whitespace-nowrap">
         {relativeTime(repo.lastPush)}
       </td>
 
@@ -902,15 +902,15 @@ function AgentCard({ agent }: { agent: AgentInfo }) {
             )}
           </div>
           <div>
-            <p className="text-sm font-medium text-white/85">{agent.name}</p>
-            <p className="text-xs text-white/35 capitalize">{agent.type}</p>
+            <p className="text-sm font-medium text-white/90">{agent.name}</p>
+            <p className="text-xs text-white/55 capitalize">{agent.type}</p>
           </div>
         </div>
         <span className={`text-xs font-medium capitalize ${AGENT_STATUS_TEXT[agent.status]}`}>
           {agent.status}
         </span>
       </div>
-      <div className="mt-3 text-xs text-white/30">
+      <div className="mt-3 text-xs text-white/55">
         Last active: {relativeTime(agent.lastActive)}
       </div>
     </div>
@@ -933,15 +933,15 @@ function SessionRow({ session }: { session: SessionInfo }) {
     <div className="flex items-center gap-4 px-4 py-3 transition-colors hover:bg-white/[0.02]">
       <div className={`h-2 w-2 rounded-full shrink-0 ${SESSION_STATUS_DOT[session.status]}`} />
       <div className="w-24 shrink-0">
-        <p className="text-xs text-white/60 font-mono">{dateStr}</p>
-        <p className="text-xs text-white/35 font-mono">{timeStr}</p>
+        <p className="text-xs text-white/70 font-mono">{dateStr}</p>
+        <p className="text-xs text-white/55 font-mono">{timeStr}</p>
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-sm text-white/75 truncate">
+        <p className="text-sm text-white/85 truncate">
           {session.summary || "Untitled session"}
         </p>
       </div>
-      <div className="hidden sm:flex items-center gap-4 text-xs text-white/40 shrink-0">
+      <div className="hidden sm:flex items-center gap-4 text-xs text-white/60 shrink-0">
         <span className="font-mono">{session.duration}</span>
         <span>{session.agentCount} agent{session.agentCount !== 1 ? "s" : ""}</span>
         <span>{session.tasksCompleted} tasks</span>
@@ -967,8 +967,8 @@ function CommitLine({ commit }: { commit: RecentCommit }) {
           <span className="text-[10px] font-mono text-[#7fffd4]/60">
             {commit.sha.slice(0, 8)}
           </span>
-          <span className="text-[10px] text-white/30">{commit.repo}</span>
-          <span className="text-[10px] text-white/20">{relativeTime(commit.date)}</span>
+          <span className="text-[10px] text-white/55">{commit.repo}</span>
+          <span className="text-[10px] text-white/45">{relativeTime(commit.date)}</span>
         </div>
       </div>
     </div>
@@ -1060,9 +1060,9 @@ function SummaryStat({
     <div className="flex flex-col gap-1">
       <span className={`text-2xl font-bold font-mono tabular-nums ${color}`}>
         {value}
-        {suffix && <span className="text-sm text-white/30">{suffix}</span>}
+        {suffix && <span className="text-sm text-white/60">{suffix}</span>}
       </span>
-      <span className="text-xs text-white/40">{label}</span>
+      <span className="text-xs text-white/65">{label}</span>
     </div>
   );
 }
@@ -1126,11 +1126,11 @@ export default async function OpsPage({
                   Ops Dashboard
                 </h1>
               </div>
-              <p className="text-sm text-white/40 pl-5">
+              <p className="text-sm text-white/65 pl-5">
                 {dateStr} -- {timeStr}
               </p>
             </div>
-            <div className="flex items-center gap-4 text-xs text-white/30 font-mono">
+            <div className="flex items-center gap-4 text-xs text-white/60 font-mono">
               <span>{healthyCount}/{totalRepos} healthy</span>
               <span className="text-white/10">|</span>
               <span>{totalIssues} issues</span>
@@ -1159,8 +1159,8 @@ export default async function OpsPage({
             <SummaryStat value={activeAgents} label="Active Agents" color="text-[#ffd700]" />
             <SummaryStat value={avgHealth} label="Avg Health" color="text-[#7fffd4]" suffix="/100" />
           </div>
-          <div className="mt-4 pt-3 border-t border-white/[0.04] flex items-center justify-between text-xs text-white/25">
-            <span>Data fetched {relativeTime(data.fetchedAt)} -- Cached for 5 minutes</span>
+          <div className="mt-4 pt-3 border-t border-white/[0.04] flex items-center justify-between text-xs text-white/65">
+            <span>Data fetched {relativeTime(data.fetchedAt)} — Cached for 5 minutes</span>
             <span className="font-mono">{systemsOnline}/{data.systems.length} systems online</span>
           </div>
         </section>
@@ -1279,7 +1279,7 @@ export default async function OpsPage({
           {/* Repo table */}
           {sortedRepos.length === 0 ? (
             <div className="text-center py-16">
-              <p className="text-sm text-white/30">No repositories in this category.</p>
+              <p className="text-sm text-white/60">No repositories in this category.</p>
             </div>
           ) : (
             <RepoTableSection category={activeTab} repos={sortedRepos} />
@@ -1316,7 +1316,7 @@ export default async function OpsPage({
         <div className="grid lg:grid-cols-2 gap-6">
           {/* Quick Actions */}
           <section className="space-y-3">
-            <h2 className="text-xs uppercase tracking-[0.15em] text-white/30 font-mono">
+            <h2 className="text-xs uppercase tracking-[0.15em] text-white/60 font-mono">
               Quick Actions
             </h2>
             <div className="flex flex-col gap-3">
@@ -1349,7 +1349,7 @@ export default async function OpsPage({
 
           {/* Recent Activity */}
           <section className="space-y-3">
-            <h2 className="text-xs uppercase tracking-[0.15em] text-white/30 font-mono">
+            <h2 className="text-xs uppercase tracking-[0.15em] text-white/60 font-mono">
               Recent Activity
             </h2>
             <div
@@ -1361,7 +1361,7 @@ export default async function OpsPage({
                 ))}
               </div>
               {data.recentCommits.length === 0 && (
-                <p className="text-xs text-white/20 text-center py-4">
+                <p className="text-xs text-white/60 text-center py-4">
                   No recent commits
                 </p>
               )}
@@ -1371,7 +1371,7 @@ export default async function OpsPage({
 
         {/* ── Footer ──────────────────────────────────────────────── */}
         <div className="text-center py-4">
-          <p className="text-[10px] text-white/15 font-mono">
+          <p className="text-[10px] text-white/45 font-mono">
             Arcanea Ops Dashboard -- Data from GitHub API -- Cached 5 min
           </p>
         </div>

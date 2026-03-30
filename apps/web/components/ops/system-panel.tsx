@@ -107,7 +107,7 @@ function MetricRow({ metric }: { metric: SystemMetric }) {
 
   return (
     <div className="flex items-center justify-between text-xs">
-      <span className="text-white/40">{metric.label}</span>
+      <span className="text-white/65">{metric.label}</span>
       <span className="text-white/70 font-mono">
         {metric.value}
         {metric.unit ? ` ${metric.unit}` : ""}
@@ -117,7 +117,7 @@ function MetricRow({ metric }: { metric: SystemMetric }) {
               "ml-1",
               metric.trend === "up" && "text-emerald-400",
               metric.trend === "down" && "text-red-400",
-              metric.trend === "stable" && "text-white/30",
+              metric.trend === "stable" && "text-white/60",
             )}
           >
             {trendIcons[metric.trend]}

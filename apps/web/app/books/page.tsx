@@ -396,7 +396,7 @@ const CONTENT_TYPE_LABELS: Record<BookSeries['contentType'], string> = {
 const SERIES_STATUS_STYLES: Record<BookSeries['status'], { bg: string; text: string; label: string }> = {
   active: { bg: 'bg-emerald-500/10 border border-emerald-500/25', text: 'text-emerald-400', label: 'Active' },
   'in-progress': { bg: 'bg-[#00bcd4]/10 border border-[#00bcd4]/25', text: 'text-[#00bcd4]', label: 'In Progress' },
-  planned: { bg: 'bg-white/5 border border-white/10', text: 'text-white/35', label: 'Coming Soon' },
+  planned: { bg: 'bg-white/5 border border-white/10', text: 'text-white/60', label: 'Coming Soon' },
 };
 
 function SeriesCard({ series }: { series: BookSeries }) {
@@ -445,7 +445,7 @@ function SeriesCard({ series }: { series: BookSeries }) {
         </div>
 
         {/* Content type */}
-        <p className="mb-1 font-mono text-[10px] uppercase tracking-[0.2em] text-white/25">
+        <p className="mb-1 font-mono text-[10px] uppercase tracking-[0.2em] text-white/50">
           {CONTENT_TYPE_LABELS[series.contentType]}
         </p>
 
@@ -458,16 +458,16 @@ function SeriesCard({ series }: { series: BookSeries }) {
         </p>
 
         {/* Description */}
-        <p className="mt-3 text-sm leading-relaxed text-white/45">
+        <p className="mt-3 text-sm leading-relaxed text-white/60">
           {series.description}
         </p>
 
         {/* Stats */}
-        <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-white/25">
+        <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-white/50">
           {hasContent ? (
             <>
               <span>{series.totalChapters} chapter{series.totalChapters !== 1 ? 's' : ''}</span>
-              <span className="text-white/10">|</span>
+              <span className="text-white/20" aria-hidden="true">|</span>
               <span>~{Math.round(series.totalWordCount / 1000)}K words</span>
             </>
           ) : (
@@ -530,7 +530,7 @@ function StatusBadge({ status }: { status: BookStatus }) {
     },
     planned: {
       bg: 'bg-white/5 border border-white/10',
-      text: 'text-white/35',
+      text: 'text-white/60',
       label: 'Coming Soon',
     },
   };
@@ -562,9 +562,9 @@ function BookCard({ book, isFeature = false }: { book: ChronicleBook; isFeature?
           </span>
           <StatusBadge status={book.status} />
         </div>
-        <h3 className="mb-1 text-sm font-semibold text-white/30">{book.title}</h3>
-        <p className="text-[11px] text-white/20">{book.subtitle}</p>
-        <p className="mt-3 text-xs leading-relaxed text-white/20">{book.description}</p>
+        <h3 className="mb-1 text-sm font-semibold text-white/60">{book.title}</h3>
+        <p className="text-[11px] text-white/50">{book.subtitle}</p>
+        <p className="mt-3 text-xs leading-relaxed text-white/50">{book.description}</p>
       </div>
     );
   }
@@ -596,7 +596,7 @@ function BookCard({ book, isFeature = false }: { book: ChronicleBook; isFeature?
           <StatusBadge status={book.status} />
         </div>
 
-        <p className="mb-1 font-mono text-[10px] uppercase tracking-[0.2em] text-white/25">
+        <p className="mb-1 font-mono text-[10px] uppercase tracking-[0.2em] text-white/50">
           {book.subtitle}
         </p>
         <h3
@@ -608,12 +608,12 @@ function BookCard({ book, isFeature = false }: { book: ChronicleBook; isFeature?
         </h3>
 
         <p
-          className={`mt-3 leading-relaxed text-white/50 ${isFeature ? 'text-sm md:text-base' : 'text-sm'}`}
+          className={`mt-3 leading-relaxed text-white/65 ${isFeature ? 'text-sm md:text-base' : 'text-sm'}`}
         >
           {book.description}
         </p>
 
-        <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/25">
+        <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/50">
           {book.chapterCount > 0 && <span>{book.chapterCount} chapters</span>}
           <span>{book.wordCount} words</span>
         </div>
@@ -719,7 +719,7 @@ export default async function BooksPage() {
 
         <div className="relative z-10 mx-auto max-w-4xl text-center">
           {/* Eyebrow label */}
-          <p className="mb-6 font-mono text-[11px] uppercase tracking-[0.35em] text-[#00bcd4]/50">
+          <p className="mb-6 font-mono text-[11px] uppercase tracking-[0.35em] text-[#00bcd4]/70">
             The Arcanea Universe
           </p>
 
@@ -729,12 +729,12 @@ export default async function BooksPage() {
           </h1>
 
           {/* Word count subtitle */}
-          <p className="mt-5 font-mono text-sm text-white/35 tracking-wide">
+          <p className="mt-5 font-mono text-sm text-white/60 tracking-wide">
             486,000+ words across the Arcanean multiverse
           </p>
 
           {/* Tagline */}
-          <p className="mx-auto mt-8 max-w-xl text-lg leading-relaxed text-white/55 md:text-xl">
+          <p className="mx-auto mt-8 max-w-xl text-lg leading-relaxed text-white/70 md:text-xl">
             Enter seeking. Leave transformed. Return whenever needed.
           </p>
 
@@ -765,7 +765,7 @@ export default async function BooksPage() {
             </a>
             <Link
               href="/books/docs/founding-myths"
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 px-8 py-3.5 text-sm font-medium text-white/50 transition-all hover:border-white/20 hover:text-white/75"
+              className="inline-flex items-center gap-2 rounded-full border border-white/20 px-8 py-3.5 text-sm font-medium text-white/65 transition-all hover:border-white/30 hover:text-white/85"
             >
               Read the Myths
             </Link>
@@ -788,13 +788,13 @@ export default async function BooksPage() {
       ================================================================ */}
       <section id="chronicles" className="relative mx-auto max-w-6xl px-6 py-24">
         <div className="mb-16 text-center">
-          <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.3em] text-[#00bcd4]/40">
+          <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.3em] text-[#00bcd4]/70">
             Main Series
           </p>
           <h2 className="font-display text-3xl font-bold tracking-tight text-white/90 md:text-4xl">
             Chronicles of Arcanea
           </h2>
-          <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-white/40">
+          <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-white/65">
             A ten-book epic following Kael and the Five-Fold Five as they navigate the politics, magic,
             and ancient darkness of the Arcanean world.
           </p>
@@ -814,7 +814,7 @@ export default async function BooksPage() {
         </div>
 
         {/* Series promise */}
-        <p className="mt-8 text-center font-mono text-[11px] uppercase tracking-[0.25em] text-white/20">
+        <p className="mt-8 text-center font-mono text-[11px] uppercase tracking-[0.25em] text-white/50">
           Books 6–10 in development
         </p>
       </section>
@@ -828,13 +828,13 @@ export default async function BooksPage() {
           <div className="mb-16 flex items-center gap-4" aria-hidden="true">
             <span className="h-px flex-1 bg-white/6" />
             <div className="text-center">
-              <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.3em] text-[#00bcd4]/40">
+              <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.3em] text-[#00bcd4]/70">
                 Expanded Universe
               </p>
               <h2 className="font-display text-3xl font-bold tracking-tight text-white/90 md:text-4xl">
                 The Arcanea Multiverse
               </h2>
-              <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-white/40">
+              <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-white/65">
                 Beyond the Chronicles, the world keeps expanding. Crews, dragon-riders, Dungeon divers,
                 Gate-Touched survivors, and the voices of those the main story calls enemies.
               </p>
@@ -859,12 +859,12 @@ export default async function BooksPage() {
           aria-hidden="true"
         />
         <div className="relative mx-auto max-w-3xl px-6">
-          <div className="mb-12 flex items-center gap-4" aria-hidden="true">
-            <span className="h-px flex-1 bg-white/8" />
-            <p className="font-mono text-[10px] uppercase tracking-[0.35em] text-white/25">
+          <div className="mb-12 flex items-center gap-4">
+            <span className="h-px flex-1 bg-white/8" aria-hidden="true" />
+            <p className="font-mono text-[10px] uppercase tracking-[0.35em] text-white/50">
               From the Pages
             </p>
-            <span className="h-px flex-1 bg-white/8" />
+            <span className="h-px flex-1 bg-white/8" aria-hidden="true" />
           </div>
 
           {/* Stacked passages — all visible, staggered opacity for scroll effect */}
@@ -883,14 +883,14 @@ export default async function BooksPage() {
                 </p>
                 <footer className="mt-5 flex items-center justify-between gap-4">
                   <div>
-                    <p className="text-sm text-white/35">{passage.chapter}</p>
+                    <p className="text-sm text-white/60">{passage.chapter}</p>
                     <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/20">
                       {passage.book}
                     </p>
                   </div>
                   <Link
                     href={passage.href}
-                    className="shrink-0 rounded-full border border-[#00bcd4]/20 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.15em] text-[#00bcd4]/50 transition-all hover:border-[#00bcd4]/40 hover:text-[#00bcd4]"
+                    className="shrink-0 rounded-full border border-[#00bcd4]/30 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.15em] text-[#00bcd4]/70 transition-all hover:border-[#00bcd4]/50 hover:text-[#00bcd4]"
                   >
                     Read chapter
                   </Link>
@@ -906,13 +906,13 @@ export default async function BooksPage() {
       ================================================================ */}
       <section className="mx-auto max-w-5xl px-6 py-24">
         <div className="mb-12 text-center">
-          <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.3em] text-[#00bcd4]/40">
+          <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.3em] text-[#00bcd4]/70">
             Choose Your Entry
           </p>
           <h2 className="font-display text-3xl font-bold tracking-tight text-white/90">
             Reading Paths
           </h2>
-          <p className="mx-auto mt-3 max-w-md text-sm text-white/40">
+          <p className="mx-auto mt-3 max-w-md text-sm text-white/65">
             Every gate into the world is the right one. Follow the thread that calls to you.
           </p>
         </div>
@@ -933,7 +933,7 @@ export default async function BooksPage() {
               <h3 className="mb-2 text-sm font-semibold text-white/80 transition-colors group-hover:text-white/95">
                 {path.label}
               </h3>
-              <p className="text-xs leading-relaxed text-white/35">{path.description}</p>
+              <p className="text-xs leading-relaxed text-white/60">{path.description}</p>
               <svg
                 className="absolute right-5 top-5 h-4 w-4 text-white/15 transition-all group-hover:translate-x-0.5 group-hover:text-[#00bcd4]/40"
                 fill="none"
@@ -954,13 +954,13 @@ export default async function BooksPage() {
       ================================================================ */}
       <section className="relative mx-auto max-w-6xl px-6 py-24">
         <div className="mb-12 text-center">
-          <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.3em] text-[#00bcd4]/40">
+          <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.3em] text-[#00bcd4]/70">
             The World
           </p>
           <h2 className="font-display text-3xl font-bold tracking-tight text-white/90">
             The Three Academies
           </h2>
-          <p className="mx-auto mt-3 max-w-md text-sm text-white/40">
+          <p className="mx-auto mt-3 max-w-md text-sm text-white/65">
             Three institutions, three philosophies, one fracture running through all of them.
           </p>
         </div>
@@ -989,7 +989,7 @@ export default async function BooksPage() {
                 <p className={`mt-1 text-xs font-medium ${academy.textAccent}/60`}>{academy.element}</p>
 
                 <blockquote className="mt-5 border-l border-white/10 pl-3">
-                  <p className="text-xs leading-relaxed italic text-white/40">{academy.philosophy}</p>
+                  <p className="text-xs leading-relaxed italic text-white/65">{academy.philosophy}</p>
                 </blockquote>
               </div>
             </div>
@@ -1002,13 +1002,13 @@ export default async function BooksPage() {
       ================================================================ */}
       <section className="mx-auto max-w-5xl px-6 py-24">
         <div className="mb-12 text-center">
-          <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.3em] text-[#00bcd4]/40">
+          <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.3em] text-[#00bcd4]/70">
             Deep Reference
           </p>
           <h2 className="font-display text-3xl font-bold tracking-tight text-white/90">
             The Reference Library
           </h2>
-          <p className="mx-auto mt-3 max-w-md text-sm text-white/40">
+          <p className="mx-auto mt-3 max-w-md text-sm text-white/65">
             Everything that exists beyond the novels. The bones of the world made visible.
           </p>
         </div>
@@ -1029,7 +1029,7 @@ export default async function BooksPage() {
               <h3 className="mb-2 text-sm font-semibold text-white/75 transition-colors group-hover:text-white/95">
                 {doc.title}
               </h3>
-              <p className="flex-1 text-xs leading-relaxed text-white/35">{doc.description}</p>
+              <p className="flex-1 text-xs leading-relaxed text-white/60">{doc.description}</p>
               <div className="mt-4 flex items-center justify-between">
                 <span className="font-mono text-[10px] text-white/20">{doc.wordCount}</span>
                 <svg
@@ -1067,7 +1067,7 @@ export default async function BooksPage() {
             Your Gate Awaits
           </h2>
 
-          <p className="mx-auto mt-5 max-w-lg text-base leading-relaxed text-white/45 md:text-lg">
+          <p className="mx-auto mt-5 max-w-lg text-base leading-relaxed text-white/65 md:text-lg">
             Every element, every Academy, every Gate — they all begin with a single story about a
             lighthouse keeper who watched a strange storm.
           </p>
@@ -1091,14 +1091,14 @@ export default async function BooksPage() {
             </Link>
             <Link
               href="/books/book1"
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 px-8 py-4 text-sm font-medium text-white/45 transition-all hover:border-white/20 hover:text-white/70"
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 px-8 py-4 text-sm font-medium text-white/65 transition-all hover:border-white/20 hover:text-white/85"
             >
               Browse Book One
             </Link>
           </div>
 
           {/* Tagline */}
-          <p className="mt-12 font-mono text-[11px] uppercase tracking-[0.3em] text-white/18">
+          <p className="mt-12 font-mono text-[11px] uppercase tracking-[0.3em] text-white/50">
             Enter seeking &nbsp;·&nbsp; Leave transformed &nbsp;·&nbsp; Return whenever needed
           </p>
         </div>

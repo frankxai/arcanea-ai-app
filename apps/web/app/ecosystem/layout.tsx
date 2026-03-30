@@ -24,6 +24,7 @@ export const metadata: Metadata = {
     description: 'Interactive constellation map of creative intelligence systems',
     images: ['/guardians/v3/elara-hero-v3.webp'],
   },
+  alternates: { canonical: '/ecosystem' },
 };
 
 const jsonLd = {

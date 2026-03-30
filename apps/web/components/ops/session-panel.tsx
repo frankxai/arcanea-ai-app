@@ -77,7 +77,7 @@ function SessionRow({ session }: { session: SessionEntry }) {
       {/* Time */}
       <div className="w-24 shrink-0">
         <p className="text-xs text-white/60 font-mono">{dateStr}</p>
-        <p className="text-xs text-white/35 font-mono">{timeStr}</p>
+        <p className="text-xs text-white/60 font-mono">{timeStr}</p>
       </div>
 
       {/* Summary */}

@@ -11,6 +11,7 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://arcanea.ai/developers',
   },
+  alternates: { canonical: '/developers' },
   twitter: {
     card: 'summary_large_image',
     title: 'Arcanea Developers',

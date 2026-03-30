@@ -91,6 +91,49 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // ── Architecture ────────────────────────────────────────
     { url: `${baseUrl}/architecture`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
 
+    // ── Books ───────────────────────────────────────────────
+    { url: `${baseUrl}/books`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${baseUrl}/books/book1`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${baseUrl}/books/book2`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
+
+    // ── Creation Tools (additional) ────────────────────────
+    { url: `${baseUrl}/imagine`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${baseUrl}/creations`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.8 },
+    { url: `${baseUrl}/music`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.75 },
+    { url: `${baseUrl}/claw`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/forge`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${baseUrl}/design-lab`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+
+    // ── Community (additional) ─────────────────────────────
+    { url: `${baseUrl}/leaderboard`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.7 },
+    { url: `${baseUrl}/challenges`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.75 },
+
+    // ── Living Lore (additional) ───────────────────────────
+    { url: `${baseUrl}/living-lore/book`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${baseUrl}/living-lore/encounter`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.75 },
+
+    // ── Contribute ──────────────────────────────────────────
+    { url: `${baseUrl}/contribute`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+
+    // ── Academy (additional) ────────────────────────────────
+    { url: `${baseUrl}/academy/certification`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+
+    // ── Codex ──────────────────────────────────────────────
+    { url: `${baseUrl}/codex/materials`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+
+    // ── Council ────────────────────────────────────────────
+    { url: `${baseUrl}/council`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.75 },
+
+    // ── APL ────────────────────────────────────────────────
+    { url: `${baseUrl}/apl`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+
+    // ── Standards ──────────────────────────────────────────
+    { url: `${baseUrl}/standards`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
+
+    // ── Ops ────────────────────────────────────────────────
+    { url: `${baseUrl}/ops`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.5 },
+    { url: `${baseUrl}/ops/agents`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.5 },
+
     // ── Content ─────────────────────────────────────────────
     { url: `${baseUrl}/blog`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
     { url: `${baseUrl}/glossary`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },

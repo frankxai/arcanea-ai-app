@@ -109,7 +109,7 @@ function RepoRow({ repo }: { repo: RepoHealth }) {
           >
             {repo.name}
           </a>
-          <span className="text-xs text-white/35 line-clamp-1">
+          <span className="text-xs text-white/60 line-clamp-1">
             {repo.description}
           </span>
         </div>
@@ -129,7 +129,7 @@ function RepoRow({ repo }: { repo: RepoHealth }) {
               ? "text-amber-400"
               : repo.openIssues > 0
                 ? "text-white/60"
-                : "text-white/25",
+                : "text-white/50",
           )}
         >
           {repo.openIssues}
@@ -145,7 +145,7 @@ function RepoRow({ repo }: { repo: RepoHealth }) {
               ? "text-amber-400"
               : repo.openPRs > 0
                 ? "text-white/60"
-                : "text-white/25",
+                : "text-white/50",
           )}
         >
           {repo.openPRs}

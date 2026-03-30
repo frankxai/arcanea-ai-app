@@ -136,7 +136,7 @@ export const ImageModelSelector = React.memo(function ImageModelSelector({
         onChange(model.id);
         setOpen(false);
       }}
-      className={`w-full text-left px-3 py-2.5 flex items-start gap-3 transition-colors outline-none ${
+      className={`w-full text-left px-3 py-2.5 flex items-start gap-3 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#00bcd4]/60 ${
         isFocused
           ? 'bg-white/[0.06] ring-1 ring-inset ring-[#00bcd4]/40'
           : isSelected

@@ -97,7 +97,7 @@ function AgentCard({ agent }: { agent: AgentStatus }) {
           </div>
           <div>
             <p className="text-sm font-medium text-white/85">{agent.name}</p>
-            <p className="text-xs text-white/35">
+            <p className="text-xs text-white/60">
               {TYPE_LABELS[agent.type] ?? agent.type}
             </p>
           </div>
@@ -115,7 +115,7 @@ function AgentCard({ agent }: { agent: AgentStatus }) {
       </div>
 
       {/* Footer */}
-      <div className="mt-3 flex items-center justify-between text-xs text-white/30">
+      <div className="mt-3 flex items-center justify-between text-xs text-white/60">
         <span>Last active: {relativeTime}</span>
         {agent.taskCount > 0 && (
           <span className="font-mono">{agent.taskCount} tasks</span>

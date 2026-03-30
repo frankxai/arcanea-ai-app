@@ -10,6 +10,7 @@ export const metadata: Metadata = {
     description:
       "Arcanea Ops Center — system health, repository status, and infrastructure monitoring across the multiverse.",
   },
+  alternates: { canonical: "/ops" },
 };
 
 export default function OpsLayout({ children }: { children: ReactNode }) {
