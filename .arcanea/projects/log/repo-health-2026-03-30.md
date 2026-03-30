@@ -11,7 +11,7 @@ Source:
 - Registry source of truth: `.arcanea/projects/repo-constellation.json`
 - Overall system status: `DEGRADED`
 - Repo constellation status: `19 total`, `9 ok`, `10 warn`, `0 error`
-- Deep smoke status: `6 passed`, `2 failed`, `11 skipped`
+- Deep smoke status: `8 passed`, `0 failed`, `11 skipped`
 
 ## Healthy
 
@@ -36,9 +36,8 @@ Source:
 - `arcanea-ecosystem`: dirty worktree
 - `arcanea-infogenius`: dirty worktree
 - `arcanea-onchain`: dirty worktree
-- `arcanea-flow`: dirty worktree and remote drift (`origin` still points to `frankxai/claude-flow.git`)
-- `arcanea-flow`: deep build currently fails
-- `arcanea-infogenius`: deep MCP server build currently fails
+- `arcanea-flow`: dirty worktree, one commit behind `origin/main`, and still carries legacy `Claude Flow` wording in parts of the shipped CLI
+- `arcanea-flow`: standalone build and CLI smoke now pass, but command help still contains legacy `Claude Flow` wording
 
 ## Deep Smoke Coverage
 
@@ -52,18 +51,17 @@ Source:
 - `arcanea-infogenius`: `npm --prefix mcp-server run build`
 
 Deep smoke results on 2026-03-30:
-- Passed: `arcanea-code`, `oh-my-arcanea`, `arcanea-opencode`, `claude-arcanea`, `codex-arcanea`, `arcanea-onchain`
-- Failed: `arcanea-flow`, `arcanea-infogenius`
+- Passed: `arcanea-code`, `oh-my-arcanea`, `arcanea-opencode`, `claude-arcanea`, `codex-arcanea`, `arcanea-flow`, `arcanea-onchain`, `arcanea-infogenius`
 
 ## Meaning
 
 - Most warnings are not breakage. They indicate local modifications or active development.
 - The repo registry now prevents workspace modules from being misclassified as missing standalone clones.
-- The only structural drift exposed by the control plane is `arcanea-flow`, which still carries upstream `claude-flow` identity across git remote and internal references.
+- The main structural drift still exposed by the control plane is `arcanea-flow`, which now tracks the Arcanea repo correctly and builds as a standalone workspace, but still carries legacy `Claude Flow` identity in parts of the shipped command copy.
 
 ## Next Execution Targets
 
-1. Decide whether `arcanea-flow` remains a branded fork of `claude-flow` or becomes a fully renamed Arcanea distribution.
-2. Add an optional `--deep` mode to `scripts/ops-health-check.js` for smoke commands on key repos.
-3. Normalize dirty worktrees by repo: separate intentional local work from untracked setup/build residue.
+1. Complete the shipped `arcanea-flow` branding sweep so CLI help and command copy stop referring to `Claude Flow`.
+2. Normalize dirty worktrees by repo: separate intentional local work from untracked setup/build residue.
+3. Promote `ops:health:deep` / `ops:release-gate` into CI so the local control plane also gates merges and releases.
 4. Feed this registry into future dashboards, eval reports, and release readiness checks.

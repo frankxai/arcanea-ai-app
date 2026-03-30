@@ -82,7 +82,7 @@
       "id": "arcanea-flow",
       "label": "Arcanea Flow",
       "path": "arcanea-flow",
-      "cli": [],
+      "cli": ["arcanea-flow", "arcanea-flow-mcp"],
       "purpose": "Swarm and multi-agent execution engine",
       "expectedRemoteHints": ["frankxai/arcanea-flow"],
       "smokeCommands": [
