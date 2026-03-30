@@ -27,7 +27,7 @@ export async function GET(
     const shouldEnrich = request.nextUrl.searchParams.get('enrich') === '1';
     const evaluation = evaluateProjectWorkspace(workspace);
     const persistedSummary = await getProjectGraphSummaryForCurrentUser(id);
-    const graphView = buildProjectGraphView(
+    const { graph: graphView } = buildProjectGraphView(
       workspace,
       persistedSummary,
       persistedSummary ? 'stored' : 'derived',

@@ -49,6 +49,13 @@ export interface ProjectGraphSummaryRecord {
   updatedAt: string;
 }
 
+export interface ProjectActivityRecord {
+  id: string;
+  action: string;
+  createdAt: string;
+  metadata: Record<string, unknown> | null;
+}
+
 type ServerSupabase = Awaited<ReturnType<typeof createClient>>;
 type UntypedServerSupabase = ServerSupabase & {
   from: (table: string) => any;
@@ -77,6 +84,18 @@ function mapGraphSummaryRow(row: Record<string, unknown>): ProjectGraphSummaryRe
     score: typeof row.score === 'number' ? row.score : 0,
     checks: Array.isArray(row.checks) ? row.checks as ProjectWorkspaceEvaluation['checks'] : [],
     updatedAt: String(row.updated_at ?? new Date().toISOString()),
+  };
+}
+
+function mapProjectActivityRow(row: Record<string, unknown>): ProjectActivityRecord {
+  return {
+    id: String(row.id),
+    action: String(row.action ?? 'project_updated'),
+    createdAt: String(row.created_at ?? new Date().toISOString()),
+    metadata:
+      row.metadata && typeof row.metadata === 'object'
+        ? (row.metadata as Record<string, unknown>)
+        : null,
   };
 }
 
@@ -295,5 +314,30 @@ export async function getProjectGraphSummaryForCurrentUser(
     return mapGraphSummaryRow(data as Record<string, unknown>);
   } catch {
     return null;
+  }
+}
+
+export async function listProjectActivityForCurrentUser(
+  projectId: string,
+  limit = 12,
+): Promise<ProjectActivityRecord[]> {
+  const { db, user } = await getProjectAuthContext();
+  if (!user) return [];
+
+  try {
+    const { data, error } = await db
+      .from('activity_log')
+      .select('id, action, metadata, created_at')
+      .eq('user_id', user.id)
+      .eq('entity_type', 'project')
+      .eq('entity_id', projectId)
+      .order('created_at', { ascending: false })
+      .limit(limit);
+
+    if (error || !data) return [];
+
+    return (data as Record<string, unknown>[]).map(mapProjectActivityRow);
+  } catch {
+    return [];
   }
 }
