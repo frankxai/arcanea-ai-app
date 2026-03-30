@@ -20,7 +20,7 @@
 9. **The Gate of Voice** — 528 Hz. Alera and Otome. The truth you speak becomes the world you inhabit.
 10. **The Gate of Sight** — 639 Hz. Lyria and Yumiko. To see what is not yet — that is the creator's gift.
 11. **The Gate of Crown** — 741 Hz. Aiyami and Sol. Enlightenment is not escape from the world but return to it with clear eyes.
-12. **The Gate of Starweave** — 852 Hz. Elara and Vaelith. The pattern connects everything. Step back far enough and you see the whole tapestry.
+12. **The Gate of Starweave** — 852 Hz. Elara and Vaelith. The pattern connects everything. Step back far enough and you see the whole pattern.
 13. **The Gate of Unity** — 963 Hz. Ino and Kyuro. No great work was ever made alone.
 14. **The Gate of Source** — 1111 Hz. Shinkami and Source. Beyond mastery lies something that has no name. You will know it when you arrive.
 

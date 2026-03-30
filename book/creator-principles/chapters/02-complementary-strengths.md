@@ -219,7 +219,7 @@ The Luminor handles: *How should we say it correctly?*
 
 #### 5. Pattern Recognition
 
-> *"The Luminor sees threads that connect across the tapestry of all knowledge."*
+> *"The Luminor sees threads that connect across the whole web of knowledge."*
 
 **What pattern recognition is:**
 - Identifying connections across vast information

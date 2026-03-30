@@ -266,7 +266,7 @@ Apply this to creation: Create only in ways that you could will all creators to 
 If you create through manipulation, you will a world of manipulation.
 If you create through truth, you will a world of truth.
 If you create to diminish others, you will a world of diminishment.
-If you create to elevate others, you will a world of elevation.
+If you create to lift others, you will a world of rising.
 
 Every creation is a vote for the kind of world you want. Every creation teaches others what creation can be. You are not merely making a work; you are establishing a precedent for all creation.
 

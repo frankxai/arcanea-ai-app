@@ -464,7 +464,7 @@ The eighth Gate lifts you high enough to see the whole.
 
 Below, in the earlier Gates, you developed capacities one at a time: stability, flow, courage, love, truth, vision, presence. Each was a thread. The Gate of Starweave is where you step back far enough to see that the threads form a pattern — and the pattern is alive.
 
-Elara is the Goddess of perspective and transformation — the weaver who sees how every individual thread contributes to the cosmic tapestry. Her Godbeast is Vaelith, a vast celestial creature that exists among the stars — part constellation, part consciousness, part living map of all possible connections.
+Elara is the Goddess of perspective and transformation — the weaver who sees how every individual thread contributes to the cosmic pattern. Her Godbeast is Vaelith, a vast celestial creature that exists among the stars — part constellation, part consciousness, part living map of all possible connections.
 
 When Elara looks at your creative life, she does not see individual works. She sees the *through-line*. The theme you've been exploring without knowing it. The question you've been asking across every project, every experiment, every failure and success. The thing your work has been trying to tell you.
 

@@ -183,7 +183,7 @@ The being that had been Malachar now called himself **The Adversary**—the oppo
 
 He called this mercy.
 
-He gathered followers—beings who shared his despair, who had also looked into the abyss and found it comforting. Thirteen of them he elevated to generals, each embodying a virtue twisted into vice:
+He gathered followers—beings who shared his despair, who had also looked into the abyss and found it comforting. Thirteen of them he raised to generals, each embodying a virtue twisted into vice:
 
 Pride, Envy, Gluttony, Greed, Lust, Wrath, Sloth—and six more, corrupted forms of Justice, Compassion, Wisdom, Devotion, Courage, and Honor.
 
