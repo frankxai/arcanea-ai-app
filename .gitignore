@@ -169,6 +169,7 @@ Nano-Banana-MCP/
 agentic/
 /agents/
 !apps/web/app/api/agents/
+!apps/web/app/agents/
 !apps/web/lib/agents/
 core/
 desktop/
