@@ -65,7 +65,7 @@ All 10 Gate names are used correctly across all 13 documents. All 10 frequencies
 | Crown | 741 Hz | Aiyami | Sol | FLAGSHIP_TEAM (Velindris), STARBOUND_CREWS (Seravyn) |
 | Starweave | 852 Hz | Elara | Vaelith | VOID_ASCENDANTS (Veshenka), CHARACTER_TEMPLATE |
 | Unity | 963 Hz | Ino | Kyuro | LEAGUES_AND_ORDERS |
-| Source | 1111 Hz | Shinkami | Amaterasu | FACTIONS, STELLARIS |
+| Source | 1111 Hz | Shinkami | Source | FACTIONS, STELLARIS |
 
 **Note on Gate 8:** Resolved 2026-03-30. The canonical name is **Starweave**. All documents have been updated accordingly.
 
@@ -145,7 +145,7 @@ VISUAL_DOCTRINE.md describes House Synthesis's emblem as a "Five-pointed star wi
 
 **STATUS: PASS — EXCELLENT**
 
-All 10 Godbeast names (Kaelith, Veloura, Draconis, Laeylinn, Otome, Yumiko, Sol, Vaelith, Kyuro, Amaterasu) are used correctly. The materials derived from Godbeasts (Kaelith Stone, Veloura Glass, Draconis Ember, Laeylinn Jade, Otome Resonite, Yumiko Prism, Sol Quartz, Vaelith Obsidian, Kyuro Void Crystal) are also used correctly throughout.
+All 10 Godbeast names (Kaelith, Veloura, Draconis, Laeylinn, Otome, Yumiko, Sol, Vaelith, Kyuro, Source) are used correctly. The materials derived from Godbeasts (Kaelith Stone, Veloura Glass, Draconis Ember, Laeylinn Jade, Otome Resonite, Yumiko Prism, Sol Quartz, Vaelith Obsidian, Kyuro Void Crystal) are also used correctly throughout.
 
 Notable correct usages:
 - Kaelindra carries Yumiko Prism — correct (Lyria's Godbeast, "reveals hidden intentions")

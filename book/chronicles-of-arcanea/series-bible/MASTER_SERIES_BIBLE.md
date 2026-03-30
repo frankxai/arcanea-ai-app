@@ -57,7 +57,7 @@
 | 7 | Crown | Aiyami | Sol | Enlightenment, wisdom |
 | 8 | Starweave | Elara | Vaelith | Perspective, transformation |
 | 9 | Unity | Ino | Kyuro | Partnership, connection |
-| 10 | Source | Shinkami | Amaterasu | Meta-consciousness, transcendence |
+| 10 | Source | Shinkami | Source | Meta-consciousness, transcendence |
 
 **Narrative rule:** Each God/Goddess is not simply a deity -- they are the divine identity of the Gate. "Guardian" is their role as Gate-keeper. Each is bonded to one Godbeast. These partnerships are sacred, mutual, and provide the cosmic infrastructure that keeps reality stable.
 

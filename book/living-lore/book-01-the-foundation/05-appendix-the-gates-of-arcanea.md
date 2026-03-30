@@ -21,7 +21,7 @@ Ten Gates hold the world together. Each is a threshold of growth, tended by a Go
 | **Crown** | Aiyami | Sol | Enlightenment, clarity |
 | **Starweave** | Elara | Vaelith | Perspective, transformation |
 | **Unity** | Ino | Kyuro | Partnership, connection |
-| **Source** | Shinkami | Amaterasu | Meta-consciousness, totality |
+| **Source** | Shinkami | Source | Meta-consciousness, totality |
 
 ## The Five Ranks of Magic
 

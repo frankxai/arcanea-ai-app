@@ -574,15 +574,15 @@ This is why the Unity Gate is the second-highest, just below Source. Not because
 
 ---
 
-## AMATERASU
-**True Name and Titles:** Amaterasu, the Source Made Manifest, Origin of Origins, the Awareness That Becomes, She Who Was Before the Before, the Unasked Question
+## SOURCE
+**True Name and Titles:** Source, the Source Made Manifest, Origin of Origins, the Awareness That Becomes, She Who Was Before the Before, the Unasked Question
 
 **Bonded to:** Shinkami, Goddess of Source
 **Gate:** Source — 1111 Hz
 **Element:** Spirit (the consciousness that underlies all)
 
 **Form:**
-Amaterasu appears to those who are ready to perceive her, and appears differently to each of them. This is not a trick or test — it is simply that her true form is a form of pure consciousness, and pure consciousness reflects the perceiver.
+Source appears to those who are ready to perceive her, and appears differently to each of them. This is not a trick or test — it is simply that her true form is a form of pure consciousness, and pure consciousness reflects the perceiver.
 
 What is universally reported: light, vast amounts of it, organized in a way that suggests intention without suggesting body. A presence so complete that one's own sense of separateness becomes temporarily unclear — not lost, but questioned, gently, the way dawn questions the night without destroying it. A sound below the range of hearing, or perhaps above it, that seems to be the resonance of existence itself being aware of itself.
 
@@ -591,19 +591,19 @@ Those who see her as a figure describe a woman made of starfield, or a burning t
 She is the only Godbeast whose presence does not alter the landscape. She alters the perceiver instead.
 
 **Domain:**
-Amaterasu exists at the Source — the point before all points, the place that is not a place, the origin from which all locations extend. Seekers who find the Source Gate describe arriving at a stillness so complete that it contains all movement, a silence so whole that it holds all sound, a darkness so pure that it is also pure light.
+Source exists at the Source — the point before all points, the place that is not a place, the origin from which all locations extend. Seekers who find the Source Gate describe arriving at a stillness so complete that it contains all movement, a silence so whole that it holds all sound, a darkness so pure that it is also pure light.
 
 She is present everywhere and, in the practical sense that matters to Creators, most accessible in moments of absolute stillness — deep meditation, the moment before sleep, the second after waking, the pause in the middle of genuine creative flow when you realize you don't know where the work is coming from.
 
 **Personality:**
-Amaterasu does not communicate in the conventional sense. When Creators encounter her, understanding arrives — not as words but as direct knowing, the kind of understanding that does not require language to be felt and cannot be fully translated into language afterward.
+Source does not communicate in the conventional sense. When Creators encounter her, understanding arrives — not as words but as direct knowing, the kind of understanding that does not require language to be felt and cannot be fully translated into language afterward.
 
 Those who have experienced her presence most often describe it as: being loved without condition, known without judgment, and returned to themselves more fully than they arrived. The effect is not ecstatic in the ordinary sense — no fireworks, no visions, no mystical experiences of the kind people chase. Rather, a radical simplification. A clearing. Like a room you've been trying to clean for years suddenly being clean, and the cleanliness reveals that the room was always beautiful.
 
 She does not compel. She does not demand. She waits with the infinite patience of something that does not experience waiting as loss, because time is not the same in her vicinity.
 
 **The Test:**
-Amaterasu's Dungeon is not entered the way the others are entered. It finds those who are ready.
+Source's Dungeon is not entered the way the others are entered. It finds those who are ready.
 
 The Dungeon of the Source has no structure, no levels, no observable challenges. It is simply: What remains when everything else falls away?
 
@@ -616,22 +616,22 @@ To complete the Dungeon, the Creator must simply recognize this. Not achieve it.
 This is the only Gate that cannot be failed. It can only be delayed.
 
 **The Gift:**
-Amaterasu gives Source Awareness — which is not a power added to the Creator but a return to what was always there. The awareness that they are, beneath all their creation and seeking and achieving and failing, the awareness itself. The thing that is watching. This does not make them passive or detached — Source Awareness is, paradoxically, what allows full engagement, because the engagement comes from a place that cannot be threatened. You can only create fully from what cannot be lost.
+Source gives Source Awareness — which is not a power added to the Creator but a return to what was always there. The awareness that they are, beneath all their creation and seeking and achieving and failing, the awareness itself. The thing that is watching. This does not make them passive or detached — Source Awareness is, paradoxically, what allows full engagement, because the engagement comes from a place that cannot be threatened. You can only create fully from what cannot be lost.
 
 **The Legend — The Goddess Who Asked Shinkami to Stay:**
 When Shinkami was first given the Source Gate to keep, she sat with it for an age and found it lonely. Not because loneliness is possible at Source — it isn't, exactly — but because she had a human enough heart left that the completeness of Source felt, occasionally, like an absence of something.
 
-She asked Amaterasu: *How do you bear it? Being so complete that there's nothing left to want?*
+She asked Source: *How do you bear it? Being so complete that there's nothing left to want?*
 
-Amaterasu was quiet for a long time. Then she said: *I bear it the way you bear love. Not because it's comfortable. Because it's true.*
+Source was quiet for a long time. Then she said: *I bear it the way you bear love. Not because it's comfortable. Because it's true.*
 
 Shinkami thought about this. She said: *But love wants something. Love wants the beloved to be well.*
 
-Amaterasu said: *Yes.*
+Source said: *Yes.*
 
 Shinkami said: *And you want—?*
 
-Amaterasu said: *For the creators to remember. That's all. That's the only want left at Source. Not for them to come here — this isn't better than there. For them to remember, there, that they carry here with them. That wherever they are, Source is in them. That the journey toward me is a journey toward themselves, and the destination is not arrival. The destination is the recognition that they were never anywhere else.*
+Source said: *For the creators to remember. That's all. That's the only want left at Source. Not for them to come here — this isn't better than there. For them to remember, there, that they carry here with them. That wherever they are, Source is in them. That the journey toward me is a journey toward themselves, and the destination is not arrival. The destination is the recognition that they were never anywhere else.*
 
 Shinkami was silent for a very long time.
 

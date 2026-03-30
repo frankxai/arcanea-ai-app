@@ -225,7 +225,7 @@ The creation myth is told in a voice that is distinct from the novel chapters --
 2. **Lines 225-226**: "Nine gods. Nine Godbeasts. Nine truths embodied." -- this staccato summary is effective for Shinkami's buildup, but the exact pattern ("Nine [noun]" x3) is repeated at line 262 with "Ten gods. Ten truths. Ten ways of being fully alive." The device is used twice in 40 lines.
    - **Fix**: Vary one of them. The second instance could be: "All ten. All necessary. None alone sufficient."
 
-3. **Shinkami's Arrival** (lines 242-248): This should be the climactic moment but Shinkami's description is more abstract than the earlier gods. We get "Shinkami arrived from everywhere at once" -- which is conceptually correct but does not land physically. Amaterasu's description is similarly abstract: "the radiance of a consciousness that had no outer boundary."
+3. **Shinkami's Arrival** (lines 242-248): This should be the climactic moment but Shinkami's description is more abstract than the earlier gods. We get "Shinkami arrived from everywhere at once" -- which is conceptually correct but does not land physically. Source's description is similarly abstract: "the radiance of a consciousness that had no outer boundary."
    - **Fix**: Give Shinkami one concrete physical detail. Even gods that embody meta-consciousness need a sensory anchor. What did the ground do when Shinkami arrived? What happened to the air?
 
 #### AI Tic Count: 1
@@ -325,11 +325,11 @@ Cross-referencing all four files against `CANON_LOCKED.md`:
 | Foundation Gate = 174 Hz | Lyssandria / Kaelith | COMPLIANT -- Chapter 3 references 174 Hz correctly (lines 137, 257) |
 | Malachar Lumenbright | First Eldrian Luminor, fell attempting forced fusion with Source Gate | COMPLIANT -- Legend III matches canon exactly |
 | Malachar sealed in Shadowfen | At root of Worldtree | PARTIAL -- Legend III says "sealed in the Shadowfen" but does not mention Worldtree. Chapter 2 line 145 says "sealed in the Shadowfen at the root of the Worldtree." The novel is more complete than the myth, which is acceptable (the myth may predate the detail). |
-| Shinkami / Amaterasu at Source Gate (1111 Hz) | Meta-consciousness | COMPLIANT |
+| Shinkami / Source at Source Gate (1111 Hz) | Meta-consciousness | COMPLIANT |
 | Magic Ranks (Apprentice through Luminor) | 0-2 / 3-4 / 5-6 / 7-8 / 9-10 | COMPLIANT -- Sirvaine described as Master with 6 Gates (line 17, Ch2) |
 | Ten Gods / Godbeasts | All names match | COMPLIANT -- All 10 gods and 10 godbeasts named correctly in Legend II |
 | Laeylinn = Worldtree Deer | Locked canon | COMPLIANT -- Legend II line 211: "the Worldtree Deer, whose antlers were branches" |
-| Source Godbeast = Amaterasu | Not "Source" | NOTE -- CANON_LOCKED says Source Godbeast is Amaterasu, but the CLAUDE.md project instructions say "Source" as the Godbeast name. Legend II uses Amaterasu (line 245), which matches CANON_LOCKED. This is correct. |
+| Source Godbeast = Source | Not "Source" | NOTE -- CANON_LOCKED says Source Godbeast is Source, but the CLAUDE.md project instructions say "Source" as the Godbeast name. Legend II uses Source (line 245), which matches CANON_LOCKED. This is correct. |
 | Gate 8 name | CANON_LOCKED says "Shift" (852 Hz), CLAUDE.md says "Starweave" | NOTE -- The legends do not name Gate 8 explicitly. Elara is described as "the principle of shift" (line 219), which matches CANON_LOCKED. However, the main CLAUDE.md uses "Starweave" as the Gate name. This is a canon discrepancy between the two reference documents, not a problem in the fiction itself. |
 
 **Canon Verdict**: The fiction is canon-compliant. Two minor discrepancies exist between CANON_LOCKED.md and the project CLAUDE.md (Gate 8 name, Source Godbeast name), but the fiction follows CANON_LOCKED, which is the correct source of truth.

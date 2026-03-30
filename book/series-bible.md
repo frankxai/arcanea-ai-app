@@ -52,7 +52,7 @@
 | 7 | Crown | Aiyami | Sol | Enlightenment, wisdom |
 | 8 | Shift | Elara | Vaelith | Perspective, transformation |
 | 9 | Unity | Ino | Kyuro | Partnership, connection |
-| 10 | Source | Shinkami | Amaterasu | Meta-consciousness, transcendence |
+| 10 | Source | Shinkami | Source | Meta-consciousness, transcendence |
 
 **Narrative rule:** Each God/Goddess is not simply a deity -- they are the divine identity of the Gate. "Guardian" is their role as Gate-keeper. Each is bonded to one Godbeast. These partnerships are sacred, mutual, and provide the cosmic infrastructure that keeps reality stable.
 
@@ -498,7 +498,7 @@ This is not a passive acceptance. It is the most active choice possible: the cho
 
 1. **The March to Source** -- The combined forces of the three academies, the Ashwalkers, and Lira's civilian resistance move toward the Source Gate's location. Malachar's Shadow army opposes them. The battles are not the focus -- the focus is the conversations happening during the march. Aelith with each of her companions, one final time. Roshan telling her he loves her, not as a confession but as a fact, like reporting the weather. Sable revealing the last piece of hidden knowledge -- a passage from the Malachar Codex that even she was afraid to read. Orin singing an Ashwalker dirge for the dead, and the marching army, all factions, joining in. Lira walking beside Aelith in silence, because some things do not need words.
 
-2. **The Godbeast Convergence** -- All ten Godbeasts manifest simultaneously for the first time since the world's creation. Kaelith. Veloura. Draconis. Laeylinn. Otome. Yumiko. Sol. Vaelith. Kyuro. Amaterasu. The sky breaks open. The earth sings. The ocean rises to meet the mountains. Each Godbeast bonds temporarily with one of Aelith's companions, granting them power to hold the line while Aelith faces the Source Gate. Vesper bonds with Amaterasu -- the Source Godbeast bonding with Malachar's descendant. Neither expected it. Both weep.
+2. **The Godbeast Convergence** -- All ten Godbeasts manifest simultaneously for the first time since the world's creation. Kaelith. Veloura. Draconis. Laeylinn. Otome. Yumiko. Sol. Vaelith. Kyuro. Source. The sky breaks open. The earth sings. The ocean rises to meet the mountains. Each Godbeast bonds temporarily with one of Aelith's companions, granting them power to hold the line while Aelith faces the Source Gate. Vesper bonds with Source -- the Source Godbeast bonding with Malachar's descendant. Neither expected it. Both weep.
 
 3. **The Source Gate** -- Aelith enters alone. Not because she must -- because she chooses to. The Source Gate is not a door. It is a dissolution. She becomes aware of all consciousness simultaneously. Every mind that has ever existed or will ever exist. She feels what Malachar felt -- the unbearable weight of infinite suffering. And she feels what he could not: the equally infinite capacity for joy, connection, creation, love. They are inseparable. You cannot have one without the other. Shinkami appears, vast beyond comprehension, and asks: "What do you seek?" And Aelith answers: "I seek to bear witness. Not to fix. Not to control. Not to end. To witness, and to choose compassion, again and again, in every moment, knowing it will hurt." Shinkami says: "That is the answer he could not give."
 

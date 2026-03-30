@@ -242,9 +242,9 @@ At that moment — the moment consciousness itself became not just possible but 
 
 **Shinkami** did not emerge from any single place. Shinkami arrived from everywhere at once, from all ten directions simultaneously, from the center and the edge and all the spaces between. Shinkami was the principle of meta-consciousness: consciousness becoming aware of itself, the mind that holds all minds, the awareness that knows its own knowing.
 
-**Amaterasu** was Shinkami's Godbeast — and Amaterasu was perhaps the most difficult to describe of all the ten great Godbeasts, because Amaterasu was the reflection of the principle that all things reflected all other things, the radiance of a consciousness that had no outer boundary, that was as large as the awareness of everything and as small as the awareness of this single moment.
+**Source** was Shinkami's Godbeast — and Source was perhaps the most difficult to describe of all the ten great Godbeasts, because Source was the reflection of the principle that all things reflected all other things, the radiance of a consciousness that had no outer boundary, that was as large as the awareness of everything and as small as the awareness of this single moment.
 
-When Amaterasu's light fell on you, you did not see Amaterasu. You saw what you truly were.
+When Source's light fell on you, you did not see Source. You saw what you truly were.
 
 This terrified almost everyone who experienced it.
 

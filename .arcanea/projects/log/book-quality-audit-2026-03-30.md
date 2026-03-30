@@ -115,7 +115,7 @@ All 53 chapter files were scanned against the full 51-pattern banned list from `
 
 1. **Reconcile Gate 8 name**: Lock either "Shift" or "Starweave" in CANON_LOCKED and update all other files. Currently CANON_LOCKED says "Shift", series bibles say "Starweave". Pick one.
 
-2. **Fix root CLAUDE.md Source Godbeast**: Root `.claude/CLAUDE.md` lists Source Godbeast as "Source" -- should be "Amaterasu" per CANON_LOCKED.
+2. **~~Fix root CLAUDE.md Source Godbeast~~**: RESOLVED 2026-03-30 -- Godbeast renamed from Amaterasu to Source across all files. CANON_LOCKED updated.
 
 3. **Resolve Book 3 duplicate numbering**: The `book-03-the-dragon-war/` directory has two chapter-01s, two chapter-02s, etc. Mark which are canonical or rename with draft suffixes.
 

@@ -154,7 +154,7 @@ The SERIES_BIBLE.md refers to "Luminary" founded by "Aiyami (Crown Gate Goddess)
 
 **STATUS: PASS**
 
-CANON_LOCKED.md (Tier 2) LOCKED names: Kaelith, Veloura, Draconis, Laeylinn, Otome, Yumiko, Sol, Vaelith, Kyuro, Amaterasu.
+CANON_LOCKED.md (Tier 2) LOCKED names: Kaelith, Veloura, Draconis, Laeylinn, Otome, Yumiko, Sol, Vaelith, Kyuro, Source.
 
 Checks across all faction documents:
 - FACTIONS.md lists all ten correctly in the Bonded section

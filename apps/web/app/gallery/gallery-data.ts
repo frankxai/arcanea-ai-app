@@ -329,7 +329,7 @@ export const SHOWCASE_CREATIONS: ShowcaseCreation[] = [
   },
   {
     id: "sc-015",
-    title: "Amaterasu Awakens",
+    title: "Source Awakens",
     description:
       "The supreme Godbeast of the Source Gate manifests as meta-consciousness itself at 1111 Hz.",
     type: "image",

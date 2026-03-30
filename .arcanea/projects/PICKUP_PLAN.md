@@ -36,7 +36,7 @@
 
 ### T2-1: Populate .arcanea/lore/ with Guardian profiles
 **DONE** (2026-03-30 overnight swarm) — 30 files created:
-- `godbeasts/` — 10 files (Kaelith, Veloura, Draconis, Laeylinn, Otome, Yumiko, Sol, Vaelith, Kyuro, Amaterasu)
+- `godbeasts/` — 10 files (Kaelith, Veloura, Draconis, Laeylinn, Otome, Yumiko, Sol, Vaelith, Kyuro, Source)
 - `gods-goddesses/` — 10 files (all 10 with full frontmatter + canon content)
 - `guardians/` — 10 files (all 10 with gate-keeper role profiles)
 

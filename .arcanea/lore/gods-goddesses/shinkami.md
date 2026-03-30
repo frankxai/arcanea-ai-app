@@ -4,7 +4,7 @@ type: god/goddess
 gate: Source
 frequency: 1111 Hz
 element: All
-godbeast: Amaterasu
+godbeast: Source
 domain: Meta-consciousness, transcendence
 ---
 
@@ -40,7 +40,7 @@ The FACTIONS.md document lists Shinkami as the Guardian of the Source Gate in it
 
 ## Relationships
 
-- **Amaterasu** (bonded Godbeast): The Godbeast that embodies all elements in unified expression. Amaterasu is the living form of what the Source Gate represents -- totality held in one being.
+- **Source** (bonded Godbeast): The Godbeast that embodies all elements in unified expression. Source is the living form of what the Source Gate represents -- totality held in one being.
 - **Lyssandria**: The first Gate and the tenth Gate are the two endpoints of the seeker's journey. Lyssandria's foundation and Shinkami's transcendence frame the entire path.
 - **Ino**: Unity precedes Source. Partnership is the precondition for transcendence. You do not reach Shinkami alone.
 - **Malachar Lumenbright**: The defining relationship. Malachar was Lumina's Champion, the First Eldrian Luminor, the greatest being ever to walk the path of the ten Gates. He reached Shinkami's Gate and demanded entry. Shinkami refused. The resulting catastrophe reshaped Arcanea forever.

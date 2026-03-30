@@ -155,7 +155,7 @@ The Unity Gate cannot be opened alone. This is its defining characteristic and i
 
 **The Tenth Gate: Source**
 *Domain: Meta-consciousness, transcendence*
-*Guardian: Shinkami, bonded to the Godbeast Amaterasu*
+*Guardian: Shinkami, bonded to the Godbeast Source*
 
 We include the Source Gate here for completeness, not because any student reading this handbook is likely to approach it. In the recorded history of the Academies, fewer than a handful of practitioners have reached the Source Gate. What lies beyond it is not a subject this handbook is equipped to address.
 

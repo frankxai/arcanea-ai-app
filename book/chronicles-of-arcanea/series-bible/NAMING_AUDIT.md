@@ -212,7 +212,7 @@ The two bibles use different names for the same locations:
 | Sol | Crown | STRONG | Simple, solar, luminous. The Crown Godbeast having the simplest name mirrors the Crown Gate's principle: true authority needs no ornamentation. |
 | Vaelith | Starweave | STRONG | The "-lith" suffix (shared with Pyralith) connects them as ancient beings. "Vael-" sounds transitional, shifting -- appropriate for the Perspective Gate. |
 | Kyuro | Unity | STRONG | Short, decisive. The hard "K" and soft "ro" create a name that feels like two things meeting. |
-| Amaterasu | Source | CONCERN | Directly borrowed from Shinto mythology (the sun goddess). This is a bold choice. Risk: cultural appropriation concerns. The 10-book SERIES_BIBLE uses "Source" as the Godbeast name, which is too generic. Recommendation: **Keep Amaterasu** -- the Source Gate's Godbeast carrying a name from real-world mythology reinforces the theme that Arcanea's divine architecture connects to something deeper than fiction. The CANON_LOCKED.md does not specify this name, so establish it clearly in the Master Bible. |
+| Source | Source | CONCERN | Directly borrowed from Shinto mythology (the sun goddess). This is a bold choice. Risk: cultural appropriation concerns. The 10-book SERIES_BIBLE uses "Source" as the Godbeast name, which is too generic. Recommendation: **Keep Source** -- the Source Gate's Godbeast carrying a name from real-world mythology reinforces the theme that Arcanea's divine architecture connects to something deeper than fiction. The CANON_LOCKED.md does not specify this name, so establish it clearly in the Master Bible. |
 
 ---
 
@@ -289,7 +289,7 @@ All canonical names in one reference:
 - Lyssandria, Leyla, Draconia, Maylinn, Alera, Lyria, Aiyami, Elara, Ino, Shinkami
 
 ### Godbeasts
-- Kaelith, Veloura, Draconis, Laeylinn, Otome, Yumiko, Sol, Vaelith, Kyuro, Amaterasu
+- Kaelith, Veloura, Draconis, Laeylinn, Otome, Yumiko, Sol, Vaelith, Kyuro, Source
 
 ### Organizations
 - The Commonground -- Lira's non-channeler movement

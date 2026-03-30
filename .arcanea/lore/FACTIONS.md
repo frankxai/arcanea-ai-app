@@ -116,7 +116,7 @@ Every being in Arcanea has an **origin** — the source of their power and the s
 
 **Weakness**: Codependence. If the beast falls, the Bonded is shattered. If the Bonded dies, the beast may go feral. The bond is strength and vulnerability in equal measure.
 
-**Canon Anchor**: The Ten Godbeasts (Kaelith, Veloura, Draconis, Laeylinn, Otome, Yumiko, Sol, Vaelith, Kyuro, Amaterasu). The Companion Bestiary.
+**Canon Anchor**: The Ten Godbeasts (Kaelith, Veloura, Draconis, Laeylinn, Otome, Yumiko, Sol, Vaelith, Kyuro, Source). The Companion Bestiary.
 
 **Archetypes**: Dragon rider, wolf-bonded scout, phoenix-linked healer, serpent whisperer, celestial mount guardian, beast tactician.
 
