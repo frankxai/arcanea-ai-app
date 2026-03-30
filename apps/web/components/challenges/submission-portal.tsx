@@ -23,7 +23,7 @@ function SpellCastingPanel({
   const [castingSpell, setCastingSpell] = useState<string | null>(null);
   const availableSpells = ALL_SPELLS.filter(s => s.element === element && s.unlockGate <= 3);
 
-  const ELEMENT_ICONS: Record<string, React.ComponentType<{ className?: string; weight?: string }>> = {
+  const ELEMENT_ICONS: Record<string, React.ComponentType<Record<string, unknown>>> = {
     fire: Flame, water: Drop, earth: Leaf, wind: Wind, void: Eye, spirit: Sun,
   };
 

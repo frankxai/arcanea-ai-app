@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { m } from 'framer-motion';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { cosmicSlideUp } from '@/lib/animations';
 import { type Academy, getAcademyClasses } from '@/lib/theme-utils';
@@ -34,6 +34,7 @@ const ChatMessage = React.memo<ChatMessageProps>(React.forwardRef<HTMLDivElement
     const isUser = role === 'user';
 
     return (
+      <LazyMotion features={domAnimation}>
       <m.div
         ref={ref}
         variants={cosmicSlideUp}
@@ -117,6 +118,7 @@ const ChatMessage = React.memo<ChatMessageProps>(React.forwardRef<HTMLDivElement
           )}
         </div>
       </m.div>
+      </LazyMotion>
     );
   }
 ));

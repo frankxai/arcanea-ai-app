@@ -21,6 +21,8 @@ declare module '@phosphor-icons/react' {
   // ---------------------------------------------------------------------------
   export const ArrowBendDownLeft: PhosphorIcon;
   export const ArrowBendUpLeft: PhosphorIcon;
+  export const Atom: PhosphorIcon;
+  export const AtomIcon: PhosphorIcon;
   export const ArrowCircleDown: PhosphorIcon;
   export const ArrowCounterClockwise: PhosphorIcon;
   export const ArrowDown: PhosphorIcon;
@@ -95,6 +97,8 @@ declare module '@phosphor-icons/react' {
   export const Fire: PhosphorIcon;
   export const Fish: PhosphorIcon;
   export const Flame: PhosphorIcon;
+  export const Flask: PhosphorIcon;
+  export const FlaskIcon: PhosphorIcon;
   export const FloppyDisk: PhosphorIcon;
   export const FolderOpen: PhosphorIcon;
   export const FolderSimple: PhosphorIcon;
@@ -177,6 +181,9 @@ declare module '@phosphor-icons/react' {
   export const Star: PhosphorIcon;
   export const Sun: PhosphorIcon;
   export const Sword: PhosphorIcon;
+  export const Stop: PhosphorIcon;
+  export const StopCircle: PhosphorIcon;
+  export const StopIcon: PhosphorIcon;
   export const Tag: PhosphorIcon;
   export const Target: PhosphorIcon;
   export const Terminal: PhosphorIcon;
@@ -202,7 +209,10 @@ declare module '@phosphor-icons/react' {
   export const UserCircle: PhosphorIcon;
   export const UserPlus: PhosphorIcon;
   export const Users: PhosphorIcon;
+  export const Video: PhosphorIcon;
   export const VideoCamera: PhosphorIcon;
+  export const VideoCameraSlash: PhosphorIcon;
+  export const VideoIcon: PhosphorIcon;
   export const Wand: PhosphorIcon;
   export const Waveform: PhosphorIcon;
   export const Warning: PhosphorIcon;

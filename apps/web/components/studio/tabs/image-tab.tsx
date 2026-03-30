@@ -6,7 +6,7 @@ import {
   Lightning,
   ArrowsClockwise,
   Download,
-  MagnifyingGlassPlus,
+  PhMagnifyingGlassPlus,
   Shuffle,
   WarningCircle,
 } from '@/lib/phosphor-icons'
@@ -244,7 +244,7 @@ export function ImageTab({ generationState }: ImageTabProps) {
               <div className="absolute inset-0 bg-gradient-to-t from-[rgba(10,10,15,0.6)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="absolute bottom-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                 <button className="p-2 rounded-lg bg-[rgba(10,10,15,0.8)] border border-[rgba(13,71,161,0.3)] text-foreground hover:text-[#a78bfa] transition-colors">
-                  <MagnifyingGlassPlus size={14} />
+                  <PhMagnifyingGlassPlus size={14} />
                 </button>
                 <button className="p-2 rounded-lg bg-[rgba(10,10,15,0.8)] border border-[rgba(13,71,161,0.3)] text-foreground hover:text-[#a78bfa] transition-colors">
                   <Download size={14} />

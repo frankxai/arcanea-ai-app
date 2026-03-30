@@ -2,6 +2,7 @@
 
 import React, { Suspense, lazy } from 'react';
 import ReactMarkdown from 'react-markdown';
+import type { ExtraProps } from 'react-markdown';
 import { EmotionalTone } from '@/hooks/use-chat';
 
 const LazyCodeBlock = lazy(() => import('./code-block'));
@@ -155,7 +156,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
           <div className="prose prose-invert prose-sm max-w-none">
             <ReactMarkdown
               components={{
-                code({ className, children }) {
+                code({ className, children }: React.ComponentProps<'code'> & ExtraProps) {
                   const match = /language-(\w+)/.exec(className || '');
                   const isBlock = match && String(children).includes('\n');
                   return isBlock ? (
@@ -170,19 +171,19 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
                     </code>
                   );
                 },
-                p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
-                ul: ({ children }) => <ul className="list-disc list-inside mb-2">{children}</ul>,
-                ol: ({ children }) => <ol className="list-decimal list-inside mb-2">{children}</ol>,
-                li: ({ children }) => <li className="mb-1">{children}</li>,
-                h1: ({ children }) => <h1 className="text-xl font-bold mb-2">{children}</h1>,
-                h2: ({ children }) => <h2 className="text-lg font-bold mb-2">{children}</h2>,
-                h3: ({ children }) => <h3 className="text-base font-bold mb-2">{children}</h3>,
-                blockquote: ({ children }) => (
+                p: ({ children }: { children?: React.ReactNode }) => <p className="mb-2 last:mb-0">{children}</p>,
+                ul: ({ children }: { children?: React.ReactNode }) => <ul className="list-disc list-inside mb-2">{children}</ul>,
+                ol: ({ children }: { children?: React.ReactNode }) => <ol className="list-decimal list-inside mb-2">{children}</ol>,
+                li: ({ children }: { children?: React.ReactNode }) => <li className="mb-1">{children}</li>,
+                h1: ({ children }: { children?: React.ReactNode }) => <h1 className="text-xl font-bold mb-2">{children}</h1>,
+                h2: ({ children }: { children?: React.ReactNode }) => <h2 className="text-lg font-bold mb-2">{children}</h2>,
+                h3: ({ children }: { children?: React.ReactNode }) => <h3 className="text-base font-bold mb-2">{children}</h3>,
+                blockquote: ({ children }: { children?: React.ReactNode }) => (
                   <blockquote className="border-l-4 border-gray-500 pl-4 italic my-2">
                     {children}
                   </blockquote>
                 ),
-                a: ({ children, href }) => (
+                a: ({ children, href }: { children?: React.ReactNode; href?: string }) => (
                   <a
                     href={href}
                     target="_blank"

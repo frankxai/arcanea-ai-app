@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { ReadingToolbar } from './reading-toolbar';
@@ -194,7 +194,7 @@ export function ChapterReader({
   // TOC
   const [showToc, setShowToc] = useState(false);
   const [activeHeading, setActiveHeading] = useState('');
-  const tocHeadings = extractHeadings(content);
+  const tocHeadings = useMemo(() => extractHeadings(content), [content]);
 
   // Notes (existing functionality preserved)
   const [showNotes, setShowNotes] = useState(false);
@@ -513,8 +513,9 @@ export function ChapterReader({
 
       {/* TOC backdrop */}
       {showToc && (
-        <div
-          className="fixed inset-0 z-20"
+        <button
+          type="button"
+          className="fixed inset-0 z-20 cursor-default"
           onClick={() => setShowToc(false)}
           aria-label="Close table of contents"
         />
@@ -552,6 +553,7 @@ export function ChapterReader({
               value={noteText}
               onChange={(e) => setNoteText(e.target.value)}
               placeholder="Your thoughts, suggestions, corrections..."
+              aria-label="Chapter notes"
               className={`w-full h-24 ${s.noteArea} rounded-xl px-4 py-3 text-sm resize-none focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/30`}
             />
             <div className="flex justify-end gap-2">

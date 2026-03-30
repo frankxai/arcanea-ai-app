@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   PhArrowUp,
   PhPaperclip,
@@ -481,25 +481,25 @@ export function ChatTab() {
                             </code>
                           );
                         },
-                        p: ({ children }) => (
+                        p: ({ children }: { children?: React.ReactNode }) => (
                           <p className="text-text-secondary font-serif leading-relaxed mb-4">
                             {children}
                           </p>
                         ),
-                        h2: ({ children }) => (
+                        h2: ({ children }: { children?: React.ReactNode }) => (
                           <h2 className="text-xl font-display text-text-primary mt-6 mb-3">
                             {children}
                           </h2>
                         ),
-                        ul: ({ children }) => (
+                        ul: ({ children }: { children?: React.ReactNode }) => (
                           <ul className="space-y-2 my-4">{children}</ul>
                         ),
-                        li: ({ children }) => (
+                        li: ({ children }: { children?: React.ReactNode }) => (
                           <li className="text-text-secondary font-serif leading-relaxed">
                             {children}
                           </li>
                         ),
-                        strong: ({ children }) => (
+                        strong: ({ children }: { children?: React.ReactNode }) => (
                           <strong className="text-text-primary font-semibold">
                             {children}
                           </strong>

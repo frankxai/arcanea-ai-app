@@ -329,7 +329,7 @@ export default function BookOfArcaneaPage() {
         {/* Cover image */}
         <div className="absolute inset-0">
           <Image
-            src="/images/luminors/book-cover.jpg"
+            src="/images/luminors/book-cover.webp"
             alt="The Book of Arcanea — World Tree Yggdrasil with the Ten Gates"
             fill
             className="object-cover object-center"
@@ -412,7 +412,7 @@ export default function BookOfArcaneaPage() {
                     chapter={part.chapterNum}
                   />
                 )}
-                <ReactMarkdown components={markdownComponents}>
+                <ReactMarkdown components={markdownComponents as Parameters<typeof ReactMarkdown>[0]['components']}>
                   {part.markdown}
                 </ReactMarkdown>
               </div>

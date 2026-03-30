@@ -103,7 +103,7 @@ export function UserNav() {
               { href: '/settings', icon: PhGear, label: 'Settings' },
             ].map((item) => (
               <Menu.Item key={item.href}>
-                {({ active }) => (
+                {({ active }: { active: boolean }) => (
                   <Link
                     href={item.href}
                     className={`flex items-center gap-3 px-4 py-2 text-sm transition-colors ${
@@ -120,7 +120,7 @@ export function UserNav() {
 
           <div className="py-1.5 border-t border-white/[0.06]">
             <Menu.Item>
-              {({ active }) => (
+              {({ active }: { active: boolean }) => (
                 <button
                   onClick={() => signOut()}
                   className={`flex items-center gap-3 px-4 py-2 text-sm w-full transition-colors ${

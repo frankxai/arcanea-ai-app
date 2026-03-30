@@ -9,7 +9,7 @@ import {
 import { DIFFICULTY_CONFIG, ELEMENT_CONFIG, CATEGORY_CONFIG } from '@/lib/challenges';
 import type { Challenge } from '@/lib/types/challenge';
 
-const ELEMENT_ICONS: Record<string, React.ComponentType<{ className?: string; weight?: string }>> = {
+const ELEMENT_ICONS: Record<string, React.ComponentType<Record<string, unknown>>> = {
   fire: Flame,
   water: Drop,
   earth: Leaf,

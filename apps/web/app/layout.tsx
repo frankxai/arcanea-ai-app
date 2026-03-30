@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ReactNode, Suspense } from "react";
-import dynamic from "next/dynamic";
 import { Space_Grotesk, Inter, JetBrains_Mono, Newsreader } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { AuthProvider } from "@/lib/auth/context";
@@ -9,13 +8,7 @@ import { Navbar, Footer } from "@/components/navigation";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import { CosmicBackground } from "@/lib/arcanea-ui/CosmicBackground";
-
-// GlobalGlowTracker follows the mouse with framer-motion springs — purely
-// cosmetic and not needed for first paint. Lazy-load to trim initial JS.
-const GlobalGlowTracker = dynamic(
-  () => import("@/components/ui/global-glow-tracker").then((m) => m.GlobalGlowTracker),
-  { ssr: false },
-);
+import { GlobalGlowTrackerLazy } from "@/components/ui/global-glow-tracker-lazy";
 
 function CosmicBackgroundFallback() {
   return (
@@ -114,6 +107,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         newsreader.variable,
       )}
     >
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+      </head>
       <body>
         {/*
           In the beginning there was Nero — the Primordial Darkness,
@@ -136,7 +134,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <Suspense fallback={<CosmicBackgroundFallback />}>
               <CosmicBackground />
             </Suspense>
-            <GlobalGlowTracker />
+            <GlobalGlowTrackerLazy />
             <Navbar />
             <main id="main-content" className="relative pt-16">
               {children}

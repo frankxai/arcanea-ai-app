@@ -1,5 +1,3 @@
-"use client";
-
 import { Skeleton, SkeletonText } from "@/components/ui/skeleton";
 
 export default function EcosystemLoading() {

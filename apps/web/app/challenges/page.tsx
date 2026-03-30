@@ -29,7 +29,7 @@ const ARENA_STATS = [
   { label: 'Legendary Entries', value: '12', icon: Crown, color: '#f59e0b' },
 ];
 
-const FILTER_CATEGORIES: { label: string; value: ChallengeCategory | 'all'; icon: React.ComponentType<{ className?: string; weight?: string }> }[] = [
+const FILTER_CATEGORIES: { label: string; value: ChallengeCategory | 'all'; icon: React.ComponentType<Record<string, unknown>> }[] = [
   { label: 'All', value: 'all', icon: Globe },
   { label: 'Web Design', value: 'web-design', icon: Globe },
   { label: 'Visual Art', value: 'visual-art', icon: Sparkle },
@@ -62,7 +62,7 @@ export default function ChallengesPage() {
     return true;
   });
 
-  const ELEMENT_ICONS: Record<string, React.ComponentType<{ className?: string; weight?: string }>> = {
+  const ELEMENT_ICONS: Record<string, React.ComponentType<Record<string, unknown>>> = {
     fire: Flame, water: Drop, earth: Leaf, wind: Wind, void: Eye, spirit: Sun,
   };
 

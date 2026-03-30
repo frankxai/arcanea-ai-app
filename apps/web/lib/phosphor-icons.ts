@@ -452,7 +452,7 @@ export const PhZap = Lightning;
 export const PhExport = ArrowSquareOut;
 export const PhTextAlignLeft = TextT;
 export const PhSpeakerHigh = SpeakerHigh;
-export const Stop = X;
+export const StopIcon = X;
 export const PhStop = Stop;
 
 // Ph-prefixed alias for GearSix

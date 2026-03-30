@@ -176,7 +176,7 @@ export function EpisodeReader({ episode, connectedLore, encounters = [], nextEpi
             <div className="prose prose-invert prose-sm max-w-none prose-headings:font-cinzel prose-headings:text-text-primary prose-p:text-text-muted prose-p:leading-relaxed prose-a:text-atlantean-teal-aqua prose-blockquote:border-l-atlantean-teal-aqua/30 prose-blockquote:text-text-muted/80">
               <ReactMarkdown
                 components={{
-                  h2: ({ children, ...props }) => {
+                  h2: ({ children, ...props }: { children?: React.ReactNode } & React.ComponentProps<'h2'>) => {
                     const text = String(children);
                     const id = text.toLowerCase().replace(/\s+/g, '-');
                     return (

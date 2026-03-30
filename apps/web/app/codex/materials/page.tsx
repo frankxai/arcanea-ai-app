@@ -121,6 +121,11 @@ function MaterialCard({ material, index }: { material: ArcaneanMaterial; index: 
       className="group relative"
     >
       <div
+        role="button"
+        tabIndex={0}
+        aria-expanded={expanded}
+        aria-label={`${material.name} details`}
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setExpanded((v) => !v); } }}
         className="relative overflow-hidden rounded-xl border transition-all duration-300 cursor-pointer select-none"
         style={{
           borderColor: expanded
@@ -544,6 +549,7 @@ export default function MaterialCodexPage() {
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
+                    aria-pressed={isActive}
                     className="relative flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap font-body"
                     style={{
                       color: isActive ? tab.color : 'rgba(255,255,255,0.4)',

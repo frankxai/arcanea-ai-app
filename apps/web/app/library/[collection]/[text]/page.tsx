@@ -12,6 +12,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import type React from 'react';
 import ReactMarkdown from 'react-markdown';
 import {
   getText,
@@ -236,7 +237,7 @@ export default async function TextPage({ params }: Props) {
             <article className="prose-arcanea">
               <ReactMarkdown
                 components={{
-                  h2: ({ children }) => {
+                  h2: ({ children }: { children?: React.ReactNode }) => {
                     const headingText = String(children);
                     const slug = headingText.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
                     return (
@@ -245,7 +246,7 @@ export default async function TextPage({ params }: Props) {
                       </h2>
                     );
                   },
-                  h3: ({ children }) => {
+                  h3: ({ children }: { children?: React.ReactNode }) => {
                     const headingText = String(children);
                     const slug = headingText.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
                     return (

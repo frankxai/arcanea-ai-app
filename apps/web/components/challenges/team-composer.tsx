@@ -16,7 +16,7 @@ const ROLES: {
   role: TeamRole;
   label: string;
   description: string;
-  icon: React.ComponentType<{ className?: string; weight?: string }>;
+  icon: React.ComponentType<Record<string, unknown>>;
   color: string;
 }[] = [
   { role: 'creator', label: 'Creator', description: 'The visionary lead. Every team needs exactly one.', icon: Crown, color: '#ffd700' },
@@ -110,7 +110,7 @@ function RoleSlot({
   role: TeamRole;
   label: string;
   description: string;
-  icon: React.ComponentType<{ className?: string; weight?: string }>;
+  icon: React.ComponentType<Record<string, unknown>>;
   color: string;
   filled: boolean;
   count: number;
@@ -150,7 +150,7 @@ function RoleSlot({
       )}
       {filled && (
         <div className="flex-shrink-0">
-          <div className="h-8 w-8 rounded-full bg-gradient-to-br from-white/10 to-white/5 ring-2" style={{ ringColor: `${color}40` }} />
+          <div className="h-8 w-8 rounded-full bg-gradient-to-br from-white/10 to-white/5 ring-2" style={{ ['--tw-ring-color' as string]: `${color}40` }} />
         </div>
       )}
     </div>

@@ -398,23 +398,26 @@ function renderInlineFormatting(text: string) {
     const italicMatch = remaining.match(/^(.*?)\*([^*]+)\*(.*)$/s);
 
     // Find earliest match
-    let earliest: { type: string; index: number; match: RegExpMatchArray } | null = null;
+    type EarliestMatch = { type: string; index: number; match: RegExpMatchArray };
+    let earliest: EarliestMatch | null = null;
+
+    const isBefore = (idx: number) => earliest === null || idx < (earliest as EarliestMatch).index;
 
     if (codeMatch && codeMatch[1] !== undefined) {
       const idx = codeMatch[1].length;
-      if (!earliest || idx < earliest.index) {
+      if (isBefore(idx)) {
         earliest = { type: "code", index: idx, match: codeMatch };
       }
     }
     if (boldMatch && boldMatch[1] !== undefined) {
       const idx = boldMatch[1].length;
-      if (!earliest || idx < earliest.index) {
+      if (isBefore(idx)) {
         earliest = { type: "bold", index: idx, match: boldMatch };
       }
     }
-    if (italicMatch && italicMatch[1] !== undefined && (!earliest || italicMatch[1].length < earliest.index)) {
+    if (italicMatch && italicMatch[1] !== undefined && isBefore(italicMatch[1].length)) {
       const idx = italicMatch[1].length;
-      if (!earliest || idx < earliest.index) {
+      if (isBefore(idx)) {
         earliest = { type: "italic", index: idx, match: italicMatch };
       }
     }

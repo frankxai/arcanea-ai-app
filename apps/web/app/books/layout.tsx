@@ -21,8 +21,36 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     images: ['/guardians/v3/maylinn-hero-v3.webp'],
   },
+  alternates: {
+    canonical: '/books',
+  },
+};
+
+const booksJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BookSeries',
+  name: 'Chronicles of Arcanea',
+  description:
+    'A seven-book fantasy saga spanning 486,000+ words. Follow Eldrians through the Ten Gates from Apprentice to Luminor.',
+  author: {
+    '@type': 'Organization',
+    name: 'Arcanea',
+    url: 'https://arcanea.ai',
+  },
+  url: 'https://arcanea.ai/books',
+  numberOfBooks: 7,
+  genre: ['Fantasy', 'Mythology', 'Creative Philosophy'],
+  inLanguage: 'en',
 };
 
 export default function BooksLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(booksJsonLd) }}
+      />
+      {children}
+    </>
+  );
 }

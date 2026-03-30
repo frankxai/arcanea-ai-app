@@ -15,7 +15,7 @@ const TIER_LABELS: Record<SpellTier, { label: string; color: string; glow: strin
   genesis: { label: 'Genesis', color: '#ffd700', glow: 'rgba(255,215,0,0.4)' },
 };
 
-const ICON_MAP: Record<string, React.ComponentType<{ className?: string; weight?: string }>> = {
+const ICON_MAP: Record<string, React.ComponentType<Record<string, unknown>>> = {
   Flame, Drop, Leaf, Wind, Eye, Star, Lightning, Sparkle,
   Heart, Shield, Globe, Moon, Sun, Diamond, Lock,
   Fire: Flame, Waves: Drop, Mountains: Globe, Megaphone: Star,
@@ -113,7 +113,7 @@ export function SpellbookViewer({
   const [activeBook, setActiveBook] = useState(0);
   const book = spellbooks[activeBook];
 
-  const ELEMENT_ICONS: Record<string, React.ComponentType<{ className?: string; weight?: string }>> = {
+  const ELEMENT_ICONS: Record<string, React.ComponentType<Record<string, unknown>>> = {
     fire: Flame,
     water: Drop,
     earth: Leaf,

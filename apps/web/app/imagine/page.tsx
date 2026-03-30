@@ -100,11 +100,11 @@ export default function ImaginePage() {
   }, []);
 
   // Handle initial generation from prompt input
-  const currentStyleRef = useRef<string | undefined>();
-  const currentModelRef = useRef<string | undefined>();
-  const currentEnhanceRef = useRef<boolean | undefined>();
+  const currentStyleRef = useRef<string | undefined>(undefined);
+  const currentModelRef = useRef<string | undefined>(undefined);
+  const currentEnhanceRef = useRef<boolean | undefined>(undefined);
 
-  const currentNegativePromptRef = useRef<string | undefined>();
+  const currentNegativePromptRef = useRef<string | undefined>(undefined);
 
   const handleGenerate = useCallback(async (prompt: string, _count: number, aspectRatio: string, style?: string, model?: string, enhance?: boolean, negativePrompt?: string) => {
     if (isGeneratingRef.current) return;

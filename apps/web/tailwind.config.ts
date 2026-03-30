@@ -180,9 +180,6 @@ const config: Config = {
         'peacock-gradient': 'linear-gradient(135deg, hsl(var(--peacock-blue)) 0%, hsl(var(--aquamarine)) 33%, hsl(var(--peacock-green)) 66%, hsl(var(--peacock-purple)) 100%)',
         'iridescent-gradient': 'linear-gradient(135deg, hsl(var(--peacock-blue-bright)) 0%, hsl(var(--aquamarine)) 25%, hsl(var(--peacock-green-bright)) 50%, hsl(var(--peacock-purple-bright)) 75%, hsl(var(--peacock-blue-bright)) 100%)',
       },
-      fontFamily: {
-        serif: ['var(--font-serif)', 'Newsreader', 'Georgia', 'ui-serif', 'serif'],
-      },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',

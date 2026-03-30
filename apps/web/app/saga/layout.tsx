@@ -21,6 +21,9 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     images: ['/guardians/v3/maylinn-hero-v3.webp'],
   },
+  alternates: {
+    canonical: '/books',
+  },
 };
 
 export default function SagaLayout({ children }: { children: React.ReactNode }) {
