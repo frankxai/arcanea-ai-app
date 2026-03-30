@@ -51,7 +51,7 @@
     "directory": "packages/cli"
   },
   "dependencies": {
-    "@arcanea/core": "^0.1.0",
+    "@arcanea/core": "workspace:*",
     "@arcanea/auth": "^1.0.3",
     "@arcanea/overlay-claude": "^1.2.0",
     "@arcanea/overlay-chatgpt": "^1.2.0",
