@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
+import type { ProjectWorkspaceEvaluation } from '@/lib/projects/enrichment';
 
 export interface ProjectRecord {
   id: string;
@@ -39,6 +40,15 @@ export interface ProjectWorkspaceSnapshot {
   };
 }
 
+export interface ProjectGraphSummaryRecord {
+  summary: string;
+  tags: string[];
+  facts: string[];
+  score: number;
+  checks: ProjectWorkspaceEvaluation['checks'];
+  updatedAt: string;
+}
+
 type ServerSupabase = Awaited<ReturnType<typeof createClient>>;
 type UntypedServerSupabase = ServerSupabase & {
   from: (table: string) => any;
@@ -55,6 +65,17 @@ function mapProjectRow(row: Record<string, unknown>): ProjectRecord {
     description: typeof row.description === 'string' ? row.description : null,
     goal: typeof row.goal === 'string' ? row.goal : null,
     createdAt: String(row.created_at ?? new Date().toISOString()),
+    updatedAt: String(row.updated_at ?? new Date().toISOString()),
+  };
+}
+
+function mapGraphSummaryRow(row: Record<string, unknown>): ProjectGraphSummaryRecord {
+  return {
+    summary: typeof row.summary === 'string' ? row.summary : '',
+    tags: Array.isArray(row.tags) ? row.tags.filter((tag): tag is string => typeof tag === 'string') : [],
+    facts: Array.isArray(row.facts) ? row.facts.filter((fact): fact is string => typeof fact === 'string') : [],
+    score: typeof row.score === 'number' ? row.score : 0,
+    checks: Array.isArray(row.checks) ? row.checks as ProjectWorkspaceEvaluation['checks'] : [],
     updatedAt: String(row.updated_at ?? new Date().toISOString()),
   };
 }
@@ -253,4 +274,26 @@ export async function getProjectWorkspaceForCurrentUser(
       memoryCount: linkedMemoryIds.length,
     },
   };
+}
+
+export async function getProjectGraphSummaryForCurrentUser(
+  projectId: string,
+): Promise<ProjectGraphSummaryRecord | null> {
+  const { db, user } = await getProjectAuthContext();
+  if (!user) return null;
+
+  try {
+    const { data, error } = await db
+      .from('project_graph_summaries')
+      .select('summary, tags, facts, score, checks, updated_at')
+      .eq('project_id', projectId)
+      .eq('user_id', user.id)
+      .single();
+
+    if (error || !data) return null;
+
+    return mapGraphSummaryRow(data as Record<string, unknown>);
+  } catch {
+    return null;
+  }
 }

@@ -84,13 +84,14 @@ test.beforeEach(async ({ page }) => {
   });
 });
 
-test('project workspace controls persist continuity in the browser', async ({ page }) => {
+test('project workspace controls persist continuity in the browser', { tag: '@smoke' }, async ({ page }) => {
   await page.goto('/chat');
 
   await expect(page.getByText('Projects')).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Atlas Launch' })).toBeVisible();
+  const projectButton = page.getByRole('button', { name: 'Atlas Launch 0 chats' });
+  await expect(projectButton).toBeVisible();
 
-  await page.getByRole('button', { name: 'Atlas Launch' }).click();
+  await projectButton.click();
   await page.getByRole('button', { name: 'Move current chat here' }).click();
 
   await expect(page.getByRole('button', { name: 'Current chat is in this project' })).toBeVisible();

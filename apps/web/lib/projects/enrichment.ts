@@ -1,5 +1,5 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
-import type { ProjectWorkspaceSnapshot } from '@/lib/projects/server';
+import type { ProjectGraphSummaryRecord, ProjectWorkspaceSnapshot } from '@/lib/projects/server';
 
 export interface ProjectWorkspaceEvaluation {
   score: number;
@@ -8,6 +8,15 @@ export interface ProjectWorkspaceEvaluation {
     passed: boolean;
     detail: string;
   }>;
+}
+
+export interface ProjectGraphView {
+  summary: string;
+  tags: string[];
+  facts: string[];
+  score: number;
+  checks: ProjectWorkspaceEvaluation['checks'];
+  source: 'stored' | 'derived' | 'enriched';
 }
 
 const STOP_WORDS = new Set([
@@ -87,6 +96,34 @@ function deriveSummary(snapshot: ProjectWorkspaceSnapshot, tags: string[]): stri
   return parts.join(' ');
 }
 
+export function buildProjectGraphView(
+  snapshot: ProjectWorkspaceSnapshot,
+  summaryRecord?: ProjectGraphSummaryRecord | null,
+  source: ProjectGraphView['source'] = 'derived',
+): {
+  evaluation: ProjectWorkspaceEvaluation;
+  graph: ProjectGraphView;
+} {
+  const evaluation = evaluateProjectWorkspace(snapshot);
+  const tags = summaryRecord?.tags?.length ? summaryRecord.tags : deriveTags(snapshot);
+  const facts = summaryRecord?.facts?.length ? summaryRecord.facts : deriveFacts(snapshot);
+  const summary = summaryRecord?.summary || deriveSummary(snapshot, tags);
+  const score = typeof summaryRecord?.score === 'number' ? summaryRecord.score : evaluation.score;
+  const checks = summaryRecord?.checks?.length ? summaryRecord.checks : evaluation.checks;
+
+  return {
+    evaluation,
+    graph: {
+      summary,
+      tags,
+      facts,
+      score,
+      checks,
+      source,
+    },
+  };
+}
+
 export function evaluateProjectWorkspace(
   snapshot: ProjectWorkspaceSnapshot,
 ): ProjectWorkspaceEvaluation {
@@ -144,10 +181,8 @@ export async function enrichProjectGraph(
   edgeCount: number;
   evaluation: ProjectWorkspaceEvaluation;
 }> {
-  const tags = deriveTags(snapshot);
-  const facts = deriveFacts(snapshot);
-  const summary = deriveSummary(snapshot, tags);
-  const evaluation = evaluateProjectWorkspace(snapshot);
+  const { evaluation, graph } = buildProjectGraphView(snapshot);
+  const { summary, tags, facts } = graph;
 
   const edges = [
     ...snapshot.sessions.map((session) => ({

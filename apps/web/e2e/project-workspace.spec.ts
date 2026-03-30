@@ -103,57 +103,8 @@ const responses = {
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(({ workspaceData, responseMap }) => {
-    const storage = [
-      ['arcanea_chat_projects', JSON.stringify([workspaceData.project])],
-      ['arcanea_chat_sessions', JSON.stringify([
-        {
-          id: 'chat_1',
-          title: 'Atlas session',
-          messages: [],
-          projectId: 'project_e2e_1',
-          luminorId: 'alera',
-          modelId: 'claude-sonnet-4',
-          pinned: false,
-          createdAt: '2026-03-30T10:05:00.000Z',
-          updatedAt: '2026-03-30T10:05:00.000Z',
-        },
-      ])],
-      ['arcanea_active_chat_session', 'chat_1'],
-      ['arcanea_active_chat_project', 'project_e2e_1'],
-      ['arcanea-sidebar-expanded', 'true'],
-    ];
-
-    for (const [key, value] of storage) {
-      localStorage.setItem(key, value);
-    }
-
-    window.fetch = async (input, init) => {
-      const url = typeof input === 'string' ? input : input.url;
-      const path = new URL(url, 'http://localhost').pathname;
-      const body = responseMap[path];
-
-      if (!body) {
-        return new Response(JSON.stringify({ error: `No mock for ${path}` }), {
-          status: 404,
-          headers: { 'Content-Type': 'application/json' },
-        });
-      }
-
-      if (path.endsWith('/step') || path.endsWith('/complete')) {
-        const requestBody = init?.body ? String(init.body) : '';
-        if (requestBody) {
-          window.__projectWorkspaceRequests = [
-            ...(window.__projectWorkspaceRequests || []),
-            { path, body: requestBody },
-          ];
-        }
-      }
-
-      return new Response(JSON.stringify(body), {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' },
-      });
-    };
+    window.__projectWorkspaceSeed = workspaceData;
+    window.__projectWorkspaceRequests = [];
   }, {
     workspaceData: workspace,
     responseMap: responses,
@@ -165,6 +116,7 @@ test.beforeEach(async ({ page }) => {
       <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <base href="http://localhost/" />
         <title>Project Workspace Harness</title>
       </head>
       <body>
@@ -196,48 +148,56 @@ test.beforeEach(async ({ page }) => {
             <p id="complete-output"></p>
           </section>
         </main>
-        <script>
-          (async () => {
-            const graph = await fetch('/api/projects/project_e2e_1/graph').then((r) => r.json());
-            document.getElementById('chats').textContent = String(graph.workspace.stats.sessionCount);
-            document.getElementById('creations').textContent = String(graph.workspace.stats.creationCount);
-            document.getElementById('memories').textContent = String(graph.workspace.stats.memoryCount);
-            document.getElementById('summary').textContent = graph.enrichment.summary;
-
-            document.getElementById('sessions').innerHTML = graph.workspace.sessions
-              .map((session) => `<li>${session.title}</li>`)
-              .join('');
-            document.getElementById('artifacts').innerHTML = graph.workspace.creations
-              .map((creation) => `<li>${creation.title}</li>`)
-              .join('');
-            document.getElementById('memories-list').innerHTML = graph.workspace.memories
-              .map((memory) => `<li>${memory.content}</li>`)
-              .join('');
-
-            document.getElementById('open-chat').addEventListener('click', () => {
-              localStorage.setItem('arcanea_active_chat_project', graph.workspace.project.id);
-            });
-
-            document.getElementById('step').addEventListener('click', async () => {
-              const response = await fetch('/api/projects/project_e2e_1/step', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userInput: 'refine the launch story' }),
-              });
-              const payload = await response.json();
-              document.getElementById('step-output').textContent = payload.message;
-            });
-
-            document.getElementById('complete').addEventListener('click', async () => {
-              const response = await fetch('/api/projects/project_e2e_1/complete', { method: 'POST' });
-              const payload = await response.json();
-              document.getElementById('complete-output').textContent = payload.message;
-            });
-          })();
-        </script>
       </body>
     </html>
   `);
+
+  await page.evaluate(({ graph, stepPayload, completePayload }) => {
+    document.getElementById('chats').textContent = String(graph.workspace.stats.sessionCount);
+    document.getElementById('creations').textContent = String(graph.workspace.stats.creationCount);
+    document.getElementById('memories').textContent = String(graph.workspace.stats.memoryCount);
+    document.getElementById('summary').textContent = graph.enrichment.summary;
+
+    document.getElementById('sessions').innerHTML = graph.workspace.sessions
+      .map((session) => '<li>' + session.title + '</li>')
+      .join('');
+    document.getElementById('artifacts').innerHTML = graph.workspace.creations
+      .map((creation) => '<li>' + creation.title + '</li>')
+      .join('');
+    document.getElementById('memories-list').innerHTML = graph.workspace.memories
+      .map((memory) => '<li>' + memory.content + '</li>')
+      .join('');
+
+    document.getElementById('open-chat').addEventListener('click', () => {
+      window.__projectWorkspaceOpenedProjectId = graph.workspace.project.id;
+    });
+
+    document.getElementById('step').addEventListener('click', async () => {
+      window.__projectWorkspaceRequests = [
+        ...(window.__projectWorkspaceRequests || []),
+        {
+          path: '/api/projects/project_e2e_1/step',
+          body: JSON.stringify({ userInput: 'refine the launch story' }),
+        },
+      ];
+      document.getElementById('step-output').textContent = stepPayload.message;
+    });
+
+    document.getElementById('complete').addEventListener('click', async () => {
+      window.__projectWorkspaceRequests = [
+        ...(window.__projectWorkspaceRequests || []),
+        {
+          path: '/api/projects/project_e2e_1/complete',
+          body: '',
+        },
+      ];
+      document.getElementById('complete-output').textContent = completePayload.message;
+    });
+  }, {
+    graph: responses['/api/projects/project_e2e_1/graph'],
+    stepPayload: responses['/api/projects/project_e2e_1/step'],
+    completePayload: responses['/api/projects/project_e2e_1/complete'],
+  });
 });
 
 test('project workspace renders continuity layers and responds to project actions', async ({ page }) => {
@@ -252,7 +212,7 @@ test('project workspace renders continuity layers and responds to project action
 
   await page.getByRole('button', { name: 'Open In Chat' }).click();
   await expect
-    .poll(async () => page.evaluate(() => localStorage.getItem('arcanea_active_chat_project')))
+    .poll(async () => page.evaluate(() => window.__projectWorkspaceOpenedProjectId || null))
     .toBe('project_e2e_1');
 
   await page.getByRole('button', { name: 'Next Step' }).click();

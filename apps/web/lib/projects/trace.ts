@@ -11,7 +11,8 @@ export interface ProjectTraceInput {
     | 'project_creation_linked'
     | 'project_memory_linked'
     | 'project_graph_enriched'
-    | 'project_graph_eval';
+    | 'project_graph_eval'
+    | 'project_graph_viewed';
   metadata?: Record<string, unknown>;
 }
 

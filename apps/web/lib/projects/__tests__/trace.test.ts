@@ -106,6 +106,24 @@ async function main() {
     assert.equal(calls.length > 0, true);
   });
 
+  await test('recordProjectTrace supports graph view traces', async () => {
+    const writes: Array<{ table: string; payload: unknown }> = [];
+    const supabase = createSupabaseStub(writes);
+
+    await recordProjectTrace(supabase as never, {
+      userId: 'user_1',
+      projectId: 'project_1',
+      action: 'project_graph_viewed',
+      metadata: {
+        score: 92,
+        source: 'stored',
+      },
+    });
+
+    assert.equal(writes.length, 1);
+    assert.equal((writes[0].payload as Record<string, unknown>).action, 'project_graph_viewed');
+  });
+
   if (failed > 0) {
     console.error(`\n${failed} project trace test(s) failed`);
     process.exit(1);

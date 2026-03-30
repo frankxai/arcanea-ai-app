@@ -21,13 +21,16 @@ export default defineConfig({
   ...(shouldRunWebServer
     ? {
         webServer: {
-          command: process.platform === 'win32' ? 'cmd.exe /c pnpm run start' : 'pnpm run start',
+          command:
+            process.env.PLAYWRIGHT_WEB_SERVER_COMMAND ??
+            (process.platform === 'win32' ? 'cmd.exe /c pnpm run dev' : 'pnpm run dev'),
           url: baseURL,
           reuseExistingServer: !process.env.CI,
-          timeout: 120000,
+          timeout: 300000,
           env: {
             NEXT_PUBLIC_SUPABASE_URL: supabaseUrl,
             NEXT_PUBLIC_SUPABASE_ANON_KEY: supabaseAnonKey,
+            NEXT_TELEMETRY_DISABLED: '1',
           },
         },
       }

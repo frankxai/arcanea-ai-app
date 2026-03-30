@@ -1,6 +1,6 @@
 import { strict as assert } from 'node:assert';
-import { enrichProjectGraph, evaluateProjectWorkspace } from '../enrichment';
-import type { ProjectWorkspaceSnapshot } from '../server';
+import { buildProjectGraphView, enrichProjectGraph, evaluateProjectWorkspace } from '../enrichment';
+import type { ProjectGraphSummaryRecord, ProjectWorkspaceSnapshot } from '../server';
 
 let passed = 0;
 let failed = 0;
@@ -168,6 +168,54 @@ async function main() {
     const edgePayload = edgeWrite?.payload as Array<{ relation: string }>;
     assert.equal(edgePayload.some((edge) => edge.relation === 'derived_from'), true);
     assert.equal(edgePayload.some((edge) => edge.relation === 'relevant_to'), true);
+  });
+
+  await test('buildProjectGraphView prefers persisted graph summaries when available', () => {
+    const snapshot = createSnapshot();
+    const persisted: ProjectGraphSummaryRecord = {
+      summary: 'Stored graph summary for Atlas Worldbuilding.',
+      tags: ['atlas', 'worldbuilding'],
+      facts: ['Goal: Turn the Atlas setting into a playable story world.'],
+      score: 88,
+      checks: [
+        {
+          name: 'has_project',
+          passed: true,
+          detail: 'Workspace resolves to a concrete project record.',
+        },
+      ],
+      updatedAt: '2026-03-30T12:00:00.000Z',
+    };
+
+    const { graph, evaluation } = buildProjectGraphView(snapshot, persisted, 'stored');
+
+    assert.equal(graph.summary, persisted.summary);
+    assert.deepEqual(graph.tags, persisted.tags);
+    assert.deepEqual(graph.facts, persisted.facts);
+    assert.equal(graph.score, persisted.score);
+    assert.deepEqual(graph.checks, persisted.checks);
+    assert.equal(graph.source, 'stored');
+    assert.equal(evaluation.score, 100);
+  });
+
+  await test('buildProjectGraphView derives a usable graph summary when nothing is persisted', () => {
+    const snapshot = createSnapshot({
+      project: {
+        id: 'project_2',
+        title: 'Lumen Archive',
+        description: null,
+        goal: null,
+        createdAt: '2026-03-30T10:00:00.000Z',
+        updatedAt: '2026-03-30T10:00:00.000Z',
+      },
+    });
+
+    const { graph } = buildProjectGraphView(snapshot);
+
+    assert.equal(graph.source, 'derived');
+    assert.equal(graph.summary.includes('Lumen Archive is an active Arcanea project workspace.'), true);
+    assert.equal(graph.score, 100);
+    assert.equal(graph.tags.length > 0, true);
   });
 
   if (failed > 0) {
