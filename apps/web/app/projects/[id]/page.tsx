@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
-import { ArrowRight, ClockCounterClockwise, FolderOpen, Sparkle } from '@/lib/phosphor-icons';
+import { ArrowRight, ClockCounterClockwise, FolderOpen } from '@/lib/phosphor-icons';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -11,9 +11,13 @@ import { buildProjectCompletionSummary } from '@/lib/projects/progress';
 import {
   getProjectGraphSummaryForCurrentUser,
   getProjectWorkspaceForCurrentUser,
+  listProjectCandidateCreationsForCurrentUser,
+  listProjectCandidateSessionsForCurrentUser,
   listProjectActivityForCurrentUser,
 } from '@/lib/projects/server';
 import { OpenProjectChatButton } from './open-project-chat-button';
+import { ProjectCreationPanel } from './project-creation-panel';
+import { ProjectSessionPanel } from './project-session-panel';
 import { ProjectWorkspaceControls } from './project-workspace-controls';
 
 interface PageProps {
@@ -74,9 +78,11 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
     notFound();
   }
 
-  const [persistedGraph, activity] = await Promise.all([
+  const [persistedGraph, activity, candidateSessions, candidateCreations] = await Promise.all([
     getProjectGraphSummaryForCurrentUser(id),
     listProjectActivityForCurrentUser(id, 8),
+    listProjectCandidateSessionsForCurrentUser(id, 6),
+    listProjectCandidateCreationsForCurrentUser(id, 6),
   ]);
 
   const completion = buildProjectCompletionSummary(workspace);
@@ -260,86 +266,18 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
         </section>
 
         <section className="mt-6 grid gap-6 xl:grid-cols-[1fr_1fr]">
-          <Card variant="liquid-glass" className="min-h-[320px]">
-            <CardHeader>
-              <CardTitle>Conversation Continuity</CardTitle>
-              <CardDescription>
-                Recent sessions already linked to this project. This is the hot path Arcanea uses to keep work coherent.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {workspace.sessions.length === 0 ? (
-                <p className="text-sm text-white/50">
-                  No chats linked yet. Open the project in chat and start building.
-                </p>
-              ) : (
-                workspace.sessions.map((session) => (
-                  <div
-                    key={session.id}
-                    className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3"
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <p className="text-sm font-medium text-white">
-                          {session.title || 'Untitled chat'}
-                        </p>
-                        <p className="mt-1 text-xs text-white/45">
-                          {session.luminorId || 'No luminor'} / {session.modelId || 'default model'}
-                        </p>
-                      </div>
-                      <span className="text-[11px] text-white/35">
-                        {new Date(session.updatedAt).toLocaleDateString()}
-                      </span>
-                    </div>
-                  </div>
-                ))
-              )}
-            </CardContent>
-          </Card>
+          <ProjectSessionPanel
+            projectId={workspace.project.id}
+            linkedSessions={workspace.sessions}
+            candidateSessions={candidateSessions}
+          />
 
-          <Card variant="liquid-glass" className="min-h-[320px]">
-            <CardHeader>
-              <CardTitle>Artifact Trail</CardTitle>
-              <CardDescription>
-                Outputs already attached to this workspace graph.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {workspace.creations.length === 0 ? (
-                <p className="text-sm text-white/50">
-                  No creations linked yet. Save from chat or studio to begin building a durable project trail.
-                </p>
-              ) : (
-                workspace.creations.map((creation) => (
-                  <div
-                    key={creation.id}
-                    className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3"
-                  >
-                    <div className="flex items-start gap-3">
-                      {creation.thumbnailUrl ? (
-                        <img
-                          src={creation.thumbnailUrl}
-                          alt={creation.title}
-                          className="h-12 w-12 rounded-xl object-cover"
-                        />
-                      ) : (
-                        <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-white/45">
-                          <Sparkle size={18} />
-                        </div>
-                      )}
-                      <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-medium text-white">{creation.title}</p>
-                        <p className="mt-1 text-xs text-white/45">
-                          {creation.type} / {creation.status}
-                          {creation.sourceSessionId ? ` / from ${creation.sourceSessionId.slice(0, 8)}` : ' / unlinked'}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                ))
-              )}
-            </CardContent>
-          </Card>
+          <ProjectCreationPanel
+            projectId={workspace.project.id}
+            linkedCreations={workspace.creations}
+            candidateCreations={candidateCreations}
+            linkedSessions={workspace.sessions}
+          />
         </section>
 
         <section className="mt-6 grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">

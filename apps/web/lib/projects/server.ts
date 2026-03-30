@@ -56,6 +56,26 @@ export interface ProjectActivityRecord {
   metadata: Record<string, unknown> | null;
 }
 
+export interface ProjectSessionRecord {
+  id: string;
+  title: string | null;
+  updatedAt: string;
+  luminorId: string | null;
+  modelId: string | null;
+  projectId?: string | null;
+}
+
+export interface ProjectCreationRecord {
+  id: string;
+  title: string;
+  type: string;
+  status: string;
+  thumbnailUrl: string | null;
+  createdAt: string;
+  sourceSessionId: string | null;
+  projectId?: string | null;
+}
+
 type ServerSupabase = Awaited<ReturnType<typeof createClient>>;
 type UntypedServerSupabase = ServerSupabase & {
   from: (table: string) => any;
@@ -96,6 +116,30 @@ function mapProjectActivityRow(row: Record<string, unknown>): ProjectActivityRec
       row.metadata && typeof row.metadata === 'object'
         ? (row.metadata as Record<string, unknown>)
         : null,
+  };
+}
+
+function mapSessionRow(row: Record<string, unknown>): ProjectSessionRecord {
+  return {
+    id: String(row.id),
+    title: typeof row.title === 'string' ? row.title : null,
+    updatedAt: String(row.updated_at ?? new Date().toISOString()),
+    luminorId: typeof row.luminor_id === 'string' ? row.luminor_id : null,
+    modelId: typeof row.model_id === 'string' ? row.model_id : null,
+    projectId: typeof row.project_id === 'string' ? row.project_id : null,
+  };
+}
+
+function mapCreationRow(row: Record<string, unknown>): ProjectCreationRecord {
+  return {
+    id: String(row.id),
+    title: String(row.title ?? 'Untitled Creation'),
+    type: String(row.type ?? 'mixed'),
+    status: String(row.status ?? 'draft'),
+    thumbnailUrl: typeof row.thumbnail_url === 'string' ? row.thumbnail_url : null,
+    createdAt: String(row.created_at ?? new Date().toISOString()),
+    sourceSessionId: typeof row.source_session_id === 'string' ? row.source_session_id : null,
+    projectId: typeof row.project_id === 'string' ? row.project_id : null,
   };
 }
 
@@ -258,23 +302,9 @@ export async function getProjectWorkspaceForCurrentUser(
         .limit(12)
     : { data: [] as Array<{ id: string; content: string; created_at: string | null }> };
 
-  const sessions = ((sessionsRes.data as Array<Record<string, unknown>> | null) ?? []).map((row) => ({
-    id: String(row.id),
-    title: typeof row.title === 'string' ? row.title : null,
-    updatedAt: String(row.updated_at ?? new Date().toISOString()),
-    luminorId: typeof row.luminor_id === 'string' ? row.luminor_id : null,
-    modelId: typeof row.model_id === 'string' ? row.model_id : null,
-  }));
+  const sessions = ((sessionsRes.data as Array<Record<string, unknown>> | null) ?? []).map(mapSessionRow);
 
-  const creations = ((creationsRes.data as Array<Record<string, unknown>> | null) ?? []).map((row) => ({
-    id: String(row.id),
-    title: String(row.title ?? 'Untitled Creation'),
-    type: String(row.type ?? 'mixed'),
-    status: String(row.status ?? 'draft'),
-    thumbnailUrl: typeof row.thumbnail_url === 'string' ? row.thumbnail_url : null,
-    createdAt: String(row.created_at ?? new Date().toISOString()),
-    sourceSessionId: typeof row.source_session_id === 'string' ? row.source_session_id : null,
-  }));
+  const creations = ((creationsRes.data as Array<Record<string, unknown>> | null) ?? []).map(mapCreationRow);
 
   const memories = ((memoriesRes.data as Array<Record<string, unknown>> | null) ?? []).map((row) => ({
     id: String(row.id),
@@ -340,4 +370,140 @@ export async function listProjectActivityForCurrentUser(
   } catch {
     return [];
   }
+}
+
+export async function listProjectCandidateSessionsForCurrentUser(
+  projectId: string,
+  limit = 8,
+): Promise<ProjectSessionRecord[]> {
+  const { db, user } = await getProjectAuthContext();
+  if (!user) return [];
+
+  try {
+    const { data, error } = await db
+      .from('chat_sessions')
+      .select('id, title, updated_at, luminor_id, model_id, project_id')
+      .eq('user_id', user.id)
+      .or(`project_id.is.null,project_id.neq.${projectId}`)
+      .order('updated_at', { ascending: false })
+      .limit(limit);
+
+    if (error || !data) return [];
+
+    return (data as Record<string, unknown>[]).map(mapSessionRow);
+  } catch {
+    return [];
+  }
+}
+
+export async function listProjectCandidateCreationsForCurrentUser(
+  projectId: string,
+  limit = 8,
+): Promise<ProjectCreationRecord[]> {
+  const { db, user } = await getProjectAuthContext();
+  if (!user) return [];
+
+  try {
+    const { data, error } = await db
+      .from('creations')
+      .select('id, title, type, status, thumbnail_url, created_at, source_session_id, project_id')
+      .eq('user_id', user.id)
+      .or(`project_id.is.null,project_id.neq.${projectId}`)
+      .order('created_at', { ascending: false })
+      .limit(limit);
+
+    if (error || !data) return [];
+
+    return (data as Record<string, unknown>[]).map(mapCreationRow);
+  } catch {
+    return [];
+  }
+}
+
+export async function assignSessionToProjectForCurrentUser(
+  projectId: string,
+  sessionId: string,
+): Promise<ProjectSessionRecord | null> {
+  const { db, user } = await getProjectAuthContext();
+  if (!user) return null;
+
+  const { data, error } = await db
+    .from('chat_sessions')
+    .update({
+      project_id: projectId,
+      updated_at: new Date().toISOString(),
+    })
+    .eq('id', sessionId)
+    .eq('user_id', user.id)
+    .select('id, title, updated_at, luminor_id, model_id, project_id')
+    .single();
+
+  if (error || !data) return null;
+  return mapSessionRow(data as Record<string, unknown>);
+}
+
+export async function detachSessionFromProjectForCurrentUser(
+  projectId: string,
+  sessionId: string,
+): Promise<boolean> {
+  const { db, user } = await getProjectAuthContext();
+  if (!user) return false;
+
+  const { error } = await db
+    .from('chat_sessions')
+    .update({
+      project_id: null,
+      updated_at: new Date().toISOString(),
+    })
+    .eq('id', sessionId)
+    .eq('user_id', user.id)
+    .eq('project_id', projectId);
+
+  return !error;
+}
+
+export async function assignCreationToProjectForCurrentUser(
+  projectId: string,
+  creationId: string,
+  sourceSessionId?: string | null,
+): Promise<ProjectCreationRecord | null> {
+  const { db, user } = await getProjectAuthContext();
+  if (!user) return null;
+
+  const payload: Record<string, unknown> = {
+    project_id: projectId,
+  };
+  if (sourceSessionId !== undefined) {
+    payload.source_session_id = sourceSessionId;
+  }
+
+  const { data, error } = await db
+    .from('creations')
+    .update(payload)
+    .eq('id', creationId)
+    .eq('user_id', user.id)
+    .select('id, title, type, status, thumbnail_url, created_at, source_session_id, project_id')
+    .single();
+
+  if (error || !data) return null;
+  return mapCreationRow(data as Record<string, unknown>);
+}
+
+export async function detachCreationFromProjectForCurrentUser(
+  projectId: string,
+  creationId: string,
+): Promise<boolean> {
+  const { db, user } = await getProjectAuthContext();
+  if (!user) return false;
+
+  const { error } = await db
+    .from('creations')
+    .update({
+      project_id: null,
+    })
+    .eq('id', creationId)
+    .eq('user_id', user.id)
+    .eq('project_id', projectId);
+
+  return !error;
 }

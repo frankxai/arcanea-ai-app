@@ -15,13 +15,21 @@ const updateProjectSchema = z.object({
   goal: z.string().trim().max(1000).nullable().optional(),
 });
 
+export const projectRouteDeps = {
+  getProjectAuthContext,
+  deleteProjectForCurrentUser,
+  getProjectForCurrentUser,
+  updateProjectForCurrentUser,
+  recordProjectTrace,
+};
+
 export async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
-    const project = await getProjectForCurrentUser(id);
+    const project = await projectRouteDeps.getProjectForCurrentUser(id);
     if (!project) {
       return errorResponse('NOT_FOUND', 'Project not found', 404);
     }
@@ -50,17 +58,17 @@ export async function PATCH(
       });
     }
 
-    const { supabase, user } = await getProjectAuthContext();
+    const { supabase, user } = await projectRouteDeps.getProjectAuthContext();
     if (!user) {
       return errorResponse('UNAUTHORIZED', 'Authentication required', 401);
     }
 
-    const project = await updateProjectForCurrentUser(id, validation.data);
+    const project = await projectRouteDeps.updateProjectForCurrentUser(id, validation.data);
     if (!project) {
       return errorResponse('NOT_FOUND', 'Project not found', 404);
     }
 
-    await recordProjectTrace(supabase, {
+    await projectRouteDeps.recordProjectTrace(supabase, {
       userId: user.id,
       projectId: project.id,
       action: 'project_updated',
@@ -79,17 +87,17 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params;
-    const { supabase, user } = await getProjectAuthContext();
+    const { supabase, user } = await projectRouteDeps.getProjectAuthContext();
     if (!user) {
       return errorResponse('UNAUTHORIZED', 'Authentication required', 401);
     }
 
-    const deleted = await deleteProjectForCurrentUser(id);
+    const deleted = await projectRouteDeps.deleteProjectForCurrentUser(id);
     if (!deleted) {
       return errorResponse('NOT_FOUND', 'Project not found', 404);
     }
 
-    await recordProjectTrace(supabase, {
+    await projectRouteDeps.recordProjectTrace(supabase, {
       userId: user.id,
       projectId: id,
       action: 'project_deleted',
