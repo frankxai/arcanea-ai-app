@@ -14,6 +14,7 @@ import {
   listProjectActivityForCurrentUser,
 } from '@/lib/projects/server';
 import { OpenProjectChatButton } from './open-project-chat-button';
+import { ProjectWorkspaceControls } from './project-workspace-controls';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -219,34 +220,43 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
             </CardContent>
           </Card>
 
-          <Card variant="liquid-glass-subtle" className="self-start">
-            <CardHeader>
-              <CardTitle>Next Actions</CardTitle>
-              <CardDescription>
-                The workspace graph is live. These are the remaining steps Arcanea can still learn from.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3 text-sm text-white/70">
-              {remainingSteps.length === 0 ? (
-                <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
-                  <p className="font-medium text-white">Workspace complete</p>
-                  <p className="mt-1 text-white/60">
-                    The project has the frame, continuity, artifacts, memory, and source provenance Arcanea expects.
-                  </p>
-                </div>
-              ) : (
-                remainingSteps.map((step) => (
-                  <div key={step.id} className="flex items-start gap-2 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
-                    <ArrowRight size={14} className="mt-1 text-atlantean-teal-aqua" />
-                    <div className="min-w-0">
-                      <p className="font-medium text-white">{step.title}</p>
-                      <p className="mt-1 text-white/55">{step.detail}</p>
-                    </div>
+          <div className="space-y-6">
+            <ProjectWorkspaceControls
+              projectId={workspace.project.id}
+              initialTitle={workspace.project.title}
+              initialDescription={workspace.project.description}
+              initialGoal={workspace.project.goal}
+            />
+
+            <Card variant="liquid-glass-subtle" className="self-start">
+              <CardHeader>
+                <CardTitle>Next Actions</CardTitle>
+                <CardDescription>
+                  The workspace graph is live. These are the remaining steps Arcanea can still learn from.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3 text-sm text-white/70">
+                {remainingSteps.length === 0 ? (
+                  <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
+                    <p className="font-medium text-white">Workspace complete</p>
+                    <p className="mt-1 text-white/60">
+                      The project has the frame, continuity, artifacts, memory, and source provenance Arcanea expects.
+                    </p>
                   </div>
-                ))
-              )}
-            </CardContent>
-          </Card>
+                ) : (
+                  remainingSteps.map((step) => (
+                    <div key={step.id} className="flex items-start gap-2 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
+                      <ArrowRight size={14} className="mt-1 text-atlantean-teal-aqua" />
+                      <div className="min-w-0">
+                        <p className="font-medium text-white">{step.title}</p>
+                        <p className="mt-1 text-white/55">{step.detail}</p>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </CardContent>
+            </Card>
+          </div>
         </section>
 
         <section className="mt-6 grid gap-6 xl:grid-cols-[1fr_1fr]">
