@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -16,7 +17,17 @@ import {
   PhSparkle,
   PhUsers,
 } from "@/lib/phosphor-icons";
-import { V4Scene } from "./v4-scene";
+
+// Heavy Three.js scene — lazy-load to keep initial JS minimal
+const V4Scene = dynamic(
+  () => import("./v4-scene").then((mod) => mod.V4Scene),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="min-h-[88vh] bg-gradient-to-b from-black/60 to-transparent" />
+    ),
+  },
+);
 
 const guardians = [
   { name: "Lyssandria", philosophy: "Structure. Patience. Foundation.", image: "/guardians/v3/lyssandria-hero-v3.webp" },

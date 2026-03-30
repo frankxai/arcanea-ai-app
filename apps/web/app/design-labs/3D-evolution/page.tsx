@@ -16,8 +16,8 @@ import {
   PhTree,
   PhUsers,
 } from "@/lib/phosphor-icons";
-import { EvolutionScene } from "./evolution-scene";
 import { SplinePreview } from "./spline-preview";
+import { EvolutionSceneLoader as EvolutionScene } from "./evolution-scene-loader";
 
 export const metadata: Metadata = {
   title: "3D Evolution Lab",

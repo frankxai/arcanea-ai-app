@@ -2,6 +2,13 @@
 const nextConfig = {
   poweredByHeader: false,
   serverExternalPackages: ['@opentelemetry/api'],
+  // Strip console.log/warn in production builds — keeps bundles lean & avoids
+  // leaking debug info. console.error is preserved for runtime diagnostics.
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production'
+      ? { exclude: ['error'] }
+      : false,
+  },
   turbopack: {
     resolveAlias: {
       '@opentelemetry/api': { browser: './empty-module.js' },
