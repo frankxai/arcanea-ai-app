@@ -1,0 +1,211 @@
+{
+  "repos": [
+    {
+      "id": "arcanea",
+      "label": "Arcanea Platform",
+      "path": ".",
+      "cli": ["arcanea"],
+      "purpose": "Main platform monorepo and control plane",
+      "expectedRemoteHints": ["frankxai/arcanea", "frankxai/arcanea-ai-app"]
+    },
+    {
+      "id": "arcanea-code",
+      "label": "Arcanea Code",
+      "path": "arcanea-code",
+      "cli": ["opencode"],
+      "purpose": "Arcanea OpenCode fork and flagship CLI engine",
+      "expectedRemoteHints": ["frankxai/arcanea-code", "anomalyco/opencode"],
+      "smokeCommands": [
+        {
+          "label": "opencode help",
+          "command": "bun run --cwd packages/opencode --conditions=browser src/index.ts --help"
+        }
+      ]
+    },
+    {
+      "id": "oh-my-arcanea",
+      "label": "Oh My Arcanea",
+      "path": "oh-my-arcanea",
+      "cli": ["oh-my-arcanea", "opencode-arcanea"],
+      "purpose": "Arcanea harness overlay and operator workflow layer",
+      "expectedRemoteHints": ["frankxai/oh-my-arcanea"],
+      "smokeCommands": [
+        {
+          "label": "cli help",
+          "command": "bun run src/cli/index.ts --help"
+        }
+      ]
+    },
+    {
+      "id": "arcanea-opencode",
+      "label": "Arcanea OpenCode Legacy Harness",
+      "path": "arcanea-opencode",
+      "cli": ["arcanea-opencode"],
+      "purpose": "Legacy Arcanea OpenCode integration retained for compatibility",
+      "expectedRemoteHints": ["frankxai/arcanea-opencode"],
+      "smokeCommands": [
+        {
+          "label": "build",
+          "command": "bun run build"
+        }
+      ]
+    },
+    {
+      "id": "claude-arcanea",
+      "label": "Claude Arcanea",
+      "path": "claude-arcanea",
+      "cli": ["claude-arcanea"],
+      "purpose": "Claude Code Arcanea harness",
+      "expectedRemoteHints": ["frankxai/claude-arcanea"],
+      "smokeCommands": [
+        {
+          "label": "build",
+          "command": "npm run build"
+        }
+      ]
+    },
+    {
+      "id": "codex-arcanea",
+      "label": "Codex Arcanea",
+      "path": "codex-arcanea",
+      "cli": ["codex-arcanea"],
+      "purpose": "Codex Arcanea harness",
+      "expectedRemoteHints": ["frankxai/codex-arcanea"],
+      "smokeCommands": [
+        {
+          "label": "build",
+          "command": "npm run build"
+        }
+      ]
+    },
+    {
+      "id": "arcanea-flow",
+      "label": "Arcanea Flow",
+      "path": "arcanea-flow",
+      "cli": [],
+      "purpose": "Swarm and multi-agent execution engine",
+      "expectedRemoteHints": ["frankxai/arcanea-flow"],
+      "smokeCommands": [
+        {
+          "label": "build",
+          "command": "npm run build"
+        }
+      ]
+    },
+    {
+      "id": "arcanea-agents",
+      "label": "Arcanea Agents",
+      "path": "arcanea-agents",
+      "cli": [],
+      "purpose": "Agent definitions and coordination assets",
+      "repoMode": "workspace-module",
+      "expectedRemoteHints": []
+    },
+    {
+      "id": "arcanea-lore",
+      "label": "Arcanea Lore",
+      "path": "arcanea-lore",
+      "cli": [],
+      "purpose": "Lore and canonical world model",
+      "repoMode": "workspace-module",
+      "expectedRemoteHints": []
+    },
+    {
+      "id": "arcanea-records",
+      "label": "Arcanea Records",
+      "path": "arcanea-records",
+      "cli": [],
+      "purpose": "Records, summaries, and session artifacts",
+      "repoMode": "workspace-module",
+      "expectedRemoteHints": []
+    },
+    {
+      "id": "arcanea-ecosystem",
+      "label": "Arcanea Ecosystem",
+      "path": "arcanea-ecosystem",
+      "cli": [],
+      "purpose": "Ecosystem specs and integration docs",
+      "expectedRemoteHints": ["frankxai/arcanea-ecosystem"]
+    },
+    {
+      "id": "arcanea-soul",
+      "label": "Arcanea Soul",
+      "path": "arcanea-soul",
+      "cli": [],
+      "purpose": "Voice and personality engine",
+      "repoMode": "workspace-module",
+      "expectedRemoteHints": []
+    },
+    {
+      "id": "arcanea-companion",
+      "label": "Arcanea Companion",
+      "path": "arcanea-companion",
+      "cli": [],
+      "purpose": "Companion app surface",
+      "repoMode": "workspace-module",
+      "expectedRemoteHints": []
+    },
+    {
+      "id": "arcanea-claw",
+      "label": "Arcanea Claw",
+      "path": "arcanea-claw",
+      "cli": ["arcanea-claw"],
+      "purpose": "Media engine and creation workflows",
+      "expectedRemoteHints": ["frankxai/arcanea-claw"]
+    },
+    {
+      "id": "arcanea-infogenius",
+      "label": "Arcanea Infogenius",
+      "path": "arcanea-infogenius",
+      "cli": [],
+      "purpose": "Visual intelligence and infographic systems",
+      "expectedRemoteHints": ["frankxai/arcanea-infogenius"],
+      "smokeCommands": [
+        {
+          "label": "mcp-server build",
+          "command": "npm --prefix mcp-server run build"
+        }
+      ]
+    },
+    {
+      "id": "arcanea-onchain",
+      "label": "Arcanea Onchain",
+      "path": "arcanea-onchain",
+      "cli": [],
+      "purpose": "Economic and onchain layer",
+      "expectedRemoteHints": ["frankxai/arcanea-onchain"],
+      "smokeCommands": [
+        {
+          "label": "build",
+          "command": "npm run build"
+        }
+      ]
+    },
+    {
+      "id": "arcanea-library-superintelligence",
+      "label": "Arcanea Library Superintelligence",
+      "path": "arcanea-library-superintelligence",
+      "cli": [],
+      "purpose": "Library and intelligence layer",
+      "repoMode": "workspace-module",
+      "expectedRemoteHints": []
+    },
+    {
+      "id": "arcanea-mobile",
+      "label": "Arcanea Mobile",
+      "path": "arcanea-mobile",
+      "cli": [],
+      "purpose": "Mobile application surface",
+      "expectedRemoteHints": ["frankxai/arcanea-mobile"]
+    },
+    {
+      "id": "arcanea-game-development",
+      "label": "Arcanea Game Development",
+      "path": "arcanea-game-development",
+      "cli": [],
+      "purpose": "Game assets and interactive systems",
+      "repoMode": "workspace-module",
+      "expectedRemoteHints": []
+    }
+  ]
+}

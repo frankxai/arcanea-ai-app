@@ -1,0 +1,167 @@
+name: Canon Lint
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'book/**'
+      - '.arcanea/lore/**'
+      - 'apps/web/content/**'
+
+concurrency:
+  group: canon-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  canon-lint:
+    name: Canon Consistency Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get changed files
+        id: changed
+        uses: tj-actions/changed-files@v44
+        with:
+          files: |
+            book/**
+            .arcanea/lore/**
+            apps/web/content/**
+
+      - name: Validate Guardian names
+        if: steps.changed.outputs.any_changed == 'true'
+        run: |
+          echo "## Canon Lint Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          ERRORS=0
+          WARNINGS=0
+
+          # Canonical Guardian/God/Goddess names from CANON_LOCKED.md
+          # Gate order: Foundation, Flow, Fire, Heart, Voice, Sight, Crown, Starweave, Unity, Source
+          CANONICAL_GODS="Lyssandria|Leyla|Draconia|Maylinn|Alera|Lyria|Aiyami|Elara|Ino|Shinkami"
+          CANONICAL_GODBEASTS="Kaelith|Veloura|Draconis|Laeylinn|Otome|Yumiko|Sol|Vaelith|Kyuro|Source"
+          CANONICAL_GATES="Foundation|Flow|Fire|Heart|Voice|Sight|Crown|Starweave|Unity|Source"
+          CANONICAL_ELEMENTS="Fire|Water|Earth|Wind|Void|Spirit"
+          CANONICAL_HOUSES="Lumina|Nero|Pyros|Aqualis|Terra|Ventus|Synthesis"
+
+          echo "### Checking changed files" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          for file in ${{ steps.changed.outputs.all_changed_files }}; do
+            if [[ ! -f "$file" ]]; then
+              continue
+            fi
+
+            FILE_ERRORS=0
+            FILE_WARNINGS=0
+
+            # --------------------------------------------------
+            # CHECK 1: Hz frequencies in user-facing content
+            # Hz values are backend-only, never user-facing
+            # --------------------------------------------------
+            HZ_MATCHES=$(grep -n "[0-9]\+\s*Hz" "$file" 2>/dev/null || true)
+            if [ -n "$HZ_MATCHES" ]; then
+              while IFS= read -r line; do
+                LINE_NUM=$(echo "$line" | cut -d: -f1)
+                echo "::warning file=${file},line=${LINE_NUM}::Hz frequency found — Hz values are backend-only, use poetic taglines instead"
+                FILE_WARNINGS=$((FILE_WARNINGS + 1))
+              done <<< "$HZ_MATCHES"
+            fi
+
+            # --------------------------------------------------
+            # CHECK 2: Anti-slop patterns
+            # --------------------------------------------------
+            SLOP_PATTERNS="(?i)\bdelve\b|\btapestry of\b|\bin the realm of\b|\bit.s important to note\b|\bunleash\b|\bgame.changer\b|\bparadigm shift\b"
+            SLOP_MATCHES=$(grep -Pn "$SLOP_PATTERNS" "$file" 2>/dev/null || true)
+            if [ -n "$SLOP_MATCHES" ]; then
+              while IFS= read -r line; do
+                LINE_NUM=$(echo "$line" | cut -d: -f1)
+                CONTENT=$(echo "$line" | cut -d: -f2-)
+                echo "::warning file=${file},line=${LINE_NUM}::Anti-slop: overused AI phrase detected — '${CONTENT:0:80}'"
+                FILE_WARNINGS=$((FILE_WARNINGS + 1))
+              done <<< "$SLOP_MATCHES"
+            fi
+
+            # --------------------------------------------------
+            # CHECK 3: Nero is NOT evil
+            # --------------------------------------------------
+            NERO_EVIL=$(grep -Pin "\bNero\b.{0,30}\b(evil|villain|wicked|malevolent)\b" "$file" 2>/dev/null || true)
+            if [ -n "$NERO_EVIL" ]; then
+              while IFS= read -r line; do
+                LINE_NUM=$(echo "$line" | cut -d: -f1)
+                echo "::error file=${file},line=${LINE_NUM}::Canon violation: Nero is NOT evil. Nero is the Primordial Darkness, the Fertile Unknown. Shadow is corrupted Void."
+                FILE_ERRORS=$((FILE_ERRORS + 1))
+              done <<< "$NERO_EVIL"
+            fi
+
+            # --------------------------------------------------
+            # CHECK 4: Malachar title check
+            # --------------------------------------------------
+            MALACHAR_WRONG=$(grep -Pin "\bMalachar\b" "$file" 2>/dev/null | grep -Piv "(Dark Lord|Lumenbright|First Eldrian|Shadowfen|sealed)" || true)
+            if [ -n "$MALACHAR_WRONG" ]; then
+              # This is informational — Malachar can appear in context
+              # Only warn if called something other than Dark Lord
+              MALACHAR_TITLE=$(grep -Pin "\bMalachar\b.{0,20}\b(the evil|evil lord|shadow king)\b" "$file" 2>/dev/null || true)
+              if [ -n "$MALACHAR_TITLE" ]; then
+                while IFS= read -r line; do
+                  LINE_NUM=$(echo "$line" | cut -d: -f1)
+                  echo "::warning file=${file},line=${LINE_NUM}::Malachar's canonical title is 'the Dark Lord', not other variants"
+                  FILE_WARNINGS=$((FILE_WARNINGS + 1))
+                done <<< "$MALACHAR_TITLE"
+              fi
+            fi
+
+            # --------------------------------------------------
+            # CHECK 5: Gate misspellings / wrong names
+            # --------------------------------------------------
+            # Check for "Star Weave" (should be "Starweave") or other common errors
+            GATE_TYPOS=$(grep -Pin "\bStar Weave\b|\bStar-weave\b|\bstar weave\b" "$file" 2>/dev/null || true)
+            if [ -n "$GATE_TYPOS" ]; then
+              while IFS= read -r line; do
+                LINE_NUM=$(echo "$line" | cut -d: -f1)
+                echo "::error file=${file},line=${LINE_NUM}::Canon: 'Starweave' is one word, no hyphen"
+                FILE_ERRORS=$((FILE_ERRORS + 1))
+              done <<< "$GATE_TYPOS"
+            fi
+
+            # --------------------------------------------------
+            # CHECK 6: Element count — must be five, not four or six
+            # --------------------------------------------------
+            FOUR_ELEMENTS=$(grep -Pin "\bfour elements\b" "$file" 2>/dev/null || true)
+            if [ -n "$FOUR_ELEMENTS" ]; then
+              while IFS= read -r line; do
+                LINE_NUM=$(echo "$line" | cut -d: -f1)
+                echo "::error file=${file},line=${LINE_NUM}::Canon: Arcanea has FIVE elements (Fire, Water, Earth, Wind, Void/Spirit), not four"
+                FILE_ERRORS=$((FILE_ERRORS + 1))
+              done <<< "$FOUR_ELEMENTS"
+            fi
+
+            ERRORS=$((ERRORS + FILE_ERRORS))
+            WARNINGS=$((WARNINGS + FILE_WARNINGS))
+
+            if [ $FILE_ERRORS -gt 0 ] || [ $FILE_WARNINGS -gt 0 ]; then
+              echo "- \`${file}\`: ${FILE_ERRORS} errors, ${FILE_WARNINGS} warnings" >> $GITHUB_STEP_SUMMARY
+            fi
+          done
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- **Errors**: ${ERRORS}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Warnings**: ${WARNINGS}" >> $GITHUB_STEP_SUMMARY
+
+          if [ $ERRORS -gt 0 ]; then
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Canon errors MUST be fixed before merge." >> $GITHUB_STEP_SUMMARY
+            echo "Reference: .arcanea/lore/CANON_LOCKED.md" >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
+
+          if [ $WARNINGS -gt 0 ]; then
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Warnings are advisory. Review and fix if appropriate." >> $GITHUB_STEP_SUMMARY
+          fi
+
+          echo "Canon lint complete."

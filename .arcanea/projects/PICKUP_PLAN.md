@@ -25,76 +25,59 @@
 **Status:** Open since 2026-03-10. Blocks production auth.
 
 ### T1-2: Update progress.md
-Last updated March 17. Write a progress entry for today covering:
-- ACOS v11 installed
-- Statusline v5 fixed (path issue)
-- Bootstrap hook upgraded to v3
-- .arcanea/ directories scaffolded
+~~Last updated March 17.~~ **DONE** (2026-03-30 overnight swarm) — progress.md current with full swarm results.
 
 ### T1-3: Verify settings.json paths persist
-Check `C:/Users/frank/Arcanea/.claude/settings.json` — all paths should use `C:/Users/frank/` NOT `/mnt/c/`. If reverted, rewrite using the Bash `cat >` method (Edit/Write get intercepted by hooks).
+~~Check settings.json paths.~~ **DONE** (2026-03-30) — all paths use correct `C:/Users/frank/` format.
 
 ---
 
 ## TIER 2: Infrastructure (30-60 min each)
 
 ### T2-1: Populate .arcanea/lore/ with Guardian profiles
-Extract from `.arcanea/lore/CANON_LOCKED.md` and create:
-- `godbeasts/[name].md` — 10 files (Sol, Yumiko, Kyuro, etc.)
-- `gods-goddesses/[name].md` — 10 files (Shinkami, Lyria, Draconia, etc.)
-- `guardians/[name].md` — 10 files (gate-keeper profiles)
+**DONE** (2026-03-30 overnight swarm) — 30 files created:
+- `godbeasts/` — 10 files (Kaelith, Veloura, Draconis, Laeylinn, Otome, Yumiko, Sol, Vaelith, Kyuro, Amaterasu)
+- `gods-goddesses/` — 10 files (all 10 with full frontmatter + canon content)
+- `guardians/` — 10 files (all 10 with gate-keeper role profiles)
 
 ### T2-2: Create .arcanea/config/ files
-- `voice.yaml` — extract from M010 completion notes in MASTER_PLAN
-- `design-tokens.yaml` — extract from Arcanean Design System (teal, blue, gold, fonts)
-- `models.yaml` — model routing preferences per tool
+**DONE** (2026-03-30 overnight swarm):
+- `voice.yaml` (251 lines) — 10 Guardian voices, 51 anti-slop patterns, full canon terms
+- `design-tokens.yaml` (331 lines) — 90+ CSS tokens, 7 glass tiers, all animations
+- `models.yaml` (291 lines) — 16 Gateway models, 9 providers, image/video/speech routing
 
 ### T2-3: Sync key agents to .arcanea/agents/
-Copy from `.claude/agents/` → `.arcanea/agents/`:
-- All 12 @guardian.agent.md files
-- arcanea-architect.md, arcanea-backend.md, arcanea-frontend.md
-- arcanea-lore-master.md, arcanea-world-expander.md
-Purpose: make these available to Cursor/Codex/Gemini.
+**DONE** (2026-03-30 overnight swarm) — 20 agent files synced:
+- 12 Guardian/Special agents (@lyssandria through @shinkami + @is-mael + @luminor-oracle)
+- 8 Development/Creative agents (architect, backend, frontend, AI specialist, devops, development, lore-master, world-expander)
+- INDEX.md created with full registry
 
 ### T2-4: Package directory audit
-In `packages/`, for each of the 43 directories:
-- If empty AND not referenced by MASTER_PLAN milestones → delete
-- If empty but referenced → add a `package.json` with name/description/status
-- Target: reduce from 43 stubs to ~15 real packages
-- Key packages to keep: arcanea-mcp, memory-mcp, arc-protocol, auth, core, database
+**DONE** (2026-03-30 overnight swarm) — Result: ALL 42 packages contain real source code.
+Zero deletions needed. 3 consolidation candidates flagged (content-api, starlight-runtime → could merge into core).
+Full report: `.arcanea/projects/log/package-audit-2026-03-30.md`
 
 ---
 
 ## TIER 3: Ecosystem Hardening (1-2 hours)
 
 ### T3-1: Create .arc milestone files
-For each active milestone in MASTER_PLAN, create a tracking file:
-```
-.arcanea/projects/milestones/m001-supabase-auth.arc
-.arcanea/projects/milestones/m003-memory-system.arc
-.arcanea/projects/milestones/m005-premium-ui-v0.arc
-.arcanea/projects/milestones/m006-creator-tools-backend.arc
-.arcanea/projects/milestones/m008-onboarding-conversion.arc
-.arcanea/projects/milestones/m009-performance-polish.arc
-```
-Format: extract tasks from MASTER_PLAN into standalone trackable files.
+**DONE** (2026-03-30 overnight swarm) — 6 files created in `.arcanea/projects/milestones/`:
+m001-supabase-auth.arc, m003-memory-system.arc, m005-premium-ui-v0.arc,
+m006-creator-tools-backend.arc, m008-onboarding-conversion.arc, m009-performance-polish.arc
 
 ### T3-2: MASTER_PLAN.md refresh
-Update to reflect current state:
-- Package count: 43 → actual count after T2-4 pruning
-- Last Updated: set to today
-- Add new items discovered in audit (statusline fix, ACOS install, bootstrap v3)
-- Mark any newly completed items
+**DONE** (2026-03-30 overnight swarm) — Updated to v1.9.0:
+- Last Updated → 2026-03-30
+- 15 new M009 completions added
+- v1.9.0 changelog entry with all recent commits
+- Page count updated to ~188
 
 ### T3-3: Agent contract system
-Create `.arcanea/agents/CONTRACT.md` defining:
-```yaml
-input: { task, context, constraints }
-output: { result, changes[], decisions[], blockers[] }
-guarantees: Will not modify files outside declared scope
-requires: MASTER_PLAN read, CANON_LOCKED loaded (if lore work)
-```
-Every agent file should reference this contract.
+**DONE** (2026-03-30 overnight swarm) — CONTRACT.md created with:
+- Input/Output contracts, 7 guarantees, required reading matrix
+- Anti-patterns (Hz backend-only, no SVG mark, WSL storage awareness)
+- Agent lifecycle flowchart, cross-agent coordination protocol, quality gate checklist
 
 ---
 
