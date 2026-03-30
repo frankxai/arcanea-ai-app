@@ -135,10 +135,10 @@ fi
 
 # Quick health check
 echo "🏥 Running health check..."
-if pnpm run --dry-run > /dev/null 2>&1; then
-    echo "✅ Package scripts accessible"
+if node scripts/ops-health-check.js --quick > /dev/null 2>&1; then
+    echo "✅ Ops health check passed"
 else
-    echo "⚠️  Package.json issues detected"
+    echo "⚠️  Ops health check reported issues"
 fi
 
 # Development server options

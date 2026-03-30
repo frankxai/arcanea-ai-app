@@ -2,11 +2,15 @@
 
 Technical reference for how all Arcanea repositories interconnect.
 
-Last updated: 2026-03-22
+Last updated: 2026-03-30
 
 ---
 
 ## 1. Repository Map
+
+Local topology note:
+- `standalone clone` means a separate git checkout under `C:\Users\frank\Arcanea\...`
+- `workspace module` means the path lives inside the main `Arcanea` monorepo and should not be treated as its own local clone
 
 ### Primary Repositories
 
@@ -14,24 +18,24 @@ Last updated: 2026-03-22
 |------|--------|------------|-------------|---------|--------|
 | **arcanea-ai-app** | `frankxai/Arcanea` | `/Arcanea` | -- | Main platform monorepo (web app, packages, lore, content) | Active |
 | **arcanea-code** | `frankxai/arcanea-code` | `/Arcanea/arcanea-code` | `arcanea` | Flagship CLI -- OpenCode fork with Arcanea Intelligence OS | Active |
-| **oh-my-arcanea** | `frankxai/oh-my-arcanea` | -- | `opencode-arcanea` | OpenCode harness overlay (CLAUDE.md + hooks + statusline) | Active |
+| **oh-my-arcanea** | `frankxai/oh-my-arcanea` | `/Arcanea/oh-my-arcanea` | `oh-my-arcanea`, `opencode-arcanea` | OpenCode harness overlay (CLAUDE.md + hooks + statusline) | Active |
 | **claude-arcanea** | `frankxai/claude-arcanea` | `/Arcanea/claude-arcanea` | `claude-arcanea` | Claude Code harness (overlay for Claude Code sessions) | Active |
 | **arcanea-orchestrator** | `frankxai/arcanea-orchestrator` | -- | `ao` | Multi-agent orchestrator (agent-orchestrator fork) | Active |
 | **arcanea-flow** | `frankxai/arcanea-flow` | `/Arcanea/arcanea-flow` | -- | Multi-agent orchestration engine (claude-flow fork) | Active |
 | **arcanea-claw** | `frankxai/arcanea-claw` | `/Arcanea/arcanea-claw` | `arcanea-claw` | Media engine (image/music/video generation) | Active |
 | **arcanea-infogenius** | `frankxai/arcanea-infogenius` | `/Arcanea/arcanea-infogenius` | -- | Visual intelligence MCP server | Active |
 | **arcanea-onchain** | `frankxai/arcanea-onchain` | `/Arcanea/arcanea-onchain` | -- | Web3/economic layer (tokens, NFTs, on-chain state) | Active |
-| **arcanea-companion** | `frankxai/arcanea-companion` | `/Arcanea/arcanea-companion` | -- | Companion web app (Next.js, Docker/Railway deploy) | Active |
-| **arcanea-soul** | `frankxai/arcanea-soul` | `/Arcanea/arcanea-soul` | -- | Core personality/voice engine (npm package) | Active |
+| **arcanea-companion** | `frankxai/arcanea-companion` | `/Arcanea/arcanea-companion` | -- | Companion web app (Next.js, Docker/Railway deploy) | Active, workspace module locally |
+| **arcanea-soul** | `frankxai/arcanea-soul` | `/Arcanea/arcanea-soul` | -- | Core personality/voice engine (npm package) | Active, workspace module locally |
 | **arcanea-vscode** | `frankxai/arcanea-vscode` | -- | -- | VS Code extension | Planned |
 
 ### Content & Lore Repositories
 
 | Repo | GitHub | Local Path | Purpose | Status |
 |------|--------|------------|---------|--------|
-| **arcanea-lore** | `frankxai/arcanea-lore` | `/Arcanea/arcanea-lore` | Canonical lore, worldbuilding, mythology | Active |
-| **arcanea-records** | `frankxai/arcanea-records` | `/Arcanea/arcanea-records` | Session records, progress logs | Active |
-| **arcanea-library-superintelligence** | `frankxai/arcanea-library-superintelligence` | `/Arcanea/arcanea-library-superintelligence` | Library AI layer | Active |
+| **arcanea-lore** | `frankxai/arcanea-lore` | `/Arcanea/arcanea-lore` | Canonical lore, worldbuilding, mythology | Active, workspace module locally |
+| **arcanea-records** | `frankxai/arcanea-records` | `/Arcanea/arcanea-records` | Session records, progress logs | Active, workspace module locally |
+| **arcanea-library-superintelligence** | `frankxai/arcanea-library-superintelligence` | `/Arcanea/arcanea-library-superintelligence` | Library AI layer | Active, workspace module locally |
 
 ### Ecosystem & Community
 
@@ -39,10 +43,10 @@ Last updated: 2026-03-22
 |------|--------|------------|---------|--------|
 | **arcanea-skills-opensource** | `frankxai/arcanea-skills-opensource` | `/Arcanea/arcanea-skills-opensource` | Open-source skill registry (agents, commands, templates) | Active |
 | **arcanea-ecosystem** | `frankxai/arcanea-ecosystem` | `/Arcanea/arcanea-ecosystem` | Ecosystem documentation and integration specs | Active |
-| **arcanea-agents** | `frankxai/arcanea-agents` | `/Arcanea/arcanea-agents` | Agent definitions and configurations | Active |
+| **arcanea-agents** | `frankxai/arcanea-agents` | `/Arcanea/arcanea-agents` | Agent definitions and configurations | Active, workspace module locally |
 | **arcanea-luminor** | `frankxai/arcanea-luminor` | `/Arcanea/arcanea-luminor` | Luminor worker agent framework | Active |
 | **arcanea-mobile** | `frankxai/arcanea-mobile` | `/Arcanea/arcanea-mobile` | Mobile app (React Native/Expo) | Active |
-| **arcanea-game-development** | `frankxai/arcanea-game-development` | `/Arcanea/arcanea-game-development` | Game development assets and logic | Active |
+| **arcanea-game-development** | `frankxai/arcanea-game-development` | `/Arcanea/arcanea-game-development` | Game development assets and logic | Active, workspace module locally |
 
 ### Archive
 
@@ -50,6 +54,16 @@ Last updated: 2026-03-22
 |------|--------|-------------|-------|
 | **arcanea-opencode** | `frankxai/arcanea-opencode` | oh-my-arcanea | Original OpenCode integration, now superseded |
 | **arcanea-openwebui** | `frankxai/arcanea-openwebui` | -- | Open WebUI fork (low priority) |
+
+### Current Local Control Plane
+
+The repo health registry used by operations now lives at:
+- `.arcanea/projects/repo-constellation.json`
+
+That registry is the source of truth for:
+- which Arcanea surfaces are separate local clones
+- which surfaces are modules embedded in the main monorepo
+- which CLI entrypoints and remote expectations the ops health check enforces
 
 ---
 

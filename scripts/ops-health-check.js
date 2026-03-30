@@ -7,6 +7,7 @@
  * Usage:
  *   node scripts/ops-health-check.js          Full report
  *   node scripts/ops-health-check.js --quick   Local only, no GitHub API
+ *   node scripts/ops-health-check.js --deep    Run configured per-repo smoke commands
  *   node scripts/ops-health-check.js --json    JSON only output
  */
 
@@ -28,6 +29,7 @@ const PATHS = {
   agentsDir: path.join(PROJECT_ROOT, '.claude', 'agents'),
   hooksDir: path.join(PROJECT_ROOT, '.claude', 'hooks'),
   settingsLocal: path.join(PROJECT_ROOT, '.claude', 'settings.local.json'),
+  repoRegistry: path.join(PROJECT_ROOT, '.arcanea', 'projects', 'repo-constellation.json'),
   packageJson: path.join(PROJECT_ROOT, 'package.json'),
   nodeModules: path.join(PROJECT_ROOT, 'node_modules'),
   nextBuildCache: path.join(PROJECT_ROOT, 'apps', 'web', '.next'),
@@ -55,6 +57,91 @@ function countEntries(dir, filter) {
     const entries = fs.readdirSync(dir, { withFileTypes: true });
     return filter ? entries.filter(filter).length : entries.length;
   } catch { return 0; }
+}
+
+function readJsonIfExists(p) {
+  if (!fileExists(p)) return null;
+  try {
+    return JSON.parse(fs.readFileSync(p, 'utf8'));
+  } catch {
+    return null;
+  }
+}
+
+function execInRepo(repoPath, command) {
+  try {
+    return execSync(command, {
+      cwd: repoPath,
+      encoding: 'utf8',
+      stdio: ['pipe', 'pipe', 'pipe'],
+    }).trim();
+  } catch {
+    return null;
+  }
+}
+
+function runCommand(command, cwd) {
+  const sanitize = (value) => String(value || '')
+    .replace(/\x1B\[[0-9;]*[A-Za-z]/g, '')
+    .replace(/[^\x20-\x7E\r\n\t]/g, '')
+    .trim();
+
+  try {
+    const stdout = execSync(command, {
+      cwd,
+      encoding: 'utf8',
+      stdio: ['pipe', 'pipe', 'pipe'],
+      timeout: 5 * 60 * 1000,
+    });
+    const lines = sanitize(stdout).split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+    return {
+      ok: true,
+      command,
+      summary: lines[0] || 'ok',
+    };
+  } catch (error) {
+    const stderr = sanitize(error?.stderr || '');
+    const stdout = sanitize(error?.stdout || '');
+    const combined = [stderr, stdout].filter(Boolean).join('\n');
+    const firstLine = combined.split(/\r?\n/).map((line) => line.trim()).find(Boolean);
+    return {
+      ok: false,
+      command,
+      summary: firstLine || error.message,
+    };
+  }
+}
+
+function normalizePathString(p) {
+  return typeof p === 'string'
+    ? path.normalize(p).replace(/[\\/]+/g, '/').replace(/\/$/, '').toLowerCase()
+    : null;
+}
+
+function inferPackageManager(repoPath) {
+  if (fileExists(path.join(repoPath, 'pnpm-lock.yaml'))) return 'pnpm';
+  if (fileExists(path.join(repoPath, 'bun.lock')) || fileExists(path.join(repoPath, 'bun.lockb'))) return 'bun';
+  if (fileExists(path.join(repoPath, 'package-lock.json'))) return 'npm';
+  if (fileExists(path.join(repoPath, 'yarn.lock'))) return 'yarn';
+  return null;
+}
+
+function collectGitRemotes(repoPath) {
+  const remoteNamesRaw = execInRepo(repoPath, 'git remote');
+  const remoteNames = remoteNamesRaw ? remoteNamesRaw.split(/\r?\n/).map((name) => name.trim()).filter(Boolean) : [];
+  const remotes = {};
+
+  for (const remoteName of remoteNames) {
+    const remoteUrl = execInRepo(repoPath, `git remote get-url ${remoteName}`);
+    remotes[remoteName] = remoteUrl || '(unknown)';
+  }
+
+  return remotes;
+}
+
+function loadRepoRegistry() {
+  const registry = readJsonIfExists(PATHS.repoRegistry);
+  return Array.isArray(registry?.repos) ? registry.repos : [];
 }
 
 function countDirRecursive(dir, filter) {
@@ -428,6 +515,134 @@ function checkBuild() {
 }
 
 // ---------------------------------------------------------------------------
+// Check: Repo Constellation
+// ---------------------------------------------------------------------------
+
+function checkRepoConstellation({ deep = false } = {}) {
+  const result = { name: 'Repos', status: 'unknown', details: {} };
+  const repos = loadRepoRegistry();
+
+  result.details.registryPath = PATHS.repoRegistry;
+
+  if (repos.length === 0) {
+    result.status = 'warn';
+    result.details.reason = 'No repo registry entries found';
+    result.details.total = 0;
+    result.details.repos = [];
+    return result;
+  }
+
+  const repoReports = [];
+  let ok = 0;
+  let warn = 0;
+  let error = 0;
+  let missing = 0;
+  let dirty = 0;
+  let smokePassed = 0;
+  let smokeFailed = 0;
+  let smokeSkipped = 0;
+
+  for (const repo of repos) {
+    const repoPath = path.resolve(PROJECT_ROOT, repo.path);
+    const exists = dirExists(repoPath);
+    const packageJson = readJsonIfExists(path.join(repoPath, 'package.json'));
+    const isGitRepo = exists && execInRepo(repoPath, 'git rev-parse --is-inside-work-tree') === 'true';
+    const gitTopLevel = isGitRepo ? execInRepo(repoPath, 'git rev-parse --show-toplevel') : null;
+    const repoMode = repo.repoMode || 'standalone';
+    const normalizedRepoPath = normalizePathString(repoPath);
+    const normalizedProjectRoot = normalizePathString(PROJECT_ROOT);
+    const normalizedGitTopLevel = normalizePathString(gitTopLevel);
+    const remotes = isGitRepo ? collectGitRemotes(repoPath) : {};
+    const branch = isGitRepo ? execInRepo(repoPath, 'git rev-parse --abbrev-ref HEAD') : null;
+    const commit = isGitRepo ? execInRepo(repoPath, 'git rev-parse --short HEAD') : null;
+    const porcelain = isGitRepo ? execInRepo(repoPath, 'git status --short') : null;
+    const dirtyFiles = porcelain ? porcelain.split(/\r?\n/).filter(Boolean) : [];
+    const expectedRemoteHints = Array.isArray(repo.expectedRemoteHints) ? repo.expectedRemoteHints : [];
+    const remoteUrls = Object.values(remotes);
+    const missingRemoteHints = expectedRemoteHints.filter((hint) =>
+      !remoteUrls.some((url) => typeof url === 'string' && url.includes(hint))
+    );
+    const smokeCommands = Array.isArray(repo.smokeCommands) ? repo.smokeCommands : [];
+    const smokeResults = [];
+
+    const expectedTopLevel = repoMode === 'workspace-module' ? normalizedProjectRoot : normalizedRepoPath;
+
+    let status = 'ok';
+    if (!exists || !isGitRepo) status = 'error';
+    else if (normalizedGitTopLevel !== expectedTopLevel) status = 'warn';
+    else if (repoMode === 'standalone' && (missingRemoteHints.length > 0 || dirtyFiles.length > 0)) status = 'warn';
+
+    if (deep) {
+      if (!exists || !isGitRepo || repoMode !== 'standalone' || smokeCommands.length === 0) {
+        smokeSkipped += smokeCommands.length || 1;
+      } else {
+        for (const smoke of smokeCommands) {
+          const command = typeof smoke === 'string' ? smoke : smoke.command;
+          const label = typeof smoke === 'string' ? smoke : (smoke.label || smoke.command);
+          const smokeResult = runCommand(command, repoPath);
+          smokeResults.push({
+            label,
+            command,
+            ok: smokeResult.ok,
+            summary: smokeResult.summary,
+          });
+          if (smokeResult.ok) smokePassed++;
+          else smokeFailed++;
+        }
+        if (smokeResults.some((entry) => !entry.ok)) status = 'warn';
+      }
+    }
+
+    if (!exists) missing++;
+    if (repoMode === 'standalone' && dirtyFiles.length > 0) dirty++;
+    if (status === 'ok') ok++;
+    else if (status === 'warn') warn++;
+    else error++;
+
+    repoReports.push({
+      id: repo.id,
+      label: repo.label || repo.id,
+      purpose: repo.purpose || null,
+      path: repoPath,
+      cli: Array.isArray(repo.cli) ? repo.cli : [],
+      packageManager: inferPackageManager(repoPath),
+      packageName: packageJson?.name || null,
+      packageVersion: packageJson?.version || null,
+      repoMode,
+      exists,
+      isGitRepo,
+      gitTopLevel,
+      branch,
+      commit,
+      dirty: repoMode === 'standalone' && dirtyFiles.length > 0,
+      dirtyFileCount: repoMode === 'standalone' ? dirtyFiles.length : 0,
+      remotes,
+      missingRemoteHints: repoMode === 'standalone' ? missingRemoteHints : [],
+      smokeResults,
+      status,
+    });
+  }
+
+  result.details.total = repos.length;
+  result.details.ok = ok;
+  result.details.warn = warn;
+  result.details.error = error;
+  result.details.missing = missing;
+  result.details.dirty = dirty;
+  result.details.deep = deep;
+  result.details.smokePassed = smokePassed;
+  result.details.smokeFailed = smokeFailed;
+  result.details.smokeSkipped = smokeSkipped;
+  result.details.repos = repoReports;
+
+  if (error > 0) result.status = 'error';
+  else if (warn > 0) result.status = 'warn';
+  else result.status = 'ok';
+
+  return result;
+}
+
+// ---------------------------------------------------------------------------
 // Report formatting
 // ---------------------------------------------------------------------------
 
@@ -518,6 +733,32 @@ function formatHumanReport(report) {
           lines.push(`     Git: ${check.details.gitBranch} (${check.details.gitCommit || '?'})`);
         }
         break;
+
+      case 'Repos':
+        lines.push(`     Registry: ${check.details.registryPath}`);
+        lines.push(`     Repos: ${check.details.total} total (${check.details.ok} ok, ${check.details.warn} warn, ${check.details.error} error)`);
+        lines.push(`     Missing: ${check.details.missing}, Dirty: ${check.details.dirty}`);
+        if (check.details.deep) {
+          lines.push(`     Smoke: ${check.details.smokePassed} passed, ${check.details.smokeFailed} failed, ${check.details.smokeSkipped} skipped`);
+        }
+        for (const repo of check.details.repos || []) {
+          const failedSmoke = (repo.smokeResults || []).filter((entry) => !entry.ok);
+          if (repo.status === 'ok' && failedSmoke.length === 0) continue;
+          const reasons = [];
+          if (!repo.exists) reasons.push('missing');
+          else {
+            if (!repo.isGitRepo) reasons.push('not-git');
+            if (normalizePathString(repo.gitTopLevel) && normalizePathString(repo.gitTopLevel) !== normalizePathString(repo.path) && repo.repoMode === 'standalone') reasons.push('nested-not-standalone');
+            if (normalizePathString(repo.gitTopLevel) && normalizePathString(repo.gitTopLevel) !== normalizePathString(PROJECT_ROOT) && repo.repoMode === 'workspace-module') reasons.push('not-in-workspace-root');
+            if (repo.missingRemoteHints?.length) reasons.push(`remote-drift:${repo.missingRemoteHints.join('|')}`);
+            if (repo.dirty) reasons.push(`dirty:${repo.dirtyFileCount}`);
+          }
+          lines.push(`       ${repo.id}: ${reasons.join(', ') || repo.status}`);
+          for (const smoke of failedSmoke) {
+            lines.push(`         smoke ${smoke.label}: ${smoke.summary}`);
+          }
+        }
+        break;
     }
 
     lines.push('');
@@ -541,6 +782,7 @@ function formatHumanReport(report) {
 async function main() {
   const args = process.argv.slice(2);
   const quick = args.includes('--quick');
+  const deep = args.includes('--deep');
   const jsonOnly = args.includes('--json');
 
   const start = Date.now();
@@ -553,6 +795,7 @@ async function main() {
   checks.push(checkHooks());
   checks.push(checkMCP());
   checks.push(checkBuild());
+  checks.push(checkRepoConstellation({ deep }));
 
   // GitHub check (unless --quick)
   if (!quick) {
@@ -562,7 +805,7 @@ async function main() {
   const report = {
     timestamp: new Date().toISOString(),
     durationMs: Date.now() - start,
-    mode: quick ? 'quick' : 'full',
+    mode: deep ? (quick ? 'quick+deep' : 'full+deep') : (quick ? 'quick' : 'full'),
     checks,
   };
 

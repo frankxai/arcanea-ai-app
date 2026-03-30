@@ -79,10 +79,10 @@ if [ -n "$MISSING_KEYS" ]; then
 fi
 
 echo "🔍 Running health check..."
-if pnpm run build --dry-run &>/dev/null; then
-    echo "✅ Build configuration looks good"
+if node scripts/ops-health-check.js --quick > /dev/null 2>&1; then
+    echo "✅ Ops health check passed"
 else
-    echo "⚠️  Build issues detected, check package.json scripts"
+    echo "⚠️  Ops health check reported issues"
 fi
 
 echo ""
