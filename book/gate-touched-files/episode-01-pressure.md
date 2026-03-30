@@ -4,14 +4,14 @@ episode: 1
 series: "The Gate-Touched Files"
 pov: Lira
 gate: Foundation
-approximate_word_count: 4100
+approximate_word_count: 4200
 ---
 
 # Episode One: Pressure
 
-The fish never stopped being cold.
+Every surface remembers the weight it carries. Lira wished she didn't.
 
-Lira had been working the Salter's Row market for eight months, and the cold had become a thing she carried home in her hands, in the skin between her knuckles, in the permanent slight numb at the tips of her fingers that faded by midnight and came back by four. You got used to it. You got used to most things, given enough time and no choice.
+The fish never stopped being cold. Lira had been working the Salter's Row market for eight months, and the cold had become a thing she carried home in her hands, in the skin between her knuckles, in the permanent slight numb at the tips of her fingers that faded by midnight and came back by four. You got used to it. You got used to most things, given enough time and no choice.
 
 She ran the middle stall, second from the harbor end. Crispen — who owned the three stalls he let to others and the two he ran himself — paid her in fish on Mondays and Wednesdays and coin on Fridays, which was backwards from how most markets worked, but Crispen was backwards in most things that didn't involve money, and he'd offered the job without asking for a name on the Registry ledger, which was why she was here. The not-being-in-the-ledger mattered more than the fish payment.
 
@@ -23,11 +23,11 @@ The official walked differently from everyone else. Not heavier — Registry off
 
 She did not look up from the mackerel.
 
-"Foundation Gate-Touched, Registry Notice 14-C, district canvass," the official said. Not to her. To Crispen, three stalls over. She heard Crispen's particular silence — he was a man who had many kinds of silence; this one was the specific silence of someone who had done nothing wrong and was very aware that this didn't matter.
+"Foundation Gate-Touched, Registry Notice 14-C, district canvass," the official said. Not to her. To Crispen, three stalls over. She heard Crispen go quiet — he was a man who had many kinds of silence; this one was the silence of someone who had done nothing wrong and knew it wouldn't matter.
 
 "Can't help you," Crispen said. "I don't take Registry records for my workers. It's not required."
 
-"It's not required," the official agreed pleasantly. "We're not here about your employment records. We're conducting a neighborhood inquiry. There was a Foundation manifestation in this district approximately — " a sound of paper — "twenty-two months ago. We're following up."
+"It's not required," the official agreed. He didn't sound threatening. He sounded tired, the way someone sounds at the fourth stop on a long shift, reciting language he'd memorized so thoroughly it had stopped meaning anything to him. "We're not here about your employment records. We're conducting a neighborhood inquiry. There was a Foundation manifestation in this district approximately — " a sound of paper, a form he'd already filled out three times today — "twenty-two months ago. We're following up."
 
 Lira's hands were still working. Mackerel sorted by size, packed by size, price chalk-marked on the slate at the front of the stall. Her hands did not know they were doing anything wrong.
 
@@ -35,15 +35,17 @@ The cold of the fish was real, ordinary, the cold of things that had been alive 
 
 "I wouldn't know about that," Crispen said.
 
-"Certainly not. We're simply asking whether anyone in the area might have seen something unusual. A person behaving strangely. Someone who seemed surprised by what they were doing. Foundation manifestations can be dramatic — structural movement, localized seismic activity."
+"Certainly not. We're simply asking whether anyone in the area might have noticed something unusual. A person behaving strangely. Someone surprised by what they were doing." He read the next part from a card — she could hear the shift in cadence, the rehearsed phrasing. "Foundation manifestations can be dramatic — structural movement, localized seismic activity. There's a public safety dimension."
 
 "There's localized seismic activity every other month in this district," Crispen said, with the patience of a man who'd filed harbor damage reports for twenty years. "You'd need to be more specific."
 
 Lira reached the end of the mackerel and started on the sea bass.
 
-The official was moving. She felt the weight pattern shift, the deliberate posture moving closer. Not to her stall yet. Two stalls over, asking the same pleasant questions of Maret, who ran the smoked fish and who had been in the district for thirty years and was constitutionally incapable of saying less than four hundred words on any subject.
+The official was moving. She felt the weight pattern shift, the deliberate posture drifting closer. Not to her stall yet. Two stalls over, asking the same questions — the same card, the same tired cadence — of Maret, who ran the smoked fish and who had been in the district for thirty years and was constitutionally incapable of saying less than four hundred words on any subject.
 
-Lira did the calculation that she was always doing. Exit routes. The dock ran in two directions. North was toward the harbor gate, which was the official entrance and exit, currently blocked by two more Registry officials — she could feel their weight now, they'd been there the whole time and she'd catalogued them as dock workers — standing at the edge of the planking with the particular stillness of people waiting. South was toward the processing sheds, which backed against the harbor wall, dead end unless you could get over the wall, which was twelve feet of wet stone.
+The third joist from the harbor end was cracked. She'd felt it since her first week — a hairline fracture running diagonal through the grain, load shifting to the neighboring joists, the whole section of dock compensating for a weakness nobody had noticed or repaired. She noticed. She noticed everything the ground carried.
+
+Lira did the calculation that she was always doing. Exit routes. The dock ran in two directions. North was toward the harbor gate, which was the official entrance and exit, currently blocked by two more Registry officials — she could feel their weight now, they'd been there the whole time and she'd catalogued them as dock workers — standing at the edge of the planking with the practiced stillness of people who'd been told to wait. South was toward the processing sheds, which backed against the harbor wall, dead end unless you could get over the wall, which was twelve feet of wet stone.
 
 She could get over the wall. She'd thought about it before this, in the way she thought about all exits, the way she thought about all weight-bearing surfaces, the way she thought about all the things she'd been thinking about since Fenhill without meaning to.
 
@@ -53,23 +55,23 @@ Not told. The word was wrong. She was aware, the way you're aware of heat from a
 
 She looked.
 
-The boy was about thirteen. He was standing at the back of the barrel stall with his back against the wall and his hands pressed flat to the planking on either side of him, and he had the look of someone who was pressing his hands flat because if he let go of the surface something terrible would happen. His eyes were open too wide. His breathing was wrong — she could see it from here, the chest working harder than any exertion required.
+The boy was about thirteen. He was standing at the back of the barrel stall with his back against the wall and his hands pressed flat to the planking on either side of him, pressing hard enough that the tendons in his wrists stood out white, and he had the rigid posture of someone who believed that if he let go the world would come apart. His eyes were too wide. His breathing was wrong — she could see it from here, the chest heaving against nothing, the shallow rapid panic-breath of a body running from something it couldn't outrun because the thing was inside it.
 
 Water was running between the planks beneath his feet.
 
-Not harbor water creeping up through the dock boards. Water appearing. A thin steady seep, spreading outward from where he stood, soaking into the wood, finding the spaces between planks. Expanding.
+Not harbor water creeping up through the dock boards. Water appearing. Pushing up through dry wood as if the planks were bleeding it. A thin steady seep that spread outward from where he stood, soaking into the grain, finding the gaps between boards with a purpose that had nothing to do with gravity. Expanding. The wood beneath him was darkening in a ring, and the ring was growing.
 
-Flow Gate. She'd never seen it manifest in a person before, only read about it in the warnings they distributed in school, the ones that said if you observed signs of Gate manifestation you should immediately contact the Registry without approaching the individual. The warnings had photographs of property damage. They did not have photographs of the person responsible, but she'd always thought they should, because the damage in the photographs didn't show fear. This boy was afraid in a way the property damage had not prepared her for.
+Flow Gate. She'd never seen it manifest in a person before, only read about it in the warnings they distributed in school — laminated cards with photographs of buckled floors and burst pipes and the instruction to contact the Registry immediately without approaching the individual. The cards didn't show what the person looked like. They should have. They should have shown the face of a thirteen-year-old boy who understood that the water was coming from him and could not make it stop.
 
 The water was rising.
 
 Slowly. Imperceptibly, if you didn't feel weight through dock planking. But she felt the load spreading, the distribution changing, the boards taking on moisture and the moisture adding weight and the weight shifting as the water moved — it was moving now, flowing in a direction that had nothing to do with gravity, pooling east toward the barrel stall's stored goods, creeping up the sides of the nearest crates.
 
-The boy made a sound. Not quite a whimper. Just the sound of someone who had been trying very hard and understood they were about to stop being able to try.
+The boy made a sound. Not a whimper. Smaller than that — the exhale of someone whose arms were giving out on a ledge.
 
 The water jumped.
 
-Not everywhere. Just upward — a column of it, knee height, then hip height, then it spread sideways and crashed against the barrel stall's back partition with enough force to knock the partition sideways and send three crates into the walkway.
+Not everywhere. Just upward — a column of it, knee height, then hip height, then chest height and still climbing, the color wrong, not harbor-blue but dark, brackish, pulling minerals from the dock wood as it rose. It hung in the air for a full second, defying everything she understood about load and gravity, and then it spread sideways and hit the barrel stall's back partition hard enough to blow it off its bracing and send three crates tumbling into the walkway in a crash of salt and splintering wood.
 
 Three things happened at once. Maret stopped mid-sentence. Crispen yelled something about his inventory. And the Registry official's weight pattern changed — the stance shifting from conversational to operative, the orientation moving toward the eastern disturbance.
 
@@ -81,7 +83,7 @@ She was at the barrel stall in eight steps.
 
 "Hey," she said.
 
-The boy looked at her. His eyes were the specific expression of someone who'd given up on anyone being helpful and didn't know what to do with helpfulness now that it was here.
+The boy looked at her. His eyes had the flattened look of someone who'd stopped expecting help and didn't know what to do with it now.
 
 "I need you to look at my hands," she said quietly. She held them out, parallel to the dock planking, the same gesture she made when she was working with weight — not demanding, offering. "Just look at my hands. Don't look at the water."
 
@@ -103,7 +105,7 @@ Not a command. She'd learned that much from Fenhill. The earth didn't respond to
 
 The concern was water pressure building from a thirteen-year-old Flow Gate manifestation, spreading outward in an uncontrolled radius. The concern was about fifteen gallons of harbor-adjacent water that didn't know it wasn't supposed to be here. The concern was—
 
-"She's here," someone said behind her. Not the boy. The official, and the official's voice had changed, the pleasant inquiry tone replaced by something more focused.
+"Secondary manifestation, same grid sector," someone said behind her. Not the boy. The official, speaking into a device, his voice flat and procedural, the tone of a man filing a report while the report was still happening. "Requesting support to current position."
 
 The boy looked up at whoever was behind her.
 
@@ -127,15 +129,15 @@ The water rose another three inches. Spread sideways. Found the path of least re
 
 She didn't know if that was the right thing to say. She'd had twenty-two months to figure out what she would have wanted someone to tell her in the moment it happened, and that was the best she'd arrived at.
 
-The official's hand on her shoulder. Not violent — firm, the practiced restraint of someone who'd been trained in minimum-necessary. "Foundation-Touched. I'm placing you under Registry Notice 14-C for—"
+The official's hand on her shoulder. Not rough — procedural, the calibrated grip of someone who'd practiced minimum-necessary contact in a training room with mats on the floor. "Foundation-Touched. I'm placing you under Registry Notice 14-C for—"
 
-"Don't touch her." The boy's voice, flatter now, the panic replaced by something older. Twelve-year-olds said things like that and meant them in a way that was difficult, sometimes, to remember twelve-year-olds were capable of.
+"Don't touch her." The boy's voice, flatter now, the panic replaced by something older. Thirteen-year-olds said things like that and meant them in a way that was hard to account for.
 
-"Son," the official started.
+"Son," the official said. He sounded like someone's father. Maybe he was. That was the worst part — she could hear it in his voice, the genuine weariness of a man who would go home tonight and eat dinner with his own children and not think of this as cruelty. He was following a process. The process was the cruelty.
 
 "He's not your son." Lira didn't turn around. She was still looking at the boy's hands. The water was below the board level now, draining through the gaps, the pressure system collapsing under its own weight. "And I'd really like to finish helping him before you arrest me."
 
-A silence. The official calculating, probably. The equation was different now than it had been: one Foundation manifestation had become two manifestations and a potential public incident, and the Registry's protocols for multiple simultaneous Gate-Touched encounters in a populated area were not designed for fish markets.
+A silence. The official recalculating. She could feel him shift his weight — not aggression, adjustment, the stance of a man whose procedure had just forked into a scenario the manual covered on page forty-something, multiple simultaneous Gate-Touched in a populated area, and the protocol for that wasn't threatening, it was administrative, and that was worse.
 
 "Both of you are going to come with—"
 
@@ -153,7 +155,7 @@ He was already looking where she'd told him to look. He assessed it the way she'
 
 She pulled the Gate shut — not all the way, she never got it all the way shut — and turned to the official.
 
-There were three of them now. The two from the dock entrance had moved. Behind her, the fish market had the particular quality of a crowd that wants to help and has no idea how, plus Crispen looking at her with an expression that would take her years to parse properly, a man watching someone he'd given a job without asking questions leave the job in a direction he'd always known she might eventually go.
+Three of them now. The two from the dock entrance had closed the distance. Behind her, the fish market had gone quiet the way crowds go quiet when they want to help and have no idea how — and Crispen, looking at her with an expression that would take her years to understand. A man watching someone he'd given a job without asking questions leave the job in a direction he'd always known she might eventually go.
 
 She ran south.
 
@@ -187,7 +189,7 @@ He understood what she was asking. "Three weeks. It started small. Just — wate
 
 "I know," she said. "I know what this morning was."
 
-He looked at her directly, and she saw in him something she recognized because she'd seen it in her own reflection for twenty-two months: the specific expression of someone who has been alone with an impossible fact and has started to doubt whether the fact is real or whether they are. "You're like me."
+He looked at her directly, and she recognized what she saw because she'd seen it in her own reflection for twenty-two months: the face of someone who has been alone with an impossible fact long enough to start doubting which part is impossible — the fact, or them. "You're like me."
 
 "Foundation. Mine opened in the Fenhill earthquake."
 
@@ -197,57 +199,67 @@ He looked at her directly, and she saw in him something she recognized because s
 
 Davan was quiet for a moment. "What do we do now?"
 
-She looked up the alley toward where the streets opened into the main district. She'd been thinking about this question for two years. Not the answer — she'd known there was an answer, there had to be, because the underground existed and she'd heard about it, and things that existed had edges, and edges had paths leading to them. She just hadn't found the path.
+She looked up the alley toward where the streets opened into the main district. No good options in that direction. No good options in any direction, which was a condition she'd been living in for twenty-two months and had gotten used to and was now, abruptly, sharing with a thirteen-year-old who was looking at her like she had a plan.
 
-She hadn't been looking, either. She'd been hiding too carefully to look.
+She didn't have a plan. She had a mark on a wall.
 
-She turned and looked at the wall.
+She turned and looked at it. There, at eye level, half-obscured by a stain from last season's rain: a chalk mark. A circle with a vertical line through it, crossed at the bottom by a short horizontal. She'd seen it twice before in the district, both times in locations she'd catalogued mentally and then walked away from. The Gate-Touched Underground. Or a Registry trap dressed up as one. Everyone who needed to know what it meant, knew what it meant — and the Registry knew that everyone knew, which meant the Registry could draw the same mark and wait.
 
-There, at eye level, half-obscured by a stain from last season's rain: a chalk mark. A circle with a vertical line through it, crossed at the bottom by a short horizontal. She'd seen it twice before in the district, both times in locations she'd marked mentally and then not gone back to. The Gate-Touched Underground. Everyone who needed to know what it meant, knew what it meant.
+She'd been walking past it for eight months. She'd never followed it. Not because she didn't need to. Because she couldn't afford to be wrong about what it was.
 
-She'd been walking past it for eight months.
+She couldn't afford to be wrong now, either. But the officials were behind them and the walls were on both sides and the boy was watching her and she had run out of the luxury of certainty.
 
-"I think," she said slowly, "we follow that."
+"We follow that," she said. Not slowly. Fast, the way you say things when hesitation is more dangerous than error.
 
 ---
 
-The mark led north, then east, then down — a hatch in the floor of an abandoned sailmaker's workshop, a wooden ladder, a basement that smelled of lamp oil and damp stone and, faintly, the particular warmth of several people having been in a space for an extended time.
+The mark led north, then east, then down — a hatch in the floor of an abandoned sailmaker's workshop, a wooden ladder descending into dark. The basement below smelled of lamp oil and damp stone and something warmer underneath, the accumulated body heat of people who'd been breathing in a closed space.
 
-She climbed down first. Davan followed.
+She stood at the top of the ladder and thought: *this is where it's a trap, if it's a trap.*
 
-The basement was low, stone-floored, lit by two lanterns. Against the east wall, three people sat on an assortment of salvaged crates and folded canvas — they'd been waiting, or resting, or both. Two women, one man, none of them looking surprised to see her. The oldest was maybe thirty. The youngest was Davan's age or younger, curled against the wall with her knees pulled up, watching Lira with eyes that were amber-gold in the lamplight, and Lira thought: *Fire Gate*, and thought: *she's twelve*, and thought: *she's been here longer than today*.
+She climbed down first. If it was wrong, better her than the boy.
 
-The man stood. He had a healer's calm, the kind you developed either from training or from having been the person everyone looked to for long enough. "Lira," he said. "We've been waiting."
+Davan followed.
+
+The basement was low, stone-floored, lit by two lanterns that had been burning long enough to yellow the near wall with soot. Against the east wall, three people sat on salvaged crates and folded canvas. Two women, one man. None of them stood when she came down. None of them looked surprised. That could mean they were expecting her, or it could mean they'd been trained not to react. She couldn't tell the difference yet, and the not-knowing sat in her chest like swallowed ice.
+
+The oldest was maybe thirty. The youngest was Davan's age or younger, curled against the wall with her knees pulled up, watching Lira with eyes that were amber-gold in the lamplight, and Lira thought: *Fire Gate*, and thought: *she's twelve*, and thought: *she's been here longer than today*.
+
+The man stood. He moved like someone who'd learned patience the hard way — not calm by nature, calm by practice. "Lira," he said. "We've been watching."
 
 She hadn't told anyone her name. She'd told it to Davan four minutes ago.
 
-"You know me," she said.
+"You know me." Not a question. A fact she was filing alongside the exits — two visible, the hatch behind her and a dark passage at the far end — and the positions of the three people and the distance between herself and each of them and the load-bearing capacity of the floor if she needed to move fast.
 
-"We know about you. Fenhill. You've been in the district long enough that we've known for a while." Not an apology in his voice. Just fact. "We gave you space to find us when you were ready."
+"We know about you. Fenhill. You've been in the district long enough." No apology. No warmth, either. Just fact, delivered by someone who understood that warmth would be the wrong move right now. "We placed that mark seven months ago. At eye level. On your route."
 
-She looked at the three of them. She looked at Davan behind her, already scanning the space with the exit-reading eyes she recognized. She looked at the chalk mark that had led her here, which someone had put in that alley months ago, at eye level, exactly where she walked every morning.
+"And if I'd been Registry," she said.
 
-"How long have I been walking past that mark?" she said.
+"You weren't."
 
-"Seven months and twelve days."
+"You couldn't have known that."
 
-"You should have made it bigger."
+He looked at her for a long moment. "No," he said. "We couldn't."
 
-He smiled. Not at what she'd said — at the fact that she'd said it, the specific quality of someone relaxing into something they'd been bracing against for a long time.
+The honesty of it — the admission that they'd gambled — did more to settle her than reassurance would have. Behind her, Davan was scanning the space with the exit-reading eyes she recognized.
 
 "Sit down," he said. "There's a lot to talk about, and we need to move again before morning."
 
 She sat down.
 
-Outside, the harbor district. Above, the Registry still moving, the weight of their organized footsteps moving through dock planking that she could still feel at this distance, this depth, through the stone of the building and the stone of the harbor wall and the foundation stone underneath it all.
+She sat in the basement and let the Foundation Gate settle to its usual low current — the earth's conversation, the weight of the harbor district pressing down through stone and wood and bedrock, the deep structural language that never stopped and that she could never fully stop hearing.
 
-She sat in the basement and let the Foundation Gate run quiet, its usual low current, the earth's conversation conducted in a frequency too low for anyone else to hear. The small Dragon-borne girl's fire was a warmth on the left side of her face. Davan's breathing, normalizing.
+The girl's fire was a warmth on the left side of her face. Davan's breathing was slowing. Above them, through the stone and the harbor wall and the dock planking, she could still feel the Registry — three officials moving in a search pattern, methodical, unhurried, filling out forms.
 
 For the first time in twenty-two months, she was in a room where everyone understood what they were.
 
-She didn't know what came next.
+She did not know yet if that made her safe.
 
-She was, she realized with a surprise that felt like the earth shifting underfoot — relieved about that.
+She did not know yet if safe was something she would ever be again, or if the best she could hope for was a room full of strangers who carried the same weight she did, in a basement that might be shelter or might be the next thing she'd have to run from.
+
+But the earth held. Beneath everything, the earth held.
+
+That would have to be enough.
 
 ---
 
