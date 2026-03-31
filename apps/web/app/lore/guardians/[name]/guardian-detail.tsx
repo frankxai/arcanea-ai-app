@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -16,6 +19,7 @@ import {
   PhLightning,
   PhInfinity,
   PhSparkle,
+  PhX,
 } from '@/lib/phosphor-icons';
 
 // ── Types ────────────────────────────────────────────────────────────────────
@@ -171,6 +175,7 @@ export function GuardianDetailContent({
   related: GuardianData[];
 }) {
   const config = ELEMENT_CONFIG[guardian.color];
+  const [activeImage, setActiveImage] = useState<string | null>(null);
 
   return (
     <div className="relative min-h-screen bg-cosmic-deep bg-cosmic-mesh">
@@ -255,13 +260,24 @@ export function GuardianDetailContent({
                 </span>
               </div>
 
-              <div className="relative w-full max-w-2xl h-64 md:h-80 lg:h-96 mb-10 rounded-2xl overflow-hidden liquid-glass">
+              <div
+                className="group relative w-full max-w-2xl h-64 md:h-80 lg:h-96 mb-10 rounded-2xl overflow-hidden liquid-glass cursor-zoom-in"
+                onClick={() => guardian.heroImage && setActiveImage(guardian.heroImage)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(event) => {
+                  if ((event.key === "Enter" || event.key === " ") && guardian.heroImage) {
+                    event.preventDefault();
+                    setActiveImage(guardian.heroImage);
+                  }
+                }}
+              >
                 {guardian.heroImage ? (
                   <Image
                     src={guardian.heroImage}
                     alt={`${guardian.name} - ${guardian.godbeast}`}
                     fill
-                    className="object-cover"
+                    className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
                     priority
                   />
                 ) : (
@@ -271,6 +287,9 @@ export function GuardianDetailContent({
                   />
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-cosmic-deep/60 to-transparent" />
+                <div className="absolute right-4 top-4 rounded-full border border-white/15 bg-black/40 px-3 py-1 text-[10px] font-sans uppercase tracking-[0.2em] text-white/70 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  Open image
+                </div>
                 <div className="absolute bottom-4 left-4 right-4">
                   <p className="text-sm text-crystal font-sans">
                     {guardian.godbeast} —{" "}
@@ -488,7 +507,18 @@ export function GuardianDetailContent({
             </h2>
 
             {guardian.gallery.length === 1 ? (
-              <div className="group relative h-64 rounded-2xl overflow-hidden liquid-glass border border-white/[0.06] hover:border-white/[0.12] transition-all">
+              <div
+                className="group relative h-64 rounded-2xl overflow-hidden liquid-glass border border-white/[0.06] hover:border-white/[0.12] transition-all cursor-zoom-in"
+                onClick={() => setActiveImage(guardian.gallery![0])}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    setActiveImage(guardian.gallery![0]);
+                  }
+                }}
+              >
                 <Image
                   src={guardian.gallery[0]}
                   alt={`${guardian.name} vision`}
@@ -496,10 +526,24 @@ export function GuardianDetailContent({
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-cosmic-deep/70 via-transparent to-transparent" />
+                <div className="absolute right-4 top-4 rounded-full border border-white/15 bg-black/40 px-3 py-1 text-[10px] font-sans uppercase tracking-[0.2em] text-white/70 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  Open image
+                </div>
               </div>
             ) : (
               <div className="grid grid-cols-3 gap-3" style={{ gridTemplateRows: '160px 160px' }}>
-                <div className="col-span-2 row-span-2 group relative rounded-2xl overflow-hidden liquid-glass border border-white/[0.06] hover:border-white/[0.12] transition-all cursor-pointer">
+                <div
+                  className="col-span-2 row-span-2 group relative rounded-2xl overflow-hidden liquid-glass border border-white/[0.06] hover:border-white/[0.12] transition-all cursor-zoom-in"
+                  onClick={() => setActiveImage(guardian.gallery![0])}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      setActiveImage(guardian.gallery![0]);
+                    }
+                  }}
+                >
                   <Image
                     src={guardian.gallery[0]}
                     alt={`${guardian.name} — featured vision`}
@@ -516,7 +560,16 @@ export function GuardianDetailContent({
                 {guardian.gallery.slice(1, 3).map((imageUrl, i) => (
                   <div
                     key={i}
-                    className="col-span-1 row-span-1 group relative rounded-2xl overflow-hidden liquid-glass border border-white/[0.06] hover:border-white/[0.12] transition-all cursor-pointer"
+                    className="col-span-1 row-span-1 group relative rounded-2xl overflow-hidden liquid-glass border border-white/[0.06] hover:border-white/[0.12] transition-all cursor-zoom-in"
+                    onClick={() => setActiveImage(imageUrl)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        setActiveImage(imageUrl);
+                      }
+                    }}
                   >
                     <Image
                       src={imageUrl}
@@ -531,7 +584,18 @@ export function GuardianDetailContent({
             )}
 
             {guardian.gallery.length >= 4 && (
-              <div className="mt-3 group relative h-32 rounded-2xl overflow-hidden liquid-glass border border-white/[0.06] hover:border-white/[0.12] transition-all cursor-pointer">
+              <div
+                className="mt-3 group relative h-32 rounded-2xl overflow-hidden liquid-glass border border-white/[0.06] hover:border-white/[0.12] transition-all cursor-zoom-in"
+                onClick={() => setActiveImage(guardian.gallery![3])}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    setActiveImage(guardian.gallery![3]);
+                  }
+                }}
+              >
                 <Image
                   src={guardian.gallery[3]}
                   alt={`${guardian.name} — panoramic vision`}
@@ -601,6 +665,40 @@ export function GuardianDetailContent({
           </div>
         </section>
       </main>
+
+      {activeImage && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 px-4 py-8 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${guardian.name} image preview`}
+          onClick={() => setActiveImage(null)}
+        >
+          <button
+            type="button"
+            onClick={() => setActiveImage(null)}
+            className="absolute right-5 top-5 z-10 rounded-full border border-white/15 bg-black/60 p-2 text-white/80 transition-colors hover:text-white"
+            aria-label="Close preview"
+          >
+            <PhX className="h-5 w-5" />
+          </button>
+          <div
+            className="relative max-h-[88vh] w-full max-w-5xl overflow-hidden rounded-3xl border border-white/10 bg-cosmic-deep shadow-2xl"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="relative aspect-[4/5] max-h-[88vh] w-full">
+              <Image
+                src={activeImage}
+                alt={`${guardian.name} enlarged artwork`}
+                fill
+                className="object-contain"
+                sizes="100vw"
+                priority
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

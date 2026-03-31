@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { GuardianDetailContent, type GuardianData } from "./guardian-detail";
+import { getGalleryImages } from "@/lib/media/image-registry";
 
 // ── Guardian canonical data ───────────────────────────────────────────────────
 
@@ -27,11 +28,7 @@ const GUARDIANS: Record<string, GuardianData> = {
     relatedGuardians: ["leyla", "ino"],
     heroImage: "/guardians/v3/lyssandria-hero-v3.webp",
     gradient: "from-amber-700 via-yellow-600 to-stone-400",
-    gallery: [
-      "/guardians/v3/lyssandria-hero-v3.webp",
-      "/guardians/v2/kaelith-godbeast.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/lyssandria-gallery-2.webp",
-    ],
+    gallery: getGalleryImages("lyssandria").map((image) => image.url),
   },
   leyla: {
     name: "Leyla",
@@ -56,14 +53,7 @@ const GUARDIANS: Record<string, GuardianData> = {
     relatedGuardians: ["maylinn", "lyria", "shinkami"],
     heroImage: "/guardians/v3/leyla-hero-v3.webp",
     gradient: "from-blue-300 via-cyan-400 to-slate-300",
-    gallery: [
-      "/guardians/v3/leyla-hero-v3.webp",
-      "/guardians/v2/veloura-godbeast.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/leyla-gallery-2.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/leyla-gallery-3.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/leyla-gallery-4.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/leyla-gallery-5.webp",
-    ],
+    gallery: getGalleryImages("leyla").map((image) => image.url),
   },
   draconia: {
     name: "Draconia",
@@ -87,14 +77,7 @@ const GUARDIANS: Record<string, GuardianData> = {
     relatedGuardians: ["alera", "aiyami"],
     heroImage: "/guardians/v3/draconia-hero-v3.webp",
     gradient: "from-red-600 via-orange-500 to-amber-400",
-    gallery: [
-      "/guardians/v3/draconia-hero-v3.webp",
-      "/guardians/v2/draconis-godbeast.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/draconia-gallery-2.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/draconia-gallery-3.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/draconia-gallery-4.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/draconia-gallery-5.webp",
-    ],
+    gallery: getGalleryImages("draconia").map((image) => image.url),
   },
   maylinn: {
     name: "Maylinn",
@@ -118,14 +101,7 @@ const GUARDIANS: Record<string, GuardianData> = {
     relatedGuardians: ["leyla", "alera", "ino"],
     heroImage: "/guardians/v3/maylinn-hero-v3.webp",
     gradient: "from-rose-300 via-pink-400 to-green-300",
-    gallery: [
-      "/guardians/v3/maylinn-hero-v3.webp",
-      "/guardians/v2/laeylinn-godbeast.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/maylinn-gallery-2.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/maylinn-gallery-3.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/maylinn-gallery-4.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/maylinn-gallery-5.webp",
-    ],
+    gallery: getGalleryImages("maylinn").map((image) => image.url),
   },
   alera: {
     name: "Alera",
@@ -149,14 +125,7 @@ const GUARDIANS: Record<string, GuardianData> = {
     relatedGuardians: ["draconia", "lyria"],
     heroImage: "/guardians/v3/alera-hero-v3.webp",
     gradient: "from-sky-400 via-blue-500 to-indigo-600",
-    gallery: [
-      "/guardians/v3/alera-hero-v3.webp",
-      "/guardians/v2/otome-godbeast.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/alera-gallery-2.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/alera-gallery-3.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/alera-gallery-4.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/alera-gallery-5.webp",
-    ],
+    gallery: getGalleryImages("alera").map((image) => image.url),
   },
   lyria: {
     name: "Lyria",
@@ -180,14 +149,7 @@ const GUARDIANS: Record<string, GuardianData> = {
     relatedGuardians: ["aiyami", "shinkami", "leyla"],
     heroImage: "/guardians/v3/lyria-hero-v3.webp",
     gradient: "from-violet-500 via-purple-600 to-indigo-700",
-    gallery: [
-      "/guardians/v3/lyria-hero-v3.webp",
-      "/guardians/v2/yumiko-godbeast.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/lyria-gallery-2.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/lyria-gallery-3.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/lyria-gallery-4.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/lyria-gallery-5.webp",
-    ],
+    gallery: getGalleryImages("lyria").map((image) => image.url),
   },
   aiyami: {
     name: "Aiyami",
@@ -211,14 +173,7 @@ const GUARDIANS: Record<string, GuardianData> = {
     relatedGuardians: ["lyria", "elara"],
     heroImage: "/guardians/v3/aiyami-hero-v3.webp",
     gradient: "from-yellow-200 via-amber-300 to-white",
-    gallery: [
-      "/guardians/v3/aiyami-hero-v3.webp",
-      "/guardians/v2/sol-godbeast.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/aiyami-gallery-2.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/aiyami-gallery-3.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/aiyami-gallery-4.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/aiyami-gallery-5.webp",
-    ],
+    gallery: getGalleryImages("aiyami").map((image) => image.url),
   },
   elara: {
     name: "Elara",
@@ -242,14 +197,7 @@ const GUARDIANS: Record<string, GuardianData> = {
     relatedGuardians: ["aiyami", "ino"],
     heroImage: "/guardians/v3/elara-hero-v3.webp",
     gradient: "from-emerald-400 via-green-500 to-teal-600",
-    gallery: [
-      "/guardians/v3/elara-hero-v3.webp",
-      "/guardians/v2/vaelith-godbeast.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/elara-gallery-2.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/elara-gallery-3.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/elara-gallery-4.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/elara-gallery-5.webp",
-    ],
+    gallery: getGalleryImages("elara").map((image) => image.url),
   },
   ino: {
     name: "Ino",
@@ -273,14 +221,7 @@ const GUARDIANS: Record<string, GuardianData> = {
     relatedGuardians: ["maylinn", "shinkami"],
     heroImage: "/guardians/v3/ino-hero-v3.webp",
     gradient: "from-pink-400 via-fuchsia-500 to-teal-400",
-    gallery: [
-      "/guardians/v3/ino-hero-v3.webp",
-      "/guardians/v2/kyuro-godbeast.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/ino-gallery-2.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/ino-gallery-3.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/ino-gallery-4.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/ino-gallery-5.webp",
-    ],
+    gallery: getGalleryImages("ino").map((image) => image.url),
   },
   shinkami: {
     name: "Shinkami",
@@ -304,14 +245,7 @@ const GUARDIANS: Record<string, GuardianData> = {
     relatedGuardians: ["aiyami", "lyria", "ino"],
     heroImage: "/guardians/v3/shinkami-hero-v3.webp",
     gradient: "from-neutral-900 via-yellow-400 to-white",
-    gallery: [
-      "/guardians/v3/shinkami-hero-v3.webp",
-      "/guardians/v2/source-godbeast.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/shinkami-gallery-2.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/shinkami-gallery-3.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/shinkami-gallery-4.webp",
-      "https://hcfhyssdzphudaqatxbk.supabase.co/storage/v1/object/public/arcanea-gallery/guardians/gallery/shinkami-gallery-5.webp",
-    ],
+    gallery: getGalleryImages("shinkami").map((image) => image.url),
   },
 };
 
