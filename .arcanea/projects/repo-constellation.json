@@ -93,6 +93,32 @@
       ]
     },
     {
+      "id": "arcanea-orchestrator",
+      "label": "Arcanea Orchestrator",
+      "path": "arcanea-orchestrator",
+      "cli": ["ao", "arcanea-orchestrator"],
+      "purpose": "Worktree-centric multi-agent execution substrate based on Composio Agent Orchestrator",
+      "expectedRemoteHints": ["frankxai/arcanea-orchestrator", "ComposioHQ/agent-orchestrator"],
+      "smokeCommands": [
+        {
+          "label": "bootstrap build",
+          "command": "pnpm run build:bootstrap"
+        },
+        {
+          "label": "cli help",
+          "command": "node packages/cli/dist/index.js --help"
+        },
+        {
+          "label": "doctor help",
+          "command": "node packages/cli/dist/index.js doctor --help"
+        },
+        {
+          "label": "start help",
+          "command": "node packages/cli/dist/index.js start --help"
+        }
+      ]
+    },
+    {
       "id": "arcanea-agents",
       "label": "Arcanea Agents",
       "path": "arcanea-agents",

@@ -20,7 +20,7 @@ Local topology note:
 | **arcanea-code** | `frankxai/arcanea-code` | `/Arcanea/arcanea-code` | `arcanea` | Flagship CLI -- OpenCode fork with Arcanea Intelligence OS | Active |
 | **oh-my-arcanea** | `frankxai/oh-my-arcanea` | `/Arcanea/oh-my-arcanea` | `oh-my-arcanea`, `opencode-arcanea` | OpenCode harness overlay (CLAUDE.md + hooks + statusline) | Active |
 | **claude-arcanea** | `frankxai/claude-arcanea` | `/Arcanea/claude-arcanea` | `claude-arcanea` | Claude Code harness (overlay for Claude Code sessions) | Active |
-| **arcanea-orchestrator** | `frankxai/arcanea-orchestrator` | -- | `ao` | Multi-agent orchestrator (agent-orchestrator fork) | Active |
+| **arcanea-orchestrator** | `frankxai/arcanea-orchestrator` | `/Arcanea/arcanea-orchestrator` | `ao`, `arcanea-orchestrator` | Multi-agent orchestrator (agent-orchestrator fork) | Active, bootstrap build required on Windows |
 | **arcanea-flow** | `frankxai/arcanea-flow` | `/Arcanea/arcanea-flow` | -- | Multi-agent orchestration engine (claude-flow fork) | Active |
 | **arcanea-claw** | `frankxai/arcanea-claw` | `/Arcanea/arcanea-claw` | `arcanea-claw` | Media engine (image/music/video generation) | Active |
 | **arcanea-infogenius** | `frankxai/arcanea-infogenius` | `/Arcanea/arcanea-infogenius` | -- | Visual intelligence MCP server | Active |
