@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 /*  Types & Constants                                                  */
 /* ------------------------------------------------------------------ */
 
-type Category = "feature" | "fix" | "design" | "performance";
+type Category = "feature" | "fix" | "design" | "performance" | "content" | "agents" | "infrastructure";
 
 interface ChangelogEntry {
   date: string;
@@ -52,6 +52,24 @@ const CATEGORY_STYLES: Record<
     text: "text-emerald-400",
     border: "border-emerald-500/20",
     label: "Performance",
+  },
+  content: {
+    bg: "bg-[#ffd700]/10",
+    text: "text-[#ffd700]",
+    border: "border-[#ffd700]/20",
+    label: "Content",
+  },
+  agents: {
+    bg: "bg-rose-500/10",
+    text: "text-rose-400",
+    border: "border-rose-500/20",
+    label: "Agents",
+  },
+  infrastructure: {
+    bg: "bg-sky-500/10",
+    text: "text-sky-400",
+    border: "border-sky-500/20",
+    label: "Infrastructure",
   },
 };
 
