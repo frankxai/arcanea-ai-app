@@ -14,6 +14,13 @@ const creationPatchSchema = z.object({
 
 type ProjectCreationRouteParams = Promise<{ id: string; creationId: string }>;
 
+export const projectCreationRouteDeps = {
+  assignCreationToProjectForCurrentUser,
+  detachCreationFromProjectForCurrentUser,
+  getProjectAuthContext,
+  recordProjectTrace,
+};
+
 export async function PATCH(
   request: NextRequest,
   { params }: { params: ProjectCreationRouteParams },
@@ -28,12 +35,12 @@ export async function PATCH(
       });
     }
 
-    const { supabase, user } = await getProjectAuthContext();
+    const { supabase, user } = await projectCreationRouteDeps.getProjectAuthContext();
     if (!user) {
       return errorResponse('UNAUTHORIZED', 'Authentication required', 401);
     }
 
-    const creation = await assignCreationToProjectForCurrentUser(
+    const creation = await projectCreationRouteDeps.assignCreationToProjectForCurrentUser(
       id,
       creationId,
       validation.data.sourceSessionId,
@@ -42,7 +49,7 @@ export async function PATCH(
       return errorResponse('NOT_FOUND', 'Creation not found', 404);
     }
 
-    await recordProjectTrace(supabase, {
+    await projectCreationRouteDeps.recordProjectTrace(supabase, {
       userId: user.id,
       projectId: id,
       action: 'project_creation_linked',
@@ -64,17 +71,17 @@ export async function DELETE(
 ) {
   try {
     const { id, creationId } = await params;
-    const { supabase, user } = await getProjectAuthContext();
+    const { supabase, user } = await projectCreationRouteDeps.getProjectAuthContext();
     if (!user) {
       return errorResponse('UNAUTHORIZED', 'Authentication required', 401);
     }
 
-    const deleted = await detachCreationFromProjectForCurrentUser(id, creationId);
+    const deleted = await projectCreationRouteDeps.detachCreationFromProjectForCurrentUser(id, creationId);
     if (!deleted) {
       return errorResponse('NOT_FOUND', 'Creation not found', 404);
     }
 
-    await recordProjectTrace(supabase, {
+    await projectCreationRouteDeps.recordProjectTrace(supabase, {
       userId: user.id,
       projectId: id,
       action: 'project_updated',

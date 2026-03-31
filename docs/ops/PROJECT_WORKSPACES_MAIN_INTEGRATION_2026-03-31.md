@@ -49,6 +49,14 @@ Set-Location apps/web
 pnpm exec playwright test
 ```
 
+Additional hardening completed after the initial replay:
+
+- route contract coverage now includes:
+  - `GET/POST /api/projects`
+  - `PATCH/DELETE /api/projects/[id]/sessions/[sessionId]`
+  - `PATCH/DELETE /api/projects/[id]/creations/[creationId]`
+- `apps/web/package.json` now runs `next typegen` before `tsc --noEmit`, so a fresh worktree no longer fails type-check before `.next/types` exists
+
 ## Result
 
 The project-workspace slice is promotable on top of current `main`.
@@ -81,3 +89,10 @@ Live Supabase activation is still external:
 - actual project credentials
 
 That work should happen after this branch is promoted or in a dedicated follow-up branch.
+
+## Remaining non-blocking warnings
+
+- Next/Turbopack workspace-root warning because a parent lockfile exists at `C:\Users\frank\pnpm-lock.yaml`
+- Next middleware deprecation warning because the app still uses the older `middleware` convention
+
+Neither warning blocks this project-workspace promotion slice, but both should be cleaned up in a focused platform follow-up.

@@ -9,23 +9,30 @@ import { recordProjectTrace } from '@/lib/projects/trace';
 
 type ProjectSessionRouteParams = Promise<{ id: string; sessionId: string }>;
 
+export const projectSessionRouteDeps = {
+  assignSessionToProjectForCurrentUser,
+  detachSessionFromProjectForCurrentUser,
+  getProjectAuthContext,
+  recordProjectTrace,
+};
+
 export async function PATCH(
   _request: NextRequest,
   { params }: { params: ProjectSessionRouteParams },
 ) {
   try {
     const { id, sessionId } = await params;
-    const { supabase, user } = await getProjectAuthContext();
+    const { supabase, user } = await projectSessionRouteDeps.getProjectAuthContext();
     if (!user) {
       return errorResponse('UNAUTHORIZED', 'Authentication required', 401);
     }
 
-    const session = await assignSessionToProjectForCurrentUser(id, sessionId);
+    const session = await projectSessionRouteDeps.assignSessionToProjectForCurrentUser(id, sessionId);
     if (!session) {
       return errorResponse('NOT_FOUND', 'Session not found', 404);
     }
 
-    await recordProjectTrace(supabase, {
+    await projectSessionRouteDeps.recordProjectTrace(supabase, {
       userId: user.id,
       projectId: id,
       action: 'project_updated',
@@ -47,17 +54,17 @@ export async function DELETE(
 ) {
   try {
     const { id, sessionId } = await params;
-    const { supabase, user } = await getProjectAuthContext();
+    const { supabase, user } = await projectSessionRouteDeps.getProjectAuthContext();
     if (!user) {
       return errorResponse('UNAUTHORIZED', 'Authentication required', 401);
     }
 
-    const deleted = await detachSessionFromProjectForCurrentUser(id, sessionId);
+    const deleted = await projectSessionRouteDeps.detachSessionFromProjectForCurrentUser(id, sessionId);
     if (!deleted) {
       return errorResponse('NOT_FOUND', 'Session not found', 404);
     }
 
-    await recordProjectTrace(supabase, {
+    await projectSessionRouteDeps.recordProjectTrace(supabase, {
       userId: user.id,
       projectId: id,
       action: 'project_updated',
