@@ -1,3 +1,5 @@
+const path = require('node:path')
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   poweredByHeader: false,
@@ -10,6 +12,7 @@ const nextConfig = {
       : false,
   },
   turbopack: {
+    root: path.resolve(__dirname, '../..'),
     resolveAlias: {
       '@opentelemetry/api': { browser: './empty-module.js' },
     },

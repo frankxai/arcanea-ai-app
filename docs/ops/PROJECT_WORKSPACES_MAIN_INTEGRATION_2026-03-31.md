@@ -92,7 +92,6 @@ That work should happen after this branch is promoted or in a dedicated follow-u
 
 ## Remaining non-blocking warnings
 
-- Next/Turbopack workspace-root warning because a parent lockfile exists at `C:\Users\frank\pnpm-lock.yaml`
 - Next middleware deprecation warning because the app still uses the older `middleware` convention
 
-Neither warning blocks this project-workspace promotion slice, but both should be cleaned up in a focused platform follow-up.
+The previous Turbopack workspace-root warning was eliminated on this branch by setting `turbopack.root` explicitly in `apps/web/next.config.js`.
