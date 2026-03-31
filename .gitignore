@@ -48,6 +48,7 @@ coverage/
 # Temporary folders
 tmp/
 temp/
+.tmp/
 
 # Local nested repos
 /ai/
@@ -116,6 +117,9 @@ arcanea-opencode-fork/
 # Runtime agent state — changes every session, never commit
 .claude-flow/
 .swarm/
+.arcanea/agents/
+.arcanea/sessions/
+.arcanea/projects/PICKUP_SESSION_*.md
 
 # Claude Code local state (per-machine, never commit)
 .claude/
@@ -145,6 +149,7 @@ arcanea-luminor/
 arcanea-mobile/
 arcanea-onchain/
 arcanea-opencode/
+arcanea-orchestrator/
 arcanea-records/
 arcanea-lore/
 arcanea-agents/
@@ -157,6 +162,7 @@ claude-arcanea/
 claude-code-oracle-skills/
 codex-arcanea/
 gemini-arcanea/
+oh-my-arcanea/
 oci-ai-architect-skills/
 intelligence-os/
 intelligence/
