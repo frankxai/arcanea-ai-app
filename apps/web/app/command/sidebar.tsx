@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 
 const NAV_ITEMS = [
   { href: '/command', label: 'Dashboard', icon: DashboardIcon },
+  { href: '/ops', label: 'Ops', icon: OpsIcon },
   { href: '/command/inbox', label: 'Inbox', icon: InboxIcon },
   { href: '/command/agents', label: 'Agents', icon: AgentsIcon },
   { href: '/command/social', label: 'Social', icon: SocialIcon },
@@ -110,6 +111,24 @@ function DashboardIcon({ active }: { active: boolean }) {
       <rect x="14" y="3" width="7" height="7" rx="1" />
       <rect x="3" y="14" width="7" height="7" rx="1" />
       <rect x="14" y="14" width="7" height="7" rx="1" />
+    </svg>
+  );
+}
+
+function OpsIcon({ active }: { active: boolean }) {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={active ? '#7fffd4' : 'currentColor'}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M12 2l2.2 4.45L19 7.1l-3.5 3.41.83 4.82L12 13l-4.33 2.33.83-4.82L5 7.1l4.8-.65L12 2z" />
+      <circle cx="12" cy="12" r="2.5" />
     </svg>
   );
 }
