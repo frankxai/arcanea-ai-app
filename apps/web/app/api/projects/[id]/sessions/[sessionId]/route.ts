@@ -7,12 +7,14 @@ import {
 } from '@/lib/projects/server';
 import { recordProjectTrace } from '@/lib/projects/trace';
 
+type ProjectSessionRouteParams = Promise<{ id: string; sessionId: string }>;
+
 export async function PATCH(
   _request: NextRequest,
-  { params }: { params: Promise<any> },
+  { params }: { params: ProjectSessionRouteParams },
 ) {
   try {
-    const { id, sessionId } = (await params) as { id: string; sessionId: string };
+    const { id, sessionId } = await params;
     const { supabase, user } = await getProjectAuthContext();
     if (!user) {
       return errorResponse('UNAUTHORIZED', 'Authentication required', 401);
@@ -41,10 +43,10 @@ export async function PATCH(
 
 export async function DELETE(
   _request: NextRequest,
-  { params }: { params: Promise<any> },
+  { params }: { params: ProjectSessionRouteParams },
 ) {
   try {
-    const { id, sessionId } = (await params) as { id: string; sessionId: string };
+    const { id, sessionId } = await params;
     const { supabase, user } = await getProjectAuthContext();
     if (!user) {
       return errorResponse('UNAUTHORIZED', 'Authentication required', 401);

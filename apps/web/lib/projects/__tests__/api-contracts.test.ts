@@ -11,6 +11,7 @@ import {
   projectGraphRouteDeps,
 } from '@/app/api/projects/[id]/graph/route';
 import type { ProjectWorkspaceSnapshot } from '@/lib/projects/server';
+import type { ProjectTraceInput } from '@/lib/projects/trace';
 
 let passed = 0;
 let failed = 0;
@@ -72,9 +73,32 @@ function createWorkspace(): ProjectWorkspaceSnapshot {
   };
 }
 
-async function parseJson(response: Response) {
-  return response.json() as Promise<Record<string, any>>;
+async function parseJson<T>(response: Response): Promise<T> {
+  return response.json() as Promise<T>;
 }
+
+type ErrorPayload = {
+  success: false;
+  error: { code: string };
+};
+
+type ProjectPayload = {
+  success: true;
+  data: { project: { title: string } };
+};
+
+type DeletePayload = {
+  success: true;
+  data: { deleted: boolean };
+};
+
+type GraphPayload = {
+  success: true;
+  data: {
+    workspace: { project: { id: string } };
+    graph: { summary: string };
+  };
+};
 
 async function main() {
   const originalProjectDeps = { ...projectRouteDeps };
@@ -88,7 +112,7 @@ async function main() {
         new NextRequest('http://localhost/api/projects/project_1'),
         { params: Promise.resolve({ id: 'project_1' }) },
       );
-      const payload = await parseJson(response);
+      const payload = await parseJson<ErrorPayload>(response);
 
       assert.equal(response.status, 404);
       assert.equal(payload.success, false);
@@ -104,7 +128,7 @@ async function main() {
         }),
         { params: Promise.resolve({ id: 'project_1' }) },
       );
-      const payload = await parseJson(response);
+      const payload = await parseJson<ErrorPayload>(response);
 
       assert.equal(response.status, 400);
       assert.equal(payload.success, false);
@@ -112,7 +136,7 @@ async function main() {
     });
 
     await test('PATCH /api/projects/[id] returns updated project contract', async () => {
-      const traces: any[] = [];
+      const traces: ProjectTraceInput[] = [];
       projectRouteDeps.getProjectAuthContext = async () => ({
         supabase: {} as never,
         db: {} as never,
@@ -138,7 +162,7 @@ async function main() {
         }),
         { params: Promise.resolve({ id: 'project_1' }) },
       );
-      const payload = await parseJson(response);
+      const payload = await parseJson<ProjectPayload>(response);
 
       assert.equal(response.status, 200);
       assert.equal(payload.success, true);
@@ -160,7 +184,7 @@ async function main() {
         new NextRequest('http://localhost/api/projects/project_1', { method: 'DELETE' }),
         { params: Promise.resolve({ id: 'project_1' }) },
       );
-      const payload = await parseJson(response);
+      const payload = await parseJson<DeletePayload>(response);
 
       assert.equal(response.status, 200);
       assert.equal(payload.success, true);
@@ -169,7 +193,7 @@ async function main() {
 
     await test('GET /api/projects/[id]/graph returns workspace, evaluation, and graph', async () => {
       const workspace = createWorkspace();
-      const traces: any[] = [];
+      const traces: ProjectTraceInput[] = [];
       projectGraphRouteDeps.getProjectWorkspaceForCurrentUser = async () => workspace;
       projectGraphRouteDeps.getProjectAuthContext = async () => ({
         supabase: {} as never,
@@ -205,7 +229,7 @@ async function main() {
         new NextRequest('http://localhost/api/projects/project_1/graph'),
         { params: Promise.resolve({ id: 'project_1' }) },
       );
-      const payload = await parseJson(response);
+      const payload = await parseJson<GraphPayload>(response);
 
       assert.equal(response.status, 200);
       assert.equal(payload.success, true);

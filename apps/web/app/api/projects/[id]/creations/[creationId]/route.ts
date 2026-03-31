@@ -12,12 +12,14 @@ const creationPatchSchema = z.object({
   sourceSessionId: z.string().min(1).nullable().optional(),
 });
 
+type ProjectCreationRouteParams = Promise<{ id: string; creationId: string }>;
+
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: Promise<any> },
+  { params }: { params: ProjectCreationRouteParams },
 ) {
   try {
-    const { id, creationId } = (await params) as { id: string; creationId: string };
+    const { id, creationId } = await params;
     const body = await request.json().catch(() => ({}));
     const validation = creationPatchSchema.safeParse(body);
     if (!validation.success) {
@@ -58,10 +60,10 @@ export async function PATCH(
 
 export async function DELETE(
   _request: NextRequest,
-  { params }: { params: Promise<any> },
+  { params }: { params: ProjectCreationRouteParams },
 ) {
   try {
-    const { id, creationId } = (await params) as { id: string; creationId: string };
+    const { id, creationId } = await params;
     const { supabase, user } = await getProjectAuthContext();
     if (!user) {
       return errorResponse('UNAUTHORIZED', 'Authentication required', 401);

@@ -77,8 +77,23 @@ export interface ProjectCreationRecord {
 }
 
 type ServerSupabase = Awaited<ReturnType<typeof createClient>>;
+type UntypedQueryResult = PromiseLike<{ data: unknown; error?: unknown }>;
+
+interface UntypedQueryBuilder extends UntypedQueryResult {
+  delete(): UntypedQueryBuilder;
+  eq(column: string, value: unknown): UntypedQueryBuilder;
+  in(column: string, values: unknown[]): UntypedQueryBuilder;
+  insert(values: Record<string, unknown>): UntypedQueryBuilder;
+  limit(count: number): UntypedQueryBuilder;
+  or(filters: string): UntypedQueryBuilder;
+  order(column: string, options?: { ascending?: boolean }): UntypedQueryBuilder;
+  select(columns: string): UntypedQueryBuilder;
+  single(): UntypedQueryBuilder;
+  update(values: Record<string, unknown>): UntypedQueryBuilder;
+}
+
 type UntypedServerSupabase = ServerSupabase & {
-  from: (table: string) => any;
+  from: (table: string) => UntypedQueryBuilder;
 };
 
 function asUntyped(client: ServerSupabase): UntypedServerSupabase {
