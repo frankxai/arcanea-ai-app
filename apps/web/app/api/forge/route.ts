@@ -1,10 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+function getForgeSupabaseClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!url || !serviceRoleKey) {
+    return null;
+  }
+
+  return createClient(url, serviceRoleKey);
+}
 
 function slugify(name: string): string {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60);
@@ -12,6 +18,10 @@ function slugify(name: string): string {
 
 // GET /api/forge — list user's agents + public agents
 export async function GET(req: NextRequest) {
+  const supabase = getForgeSupabaseClient();
+  if (!supabase) {
+    return NextResponse.json({ error: 'Forge backend not configured' }, { status: 503 });
+  }
   const { searchParams } = new URL(req.url);
   const userId = searchParams.get('userId');
   const category = searchParams.get('category');
@@ -41,6 +51,10 @@ export async function GET(req: NextRequest) {
 
 // POST /api/forge — create custom agent
 export async function POST(req: NextRequest) {
+  const supabase = getForgeSupabaseClient();
+  if (!supabase) {
+    return NextResponse.json({ error: 'Forge backend not configured' }, { status: 503 });
+  }
   const body = await req.json();
   const { userId, name, description, avatarEmoji, systemPrompt, personalityTags, baseLuminorId, preferredTools, category, visibility } = body;
 

@@ -151,6 +151,7 @@ export interface ConversationState {
   enabledTools: Set<string>;
   setEnabledTools: (tools: Set<string>) => void;
   toggleTool: (tool: string) => void;
+  detectToolIntent: (message: string) => string[];
 
   // State
   isLoading: boolean;

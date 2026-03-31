@@ -47,6 +47,10 @@ function isSupabaseConfigured(): boolean {
   return !!url && !url.includes('placeholder');
 }
 
+function getUntypedTableClient(supabase: unknown, table: 'agents' | 'reputation_events') {
+  return (supabase as { from: (name: string) => any }).from(table);
+}
+
 // ---------------------------------------------------------------------------
 // Agent CRUD
 // ---------------------------------------------------------------------------
@@ -71,8 +75,7 @@ export async function createAgent(input: AgentProfileCreate): Promise<AgentProfi
     try {
       const { createClient } = await import('@/lib/supabase/server');
       const supabase = await createClient();
-      const { error } = await supabase
-        .from('agents')
+      const { error } = await getUntypedTableClient(supabase, 'agents')
         .insert({
           id: profile.id,
           name: profile.name,
@@ -102,8 +105,7 @@ export async function getAgent(id: string): Promise<AgentProfile | null> {
     try {
       const { createClient } = await import('@/lib/supabase/server');
       const supabase = await createClient();
-      const { data, error } = await supabase
-        .from('agents')
+      const { data, error } = await getUntypedTableClient(supabase, 'agents')
         .select('*')
         .eq('id', id)
         .single();
@@ -133,8 +135,7 @@ export async function updateAgent(
     try {
       const { createClient } = await import('@/lib/supabase/server');
       const supabase = await createClient();
-      const { error } = await supabase
-        .from('agents')
+      const { error } = await getUntypedTableClient(supabase, 'agents')
         .update({
           name: updated.name,
           type: updated.type,
@@ -164,7 +165,7 @@ export async function searchAgents(params: AgentSearchParams): Promise<AgentProf
     try {
       const { createClient } = await import('@/lib/supabase/server');
       const supabase = await createClient();
-      let query = supabase.from('agents').select('*');
+      let query = getUntypedTableClient(supabase, 'agents').select('*');
 
       if (params.q) {
         query = query.ilike('name', `%${params.q}%`);
@@ -244,7 +245,7 @@ export async function addReputationEvent(
       const supabase = await createClient();
 
       const [insertResult, updateResult] = await Promise.all([
-        supabase.from('reputation_events').insert({
+        getUntypedTableClient(supabase, 'reputation_events').insert({
           id: event.id,
           agent_id: agentId,
           type: event.type,
@@ -252,7 +253,7 @@ export async function addReputationEvent(
           reason: event.reason,
           created_at: event.createdAt,
         }),
-        supabase.from('agents').update({
+        getUntypedTableClient(supabase, 'agents').update({
           reputation: newReputation,
           tasks_completed: newTasksCompleted,
           last_active: new Date().toISOString(),
@@ -290,8 +291,7 @@ export async function getReputationHistory(
     try {
       const { createClient } = await import('@/lib/supabase/server');
       const supabase = await createClient();
-      const { data, error } = await supabase
-        .from('reputation_events')
+      const { data, error } = await getUntypedTableClient(supabase, 'reputation_events')
         .select('*')
         .eq('agent_id', agentId)
         .order('created_at', { ascending: false })

@@ -1,16 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+function getForgeSupabaseClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!url || !serviceRoleKey) {
+    return null;
+  }
+
+  return createClient(url, serviceRoleKey);
+}
 
 // GET /api/forge/[id]
 export async function GET(
   _req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const supabase = getForgeSupabaseClient();
+  if (!supabase) {
+    return NextResponse.json({ error: 'Forge backend not configured' }, { status: 503 });
+  }
   const { id } = await params;
   const { data, error } = await supabase.from('custom_agents').select('*').eq('id', id).single();
   if (error || !data) return NextResponse.json({ error: 'Agent not found' }, { status: 404 });
@@ -22,6 +32,10 @@ export async function PATCH(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const supabase = getForgeSupabaseClient();
+  if (!supabase) {
+    return NextResponse.json({ error: 'Forge backend not configured' }, { status: 503 });
+  }
   const { id } = await params;
   const body = await req.json();
   const { userId, ...updates } = body;
@@ -46,6 +60,10 @@ export async function DELETE(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const supabase = getForgeSupabaseClient();
+  if (!supabase) {
+    return NextResponse.json({ error: 'Forge backend not configured' }, { status: 503 });
+  }
   const { id } = await params;
   const userId = new URL(req.url).searchParams.get('userId');
   if (!userId) return NextResponse.json({ error: 'userId required' }, { status: 400 });
