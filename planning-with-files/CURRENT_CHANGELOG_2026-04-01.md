@@ -39,3 +39,4 @@
 - Added `ARCANEA_PRODUCT_SYSTEM_ROADMAP_2026-04-02.md` to sequence chat, notes, board, capture, crews, and social graph
 - Added `NOTES_BOARD_AND_CAPTURE_BACKLOG_2026-04-02.md` for the next concrete product slices
 - Added `NOTES_DOCS_SYSTEM_ARCHITECTURE_2026-04-02.md` as the full notes/docs object model, route map, stack decision, and cost plan
+- Added `EDITOR_AND_TEMPLATE_DECISION_2026-04-02.md` to explain why Arcanea should absorb from Novel/Morphic/templates without adopting them as the app foundation

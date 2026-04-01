@@ -66,3 +66,4 @@
   - `planning-with-files/ARCANEA_PRODUCT_SYSTEM_ROADMAP_2026-04-02.md`
   - `planning-with-files/NOTES_BOARD_AND_CAPTURE_BACKLOG_2026-04-02.md`
   - `planning-with-files/NOTES_DOCS_SYSTEM_ARCHITECTURE_2026-04-02.md`
+  - `planning-with-files/EDITOR_AND_TEMPLATE_DECISION_2026-04-02.md`
