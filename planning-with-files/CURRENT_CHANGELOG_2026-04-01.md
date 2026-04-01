@@ -38,3 +38,4 @@
 - Added `CANVAS_EDITOR_DECISION_2026-04-02.md` to decide between first-party board work and `tldraw`
 - Added `ARCANEA_PRODUCT_SYSTEM_ROADMAP_2026-04-02.md` to sequence chat, notes, board, capture, crews, and social graph
 - Added `NOTES_BOARD_AND_CAPTURE_BACKLOG_2026-04-02.md` for the next concrete product slices
+- Added `NOTES_DOCS_SYSTEM_ARCHITECTURE_2026-04-02.md` as the full notes/docs object model, route map, stack decision, and cost plan
