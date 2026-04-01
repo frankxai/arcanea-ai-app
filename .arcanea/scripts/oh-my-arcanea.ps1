@@ -15,10 +15,10 @@ if (Test-Path $arcaneaConfigDir) {
     $env:OPENCODE_CONFIG_DIR = $arcaneaConfigDir
 }
 
-Push-Location $(if (Test-Path $ohMyArcaneaRoot) { $ohMyArcaneaRoot } else { $repoRoot })
+Push-Location $repoRoot
 try {
     if (Test-Path $localCli) {
-        bun $localCli @CommandArgs
+        & bun $localCli @CommandArgs
     }
     elseif (Test-Path $shim) {
         & $shim @CommandArgs
