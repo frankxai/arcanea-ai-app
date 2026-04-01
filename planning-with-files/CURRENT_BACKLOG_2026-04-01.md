@@ -51,29 +51,6 @@ Verification:
 ## 3. Async Graph Enrichment
 
 Scope:
-- use project graph data during retrieval for active project sessions
-
-Owner:
-- next feature slice
-
-Files:
-- `apps/web/app/api/ai/chat/route.ts`
-- `apps/web/lib/projects/server.ts`
-- retrieval/memory helpers
-
-Non-goals:
-- provider pricing redesign
-
-Acceptance criteria:
-- active project pulls relevant sessions, creations, and memories
-
-Verification:
-- route tests
-- browser smoke for project continuity
-
-## 4. Provider Routing And Usage Tracing
-
-Scope:
 - post-save/post-chat background extraction of facts, summaries, and edges
 
 Owner:
@@ -93,7 +70,7 @@ Verification:
 - deterministic enrichment tests
 - trace assertions
 
-## 5. Creator Social Compounding Layer
+## 4. Provider Routing And Usage Tracing
 
 Scope:
 - track provider/model/latency/useful retrieval on important flows
@@ -114,7 +91,31 @@ Acceptance criteria:
 
 Verification:
 - route tests
-- trace payload assertions
+- trace assertions
+
+## 5. Creator Social Compounding Layer
+
+Scope:
+- strengthen collections, follows, prompt books, challenge reputation, provenance
+
+Owner:
+- product/social slice
+
+Files:
+- `apps/web/app/community`
+- `apps/web/app/prompt-books`
+- `apps/web/app/challenges`
+- social APIs
+
+Non-goals:
+- generic feed cloning
+
+Acceptance criteria:
+- creator identity and artifact graph become more compounding
+
+Verification:
+- route tests
+- browser flows for create/save/follow/collect
 
 ## 6. Repo And Agent Control Plane Hygiene
 
@@ -140,27 +141,3 @@ Acceptance criteria:
 
 Verification:
 - manual audit before each major agent handoff
-
-## 7. Creator Social Compounding Layer
-
-Scope:
-- strengthen collections, follows, prompt books, challenge reputation, provenance
-
-Owner:
-- product/social slice
-
-Files:
-- `apps/web/app/community`
-- `apps/web/app/prompt-books`
-- `apps/web/app/challenges`
-- social APIs
-
-Non-goals:
-- generic feed cloning
-
-Acceptance criteria:
-- creator identity and artifact graph become more compounding
-
-Verification:
-- route tests
-- browser flows for create/save/follow/collect

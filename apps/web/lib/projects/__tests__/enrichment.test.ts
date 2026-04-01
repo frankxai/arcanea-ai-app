@@ -1,5 +1,10 @@
 import { strict as assert } from 'node:assert';
-import { buildProjectGraphView, enrichProjectGraph, evaluateProjectWorkspace } from '../enrichment';
+import {
+  buildProjectEnrichmentTask,
+  buildProjectGraphView,
+  enrichProjectGraph,
+  evaluateProjectWorkspace,
+} from '../enrichment';
 import type { ProjectGraphSummaryRecord, ProjectWorkspaceSnapshot } from '../server';
 
 let passed = 0;
@@ -216,6 +221,24 @@ async function main() {
     assert.equal(graph.summary.includes('Lumen Archive is an active Arcanea project workspace.'), true);
     assert.equal(graph.score, 100);
     assert.equal(graph.tags.length > 0, true);
+  });
+
+  await test('buildProjectEnrichmentTask creates a deterministic async enrichment payload', () => {
+    const snapshot = createSnapshot();
+    const task = buildProjectEnrichmentTask('user_1', snapshot);
+
+    assert.equal(task.projectId, 'project_1');
+    assert.equal(task.userId, 'user_1');
+    assert.equal(task.summarySeed.includes('Atlas Worldbuilding is an active Arcanea project workspace.'), true);
+    assert.equal(task.summarySeed.includes('2 linked chat sessions'), true);
+    assert.deepEqual(task.sessionIds, ['session_1', 'session_2']);
+    assert.deepEqual(task.creationIds, ['creation_1', 'creation_2']);
+    assert.deepEqual(task.memoryIds, ['memory_1']);
+    assert.deepEqual(task.counts, {
+      sessionCount: 2,
+      creationCount: 2,
+      memoryCount: 1,
+    });
   });
 
   if (failed > 0) {

@@ -15,7 +15,12 @@ import { convertToModelMessages, streamText, type UIMessage } from 'ai';
 import { createArcanea } from '@/lib/ai/arcanea-intelligence';
 import { GATEWAY_MODELS, EXTENDED_PROVIDERS } from '@/lib/gateway/catalog';
 import { createChatTools } from '@/lib/chat/tools';
-import { buildProjectRetrievalBlock, selectRelevantProjectContext } from '@/lib/projects/retrieval';
+import {
+  buildProjectRetrievalBlock,
+  buildProjectRetrievalTraceMetadata,
+  selectRelevantProjectContext,
+} from '@/lib/projects/retrieval';
+import { recordProjectTrace } from '@/lib/projects/trace';
 
 export const runtime = 'edge';
 
@@ -427,6 +432,8 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
       resolvedSystemPrompt = `${projectBlock}\n${resolvedSystemPrompt}`;
     }
 
+    let projectRetrievalMetadata: ReturnType<typeof buildProjectRetrievalTraceMetadata> | null = null;
+
     if (projectContext?.id && sbClient && sbUserId) {
       try {
         const recentContext = messages
@@ -486,10 +493,23 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
           graphSummary: (graphSummaryRes.data as { summary?: string | null; tags?: string[] | null; facts?: string[] | null } | null) ?? null,
         });
 
+        projectRetrievalMetadata = buildProjectRetrievalTraceMetadata(retrieval);
         resolvedSystemPrompt = `${buildProjectRetrievalBlock(retrieval)}\n${resolvedSystemPrompt}`;
       } catch (e) {
         console.warn('Failed to load project graph:', e);
       }
+    }
+
+    if (projectContext?.id && sbClient && sbUserId && projectRetrievalMetadata) {
+      await recordProjectTrace(sbClient, {
+        userId: sbUserId,
+        projectId: projectContext.id,
+        action: 'project_chat_context_loaded',
+        metadata: {
+          projectTitle: projectContext.title,
+          ...projectRetrievalMetadata,
+        },
+      });
     }
 
     // --- Inject Library wisdom based on active gate ---
@@ -548,6 +568,21 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
       if (enabledTools.includes('memory') && chatToolSet.memory_store) selected.memory_store = chatToolSet.memory_store;
       return Object.keys(selected).length > 0 ? selected : undefined;
     })();
+
+    if (projectContext?.id && sbClient && sbUserId) {
+      await recordProjectTrace(sbClient, {
+        userId: sbUserId,
+        projectId: projectContext.id,
+        action: 'project_provider_routed',
+        metadata: {
+          projectTitle: projectContext.title,
+          provider: requestedProvider ?? resolvedGateway?.provider ?? 'auto',
+          gatewayModel: gatewayModel ?? null,
+          modelLabel: label,
+          enabledTools: enabledTools ?? [],
+        },
+      });
+    }
 
     // --- Stream response ---
     const result = streamText({

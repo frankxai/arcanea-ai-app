@@ -124,6 +124,35 @@ async function main() {
     assert.equal((writes[0].payload as Record<string, unknown>).action, 'project_graph_viewed');
   });
 
+  await test('recordProjectTrace supports chat retrieval and provider routing traces', async () => {
+    const writes: Array<{ table: string; payload: unknown }> = [];
+    const supabase = createSupabaseStub(writes);
+
+    await recordProjectTrace(supabase as never, {
+      userId: 'user_1',
+      projectId: 'project_1',
+      action: 'project_chat_context_loaded',
+      metadata: {
+        sessionCount: 3,
+        memoryCount: 2,
+      },
+    });
+
+    await recordProjectTrace(supabase as never, {
+      userId: 'user_1',
+      projectId: 'project_1',
+      action: 'project_provider_routed',
+      metadata: {
+        provider: 'anthropic',
+        modelLabel: 'Claude Sonnet 4',
+      },
+    });
+
+    assert.equal(writes.length, 2);
+    assert.equal((writes[0].payload as Record<string, unknown>).action, 'project_chat_context_loaded');
+    assert.equal((writes[1].payload as Record<string, unknown>).action, 'project_provider_routed');
+  });
+
   if (failed > 0) {
     console.error(`\n${failed} project trace test(s) failed`);
     process.exit(1);

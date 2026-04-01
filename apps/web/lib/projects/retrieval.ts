@@ -37,6 +37,16 @@ export interface ProjectRetrievalSelection {
   contextTerms: string[];
 }
 
+export interface ProjectRetrievalTraceMetadata {
+  sessionCount: number;
+  creationCount: number;
+  memoryCount: number;
+  contextTerms: string[];
+  hasStoredSummary: boolean;
+  factCount: number;
+  tagCount: number;
+}
+
 const STOP_WORDS = new Set([
   'about', 'after', 'again', 'along', 'also', 'because', 'before', 'being',
   'between', 'build', 'could', 'from', 'have', 'into', 'just', 'make',
@@ -159,4 +169,18 @@ export function buildProjectRetrievalBlock(selection: ProjectRetrievalSelection)
   lines.push('');
 
   return lines.join('\n');
+}
+
+export function buildProjectRetrievalTraceMetadata(
+  selection: ProjectRetrievalSelection,
+): ProjectRetrievalTraceMetadata {
+  return {
+    sessionCount: selection.sessions.length,
+    creationCount: selection.creations.length,
+    memoryCount: selection.memories.length,
+    contextTerms: selection.contextTerms,
+    hasStoredSummary: Boolean(selection.graphSummary?.summary),
+    factCount: selection.graphSummary?.facts?.length ?? 0,
+    tagCount: selection.graphSummary?.tags?.length ?? 0,
+  };
 }

@@ -19,6 +19,16 @@ export interface ProjectGraphView {
   source: 'stored' | 'derived' | 'enriched';
 }
 
+export interface ProjectEnrichmentTask {
+  projectId: string;
+  userId: string;
+  summarySeed: string;
+  sessionIds: string[];
+  creationIds: string[];
+  memoryIds: string[];
+  counts: ProjectWorkspaceSnapshot['stats'];
+}
+
 type UntypedQueryResult = PromiseLike<{ data: unknown; error?: unknown }>;
 
 interface UntypedQueryBuilder extends UntypedQueryResult {
@@ -180,6 +190,23 @@ export function evaluateProjectWorkspace(
   );
 
   return { score, checks };
+}
+
+export function buildProjectEnrichmentTask(
+  userId: string,
+  snapshot: ProjectWorkspaceSnapshot,
+): ProjectEnrichmentTask {
+  const tags = deriveTags(snapshot).slice(0, 5);
+
+  return {
+    projectId: snapshot.project.id,
+    userId,
+    summarySeed: deriveSummary(snapshot, tags),
+    sessionIds: snapshot.sessions.map((session) => session.id),
+    creationIds: snapshot.creations.map((creation) => creation.id),
+    memoryIds: snapshot.memories.map((memory) => memory.id),
+    counts: snapshot.stats,
+  };
 }
 
 export async function enrichProjectGraph(

@@ -8,11 +8,13 @@ export interface ProjectTraceInput {
     | 'project_created'
     | 'project_updated'
     | 'project_deleted'
+    | 'project_chat_context_loaded'
     | 'project_creation_linked'
     | 'project_memory_linked'
     | 'project_graph_enriched'
     | 'project_graph_eval'
-    | 'project_graph_viewed';
+    | 'project_graph_viewed'
+    | 'project_provider_routed';
   metadata?: Record<string, unknown>;
 }
 

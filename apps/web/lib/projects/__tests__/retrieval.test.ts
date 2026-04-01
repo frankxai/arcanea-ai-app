@@ -1,5 +1,9 @@
 import { strict as assert } from 'node:assert';
-import { buildProjectRetrievalBlock, selectRelevantProjectContext } from '../retrieval';
+import {
+  buildProjectRetrievalBlock,
+  buildProjectRetrievalTraceMetadata,
+  selectRelevantProjectContext,
+} from '../retrieval';
 
 let passed = 0;
 let failed = 0;
@@ -66,6 +70,30 @@ async function main() {
     assert.equal(block.includes('- Creation: Atlas city map (image)'), true);
     assert.equal(block.includes('- Memory [worldbuilding]: Relic engines rely on harmonic crystal cores.'), true);
     assert.equal(block.includes('Active retrieval terms: atlas, relic, map'), true);
+  });
+
+  await test('buildProjectRetrievalTraceMetadata summarizes retrieval payload shape', () => {
+    const metadata = buildProjectRetrievalTraceMetadata({
+      sessions: [{ id: 's1', title: 'Atlas city map planning' }],
+      creations: [{ id: 'c1', title: 'Atlas city map', type: 'image' }],
+      memories: [{ id: 'm1', content: 'Relic engines rely on harmonic crystal cores.', category: 'worldbuilding' }],
+      graphSummary: {
+        summary: 'Atlas is a science-fantasy project.',
+        tags: ['atlas', 'map'],
+        facts: ['Goal: turn Atlas into a playable story world.'],
+      },
+      contextTerms: ['atlas', 'relic', 'map'],
+    });
+
+    assert.deepEqual(metadata, {
+      sessionCount: 1,
+      creationCount: 1,
+      memoryCount: 1,
+      contextTerms: ['atlas', 'relic', 'map'],
+      hasStoredSummary: true,
+      factCount: 1,
+      tagCount: 2,
+    });
   });
 
   if (failed > 0) {
