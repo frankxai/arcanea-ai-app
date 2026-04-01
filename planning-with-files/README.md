@@ -19,13 +19,14 @@ This directory is the execution control plane for Arcanea.
 ## Agent Rules
 
 1. Read the newest `CURRENT_STATE`, `CURRENT_BACKLOG`, and `CURRENT_CHANGELOG` files before coding.
-2. Every substantial task must include:
+2. Verify whether remote `main` already contains the promotion slice before treating promotion as pending work.
+3. Every substantial task must include:
    - scope
    - owner
    - files
    - non-goals
    - acceptance criteria
    - verification command
-3. Treat the newest dated `CURRENT_*` files as authoritative until replaced.
-4. Do not merge to `main` from a dirty worktree.
-5. Verification evidence beats confidence.
+4. Treat the newest dated `CURRENT_*` files as authoritative until replaced.
+5. Do not merge to `main` from a dirty worktree.
+6. Verification evidence beats confidence.

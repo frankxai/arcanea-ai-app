@@ -6,7 +6,7 @@
 - Promotion worktree: `C:\Users\frank\Arcanea-main-promote`
 - Promotion branch: `promote/project-workspaces`
 - Source branch already integrated here: `origin/integration/project-workspaces-mainline`
-- Promotion posture: ready for `main`
+- Promotion posture: already promoted to remote `main`
 
 ## What Is In This Promotion Slice
 
@@ -14,6 +14,7 @@
 - `/projects` and `/projects/[id]` product surfaces
 - Project-linked chat sessions, creations, memories, and provenance
 - Project graph summaries, progress guidance, and trace hooks
+- Project-aware retrieval helper for active chat sessions using graph summary, ranked sessions, creations, and memories
 - Route/API contract tests and Playwright browser smoke coverage
 - Guardian/gallery media cleanup
 - Local-canonical first-party guardian media paths
@@ -24,6 +25,7 @@
 
 - `pnpm run verify:project-workspaces`
 - `pnpm --dir apps/web test:media`
+- verification gate now self-seeds placeholder public Supabase envs for clean-machine builds
 
 ## Verification Notes
 
@@ -56,6 +58,6 @@
 
 ## Recommendation
 
-- Promote this verified slice to `main`
+- Treat remote `main` as the authoritative branch for the workspace slice
 - Do DB activation in the evening
 - Build project-aware retrieval and async graph enrichment immediately after DB activation

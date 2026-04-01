@@ -1,28 +1,6 @@
 # Current Backlog — 2026-04-01
 
-## 1. Promote Project Workspace Slice To Main
-
-Scope:
-- merge verified promotion branch into `main`
-
-Owner:
-- Codex / release operator
-
-Files:
-- all files in `promote/project-workspaces`
-
-Non-goals:
-- broad lint cleanup
-- unrelated trunk stabilization
-
-Acceptance criteria:
-- `main` contains project workspace + media cleanup slice
-- branch history is reviewable
-
-Verification:
-- `pnpm run verify:project-workspaces`
-
-## 2. Live Supabase Activation
+## 1. Live Supabase Activation
 
 Scope:
 - apply project graph migrations and regenerate Supabase types
@@ -47,7 +25,30 @@ Verification:
 - regenerate types from live DB
 - `pnpm run verify:project-workspaces`
 
-## 3. Project-Aware Retrieval
+## 2. Project-Aware Retrieval On Live Data
+
+Scope:
+- use live project graph data during retrieval for active project sessions after DB activation
+
+Owner:
+- next feature slice
+
+Files:
+- `apps/web/app/api/ai/chat/route.ts`
+- `apps/web/lib/projects/server.ts`
+- retrieval/memory helpers
+
+Non-goals:
+- provider pricing redesign
+
+Acceptance criteria:
+- active project pulls relevant graph summary, sessions, creations, and memories from the migrated DB-backed graph
+
+Verification:
+- route tests
+- browser smoke for project continuity
+
+## 3. Async Graph Enrichment
 
 Scope:
 - use project graph data during retrieval for active project sessions
@@ -70,7 +71,7 @@ Verification:
 - route tests
 - browser smoke for project continuity
 
-## 4. Async Graph Enrichment
+## 4. Provider Routing And Usage Tracing
 
 Scope:
 - post-save/post-chat background extraction of facts, summaries, and edges
@@ -92,7 +93,7 @@ Verification:
 - deterministic enrichment tests
 - trace assertions
 
-## 5. Provider Routing And Usage Tracing
+## 5. Creator Social Compounding Layer
 
 Scope:
 - track provider/model/latency/useful retrieval on important flows
@@ -115,7 +116,32 @@ Verification:
 - route tests
 - trace payload assertions
 
-## 6. Creator Social Compounding Layer
+## 6. Repo And Agent Control Plane Hygiene
+
+Scope:
+- keep `planning-with-files` current and make promotion/runtime state explicit for all agents
+
+Owner:
+- Codex / release operator
+
+Files:
+- `planning-with-files/README.md`
+- `planning-with-files/CURRENT_STATE_2026-04-01.md`
+- `planning-with-files/CURRENT_BACKLOG_2026-04-01.md`
+- `planning-with-files/CURRENT_CHANGELOG_2026-04-01.md`
+- `planning-with-files/AGENT_EXECUTION_PROTOCOL_2026-04-01.md`
+
+Non-goals:
+- replacing durable product docs in `docs/ops`
+
+Acceptance criteria:
+- agents do not treat already-merged work as pending
+- current branch/runtime state is visible from one read
+
+Verification:
+- manual audit before each major agent handoff
+
+## 7. Creator Social Compounding Layer
 
 Scope:
 - strengthen collections, follows, prompt books, challenge reputation, provenance
