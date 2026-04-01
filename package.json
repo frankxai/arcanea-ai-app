@@ -34,6 +34,7 @@
     "ops:health": "node scripts/ops-health-check.js --quick",
     "ops:health:deep": "node scripts/ops-health-check.js --quick --deep",
     "ops:release-gate": "node scripts/ops-health-check.js --quick --deep --json",
+    "verify:project-workspaces": "pnpm --dir apps/web type-check && pnpm --dir apps/web test:projects && pnpm --dir apps/web build && pnpm --dir apps/web exec playwright test",
     "embed:library": "cd apps/web && npx tsx ../../scripts/embed-library.ts",
     "embed:library:dry-run": "cd apps/web && npx tsx ../../scripts/embed-library.ts --dry-run --verbose"
   },

@@ -12,29 +12,39 @@ import {
 } from '@/lib/projects/server';
 import { recordProjectTrace } from '@/lib/projects/trace';
 
+export const projectGraphRouteDeps = {
+  buildProjectGraphView,
+  enrichProjectGraph,
+  evaluateProjectWorkspace,
+  getProjectAuthContext,
+  getProjectGraphSummaryForCurrentUser,
+  getProjectWorkspaceForCurrentUser,
+  recordProjectTrace,
+};
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
-    const workspace = await getProjectWorkspaceForCurrentUser(id);
+    const workspace = await projectGraphRouteDeps.getProjectWorkspaceForCurrentUser(id);
     if (!workspace) {
       return errorResponse('NOT_FOUND', 'Project graph not found', 404);
     }
 
-    const { supabase, user } = await getProjectAuthContext();
+    const { supabase, user } = await projectGraphRouteDeps.getProjectAuthContext();
     const shouldEnrich = request.nextUrl.searchParams.get('enrich') === '1';
-    const evaluation = evaluateProjectWorkspace(workspace);
-    const persistedSummary = await getProjectGraphSummaryForCurrentUser(id);
-    const graphView = buildProjectGraphView(
+    const evaluation = projectGraphRouteDeps.evaluateProjectWorkspace(workspace);
+    const persistedSummary = await projectGraphRouteDeps.getProjectGraphSummaryForCurrentUser(id);
+    const { graph: graphView } = projectGraphRouteDeps.buildProjectGraphView(
       workspace,
       persistedSummary,
       persistedSummary ? 'stored' : 'derived',
     );
 
     if (user) {
-      await recordProjectTrace(supabase, {
+      await projectGraphRouteDeps.recordProjectTrace(supabase, {
         userId: user.id,
         projectId: id,
         action: 'project_graph_viewed',
@@ -49,13 +59,13 @@ export async function GET(
 
     let enrichment: Awaited<ReturnType<typeof enrichProjectGraph>> | null = null;
     if (shouldEnrich && user) {
-      enrichment = await enrichProjectGraph(supabase, user.id, workspace);
+      enrichment = await projectGraphRouteDeps.enrichProjectGraph(supabase, user.id, workspace);
       graphView.summary = enrichment.summary;
       graphView.tags = enrichment.tags;
       graphView.score = enrichment.evaluation.score;
       graphView.checks = enrichment.evaluation.checks;
       graphView.source = 'enriched';
-      await recordProjectTrace(supabase, {
+      await projectGraphRouteDeps.recordProjectTrace(supabase, {
         userId: user.id,
         projectId: id,
         action: 'project_graph_enriched',

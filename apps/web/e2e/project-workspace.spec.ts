@@ -1,5 +1,13 @@
 import { expect, test } from '@playwright/test';
 
+declare global {
+  interface Window {
+    __projectWorkspaceSeed?: unknown;
+    __projectWorkspaceRequests?: Array<{ path: string; body: string }>;
+    __projectWorkspaceOpenedProjectId?: string;
+  }
+}
+
 const workspace = {
   project: {
     id: 'project_e2e_1',
@@ -153,26 +161,56 @@ test.beforeEach(async ({ page }) => {
   `);
 
   await page.evaluate(({ graph, stepPayload, completePayload }) => {
-    document.getElementById('chats').textContent = String(graph.workspace.stats.sessionCount);
-    document.getElementById('creations').textContent = String(graph.workspace.stats.creationCount);
-    document.getElementById('memories').textContent = String(graph.workspace.stats.memoryCount);
-    document.getElementById('summary').textContent = graph.enrichment.summary;
+    const chats = document.getElementById('chats');
+    const creations = document.getElementById('creations');
+    const memories = document.getElementById('memories');
+    const summary = document.getElementById('summary');
+    const sessions = document.getElementById('sessions');
+    const artifacts = document.getElementById('artifacts');
+    const memoriesList = document.getElementById('memories-list');
+    const openChat = document.getElementById('open-chat');
+    const step = document.getElementById('step');
+    const complete = document.getElementById('complete');
+    const stepOutput = document.getElementById('step-output');
+    const completeOutput = document.getElementById('complete-output');
 
-    document.getElementById('sessions').innerHTML = graph.workspace.sessions
+    if (
+      !chats ||
+      !creations ||
+      !memories ||
+      !summary ||
+      !sessions ||
+      !artifacts ||
+      !memoriesList ||
+      !openChat ||
+      !step ||
+      !complete ||
+      !stepOutput ||
+      !completeOutput
+    ) {
+      throw new Error('Workspace harness DOM is incomplete.');
+    }
+
+    chats.textContent = String(graph.workspace.stats.sessionCount);
+    creations.textContent = String(graph.workspace.stats.creationCount);
+    memories.textContent = String(graph.workspace.stats.memoryCount);
+    summary.textContent = graph.enrichment.summary;
+
+    sessions.innerHTML = graph.workspace.sessions
       .map((session) => '<li>' + session.title + '</li>')
       .join('');
-    document.getElementById('artifacts').innerHTML = graph.workspace.creations
+    artifacts.innerHTML = graph.workspace.creations
       .map((creation) => '<li>' + creation.title + '</li>')
       .join('');
-    document.getElementById('memories-list').innerHTML = graph.workspace.memories
+    memoriesList.innerHTML = graph.workspace.memories
       .map((memory) => '<li>' + memory.content + '</li>')
       .join('');
 
-    document.getElementById('open-chat').addEventListener('click', () => {
+    openChat.addEventListener('click', () => {
       window.__projectWorkspaceOpenedProjectId = graph.workspace.project.id;
     });
 
-    document.getElementById('step').addEventListener('click', async () => {
+    step.addEventListener('click', async () => {
       window.__projectWorkspaceRequests = [
         ...(window.__projectWorkspaceRequests || []),
         {
@@ -180,10 +218,10 @@ test.beforeEach(async ({ page }) => {
           body: JSON.stringify({ userInput: 'refine the launch story' }),
         },
       ];
-      document.getElementById('step-output').textContent = stepPayload.message;
+      stepOutput.textContent = stepPayload.message;
     });
 
-    document.getElementById('complete').addEventListener('click', async () => {
+    complete.addEventListener('click', async () => {
       window.__projectWorkspaceRequests = [
         ...(window.__projectWorkspaceRequests || []),
         {
@@ -191,7 +229,7 @@ test.beforeEach(async ({ page }) => {
           body: '',
         },
       ];
-      document.getElementById('complete-output').textContent = completePayload.message;
+      completeOutput.textContent = completePayload.message;
     });
   }, {
     graph: responses['/api/projects/project_e2e_1/graph'],

@@ -262,6 +262,7 @@ function buildLuminorConfig(member: CrewMember): LuminorConfig {
   return {
     id: member.id,
     name: member.name,
+    loreName: member.name,
     title: member.title,
     tagline: member.tagline,
     team: teamMap[member.id] ?? 'creative',

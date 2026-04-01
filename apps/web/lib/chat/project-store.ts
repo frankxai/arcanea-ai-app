@@ -24,6 +24,23 @@ export interface ProjectGraphSnapshot {
   recentMemorySnippets: string[];
 }
 
+type UntypedQueryResult = PromiseLike<{ data: unknown; error?: unknown }>;
+
+interface UntypedQueryBuilder extends UntypedQueryResult {
+  delete(): UntypedQueryBuilder;
+  eq(column: string, value: unknown): UntypedQueryBuilder;
+  in(column: string, values: unknown[]): UntypedQueryBuilder;
+  limit(count: number): UntypedQueryBuilder;
+  order(column: string, options?: { ascending?: boolean }): UntypedQueryBuilder;
+  select(columns: string): UntypedQueryBuilder;
+  update(values: Record<string, unknown>): UntypedQueryBuilder;
+  upsert(values: Record<string, unknown>, options?: { onConflict?: string }): UntypedQueryBuilder;
+}
+
+interface UntypedCloudProjectClient {
+  from(table: string): UntypedQueryBuilder;
+}
+
 function readProjects(): ChatProject[] {
   if (typeof window === 'undefined') return [];
 
@@ -86,7 +103,10 @@ async function getCloudProjectClient() {
     const supabase = createClient();
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return null;
-    return { supabase: supabase as any, userId: user.id as string };
+    return {
+      supabase: supabase as unknown as UntypedCloudProjectClient,
+      userId: user.id,
+    };
   } catch {
     return null;
   }
@@ -300,12 +320,15 @@ export async function loadProjectGraph(projectId: string): Promise<ProjectGraphS
       .limit(10)
     : { data: [] };
 
+  const sessionRows = (sessionsRes.data as Array<{ id: string; title?: string | null }> | null) ?? [];
+  const creationRows = (creationsRes.data as Array<{ title: string | null }> | null) ?? [];
+
   return {
     projectId,
-    sessionCount: sessionsRes.data?.length ?? 0,
-    creationCount: creationsRes.data?.length ?? 0,
+    sessionCount: sessionRows.length,
+    creationCount: creationRows.length,
     memoryCount: memoryIds.length,
-    recentCreationTitles: ((creationsRes.data as Array<{ title: string | null }> | null) ?? [])
+    recentCreationTitles: creationRows
       .map((row) => row.title ?? 'Untitled creation'),
     recentMemorySnippets: ((memoriesRes.data as Array<{ content: string }> | null) ?? [])
       .map((row) => row.content.slice(0, 120)),

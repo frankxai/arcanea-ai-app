@@ -19,6 +19,18 @@ export interface ProjectGraphView {
   source: 'stored' | 'derived' | 'enriched';
 }
 
+type UntypedQueryResult = PromiseLike<{ data: unknown; error?: unknown }>;
+
+interface UntypedQueryBuilder extends UntypedQueryResult {
+  eq(column: string, value: unknown): UntypedQueryBuilder;
+  update(values: Record<string, unknown>): UntypedQueryBuilder;
+  upsert(values: Record<string, unknown> | Record<string, unknown>[], options?: { onConflict?: string }): UntypedQueryBuilder;
+}
+
+interface UntypedProjectGraphClient {
+  from(table: string): UntypedQueryBuilder;
+}
+
 const STOP_WORDS = new Set([
   'the', 'and', 'for', 'that', 'with', 'this', 'from', 'into', 'your', 'their',
   'about', 'have', 'will', 'just', 'than', 'when', 'what', 'where', 'which',
@@ -183,6 +195,7 @@ export async function enrichProjectGraph(
 }> {
   const { evaluation, graph } = buildProjectGraphView(snapshot);
   const { summary, tags, facts } = graph;
+  const db = supabase as unknown as UntypedProjectGraphClient;
 
   const edges = [
     ...snapshot.sessions.map((session) => ({
@@ -246,7 +259,7 @@ export async function enrichProjectGraph(
   ];
 
   try {
-    await (supabase as any)
+    await db
       .from('chat_projects')
       .update({
         metadata: {
@@ -264,7 +277,7 @@ export async function enrichProjectGraph(
   }
 
   try {
-    await (supabase as any)
+    await db
       .from('project_graph_summaries')
       .upsert({
         project_id: snapshot.project.id,
@@ -282,7 +295,7 @@ export async function enrichProjectGraph(
 
   if (edges.length > 0) {
     try {
-      await (supabase as any)
+      await db
         .from('project_graph_edges')
         .upsert(edges, {
           onConflict: 'project_id,source_type,source_id,target_type,target_id,relation',

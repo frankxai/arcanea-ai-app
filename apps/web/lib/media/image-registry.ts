@@ -82,7 +82,7 @@ interface GuardianMeta {
 }
 
 const GUARDIAN_META: Record<GuardianName, GuardianMeta> = {
-  lyssandria: { godbeast: 'kaelith',  gate: 'Foundation', frequencyHz: 174,  element: 'Earth',  galleryCount: 1 },
+  lyssandria: { godbeast: 'kaelith',  gate: 'Foundation', frequencyHz: 174,  element: 'Earth',  galleryCount: 0 },
   leyla:      { godbeast: 'veloura',  gate: 'Flow',       frequencyHz: 285,  element: 'Water',  galleryCount: 4 },
   draconia:   { godbeast: 'draconis', gate: 'Fire',       frequencyHz: 396,  element: 'Fire',   galleryCount: 4 },
   maylinn:    { godbeast: 'laeylinn', gate: 'Heart',      frequencyHz: 417,  element: 'Air',    galleryCount: 4 },
@@ -247,8 +247,7 @@ export const MEDIA_REGISTRY: ImageRecord[] = [
   ...GUARDIAN_NAMES.map(makeGodbeast),
   // v1 hero portraits
   ...GUARDIAN_NAMES.map(makeHeroV1),
-  // gallery images — lyssandria has only index 2 confirmed; others have 2–5
-  makeGallery('lyssandria', 2),
+  // gallery images — Lyssandria has no approved public gallery variations
   ...(['leyla', 'draconia', 'maylinn', 'alera', 'lyria', 'aiyami', 'elara', 'ino', 'shinkami'] as GuardianName[]).flatMap(
     (g) => [2, 3, 4, 5].map((i) => makeGallery(g, i))
   ),
