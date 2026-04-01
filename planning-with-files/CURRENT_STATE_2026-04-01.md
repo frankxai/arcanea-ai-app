@@ -61,3 +61,7 @@
 - Treat remote `main` as the authoritative branch for the workspace slice
 - Do DB activation in the evening
 - Build project-aware retrieval and async graph enrichment immediately after DB activation
+- Use the new 2026-04-02 planning files for notes/board/capture and canvas strategy:
+  - `planning-with-files/CANVAS_EDITOR_DECISION_2026-04-02.md`
+  - `planning-with-files/ARCANEA_PRODUCT_SYSTEM_ROADMAP_2026-04-02.md`
+  - `planning-with-files/NOTES_BOARD_AND_CAPTURE_BACKLOG_2026-04-02.md`

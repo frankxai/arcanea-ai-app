@@ -32,3 +32,9 @@
 - Promotion branch is now stronger than the original integration branch because it was reverified against current remote `main`
 - Remote `main` already contains the promoted workspace slice; planning files now treat DB activation as the top pending step
 - Mainline DB activation is still pending and remains the next external step
+
+## New Planning Artifacts
+
+- Added `CANVAS_EDITOR_DECISION_2026-04-02.md` to decide between first-party board work and `tldraw`
+- Added `ARCANEA_PRODUCT_SYSTEM_ROADMAP_2026-04-02.md` to sequence chat, notes, board, capture, crews, and social graph
+- Added `NOTES_BOARD_AND_CAPTURE_BACKLOG_2026-04-02.md` for the next concrete product slices
