@@ -4,10 +4,18 @@ param(
 )
 
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
+$arcaneaCodeRoot = Join-Path $repoRoot "arcanea-code"
+$arcaneaConfigDir = Join-Path $arcaneaCodeRoot ".arcanea"
+$ohMyArcaneaRoot = Join-Path $repoRoot "oh-my-arcanea"
 $localCli = Join-Path $repoRoot "oh-my-arcanea\src\cli\index.ts"
 $shim = Join-Path $env:APPDATA "npm\oh-my-arcanea.ps1"
 
-Push-Location $repoRoot
+if (Test-Path $arcaneaConfigDir) {
+    $env:ARCANEA_CONFIG_DIR = $arcaneaConfigDir
+    $env:OPENCODE_CONFIG_DIR = $arcaneaConfigDir
+}
+
+Push-Location $(if (Test-Path $ohMyArcaneaRoot) { $ohMyArcaneaRoot } else { $repoRoot })
 try {
     if (Test-Path $localCli) {
         bun $localCli @CommandArgs

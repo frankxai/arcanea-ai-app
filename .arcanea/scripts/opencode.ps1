@@ -4,6 +4,8 @@ param(
 )
 
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
+$arcaneaCodeRoot = Join-Path $repoRoot "arcanea-code"
+$arcaneaConfigDir = Join-Path $arcaneaCodeRoot ".arcanea"
 $opencodeRoot = Join-Path $repoRoot "arcanea-code\packages\opencode"
 $sourceEntry = Join-Path $opencodeRoot "src\index.ts"
 
@@ -11,6 +13,14 @@ if (-not (Test-Path $sourceEntry)) {
     Write-Error "Arcanea Code source entrypoint not found: $sourceEntry"
     exit 1
 }
+
+if (-not (Test-Path $arcaneaConfigDir)) {
+    Write-Error "Arcanea config directory not found: $arcaneaConfigDir"
+    exit 1
+}
+
+$env:ARCANEA_CONFIG_DIR = $arcaneaConfigDir
+$env:OPENCODE_CONFIG_DIR = $arcaneaConfigDir
 
 Push-Location $repoRoot
 try {
