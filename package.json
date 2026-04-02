@@ -41,6 +41,10 @@
     "embed:library:dry-run": "cd apps/web && npx tsx ../../scripts/embed-library.ts --dry-run --verbose",
     "sis:sync": "node scripts/sis-context-bridge.mjs",
     "sis:mcp": "node scripts/sis-mcp-server.mjs",
+    "sis:append": "node scripts/sis-write.mjs",
+    "sis:contracts": "node scripts/sis-contract-check.mjs",
+    "sis:schema-check": "node scripts/sis-schema-check.mjs",
+    "sis:legacy-export": "node scripts/sis-legacy-export.mjs",
     "sis:check": "node scripts/sis-context-bridge.mjs && node scripts/sis-check.mjs"
   },
   "dependencies": {

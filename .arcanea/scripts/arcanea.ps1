@@ -94,14 +94,20 @@ switch ($command) {
             $sisCommand = ([string]$sisArgs[0]).ToLowerInvariant()
             $sisRest = @(Get-RemainingArgs -Values $sisArgs -StartIndex 1)
             switch ($sisCommand) {
+                "append" { node (Join-Path $repoRoot "scripts\sis-write.mjs") @sisRest }
+                "check" { pnpm run sis:check }
+                "contracts" { pnpm run sis:contracts }
+                "schema-check" { pnpm run sis:schema-check }
+                "legacy-sync" { pnpm run sis:legacy-export }
                 "open" { & (Join-Path $PSScriptRoot "sis-bootstrap.ps1") -OpenSummary }
                 "summary" { & (Join-Path $PSScriptRoot "sis-bootstrap.ps1") }
                 "json" { & (Join-Path $PSScriptRoot "sis-bootstrap.ps1") -Quiet -Json }
+                "stats-json" { & (Join-Path $PSScriptRoot "sis-bootstrap.ps1") -Quiet -ShowStats -StatsJson }
                 "sync" { & (Join-Path $PSScriptRoot "sis-bootstrap.ps1") -Quiet }
                 "stats" { & (Join-Path $PSScriptRoot "sis-bootstrap.ps1") -Quiet -ShowStats }
                 default {
                     Write-Host "Unknown SIS command: $sisCommand" -ForegroundColor DarkYellow
-                    Write-Host "Use: arcanea sis [summary|json|stats|sync|open]" -ForegroundColor DarkGray
+                    Write-Host "Use: arcanea sis [append|check|contracts|schema-check|legacy-sync|summary|json|stats|stats-json|sync|open]" -ForegroundColor DarkGray
                     exit 1
                 }
             }

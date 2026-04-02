@@ -2,7 +2,8 @@ param(
     [switch] $OpenSummary,
     [switch] $ShowStats,
     [switch] $Quiet,
-    [switch] $Json
+    [switch] $Json,
+    [switch] $StatsJson
 )
 
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
@@ -57,15 +58,17 @@ Push-Location $repoRoot
 try {
     if ($Quiet) {
         node .\scripts\sis-context-bridge.mjs | Out-Null
+        node .\scripts\sis-legacy-export.mjs | Out-Null
     } else {
         node .\scripts\sis-context-bridge.mjs | Out-Host
+        node .\scripts\sis-legacy-export.mjs | Out-Host
     }
 
     $snapshot = Get-SISSnapshot -Path $snapshotPath
     $stats = Get-SISStatsObject -Snapshot $snapshot
 
     if ($ShowStats) {
-        if ($Json) {
+        if ($Json -or $StatsJson) {
             if ($stats) {
                 $stats | ConvertTo-Json -Depth 6 | Out-Host
             } else {
