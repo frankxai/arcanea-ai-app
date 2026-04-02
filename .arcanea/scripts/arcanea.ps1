@@ -1,5 +1,25 @@
+param(
+    [Parameter(ValueFromRemainingArguments = $true)]
+    [string[]] $CommandArgs
+)
+
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
-$CommandArgs = @($args)
+$CommandArgs = @($CommandArgs)
+
+function Get-RemainingArgs {
+    param(
+        [string[]] $Values,
+        [int] $StartIndex
+    )
+
+    if (-not $Values -or $Values.Count -le $StartIndex) {
+        return @()
+    }
+
+    $result = New-Object string[] ($Values.Count - $StartIndex)
+    [Array]::Copy($Values, $StartIndex, $result, 0, $Values.Count - $StartIndex)
+    return $result
+}
 
 function Invoke-ArcaneaOpencode {
     & (Join-Path $PSScriptRoot "arcanea-opencode.ps1") @args
@@ -49,7 +69,7 @@ if (-not $CommandArgs -or $CommandArgs.Count -eq 0) {
 }
 
 $command = $CommandArgs[0].ToLowerInvariant()
-$remaining = if ($CommandArgs.Count -gt 1) { @($CommandArgs[1..($CommandArgs.Count - 1)]) } else { @() }
+$remaining = @(Get-RemainingArgs -Values $CommandArgs -StartIndex 1)
 
 switch ($command) {
     "status" {
@@ -70,16 +90,20 @@ switch ($command) {
         if ($remaining.Count -eq 0) {
             & (Join-Path $PSScriptRoot "sis-bootstrap.ps1") -ShowStats
         } else {
-            $sisCommand = [string]$remaining[0]
-            $sisCommand = $sisCommand.ToLowerInvariant()
-            $sisRest = if ($remaining.Count -gt 1) { @($remaining[1..($remaining.Count - 1)]) } else { @() }
+            $sisArgs = @($remaining)
+            $sisCommand = ([string]$sisArgs[0]).ToLowerInvariant()
+            $sisRest = @(Get-RemainingArgs -Values $sisArgs -StartIndex 1)
             switch ($sisCommand) {
                 "open" { & (Join-Path $PSScriptRoot "sis-bootstrap.ps1") -OpenSummary }
                 "summary" { & (Join-Path $PSScriptRoot "sis-bootstrap.ps1") }
                 "json" { & (Join-Path $PSScriptRoot "sis-bootstrap.ps1") -Quiet -Json }
                 "sync" { & (Join-Path $PSScriptRoot "sis-bootstrap.ps1") -Quiet }
                 "stats" { & (Join-Path $PSScriptRoot "sis-bootstrap.ps1") -Quiet -ShowStats }
-                default { & (Join-Path $PSScriptRoot "sis-bootstrap.ps1") -ShowStats @sisRest }
+                default {
+                    Write-Host "Unknown SIS command: $sisCommand" -ForegroundColor DarkYellow
+                    Write-Host "Use: arcanea sis [summary|json|stats|sync|open]" -ForegroundColor DarkGray
+                    exit 1
+                }
             }
         }
         exit $LASTEXITCODE
