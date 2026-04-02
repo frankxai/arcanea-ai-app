@@ -31,7 +31,8 @@ Write-Host "  Transcribing..." -ForegroundColor Yellow
 
 # Transcribe with whisper
 $result = python3 -c @"
-import sys
+import sys, warnings
+warnings.filterwarnings('ignore')
 try:
     import whisper
     model = whisper.load_model('tiny')
@@ -43,10 +44,11 @@ try:
 except Exception as e:
     print(f'ERROR: {e}', file=sys.stderr)
     sys.exit(1)
-"@ 2>&1
+"@ 2>$null
 
 if ($LASTEXITCODE -eq 0 -and $result) {
-    $text = $result.ToString().Trim()
+    $text = if ($result -is [array]) { $result -join ' ' } else { $result.ToString() }
+    $text = $text.Trim()
     Write-Host ""
     Write-Host "  ---" -ForegroundColor DarkGray
     Write-Host "  $text" -ForegroundColor White

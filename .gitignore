@@ -121,6 +121,11 @@ arcanea-opencode-fork/
 .arcanea/sessions/
 .arcanea/projects/PICKUP_SESSION_*.md
 .arcanea/sis/
+.arcanea/memory/
+.arcanea/voice/recordings/
+.arcanea/voice/transcripts/
+.arcanea/voice/voice-log.md
+.arcanea/AGENTS.md
 
 # Claude Code local state (per-machine, never commit)
 .claude/
