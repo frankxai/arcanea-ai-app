@@ -2,7 +2,9 @@
 
 Arcanea is a **creative multiverse** — six coexisting layers: Chat/Imagine (creation surface), Worlds (framework for building YOUR universe), Feed (social discovery), OSS (27 repos, 35 packages), Community (co-creation + governance), Academy (world-building education). arcanea.ai is BOTH a working product AND the reference world showing what the framework can build. See `Arcanea Command Center/WHAT-ARCANEA-IS (1).md` for the canonical identity document.
 
-This directory is the **tool-agnostic brain** of the Arcanea ecosystem. Any AI coding tool (Claude Code, Cursor, Codex, Gemini, arcanea-code) reads from here.
+This directory is the **tool-agnostic brain** of the Arcanea ecosystem. Any AI coding tool (Claude Code, Cursor, Codex, Gemini, opencode, arcanea-code) reads from here.
+
+Execution control lives in `planning-with-files/`. Shared intelligence lives in `.arcanea/`.
 
 ## Directory Map
 
@@ -28,11 +30,15 @@ This directory is the **tool-agnostic brain** of the Arcanea ecosystem. Any AI c
 
 ## Central Orchestrator
 
-**MASTER_PLAN.md** is the single source of truth for the platform. Every session MUST:
-1. Read `.arcanea/MASTER_PLAN.md` at session start
-2. Check the Priority Queue before choosing work
-3. Update page status after completing work
-4. Update milestone progress in `projects/milestones/`
+Read order for all agents:
+1. `AGENTS.md`
+2. newest `planning-with-files/CURRENT_STATE_*`
+3. newest `planning-with-files/CURRENT_BACKLOG_*`
+4. newest `planning-with-files/CURRENT_CHANGELOG_*`
+5. newest `planning-with-files/AGENT_EXECUTION_PROTOCOL_*`
+6. `.arcanea/MASTER_PLAN.md`
+
+`MASTER_PLAN.md` remains the strategic orchestrator. `planning-with-files/` is the live execution layer.
 
 The Master Plan contains:
 - Current state of all 111 pages (LIVE/PARTIAL/STUB/PLANNED)
@@ -62,4 +68,4 @@ The Master Plan contains:
 
 ## For Project-Level Instructions
 
-See the root `CLAUDE.md` and `.claude/CLAUDE.md` for project instructions, tech stack, and development workflow.
+See `AGENTS.md`, the root `CLAUDE.md`, and `.claude/CLAUDE.md` for project instructions, branch discipline, task contracts, and current execution state.
