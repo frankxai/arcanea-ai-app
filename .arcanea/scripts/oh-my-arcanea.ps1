@@ -14,9 +14,15 @@ if (Test-Path $arcaneaConfigDir) {
     $env:ARCANEA_CONFIG_DIR = $arcaneaConfigDir
     $env:OPENCODE_CONFIG_DIR = $arcaneaConfigDir
 }
+$env:STARLIGHT_HOME = "C:\Users\frank\.starlight"
+$env:STARLIGHT_BRIDGE_OUT = Join-Path $repoRoot ".arcanea\sis"
+$sisBootstrap = Join-Path $PSScriptRoot "sis-bootstrap.ps1"
 
 Push-Location $repoRoot
 try {
+    if (Test-Path $sisBootstrap) {
+        & $sisBootstrap -Quiet | Out-Null
+    }
     if (Test-Path $localCli) {
         & bun $localCli @CommandArgs
     }

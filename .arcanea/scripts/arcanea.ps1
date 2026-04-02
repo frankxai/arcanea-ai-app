@@ -13,6 +13,30 @@ function Invoke-ArcaneaClaude {
     & (Join-Path $PSScriptRoot "claude-launcher.ps1") @args
 }
 
+function Get-SISSnapshotPath {
+    return (Join-Path $repoRoot ".arcanea\sis\snapshot.json")
+}
+
+function Write-SISStatusLine {
+    $snapshotPath = Get-SISSnapshotPath
+    if (Test-Path $snapshotPath) {
+        try {
+            $snapshot = Get-Content $snapshotPath -Raw | ConvertFrom-Json
+            $totalVaultEntries = 0
+            foreach ($vaultName in $snapshot.vaults.PSObject.Properties.Name) {
+                $totalVaultEntries += @($snapshot.vaults.$vaultName).Count
+            }
+            $patternCount = @($snapshot.patterns).Count
+            $sessionFile = if ($snapshot.latestSession) { $snapshot.latestSession.file } else { "none" }
+            Write-Host "SIS:            $totalVaultEntries entries, $patternCount patterns, latest eval $sessionFile" -ForegroundColor White
+        } catch {
+            Write-Host "SIS:            snapshot unreadable" -ForegroundColor DarkYellow
+        }
+    } else {
+        Write-Host "SIS:            snapshot not generated yet" -ForegroundColor DarkYellow
+    }
+}
+
 if (-not $CommandArgs -or $CommandArgs.Count -eq 0) {
     Write-Host ""
     Write-Host "Arcanea command center" -ForegroundColor Cyan
@@ -20,6 +44,7 @@ if (-not $CommandArgs -or $CommandArgs.Count -eq 0) {
     Write-Host ""
     Write-Host "Available commands:" -ForegroundColor Yellow
     Write-Host "  arcanea status" -ForegroundColor White
+    Write-Host "  arcanea sis" -ForegroundColor White
     Write-Host "  arcanea opencode [args...]" -ForegroundColor White
     Write-Host "  arcanea claude [args...]" -ForegroundColor White
     Write-Host "  arcanea repo" -ForegroundColor White
@@ -37,9 +62,28 @@ switch ($command) {
         Write-Host "Main repo:      $repoRoot" -ForegroundColor White
         Write-Host "Arcanea Code:   $(Join-Path $repoRoot 'arcanea-code')" -ForegroundColor White
         Write-Host "OpenCode CLI:   $(Join-Path $repoRoot 'arcanea-opencode')" -ForegroundColor White
+        Write-Host "SIS summary:    $(Join-Path $repoRoot '.arcanea\sis\summary.md')" -ForegroundColor White
+        Write-SISStatusLine
         Write-Host ""
         if (Test-Path (Join-Path $repoRoot "arcanea-opencode\bin\arcanea-opencode.js")) {
             & (Join-Path $PSScriptRoot "arcanea-opencode.ps1") status
+        }
+        exit $LASTEXITCODE
+    }
+    "sis" {
+        if ($remaining.Count -eq 0) {
+            & (Join-Path $PSScriptRoot "sis-bootstrap.ps1") -ShowStats
+        } else {
+            $sisCommand = $remaining[0].ToLowerInvariant()
+            $sisRest = if ($remaining.Count -gt 1) { $remaining[1..($remaining.Count - 1)] } else { @() }
+            switch ($sisCommand) {
+                "open" { & (Join-Path $PSScriptRoot "sis-bootstrap.ps1") -OpenSummary }
+                "summary" { & (Join-Path $PSScriptRoot "sis-bootstrap.ps1") }
+                "json" { & (Join-Path $PSScriptRoot "sis-bootstrap.ps1") -Json }
+                "sync" { & (Join-Path $PSScriptRoot "sis-bootstrap.ps1") -Quiet }
+                "stats" { & (Join-Path $PSScriptRoot "sis-bootstrap.ps1") -ShowStats }
+                default { & (Join-Path $PSScriptRoot "sis-bootstrap.ps1") -ShowStats @sisRest }
+            }
         }
         exit $LASTEXITCODE
     }
