@@ -19,6 +19,7 @@
   - fixed the editor payload shape and `novel` command/upload contracts
   - added docs API contract coverage to `pnpm --dir apps/web test:projects`
   - repaired the ops dashboard `worktree.prunable` type mismatch so `tsc --noEmit` is honest again
+- Quarantined stray NFT/agent spreadsheet generator scripts into `.arcanea/experiments/nft-agent-research/` and documented them as non-production research artifacts
 
 ## Still Pending
 

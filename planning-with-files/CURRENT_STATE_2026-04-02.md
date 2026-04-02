@@ -21,7 +21,8 @@
 
 - Former dirty local trunk has been moved to `integration/agent-control-plane-unification`
 - Remote `main` already contains the verified project-workspace, retrieval, trace, media, and planning slices
-- Current local branch also contains new uncommitted Claude docs-system work and agent-ops work that still needs scoped review before promotion
+- Current local branch contains pushed docs-system hardening and agent-control-plane work
+- Remaining loose research scripts have been quarantined outside the production `scripts/` surface
 
 ## What Is True Now
 
@@ -36,12 +37,13 @@
 - Live Supabase activation is still the main external blocker for the project graph
 - Claude is now adding notes/docs and agent-ops work locally
 - SIS context can now be materialized into `.arcanea/sis/summary.md` and exposed over a local MCP server
+- Experimental NFT/agent spreadsheet generators now live under `.arcanea/experiments/nft-agent-research/`
 
 ## Immediate Risks
 
-- Large uncommitted feature work landed locally without a clean promotion branch
 - Tool-specific agent docs were drifting and had stale design/product guidance
 - CI/workflow changes from the current local work still need scoped review before trust
+- Some recent voice/buddy/runtime commits on this integration branch still need repo-by-repo promotion judgment against `main`
 
 ## Recommendation
 
