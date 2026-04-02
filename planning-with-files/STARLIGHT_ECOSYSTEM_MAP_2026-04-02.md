@@ -100,9 +100,10 @@ Target: same thin wrapper using SIS package
 The key insight: ALL coding agents (Claude Code, Codex, OpenCode, Cursor) should read/write to the SAME SIS vaults. Not separate memory systems per tool.
 
 ```
-~/.starlight/                    # Shared across all agents
-├── config.json                  # Which vaults, which adapters
-├── vaults/
+~/.arcanea/                      # ONE home (already exists)
+├── starlight/                   # SIS lives here (not ~/.starlight/)
+│   ├── config.json              # Which vaults, which adapters
+│   ├── vaults/
 │   ├── technical.jsonl          # Patterns, architectures
 │   ├── strategic.jsonl          # Business decisions
 │   ├── creative.jsonl           # Style, voice, creative patterns
