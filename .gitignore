@@ -126,6 +126,7 @@ arcanea-opencode-fork/
 .arcanea/voice/transcripts/
 .arcanea/voice/voice-log.md
 .arcanea/AGENTS.md
+.arcanea/projects/NFT_STRATEGY_MASTER.md
 
 # Claude Code local state (per-machine, never commit)
 .claude/
