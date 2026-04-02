@@ -165,6 +165,51 @@ function getUniverse() {
   return { lore, agents };
 }
 
+// ─── Arcanea Buddy (SIS Integration) ────────────────────────────────────
+
+const BUDDY_ICONS = {
+  'ember-wolf': '🔥', 'crystal-stag': '🦌', 'storm-falcon': '🦅', 'void-cat': '🐈‍⬛',
+  'ocean-serpent': '🐉', 'stone-guardian': '🪨', 'mist-fox': '🦊', 'tide-bear': '🐻',
+  'moss-tortoise': '🐢', 'coral-otter': '🦦', 'phoenix-spark': '🌟', 'flame-drake': '🐲',
+  'gale-hummingbird': '🐦', 'abyss-jellyfish': '🪼', 'shadow-raven': '🐦‍⬛', 'starweave-moth': '🦋',
+  'kaelith': '🌿', 'veloura': '💧', 'draconis': '🔥', 'laeylinn': '💜', 'otome': '🌟',
+  'yumiko': '👁', 'sol': '👑', 'vaelith': '🌀', 'kyuro': '🤝', 'source': '✦',
+};
+
+const BUDDY_NAMES = {
+  'ember-wolf': 'Ember Wolf', 'crystal-stag': 'Crystal Stag', 'storm-falcon': 'Storm Falcon',
+  'void-cat': 'Void Cat', 'ocean-serpent': 'Ocean Serpent', 'stone-guardian': 'Stone Guardian',
+  'mist-fox': 'Mist Fox', 'tide-bear': 'Tide Bear', 'moss-tortoise': 'Moss Tortoise',
+  'coral-otter': 'Coral Otter', 'phoenix-spark': 'Phoenix Spark', 'flame-drake': 'Flame Drake',
+  'gale-hummingbird': 'Gale Hummingbird', 'abyss-jellyfish': 'Abyss Jellyfish',
+  'shadow-raven': 'Shadow Raven', 'starweave-moth': 'Starweave Moth',
+  'kaelith': 'Kaelith', 'veloura': 'Veloura', 'draconis': 'Draconis', 'laeylinn': 'Laeylinn',
+  'otome': 'Otome', 'yumiko': 'Yumiko', 'sol': 'Sol', 'vaelith': 'Vaelith', 'kyuro': 'Kyuro', 'source': 'Source',
+};
+
+function getBuddyStatusline() {
+  try {
+    // Check both legacy /tmp and os.tmpdir() paths
+    const paths = [
+      '/tmp/arcanea-buddy/state.json',
+      `${process.env.TEMP || ''}/arcanea-buddy/state.json`,
+      `${process.env.LOCALAPPDATA || ''}/Temp/arcanea-buddy/state.json`,
+    ].filter(Boolean);
+    const buddyPath = paths.find(p => existsSync(p));
+    if (!buddyPath) return '';
+    const state = JSON.parse(readFileSync(buddyPath, 'utf-8'));
+    if (!state.hatched || state.hidden) return '';
+    const icon = BUDDY_ICONS[state.buddyId] || '?';
+    const name = BUDDY_NAMES[state.buddyId] || state.buddyId;
+    let display = `${icon} ${name}`;
+    if (state.godbeastId && state.godbeastId !== state.buddyId) {
+      const gbIcon = BUDDY_ICONS[state.godbeastId] || '✦';
+      display += `+${gbIcon}`;
+    }
+    return `${C.green}${display}${C.reset}`;
+  } catch { return ''; }
+}
+
 // ─── MCP Count ──────────────────────────────────────────────────────────────
 
 function getMcpCount() {
@@ -263,13 +308,17 @@ function statusline(data) {
   const lastCommit = getLastCommit();
   const wisdom     = getWisdom(guardian, arc.label);
 
-  // ── Line 1: Brand + Model + Guardian + Arc ───────────────────────────────
+  // Arcanea Buddy (SIS integration)
+  const buddyDisplay = getBuddyStatusline();
+
+  // ── Line 1: Brand + Model + Buddy + Guardian + Arc ──────────────────────
   const parts1 = [
     `${C.cyan}${C.bold}Arcanea${C.reset}`,
     `${C.magenta}${model}${C.reset}`,
-    `${guardian} ${gateInfo.glyph}`,
-    `${arc.glyph} ${arc.label}`,
   ];
+  if (buddyDisplay) parts1.push(buddyDisplay);
+  parts1.push(`${guardian} ${gateInfo.glyph}`);
+  parts1.push(`${arc.glyph} ${arc.label}`);
   if (cost) parts1.push(`${C.yellow}${cost}${C.reset}`);
   if (agentName) parts1.push(`🤖 ${agentName}`);
 
