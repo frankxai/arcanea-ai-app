@@ -12,6 +12,7 @@
 - The local migration `supabase/migrations/20260402000001_project_docs.sql` is a reasonable MVP starting point.
 - `apps/web/package.json` adding `novel` and `lowlight` supports a practical Tiptap/Novel-based editor path instead of rebuilding a rich-text editor from scratch.
 - The billing execution plan in `docs/ops/BILLING_PROJECT_GRAPH_EXECUTION_PLAN_2026-04-02.md` is aligned with provider-neutral billing and Supabase-as-product-truth.
+- The SIS bridge and local MCP server scripts are useful and worth keeping, because they let Claude/Codex/opencode read the same canonical Starlight vault context without depending on one UI.
 
 ## Main Risks
 

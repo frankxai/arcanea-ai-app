@@ -38,7 +38,10 @@
     "ops:machine:json": "node scripts/machine-readiness-check.js --json",
     "verify:project-workspaces": "tsx scripts/verify-project-workspaces.ts",
     "embed:library": "cd apps/web && npx tsx ../../scripts/embed-library.ts",
-    "embed:library:dry-run": "cd apps/web && npx tsx ../../scripts/embed-library.ts --dry-run --verbose"
+    "embed:library:dry-run": "cd apps/web && npx tsx ../../scripts/embed-library.ts --dry-run --verbose",
+    "sis:sync": "node scripts/sis-context-bridge.mjs",
+    "sis:mcp": "node scripts/sis-mcp-server.mjs",
+    "sis:check": "node scripts/sis-context-bridge.mjs && node scripts/sis-check.mjs"
   },
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
