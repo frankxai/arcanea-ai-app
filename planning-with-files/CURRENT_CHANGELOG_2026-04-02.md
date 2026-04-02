@@ -12,6 +12,7 @@
   - `.codex/instructions.md`
   - `.gemini/instructions.md`
 - Added fresh planning control files for 2026-04-02 reflecting the new branch posture and review backlog
+- Verified the SIS bridge against real `~/.starlight` data and replaced the fragile shell-based MCP smoke check with a Node-based one
 
 ## Still Pending
 

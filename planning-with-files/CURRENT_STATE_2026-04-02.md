@@ -12,6 +12,10 @@
   - `.cursorrules`
   - `.codex/instructions.md`
   - `.gemini/instructions.md`
+- SIS bridge scripts now exist locally to expose canonical `~/.starlight` state into Arcanea:
+  - `scripts/sis-context-bridge.mjs`
+  - `scripts/sis-mcp-server.mjs`
+  - `scripts/sis-check.mjs`
 
 ## Branch State
 
@@ -31,6 +35,7 @@
   - planning control files
 - Live Supabase activation is still the main external blocker for the project graph
 - Claude is now adding notes/docs and agent-ops work locally
+- SIS context can now be materialized into `.arcanea/sis/summary.md` and exposed over a local MCP server
 
 ## Immediate Risks
 
