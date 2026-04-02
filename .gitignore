@@ -198,6 +198,7 @@ status/
 findings.md
 progress.md
 task_plan.md
+scripts/collection-v1-*.js
 
 # Config files (local dev, not shared)
 cypress.config.ts
