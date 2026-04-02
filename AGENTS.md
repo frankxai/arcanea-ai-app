@@ -29,6 +29,15 @@ The core product centers on:
 - workflow orchestration
 - creator and social compounding over time
 
+## Execution Law (Machine-Enforced)
+
+1. Node 20.x and pnpm only. Never use npm. `.nvmrc` pins the version.
+2. No PR merges unless changed scope passes: build, typecheck, lint.
+3. Frozen lockfile in CI (`pnpm install --frozen-lockfile`).
+4. No raw visual constants in app code — use design tokens only.
+5. If git state is dirty, stage only target files and report unrelated changes.
+6. Every agent spawned must use the Luminor Engineering Kernel (`.arcanea/prompts/luminor-engineering-kernel.md`).
+
 ## Task Contract
 
 Every substantial task must define:
@@ -40,6 +49,7 @@ Files:
 Non-goals:
 Acceptance criteria:
 Verification:
+Rollback: (how to undo if it breaks)
 ```
 
 ## Branch Discipline

@@ -1,13 +1,20 @@
 #!/usr/bin/env node
 
 import { createInterface } from "node:readline";
-import { readFileSync, existsSync, readdirSync } from "node:fs";
+import { readFileSync, existsSync, readdirSync, mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { homedir } from "node:os";
+import { normalizeSisReadEntry, validateSisWriteInput, SIS_ENTRY_TYPES, SIS_VAULT_NAMES } from "./sis-schema.mjs";
 
 const home = homedir();
 const sisRoot = process.env.STARLIGHT_HOME || join(home, ".starlight");
-const vaultNames = ["strategic", "technical", "creative", "operational", "wisdom", "horizon"];
+const vaultNames = SIS_VAULT_NAMES;
+
+function ensureSisLayout() {
+  mkdirSync(join(sisRoot, "vaults"), { recursive: true });
+  mkdirSync(join(sisRoot, "evals", "sessions"), { recursive: true });
+  mkdirSync(join(sisRoot, "graph"), { recursive: true });
+}
 
 function safeRead(path) {
   if (!existsSync(path)) return "";
@@ -32,37 +39,69 @@ function parseJsonl(path) {
 }
 
 function normalizeEntry(vault, entry) {
-  const content =
-    entry.content ??
-    entry.insight ??
-    entry.learning ??
-    entry.text ??
-    entry.value ??
-    entry.wish ??
-    entry.pattern ??
-    entry.summary ??
-    JSON.stringify(entry);
-  const createdAt =
-    entry.createdAt ??
-    entry.created_at ??
-    entry.timestamp ??
-    entry.date ??
-    null;
-  const tags = Array.isArray(entry.tags) ? entry.tags : [];
-  return {
-    vault,
-    id: entry.id ?? null,
-    createdAt,
-    tags,
-    content: String(content),
-    raw: entry,
-  };
+  return normalizeSisReadEntry(vault, entry);
 }
 
 function vaultEntries(vault) {
   return parseJsonl(join(sisRoot, "vaults", `${vault}.jsonl`)).map((entry) =>
     normalizeEntry(vault, entry),
   );
+}
+
+function slugPart(value, fallback = "entry") {
+  return String(value || fallback)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 40) || fallback;
+}
+
+function parseTags(value) {
+  if (Array.isArray(value)) return value.map((tag) => String(tag).trim()).filter(Boolean);
+  if (!value) return [];
+  return String(value)
+    .split(",")
+    .map((tag) => tag.trim())
+    .filter(Boolean);
+}
+
+function buildEntry({ vault, content, tags = [], category, source = "mcp", confidence = "medium", author, context }) {
+  const timestamp = new Date().toISOString();
+  const prefix = vault === "operational" ? "ops" : vault.slice(0, 5);
+  const id = `${prefix}_${timestamp.replace(/[-:TZ.]/g, "").slice(0, 14)}_${slugPart(category || content, "entry").slice(0, 12)}`;
+
+  if (vault === "horizon") {
+    return {
+      id,
+      wish: content,
+      context: context || null,
+      author: author || "Frank",
+      coAuthored: false,
+      tags,
+      createdAt: timestamp,
+    };
+  }
+
+  return {
+    id,
+    insight: content,
+    category: category || "general",
+    confidence,
+    source,
+    tags,
+    createdAt: timestamp,
+  };
+}
+
+function appendJsonl(path, entry) {
+  const line = `${JSON.stringify(entry)}\n`;
+  if (!existsSync(path)) {
+    writeFileSync(path, line, "utf8");
+    return;
+  }
+  const existing = readFileSync(path, "utf8");
+  const prefix = existing.endsWith("\n") ? "" : "\n";
+  writeFileSync(path, `${existing}${prefix}${line}`, "utf8");
 }
 
 function resourceForVault(vault) {
@@ -136,6 +175,39 @@ const tools = [
       properties: {},
     },
   },
+  {
+    name: "sis_append_entry",
+    description: "Append a structured entry into a canonical SIS vault in ~/.starlight.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        vault: { type: "string", enum: vaultNames },
+        content: { type: "string" },
+        entryType: { type: "string", enum: Object.keys(SIS_ENTRY_TYPES) },
+        tags: {
+          oneOf: [
+            { type: "array", items: { type: "string" } },
+            { type: "string" },
+          ],
+        },
+        category: { type: "string" },
+        source: { type: "string" },
+        confidence: { type: "string", enum: ["low", "medium", "high"] },
+        author: { type: "string" },
+        context: { type: "string" },
+        metadata: { type: "object" },
+      },
+      required: ["vault", "content"],
+    },
+  },
+  {
+    name: "sis_entry_types",
+    description: "List supported SIS entry types and required metadata fields.",
+    inputSchema: {
+      type: "object",
+      properties: {},
+    },
+  },
 ];
 
 function scoreMatch(entry, query) {
@@ -193,6 +265,42 @@ async function callTool(name, args = {}) {
       ? readdirSync(sessionsDir).filter((name) => name.endsWith(".json")).length
       : 0;
     return { sisRoot, vaults, patternCount, sessionCount };
+  }
+
+  if (name === "sis_append_entry") {
+    const validation = validateSisWriteInput({
+      vault: args.vault,
+      content: args.content,
+      tags: args.tags,
+      category: args.category,
+      source: args.source,
+      confidence: args.confidence,
+      author: args.author,
+      context: args.context,
+      entryType: args.entryType,
+      metadata: args.metadata,
+    });
+    if (!validation.valid) {
+      throw new Error(validation.errors.join("; "));
+    }
+
+    ensureSisLayout();
+    const entry = buildEntry({
+      ...validation.normalized,
+    });
+    const path = join(sisRoot, "vaults", `${validation.normalized.vault}.jsonl`);
+    appendJsonl(path, entry);
+    return { ok: true, sisRoot, vault: validation.normalized.vault, path, warnings: validation.warnings, entry };
+  }
+
+  if (name === "sis_entry_types") {
+    return {
+      entryTypes: Object.entries(SIS_ENTRY_TYPES).map(([name, def]) => ({
+        name,
+        description: def.description,
+        requiredMetadata: def.requiredMetadata,
+      })),
+    };
   }
 
   throw new Error(`Unknown tool: ${name}`);
