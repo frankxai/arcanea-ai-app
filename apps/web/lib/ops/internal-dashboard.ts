@@ -29,6 +29,7 @@ type WorktreeEntry = {
   head: string;
   branch: string | null;
   detached: boolean;
+  prunable: boolean;
 };
 
 type CommandProbe = {
@@ -185,6 +186,7 @@ function parseWorktrees(output: string): WorktreeEntry[] {
       head: map.get("HEAD") || "",
       branch: map.get("branch")?.replace("refs/heads/", "") || null,
       detached: map.has("detached"),
+      prunable: map.has("prunable"),
     };
   });
 }

@@ -49,10 +49,15 @@ export default function DocEditorPage() {
           router.push(`/projects/${params.id}/docs`);
           return;
         }
-        const data = await res.json() as { doc: DocData };
-        setDoc(data.doc);
-        setTitle(data.doc.title);
-        setDocType(data.doc.doc_type);
+        const data = await res.json() as { data?: { doc?: DocData }; doc?: DocData };
+        const docPayload = data.data?.doc ?? data.doc;
+        if (!docPayload) {
+          router.push(`/projects/${params.id}/docs`);
+          return;
+        }
+        setDoc(docPayload);
+        setTitle(docPayload.title);
+        setDocType(docPayload.doc_type);
       } catch {
         router.push(`/projects/${params.id}/docs`);
       } finally {
