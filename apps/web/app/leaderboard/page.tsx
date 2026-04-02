@@ -110,7 +110,7 @@ function PodiumCard({ entry, place }: { entry: LeaderboardEntry; place: 1 | 2 | 
           {entry.avatar_url ? (
             <Image src={entry.avatar_url} alt={entry.display_name || 'Creator'} width={80} height={80} className="w-full h-full object-cover" loading="lazy" />
           ) : (
-            <span className="text-2xl font-bold" style={{ fontFamily: 'var(--font-display, Cinzel, serif)' }}>
+            <span className="text-2xl font-bold" style={{ fontFamily: 'var(--font-display, Space Grotesk, serif)' }}>
               {(entry.display_name || '?')[0].toUpperCase()}
             </span>
           )}
@@ -122,7 +122,7 @@ function PodiumCard({ entry, place }: { entry: LeaderboardEntry; place: 1 | 2 | 
       </div>
 
       {/* Name + rank */}
-      <p className={`${config.nameSize} font-semibold text-white truncate max-w-[120px] text-center`} style={{ fontFamily: 'var(--font-display, Cinzel, serif)' }}>
+      <p className={`${config.nameSize} font-semibold text-white truncate max-w-[120px] text-center`} style={{ fontFamily: 'var(--font-display, Space Grotesk, serif)' }}>
         {entry.display_name || 'Anonymous'}
       </p>
       <p className={`text-xs mt-0.5 ${RANK_COLORS[entry.magic_rank] || 'text-white/40'}`}>
@@ -201,7 +201,7 @@ export default function LeaderboardPage() {
         <div className="text-center mb-10">
           <h1
             className="text-4xl sm:text-5xl font-bold mb-3 bg-gradient-to-r from-white via-white to-white/70 bg-clip-text text-transparent"
-            style={{ fontFamily: 'var(--font-display, Cinzel, serif)' }}
+            style={{ fontFamily: 'var(--font-display, Space Grotesk, serif)' }}
           >
             Hall of Luminors
           </h1>
@@ -242,7 +242,7 @@ export default function LeaderboardPage() {
             </div>
             <h2
               className="text-2xl font-bold text-white/80 mb-2"
-              style={{ fontFamily: 'var(--font-display, Cinzel, serif)' }}
+              style={{ fontFamily: 'var(--font-display, Space Grotesk, serif)' }}
             >
               The Hall Awaits
             </h2>

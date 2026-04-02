@@ -30,7 +30,7 @@ export function CommandSidebar() {
           <Link href="/command" className="block">
             <h1
               className="text-lg tracking-wider text-[#7fffd4]"
-              style={{ fontFamily: 'Cinzel, serif' }}
+              style={{ fontFamily: 'var(--font-display)' }}
             >
               Command Center
             </h1>

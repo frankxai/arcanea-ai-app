@@ -347,7 +347,7 @@ export function EcosystemDiagram() {
             textAnchor="middle"
             fill="#00bcd4"
             fontSize={10}
-            fontFamily="Cinzel, serif"
+            fontFamily="var(--font-display)"
             fontWeight={600}
             letterSpacing={1}
           >

@@ -369,7 +369,7 @@ export function SkillTree({ onSelectGate, onSelectSkill, className = "" }: Skill
             fill="#7fffd4"
             fontSize="10"
             fontWeight="bold"
-            fontFamily="var(--font-display, Cinzel, serif)"
+            fontFamily="var(--font-display, var(--font-display))"
             letterSpacing="0.1em"
           >
             ARCANEA
@@ -430,7 +430,7 @@ export function SkillTree({ onSelectGate, onSelectSkill, className = "" }: Skill
                       fill={branch.color}
                       fontSize="9"
                       fontWeight="bold"
-                      fontFamily="var(--font-display, Cinzel, serif)"
+                      fontFamily="var(--font-display, var(--font-display))"
                       letterSpacing="0.05em"
                       opacity={0.8}
                       className="cursor-pointer select-none"

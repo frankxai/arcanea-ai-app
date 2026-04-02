@@ -88,7 +88,7 @@ export default function InboxPage() {
         <div>
           <h1
             className="text-2xl font-bold text-white"
-            style={{ fontFamily: 'Cinzel, serif' }}
+            style={{ fontFamily: 'var(--font-display)' }}
           >
             Inbox
           </h1>

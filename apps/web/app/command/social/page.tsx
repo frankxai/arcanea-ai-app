@@ -90,7 +90,7 @@ export default function SocialPage() {
       <div>
         <h1
           className="text-2xl font-bold text-white"
-          style={{ fontFamily: 'Cinzel, serif' }}
+          style={{ fontFamily: 'var(--font-display)' }}
         >
           Social
         </h1>
@@ -103,7 +103,7 @@ export default function SocialPage() {
       <section>
         <h2
           className="text-sm font-semibold text-white/60 mb-3 uppercase tracking-wider"
-          style={{ fontFamily: 'Cinzel, serif' }}
+          style={{ fontFamily: 'var(--font-display)' }}
         >
           This Week
         </h2>
@@ -211,7 +211,7 @@ export default function SocialPage() {
       <section>
         <h2
           className="text-sm font-semibold text-white/60 mb-3 uppercase tracking-wider"
-          style={{ fontFamily: 'Cinzel, serif' }}
+          style={{ fontFamily: 'var(--font-display)' }}
         >
           Queue ({items.length})
         </h2>

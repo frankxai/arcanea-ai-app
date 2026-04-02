@@ -88,7 +88,7 @@ function SectionTitle({
         ) : null}
         <div className="flex items-center gap-3">
           <div className={cn("h-7 w-1 rounded-full", accent)} />
-          <h2 className="font-[Cinzel,serif] text-xl font-semibold text-white/90">
+          <h2 className="font-[Space Grotesk,serif] text-xl font-semibold text-white/90">
             {title}
           </h2>
         </div>
@@ -112,7 +112,7 @@ export default async function OpsPage() {
               <p className="mb-3 text-[11px] uppercase tracking-[0.2em] text-[#7fffd4]/60">
                 Internal Ops Surface
               </p>
-              <h1 className="font-[Cinzel,serif] text-3xl font-bold tracking-wide text-white/92 sm:text-4xl">
+              <h1 className="font-[Space Grotesk,serif] text-3xl font-bold tracking-wide text-white/92 sm:text-4xl">
                 Arcanea control plane made visible
               </h1>
               <p className="mt-4 max-w-2xl text-sm leading-6 text-white/62">
@@ -341,7 +341,7 @@ export default async function OpsPage() {
             <div className="grid gap-4 lg:grid-cols-2">
               <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-5">
                 <div className="flex items-center justify-between">
-                  <p className="font-[Cinzel,serif] text-lg text-white/88">Arcanea Orchestrator</p>
+                  <p className="font-[Space Grotesk,serif] text-lg text-white/88">Arcanea Orchestrator</p>
                   <StatusPill level={data.orchestrator.help.ok ? "healthy" : "critical"}>
                     {data.orchestrator.help.ok ? "usable" : "blocked"}
                   </StatusPill>
@@ -355,7 +355,7 @@ export default async function OpsPage() {
 
               <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-5">
                 <div className="flex items-center justify-between">
-                  <p className="font-[Cinzel,serif] text-lg text-white/88">Flow Delegation</p>
+                  <p className="font-[Space Grotesk,serif] text-lg text-white/88">Flow Delegation</p>
                   <StatusPill level={data.flowBridge.ok ? "healthy" : "critical"}>
                     {data.flowBridge.ok ? "bridged" : "blocked"}
                   </StatusPill>
@@ -394,7 +394,7 @@ export default async function OpsPage() {
             href="/ops/agents"
             className="rounded-2xl border border-[#7fffd4]/20 bg-[#7fffd4]/10 p-5 transition-colors hover:bg-[#7fffd4]/15"
           >
-            <p className="font-[Cinzel,serif] text-lg text-[#7fffd4]">Agents</p>
+            <p className="font-[Space Grotesk,serif] text-lg text-[#7fffd4]">Agents</p>
             <p className="mt-2 text-sm text-white/68">
               Registry, categories, and evaluation framing for Arcanea agents.
             </p>
@@ -403,7 +403,7 @@ export default async function OpsPage() {
             href="/command-center"
             className="rounded-2xl border border-[#78a6ff]/20 bg-[#78a6ff]/10 p-5 transition-colors hover:bg-[#78a6ff]/15"
           >
-            <p className="font-[Cinzel,serif] text-lg text-[#78a6ff]">Command Center</p>
+            <p className="font-[Space Grotesk,serif] text-lg text-[#78a6ff]">Command Center</p>
             <p className="mt-2 text-sm text-white/68">
               Operational control surfaces, social, inbox, and command workflows.
             </p>
@@ -412,7 +412,7 @@ export default async function OpsPage() {
             href="/projects"
             className="rounded-2xl border border-[#ffd700]/20 bg-[#ffd700]/10 p-5 transition-colors hover:bg-[#ffd700]/15"
           >
-            <p className="font-[Cinzel,serif] text-lg text-[#ffd700]">Projects</p>
+            <p className="font-[Space Grotesk,serif] text-lg text-[#ffd700]">Projects</p>
             <p className="mt-2 text-sm text-white/68">
               Project workspaces and the repaired integration branch flow.
             </p>
@@ -421,7 +421,7 @@ export default async function OpsPage() {
 
         {repoWarnings.length ? (
           <section className="rounded-2xl border border-amber-500/20 bg-amber-500/10 p-5">
-            <p className="font-[Cinzel,serif] text-lg text-amber-200">Next highest-value cleanup</p>
+            <p className="font-[Space Grotesk,serif] text-lg text-amber-200">Next highest-value cleanup</p>
             <p className="mt-2 text-sm text-amber-100/80">
               Convert dirty repos into intentional slices, starting with the control-plane tranche in the main repo, then
               orchestrator productization, then flow delegation cleanup.

@@ -85,7 +85,7 @@ export function StatsOverview({ stats, loading }: StatsOverviewProps) {
       <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5">
         <h3
           className="text-sm font-semibold text-white/70 mb-3 uppercase tracking-wider"
-          style={{ fontFamily: 'Cinzel, serif' }}
+          style={{ fontFamily: 'var(--font-display)' }}
         >
           Classification Progress
         </h3>
@@ -108,7 +108,7 @@ export function StatsOverview({ stats, loading }: StatsOverviewProps) {
         <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5">
           <h3
             className="text-sm font-semibold text-white/70 mb-4 uppercase tracking-wider"
-            style={{ fontFamily: 'Cinzel, serif' }}
+            style={{ fontFamily: 'var(--font-display)' }}
           >
             Guardian Coverage
           </h3>
@@ -148,7 +148,7 @@ export function StatsOverview({ stats, loading }: StatsOverviewProps) {
         <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-5">
           <h3
             className="text-sm font-semibold text-white/70 mb-4 uppercase tracking-wider"
-            style={{ fontFamily: 'Cinzel, serif' }}
+            style={{ fontFamily: 'var(--font-display)' }}
           >
             Quality Tiers
           </h3>

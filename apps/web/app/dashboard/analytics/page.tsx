@@ -137,7 +137,7 @@ export default function AnalyticsPage() {
         <div className="mb-10">
           <h1
             className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-white via-white to-white/70 bg-clip-text text-transparent"
-            style={{ fontFamily: 'var(--font-display, Cinzel, serif)' }}
+            style={{ fontFamily: 'var(--font-display, Space Grotesk, serif)' }}
           >
             Arcanea Analytics
           </h1>
@@ -201,7 +201,7 @@ export default function AnalyticsPage() {
             <div className="grid md:grid-cols-2 gap-6">
               {/* Element Distribution */}
               <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.06] rounded-xl p-6 animate-[fadeSlideUp_0.5s_ease-out_0.3s_both]">
-                <h2 className="text-lg font-semibold mb-5 flex items-center gap-2" style={{ fontFamily: 'var(--font-display, Cinzel, serif)' }}>
+                <h2 className="text-lg font-semibold mb-5 flex items-center gap-2" style={{ fontFamily: 'var(--font-display, Space Grotesk, serif)' }}>
                   <span className="text-white/40">◇</span> Element Distribution
                 </h2>
                 <div className="space-y-4">
@@ -239,7 +239,7 @@ export default function AnalyticsPage() {
               {/* Your Engagement */}
               {engagement && (
                 <div className="bg-white/[0.03] backdrop-blur-xl border border-white/[0.06] rounded-xl p-6 animate-[fadeSlideUp_0.5s_ease-out_0.4s_both]">
-                  <h2 className="text-lg font-semibold mb-5 flex items-center gap-2" style={{ fontFamily: 'var(--font-display, Cinzel, serif)' }}>
+                  <h2 className="text-lg font-semibold mb-5 flex items-center gap-2" style={{ fontFamily: 'var(--font-display, Space Grotesk, serif)' }}>
                     <span className="text-white/40">◇</span> Your Engagement
                   </h2>
 

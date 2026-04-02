@@ -17,7 +17,7 @@ export default function AgentsPage() {
         <div>
           <h1
             className="text-2xl font-bold text-white"
-            style={{ fontFamily: 'Cinzel, serif' }}
+            style={{ fontFamily: 'var(--font-display)' }}
           >
             Agents
           </h1>
@@ -43,7 +43,7 @@ export default function AgentsPage() {
       <section>
         <h2
           className="text-lg font-semibold text-white/80 mb-4"
-          style={{ fontFamily: 'Cinzel, serif' }}
+          style={{ fontFamily: 'var(--font-display)' }}
         >
           Recent Agent Events
         </h2>

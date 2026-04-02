@@ -306,7 +306,7 @@ export function GrimoireViewer({
           <p className="text-xs uppercase tracking-[0.25em] text-[#c8a96e]/70 mb-2 font-medium">
             The Grimoire of
           </p>
-          <h1 className="font-display text-3xl sm:text-4xl font-bold text-[#4a2e0e] mb-3 [font-family:'Cinzel',serif]">
+          <h1 className="font-display text-3xl sm:text-4xl font-bold text-[#4a2e0e] mb-3 [font-family:var(--font-display),serif]">
             {worldName}
           </h1>
           <div className="flex items-center justify-center gap-4 text-sm text-[#8c7355]">

@@ -122,7 +122,7 @@ function PillarCard({ title, description, icon, blobs }: PillarCardProps) {
         <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 backdrop-blur-sm">
           {icon}
         </div>
-        <h3 style={{ fontFamily: 'Cinzel, serif' }} className="text-2xl font-bold text-white">
+        <h3 style={{ fontFamily: 'var(--font-display)' }} className="text-2xl font-bold text-white">
           {title}
         </h3>
         <p className="text-base leading-relaxed text-white/70" style={{ fontFamily: 'Inter, sans-serif' }}>
@@ -180,7 +180,7 @@ export function V5GradientMesh() {
           {/* Brand mark */}
           <p
             className="relative z-10 mb-4 text-xl tracking-[0.25em] text-white/60 uppercase"
-            style={{ fontFamily: 'Cinzel, serif', fontSize: 20 }}
+            style={{ fontFamily: 'var(--font-display)', fontSize: 20 }}
           >
             Arcanea
           </p>
@@ -188,7 +188,7 @@ export function V5GradientMesh() {
           {/* Headline */}
           <h1
             className="relative z-10 mx-auto max-w-4xl text-center font-bold leading-[1.1] text-white"
-            style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(40px, 6vw, 72px)' }}
+            style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(40px, 6vw, 72px)' }}
           >
             The Universe That Creates With You
           </h1>
@@ -272,7 +272,7 @@ export function V5GradientMesh() {
           <div className="relative z-10 mx-auto max-w-3xl text-center">
             <blockquote
               className="text-3xl leading-relaxed text-white/90 italic md:text-4xl"
-              style={{ fontFamily: 'Cinzel, serif' }}
+              style={{ fontFamily: 'var(--font-display)' }}
             >
               &ldquo;Enter seeking, leave transformed, return whenever needed.&rdquo;
             </blockquote>
@@ -286,7 +286,7 @@ export function V5GradientMesh() {
         <section className="relative z-10 mx-auto max-w-3xl px-6 py-24">
           <h2
             className="mb-14 text-center text-3xl font-bold text-white"
-            style={{ fontFamily: 'Cinzel, serif' }}
+            style={{ fontFamily: 'var(--font-display)' }}
           >
             The Five Elements
           </h2>
@@ -320,7 +320,7 @@ export function V5GradientMesh() {
           <div className="relative z-10 flex flex-col items-center gap-8 text-center">
             <h2
               className="text-4xl font-bold text-white md:text-5xl"
-              style={{ fontFamily: 'Cinzel, serif' }}
+              style={{ fontFamily: 'var(--font-display)' }}
             >
               Build Your Universe
             </h2>

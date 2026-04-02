@@ -114,7 +114,7 @@ export function V9Particles() {
         .glass-btn {
           display: inline-block; padding: 14px 40px; border-radius: 999px;
           border: 1px solid ${TEAL}66; background: rgba(127,255,212,0.06);
-          color: ${TEAL}; font-family: 'Cinzel', serif; font-size: 15px;
+          color: ${TEAL}; font-family: var(--font-display); font-size: 15px;
           letter-spacing: 0.12em; cursor: pointer; transition: all 0.3s;
           text-decoration: none;
         }
@@ -122,7 +122,7 @@ export function V9Particles() {
         .glass-btn-solid {
           display: inline-block; padding: 16px 48px; border-radius: 999px;
           border: none; background: ${TEAL}; color: ${BG};
-          font-family: 'Cinzel', serif; font-size: 16px; font-weight: 700;
+          font-family: var(--font-display); font-size: 16px; font-weight: 700;
           letter-spacing: 0.1em; cursor: pointer; transition: all 0.3s;
           text-decoration: none;
         }
@@ -155,11 +155,11 @@ export function V9Particles() {
         justifyContent: 'center', textAlign: 'center', padding: '0 24px',
       }}>
         <p style={{
-          fontFamily: "'Cinzel', serif", fontSize: 16, letterSpacing: '0.3em',
+          fontFamily: "var(--font-display)", fontSize: 16, letterSpacing: '0.3em',
           textTransform: 'uppercase', opacity: 0.6, marginBottom: 24,
         }}>ARCANEA</p>
         <h1 style={{
-          fontFamily: "'Cinzel', serif", fontSize: 'clamp(36px, 5vw, 64px)',
+          fontFamily: "var(--font-display)", fontSize: 'clamp(36px, 5vw, 64px)',
           fontWeight: 400, lineHeight: 1.15, maxWidth: 800, margin: '0 0 28px',
         }}>The Universe That Creates With You</h1>
         <p style={{ fontSize: 18, opacity: 0.55, maxWidth: 540, margin: '0 0 44px', lineHeight: 1.6 }}>
@@ -182,7 +182,7 @@ export function V9Particles() {
             width: 14, height: 14, borderRadius: '50%', background: TEAL,
             margin: '0 auto 10px', animation: 'pulse 3s ease-in-out infinite',
           }} />
-          <span style={{ fontFamily: "'Cinzel', serif", fontSize: 13, opacity: 0.7, letterSpacing: '0.15em' }}>
+          <span style={{ fontFamily: "var(--font-display)", fontSize: 13, opacity: 0.7, letterSpacing: '0.15em' }}>
             THE SOURCE
           </span>
           <div style={{ fontSize: 11, opacity: 0.35, marginTop: 2 }}>Source</div>
@@ -200,7 +200,7 @@ export function V9Particles() {
             return (
               <span key={name} className="orbit-label" style={{
                 position: 'absolute', fontSize: 12, opacity: 0.5,
-                fontFamily: "'Cinzel', serif", letterSpacing: '0.08em',
+                fontFamily: "var(--font-display)", letterSpacing: '0.08em',
                 left: `calc(50% + ${Math.cos(rad) * 100}px)`,
                 top: `calc(50% + ${Math.sin(rad) * 100}px)`,
                 transform: 'translate(-50%,-50%)',
@@ -221,7 +221,7 @@ export function V9Particles() {
             return (
               <span key={name} className="orbit-label" style={{
                 position: 'absolute', fontSize: 12, opacity: 0.4,
-                fontFamily: "'Cinzel', serif", letterSpacing: '0.08em',
+                fontFamily: "var(--font-display)", letterSpacing: '0.08em',
                 left: `calc(50% + ${Math.cos(rad) * 170}px)`,
                 top: `calc(50% + ${Math.sin(rad) * 170}px)`,
                 transform: 'translate(-50%,-50%)',
@@ -242,7 +242,7 @@ export function V9Particles() {
             return (
               <span key={name} className="orbit-label" style={{
                 position: 'absolute', fontSize: 12, opacity: 0.35,
-                fontFamily: "'Cinzel', serif", letterSpacing: '0.08em',
+                fontFamily: "var(--font-display)", letterSpacing: '0.08em',
                 left: `calc(50% + ${Math.cos(rad) * 250}px)`,
                 top: `calc(50% + ${Math.sin(rad) * 250}px)`,
                 transform: 'translate(-50%,-50%)',
@@ -261,7 +261,7 @@ export function V9Particles() {
           position: 'absolute', inset: 0, pointerEvents: 'none',
           background: `radial-gradient(ellipse 500px 400px at 50% 40%, ${TEAL}0d, transparent)`,
         }} />
-        <h2 style={{ fontFamily: "'Cinzel', serif", fontSize: 'clamp(28px, 3.5vw, 40px)', marginBottom: 16 }}>
+        <h2 style={{ fontFamily: "var(--font-display)", fontSize: 'clamp(28px, 3.5vw, 40px)', marginBottom: 16 }}>
           The Guardians
         </h2>
         <p style={{ fontSize: 17, opacity: 0.5, lineHeight: 1.7, marginBottom: 40, maxWidth: 520, margin: '0 auto 40px' }}>
@@ -276,7 +276,7 @@ export function V9Particles() {
               padding: '12px 16px', borderRadius: 8,
               background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)',
             }}>
-              <div style={{ fontSize: 14, fontFamily: "'Cinzel', serif", marginBottom: 2 }}>{g.name}</div>
+              <div style={{ fontSize: 14, fontFamily: "var(--font-display)", marginBottom: 2 }}>{g.name}</div>
               <div style={{ fontSize: 12, opacity: 0.35 }}>{g.hz} &middot; {g.domain}</div>
             </div>
           ))}
@@ -292,7 +292,7 @@ export function V9Particles() {
           position: 'absolute', inset: 0, pointerEvents: 'none',
           background: `radial-gradient(ellipse 500px 400px at 50% 40%, ${VIOLET}0d, transparent)`,
         }} />
-        <h2 style={{ fontFamily: "'Cinzel', serif", fontSize: 'clamp(28px, 3.5vw, 40px)', marginBottom: 16 }}>
+        <h2 style={{ fontFamily: "var(--font-display)", fontSize: 'clamp(28px, 3.5vw, 40px)', marginBottom: 16 }}>
           The Library
         </h2>
         <p style={{ fontSize: 17, opacity: 0.5, lineHeight: 1.7, maxWidth: 480, margin: '0 auto 40px' }}>
@@ -318,7 +318,7 @@ export function V9Particles() {
           position: 'absolute', inset: 0, pointerEvents: 'none',
           background: `radial-gradient(ellipse 500px 400px at 50% 40%, ${GOLD}0a, transparent)`,
         }} />
-        <h2 style={{ fontFamily: "'Cinzel', serif", fontSize: 'clamp(28px, 3.5vw, 40px)', marginBottom: 16 }}>
+        <h2 style={{ fontFamily: "var(--font-display)", fontSize: 'clamp(28px, 3.5vw, 40px)', marginBottom: 16 }}>
           The Gateway
         </h2>
         <p style={{ fontSize: 17, opacity: 0.5, lineHeight: 1.7, maxWidth: 480, margin: '0 auto 40px' }}>
@@ -360,7 +360,7 @@ export function V9Particles() {
           }} />
         ))}
         <p style={{
-          fontFamily: "'Cinzel', serif", fontSize: 'clamp(22px, 3vw, 32px)',
+          fontFamily: "var(--font-display)", fontSize: 'clamp(22px, 3vw, 32px)',
           opacity: 0.7, marginBottom: 40, lineHeight: 1.4,
         }}>
           Your story is waiting in the stars.

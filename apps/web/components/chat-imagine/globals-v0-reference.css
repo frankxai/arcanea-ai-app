@@ -58,7 +58,7 @@
   --font-sans: 'Inter', 'Inter Fallback', system-ui;
   --font-serif: 'Crimson Pro', 'Crimson Pro Fallback', serif;
   --font-mono: 'JetBrains Mono', 'JetBrains Mono Fallback', monospace;
-  --font-display: 'Cinzel', 'Cinzel Fallback', serif;
+  --font-display: var(--font-display), 'Space Grotesk Fallback', serif;
   
   /* Color Tokens */
   --color-cosmic-void: var(--cosmic-void);

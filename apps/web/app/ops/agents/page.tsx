@@ -44,7 +44,7 @@ function CategorySection({
 }) {
   return (
     <section>
-      <h3 className="text-sm font-semibold text-white/70 mb-3 font-[Cinzel,serif]">
+      <h3 className="text-sm font-semibold text-white/70 mb-3 font-[Space Grotesk,serif]">
         {CATEGORY_LABELS[category]}
         <span className="text-white/30 text-xs ml-2 font-sans">
           ({agents.length})
@@ -118,7 +118,7 @@ export default function AgentPerformancePage() {
             >
               &larr; Ops Center
             </Link>
-            <h1 className="text-2xl font-bold font-[Cinzel,serif] text-white/90">
+            <h1 className="text-2xl font-bold font-[Space Grotesk,serif] text-white/90">
               Agent Registry & Performance
             </h1>
             <p className="text-sm text-white/40 mt-1">
@@ -150,7 +150,7 @@ export default function AgentPerformancePage() {
 
         {/* Evaluation Framework Info */}
         <div className="rounded-xl border border-[#7fffd4]/20 bg-[#7fffd4]/5 p-4 mb-8">
-          <h2 className="text-sm font-semibold text-[#7fffd4] mb-2 font-[Cinzel,serif]">
+          <h2 className="text-sm font-semibold text-[#7fffd4] mb-2 font-[Space Grotesk,serif]">
             Evaluation Framework
           </h2>
           <p className="text-xs text-white/50 mb-3">

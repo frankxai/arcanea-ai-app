@@ -58,14 +58,14 @@ export function V10Minimal() {
   return (
     <div style={{ background: '#0a0a0a', color: '#fff', minHeight: '100vh' }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400&family=Crimson+Pro:ital,wght@0,400;1,400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Space Grotesk:wght@400&family=Crimson+Pro:ital,wght@0,400;1,400&display=swap');
         html { scroll-behavior: smooth; }
       `}</style>
 
       {/* ── Hero ── */}
       <div className="h-screen flex flex-col items-center justify-center relative">
         <h1
-          style={{ fontFamily: 'Cinzel, serif', fontSize: 48, letterSpacing: '0.2em', fontWeight: 400 }}
+          style={{ fontFamily: 'var(--font-display)', fontSize: 48, letterSpacing: '0.2em', fontWeight: 400 }}
           className="text-white"
         >
           Arcanea

@@ -17,7 +17,7 @@ const GUARDIANS = [
 ];
 
 const S = {
-  cinzel: 'Cinzel, serif',
+  cinzel: 'var(--font-display)',
   crimson: 'Crimson Pro, serif',
   mono: 'JetBrains Mono, monospace',
   bg: '#0a0a0f',

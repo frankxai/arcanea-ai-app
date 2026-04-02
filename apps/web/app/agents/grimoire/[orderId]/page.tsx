@@ -529,7 +529,7 @@ export default function GrimoireResultPage({
                   >
                     {/* Parchment header bar */}
                     <div className="px-6 py-4 border-b border-[#c8a96e]/20 flex items-center justify-between">
-                      <span className="text-sm font-medium text-[#8c7355] [font-family:'Cinzel',serif] tracking-wide">
+                      <span className="text-sm font-medium text-[#8c7355] [font-family:var(--font-display),serif] tracking-wide">
                         {worldName}
                       </span>
                       <m.div

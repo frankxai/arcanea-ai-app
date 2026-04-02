@@ -103,7 +103,7 @@ function ChapterHero() {
           })}
         </div>
         <a href="/discover" className="inline-flex items-center gap-2 mt-12" style={{
-          fontFamily: 'Cinzel, serif', fontSize: 14, letterSpacing: '0.12em', color: A,
+          fontFamily: 'var(--font-display)', fontSize: 14, letterSpacing: '0.12em', color: A,
           padding: '14px 40px', border: `1px solid rgba(127,255,212,${ctaOn ? 0.3 : 0})`,
           borderRadius: 8, background: `rgba(127,255,212,${ctaOn ? 0.05 : 0})`,
           opacity: ctaOn ? 1 : 0, transform: ctaOn ? 'translateY(0)' : 'translateY(12px)',
@@ -126,7 +126,7 @@ function ChapterGuardians() {
     <section ref={ref} style={{ height: `${GUARDIANS.length * 20 + 100}vh`, position: 'relative', background: '#000' }}>
       <div className="sticky top-0 flex flex-col md:flex-row items-start md:items-center" style={{ height: '100vh', padding: '0 clamp(24px,6vw,80px)' }}>
         <div className="w-full md:w-1/3 pt-16 md:pt-0">
-          <h2 style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(28px,4vw,56px)', color: '#d4d4d4', letterSpacing: '0.04em', lineHeight: 1.15 }}>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(28px,4vw,56px)', color: '#d4d4d4', letterSpacing: '0.04em', lineHeight: 1.15 }}>
             The Ten<br />Guardians
           </h2>
           <p className="mt-4" style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 12, color: 'rgba(127,255,212,0.5)' }}>
@@ -144,7 +144,7 @@ function ChapterGuardians() {
               }}>
                 <g.Icon size={act ? 24 : 18} weight={act ? 'fill' : 'light'} color={act ? g.c : 'rgba(212,212,212,0.3)'} style={{ transition: 'all 0.4s ease', flexShrink: 0 }} />
                 <span style={{
-                  fontFamily: 'Cinzel, serif', letterSpacing: '0.06em', transition: 'all 0.4s ease',
+                  fontFamily: 'var(--font-display)', letterSpacing: '0.06em', transition: 'all 0.4s ease',
                   fontSize: act ? 'clamp(20px,2.5vw,32px)' : 'clamp(16px,2vw,22px)',
                   color: act ? g.c : 'rgba(212,212,212,0.3)',
                 }}>{g.name}</span>
@@ -219,7 +219,7 @@ function ChapterGateway() {
         <div className="w-full max-w-xl">
           <div className="flex items-center gap-3 mb-6">
             <Terminal size={20} weight="bold" color={A} />
-            <h2 style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(24px,3.5vw,40px)', color: '#d4d4d4', letterSpacing: '0.04em' }}>The Intelligence Gateway</h2>
+            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(24px,3.5vw,40px)', color: '#d4d4d4', letterSpacing: '0.04em' }}>The Intelligence Gateway</h2>
           </div>
           <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 12, padding: 24, fontFamily: 'JetBrains Mono, monospace', fontSize: 'clamp(11px,1.4vw,14px)', lineHeight: 1.8 }}>
             <div className="flex gap-2 mb-4">
@@ -266,7 +266,7 @@ function ChapterCTA() {
           Enter seeking. Leave transformed.<br />Return whenever needed.
         </p>
         <a href="/discover" className="group inline-flex items-center gap-2 mt-12" style={{
-          fontFamily: 'Cinzel, serif', fontSize: 16, letterSpacing: '0.15em', color: '#000',
+          fontFamily: 'var(--font-display)', fontSize: 16, letterSpacing: '0.15em', color: '#000',
           padding: '16px 52px', borderRadius: 8, background: A,
           boxShadow: '0 0 30px rgba(127,255,212,0.15), 0 0 60px rgba(127,255,212,0.05)', transition: 'all 0.3s ease',
         }}>

@@ -105,7 +105,7 @@ const ConstellationNodeComponent = memo(function ConstellationNodeComponent({
           fontSize: ring === 'center' ? 13 : ring === 'far' ? 9 : 10,
           fontWeight: ring === 'center' ? 700 : 500,
           color: hovered ? color : `${color}cc`,
-          fontFamily: "'Cinzel', 'Georgia', serif",
+          fontFamily: "var(--font-display), 'Georgia', serif",
           letterSpacing: ring === 'center' ? '0.08em' : '0.04em',
           textShadow: `0 0 8px ${color}40`,
           transition: 'color 0.2s ease',
@@ -142,7 +142,7 @@ const ConstellationNodeComponent = memo(function ConstellationNodeComponent({
               fontWeight: 600,
               color,
               marginBottom: 4,
-              fontFamily: "'Cinzel', serif",
+              fontFamily: "var(--font-display)",
             }}
           >
             {label}
@@ -355,7 +355,7 @@ export default function EcosystemConstellationPage() {
             style={{
               fontSize: 20,
               fontWeight: 700,
-              fontFamily: "'Cinzel', 'Georgia', serif",
+              fontFamily: "var(--font-display), 'Georgia', serif",
               background: 'linear-gradient(135deg, #ffd700, #7fffd4, #78a6ff)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',

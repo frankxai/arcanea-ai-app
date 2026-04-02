@@ -15,7 +15,7 @@ export default function CommandCenterDashboard() {
       <div>
         <h1
           className="text-2xl md:text-3xl font-bold text-white"
-          style={{ fontFamily: 'Cinzel, serif' }}
+          style={{ fontFamily: 'var(--font-display)' }}
         >
           Command Center
         </h1>
@@ -54,7 +54,7 @@ export default function CommandCenterDashboard() {
       <section>
         <h2
           className="text-lg font-semibold text-white/80 mb-4"
-          style={{ fontFamily: 'Cinzel, serif' }}
+          style={{ fontFamily: 'var(--font-display)' }}
         >
           Recent Activity
         </h2>
@@ -66,7 +66,7 @@ export default function CommandCenterDashboard() {
         <div className="flex items-center justify-between mb-4">
           <h2
             className="text-lg font-semibold text-white/80"
-            style={{ fontFamily: 'Cinzel, serif' }}
+            style={{ fontFamily: 'var(--font-display)' }}
           >
             Agents
           </h2>
