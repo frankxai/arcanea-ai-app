@@ -53,7 +53,7 @@ if (-not $CommandArgs -or $CommandArgs.Count -eq 0) {
 }
 
 $command = $CommandArgs[0].ToLowerInvariant()
-$remaining = if ($CommandArgs.Count -gt 1) { $CommandArgs[1..($CommandArgs.Count - 1)] } else { @() }
+$remaining = if ($CommandArgs.Count -gt 1) { @($CommandArgs[1..($CommandArgs.Count - 1)]) } else { @() }
 
 switch ($command) {
     "status" {
@@ -74,14 +74,15 @@ switch ($command) {
         if ($remaining.Count -eq 0) {
             & (Join-Path $PSScriptRoot "sis-bootstrap.ps1") -ShowStats
         } else {
-            $sisCommand = $remaining[0].ToLowerInvariant()
-            $sisRest = if ($remaining.Count -gt 1) { $remaining[1..($remaining.Count - 1)] } else { @() }
+            $sisCommand = [string]$remaining[0]
+            $sisCommand = $sisCommand.ToLowerInvariant()
+            $sisRest = if ($remaining.Count -gt 1) { @($remaining[1..($remaining.Count - 1)]) } else { @() }
             switch ($sisCommand) {
                 "open" { & (Join-Path $PSScriptRoot "sis-bootstrap.ps1") -OpenSummary }
                 "summary" { & (Join-Path $PSScriptRoot "sis-bootstrap.ps1") }
-                "json" { & (Join-Path $PSScriptRoot "sis-bootstrap.ps1") -Json }
+                "json" { & (Join-Path $PSScriptRoot "sis-bootstrap.ps1") -Quiet -Json }
                 "sync" { & (Join-Path $PSScriptRoot "sis-bootstrap.ps1") -Quiet }
-                "stats" { & (Join-Path $PSScriptRoot "sis-bootstrap.ps1") -ShowStats }
+                "stats" { & (Join-Path $PSScriptRoot "sis-bootstrap.ps1") -Quiet -ShowStats }
                 default { & (Join-Path $PSScriptRoot "sis-bootstrap.ps1") -ShowStats @sisRest }
             }
         }
