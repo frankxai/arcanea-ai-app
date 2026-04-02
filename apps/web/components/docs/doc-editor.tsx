@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useRef, useEffect } from 'react';
+import { useCallback, useRef, useEffect, type ReactNode } from 'react';
 import {
   EditorRoot,
   EditorContent,
@@ -73,6 +73,14 @@ const uploadFn = createImageUpload({
   },
 });
 
+function commandIcon(label: string): ReactNode {
+  return (
+    <span className="inline-flex h-6 w-6 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04] text-[10px] font-medium text-white/55">
+      {label}
+    </span>
+  );
+}
+
 // ---------------------------------------------------------------------------
 // Slash command items
 // ---------------------------------------------------------------------------
@@ -81,6 +89,7 @@ const suggestionItems = createSuggestionItems([
   {
     title: 'Text',
     description: 'Plain paragraph',
+    icon: commandIcon('T'),
     searchTerms: ['text', 'paragraph', 'p'],
     command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
       editor.chain().focus().deleteRange(range).toggleNode('paragraph', 'paragraph').run();
@@ -89,6 +98,7 @@ const suggestionItems = createSuggestionItems([
   {
     title: 'Heading 1',
     description: 'Large section heading',
+    icon: commandIcon('H1'),
     searchTerms: ['h1', 'heading', 'title'],
     command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
       editor.chain().focus().deleteRange(range).setNode('heading', { level: 1 }).run();
@@ -97,6 +107,7 @@ const suggestionItems = createSuggestionItems([
   {
     title: 'Heading 2',
     description: 'Medium section heading',
+    icon: commandIcon('H2'),
     searchTerms: ['h2', 'heading', 'subtitle'],
     command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
       editor.chain().focus().deleteRange(range).setNode('heading', { level: 2 }).run();
@@ -105,6 +116,7 @@ const suggestionItems = createSuggestionItems([
   {
     title: 'Heading 3',
     description: 'Small section heading',
+    icon: commandIcon('H3'),
     searchTerms: ['h3', 'heading'],
     command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
       editor.chain().focus().deleteRange(range).setNode('heading', { level: 3 }).run();
@@ -113,6 +125,7 @@ const suggestionItems = createSuggestionItems([
   {
     title: 'Bullet List',
     description: 'Unordered list',
+    icon: commandIcon('•'),
     searchTerms: ['ul', 'list', 'bullet', 'unordered'],
     command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
       editor.chain().focus().deleteRange(range).toggleBulletList().run();
@@ -121,6 +134,7 @@ const suggestionItems = createSuggestionItems([
   {
     title: 'Numbered List',
     description: 'Ordered list',
+    icon: commandIcon('1.'),
     searchTerms: ['ol', 'list', 'numbered', 'ordered'],
     command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
       editor.chain().focus().deleteRange(range).toggleOrderedList().run();
@@ -129,6 +143,7 @@ const suggestionItems = createSuggestionItems([
   {
     title: 'To-Do',
     description: 'Task checklist item',
+    icon: commandIcon('[]'),
     searchTerms: ['todo', 'task', 'check', 'checkbox'],
     command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
       editor.chain().focus().deleteRange(range).toggleTaskList().run();
@@ -137,6 +152,7 @@ const suggestionItems = createSuggestionItems([
   {
     title: 'Quote',
     description: 'Block quotation',
+    icon: commandIcon('"'),
     searchTerms: ['blockquote', 'quote'],
     command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
       editor.chain().focus().deleteRange(range).toggleBlockquote().run();
@@ -145,6 +161,7 @@ const suggestionItems = createSuggestionItems([
   {
     title: 'Code',
     description: 'Code block with syntax highlighting',
+    icon: commandIcon('</>'),
     searchTerms: ['code', 'codeblock', 'pre'],
     command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
       editor.chain().focus().deleteRange(range).toggleCodeBlock().run();
@@ -153,6 +170,7 @@ const suggestionItems = createSuggestionItems([
   {
     title: 'Divider',
     description: 'Horizontal rule',
+    icon: commandIcon('---'),
     searchTerms: ['hr', 'divider', 'separator', 'rule'],
     command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
       editor.chain().focus().deleteRange(range).setHorizontalRule().run();
@@ -161,6 +179,7 @@ const suggestionItems = createSuggestionItems([
   {
     title: 'Image',
     description: 'Upload or embed an image',
+    icon: commandIcon('Img'),
     searchTerms: ['image', 'img', 'photo', 'picture'],
     command: ({ editor, range }: { editor: EditorInstance; range: { from: number; to: number } }) => {
       editor.chain().focus().deleteRange(range).run();
@@ -169,10 +188,7 @@ const suggestionItems = createSuggestionItems([
       input.accept = 'image/*';
       input.onchange = async () => {
         if (!input.files?.[0]) return;
-        const url = await uploadFn(input.files[0], editor.view);
-        if (url) {
-          editor.chain().focus().setImage({ src: url as string }).run();
-        }
+        uploadFn(input.files[0], editor.view, editor.state.selection.from);
       };
       input.click();
     },
@@ -286,6 +302,7 @@ export function DocEditor({
                   onCommand={(val) => item.command?.(val)}
                   className="flex w-full cursor-pointer select-none items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-white/70 transition-colors hover:bg-white/[0.06] data-[selected]:bg-white/[0.08] data-[selected]:text-white font-sans"
                 >
+                  <span className="flex-shrink-0">{item.icon}</span>
                   <div className="flex flex-col gap-0.5">
                     <span className="text-sm font-medium text-white/80">{item.title}</span>
                     {item.description && (
