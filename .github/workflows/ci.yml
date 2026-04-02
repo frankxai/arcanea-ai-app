@@ -95,6 +95,24 @@ jobs:
             packages/*/node_modules
           key: modules-${{ hashFiles('pnpm-lock.yaml') }}
 
+      - name: Reject npm usage in scripts
+        run: |
+          if grep -rl "npm install\|npm ci\|npm run" scripts/ .github/ 2>/dev/null | grep -v "npx\|node_modules\|.md\|pnpm" | head -5; then
+            echo "::error::Found npm usage — use pnpm only (Execution Law)"
+            exit 1
+          fi
+          echo "No npm usage found — pnpm discipline enforced"
+
+      - name: Verify .nvmrc matches CI
+        run: |
+          if [ -f .nvmrc ]; then
+            NVMRC_VER=$(cat .nvmrc | tr -d '[:space:]')
+            if [ "$NVMRC_VER" != "${{ env.NODE_VERSION }}" ]; then
+              echo "::error::.nvmrc ($NVMRC_VER) != CI Node (${{ env.NODE_VERSION }})"
+              exit 1
+            fi
+          fi
+
       - name: ESLint
         run: cd apps/web && npx next lint
 
@@ -135,15 +153,15 @@ jobs:
           key: modules-${{ hashFiles('pnpm-lock.yaml') }}
 
       - name: TypeScript check
-        continue-on-error: true
         run: |
           cd apps/web
-          npx tsc --noEmit 2>&1 | tee /tmp/tsc-output.txt || true
+          npx tsc --noEmit 2>&1 | tee /tmp/tsc-output.txt
           ERROR_COUNT=$(grep -c "error TS" /tmp/tsc-output.txt || echo "0")
           echo "## TypeScript Report" >> $GITHUB_STEP_SUMMARY
           echo "**Errors**: ${ERROR_COUNT}" >> $GITHUB_STEP_SUMMARY
           if [ "$ERROR_COUNT" -gt 0 ]; then
-            echo "::warning::TypeScript has ${ERROR_COUNT} pre-existing errors (informational)"
+            echo "::error::TypeScript has ${ERROR_COUNT} errors — fix before merge"
+            exit 1
           fi
 
   # ============================================
@@ -212,15 +230,19 @@ jobs:
           echo "| Job | Status |" >> $GITHUB_STEP_SUMMARY
           echo "|-----|--------|" >> $GITHUB_STEP_SUMMARY
           echo "| Lint | ${{ needs.lint.result }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| TypeCheck | ${{ needs.typecheck.result }} (informational) |" >> $GITHUB_STEP_SUMMARY
+          echo "| TypeCheck | ${{ needs.typecheck.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Build | ${{ needs.build.result }} |" >> $GITHUB_STEP_SUMMARY
 
           if [ "${{ needs.lint.result }}" != "success" ]; then
             echo "::error::Lint failed"
             exit 1
           fi
+          if [ "${{ needs.typecheck.result }}" != "success" ]; then
+            echo "::error::TypeScript check failed"
+            exit 1
+          fi
           if [ "${{ needs.build.result }}" != "success" ]; then
             echo "::error::Build failed"
             exit 1
           fi
-          echo "CI passed (lint + build green)"
+          echo "CI passed (lint + typecheck + build green)"
