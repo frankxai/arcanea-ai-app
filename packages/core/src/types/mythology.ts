@@ -117,6 +117,7 @@ export type GodbeastName =
   | 'sol'
   | 'vaelith'
   | 'kyuro'
+  | 'source'
   | 'source-godbeast';
 
 export interface Godbeast {

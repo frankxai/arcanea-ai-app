@@ -9,7 +9,7 @@ export interface CreationNode {
   name: string;
   element?: string;
   gate?: number;
-  createdAt: Date;
+  createdAt: string;
   metadata: Record<string, any>;
 }
 
@@ -69,7 +69,9 @@ export function addCreationToGraph(
     name: creation.name,
     element: creation.element,
     gate: creation.gate,
-    createdAt: creation.createdAt,
+    createdAt: creation.createdAt instanceof Date
+      ? creation.createdAt.toISOString()
+      : creation.createdAt ?? new Date().toISOString(),
     metadata,
   };
 
