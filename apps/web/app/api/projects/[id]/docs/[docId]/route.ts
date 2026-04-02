@@ -57,7 +57,6 @@ async function loadDocForResponse(
 
   return { ...doc, project_doc_content: undefined, content };
 }
-
 export async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ id: string; docId: string }> }
@@ -148,7 +147,6 @@ export async function PATCH(
         existingWordCount !== nextWordCount;
 
       const readingTimeMinutes = Math.max(1, Math.round((word_count ?? 0) / 200));
-
       const { error: contentError } = await db
         .from('project_doc_content')
         .upsert(

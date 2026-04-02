@@ -134,7 +134,6 @@ function createPatchDbState(overrides?: {
 
   return { db, state };
 }
-
 async function main() {
   const originalProjectDocsDeps = { ...projectDocsRouteDeps };
   const originalProjectDocDeps = { ...projectDocRouteDeps };
@@ -156,7 +155,6 @@ async function main() {
 
       assert.equal(doc?.id, 'doc_1');
     });
-
     await test('GET /api/projects/[id]/docs returns unauthorized without user', async () => {
       projectDocsRouteDeps.getDocsAuthContext = async () => ({
         supabase: {} as never,
@@ -378,7 +376,6 @@ async function main() {
       assert.equal(state.contentUpserts.length, 1);
       assert.equal(state.versionInserts.length, 0);
     });
-
     await test('DELETE /api/projects/[id]/docs/[docId] returns success payload', async () => {
       projectDocRouteDeps.getDocAuthContext = async () => ({
         supabase: {} as never,
