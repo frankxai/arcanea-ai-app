@@ -20,6 +20,7 @@
     "types": [
       "node"
     ],
+    "ignoreDeprecations": "5.0",
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {

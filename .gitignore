@@ -120,6 +120,7 @@ arcanea-opencode-fork/
 .arcanea/agents/
 .arcanea/sessions/
 .arcanea/projects/PICKUP_SESSION_*.md
+.arcanea/sis/
 
 # Claude Code local state (per-machine, never commit)
 .claude/

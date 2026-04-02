@@ -1,5 +1,37 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
+import { errorResponse, handleApiError, successResponse } from '@/lib/api-utils';
 import { createClient } from '@/lib/supabase/server';
+
+type AuthContext = {
+  supabase: Awaited<ReturnType<typeof createClient>>;
+  // Temporary bridge until real generated types include docs tables.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  db: any;
+  user: { id: string } | null;
+};
+
+async function getDocsAuthContext(): Promise<AuthContext> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+
+  if (error) {
+    throw error;
+  }
+
+  return {
+    supabase,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    db: supabase as any,
+    user: user ? { id: user.id } : null,
+  };
+}
+
+export const projectDocsRouteDeps = {
+  getDocsAuthContext,
+};
 
 export async function GET(
   _request: NextRequest,
@@ -7,15 +39,13 @@ export async function GET(
 ) {
   try {
     const { id: projectId } = await params;
-    const supabase = await createClient();
+    const { db, user } = await projectDocsRouteDeps.getDocsAuthContext();
 
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-    if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    if (!user) {
+      return errorResponse('UNAUTHORIZED', 'Authentication required', 401);
     }
 
-    // Fetch docs with word_count joined from content table
-    const { data: docs, error } = await (supabase as any)
+    const { data: docs, error } = await db
       .from('project_docs')
       .select(`
         id, title, slug, icon, status, doc_type, sort_order,
@@ -28,10 +58,9 @@ export async function GET(
       .order('created_at', { ascending: false });
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return errorResponse('INTERNAL_ERROR', error.message, 500);
     }
 
-    // Flatten word_count to top level
     const normalised = (docs ?? []).map(
       (doc: Record<string, unknown> & { project_doc_content?: { word_count?: number }[] }) => ({
         ...doc,
@@ -40,10 +69,9 @@ export async function GET(
       })
     );
 
-    return NextResponse.json({ docs: normalised });
+    return successResponse({ docs: normalised });
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Internal server error';
-    return NextResponse.json({ error: message }, { status: 500 });
+    return handleApiError(err);
   }
 }
 
@@ -53,16 +81,15 @@ export async function POST(
 ) {
   try {
     const { id: projectId } = await params;
-    const supabase = await createClient();
+    const { db, user } = await projectDocsRouteDeps.getDocsAuthContext();
 
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-    if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    if (!user) {
+      return errorResponse('UNAUTHORIZED', 'Authentication required', 401);
     }
 
     const body = await request.json().catch(() => null);
     if (!body) {
-      return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
+      return errorResponse('INVALID_INPUT', 'Invalid request body', 400);
     }
 
     const { title = 'Untitled', doc_type = 'note', icon, status = 'draft' } = body as {
@@ -72,12 +99,11 @@ export async function POST(
       status?: string;
     };
 
-    // Create the doc row
-    const { data: doc, error: docError } = await (supabase as any)
+    const { data: doc, error: docError } = await db
       .from('project_docs')
       .insert({
         project_id: projectId,
-        workspace_id: user.id, // use user id as workspace_id until workspace system exists
+        workspace_id: projectId,
         user_id: user.id,
         title,
         doc_type,
@@ -88,11 +114,10 @@ export async function POST(
       .single();
 
     if (docError) {
-      return NextResponse.json({ error: docError.message }, { status: 500 });
+      return errorResponse('INTERNAL_ERROR', docError.message, 500);
     }
 
-    // Create the content row
-    const { error: contentError } = await (supabase as any)
+    const { error: contentError } = await db
       .from('project_doc_content')
       .insert({
         doc_id: doc.id,
@@ -102,13 +127,11 @@ export async function POST(
       });
 
     if (contentError) {
-      // Non-fatal — doc was created, content row can be created on first save
       console.error('Failed to create doc content row:', contentError.message);
     }
 
-    return NextResponse.json({ doc }, { status: 201 });
+    return successResponse({ doc }, 201);
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Internal server error';
-    return NextResponse.json({ error: message }, { status: 500 });
+    return handleApiError(err);
   }
 }

@@ -1,5 +1,18 @@
 # Claude Code Configuration - Claude Flow V3
 
+## Arcanea Source Of Truth
+
+Before coding, read:
+
+1. `AGENTS.md`
+2. newest `planning-with-files/CURRENT_STATE_*`
+3. newest `planning-with-files/CURRENT_BACKLOG_*`
+4. newest `planning-with-files/CURRENT_CHANGELOG_*`
+5. newest `planning-with-files/AGENT_EXECUTION_PROTOCOL_*`
+6. `.arcanea/CLAUDE.md`
+
+`.arcanea/` is the shared intelligence substrate. `planning-with-files/` is the live execution control plane.
+
 ## Behavioral Rules (Always Enforced)
 
 - Do what has been asked; nothing more, nothing less

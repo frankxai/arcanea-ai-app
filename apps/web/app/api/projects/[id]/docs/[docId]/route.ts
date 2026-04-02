@@ -1,38 +1,69 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
+import { errorResponse, handleApiError, successResponse } from '@/lib/api-utils';
 import { createClient } from '@/lib/supabase/server';
+
+type AuthContext = {
+  supabase: Awaited<ReturnType<typeof createClient>>;
+  // Temporary bridge until real generated types include docs tables.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  db: any;
+  user: { id: string } | null;
+};
+
+async function getDocAuthContext(): Promise<AuthContext> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+
+  if (error) {
+    throw error;
+  }
+
+  return {
+    supabase,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    db: supabase as any,
+    user: user ? { id: user.id } : null,
+  };
+}
+
+export const projectDocRouteDeps = {
+  getDocAuthContext,
+};
 
 export async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ id: string; docId: string }> }
 ) {
   try {
-    const { docId } = await params;
-    const supabase = await createClient();
+    const { id: projectId, docId } = await params;
+    const { db, user } = await projectDocRouteDeps.getDocAuthContext();
 
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-    if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    if (!user) {
+      return errorResponse('UNAUTHORIZED', 'Authentication required', 401);
     }
 
-    const { data: doc, error } = await (supabase as any)
+    const { data: doc, error } = await db
       .from('project_docs')
-      .select(`*, project_doc_content (*)`)
+      .select('*, project_doc_content (*)')
       .eq('id', docId)
+      .eq('project_id', projectId)
       .eq('user_id', user.id)
       .single();
 
     if (error || !doc) {
-      return NextResponse.json({ error: 'Document not found' }, { status: 404 });
+      return errorResponse('NOT_FOUND', 'Document not found', 404);
     }
 
     const content = Array.isArray(doc.project_doc_content)
       ? doc.project_doc_content[0] ?? null
       : doc.project_doc_content ?? null;
 
-    return NextResponse.json({ doc: { ...doc, project_doc_content: undefined, content } });
+    return successResponse({ doc: { ...doc, project_doc_content: undefined, content } });
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Internal server error';
-    return NextResponse.json({ error: message }, { status: 500 });
+    return handleApiError(err);
   }
 }
 
@@ -41,17 +72,16 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string; docId: string }> }
 ) {
   try {
-    const { docId } = await params;
-    const supabase = await createClient();
+    const { id: projectId, docId } = await params;
+    const { db, user } = await projectDocRouteDeps.getDocAuthContext();
 
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-    if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    if (!user) {
+      return errorResponse('UNAUTHORIZED', 'Authentication required', 401);
     }
 
     const body = await request.json().catch(() => null);
     if (!body) {
-      return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
+      return errorResponse('INVALID_INPUT', 'Invalid request body', 400);
     }
 
     const { title, doc_type, status, icon, content_json, content_text, word_count } = body as {
@@ -64,7 +94,6 @@ export async function PATCH(
       word_count?: number;
     };
 
-    // Update doc metadata if any doc fields provided
     if (title !== undefined || doc_type !== undefined || status !== undefined || icon !== undefined) {
       const docPatch: Record<string, unknown> = { last_edited_at: new Date().toISOString() };
       if (title !== undefined) docPatch.title = title;
@@ -72,22 +101,22 @@ export async function PATCH(
       if (status !== undefined) docPatch.status = status;
       if (icon !== undefined) docPatch.icon = icon;
 
-      const { error: docError } = await (supabase as any)
+      const { error: docError } = await db
         .from('project_docs')
         .update(docPatch)
         .eq('id', docId)
+        .eq('project_id', projectId)
         .eq('user_id', user.id);
 
       if (docError) {
-        return NextResponse.json({ error: docError.message }, { status: 500 });
+        return errorResponse('INTERNAL_ERROR', docError.message, 500);
       }
     }
 
-    // Update content if provided
     if (content_json !== undefined || content_text !== undefined) {
-      const reading_time_minutes = Math.max(1, Math.round((word_count ?? 0) / 200));
+      const readingTimeMinutes = Math.max(1, Math.round((word_count ?? 0) / 200));
 
-      const { error: contentError } = await (supabase as any)
+      const { error: contentError } = await db
         .from('project_doc_content')
         .upsert(
           {
@@ -95,17 +124,16 @@ export async function PATCH(
             content_json: content_json ?? {},
             content_text: content_text ?? '',
             word_count: word_count ?? 0,
-            reading_time_minutes,
+            reading_time_minutes: readingTimeMinutes,
           },
           { onConflict: 'doc_id' }
         );
 
       if (contentError) {
-        return NextResponse.json({ error: contentError.message }, { status: 500 });
+        return errorResponse('INTERNAL_ERROR', contentError.message, 500);
       }
 
-      // Snapshot version
-      const { data: versionData } = await (supabase as any)
+      const { data: versionData } = await db
         .from('project_doc_versions')
         .select('version_number')
         .eq('doc_id', docId)
@@ -115,7 +143,7 @@ export async function PATCH(
 
       const nextVersion = ((versionData as { version_number: number } | null)?.version_number ?? 0) + 1;
 
-      await (supabase as any).from('project_doc_versions').insert({
+      await db.from('project_doc_versions').insert({
         doc_id: docId,
         version_number: nextVersion,
         editor_type: 'human',
@@ -125,10 +153,9 @@ export async function PATCH(
       });
     }
 
-    return NextResponse.json({ ok: true });
+    return successResponse({ ok: true });
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Internal server error';
-    return NextResponse.json({ error: message }, { status: 500 });
+    return handleApiError(err);
   }
 }
 
@@ -137,27 +164,26 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string; docId: string }> }
 ) {
   try {
-    const { docId } = await params;
-    const supabase = await createClient();
+    const { id: projectId, docId } = await params;
+    const { db, user } = await projectDocRouteDeps.getDocAuthContext();
 
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-    if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    if (!user) {
+      return errorResponse('UNAUTHORIZED', 'Authentication required', 401);
     }
 
-    const { error } = await (supabase as any)
+    const { error } = await db
       .from('project_docs')
       .delete()
       .eq('id', docId)
+      .eq('project_id', projectId)
       .eq('user_id', user.id);
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return errorResponse('INTERNAL_ERROR', error.message, 500);
     }
 
-    return NextResponse.json({ ok: true });
+    return successResponse({ ok: true });
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Internal server error';
-    return NextResponse.json({ error: message }, { status: 500 });
+    return handleApiError(err);
   }
 }
