@@ -1,9 +1,5 @@
-param(
-    [Parameter(ValueFromRemainingArguments = $true)]
-    [string[]] $CommandArgs
-)
-
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
+$CommandArgs = @($args)
 
 function Invoke-ArcaneaOpencode {
     & (Join-Path $PSScriptRoot "arcanea-opencode.ps1") @args
