@@ -123,7 +123,7 @@ The Arcanean Design System uses a cosmic theme:
 - **Primary**: Atlantean Teal (#7fffd4)
 - **Secondary**: Cosmic Blue (#78a6ff)
 - **Accent**: Gold Bright (#ffd700)
-- **Fonts**: Cinzel (display), Crimson Pro (body)
+- **Fonts**: Space Grotesk (display), Inter (body/UI), JetBrains Mono (code) — NEVER use Cinzel
 - **Effects**: Glass morphism, aurora gradients, cosmic glows
 
 ---
