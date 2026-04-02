@@ -2,27 +2,7 @@
 
 ## P0
 
-### 1. Normalize agent control plane
-Scope: make Claude, Codex, Cursor, Gemini, opencode, and Arcanea agents resolve to the same source-of-truth order
-Owner: control-plane
-Files:
-- `AGENTS.md`
-- `CLAUDE.md`
-- `.claude/CLAUDE.md`
-- `.arcanea/CLAUDE.md`
-- `.cursorrules`
-- `.codex/instructions.md`
-- `.gemini/instructions.md`
-Non-goals:
-- full lore rewrite
-- product UI changes
-Acceptance criteria:
-- all major agent entrypoints point to `AGENTS.md` -> `planning-with-files` -> `.arcanea`
-- dirty-main prohibition is explicit
-Verification:
-- manual file review
-
-### 2. Review Claude docs-system slice
+### 1. Review Claude docs-system slice
 Scope: audit local notes/docs implementation for schema quality, route design, and promotion readiness
 Owner: integration
 Files:
@@ -40,7 +20,7 @@ Acceptance criteria:
 Verification:
 - route/file review and app verification if promoted
 
-### 3. Live Supabase activation
+### 2. Live Supabase activation
 Scope: apply project graph migrations and regenerate real Supabase types
 Owner: platform
 Files:
@@ -55,9 +35,24 @@ Acceptance criteria:
 Verification:
 - `pnpm run verify:project-workspaces`
 
+### 3. Review remaining agent-system integration branch
+Scope: classify the remaining `integration/agent-control-plane-unification` commits into promotable, experimental, or archive-only
+Owner: integration
+Files:
+- `integration/agent-control-plane-unification` commit range after `1b6031a7b`
+- `.arcanea/voice/**`
+- `.arcanea/projects/LUMINOR_AGENT_SYSTEM_PLAN.md`
+- `.arcanea/prompts/luminor-*.md`
+Non-goals:
+- blind merge of the remaining branch
+Acceptance criteria:
+- commit-by-commit recommendation
+- next safe promotion branch identified
+Verification:
+- git review + scoped verification
+
 ## P1
 
-### 4. Promote docs MVP on a scoped branch
-### 5. Project-aware retrieval on live DB data
-### 6. Async graph enrichment with real queueing
-### 7. Provider routing and usage tracing
+### 4. Project-aware retrieval on live DB data
+### 5. Async graph enrichment with real queueing
+### 6. Provider routing and usage tracing
