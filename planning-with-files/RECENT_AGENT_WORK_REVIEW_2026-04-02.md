@@ -44,15 +44,27 @@ That is acceptable for MVP, but it should be treated as Phase 1, not final archi
 
 The current client editor page loads data on first render with client state orchestration. It is workable, but a cleaner split between server loading and client editing would be a better long-term Next.js shape.
 
+## What Was Hardened After Review
+
+- The docs list/detail routes were normalized onto the shared API contract helpers.
+- Project scoping was enforced for doc detail reads, updates, and deletes.
+- The editor page now understands the wrapped `successResponse({ doc })` payload shape.
+- A docs API contract test suite now runs inside `pnpm --dir apps/web test:projects`.
+- The `novel` editor integration was fixed to match its current `SuggestionItem` and upload function contracts.
+- A small unrelated ops dashboard type mismatch around `worktree.prunable` was also fixed so `tsc --noEmit` is honest again.
+
+These fixes are now pushed on `integration/agent-control-plane-unification` in commit `d393b8b29`.
+
 ## Recommendation
 
 1. Keep the docs direction.
-2. Do not promote the docs slice straight from local branch state.
-3. Review it as a scoped notes/docs branch after live Supabase activation.
-4. Align it with `planning-with-files/NOTES_DOCS_SYSTEM_ARCHITECTURE_2026-04-02.md` before promotion.
+2. Do not promote the remaining local experimental scripts straight from branch state.
+3. Treat the docs slice as a scoped promotable tranche once live Supabase activation is done.
+4. Align the next iteration with `planning-with-files/NOTES_DOCS_SYSTEM_ARCHITECTURE_2026-04-02.md` before promotion.
 
 ## Immediate Next Actions
 
-- finish agent control-plane unification
-- commit and push the new branch
-- keep local docs work on this branch until reviewed and verified
+- keep `integration/agent-control-plane-unification` as the safe staging branch
+- apply the docs migration and regenerate real Supabase types
+- then decide whether the docs slice promotes on its own or with the next notes/docs tranche
+- leave the remaining untracked helper scripts unpromoted until they are reviewed as their own scope

@@ -13,6 +13,12 @@
   - `.gemini/instructions.md`
 - Added fresh planning control files for 2026-04-02 reflecting the new branch posture and review backlog
 - Verified the SIS bridge against real `~/.starlight` data and replaced the fragile shell-based MCP smoke check with a Node-based one
+- Hardened the project docs MVP slice on `integration/agent-control-plane-unification`:
+  - normalized docs routes onto the shared API response contract
+  - enforced project scoping on doc detail routes
+  - fixed the editor payload shape and `novel` command/upload contracts
+  - added docs API contract coverage to `pnpm --dir apps/web test:projects`
+  - repaired the ops dashboard `worktree.prunable` type mismatch so `tsc --noEmit` is honest again
 
 ## Still Pending
 
