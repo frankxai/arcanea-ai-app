@@ -55,6 +55,16 @@ export const SEARCH_PROVIDERS: SearchProvider[] = [
     placeholder: 'tvly-...',
   },
   {
+    id: 'exa',
+    name: 'Exa',
+    envKey: 'EXA_API_KEY',
+    requiresKey: true,
+    cost: 'paid',
+    description: 'Neural search engine — high-quality semantic results',
+    docsUrl: 'https://exa.ai',
+    placeholder: 'exa-...',
+  },
+  {
     id: 'brave',
     name: 'Brave Search',
     envKey: 'BRAVE_API_KEY',
@@ -108,7 +118,16 @@ export async function executeSearch(
         // Fall through to next provider
       }
     }
-    // 2. Brave if key available
+    // 2. Exa if key available
+    const exaKey = process.env.EXA_API_KEY;
+    if (exaKey) {
+      try {
+        return await searchExa(query, exaKey, maxResults);
+      } catch {
+        // Fall through to next provider
+      }
+    }
+    // 3. Brave if key available
     const braveKey = process.env.BRAVE_API_KEY;
     if (braveKey) {
       try {
@@ -117,7 +136,7 @@ export async function executeSearch(
         // Fall through to next provider
       }
     }
-    // 3. DuckDuckGo (always free, no key)
+    // 4. DuckDuckGo (always free, no key)
     try {
       return await searchDuckDuckGo(query, maxResults);
     } catch {
@@ -133,6 +152,11 @@ export async function executeSearch(
       const key = options?.apiKey || process.env.TAVILY_API_KEY;
       if (!key) throw new Error('Tavily API key required');
       return searchTavily(query, key, maxResults);
+    }
+    case 'exa': {
+      const key = options?.apiKey || process.env.EXA_API_KEY;
+      if (!key) throw new Error('Exa API key required');
+      return searchExa(query, key, maxResults);
     }
     case 'brave': {
       const key = options?.apiKey || process.env.BRAVE_API_KEY;
@@ -178,6 +202,41 @@ async function searchTavily(
         title: r.title,
         url: r.url,
         content: r.content,
+        score: r.score,
+      })
+    ),
+  };
+}
+
+async function searchExa(
+  query: string,
+  apiKey: string,
+  maxResults: number
+): Promise<SearchResponse> {
+  const res = await fetch('https://api.exa.ai/search', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': apiKey,
+    },
+    body: JSON.stringify({
+      query,
+      numResults: maxResults,
+      useAutoprompt: true,
+      type: 'auto',
+    }),
+  });
+  if (!res.ok) throw new Error(`Exa: ${res.status}`);
+  const data = await res.json();
+  return {
+    query,
+    provider: 'exa',
+    answer: null,
+    results: (data.results || []).map(
+      (r: { title: string; url: string; text?: string; snippet?: string; score?: number }) => ({
+        title: r.title,
+        url: r.url,
+        content: r.text || r.snippet || '',
         score: r.score,
       })
     ),
@@ -284,6 +343,7 @@ async function searchDuckDuckGo(
 /** Get the first available search provider (for display / status checks) */
 export function getActiveSearchProvider(): string {
   if (process.env.TAVILY_API_KEY) return 'tavily';
+  if (process.env.EXA_API_KEY) return 'exa';
   if (process.env.BRAVE_API_KEY) return 'brave';
   return 'duckduckgo';
 }

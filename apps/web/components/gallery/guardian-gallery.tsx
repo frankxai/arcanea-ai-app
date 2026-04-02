@@ -15,7 +15,7 @@ export type ElementName = "Earth" | "Water" | "Fire" | "Air" | "Void" | "Spirit"
 export interface GuardianImage {
   src: string;
   alt: string;
-  type: "hero-v3" | "divine-bond" | "hero-v1" | "godbeast" | "gallery";
+  type: "hero-v4" | "hero-v3" | "divine-bond" | "hero-v1" | "godbeast" | "gallery";
   label: string;
 }
 
@@ -28,6 +28,10 @@ export interface GuardianData {
   images: GuardianImage[];
 }
 
+function heroV4(name: string): GuardianImage {
+  const src = `/guardians/v4/${name}-hero-v4.webp`;
+  return { src, alt: getGuardianAlt(src), type: "hero-v4", label: "Hero v4" };
+}
 function heroV3(name: string, label: string): GuardianImage {
   const src = `/guardians/v3/${name}-hero-v3.webp`;
   return { src, alt: getGuardianAlt(src), type: "hero-v3", label: "Hero v3" };
@@ -62,6 +66,7 @@ export const GUARDIAN_DATA: GuardianData[] = [
     element: "Earth",
     godbeast: "Kaelith",
     images: [
+      heroV4("lyssandria"),
       heroV3("lyssandria", "Lyssandria"),
       divineBond("lyssandria", "Lyssandria"),
       godbeast("kaelith", "Lyssandria", "Kaelith"),
@@ -75,6 +80,7 @@ export const GUARDIAN_DATA: GuardianData[] = [
     element: "Water",
     godbeast: "Veloura",
     images: [
+      heroV4("leyla"),
       heroV3("leyla", "Leyla"),
       divineBond("leyla", "Leyla"),
       godbeast("veloura", "Leyla", "Veloura"),
@@ -89,6 +95,7 @@ export const GUARDIAN_DATA: GuardianData[] = [
     element: "Fire",
     godbeast: "Draconis",
     images: [
+      heroV4("draconia"),
       heroV3("draconia", "Draconia"),
       divineBond("draconia", "Draconia"),
       godbeast("draconis", "Draconia", "Draconis"),
@@ -103,6 +110,7 @@ export const GUARDIAN_DATA: GuardianData[] = [
     element: "Air",
     godbeast: "Laeylinn",
     images: [
+      heroV4("maylinn"),
       heroV3("maylinn", "Maylinn"),
       divineBond("maylinn", "Maylinn"),
       godbeast("laeylinn", "Maylinn", "Laeylinn"),
@@ -117,6 +125,7 @@ export const GUARDIAN_DATA: GuardianData[] = [
     element: "Air",
     godbeast: "Otome",
     images: [
+      heroV4("alera"),
       heroV3("alera", "Alera"),
       divineBond("alera", "Alera"),
       godbeast("otome", "Alera", "Otome"),
@@ -131,6 +140,7 @@ export const GUARDIAN_DATA: GuardianData[] = [
     element: "Water",
     godbeast: "Yumiko",
     images: [
+      heroV4("lyria"),
       heroV3("lyria", "Lyria"),
       divineBond("lyria", "Lyria"),
       godbeast("yumiko", "Lyria", "Yumiko"),
@@ -145,6 +155,7 @@ export const GUARDIAN_DATA: GuardianData[] = [
     element: "Spirit",
     godbeast: "Sol",
     images: [
+      heroV4("aiyami"),
       heroV3("aiyami", "Aiyami"),
       divineBond("aiyami", "Aiyami"),
       godbeast("sol", "Aiyami", "Sol"),
@@ -159,6 +170,7 @@ export const GUARDIAN_DATA: GuardianData[] = [
     element: "Void",
     godbeast: "Vaelith",
     images: [
+      heroV4("elara"),
       heroV3("elara", "Elara"),
       divineBond("elara", "Elara"),
       godbeast("vaelith", "Elara", "Vaelith"),
@@ -173,6 +185,7 @@ export const GUARDIAN_DATA: GuardianData[] = [
     element: "Spirit",
     godbeast: "Kyuro",
     images: [
+      heroV4("ino"),
       heroV3("ino", "Ino"),
       divineBond("ino", "Ino"),
       godbeast("kyuro", "Ino", "Kyuro"),
@@ -187,6 +200,7 @@ export const GUARDIAN_DATA: GuardianData[] = [
     element: "Void",
     godbeast: "Source",
     images: [
+      heroV4("shinkami"),
       heroV3("shinkami", "Shinkami"),
       divineBond("shinkami", "Shinkami"),
       godbeast("source", "Shinkami", "Source"),
@@ -234,7 +248,6 @@ export function GuardianGallery() {
   const [filter, setFilter] = useState<FilterMode>("All");
   const [selected, setSelected] = useState<SelectedImage | null>(null);
   const [filterMode, setFilterMode] = useState<"element" | "guardian">("element");
-  const [showFilterPanel, setShowFilterPanel] = useState(false);
   const canonicalImageCount = useMemo(
     () => GUARDIAN_DATA.reduce((sum, guardian) => sum + guardian.images.length, 0),
     []
@@ -566,9 +579,9 @@ function ImageCard({
 }) {
   const ec = ELEMENT_COLORS[guardian.element];
 
-  // Give v3 heroes a taller aspect ratio to make them visually dominant
+  // Give v3/v4 heroes a taller aspect ratio to make them visually dominant
   const aspectClass =
-    image.type === "hero-v3"
+    image.type === "hero-v4" || image.type === "hero-v3"
       ? "aspect-[3/4]"
       : image.type === "divine-bond"
       ? "aspect-square"

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { InlineImage } from './inline-image';
 import { ResearchProgress } from './research-progress';
 import ChatMarkdown from './chat-markdown';
@@ -16,6 +17,11 @@ import {
   Brain,
   BookOpen,
 } from '@/lib/phosphor-icons';
+
+const cardEnter = {
+  hidden: { opacity: 0, y: 6 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] } },
+};
 
 // ---------------------------------------------------------------------------
 // Types
@@ -95,7 +101,9 @@ function SearchResults({ result }: { result: { query: string; results: Array<{ t
   return (
     <div className="space-y-2">
       {result.answer && (
-        <p className="text-sm text-white/70 mb-3 pb-3 border-b border-white/[0.06]">{result.answer}</p>
+        <div className="mb-3 pb-3 border-b border-white/[0.06] p-3 rounded-lg bg-[#00bcd4]/[0.04] border border-[#00bcd4]/10">
+          <p className="text-sm text-white/80 leading-relaxed">{result.answer}</p>
+        </div>
       )}
       {result.results.map((r, i) => {
         const domain = getDomain(r.url);
@@ -330,7 +338,8 @@ export function ToolResultBlock({
   // Web search — render rich search results
   if (isSearchResult(toolName, result)) {
     return (
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm overflow-hidden">
+      <LazyMotion features={domAnimation}>
+      <m.div variants={cardEnter} initial="hidden" animate="visible" className="rounded-xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-xl overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.2)]">
         <div className="flex items-center gap-2 px-3 py-2 border-b border-white/[0.06]">
           <span className="text-white/50">{meta.icon}</span>
           <span className="text-xs text-white/70 font-medium flex-1">{meta.label}: {result.query}</span>
@@ -339,14 +348,16 @@ export function ToolResultBlock({
         <div className="px-3 py-2">
           <SearchResults result={result} />
         </div>
-      </div>
+      </m.div>
+      </LazyMotion>
     );
   }
 
   // Deep research — render full report with sources
   if (isResearchResult(toolName, result)) {
     return (
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm overflow-hidden">
+      <LazyMotion features={domAnimation}>
+      <m.div variants={cardEnter} initial="hidden" animate="visible" className="rounded-xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-xl overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.2)]">
         <div className="flex items-center gap-2 px-3 py-2 border-b border-white/[0.06]">
           <span className="text-white/50">{meta.icon}</span>
           <span className="text-xs text-white/70 font-medium flex-1">
@@ -358,7 +369,8 @@ export function ToolResultBlock({
         <div className="px-3 py-2">
           <ResearchReport result={result} />
         </div>
-      </div>
+      </m.div>
+      </LazyMotion>
     );
   }
 
@@ -417,7 +429,7 @@ export function ToolResultBlock({
 
   // Generic collapsible result
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm overflow-hidden">
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-xl overflow-hidden shadow-[0_0_30px_rgba(0,0,0,0.15)]">
       {/* Header — clickable */}
       <button
         type="button"

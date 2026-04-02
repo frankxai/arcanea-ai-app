@@ -157,7 +157,7 @@ function ResultCard({ origin, onRetake }: ResultCardProps) {
         <div>
           <h2
             className="font-display text-4xl font-bold mb-2"
-            style={{ color: result.color, fontFamily: "var(--font-display, Cinzel, serif)" }}
+            style={{ color: result.color, fontFamily: "var(--font-display)" }}
           >
             {result.name}
           </h2>
@@ -287,7 +287,7 @@ export default function QuizClient() {
             </p>
             <h1
               className="text-3xl sm:text-4xl font-bold text-white mb-3"
-              style={{ fontFamily: "var(--font-display, Cinzel, serif)" }}
+              style={{ fontFamily: "var(--font-display)" }}
             >
               What Is Your Origin Class?
             </h1>

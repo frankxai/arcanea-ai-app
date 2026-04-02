@@ -58,7 +58,7 @@ export default function FactionsPage() {
           <h1
             className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6"
             style={{
-              fontFamily: '"Cinzel", serif',
+              fontFamily: 'var(--font-display)',
               background:
                 'linear-gradient(135deg, #ffffff 0%, rgba(255,215,0,0.9) 50%, rgba(168,85,247,0.8) 100%)',
               WebkitBackgroundClip: 'text',
@@ -113,7 +113,7 @@ export default function FactionsPage() {
             </p>
             <h2
               className="text-2xl font-bold mb-3 text-white"
-              style={{ fontFamily: '"Cinzel", serif' }}
+              style={{ fontFamily: 'var(--font-display)' }}
             >
               Which class are you?
             </h2>

@@ -63,7 +63,7 @@ function ExpandedPanel({
               className="font-display text-3xl md:text-4xl font-bold mb-2"
               style={{
                 color: faction.color,
-                fontFamily: '"Cinzel", serif',
+                fontFamily: 'var(--font-display)',
                 textShadow: `0 0 30px rgba(${faction.colorRgb}, 0.5)`,
               }}
             >
@@ -263,7 +263,7 @@ function FactionCard({
         <h3
           className="font-bold text-xl mb-1 leading-tight"
           style={{
-            fontFamily: '"Cinzel", serif',
+            fontFamily: 'var(--font-display)',
             color: isActive ? faction.color : 'rgba(255,255,255,0.9)',
             textShadow: isActive ? `0 0 20px rgba(${faction.colorRgb}, 0.4)` : 'none',
           }}
