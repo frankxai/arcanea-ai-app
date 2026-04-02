@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Guardians of the Ten Gates — Arcanea",
     description:
-      "77 artworks spanning all ten Guardians, their divine-bond Godbeasts, and gallery variations. From Lyssandria at Foundation to Shinkami at Source.",
+      "76 artworks spanning all ten Guardians, their divine-bond Godbeasts, and gallery variations. From Lyssandria at Foundation to Shinkami at Source.",
     type: "website",
     images: [
       {
@@ -34,7 +34,7 @@ const jsonLd = {
   description:
     "Canonical artwork for all ten Guardians of Arcanea — ultra-quality hero portraits, divine-bond art, Godbeast companions, and gallery variations.",
   url: "https://arcanea.ai/gallery/guardians",
-  numberOfItems: 77,
+  numberOfItems: 76,
   about: {
     "@type": "Thing",
     name: "Arcanea — Ten Gates and Ten Guardians",

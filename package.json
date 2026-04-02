@@ -36,6 +36,7 @@
     "ops:release-gate": "node scripts/ops-health-check.js --quick --deep --json",
     "ops:machine": "node scripts/machine-readiness-check.js",
     "ops:machine:json": "node scripts/machine-readiness-check.js --json",
+    "verify:project-workspaces": "tsx scripts/verify-project-workspaces.ts",
     "embed:library": "cd apps/web && npx tsx ../../scripts/embed-library.ts",
     "embed:library:dry-run": "cd apps/web && npx tsx ../../scripts/embed-library.ts --dry-run --verbose"
   },

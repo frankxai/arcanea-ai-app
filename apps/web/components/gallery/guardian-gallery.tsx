@@ -66,7 +66,6 @@ export const GUARDIAN_DATA: GuardianData[] = [
       divineBond("lyssandria", "Lyssandria"),
       godbeast("kaelith", "Lyssandria", "Kaelith"),
       heroV1("lyssandria", "Lyssandria"),
-      ...galleryImages("lyssandria", "Lyssandria", [2]),
     ],
   },
   {
@@ -236,6 +235,10 @@ export function GuardianGallery() {
   const [selected, setSelected] = useState<SelectedImage | null>(null);
   const [filterMode, setFilterMode] = useState<"element" | "guardian">("element");
   const [showFilterPanel, setShowFilterPanel] = useState(false);
+  const canonicalImageCount = useMemo(
+    () => GUARDIAN_DATA.reduce((sum, guardian) => sum + guardian.images.length, 0),
+    []
+  );
 
   const filteredGuardians = useMemo((): GuardianData[] => {
     if (filter === "All") return GUARDIAN_DATA;
@@ -295,7 +298,7 @@ export function GuardianGallery() {
                 {/* Stats */}
                 <div className="flex flex-wrap items-center gap-6 mt-6 text-sm text-white/25 font-sans">
                   <span>
-                    <span className="text-white/60 font-semibold">77</span> artworks
+                    <span className="text-white/60 font-semibold">{canonicalImageCount}</span> artworks
                   </span>
                   <span>
                     <span className="text-white/60 font-semibold">10</span> Guardians

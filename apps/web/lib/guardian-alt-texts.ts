@@ -127,8 +127,6 @@ export const GUARDIAN_ALT_TEXTS: Record<string, Record<string, string>> = {
 
   // ── Gallery: Additional artwork per guardian ──────────────────────────────
   gallery: {
-    'lyssandria-gallery-2.webp':
-      'Lyssandria, Foundation Guardian, earth-element artwork depicting stone and obsidian motifs',
     'leyla-gallery-2.webp':
       'Leyla, Flow Guardian, water-fire artwork depicting swirling currents and ember sparks',
     'leyla-gallery-3.webp':

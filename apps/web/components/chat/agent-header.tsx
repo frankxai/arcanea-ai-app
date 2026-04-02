@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { PhCaretDown, PhSparkle, PhRobot } from '@/lib/phosphor-icons';
+import { PhCaretDown } from '@/lib/phosphor-icons';
 import { getModelById, CHAT_MODELS } from '@/components/chat/model-selector';
 import { FOCUS_MODES, type FocusMode } from './focus-modes';
 

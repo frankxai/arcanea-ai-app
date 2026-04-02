@@ -14,13 +14,20 @@ const createProjectSchema = z.object({
   goal: z.string().trim().max(1000).optional(),
 });
 
+export const projectsRouteDeps = {
+  createProjectForCurrentUser,
+  getProjectAuthContext,
+  listProjectsForCurrentUser,
+  recordProjectTrace,
+};
+
 export async function GET() {
   try {
-    const { user } = await getProjectAuthContext();
+    const { user } = await projectsRouteDeps.getProjectAuthContext();
     if (!user) {
       return errorResponse('UNAUTHORIZED', 'Authentication required', 401);
     }
-    const projects = await listProjectsForCurrentUser();
+    const projects = await projectsRouteDeps.listProjectsForCurrentUser();
     return successResponse({ projects });
   } catch (error) {
     return handleApiError(error);
@@ -41,17 +48,17 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    const { supabase, user } = await getProjectAuthContext();
+    const { supabase, user } = await projectsRouteDeps.getProjectAuthContext();
     if (!user) {
       return errorResponse('UNAUTHORIZED', 'Authentication required', 401);
     }
 
-    const project = await createProjectForCurrentUser(validation.data);
+    const project = await projectsRouteDeps.createProjectForCurrentUser(validation.data);
     if (!project) {
       return errorResponse('INTERNAL_ERROR', 'Failed to create project', 500);
     }
 
-    await recordProjectTrace(supabase, {
+    await projectsRouteDeps.recordProjectTrace(supabase, {
       userId: user.id,
       projectId: project.id,
       action: 'project_created',

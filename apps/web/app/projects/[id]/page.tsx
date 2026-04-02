@@ -1,14 +1,24 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
-import { ArrowRight, ClockCounterClockwise, FolderOpen, Sparkle } from '@/lib/phosphor-icons';
+import { ArrowRight, ClockCounterClockwise, FolderOpen } from '@/lib/phosphor-icons';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { createClient } from '@/lib/supabase/server';
+import { buildProjectGraphView } from '@/lib/projects/enrichment';
 import { buildProjectCompletionSummary } from '@/lib/projects/progress';
-import { getProjectWorkspaceForCurrentUser } from '@/lib/projects/server';
+import {
+  getProjectGraphSummaryForCurrentUser,
+  getProjectWorkspaceForCurrentUser,
+  listProjectCandidateCreationsForCurrentUser,
+  listProjectCandidateSessionsForCurrentUser,
+  listProjectActivityForCurrentUser,
+} from '@/lib/projects/server';
 import { OpenProjectChatButton } from './open-project-chat-button';
+import { ProjectCreationPanel } from './project-creation-panel';
+import { ProjectSessionPanel } from './project-session-panel';
+import { ProjectWorkspaceControls } from './project-workspace-controls';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -20,6 +30,14 @@ function formatTimestamp(value: string): string {
 
 function statusLabel(value: string): string {
   return value
+    .split('_')
+    .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
+    .join(' ');
+}
+
+function actionLabel(value: string): string {
+  return value
+    .replace(/^project_/, '')
     .split('_')
     .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
     .join(' ');
@@ -60,13 +78,25 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
     notFound();
   }
 
+  const [persistedGraph, activity, candidateSessions, candidateCreations] = await Promise.all([
+    getProjectGraphSummaryForCurrentUser(id),
+    listProjectActivityForCurrentUser(id, 8),
+    listProjectCandidateSessionsForCurrentUser(id, 6),
+    listProjectCandidateCreationsForCurrentUser(id, 6),
+  ]);
+
   const completion = buildProjectCompletionSummary(workspace);
+  const { graph } = buildProjectGraphView(
+    workspace,
+    persistedGraph,
+    persistedGraph ? 'stored' : 'derived',
+  );
   const progress = completion.progress;
   const stats = [
     { label: 'Chats', value: workspace.stats.sessionCount },
     { label: 'Creations', value: workspace.stats.creationCount },
     { label: 'Memories', value: workspace.stats.memoryCount },
-    { label: 'Completion', value: `${progress.completionPercent}%` },
+    { label: 'Graph Score', value: `${graph.score}` },
   ];
   const remainingSteps = progress.steps.filter((step) => !step.completed);
 
@@ -147,13 +177,32 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
                   <p className="text-[11px] uppercase tracking-[0.18em] text-white/35">Next action</p>
                   <p className="mt-2 text-sm leading-6 text-white/75">{progress.nextRecommendedAction}</p>
                 </div>
-                <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
-                  <p className="text-[11px] uppercase tracking-[0.18em] text-white/35">Graph health</p>
-                  <p className="mt-2 text-sm leading-6 text-white/75">
-                    {progress.completionPercent === 100
-                      ? 'Frame, sessions, creations, memory, and provenance are all connected.'
-                      : `Graph is ${progress.completionPercent}% complete and still missing ${remainingSteps.length} step(s).`}
-                  </p>
+              <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
+                <p className="text-[11px] uppercase tracking-[0.18em] text-white/35">Graph health</p>
+                <p className="mt-2 text-sm leading-6 text-white/75">
+                  {progress.completionPercent === 100
+                    ? 'Frame, sessions, creations, memory, and provenance are all connected.'
+                    : `Graph is ${progress.completionPercent}% complete and still missing ${remainingSteps.length} step(s).`}
+                </p>
+              </div>
+              </div>
+
+              <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
+                <p className="text-[11px] uppercase tracking-[0.18em] text-white/35">Semantic summary</p>
+                <p className="mt-2 text-sm leading-6 text-white/75">{graph.summary}</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {graph.tags.length > 0 ? (
+                    graph.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-[11px] uppercase tracking-[0.12em] text-white/55"
+                      >
+                        {tag}
+                      </span>
+                    ))
+                  ) : (
+                    <span className="text-xs text-white/40">No graph tags yet.</span>
+                  )}
                 </div>
               </div>
 
@@ -177,112 +226,148 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
             </CardContent>
           </Card>
 
-          <Card variant="liquid-glass-subtle" className="self-start">
-            <CardHeader>
-              <CardTitle>Next Actions</CardTitle>
-              <CardDescription>
-                The workspace graph is live. These are the remaining steps Arcanea can still learn from.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3 text-sm text-white/70">
-              {remainingSteps.length === 0 ? (
-                <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
-                  <p className="font-medium text-white">Workspace complete</p>
-                  <p className="mt-1 text-white/60">
-                    The project has the frame, continuity, artifacts, memory, and source provenance Arcanea expects.
-                  </p>
-                </div>
-              ) : (
-                remainingSteps.map((step) => (
-                  <div key={step.id} className="flex items-start gap-2 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
-                    <ArrowRight size={14} className="mt-1 text-atlantean-teal-aqua" />
-                    <div className="min-w-0">
-                      <p className="font-medium text-white">{step.title}</p>
-                      <p className="mt-1 text-white/55">{step.detail}</p>
-                    </div>
+          <div className="space-y-6">
+            <ProjectWorkspaceControls
+              projectId={workspace.project.id}
+              initialTitle={workspace.project.title}
+              initialDescription={workspace.project.description}
+              initialGoal={workspace.project.goal}
+            />
+
+            <Card variant="liquid-glass-subtle" className="self-start">
+              <CardHeader>
+                <CardTitle>Next Actions</CardTitle>
+                <CardDescription>
+                  The workspace graph is live. These are the remaining steps Arcanea can still learn from.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3 text-sm text-white/70">
+                {remainingSteps.length === 0 ? (
+                  <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
+                    <p className="font-medium text-white">Workspace complete</p>
+                    <p className="mt-1 text-white/60">
+                      The project has the frame, continuity, artifacts, memory, and source provenance Arcanea expects.
+                    </p>
                   </div>
-                ))
-              )}
-            </CardContent>
-          </Card>
+                ) : (
+                  remainingSteps.map((step) => (
+                    <div key={step.id} className="flex items-start gap-2 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
+                      <ArrowRight size={14} className="mt-1 text-atlantean-teal-aqua" />
+                      <div className="min-w-0">
+                        <p className="font-medium text-white">{step.title}</p>
+                        <p className="mt-1 text-white/55">{step.detail}</p>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </CardContent>
+            </Card>
+          </div>
         </section>
 
         <section className="mt-6 grid gap-6 xl:grid-cols-[1fr_1fr]">
-          <Card variant="liquid-glass" className="min-h-[320px]">
+          <ProjectSessionPanel
+            projectId={workspace.project.id}
+            linkedSessions={workspace.sessions}
+            candidateSessions={candidateSessions}
+          />
+
+          <ProjectCreationPanel
+            projectId={workspace.project.id}
+            linkedCreations={workspace.creations}
+            candidateCreations={candidateCreations}
+            linkedSessions={workspace.sessions}
+          />
+        </section>
+
+        <section className="mt-6 grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
+          <Card variant="liquid-glass">
             <CardHeader>
-              <CardTitle>Conversation Continuity</CardTitle>
+              <CardTitle>Graph Facts & Checks</CardTitle>
               <CardDescription>
-                Recent sessions already linked to this project. This is the hot path Arcanea uses to keep work coherent.
+                Stored or derived facts Arcanea is using to understand this workspace.
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-3">
-              {workspace.sessions.length === 0 ? (
-                <p className="text-sm text-white/50">
-                  No chats linked yet. Open the project in chat and start building.
+            <CardContent className="grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">
+              <div className="space-y-3">
+                <p className="text-[11px] uppercase tracking-[0.18em] text-white/35">
+                  Fact inventory / {graph.source}
                 </p>
-              ) : (
-                workspace.sessions.map((session) => (
+                {graph.facts.length === 0 ? (
+                  <p className="text-sm text-white/50">
+                    No durable facts recorded yet. Arcanea will infer them as the workspace gains activity.
+                  </p>
+                ) : (
+                  graph.facts.map((fact) => (
+                    <div
+                      key={fact}
+                      className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm leading-6 text-white/75"
+                    >
+                      {fact}
+                    </div>
+                  ))
+                )}
+              </div>
+
+              <div className="space-y-3">
+                <p className="text-[11px] uppercase tracking-[0.18em] text-white/35">Evaluation checks</p>
+                {graph.checks.map((check) => (
                   <div
-                    key={session.id}
+                    key={check.name}
                     className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3"
                   >
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <p className="text-sm font-medium text-white">
-                          {session.title || 'Untitled chat'}
-                        </p>
-                        <p className="mt-1 text-xs text-white/45">
-                          {session.luminorId || 'No luminor'} · {session.modelId || 'default model'}
-                        </p>
-                      </div>
-                      <span className="text-[11px] text-white/35">
-                        {new Date(session.updatedAt).toLocaleDateString()}
+                    <div className="flex items-center justify-between gap-4">
+                      <p className="text-sm font-medium text-white">
+                        {check.name.replace(/_/g, ' ')}
+                      </p>
+                      <span
+                        className={`rounded-full px-2.5 py-1 text-[11px] uppercase tracking-[0.12em] ${
+                          check.passed
+                            ? 'border border-emerald-400/20 bg-emerald-400/10 text-emerald-200'
+                            : 'border border-amber-400/20 bg-amber-400/10 text-amber-200'
+                        }`}
+                      >
+                        {check.passed ? 'Pass' : 'Open'}
                       </span>
                     </div>
+                    <p className="mt-2 text-sm leading-6 text-white/60">{check.detail}</p>
                   </div>
-                ))
-              )}
+                ))}
+              </div>
             </CardContent>
           </Card>
 
-          <Card variant="liquid-glass" className="min-h-[320px]">
+          <Card variant="liquid-glass-subtle" className="self-start">
             <CardHeader>
-              <CardTitle>Artifact Trail</CardTitle>
+              <CardTitle>Project Activity</CardTitle>
               <CardDescription>
-                Outputs already attached to this workspace graph.
+                Recent project-level events Arcanea recorded for this workspace.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
-              {workspace.creations.length === 0 ? (
+              {activity.length === 0 ? (
                 <p className="text-sm text-white/50">
-                  No creations linked yet. Save from chat or studio to begin building a durable project trail.
+                  No recent project activity yet. It will appear as Arcanea records project actions and graph updates.
                 </p>
               ) : (
-                workspace.creations.map((creation) => (
+                activity.map((item) => (
                   <div
-                    key={creation.id}
+                    key={item.id}
                     className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3"
                   >
-                    <div className="flex items-start gap-3">
-                      {creation.thumbnailUrl ? (
-                        <img
-                          src={creation.thumbnailUrl}
-                          alt={creation.title}
-                          className="h-12 w-12 rounded-xl object-cover"
-                        />
-                      ) : (
-                        <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-white/45">
-                          <Sparkle size={18} />
-                        </div>
-                      )}
-                      <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-medium text-white">{creation.title}</p>
-                        <p className="mt-1 text-xs text-white/45">
-                          {creation.type} · {creation.status}
-                          {creation.sourceSessionId ? ` · from ${creation.sourceSessionId.slice(0, 8)}` : ' · unlinked'}
-                        </p>
-                      </div>
+                    <div className="flex items-center justify-between gap-4">
+                      <p className="text-sm font-medium text-white">{actionLabel(item.action)}</p>
+                      <span className="text-[11px] text-white/35">
+                        {new Date(item.createdAt).toLocaleDateString()}
+                      </span>
                     </div>
+                    {item.metadata && Object.keys(item.metadata).length > 0 ? (
+                      <p className="mt-2 text-sm leading-6 text-white/55">
+                        {JSON.stringify(item.metadata)}
+                      </p>
+                    ) : (
+                      <p className="mt-2 text-sm leading-6 text-white/45">No extra metadata.</p>
+                    )}
                   </div>
                 ))
               )}
