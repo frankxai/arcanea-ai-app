@@ -4,6 +4,19 @@
 
 ---
 
+## Control Plane First
+
+Before doing substantial work, read:
+
+1. `AGENTS.md`
+2. newest `planning-with-files/CURRENT_STATE_*`
+3. newest `planning-with-files/CURRENT_BACKLOG_*`
+4. newest `planning-with-files/CURRENT_CHANGELOG_*`
+5. newest `planning-with-files/AGENT_EXECUTION_PROTOCOL_*`
+6. `.arcanea/CLAUDE.md`
+
+Treat `.arcanea/` as the shared intelligence substrate and `planning-with-files/` as the execution control plane.
+
 ## The Arcanea Vision
 
 Arcanea is a **creative multiverse** — a living ecosystem where creators chat with AI, build fantasy worlds, share what they make, contribute to an open-source civilization, and turn imagination into products.
