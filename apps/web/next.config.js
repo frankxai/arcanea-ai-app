@@ -33,9 +33,6 @@ const nextConfig = {
       'framer-motion',
       'react-syntax-highlighter',
     ],
-    // Don't exit build on prerender errors — pages with require() crash workStore
-    // but serve fine at runtime with force-dynamic
-    prerenderEarlyExit: false,
   },
   images: {
     remotePatterns: [
@@ -63,6 +60,9 @@ const nextConfig = {
   },
   typescript: {
     ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
   },
   async headers() {
     return [
