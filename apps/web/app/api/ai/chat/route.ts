@@ -20,7 +20,10 @@ import {
   buildProjectRetrievalTraceMetadata,
   selectRelevantProjectContext,
 } from '@/lib/projects/retrieval';
-import { recordProjectTrace } from '@/lib/projects/trace';
+import {
+  buildProjectProviderRoutingTraceMetadata,
+  recordProjectTrace,
+} from '@/lib/projects/trace';
 
 export const runtime = 'edge';
 
@@ -190,6 +193,9 @@ export async function POST(req: NextRequest) {
 
     // Gateway model path: arcanea-* model IDs
     let resolvedGateway = gatewayModel && gatewayModel !== 'arcanea-auto' ? GATEWAY_MODELS[gatewayModel] : null;
+    let resolvedProviderId: string | null = null;
+    let providerRouteMode: 'gateway' | 'legacy' | 'auto-detected' = 'legacy';
+    let providerApiKeySource: 'server-env' | 'client-byok' | 'unknown' = 'unknown';
 
     // Smart auto-routing: find the best available model when 'arcanea-auto' is selected
     if (!resolvedGateway && (!gatewayModel || gatewayModel === 'arcanea-auto')) {
@@ -216,16 +222,29 @@ export async function POST(req: NextRequest) {
       // Gateway mode: resolve the model from our curated catalog
       const gwProvider = resolvedGateway.provider;
       let gwApiKey: string | undefined;
+      let gwApiKeySource: 'server-env' | 'client-byok' | 'unknown' = 'unknown';
 
       // Try server-side env vars first
       if (PROVIDERS[gwProvider]) {
         gwApiKey = resolveApiKey(PROVIDERS[gwProvider], clientApiKey);
+        gwApiKeySource = PROVIDERS[gwProvider].envKeys.some((envKey) => Boolean(process.env[envKey]))
+          ? 'server-env'
+          : clientApiKey
+            ? 'client-byok'
+            : 'unknown';
       } else if (EXTENDED_PROVIDERS[gwProvider]) {
         const ext = EXTENDED_PROVIDERS[gwProvider];
         for (const envKey of ext.envKeys) {
-          if (process.env[envKey]) { gwApiKey = process.env[envKey]; break; }
+          if (process.env[envKey]) {
+            gwApiKey = process.env[envKey];
+            gwApiKeySource = 'server-env';
+            break;
+          }
         }
-        if (!gwApiKey) gwApiKey = clientApiKey || undefined;
+        if (!gwApiKey && clientApiKey) {
+          gwApiKey = clientApiKey;
+          gwApiKeySource = 'client-byok';
+        }
       }
 
       if (!gwApiKey) {
@@ -258,9 +277,13 @@ export async function POST(req: NextRequest) {
       }
 
       label = resolvedGateway.label;
+      resolvedProviderId = gwProvider;
+      providerRouteMode = 'gateway';
+      providerApiKeySource = gwApiKeySource;
     } else {
       // Legacy provider path
       let providerId: string;
+      let providerDetectedAutomatically = false;
       if (requestedProvider && PROVIDERS[requestedProvider]) {
         providerId = requestedProvider;
       } else {
@@ -269,6 +292,7 @@ export async function POST(req: NextRequest) {
           return cfg.envKeys.some((k) => Boolean(process.env[k]));
         });
         providerId = detected || 'openrouter';
+        providerDetectedAutomatically = true;
       }
       const providerConfig = PROVIDERS[providerId];
 
@@ -283,6 +307,13 @@ export async function POST(req: NextRequest) {
       const created = createModel(providerId, apiKey, modelOverride);
       model = created.model;
       label = created.label;
+      resolvedProviderId = providerId;
+      providerRouteMode = providerDetectedAutomatically ? 'auto-detected' : 'legacy';
+      providerApiKeySource = providerConfig.envKeys.some((envKey) => Boolean(process.env[envKey]))
+        ? 'server-env'
+        : clientApiKey
+          ? 'client-byok'
+          : 'unknown';
     }
 
     const normalizedMessages = messages.map((msg) => ({
@@ -518,7 +549,21 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
           graphSummary: (graphSummaryRes.data as { summary?: string | null; tags?: string[] | null; facts?: string[] | null } | null) ?? null,
         });
 
-        projectRetrievalMetadata = buildProjectRetrievalTraceMetadata(retrieval);
+        projectRetrievalMetadata = buildProjectRetrievalTraceMetadata(retrieval, {
+          sessions: ((sessionsRes.data as Array<{ id: string; title: string | null }> | null) ?? []).length,
+          creations: ((creationsRes.data as Array<{ id: string; title: string | null; type: string | null }> | null) ?? []).length,
+          docs: (
+            (
+              docsRes.data as Array<{
+                id: string;
+                title: string | null;
+                doc_type?: string | null;
+                project_doc_content?: Array<{ content_text?: string | null }>;
+              }> | null
+            ) ?? []
+          ).length,
+          memories: ((memoryRes.data as Array<{ id: string; category?: string | null; content: string }> | null) ?? []).length,
+        });
         resolvedSystemPrompt = `${buildProjectRetrievalBlock(retrieval)}\n${resolvedSystemPrompt}`;
       } catch (e) {
         console.warn('Failed to load project graph:', e);
@@ -533,6 +578,7 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
         metadata: {
           projectTitle: projectContext.title,
           ...projectRetrievalMetadata,
+          retrievalMode: projectRetrievalMetadata.hasStoredSummary ? 'graph+selection' : 'selection-only',
         },
       });
     }
@@ -599,13 +645,19 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
         userId: sbUserId,
         projectId: projectContext.id,
         action: 'project_provider_routed',
-        metadata: {
+        metadata: buildProjectProviderRoutingTraceMetadata({
           projectTitle: projectContext.title,
-          provider: requestedProvider ?? resolvedGateway?.provider ?? 'auto',
+          requestedProvider: requestedProvider ?? null,
+          resolvedProvider: resolvedProviderId ?? resolvedGateway?.provider ?? 'unknown',
+          routeMode: providerRouteMode,
+          apiKeySource: providerApiKeySource,
           gatewayModel: gatewayModel ?? null,
           modelLabel: label,
           enabledTools: enabledTools ?? [],
-        },
+          focusHint: focusHint ?? null,
+          activeGates,
+          activeLuminors: activeLuminorIds,
+        }),
       });
     }
 

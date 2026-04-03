@@ -1,6 +1,20 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { createActivity } from '@/lib/database/services/activity-service';
 
+export interface ProjectProviderRoutingTraceInput {
+  requestedProvider?: string | null;
+  resolvedProvider: string;
+  routeMode: 'gateway' | 'legacy' | 'auto-detected';
+  apiKeySource: 'server-env' | 'client-byok' | 'unknown';
+  gatewayModel?: string | null;
+  modelLabel: string;
+  enabledTools?: string[];
+  focusHint?: string | null;
+  projectTitle?: string | null;
+  activeGates?: string[];
+  activeLuminors?: string[];
+}
+
 export interface ProjectTraceInput {
   userId: string;
   projectId: string;
@@ -33,4 +47,26 @@ export async function recordProjectTrace(
   } catch (error) {
     console.warn('[projects/trace] failed to record trace', error);
   }
+}
+
+export function buildProjectProviderRoutingTraceMetadata(
+  input: ProjectProviderRoutingTraceInput,
+): Record<string, unknown> {
+  return {
+    projectTitle: input.projectTitle ?? null,
+    requestedProvider: input.requestedProvider ?? null,
+    resolvedProvider: input.resolvedProvider,
+    routeMode: input.routeMode,
+    apiKeySource: input.apiKeySource,
+    gatewayModel: input.gatewayModel ?? null,
+    modelLabel: input.modelLabel,
+    enabledTools: input.enabledTools ?? [],
+    enabledToolCount: input.enabledTools?.length ?? 0,
+    hasFocusHint: Boolean(input.focusHint),
+    focusHint: input.focusHint ?? null,
+    activeGates: input.activeGates ?? [],
+    activeGateCount: input.activeGates?.length ?? 0,
+    activeLuminors: input.activeLuminors ?? [],
+    activeLuminorCount: input.activeLuminors?.length ?? 0,
+  };
 }

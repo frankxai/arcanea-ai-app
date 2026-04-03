@@ -92,17 +92,34 @@ async function main() {
         facts: ['Goal: turn Atlas into a playable story world.'],
       },
       contextTerms: ['atlas', 'relic', 'map'],
+    }, {
+      sessions: 4,
+      creations: 5,
+      docs: 3,
+      memories: 8,
     });
 
     assert.deepEqual(metadata, {
       sessionCount: 1,
+      availableSessionCount: 4,
       creationCount: 1,
+      availableCreationCount: 5,
       docCount: 1,
+      availableDocCount: 3,
       memoryCount: 1,
+      availableMemoryCount: 8,
       contextTerms: ['atlas', 'relic', 'map'],
+      contextTermCount: 3,
       hasStoredSummary: true,
       factCount: 1,
       tagCount: 2,
+      selectedSessionIds: ['s1'],
+      selectedCreationIds: ['c1'],
+      selectedCreationTypes: ['image'],
+      selectedDocIds: ['d1'],
+      selectedDocTypes: ['spec'],
+      selectedMemoryIds: ['m1'],
+      selectedMemoryCategories: ['worldbuilding'],
     });
   });
 
