@@ -13,6 +13,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { guardRequest } from '@/lib/api-auth';
 import { getMemory, deleteMemory, updateMemory } from '@/lib/agentdb/store';
+import { getAgentDbBackendLabel } from '@/lib/agentdb/starlight-store';
 
 type RouteContext = { params: Promise<{ key: string }> };
 
@@ -48,7 +49,7 @@ export async function GET(
       {
         ok: true,
         data: record,
-        meta: { latency_ms: latencyMs },
+        meta: { backend: getAgentDbBackendLabel(), latency_ms: latencyMs },
       },
       { headers }
     );
@@ -93,7 +94,7 @@ export async function DELETE(
       {
         ok: true,
         data: { key: decodeURIComponent(key), namespace, deleted: true },
-        meta: { latency_ms: latencyMs },
+        meta: { backend: getAgentDbBackendLabel(), latency_ms: latencyMs },
       },
       { headers }
     );
@@ -204,7 +205,7 @@ export async function PATCH(
       {
         ok: true,
         data: record,
-        meta: { latency_ms: latencyMs },
+        meta: { backend: getAgentDbBackendLabel(), latency_ms: latencyMs },
       },
       { headers }
     );

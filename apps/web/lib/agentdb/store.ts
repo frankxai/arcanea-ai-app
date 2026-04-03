@@ -1,10 +1,13 @@
 /**
- * AgentDB Cloud — Memory Store
+ * AgentDB Cloud - Memory Store
  *
  * Persistent vector memory for AI agents.
- * Uses Supabase when available, falls back to in-memory Map.
+ * Uses local Starlight-backed persistence when available, and otherwise
+ * falls back to an in-memory Map. This keeps local Arcanea development
+ * aligned with the canonical SIS home at ~/.starlight without breaking
+ * hosted environments that do not have durable local storage.
  *
- * Storage schema (Supabase `agent_memories` table):
+ * Storage schema (future Supabase `agent_memories` table):
  *   id          uuid  PK DEFAULT gen_random_uuid()
  *   agent_id    text  NOT NULL
  *   key         text  NOT NULL
@@ -19,6 +22,13 @@
  *
  *   UNIQUE(agent_id, namespace, key)
  */
+
+import {
+  estimateStorageBytes,
+  loadAgentRecords,
+  saveAgentRecords,
+  shouldUseStarlightAgentDb,
+} from './starlight-store';
 
 export interface MemoryRecord {
   key: string;
@@ -47,10 +57,6 @@ export interface StoreStats {
   storage_bytes_estimate: number;
 }
 
-// ---------------------------------------------------------------------------
-// In-Memory Fallback Store
-// ---------------------------------------------------------------------------
-
 /** Composite key: agentId::namespace::key */
 function compositeKey(agentId: string, namespace: string, key: string): string {
   return `${agentId}::${namespace}::${key}`;
@@ -63,9 +69,43 @@ function isExpired(record: MemoryRecord): boolean {
   return new Date(record.expires_at).getTime() < Date.now();
 }
 
-// ---------------------------------------------------------------------------
-// CRUD Operations
-// ---------------------------------------------------------------------------
+function pruneExpired(records: MemoryRecord[]): MemoryRecord[] {
+  return records.filter((record) => !isExpired(record));
+}
+
+async function loadAllRecords(agentId: string): Promise<MemoryRecord[]> {
+  if (shouldUseStarlightAgentDb()) {
+    return pruneExpired(await loadAgentRecords(agentId));
+  }
+
+  const results: MemoryRecord[] = [];
+  for (const [ck, record] of memoryStore) {
+    if (record.agent_id !== agentId) continue;
+    if (isExpired(record)) {
+      memoryStore.delete(ck);
+      continue;
+    }
+    results.push(record);
+  }
+  return results;
+}
+
+async function saveAllRecords(agentId: string, records: MemoryRecord[]): Promise<void> {
+  if (shouldUseStarlightAgentDb()) {
+    await saveAgentRecords(agentId, pruneExpired(records));
+    return;
+  }
+
+  for (const [ck, record] of memoryStore) {
+    if (record.agent_id === agentId || isExpired(record)) {
+      memoryStore.delete(ck);
+    }
+  }
+
+  for (const record of pruneExpired(records)) {
+    memoryStore.set(compositeKey(record.agent_id, record.namespace, record.key), record);
+  }
+}
 
 export async function storeMemory(
   agentId: string,
@@ -73,8 +113,9 @@ export async function storeMemory(
   value: string,
   namespace = 'default',
   tags: string[] = [],
-  ttl: number | null = null
+  ttl: number | null = null,
 ): Promise<MemoryRecord> {
+  const records = await loadAllRecords(agentId);
   const now = new Date().toISOString();
   const expiresAt = ttl ? new Date(Date.now() + ttl * 1000).toISOString() : null;
 
@@ -90,53 +131,47 @@ export async function storeMemory(
     agent_id: agentId,
   };
 
-  // TODO: When Supabase `agent_memories` table exists, use:
-  //   const { data, error } = await supabase
-  //     .from('agent_memories')
-  //     .upsert({ agent_id: agentId, key, value, namespace, tags, ttl, expires_at: expiresAt })
-  //     .select()
-  //     .single();
-
-  const ck = compositeKey(agentId, namespace, key);
-  const existing = memoryStore.get(ck);
+  const existingIndex = records.findIndex(
+    (existingRecord) => existingRecord.namespace === namespace && existingRecord.key === key,
+  );
+  const existing = existingIndex >= 0 ? records[existingIndex] : null;
 
   if (existing) {
     record.created_at = existing.created_at;
+    records[existingIndex] = record;
+  } else {
+    records.push(record);
   }
 
-  memoryStore.set(ck, record);
+  await saveAllRecords(agentId, records);
   return record;
 }
 
 export async function getMemory(
   agentId: string,
   key: string,
-  namespace = 'default'
+  namespace = 'default',
 ): Promise<MemoryRecord | null> {
-  const ck = compositeKey(agentId, namespace, key);
-  const record = memoryStore.get(ck);
+  const records = await loadAllRecords(agentId);
+  const record = records.find(
+    (existingRecord) => existingRecord.namespace === namespace && existingRecord.key === key,
+  );
 
-  if (!record) return null;
-  if (record.agent_id !== agentId) return null;
-  if (isExpired(record)) {
-    memoryStore.delete(ck);
-    return null;
-  }
-
-  return record;
+  return record ?? null;
 }
 
 export async function deleteMemory(
   agentId: string,
   key: string,
-  namespace = 'default'
+  namespace = 'default',
 ): Promise<boolean> {
-  const ck = compositeKey(agentId, namespace, key);
-  const record = memoryStore.get(ck);
+  const records = await loadAllRecords(agentId);
+  const nextRecords = records.filter(
+    (record) => !(record.namespace === namespace && record.key === key),
+  );
 
-  if (!record || record.agent_id !== agentId) return false;
-
-  memoryStore.delete(ck);
+  if (nextRecords.length === records.length) return false;
+  await saveAllRecords(agentId, nextRecords);
   return true;
 }
 
@@ -144,18 +179,15 @@ export async function updateMemory(
   agentId: string,
   key: string,
   updates: { value?: string; tags?: string[]; ttl?: number | null; namespace?: string },
-  namespace = 'default'
+  namespace = 'default',
 ): Promise<MemoryRecord | null> {
-  const ck = compositeKey(agentId, namespace, key);
-  const record = memoryStore.get(ck);
+  const records = await loadAllRecords(agentId);
+  const recordIndex = records.findIndex(
+    (record) => record.namespace === namespace && record.key === key,
+  );
+  const record = recordIndex >= 0 ? records[recordIndex] : null;
 
-  if (!record || record.agent_id !== agentId) return null;
-  if (isExpired(record)) {
-    memoryStore.delete(ck);
-    return null;
-  }
-
-  const now = new Date().toISOString();
+  if (!record) return null;
 
   if (updates.value !== undefined) record.value = updates.value;
   if (updates.tags !== undefined) record.tags = updates.tags;
@@ -165,131 +197,74 @@ export async function updateMemory(
       ? new Date(Date.now() + updates.ttl * 1000).toISOString()
       : null;
   }
-  record.updated_at = now;
-
-  // If namespace changed, re-key
   if (updates.namespace && updates.namespace !== namespace) {
-    memoryStore.delete(ck);
     record.namespace = updates.namespace;
-    const newCk = compositeKey(agentId, updates.namespace, key);
-    memoryStore.set(newCk, record);
-  } else {
-    memoryStore.set(ck, record);
   }
+  record.updated_at = new Date().toISOString();
 
+  records[recordIndex] = record;
+  await saveAllRecords(agentId, records);
   return record;
 }
 
 export async function listMemories(
   agentId: string,
   namespace?: string,
-  limit = 20
+  limit = 20,
 ): Promise<MemoryRecord[]> {
-  const results: MemoryRecord[] = [];
+  const records = await loadAllRecords(agentId);
 
-  for (const [ck, record] of memoryStore) {
-    if (record.agent_id !== agentId) continue;
-    if (namespace && record.namespace !== namespace) continue;
-    if (isExpired(record)) {
-      memoryStore.delete(ck);
-      continue;
-    }
-    results.push(record);
-    if (results.length >= limit) break;
-  }
-
-  return results.sort(
-    (a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
-  );
+  return records
+    .filter((record) => (namespace ? record.namespace === namespace : true))
+    .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())
+    .slice(0, limit);
 }
-
-// ---------------------------------------------------------------------------
-// Search
-// ---------------------------------------------------------------------------
 
 /**
  * Semantic search across agent memories.
  *
- * Current implementation: simple text matching (includes/startsWith).
+ * Current implementation: simple token overlap text matching.
  *
  * TODO [HNSW]: Replace with vector similarity search when embeddings are available.
- * The upgrade path:
- *   1. Generate embeddings on store (OpenAI text-embedding-3-small or local model)
- *   2. Store in Supabase pgvector column with HNSW index:
- *      CREATE INDEX ON agent_memories USING hnsw (embedding vector_cosine_ops);
- *   3. Query: SELECT *, 1 - (embedding <=> query_embedding) AS score
- *      FROM agent_memories
- *      WHERE agent_id = $1
- *      ORDER BY embedding <=> query_embedding
- *      LIMIT $2;
  */
 export async function searchMemories(
   agentId: string,
   query: string,
   namespace?: string,
   limit = 10,
-  threshold = 0.0
+  threshold = 0.0,
 ): Promise<SearchResult[]> {
-  const queryLower = query.toLowerCase();
-  const queryTokens = queryLower.split(/\s+/).filter(Boolean);
+  const queryTokens = query.toLowerCase().split(/\s+/).filter(Boolean);
   const results: SearchResult[] = [];
 
-  for (const [ck, record] of memoryStore) {
-    if (record.agent_id !== agentId) continue;
-    if (namespace && record.namespace !== namespace) continue;
-    if (isExpired(record)) {
-      memoryStore.delete(ck);
-      continue;
-    }
+  if (queryTokens.length === 0) return results;
 
-    // Simple text similarity: count token matches in key + value + tags
-    const haystack = [record.key, record.value, ...record.tags]
-      .join(' ')
-      .toLowerCase();
+  for (const record of await loadAllRecords(agentId)) {
+    if (namespace && record.namespace !== namespace) continue;
+
+    const haystack = [record.key, record.value, ...record.tags].join(' ').toLowerCase();
 
     let matchCount = 0;
     for (const token of queryTokens) {
-      if (haystack.includes(token)) matchCount++;
+      if (haystack.includes(token)) matchCount += 1;
     }
 
-    if (queryTokens.length === 0) continue;
-
     const score = matchCount / queryTokens.length;
-
     if (score > threshold) {
       results.push({ record, score });
     }
   }
 
-  return results
-    .sort((a, b) => b.score - a.score)
-    .slice(0, limit);
+  return results.sort((a, b) => b.score - a.score).slice(0, limit);
 }
 
-// ---------------------------------------------------------------------------
-// Stats
-// ---------------------------------------------------------------------------
-
 export async function getStats(agentId: string): Promise<StoreStats> {
-  const namespaces = new Set<string>();
-  let total = 0;
-  let bytes = 0;
-
-  for (const [ck, record] of memoryStore) {
-    if (record.agent_id !== agentId) continue;
-    if (isExpired(record)) {
-      memoryStore.delete(ck);
-      continue;
-    }
-    total++;
-    namespaces.add(record.namespace);
-    // Rough byte estimate: key + value + tags + metadata overhead
-    bytes += record.key.length + record.value.length + record.tags.join('').length + 200;
-  }
+  const records = await loadAllRecords(agentId);
+  const namespaces = new Set(records.map((record) => record.namespace));
 
   return {
-    total_memories: total,
+    total_memories: records.length,
     namespaces: Array.from(namespaces),
-    storage_bytes_estimate: bytes,
+    storage_bytes_estimate: estimateStorageBytes(records),
   };
 }
