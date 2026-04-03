@@ -15,6 +15,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { guardRequest } from '@/lib/api-auth';
 import { searchMemories } from '@/lib/agentdb/store';
+import { getAgentDbBackendLabel } from '@/lib/agentdb/starlight-store';
 
 export async function POST(request: NextRequest) {
   const start = performance.now();
@@ -79,6 +80,7 @@ export async function POST(request: NextRequest) {
           query,
           namespace: namespace || 'all',
           count: results.length,
+          backend: getAgentDbBackendLabel(),
           // TODO [HNSW]: Add vector search metadata (index type, ef_search, etc.)
           search_backend: 'text_match',
           usage: { stored: results.length, limit: 10_000 },

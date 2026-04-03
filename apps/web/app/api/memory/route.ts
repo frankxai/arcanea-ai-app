@@ -10,6 +10,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { guardRequest } from '@/lib/api-auth';
 import { storeMemory, listMemories } from '@/lib/agentdb/store';
+import { getAgentDbBackendLabel } from '@/lib/agentdb/starlight-store';
 
 function jsonOk(data: unknown, meta: Record<string, unknown>, headers: Record<string, string>) {
   return NextResponse.json(
@@ -89,6 +90,7 @@ export async function POST(request: NextRequest) {
 
     return jsonOk(record, {
       usage: { stored: 1, limit: 10_000 },
+      backend: getAgentDbBackendLabel(),
       latency_ms: latencyMs,
     }, headers);
   } catch (err) {
@@ -118,6 +120,7 @@ export async function GET(request: NextRequest) {
     return jsonOk(records, {
       count: records.length,
       namespace: namespace || 'all',
+      backend: getAgentDbBackendLabel(),
       usage: { stored: records.length, limit: 10_000 },
       latency_ms: latencyMs,
     }, headers);

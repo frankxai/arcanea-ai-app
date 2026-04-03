@@ -11,6 +11,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { guardRequest } from '@/lib/api-auth';
 import { getStats } from '@/lib/agentdb/store';
+import { getAgentDbBackendLabel } from '@/lib/agentdb/starlight-store';
 
 export async function GET(request: NextRequest) {
   const start = performance.now();
@@ -28,6 +29,7 @@ export async function GET(request: NextRequest) {
         ok: true,
         data: {
           agent_id: auth.agentId,
+          backend: getAgentDbBackendLabel(),
           total_memories: stats.total_memories,
           namespaces: stats.namespaces,
           namespace_count: stats.namespaces.length,

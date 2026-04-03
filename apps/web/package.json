@@ -11,6 +11,7 @@
     "test:e2e": "playwright test",
     "test:e2e:list": "playwright test --list",
     "test:e2e:headed": "playwright test --headed",
+    "test:agentdb": "tsx lib/agentdb/__tests__/store.test.ts",
     "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix",
     "test:projects": "tsx lib/projects/__tests__/retrieval.test.ts && tsx lib/projects/__tests__/enrichment.test.ts && tsx lib/projects/__tests__/progress.test.ts && tsx lib/projects/__tests__/trace.test.ts && tsx lib/projects/__tests__/api-contracts.test.ts && tsx lib/projects/__tests__/api-actions.test.ts && tsx lib/chat/__tests__/local-store-projects.test.ts && tsx lib/analytics/__tests__/events-projects.test.ts && tsx lib/docs/__tests__/api-contracts.test.ts",
