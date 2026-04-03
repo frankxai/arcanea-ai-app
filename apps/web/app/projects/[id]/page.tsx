@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
-import { ArrowRight, ClockCounterClockwise, FolderOpen } from '@/lib/phosphor-icons';
+import { ArrowRight, ClockCounterClockwise, FileText, FolderOpen } from '@/lib/phosphor-icons';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -132,10 +132,16 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
-            <OpenProjectChatButton projectId={workspace.project.id} />
-            <Button asChild variant="ghost">
-              <Link href="/chat">View Chat Shell</Link>
+            <Button asChild>
+              <Link href={`/projects/${workspace.project.id}/docs/new`}>
+                <FileText size={16} />
+                Start doc
+              </Link>
             </Button>
+            <Button asChild variant="ghost">
+              <Link href={`/projects/${workspace.project.id}/docs`}>View docs</Link>
+            </Button>
+            <OpenProjectChatButton projectId={workspace.project.id} />
           </div>
         </div>
 
@@ -419,6 +425,10 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3 text-sm text-white/70">
+              <div className="flex items-start gap-2">
+                <ArrowRight size={14} className="mt-1 text-atlantean-teal-aqua" />
+                <span>Start with a project doc so the brief, outline, or spec becomes durable context.</span>
+              </div>
               <div className="flex items-start gap-2">
                 <ArrowRight size={14} className="mt-1 text-atlantean-teal-aqua" />
                 <span>Open this project in chat to continue the active context.</span>
