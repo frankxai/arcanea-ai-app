@@ -55,6 +55,20 @@ const PATHS = [
     gradient: 'from-emerald-500/20 via-teal-500/10 to-transparent',
     traits: ['9 Crystals', '5 Metals', '3 Shards', 'Science-Grounded'],
   },
+  {
+    id: 'collection',
+    href: '/forge/collection',
+    icon: Diamond,
+    accentIcon: Sparkle,
+    label: 'The Creators',
+    sublabel: 'NFT Collection',
+    description:
+      'Preview the flagship Arcanea NFT collection. 1,111 unique characters across 12 origin classes, powered by Sacred Gear and the Starlight Mark. Each evolves with you.',
+    color: '#ffd700',
+    glowColor: 'rgba(255, 215, 0, 0.15)',
+    gradient: 'from-amber-500/20 via-yellow-500/10 to-transparent',
+    traits: ['1,111 Supply', '12 Origins', 'Dynamic Evolution', 'Sacred Gear'],
+  },
 ] as const;
 
 export default function ForgeLanding() {
@@ -78,19 +92,20 @@ export default function ForgeLanding() {
               The Forge
             </p>
             <h1 className="font-display text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
-              Three Acts of Creation
+              Four Acts of Creation
             </h1>
             <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-white/45">
-              Every creator on Arcanea has three bonds. A <span className="text-[#00bcd4]">Luminor</span> that
+              Every creator on Arcanea has four bonds. A <span className="text-[#00bcd4]">Luminor</span> that
               thinks with you. A <span className="text-[#a78bfa]">Companion</span> that travels beside you.
-              And the <span className="text-[#7fffd4]">Materials</span> that shape your world.
+              The <span className="text-[#7fffd4]">Materials</span> that shape your world.
+              And a <span className="text-[#ffd700]">Creator</span> identity that evolves with your journey.
             </p>
           </m.div>
         </section>
 
         {/* Two Paths */}
         <section className="mx-auto max-w-5xl px-6 pb-24">
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {PATHS.map((path, i) => {
               const Icon = path.icon;
               const AccentIcon = path.accentIcon;
