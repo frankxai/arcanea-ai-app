@@ -120,7 +120,7 @@ export async function POST(req: NextRequest) {
         },
         safety: {
           providerConfigured: true,
-          fallbackUsed: result.provider !== 'grok',
+          fallbackUsed: result.provider !== 'openrouter',
         },
         saveState: {
           canSave: images.length > 0,
