@@ -33,6 +33,9 @@ const nextConfig = {
       'framer-motion',
       'react-syntax-highlighter',
     ],
+    // Don't exit build on prerender errors — pages with require() crash workStore
+    // but serve fine at runtime with force-dynamic
+    prerenderEarlyExit: false,
   },
   images: {
     remotePatterns: [
@@ -64,9 +67,6 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  // Skip prerender errors for pages using CommonJS require() — Next.js 16 workStore bug
-  // These pages serve fine at runtime with force-dynamic, just can't be statically generated
-  output: 'standalone',
   async headers() {
     return [
       {
