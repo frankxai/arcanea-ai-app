@@ -91,21 +91,69 @@ export async function generateCharacter(options: {
     Spirit: ["transcendent", "wise", "connecting", "luminous"],
   };
 
+  // Canonical constraints the LLM must respect
+  const godbeast = gatesOpen <= 9 ? godbeasts[gatesOpen - 1] : null;
+  const secondaryElement = pick(elements.filter(e => e !== primaryElement));
+  const traits = pickMultiple(elementTraits[primaryElement] || elementTraits.Fire, 3);
+  const flaw = pick([
+    "fears losing control of their power",
+    "cannot forgive a betrayal from their past",
+    "pushes others away to protect them",
+    "carries guilt for a choice they can never undo",
+    "doesn't believe they deserve their rank",
+    "obsessed with a Gate they cannot open",
+    "trusts too easily — has been burned",
+    "refuses to use their full power after an accident",
+  ]);
+  const desire = pick([
+    "to open the next Gate and prove themselves worthy",
+    "to find the person who disappeared from their life",
+    "to reform the institution that failed them",
+    "to create something that outlasts them",
+    "to understand why their element chose them",
+    "to protect someone who doesn't want protecting",
+    "to be seen for who they are, not their rank",
+  ]);
+
   return {
     content: [{
       type: "text",
       text: JSON.stringify({
+        _type: "character_blueprint",
+        _note: "This is a canonical scaffolding. Use these constraints as foundation — then add depth, contradictions, secrets, and a voice that makes this person unforgettable.",
         name,
         primaryElement,
+        secondaryElement,
         house,
         gatesOpen,
         rank: getRankFromGates(gatesOpen),
-        patronGuardian: patronGuardian.name,
+        patronGuardian: {
+          name: patronGuardian.name,
+          gate: patronGuardian.gate,
+          domain: patronGuardian.domain,
+          element: patronGuardian.element,
+          relationship: pick(["devoted student", "reluctant ward", "rebellious apprentice", "chosen champion", "abandoned protege"]),
+        },
+        godbeast: godbeast ? { name: godbeast.name, form: godbeast.form, bond: pick(["bonded at birth", "earned through trial", "accidental encounter", "inherited from mentor", "not yet bonded — yearning"]) } : null,
         abilities,
-        traits: pickMultiple(elementTraits[primaryElement] || elementTraits.Fire, 3),
-        backstory: `Born under the influence of ${primaryElement}. Trained at the ${house} Academy. Opened ${gatesOpen} Gates, reaching ${getRankFromGates(gatesOpen)} rank. Sought guidance from ${patronGuardian.name}, Guardian of the ${patronGuardian.domain} Gate.`,
-        magicStyle: `Channels ${primaryElement} through ${patronGuardian.domain} attunement`,
-        potentialArc: gatesOpen < 10 ? `Next: Opening the ${guardians[gatesOpen].domain} Gate` : "Luminor status achieved",
+        personality: {
+          traits,
+          flaw,
+          desire,
+          fear: pick(["losing their element", "becoming like Malachar", "failing the people who believe in them", "never being enough", "the Void consuming what they love"]),
+          secret: pick(["has touched the Void and survived", "can hear a Gate that shouldn't exist", "is related to a villain", "has already opened a Gate no one knows about", "was rejected by another house first"]),
+        },
+        backstory: {
+          origin: `Born under ${primaryElement} influence in the ${house} tradition`,
+          definingMoment: `The moment that changed everything — when ${name} first ${pick(["felt their element awaken during a crisis", "was chosen by " + patronGuardian.name + " against all expectations", "witnessed something at the Gates that nobody else saw", "lost someone and their grief became power", "broke a rule that turned out to be a prison"])}`,
+          currentState: `${getRankFromGates(gatesOpen)} at the ${house} Academy, ${gatesOpen} Gates open`,
+          tension: `${name} wants ${desire.replace("to ", "")} but ${flaw}`,
+        },
+        magicStyle: `Channels ${primaryElement} through ${patronGuardian.domain} attunement, with ${secondaryElement} undertones`,
+        narrativeHooks: [
+          gatesOpen < 10 ? `Next Gate: ${guardians[gatesOpen].domain} — but the cost may be ${pick(["a memory they treasure", "their relationship with " + patronGuardian.name, "their connection to " + primaryElement, "something they can't get back"])}` : "Luminor — but at what price?",
+          `Conflict seed: ${name}'s ${flaw} will clash with ${pick(["the Academy's expectations", "a new ally who sees through them", "a crisis that demands exactly what they're afraid of"])}`,
+        ],
       }, null, 2),
     }],
   };
@@ -141,19 +189,57 @@ export async function generateMagicAbility(options: {
   const purposeKey = purpose?.toLowerCase() || pick(Object.keys(suffixes));
   const suffix = pick(suffixes[purposeKey as keyof typeof suffixes] || suffixes.utility);
 
+  const abilityName = `${prefix} ${suffix}`;
+  const manaCost = gateLevel * 10 + Math.floor(Math.random() * 20);
+
   return {
     content: [{
       type: "text",
       text: JSON.stringify({
-        name: `${prefix} ${suffix}`,
+        _type: "magic_blueprint",
+        _note: "Canonical magic scaffolding. Add visual spectacle, emotional resonance, and narrative cost. Great magic has consequences.",
+        name: abilityName,
         element,
         gateRequired: gateLevel,
         gateName: gate.domain,
         guardian: gate.name,
-        description: `A ${element}-aligned ability channeled through the ${gate.domain} Gate.`,
-        cost: { mana: gateLevel * 10 + Math.floor(Math.random() * 20), anima: gateLevel > 5 ? Math.floor(gateLevel / 2) : undefined },
-        casting: { gesture: `Invoke the sigil of ${gate.name}`, incantation: `"By ${gate.name}'s ${gate.domain}, let ${element} flow!"` },
-        mastery: `Requires ${getRankFromGates(gateLevel)} rank`,
+        godbeast: godbeast?.name,
+        description: `${element}-aligned ability channeled through the ${gate.domain} Gate`,
+        mechanics: {
+          cost: { mana: manaCost, anima: gateLevel > 5 ? Math.floor(gateLevel / 2) : undefined },
+          casting: {
+            gesture: `Invoke the sigil of ${gate.name}`,
+            incantation: `"By ${gate.name}'s ${gate.domain}, let ${element} flow!"`,
+            castTime: gateLevel <= 3 ? "instant" : gateLevel <= 6 ? "3 seconds" : "requires preparation",
+          },
+          mastery: getRankFromGates(gateLevel),
+        },
+        flavor: {
+          visual: pick([
+            `${element} erupts from the caster's hands in spiraling patterns`,
+            `The air shimmers with ${element.toLowerCase()} energy as reality bends`,
+            `${gate.name}'s sigil blazes in the air, visible only to those who've opened this Gate`,
+            `The caster's eyes glow with ${element.toLowerCase()} light as the spell takes form`,
+          ]),
+          sensation: pick([
+            "feels like holding lightning in your veins",
+            "the world goes quiet, then everything happens at once",
+            "tastes like copper and starlight",
+            "your bones hum at a frequency that makes your teeth ache",
+            "time stretches — you can see each particle of energy move",
+          ]),
+          sideEffect: pick([
+            "leaves the caster trembling for a full minute",
+            "nearby plants grow or wilt depending on the caster's intent",
+            "the caster temporarily cannot hear their own element",
+            "scars glow faintly where the energy channeled through the body",
+            "dreams that night will replay the casting in surreal detail",
+          ]),
+        },
+        narrativeHooks: [
+          pick(["What happens when this ability is used in desperation?", "Who taught the caster this — and what did learning it cost?", "There's a version of this spell that was banned. Why?"]),
+          purpose ? `Designed for ${purpose} — but every tool can be misused` : "The line between creation and destruction is intention",
+        ],
       }, null, 2),
     }],
   };
