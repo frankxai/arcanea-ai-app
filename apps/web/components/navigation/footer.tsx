@@ -8,10 +8,20 @@ const footerLinks = {
     label: "Create",
     links: [
       { href: "/chat", label: "Chat" },
-      { href: "/studio", label: "Studio" },
       { href: "/imagine", label: "Imagine" },
-      { href: "/forge", label: "The Forge" },
+      { href: "/studio", label: "Studio" },
+      { href: "/agents", label: "Agents" },
       { href: "/gallery", label: "Gallery" },
+    ],
+  },
+  explore: {
+    label: "Explore",
+    links: [
+      { href: "/library", label: "Library" },
+      { href: "/lore", label: "Lore" },
+      { href: "/lore/guardians", label: "Guardians" },
+      { href: "/factions", label: "Factions" },
+      { href: "/discover", label: "Discover" },
     ],
   },
   learn: {
@@ -19,39 +29,18 @@ const footerLinks = {
     links: [
       { href: "/academy", label: "Academy" },
       { href: "/academy/courses", label: "Courses" },
-      { href: "/library", label: "Library" },
-      { href: "/lore", label: "Lore" },
-      { href: "/lore/guardians", label: "Guardians" },
-    ],
-  },
-  community: {
-    label: "Community",
-    links: [
-      { href: "/discover", label: "Discover" },
-      { href: "/music", label: "Music" },
+      { href: "/developers", label: "Developers" },
       { href: "https://github.com/frankxai", label: "GitHub", external: true },
       { href: "https://discord.gg/arcanea", label: "Discord", external: true },
-    ],
-  },
-  build: {
-    label: "Build",
-    links: [
-      { href: "/ecosystem", label: "Ecosystem" },
-      { href: "/research", label: "Research" },
-      { href: "/developers", label: "Developers" },
-      { href: "/acos", label: "ACOS" },
-      { href: "/arcanea-code", label: "Arcanea Code" },
     ],
   },
   company: {
     label: "Company",
     links: [
       { href: "/about", label: "About" },
-      { href: "/vision", label: "Vision" },
       { href: "/blog", label: "Blog" },
       { href: "/pricing", label: "Pricing" },
       { href: "/roadmap", label: "Roadmap" },
-      { href: "/changelog", label: "Changelog" },
       { href: "/contact", label: "Contact" },
     ],
   },
@@ -126,7 +115,7 @@ export function Footer() {
         </div>
 
         {/* Link columns */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-10 mb-14">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-10 mb-14">
           {Object.values(footerLinks).map((section) => (
             <div key={section.label}>
               <h3 className="text-xs uppercase tracking-[0.22em] font-semibold text-white/36 mb-5">

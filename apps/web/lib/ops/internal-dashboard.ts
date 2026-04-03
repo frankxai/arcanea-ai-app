@@ -1,3 +1,4 @@
+import { existsSync } from "fs";
 import { readdir, readFile, stat } from "fs/promises";
 import path from "path";
 import { spawnSync } from "child_process";
@@ -37,6 +38,33 @@ type CommandProbe = {
   command: string;
   summary: string;
   raw: string;
+};
+
+type FlowRunTrace = {
+  schemaVersion: 1;
+  kind: "arcanea-flow.ao-run";
+  runId: string;
+  timestamp: string;
+  finishedAt: string;
+  durationMs: number;
+  mode: "dry-run" | "delegated";
+  repo: {
+    id: string;
+    path: string;
+  };
+  ao: {
+    entry: string;
+    args: string[];
+    commandPreview: string;
+  };
+  execution: {
+    ok: boolean;
+    exitCode: number;
+  };
+  output?: {
+    stdout: string;
+    stderr: string;
+  };
 };
 
 type RepoRegistryEntry = {
@@ -102,6 +130,7 @@ export type InternalOpsDashboardData = {
     status: CommandProbe;
   };
   flowBridge: CommandProbe;
+  flowRuns: FlowRunTrace[];
   handoffs: Array<{
     name: string;
     path: string;
@@ -224,6 +253,27 @@ async function loadRepoRegistry(root: string) {
   };
 }
 
+async function loadFlowRuns(root: string) {
+  const tracePath = path.join(root, ".arcanea", "runtime", "flow-runs.jsonl");
+  if (!existsSync(tracePath)) return [] as FlowRunTrace[];
+
+  const raw = await readFile(tracePath, "utf8");
+  return raw
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) => {
+      try {
+        return JSON.parse(line) as FlowRunTrace;
+      } catch {
+        return null;
+      }
+    })
+    .filter((entry): entry is FlowRunTrace => Boolean(entry))
+    .sort((a, b) => b.timestamp.localeCompare(a.timestamp))
+    .slice(0, 12);
+}
+
 function collectRepoHealth(root: string, repo: RepoRegistryEntry): RepoHealthEntry {
   const repoPath = path.resolve(root, repo.path);
   const branchProbe = runCommand("git", ["rev-parse", "--abbrev-ref", "HEAD"], repoPath);
@@ -296,10 +346,11 @@ export async function getInternalOpsDashboardData(): Promise<InternalOpsDashboar
       "-NoLogo",
       "-NoProfile",
       "-Command",
-      `. '${path.join(process.env.USERPROFILE || "", "Documents", "WindowsPowerShell", "Microsoft.PowerShell_profile.ps1")}'; arcanea-flow ao --dry-run status`,
+      `. '${path.join(process.env.USERPROFILE || "", "Documents", "WindowsPowerShell", "Microsoft.PowerShell_profile.ps1")}'; arcanea-flow ao --json --dry-run status`,
     ],
     root,
   );
+  const flowRuns = await loadFlowRuns(root);
   const handoffs = await listHandoffDocs(root);
 
   const ok = repos.filter((repo) => repo.status === "ok").length;
@@ -337,6 +388,7 @@ export async function getInternalOpsDashboardData(): Promise<InternalOpsDashboar
       status: orchestratorStatus,
     },
     flowBridge,
+    flowRuns,
     handoffs,
   };
 }

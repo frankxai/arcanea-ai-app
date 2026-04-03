@@ -363,44 +363,43 @@ export async function generateImages(
   if (forceProvider === 'openrouter') return generateWithOpenRouter(prompt, count, aspectRatio, openrouterModel);
   if (forceProvider === 'gemini') return generateWithGemini(prompt, count);
 
-  // --- Fallback chain ---
+  // --- Fallback chain: OpenRouter → Grok → Gemini (any error = try next) ---
+  const errors: string[] = [];
 
-  // 1. Try Grok first (primary provider)
-  try {
-    return await generateWithGrok(prompt, count, aspectRatio);
-  } catch (grokErr) {
-    const grokMsg = grokErr instanceof Error ? grokErr.message : '';
-    // Only fall back if Grok key is missing — real API errors should surface
-    if (grokMsg !== 'NO_XAI_KEY') {
-      throw grokErr;
+  if (process.env.OPENROUTER_API_KEY) {
+    try {
+      return await generateWithOpenRouter(prompt, count, aspectRatio, openrouterModel);
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : 'unknown';
+      console.warn('[imagine] OpenRouter failed:', msg);
+      errors.push(`OpenRouter: ${msg}`);
     }
   }
 
-  // 2. Try OpenRouter (access to Gemini 3 Pro, Flux, GPT-5 Image, etc.)
-  try {
-    return await generateWithOpenRouter(prompt, count, aspectRatio, openrouterModel);
-  } catch (orErr) {
-    const orMsg = orErr instanceof Error ? orErr.message : '';
-    if (orMsg !== 'NO_OPENROUTER_KEY') {
-      // Log but continue to Gemini fallback for recoverable errors
-      console.warn('[imagine] OpenRouter failed, falling back to Gemini:', orMsg);
+  if (process.env.XAI_API_KEY) {
+    try {
+      return await generateWithGrok(prompt, count, aspectRatio);
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : 'unknown';
+      console.warn('[imagine] Grok failed:', msg);
+      errors.push(`Grok: ${msg}`);
     }
   }
 
-  // 3. Gemini direct fallback
-  try {
-    const result = await generateWithGemini(prompt, count);
-    if (result.images.length === 0) {
-      throw new Error('All image generations failed. Try a different prompt.');
+  if (process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY) {
+    try {
+      const result = await generateWithGemini(prompt, count);
+      if (result.images.length > 0) return result;
+      errors.push('Gemini: no images returned');
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : 'unknown';
+      console.warn('[imagine] Gemini failed:', msg);
+      errors.push(`Gemini: ${msg}`);
     }
-    return result;
-  } catch (geminiErr) {
-    const geminiMsg = geminiErr instanceof Error ? geminiErr.message : '';
-    if (geminiMsg === 'NO_GEMINI_KEY') {
-      throw new Error(
-        'No image generation API configured. Set XAI_API_KEY, OPENROUTER_API_KEY, or GEMINI_API_KEY.',
-      );
-    }
-    throw geminiErr;
   }
+
+  if (errors.length === 0) {
+    throw new Error('No image generation API configured. Set OPENROUTER_API_KEY, XAI_API_KEY, or GEMINI_API_KEY.');
+  }
+  throw new Error(`All image providers failed. ${errors.join(' | ')}`);
 }

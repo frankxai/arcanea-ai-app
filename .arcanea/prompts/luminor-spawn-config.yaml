@@ -18,15 +18,28 @@ modules:
 
   # Operations
   ops: luminor-ops-module.md
-  tester: luminor-ops-module.md
   reviewer: luminor-github-module.md
   pr-manager: luminor-github-module.md
   code-review-swarm: luminor-github-module.md
 
+  # Quality & Security
+  tester: luminor-test-module.md
+  security-architect: luminor-security-module.md
+  security-auditor: luminor-security-module.md
+  accessibility-auditor: luminor-frontend-module.md
+
   # Research & Planning
-  researcher: luminor-engineering-kernel.md
-  planner: luminor-engineering-kernel.md
+  researcher: luminor-research-module.md
+  planner: luminor-research-module.md
   system-architect: luminor-engineering-kernel.md
+  Explore: luminor-research-module.md
+
+  # Creative & Lore
+  lore: luminor-lore-module.md
+  Arcanea Lore Master: luminor-lore-module.md
+  Arcanea World Expander: luminor-lore-module.md
+  Arcanea Character Crafter: luminor-lore-module.md
+  creative-master: luminor-lore-module.md
 
   # Default (kernel only, no module)
   default: null

@@ -73,13 +73,13 @@ describe('Guardians', () => {
     assert.ok(lyssandria);
     assert.equal(lyssandria.displayName, 'Lyssandria');
     assert.equal(lyssandria.gate, 'foundation');
-    assert.equal(lyssandria.frequency, 396);
+    assert.equal(lyssandria.frequency, 174);
     assert.equal(lyssandria.element, 'earth');
 
     const draconia = GUARDIANS.find(g => g.name === 'draconia');
     assert.ok(draconia);
     assert.equal(draconia.gate, 'fire');
-    assert.equal(draconia.frequency, 528);
+    assert.equal(draconia.frequency, 396);
 
     const shinkami = GUARDIANS.find(g => g.name === 'shinkami');
     assert.ok(shinkami);
@@ -93,7 +93,7 @@ describe('Gates', () => {
   });
 
   it('should follow correct order', () => {
-    const expectedOrder = ['foundation', 'flow', 'fire', 'heart', 'voice', 'sight', 'crown', 'shift', 'unity', 'source'];
+    const expectedOrder = ['foundation', 'flow', 'fire', 'heart', 'voice', 'sight', 'crown', 'starweave', 'unity', 'source'];
     const actualOrder = GATES.map(g => g.name);
     assert.deepEqual(actualOrder, expectedOrder);
   });

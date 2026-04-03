@@ -23,7 +23,7 @@ const TIER_LABELS: Record<string, { label: string; icon: typeof PhBrain; color: 
 };
 
 export const IMAGE_MODELS: ImageModel[] = [
-  { id: 'auto', name: 'Auto', shortName: 'Auto', provider: 'arcanea', tier: 'quality', description: 'Best available — Grok, then OpenRouter, then Gemini' },
+  { id: 'auto', name: 'Auto', shortName: 'Auto', provider: 'arcanea', tier: 'quality', description: 'Best available — OpenRouter, then Grok, then Gemini' },
   // Premium
   { id: 'google/gemini-3-pro-image-preview', name: 'Nano Banana Pro', shortName: 'Gemini 3 Pro', provider: 'Google', tier: 'premium', description: 'Most advanced image gen — Gemini 3 Pro' },
   { id: 'black-forest-labs/flux.2-max', name: 'FLUX.2 Max', shortName: 'Flux Max', provider: 'BFL', tier: 'premium', description: 'Maximum quality from Black Forest Labs' },

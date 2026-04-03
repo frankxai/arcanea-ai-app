@@ -3,7 +3,7 @@
  * @arcanea/memory-mcp — Starlight Vaults MCP Server
  *
  * Exposes 6 semantic memory vaults to any MCP-compatible AI tool via
- * the MCP stdio JSON-RPC transport (protocol version 2024-11-05).
+ * the MCP SDK 1.29 stdio transport.
  *
  * Add to Claude Code:
  *   claude mcp add arcanea-memory npx @arcanea/memory-mcp
@@ -26,7 +26,9 @@
  *                      Default: {cwd}/.arcanea/memory
  */
 
-import { createInterface } from 'node:readline';
+import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { z } from 'zod';
 import { join } from 'node:path';
 import {
   StarlightVaults,
@@ -42,227 +44,6 @@ import type {
   ClassificationResult,
   SyncResult,
 } from '@arcanea/memory-system';
-
-// ── MCP Protocol Types ───────────────────────────────────────────────────────
-
-interface McpRequest {
-  jsonrpc: '2.0';
-  id: string | number;
-  method: string;
-  params?: Record<string, unknown>;
-}
-
-interface McpResponse {
-  jsonrpc: '2.0';
-  id: string | number;
-  result?: unknown;
-  error?: { code: number; message: string; data?: unknown };
-}
-
-// ── Tool Definitions ─────────────────────────────────────────────────────────
-
-const TOOLS = [
-  {
-    name: 'vault_remember',
-    description:
-      'Store a memory in Starlight Vaults. Auto-classifies into the right vault ' +
-      '(strategic, technical, creative, operational, wisdom, horizon) unless vault ' +
-      'is specified. Optionally tag a Guardian namespace for domain routing.',
-    inputSchema: {
-      type: 'object',
-      properties: {
-        content: {
-          type: 'string',
-          description: 'The memory content to store',
-        },
-        vault: {
-          type: 'string',
-          enum: [
-            'strategic',
-            'technical',
-            'creative',
-            'operational',
-            'wisdom',
-            'horizon',
-          ],
-          description: 'Force a specific vault (optional — omit for auto-classification)',
-        },
-        guardian: {
-          type: 'string',
-          enum: [
-            'Lyssandria',
-            'Leyla',
-            'Draconia',
-            'Maylinn',
-            'Alera',
-            'Lyria',
-            'Aiyami',
-            'Elara',
-            'Ino',
-            'Shinkami',
-          ],
-          description: 'Guardian namespace for domain routing (optional)',
-        },
-        tags: {
-          type: 'array',
-          items: { type: 'string' },
-          description: 'Tags for categorization (optional)',
-        },
-      },
-      required: ['content'],
-    },
-  },
-  {
-    name: 'vault_recall',
-    description:
-      'Search across Starlight Vaults for relevant memories. Returns scored results ' +
-      'ranked by relevance. Optionally filter to a specific vault or Guardian.',
-    inputSchema: {
-      type: 'object',
-      properties: {
-        query: {
-          type: 'string',
-          description: 'Search query',
-        },
-        vault: {
-          type: 'string',
-          enum: [
-            'strategic',
-            'technical',
-            'creative',
-            'operational',
-            'wisdom',
-            'horizon',
-          ],
-          description: 'Filter to specific vault (optional)',
-        },
-        guardian: {
-          type: 'string',
-          description: 'Filter by Guardian namespace (optional)',
-        },
-        limit: {
-          type: 'number',
-          description: 'Max results to return (default: 10)',
-        },
-      },
-      required: ['query'],
-    },
-  },
-  {
-    name: 'vault_recent',
-    description:
-      'Get the most recent memories from a specific vault or all vaults combined.',
-    inputSchema: {
-      type: 'object',
-      properties: {
-        vault: {
-          type: 'string',
-          enum: [
-            'strategic',
-            'technical',
-            'creative',
-            'operational',
-            'wisdom',
-            'horizon',
-          ],
-          description: 'Filter to specific vault (optional)',
-        },
-        limit: {
-          type: 'number',
-          description: 'Max results to return (default: 10)',
-        },
-      },
-    },
-  },
-  {
-    name: 'vault_stats',
-    description:
-      'Get statistics about the Starlight Vault memory system — entry counts per ' +
-      'vault, top tags, Guardian distribution, and last activity.',
-    inputSchema: {
-      type: 'object',
-      properties: {},
-    },
-  },
-  {
-    name: 'horizon_append',
-    description:
-      'Append a benevolent wish or intention to the Horizon Vault. ' +
-      'This is PERMANENT — Horizon entries cannot be deleted. ' +
-      'Use for recording constructive visions, AI alignment intentions, or ' +
-      'creative aspirations. Destructive intentions are not accepted.',
-    inputSchema: {
-      type: 'object',
-      properties: {
-        wish: {
-          type: 'string',
-          description:
-            'The benevolent intention or wish (must be constructive, not destructive)',
-        },
-        context: {
-          type: 'string',
-          description: 'What prompted this wish',
-        },
-        tags: {
-          type: 'array',
-          items: { type: 'string' },
-          description: 'Categorization tags (optional)',
-        },
-      },
-      required: ['wish', 'context'],
-    },
-  },
-  {
-    name: 'horizon_read',
-    description:
-      'Read recent wishes and intentions from the Horizon Vault. ' +
-      'Optionally search within wishes by keyword.',
-    inputSchema: {
-      type: 'object',
-      properties: {
-        limit: {
-          type: 'number',
-          description: 'Max wishes to return (default: 10)',
-        },
-        search: {
-          type: 'string',
-          description: 'Search query within wishes (optional)',
-        },
-      },
-    },
-  },
-  {
-    name: 'vault_classify',
-    description:
-      'Classify content into the appropriate vault type without storing it. ' +
-      'Returns the predicted vault, confidence score, and reasoning.',
-    inputSchema: {
-      type: 'object',
-      properties: {
-        content: {
-          type: 'string',
-          description: 'Content to classify',
-        },
-        guardian: {
-          type: 'string',
-          description: 'Guardian context for classification (optional)',
-        },
-      },
-      required: ['content'],
-    },
-  },
-  {
-    name: 'memory_sync',
-    description:
-      "Sync Starlight Vaults to MEMORY.md — creates a structured summary in " +
-      "Claude Code's native memory format at .arcanea/memory/MEMORY.md. " +
-      'Returns sync metadata (lines written, entries included per vault).',
-    inputSchema: {
-      type: 'object',
-      properties: {},
-    },
-  },
-];
 
 // ── Vault Shortcut Map ───────────────────────────────────────────────────────
 
@@ -463,146 +244,240 @@ async function handleMemorySync(): Promise<SyncResult> {
   return bridge.sync();
 }
 
-// ── Dispatch ─────────────────────────────────────────────────────────────────
+// ── Shared Zod Enums ─────────────────────────────────────────────────────────
 
-async function handleToolCall(
-  name: string,
-  args: Record<string, unknown>,
-): Promise<unknown> {
-  switch (name) {
-    case 'vault_remember':
-      return handleVaultRemember(args as unknown as VaultRememberArgs);
+const VAULT_ENUM = z.enum([
+  'strategic',
+  'technical',
+  'creative',
+  'operational',
+  'wisdom',
+  'horizon',
+]);
 
-    case 'vault_recall':
-      return handleVaultRecall(args as unknown as VaultRecallArgs);
+const GUARDIAN_ENUM = z.enum([
+  'Lyssandria',
+  'Leyla',
+  'Draconia',
+  'Maylinn',
+  'Alera',
+  'Lyria',
+  'Aiyami',
+  'Elara',
+  'Ino',
+  'Shinkami',
+]);
 
-    case 'vault_recent':
-      return handleVaultRecent(args as unknown as VaultRecentArgs);
+// ── Helper: serialize result to MCP text content ──────────────────────────────
 
-    case 'vault_stats':
-      return handleVaultStats();
-
-    case 'horizon_append':
-      return handleHorizonAppend(args as unknown as HorizonAppendArgs);
-
-    case 'horizon_read':
-      return handleHorizonRead(args as unknown as HorizonReadArgs);
-
-    case 'vault_classify':
-      return handleVaultClassify(args as unknown as VaultClassifyArgs);
-
-    case 'memory_sync':
-      return handleMemorySync();
-
-    default:
-      throw new Error(`Unknown tool: ${name}`);
-  }
+function toTextContent(value: unknown) {
+  return {
+    content: [{ type: 'text' as const, text: JSON.stringify(value, null, 2) }],
+  };
 }
 
-// ── MCP Protocol Handler ──────────────────────────────────────────────────────
+// ── MCP Server ────────────────────────────────────────────────────────────────
 
-function sendResponse(response: McpResponse): void {
-  process.stdout.write(JSON.stringify(response) + '\n');
-}
-
-async function handleRequest(request: McpRequest): Promise<void> {
-  const { id, method, params } = request;
-
-  try {
-    switch (method) {
-      case 'initialize':
-        sendResponse({
-          jsonrpc: '2.0',
-          id,
-          result: {
-            protocolVersion: '2024-11-05',
-            capabilities: { tools: {} },
-            serverInfo: {
-              name: 'arcanea-memory',
-              version: '0.1.0',
-              description:
-                'Starlight Vaults — 6-vault semantic memory for AI tools',
-            },
-          },
-        });
-        break;
-
-      case 'tools/list':
-        sendResponse({
-          jsonrpc: '2.0',
-          id,
-          result: { tools: TOOLS },
-        });
-        break;
-
-      case 'tools/call': {
-        const toolName = (params?.['name'] as string) ?? '';
-        const toolArgs =
-          (params?.['arguments'] as Record<string, unknown>) ?? {};
-        const result = await handleToolCall(toolName, toolArgs);
-        sendResponse({
-          jsonrpc: '2.0',
-          id,
-          result: {
-            content: [
-              { type: 'text', text: JSON.stringify(result, null, 2) },
-            ],
-          },
-        });
-        break;
-      }
-
-      case 'notifications/initialized':
-        // Notifications do not require a response
-        break;
-
-      default:
-        sendResponse({
-          jsonrpc: '2.0',
-          id,
-          error: { code: -32601, message: `Method not found: ${method}` },
-        });
-    }
-  } catch (error) {
-    sendResponse({
-      jsonrpc: '2.0',
-      id,
-      error: {
-        code: -32603,
-        message:
-          error instanceof Error ? error.message : 'Internal server error',
-        data:
-          error instanceof Error ? { stack: error.stack } : undefined,
-      },
-    });
-  }
-}
-
-// ── Main: stdio JSON-RPC loop ─────────────────────────────────────────────────
-
-const rl = createInterface({ input: process.stdin, terminal: false });
-
-rl.on('line', (line: string) => {
-  const trimmed = line.trim();
-  if (!trimmed) return;
-
-  let request: McpRequest;
-  try {
-    request = JSON.parse(trimmed) as McpRequest;
-  } catch {
-    // Silently ignore malformed JSON — MCP clients always send valid JSON
-    return;
-  }
-
-  handleRequest(request).catch((err: unknown) => {
-    // Last-resort handler — should not reach here because handleRequest
-    // wraps all errors in MCP error responses internally.
-    process.stderr.write(
-      `[arcanea-memory-mcp] Unhandled error: ${String(err)}\n`,
-    );
-  });
+const server = new McpServer({
+  name: 'arcanea-memory',
+  version: '0.1.0',
 });
 
-process.stderr.write(
-  '[arcanea-memory-mcp] Starlight Vaults MCP server started\n',
+// vault_remember
+server.registerTool(
+  'vault_remember',
+  {
+    description:
+      'Store a memory in Starlight Vaults. Auto-classifies into the right vault ' +
+      '(strategic, technical, creative, operational, wisdom, horizon) unless vault ' +
+      'is specified. Optionally tag a Guardian namespace for domain routing.',
+    inputSchema: {
+      content: z.string().describe('The memory content to store'),
+      vault: VAULT_ENUM.optional().describe(
+        'Force a specific vault (optional — omit for auto-classification)',
+      ),
+      guardian: GUARDIAN_ENUM.optional().describe(
+        'Guardian namespace for domain routing (optional)',
+      ),
+      tags: z
+        .array(z.string())
+        .optional()
+        .describe('Tags for categorization (optional)'),
+    },
+  },
+  async (args) => {
+    const result = await handleVaultRemember(args as VaultRememberArgs);
+    return toTextContent(result);
+  },
 );
+
+// vault_recall
+server.registerTool(
+  'vault_recall',
+  {
+    description:
+      'Search across Starlight Vaults for relevant memories. Returns scored results ' +
+      'ranked by relevance. Optionally filter to a specific vault or Guardian.',
+    inputSchema: {
+      query: z.string().describe('Search query'),
+      vault: VAULT_ENUM.optional().describe(
+        'Filter to specific vault (optional)',
+      ),
+      guardian: z
+        .string()
+        .optional()
+        .describe('Filter by Guardian namespace (optional)'),
+      limit: z
+        .number()
+        .optional()
+        .describe('Max results to return (default: 10)'),
+    },
+  },
+  async (args) => {
+    const result = await handleVaultRecall(args as VaultRecallArgs);
+    return toTextContent(result);
+  },
+);
+
+// vault_recent
+server.registerTool(
+  'vault_recent',
+  {
+    description:
+      'Get the most recent memories from a specific vault or all vaults combined.',
+    inputSchema: {
+      vault: VAULT_ENUM.optional().describe(
+        'Filter to specific vault (optional)',
+      ),
+      limit: z
+        .number()
+        .optional()
+        .describe('Max results to return (default: 10)'),
+    },
+  },
+  async (args) => {
+    const result = await handleVaultRecent(args as VaultRecentArgs);
+    return toTextContent(result);
+  },
+);
+
+// vault_stats
+server.registerTool(
+  'vault_stats',
+  {
+    description:
+      'Get statistics about the Starlight Vault memory system — entry counts per ' +
+      'vault, top tags, Guardian distribution, and last activity.',
+    inputSchema: {},
+  },
+  async () => {
+    const result = await handleVaultStats();
+    return toTextContent(result);
+  },
+);
+
+// horizon_append
+server.registerTool(
+  'horizon_append',
+  {
+    description:
+      'Append a benevolent wish or intention to the Horizon Vault. ' +
+      'This is PERMANENT — Horizon entries cannot be deleted. ' +
+      'Use for recording constructive visions, AI alignment intentions, or ' +
+      'creative aspirations. Destructive intentions are not accepted.',
+    inputSchema: {
+      wish: z
+        .string()
+        .describe(
+          'The benevolent intention or wish (must be constructive, not destructive)',
+        ),
+      context: z.string().describe('What prompted this wish'),
+      tags: z
+        .array(z.string())
+        .optional()
+        .describe('Categorization tags (optional)'),
+    },
+  },
+  async (args) => {
+    const result = await handleHorizonAppend(args as HorizonAppendArgs);
+    return toTextContent(result);
+  },
+);
+
+// horizon_read
+server.registerTool(
+  'horizon_read',
+  {
+    description:
+      'Read recent wishes and intentions from the Horizon Vault. ' +
+      'Optionally search within wishes by keyword.',
+    inputSchema: {
+      limit: z
+        .number()
+        .optional()
+        .describe('Max wishes to return (default: 10)'),
+      search: z
+        .string()
+        .optional()
+        .describe('Search query within wishes (optional)'),
+    },
+  },
+  async (args) => {
+    const result = await handleHorizonRead(args as HorizonReadArgs);
+    return toTextContent(result);
+  },
+);
+
+// vault_classify
+server.registerTool(
+  'vault_classify',
+  {
+    description:
+      'Classify content into the appropriate vault type without storing it. ' +
+      'Returns the predicted vault, confidence score, and reasoning.',
+    inputSchema: {
+      content: z.string().describe('Content to classify'),
+      guardian: z
+        .string()
+        .optional()
+        .describe('Guardian context for classification (optional)'),
+    },
+  },
+  async (args) => {
+    const result = await handleVaultClassify(args as VaultClassifyArgs);
+    return toTextContent(result);
+  },
+);
+
+// memory_sync
+server.registerTool(
+  'memory_sync',
+  {
+    description:
+      "Sync Starlight Vaults to MEMORY.md — creates a structured summary in " +
+      "Claude Code's native memory format at .arcanea/memory/MEMORY.md. " +
+      'Returns sync metadata (lines written, entries included per vault).',
+    inputSchema: {},
+  },
+  async () => {
+    const result = await handleMemorySync();
+    return toTextContent(result);
+  },
+);
+
+// ── Main ──────────────────────────────────────────────────────────────────────
+
+async function main(): Promise<void> {
+  const transport = new StdioServerTransport();
+  await server.connect(transport);
+  process.stderr.write(
+    '[arcanea-memory-mcp] Starlight Vaults MCP server started (SDK 1.29)\n',
+  );
+}
+
+main().catch((err: unknown) => {
+  process.stderr.write(
+    `[arcanea-memory-mcp] Fatal error: ${String(err)}\n`,
+  );
+  process.exit(1);
+});

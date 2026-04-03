@@ -5,11 +5,6 @@
 - Repo-level agent contract now lives in `AGENTS.md`
 - `planning-with-files/` is the live execution control plane
 - `.arcanea/` remains the shared intelligence substrate
-- `main` now also contains the verified SIS runtime/write-path tranche:
-  - `.nvmrc` pinned to Node 20
-  - CI rejects `npm` usage and treats typecheck as a real gate
-  - canonical SIS write/read/schema/legacy-export tooling exists under `scripts/`
-  - clean-worktree SIS verification now degrades gracefully when local-only config files are absent
 - Tool-specific entrypoints should point to the same hierarchy:
   - `CLAUDE.md`
   - `.claude/CLAUDE.md`
@@ -21,11 +16,6 @@
   - `scripts/sis-context-bridge.mjs`
   - `scripts/sis-mcp-server.mjs`
   - `scripts/sis-check.mjs`
-  - `scripts/sis-write.mjs`
-  - `scripts/sis-schema.mjs`
-  - `scripts/sis-schema-check.mjs`
-  - `scripts/sis-legacy-export.mjs`
-  - `scripts/arcanea-memory-compat-mcp.mjs`
 
 ## Branch State
 
@@ -47,22 +37,18 @@
 - Live Supabase activation is still the main external blocker for the project graph
 - Claude is now adding notes/docs and agent-ops work locally
 - SIS context can now be materialized into `.arcanea/sis/summary.md` and exposed over a local MCP server
-- SIS can now also append validated canonical entries and export a legacy `.arcanea/memory/` compatibility view without committing generated local state
 - Experimental NFT/agent spreadsheet generators now live under `.arcanea/experiments/nft-agent-research/`
 
 ## Immediate Risks
 
 - Tool-specific agent docs were drifting and had stale design/product guidance
-- CI/workflow changes are now partly promoted, but the broader `integration/agent-control-plane-unification` branch still contains mixed voice/buddy/Luminor work that should not be merged wholesale
+- CI/workflow changes from the current local work still need scoped review before trust
 - Some recent voice/buddy/runtime commits on this integration branch still need repo-by-repo promotion judgment against `main`
 
 ## Recommendation
 
-1. Keep broader voice/buddy/Luminor work on `integration/agent-control-plane-unification`
-2. Treat `main` as the stable trunk for:
-   - project workspaces
-   - docs hardening
-   - SIS runtime and CI discipline
-3. Do live Supabase activation in the evening
-4. Then continue docs/retrieval/enrichment on top of the real DB
-5. Review the remaining integration-only commits one by one before any further promotion
+1. Keep all current local work on `integration/agent-control-plane-unification`
+2. Normalize agent instructions first
+3. Review Claude docs-system work into a scoped promotion branch
+4. Do live Supabase activation in the evening
+5. Then continue docs/retrieval/enrichment on top of the real DB

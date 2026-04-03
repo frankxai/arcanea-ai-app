@@ -35,7 +35,7 @@ const CANON_GATES = [
   { gate: 5, domain: 'Voice', guardian: 'Alera', frequency: '528 Hz' },
   { gate: 6, domain: 'Sight', guardian: 'Lyria', frequency: '639 Hz' },
   { gate: 7, domain: 'Crown', guardian: 'Aiyami', frequency: '741 Hz' },
-  { gate: 8, domain: 'Shift', guardian: 'Elara', frequency: '852 Hz' },
+  { gate: 8, domain: 'Starweave', guardian: 'Elara', frequency: '852 Hz' },
   { gate: 9, domain: 'Unity', guardian: 'Ino', frequency: '963 Hz' },
   { gate: 10, domain: 'Source', guardian: 'Shinkami', frequency: '1111 Hz' },
 ];
@@ -958,7 +958,7 @@ describe('Canon Compliance — Extended Solfeggio frequencies (MEMORY.md locked)
     Voice: '528 Hz',
     Sight: '639 Hz',
     Crown: '741 Hz',
-    Shift: '852 Hz',
+    Starweave: '852 Hz',
     Unity: '963 Hz',
     Source: '1111 Hz',
   };
@@ -992,7 +992,7 @@ describe('Canon Compliance — Extended Solfeggio frequencies (MEMORY.md locked)
     const domainGuardian = {
       Foundation: 'Lyssandria', Flow: 'Leyla', Fire: 'Draconia',
       Heart: 'Maylinn', Voice: 'Alera', Sight: 'Lyria',
-      Crown: 'Aiyami', Shift: 'Elara', Unity: 'Ino', Source: 'Shinkami',
+      Crown: 'Aiyami', Starweave: 'Elara', Unity: 'Ino', Source: 'Shinkami',
     };
     assert.equal(Object.keys(domainGuardian).length, 10);
     const guardians = Object.values(domainGuardian);

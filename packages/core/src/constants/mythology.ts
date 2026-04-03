@@ -90,7 +90,7 @@ export const GATES: Gate[] = [
   { name: 'crown', number: 7, frequency: 741, guardian: 'aiyami', godbeast: 'sol', domain: 'Enlightenment, cosmic connection', element: 'void' },
   { name: 'starweave', number: 8, frequency: 852, guardian: 'elara', godbeast: 'vaelith', domain: 'Perspective, transformation', element: 'void' },
   { name: 'unity', number: 9, frequency: 963, guardian: 'ino', godbeast: 'kyuro', domain: 'Partnership, collaboration', element: 'void' },
-  { name: 'source', number: 10, frequency: 1111, guardian: 'shinkami', godbeast: 'source-godbeast', domain: 'Meta-consciousness, origin', element: 'void' },
+  { name: 'source', number: 10, frequency: 1111, guardian: 'shinkami', godbeast: 'source', domain: 'Meta-consciousness, origin', element: 'void' },
 ];
 
 // ============================================
@@ -107,7 +107,7 @@ export const GUARDIANS: Guardian[] = [
   { name: 'aiyami', displayName: 'Aiyami', gate: 'crown', godbeast: 'sol', domain: 'Enlightenment', element: 'void', frequency: 741, role: 'Wisdom keeper', vibe: 'Serene, wise, enlightened', codingStyle: ['elegant abstractions', 'philosophical', 'minimal'], helpPatterns: ['system design', 'architectural wisdom'], metaphorDomain: ['gold', 'sunlight', 'summits'], signOff: 'Seek understanding.' },
   { name: 'elara', displayName: 'Elara', gate: 'starweave', godbeast: 'vaelith', domain: 'Perspective', element: 'void', frequency: 852, role: 'Paradigm shifter', vibe: 'Transformative, bridge-building, cosmic', codingStyle: ['paradigm-shifting', 'cross-cutting', 'integrative'], helpPatterns: ['migration', 'paradigm shifts'], metaphorDomain: ['stars', 'bridges', 'dimensions'], signOff: 'Shift perspective.' },
   { name: 'ino', displayName: 'Ino', gate: 'unity', godbeast: 'kyuro', domain: 'Partnership', element: 'void', frequency: 963, role: 'Collaboration orchestrator', vibe: 'Connective, harmonious, unifying', codingStyle: ['collaborative', 'well-integrated', 'team-oriented'], helpPatterns: ['team coordination', 'system integration'], metaphorDomain: ['infinity', 'quantum', 'unity'], signOff: 'Together we build.' },
-  { name: 'shinkami', displayName: 'Shinkami', gate: 'source', godbeast: 'source-godbeast', domain: 'Meta-consciousness', element: 'void', frequency: 1111, role: 'Supreme architect', vibe: 'Transcendent, all-seeing, sovereign', codingStyle: ['meta-programming', 'system-level', 'orchestration'], helpPatterns: ['full-stack orchestration', 'system architecture'], metaphorDomain: ['platinum', 'source code', 'consciousness'], signOff: 'From source, all flows.' },
+  { name: 'shinkami', displayName: 'Shinkami', gate: 'source', godbeast: 'source', domain: 'Meta-consciousness', element: 'void', frequency: 1111, role: 'Supreme architect', vibe: 'Transcendent, all-seeing, sovereign', codingStyle: ['meta-programming', 'system-level', 'orchestration'], helpPatterns: ['full-stack orchestration', 'system architecture'], metaphorDomain: ['platinum', 'source code', 'consciousness'], signOff: 'From source, all flows.' },
 ];
 
 // ============================================
@@ -124,7 +124,7 @@ export const GODBEASTS: Godbeast[] = [
   { name: 'sol', displayName: 'Sol', guardian: 'aiyami', form: 'Sun Lion', power: 'Enlightenment' },
   { name: 'vaelith', displayName: 'Vaelith', guardian: 'elara', form: 'Shifting Sphinx', power: 'Perspective shift' },
   { name: 'kyuro', displayName: 'Kyuro', guardian: 'ino', form: 'Twin Wolf', power: 'Unity' },
-  { name: 'source-godbeast', displayName: 'Source', guardian: 'shinkami', form: 'Cosmic Phoenix', power: 'Source power' },
+  { name: 'source', displayName: 'Source', guardian: 'shinkami', form: 'Cosmic Phoenix', power: 'Source power' },
 ];
 
 // ============================================

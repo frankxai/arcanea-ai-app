@@ -2,10 +2,32 @@
 
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { m, AnimatePresence, LazyMotion, domAnimation } from 'framer-motion';
-import { ChatImagineTabs } from '@/components/chat/chat-imagine-tabs';
 import { PromptInput } from '@/components/imagine/PromptInput';
 import { ImageCard } from '@/components/imagine/ImageCard';
 import { getFavorites, removeFavorite, getFavoriteCount, type FavoriteImage } from '@/lib/imagine-favorites';
+
+// ---------------------------------------------------------------------------
+// Featured Templates — Arcanean style presets as clickable cards (like Grok)
+// ---------------------------------------------------------------------------
+
+const FEATURED_TEMPLATES = [
+  { id: 'fantasy-hero', label: 'Fantasy Hero', prompt: 'Epic fantasy hero in crystalline armor standing on a cliff edge, cosmic sky behind, volumetric lighting, mythic scale' },
+  { id: 'anime', label: 'Anime', prompt: 'Beautiful anime character illustration, studio quality, expressive eyes, dynamic pose, vibrant colors' },
+  { id: 'cosmic-art', label: 'Cosmic Art', prompt: 'Deep space nebula scene with cosmic dust, vibrant violet and teal colors, infinite scale, volumetric god-rays' },
+  { id: 'portrait', label: 'Portrait', prompt: 'Cinematic portrait with dramatic lighting, shallow depth of field, Hasselblad quality, natural skin textures' },
+  { id: 'concept-art', label: 'Concept Art', prompt: 'Professional concept art for fantasy game, bold shapes, clear silhouettes, painterly finish, environmental storytelling' },
+  { id: '3d-render', label: '3D Render', prompt: 'Ultra-detailed 3D render, subsurface scattering, ray-traced reflections, studio lighting, octane render quality' },
+  { id: 'guardian', label: 'Guardian', prompt: 'Divine Arcanean Guardian with cosmic aura, gold accents on sacred armor, glowing elemental energy, mythic portrait' },
+  { id: 'cyberpunk', label: 'Cyberpunk', prompt: 'Cyberpunk street at night, neon reflections on rain-soaked pavement, holographic advertisements, cinematic composition' },
+  { id: 'watercolor', label: 'Watercolor', prompt: 'Delicate watercolor painting, soft washes of color, wet-on-wet technique, gentle palette, fine detail work' },
+  { id: 'product', label: 'Product Shot', prompt: 'Professional product photography, clean white background, studio lighting, sharp detail, commercial quality' },
+  { id: 'chibi', label: 'Chibi', prompt: 'Adorable chibi character, cute proportions, big expressive eyes, colorful, kawaii style illustration' },
+  { id: 'cinematic', label: 'Cinematic', prompt: 'Cinematic film still, anamorphic widescreen, professional color grading, dramatic lighting, decisive moment' },
+] as const;
+
+// ---------------------------------------------------------------------------
+// Types
+// ---------------------------------------------------------------------------
 
 interface GeneratedImage {
   id: string;
@@ -24,6 +46,10 @@ interface GenerationRow {
   isLoading?: boolean;
 }
 
+// ---------------------------------------------------------------------------
+// Page
+// ---------------------------------------------------------------------------
+
 export default function ImaginePage() {
   const [rows, setRows] = useState<GenerationRow[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -36,7 +62,7 @@ export default function ImaginePage() {
   const [generationProgress, setGenerationProgress] = useState<{ current: number; total: number; estimatedSecondsLeft?: number } | null>(null);
   const generationTimesRef = useRef<number[]>([]);
 
-  // Favorites state
+  // Favorites
   const [showFavorites, setShowFavorites] = useState(false);
   const [favorites, setFavorites] = useState<FavoriteImage[]>([]);
   const [favCount, setFavCount] = useState(0);
@@ -46,41 +72,31 @@ export default function ImaginePage() {
   const generationCounterRef = useRef(0);
   const isGeneratingRef = useRef(false);
 
-  // Load favorites count on mount
-  useEffect(() => {
-    setFavCount(getFavoriteCount());
-  }, []);
+  // Refs for style/model/enhance/negative persistence across scroll generations
+  const currentStyleRef = useRef<string | undefined>(undefined);
+  const currentModelRef = useRef<string | undefined>(undefined);
+  const currentEnhanceRef = useRef<boolean | undefined>(undefined);
+  const currentNegativePromptRef = useRef<string | undefined>(undefined);
+
+  useEffect(() => { setFavCount(getFavoriteCount()); }, []);
 
   const refreshFavorites = useCallback(() => {
     setFavorites(getFavorites());
     setFavCount(getFavoriteCount());
   }, []);
 
-  const handleOpenFavorites = useCallback(() => {
-    refreshFavorites();
-    setShowFavorites(true);
-  }, [refreshFavorites]);
-
-  const handleRemoveFavorite = useCallback((id: string) => {
-    removeFavorite(id);
-    refreshFavorites();
-  }, [refreshFavorites]);
-
   // Generate a single row of images
   const generateRow = useCallback(async (prompt: string, aspectRatio: string, rowId?: string, style?: string, model?: string, enhance?: boolean): Promise<GenerationRow | null> => {
     const id = rowId || `row_${Date.now()}_${generationCounterRef.current++}`;
-
     const res = await fetch('/api/imagine/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ prompt, count: 4, aspectRatio, style, model, enhance }),
     });
-
     if (!res.ok) {
       const data = await res.json();
       throw new Error(data.error || 'Generation failed');
     }
-
     const data = await res.json();
     const images: GeneratedImage[] = (data.images || []).map((img: { url?: string; data?: string; mimeType?: string; prompt?: string }, i: number) => ({
       id: `${id}_img_${i}`,
@@ -89,23 +105,10 @@ export default function ImaginePage() {
       data: img.data,
       mimeType: img.mimeType,
     }));
-
-    return {
-      id,
-      images,
-      prompt,
-      aspectRatio,
-      createdAt: new Date().toISOString(),
-    };
+    return { id, images, prompt, aspectRatio, createdAt: new Date().toISOString() };
   }, []);
 
-  // Handle initial generation from prompt input
-  const currentStyleRef = useRef<string | undefined>(undefined);
-  const currentModelRef = useRef<string | undefined>(undefined);
-  const currentEnhanceRef = useRef<boolean | undefined>(undefined);
-
-  const currentNegativePromptRef = useRef<string | undefined>(undefined);
-
+  // Main generation handler
   const handleGenerate = useCallback(async (prompt: string, _count: number, aspectRatio: string, style?: string, model?: string, enhance?: boolean, negativePrompt?: string) => {
     if (isGeneratingRef.current) return;
     currentStyleRef.current = style;
@@ -119,47 +122,32 @@ export default function ImaginePage() {
     setCurrentPrompt(prompt);
     setCurrentAspectRatio(aspectRatio);
 
-    // Start progress tracking
+    // Progress tracking
     const avgTime = generationTimesRef.current.length > 0
       ? generationTimesRef.current.reduce((a, b) => a + b, 0) / generationTimesRef.current.length
-      : 12000; // default 12s estimate
+      : 12000;
     setGenerationProgress({ current: 1, total: 4, estimatedSecondsLeft: Math.round(avgTime / 1000) });
     const progressInterval = setInterval(() => {
       setGenerationProgress((prev) => {
         if (!prev || prev.current >= prev.total) return prev;
-        const nextCurrent = Math.min(prev.current + 1, prev.total);
-        const remaining = Math.max(0, Math.round((prev.estimatedSecondsLeft ?? 0) - 3));
-        return { ...prev, current: nextCurrent, estimatedSecondsLeft: remaining };
+        return { ...prev, current: Math.min(prev.current + 1, prev.total), estimatedSecondsLeft: Math.max(0, Math.round((prev.estimatedSecondsLeft ?? 0) - 3)) };
       });
     }, 3000);
 
     const loadingId = `row_${Date.now()}_loading`;
-    setRows((prev) => [{
-      id: loadingId,
-      images: [],
-      prompt,
-      aspectRatio,
-      createdAt: new Date().toISOString(),
-      isLoading: true,
-    }, ...prev]);
+    setRows((prev) => [{ id: loadingId, images: [], prompt, aspectRatio, createdAt: new Date().toISOString(), isLoading: true }, ...prev]);
 
     const startTime = Date.now();
     try {
-      // If negative prompt is provided, append it to the prompt for the API
-      const fullPrompt = negativePrompt
-        ? `${prompt}. Avoid: ${negativePrompt}`
-        : prompt;
+      const fullPrompt = negativePrompt ? `${prompt}. Avoid: ${negativePrompt}` : prompt;
       const row = await generateRow(fullPrompt, aspectRatio, loadingId, style, model, enhance);
       if (row) {
-        // Store original prompt (without negative) for display
         row.prompt = prompt;
         row.images = row.images.map((img) => ({ ...img, prompt }));
         setRows((prev) => prev.map((r) => r.id === loadingId ? row : r));
         setAutoScrollEnabled(true);
-        // Track generation time for ETA
         generationTimesRef.current.push(Date.now() - startTime);
         if (generationTimesRef.current.length > 5) generationTimesRef.current.shift();
-        // Smooth scroll to show new images
         requestAnimationFrame(() => {
           gridTopRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
@@ -175,29 +163,18 @@ export default function ImaginePage() {
     }
   }, [generateRow]);
 
-  // Infinite scroll
+  // Infinite scroll generation
   const generateMoreRows = useCallback(async () => {
     if (isGeneratingRef.current || !currentPrompt || !autoScrollEnabled) return;
-
     setIsGenerating(true);
     isGeneratingRef.current = true;
-
     const loadingId = `row_${Date.now()}_scroll`;
-    setRows((prev) => [...prev, {
-      id: loadingId,
-      images: [],
-      prompt: currentPrompt,
-      aspectRatio: currentAspectRatio,
-      createdAt: new Date().toISOString(),
-      isLoading: true,
-    }]);
-
+    setRows((prev) => [...prev, { id: loadingId, images: [], prompt: currentPrompt, aspectRatio: currentAspectRatio, createdAt: new Date().toISOString(), isLoading: true }]);
     try {
-      const negPrompt = currentNegativePromptRef.current;
-      const fullPrompt = negPrompt ? `${currentPrompt}. Avoid: ${negPrompt}` : currentPrompt;
+      const neg = currentNegativePromptRef.current;
+      const fullPrompt = neg ? `${currentPrompt}. Avoid: ${neg}` : currentPrompt;
       const row = await generateRow(fullPrompt, currentAspectRatio, loadingId, currentStyleRef.current, currentModelRef.current, currentEnhanceRef.current);
       if (row) {
-        // Keep display prompt clean (without negative prompt suffix)
         row.prompt = currentPrompt;
         row.images = row.images.map((img) => ({ ...img, prompt: currentPrompt }));
         setRows((prev) => prev.map((r) => r.id === loadingId ? row : r));
@@ -211,82 +188,50 @@ export default function ImaginePage() {
     }
   }, [currentPrompt, currentAspectRatio, autoScrollEnabled, generateRow]);
 
-  // IntersectionObserver
+  // IntersectionObserver for infinite scroll
   useEffect(() => {
     if (!autoScrollEnabled) return;
     const sentinel = sentinelRef.current;
     if (!sentinel) return;
-
     const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !isGeneratingRef.current) {
-          generateMoreRows();
-        }
-      },
+      (entries) => { if (entries[0].isIntersecting && !isGeneratingRef.current) generateMoreRows(); },
       { rootMargin: '400px' },
     );
-
     observer.observe(sentinel);
     return () => observer.disconnect();
   }, [autoScrollEnabled, generateMoreRows]);
+
+  // Handle template click
+  const handleTemplateClick = useCallback((templatePrompt: string) => {
+    setExternalPrompt(templatePrompt);
+  }, []);
 
   // Handle animation
   const handleAnimate = useCallback(async (imageId: string, imageUrl: string) => {
     setAnimatingIds((prev) => new Set(prev).add(imageId));
     setError(null);
-
     try {
       let urlForAnimation = imageUrl;
-
       if (imageUrl.startsWith('data:')) {
         const [header, data] = imageUrl.split(',');
         const mimeType = header.match(/data:(.*?);/)?.[1] || 'image/png';
-        const saveRes = await fetch('/api/imagine/save', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ imageData: data, mimeType, prompt: 'animation source' }),
-        });
-        if (saveRes.ok) {
-          const saveData = await saveRes.json();
-          if (saveData.url) urlForAnimation = saveData.url;
-        }
+        const saveRes = await fetch('/api/imagine/save', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ imageData: data, mimeType, prompt: 'animation source' }) });
+        if (saveRes.ok) { const saveData = await saveRes.json(); if (saveData.url) urlForAnimation = saveData.url; }
       }
-
-      const res = await fetch('/api/imagine/animate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ imageUrl: urlForAnimation }),
-      });
-
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || 'Animation failed');
-      }
-
+      const res = await fetch('/api/imagine/animate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ imageUrl: urlForAnimation }) });
+      if (!res.ok) { const data = await res.json(); throw new Error(data.error || 'Animation failed'); }
       const data = await res.json();
-
       if (data.videoUrl) {
-        setRows((prev) =>
-          prev.map((row) => ({
-            ...row,
-            images: row.images.map((img) =>
-              img.id === imageId ? { ...img, videoUrl: data.videoUrl } : img,
-            ),
-          })),
-        );
+        setRows((prev) => prev.map((row) => ({ ...row, images: row.images.map((img) => img.id === imageId ? { ...img, videoUrl: data.videoUrl } : img) })));
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Animation failed');
     } finally {
-      setAnimatingIds((prev) => {
-        const next = new Set(prev);
-        next.delete(imageId);
-        return next;
-      });
+      setAnimatingIds((prev) => { const next = new Set(prev); next.delete(imageId); return next; });
     }
   }, []);
 
-  // Vary: pre-fill prompt with variation suffix and scroll to top
+  // Vary: pre-fill prompt
   const handleVary = useCallback((originalPrompt: string) => {
     setExternalPrompt(originalPrompt + ' \u2014 variation');
   }, []);
@@ -296,141 +241,98 @@ export default function ImaginePage() {
 
   return (
     <LazyMotion features={domAnimation}>
-    <div className="min-h-screen bg-[#09090b]">
-      {/* Chat/Imagine tabs */}
-      <div className="fixed top-[72px] left-1/2 -translate-x-1/2 z-40">
-        <ChatImagineTabs />
-      </div>
+    <div className="min-h-screen bg-[#09090b] pb-32">
+      {/* ═══ Featured Templates ═══ */}
+      {!hasResults && (
+        <m.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="pt-20 px-4"
+        >
+          <h2 className="text-sm font-semibold text-white/60 mb-3 px-2">Featured Templates</h2>
+          <div className="flex gap-3 overflow-x-auto pb-4 scrollbar-hide">
+            {FEATURED_TEMPLATES.map((template) => (
+              <button
+                key={template.id}
+                onClick={() => handleTemplateClick(template.prompt)}
+                className="flex-shrink-0 group"
+              >
+                <div className="w-[140px] h-[100px] rounded-xl bg-[#1a1a2e] border border-white/[0.06] hover:border-[#7fffd4]/30 transition-all overflow-hidden relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#7fffd4]/5 to-[#78a6ff]/5 group-hover:from-[#7fffd4]/10 group-hover:to-[#78a6ff]/10 transition-all" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-white/15 group-hover:text-[#7fffd4]/40 transition-colors">
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                      <circle cx="8.5" cy="8.5" r="1.5" />
+                      <polyline points="21 15 16 10 5 21" />
+                    </svg>
+                  </div>
+                </div>
+                <span className="block mt-1.5 text-xs text-white/40 group-hover:text-white/70 transition-colors text-center font-medium">
+                  {template.label}
+                </span>
+              </button>
+            ))}
+          </div>
+        </m.div>
+      )}
 
-      {/* Hero — only visible when no results */}
-      <AnimatePresence>
-        {!hasResults && (
-          <m.div
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0, y: -40 }}
-            className="pt-28 pb-6 px-6 text-center"
-          >
-            <m.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-5xl md:text-7xl font-display font-bold bg-gradient-to-r from-[#00bcd4] via-[#0d47a1] to-[#00bcd4] bg-clip-text text-transparent"
-            >
-              Imagine
-            </m.h1>
-            <m.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="mt-3 text-lg text-text-secondary font-body"
-            >
-              Describe your vision. Watch it materialize.
-            </m.p>
-          </m.div>
-        )}
-      </AnimatePresence>
-
-      {/* Stats bar — when results exist */}
+      {/* ═══ Stats bar (when generating) ═══ */}
       {hasResults && (
-        <div className="sticky top-0 z-30 border-b border-white/[0.05] liquid-glass bg-gradient-to-r from-transparent via-white/[0.01] to-transparent">
-          <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+        <div className="sticky top-0 z-30 bg-[#09090b]/80 backdrop-blur-xl border-b border-white/[0.04]">
+          <div className="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <ChatImagineTabs />
-              <span className="text-xs text-text-muted bg-white/[0.04] px-2.5 py-1 rounded-full">
-                {totalImages} image{totalImages !== 1 ? 's' : ''}
+              <span className="text-xs text-white/50 font-medium">
+                {totalImages} image{totalImages !== 1 ? 's' : ''} created
               </span>
             </div>
             <div className="flex items-center gap-2">
               {autoScrollEnabled && (
-                <button
-                  onClick={() => setAutoScrollEnabled(false)}
-                  className="text-xs text-text-muted hover:text-text-secondary px-3 py-1.5 rounded-lg hover:bg-white/[0.04] transition-all"
-                >
+                <button onClick={() => setAutoScrollEnabled(false)} className="text-xs text-white/30 hover:text-white/60 px-3 py-1 rounded-lg hover:bg-white/[0.04] transition-all">
                   Stop auto-generate
                 </button>
               )}
               {!autoScrollEnabled && currentPrompt && (
-                <button
-                  onClick={() => setAutoScrollEnabled(true)}
-                  className="text-xs text-[#00bcd4] hover:text-[#00acc1] px-3 py-1.5 rounded-lg hover:bg-[#00bcd4]/10 transition-all"
-                >
-                  Resume infinite scroll
+                <button onClick={() => setAutoScrollEnabled(true)} className="text-xs text-[#7fffd4]/70 hover:text-[#7fffd4] px-3 py-1 rounded-lg hover:bg-[#7fffd4]/10 transition-all">
+                  Resume
                 </button>
               )}
-              {/* Favorites button */}
               <button
-                onClick={handleOpenFavorites}
-                className="relative flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs transition-all text-pink-300 hover:bg-pink-500/10"
+                onClick={() => { refreshFavorites(); setShowFavorites(true); }}
+                className="flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs text-pink-300/60 hover:text-pink-300 hover:bg-pink-500/10 transition-all"
               >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="#f472b6" stroke="#f472b6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="#f472b6" stroke="#f472b6" strokeWidth="2">
                   <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
                 </svg>
-                Favorites
-                {favCount > 0 && (
-                  <span className="ml-0.5 px-1.5 py-0.5 text-[10px] font-bold bg-pink-500/20 rounded-full">
-                    {favCount}
-                  </span>
-                )}
+                {favCount > 0 && favCount}
               </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Favorites button in empty state */}
-      {!hasResults && (
-        <div className="flex justify-center mb-4">
-          <button
-            onClick={handleOpenFavorites}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm text-pink-300/80 hover:text-pink-300 hover:bg-pink-500/5 transition-all"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-            </svg>
-            {favCount > 0 ? `${favCount} Favorite${favCount !== 1 ? 's' : ''}` : 'Favorites'}
-          </button>
-        </div>
-      )}
-
-      {/* Prompt input */}
-      <div className={hasResults ? '' : 'px-6 pb-8 pt-2'}>
-        <PromptInput
-          onGenerate={handleGenerate}
-          isGenerating={isGenerating}
-          hasResults={hasResults}
-          externalPrompt={externalPrompt}
-          generationProgress={generationProgress}
-        />
-      </div>
-
-      {/* Error display */}
+      {/* ═══ Error display ═══ */}
       <AnimatePresence>
         {error && (
           <m.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="max-w-2xl mx-auto px-6 mb-6"
+            className="max-w-2xl mx-auto px-4 py-3 mt-2"
           >
-            <div className="rounded-2xl border border-red-500/20 bg-red-500/5 px-5 py-3 text-sm text-red-300 flex items-center justify-between backdrop-blur-sm">
-              <span>{error}</span>
-              <div className="flex items-center gap-2 ml-3">
+            <div className="rounded-xl border border-red-500/20 bg-red-500/5 px-4 py-2.5 text-sm text-red-300 flex items-center justify-between backdrop-blur-sm">
+              <span className="truncate">{error}</span>
+              <div className="flex items-center gap-2 ml-3 flex-shrink-0">
                 {currentPrompt && (
                   <button
-                    onClick={() => {
-                      setError(null);
-                      handleGenerate(currentPrompt, 4, currentAspectRatio, currentStyleRef.current, currentModelRef.current, currentEnhanceRef.current);
-                    }}
-                    className="px-3 py-1 text-xs rounded-lg bg-[#00bcd4]/15 text-[#00bcd4] border border-[#00bcd4]/20 hover:bg-[#00bcd4]/25 transition-colors"
+                    onClick={() => { setError(null); handleGenerate(currentPrompt, 4, currentAspectRatio); }}
+                    className="px-3 py-1 text-xs rounded-lg bg-[#7fffd4]/10 text-[#7fffd4] border border-[#7fffd4]/20 hover:bg-[#7fffd4]/20 transition-colors"
                   >
                     Retry
                   </button>
                 )}
                 <button onClick={() => setError(null)} className="text-red-400 hover:text-red-300 p-1">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18" />
-                    <line x1="6" y1="6" x2="18" y2="18" />
-                  </svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
                 </button>
               </div>
             </div>
@@ -438,16 +340,34 @@ export default function ImaginePage() {
         )}
       </AnimatePresence>
 
-      {/* Image grid — masonry layout */}
-      <div ref={gridTopRef} className={`max-w-7xl mx-auto px-1 sm:px-6 ${hasResults ? 'pt-4 pb-32' : ''}`}>
-        {/* Loading skeletons for in-progress rows */}
+      {/* ═══ Discover Section Header ═══ */}
+      {!hasResults && (
+        <div className="px-6 pt-4 pb-2">
+          <div className="flex items-center justify-between">
+            <h2 className="text-sm font-semibold text-white/60">Discover</h2>
+            <button
+              onClick={() => { refreshFavorites(); setShowFavorites(true); }}
+              className="flex items-center gap-1.5 text-xs text-pink-300/50 hover:text-pink-300 transition-colors"
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+              </svg>
+              {favCount > 0 ? `${favCount} Saved` : 'Favorites'}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ═══ Image Grid ═══ */}
+      <div ref={gridTopRef} className="max-w-7xl mx-auto px-2 sm:px-4">
+        {/* Loading skeletons */}
         {rows.filter((r) => r.isLoading).map((row) => (
-          <div key={row.id} className="mb-1 sm:mb-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-0.5 md:gap-1">
+          <div key={row.id} className="mb-2">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-1">
               {Array.from({ length: 4 }).map((_, i) => (
                 <div
                   key={i}
-                  className={`rounded-lg sm:rounded-2xl border border-white/[0.04] relative overflow-hidden ${
+                  className={`rounded-lg border border-white/[0.04] relative overflow-hidden ${
                     row.aspectRatio === '16:9' ? 'aspect-video' :
                     row.aspectRatio === '9:16' ? 'aspect-[9/16]' :
                     row.aspectRatio === '4:3' ? 'aspect-[4/3]' :
@@ -456,23 +376,20 @@ export default function ImaginePage() {
                   }`}
                 >
                   <div className="absolute inset-0 bg-[#12121a]" />
-                  <div className="absolute inset-0 shimmer opacity-60" style={{ animationDelay: `${i * 0.3}s` }} />
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#00bcd4]/[0.03] to-violet-500/[0.03] animate-pulse" style={{ animationDuration: '2.5s' }} />
-                  <div className="absolute bottom-3 left-0 right-0 flex justify-center">
-                    <span className="text-[10px] text-text-muted/50 font-body tracking-wider uppercase">Creating...</span>
-                  </div>
+                  <div className="absolute inset-0 shimmer opacity-40" style={{ animationDelay: `${i * 0.3}s` }} />
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#7fffd4]/[0.02] to-[#78a6ff]/[0.02] animate-pulse" style={{ animationDuration: '2.5s' }} />
                 </div>
               ))}
             </div>
           </div>
         ))}
 
-        {/* Masonry layout for completed images */}
+        {/* Masonry grid of generated images */}
         {rows.some((r) => !r.isLoading && r.images.length > 0) && (
-          <div className="columns-2 md:columns-3 lg:columns-4 gap-3">
+          <div className="columns-2 md:columns-3 lg:columns-4 gap-2">
             {rows.filter((r) => !r.isLoading && r.images.length > 0).flatMap((row) =>
               row.images.map((img, i) => (
-                <div key={img.id} className="break-inside-avoid mb-3">
+                <div key={img.id} className="break-inside-avoid mb-2">
                   <ImageCard
                     id={img.id}
                     src={img.url}
@@ -495,39 +412,39 @@ export default function ImaginePage() {
         {autoScrollEnabled && <div ref={sentinelRef} className="h-px" />}
 
         {hasResults && !autoScrollEnabled && !isGenerating && currentPrompt && (
-          <div className="text-center py-8">
+          <div className="text-center py-6">
             <button
               onClick={() => generateMoreRows()}
-              className="px-6 py-3 rounded-2xl text-sm font-medium bg-white/[0.04] text-text-secondary hover:text-text-primary hover:bg-white/[0.08] border border-white/[0.06] hover:border-white/[0.12] transition-all"
+              className="px-5 py-2.5 rounded-xl text-sm font-medium bg-white/[0.04] text-white/50 hover:text-white/80 hover:bg-white/[0.08] border border-white/[0.06] hover:border-white/[0.1] transition-all"
             >
-              Generate more variations
+              Generate more
             </button>
           </div>
         )}
       </div>
 
-      {/* Empty state */}
+      {/* ═══ Empty state (when no results and no templates needed) ═══ */}
       {!hasResults && !isGenerating && (
-        <div className="text-center py-12 px-6">
-          <div className="max-w-md mx-auto">
-            <div className="w-20 h-20 rounded-3xl bg-[#00bcd4]/10 flex items-center justify-center mx-auto mb-6">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="hsl(262, 83%, 66%)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="opacity-60">
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                <circle cx="8.5" cy="8.5" r="1.5" />
-                <polyline points="21 15 16 10 5 21" />
-              </svg>
-            </div>
-            <p className="text-text-secondary font-body text-lg mb-1">Start creating</p>
-            <p className="text-text-muted text-sm">Enter a prompt above to begin creating</p>
+        <div className="text-center py-8 px-6">
+          <div className="max-w-sm mx-auto">
+            <p className="text-white/20 text-sm">Type a prompt below to start creating</p>
           </div>
         </div>
       )}
 
-      {/* Favorites drawer */}
+      {/* ═══ Floating Prompt Input (Grok-style bottom bar) ═══ */}
+      <PromptInput
+        onGenerate={handleGenerate}
+        isGenerating={isGenerating}
+        hasResults={hasResults}
+        externalPrompt={externalPrompt}
+        generationProgress={generationProgress}
+      />
+
+      {/* ═══ Favorites Drawer ═══ */}
       <AnimatePresence>
         {showFavorites && (
           <>
-            {/* Backdrop */}
             <m.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -535,105 +452,48 @@ export default function ImaginePage() {
               className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
               onClick={() => setShowFavorites(false)}
             />
-
-            {/* Drawer */}
             <m.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className="fixed top-0 right-0 bottom-0 z-50 w-full max-w-lg glass-strong border-l border-white/[0.08] flex flex-col"
+              className="fixed top-0 right-0 bottom-0 z-50 w-full max-w-lg bg-[#111113]/95 backdrop-blur-xl border-l border-white/[0.08] flex flex-col"
             >
-              {/* Drawer header */}
-              <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.06]">
+              <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.06]">
                 <div className="flex items-center gap-3">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="#f472b6" stroke="#f472b6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="#f472b6" stroke="#f472b6" strokeWidth="2">
                     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
                   </svg>
-                  <h2 className="text-lg font-display font-semibold text-text-primary">Favorites</h2>
-                  {favorites.length > 0 && (
-                    <span className="text-xs text-text-muted bg-white/[0.04] px-2 py-0.5 rounded-full">
-                      {favorites.length}
-                    </span>
-                  )}
+                  <h2 className="text-base font-semibold text-white/90">Favorites</h2>
+                  {favorites.length > 0 && <span className="text-xs text-white/30 bg-white/[0.04] px-2 py-0.5 rounded-full">{favorites.length}</span>}
                 </div>
-                <button
-                  onClick={() => setShowFavorites(false)}
-                  className="p-2 rounded-xl hover:bg-white/[0.06] transition-all text-text-muted hover:text-text-primary"
-                >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18" />
-                    <line x1="6" y1="6" x2="18" y2="18" />
-                  </svg>
+                <button onClick={() => setShowFavorites(false)} className="p-2 rounded-xl hover:bg-white/[0.06] transition-all text-white/40 hover:text-white/80">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
                 </button>
               </div>
-
-              {/* Drawer content */}
               <div className="flex-1 overflow-y-auto p-4">
                 {favorites.length === 0 ? (
                   <div className="flex flex-col items-center justify-center h-full text-center py-16">
-                    <div className="w-16 h-16 rounded-2xl bg-pink-500/10 flex items-center justify-center mb-4">
-                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="hsl(330, 80%, 60%)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="opacity-40">
-                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                      </svg>
-                    </div>
-                    <p className="text-text-secondary font-body mb-1">No favorites yet</p>
-                    <p className="text-xs text-text-muted max-w-[240px]">
-                      Heart images you love and they&apos;ll be saved here permanently
-                    </p>
+                    <p className="text-white/30 text-sm mb-1">No favorites yet</p>
+                    <p className="text-xs text-white/15 max-w-[240px]">Heart images you love and they&apos;ll be saved here</p>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-2 gap-2">
                     {favorites.map((fav) => (
-                      <m.div
-                        key={fav.id}
-                        layout
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.9 }}
-                        className="group relative rounded-xl overflow-hidden"
-                      >
-                        <img
-                          src={fav.blobUrl}
-                          alt={fav.prompt}
-                          className="w-full aspect-square object-cover"
-                          loading="lazy"
-                        />
-
-                        {/* Hover overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                          <div className="absolute bottom-0 left-0 right-0 p-3">
+                      <m.div key={fav.id} layout className="group relative rounded-xl overflow-hidden">
+                        <img src={fav.blobUrl} alt={fav.prompt} className="w-full aspect-square object-cover" loading="lazy" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                          <div className="absolute bottom-0 left-0 right-0 p-2.5">
                             <p className="text-[10px] text-white/60 line-clamp-2 mb-2">{fav.prompt}</p>
                             <div className="flex gap-1.5">
-                              <button
-                                onClick={() => handleRemoveFavorite(fav.id)}
-                                className="p-1.5 rounded-lg bg-red-500/20 hover:bg-red-500/30 transition-all"
-                                title="Remove from favorites"
-                              >
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                  <path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" />
-                                </svg>
+                              <button onClick={() => { removeFavorite(fav.id); refreshFavorites(); }} className="p-1.5 rounded-lg bg-red-500/20 hover:bg-red-500/30" title="Remove">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" /></svg>
                               </button>
-                              <a
-                                href={fav.blobUrl}
-                                download={`arcanea-fav-${fav.id}.png`}
-                                className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 transition-all"
-                                title="Download"
-                                onClick={(e) => e.stopPropagation()}
-                              >
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                  <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
-                                  <polyline points="7 10 12 15 17 10" />
-                                  <line x1="12" y1="15" x2="12" y2="3" />
-                                </svg>
+                              <a href={fav.blobUrl} download={`arcanea-fav-${fav.id}.png`} className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20" title="Download" onClick={(e) => e.stopPropagation()}>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg>
                               </a>
                             </div>
                           </div>
-                        </div>
-
-                        {/* Date */}
-                        <div className="absolute top-2 right-2 px-1.5 py-0.5 rounded text-[9px] text-white/50 bg-black/40 backdrop-blur-sm">
-                          {new Date(fav.savedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
                         </div>
                       </m.div>
                     ))}

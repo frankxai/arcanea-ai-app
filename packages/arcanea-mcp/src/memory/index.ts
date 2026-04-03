@@ -3,7 +3,7 @@
 
 export interface CreativeSession {
   id: string;
-  startedAt: Date;
+  startedAt: string | Date;
   gatesExplored: number[];
   luminorsConsulted: string[];
   creaturesEncountered: string[];
@@ -21,7 +21,7 @@ export interface CreationRef {
   name: string;
   element?: string;
   gate?: number;
-  createdAt: Date;
+  createdAt?: string | Date;
   summary: string;
 }
 
@@ -47,11 +47,38 @@ export interface Milestone {
 // TODO: Add SQLite persistence for production
 const sessions = new Map<string, CreativeSession>();
 
+const MEMORY_FILE_PATH = `${process.env.HOME || process.env.USERPROFILE || '.'}/.arcanea/memories.json`;
+
+function normalizeCreation(sessionId: string, creation: CreationRef): CreationRef {
+  return {
+    ...creation,
+    summary: creation.summary ?? '',
+    name: creation.name ?? creation.id ?? `creation-${sessionId}`,
+    createdAt: creation.createdAt instanceof Date
+      ? creation.createdAt.toISOString()
+      : typeof creation.createdAt === 'string'
+        ? creation.createdAt
+        : new Date().toISOString(),
+  };
+}
+
+export function getMemoryFilePath(): string {
+  return MEMORY_FILE_PATH;
+}
+
+export function listSessions(): string[] {
+  return Array.from(sessions.keys());
+}
+
+export function deleteSession(sessionId: string): boolean {
+  return sessions.delete(sessionId);
+}
+
 export function getOrCreateSession(sessionId: string): CreativeSession {
   if (!sessions.has(sessionId)) {
     sessions.set(sessionId, {
       id: sessionId,
-      startedAt: new Date(),
+      startedAt: new Date().toISOString(),
       gatesExplored: [],
       luminorsConsulted: [],
       creaturesEncountered: [],
@@ -90,7 +117,7 @@ export function recordCreatureEncountered(sessionId: string, creature: string): 
 
 export function recordCreation(sessionId: string, creation: CreationRef): void {
   const session = getOrCreateSession(sessionId);
-  session.creations.push(creation);
+  session.creations.push(normalizeCreation(sessionId, creation));
 }
 
 export function getSessionSummary(sessionId: string): {
@@ -106,7 +133,14 @@ export function getSessionSummary(sessionId: string): {
     luminorsConsulted: session.luminorsConsulted.length,
     creaturesDefeated: session.creaturesEncountered.length,
     creationsGenerated: session.creations.length,
-    duration: Date.now() - session.startedAt.getTime(),
+    duration: Math.max(
+      0,
+      Date.now() - (
+        session.startedAt instanceof Date
+          ? session.startedAt.getTime()
+          : Date.parse(session.startedAt)
+      )
+    ),
   };
 }
 

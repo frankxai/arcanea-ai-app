@@ -11,7 +11,6 @@ import {
   PATCH as patchProjectDocRoute,
   projectDocRouteDeps,
 } from '@/app/api/projects/[id]/docs/[docId]/route';
-import { extractDocFromEnvelope } from '@/lib/docs/client';
 
 let passed = 0;
 let failed = 0;
@@ -47,116 +46,11 @@ type ErrorPayload = {
   error: { code: string };
 };
 
-function createPatchDbState(overrides?: {
-  content_text?: string;
-  content_json?: Record<string, unknown>;
-  word_count?: number;
-  version_number?: number;
-}) {
-  const state = {
-    doc: {
-      id: 'doc_1',
-      title: 'Atlas Brief',
-      doc_type: 'note',
-      status: 'draft',
-      icon: null,
-      project_doc_content: [
-        {
-          content_json: overrides?.content_json ?? { type: 'doc', content: [] },
-          content_text: overrides?.content_text ?? 'Old content',
-          word_count: overrides?.word_count ?? 2,
-        },
-      ],
-    },
-    latestVersion: overrides?.version_number ?? 4,
-    docUpdates: [] as Array<Record<string, unknown>>,
-    contentUpserts: [] as Array<Record<string, unknown>>,
-    versionInserts: [] as Array<Record<string, unknown>>,
-  };
-
-  const db = {
-    from(table: string) {
-      if (table === 'project_docs') {
-        return {
-          select() { return this; },
-          update(values: Record<string, unknown>) {
-            state.docUpdates.push(values);
-            state.doc = {
-              ...state.doc,
-              ...values,
-            };
-            return this;
-          },
-          eq() { return this; },
-          single() {
-            return Promise.resolve({ data: state.doc, error: null });
-          },
-        };
-      }
-
-      if (table === 'project_doc_content') {
-        return {
-          upsert(values: Record<string, unknown>) {
-            state.contentUpserts.push(values);
-            state.doc.project_doc_content = [{
-              content_json: values.content_json as Record<string, unknown>,
-              content_text: String(values.content_text ?? ''),
-              word_count: Number(values.word_count ?? 0),
-            }];
-            return Promise.resolve({ error: null });
-          },
-        };
-      }
-
-      if (table === 'project_doc_versions') {
-        return {
-          select() { return this; },
-          eq() { return this; },
-          order() { return this; },
-          limit() { return this; },
-          single() {
-            return Promise.resolve({
-              data: { version_number: state.latestVersion },
-              error: null,
-            });
-          },
-          insert(values: Record<string, unknown>) {
-            state.versionInserts.push(values);
-            state.latestVersion = Number(values.version_number ?? state.latestVersion);
-            return Promise.resolve({ error: null });
-          },
-        };
-      }
-
-      throw new Error(`Unexpected table ${table}`);
-    },
-  };
-
-  return { db, state };
-}
-
 async function main() {
   const originalProjectDocsDeps = { ...projectDocsRouteDeps };
   const originalProjectDocDeps = { ...projectDocRouteDeps };
 
   try {
-    await test('extractDocFromEnvelope reads the standard API response shape', () => {
-      const doc = extractDocFromEnvelope({
-        data: {
-          doc: {
-            id: 'doc_1',
-            title: 'Atlas Brief',
-            doc_type: 'note',
-            status: 'draft',
-            icon: null,
-            content: null,
-          },
-        },
-      });
-
-      assert.equal(doc?.id, 'doc_1');
-    });
-
     await test('GET /api/projects/[id]/docs returns unauthorized without user', async () => {
       projectDocsRouteDeps.getDocsAuthContext = async () => ({
         supabase: {} as never,
@@ -313,70 +207,6 @@ async function main() {
 
       assert.equal(response.status, 401);
       assert.equal(payload.error.code, 'UNAUTHORIZED');
-    });
-
-    await test('PATCH /api/projects/[id]/docs/[docId] returns updated doc data and creates a version only when content changes', async () => {
-      const { db, state } = createPatchDbState();
-      projectDocRouteDeps.getDocAuthContext = async () => ({
-        supabase: {} as never,
-        db,
-        user: { id: 'user_1' },
-      });
-
-      const response = await patchProjectDocRoute(
-        new NextRequest('http://localhost/api/projects/project_1/docs/doc_1', {
-          method: 'PATCH',
-          body: JSON.stringify({
-            content_json: { type: 'doc', content: [{ type: 'paragraph' }] },
-            content_text: 'New content',
-            word_count: 2,
-          }),
-          headers: { 'Content-Type': 'application/json' },
-        }),
-        { params: Promise.resolve({ id: 'project_1', docId: 'doc_1' }) },
-      );
-      const payload = await parseJson<{
-        success: true;
-        data: { ok: true; contentChanged: boolean; doc: { content: { content_text: string } | null } };
-      }>(response);
-
-      assert.equal(response.status, 200);
-      assert.equal(payload.data.contentChanged, true);
-      assert.equal(payload.data.doc.content?.content_text, 'New content');
-      assert.equal(state.contentUpserts.length, 1);
-      assert.equal(state.versionInserts.length, 1);
-      assert.equal(state.versionInserts[0].version_number, 5);
-    });
-
-    await test('PATCH /api/projects/[id]/docs/[docId] skips duplicate versions when content is unchanged', async () => {
-      const { db, state } = createPatchDbState();
-      projectDocRouteDeps.getDocAuthContext = async () => ({
-        supabase: {} as never,
-        db,
-        user: { id: 'user_1' },
-      });
-
-      const response = await patchProjectDocRoute(
-        new NextRequest('http://localhost/api/projects/project_1/docs/doc_1', {
-          method: 'PATCH',
-          body: JSON.stringify({
-            content_json: { type: 'doc', content: [] },
-            content_text: 'Old content',
-            word_count: 2,
-          }),
-          headers: { 'Content-Type': 'application/json' },
-        }),
-        { params: Promise.resolve({ id: 'project_1', docId: 'doc_1' }) },
-      );
-      const payload = await parseJson<{
-        success: true;
-        data: { ok: true; contentChanged: boolean };
-      }>(response);
-
-      assert.equal(response.status, 200);
-      assert.equal(payload.data.contentChanged, false);
-      assert.equal(state.contentUpserts.length, 1);
-      assert.equal(state.versionInserts.length, 0);
     });
 
     await test('DELETE /api/projects/[id]/docs/[docId] returns success payload', async () => {

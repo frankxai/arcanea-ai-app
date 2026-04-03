@@ -65,7 +65,7 @@ function parseTags(value) {
     .filter(Boolean);
 }
 
-function buildEntry({ vault, content, tags = [], category, source = "mcp", confidence = "medium", author, context }) {
+function buildEntry({ vault, content, tags = [], category, source = "mcp", confidence = "medium", author, context, entryType = "generic", metadata = {} }) {
   const timestamp = new Date().toISOString();
   const prefix = vault === "operational" ? "ops" : vault.slice(0, 5);
   const id = `${prefix}_${timestamp.replace(/[-:TZ.]/g, "").slice(0, 14)}_${slugPart(category || content, "entry").slice(0, 12)}`;
@@ -78,6 +78,11 @@ function buildEntry({ vault, content, tags = [], category, source = "mcp", confi
       author: author || "Frank",
       coAuthored: false,
       tags,
+      entryType,
+      metadata: {
+        ...metadata,
+        entryType,
+      },
       createdAt: timestamp,
     };
   }
@@ -89,6 +94,11 @@ function buildEntry({ vault, content, tags = [], category, source = "mcp", confi
     confidence,
     source,
     tags,
+    entryType,
+    metadata: {
+      ...metadata,
+      entryType,
+    },
     createdAt: timestamp,
   };
 }
@@ -196,6 +206,11 @@ const tools = [
         author: { type: "string" },
         context: { type: "string" },
         metadata: { type: "object" },
+        project: { type: "string" },
+        routine: { type: "string" },
+        state: { type: "string" },
+        packName: { type: "string" },
+        assetName: { type: "string" },
       },
       required: ["vault", "content"],
     },
@@ -279,6 +294,11 @@ async function callTool(name, args = {}) {
       context: args.context,
       entryType: args.entryType,
       metadata: args.metadata,
+      project: args.project,
+      routine: args.routine,
+      state: args.state,
+      packName: args.packName,
+      assetName: args.assetName,
     });
     if (!validation.valid) {
       throw new Error(validation.errors.join("; "));

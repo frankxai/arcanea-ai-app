@@ -1,7 +1,7 @@
 {
   "name": "@arcanea/mcp-server",
   "version": "0.3.0",
-  "private": true,
+  "private": false,
   "description": "Arcanea MCP Server - Worldbuilding toolkit, creative companion, and magic maker",
   "type": "module",
   "main": "dist/index.js",
@@ -14,11 +14,19 @@
     "start": "node dist/cli.js",
     "clean": "rm -rf dist"
   },
-  "keywords": ["mcp", "arcanea", "worldbuilding", "creative", "ai", "fantasy"],
+  "keywords": [
+    "mcp",
+    "arcanea",
+    "worldbuilding",
+    "creative",
+    "ai",
+    "fantasy"
+  ],
   "author": "FrankX",
   "license": "MIT",
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^0.5.0"
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@types/node": "^20.10.0",

@@ -4,7 +4,6 @@ import { useState, useCallback, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { DocEditor, type DocEditorSavePayload } from '@/components/docs/doc-editor';
-import { extractDocFromEnvelope, type DocApiRecord } from '@/lib/docs/client';
 import { DOC_TYPE_LABELS, DOC_STATUS_LABELS, type DocType, type DocStatus } from '@/lib/docs/types';
 import type { JSONContent } from 'novel';
 
@@ -12,7 +11,18 @@ import type { JSONContent } from 'novel';
 // Types
 // ---------------------------------------------------------------------------
 
-type DocData = DocApiRecord;
+interface DocData {
+  id: string;
+  title: string;
+  doc_type: DocType;
+  status: DocStatus;
+  icon: string | null;
+  content: {
+    content_json: Record<string, unknown>;
+    content_text: string;
+    word_count: number;
+  } | null;
+}
 
 type SaveState = 'idle' | 'saving' | 'saved' | 'error';
 
@@ -39,7 +49,8 @@ export default function DocEditorPage() {
           router.push(`/projects/${params.id}/docs`);
           return;
         }
-        const docPayload = extractDocFromEnvelope(await res.json());
+        const data = await res.json() as { data?: { doc?: DocData }; doc?: DocData };
+        const docPayload = data.data?.doc ?? data.doc;
         if (!docPayload) {
           router.push(`/projects/${params.id}/docs`);
           return;
@@ -69,26 +80,7 @@ export default function DocEditorPage() {
             word_count: payload.word_count,
           }),
         });
-        if (!res.ok) {
-          setSaveState('error');
-          return;
-        }
-
-        const nextDoc = extractDocFromEnvelope(await res.json());
-        if (nextDoc) {
-          setDoc(nextDoc);
-        } else {
-          setDoc((prev) => prev ? {
-            ...prev,
-            content: {
-              content_json: payload.content_json,
-              content_text: payload.content_text,
-              word_count: payload.word_count,
-            },
-          } : prev);
-        }
-
-        setSaveState('saved');
+        setSaveState(res.ok ? 'saved' : 'error');
         if (res.ok) {
           setTimeout(() => setSaveState('idle'), 2000);
         }
@@ -101,20 +93,11 @@ export default function DocEditorPage() {
 
   const handleTitleBlur = useCallback(async () => {
     if (!doc || title === doc.title) return;
-    const res = await fetch(`/api/projects/${params.id}/docs/${params.docId}`, {
+    await fetch(`/api/projects/${params.id}/docs/${params.docId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title }),
     });
-    if (!res.ok) return;
-
-    const nextDoc = extractDocFromEnvelope(await res.json());
-    if (nextDoc) {
-      setDoc(nextDoc);
-      setTitle(nextDoc.title);
-      return;
-    }
-
     setDoc((prev) => (prev ? { ...prev, title } : prev));
   }, [doc, title, params.id, params.docId]);
 
@@ -126,7 +109,6 @@ export default function DocEditorPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ doc_type: newType }),
       });
-      setDoc((prev) => (prev ? { ...prev, doc_type: newType } : prev));
     },
     [params.id, params.docId]
   );

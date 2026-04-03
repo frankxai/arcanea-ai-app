@@ -49,7 +49,7 @@ describe('MCP Server — Canon Compliance', () => {
   });
 
   it('domains should follow canonical order', () => {
-    const expected = ["Foundation", "Flow", "Fire", "Heart", "Voice", "Sight", "Crown", "Shift", "Unity", "Source"];
+    const expected = ["Foundation", "Flow", "Fire", "Heart", "Voice", "Sight", "Crown", "Starweave", "Unity", "Source"];
     const actual = CANON_GATES.map(g => g.domain);
     assert.deepEqual(actual, expected);
   });

@@ -1,364 +1,437 @@
-# Massive Action Log - 2026-04-03
+# Arcanea Massive Action Log
 
-This file is the durable operating log for the recent Arcanea execution cycle across product, infrastructure, agent control-plane work, and repo strategy.
+Date: 2026-04-03
+Scope: platform control plane, repo constellation, orchestration, runtime harnesses, billing strategy, project graph, creator graph, and operational conclusions
 
-## Executive Summary
+## Current platform state
 
-The highest-leverage work was completed in `arcanea-ai-app` and promoted to `main` in multiple verified tranches instead of being dumped from mixed branches.
+- Main control plane repo: [Arcanea](C:/Users/frank/Arcanea)
+- Main active branch: `integration/agent-control-plane-unification`
+- Current verified commit at time of log: `fc69fa3b7`
+- Deep health status:
+  - `20 total repos`
+  - `19 ok`
+  - `1 warn`
+  - `0 error`
+  - `12 smoke passed`
+  - `0 smoke failed`
+- Remaining repo warning:
+  - `arcanea-ecosystem` only
 
-What is now true on `origin/main`:
+## Core architectural conclusion
 
-- Project workspaces are real product objects.
-- Sessions, creations, and memories can link into a project graph.
-- Chat uses project-aware retrieval instead of blunt context dumping.
-- Trace and enrichment scaffolding exist for project continuity.
-- The docs MVP is hardened and API-tested.
-- Guardian/gallery media is cleaner and explicit unsafe imagery was removed from live code.
-- Agent coordination now has a repo-level control plane.
-- SIS/Starlight operator tooling is live, schema-validated, and clean-worktree-safe.
-- CI is stricter: Node 20 pinned, `pnpm` enforced, typecheck is a real gate.
+Arcanea should operate as a layered platform, not a single app and not a pile of forks.
 
-## What Landed To `main`
+- `arcanea`
+  - control plane
+  - product surfaces
+  - ops UI
+  - memory and graph visibility
+  - billing and entitlements
+  - registry, policy, handoffs, recovery
+- `arcanea-flow`
+  - Arcanea-native orchestration semantics
+  - high-level decomposition and routing
+  - should support Claude, Codex, OpenCode, Gemini, and future runtimes
+- `arcanea-orchestrator`
+  - heavy execution substrate
+  - worktrees, sessions, fanout, status, review loops
+- runtime harnesses
+  - `arcanea-code`
+  - `oh-my-arcanea`
+  - `arcanea-opencode`
+  - `claude-arcanea`
+  - `codex-arcanea`
+  - `gemini-arcanea`
 
-Recent `origin/main` milestone commits:
+This is better than the older state because it separates:
 
-- `71356dbcf` `merge: promote agent control plane and docs hardening`
-- `d3c618dd7` `merge: promote SIS runtime hardening and CI discipline`
-- `3c75c66d4` `docs(ops): record SIS runtime promotion and next review backlog`
+- visibility from execution
+- orchestration semantics from runtime adapters
+- platform identity from upstream fork baggage
 
-Key prior product promotion work already on `main` from this cycle:
+## Repo constellation
 
-- project workspaces and graph APIs
-- project-aware retrieval
-- trace/enrichment scaffolding
-- `/projects` and `/projects/[id]`
-- docs routes under `/projects/[id]/docs`
-- project/session/creation linking actions
-- media cleanup and guardian-image enlargement
-- verification gates and Playwright smoke
+### Platform and orchestration
 
-## Main Product Work Completed In `arcanea-ai-app`
+- `arcanea`
+  - main platform monorepo and control plane
+  - branch: `integration/agent-control-plane-unification`
+  - status: clean
+- `arcanea-flow`
+  - swarm and multi-agent orchestration engine
+  - branch: `main`
+  - pushed and reconciled
+  - status: clean
+- `arcanea-orchestrator`
+  - worktree-centric execution substrate based on Composio agent-orchestrator
+  - branch: `main`
+  - pushed
+  - status: clean
+- `arcanea-ecosystem`
+  - ecosystem docs and portfolio registry
+  - branch: `master`
+  - still dirty because of legacy submodule model
 
-### 1. Project Workspace Spine
+### Runtime harnesses
 
-Built and promoted:
+- `arcanea-code`
+  - Arcanea OpenCode fork
+  - branch: `dev`
+  - pushed
+  - status: clean
+- `oh-my-arcanea`
+  - Arcanea operator workflow overlay
+  - branch: `dev`
+  - status: clean
+- `arcanea-opencode`
+  - Arcanea OpenCode legacy compatibility harness
+  - branch: `dev`
+  - status: clean
+- `claude-arcanea`
+  - Claude Code Arcanea harness
+  - branch: `master`
+  - pushed
+  - status: clean
+- `codex-arcanea`
+  - Codex Arcanea harness
+  - branch: `master`
+  - status: clean
 
-- project CRUD and project pages
-- graph-backed project views
-- project progress and completion guidance
-- session attachment/detachment
-- creation attachment/detachment
-- memory linkage
-- project-aware chat continuity
+### Verticals and adjacent products
 
-This changed Arcanea from “chat plus saves” into a BYOK-first creative intelligence workspace with a real continuity container.
+- `arcanea-infogenius`
+  - visual intelligence and infographic systems
+  - status: clean
+- `arcanea-onchain`
+  - economic and onchain layer
+  - status: clean
+- `arcanea-claw`
+  - media engine and creation workflows
+  - status: clean
+- `arcanea-mobile`
+  - mobile surface
+  - status: clean
 
-### 2. Project-Aware Retrieval
+### Embedded workspace modules in main repo
 
-Built and promoted:
+- `arcanea-agents`
+- `arcanea-lore`
+- `arcanea-records`
+- `arcanea-soul`
+- `arcanea-companion`
+- `arcanea-library-superintelligence`
+- `arcanea-game-development`
 
-- ranked retrieval over project sessions, creations, and memories
-- graph-summary-aware retrieval block construction
-- trace metadata for retrieval payload shape
-- project chat traces for context loading and provider routing
+## Major actions completed
 
-Why this matters:
+### Command and shell surface
 
-- continuity improves chat quality without requiring managed-default inference
-- the workspace graph becomes useful, not just stored
-- Arcanea’s moat shifts toward accumulated work and context instead of prompt forwarding
+Local shell wrappers and profile routing were established so commands resolve to local repos instead of stale global shims.
 
-### 3. Trace And Enrichment Scaffolding
+Working command surfaces include:
 
-Built and promoted:
+- `arcanea`
+- `arcanea-flow`
+- `arcanea-flow-mcp`
+- `ao`
+- `arcanea-orchestrator`
+- `oh-my-arcanea`
+- `opencode-arcanea`
+- `arcanea-opencode`
+- `opencode`
 
-- project activity traces
-- enrichment evaluation helpers
-- graph-summary derivation
-- async-enrichment task shape for later background execution
+### Control plane and visibility
 
-Why this matters:
+Built and stabilized:
 
-- this is the bridge from “organized workspace” to “intelligent workspace”
-- it sets up later queue-based graph enrichment and usage observability
+- repo registry
+  - [.arcanea/projects/repo-constellation.json](C:/Users/frank/Arcanea/.arcanea/projects/repo-constellation.json)
+- health gate
+  - [scripts/ops-health-check.js](C:/Users/frank/Arcanea/scripts/ops-health-check.js)
+- machine readiness gate
+  - [scripts/machine-readiness-check.js](C:/Users/frank/Arcanea/scripts/machine-readiness-check.js)
+- internal ops UI
+  - [apps/web/app/ops/page.tsx](C:/Users/frank/Arcanea/apps/web/app/ops/page.tsx)
+  - [apps/web/app/api/ops/internal/route.ts](C:/Users/frank/Arcanea/apps/web/app/api/ops/internal/route.ts)
+  - [apps/web/lib/ops/internal-dashboard.ts](C:/Users/frank/Arcanea/apps/web/lib/ops/internal-dashboard.ts)
+- command nav entry
+  - [apps/web/app/command/sidebar.tsx](C:/Users/frank/Arcanea/apps/web/app/command/sidebar.tsx)
 
-### 4. Docs MVP Hardening
+### Arcanea Flow productization
 
-Reviewed Claude’s notes/docs direction and hardened it:
+Completed high-value import and cleanup slices so `arcanea-flow` is not just a dirty fork but a more coherent Arcanea-native orchestration repo.
 
-- docs routes normalized onto shared API helpers
-- project-scoped doc access enforced
-- editor payload contract corrected
-- `novel` integration corrected to real library usage
-- docs API contract tests added
+Imported or normalized:
 
-Why this matters:
+- `claims`
+- `memory`
+- `hooks`
+- `shared`
+- `mcp`
+- `providers`
+- `swarm`
+- `security`
 
-- the direction is correct: project-native docs
-- the risk was contract drift, not product vision
-- this made the docs slice real enough to keep building on
+Also completed:
 
-### 5. Media / Gallery Cleanup
+- remote normalization
+- local shell launchers
+- `ao` delegation bridge
+- push and reconciliation to `origin/main`
+
+### Arcanea Orchestrator productization
+
+Promoted from satellite to real top-level managed repo.
 
 Completed:
 
-- removed the explicit unsafe Lyssandria image from live code and repo use
-- canonicalized first-party guardian media to local registry patterns
-- added enlarge-on-click behavior for guardian imagery
-- added media contract tests so remote drift does not silently return
+- local shell wrappers
+- config template
+- Arcanea-shaped CLI/help/config surface
+- integration into deep health checks
+- generated dashboard server output ignored cleanly in git
 
-Why this matters:
+### SIS and canonical memory layer
 
-- content safety and brand control
-- fewer broken/remote-drifting gallery surfaces
-- tighter first-party media discipline
+Built and verified a real canonical memory path instead of loose notes and stale compatibility shims.
 
-## Agent / Control Plane Work Completed
+Completed:
 
-### 1. Repo-Level Agent Contract
+- schema definition
+  - [scripts/sis-schema.mjs](C:/Users/frank/Arcanea/scripts/sis-schema.mjs)
+- schema validation
+  - [scripts/sis-schema-check.mjs](C:/Users/frank/Arcanea/scripts/sis-schema-check.mjs)
+- write path
+  - [scripts/sis-write.mjs](C:/Users/frank/Arcanea/scripts/sis-write.mjs)
+- contract check
+  - [scripts/sis-contract-check.mjs](C:/Users/frank/Arcanea/scripts/sis-contract-check.mjs)
+- legacy export
+  - [scripts/sis-legacy-export.mjs](C:/Users/frank/Arcanea/scripts/sis-legacy-export.mjs)
+- compatibility MCP
+  - [scripts/arcanea-memory-compat-mcp.mjs](C:/Users/frank/Arcanea/scripts/arcanea-memory-compat-mcp.mjs)
+- server extension
+  - [scripts/sis-mcp-server.mjs](C:/Users/frank/Arcanea/scripts/sis-mcp-server.mjs)
+- launcher surface
+  - [.arcanea/scripts/arcanea.ps1](C:/Users/frank/Arcanea/.arcanea/scripts/arcanea.ps1)
+  - [.arcanea/scripts/sis-bootstrap.ps1](C:/Users/frank/Arcanea/.arcanea/scripts/sis-bootstrap.ps1)
 
-Promoted and made authoritative:
+Validation now passes:
 
-- `AGENTS.md`
-- `CLAUDE.md`
-- `.claude/CLAUDE.md`
-- planning state/backlog/changelog/protocol docs
+- `npm run sis:check`
+- `arcanea sis stats-json`
 
-The intended hierarchy is:
+Also repaired one malformed JSON line in the canonical operational SIS vault to make the stricter schema checks truthful and useful.
 
-1. `AGENTS.md`
-2. latest `planning-with-files/*`
-3. `.arcanea/`
+### Canon and test repair
 
-Why this matters:
+Previously red baseline tests were fixed so the main repo no longer had a fake production blocker.
 
-- Claude, Codex, Cursor, Gemini, opencode, and future agent surfaces should stop drifting
-- planning becomes discoverable and explicit
-- branch discipline and task contract expectations are now repo-visible
+Repaired:
 
-### 2. SIS / Starlight Runtime
+- mythology constant mismatches
+- MCP memory contract gaps
+- stale canon expectations in tests
 
-Promoted and verified:
+Result:
 
-- SIS bridge
-- SIS MCP server
-- SIS schema validation
-- SIS write path
-- SIS legacy export
-- Arcanea memory compatibility MCP bridge
-- PowerShell operator launchers
+- `npm run test:quick`
+  - `664 passed`
+  - `0 failed`
 
-Why this matters:
+## Strategic conclusions
 
-- the operator layer now works on the actual machine instead of being just a concept
-- SIS is now validated, writable, exportable, and testable
-- legacy compatibility and future canonical memory can coexist
+### Arcanea Flow should not be Claude-only
 
-### 3. CI And Discipline
+`arcanea-flow` should be runtime-agnostic and usable by:
 
-Promoted:
+- Claude Code
+- Codex
+- OpenCode
+- Gemini
+- future internal or external agents
 
-- `.nvmrc` pin to Node 20
-- CI rejects `npm`
-- CI checks `.nvmrc` against configured Node
-- TypeScript check is blocking instead of informational
+To support that fully, `arcanea-flow` still needs:
 
-Why this matters:
+- stable CLI contracts
+- machine-readable JSON output
+- explicit run IDs
+- deterministic delegation to `ao`
+- traces persisted back into the control plane
 
-- the repo now rejects a class of silent drift
-- fresh-worktree verification is more honest
-- local machine mismatch is now explicit rather than implicit
+### Billing strategy
 
-## Branch Strategy Used
+Best conclusion:
 
-The correct pattern during this cycle was:
-
-- do not trust dirty local `main`
-- isolate mixed work on integration branches
-- cut clean promotion branches from current `origin/main`
-- replay only safe commits
-- verify in a clean worktree
-- merge only the safe tranche
-
-This pattern was used for:
-
-- `promote/agent-control-plane`
-- `promote/sis-runtime-hardening`
-
-That approach prevented another mixed “session accumulation” dump onto trunk.
-
-## Repos Worked In Directly
-
-### Primary execution repo
-
-- `frankxai/arcanea-ai-app`
-
-This was the correct execution surface because it is the product center for:
-
-- `arcanea.ai`
-- workspace graph
-- chat / docs / projects / memory / creations
-- retrieval
-- verification
-- runtime and operator tooling
-
-### Context / remote references configured in this repo
-
-- `origin` -> `https://github.com/frankxai/arcanea-ai-app.git`
-- `oss` -> `https://github.com/frankxai/arcanea.git`
-- `records` -> `https://github.com/frankxai/arcanea-records.git`
-
-## Repos Considered But Not Modified In This Execution Slice
-
-These mattered strategically, but they were not the highest-leverage place to act first:
-
-- `frankxai/arcanea`
-- `frankxai/arcanea-records`
-- `frankxai/arcanea-code`
-- `frankxai/oh-my-arcanea`
+- short-term if pre-BV monetization is needed:
+  - `LemonSqueezy`
+- long-term primary rail:
+  - `Stripe`
 
 Reason:
 
-- the product spine in `arcanea-ai-app` needed to be real before broad ecosystem/community/secondary repo work would compound
-- `arcanea-code` and `oh-my-arcanea` still need dedicated branch/merge audits before safe sync
-- `arcanea` and `arcanea-records` matter for OSS/story/provenance, but they were not the core bottleneck
+- Stripe is better for the final Arcanea shape:
+  - subscriptions
+  - credits
+  - team/org billing
+  - premium execution
+  - future marketplace or payouts
+- LemonSqueezy is better for early merchant-of-record simplicity before business setup is ready
 
-## Local Arcanea-Related Repos / Worktrees Observed On This Machine
+Most important billing principle:
 
-Observed under `C:\Users\frank` during this pass:
+- payment provider should not be the product truth
+- `Supabase` should hold:
+  - entitlements
+  - credits
+  - usage ledger
+  - project graph
+  - creator graph
+  - run state
 
-- `Arcanea`
-- `Arcanea-agent-control-promote`
-- `arcanea-ai-app`
-- `arcanea-code`
-- `arcanea-cosmos`
-- `arcanea-flow`
-- `arcanea-images`
-- `Arcanea-integration-review-orphaned-2026-03-31`
-- `Arcanea-main-audit`
-- `arcanea-nft-forge`
-- `arcanea-onchain`
-- `arcanea-opencode`
-- `arcanea-orchestrator`
-- `arcanea-platform`
-- `arcanea-processed`
-- `arcanea-realm`
-- `Arcanea-sis-promote`
-- `arcanea-tab2`
-- `Arcanea-testing-review`
-- `arcanea-vault`
-- `oh-my-arcanea`
+### Product graph and creator graph
 
-These should not all be treated as active product repos. They need eventual classification into:
+High-value product direction:
 
-- core product
-- ecosystem/supporting
-- experiments
-- archived/orphaned worktrees
+- finish real Supabase project graph
+- typed schema and migrations
+- explicit cost-before-execution
+- live run status pages
+- creator graph across:
+  - prompt books
+  - collections
+  - follows
+  - challenges
+  - reputation
 
-## Strategic Thinking Captured During This Cycle
+This gives a product loop:
 
-### Core Product Direction
-
-Arcanea is becoming:
-
-BYOK-first creative intelligence workspace with a project graph at the center.
-
-Core value layer:
-
-- projects
-- continuity
+- work
 - memory
-- creations
-- provenance
-- graph context
-- workflow orchestration
-- creator/social surfaces over time
+- graph
+- social proof
+- monetization
+- compounding value
 
-This is stronger than a thin wrapper because Arcanea owns the work system, not just the prompt pipe.
+## Why this strategy is better
 
-### Product Strategy
+It creates clearer economic and technical leverage:
 
-The strongest strategy identified:
+- one place for visibility
+- one place for orchestration semantics
+- one place for multi-agent execution
+- separate runtime adapters
+- persistent memory and graph as a defensible asset
+- creator and team workflows that can compound instead of resetting every session
 
-- BYOK-first now
-- managed-default later if desired
-- sell the workspace/product layer, not just inference
-- use subscriptions for sync/graph/organization
-- use credits later for expensive generation/research/media
-- make continuity and provenance the moat
+This is stronger than “just another AI app” and stronger than “just another agent runner.”
 
-### Platform / Tech Strategy
+## Money and value model
 
-Recommended platform shape:
+Arcanea should make money from leverage, not only from token resale.
 
-- `Next.js` as shell
-- `Supabase/Postgres` as product state backbone
-- custom Arcanea graph / provenance model
-- selective adoption of MCP for connectors
-- selective LangGraph-style workflow ideas later for durable background jobs
-- avoid over-replatforming around generic agent OS frameworks
+Revenue layers:
 
-### Notes / Board / Capture Direction
+- subscriptions
+  - workspace graph
+  - memory
+  - orchestration
+  - advanced control surfaces
+  - creator features
+- credits
+  - expensive research
+  - media generation
+  - large swarm runs
+  - premium providers
+- BYOK power tier
+  - advanced users bring their own keys
+  - lowers Arcanea cost exposure
+- team/studio plans
+  - multi-agent repo ops
+  - review workflows
+  - shared memory and visibility
+- marketplace and academy later
+  - prompt books
+  - workflow packs
+  - agent packs
+  - community extensions
+  - learning products
 
-Strong recommendation captured:
+## Remaining unresolved issues
 
-- docs/notes before serious whiteboard
-- project-native docs as first-class graph objects
-- lightweight board before a full infinite-canvas bet
-- capture/import from external AI surfaces later as a moat layer
+### Primary remaining repo warning
 
-### What Not To Do
+- `arcanea-ecosystem`
+  - still dirty because it is a legacy submodule meta-repo while the actual portfolio evolved into a mixed direct-repo plus registry model
+  - this is now a product/repo-model decision, not random drift
 
-- do not blindly merge mixed integration branches
-- do not turn `main` into an active accumulation branch
-- do not rebuild a serious editor/canvas from scratch too early
-- do not let generic frameworks define Arcanea’s product model
+### Main control plane branch
 
-## What Still Remains
+- current main repo branch is clean
+- branch remains `integration/agent-control-plane-unification`
+- promotion into `main` still needs intentional review/merge, not blind fast-forwarding
 
-### External blocker
+## Recommended next actions
 
-- live Supabase activation and real type regeneration
+1. Decide the future of `arcanea-ecosystem`
+- keep as legacy submodule meta-repo and accept that it will be noisy
+- or convert it into a pure portfolio registry repo and stop tracking stale submodule pointers
 
-This is still the main productization blocker for the project graph.
+2. Add machine-readable orchestration output to `arcanea-flow`
+- `--json` or equivalent
+- run IDs
+- delegated command preview
+- repo/workspace metadata
 
-### Branch backlog
+3. Advance Supabase product graph execution
+- apply migrations
+- regenerate types
+- expose project-aware retrieval and run graph
 
-Still requiring explicit review:
+4. Build user-facing run visibility
+- live run status pages
+- cost-before-execution
+- execution traces
 
-- the remaining commits on `integration/agent-control-plane-unification`
-- especially broader voice / buddy / Luminor / experimental agent-system work
+5. Unify creator graph
+- prompt books
+- collections
+- follows
+- challenge reputation
 
-These should be reviewed commit-by-commit and not promoted wholesale.
+## Latest execution tranche
 
-### Next product-engineering stack after DB activation
+### Arcanea Flow machine-readable delegation
 
-1. project-aware retrieval on real DB-backed graph data
-2. async graph enrichment with real queueing
-3. provider routing and usage tracing
-4. docs expansion on live DB state
-5. eventually board/capture/social compounding layers
+- implemented `ao --json` in `arcanea-flow`
+- added a stable run envelope with:
+  - `schemaVersion`
+  - `kind`
+  - `runId`
+  - `timestamp`
+  - `finishedAt`
+  - `durationMs`
+  - `mode`
+  - `repo`
+  - `ao`
+  - `execution`
+  - optional `output`
+- persisted traces to:
+  - `.arcanea/runtime/flow-runs.jsonl`
 
-## Why The Work Was High Leverage
+### Control-plane visibility
 
-This cycle did not optimize for “touching everything.”
-It optimized for:
+- updated `/ops` internal surface to read and display recent `arcanea-flow` traces
+- added a new “Recent Flow Runs” section so orchestration is visible from the main control plane
 
-- making the main product more real
-- making the repo less chaotic
-- making verification honest
-- making operator tooling usable
-- turning mixed branch work into promotable slices
+### Runtime bootstrap conclusion
 
-That was the right engineering tradeoff.
+- the compiled `arcanea-flow` CLI output in repo-root `dist` is a library module, not a self-executing binary
+- local wrappers now use a dedicated bootstrap script:
+  - `.arcanea/scripts/arcanea-flow-bootstrap.mjs`
+- `arcanea-flow` works through the bootstrap and can emit JSON traces locally
+- `arcanea-flow ao --json --dry-run status` now succeeds and seeds the runtime trace log
 
-## Operator Notes
+## Important operational note
 
-When resuming:
-
-- trust `origin/main` more than the local integration branch
-- read the latest `planning-with-files/*`
-- treat `integration/agent-control-plane-unification` as a staging branch, not as something to merge wholesale
-- do DB activation before broad new project-graph feature growth
-
+This log is meant to preserve not only what was changed, but the reasons and strategic conclusions behind the changes, so future agents can continue without re-deriving the same architecture from scratch.
