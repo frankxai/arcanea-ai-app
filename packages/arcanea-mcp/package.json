@@ -1,18 +1,31 @@
 {
   "name": "@arcanea/mcp-server",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "private": false,
-  "description": "Arcanea MCP Server - Worldbuilding toolkit, creative companion, and magic maker",
+  "description": "40 worldbuilding tools for AI — characters, magic, locations, creatures, world intelligence, visual prompts. MCP protocol.",
   "type": "module",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./tools/generators": "./dist/tools/generators.js",
+    "./tools/world-intelligence": "./dist/tools/world-intelligence.js",
+    "./tools/visual-prompts": "./dist/tools/visual-prompts.js",
+    "./tools/creation-graph": "./dist/tools/creation-graph.js"
+  },
   "bin": {
     "arcanea-mcp": "./dist/cli.js"
   },
+  "files": [
+    "dist/",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
     "start": "node dist/cli.js",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "mcp",
@@ -20,10 +33,21 @@
     "worldbuilding",
     "creative",
     "ai",
-    "fantasy"
+    "fantasy",
+    "character-generator",
+    "world-intelligence",
+    "model-context-protocol",
+    "claude",
+    "cursor",
+    "windsurf"
   ],
-  "author": "FrankX",
+  "author": "FrankX <frank@frankx.ai>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/frankxai/arcanea"
+  },
+  "homepage": "https://arcanea.ai/docs/mcp",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
     "zod": "^4.3.6"

@@ -20,6 +20,9 @@
     "typescript": "^5.3.0"
   },
   "files": ["dist"],
-  "keywords": ["arcanea", "luminor", "agent", "orchestration", "ai"],
-  "license": "MIT"
+  "keywords": ["arcanea", "luminor", "agent", "orchestration", "ai", "prompt-engineering", "mcp"],
+  "author": "FrankX <frank@frankx.ai>",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "https://github.com/frankxai/arcanea" },
+  "homepage": "https://arcanea.ai"
 }
