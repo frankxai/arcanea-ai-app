@@ -1,0 +1,16 @@
+{
+  "type": "operational",
+  "timestamp": "2026-04-04T01:30:00Z",
+  "source": "arcanea-orchestrator",
+  "title": "AO Ops Command System Registered",
+  "content": "Arcanea Orchestrator (AO) registered as shared ops layer. Commands: status, handover, digest, cleanup, promote, plan, coach. Shared source: .arcanea/ops/commands/. Bootstrap: .arcanea/ops/AGENT_BOOTSTRAP.md. All agents (Claude, Codex, Gemini, Cursor, OpenCode) configured with thin shims pointing to shared commands.",
+  "tags": ["ops", "orchestrator", "ao", "multi-agent"],
+  "connections": [
+    ".arcanea/ops/ao.md",
+    ".arcanea/ops/AGENT_BOOTSTRAP.md",
+    ".arcanea/ops/commands/status.md",
+    ".arcanea/ops/commands/handover.md",
+    ".arcanea/ops/commands/digest.md",
+    ".arcanea/ops/commands/cleanup.md"
+  ]
+}
