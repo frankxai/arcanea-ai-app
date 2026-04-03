@@ -61,6 +61,7 @@ if (-not $CommandArgs -or $CommandArgs.Count -eq 0) {
     Write-Host "Available commands:" -ForegroundColor Yellow
     Write-Host "  arcanea status" -ForegroundColor White
     Write-Host "  arcanea sis" -ForegroundColor White
+    Write-Host "  arcanea agent-os" -ForegroundColor White
     Write-Host "  arcanea opencode [args...]" -ForegroundColor White
     Write-Host "  arcanea claude [args...]" -ForegroundColor White
     Write-Host "  arcanea repo" -ForegroundColor White
@@ -108,6 +109,33 @@ switch ($command) {
                 default {
                     Write-Host "Unknown SIS command: $sisCommand" -ForegroundColor DarkYellow
                     Write-Host "Use: arcanea sis [append|check|contracts|schema-check|legacy-sync|summary|json|stats|stats-json|sync|open]" -ForegroundColor DarkGray
+                    exit 1
+                }
+            }
+        }
+        exit $LASTEXITCODE
+    }
+    "agent-os" {
+        if ($remaining.Count -eq 0) {
+            Write-Host ""
+            Write-Host "Arcanea Agent OS" -ForegroundColor Cyan
+            Write-Host "Config:          $(Join-Path $repoRoot '.arcanea\config\agent-os.json')" -ForegroundColor White
+            Write-Host "Task template:   $(Join-Path $repoRoot '.arcanea\agents\task-contract.template.json')" -ForegroundColor White
+            Write-Host "Handoff template:$(Join-Path $repoRoot '.arcanea\agents\handoff-packet.template.json')" -ForegroundColor White
+            Write-Host ""
+            Write-Host "Use: arcanea agent-os [check|route <repo>|validate-task <file>|validate-handoff <file> [--remember]]" -ForegroundColor DarkGray
+        } else {
+            $agentArgs = @($remaining)
+            $agentCommand = ([string]$agentArgs[0]).ToLowerInvariant()
+            $agentRest = @(Get-RemainingArgs -Values $agentArgs -StartIndex 1)
+            switch ($agentCommand) {
+                "check" { npm run agent-os:check }
+                "route" { npx tsx (Join-Path $repoRoot "scripts\agent-os-route.ts") @agentRest }
+                "validate-task" { npx tsx (Join-Path $repoRoot "scripts\agent-os-validate-task.ts") @agentRest }
+                "validate-handoff" { npx tsx (Join-Path $repoRoot "scripts\agent-os-validate-handoff.ts") @agentRest }
+                default {
+                    Write-Host "Unknown Agent OS command: $agentCommand" -ForegroundColor DarkYellow
+                    Write-Host "Use: arcanea agent-os [check|route|validate-task|validate-handoff]" -ForegroundColor DarkGray
                     exit 1
                 }
             }
