@@ -33,6 +33,31 @@ export const projectDocRouteDeps = {
   getDocAuthContext,
 };
 
+async function loadDocForResponse(
+  db: AuthContext['db'],
+  projectId: string,
+  docId: string,
+  userId: string,
+) {
+  const { data: doc, error } = await db
+    .from('project_docs')
+    .select('*, project_doc_content (*)')
+    .eq('id', docId)
+    .eq('project_id', projectId)
+    .eq('user_id', userId)
+    .single();
+
+  if (error || !doc) {
+    return null;
+  }
+
+  const content = Array.isArray(doc.project_doc_content)
+    ? doc.project_doc_content[0] ?? null
+    : doc.project_doc_content ?? null;
+
+  return { ...doc, project_doc_content: undefined, content };
+}
+
 export async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ id: string; docId: string }> }
@@ -45,23 +70,12 @@ export async function GET(
       return errorResponse('UNAUTHORIZED', 'Authentication required', 401);
     }
 
-    const { data: doc, error } = await db
-      .from('project_docs')
-      .select('*, project_doc_content (*)')
-      .eq('id', docId)
-      .eq('project_id', projectId)
-      .eq('user_id', user.id)
-      .single();
-
-    if (error || !doc) {
+    const doc = await loadDocForResponse(db, projectId, docId, user.id);
+    if (!doc) {
       return errorResponse('NOT_FOUND', 'Document not found', 404);
     }
 
-    const content = Array.isArray(doc.project_doc_content)
-      ? doc.project_doc_content[0] ?? null
-      : doc.project_doc_content ?? null;
-
-    return successResponse({ doc: { ...doc, project_doc_content: undefined, content } });
+    return successResponse({ doc });
   } catch (err) {
     return handleApiError(err);
   }
@@ -113,7 +127,26 @@ export async function PATCH(
       }
     }
 
+    let contentChanged = false;
+
     if (content_json !== undefined || content_text !== undefined) {
+      const existingDoc = await loadDocForResponse(db, projectId, docId, user.id);
+      if (!existingDoc) {
+        return errorResponse('NOT_FOUND', 'Document not found', 404);
+      }
+
+      const nextContentJson = content_json ?? {};
+      const nextContentText = content_text ?? '';
+      const nextWordCount = word_count ?? 0;
+      const existingContentJson = existingDoc.content?.content_json ?? {};
+      const existingContentText = existingDoc.content?.content_text ?? '';
+      const existingWordCount = existingDoc.content?.word_count ?? 0;
+
+      contentChanged =
+        JSON.stringify(existingContentJson) !== JSON.stringify(nextContentJson) ||
+        existingContentText !== nextContentText ||
+        existingWordCount !== nextWordCount;
+
       const readingTimeMinutes = Math.max(1, Math.round((word_count ?? 0) / 200));
 
       const { error: contentError } = await db
@@ -121,9 +154,9 @@ export async function PATCH(
         .upsert(
           {
             doc_id: docId,
-            content_json: content_json ?? {},
-            content_text: content_text ?? '',
-            word_count: word_count ?? 0,
+            content_json: nextContentJson,
+            content_text: nextContentText,
+            word_count: nextWordCount,
             reading_time_minutes: readingTimeMinutes,
           },
           { onConflict: 'doc_id' }
@@ -133,27 +166,34 @@ export async function PATCH(
         return errorResponse('INTERNAL_ERROR', contentError.message, 500);
       }
 
-      const { data: versionData } = await db
-        .from('project_doc_versions')
-        .select('version_number')
-        .eq('doc_id', docId)
-        .order('version_number', { ascending: false })
-        .limit(1)
-        .single();
+      if (contentChanged) {
+        const { data: versionData } = await db
+          .from('project_doc_versions')
+          .select('version_number')
+          .eq('doc_id', docId)
+          .order('version_number', { ascending: false })
+          .limit(1)
+          .single();
 
-      const nextVersion = ((versionData as { version_number: number } | null)?.version_number ?? 0) + 1;
+        const nextVersion = ((versionData as { version_number: number } | null)?.version_number ?? 0) + 1;
 
-      await db.from('project_doc_versions').insert({
-        doc_id: docId,
-        version_number: nextVersion,
-        editor_type: 'human',
-        author_user_id: user.id,
-        content_json: content_json ?? {},
-        content_text: content_text ?? '',
-      });
+        await db.from('project_doc_versions').insert({
+          doc_id: docId,
+          version_number: nextVersion,
+          editor_type: 'human',
+          author_user_id: user.id,
+          content_json: nextContentJson,
+          content_text: nextContentText,
+        });
+      }
     }
 
-    return successResponse({ ok: true });
+    const doc = await loadDocForResponse(db, projectId, docId, user.id);
+    if (!doc) {
+      return errorResponse('NOT_FOUND', 'Document not found', 404);
+    }
+
+    return successResponse({ ok: true, contentChanged, doc });
   } catch (err) {
     return handleApiError(err);
   }

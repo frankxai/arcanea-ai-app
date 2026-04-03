@@ -1,7 +1,7 @@
 import type { ProjectWorkspaceSnapshot } from './server';
 
 export interface ProjectProgressStep {
-  id: 'frame' | 'chat' | 'creation' | 'memory' | 'source';
+  id: 'frame' | 'chat' | 'creation' | 'docs' | 'memory' | 'source';
   title: string;
   completed: boolean;
   detail: string;
@@ -50,6 +50,14 @@ export function deriveProjectProgress(workspace: ProjectWorkspaceSnapshot): Proj
       detail: workspace.stats.creationCount > 0
         ? `Project has ${workspace.stats.creationCount} saved creation(s).`
         : 'Save at least one creation into this project.',
+    },
+    {
+      id: 'docs',
+      title: 'Capture project docs',
+      completed: workspace.stats.docCount > 0,
+      detail: workspace.stats.docCount > 0
+        ? `Project has ${workspace.stats.docCount} linked doc(s).`
+        : 'Create at least one project doc so notes live inside the graph.',
     },
     {
       id: 'memory',

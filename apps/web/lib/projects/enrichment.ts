@@ -25,6 +25,7 @@ export interface ProjectEnrichmentTask {
   summarySeed: string;
   sessionIds: string[];
   creationIds: string[];
+  docIds: string[];
   memoryIds: string[];
   counts: ProjectWorkspaceSnapshot['stats'];
 }
@@ -64,6 +65,7 @@ function deriveTags(snapshot: ProjectWorkspaceSnapshot): string[] {
     snapshot.project.goal ?? '',
     ...snapshot.sessions.map((session) => session.title ?? ''),
     ...snapshot.creations.map((creation) => creation.title),
+    ...snapshot.docs.flatMap((doc) => [doc.title, doc.excerpt ?? '']),
     ...snapshot.memories.map((memory) => memory.content.slice(0, 180)),
   ];
 
@@ -94,6 +96,10 @@ function deriveFacts(snapshot: ProjectWorkspaceSnapshot): string[] {
     facts.push(`Creation: ${creation.title} (${creation.type})`);
   }
 
+  for (const doc of snapshot.docs.slice(0, 3)) {
+    facts.push(`Doc: ${doc.title} (${doc.docType})`);
+  }
+
   for (const memory of snapshot.memories.slice(0, 3)) {
     facts.push(`Memory: ${memory.content.slice(0, 140)}`);
   }
@@ -104,7 +110,7 @@ function deriveFacts(snapshot: ProjectWorkspaceSnapshot): string[] {
 function deriveSummary(snapshot: ProjectWorkspaceSnapshot, tags: string[]): string {
   const parts = [
     `${snapshot.project.title} is an active Arcanea project workspace.`,
-    `It currently contains ${snapshot.stats.sessionCount} linked chat sessions, ${snapshot.stats.creationCount} saved creations, and ${snapshot.stats.memoryCount} durable memory links.`,
+    `It currently contains ${snapshot.stats.sessionCount} linked chat sessions, ${snapshot.stats.creationCount} saved creations, ${snapshot.stats.docCount} project docs, and ${snapshot.stats.memoryCount} durable memory links.`,
   ];
 
   if (snapshot.project.goal) {
@@ -170,6 +176,13 @@ export function evaluateProjectWorkspace(
         : 'Project has no linked creations yet.',
     },
     {
+      name: 'has_doc_layer',
+      passed: snapshot.stats.docCount > 0,
+      detail: snapshot.stats.docCount > 0
+        ? `Project has ${snapshot.stats.docCount} linked doc(s).`
+        : 'Project has no linked docs yet.',
+    },
+    {
       name: 'has_memory_layer',
       passed: snapshot.stats.memoryCount > 0,
       detail: snapshot.stats.memoryCount > 0
@@ -204,6 +217,7 @@ export function buildProjectEnrichmentTask(
     summarySeed: deriveSummary(snapshot, tags),
     sessionIds: snapshot.sessions.map((session) => session.id),
     creationIds: snapshot.creations.map((creation) => creation.id),
+    docIds: snapshot.docs.map((doc) => doc.id),
     memoryIds: snapshot.memories.map((memory) => memory.id),
     counts: snapshot.stats,
   };
@@ -253,6 +267,22 @@ export async function enrichProjectGraph(
         title: creation.title,
         type: creation.type,
         status: creation.status,
+      },
+    })),
+    ...snapshot.docs.map((doc) => ({
+      project_id: snapshot.project.id,
+      user_id: userId,
+      source_type: 'project',
+      source_id: snapshot.project.id,
+      target_type: 'doc',
+      target_id: doc.id,
+      relation: 'documents',
+      weight: 0.9,
+      metadata: {
+        title: doc.title,
+        docType: doc.docType,
+        status: doc.status,
+        wordCount: doc.wordCount,
       },
     })),
     ...snapshot.memories.map((memory) => ({

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import { extractDocFromEnvelope } from '@/lib/docs/client';
 
 /**
  * Creates a new project doc then immediately redirects to its editor.
@@ -29,8 +30,13 @@ export default function NewDocPage() {
           return;
         }
 
-        const data = await res.json() as { doc: { id: string } };
-        router.replace(`/projects/${params.id}/docs/${data.doc.id}`);
+        const payload = extractDocFromEnvelope(await res.json());
+        if (!payload?.id) {
+          router.replace(`/projects/${params.id}/docs`);
+          return;
+        }
+
+        router.replace(`/projects/${params.id}/docs/${payload.id}`);
       } catch {
         router.replace(`/projects/${params.id}/docs`);
       }
