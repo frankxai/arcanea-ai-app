@@ -48,13 +48,32 @@ export interface ProjectRetrievalSelection {
 
 export interface ProjectRetrievalTraceMetadata {
   sessionCount: number;
+  availableSessionCount: number;
   creationCount: number;
+  availableCreationCount: number;
   docCount: number;
+  availableDocCount: number;
   memoryCount: number;
+  availableMemoryCount: number;
   contextTerms: string[];
+  contextTermCount: number;
   hasStoredSummary: boolean;
   factCount: number;
   tagCount: number;
+  selectedSessionIds: string[];
+  selectedCreationIds: string[];
+  selectedCreationTypes: string[];
+  selectedDocIds: string[];
+  selectedDocTypes: string[];
+  selectedMemoryIds: string[];
+  selectedMemoryCategories: string[];
+}
+
+export interface ProjectRetrievalInventory {
+  sessions: number;
+  creations: number;
+  docs: number;
+  memories: number;
 }
 
 const STOP_WORDS = new Set([
@@ -198,15 +217,34 @@ export function buildProjectRetrievalBlock(selection: ProjectRetrievalSelection)
 
 export function buildProjectRetrievalTraceMetadata(
   selection: ProjectRetrievalSelection,
+  inventory?: Partial<ProjectRetrievalInventory>,
 ): ProjectRetrievalTraceMetadata {
   return {
     sessionCount: selection.sessions.length,
+    availableSessionCount: inventory?.sessions ?? selection.sessions.length,
     creationCount: selection.creations.length,
+    availableCreationCount: inventory?.creations ?? selection.creations.length,
     docCount: selection.docs.length,
+    availableDocCount: inventory?.docs ?? selection.docs.length,
     memoryCount: selection.memories.length,
+    availableMemoryCount: inventory?.memories ?? selection.memories.length,
     contextTerms: selection.contextTerms,
+    contextTermCount: selection.contextTerms.length,
     hasStoredSummary: Boolean(selection.graphSummary?.summary),
     factCount: selection.graphSummary?.facts?.length ?? 0,
     tagCount: selection.graphSummary?.tags?.length ?? 0,
+    selectedSessionIds: selection.sessions.map((session) => session.id),
+    selectedCreationIds: selection.creations.map((creation) => creation.id),
+    selectedCreationTypes: Array.from(
+      new Set(selection.creations.map((creation) => creation.type).filter((type): type is string => Boolean(type))),
+    ),
+    selectedDocIds: selection.docs.map((doc) => doc.id),
+    selectedDocTypes: Array.from(
+      new Set(selection.docs.map((doc) => doc.docType).filter((type): type is string => Boolean(type))),
+    ),
+    selectedMemoryIds: selection.memories.map((memory) => memory.id),
+    selectedMemoryCategories: Array.from(
+      new Set(selection.memories.map((memory) => memory.category).filter((category): category is string => Boolean(category))),
+    ),
   };
 }

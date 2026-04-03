@@ -100,12 +100,32 @@ Scope:
 ### 4. Provider Routing / Usage Tracing
 
 Status:
-- hold until DB-backed graph is live
+- core routing and retrieval trace enrichment completed
+- ready to promote to `main`
+- live DB-backed cost and usage instrumentation still depends on Supabase activation
 
 Scope:
 - extend provider/model trace payloads
 - make project retrieval and provider choice visible in traces
 - prepare cost/routing instrumentation for BYOK-first execution
+
+Files:
+- `apps/web/app/api/ai/chat/route.ts`
+- `apps/web/lib/projects/retrieval.ts`
+- `apps/web/lib/projects/trace.ts`
+- `apps/web/lib/projects/__tests__/retrieval.test.ts`
+- `apps/web/lib/projects/__tests__/trace.test.ts`
+
+Acceptance:
+- retrieval traces distinguish available context from selected context
+- provider traces record route mode, API-key source, focus hint, gates, and active tools
+- tests cover deterministic metadata shape
+
+Verification:
+- `pnpm --filter @arcanea/web type-check`
+- `pnpm --filter @arcanea/web test:projects`
+- `pnpm --filter @arcanea/web build`
+- `pnpm --filter @arcanea/web exec playwright test`
 
 ## Rules
 
