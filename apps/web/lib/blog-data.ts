@@ -1386,6 +1386,63 @@ We are betting on that future.
     `,
   },
   {
+    slug: 'mcp-mythology-engine',
+    title: 'We Built a Mythology Engine as an MCP Server',
+    excerpt:
+      '34 tools for worldbuilding. One npx command. The Arcanea MCP server gives your AI canon-aware generation, a living creation graph, semantic memory vaults, and a world health analyzer that tells you what to build next.',
+    category: 'Technology',
+    author: 'FrankX',
+    date: '2026-04-03',
+    readTime: '8 min read',
+    featured: true,
+    accent: '#78a6ff',
+    tags: ['mcp', 'worldbuilding', 'ai-tools', 'typescript', 'open-source', 'developer', 'arcanea-mcp', 'architecture'],
+    content: `
+## What if your AI knew your world?
+
+What if your AI could generate characters that fit your world — its specific history, factions, magic system, and political tensions — instead of producing generic heroes that could belong to any setting? We built that. It is called the Arcanea MCP server, and it ships as a single \`npx\` command.
+
+## What is MCP?
+
+The Model Context Protocol is a standard for giving AI assistants structured access to external tools. Think of it as USB for AI: the protocol defines how tools connect, and any compliant host — Claude, Cursor, Windsurf, Zed — can use them without custom integration code. What makes MCP interesting for creative systems is that it turns an AI assistant into a stateful collaborator that knows your world, remembers what you created yesterday, and can check new content against rules you established six months ago.
+
+## 34 Tools Across 6 Categories
+
+The server ships with tools across World Intelligence (world_report, generate_conflict, weave_narrative), Creation Generators (characters, creatures, locations, artifacts, magic, names), the Creation Graph (link_creations, get_world_graph, suggest_connections), Memory Vaults (six semantic vaults for persistent worlds), Canon Validation, and Luminor Orchestration for multi-agent creative tasks.
+
+## The Creation Graph
+
+Every element you create can be linked to every other element. A character can be linked to their faction, artifact, birthplace, and prophecy. Call \`get_world_graph\` and you receive a traversable map of your entire world — not a list of documents, but a living network of relationships. \`suggest_connections\` surfaces latent links you may not have noticed: structural tensions you built without realizing it.
+
+## The Feature That Changes How You Build
+
+\`world_report\` analyzes the structural health of your world and tells you what to create next. Not "add more content." Specific gaps with specific consequences: "You have 5 warriors but no healer — your party will die in Act 3. Your northern faction has no known enemies, which means they have no narrative function."
+
+## Install in 3 Lines
+
+\`\`\`json
+{
+  "mcpServers": {
+    "arcanea": {
+      "command": "npx",
+      "args": ["-y", "@arcanea/mcp-server@latest"]
+    }
+  }
+}
+\`\`\`
+
+Add to \`claude_desktop_config.json\`, \`.cursor/mcp.json\`, or \`.windsurf/mcp.json\`.
+
+## Architecture
+
+Built on MCP SDK 1.29 with the \`tool()\` API, Zod schemas for input validation, and HTTP/SSE dual-transport. Tool calls are stateless at the protocol level but stateful through the vault layer — the server can restart without losing your world.
+
+## What Comes Next
+
+Open source. Marketplace listings for Claude and Cursor extension stores. Self-hostable vault backends. Custom canon rules. Domain-specific generators for your genre. Your world, your rules.
+    `,
+  },
+  {
     slug: 'creative-superintelligence-vision',
     title: 'What We Mean by Creative Superintelligence',
     excerpt:
