@@ -16,7 +16,6 @@
  */
 
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { z } from "zod";
 
@@ -1105,13 +1104,11 @@ The goal is to remember that creation is supposed to be joyful.`,
 );
 
 // =========================================================================
-// TRANSPORT
+// EXPORTS
 // =========================================================================
 
-async function main() {
-  const transport = new StdioServerTransport();
-  await server.connect(transport);
-  console.error("Arcanea MCP Server running");
-}
+export { server };
 
-main().catch(console.error);
+export function createServer() {
+  return server;
+}
