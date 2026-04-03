@@ -273,18 +273,50 @@ export async function generateLocation(options: {
   const suffix = locationSuffixes[locationType] || "Place";
   const relatedGuardian = guardians.find(g => g.element === dominantElement) || pick(guardians);
 
+  const locationName = `The ${prefix} ${suffix}`;
+  const history = pick([
+    "Built by the first Eldrians before the Fall",
+    `Founded after ${relatedGuardian.name}'s victory at the ${relatedGuardian.domain} Gate`,
+    "Rose from the earth during a Gate Resonance Event — no one built it",
+    "Once a stronghold of Malachar, reclaimed and purified",
+    "Created by an unnamed Luminor who vanished after completing it",
+  ]);
+  const secret = pick([
+    "A sealed chamber beneath the foundation holds something that predates the Gates",
+    `The walls hum at ${relatedGuardian.name}'s frequency — but only at midnight`,
+    "A passage connects this place to the Shadowfen, sealed by oath",
+    "The founding stone is a fragment of Nero's original darkness — not corrupted, but fertile",
+    "Those who sleep here dream the same dream, but none speak of it",
+  ]);
+
   return {
     content: [{
       type: "text",
       text: JSON.stringify({
-        name: `The ${prefix} ${suffix}`,
+        _type: "location_blueprint",
+        _note: "Canonical scaffolding. Add sensory detail, history, and the feeling of being there. Great places have personality.",
+        name: locationName,
         type: locationType,
         dominantElement,
         alignment,
-        guardian: relatedGuardian.name,
-        gate: `${relatedGuardian.domain} Gate (${relatedGuardian.gate})`,
-        description: `A ${alignment} ${locationType} where ${dominantElement} energy flows strong.`,
-        features: alignment === "light" ? ["Eternal soft light", `Shrine to ${relatedGuardian.name}`, "Healing springs"] : alignment === "dark" ? ["Dancing shadows", "Wards against Malachar", "Testing grounds"] : ["Light and shadow in harmony", "Balance and transformation", "Sacred to both Lumina and Nero"],
+        guardian: { name: relatedGuardian.name, domain: relatedGuardian.domain, gate: relatedGuardian.gate },
+        atmosphere: {
+          visual: alignment === "light" ? `Warm ${dominantElement.toLowerCase()} light filters through everything` : alignment === "dark" ? `Shadows move with purpose, ${dominantElement.toLowerCase()} energy pulses beneath the surface` : `${dominantElement} energy shifts between light and shadow like breathing`,
+          sound: pick(["Constant low hum of elemental energy", "Wind carries whispered voices", "Water flows in patterns that sound like speech", "Absolute silence broken only by Gate resonance", "Distant rumbling from deep below"]),
+          smell: pick(["Ozone and old stone", "Incense and growing things", "Cold metal and starlight", "Warm earth after rain", "Something electric, like the air before a storm"]),
+        },
+        features: [
+          pick(["A central courtyard where element practice is visible", "A library with texts that rewrite themselves", "Training grounds scarred by centuries of combat", "Gardens where plants respond to emotional state"]),
+          pick([`A shrine to ${relatedGuardian.name} that glows during Gate hours`, "An observation tower overlooking the Gate network", "Dormitories where roommates are paired by opposing elements", "A forge that only lights for those who need it"]),
+          pick(["A restricted wing that students whisper about", "An ancient tree growing through the center of the building", "A map room showing Gate connections in real time", "A mess hall where the food changes based on the dominant element of those present"]),
+        ],
+        history,
+        secret,
+        narrativeHooks: [
+          `What happens when the ${dominantElement} energy here suddenly inverts?`,
+          `Someone important vanished from this place. Their belongings are still here.`,
+          alignment === "dark" ? "Not everyone who enters comes back unchanged" : "This place heals wounds that magic cannot — but it takes something in return",
+        ],
       }, null, 2),
     }],
   };
@@ -315,18 +347,46 @@ export async function generateCreature(options: {
   const type = pick(types[size]);
   const name = `${prefix}${type.charAt(0).toUpperCase() + type.slice(1)}`;
 
+  const relatedGuardian = guardians.find(g => g.element === element) || pick(guardians);
+  const relatedGodbeast = godbeasts.find(g => g.gate === relatedGuardian.gate);
+
   return {
     content: [{
       type: "text",
       text: JSON.stringify({
+        _type: "creature_blueprint",
+        _note: "Canonical scaffolding. Add behavior patterns, sounds, movement, and the feeling of encountering this creature. Great creatures feel alive.",
         name,
         species: `${prefix} ${type}`,
         element,
         size,
         temperament,
-        description: `A ${size} ${element}-attuned creature.`,
-        abilities: [`Control ${element.toLowerCase()} energy`, `Enhanced ${size === "massive" ? "devastating" : size === "large" ? "powerful" : "precise"} attacks`],
-        habitat: `Found near ${element} sources`,
+        appearance: {
+          body: pick([`Sleek ${element.toLowerCase()}-infused form`, `Armored hide that shifts like ${element.toLowerCase()}`, `Semi-transparent body revealing inner ${element.toLowerCase()} energy`, `Muscular build with ${element.toLowerCase()} markings`]),
+          eyes: pick(["Ember-bright and intelligent", "Reflective silver, seeing more than the visible spectrum", "Deep black with swirling inner light", "Constantly shifting color based on mood"]),
+          distinctFeature: pick(["Leaves ${element.toLowerCase()} traces in the air when it moves", "Its shadow moves independently", "Surrounding plants/water/air respond to its presence", `Scars from a fight with a ${pick(["shadow creature", "rival elemental", "Gate guardian"])}`]),
+        },
+        behavior: {
+          temperamentDetail: temperament === "hostile" ? pick(["Territorial — attacks anything within its domain", "Hunting pack mentality — never truly alone", "Wounded and desperate — more dangerous than natural hostility"]) : temperament === "friendly" ? pick(["Bonds with those who share its element", "Playful but unpredictable — its games can be dangerous", "Protective of the weak — will adopt lost travelers"]) : temperament === "sacred" ? pick(["Appears only during Gate Resonance Events", "Its presence indicates a major shift in elemental balance", "Ancient beyond counting — may be as old as the Gates themselves"]) : pick(["Observes before acting — patience is its weapon", "Will trade favors for the right offering", "Neither ally nor enemy — responds to intent, not identity"]),
+          sound: pick(["Low rumbling purr that vibrates elemental frequencies", "Clicks and whistles that other creatures respond to", "Completely silent — absence of sound follows it", `Howl that resonates with the ${relatedGuardian.domain} Gate`]),
+          diet: pick(["Pure elemental energy — draws from nearby sources", "Other creatures of opposing elements", "Crystallized mana deposits", "Emotion — feeds on the feelings of nearby beings"]),
+        },
+        abilities: [
+          `Control ${element.toLowerCase()} energy in a ${size === "massive" ? "devastating" : size === "large" ? "wide" : "precise"} radius`,
+          pick(["Phase through solid matter briefly", "Sense intent before action", "Heal wounds by channeling its element", "Create temporary elemental barriers", "Communicate telepathically with bonded mages"]),
+        ],
+        habitat: {
+          location: pick([`Deep ${element.toLowerCase()} zones where few mages venture`, `Near the ${relatedGuardian.domain} Gate's earthly anchor`, "The boundary between two elemental territories", "Ancient ruins predating the Academy system"]),
+          behavior: pick(["Solitary — encounters another of its kind only to mate", "Small packs of 3-5, led by the eldest", "Migratory — follows elemental tides", "Stationary guardian of a specific location"]),
+        },
+        lore: {
+          godBeastConnection: relatedGodbeast ? `Scholars debate whether ${name} species are distant descendants of ${relatedGodbeast.name} (${relatedGodbeast.form})` : "No known divine lineage",
+          culturalSignificance: pick(["Academy students consider sighting one a good omen", "Hunters prize its core for alchemical uses — ethically controversial", "Ancient pact forbids harming them near Gate sites", "Some believe they carry messages from the Guardians"]),
+        },
+        narrativeHooks: [
+          pick(["This creature has been following a specific character. Why?", "A clutch of eggs was found in an impossible location", "This species is going extinct — and the elemental balance is shifting because of it"]),
+          `What happens when a ${element} ${type} encounters its elemental opposite?`,
+        ],
       }, null, 2),
     }],
   };
