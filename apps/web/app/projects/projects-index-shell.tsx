@@ -57,58 +57,84 @@ export function ProjectsIndexShell({ initialProjects }: ProjectsIndexShellProps)
 
   return (
     <div className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
-      <Card variant="liquid-glass-subtle" className="self-start">
-        <CardHeader>
-          <CardTitle>Start a new project</CardTitle>
-          <CardDescription>
-            Give the workspace a frame so Arcanea can connect chats, creations, memories,
-            and provenance around one concrete goal.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <Input
-            label="Title"
-            placeholder="Atlas Launch"
-            value={title}
-            onChange={(event) => setTitle(event.target.value)}
-            maxLength={120}
-          />
-          <Textarea
-            label="Description"
-            placeholder="What is this project trying to build?"
-            value={description}
-            onChange={(event) => setDescription(event.target.value)}
-            maxLength={1000}
-            minRows={4}
-          />
-          <Textarea
-            label="Goal"
-            placeholder="What should be true when this workspace is complete?"
-            value={goal}
-            onChange={(event) => setGoal(event.target.value)}
-            maxLength={1000}
-            minRows={3}
-          />
+      <div className="space-y-6">
+        <Card variant="liquid-glass-subtle" className="self-start">
+          <CardHeader>
+            <CardTitle>Start a new project</CardTitle>
+            <CardDescription>
+              Give the workspace a frame so Arcanea can connect chats, docs, creations, memories,
+              and provenance around one concrete goal.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <Input
+              label="Title"
+              placeholder="Atlas Launch"
+              value={title}
+              onChange={(event) => setTitle(event.target.value)}
+              maxLength={120}
+            />
+            <Textarea
+              label="Description"
+              placeholder="What is this project trying to build?"
+              value={description}
+              onChange={(event) => setDescription(event.target.value)}
+              maxLength={1000}
+              minRows={4}
+            />
+            <Textarea
+              label="Goal"
+              placeholder="What should be true when this workspace is complete?"
+              value={goal}
+              onChange={(event) => setGoal(event.target.value)}
+              maxLength={1000}
+              minRows={3}
+            />
 
-          {error ? (
-            <p className="text-sm text-rose-300">{error}</p>
-          ) : (
-            <p className="text-xs text-white/45">
-              Projects become the continuity container for linked chat sessions, creations,
-              and extracted memories.
-            </p>
-          )}
+            {error ? (
+              <p className="text-sm text-rose-300">{error}</p>
+            ) : (
+              <p className="text-xs text-white/45">
+                Projects become the continuity container for linked chat sessions, docs, creations,
+                and extracted memories.
+              </p>
+            )}
 
-          <Button
-            onClick={() => void createProject()}
-            disabled={isPending || title.trim().length === 0}
-            className="w-full"
-          >
-            <Plus size={16} />
-            {isPending ? 'Creating project...' : 'Create project'}
-          </Button>
-        </CardContent>
-      </Card>
+            <Button
+              onClick={() => void createProject()}
+              disabled={isPending || title.trim().length === 0}
+              className="w-full"
+            >
+              <Plus size={16} />
+              {isPending ? 'Creating project...' : 'Create project'}
+            </Button>
+          </CardContent>
+        </Card>
+
+        <Card variant="liquid-glass">
+          <CardHeader>
+            <CardTitle>Project workflow</CardTitle>
+            <CardDescription>
+              The strongest Arcanea loop starts with durable context, then uses chat and studio as execution surfaces.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            {[
+              'Create the project so Arcanea has a clear frame and goal.',
+              'Start a doc inside the project to capture the brief, outline, canon, or spec.',
+              'Continue in chat with the active project so retrieval can use that written context.',
+              'Save creations and memories back into the same project to strengthen provenance and graph intelligence.',
+            ].map((step, index) => (
+              <div key={step} className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-4">
+                <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-[11px] font-medium text-white/70">
+                  {index + 1}
+                </div>
+                <p className="text-sm leading-6 text-white/70">{step}</p>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      </div>
 
       <section className="grid gap-4 md:grid-cols-2">
         {initialProjects.length === 0 ? (

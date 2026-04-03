@@ -21,7 +21,7 @@ async function test(name: string, fn: () => void | Promise<void>) {
 }
 
 async function main() {
-  await test('selectRelevantProjectContext prioritizes matching sessions, creations, and memories', () => {
+  await test('selectRelevantProjectContext prioritizes matching sessions, creations, docs, and memories', () => {
     const selection = selectRelevantProjectContext({
       recentContext: 'Refine the relic engine power budget and atlas city map notes.',
       sessions: [
@@ -32,6 +32,10 @@ async function main() {
       creations: [
         { id: 'c1', title: 'Atlas city map', type: 'image' },
         { id: 'c2', title: 'House sigils', type: 'image' },
+      ],
+      docs: [
+        { id: 'd1', title: 'Relic engine notes', docType: 'spec', excerpt: 'Power budget for the relic engine and atlas transit core.' },
+        { id: 'd2', title: 'Character naming pass', docType: 'note', excerpt: 'Naming notes for the main cast.' },
       ],
       memories: [
         { id: 'm1', content: 'Relic engines rely on harmonic crystal cores.', category: 'worldbuilding' },
@@ -46,6 +50,7 @@ async function main() {
 
     assert.deepEqual(selection.sessions.map((item) => item.id), ['s3', 's1', 's2']);
     assert.deepEqual(selection.creations.map((item) => item.id), ['c1', 'c2']);
+    assert.deepEqual(selection.docs.map((item) => item.id), ['d1', 'd2']);
     assert.deepEqual(selection.memories.map((item) => item.id), ['m1', 'm2']);
     assert.equal(selection.contextTerms.includes('atlas'), true);
     assert.equal(selection.contextTerms.includes('relic'), true);
@@ -55,6 +60,7 @@ async function main() {
     const block = buildProjectRetrievalBlock({
       sessions: [{ id: 's1', title: 'Atlas city map planning' }],
       creations: [{ id: 'c1', title: 'Atlas city map', type: 'image' }],
+      docs: [{ id: 'd1', title: 'Relic engine notes', docType: 'spec', excerpt: 'Power budget for the relic engine.' }],
       memories: [{ id: 'm1', content: 'Relic engines rely on harmonic crystal cores.', category: 'worldbuilding' }],
       graphSummary: {
         summary: 'Atlas is a science-fantasy project.',
@@ -68,6 +74,8 @@ async function main() {
     assert.equal(block.includes('Tags: atlas, map'), true);
     assert.equal(block.includes('- Session: Atlas city map planning'), true);
     assert.equal(block.includes('- Creation: Atlas city map (image)'), true);
+    assert.equal(block.includes('- Doc: Relic engine notes (spec)'), true);
+    assert.equal(block.includes('Excerpt: Power budget for the relic engine.'), true);
     assert.equal(block.includes('- Memory [worldbuilding]: Relic engines rely on harmonic crystal cores.'), true);
     assert.equal(block.includes('Active retrieval terms: atlas, relic, map'), true);
   });
@@ -76,6 +84,7 @@ async function main() {
     const metadata = buildProjectRetrievalTraceMetadata({
       sessions: [{ id: 's1', title: 'Atlas city map planning' }],
       creations: [{ id: 'c1', title: 'Atlas city map', type: 'image' }],
+      docs: [{ id: 'd1', title: 'Relic engine notes', docType: 'spec', excerpt: 'Power budget for the relic engine.' }],
       memories: [{ id: 'm1', content: 'Relic engines rely on harmonic crystal cores.', category: 'worldbuilding' }],
       graphSummary: {
         summary: 'Atlas is a science-fantasy project.',
@@ -88,6 +97,7 @@ async function main() {
     assert.deepEqual(metadata, {
       sessionCount: 1,
       creationCount: 1,
+      docCount: 1,
       memoryCount: 1,
       contextTerms: ['atlas', 'relic', 'map'],
       hasStoredSummary: true,

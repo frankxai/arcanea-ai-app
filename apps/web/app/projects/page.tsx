@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { FolderOpen, Plus } from '@/lib/phosphor-icons';
+import { FileText, FolderOpen, Plus } from '@/lib/phosphor-icons';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { createClient } from '@/lib/supabase/server';
@@ -10,7 +10,7 @@ import { ProjectsIndexShell } from './projects-index-shell';
 
 export const metadata: Metadata = {
   title: 'Projects | Arcanea',
-  description: 'Browse Arcanea workspaces that connect chats, creations, memories, and graph context.',
+  description: 'Browse Arcanea workspaces that connect chats, docs, creations, memories, and graph context.',
 };
 
 export default async function ProjectsIndexPage() {
@@ -38,8 +38,9 @@ export default async function ProjectsIndexPage() {
               Projects
             </h1>
             <p className="mt-4 text-sm leading-7 text-white/70">
-              Arcanea projects are the continuity container for your chats, creations, memories,
-              and graph context. Use them to keep work coherent across sessions and surfaces.
+              Arcanea projects are the continuity container for your chats, docs, creations, memories,
+              and graph context. Start a project, capture the brief or canon in docs, then keep execution
+              moving in chat and studio without losing the thread.
             </p>
           </div>
 
@@ -48,6 +49,12 @@ export default async function ProjectsIndexPage() {
               <Link href="/chat">
                 <Plus size={16} />
                 Create from chat
+              </Link>
+            </Button>
+            <Button asChild variant="ghost">
+              <Link href="/docs">
+                <FileText size={16} />
+                Developer docs
               </Link>
             </Button>
             <Button asChild variant="ghost">

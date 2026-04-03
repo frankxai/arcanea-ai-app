@@ -189,23 +189,30 @@ export default function DocsPage() {
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#7fffd4]/30 bg-[#7fffd4]/10 mb-6">
                   <PhBook className="w-3.5 h-3.5 text-[#7fffd4]" />
                   <span className="text-xs font-mono tracking-widest uppercase text-[#7fffd4]">
-                    Documentation
+                    Developer Documentation
                   </span>
                 </div>
 
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold mb-6 tracking-tight">
                   Arcanea{' '}
                   <span className="bg-gradient-to-r from-[#7fffd4] to-[#78a6ff] bg-clip-text text-transparent">
-                    Documentation
+                    Developer Docs
                   </span>
                 </h1>
 
                 <p className="text-lg text-neutral-400 leading-relaxed max-w-2xl mb-8">
-                  Everything you need to build with the Creative Superintelligence.
-                  From your first creation to advanced API integrations.
+                  Everything you need to build with the Arcanea platform and APIs.
+                  For project notes, briefs, outlines, and canon docs inside the product, use Projects.
                 </p>
 
                 <div className="flex flex-wrap gap-4">
+                  <Link
+                    href="/projects"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 text-white font-semibold hover:border-[#7fffd4]/30 hover:bg-[#7fffd4]/5 transition-all duration-200"
+                  >
+                    <PhBookOpen className="w-4 h-4" />
+                    Product docs workflow
+                  </Link>
                   <Link
                     href="/welcome"
                     className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#7fffd4] text-black font-semibold hover:scale-[1.03] transition-all duration-200"

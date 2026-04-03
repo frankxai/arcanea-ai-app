@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
-import { ArrowRight, ClockCounterClockwise, FolderOpen } from '@/lib/phosphor-icons';
+import { ArrowRight, ClockCounterClockwise, FileText, FolderOpen } from '@/lib/phosphor-icons';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -17,6 +17,7 @@ import {
 } from '@/lib/projects/server';
 import { OpenProjectChatButton } from './open-project-chat-button';
 import { ProjectCreationPanel } from './project-creation-panel';
+import { ProjectDocPanel } from './project-doc-panel';
 import { ProjectSessionPanel } from './project-session-panel';
 import { ProjectWorkspaceControls } from './project-workspace-controls';
 
@@ -95,6 +96,7 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
   const stats = [
     { label: 'Chats', value: workspace.stats.sessionCount },
     { label: 'Creations', value: workspace.stats.creationCount },
+    { label: 'Docs', value: workspace.stats.docCount },
     { label: 'Memories', value: workspace.stats.memoryCount },
     { label: 'Graph Score', value: `${graph.score}` },
   ];
@@ -130,14 +132,20 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
-            <OpenProjectChatButton projectId={workspace.project.id} />
-            <Button asChild variant="ghost">
-              <Link href="/chat">View Chat Shell</Link>
+            <Button asChild>
+              <Link href={`/projects/${workspace.project.id}/docs/new`}>
+                <FileText size={16} />
+                Start doc
+              </Link>
             </Button>
+            <Button asChild variant="ghost">
+              <Link href={`/projects/${workspace.project.id}/docs`}>View docs</Link>
+            </Button>
+            <OpenProjectChatButton projectId={workspace.project.id} />
           </div>
         </div>
 
-        <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
           {stats.map((stat) => (
             <Card key={stat.label} variant="liquid-glass">
               <CardHeader className="pb-3">
@@ -218,6 +226,10 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
                     <p className="text-xs text-white/45">Linked creations</p>
                   </div>
                   <div>
+                    <p className="text-2xl font-semibold text-white">{workspace.docs.length}</p>
+                    <p className="text-xs text-white/45">Linked docs</p>
+                  </div>
+                  <div>
                     <p className="text-2xl font-semibold text-white">{workspace.memories.length}</p>
                     <p className="text-xs text-white/45">Linked memories</p>
                   </div>
@@ -278,6 +290,10 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
             candidateCreations={candidateCreations}
             linkedSessions={workspace.sessions}
           />
+        </section>
+
+        <section className="mt-6">
+          <ProjectDocPanel projectId={workspace.project.id} docs={workspace.docs} />
         </section>
 
         <section className="mt-6 grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
@@ -409,6 +425,10 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3 text-sm text-white/70">
+              <div className="flex items-start gap-2">
+                <ArrowRight size={14} className="mt-1 text-atlantean-teal-aqua" />
+                <span>Start with a project doc so the brief, outline, or spec becomes durable context.</span>
+              </div>
               <div className="flex items-start gap-2">
                 <ArrowRight size={14} className="mt-1 text-atlantean-teal-aqua" />
                 <span>Open this project in chat to continue the active context.</span>

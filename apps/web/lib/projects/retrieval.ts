@@ -15,6 +15,13 @@ export interface ProjectRetrievalMemory {
   category?: string | null;
 }
 
+export interface ProjectRetrievalDoc {
+  id: string;
+  title: string;
+  docType?: string | null;
+  excerpt?: string | null;
+}
+
 export interface ProjectRetrievalGraphSummary {
   summary?: string | null;
   tags?: string[] | null;
@@ -25,6 +32,7 @@ export interface ProjectRetrievalInput {
   recentContext: string;
   sessions: ProjectRetrievalSession[];
   creations: ProjectRetrievalCreation[];
+  docs: ProjectRetrievalDoc[];
   memories: ProjectRetrievalMemory[];
   graphSummary?: ProjectRetrievalGraphSummary | null;
 }
@@ -32,6 +40,7 @@ export interface ProjectRetrievalInput {
 export interface ProjectRetrievalSelection {
   sessions: ProjectRetrievalSession[];
   creations: ProjectRetrievalCreation[];
+  docs: ProjectRetrievalDoc[];
   memories: ProjectRetrievalMemory[];
   graphSummary?: ProjectRetrievalGraphSummary | null;
   contextTerms: string[];
@@ -40,6 +49,7 @@ export interface ProjectRetrievalSelection {
 export interface ProjectRetrievalTraceMetadata {
   sessionCount: number;
   creationCount: number;
+  docCount: number;
   memoryCount: number;
   contextTerms: string[];
   hasStoredSummary: boolean;
@@ -115,6 +125,12 @@ export function selectRelevantProjectContext(input: ProjectRetrievalInput): Proj
       contextTerms,
       3,
     ),
+    docs: rankItems(
+      input.docs,
+      (doc) => `${doc.title ?? ''} ${doc.docType ?? ''} ${doc.excerpt ?? ''}`,
+      contextTerms,
+      3,
+    ),
     memories: rankItems(
       input.memories,
       (memory) => `${memory.category ?? ''} ${memory.content}`,
@@ -154,6 +170,15 @@ export function buildProjectRetrievalBlock(selection: ProjectRetrievalSelection)
     lines.push(`- Creation: ${creation.title || 'Untitled creation'} (${creation.type || 'unknown'})`);
   }
 
+  lines.push(`Relevant docs: ${selection.docs.length}`);
+  for (const doc of selection.docs) {
+    const typeLabel = doc.docType ? ` (${doc.docType})` : '';
+    lines.push(`- Doc: ${doc.title || 'Untitled doc'}${typeLabel}`);
+    if (doc.excerpt) {
+      lines.push(`  Excerpt: ${doc.excerpt}`);
+    }
+  }
+
   lines.push(`Relevant memories: ${selection.memories.length}`);
   for (const memory of selection.memories) {
     const label = memory.category ? ` [${memory.category}]` : '';
@@ -177,6 +202,7 @@ export function buildProjectRetrievalTraceMetadata(
   return {
     sessionCount: selection.sessions.length,
     creationCount: selection.creations.length,
+    docCount: selection.docs.length,
     memoryCount: selection.memories.length,
     contextTerms: selection.contextTerms,
     hasStoredSummary: Boolean(selection.graphSummary?.summary),

@@ -36,6 +36,14 @@
   - planning control files
 - Live Supabase activation is still the main external blocker for the project graph
 - Claude is now adding notes/docs and agent-ops work locally
+- A clean promotion slice now exists on `feat/docs-graph-retrieval` to fold docs into the main project graph spine
+- That slice wires docs into workspace snapshots, graph enrichment, and project-aware chat retrieval instead of leaving docs as an isolated route
+- `/projects/[id]` now exposes linked docs directly on the workspace page with first-class create/view actions
+- The docs creation flow now follows the canonical API envelope correctly, and doc saves only create new content versions when the body actually changes
+- Verification for the isolated docs slice has completed:
+  - `pnpm --dir apps/web test:projects`
+  - `pnpm --dir apps/web type-check`
+- Integration commit review has been split into a promote-next tranche versus hold/archive in `planning-with-files/INTEGRATION_TRANCHE_REVIEW_2026-04-03.md`
 - SIS context can now be materialized into `.arcanea/sis/summary.md` and exposed over a local MCP server
 - Experimental NFT/agent spreadsheet generators now live under `.arcanea/experiments/nft-agent-research/`
 

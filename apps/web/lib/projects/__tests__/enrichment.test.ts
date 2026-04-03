@@ -68,6 +68,17 @@ function createSnapshot(overrides?: Partial<ProjectWorkspaceSnapshot>): ProjectW
         sourceSessionId: null,
       },
     ],
+    docs: [
+      {
+        id: 'doc_1',
+        title: 'Atlas canon brief',
+        docType: 'brief',
+        status: 'active',
+        updatedAt: '2026-03-29T11:07:00.000Z',
+        wordCount: 640,
+        excerpt: 'Atlas canon brief covering floating cities and relic engine rules.',
+      },
+    ],
     memories: [
       {
         id: 'memory_1',
@@ -78,6 +89,7 @@ function createSnapshot(overrides?: Partial<ProjectWorkspaceSnapshot>): ProjectW
     stats: {
       sessionCount: 2,
       creationCount: 2,
+      docCount: 1,
       memoryCount: 1,
     },
     ...overrides,
@@ -135,21 +147,25 @@ async function main() {
           sourceSessionId: null,
         },
       ],
+      docs: [],
       memories: [],
       stats: {
         sessionCount: 2,
         creationCount: 1,
+        docCount: 0,
         memoryCount: 0,
       },
     });
 
     const evaluation = evaluateProjectWorkspace(snapshot);
+    const missingDocs = evaluation.checks.find((check) => check.name === 'has_doc_layer');
     const missingMemory = evaluation.checks.find((check) => check.name === 'has_memory_layer');
     const missingSourceLink = evaluation.checks.find((check) => check.name === 'has_source_links');
 
+    assert.equal(missingDocs?.passed, false);
     assert.equal(missingMemory?.passed, false);
     assert.equal(missingSourceLink?.passed, false);
-    assert.equal(evaluation.score, 60);
+    assert.equal(evaluation.score, 50);
   });
 
   await test('enrichProjectGraph derives tags, summaries, and edges from the workspace snapshot', async () => {
@@ -160,8 +176,8 @@ async function main() {
     const result = await enrichProjectGraph(supabase as never, 'user_1', snapshot);
 
     assert.equal(result.evaluation.score, 100);
-    assert.equal(result.factCount >= 4, true);
-    assert.equal(result.edgeCount, 6);
+    assert.equal(result.factCount >= 5, true);
+    assert.equal(result.edgeCount, 7);
     assert.equal(result.tags.includes('atlas'), true);
     assert.equal(result.summary.includes('Atlas Worldbuilding is an active Arcanea project workspace.'), true);
 
@@ -172,6 +188,7 @@ async function main() {
     assert.ok(edgeWrite);
     const edgePayload = edgeWrite?.payload as Array<{ relation: string }>;
     assert.equal(edgePayload.some((edge) => edge.relation === 'derived_from'), true);
+    assert.equal(edgePayload.some((edge) => edge.relation === 'documents'), true);
     assert.equal(edgePayload.some((edge) => edge.relation === 'relevant_to'), true);
   });
 
@@ -233,10 +250,13 @@ async function main() {
     assert.equal(task.summarySeed.includes('2 linked chat sessions'), true);
     assert.deepEqual(task.sessionIds, ['session_1', 'session_2']);
     assert.deepEqual(task.creationIds, ['creation_1', 'creation_2']);
+    assert.deepEqual(task.docIds, ['doc_1']);
+    assert.equal(task.summarySeed.includes('1 project docs'), true);
     assert.deepEqual(task.memoryIds, ['memory_1']);
     assert.deepEqual(task.counts, {
       sessionCount: 2,
       creationCount: 2,
+      docCount: 1,
       memoryCount: 1,
     });
   });

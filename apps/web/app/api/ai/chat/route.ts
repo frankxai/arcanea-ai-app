@@ -446,7 +446,7 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
           .join(' ')
           .slice(0, 500);
 
-        const [sessionsRes, creationsRes, memoryLinkRes, graphSummaryRes] = await Promise.all([
+        const [sessionsRes, creationsRes, docsRes, memoryLinkRes, graphSummaryRes] = await Promise.all([
           sbClient
             .from('chat_sessions')
             .select('id, title')
@@ -460,6 +460,13 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
             .eq('user_id', sbUserId)
             .eq('project_id', projectContext.id)
             .order('created_at', { ascending: false })
+            .limit(4),
+          sbClient
+            .from('project_docs')
+            .select('id, title, doc_type, updated_at, project_doc_content ( content_text )')
+            .eq('user_id', sbUserId)
+            .eq('project_id', projectContext.id)
+            .order('last_edited_at', { ascending: false })
             .limit(4),
           sbClient
             .from('project_memory_links')
@@ -489,6 +496,24 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
           recentContext,
           sessions: ((sessionsRes.data as Array<{ id: string; title: string | null }> | null) ?? []),
           creations: ((creationsRes.data as Array<{ id: string; title: string | null; type: string | null }> | null) ?? []),
+          docs: (
+            (
+              docsRes.data as Array<{
+                id: string;
+                title: string | null;
+                doc_type?: string | null;
+                project_doc_content?: Array<{ content_text?: string | null }>;
+              }> | null
+            ) ?? []
+          ).map((doc) => ({
+            id: doc.id,
+            title: doc.title ?? 'Untitled doc',
+            docType: doc.doc_type ?? null,
+            excerpt:
+              typeof doc.project_doc_content?.[0]?.content_text === 'string'
+                ? doc.project_doc_content[0].content_text.slice(0, 220)
+                : null,
+          })),
           memories: ((memoryRes.data as Array<{ id: string; category?: string | null; content: string }> | null) ?? []),
           graphSummary: (graphSummaryRes.data as { summary?: string | null; tags?: string[] | null; facts?: string[] | null } | null) ?? null,
         });
