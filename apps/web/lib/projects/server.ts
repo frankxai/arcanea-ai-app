@@ -466,7 +466,7 @@ export async function listProjectCandidateSessionsForCurrentUser(
 
     if (error || !data) return [];
 
-    return (data as Record<string, unknown>[]).map(mapSessionRow);
+    return (data as unknown as Record<string, unknown>[]).map(mapSessionRow);
   } catch {
     return [];
   }
@@ -490,7 +490,7 @@ export async function listProjectCandidateCreationsForCurrentUser(
 
     if (error || !data) return [];
 
-    return (data as Record<string, unknown>[]).map(mapCreationRow);
+    return (data as unknown as Record<string, unknown>[]).map(mapCreationRow);
   } catch {
     return [];
   }
@@ -508,14 +508,14 @@ export async function assignSessionToProjectForCurrentUser(
     .update({
       project_id: projectId,
       updated_at: new Date().toISOString(),
-    })
+    } as any)
     .eq('id', sessionId)
     .eq('user_id', user.id)
     .select('id, title, updated_at, luminor_id, model_id, project_id')
     .single();
 
   if (error || !data) return null;
-  return mapSessionRow(data as Record<string, unknown>);
+  return mapSessionRow(data as unknown as Record<string, unknown>);
 }
 
 export async function detachSessionFromProjectForCurrentUser(
@@ -530,7 +530,7 @@ export async function detachSessionFromProjectForCurrentUser(
     .update({
       project_id: null,
       updated_at: new Date().toISOString(),
-    })
+    } as any)
     .eq('id', sessionId)
     .eq('user_id', user.id)
     .eq('project_id', projectId);
@@ -562,7 +562,7 @@ export async function assignCreationToProjectForCurrentUser(
     .single();
 
   if (error || !data) return null;
-  return mapCreationRow(data as Record<string, unknown>);
+  return mapCreationRow(data as unknown as Record<string, unknown>);
 }
 
 export async function detachCreationFromProjectForCurrentUser(
@@ -576,7 +576,7 @@ export async function detachCreationFromProjectForCurrentUser(
     .from('creations')
     .update({
       project_id: null,
-    })
+    } as any)
     .eq('id', creationId)
     .eq('user_id', user.id)
     .eq('project_id', projectId);

@@ -71,12 +71,9 @@ export async function saveSessionToCloud(session: {
         id: session.id,
         user_id: user.id,
         title: session.title,
-        messages: session.messages,
-        luminor_id: session.luminorId ?? undefined,
-        model_id: session.modelId,
-        project_id: session.projectId ?? undefined,
+        luminor_id: session.luminorId || 'lumina',
         updated_at: new Date().toISOString(),
-      }, { onConflict: 'id' });
+      } as any, { onConflict: 'id' });
 
     if (error) {
       // Table might not exist yet — silently fail
