@@ -25,6 +25,9 @@ Recent `origin/main` milestone commits:
 - `71356dbcf` `merge: promote agent control plane and docs hardening`
 - `d3c618dd7` `merge: promote SIS runtime hardening and CI discipline`
 - `3c75c66d4` `docs(ops): record SIS runtime promotion and next review backlog`
+- `aa46901d6` `merge: promote agentdb starlight backend`
+- `5e5b5026d` `merge: promote docs graph retrieval`
+- `06f77d6ca` `feat(projects): enrich provider routing traces` (promotion branch ready during this cycle)
 
 Key prior product promotion work already on `main` from this cycle:
 
@@ -81,6 +84,25 @@ Why this matters:
 
 - this is the bridge from “organized workspace” to “intelligent workspace”
 - it sets up later queue-based graph enrichment and usage observability
+
+### 3b. Provider Routing Trace Enrichment
+
+Built and staged as a narrow verified tranche:
+
+- retrieval traces now distinguish selected context from available context
+- provider routing traces now capture:
+  - route mode
+  - resolved provider
+  - API-key source
+  - focus-hint presence
+  - active gates and luminors
+  - enabled tools
+
+Why this matters:
+
+- BYOK-first execution becomes observable instead of opaque
+- later routing/cost policy can build on structured traces instead of ad hoc logs
+- retrieval quality debugging gets easier before live Supabase activation
 
 ### 4. Docs MVP Hardening
 

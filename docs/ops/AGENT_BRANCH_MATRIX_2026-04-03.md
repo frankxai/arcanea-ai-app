@@ -30,9 +30,22 @@ This file records the active Arcanea branches and worktrees observed on this mac
   - uses a clean worktree instead of dirty `main`
   - aligned with current backlog priority
 - Recommendation:
-  - continue
-  - verify in isolation
-  - promote only after tests/build pass
+  - completed and already promoted to `main`
+
+- `feat/provider-routing-tracing`
+- Worktree: `C:\Users\frank\Arcanea-provider-tracing`
+- Status: good active branch
+- Current observed scope:
+  - enrich project retrieval traces with available-vs-selected context metadata
+  - enrich provider routing traces with route mode, API key source, focus hints, gates, and tools
+  - keep the slice limited to project chat/runtime observability
+- Current signal:
+  - high-leverage and correctly scoped
+  - verified in a clean worktree
+  - ready for promotion to `main`
+- Recommendation:
+  - promote as a narrow verified tranche
+  - leave DB-backed cost tracing for the post-Supabase slice
 
 - `integration/agent-control-plane-unification`
 - Worktree: `C:\Users\frank\Arcanea`
@@ -85,6 +98,14 @@ This file records the active Arcanea branches and worktrees observed on this mac
   - docs included in enrichment/progress signals
   - dedicated workspace doc panel and stronger docs API contract coverage
 
+- `promote/provider-routing-tracing-main`
+- Status: ready to promote
+- Value delivered:
+  - richer retrieval trace metadata with available-vs-selected context counts
+  - deterministic provider routing trace payloads
+  - route mode and API key source visibility for BYOK-first execution
+  - focused trace test expansion without broader Agent OS/package churn
+
 ## Current Interpretation
 
 If an agent starts now and wants the best available branch:
@@ -94,7 +115,8 @@ If an agent starts now and wants the best available branch:
 3. Read `docs/ops/MASSIVE_ACTION_LOG_2026-04-03.md`
 4. Prefer `main` for durable docs/ops changes only
 5. Treat `feat/docs-graph-retrieval` as completed work unless new follow-ups appear
-6. Treat `integration/agent-control-plane-unification` as review/staging territory, not as a production branch
+6. Treat `feat/provider-routing-tracing` as a current safe promotion branch
+7. Treat `integration/agent-control-plane-unification` as review/staging territory, not as a production branch
 
 ## Immediate Next Decisions
 
