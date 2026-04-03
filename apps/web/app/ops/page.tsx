@@ -372,6 +372,65 @@ export default async function OpsPage() {
 
         <section className="space-y-6">
           <SectionTitle
+            title="Recent Flow Runs"
+            accent="bg-gradient-to-b from-[#7fffd4] to-[#78a6ff]"
+            eyebrow="Programmable orchestration"
+          />
+          <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03]">
+            <div className="grid grid-cols-[0.9fr_0.8fr_0.8fr_1.5fr_0.6fr] gap-4 border-b border-white/[0.08] px-4 py-3 text-[11px] uppercase tracking-[0.14em] text-white/40">
+              <span>Run</span>
+              <span>Repo</span>
+              <span>Mode</span>
+              <span>Delegation</span>
+              <span>Status</span>
+            </div>
+            <div className="divide-y divide-white/[0.06]">
+              {data.flowRuns.length ? (
+                data.flowRuns.map((run) => (
+                  <div
+                    key={run.runId}
+                    className="grid grid-cols-[0.9fr_0.8fr_0.8fr_1.5fr_0.6fr] gap-4 px-4 py-4 text-sm"
+                  >
+                    <div className="min-w-0">
+                      <p className="font-mono text-white/82">{run.runId.slice(0, 12)}</p>
+                      <p className="mt-1 text-[11px] text-white/45">{relativeTime(run.timestamp)}</p>
+                    </div>
+                    <div className="min-w-0">
+                      <p className="truncate text-white/82">{run.repo.id}</p>
+                      <p className="mt-1 truncate text-[11px] text-white/40">{run.repo.path}</p>
+                    </div>
+                    <div className="pt-0.5">
+                      <StatusPill level={run.mode === "dry-run" ? "info" : "healthy"}>
+                        {run.mode}
+                      </StatusPill>
+                    </div>
+                    <div className="min-w-0">
+                      <p className="truncate font-mono text-[11px] text-white/72">
+                        {run.ao.commandPreview}
+                      </p>
+                      <p className="mt-1 text-[11px] text-white/40">
+                        {run.durationMs}ms
+                        {run.output?.stdout ? ` - ${run.output.stdout}` : ""}
+                      </p>
+                    </div>
+                    <div className="pt-0.5">
+                      <StatusPill level={run.execution.ok ? "healthy" : "critical"}>
+                        {run.execution.ok ? "ok" : `exit ${run.execution.exitCode}`}
+                      </StatusPill>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="px-4 py-8 text-sm text-white/50">
+                  No Arcanea Flow traces yet. Run <span className="font-mono text-white/72">arcanea-flow ao --json --dry-run status</span> to seed the trace stream.
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+
+        <section className="space-y-6">
+          <SectionTitle
             title="Current handoffs and planning artifacts"
             accent="bg-gradient-to-b from-[#7fffd4] to-[#ffd700]"
             eyebrow="Done and next"

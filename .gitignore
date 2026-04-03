@@ -121,6 +121,7 @@ arcanea-opencode-fork/
 .arcanea/sessions/
 .arcanea/projects/PICKUP_SESSION_*.md
 .arcanea/sis/
+.arcanea/runtime/
 .arcanea/memory/
 .arcanea/voice/recordings/
 .arcanea/voice/transcripts/
