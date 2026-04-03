@@ -32,7 +32,13 @@ git diff --stat origin/main...HEAD
 {which gates passed}
 ```
 
-3. Stage and commit (do NOT push unless asked):
+3. Write ONE Starlight horizon entry (optional, only if something non-obvious was learned):
+```bash
+node scripts/sis-write.mjs --vault horizon --title "{one-line insight}" --content "{why it matters}"
+```
+Skip this if nothing surprising happened. The handover doc IS the durable record — Starlight is only for cross-session insights that aren't obvious from git history.
+
+4. Stage and commit (do NOT push unless asked):
 ```bash
 git add docs/ops/SHORT_STATUS_AND_HANDOVER_{date}.md
 git commit -m "docs(ops): session handover {date}"
