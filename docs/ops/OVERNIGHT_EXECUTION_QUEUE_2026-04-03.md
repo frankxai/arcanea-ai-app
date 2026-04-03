@@ -52,8 +52,8 @@ Verification:
 ### 2. Agentdb / Memory Tranche Review
 
 Status:
-- mixed
-- review only until scoped
+- completed for the safe subset
+- remaining broader Agent OS layer still on hold
 
 Recommended branch/worktree:
 - `integration/agent-control-plane-unification`
@@ -77,7 +77,9 @@ Acceptance:
 - exact hold/experimental files identified
 
 Verification:
-- status/diff/log review only unless a clean split branch is created
+- review completed
+- safe backend subset promoted
+- remaining framework/package layer still requires separate review
 
 ### 3. Live DB Activation
 

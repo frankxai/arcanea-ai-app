@@ -69,6 +69,14 @@ This file records the active Arcanea branches and worktrees observed on this mac
   - SIS schema/contract/write-path checks
   - legacy export compatibility
 
+- `promote/agentdb-starlight-backend`
+- Status: promoted to `main`
+- Value delivered:
+  - Starlight-backed local memory persistence
+  - backend labeling on memory routes
+  - isolated `agentdb` store test
+  - narrow promotion of the safe subset only
+
 ## Current Interpretation
 
 If an agent starts now and wants the best available branch:
@@ -83,5 +91,5 @@ If an agent starts now and wants the best available branch:
 ## Immediate Next Decisions
 
 - Promote docs-graph retrieval only if verification is clean
-- Review the new `agentdb` tranche separately before allowing any merge discussion
+- Leave the broader Agent OS / package tranche out of `main` until reviewed independently
 - Keep live DB activation as the top external blocker once credentials are available
