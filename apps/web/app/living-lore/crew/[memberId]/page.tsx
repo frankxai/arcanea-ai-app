@@ -1,18 +1,16 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { getCrewMember, getAllCrew } from '@/lib/living-lore/crew-data';
+import { getCrewMember } from '@/lib/living-lore/crew-data';
 import { getCrewBackstory, getEncountersForCrewMember } from '@/lib/living-lore/episode-loader';
 import { getTextsForCrewMember } from '@/lib/living-lore/lore-connections';
 import type { Text } from '@/lib/content/types';
 import type { Encounter } from '@/lib/living-lore/types';
 import { CrewDetailView } from '@/components/living-lore/crew-detail-view';
 
+export const dynamic = 'force-dynamic';
+
 interface Props {
   params: Promise<{ memberId: string }>;
-}
-
-export function generateStaticParams() {
-  return getAllCrew().map((member) => ({ memberId: member.id }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

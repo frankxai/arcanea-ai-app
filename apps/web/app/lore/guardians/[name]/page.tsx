@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { GuardianDetailContent, type GuardianData } from "./guardian-detail";
 import { getGalleryImages } from "@/lib/media/image-registry";
 
+export const dynamic = 'force-dynamic';
+
 // ── Guardian canonical data ───────────────────────────────────────────────────
 
 const GUARDIANS: Record<string, GuardianData> = {
@@ -273,12 +275,6 @@ export async function generateMetadata({
       description: `Meet ${guardian.name}, keeper of the ${guardian.gate} Gate. "${guardian.quote}"`,
     },
   };
-}
-
-// ── Static params ─────────────────────────────────────────────────────────────
-
-export function generateStaticParams() {
-  return Object.keys(GUARDIANS).map((name) => ({ name }));
 }
 
 // ── Page ──────────────────────────────────────────────────────────────────────

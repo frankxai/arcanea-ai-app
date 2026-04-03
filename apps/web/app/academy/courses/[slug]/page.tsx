@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { COURSES, getCourse } from '@/lib/courses';
 
+export const dynamic = 'force-dynamic';
+
 // ── Metadata ─────────────────────────────────────────────────────────────────
 
 export async function generateMetadata({
@@ -22,12 +24,6 @@ export async function generateMetadata({
       description: course.description,
     },
   };
-}
-
-// ── Static Params ────────────────────────────────────────────────────────────
-
-export function generateStaticParams() {
-  return COURSES.map((c) => ({ slug: c.slug }));
 }
 
 // ── Lesson type labels ───────────────────────────────────────────────────────

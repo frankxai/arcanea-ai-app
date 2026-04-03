@@ -2,6 +2,8 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { LuminorDetailContent, LuminorData } from "./luminor-detail";
 
+export const dynamic = 'force-dynamic';
+
 // ── Luminor dataset ───────────────────────────────────────────────────────────
 
 const LUMINORS: Record<string, LuminorData> = {
@@ -588,12 +590,6 @@ export async function generateMetadata({
       description: luminor.description,
     },
   };
-}
-
-// ── Static params ─────────────────────────────────────────────────────────────
-
-export function generateStaticParams() {
-  return Object.keys(LUMINORS).map((id) => ({ id }));
 }
 
 // ── Page ──────────────────────────────────────────────────────────────────────

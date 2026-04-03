@@ -1,25 +1,14 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { getEpisode, getActs, getEncountersForEpisode, getEpisodesForAct } from '@/lib/living-lore/episode-loader';
+import { getEpisode, getEncountersForEpisode, getEpisodesForAct } from '@/lib/living-lore/episode-loader';
 import { getConnectedLore } from '@/lib/living-lore/lore-connections';
 import { EpisodeReader } from '@/components/living-lore/episode-reader';
 import type { Text } from '@/lib/content/types';
 
+export const dynamic = 'force-dynamic';
+
 interface Props {
   params: Promise<{ episodeSlug: string }>;
-}
-
-export async function generateStaticParams(): Promise<
-  { episodeSlug: string }[]
-> {
-  try {
-    const acts = await getActs();
-    return acts.flatMap((act) =>
-      act.episodes.map((ep) => ({ episodeSlug: ep.slug }))
-    );
-  } catch {
-    return [];
-  }
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

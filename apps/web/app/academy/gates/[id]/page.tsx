@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+
+export const dynamic = 'force-dynamic';
+
 import {
   PhArrowRight,
   PhArrowLeft,
@@ -17,7 +20,6 @@ import {
 import {
   GATES,
   GATE_ORDER,
-  NUMBER_TO_SLUG,
   resolveGate,
   type GateData,
 } from '@/lib/gates';
@@ -56,14 +58,6 @@ export async function generateMetadata({
       type: 'website',
     },
   };
-}
-
-// ── Static params ─────────────────────────────────────────────────────────────
-
-export function generateStaticParams() {
-  const slugParams = GATE_ORDER.map((id) => ({ id }));
-  const numericParams = Object.keys(NUMBER_TO_SLUG).map((id) => ({ id }));
-  return [...slugParams, ...numericParams];
 }
 
 // ── Shared sub-components (Server) ────────────────────────────────────────────

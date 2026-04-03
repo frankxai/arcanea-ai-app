@@ -77,11 +77,6 @@ async function loadChapter(slug: string) {
   };
 }
 
-export async function generateStaticParams() {
-  const chapterFiles = await getChapterFiles();
-  return chapterFiles.map((cf) => ({ chapter: cf.slug }));
-}
-
 export async function generateMetadata({
   params,
 }: {

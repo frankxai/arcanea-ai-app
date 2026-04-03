@@ -2,6 +2,9 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { LibraryBrowse } from "./library-browse";
 import { getCollections, getTextsInCollection } from "../../lib/content";
+
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "Library of Arcanea — 190K+ Words of Creative Philosophy",
   description:

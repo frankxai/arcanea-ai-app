@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { ElementBadge } from "@/components/worlds/ElementBadge";
@@ -12,20 +13,49 @@ export interface WorldPalette {
   secondary: string;
 }
 
-// ── Types (match live Supabase schema) ─────────────────────────────
+// ── Types (match Supabase Row shapes) ────────────────────────────────
 
-import type { Json } from "@/lib/database/types/supabase";
-import type {
-  WorldCharacterRow,
-  WorldLocationRow,
-  WorldEventRow,
-  WorldFactionRow,
-} from "@/lib/database/types/world-graph-types";
+interface CharacterRow {
+  id: string;
+  name: string;
+  element: string | null;
+  gate: number | null;
+  origin_class: string | null;
+  title: string | null;
+  backstory: string | null;
+  personality: unknown;
+  portrait_url: string | null;
+  motivation: string | null;
+  is_agent: boolean | null;
+}
 
-type CharacterRow = WorldCharacterRow;
-type LocationRow = WorldLocationRow;
-type EventRow = WorldEventRow;
-type FactionRow = WorldFactionRow;
+interface LocationRow {
+  id: string;
+  name: string;
+  description: string | null;
+  region: string | null;
+  significance: string | null;
+  image_url: string | null;
+}
+
+interface EventRow {
+  id: string;
+  title: string;
+  description: string | null;
+  era: string | null;
+  characters_involved: string[] | null;
+  sort_order: number | null;
+  consequences: string | null;
+  date_in_world: string | null;
+}
+
+interface FactionRow {
+  id: string;
+  name: string;
+  history: string | null;
+  philosophy: string | null;
+  territory: unknown;
+}
 
 interface WorldData {
   id: string;
@@ -37,13 +67,12 @@ interface WorldData {
   forked_from_id: string | null;
   star_count: number | null;
   fork_count: number | null;
-  laws: Json | null;
-  systems: Json | null;
+  laws: unknown;
+  systems: unknown;
   characters: CharacterRow[];
   locations: LocationRow[];
   events: EventRow[];
   factions: FactionRow[];
-  [key: string]: unknown; // allow extra DB columns to pass through
 }
 
 interface WorldDetailTabsProps {
@@ -140,18 +169,12 @@ export function WorldDetailTabs({ world, palette }: WorldDetailTabsProps) {
               {activeTab === "overview" && (
                 <OverviewTab world={world} palette={palette} />
               )}
-              {activeTab === "characters" && (
-                <CharactersTab world={world} />
-              )}
-              {activeTab === "locations" && (
-                <LocationsTab world={world} palette={palette} />
-              )}
+              {activeTab === "characters" && <CharactersTab world={world} />}
+              {activeTab === "locations" && <LocationsTab world={world} />}
               {activeTab === "timeline" && (
                 <TimelineTab world={world} palette={palette} />
               )}
-              {activeTab === "creations" && (
-                <CreationsTab world={world} />
-              )}
+              {activeTab === "creations" && <CreationsTab world={world} />}
             </m.div>
           </AnimatePresence>
         </div>
@@ -168,13 +191,16 @@ export function WorldDetailTabs({ world, palette }: WorldDetailTabsProps) {
           </SidebarCard>
 
           {/* Palette preview */}
-          {world.elements && world.elements.length > 0 && (
+          {world.elements.length > 0 && (
             <SidebarCard title="Palette">
               <div className="flex gap-2">
                 {world.elements.map((el) => {
                   const hex = ELEMENT_HEX[el] || "#00bcd4";
                   return (
-                    <div key={el} className="flex flex-col items-center gap-1.5">
+                    <div
+                      key={el}
+                      className="flex flex-col items-center gap-1.5"
+                    >
                       <div
                         className="w-10 h-10 rounded-xl ring-1 ring-white/10"
                         style={{ backgroundColor: hex }}
@@ -199,12 +225,9 @@ export function WorldDetailTabs({ world, palette }: WorldDetailTabsProps) {
           {/* Fork source */}
           {world.forked_from_id && (
             <SidebarCard title="Forked From">
-              <Link
-                href={`/worlds/${world.forked_from_id}`}
-                className="text-sm text-[#00bcd4] hover:underline"
-              >
+              <span className="text-sm text-[#00bcd4]/60">
                 {world.forked_from_id}
-              </Link>
+              </span>
             </SidebarCard>
           )}
 
@@ -246,8 +269,10 @@ function OverviewTab({
   world: WorldData;
   palette: WorldPalette;
 }) {
-  const laws = Array.isArray(world.laws) ? (world.laws as unknown as string[]) : [];
-  const magicSystems = Array.isArray(world.systems) ? (world.systems as unknown as string[]) : [];
+  const laws = Array.isArray(world.laws) ? (world.laws as string[]) : [];
+  const systems = Array.isArray(world.systems)
+    ? (world.systems as string[])
+    : [];
   const firstEvent = world.events[0];
 
   return (
@@ -271,18 +296,16 @@ function OverviewTab({
           <div className="grid sm:grid-cols-2 gap-4">
             {world.factions.map((faction) => (
               <GlassCard key={faction.id}>
-                <div className="flex items-start justify-between gap-2 mb-2">
-                  <h4 className="text-sm font-semibold text-white/80">
-                    {faction.name}
-                  </h4>
-                </div>
+                <h4 className="text-sm font-semibold text-white/80 mb-2">
+                  {faction.name}
+                </h4>
                 {faction.philosophy && (
-                  <p className="text-xs text-white/40 leading-relaxed">
+                  <p className="text-xs text-white/40 leading-relaxed mb-2 italic">
                     {faction.philosophy}
                   </p>
                 )}
                 {faction.history && (
-                  <p className="text-xs text-white/30 leading-relaxed mt-2">
+                  <p className="text-xs text-white/35 leading-relaxed">
                     {faction.history}
                   </p>
                 )}
@@ -318,12 +341,12 @@ function OverviewTab({
         </div>
       )}
 
-      {/* Magic systems */}
-      {magicSystems.length > 0 && (
+      {/* Systems */}
+      {systems.length > 0 && (
         <div>
           <SectionLabel>Magic &amp; Systems</SectionLabel>
           <div className="flex flex-wrap gap-2">
-            {magicSystems.map((sys) => (
+            {systems.map((sys) => (
               <span
                 key={sys}
                 className="px-3 py-1.5 rounded-lg text-xs font-medium bg-[#7c3aed]/10 border border-[#7c3aed]/20 text-[#7c3aed]/70"
@@ -342,7 +365,7 @@ function OverviewTab({
           <GlassCard>
             <div className="flex items-center gap-2 mb-2">
               {firstEvent.era && (
-                <span className="text-[10px] uppercase tracking-widest text-white/25 font-semibold">
+                <span className="text-[10px] uppercase tracking-widest text-white/25 font-semibold px-2 py-0.5 rounded bg-white/[0.04]">
                   {firstEvent.era}
                 </span>
               )}
@@ -379,14 +402,16 @@ function CharactersTab({ world }: { world: WorldData }) {
     <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
       {world.characters.map((char) => {
         const personality = char.personality as Record<string, unknown> | null;
-        const traits = Array.isArray(personality?.traits) ? (personality.traits as string[]) : [];
+        const traits = Array.isArray(personality?.traits)
+          ? (personality.traits as string[])
+          : [];
 
         return (
           <div key={char.id} className="flex flex-col">
-            <GlassCard className="flex-1">
-              {/* Portrait placeholder */}
+            <GlassCard className="flex-1 flex flex-col">
+              {/* Portrait */}
               <div
-                className="w-full aspect-[4/3] rounded-xl mb-4 flex items-center justify-center overflow-hidden"
+                className="w-full aspect-[4/3] rounded-xl mb-4 flex items-center justify-center overflow-hidden relative"
                 style={{
                   background: char.element
                     ? `linear-gradient(135deg, ${ELEMENT_HEX[char.element] || "#00bcd4"}20, rgba(9,9,11,0.8))`
@@ -394,7 +419,13 @@ function CharactersTab({ world }: { world: WorldData }) {
                 }}
               >
                 {char.portrait_url ? (
-                  <img src={char.portrait_url} alt={char.name} className="w-full h-full object-cover" />
+                  <Image
+                    src={char.portrait_url}
+                    alt={`Portrait of ${char.name}`}
+                    fill
+                    className="object-cover object-top"
+                    sizes="(max-width: 768px) 100vw, 400px"
+                  />
                 ) : (
                   <span
                     className="font-display text-5xl font-bold select-none"
@@ -413,22 +444,22 @@ function CharactersTab({ world }: { world: WorldData }) {
               <h4 className="font-display text-lg font-bold text-white leading-tight mb-1">
                 {char.name}
               </h4>
+              {char.title && (
+                <p className="text-xs text-white/35 mb-2">{char.title}</p>
+              )}
 
               <div className="flex items-center gap-2 flex-wrap mb-3">
                 {char.element && (
                   <ElementBadge element={char.element} size="sm" />
                 )}
-                {char.title && (
-                  <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-white/[0.05] border border-white/[0.08] text-white/40">
-                    {char.title}
-                  </span>
-                )}
                 {char.origin_class && (
-                  <span className="text-[11px] text-white/30">{char.origin_class}</span>
+                  <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-white/[0.05] border border-white/[0.08] text-white/40">
+                    {char.origin_class}
+                  </span>
                 )}
               </div>
 
-              {/* Gate level */}
+              {/* Gates */}
               {char.gate != null && char.gate > 0 && (
                 <div className="flex items-center gap-1 mb-3">
                   {Array.from({ length: 10 }).map((_, i) => (
@@ -448,10 +479,10 @@ function CharactersTab({ world }: { world: WorldData }) {
                 </div>
               )}
 
-              {/* Traits from personality JSON */}
+              {/* Traits */}
               {traits.length > 0 && (
                 <div className="flex flex-wrap gap-1 mb-3">
-                  {traits.slice(0, 4).map((trait: string) => (
+                  {traits.slice(0, 4).map((trait) => (
                     <span
                       key={trait}
                       className="text-[10px] px-1.5 py-0.5 rounded bg-white/[0.04] border border-white/[0.06] text-white/35"
@@ -515,13 +546,7 @@ function CharactersTab({ world }: { world: WorldData }) {
 
 // ── Tab: Locations ───────────────────────────────────────────────────
 
-function LocationsTab({
-  world,
-  palette,
-}: {
-  world: WorldData;
-  palette: WorldPalette;
-}) {
+function LocationsTab({ world }: { world: WorldData }) {
   if (world.locations.length === 0) {
     return (
       <EmptyState
@@ -536,19 +561,26 @@ function LocationsTab({
     <div className="grid sm:grid-cols-2 gap-5">
       {world.locations.map((loc) => (
         <GlassCard key={loc.id}>
-          {/* Gradient header */}
-          <div
-            className="w-full h-24 rounded-xl mb-4 flex items-end p-3 overflow-hidden"
-            style={{
-              background: loc.image_url
-                ? undefined
-                : `linear-gradient(135deg, ${palette.primary}20, rgba(9,9,11,0.9))`,
-            }}
-          >
-            {loc.image_url && (
-              <img src={loc.image_url} alt={loc.name} className="absolute inset-0 w-full h-full object-cover opacity-40" />
+          {/* Image or gradient header */}
+          <div className="w-full h-24 rounded-xl mb-4 flex items-end p-3 overflow-hidden relative">
+            {loc.image_url ? (
+              <Image
+                src={loc.image_url}
+                alt={loc.name}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+            ) : (
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(0,188,212,0.15), rgba(9,9,11,0.9))",
+                }}
+              />
             )}
-            <div className="relative flex items-center gap-2">
+            <div className="relative z-10 flex items-center gap-2">
               <svg
                 className="w-4 h-4 text-white/30"
                 viewBox="0 0 24 24"
@@ -579,8 +611,8 @@ function LocationsTab({
           )}
 
           {loc.significance && (
-            <p className="text-xs text-white/30 mt-2">
-              <span className="text-white/20">Significance:</span>{" "}
+            <p className="text-xs text-white/30 leading-relaxed italic">
+              <span className="text-[#00bcd4]/40 mr-1">Significance:</span>
               {loc.significance}
             </p>
           )}
@@ -631,7 +663,7 @@ function TimelineTab({
       <div className="space-y-6">
         {sorted.map((event, i) => {
           const involvedNames = (event.characters_involved || [])
-            .map((id) => characterMap.get(id))
+            .map((id) => characterMap.get(id) ?? id)
             .filter(Boolean);
 
           return (
@@ -659,7 +691,7 @@ function TimelineTab({
                     </span>
                   )}
                   {event.date_in_world && (
-                    <span className="text-[10px] text-white/20">
+                    <span className="text-[10px] text-white/20 font-mono">
                       {event.date_in_world}
                     </span>
                   )}
@@ -670,6 +702,14 @@ function TimelineTab({
                 {event.description && (
                   <p className="text-xs text-white/40 leading-relaxed mb-3">
                     {event.description}
+                  </p>
+                )}
+                {event.consequences && (
+                  <p className="text-xs text-amber-400/40 leading-relaxed mb-3 italic">
+                    <span className="text-amber-400/30 mr-1">
+                      Consequences:
+                    </span>
+                    {event.consequences}
                   </p>
                 )}
                 {involvedNames.length > 0 && (
@@ -699,7 +739,6 @@ function TimelineTab({
 // ── Tab: Creations ───────────────────────────────────────────────────
 
 function CreationsTab({ world }: { world: WorldData }) {
-  // Creations are not loaded from the API yet; show placeholder
   return (
     <EmptyState
       message="Creations will appear here as you build inside this world — images, music, text, and more."
@@ -768,7 +807,7 @@ function SidebarCard({
   );
 }
 
-function MiniStat({ label, value }: { label: string; value: number | null }) {
+function MiniStat({ label, value }: { label: string; value: number }) {
   return (
     <div
       className="rounded-xl px-3 py-3 text-center"
@@ -778,32 +817,12 @@ function MiniStat({ label, value }: { label: string; value: number | null }) {
       }}
     >
       <div className="text-xl font-display font-bold text-white/70 tabular-nums">
-        {value ?? 0}
+        {value}
       </div>
       <div className="text-[10px] text-white/30 uppercase tracking-wider mt-0.5">
         {label}
       </div>
     </div>
-  );
-}
-
-function AlignmentPill({ alignment }: { alignment: string }) {
-  const classes: Record<string, string> = {
-    light: "bg-amber-400/10 border-amber-400/20 text-amber-300/60",
-    dark: "bg-violet-500/10 border-violet-500/20 text-violet-300/60",
-    balanced: "bg-[#00bcd4]/10 border-[#00bcd4]/20 text-[#00bcd4]/60",
-    neutral: "bg-white/[0.04] border-white/[0.08] text-white/35",
-  };
-
-  return (
-    <span
-      className={cn(
-        "text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full border",
-        classes[alignment] || classes.neutral
-      )}
-    >
-      {alignment}
-    </span>
   );
 }
 
@@ -867,7 +886,7 @@ function EmptyState({
   );
 }
 
-// ── Element hex map (duplicated for client component boundary) ───────
+// ── Element hex map ──────────────────────────────────────────────────
 
 const ELEMENT_HEX: Record<string, string> = {
   Fire: "#ef4444",
