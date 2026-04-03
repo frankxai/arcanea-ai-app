@@ -77,6 +77,14 @@ This file records the active Arcanea branches and worktrees observed on this mac
   - isolated `agentdb` store test
   - narrow promotion of the safe subset only
 
+- `promote/docs-graph-retrieval`
+- Status: promoted to `main`
+- Value delivered:
+  - docs folded into project workspace graph surfaces
+  - docs included in project retrieval selection and trace metadata
+  - docs included in enrichment/progress signals
+  - dedicated workspace doc panel and stronger docs API contract coverage
+
 ## Current Interpretation
 
 If an agent starts now and wants the best available branch:
@@ -85,11 +93,10 @@ If an agent starts now and wants the best available branch:
 2. Read the latest `planning-with-files/*`
 3. Read `docs/ops/MASSIVE_ACTION_LOG_2026-04-03.md`
 4. Prefer `main` for durable docs/ops changes only
-5. Prefer `feat/docs-graph-retrieval` for the next product-compounding code slice
+5. Treat `feat/docs-graph-retrieval` as completed work unless new follow-ups appear
 6. Treat `integration/agent-control-plane-unification` as review/staging territory, not as a production branch
 
 ## Immediate Next Decisions
 
-- Promote docs-graph retrieval only if verification is clean
-- Leave the broader Agent OS / package tranche out of `main` until reviewed independently
+- Keep the broader Agent OS / package tranche out of `main` until reviewed independently
 - Keep live DB activation as the top external blocker once credentials are available

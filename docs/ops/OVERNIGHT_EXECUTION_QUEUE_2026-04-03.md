@@ -14,9 +14,9 @@ Use together with:
 ### 1. Docs Graph Retrieval
 
 Status:
-- active
-- high confidence
-- best current product-compounding slice
+- completed
+- promoted to `main`
+- verified on a clean promotion branch
 
 Recommended branch/worktree:
 - `feat/docs-graph-retrieval`
@@ -48,6 +48,7 @@ Verification:
 - `pnpm --dir apps/web exec tsc --noEmit`
 - `pnpm --dir apps/web test:projects`
 - `pnpm --dir apps/web build`
+- `pnpm --dir apps/web exec playwright test`
 
 ### 2. Agentdb / Memory Tranche Review
 
@@ -85,7 +86,7 @@ Verification:
 
 Status:
 - external blocker
-- highest-value step once credentials are available
+- now the highest-value platform step once credentials are available
 
 Prerequisites:
 - Supabase CLI working
