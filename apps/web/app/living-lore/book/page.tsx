@@ -2,10 +2,6 @@ import { readdir, readFile } from 'fs/promises';
 import { join } from 'path';
 import Link from 'next/link';
 const grayMatter = require('gray-matter') as typeof import('gray-matter');
-type YamlRuntime = {
-  load: (value: string) => unknown;
-};
-const yaml = require('js-yaml') as YamlRuntime;
 
 const BOOK_DIR = join(
   process.cwd(),
@@ -26,11 +22,7 @@ interface ChapterInfo {
 }
 
 function parseFrontmatter(source: string) {
-  return grayMatter(source, {
-    engines: {
-      yaml: (value: string) => yaml.load(value) as Record<string, unknown>,
-    },
-  });
+  return grayMatter(source);
 }
 
 async function getChapters(): Promise<ChapterInfo[]> {

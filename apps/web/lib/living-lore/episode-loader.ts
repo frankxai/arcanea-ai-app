@@ -10,10 +10,6 @@ import { join } from 'path';
 import type { Episode, Encounter, ActInfo, EpisodeMeta } from './types';
 
 const grayMatter = require('gray-matter') as typeof import('gray-matter');
-type YamlRuntime = {
-  load: (value: string) => unknown;
-};
-const yaml = require('js-yaml') as YamlRuntime;
 
 const LIVING_LORE_DIR = join(process.cwd(), '..', '..', 'book', 'living-lore');
 
@@ -415,9 +411,5 @@ export async function getCrewBackstory(memberId: string): Promise<string | null>
   }
 }
 function parseFrontmatter(source: string) {
-  return grayMatter(source, {
-    engines: {
-      yaml: (value: string) => yaml.load(value) as Record<string, unknown>,
-    },
-  });
+  return grayMatter(source);
 }
