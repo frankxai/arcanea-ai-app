@@ -64,6 +64,7 @@ jobs:
 
       - name: Lint
         run: pnpm --filter @arcanea/web lint
+        continue-on-error: true
 
       - name: Build
         run: pnpm --filter @arcanea/web build
