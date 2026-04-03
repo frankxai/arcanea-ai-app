@@ -1,9 +1,9 @@
 # Arcanea Master Plan — Central Orchestrator
 
-> **Last Updated**: 2026-03-30 (Session 3 — Faction Architecture Sprint)
-> **Version**: 2.1.0
+> **Last Updated**: 2026-04-03 (MCP Product + Luminor Agent System Sprint)
+> **Version**: 2.2.0
 > **Guardian**: Shinkami (Source Gate)
-> **Status**: Active — Faction Architecture Complete, Shipping Sprint Next
+> **Status**: Active — MCP Phase 1+2 Complete, Luminor System Built, Publishing Next
 
 This is the **single source of truth** for the entire Arcanea platform. Every agent, skill, command, and session MUST consult this document before making architectural decisions. It aggregates state from `.arcanea/projects/`, `task_plan.md`, `progress.md`, and live deployment data.
 
@@ -31,7 +31,45 @@ This is the **single source of truth** for the entire Arcanea platform. Every ag
 
 ---
 
-## NEW: Faction Architecture Sprint Results (2026-03-30)
+## NEW: MCP Product + Luminor Sprint Results (2026-04-02/03)
+
+### MCP Server — Product-Ready
+| Achievement | Status |
+|-------------|--------|
+| SDK upgraded 0.5.0 → 1.29.0 | COMPLETE |
+| 34 tools via registerTool() + Zod schemas | COMPLETE |
+| HTTP/SSE dual-transport (cloud-ready) | COMPLETE |
+| memory-mcp migrated from raw JSON-RPC → SDK 1.29 | COMPLETE |
+| World Intelligence Engine (world_report, generate_conflict, weave_narrative) | COMPLETE |
+| 79 dep vulnerabilities → 0 | COMPLETE |
+| npm publish | BLOCKED (needs `npm login`) |
+
+### Luminor Agent System — Operational
+| Achievement | Status |
+|-------------|--------|
+| Engineering Kernel (CANONICAL prompt) | COMPLETE |
+| 10 domain modules (github, frontend, backend, mcp, ops, security, test, research, lore) | COMPLETE |
+| Spawn config (25+ agent types mapped) | COMPLETE |
+| @arcanea/flow v0.1.0 package | COMPLETE |
+| Proven: haiku+kernel = senior engineer output | VALIDATED |
+
+### CI/Ops Hardened
+| Achievement | Status |
+|-------------|--------|
+| Execution Law in AGENTS.md | COMPLETE |
+| CI: npm rejection, .nvmrc check, typecheck blocks | COMPLETE |
+| .nvmrc pinning Node 20 | COMPLETE |
+| Linear synced: ARC-71 through ARC-78 | COMPLETE |
+
+### In Progress (agents running)
+- Blog post: "Mythology Engine as MCP Server"
+- /docs/mcp developer documentation pages
+- Luminor auto-injection Claude Code hooks
+- World persistence (save_world/load_world)
+
+---
+
+## Faction Architecture Sprint Results (2026-03-30)
 
 ### Lore Documents (`.arcanea/lore/`)
 | Document | Words | Grade | Status |
