@@ -132,7 +132,7 @@ function HeroPortal() {
             alt="Lyria — Sight Gate Guardian"
             fill
             sizes="340px"
-            className="object-cover object-top opacity-[0.09] mix-blend-luminosity"
+            className="object-cover object-top opacity-[0.18] mix-blend-luminosity"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#09090b] via-transparent to-[#09090b]" />
         </div>
@@ -145,7 +145,7 @@ function HeroPortal() {
             alt="Shinkami — Source Gate Guardian"
             fill
             sizes="340px"
-            className="object-cover object-top opacity-[0.09] mix-blend-luminosity"
+            className="object-cover object-top opacity-[0.18] mix-blend-luminosity"
           />
           <div className="absolute inset-0 bg-gradient-to-l from-[#09090b] via-transparent to-[#09090b]" />
         </div>
@@ -205,7 +205,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Not a chatbot. A creative superintelligence that thinks in systems, creates with passion, and evolves with you.
+            Chat with AI. Generate images. Build worlds. Write stories. Ship code. All in one place.
           </m.p>
 
           {/* Differentiator — what makes this different */}
@@ -215,7 +215,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.25 }}
           >
-            Ten Guardians. Sixteen specialist minds. One intelligence that knows your domain.
+            Sixteen AI specialists. A 200K-word creative library. Open source.
           </m.p>
 
           {/* Chat box — THE hero element */}
@@ -235,7 +235,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.7 }}
           >
-            190K+ Words of Creative Philosophy &middot; Open Source &middot; Free to Start
+            17 Collections &middot; Open Source &middot; Free to Start
           </m.p>
         </div>
       </m.div>

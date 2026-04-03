@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { ArcaneanMark } from "@/components/brand/arcanea-mark";
 
 const footerLinks = {
   create: {
@@ -71,8 +72,9 @@ export function Footer() {
           <div className="max-w-xs">
             <Link
               href="/"
-              className="font-display font-bold text-lg text-white hover:text-[#00bcd4] transition-colors"
+              className="flex items-center gap-2.5 font-display font-bold text-lg text-white hover:text-[#00bcd4] transition-colors"
             >
+              <ArcaneanMark size={28} glow />
               Arcanea
             </Link>
             <p className="text-[11px] uppercase tracking-[0.2em] text-white/28 mt-1.5">
