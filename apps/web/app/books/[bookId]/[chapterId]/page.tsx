@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { ChapterReader } from '@/components/saga/chapter-reader';
 
+export const dynamic = 'force-dynamic';
+
 /* ------------------------------------------------------------------ */
 /*  Book metadata                                                      */
 /* ------------------------------------------------------------------ */

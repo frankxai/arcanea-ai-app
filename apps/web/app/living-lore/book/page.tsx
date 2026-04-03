@@ -3,6 +3,8 @@ import { join } from 'path';
 import Link from 'next/link';
 const grayMatter = require('gray-matter') as typeof import('gray-matter');
 
+export const dynamic = 'force-dynamic';
+
 const BOOK_DIR = join(
   process.cwd(),
   '..',

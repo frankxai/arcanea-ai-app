@@ -12,12 +12,8 @@
 import { readdir, readFile, access } from 'fs/promises';
 import { join } from 'path';
 
-// gray-matter is CommonJS, use dynamic import pattern
+// gray-matter is CommonJS — let it use its own bundled yaml engine
 const grayMatter = require('gray-matter') as typeof import('gray-matter');
-type YamlRuntime = {
-  load: (value: string) => unknown;
-};
-const yaml = require('js-yaml') as YamlRuntime;
 import {
   Collection,
   Text,
@@ -35,11 +31,7 @@ import {
 } from './types';
 
 function parseFrontmatter(source: string) {
-  return grayMatter(source, {
-    engines: {
-      yaml: (value: string) => yaml.load(value) as Record<string, unknown>,
-    },
-  });
+  return grayMatter(source);
 }
 
 // ============================================
