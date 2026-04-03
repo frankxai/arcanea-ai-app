@@ -18,6 +18,7 @@ export async function POST(_request: NextRequest, { params }: RouteParams) {
   try {
     const { slug } = await params;
     const supabase = await createClient();
+    const db = supabase as any;
     const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) {
@@ -25,7 +26,7 @@ export async function POST(_request: NextRequest, { params }: RouteParams) {
     }
 
     // Resolve source world
-    const { data: source, error: srcErr } = await supabase
+    const { data: source, error: srcErr } = await db
       .from('worlds')
       .select('*')
       .eq('slug', slug)
@@ -42,7 +43,7 @@ export async function POST(_request: NextRequest, { params }: RouteParams) {
     }
 
     // Determine unique fork slug
-    const { count } = await supabase
+    const { count } = await db
       .from('worlds')
       .select('id', { count: 'exact', head: true })
       .like('slug', `${slug}-fork-%`);
@@ -52,7 +53,7 @@ export async function POST(_request: NextRequest, { params }: RouteParams) {
     // Create the forked world
     const { id: _id, created_at: _ca, updated_at: _ua, star_count: _sc, fork_count: _fc, character_count: _cc, ...worldFields } = src;
 
-    const { data: forkedWorld, error: forkErr } = await supabase
+    const { data: forkedWorld, error: forkErr } = await db
       .from('worlds')
       .insert({
         ...worldFields,
@@ -74,9 +75,9 @@ export async function POST(_request: NextRequest, { params }: RouteParams) {
 
     // Copy characters, factions, locations in parallel
     const [chars, factions, locations] = await Promise.all([
-      supabase.from('world_characters').select('*').eq('world_id', src.id),
-      supabase.from('world_factions').select('*').eq('world_id', src.id),
-      supabase.from('world_locations').select('*').eq('world_id', src.id),
+      db.from('world_characters').select('*').eq('world_id', src.id),
+      db.from('world_factions').select('*').eq('world_id', src.id),
+      db.from('world_locations').select('*').eq('world_id', src.id),
     ]);
 
     const copyRows = (rows: any[] | null) =>
@@ -86,20 +87,20 @@ export async function POST(_request: NextRequest, { params }: RouteParams) {
       }));
 
     await Promise.all([
-      chars.data?.length ? supabase.from('world_characters').insert(copyRows(chars.data)) : null,
-      factions.data?.length ? supabase.from('world_factions').insert(copyRows(factions.data)) : null,
-      locations.data?.length ? supabase.from('world_locations').insert(copyRows(locations.data)) : null,
+      chars.data?.length ? db.from('world_characters').insert(copyRows(chars.data)) : null,
+      factions.data?.length ? db.from('world_factions').insert(copyRows(factions.data)) : null,
+      locations.data?.length ? db.from('world_locations').insert(copyRows(locations.data)) : null,
     ]);
 
     // Record the fork relationship
-    await supabase.from('world_forks').insert({
+    await db.from('world_forks').insert({
       source_world_id: src.id,
       forked_world_id: forkedId,
       user_id: user.id,
     });
 
     // Increment parent fork_count
-    await supabase
+    await db
       .from('worlds')
       .update({ fork_count: (src.fork_count ?? 0) + 1 })
       .eq('id', src.id);

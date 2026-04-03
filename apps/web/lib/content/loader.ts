@@ -14,6 +14,10 @@ import { join } from 'path';
 
 // gray-matter is CommonJS, use dynamic import pattern
 const grayMatter = require('gray-matter') as typeof import('gray-matter');
+type YamlRuntime = {
+  load: (value: string) => unknown;
+};
+const yaml = require('js-yaml') as YamlRuntime;
 import {
   Collection,
   Text,
@@ -29,6 +33,14 @@ import {
   Element,
   Luminor,
 } from './types';
+
+function parseFrontmatter(source: string) {
+  return grayMatter(source, {
+    engines: {
+      yaml: (value: string) => yaml.load(value) as Record<string, unknown>,
+    },
+  });
+}
 
 // ============================================
 // CONFIGURATION
@@ -483,7 +495,7 @@ export async function getTextsInCollection(collectionSlug: string): Promise<Text
  */
 async function loadText(filePath: string, collectionSlug: string, filename: string): Promise<Text> {
   const fileContent = await readFile(filePath, 'utf-8');
-  const { data: frontmatter, content } = grayMatter(fileContent);
+  const { data: frontmatter, content } = parseFrontmatter(fileContent);
 
   const collection = COLLECTIONS.find(c => c.slug === collectionSlug);
   const headings = extractHeadings(content);

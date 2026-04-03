@@ -493,6 +493,7 @@ export default function ChatPage() {
           activeLuminor={conversation.activeLuminor}
           swarmResult={conversation.swarmResult}
           providerLabel={conversation.providerLabel}
+          runtimeSummary={conversation.runtimeSummary}
           onSendMessage={conversation.sendMessage}
           onSetInput={(v: string) => setPendingInput(v)}
           onFocusInput={() => textareaRef.current?.focus()}

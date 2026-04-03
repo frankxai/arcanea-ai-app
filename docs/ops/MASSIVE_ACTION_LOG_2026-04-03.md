@@ -28,6 +28,7 @@ Recent `origin/main` milestone commits:
 - `aa46901d6` `merge: promote agentdb starlight backend`
 - `5e5b5026d` `merge: promote docs graph retrieval`
 - `06f77d6ca` `feat(projects): enrich provider routing traces` (promotion branch ready during this cycle)
+- `promote/chat-runtime-metadata` verified end-to-end with runtime metadata UX, lore-loader build healing, and chat-shell hydration fixes; ready for merge in this slice
 
 Key prior product promotion work already on `main` from this cycle:
 
@@ -103,6 +104,22 @@ Why this matters:
 - BYOK-first execution becomes observable instead of opaque
 - later routing/cost policy can build on structured traces instead of ad hoc logs
 - retrieval quality debugging gets easier before live Supabase activation
+
+### 3c. Runtime Metadata And Trunk-Heal Pass
+
+Completed in the `promote/chat-runtime-metadata` slice:
+
+- surfaced provider/runtime metadata into streamed chat message metadata and UI summaries
+- fixed `worlds` fork route typing drift so the clean verification gate could run again
+- made Living Lore frontmatter parsing compatible with `js-yaml` 4 during production builds
+- removed chat-shell hydration mismatches caused by client-only sidebar and empty-state state
+- installed and validated Playwright Chromium in the verification environment
+
+Why this matters:
+
+- the runtime layer is now visible to users instead of only observable in server traces
+- the promotion tranche healed real trunk blockers rather than pretending they were someone elseâ€™s problem
+- the browser smoke now reflects a calmer, more stable chat shell
 
 ### 4. Docs MVP Hardening
 
