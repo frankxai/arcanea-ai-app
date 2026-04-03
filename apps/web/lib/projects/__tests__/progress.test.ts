@@ -47,6 +47,17 @@ function createWorkspace(overrides?: Partial<ProjectWorkspaceSnapshot>): Project
         sourceSessionId: 'session_1',
       },
     ],
+    docs: [
+      {
+        id: 'doc_1',
+        title: 'Atlas brief',
+        docType: 'brief',
+        status: 'active',
+        updatedAt: '2026-03-30T10:12:00.000Z',
+        wordCount: 420,
+        excerpt: 'Atlas brief excerpt.',
+      },
+    ],
     memories: [
       {
         id: 'memory_1',
@@ -57,6 +68,7 @@ function createWorkspace(overrides?: Partial<ProjectWorkspaceSnapshot>): Project
     stats: {
       sessionCount: 1,
       creationCount: 1,
+      docCount: 1,
       memoryCount: 1,
     },
     ...overrides,
@@ -67,16 +79,18 @@ test('deriveProjectProgress reports a complete workspace when all continuity lay
   const progress = deriveProjectProgress(createWorkspace());
   assert.equal(progress.status, 'complete');
   assert.equal(progress.completionPercent, 100);
-  assert.equal(progress.completedCount, 5);
+  assert.equal(progress.completedCount, 6);
 });
 
 test('deriveProjectProgress recommends the first missing continuity layer', () => {
   const progress = deriveProjectProgress(createWorkspace({
     creations: [],
+    docs: [],
     memories: [],
     stats: {
       sessionCount: 1,
       creationCount: 0,
+      docCount: 0,
       memoryCount: 0,
     },
   }));
@@ -89,10 +103,12 @@ test('deriveProjectProgress recommends the first missing continuity layer', () =
 test('buildProjectStepGuidance folds user input into the guidance message', () => {
   const guidance = buildProjectStepGuidance(createWorkspace({
     creations: [],
+    docs: [],
     memories: [],
     stats: {
       sessionCount: 1,
       creationCount: 0,
+      docCount: 0,
       memoryCount: 0,
     },
   }), 'prepare a launch pack');

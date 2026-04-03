@@ -17,6 +17,7 @@ import {
 } from '@/lib/projects/server';
 import { OpenProjectChatButton } from './open-project-chat-button';
 import { ProjectCreationPanel } from './project-creation-panel';
+import { ProjectDocPanel } from './project-doc-panel';
 import { ProjectSessionPanel } from './project-session-panel';
 import { ProjectWorkspaceControls } from './project-workspace-controls';
 
@@ -95,6 +96,7 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
   const stats = [
     { label: 'Chats', value: workspace.stats.sessionCount },
     { label: 'Creations', value: workspace.stats.creationCount },
+    { label: 'Docs', value: workspace.stats.docCount },
     { label: 'Memories', value: workspace.stats.memoryCount },
     { label: 'Graph Score', value: `${graph.score}` },
   ];
@@ -137,7 +139,7 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
           </div>
         </div>
 
-        <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
           {stats.map((stat) => (
             <Card key={stat.label} variant="liquid-glass">
               <CardHeader className="pb-3">
@@ -218,6 +220,10 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
                     <p className="text-xs text-white/45">Linked creations</p>
                   </div>
                   <div>
+                    <p className="text-2xl font-semibold text-white">{workspace.docs.length}</p>
+                    <p className="text-xs text-white/45">Linked docs</p>
+                  </div>
+                  <div>
                     <p className="text-2xl font-semibold text-white">{workspace.memories.length}</p>
                     <p className="text-xs text-white/45">Linked memories</p>
                   </div>
@@ -278,6 +284,10 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
             candidateCreations={candidateCreations}
             linkedSessions={workspace.sessions}
           />
+        </section>
+
+        <section className="mt-6">
+          <ProjectDocPanel projectId={workspace.project.id} docs={workspace.docs} />
         </section>
 
         <section className="mt-6 grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">

@@ -58,6 +58,17 @@ function createWorkspace(): ProjectWorkspaceSnapshot {
         sourceSessionId: 'chat_1',
       },
     ],
+    docs: [
+      {
+        id: 'doc_1',
+        title: 'Launch brief',
+        docType: 'brief',
+        status: 'active',
+        updatedAt: '2026-03-30T10:07:30.000Z',
+        wordCount: 320,
+        excerpt: 'Launch brief excerpt.',
+      },
+    ],
     memories: [
       {
         id: 'memory_1',
@@ -68,6 +79,7 @@ function createWorkspace(): ProjectWorkspaceSnapshot {
     stats: {
       sessionCount: 1,
       creationCount: 1,
+      docCount: 1,
       memoryCount: 1,
     },
   };

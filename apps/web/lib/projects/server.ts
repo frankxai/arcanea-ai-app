@@ -28,6 +28,15 @@ export interface ProjectWorkspaceSnapshot {
     createdAt: string;
     sourceSessionId: string | null;
   }>;
+  docs: Array<{
+    id: string;
+    title: string;
+    docType: string;
+    status: string;
+    updatedAt: string;
+    wordCount: number;
+    excerpt: string | null;
+  }>;
   memories: Array<{
     id: string;
     content: string;
@@ -36,6 +45,7 @@ export interface ProjectWorkspaceSnapshot {
   stats: {
     sessionCount: number;
     creationCount: number;
+    docCount: number;
     memoryCount: number;
   };
 }
@@ -74,6 +84,16 @@ export interface ProjectCreationRecord {
   createdAt: string;
   sourceSessionId: string | null;
   projectId?: string | null;
+}
+
+export interface ProjectDocRecord {
+  id: string;
+  title: string;
+  docType: string;
+  status: string;
+  updatedAt: string;
+  wordCount: number;
+  excerpt: string | null;
 }
 
 type ServerSupabase = Awaited<ReturnType<typeof createClient>>;
@@ -155,6 +175,28 @@ function mapCreationRow(row: Record<string, unknown>): ProjectCreationRecord {
     createdAt: String(row.created_at ?? new Date().toISOString()),
     sourceSessionId: typeof row.source_session_id === 'string' ? row.source_session_id : null,
     projectId: typeof row.project_id === 'string' ? row.project_id : null,
+  };
+}
+
+function mapDocRow(
+  row: Record<string, unknown> & {
+    project_doc_content?: Array<{ content_text?: string | null; word_count?: number | null }>;
+  },
+): ProjectDocRecord {
+  const content = Array.isArray(row.project_doc_content) ? row.project_doc_content[0] : null;
+  const excerpt =
+    typeof content?.content_text === 'string' && content.content_text.trim().length > 0
+      ? content.content_text.trim().slice(0, 220)
+      : null;
+
+  return {
+    id: String(row.id),
+    title: String(row.title ?? 'Untitled Doc'),
+    docType: String(row.doc_type ?? 'note'),
+    status: String(row.status ?? 'draft'),
+    updatedAt: String(row.updated_at ?? row.last_edited_at ?? new Date().toISOString()),
+    wordCount: typeof content?.word_count === 'number' ? content.word_count : 0,
+    excerpt,
   };
 }
 
@@ -281,7 +323,7 @@ export async function getProjectWorkspaceForCurrentUser(
 
   if (projectError || !projectRow) return null;
 
-  const [sessionsRes, creationsRes, memoryLinksRes] = await Promise.all([
+  const [sessionsRes, creationsRes, docsRes, memoryLinksRes] = await Promise.all([
     db
       .from('chat_sessions')
       .select('id, title, updated_at, luminor_id, model_id')
@@ -295,6 +337,16 @@ export async function getProjectWorkspaceForCurrentUser(
       .eq('user_id', user.id)
       .eq('project_id', projectId)
       .order('created_at', { ascending: false })
+      .limit(12),
+    db
+      .from('project_docs')
+      .select(`
+        id, title, doc_type, status, updated_at, last_edited_at,
+        project_doc_content ( content_text, word_count )
+      `)
+      .eq('user_id', user.id)
+      .eq('project_id', projectId)
+      .order('last_edited_at', { ascending: false })
       .limit(12),
     db
       .from('project_memory_links')
@@ -320,6 +372,13 @@ export async function getProjectWorkspaceForCurrentUser(
   const sessions = ((sessionsRes.data as Array<Record<string, unknown>> | null) ?? []).map(mapSessionRow);
 
   const creations = ((creationsRes.data as Array<Record<string, unknown>> | null) ?? []).map(mapCreationRow);
+  const docs = (
+    (docsRes.data as Array<
+      Record<string, unknown> & {
+        project_doc_content?: Array<{ content_text?: string | null; word_count?: number | null }>;
+      }
+    > | null) ?? []
+  ).map(mapDocRow);
 
   const memories = ((memoriesRes.data as Array<Record<string, unknown>> | null) ?? []).map((row) => ({
     id: String(row.id),
@@ -331,10 +390,12 @@ export async function getProjectWorkspaceForCurrentUser(
     project: mapProjectRow(projectRow as Record<string, unknown>),
     sessions,
     creations,
+    docs,
     memories,
     stats: {
       sessionCount: sessions.length,
       creationCount: creations.length,
+      docCount: docs.length,
       memoryCount: linkedMemoryIds.length,
     },
   };
