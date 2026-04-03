@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 
+export const dynamic = 'force-dynamic';
+
 /* ------------------------------------------------------------------ */
 /*  Book registry                                                      */
 /* ------------------------------------------------------------------ */
@@ -212,10 +214,6 @@ async function getChapters(bookDir: string): Promise<ChapterInfo[]> {
 
 interface PageProps {
   params: Promise<{ bookId: string }>;
-}
-
-export async function generateStaticParams() {
-  return Object.keys(BOOKS).map((bookId) => ({ bookId }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

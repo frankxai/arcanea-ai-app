@@ -162,23 +162,6 @@ async function loadChapter(bookId: string, chapterId: string) {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Static generation                                                  */
-/* ------------------------------------------------------------------ */
-
-export async function generateStaticParams() {
-  const params: { bookId: string; chapterId: string }[] = [];
-
-  for (const [bookId, meta] of Object.entries(BOOK_META)) {
-    const chapters = await getChapterFiles(meta.dir);
-    for (const ch of chapters) {
-      params.push({ bookId, chapterId: ch.id });
-    }
-  }
-
-  return params;
-}
-
-/* ------------------------------------------------------------------ */
 /*  Metadata                                                           */
 /* ------------------------------------------------------------------ */
 

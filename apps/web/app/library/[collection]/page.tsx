@@ -16,10 +16,6 @@ interface Props {
   params: Promise<{ collection: string }>;
 }
 
-export async function generateStaticParams() {
-  return COLLECTIONS.map((c) => ({ collection: c.slug }));
-}
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { collection: slug } = await params;
   const collection = await getCollection(slug);

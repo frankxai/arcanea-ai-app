@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { SagaDocReader, type TocHeading } from '@/components/saga/doc-reader';
 
+export const dynamic = 'force-dynamic';
+
 /* ------------------------------------------------------------------ */
 /*  Document registry                                                  */
 /* ------------------------------------------------------------------ */
@@ -65,10 +67,6 @@ const DOCS: Record<string, DocDef> = {
 
 interface PageProps {
   params: Promise<{ slug: string }>;
-}
-
-export async function generateStaticParams() {
-  return Object.keys(DOCS).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
