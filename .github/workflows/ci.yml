@@ -97,8 +97,8 @@ jobs:
 
       - name: Reject npm usage in scripts
         run: |
-          # Only flag actual npm invocations, not comments/echo/docs
-          HITS=$(grep -rn "^\s*npm install\|^\s*npm ci\|^\s*npm run" scripts/ .github/ 2>/dev/null | grep -v "npx\|node_modules\|.md\|pnpm\|echo\|#\|//\|log\.\|console\." | head -5 || true)
+          # Flag repo-level npm usage (not global installs, not comments/docs/shell utilities)
+          HITS=$(grep -rn "^\s*npm install\|^\s*npm ci\|^\s*npm run" scripts/ .github/ 2>/dev/null | grep -v "npx\|node_modules\|.md\|pnpm\|echo\|#\|//\|log\.\|console\.\|npm install -g\|\.sh:" | head -5 || true)
           if [ -n "$HITS" ]; then
             echo "$HITS"
             echo "::error::Found npm usage — use pnpm only (Execution Law)"
