@@ -71,6 +71,13 @@ import {
   type RelationshipType,
 } from "./tools/creation-graph.js";
 
+// World Persistence
+import {
+  saveWorldToDisk,
+  loadWorldFromDisk,
+  listSavedWorlds,
+} from "./tools/world-persistence.js";
+
 // Agent System (oh-my-opencode inspired orchestration)
 import {
   AGENTS,
@@ -144,6 +151,8 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
     { name: "get_world_graph", description: "Get a summary of your entire created world network", inputSchema: { type: "object", properties: { sessionId: { type: "string" } } } },
     { name: "find_path", description: "Find the connection path between two creations", inputSchema: { type: "object", properties: { sourceId: { type: "string" }, targetId: { type: "string" }, maxDepth: { type: "number", minimum: 1, maximum: 10 } }, required: ["sourceId", "targetId"] } },
     { name: "export_world", description: "Export your entire world graph for visualization", inputSchema: { type: "object", properties: { sessionId: { type: "string" } } } },
+    { name: "save_world", description: "Explicitly save current world state to disk so it persists across server restarts", inputSchema: { type: "object", properties: { sessionId: { type: "string" } } } },
+    { name: "load_world", description: "Load a previously saved world into the active session", inputSchema: { type: "object", properties: { sessionId: { type: "string" } }, required: ["sessionId"] } },
 
     // === AGENT ORCHESTRATION (oh-my-opencode inspired) ===
     { name: "orchestrate", description: "Run a full creative session with multi-agent coordination and Guardian-swarm awareness", inputSchema: { type: "object", properties: { request: { type: "string", description: "What you want to create or explore" }, sessionId: { type: "string" }, coordinationMode: { type: "string", enum: ["solo", "council", "convergence"], description: "How Lumina coordinates: solo (one Guardian leads), council (2-3 Guardians collaborate), convergence (Shinkami mode, broad blend)" }, guardian: { type: "string", enum: ["lyssandria", "leyla", "draconia", "maylinn", "alera", "lyria", "aiyami", "elara", "ino", "shinkami"], description: "Primary Guardian to lead the session (optional)" } }, required: ["request"] } },
@@ -335,6 +344,41 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         nodeCount: graph.nodes.length,
         edgeCount: graph.edges.length,
         graph,
+      }, null, 2) }] };
+    }
+    case "save_world": {
+      const graph = exportGraph(sessionId);
+      const saved = saveWorldToDisk(sessionId, graph.nodes, graph.edges);
+      return { content: [{ type: "text", text: JSON.stringify({
+        success: true,
+        sessionId,
+        filePath: saved.filePath,
+        nodeCount: saved.nodeCount,
+        edgeCount: saved.edgeCount,
+        savedAt: new Date().toISOString(),
+        message: `World saved — ${saved.nodeCount} node(s) and ${saved.edgeCount} edge(s) persisted to disk.`,
+      }, null, 2) }] };
+    }
+    case "load_world": {
+      const targetSessionId = (args?.sessionId as string | undefined) ?? sessionId;
+      const persisted = loadWorldFromDisk(targetSessionId);
+      if (!persisted) {
+        const available = listSavedWorlds();
+        return { content: [{ type: "text", text: JSON.stringify({
+          success: false,
+          sessionId: targetSessionId,
+          message: `No saved world found for session "${targetSessionId}".`,
+          availableWorlds: available.map(w => ({ sessionId: w.sessionId, savedAt: w.savedAt, nodes: w.nodeCount, edges: w.edgeCount })),
+        }, null, 2) }] };
+      }
+      return { content: [{ type: "text", text: JSON.stringify({
+        success: true,
+        sessionId: targetSessionId,
+        savedAt: persisted.savedAt,
+        nodeCount: persisted.nodes.length,
+        edgeCount: persisted.edges.length,
+        nodes: persisted.nodes.map(n => ({ id: n.id, name: n.name, type: n.type, element: n.element })),
+        message: `World loaded — ${persisted.nodes.length} node(s) and ${persisted.edges.length} edge(s) restored. The graph will be live on next access.`,
       }, null, 2) }] };
     }
 

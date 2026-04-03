@@ -2,6 +2,10 @@
 // Inspired by Qdrant vector patterns and knowledge graphs
 
 import { CreationRef } from "../memory/index.js";
+import {
+  loadWorldFromDisk,
+  scheduleSave,
+} from "./world-persistence.js";
 
 export interface CreationNode {
   id: string;
@@ -46,14 +50,36 @@ interface CreationGraph {
 // In-memory graph store
 const graphs = new Map<string, CreationGraph>();
 
+// Track which sessions have been loaded from disk this process lifetime
+const loadedFromDisk = new Set<string>();
+
 function getOrCreateGraph(sessionId: string): CreationGraph {
   if (!graphs.has(sessionId)) {
-    graphs.set(sessionId, {
-      nodes: new Map(),
-      edges: [],
-    });
+    // Try to restore from disk on first access
+    const persisted = loadWorldFromDisk(sessionId);
+    if (persisted) {
+      const nodeMap = new Map<string, CreationNode>();
+      for (const node of persisted.nodes) {
+        nodeMap.set(node.id, node);
+      }
+      graphs.set(sessionId, { nodes: nodeMap, edges: persisted.edges });
+    } else {
+      graphs.set(sessionId, { nodes: new Map(), edges: [] });
+    }
+    loadedFromDisk.add(sessionId);
   }
   return graphs.get(sessionId)!;
+}
+
+function triggerAutoSave(sessionId: string): void {
+  const graph = graphs.get(sessionId);
+  if (!graph) return;
+  scheduleSave(
+    sessionId,
+    () => [...graph.nodes.values()],
+    () => [...graph.edges],
+    5000
+  );
 }
 
 export function addCreationToGraph(
@@ -78,6 +104,9 @@ export function addCreationToGraph(
   // Auto-detect relationships based on shared properties
   autoLinkByElement(sessionId, node);
   autoLinkByGate(sessionId, node);
+
+  // Persist — debounced, max once per 5 seconds per session
+  triggerAutoSave(sessionId);
 
   return node;
 }
@@ -118,6 +147,9 @@ export function linkCreations(
   } else {
     graph.edges.push(edge);
   }
+
+  // Persist — debounced, max once per 5 seconds per session
+  triggerAutoSave(sessionId);
 
   return edge;
 }
