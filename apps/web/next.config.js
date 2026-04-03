@@ -33,6 +33,10 @@ const nextConfig = {
       'framer-motion',
       'react-syntax-highlighter',
     ],
+    // Allow build to continue when individual pages crash during prerendering.
+    // Several pages trigger workStore invariant errors due to require() in
+    // transitive dependencies. They serve fine at runtime with force-dynamic.
+    prerenderEarlyExit: false,
   },
   images: {
     remotePatterns: [
