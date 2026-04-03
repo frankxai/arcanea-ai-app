@@ -1,5 +1,8 @@
 import { strict as assert } from 'node:assert';
-import { recordProjectTrace } from '../trace';
+import {
+  buildProjectProviderRoutingTraceMetadata,
+  recordProjectTrace,
+} from '../trace';
 
 let passed = 0;
 let failed = 0;
@@ -151,6 +154,40 @@ async function main() {
     assert.equal(writes.length, 2);
     assert.equal((writes[0].payload as Record<string, unknown>).action, 'project_chat_context_loaded');
     assert.equal((writes[1].payload as Record<string, unknown>).action, 'project_provider_routed');
+  });
+
+  await test('buildProjectProviderRoutingTraceMetadata returns deterministic provider routing details', () => {
+    const metadata = buildProjectProviderRoutingTraceMetadata({
+      projectTitle: 'Atlas Worldbuilding',
+      requestedProvider: 'anthropic',
+      resolvedProvider: 'anthropic',
+      routeMode: 'gateway',
+      apiKeySource: 'client-byok',
+      gatewayModel: 'arcanea-sonnet',
+      modelLabel: 'Claude Sonnet 4',
+      enabledTools: ['search', 'memory'],
+      focusHint: 'Stay in canon.',
+      activeGates: ['aiyami'],
+      activeLuminors: ['aiyami', 'lyssandria'],
+    });
+
+    assert.deepEqual(metadata, {
+      projectTitle: 'Atlas Worldbuilding',
+      requestedProvider: 'anthropic',
+      resolvedProvider: 'anthropic',
+      routeMode: 'gateway',
+      apiKeySource: 'client-byok',
+      gatewayModel: 'arcanea-sonnet',
+      modelLabel: 'Claude Sonnet 4',
+      enabledTools: ['search', 'memory'],
+      enabledToolCount: 2,
+      hasFocusHint: true,
+      focusHint: 'Stay in canon.',
+      activeGates: ['aiyami'],
+      activeGateCount: 1,
+      activeLuminors: ['aiyami', 'lyssandria'],
+      activeLuminorCount: 2,
+    });
   });
 
   if (failed > 0) {
