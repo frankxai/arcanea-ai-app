@@ -84,7 +84,7 @@ test.beforeEach(async ({ page }) => {
   });
 });
 
-test('project workspace controls persist continuity in the browser', { tag: '@smoke' }, async ({ page }) => {
+test('project workspace controls persist continuity in the browser', { tag: '@integration' }, async ({ page }) => {
   await page.goto('/chat');
 
   await expect(page.getByText('Projects')).toBeVisible();
