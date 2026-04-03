@@ -1,25 +1,45 @@
 'use client';
 
+import type { ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button';
+import { ChatCircleDots } from '@/lib/phosphor-icons';
+import { Button, type ButtonProps } from '@/components/ui/button';
 import { setActiveChatProject } from '@/lib/chat/project-store';
 
 interface OpenProjectChatButtonProps {
   projectId: string;
+  children?: ReactNode;
+  variant?: ButtonProps['variant'];
+  size?: ButtonProps['size'];
+  className?: string;
 }
 
-export function OpenProjectChatButton({ projectId }: OpenProjectChatButtonProps) {
+export function OpenProjectChatButton({
+  projectId,
+  children,
+  variant = 'creation',
+  size = 'default',
+  className,
+}: OpenProjectChatButtonProps) {
   const router = useRouter();
 
   return (
     <Button
-      variant="creation"
+      type="button"
+      variant={variant}
+      size={size}
+      className={className}
       onClick={() => {
         setActiveChatProject(projectId);
         router.push('/chat');
       }}
     >
-      Open In Chat
+      {children ?? (
+        <>
+          <ChatCircleDots size={16} />
+          Open in chat
+        </>
+      )}
     </Button>
   );
 }

@@ -1,14 +1,12 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { ChatCircleDots, FileText, FolderOpen, Plus } from '@/lib/phosphor-icons';
 import { createClient } from '@/lib/supabase/server';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { DOC_TYPE_LABELS, type DocType, type DocStatus } from '@/lib/docs/types';
-
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
+import { OpenProjectChatButton } from '../open-project-chat-button';
 
 interface DocListItem {
   id: string;
@@ -21,9 +19,17 @@ interface DocListItem {
   last_edited_at: string;
 }
 
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
+type UntypedQueryResult = PromiseLike<{ data: unknown; error?: unknown }>;
+
+interface UntypedQueryBuilder extends UntypedQueryResult {
+  eq(column: string, value: unknown): UntypedQueryBuilder;
+  order(column: string, options?: { ascending?: boolean }): UntypedQueryBuilder;
+  select(columns: string): UntypedQueryBuilder;
+}
+
+interface DocsDbClient {
+  from(table: string): UntypedQueryBuilder;
+}
 
 function relativeDate(iso: string): string {
   const diff = Date.now() - new Date(iso).getTime();
@@ -44,10 +50,6 @@ const STATUS_COLORS: Record<DocStatus, string> = {
   archived: 'bg-white/[0.04] text-white/25 border-white/[0.06]',
 };
 
-// ---------------------------------------------------------------------------
-// Page
-// ---------------------------------------------------------------------------
-
 export default async function ProjectDocsPage({
   params,
 }: {
@@ -56,10 +58,14 @@ export default async function ProjectDocsPage({
   const { id: projectId } = await params;
   const supabase = await createClient();
 
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   if (!user) notFound();
 
-  const { data: docsRaw } = await (supabase as any)
+  const db = supabase as unknown as DocsDbClient;
+
+  const { data: docsRaw } = await db
     .from('project_docs')
     .select(`
       id, title, doc_type, status, icon, updated_at, last_edited_at,
@@ -70,55 +76,67 @@ export default async function ProjectDocsPage({
     .order('sort_order', { ascending: true })
     .order('updated_at', { ascending: false });
 
-  const docs: DocListItem[] = (docsRaw ?? []).map(
-    (d: Record<string, unknown> & { project_doc_content?: { word_count?: number }[] }) => ({
-      id: d.id,
-      title: d.title,
-      doc_type: d.doc_type,
-      status: d.status,
-      icon: d.icon ?? null,
-      word_count: d.project_doc_content?.[0]?.word_count ?? 0,
-      updated_at: d.updated_at as string,
-      last_edited_at: d.last_edited_at as string,
-    })
+  const docsSource = Array.isArray(docsRaw) ? docsRaw : [];
+
+  const docs: DocListItem[] = docsSource.map(
+    (doc: Record<string, unknown> & { project_doc_content?: { word_count?: number }[] }) => ({
+      id: doc.id as string,
+      title: doc.title as string,
+      doc_type: doc.doc_type as DocType,
+      status: doc.status as DocStatus,
+      icon: (doc.icon as string | null) ?? null,
+      word_count: doc.project_doc_content?.[0]?.word_count ?? 0,
+      updated_at: doc.updated_at as string,
+      last_edited_at: doc.last_edited_at as string,
+    }),
   );
 
   return (
     <div className="min-h-screen bg-[#09090b]">
-      {/* Header */}
-      <div className="border-b border-white/[0.06] bg-[#09090b]/80 backdrop-blur-sm sticky top-0 z-10">
-        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Link
-              href={`/projects/${projectId}`}
-              className="text-xs text-white/30 hover:text-white/50 transition-colors font-sans uppercase tracking-widest"
-            >
-              Project
-            </Link>
-            <span className="text-white/15">/</span>
-            <span className="text-xs text-white/60 font-sans">Docs</span>
+      <div className="mx-auto max-w-5xl px-6 py-10">
+        <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+          <div className="max-w-3xl">
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs uppercase tracking-[0.22em] text-[#7fffd4]/80">
+              <FolderOpen size={14} />
+              Project docs
+            </div>
+            <h1 className="text-4xl font-display font-bold tracking-tight text-white">
+              Durable context for this workspace
+            </h1>
+            <p className="mt-4 text-sm leading-7 text-white/70">
+              Keep briefs, notes, outlines, lore, research, and specs inside the project so chat
+              can pull them back into retrieval and the graph can preserve provenance over time.
+            </p>
           </div>
-          <Link href={`/projects/${projectId}/docs/new`}>
-            <Button
-              size="sm"
-              className="rounded-xl bg-white/[0.06] hover:bg-white/[0.10] text-white/70 hover:text-white border border-white/[0.08] font-sans text-xs h-8 px-4 transition-all"
-            >
-              + New Doc
-            </Button>
-          </Link>
-        </div>
-      </div>
 
-      {/* Content */}
-      <div className="max-w-4xl mx-auto px-6 py-10">
+          <div className="flex flex-wrap items-center gap-3">
+            <Button asChild variant="ghost">
+              <Link href={`/projects/${projectId}`}>
+                <FolderOpen size={16} />
+                Back to project
+              </Link>
+            </Button>
+            <OpenProjectChatButton projectId={projectId}>
+              <ChatCircleDots size={16} />
+              Open project chat
+            </OpenProjectChatButton>
+            <Button asChild>
+              <Link href={`/projects/${projectId}/docs/new`}>
+                <Plus size={16} />
+                New doc
+              </Link>
+            </Button>
+          </div>
+        </div>
+
         {docs.length === 0 ? (
           <EmptyState projectId={projectId} />
         ) : (
           <div className="space-y-2">
-            <div className="flex items-center justify-between mb-6">
-              <h1 className="text-lg font-semibold text-white font-sans">
+            <div className="mb-6 flex items-center justify-between">
+              <h2 className="text-lg font-semibold text-white font-sans">
                 {docs.length} {docs.length === 1 ? 'document' : 'documents'}
-              </h1>
+              </h2>
             </div>
             {docs.map((doc) => (
               <DocRow key={doc.id} doc={doc} projectId={projectId} />
@@ -130,40 +148,27 @@ export default async function ProjectDocsPage({
   );
 }
 
-// ---------------------------------------------------------------------------
-// Doc row
-// ---------------------------------------------------------------------------
-
 function DocRow({ doc, projectId }: { doc: DocListItem; projectId: string }) {
   return (
     <Link href={`/projects/${projectId}/docs/${doc.id}`}>
-      <Card className="group flex items-center gap-4 px-5 py-4 bg-white/[0.02] border-white/[0.06] hover:bg-white/[0.04] hover:border-white/[0.10] transition-all cursor-pointer rounded-2xl">
-        {/* Icon / type marker */}
-        <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-base">
-          {doc.icon ?? typeEmoji(doc.doc_type)}
+      <Card className="group flex cursor-pointer items-center gap-4 rounded-2xl border-white/[0.06] bg-white/[0.02] px-5 py-4 transition-all hover:border-white/[0.10] hover:bg-white/[0.04]">
+        <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl border border-white/[0.06] bg-white/[0.04] text-base">
+          {doc.icon ?? typeGlyph(doc.doc_type)}
         </div>
 
-        {/* Title + meta */}
-        <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-white/80 group-hover:text-white truncate font-sans transition-colors">
+        <div className="min-w-0 flex-1">
+          <p className="truncate font-sans text-sm font-medium text-white/80 transition-colors group-hover:text-white">
             {doc.title || 'Untitled'}
           </p>
-          <div className="flex items-center gap-3 mt-1 text-[11px] text-white/30 font-sans">
+          <div className="mt-1 flex items-center gap-3 font-sans text-[11px] text-white/30">
             <span>{DOC_TYPE_LABELS[doc.doc_type]}</span>
-            {doc.word_count > 0 && (
-              <>
-                <span className="text-white/15">·</span>
-                <span>{doc.word_count.toLocaleString()} words</span>
-              </>
-            )}
-            <span className="text-white/15">·</span>
+            {doc.word_count > 0 ? <span>{doc.word_count.toLocaleString()} words</span> : null}
             <span>{relativeDate(doc.last_edited_at)}</span>
           </div>
         </div>
 
-        {/* Status badge */}
         <Badge
-          className={`flex-shrink-0 text-[10px] px-2.5 py-0.5 rounded-full border font-sans font-normal ${STATUS_COLORS[doc.status]}`}
+          className={`flex-shrink-0 rounded-full border px-2.5 py-0.5 font-sans text-[10px] font-normal ${STATUS_COLORS[doc.status]}`}
         >
           {doc.status}
         </Badge>
@@ -172,43 +177,56 @@ function DocRow({ doc, projectId }: { doc: DocListItem; projectId: string }) {
   );
 }
 
-// ---------------------------------------------------------------------------
-// Empty state
-// ---------------------------------------------------------------------------
-
 function EmptyState({ projectId }: { projectId: string }) {
   return (
     <div className="flex flex-col items-center justify-center py-24 text-center">
-      <div className="w-16 h-16 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center text-3xl mb-6">
-        📄
+      <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl border border-white/[0.06] bg-white/[0.03] text-3xl">
+        <FileText className="text-[#7fffd4]" size={28} />
       </div>
-      <h2 className="text-lg font-semibold text-white/70 font-sans mb-2">No documents yet</h2>
-      <p className="text-sm text-white/30 font-sans mb-8 max-w-sm">
-        Create notes, briefs, lore entries, and specs to support your project.
+      <h2 className="mb-2 font-sans text-lg font-semibold text-white/70">No documents yet</h2>
+      <p className="mb-8 max-w-sm font-sans text-sm text-white/30">
+        Start with a brief, note, outline, or spec so this project has durable written context
+        before the next chat session.
       </p>
-      <Link href={`/projects/${projectId}/docs/new`}>
-        <Button className="rounded-xl bg-[#7fffd4]/10 hover:bg-[#7fffd4]/20 text-[#7fffd4] border border-[#7fffd4]/20 font-sans text-sm transition-all">
-          Create first document
+
+      <div className="mb-8 space-y-3 text-left">
+        {[
+          'Frame the project in writing before execution drifts.',
+          'Open project chat once the doc exists so retrieval can use it.',
+          'Save creations back into the same project to strengthen provenance.',
+        ].map((step) => (
+          <div
+            key={step}
+            className="rounded-2xl border border-white/[0.06] bg-white/[0.03] px-4 py-3 text-sm text-white/55"
+          >
+            {step}
+          </div>
+        ))}
+      </div>
+
+      <div className="flex flex-wrap items-center justify-center gap-3">
+        <Button asChild className="rounded-xl border border-[#7fffd4]/20 bg-[#7fffd4]/10 font-sans text-sm text-[#7fffd4] transition-all hover:bg-[#7fffd4]/20">
+          <Link href={`/projects/${projectId}/docs/new`}>Create first document</Link>
         </Button>
-      </Link>
+        <OpenProjectChatButton projectId={projectId} variant="ghost">
+          <ChatCircleDots size={16} />
+          Open project chat
+        </OpenProjectChatButton>
+      </div>
     </div>
   );
 }
 
-// ---------------------------------------------------------------------------
-// Utility
-// ---------------------------------------------------------------------------
-
-function typeEmoji(type: DocType): string {
+function typeGlyph(type: DocType): string {
   const map: Record<DocType, string> = {
-    note: '📝',
-    brief: '📋',
-    outline: '🗂',
-    lore: '📖',
-    research: '🔍',
-    prompt_book: '✨',
-    spec: '⚙️',
-    journal: '📓',
+    note: 'N',
+    brief: 'B',
+    outline: 'O',
+    lore: 'L',
+    research: 'R',
+    prompt_book: 'P',
+    spec: 'S',
+    journal: 'J',
   };
-  return map[type] ?? '📄';
+  return map[type] ?? 'D';
 }

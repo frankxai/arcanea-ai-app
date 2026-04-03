@@ -3,12 +3,19 @@
 import { useMemo, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
-import { ArrowRight, BookOpen, ChatCircleDots, FileText, Lightbulb, Sparkle } from '@/lib/phosphor-icons';
+import {
+  ArrowRight,
+  BookOpen,
+  ChatCircleDots,
+  Lightbulb,
+  Sparkle,
+} from '@/lib/phosphor-icons';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { extractDocFromEnvelope } from '@/lib/docs/client';
 import { DOC_TYPE_LABELS, type DocType } from '@/lib/docs/types';
+import { OpenProjectChatButton } from '../../open-project-chat-button';
 
 const DOC_TYPE_DESCRIPTIONS: Record<DocType, string> = {
   note: 'Fast working notes for decisions, fragments, and continuity.',
@@ -87,12 +94,10 @@ export default function NewDocPage() {
                 View docs
               </Link>
             </Button>
-            <Button asChild variant="creation">
-              <Link href="/chat">
-                <ChatCircleDots size={16} />
-                Open chat
-              </Link>
-            </Button>
+            <OpenProjectChatButton projectId={params.id}>
+              <ChatCircleDots size={16} />
+              Open project chat
+            </OpenProjectChatButton>
           </div>
         </div>
 
@@ -140,7 +145,9 @@ export default function NewDocPage() {
               </div>
 
               <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-4">
-                <p className="text-[11px] uppercase tracking-[0.18em] text-white/40">Selected workflow</p>
+                <p className="text-[11px] uppercase tracking-[0.18em] text-white/40">
+                  Selected workflow
+                </p>
                 <p className="mt-2 text-sm text-white">{DOC_TYPE_LABELS[docType]}</p>
                 <p className="mt-2 text-sm leading-6 text-white/60">{selectedDescription}</p>
               </div>
@@ -149,7 +156,8 @@ export default function NewDocPage() {
                 <p className="text-sm text-rose-300">{error}</p>
               ) : (
                 <p className="text-xs text-white/45">
-                  Arcanea will create the doc inside this project so retrieval and provenance can use it immediately.
+                  Arcanea will create the doc inside this project so retrieval and provenance can
+                  use it immediately.
                 </p>
               )}
 
@@ -172,7 +180,8 @@ export default function NewDocPage() {
               <CardHeader>
                 <CardTitle>Why docs matter here</CardTitle>
                 <CardDescription>
-                  Arcanea works best when projects have a durable written layer, not just transient chats.
+                  Arcanea works best when projects have a durable written layer, not just transient
+                  chats.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
@@ -192,26 +201,36 @@ export default function NewDocPage() {
               <CardHeader>
                 <CardTitle>What to start with</CardTitle>
                 <CardDescription>
-                  The strongest default is usually a brief or spec, depending on whether the project is product or creative-first.
+                  The strongest default is usually a brief or spec, depending on whether the
+                  project is product or creative-first.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3 text-sm leading-6 text-white/65">
                 <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-4">
                   <p className="font-medium text-white">For product work</p>
-                  <p className="mt-2">Start with a brief or spec so chat and execution stay aligned to the same constraints.</p>
+                  <p className="mt-2">
+                    Start with a brief or spec so chat and execution stay aligned to the same
+                    constraints.
+                  </p>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-4">
                   <p className="font-medium text-white">For story or worldbuilding work</p>
-                  <p className="mt-2">Start with lore or outline so continuity survives beyond a single conversation.</p>
+                  <p className="mt-2">
+                    Start with lore or outline so continuity survives beyond a single conversation.
+                  </p>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-4">
                   <p className="font-medium text-white">For research-heavy work</p>
-                  <p className="mt-2">Start with research so evidence and decisions don’t get buried inside chat history.</p>
+                  <p className="mt-2">
+                    Start with research so evidence and decisions do not get buried inside chat
+                    history.
+                  </p>
                 </div>
                 <div className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-4">
                   <Lightbulb size={16} className="mt-1 text-atlantean-teal-aqua" />
                   <p>
-                    Build the durable artifact first, then use chat as the active execution loop around it.
+                    Build the durable artifact first, then use chat as the active execution loop
+                    around it.
                   </p>
                 </div>
               </CardContent>
