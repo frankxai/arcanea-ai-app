@@ -12,7 +12,7 @@ import {
   PhCaretDown,
   PhImageSquare,
 } from '@/lib/phosphor-icons';
-import { CHAT_MODELS, getModelById } from '@/components/chat/model-selector';
+import { CHAT_MODELS, getModelById, ProviderLogo } from '@/components/chat/model-selector';
 import { MentionPopup, type MentionItem } from './mention-popup';
 import { VoiceWaveform } from './voice-waveform';
 
@@ -124,10 +124,7 @@ function CompactModelPicker({
           border border-white/[0.08] hover:border-[#00bcd4]/20 hover:bg-[#00bcd4]/[0.04] text-white/50 hover:text-white/70
           focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
       >
-        <span
-          className="w-1.5 h-1.5 rounded-full shrink-0"
-          style={{ backgroundColor: tierColor(selected.tier) }}
-        />
+        <ProviderLogo provider={selected.provider} size={16} />
         <span>{selected.shortName}</span>
         <PhCaretDown
           className={`w-3 h-3 text-white/30 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
@@ -197,11 +194,11 @@ function CompactModelPicker({
                         : 'text-white/60 hover:bg-white/[0.04] hover:text-white/80'
                     }`}
                   >
+                    <ProviderLogo provider={model.provider} size={20} />
                     <span className="text-xs font-medium flex-1">{model.shortName}</span>
                     {model.tokensPerSecond && (
                       <span className="text-[9px] text-white/20 font-mono">{model.tokensPerSecond}t/s</span>
                     )}
-                    <span className="text-[10px] text-white/20 font-mono">{model.provider}</span>
                   </button>
                 ))}
               </div>
@@ -313,12 +310,9 @@ function ToolsPopover({
             : 'bg-white/[0.03] border border-white/[0.06] text-white/35 hover:text-white/60 hover:bg-white/[0.06]'
         }`}
         aria-label={`Tools (${activeCount} active)`}
-        title="Toggle tools"
+        title="Tools: Image gen, Thinking, Web search"
       >
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-          <line x1="7" y1="3" x2="7" y2="11" />
-          <line x1="3" y1="7" x2="11" y2="7" />
-        </svg>
+        <PhBrain className="w-4 h-4" />
         {activeCount > 0 && (
           <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-[#00bcd4] text-[8px] text-black font-bold flex items-center justify-center">
             {activeCount}

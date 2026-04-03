@@ -23,6 +23,39 @@ const TIER_LABELS: Record<string, { label: string; icon: typeof PhBrain; color: 
   speed: { label: 'Speed', icon: PhLightning, color: '#ffd700' },
 };
 
+// Provider brand colors & initials (LobeChat-inspired)
+const PROVIDER_BRAND: Record<string, { color: string; bg: string; initial: string }> = {
+  arcanea: { color: '#7fffd4', bg: '#7fffd410', initial: 'A' },
+  anthropic: { color: '#d4a27c', bg: '#d4a27c15', initial: 'A' },
+  openai: { color: '#10a37f', bg: '#10a37f15', initial: 'O' },
+  google: { color: '#4285f4', bg: '#4285f415', initial: 'G' },
+  xai: { color: '#ffffff', bg: '#ffffff10', initial: 'X' },
+  deepseek: { color: '#4d6bfe', bg: '#4d6bfe15', initial: 'D' },
+  moonshot: { color: '#ff6b35', bg: '#ff6b3515', initial: 'K' },
+  cerebras: { color: '#ff4444', bg: '#ff444415', initial: 'C' },
+  groq: { color: '#f55036', bg: '#f5503615', initial: 'Q' },
+  mistral: { color: '#ff7000', bg: '#ff700015', initial: 'M' },
+};
+
+export function ProviderLogo({ provider, size = 20 }: { provider: string; size?: number }) {
+  const brand = PROVIDER_BRAND[provider] || { color: '#888', bg: '#88888815', initial: '?' };
+  return (
+    <div
+      className="rounded-md flex items-center justify-center shrink-0 font-bold"
+      style={{
+        width: size,
+        height: size,
+        backgroundColor: brand.bg,
+        color: brand.color,
+        fontSize: size * 0.5,
+        border: `1px solid ${brand.color}25`,
+      }}
+    >
+      {brand.initial}
+    </div>
+  );
+}
+
 export const CHAT_MODELS: ChatModel[] = [
   // Auto
   { id: 'arcanea-auto', name: 'Arcanea Auto', shortName: 'Auto', provider: 'arcanea', tier: 'frontier', description: 'Smart routing — picks the best model for your task' },
@@ -190,22 +223,22 @@ export const ModelSelector = React.memo(function ModelSelector({ value, onChange
       type="button"
       data-model-item
       onClick={() => { onChange(model.id); setOpen(false); }}
-      className={`w-full text-left px-3 py-3 flex items-start gap-3 transition-colors outline-none ${
+      className={`w-full text-left px-3 py-2.5 flex items-center gap-3 transition-colors outline-none ${
         isFocused ? 'bg-white/[0.06] ring-1 ring-inset ring-[#00bcd4]/40' :
         isSelected ? 'bg-white/[0.04]' : 'hover:bg-white/[0.03]'
       }`}
       role="option"
       aria-selected={isSelected}
     >
+      <ProviderLogo provider={model.provider} size={28} />
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
           <span className={`text-sm font-medium ${isSelected ? 'text-[#00bcd4]' : 'text-white/80'}`}>
             {model.shortName}
           </span>
-          <span className="text-[10px] text-white/25 font-mono">{model.provider}</span>
           {model.tokensPerSecond && (
             <span className="text-[10px] text-yellow-400/50 font-mono">
-              {model.tokensPerSecond.toLocaleString()} tok/s
+              {model.tokensPerSecond.toLocaleString()} t/s
             </span>
           )}
           {(MODEL_CAPABILITIES[model.id] || [])
@@ -221,7 +254,7 @@ export const ModelSelector = React.memo(function ModelSelector({ value, onChange
         </div>
         <p className="text-[11px] text-white/30 mt-0.5 truncate">{model.description}</p>
       </div>
-      {isSelected && <PhCheck className="w-4 h-4 text-[#00bcd4] shrink-0 mt-0.5" />}
+      {isSelected && <PhCheck className="w-4 h-4 text-[#00bcd4] shrink-0" />}
     </button>
   );
 
@@ -231,7 +264,7 @@ export const ModelSelector = React.memo(function ModelSelector({ value, onChange
       <button
         type="button"
         onClick={() => { setOpen(!open); setFocusIndex(SELECTABLE_IDS.indexOf(value)); }}
-        className="flex items-center gap-1.5 px-2.5 py-2 sm:py-1.5 rounded-lg text-[11px] font-medium transition-all min-h-[44px] sm:min-h-0
+        className="flex items-center gap-2 px-2.5 py-2 sm:py-1.5 rounded-lg text-[11px] font-medium transition-all min-h-[44px] sm:min-h-0
           border border-white/[0.06] hover:border-white/[0.12] hover:bg-white/[0.03]
           focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/50"
         style={{ color: tierMeta?.color || '#fff' }}
@@ -239,6 +272,7 @@ export const ModelSelector = React.memo(function ModelSelector({ value, onChange
         aria-expanded={open}
         aria-haspopup="listbox"
       >
+        <ProviderLogo provider={selected.provider} size={18} />
         <span className="text-white/60">{selected.shortName}</span>
         <PhCaretDown className={`w-3 h-3 text-white/30 transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>

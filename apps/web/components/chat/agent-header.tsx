@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { PhCaretDown } from '@/lib/phosphor-icons';
-import { getModelById, CHAT_MODELS } from '@/components/chat/model-selector';
+import { getModelById, CHAT_MODELS, ProviderLogo } from '@/components/chat/model-selector';
 import { FOCUS_MODES, type FocusMode } from './focus-modes';
 
 interface AgentHeaderProps {
@@ -65,6 +65,7 @@ export function AgentHeader({
             onClick={() => setShowModelDropdown(!showModelDropdown)}
             className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/[0.03] border border-white/[0.06] hover:border-white/[0.12] hover:bg-white/[0.05] transition-all text-[11px] text-white/40 hover:text-white/60"
           >
+            <ProviderLogo provider={model?.provider ?? 'arcanea'} size={16} />
             <span>{model?.shortName ?? currentModel}</span>
             <PhCaretDown className="w-2.5 h-2.5" />
           </button>
@@ -84,7 +85,10 @@ export function AgentHeader({
                       currentModel === m.id ? 'text-[#00bcd4]' : 'text-white/50'
                     }`}
                   >
-                    <span>{m.shortName ?? m.name}</span>
+                    <div className="flex items-center gap-2">
+                      <ProviderLogo provider={m.provider} size={18} />
+                      <span>{m.shortName ?? m.name}</span>
+                    </div>
                     {m.tier && (
                       <span className="text-[9px] text-white/20">{m.tier}</span>
                     )}
