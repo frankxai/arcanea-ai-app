@@ -103,8 +103,8 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       generated: true,
-      imageData: imagePart.inlineData.data, // base64
-      mimeType: imagePart.inlineData.mimeType,
+      imageData: imagePart.inlineData!.data, // base64 — guaranteed by find() above
+      mimeType: imagePart.inlineData!.mimeType,
       prompt,
       artDirection: type === "character"
         ? getArtDirection(blueprint.primaryElement, blueprint.rank)
