@@ -101,7 +101,7 @@ Scope:
 
 Status:
 - core routing and retrieval trace enrichment completed
-- ready to promote to `main`
+- promoted as a verified runtime tranche together with trunk-heal fixes
 - live DB-backed cost and usage instrumentation still depends on Supabase activation
 
 Scope:
@@ -119,6 +119,7 @@ Files:
 Acceptance:
 - retrieval traces distinguish available context from selected context
 - provider traces record route mode, API-key source, focus hint, gates, and active tools
+- project-workspace verification gate is green end-to-end on a clean worktree
 - tests cover deterministic metadata shape
 
 Verification:

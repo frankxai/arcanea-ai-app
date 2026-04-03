@@ -4,6 +4,11 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { BookChapterContent } from './chapter-content';
+const grayMatter = require('gray-matter') as typeof import('gray-matter');
+type YamlRuntime = {
+  load: (value: string) => unknown;
+};
+const yaml = require('js-yaml') as YamlRuntime;
 
 const BOOK_DIR = join(
   process.cwd(),
@@ -19,6 +24,14 @@ interface ChapterFile {
   slug: string;
 }
 
+function parseFrontmatter(source: string) {
+  return grayMatter(source, {
+    engines: {
+      yaml: (value: string) => yaml.load(value) as Record<string, unknown>,
+    },
+  });
+}
+
 async function getChapterFiles(): Promise<ChapterFile[]> {
   const files = await readdir(BOOK_DIR);
   return files
@@ -31,13 +44,12 @@ async function getChapterFiles(): Promise<ChapterFile[]> {
 }
 
 async function loadChapter(slug: string) {
-  const grayMatter = require('gray-matter') as typeof import('gray-matter');
   const chapterFiles = await getChapterFiles();
   const match = chapterFiles.find((cf) => cf.slug === slug);
   if (!match) return null;
 
   const raw = await readFile(join(BOOK_DIR, match.filename), 'utf-8');
-  const { data, content } = grayMatter(raw);
+  const { data, content } = parseFrontmatter(raw);
   const words = content.trim().split(/\s+/).length;
   const readingTime = Math.max(1, Math.ceil(words / 230));
 
@@ -51,12 +63,12 @@ async function loadChapter(slug: string) {
 
   if (prev) {
     const prevRaw = await readFile(join(BOOK_DIR, prev.filename), 'utf-8');
-    const prevData = grayMatter(prevRaw).data;
+    const prevData = parseFrontmatter(prevRaw).data;
     prevTitle = prevData.title || prev.slug;
   }
   if (next) {
     const nextRaw = await readFile(join(BOOK_DIR, next.filename), 'utf-8');
-    const nextData = grayMatter(nextRaw).data;
+    const nextData = parseFrontmatter(nextRaw).data;
     nextTitle = nextData.title || next.slug;
   }
 

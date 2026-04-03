@@ -228,6 +228,9 @@ export function ChatArea({
   const [autoScroll, setAutoScroll] = useState(true);
   const [showScrollBtn, setShowScrollBtn] = useState(false);
   const [showShortcuts, setShowShortcuts] = useState(false);
+  const [emptyGreeting, setEmptyGreeting] = useState('What are you creating?');
+  const [emptySubtitle, setEmptySubtitle] = useState(SUBTITLES[0]);
+  const [hasMounted, setHasMounted] = useState(false);
 
   // -------------------------------------------------------------------------
   // Keyboard shortcuts overlay toggle
@@ -248,6 +251,12 @@ export function ChatArea({
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
+  }, []);
+
+  useEffect(() => {
+    setHasMounted(true);
+    setEmptyGreeting(getTimeGreeting());
+    setEmptySubtitle(getSubtitle());
   }, []);
 
   // Auto-scroll on new content
@@ -308,12 +317,12 @@ export function ChatArea({
 
               {/* Time-aware greeting — gradient text */}
               <h1 className="text-2xl sm:text-3xl font-semibold mb-3 tracking-tight animate-empty-fade-in bg-gradient-to-r from-white via-white/95 to-[#00bcd4]/80 bg-clip-text text-transparent" style={{ animationDelay: '60ms' }}>
-                {activeLuminor ? activeLuminor.name : getTimeGreeting()}
+                {activeLuminor ? activeLuminor.name : emptyGreeting}
               </h1>
 
               {/* Rotating subtitle */}
               <p className="text-sm text-white/30 mb-8 animate-empty-fade-in font-light" style={{ animationDelay: '100ms' }}>
-                {getSubtitle()}
+                {emptySubtitle}
               </p>
 
               {/* 4 creative starter chips in a 2x2 grid */}
@@ -351,7 +360,7 @@ export function ChatArea({
               </div>
 
               {/* Continue last session — subtle, not prominent */}
-              {lastSessionTitle && onContinueLastSession && (
+              {hasMounted && lastSessionTitle && onContinueLastSession && (
                 <button
                   onClick={onContinueLastSession}
                   className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-[11px] text-white/25 hover:text-white/45 hover:bg-white/[0.03] transition-all duration-200 mx-auto animate-empty-fade-in"
@@ -363,7 +372,7 @@ export function ChatArea({
               )}
 
               {/* Subtle API key hint — only when no keys at all */}
-              {!clientApiKey && !serverHasKeys && (
+              {hasMounted && !clientApiKey && !serverHasKeys && (
                 <p className="text-[11px] text-white/15 mt-4 animate-empty-fade-in" style={{ animationDelay: '500ms' }}>
                   Tip: <Link href="/settings/providers" className="underline decoration-white/10 hover:text-white/30 transition-colors">Add your own AI keys</Link> in Settings for unlimited access
                 </p>

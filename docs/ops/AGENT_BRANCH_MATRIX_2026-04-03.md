@@ -99,12 +99,13 @@ This file records the active Arcanea branches and worktrees observed on this mac
   - dedicated workspace doc panel and stronger docs API contract coverage
 
 - `promote/provider-routing-tracing-main`
-- Status: ready to promote
+- Status: promotion slice complete in successor branch `promote/chat-runtime-metadata`
 - Value delivered:
   - richer retrieval trace metadata with available-vs-selected context counts
   - deterministic provider routing trace payloads
   - route mode and API key source visibility for BYOK-first execution
   - focused trace test expansion without broader Agent OS/package churn
+  - trunk-heal fixes for `worlds` fork typing, Living Lore frontmatter parsing, and chat-shell hydration mismatches
 
 ## Current Interpretation
 
@@ -115,7 +116,7 @@ If an agent starts now and wants the best available branch:
 3. Read `docs/ops/MASSIVE_ACTION_LOG_2026-04-03.md`
 4. Prefer `main` for durable docs/ops changes only
 5. Treat `feat/docs-graph-retrieval` as completed work unless new follow-ups appear
-6. Treat `feat/provider-routing-tracing` as a current safe promotion branch
+6. Treat `feat/provider-routing-tracing` as historical source work and `promote/chat-runtime-metadata` as the current verified promotion slice
 7. Treat `integration/agent-control-plane-unification` as review/staging territory, not as a production branch
 
 ## Immediate Next Decisions
