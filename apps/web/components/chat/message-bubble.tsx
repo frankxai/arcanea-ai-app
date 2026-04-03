@@ -56,6 +56,8 @@ export interface MessageBubbleProps {
   luminorTitle?: string;
   /** Provider label (e.g. "gemini-2.5-flash") */
   providerLabel?: string;
+  /** Runtime provider/context summary from server headers */
+  runtimeSummary?: string | null;
   onRegenerate?: () => void;
   onEdit?: (id: string, newContent: string) => void;
   onCopy?: (text: string) => void;
@@ -201,6 +203,7 @@ export const MessageBubble = React.memo(function MessageBubble({
   luminorColor,
   luminorTitle,
   providerLabel,
+  runtimeSummary,
   onRegenerate,
   onEdit,
   onCopy,
@@ -460,6 +463,11 @@ export const MessageBubble = React.memo(function MessageBubble({
               </span>
             )}
           </div>
+          {runtimeSummary && (
+            <div className="mb-2 rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-2 text-[11px] text-white/35">
+              {runtimeSummary}
+            </div>
+          )}
 
           {/* Tool results */}
           {toolParts.length > 0 && (

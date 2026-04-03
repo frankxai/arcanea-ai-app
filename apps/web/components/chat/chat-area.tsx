@@ -141,6 +141,8 @@ interface ChatAreaProps {
   swarmResult: SwarmResult | null;
   /** Provider label for display */
   providerLabel: string;
+  /** Runtime provider/context summary parsed from server headers */
+  runtimeSummary?: string | null;
   /** Send a new message */
   onSendMessage: (opts: { text: string }) => void;
   /** Set input field value (for capability chip hints) */
@@ -194,6 +196,7 @@ export function ChatArea({
   activeLuminor,
   swarmResult,
   providerLabel,
+  runtimeSummary,
   onSendMessage,
   onSetInput,
   onFocusInput,
@@ -404,6 +407,7 @@ export function ChatArea({
                     luminorTitle={activeLuminor?.title}
                     luminorId={activeLuminor?.id}
                     providerLabel={providerLabel}
+                    runtimeSummary={isLastMsg ? runtimeSummary : undefined}
                     onRegenerate={() => onRegenerateFrom(msg.id)}
                     onEdit={(id, text) => {
                       onEditMessage(id, text);
@@ -455,6 +459,11 @@ export function ChatArea({
                       </span>
                       <span className="text-[10px] text-white/20 font-mono">{providerLabel}</span>
                     </div>
+                    {runtimeSummary && (
+                      <div className="mb-2 rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-2 text-[11px] text-white/35">
+                        {runtimeSummary}
+                      </div>
+                    )}
                     <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-[#00bcd4]/[0.04] via-white/[0.02] to-[#00897b]/[0.03] border border-[#00bcd4]/[0.08] shadow-[0_0_16px_rgba(0,188,212,0.1)]" aria-live="assertive">
                       <div className="relative w-5 h-5">
                         <div className="absolute inset-0 rounded-full border-2 border-[#00bcd4]/20" />

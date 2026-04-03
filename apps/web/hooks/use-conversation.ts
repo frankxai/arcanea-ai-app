@@ -23,6 +23,11 @@ import { resolveSwarm, type SwarmResult } from '@/lib/ai/guardian-swarm';
 import { CHAT_MODELS } from '@/components/chat/model-selector';
 import { getLuminor, getLuminorIds, type LuminorConfig } from '@/lib/luminors/config';
 import type { ChatProject } from '@/lib/chat/project-store';
+import {
+  coerceArcaneaRuntimeMetadata,
+  formatArcaneaRuntimeSummary,
+  type ArcaneaRuntimeMetadata,
+} from '@/lib/chat/runtime-metadata';
 
 // ---------------------------------------------------------------------------
 // Helpers (pure functions, co-located with their consumer)
@@ -135,6 +140,8 @@ export interface ConversationState {
   providerLabel: string;
   provider: string;
   clientApiKey: string | undefined;
+  runtimeMetadata: ArcaneaRuntimeMetadata | null;
+  runtimeSummary: string | null;
 
   // Focus (deprecated — auto-routing replaces manual focus selection)
   focusMode: string;
@@ -230,12 +237,10 @@ export function useConversation(options?: UseConversationOptions): ConversationS
   // Active Luminor from Sanctum ("Use in Chat")
   const [activeLuminor, setActiveLuminor] = useState<ActiveLuminor | null>(null);
 
-  // Which Luminor responded (read from x-arcanea-luminors header).
-  // TODO: TextStreamChatTransport does not expose response headers.
-  // To read x-arcanea-luminors, either:
-  //   1. Wrap fetch in the transport's `fetch` option to intercept headers, or
-  //   2. Have the backend embed luminor info in the stream metadata.
-  // For now this is set by @mention activation; backend header support pending.
+  // Which Luminor responded.
+  // Today this is still approximated from local activation/@mention state.
+  // If we want server-authoritative responding Luminor state, it should move
+  // into message metadata just like the runtime provider/context summary.
   const [respondingLuminor, setRespondingLuminor] = useState<string | null>(null);
 
   // Enabled tool categories (e.g. 'image', 'think', 'search')
@@ -468,6 +473,14 @@ export function useConversation(options?: UseConversationOptions): ConversationS
   const isStreaming = isLoading && lastMsg?.role === 'assistant';
   const isThinking = isLoading && (!lastMsg || lastMsg.role === 'user');
   const isEmpty = messages.length === 0 && !isLoading;
+  const runtimeMetadata = useMemo<ArcaneaRuntimeMetadata | null>(() => {
+    const lastAssistant = [...messages].reverse().find((message) => message.role === 'assistant');
+    return coerceArcaneaRuntimeMetadata(lastAssistant?.metadata);
+  }, [messages]);
+  const runtimeSummary = useMemo(() => {
+    if (!runtimeMetadata) return null;
+    return formatArcaneaRuntimeSummary(runtimeMetadata);
+  }, [runtimeMetadata]);
 
   // ---------------------------------------------------------------------------
   // Client-side router for frequency indicator
@@ -775,6 +788,8 @@ export function useConversation(options?: UseConversationOptions): ConversationS
     providerLabel,
     provider,
     clientApiKey,
+    runtimeMetadata,
+    runtimeSummary,
 
     // Focus
     focusMode,
