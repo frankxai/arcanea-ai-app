@@ -15,6 +15,7 @@ import { convertToModelMessages, streamText, type UIMessage } from 'ai';
 import { createArcanea } from '@/lib/ai/arcanea-intelligence';
 import { GATEWAY_MODELS, EXTENDED_PROVIDERS } from '@/lib/gateway/catalog';
 import { createChatTools } from '@/lib/chat/tools';
+import { buildArcaneaRuntimeHeaders } from '@/lib/chat/runtime-metadata';
 import {
   buildProjectRetrievalBlock,
   buildProjectRetrievalTraceMetadata,
@@ -672,14 +673,59 @@ Adapt your depth, vocabulary, and suggestions to this creator's level. A Luminor
     });
 
     const responseHeaders: Record<string, string> = {
-      'x-arcanea-model': label,
       'x-arcanea-gates': activeGates.join(','),
       'x-arcanea-coordination': coordinationMode,
       'x-arcanea-lead': leadGuardian || '',
       'x-arcanea-luminors': activeLuminorIds.join(','),
+      ...buildArcaneaRuntimeHeaders({
+        modelLabel: label,
+        provider: resolvedProviderId ?? resolvedGateway?.provider ?? null,
+        routeMode: providerRouteMode,
+        apiKeySource: providerApiKeySource,
+        retrievalMode: projectRetrievalMetadata
+          ? (projectRetrievalMetadata.hasStoredSummary ? 'graph+selection' : 'selection-only')
+          : 'none',
+        selectedSessionCount: projectRetrievalMetadata?.sessionCount,
+        availableSessionCount: projectRetrievalMetadata?.availableSessionCount,
+        selectedCreationCount: projectRetrievalMetadata?.creationCount,
+        availableCreationCount: projectRetrievalMetadata?.availableCreationCount,
+        selectedDocCount: projectRetrievalMetadata?.docCount,
+        availableDocCount: projectRetrievalMetadata?.availableDocCount,
+        selectedMemoryCount: projectRetrievalMetadata?.memoryCount,
+        availableMemoryCount: projectRetrievalMetadata?.availableMemoryCount,
+        hasStoredSummary: projectRetrievalMetadata?.hasStoredSummary,
+      }),
     };
 
-    return result.toUIMessageStreamResponse({ headers: responseHeaders });
+    const runtimeMetadata = {
+      modelLabel: label,
+      provider: resolvedProviderId ?? resolvedGateway?.provider ?? null,
+      routeMode: providerRouteMode,
+      apiKeySource: providerApiKeySource,
+      retrievalMode: projectRetrievalMetadata
+        ? (projectRetrievalMetadata.hasStoredSummary ? 'graph+selection' : 'selection-only')
+        : 'none',
+      selectedSessionCount: projectRetrievalMetadata?.sessionCount,
+      availableSessionCount: projectRetrievalMetadata?.availableSessionCount,
+      selectedCreationCount: projectRetrievalMetadata?.creationCount,
+      availableCreationCount: projectRetrievalMetadata?.availableCreationCount,
+      selectedDocCount: projectRetrievalMetadata?.docCount,
+      availableDocCount: projectRetrievalMetadata?.availableDocCount,
+      selectedMemoryCount: projectRetrievalMetadata?.memoryCount,
+      availableMemoryCount: projectRetrievalMetadata?.availableMemoryCount,
+      hasStoredSummary: projectRetrievalMetadata?.hasStoredSummary,
+    };
+
+    return result.toUIMessageStreamResponse({
+      headers: responseHeaders,
+      messageMetadata: ({ part }) => {
+        if (part.type === 'start') {
+          return runtimeMetadata;
+        }
+
+        return undefined;
+      },
+    });
   } catch (error) {
     console.error('Chat API error:', error);
 

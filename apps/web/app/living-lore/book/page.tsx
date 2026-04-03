@@ -1,6 +1,11 @@
 import { readdir, readFile } from 'fs/promises';
 import { join } from 'path';
 import Link from 'next/link';
+const grayMatter = require('gray-matter') as typeof import('gray-matter');
+type YamlRuntime = {
+  load: (value: string) => unknown;
+};
+const yaml = require('js-yaml') as YamlRuntime;
 
 const BOOK_DIR = join(
   process.cwd(),
@@ -20,8 +25,15 @@ interface ChapterInfo {
   filename: string;
 }
 
+function parseFrontmatter(source: string) {
+  return grayMatter(source, {
+    engines: {
+      yaml: (value: string) => yaml.load(value) as Record<string, unknown>,
+    },
+  });
+}
+
 async function getChapters(): Promise<ChapterInfo[]> {
-  const grayMatter = require('gray-matter') as typeof import('gray-matter');
   const files = await readdir(BOOK_DIR);
   const mdFiles = files
     .filter((f) => f.endsWith('.md') && f !== '00-front-matter.md')
@@ -31,7 +43,7 @@ async function getChapters(): Promise<ChapterInfo[]> {
 
   for (const file of mdFiles) {
     const raw = await readFile(join(BOOK_DIR, file), 'utf-8');
-    const { data, content } = grayMatter(raw);
+    const { data, content } = parseFrontmatter(raw);
     const words = content.trim().split(/\s+/).length;
     const readingTime = Math.max(1, Math.ceil(words / 230));
 
@@ -54,12 +66,11 @@ async function getChapters(): Promise<ChapterInfo[]> {
 }
 
 async function getBookMeta() {
-  const grayMatter = require('gray-matter') as typeof import('gray-matter');
   const raw = await readFile(
     join(BOOK_DIR, '00-front-matter.md'),
     'utf-8',
   );
-  const { data } = grayMatter(raw);
+  const { data } = parseFrontmatter(raw);
   return {
     title: (data.title as string) || 'The Foundation',
     series: (data.series as string) || 'The Living Lore',

@@ -45,16 +45,7 @@ const SIDEBAR_KEY = 'arcanea-sidebar-expanded';
 const MOBILE_BREAKPOINT = 768;
 
 function getInitialExpanded(): boolean {
-  if (typeof window === 'undefined') return false;
-
-  try {
-    const stored = localStorage.getItem(SIDEBAR_KEY);
-    // Only expand if user explicitly expanded before; first visit is always collapsed
-    if (stored !== null) return stored === 'true';
-    return false;
-  } catch {
-    return false;
-  }
+  return false;
 }
 
 function persistExpanded(value: boolean): void {
@@ -115,6 +106,17 @@ export function useChatSessions(): UseChatSessionsReturn {
 
   const refreshSessions = useCallback(async () => {
     setRefreshTick((tick) => tick + 1);
+  }, []);
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem(SIDEBAR_KEY);
+      if (stored !== null) {
+        setIsSidebarExpanded(stored === 'true');
+      }
+    } catch {
+      // ignore localStorage failures
+    }
   }, []);
 
   useEffect(() => {

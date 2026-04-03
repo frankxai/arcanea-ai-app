@@ -364,17 +364,20 @@ function SessionItem({ session, isActive, onSelect, onDelete, onRename, onToggle
   }, [onSelect, onAutoClose]);
 
   return (
-    <button
-      onClick={handleSelect}
-      onDoubleClick={handleDoubleClick}
-      aria-current={isActive ? 'page' : undefined}
-      className={`group w-full flex items-center gap-2 px-2.5 py-2.5 min-h-[44px] rounded-lg text-left transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none ${
+    <div
+      className={`group w-full flex items-center gap-2 px-2.5 py-2.5 min-h-[44px] rounded-lg text-left transition-all duration-200 ${
         isActive
           ? 'bg-gradient-to-r from-[#00bcd4]/10 to-transparent border-l-2 border-[#00bcd4] shadow-[inset_0_0_16px_rgba(0,188,212,0.05)]'
           : 'border-l-2 border-transparent hover:bg-white/[0.04] hover:border-white/[0.1]'
       }`}
     >
-      <div className="min-w-0 flex-1">
+      <button
+        type="button"
+        onClick={handleSelect}
+        onDoubleClick={handleDoubleClick}
+        aria-current={isActive ? 'page' : undefined}
+        className="min-w-0 flex-1 text-left rounded-md focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
+      >
         {editing ? (
           <div className="flex items-center gap-1">
             <input
@@ -422,11 +425,12 @@ function SessionItem({ session, isActive, onSelect, onDelete, onRename, onToggle
             </span>
           </>
         )}
-      </div>
+      </button>
 
       {/* Pin indicator — always visible when pinned */}
       {!editing && session.pinned && (
         <button
+          type="button"
           onClick={(e) => { e.stopPropagation(); onTogglePin?.(); }}
           className="shrink-0 p-0.5 rounded transition-colors text-[#ffd700] hover:text-[#ffd700]/70"
           aria-label="Unpin"
@@ -443,6 +447,7 @@ function SessionItem({ session, isActive, onSelect, onDelete, onRename, onToggle
           {/* Pin button — only show outline on hover when not already pinned */}
           {!session.pinned && (
             <button
+              type="button"
               onClick={(e) => { e.stopPropagation(); onTogglePin?.(); }}
               className="w-5 h-5 flex items-center justify-center rounded text-white/0 group-hover:text-white/20 hover:!text-[#ffd700]/70 hover:bg-[#ffd700]/5 focus-visible:ring-2 focus-visible:ring-[#ffd700]/40 focus-visible:outline-none transition-colors"
               aria-label="Pin"
@@ -453,6 +458,7 @@ function SessionItem({ session, isActive, onSelect, onDelete, onRename, onToggle
             </button>
           )}
           <button
+            type="button"
             onClick={(e) => {
               e.stopPropagation();
               handleDoubleClick();
@@ -464,6 +470,7 @@ function SessionItem({ session, isActive, onSelect, onDelete, onRename, onToggle
           </button>
           {confirmDelete ? (
             <button
+              type="button"
               onClick={handleDeleteClick}
               className="shrink-0 px-2 py-0.5 rounded text-[10px] font-medium bg-red-500/20 text-red-400 hover:bg-red-500/30 transition-colors border border-red-500/20 focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
               aria-label="Confirm delete"
@@ -472,6 +479,7 @@ function SessionItem({ session, isActive, onSelect, onDelete, onRename, onToggle
             </button>
           ) : (
             <button
+              type="button"
               onClick={handleDeleteClick}
               className="w-5 h-5 flex items-center justify-center rounded text-white/20 hover:text-red-400/70 hover:bg-red-400/10 transition-all focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
               aria-label={`Delete: ${session.title}`}
@@ -481,7 +489,7 @@ function SessionItem({ session, isActive, onSelect, onDelete, onRename, onToggle
           )}
         </div>
       )}
-    </button>
+    </div>
   );
 }
 
