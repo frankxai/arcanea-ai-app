@@ -56,6 +56,16 @@ function getOrCreateGraph(sessionId: string): CreationGraph {
   return graphs.get(sessionId)!;
 }
 
+export function getGraphNodes(sessionId: string): CreationNode[] {
+  const graph = getOrCreateGraph(sessionId);
+  return [...graph.nodes.values()];
+}
+
+export function getGraphEdges(sessionId: string): CreationEdge[] {
+  const graph = getOrCreateGraph(sessionId);
+  return [...graph.edges];
+}
+
 export function addCreationToGraph(
   sessionId: string,
   creation: CreationRef,
