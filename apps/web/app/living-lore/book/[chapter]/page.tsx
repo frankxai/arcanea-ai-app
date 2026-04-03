@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { BookChapterContent } from './chapter-content';
-const grayMatter = require('gray-matter') as typeof import('gray-matter');
+import grayMatter from 'gray-matter';
 
 export const dynamic = 'force-dynamic';
 

@@ -9,7 +9,7 @@ import { readdir, readFile, access } from 'fs/promises';
 import { join } from 'path';
 import type { Episode, Encounter, ActInfo, EpisodeMeta } from './types';
 
-const grayMatter = require('gray-matter') as typeof import('gray-matter');
+import grayMatter from 'gray-matter';
 
 const LIVING_LORE_DIR = join(process.cwd(), '..', '..', 'book', 'living-lore');
 

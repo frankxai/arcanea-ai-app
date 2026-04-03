@@ -1,7 +1,7 @@
 import { readdir, readFile } from 'fs/promises';
 import { join } from 'path';
 import Link from 'next/link';
-const grayMatter = require('gray-matter') as typeof import('gray-matter');
+import grayMatter from 'gray-matter';
 
 export const dynamic = 'force-dynamic';
 

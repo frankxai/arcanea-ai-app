@@ -12,8 +12,7 @@
 import { readdir, readFile, access } from 'fs/promises';
 import { join } from 'path';
 
-// gray-matter is CommonJS — let it use its own bundled yaml engine
-const grayMatter = require('gray-matter') as typeof import('gray-matter');
+import grayMatter from 'gray-matter';
 import {
   Collection,
   Text,
