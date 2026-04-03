@@ -11,6 +11,7 @@ import {
   errorResponse,
   handleApiError,
 } from '@/lib/api-utils';
+import type { WorldRow } from '@/lib/database/types/world-graph-types';
 
 type RouteParams = { params: Promise<{ slug: string }> };
 
@@ -18,7 +19,6 @@ export async function POST(_request: NextRequest, { params }: RouteParams) {
   try {
     const { slug } = await params;
     const supabase = await createClient();
-    const db = supabase as any;
     const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) {
@@ -26,7 +26,7 @@ export async function POST(_request: NextRequest, { params }: RouteParams) {
     }
 
     // Resolve source world
-    const { data: source, error: srcErr } = await db
+    const { data: source, error: srcErr } = await supabase
       .from('worlds')
       .select('*')
       .eq('slug', slug)
@@ -36,31 +36,39 @@ export async function POST(_request: NextRequest, { params }: RouteParams) {
       return errorResponse('NOT_FOUND', 'World not found', 404);
     }
 
-    const src = source as Record<string, any>;
-
-    if (src.visibility !== 'public' && src.creator_id !== user.id) {
+    if (source.visibility !== 'public' && source.creator_id !== user.id) {
       return errorResponse('NOT_FOUND', 'World not found', 404);
     }
 
     // Determine unique fork slug
-    const { count } = await db
+    const { count } = await supabase
       .from('worlds')
       .select('id', { count: 'exact', head: true })
       .like('slug', `${slug}-fork-%`);
 
     const forkSlug = `${slug}-fork-${(count ?? 0) + 1}`;
 
-    // Create the forked world
-    const { id: _id, created_at: _ca, updated_at: _ua, star_count: _sc, fork_count: _fc, character_count: _cc, ...worldFields } = src;
+    // Build the forked world payload — omit server-managed fields
+    const {
+      id: _id,
+      created_at: _ca,
+      updated_at: _ua,
+      star_count: _sc,
+      fork_count: _fc,
+      character_count: _cc,
+      creation_count: _crc,
+      marketplace_downloads: _md,
+      ...inheritedFields
+    } = source;
 
-    const { data: forkedWorld, error: forkErr } = await db
+    const { data: forkedWorld, error: forkErr } = await supabase
       .from('worlds')
       .insert({
-        ...worldFields,
+        ...inheritedFields,
         slug: forkSlug,
-        name: `${src.name} (Fork)`,
+        name: `${source.name} (Fork)`,
         creator_id: user.id,
-        forked_from: src.id,
+        forked_from_id: source.id,
         star_count: 0,
         fork_count: 0,
         character_count: 0,
@@ -69,41 +77,46 @@ export async function POST(_request: NextRequest, { params }: RouteParams) {
       .select()
       .single();
 
-    if (forkErr) throw new Error(forkErr.message);
+    if (forkErr || !forkedWorld) throw new Error(forkErr?.message ?? 'Fork insert failed');
 
-    const forkedId = (forkedWorld as any).id;
+    const forkedId = forkedWorld.id;
 
     // Copy characters, factions, locations in parallel
     const [chars, factions, locations] = await Promise.all([
-      db.from('world_characters').select('*').eq('world_id', src.id),
-      db.from('world_factions').select('*').eq('world_id', src.id),
-      db.from('world_locations').select('*').eq('world_id', src.id),
+      supabase.from('world_characters').select('*').eq('world_id', source.id),
+      supabase.from('world_factions').select('*').eq('world_id', source.id),
+      supabase.from('world_locations').select('*').eq('world_id', source.id),
     ]);
 
-    const copyRows = (rows: any[] | null) =>
-      (rows ?? []).map(({ id: _rid, world_id: _wid, created_at: _rca, updated_at: _rua, ...rest }: any) => ({
-        ...rest,
+    type OmitMeta<T> = Omit<T, 'id' | 'world_id' | 'created_at' | 'updated_at'>;
+
+    function copyRows<T extends { id: string; world_id: string; created_at: string | null; updated_at?: string | null }>(
+      rows: T[] | null,
+    ): (OmitMeta<T> & { world_id: string })[] {
+      return (rows ?? []).map(({ id: _rid, world_id: _wid, created_at: _rca, updated_at: _rua, ...rest }) => ({
+        ...(rest as OmitMeta<T>),
         world_id: forkedId,
       }));
+    }
 
     await Promise.all([
-      chars.data?.length ? db.from('world_characters').insert(copyRows(chars.data)) : null,
-      factions.data?.length ? db.from('world_factions').insert(copyRows(factions.data)) : null,
-      locations.data?.length ? db.from('world_locations').insert(copyRows(locations.data)) : null,
+      chars.data?.length ? supabase.from('world_characters').insert(copyRows(chars.data)) : null,
+      factions.data?.length ? supabase.from('world_factions').insert(copyRows(factions.data)) : null,
+      locations.data?.length ? supabase.from('world_locations').insert(copyRows(locations.data)) : null,
     ]);
 
     // Record the fork relationship
-    await db.from('world_forks').insert({
-      source_world_id: src.id,
+    await supabase.from('world_forks').insert({
+      parent_world_id: source.id,
       forked_world_id: forkedId,
-      user_id: user.id,
+      forked_by: user.id,
     });
 
     // Increment parent fork_count
-    await db
+    await supabase
       .from('worlds')
-      .update({ fork_count: (src.fork_count ?? 0) + 1 })
-      .eq('id', src.id);
+      .update({ fork_count: (source.fork_count ?? 0) + 1 })
+      .eq('id', source.id);
 
     return successResponse({ world: forkedWorld, fork_slug: forkSlug }, 201);
   } catch (error) {

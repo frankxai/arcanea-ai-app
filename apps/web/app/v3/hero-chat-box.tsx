@@ -28,7 +28,8 @@ const STARTER_CARDS = [
   {
     icon: PhPaintBrush,
     label: "Design a world",
-    prompt: "Help me create a fantasy world with unique magic systems and cultures",
+    prompt: "Help me design a new world — I want to define its elements, magic system, factions, and founding mythology",
+    href: "/chat?mode=world",
   },
   {
     icon: PhCode,
@@ -139,10 +140,17 @@ export function HeroChatBox() {
       >
         {STARTER_CARDS.map((card) => {
           const Icon = card.icon;
+          const handleClick = () => {
+            if ("href" in card && card.href) {
+              window.location.href = `${card.href}&prompt=${encodeURIComponent(card.prompt)}`;
+            } else {
+              goToChat(card.prompt);
+            }
+          };
           return (
             <button
               key={card.label}
-              onClick={() => goToChat(card.prompt)}
+              onClick={handleClick}
               className="group flex items-center gap-2 px-4 py-2.5 rounded-full text-[13px] text-white/30 hover:text-white/65 bg-white/[0.02] hover:bg-gradient-to-r hover:from-[#00bcd4]/[0.06] hover:to-transparent border border-white/[0.04] hover:border-[#00bcd4]/20 hover:shadow-[0_0_16px_rgba(0,188,212,0.06)] hover:scale-[1.03] active:scale-[0.97] transition-all duration-300"
             >
               <Icon className="w-3.5 h-3.5 text-white/20 group-hover:text-[#00bcd4]/70 transition-colors" />

@@ -9,6 +9,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { buildGeminiCharacterPrompt, getArtDirection } from "@/lib/worlds/image-gen";
+import type { GeminiResponsePart } from "@/lib/database/types/world-graph-types";
 
 export async function POST(request: NextRequest) {
   try {
@@ -88,15 +89,15 @@ export async function POST(request: NextRequest) {
     const data = await response.json();
 
     // Extract image from Gemini response
-    const parts = data.candidates?.[0]?.content?.parts || [];
-    const imagePart = parts.find((p: any) => p.inlineData?.mimeType?.startsWith("image/"));
+    const parts: GeminiResponsePart[] = data.candidates?.[0]?.content?.parts || [];
+    const imagePart = parts.find((p) => p.inlineData?.mimeType?.startsWith("image/"));
 
     if (!imagePart) {
       return NextResponse.json({
         generated: false,
         prompt,
         message: "Gemini returned text but no image. The prompt may need adjustment.",
-        textResponse: parts.find((p: any) => p.text)?.text,
+        textResponse: parts.find((p) => p.text)?.text,
       });
     }
 

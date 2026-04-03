@@ -1,114 +1,46 @@
 /**
  * World Graph Types
  *
- * Unified type definitions for the World service layer.
- * Maps to Supabase tables: worlds, world_characters, world_factions,
- * world_locations, world_events, world_creations.
+ * Service-layer type definitions derived from the live Supabase schema.
+ * The canonical DB types live in @/lib/database/types/world-graph-types.ts.
+ * This file re-exports those plus adds generation / analysis types
+ * used only by the service layer.
  */
 
 import type { Json } from '@/lib/database/types/supabase';
+import type {
+  WorldRow,
+  WorldInsert,
+  WorldUpdate,
+  WorldCharacterRow,
+  WorldCharacterInsert,
+  WorldFactionRow,
+  WorldLocationRow,
+  WorldEventRow,
+  WorldCreationRow,
+  WorldWithGraph as DbWorldWithGraph,
+} from '@/lib/database/types/world-graph-types';
 
-// ── Core Entities ───────────────────────────────────────────────────
+// ── Re-exports (use these in the service layer) ──────────────────────
 
-export interface World {
-  id: string;
-  slug: string;
-  name: string;
-  tagline: string | null;
-  description: string | null;
-  cover_image_url: string | null;
-  elements: string[];
-  tone: string | null;
-  is_public: boolean;
-  is_template: boolean;
-  forked_from: string | null;
-  star_count: number;
-  owner_id: string;
-  created_at: string;
-  updated_at: string;
-  metadata: Json | null;
-}
-
-export interface WorldCharacter {
-  id: string;
-  world_id: string;
-  name: string;
-  primary_element: string | null;
-  gates_open: number;
-  rank: string | null;
-  house: string | null;
-  archetype: string | null;
-  backstory: string | null;
-  traits: string[];
-  abilities: string[];
-  patron_guardian: string | null;
-  metadata: Json | null;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface WorldFaction {
-  id: string;
-  world_id: string;
-  name: string;
-  element: string | null;
-  alignment: 'light' | 'dark' | 'balanced' | 'neutral';
-  description: string | null;
-  territory: string | null;
-  leader_character_id: string | null;
-  metadata: Json | null;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface WorldLocation {
-  id: string;
-  world_id: string;
-  name: string;
-  location_type: string | null;
-  dominant_element: string | null;
-  alignment: 'light' | 'dark' | 'balanced';
-  description: string | null;
-  features: string[];
-  metadata: Json | null;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface WorldEvent {
-  id: string;
-  world_id: string;
-  title: string;
-  event_type: string | null;
-  description: string | null;
-  involved_character_ids: string[];
-  involved_location_id: string | null;
-  sequence_order: number;
-  metadata: Json | null;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface WorldCreation {
-  id: string;
-  world_id: string;
-  creation_type: 'artifact' | 'creature' | 'magic' | 'custom';
-  name: string;
-  element: string | null;
-  description: string | null;
-  metadata: Json | null;
-  created_at: string;
-  updated_at: string;
-}
+export type World = WorldRow;
+export type WorldInsert_ = WorldInsert;
+export type WorldUpdate_ = WorldUpdate;
+export type WorldCharacter = WorldCharacterRow;
+export type WorldCharacterInsert_ = WorldCharacterInsert;
+export type WorldFaction = WorldFactionRow;
+export type WorldLocation = WorldLocationRow;
+export type WorldEvent = WorldEventRow;
+export type WorldCreation = WorldCreationRow;
 
 // ── Composite / Hydrated ────────────────────────────────────────────
 
-export interface WorldWithGraph extends World {
-  characters: WorldCharacter[];
-  factions: WorldFaction[];
-  locations: WorldLocation[];
-  events: WorldEvent[];
-  creations: WorldCreation[];
+export interface WorldWithGraph extends WorldRow {
+  characters: WorldCharacterRow[];
+  factions: WorldFactionRow[];
+  locations: WorldLocationRow[];
+  events: WorldEventRow[];
+  creations: WorldCreationRow[];
 }
 
 // ── Generation Inputs / Outputs ────────────────────────────────────
@@ -125,8 +57,28 @@ export interface GeneratedWorld {
   description: string;
   elements: string[];
   tone: string;
-  characters: Omit<WorldCharacter, 'id' | 'world_id' | 'created_at' | 'updated_at'>[];
-  locations: Omit<WorldLocation, 'id' | 'world_id' | 'created_at' | 'updated_at'>[];
+  characters: Array<{
+    name: string;
+    primary_element: string | null;
+    gates_open: number;
+    rank: string | null;
+    house: string | null;
+    archetype: string | null;
+    backstory: string | null;
+    traits: string[];
+    abilities: string[];
+    patron_guardian: string | null;
+    metadata: Record<string, unknown> | null;
+  }>;
+  locations: Array<{
+    name: string;
+    location_type: string | null;
+    dominant_element: string | null;
+    alignment: 'light' | 'dark' | 'balanced';
+    description: string | null;
+    features: string[];
+    metadata: Record<string, unknown> | null;
+  }>;
   firstEvent: {
     title: string;
     description: string;
@@ -200,3 +152,5 @@ export interface PaginatedResult<T> {
   limit: number;
   hasMore: boolean;
 }
+
+export type { Json };

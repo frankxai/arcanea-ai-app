@@ -15,6 +15,7 @@ import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { createOpenAI } from '@ai-sdk/openai';
 import { generateText } from 'ai';
 import { createClient } from '@/lib/supabase/server';
+import type { Json } from '@/lib/database/types/world-graph-types';
 
 export const maxDuration = 30;
 
@@ -150,10 +151,14 @@ export async function POST(req: NextRequest) {
     }
 
     // Extract structured pieces from the generated data
-    const characters = (worldData.characters as Record<string, unknown>[]) ?? [];
-    const locations = (worldData.locations as Record<string, unknown>[]) ?? [];
+    const characters = Array.isArray(worldData.characters)
+      ? (worldData.characters as Record<string, unknown>[])
+      : [];
+    const locations = Array.isArray(worldData.locations)
+      ? (worldData.locations as Record<string, unknown>[])
+      : [];
     const event = (worldData.first_event as Record<string, unknown>) ?? null;
-    const imagePrompt = (worldData.image_prompt as string) ?? '';
+    const imagePrompt = typeof worldData.image_prompt === 'string' ? worldData.image_prompt : '';
 
     // --- Auth check: save to DB if authenticated ---
     let saved = false;
@@ -173,21 +178,19 @@ export async function POST(req: NextRequest) {
 
         const slug = count && count > 0 ? `${baseSlug}-${Date.now()}` : baseSlug;
 
-        // Insert world
+        // Insert world (image_prompt / first_event are not DB columns — kept in response only)
         const { data: insertedWorld, error: worldErr } = await supabase
           .from('worlds')
           .insert({
-            name: worldData.name,
+            name: worldData.name as string,
             slug,
-            tagline: worldData.tagline ?? null,
-            description: worldData.description ?? null,
-            mood: worldData.mood ?? null,
-            elements: worldData.elements ?? null,
-            laws: worldData.laws ?? null,
-            systems: worldData.systems ?? null,
-            palette: worldData.palette ?? null,
-            image_prompt: imagePrompt || null,
-            first_event: event,
+            tagline: (worldData.tagline as string) ?? null,
+            description: (worldData.description as string) ?? null,
+            mood: (worldData.mood as string) ?? null,
+            elements: (worldData.elements as Json) ?? null,
+            laws: (worldData.laws as Json) ?? null,
+            systems: (worldData.systems as Json) ?? null,
+            palette: (worldData.palette as Json) ?? null,
             creator_id: user.id,
             visibility: 'private',
           })
@@ -195,31 +198,32 @@ export async function POST(req: NextRequest) {
           .single();
 
         if (!worldErr && insertedWorld) {
-          savedWorldId = (insertedWorld as { id: string }).id;
+          savedWorldId = insertedWorld.id;
 
           // Insert characters and locations in parallel
+          const wid = savedWorldId!; // safe — we just inserted and checked
           await Promise.all([
             characters.length > 0
               ? supabase.from('world_characters').insert(
                   characters.map((c) => ({
-                    world_id: savedWorldId,
-                    name: c.name,
-                    title: c.title ?? null,
-                    personality: c.personality ?? null,
-                    backstory: c.backstory ?? null,
-                    element: c.element ?? null,
-                    origin_class: c.origin_class ?? null,
+                    world_id: wid,
+                    name: c.name as string,
+                    title: (c.title as string) ?? null,
+                    personality: (c.personality as Json) ?? {},
+                    backstory: (c.backstory as string) ?? null,
+                    element: (c.element as string) ?? null,
+                    origin_class: (c.origin_class as string) ?? null,
                   })),
                 )
               : null,
             locations.length > 0
               ? supabase.from('world_locations').insert(
                   locations.map((l) => ({
-                    world_id: savedWorldId,
-                    name: l.name,
-                    region: l.region ?? null,
-                    description: l.description ?? null,
-                    significance: l.significance ?? null,
+                    world_id: wid,
+                    name: l.name as string,
+                    region: (l.region as string) ?? null,
+                    description: (l.description as string) ?? null,
+                    significance: (l.significance as string) ?? null,
                   })),
                 )
               : null,
