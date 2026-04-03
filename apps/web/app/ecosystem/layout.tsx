@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Ecosystem — Arcanea Creative Intelligence',
+  title: 'Ecosystem Hub — Arcanea Creative Intelligence',
   description:
-    'Interactive constellation map of the Arcanea ecosystem. 27 repos, 35 packages, 54 skills powering creative intelligence across code, lore, art, and music.',
+    'The full Arcanea ecosystem: 27 repos, 43 packages, 80+ skills across intelligence, creative tools, and open source — one connected multiverse.',
   openGraph: {
     title: 'Arcanea Ecosystem',
-    description: 'Interactive constellation map of creative intelligence systems',
+    description: '27 repos, 43 packages, 80+ skills — the full Arcanea ecosystem hub',
     type: 'website',
     url: 'https://arcanea.ai/ecosystem',
     images: [
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Arcanea Ecosystem',
-    description: 'Interactive constellation map of creative intelligence systems',
+    description: '27 repos, 43 packages, 80+ skills — the full Arcanea ecosystem hub',
     images: ['/guardians/v3/elara-hero-v3.webp'],
   },
   alternates: { canonical: '/ecosystem' },
@@ -32,7 +32,7 @@ const jsonLd = {
   "@type": "WebPage",
   name: "Arcanea Ecosystem",
   description:
-    "Interactive constellation map of the Arcanea ecosystem. 27 repos, 35 packages, 54 skills powering creative intelligence across code, lore, art, and music.",
+    "The full Arcanea ecosystem: 27 repos, 43 packages, 80+ skills across intelligence, creative tools, and open source.",
   url: "https://arcanea.ai/ecosystem",
   publisher: {
     "@type": "Organization",
