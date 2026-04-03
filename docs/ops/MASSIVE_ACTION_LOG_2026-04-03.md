@@ -6,6 +6,14 @@ This file is the durable operating log for the recent Arcanea execution cycle ac
 
 The highest-leverage work was completed in `arcanea-ai-app` and promoted to `main` in multiple verified tranches instead of being dumped from mixed branches.
 
+An additional clean-branch tranche now exists on `feat/run-graph-control-plane` for the first durable project run graph layer:
+
+- `project_runs` and `project_run_events` migration
+- run list/detail APIs
+- cost preflight API
+- run list/detail pages
+- run graph persistence and API contract tests
+
 What is now true on `origin/main`:
 
 - Project workspaces are real product objects.

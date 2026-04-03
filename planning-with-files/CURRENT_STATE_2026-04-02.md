@@ -30,6 +30,7 @@
 ## Branch State
 
 - Former dirty local trunk has been moved to `integration/agent-control-plane-unification`
+- New clean worktree branch `feat/run-graph-control-plane` isolates the run graph tranche away from dirty `main`
 - Remote `main` already contains the verified project-workspace, retrieval, trace, media, and planning slices
 - Current local branch contains pushed docs-system hardening and agent-control-plane work
 - Remaining loose research scripts have been quarantined outside the production `scripts/` surface
@@ -37,6 +38,12 @@
 ## What Is True Now
 
 - Arcanea mainline product center is still `arcanea-ai-app`
+- The first durable project run graph slice now exists in a clean promotion branch:
+  - run migration
+  - run APIs
+  - run status pages
+  - explicit cost preflight
+  - run graph persistence into `project_graph_edges`
 - Verified `main` already includes:
   - project workspaces
   - project graph APIs
@@ -49,6 +56,7 @@
 - SIS context can now be materialized into `.arcanea/sis/summary.md` and exposed over a local MCP server
 - SIS can now also append validated canonical entries and export a legacy `.arcanea/memory/` compatibility view without committing generated local state
 - Experimental NFT/agent spreadsheet generators now live under `.arcanea/experiments/nft-agent-research/`
+- The root `main` worktree is no longer safe for substantial edits because concurrent work there includes unresolved merge state
 
 ## Immediate Risks
 
@@ -59,10 +67,12 @@
 ## Recommendation
 
 1. Keep broader voice/buddy/Luminor work on `integration/agent-control-plane-unification`
-2. Treat `main` as the stable trunk for:
+2. Use clean worktrees for new product slices instead of touching the dirty root `main` worktree
+3. Treat `main` as the stable trunk for:
    - project workspaces
    - docs hardening
    - SIS runtime and CI discipline
-3. Do live Supabase activation in the evening
-4. Then continue docs/retrieval/enrichment on top of the real DB
-5. Review the remaining integration-only commits one by one before any further promotion
+4. Promote the run graph tranche from `feat/run-graph-control-plane`
+5. Do live Supabase activation in the evening
+6. Then continue docs/retrieval/enrichment on top of the real DB
+7. Review the remaining integration-only commits one by one before any further promotion

@@ -10,6 +10,7 @@ const repoRoot = process.cwd();
 const migrationPaths = [
   'supabase/migrations/20260329000001_chat_projects_graph.sql',
   'supabase/migrations/20260329000002_project_graph_enrichment.sql',
+  'supabase/migrations/20260403000001_project_runs_graph.sql',
 ];
 const generatedTypesPath = 'apps/web/lib/database/types/supabase-generated.ts';
 const projectRef = process.env.SUPABASE_PROJECT_REF?.trim() || '';

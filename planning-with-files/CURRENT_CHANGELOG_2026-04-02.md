@@ -2,6 +2,15 @@
 
 ## Landed Today
 
+- Added the first durable project run graph tranche on `feat/run-graph-control-plane`:
+  - `project_runs` and `project_run_events` migration
+  - run list/detail APIs
+  - cost preflight API
+  - run list/detail pages
+  - run graph server helpers
+  - run API contract tests
+- Added direct project workspace navigation into the run layer
+- Updated project graph activation to include the run migration
 - Moved active local work off `main` onto `integration/agent-control-plane-unification`
 - Added repo-level `AGENTS.md` as the top-level agent contract
 - Unified agent source-of-truth hierarchy across:
@@ -30,6 +39,7 @@
 
 ## Still Pending
 
+- promote `feat/run-graph-control-plane` after review
 - scoped review and promotion decision for Claude's notes/docs slice
 - live Supabase activation
 - real Supabase type regeneration

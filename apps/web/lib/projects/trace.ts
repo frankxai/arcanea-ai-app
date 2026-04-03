@@ -14,7 +14,11 @@ export interface ProjectTraceInput {
     | 'project_graph_enriched'
     | 'project_graph_eval'
     | 'project_graph_viewed'
-    | 'project_provider_routed';
+    | 'project_provider_routed'
+    | 'project_run_ingested'
+    | 'project_run_viewed'
+    | 'project_run_list_viewed'
+    | 'project_run_cost_preflight';
   metadata?: Record<string, unknown>;
 }
 

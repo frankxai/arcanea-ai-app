@@ -96,6 +96,90 @@ export interface ProjectDocRecord {
   excerpt: string | null;
 }
 
+export interface ProjectRunRecord {
+  id: string;
+  projectId: string;
+  userId: string;
+  traceRunId: string;
+  kind: string;
+  status: string;
+  runtime: string;
+  provider: string | null;
+  repoId: string;
+  repoPath: string;
+  commandName: string;
+  commandPreview: string;
+  executionMode: string;
+  billingMode: string;
+  estimatedCredits: number | null;
+  estimatedUsd: number | null;
+  byokEligible: boolean;
+  sourceTracePath: string | null;
+  sourceDocId: string | null;
+  sourceCreationId: string | null;
+  sourceCollectionId: string | null;
+  sourcePromptId: string | null;
+  sourcePromptCollectionId: string | null;
+  metadata: Record<string, unknown>;
+  startedAt: string;
+  finishedAt: string | null;
+  durationMs: number | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ProjectRunEventRecord {
+  id: string;
+  runId: string;
+  projectId: string;
+  userId: string;
+  eventType: string;
+  phase: string | null;
+  status: string | null;
+  message: string | null;
+  payload: Record<string, unknown>;
+  createdAt: string;
+}
+
+export interface ProjectRunCostPreflight {
+  billingMode: string;
+  estimatedCredits: number | null;
+  estimatedUsd: number | null;
+  byokEligible: boolean;
+}
+
+export interface ProjectRunUpsertInput {
+  traceRunId: string;
+  kind: string;
+  status: string;
+  runtime?: string | null;
+  provider?: string | null;
+  repoId: string;
+  repoPath: string;
+  commandName: string;
+  commandPreview: string;
+  executionMode: string;
+  sourceTracePath?: string | null;
+  sourceDocId?: string | null;
+  sourceCreationId?: string | null;
+  sourceCollectionId?: string | null;
+  sourcePromptId?: string | null;
+  sourcePromptCollectionId?: string | null;
+  startedAt: string;
+  finishedAt?: string | null;
+  durationMs?: number | null;
+  metadata?: Record<string, unknown> | null;
+  cost?: Partial<ProjectRunCostPreflight> | null;
+  events?: Array<{
+    eventType: string;
+    phase?: string | null;
+    status?: string | null;
+    message?: string | null;
+    payload?: Record<string, unknown> | null;
+    createdAt?: string | null;
+  }>;
+}
+
 type ServerSupabase = Awaited<ReturnType<typeof createClient>>;
 type UntypedQueryResult = PromiseLike<{ data: unknown; error?: unknown }>;
 
@@ -103,13 +187,17 @@ interface UntypedQueryBuilder extends UntypedQueryResult {
   delete(): UntypedQueryBuilder;
   eq(column: string, value: unknown): UntypedQueryBuilder;
   in(column: string, values: unknown[]): UntypedQueryBuilder;
-  insert(values: Record<string, unknown>): UntypedQueryBuilder;
+  insert(values: Record<string, unknown> | Record<string, unknown>[]): UntypedQueryBuilder;
   limit(count: number): UntypedQueryBuilder;
   or(filters: string): UntypedQueryBuilder;
   order(column: string, options?: { ascending?: boolean }): UntypedQueryBuilder;
-  select(columns: string): UntypedQueryBuilder;
+  select(columns?: string): UntypedQueryBuilder;
   single(): UntypedQueryBuilder;
   update(values: Record<string, unknown>): UntypedQueryBuilder;
+  upsert(
+    values: Record<string, unknown> | Record<string, unknown>[],
+    options?: Record<string, unknown>,
+  ): UntypedQueryBuilder;
 }
 
 type UntypedServerSupabase = ServerSupabase & {
@@ -197,6 +285,104 @@ function mapDocRow(
     updatedAt: String(row.updated_at ?? row.last_edited_at ?? new Date().toISOString()),
     wordCount: typeof content?.word_count === 'number' ? content.word_count : 0,
     excerpt,
+  };
+}
+
+function mapProjectRunRow(row: Record<string, unknown>): ProjectRunRecord {
+  return {
+    id: String(row.id),
+    projectId: String(row.project_id),
+    userId: String(row.user_id),
+    traceRunId: String(row.trace_run_id),
+    kind: String(row.kind ?? 'arcanea-flow.run'),
+    status: String(row.status ?? 'queued'),
+    runtime: typeof row.runtime === 'string' ? row.runtime : 'arcanea-flow',
+    provider: typeof row.provider === 'string' ? row.provider : null,
+    repoId: String(row.repo_id ?? 'arcanea'),
+    repoPath: String(row.repo_path ?? ''),
+    commandName: String(row.command_name ?? 'unknown'),
+    commandPreview: String(row.command_preview ?? ''),
+    executionMode: String(row.execution_mode ?? 'delegated'),
+    billingMode: String(row.billing_mode ?? 'included'),
+    estimatedCredits: typeof row.estimated_credits === 'number' ? row.estimated_credits : null,
+    estimatedUsd: typeof row.estimated_usd === 'number' ? row.estimated_usd : null,
+    byokEligible: Boolean(row.byok_eligible),
+    sourceTracePath: typeof row.source_trace_path === 'string' ? row.source_trace_path : null,
+    sourceDocId: typeof row.source_doc_id === 'string' ? row.source_doc_id : null,
+    sourceCreationId: typeof row.source_creation_id === 'string' ? row.source_creation_id : null,
+    sourceCollectionId: typeof row.source_collection_id === 'string' ? row.source_collection_id : null,
+    sourcePromptId: typeof row.source_prompt_id === 'string' ? row.source_prompt_id : null,
+    sourcePromptCollectionId:
+      typeof row.source_prompt_collection_id === 'string' ? row.source_prompt_collection_id : null,
+    metadata:
+      row.metadata && typeof row.metadata === 'object'
+        ? (row.metadata as Record<string, unknown>)
+        : {},
+    startedAt: String(row.started_at ?? new Date().toISOString()),
+    finishedAt: typeof row.finished_at === 'string' ? row.finished_at : null,
+    durationMs: typeof row.duration_ms === 'number' ? row.duration_ms : null,
+    createdAt: String(row.created_at ?? new Date().toISOString()),
+    updatedAt: String(row.updated_at ?? new Date().toISOString()),
+  };
+}
+
+function mapProjectRunEventRow(row: Record<string, unknown>): ProjectRunEventRecord {
+  return {
+    id: String(row.id),
+    runId: String(row.run_id),
+    projectId: String(row.project_id),
+    userId: String(row.user_id),
+    eventType: String(row.event_type ?? 'run_event'),
+    phase: typeof row.phase === 'string' ? row.phase : null,
+    status: typeof row.status === 'string' ? row.status : null,
+    message: typeof row.message === 'string' ? row.message : null,
+    payload:
+      row.payload && typeof row.payload === 'object'
+        ? (row.payload as Record<string, unknown>)
+        : {},
+    createdAt: String(row.created_at ?? new Date().toISOString()),
+  };
+}
+
+export function inferProjectRunCostPreflight(
+  input: Pick<
+    ProjectRunUpsertInput,
+    'kind' | 'status' | 'runtime' | 'provider' | 'executionMode' | 'commandName' | 'cost'
+  >,
+): ProjectRunCostPreflight {
+  if (input.cost?.billingMode) {
+    return {
+      billingMode: input.cost.billingMode,
+      estimatedCredits: input.cost.estimatedCredits ?? null,
+      estimatedUsd: input.cost.estimatedUsd ?? null,
+      byokEligible: input.cost.byokEligible ?? false,
+    };
+  }
+
+  const provider = input.provider?.toLowerCase() ?? '';
+  const command = input.commandName.toLowerCase();
+  const kind = input.kind.toLowerCase();
+  const dryRun = input.executionMode === 'dry-run' || input.status === 'preview';
+  const providerBacked = provider.length > 0 && !['local', 'self-hosted', 'byok'].includes(provider);
+
+  let estimatedCredits = 2;
+  if (kind.includes('swarm') || command.includes('swarm')) estimatedCredits = 24;
+  else if (kind.includes('session') || command.includes('session')) estimatedCredits = 6;
+  else if (kind.includes('task') || command.includes('task')) estimatedCredits = 8;
+  else if (kind.includes('ao') || command.includes('ao')) estimatedCredits = 10;
+  else if (command.includes('status')) estimatedCredits = 1;
+
+  if (dryRun) estimatedCredits = 0;
+
+  const billingMode = dryRun ? 'included' : providerBacked ? 'credits' : 'included';
+  const estimatedUsd = billingMode === 'credits' ? Number((estimatedCredits * 0.02).toFixed(2)) : 0;
+  const byokEligible = providerBacked || provider.length === 0;
+
+  return {
+    billingMode,
+    estimatedCredits,
+    estimatedUsd,
+    byokEligible,
   };
 }
 
@@ -582,4 +768,196 @@ export async function detachCreationFromProjectForCurrentUser(
     .eq('project_id', projectId);
 
   return !error;
+}
+
+export async function listProjectRunsForCurrentUser(
+  projectId: string,
+  limit = 24,
+): Promise<ProjectRunRecord[]> {
+  const { db, user } = await getProjectAuthContext();
+  if (!user) return [];
+
+  try {
+    const { data, error } = await db
+      .from('project_runs')
+      .select()
+      .eq('project_id', projectId)
+      .eq('user_id', user.id)
+      .order('started_at', { ascending: false })
+      .limit(limit);
+
+    if (error || !data) return [];
+    return (data as Record<string, unknown>[]).map(mapProjectRunRow);
+  } catch {
+    return [];
+  }
+}
+
+export async function getProjectRunForCurrentUser(
+  projectId: string,
+  runId: string,
+): Promise<ProjectRunRecord | null> {
+  const { db, user } = await getProjectAuthContext();
+  if (!user) return null;
+
+  try {
+    const { data, error } = await db
+      .from('project_runs')
+      .select()
+      .eq('project_id', projectId)
+      .eq('user_id', user.id)
+      .eq('id', runId)
+      .single();
+
+    if (error || !data) return null;
+    return mapProjectRunRow(data as Record<string, unknown>);
+  } catch {
+    return null;
+  }
+}
+
+export async function listProjectRunEventsForCurrentUser(
+  projectId: string,
+  runId: string,
+): Promise<ProjectRunEventRecord[]> {
+  const { db, user } = await getProjectAuthContext();
+  if (!user) return [];
+
+  try {
+    const { data, error } = await db
+      .from('project_run_events')
+      .select()
+      .eq('project_id', projectId)
+      .eq('user_id', user.id)
+      .eq('run_id', runId)
+      .order('created_at', { ascending: true });
+
+    if (error || !data) return [];
+    return (data as Record<string, unknown>[]).map(mapProjectRunEventRow);
+  } catch {
+    return [];
+  }
+}
+
+export async function upsertProjectRunForCurrentUser(
+  projectId: string,
+  input: ProjectRunUpsertInput,
+): Promise<ProjectRunRecord | null> {
+  const { db, user } = await getProjectAuthContext();
+  if (!user) return null;
+
+  const cost = inferProjectRunCostPreflight(input);
+  const now = new Date().toISOString();
+
+  const runPayload: Record<string, unknown> = {
+    project_id: projectId,
+    user_id: user.id,
+    trace_run_id: input.traceRunId,
+    kind: input.kind,
+    status: input.status,
+    runtime: input.runtime ?? 'arcanea-flow',
+    provider: input.provider ?? null,
+    repo_id: input.repoId,
+    repo_path: input.repoPath,
+    command_name: input.commandName,
+    command_preview: input.commandPreview,
+    execution_mode: input.executionMode,
+    billing_mode: cost.billingMode,
+    estimated_credits: cost.estimatedCredits,
+    estimated_usd: cost.estimatedUsd,
+    byok_eligible: cost.byokEligible,
+    source_trace_path: input.sourceTracePath ?? null,
+    source_doc_id: input.sourceDocId ?? null,
+    source_creation_id: input.sourceCreationId ?? null,
+    source_collection_id: input.sourceCollectionId ?? null,
+    source_prompt_id: input.sourcePromptId ?? null,
+    source_prompt_collection_id: input.sourcePromptCollectionId ?? null,
+    metadata: input.metadata ?? {},
+    started_at: input.startedAt,
+    finished_at: input.finishedAt ?? null,
+    duration_ms: input.durationMs ?? null,
+    updated_at: now,
+  };
+
+  try {
+    const { data, error } = await db
+      .from('project_runs')
+      .upsert(runPayload, { onConflict: 'project_id,user_id,trace_run_id' })
+      .select()
+      .single();
+
+    if (error || !data) return null;
+
+    const run = mapProjectRunRow(data as Record<string, unknown>);
+
+    if (input.events?.length) {
+      const eventRows = input.events.map((event) => ({
+        run_id: run.id,
+        project_id: projectId,
+        user_id: user.id,
+        event_type: event.eventType,
+        phase: event.phase ?? null,
+        status: event.status ?? null,
+        message: event.message ?? null,
+        payload: event.payload ?? {},
+        created_at: event.createdAt ?? now,
+      }));
+
+      await db.from('project_run_events').insert(eventRows);
+    }
+
+    const edgeRows: Record<string, unknown>[] = [
+      {
+        project_id: projectId,
+        user_id: user.id,
+        source_type: 'project',
+        source_id: projectId,
+        target_type: 'run',
+        target_id: run.id,
+        relation: 'executed',
+        weight: 1,
+        metadata: {
+          traceRunId: run.traceRunId,
+          kind: run.kind,
+          runtime: run.runtime,
+          provider: run.provider,
+        },
+      },
+    ];
+
+    const linkedTargets = [
+      { targetType: 'project_doc', targetId: run.sourceDocId, relation: 'contextualized_by' },
+      { targetType: 'creation', targetId: run.sourceCreationId, relation: 'produced_from' },
+      { targetType: 'prompt', targetId: run.sourcePromptId, relation: 'prompted_by' },
+      { targetType: 'prompt_collection', targetId: run.sourcePromptCollectionId, relation: 'collected_in' },
+      { targetType: 'collection', targetId: run.sourceCollectionId, relation: 'collected_in' },
+    ];
+
+    for (const target of linkedTargets) {
+      if (!target.targetId) continue;
+      edgeRows.push({
+        project_id: projectId,
+        user_id: user.id,
+        source_type: 'run',
+        source_id: run.id,
+        target_type: target.targetType,
+        target_id: target.targetId,
+        relation: target.relation,
+        weight: 1,
+        metadata: {
+          traceRunId: run.traceRunId,
+        },
+      });
+    }
+
+    await db
+      .from('project_graph_edges')
+      .upsert(edgeRows, {
+        onConflict: 'project_id,source_type,source_id,target_type,target_id,relation',
+      });
+
+    return run;
+  } catch {
+    return null;
+  }
 }

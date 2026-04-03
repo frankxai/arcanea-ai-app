@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
-import { ArrowRight, ClockCounterClockwise, FolderOpen } from '@/lib/phosphor-icons';
+import { ArrowRight, ChartBar, ClockCounterClockwise, FolderOpen } from '@/lib/phosphor-icons';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -133,6 +133,12 @@ export default async function ProjectWorkspacePage({ params }: PageProps) {
 
           <div className="flex flex-wrap items-center gap-3">
             <OpenProjectChatButton projectId={workspace.project.id} />
+            <Button asChild variant="ghost">
+              <Link href={`/projects/${workspace.project.id}/runs`}>
+                <ChartBar size={14} className="mr-2" />
+                View Runs
+              </Link>
+            </Button>
             <Button asChild variant="ghost">
               <Link href="/chat">View Chat Shell</Link>
             </Button>
