@@ -13,11 +13,21 @@
     "start": "node dist/server.js",
     "test": "node --import tsx --test src/**/*.test.ts"
   },
-  "keywords": ["mcp", "memory", "arcanea", "starlight-vaults", "claude", "cursor", "ai-memory"],
+  "keywords": [
+    "mcp",
+    "memory",
+    "arcanea",
+    "starlight-vaults",
+    "claude",
+    "cursor",
+    "ai-memory"
+  ],
   "author": "FrankX <frank@frankx.ai>",
   "license": "MIT",
   "dependencies": {
-    "@arcanea/memory-system": "workspace:*"
+    "@arcanea/memory-system": "workspace:*",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
