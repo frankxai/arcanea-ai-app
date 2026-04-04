@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useCallback, useRef, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { m, AnimatePresence, LazyMotion, domAnimation } from 'framer-motion';
 import Link from 'next/link';
 import { PromptInput } from '@/components/imagine/PromptInput';
@@ -53,6 +54,7 @@ interface GenerationRow {
 // ---------------------------------------------------------------------------
 
 export default function ImaginePage() {
+  const searchParams = useSearchParams();
   const [rows, setRows] = useState<GenerationRow[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -81,6 +83,18 @@ export default function ImaginePage() {
   const currentNegativePromptRef = useRef<string | undefined>(undefined);
 
   useEffect(() => { setFavCount(getFavoriteCount()); }, []);
+
+  // Prompt handoff from homepage showcase card (?prompt=...)
+  const promptConsumed = useRef(false);
+  useEffect(() => {
+    if (promptConsumed.current) return;
+    const prompt = searchParams.get('prompt');
+    if (prompt && prompt.trim()) {
+      promptConsumed.current = true;
+      setExternalPrompt(prompt.trim());
+      window.history.replaceState(null, '', '/imagine');
+    }
+  }, [searchParams]);
 
   const refreshFavorites = useCallback(() => {
     setFavorites(getFavorites());
