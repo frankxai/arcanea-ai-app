@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { MessageBubble } from '@/components/chat/message-bubble';
 import type { ActiveLuminor } from '@/hooks/use-conversation';
 import type { SwarmResult } from '@/lib/ai/guardian-swarm';
-import { getLuminor } from '@/lib/luminors/config';
+import { getLuminor, LUMINORS, type LuminorConfig } from '@/lib/luminors/config';
 import {
   PhArrowDown,
   PhArrowClockwise,
@@ -21,6 +21,9 @@ import { ArcaneanMarkGlow, ArcaneanMarkSmall } from '@/components/brand/arcanea-
 // ---------------------------------------------------------------------------
 
 const ACCENT = '#00bcd4';
+
+/** 3 featured Luminors for quick-select in empty state — one per creative domain */
+const FEATURED_LUMINOR_IDS = ['chronica', 'melodia', 'logicus'] as const;
 
 const CREATIVE_STARTERS = [
   { icon: '\u2726', text: 'Design a magic system', hint: 'Elements, costs, limits, factions' },
@@ -362,6 +365,28 @@ export function ChatArea({
                   </button>
                 ))}
               </div>
+
+              {/* Luminor quick-select — 3 featured personalities */}
+              {!activeLuminor && (
+                <div className="flex items-center justify-center gap-2 mb-4 animate-empty-fade-in" style={{ animationDelay: '300ms' }}>
+                  <span className="text-[10px] text-white/20 mr-1">Talk to</span>
+                  {FEATURED_LUMINOR_IDS.map((lid) => {
+                    const l = LUMINORS[lid];
+                    if (!l) return null;
+                    return (
+                      <button
+                        key={lid}
+                        onClick={() => onSelectLuminor(l as unknown as ActiveLuminor)}
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/[0.06] bg-white/[0.02] hover:border-white/[0.15] hover:bg-white/[0.05] transition-all duration-200 group"
+                        title={`${l.loreName} — ${l.specialty}`}
+                      >
+                        <span className="text-sm" aria-hidden="true">{l.avatar}</span>
+                        <span className="text-[11px] text-white/40 group-hover:text-white/70 transition-colors">{l.loreName}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
 
               {/* Capabilities hint — tools users don't know exist */}
               <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] text-white/20 animate-empty-fade-in" style={{ animationDelay: '350ms' }}>
