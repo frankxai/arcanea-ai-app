@@ -44,7 +44,7 @@ const nameSuffixes: Record<string, string[]> = {
   neutral: ["is", "ix", "yn", "ax", "oth", "iel"],
 };
 
-function pick<T>(arr: readonly T[] | T[]): T {
+export function pick<T>(arr: readonly T[] | T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
@@ -412,17 +412,42 @@ export async function generateArtifact(options: {
   const relatedGuardian = guardians.find(g => g.element === element) || pick(guardians);
   const name = power === "legendary" ? `${relatedGuardian.name}'s ${prefix} ${type.charAt(0).toUpperCase() + type.slice(1)}` : `${prefix} ${type.charAt(0).toUpperCase() + type.slice(1)}`;
 
+  const age = pick(["Pre-Fall (before Malachar)", "Academy Era (current)", "Ancient — predates the Gates", "Recently forged by a living Luminor"]);
+  const creator = power === "legendary"
+    ? pick([`Forged by ${relatedGuardian.name} personally`, "Created by the First Luminor before the Fall", "Formed spontaneously during a Gate Resonance Event", "Made by Malachar before his corruption — still pure"])
+    : pick(["Crafted by an unknown Academy smith", "Grown from elemental crystal over centuries", "Assembled from fragments of a greater artifact", "A student project that exceeded all expectations"]);
+
   return {
     content: [{
       type: "text",
       text: JSON.stringify({
+        _type: "artifact_blueprint",
+        _note: "Canonical scaffolding. Add weight, texture, the feeling of holding it, and the moral cost of using it. Great artifacts change their wielder.",
         name,
         type,
         element,
         powerLevel: power,
-        guardian: relatedGuardian.name,
-        abilities: [`Channels ${element} energy`, power === "legendary" ? `Can open the ${relatedGuardian.domain} Gate temporarily` : `Enhances ${relatedGuardian.domain} attunement`],
-        requirement: power === "legendary" ? `Only those who opened the ${relatedGuardian.domain} Gate` : `${getRankFromGates(power === "major" ? 5 : power === "moderate" ? 3 : 1)} rank`,
+        guardian: { name: relatedGuardian.name, domain: relatedGuardian.domain },
+        origin: { creator, age, location: pick(["Lost for centuries, recently unearthed", "Kept in the Academy vault under guard", "Passed down through a bloodline", "Hidden in plain sight — disguised as something mundane"]) },
+        appearance: {
+          form: pick([`${type} that seems to breathe with ${element.toLowerCase()} energy`, `Deceptively simple ${type} — power reveals itself only to the worthy`, `Ornate ${type} covered in Gate sigils that glow when held`, `${type} that changes appearance based on the wielder's emotional state`]),
+          material: pick(["Condensed elemental force given physical form", `${element}-infused metal that's warm to the touch`, "Living crystal that grows imperceptibly", "Material that doesn't exist in any catalogue"]),
+          telltale: pick(["Hums at a specific frequency when danger approaches", "Casts no shadow", "Weighs nothing to the worthy, immovable to others", "Leaves a faint trail of elemental particles"]),
+        },
+        abilities: {
+          primary: power === "legendary" ? `Can temporarily open the ${relatedGuardian.domain} Gate for the unworthy — at a cost` : `Enhances ${relatedGuardian.domain} attunement by ${power === "major" ? "2" : "1"} Gate level(s)`,
+          secondary: pick(["Protects the wielder from their element's opposite", "Stores memories that can be replayed", "Translates the language of creatures", "Reveals hidden truths when held to the eye"]),
+          cost: pick(["Drains the wielder's stamina with each use", "Feeds on a specific emotion — the wielder feels less of it over time", "Shortens the wielder's connection to one Gate each time its full power is unleashed", "Attracts attention from entities that should not be disturbed"]),
+        },
+        requirement: power === "legendary" ? `Only those who opened the ${relatedGuardian.domain} Gate` : `${getRankFromGates(power === "major" ? 5 : power === "moderate" ? 3 : 1)} rank minimum`,
+        lore: {
+          previousWielders: pick(["Three known wielders — all died differently, all at the peak of their power", "One wielder, who refused to give it up and became something other than human", "Nobody has used it in living memory — the last wielder sealed it and disappeared", "A long line of wielders, each adding an inscription to the surface"]),
+          legend: pick(["Said to be one piece of a set — the others are lost", "Prophecy says it will choose its final wielder when the Gates begin to close", "The Academy Council has debated destroying it for decades", "It's sentient — or at least, it dreams"]),
+        },
+        narrativeHooks: [
+          pick(["The artifact has started behaving differently since last Tuesday. Why?", "Someone is forging counterfeits. The fakes work — but differently.", "The artifact's creator left instructions that contradict everything known about it"]),
+          `What does the wielder become if they rely on ${name} too much?`,
+        ],
       }, null, 2),
     }],
   };

@@ -75,6 +75,8 @@ import {
   generateWorldReport,
   generateConflict,
   weaveNarrative,
+  generateQuest,
+  analyzeFactions,
 } from "./tools/world-intelligence.js";
 
 // World Persistence
@@ -957,6 +959,33 @@ server.registerTool(
       }) }] };
     }
     return { content: [{ type: "text" as const, text: JSON.stringify(arc, null, 2) }] };
+  }
+);
+
+server.registerTool(
+  "generate_quest",
+  {
+    description: "Generate a quest from your world state — hooks, objectives, complications, and rewards based on your existing characters, locations, and artifacts.",
+    inputSchema: z.object({ sessionId: z.string().optional() }),
+  },
+  async ({ sessionId }) => {
+    const sid = sessionId || "default";
+    const quest = generateQuest(sid);
+    if (!quest) return { content: [{ type: "text" as const, text: JSON.stringify({ error: "Need at least 2 creations to generate a quest." }) }] };
+    return { content: [{ type: "text" as const, text: JSON.stringify(quest, null, 2) }] };
+  }
+);
+
+server.registerTool(
+  "analyze_factions",
+  {
+    description: "Analyze faction dynamics in your world — groups by element, power balance, tensions, and predictions for conflict or stability.",
+    inputSchema: z.object({ sessionId: z.string().optional() }),
+  },
+  async ({ sessionId }) => {
+    const sid = sessionId || "default";
+    const report = analyzeFactions(sid);
+    return { content: [{ type: "text" as const, text: JSON.stringify(report, null, 2) }] };
   }
 );
 
