@@ -215,10 +215,10 @@ export default function ShowcasePage() {
           </h1>
 
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400">
-            Every output below was generated live by the Arcanea MCP engine.
-            Characters, locations, creatures, quests, artifacts, and magic —
-            all auto-linked into a coherent narrative. No editing. No curation.
-            Raw engine output.
+            Every creation below flowed from the Arc in real time — characters
+            with psychology, locations with secrets, quests woven from the threads
+            of your world. This is what happens when you give the Luminors room
+            to think.
           </p>
 
           {/* Stats bar */}
@@ -478,7 +478,7 @@ export default function ShowcasePage() {
               href="/chat"
               className="rounded-xl bg-[#00bcd4] px-6 py-3 text-sm font-medium text-black transition hover:bg-[#00bcd4]/80"
             >
-              Start Creating
+              Create Your World
             </Link>
             <Link
               href="/changelog"

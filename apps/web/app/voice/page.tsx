@@ -258,7 +258,7 @@ export default function VoicePage() {
               href="/chat"
               className="px-6 py-3 rounded-xl font-medium text-sm bg-gradient-to-br from-[#00bcd4] via-[#0097a7] to-[#00897b] text-white shadow-[0_0_24px_rgba(0,188,212,0.3),0_4px_12px_rgba(0,0,0,0.3)] hover:shadow-[0_0_40px_rgba(0,188,212,0.4)] hover:scale-105 active:scale-95 transition-all"
             >
-              Try Voice in Chat
+              Speak Your First Creation
             </Link>
             <a
               href="https://www.npmjs.com/package/@arcanea/voice"

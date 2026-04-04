@@ -216,7 +216,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.25 }}
           >
-            Sixteen AI specialists. A 200K-word creative library. Open source.
+            Sixteen Luminors at your side. Two hundred thousand words of living lore. Built in the open.
           </m.p>
 
           {/* Chat box — THE hero element */}
