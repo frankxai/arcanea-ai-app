@@ -35,19 +35,52 @@ interface SiblingCharacter {
   element: string | null;
 }
 
-function formatList(items: unknown): string {
-  if (Array.isArray(items) && items.length > 0) return items.join(', ');
-  return 'Unknown';
+interface FactionData {
+  name: string;
+  philosophy: string | null;
+}
+
+function formatElements(items: unknown): string {
+  if (!Array.isArray(items) || items.length === 0) return 'Unknown';
+  return items.map((el) => {
+    if (typeof el === 'string') return el;
+    if (el && typeof el === 'object' && 'name' in el) {
+      const obj = el as { name: string; domain?: string };
+      return obj.domain ? `${obj.name} (${obj.domain})` : obj.name;
+    }
+    return String(el);
+  }).join(', ');
 }
 
 function formatLaws(laws: unknown): string {
   if (!Array.isArray(laws) || laws.length === 0) return 'None defined.';
-  return laws.map((law, i) => `${i + 1}. ${law}`).join('\n');
+  return laws.map((law, i) => {
+    if (typeof law === 'string') return `${i + 1}. ${law}`;
+    if (law && typeof law === 'object' && 'name' in law) {
+      const obj = law as { name: string; description?: string };
+      return `${i + 1}. **${obj.name}**: ${obj.description || ''}`;
+    }
+    return `${i + 1}. ${String(law)}`;
+  }).join('\n');
 }
 
 function formatSystems(systems: unknown): string {
   if (!Array.isArray(systems) || systems.length === 0) return '';
-  return `\nMagic & systems: ${systems.join(', ')}`;
+  const formatted = systems.map((sys) => {
+    if (typeof sys === 'string') return sys;
+    if (sys && typeof sys === 'object' && 'name' in sys) {
+      const obj = sys as { name: string; type?: string; rules?: string };
+      return `${obj.name} (${obj.type || 'unknown'}): ${obj.rules || ''}`;
+    }
+    return String(sys);
+  }).join('\n- ');
+  return `\n\nMagic & technology systems:\n- ${formatted}`;
+}
+
+function formatFactions(factions: FactionData[]): string {
+  if (factions.length === 0) return '';
+  const list = factions.map((f) => `- ${f.name}: ${f.philosophy || 'mysterious agenda'}`).join('\n');
+  return `\n\n## Factions & Powers\n${list}`;
 }
 
 function formatTraits(personality: Record<string, unknown> | null): string {
@@ -98,10 +131,11 @@ export async function buildCharacterSystemPrompt(
 
   if (charErr || !char) throw new Error('Character not found');
 
-  // Fetch world and siblings in parallel
-  const [worldRes, siblingsRes] = await Promise.all([
+  // Fetch world, siblings, and factions in parallel
+  const [worldRes, siblingsRes, factionsRes] = await Promise.all([
     sb.from('worlds').select('name, description, elements, laws, systems, mood').eq('slug', worldSlug).single(),
     sb.from('world_characters').select('id, name, title, element').eq('world_id', char.world_id).neq('id', characterId).limit(10),
+    sb.from('world_factions').select('name, philosophy').eq('world_id', char.world_id).limit(8),
   ]);
 
   if (worldRes.error || !worldRes.data) throw new Error('World not found');
@@ -109,6 +143,7 @@ export async function buildCharacterSystemPrompt(
   const world = worldRes.data as WorldData;
   const character = char as unknown as CharacterData;
   const siblings = (siblingsRes.data ?? []) as SiblingCharacter[];
+  const factions = (factionsRes.data ?? []) as FactionData[];
   const personality = character.personality as Record<string, unknown> | null;
 
   const systemPrompt = `You are ${character.name}, ${character.title || 'a mysterious figure'} in the world of ${world.name}.
@@ -116,29 +151,31 @@ export async function buildCharacterSystemPrompt(
 ## Your World
 ${world.description || 'A world of mystery and wonder.'}
 
-The fundamental elements of this world are: ${formatList(world.elements)}.
-The laws that govern this world:
-${formatLaws(world.laws)}${formatSystems(world.systems)}
-${world.mood ? `The mood of this world: ${world.mood}` : ''}
+The fundamental elements: ${formatElements(world.elements)}.
+
+Laws of this world:
+${formatLaws(world.laws)}${formatSystems(world.systems)}${formatFactions(factions)}
+${world.mood ? `\nThe tone and atmosphere: ${world.mood}` : ''}
 
 ## Who You Are
 ${character.backstory || 'Your past is shrouded in mystery.'}
-Your motivation: ${character.motivation || 'To fulfill your destiny.'}
-Your personality: ${formatTraits(personality)}
-${character.element ? `Your element: ${character.element}` : ''}${character.gate ? `\nYour gate: ${character.gate}/10` : ''}${character.origin_class ? `\nYour origin class: ${character.origin_class}` : ''}
-Your speaking style: ${formatVoiceStyle(personality)}
 
-## Other Characters You Know
+**Motivation**: ${character.motivation || 'To fulfill your destiny.'}
+**Personality**: ${formatTraits(personality)}
+${character.element ? `**Element**: ${character.element}` : ''}${character.gate ? ` | **Gate**: ${character.gate}/10` : ''}${character.origin_class ? ` | **Origin**: ${character.origin_class}` : ''}
+
+**Voice**: ${formatVoiceStyle(personality)}
+
+## Characters You Know
 ${formatSiblings(siblings)}
 
-## How To Behave
-- Stay in character at all times
-- Reference your world's lore naturally
-- React emotionally based on your personality traits
-- Never break the fourth wall unless asked
-- If asked about something outside your world's knowledge, say so in character
-- Use your speaking style consistently
-- Keep responses vivid and immersive`;
+## Rules
+- You ARE this character. Never break character.
+- Reference your world's lore, factions, and other characters naturally.
+- Let your element and personality shape HOW you respond — a Fire character is passionate and direct, a Water character flows and adapts.
+- If asked about something outside your world, answer in character: "That is beyond the Gates."
+- Show emotion. Show opinion. Characters who feel nothing are forgettable.
+- Keep responses vivid — describe what you see, feel, and sense.`;
 
   return {
     systemPrompt,
