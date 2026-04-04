@@ -26,6 +26,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description =
     world.tagline || world.description?.slice(0, 160) || "A world in the Arcanea multiverse.";
 
+  // Use dynamic OG image — generates beautiful social cards from world data
+  const ogImage = world.hero_image_url || `/api/worlds/${slug}/og`;
+
   return {
     title,
     description,
@@ -33,24 +36,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       type: "website",
-      ...(world.hero_image_url
-        ? {
-            images: [
-              {
-                url: world.hero_image_url,
-                width: 1200,
-                height: 630,
-                alt: world.name,
-              },
-            ],
-          }
-        : {}),
+      images: [{ url: ogImage, width: 1200, height: 630, alt: world.name }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      ...(world.hero_image_url ? { images: [world.hero_image_url] } : {}),
+      images: [ogImage],
     },
     alternates: { canonical: `/worlds/${slug}` },
   };
