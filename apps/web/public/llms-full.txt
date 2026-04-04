@@ -1,0 +1,201 @@
+# Arcanea — Complete AI Reference
+
+> For AI agents, crawlers, and developers building on the Arcanea platform
+
+## MCP Tool Schemas (42 tools)
+
+### World-Building Generators
+
+#### generate_character
+Create a character with Gates, Elements, House, and backstory.
+Parameters:
+- primaryElement: Fire | Water | Earth | Wind | Void | Spirit
+- house: Lumina | Nero | Pyros | Aqualis | Terra | Ventus | Synthesis
+- gatesOpen: 1-10 (determines rank: 1-2=Apprentice, 3-4=Mage, 5-6=Master, 7-8=Archmage, 9-10=Luminor)
+- archetype: string (personality description)
+- nameGender: masculine | feminine | neutral
+Returns: Character blueprint with name, personality (traits, flaw, desire, fear, secret), backstory, abilities, magic style, narrative hooks.
+
+#### generate_location
+Create a location with elemental alignment.
+Parameters:
+- dominantElement: Fire | Water | Earth | Wind | Void | Spirit
+- type: string (temple, forest, city, dungeon, void-rift, etc.)
+- alignment: light | dark | balanced
+Returns: Location blueprint with name, atmosphere (visual, sound, smell), features, history, secret, narrative hooks.
+
+#### generate_creature
+Design a magical creature.
+Parameters:
+- element: Fire | Water | Earth | Wind | Void | Spirit
+- size: tiny | small | medium | large | massive
+- temperament: hostile | neutral | friendly | sacred
+Returns: Creature blueprint with name, species, appearance, behavior, abilities, habitat, lore (Godbeast connection), narrative hooks.
+
+#### generate_quest
+Generate a quest from world state — auto-links existing characters, locations, and creatures.
+Parameters:
+- sessionId: string (optional, links to existing creations)
+Returns: Quest with title, type, hook, objective, stakes, complications (3), rewards (tangible + intangible), involved creations, difficulty.
+
+#### generate_artifact
+Create a magical artifact with history and powers.
+Parameters:
+- element: Fire | Water | Earth | Wind | Void | Spirit
+- type: string (weapon, crown, mirror, key, seed, etc.)
+- power: minor | moderate | major | legendary
+Returns: Artifact blueprint with name, material, appearance, abilities (primary, secondary, cost), requirement, lore, narrative hooks.
+
+#### generate_magic
+Design a magical ability.
+Parameters:
+- element: Fire | Water | Earth | Wind | Void | Spirit (required)
+- gateLevel: 1-10 (required)
+- purpose: string (what the magic does)
+Returns: Magic blueprint with name, gate required, guardian, godbeast, mechanics (mana cost, anima cost, casting), flavor (visual, sensation, side effect), narrative hooks.
+
+#### generate_name
+Generate Arcanean names.
+Parameters:
+- type: character | place | artifact | creature
+- count: 1-20
+- gender: masculine | feminine | neutral
+- element: string
+Returns: Array of names following Arcanean linguistic patterns.
+
+### World Intelligence
+
+#### analyze_factions
+Analyze faction dynamics — power balance, tensions, predictions.
+Returns: Factions with element, members, strength, alignment. Tensions between factions. Power balance assessment. Prediction for conflict or stability.
+
+#### generate_conflict
+Generate a conflict between factions or characters.
+Returns: Conflict with type, parties, stakes, escalation path, resolution options.
+
+#### assess_world
+Full world health check — completeness, balance, narrative potential.
+Returns: World assessment with element coverage, faction balance, narrative gaps, suggestions.
+
+#### weave_narrative
+Generate a narrative connecting existing creations.
+Returns: Story outline with scenes, character arcs, thematic throughline.
+
+### Canon & Validation
+
+#### validate_canon
+Check content against CANON_LOCKED.
+Returns: Validation result with pass/fail, violations if any, suggestions.
+
+#### identify_gate
+Identify which Gate a concept aligns with.
+Returns: Gate name, frequency, Guardian, domain, element.
+
+### Creative Coaching
+
+#### diagnose_block
+Help with creative blocks.
+Returns: Block diagnosis, exercises, Guardian advice.
+
+#### invoke_luminor
+Channel a specific Luminor personality.
+Returns: Luminor response in character.
+
+#### deep_diagnosis
+Deep creative analysis.
+Returns: Comprehensive diagnosis with multiple perspectives.
+
+### Agent Orchestration
+
+#### orchestrate
+Coordinate multi-agent workflows.
+#### list_agents
+List available agent types.
+#### agent_info
+Get details about a specific agent.
+#### match_skill
+Match a task to the best skill.
+#### active_sessions
+List active creation sessions.
+
+## REST API Endpoints
+
+### World Building
+POST /api/worlds/mcp-bridge — Call any MCP tool via REST
+GET /api/worlds/mcp-bridge — Tool discovery metadata
+POST /api/worlds/generate — Generate a new world
+POST /api/worlds/generate-image — Generate world imagery
+GET /api/worlds — List worlds with pagination
+GET /api/worlds/[slug] — Get world details
+POST /api/worlds/[slug]/fork — Fork a world
+POST /api/worlds/[slug]/star — Star a world
+
+### AI Chat
+POST /api/ai/chat — Multi-provider chat (Google, Anthropic, OpenAI, OpenRouter)
+POST /api/ai/generate-image — Image generation
+POST /api/ai/generate-video — Video generation
+POST /api/ai/research — Research/web search
+POST /api/ai/speak — Text-to-speech
+POST /api/ai/transcribe — Speech-to-text
+
+### Agents
+GET /api/agents — List agents
+POST /api/agents — Create agent
+POST /api/agents/[id]/execute — Execute agent
+GET /api/agents/discover — Discover agents
+
+### Content
+GET /api/gallery — Gallery of creations
+GET /api/library — Library collections
+GET /api/activity/feed — Activity stream
+GET /api/community/stats — Community statistics
+
+### Infrastructure
+GET /api/health — Health check (no auth)
+GET /api/status — Platform status
+POST /api/v1/chat/completions — OpenAI-compatible endpoint
+
+## Canonical Lore Reference
+
+### The Ten Gates and Guardians
+1. Foundation (174 Hz) — Lyssandria / Kaelith — Earth, survival
+2. Flow (285 Hz) — Leyla / Veloura — Creativity, emotion
+3. Fire (396 Hz) — Draconia / Draconis — Power, will
+4. Heart (417 Hz) — Maylinn / Laeylinn — Love, healing
+5. Voice (528 Hz) — Alera / Otome — Truth, expression
+6. Sight (639 Hz) — Lyria / Yumiko — Intuition, vision
+7. Crown (741 Hz) — Aiyami / Sol — Enlightenment
+8. Starweave (852 Hz) — Elara / Vaelith — Perspective, transformation
+9. Unity (963 Hz) — Ino / Kyuro — Partnership
+10. Source (1111 Hz) — Shinkami / Source — Meta-consciousness
+
+### The Seven Academy Houses
+Lumina (Light), Nero (Darkness), Pyros (Fire), Aqualis (Water), Terra (Earth), Ventus (Wind), Synthesis (All)
+
+### The Five Elements
+Fire (energy, transformation), Water (flow, healing), Earth (stability, growth), Wind (freedom, change), Void/Spirit (potential & transcendence)
+
+### Magic System
+- Magic Types: Arcane (structured), Song (emotional), Mana (raw energy), Anima (life force)
+- Ranks: Apprentice (0-2 gates) → Mage (3-4) → Master (5-6) → Archmage (7-8) → Luminor (9-10)
+
+## npm Packages
+
+Core packages (install via npm/pnpm):
+- @arcanea/mcp-server — MCP server with 42 tools
+- @arcanea/world-engine — World-building SDK
+- @arcanea/core — Canonical types, mythology constants
+- @arcanea/memory-mcp — Memory and vault system
+- @arcanea/ai-core — AI provider abstraction
+- @arcanea/flow-engine — Agent orchestration
+- @arcanea/peak-performance — Development productivity system
+
+## Platform Statistics (April 2026)
+- 195 pages
+- 144 API routes
+- 286 React components
+- 49 npm packages
+- 42 MCP tools
+- 103 skills
+- 1,353 commits
+- 190,000+ words of canon content

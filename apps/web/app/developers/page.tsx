@@ -397,7 +397,7 @@ const TOOLS = [
       { name: "IntelligenceRouter", description: "Request routing to AI models" },
       { name: "VoiceEnforcer", description: "Output validation" },
       { name: "Token Optimizer", description: "Context window management" },
-      { name: "MCP Server", description: "30+ tools with skill-rules" },
+      { name: "MCP Server", description: "42 tools with skill-rules" },
     ],
     color: "#00bcd4",
   },
@@ -472,7 +472,7 @@ const MCP_SERVERS = [
   {
     name: "arcanea-mcp",
     description:
-      "The core MCP server with 30+ tools: world-building, canon validation, Luminor companions, story generation, agent orchestration.",
+      "The core MCP server with 42 tools: world-building, canon validation, Luminor companions, story generation, agent orchestration.",
     install: "npx @arcanea/mcp-server",
     color: "#7fffd4",
   },
@@ -496,14 +496,14 @@ const OPEN_SOURCE_REPOS = [
   {
     name: "frankxai/arcanea",
     description:
-      "Main monorepo. Web app, intelligence packages, MCP servers, creative pipeline, and 35+ npm packages.",
+      "Main monorepo. Web app, intelligence packages, MCP servers, creative pipeline, and 49 npm packages.",
     href: "https://github.com/frankxai/arcanea",
     color: "#7fffd4",
   },
   {
     name: "frankxai/arcanea-skills-opensource",
     description:
-      "54 open-source skills for Claude Code, Cursor, Windsurf, and any MCP-compatible agent. Fork and extend.",
+      "103 open-source skills for Claude Code, Cursor, Windsurf, and any MCP-compatible agent. Fork and extend.",
     href: "https://github.com/frankxai/arcanea-skills-opensource",
     color: "#a855f7",
   },

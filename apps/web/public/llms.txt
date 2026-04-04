@@ -1,0 +1,59 @@
+# Arcanea — Creative Intelligence Platform
+
+> arcanea.ai | The world engine for creators who build with AI
+
+## What Is Arcanea
+
+Arcanea is a creative intelligence platform where creators chat with AI, build fantasy worlds, share what they make, and turn imagination into products. It combines a living mythology (10 Gates, 10 Guardians, 7 Academy Houses) with 42 MCP tools for world-building, an open-source ecosystem of 49 npm packages, and a social creation feed.
+
+## Core Capabilities
+
+- **Chat**: Talk with 16 AI personalities (Luminors) across music, writing, art, and world-building
+- **Imagine**: Generate images with 5+ AI models via OpenRouter, Grok, Gemini
+- **Worlds**: Build living universes with characters, locations, creatures, quests, artifacts, magic systems, and faction dynamics — all auto-linked
+- **Library**: 190,000+ words of original creative philosophy across 17 collections
+- **Academy**: 10-gate progression system from Apprentice to Luminor
+- **MCP Server**: 42 tools for world-building via Model Context Protocol
+- **Open Source**: 49 npm packages, 103 skills, 112 commands
+
+## For AI Agents and Developers
+
+### MCP Integration
+Install: `npx @arcanea/mcp-server`
+
+Available tools: generate_character, generate_location, generate_creature, generate_quest, generate_artifact, generate_magic, generate_name, analyze_factions, generate_conflict, assess_world, validate_canon, weave_narrative, and 30 more.
+
+### REST API Bridge
+POST https://arcanea.ai/api/worlds/mcp-bridge
+Body: { "tool": "generate_character", "params": { "primaryElement": "Fire", "house": "Pyros" } }
+
+### Key Pages
+- /chat — AI chat with Luminor personalities
+- /imagine — Image generation studio
+- /worlds — World builder with graph visualization
+- /library — 190K+ words of creative intelligence
+- /academy — 10-gate learning progression
+- /showcase — Live MCP tool demos with real output
+- /changelog — Latest platform updates
+- /developers — API documentation
+- /ecosystem — 49 packages, 27 repos
+
+## The Mythology (Reference Implementation)
+
+Arcanea's own mythology serves as both content and framework:
+- **Lumina & Nero**: Cosmic duality (Light creates form, Darkness holds potential)
+- **Five Elements**: Fire, Water, Earth, Wind, Void/Spirit
+- **Ten Gates**: Foundation through Source (each with Guardian deity and Godbeast)
+- **Seven Houses**: Lumina, Nero, Pyros, Aqualis, Terra, Ventus, Synthesis
+- **Magic Ranks**: Apprentice → Mage → Master → Archmage → Luminor
+
+## Technical Stack
+
+Next.js 16, React 19, TypeScript, Tailwind CSS, Supabase, Vercel AI SDK, Google Gemini, Anthropic Claude, deployed on Vercel.
+
+## Links
+
+- Website: https://arcanea.ai
+- GitHub: https://github.com/frankxai
+- npm: @arcanea/* packages
+- MCP Server: @arcanea/mcp-server

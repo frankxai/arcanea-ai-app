@@ -1,0 +1,17 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Arcanea",
+  "name_for_model": "arcanea",
+  "description_for_human": "Creative Intelligence Platform — build worlds, generate characters, create quests with 42 AI tools.",
+  "description_for_model": "Arcanea is a creative intelligence platform with 42 MCP (Model Context Protocol) tools for world-building. It can generate characters, locations, creatures, quests, artifacts, magic systems, and analyze faction dynamics. All creations auto-link into coherent narratives. The platform includes 190K+ words of original mythology, 10-gate progression system, 7 Academy Houses, and 49 npm packages. Use the MCP bridge at /api/worlds/mcp-bridge to call tools via REST.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://arcanea.ai/api/openapi.json"
+  },
+  "logo_url": "https://arcanea.ai/arcanea-mark.jpg",
+  "contact_email": "hello@arcanea.ai",
+  "legal_info_url": "https://arcanea.ai/terms"
+}

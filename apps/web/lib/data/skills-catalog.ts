@@ -1,7 +1,7 @@
 /**
  * Arcanea Skills Marketplace — Catalog Data
  *
- * Curated catalog of 75+ skills from the Arcanea ecosystem,
+ * Curated catalog of 103+ skills from the Arcanea ecosystem,
  * organized by category for the /skills marketplace page.
  */
 
@@ -722,7 +722,7 @@ export const SKILLS_CATALOG: Skill[] = [
 // ---------------------------------------------------------------------------
 
 export const CATALOG_STATS = {
-  totalSkills: 75,
+  totalSkills: 103,
   categories: SKILL_CATEGORIES.filter((c) => c.key !== "all").length,
   contributors: 42,
   totalInstalls: "125K+",

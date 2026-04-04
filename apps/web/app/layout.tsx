@@ -120,6 +120,41 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebApplication",
+              "name": "Arcanea",
+              "url": "https://arcanea.ai",
+              "description": "Creative Intelligence Platform — chat with AI, build fantasy worlds, share what you make, and turn imagination into products.",
+              "applicationCategory": "CreativeWork",
+              "operatingSystem": "Web",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD",
+                "description": "Free to start"
+              },
+              "creator": {
+                "@type": "Organization",
+                "name": "Arcanea",
+                "url": "https://arcanea.ai"
+              },
+              "featureList": [
+                "42 MCP tools for world-building",
+                "16 AI personalities (Luminors)",
+                "Image generation with 5+ models",
+                "190K+ words of creative philosophy",
+                "10-gate progression system",
+                "49 open-source npm packages",
+                "Living world builder with auto-linking",
+                "Quest and faction generation"
+              ]
+            })
+          }}
+        />
       </head>
       <body>
         {/*
