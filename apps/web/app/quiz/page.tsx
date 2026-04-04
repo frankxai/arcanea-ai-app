@@ -18,6 +18,33 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Quiz",
+  name: "Arcanea Origin Class Quiz",
+  description:
+    "Take the Arcanea Origin Class Quiz and discover the source of your power. Eight questions reveal your place in the multiverse.",
+  url: "https://arcanea.ai/quiz",
+  provider: {
+    "@type": "Organization",
+    name: "Arcanea",
+    url: "https://arcanea.ai",
+  },
+  about: {
+    "@type": "Thing",
+    name: "Origin Classes",
+    description: "Eight archetypes in the Arcanea creative multiverse",
+  },
+};
+
 export default function QuizPage() {
-  return <QuizClient />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <QuizClient />
+    </>
+  );
 }
