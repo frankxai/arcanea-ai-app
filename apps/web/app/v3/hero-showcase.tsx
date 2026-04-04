@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { m } from "framer-motion";
 
 // ---------------------------------------------------------------------------
@@ -14,6 +15,7 @@ const CARDS = [
     subtitle: "12 characters · 3 locations",
     elements: ["#ef4444", "#3b82f6", "#a855f7"],
     gradient: "from-[#0d47a1]/40 via-[#00897b]/30 to-[#4a148c]/40",
+    href: "/worlds",
   },
   {
     type: "Character",
@@ -23,6 +25,7 @@ const CARDS = [
     gradient: "from-[#1a237e]/40 via-[#006064]/30 to-[#1b5e20]/40",
     badge: "Wind",
     badgeColor: "#e2e8f0",
+    href: "/chat",
   },
   {
     type: "Image",
@@ -30,6 +33,7 @@ const CARDS = [
     subtitle: "Fantasy · Cinematic Lighting",
     elements: [],
     gradient: "from-[#4a148c]/50 via-[#00bcd4]/30 to-[#e65100]/40",
+    href: "/imagine",
   },
 ] as const;
 
@@ -41,8 +45,9 @@ function ShowcaseCard({
   delay: number;
 }) {
   return (
+    <Link href={card.href} className="block">
     <m.div
-      className="relative w-full sm:w-[200px] rounded-xl overflow-hidden border border-white/[0.06] backdrop-blur-xl"
+      className="relative w-full sm:w-[200px] rounded-xl overflow-hidden border border-white/[0.06] backdrop-blur-xl hover:border-white/[0.12] hover:scale-[1.03] active:scale-[0.98] transition-all duration-300 cursor-pointer"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
@@ -96,6 +101,7 @@ function ShowcaseCard({
         )}
       </div>
     </m.div>
+    </Link>
   );
 }
 

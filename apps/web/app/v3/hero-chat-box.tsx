@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { m } from "framer-motion";
 import {
   PhPaperPlane,
@@ -46,6 +47,7 @@ export function HeroChatBox() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [message, setMessage] = useState("");
   const [isFocused, setIsFocused] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     if (textareaRef.current) {
@@ -57,9 +59,8 @@ export function HeroChatBox() {
   const goToChat = (text: string) => {
     const trimmed = text.trim();
     if (!trimmed) return;
-    // Use plain navigation instead of useRouter to avoid pulling the
-    // Next.js client router into the initial homepage bundle.
-    window.location.href = `/chat?prompt=${encodeURIComponent(trimmed)}`;
+    // Next.js router for instant SPA navigation (no full page reload)
+    router.push(`/chat?prompt=${encodeURIComponent(trimmed)}`);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -154,7 +155,7 @@ export function HeroChatBox() {
           const handleClick = () => {
             if ("href" in card && card.href) {
               const sep = card.href.includes('?') ? '&' : '?';
-              window.location.href = `${card.href}${sep}prompt=${encodeURIComponent(card.prompt)}`;
+              router.push(`${card.href}${sep}prompt=${encodeURIComponent(card.prompt)}`);
             } else {
               goToChat(card.prompt);
             }

@@ -46,13 +46,13 @@ export function CTASection() {
               <div>
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold leading-tight mb-6">
                   <span className="text-gradient-cosmic">
-                    Start creating.
+                    Your world is waiting.
                   </span>
                 </h2>
 
                 <p className="text-lg text-white/50 mb-8 leading-relaxed">
-                  Arcanea is a complete creation ecosystem, not a thin AI
-                  wrapper.
+                  A complete creation ecosystem — not a thin AI wrapper.
+                  Type one sentence and watch a universe unfold.
                 </p>
 
                 <ul className="space-y-3 mb-10">

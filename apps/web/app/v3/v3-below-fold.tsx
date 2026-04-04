@@ -117,18 +117,18 @@ const ALL_GUARDIANS = [
 const FEATURES = [
   {
     icon: Diamond,
-    title: "16 Creative Intelligences",
+    title: "16 Luminors",
     description:
-      "Sixteen specialized AI minds across four teams — each trained on proprietary creative philosophy, not generic AI. Distinct expertise in music, writing, art, and world-building.",
+      "Sixteen specialized AI minds across four teams — each trained on original creative philosophy, not generic AI. Distinct expertise in music, writing, art, and world-building.",
     href: "/chat",
     accentHex: "#00bcd4",
     glowColor: "rgba(0, 188, 212, 0.15)",
   },
   {
     icon: Scroll,
-    title: "Intelligence Library",
+    title: "The Library",
     description:
-      "190K words of proprietary creative intelligence — not generic AI writing, original philosophy for makers who build worlds, write stories, and design systems. 17 collections, 34+ texts.",
+      "190K words of original creative philosophy — not generic AI writing, but real craft guidance for makers who build worlds, write stories, and design systems. 17 collections, 34+ texts.",
     href: "/library",
     accentHex: "#ffd700",
     glowColor: "rgba(255, 215, 0, 0.12)",
@@ -190,7 +190,7 @@ const PATHWAYS = [
     title: "Build Worlds",
     description:
       "Design places, systems, factions, and entire mythologies from scratch.",
-    href: "/studio",
+    href: "/worlds",
     image: "/guardians/v3/lyria-hero-v3.webp",
   },
   {
