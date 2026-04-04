@@ -162,9 +162,9 @@ const FEATURES = [
   },
   {
     icon: Scroll,
-    title: "Creative Intelligence",
+    title: "Living Lore",
     description:
-      "The founding mythology that trains every AI in the system — Lumina, Nero, the Ten Guardians, and the cosmic architecture of creation.",
+      "Franchise-grade mythology that trains every AI — Lumina, Nero, the Ten Guardians, 8 factions, 80+ characters. Fork it for your own world.",
     href: "/lore",
     accentHex: "#a78bfa",
     glowColor: "rgba(167, 139, 250, 0.12)",
@@ -242,7 +242,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "Is Arcanea free?",
-    a: "Free to start, no credit card required. Full access to the Library, Gallery, and Academy. Three companions on the free plan.",
+    a: "Free to start, no credit card required. Full access to the Library, Gallery, Academy, and Worlds. Bring your own API key for unlimited AI chat and image generation.",
   },
   {
     q: "Is my work private?",

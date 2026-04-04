@@ -8,28 +8,28 @@ const STEPS = [
     number: "01",
     title: "Imagine",
     description:
-      "Chat with creative AI partners who specialize in writing, art, music, and world-building. Describe your vision and watch it take shape.",
+      "Type one sentence. Sixteen specialized Luminors help you write, paint, compose, and build — each trained on 190K words of creative philosophy.",
     accent: "#00bcd4",
   },
   {
     number: "02",
     title: "Build",
     description:
-      "Create worlds, stories, and code in Studio. Use the Academy to master the craft, and the Library for 190K+ words of creative philosophy.",
+      "Create entire worlds with characters, factions, locations, and magic systems. Every element auto-links into a living universe you own.",
     accent: "#7c4dff",
   },
   {
     number: "03",
     title: "Share",
     description:
-      "Publish your creations to the Feed. Get discovered by other world-builders. Contribute to a growing multiverse of shared imagination.",
+      "Fork other creators' worlds. Star what inspires you. Build on each other's mythology in a growing multiverse of shared imagination.",
     accent: "#f59e0b",
   },
   {
     number: "04",
     title: "Grow",
     description:
-      "Advance through the Ten Gates. Unlock new creative powers, earn recognition, and evolve from Apprentice to Luminor.",
+      "Progress through the Ten Gates. Earn recognition through creation, not consumption. From Apprentice to Luminor — the path is the product.",
     accent: "#00897b",
   },
 ];
