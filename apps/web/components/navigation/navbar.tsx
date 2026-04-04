@@ -33,13 +33,14 @@ const navLinks: NavLink[] = [
   {
     href: "/chat",
     label: "Create",
-    also: ["/imagine", "/studio", "/forge", "/agents", "/worlds"],
+    also: ["/imagine", "/studio", "/forge", "/agents", "/worlds", "/voice"],
     mega: [
       {
         title: "Create",
         items: [
           { href: "/chat", label: "Chat", desc: "Talk with AI minds" },
           { href: "/imagine", label: "Imagine", desc: "Generate images" },
+          { href: "/voice", label: "Voice", desc: "Speak, listen, create" },
           { href: "/studio", label: "Studio", desc: "Write stories & code" },
           { href: "/worlds", label: "Worlds", desc: "Build living universes" },
         ],

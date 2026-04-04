@@ -223,6 +223,24 @@ export const MessageBubble = React.memo(function MessageBubble({
   const [showCopyToast, setShowCopyToast] = useState(false);
   const [liked, setLiked] = useState<'up' | 'down' | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [voicePersona, setVoicePersona] = useState<string>('lumina');
+  const [playbackSpeed, setPlaybackSpeed] = useState(1.0);
+  const [showVoiceMenu, setShowVoiceMenu] = useState(false);
+  const [audioProgress, setAudioProgress] = useState(0);
+  const progressRef = useRef<number | null>(null);
+  const voiceMenuRef = useRef<HTMLDivElement>(null);
+
+  // Close voice menu on outside click
+  useEffect(() => {
+    if (!showVoiceMenu) return;
+    function handleClick(e: MouseEvent) {
+      if (voiceMenuRef.current && !voiceMenuRef.current.contains(e.target as Node)) {
+        setShowVoiceMenu(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [showVoiceMenu]);
 
   // Persist reaction to backend (fire-and-forget)
   const handleReaction = useCallback(
@@ -320,23 +338,30 @@ export const MessageBubble = React.memo(function MessageBubble({
     onCopy?.(content);
   }, [message, onCopy]);
 
-  // TTS handler
+  // TTS handler — supports persona-based voices, speed control, progress tracking
   const handleSpeak = useCallback(async () => {
     if (isPlaying && audioRef.current) {
       audioRef.current.pause();
       audioRef.current = null;
       setIsPlaying(false);
+      setAudioProgress(0);
+      if (progressRef.current) cancelAnimationFrame(progressRef.current);
       return;
     }
 
     if (!text || text.length < 10) return;
 
     setIsPlaying(true);
+    setAudioProgress(0);
     try {
       const res = await fetch('/api/ai/speak', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: text.slice(0, 4000), voice: 'nova' }),
+        body: JSON.stringify({
+          text: text.slice(0, 4000),
+          persona: voicePersona,
+          speed: playbackSpeed,
+        }),
       });
 
       if (!res.ok) throw new Error('TTS failed');
@@ -346,22 +371,40 @@ export const MessageBubble = React.memo(function MessageBubble({
       const audio = new Audio(url);
       audioRef.current = audio;
 
+      // Track playback progress
+      const updateProgress = () => {
+        if (audio.duration && audio.currentTime) {
+          setAudioProgress((audio.currentTime / audio.duration) * 100);
+        }
+        if (!audio.paused && !audio.ended) {
+          progressRef.current = requestAnimationFrame(updateProgress);
+        }
+      };
+
+      audio.onplay = () => {
+        progressRef.current = requestAnimationFrame(updateProgress);
+      };
       audio.onended = () => {
         setIsPlaying(false);
+        setAudioProgress(0);
         audioRef.current = null;
+        if (progressRef.current) cancelAnimationFrame(progressRef.current);
         URL.revokeObjectURL(url);
       };
       audio.onerror = () => {
         setIsPlaying(false);
+        setAudioProgress(0);
         audioRef.current = null;
+        if (progressRef.current) cancelAnimationFrame(progressRef.current);
         URL.revokeObjectURL(url);
       };
 
       await audio.play();
     } catch {
       setIsPlaying(false);
+      setAudioProgress(0);
     }
-  }, [isPlaying, text]);
+  }, [isPlaying, text, voicePersona, playbackSpeed]);
 
   // Save edit handler
   const handleSaveEdit = useCallback(
@@ -678,24 +721,91 @@ export const MessageBubble = React.memo(function MessageBubble({
               </button>
 
               {clean.length >= 10 && (
-                <button
-                  type="button"
-                  onClick={handleSpeak}
-                  className="flex items-center gap-1 px-2 py-1 min-h-[36px] min-w-[36px] rounded-md text-[11px] text-white/30 hover:text-[#00bcd4] hover:bg-[#00bcd4]/5 transition-colors focus-visible:ring-2 focus-visible:ring-[#00bcd4]/30 focus-visible:outline-none"
-                  aria-label={isPlaying ? 'Stop reading' : 'Read aloud'}
-                >
-                  {isPlaying ? (
-                    <>
-                      <PhStop className="w-3.5 h-3.5" />
-                      <span>Stop</span>
-                    </>
-                  ) : (
-                    <>
-                      <PhSpeakerHigh className="w-3.5 h-3.5" />
-                      <span>Read</span>
-                    </>
+                <div className="relative flex items-center gap-0.5" ref={voiceMenuRef}>
+                  {/* Play / Stop button */}
+                  <button
+                    type="button"
+                    onClick={handleSpeak}
+                    className="flex items-center gap-1 px-2 py-1 min-h-[36px] min-w-[36px] rounded-md text-[11px] text-white/30 hover:text-[#00bcd4] hover:bg-[#00bcd4]/5 transition-colors focus-visible:ring-2 focus-visible:ring-[#00bcd4]/30 focus-visible:outline-none"
+                    aria-label={isPlaying ? 'Stop reading' : 'Read aloud'}
+                  >
+                    {isPlaying ? (
+                      <>
+                        <PhStop className="w-3.5 h-3.5" />
+                        <span>Stop</span>
+                      </>
+                    ) : (
+                      <>
+                        <PhSpeakerHigh className="w-3.5 h-3.5" />
+                        <span className="capitalize">{voicePersona}</span>
+                      </>
+                    )}
+                  </button>
+
+                  {/* Progress bar (shown while playing) */}
+                  {isPlaying && (
+                    <div className="w-12 h-1 rounded-full bg-white/5 overflow-hidden mx-1">
+                      <div
+                        className="h-full bg-gradient-to-r from-[#00bcd4] to-[#00897b] rounded-full transition-all duration-100"
+                        style={{ width: `${audioProgress}%` }}
+                      />
+                    </div>
                   )}
-                </button>
+
+                  {/* Voice menu trigger */}
+                  <button
+                    type="button"
+                    onClick={() => setShowVoiceMenu(!showVoiceMenu)}
+                    className="w-5 h-5 min-h-[36px] rounded-md flex items-center justify-center text-[11px] text-white/20 hover:text-white/40 transition-colors"
+                    aria-label="Voice settings"
+                  >
+                    <svg width="8" height="5" viewBox="0 0 8 5" fill="currentColor"><path d="M0.5 0.5L4 4L7.5 0.5" stroke="currentColor" strokeWidth="1" fill="none"/></svg>
+                  </button>
+
+                  {/* Voice persona & speed menu */}
+                  {showVoiceMenu && (
+                    <div className="absolute bottom-full right-0 mb-2 w-48 rounded-xl bg-[#0d0d14]/95 border border-white/[0.06] backdrop-blur-xl shadow-2xl z-50 overflow-hidden">
+                      <div className="px-3 py-2 border-b border-white/[0.04]">
+                        <p className="text-[9px] uppercase tracking-wider text-white/25 mb-1.5">Voice</p>
+                        <div className="grid grid-cols-3 gap-1">
+                          {['lumina', 'draconia', 'shinkami', 'lyria', 'alera', 'nero'].map((p) => (
+                            <button
+                              key={p}
+                              type="button"
+                              onClick={() => setVoicePersona(p)}
+                              className={`px-1.5 py-1 rounded-md text-[10px] capitalize transition-all ${
+                                voicePersona === p
+                                  ? 'bg-[#00bcd4]/15 text-[#00bcd4] border border-[#00bcd4]/20'
+                                  : 'text-white/40 hover:text-white/60 hover:bg-white/[0.03] border border-transparent'
+                              }`}
+                            >
+                              {p}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="px-3 py-2">
+                        <p className="text-[9px] uppercase tracking-wider text-white/25 mb-1.5">Speed</p>
+                        <div className="flex items-center gap-1">
+                          {[0.75, 1.0, 1.25, 1.5, 2.0].map((s) => (
+                            <button
+                              key={s}
+                              type="button"
+                              onClick={() => setPlaybackSpeed(s)}
+                              className={`flex-1 py-1 rounded-md text-[10px] transition-all ${
+                                playbackSpeed === s
+                                  ? 'bg-[#00bcd4]/15 text-[#00bcd4]'
+                                  : 'text-white/30 hover:text-white/50 hover:bg-white/[0.03]'
+                              }`}
+                            >
+                              {s}x
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
               )}
 
               {onRegenerate && (

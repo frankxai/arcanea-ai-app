@@ -394,6 +394,7 @@ export function ChatInputBar({
   const [attachments, setAttachments] = useState<File[]>([]);
   const [isDragOver, setIsDragOver] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  const [voiceAutoSend, setVoiceAutoSend] = useState(true);
   const [validationToast, setValidationToast] = useState<string | null>(null);
 
   // @mention state
@@ -670,7 +671,15 @@ export function ChatInputBar({
           if (res.ok) {
             const { text } = await res.json();
             if (text) {
-              setMessage((prev) => (prev ? prev + ' ' + text : text));
+              if (voiceAutoSend) {
+                // One-step voice: transcribe → send immediately
+                const combined = message.trim() ? message + ' ' + text : text;
+                onSend(combined, attachments.length > 0 ? attachments : undefined);
+                setMessage('');
+                setAttachments([]);
+              } else {
+                setMessage((prev) => (prev ? prev + ' ' + text : text));
+              }
             }
           }
         } catch (e) {
@@ -690,7 +699,7 @@ export function ChatInputBar({
       console.warn('Microphone access denied:', e);
       showValidationToast('Microphone access denied. Check browser permissions.');
     }
-  }, [stopRecording, showValidationToast]);
+  }, [stopRecording, showValidationToast, voiceAutoSend, message, onSend, attachments]);
 
   // -------------------------------------------------------------------------
   // Derived state
@@ -859,16 +868,39 @@ export function ChatInputBar({
 
           {/* Right-side buttons (mic + send/stop) */}
           <div className="absolute right-2 bottom-2 flex items-center gap-1.5">
-            {/* Voice input — hidden while recording since VoiceWaveform has its own stop */}
-            {!message.trim() && !isStreaming && !isRecording && (
-              <button
-                type="button"
-                onClick={startRecording}
-                className="w-9 h-9 min-h-[44px] rounded-xl flex items-center justify-center transition-all duration-150 text-white/30 hover:text-white/60 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none"
-                aria-label="Start voice input"
-              >
-                <PhMicrophone className="w-4 h-4" />
-              </button>
+            {/* Voice input — always visible, coexists with typing */}
+            {!isStreaming && !isRecording && (
+              <div className="relative group/voice">
+                <button
+                  type="button"
+                  onClick={startRecording}
+                  className={`w-9 h-9 min-h-[44px] rounded-xl flex items-center justify-center transition-all duration-150 focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 focus-visible:outline-none ${
+                    message.trim()
+                      ? 'text-white/20 hover:text-[#00bcd4]/70 hover:bg-[#00bcd4]/5'
+                      : 'text-white/30 hover:text-white/60 hover:bg-white/[0.04]'
+                  }`}
+                  aria-label={voiceAutoSend ? 'Voice input (auto-send)' : 'Voice input (transcribe only)'}
+                >
+                  <PhMicrophone className="w-4 h-4" />
+                  {voiceAutoSend && (
+                    <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-[#00bcd4]" />
+                  )}
+                </button>
+                {/* Auto-send toggle tooltip on hover */}
+                <div className="absolute bottom-full right-0 mb-2 hidden group-hover/voice:flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-[#0d0d14]/95 border border-white/[0.06] backdrop-blur-xl shadow-lg whitespace-nowrap z-50">
+                  <button
+                    type="button"
+                    onClick={(e) => { e.stopPropagation(); setVoiceAutoSend(!voiceAutoSend); }}
+                    className="flex items-center gap-1.5 text-[10px]"
+                    aria-label="Toggle auto-send"
+                  >
+                    <span className={`w-6 h-3.5 rounded-full relative transition-colors ${voiceAutoSend ? 'bg-[#00bcd4]' : 'bg-white/10'}`}>
+                      <span className={`absolute top-0.5 w-2.5 h-2.5 rounded-full bg-white transition-transform ${voiceAutoSend ? 'translate-x-3' : 'translate-x-0.5'}`} />
+                    </span>
+                    <span className="text-white/50">Auto-send</span>
+                  </button>
+                </div>
+              </div>
             )}
 
             {/* Send or Stop button */}
