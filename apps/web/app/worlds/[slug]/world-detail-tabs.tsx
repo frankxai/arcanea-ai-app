@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -110,6 +110,12 @@ const TABS: { key: Tab; label: string; count?: (w: WorldData) => number }[] = [
   { key: "creations", label: "Creations" },
 ];
 
+const SIMILAR_WORLDS = [
+  { name: "Arcanea", mood: "Mythological", href: "/lore", gradient: "linear-gradient(135deg, #00bcd4, #7c3aed)" },
+  { name: "Eldrian Archives", mood: "Fantasy", href: "/worlds/create?prompt=ancient+library+of+lost+magic", gradient: "linear-gradient(135deg, #fbbf24, #ef4444)" },
+  { name: "Void Expanse", mood: "Cosmic", href: "/worlds/create?prompt=cosmic+void+between+stars", gradient: "linear-gradient(135deg, #a855f7, #1e1b4b)" },
+];
+
 export function WorldDetailTabs({ world, palette, slug, initialStarred = false }: WorldDetailTabsProps) {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
   const [starred, setStarred] = useState(initialStarred);
@@ -160,6 +166,21 @@ export function WorldDetailTabs({ world, palette, slug, initialStarred = false }
       setForking(false);
     }
   }, [slug, router]);
+
+  // Keyboard shortcuts: Arrow keys for tabs, S to star, F to fork
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement)?.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+      const idx = TAB_ORDER.indexOf(activeTab);
+      if (e.key === "ArrowRight" && idx < TAB_ORDER.length - 1) { e.preventDefault(); handleTabChange(TAB_ORDER[idx + 1]); }
+      if (e.key === "ArrowLeft" && idx > 0) { e.preventDefault(); handleTabChange(TAB_ORDER[idx - 1]); }
+      if (e.key === "s" || e.key === "S") { e.preventDefault(); handleStar(); }
+      if (e.key === "f" || e.key === "F") { e.preventDefault(); handleFork(); }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [activeTab, handleTabChange, handleStar, handleFork]);
 
   return (
     <LazyMotion features={domAnimation}>
@@ -296,6 +317,21 @@ export function WorldDetailTabs({ world, palette, slug, initialStarred = false }
                 <span className="text-sm text-[#00bcd4]/60">{world.forked_from_id}</span>
               </SidebarCard>
             )}
+
+            {/* Similar Worlds */}
+            <SidebarCard title="Similar Worlds">
+              <div className="space-y-3">
+                {SIMILAR_WORLDS.slice(0, 3).map((sw) => (
+                  <Link key={sw.name} href={sw.href} className="group flex items-center gap-3 rounded-lg p-2 -mx-2 hover:bg-white/[0.03] transition-colors">
+                    <div className="w-8 h-8 rounded-lg shrink-0" style={{ background: sw.gradient }} />
+                    <div className="min-w-0">
+                      <p className="text-xs font-medium text-white/60 group-hover:text-white/80 truncate transition-colors">{sw.name}</p>
+                      <p className="text-[10px] text-white/25 truncate">{sw.mood}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </SidebarCard>
 
             {/* Star CTA */}
             <button
@@ -963,11 +999,16 @@ function MiniStat({ label, value, icon }: { label: string; value: number; icon?:
 function EmptyState({ message, cta, href }: { message: string; cta: string; href: string }) {
   return (
     <div className="flex flex-col items-center justify-center py-16 text-center">
-      <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
+      <m.div
+        animate={{ y: [0, -6, 0] }}
+        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4"
+        style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
+      >
         <svg className="w-7 h-7 text-white/15" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
         </svg>
-      </div>
+      </m.div>
       <p className="text-white/35 text-sm max-w-md mb-4 leading-relaxed">{message}</p>
       <Link href={href} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium bg-[#00bcd4]/10 border border-[#00bcd4]/20 text-[#00bcd4] hover:bg-[#00bcd4]/20 transition-all">
         {cta}

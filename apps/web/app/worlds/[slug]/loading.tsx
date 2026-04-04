@@ -1,17 +1,18 @@
 export default function WorldDetailLoading() {
   return (
     <main className="min-h-screen bg-[#09090b]">
+      <style>{`@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}} .animate-\\[shimmer_2s_infinite\\]{background:linear-gradient(90deg,transparent 0%,rgba(0,188,212,0.04) 50%,transparent 100%);background-size:200% 100%;animation:shimmer 2s infinite}`}</style>
       {/* Hero skeleton */}
       <section className="relative pt-24 pb-10 overflow-hidden">
-        <div className="aspect-[3/1] max-h-[360px] w-full bg-white/[0.04] animate-pulse" />
+        <div className="aspect-[3/1] max-h-[360px] w-full bg-white/[0.04] animate-[shimmer_2s_infinite]" />
         <div className="max-w-7xl mx-auto px-6 -mt-20 relative z-10">
           <div className="flex flex-col gap-4">
-            <div className="h-10 w-72 rounded-xl bg-white/[0.06] animate-pulse" />
-            <div className="h-5 w-96 rounded-lg bg-white/[0.04] animate-pulse" />
+            <div className="h-10 w-72 rounded-xl bg-white/[0.06] animate-[shimmer_2s_infinite]" />
+            <div className="h-5 w-96 rounded-lg bg-white/[0.04] animate-[shimmer_2s_infinite]" />
             <div className="flex gap-3 mt-2">
-              <div className="h-8 w-20 rounded-lg bg-white/[0.06] animate-pulse" />
-              <div className="h-8 w-20 rounded-lg bg-white/[0.06] animate-pulse" />
-              <div className="h-8 w-24 rounded-lg bg-white/[0.06] animate-pulse" />
+              <div className="h-8 w-20 rounded-lg bg-white/[0.06] animate-[shimmer_2s_infinite]" />
+              <div className="h-8 w-20 rounded-lg bg-white/[0.06] animate-[shimmer_2s_infinite]" />
+              <div className="h-8 w-24 rounded-lg bg-white/[0.06] animate-[shimmer_2s_infinite]" />
             </div>
           </div>
         </div>
@@ -24,7 +25,7 @@ export default function WorldDetailLoading() {
             (tab) => (
               <div
                 key={tab}
-                className="h-10 rounded-t-lg bg-white/[0.04] animate-pulse"
+                className="h-10 rounded-t-lg bg-white/[0.04] animate-[shimmer_2s_infinite]"
                 style={{ width: `${tab.length * 10 + 24}px` }}
               />
             )
@@ -37,17 +38,17 @@ export default function WorldDetailLoading() {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8">
           {/* Main */}
           <div className="space-y-6">
-            <div className="h-6 w-48 rounded bg-white/[0.06] animate-pulse" />
+            <div className="h-6 w-48 rounded bg-white/[0.06] animate-[shimmer_2s_infinite]" />
             <div className="space-y-3">
-              <div className="h-4 w-full rounded bg-white/[0.04] animate-pulse" />
-              <div className="h-4 w-5/6 rounded bg-white/[0.04] animate-pulse" />
-              <div className="h-4 w-4/6 rounded bg-white/[0.04] animate-pulse" />
+              <div className="h-4 w-full rounded bg-white/[0.04] animate-[shimmer_2s_infinite]" />
+              <div className="h-4 w-5/6 rounded bg-white/[0.04] animate-[shimmer_2s_infinite]" />
+              <div className="h-4 w-4/6 rounded bg-white/[0.04] animate-[shimmer_2s_infinite]" />
             </div>
             <div className="flex gap-2 mt-4">
               {Array.from({ length: 4 }).map((_, i) => (
                 <div
                   key={i}
-                  className="h-7 w-20 rounded-full bg-white/[0.06] animate-pulse"
+                  className="h-7 w-20 rounded-full bg-white/[0.06] animate-[shimmer_2s_infinite]"
                 />
               ))}
             </div>
@@ -55,7 +56,7 @@ export default function WorldDetailLoading() {
 
           {/* Sidebar */}
           <div className="space-y-4">
-            <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-5 space-y-4 animate-pulse">
+            <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-5 space-y-4 animate-[shimmer_2s_infinite]">
               <div className="h-5 w-32 rounded bg-white/[0.06]" />
               <div className="grid grid-cols-2 gap-3">
                 {Array.from({ length: 4 }).map((_, i) => (

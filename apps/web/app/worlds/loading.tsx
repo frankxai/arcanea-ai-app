@@ -1,22 +1,23 @@
 export default function WorldsLoading() {
   return (
     <main className="min-h-screen bg-[#09090b]">
+      <style>{`@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}} .animate-\\[shimmer_2s_infinite\\]{background:linear-gradient(90deg,transparent 0%,rgba(0,188,212,0.04) 50%,transparent 100%);background-size:200% 100%;animation:shimmer 2s infinite}`}</style>
       {/* Hero skeleton */}
       <section className="pt-32 pb-16">
         <div className="max-w-6xl mx-auto px-6 text-center">
-          <div className="h-4 w-32 mx-auto mb-6 rounded-full bg-white/[0.06] animate-pulse" />
-          <div className="h-12 w-80 mx-auto mb-4 rounded-xl bg-white/[0.06] animate-pulse" />
-          <div className="h-5 w-96 mx-auto mb-10 rounded-lg bg-white/[0.04] animate-pulse" />
+          <div className="h-4 w-32 mx-auto mb-6 rounded-full bg-white/[0.06] animate-[shimmer_2s_infinite]" />
+          <div className="h-12 w-80 mx-auto mb-4 rounded-xl bg-white/[0.06] animate-[shimmer_2s_infinite]" />
+          <div className="h-5 w-96 mx-auto mb-10 rounded-lg bg-white/[0.04] animate-[shimmer_2s_infinite]" />
 
           {/* Search skeleton */}
-          <div className="h-12 max-w-lg mx-auto rounded-xl bg-white/[0.05] animate-pulse mb-8" />
+          <div className="h-12 max-w-lg mx-auto rounded-xl bg-white/[0.05] animate-[shimmer_2s_infinite] mb-8" />
 
           {/* Filter pills skeleton */}
           <div className="flex justify-center gap-3 mb-8">
             {Array.from({ length: 6 }).map((_, i) => (
               <div
                 key={i}
-                className="h-9 rounded-xl bg-white/[0.04] animate-pulse"
+                className="h-9 rounded-xl bg-white/[0.04] animate-[shimmer_2s_infinite]"
                 style={{ width: `${70 + i * 10}px` }}
               />
             ))}
@@ -30,7 +31,7 @@ export default function WorldsLoading() {
           {Array.from({ length: 6 }).map((_, i) => (
             <div
               key={i}
-              className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden animate-pulse"
+              className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden animate-[shimmer_2s_infinite]"
             >
               {/* Image placeholder */}
               <div className="aspect-[16/10] bg-white/[0.04]" />

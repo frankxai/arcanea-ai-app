@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PageTransition } from "./page-transition";
 
 export const metadata: Metadata = {
   title: "Explore Worlds — Arcanea",
@@ -16,5 +17,5 @@ export default function WorldsLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return <PageTransition>{children}</PageTransition>;
 }

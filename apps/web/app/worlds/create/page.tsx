@@ -277,22 +277,6 @@ export default function CreateWorldPage() {
   const [refining, setRefining] = useState(false);
   const [exampleIdx, setExampleIdx] = useState(-1);
 
-  // Keyboard shortcuts: Cmd/Ctrl+Enter to generate, Escape to reset, Tab to cycle examples
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (phase === "input" && e.key === "Enter" && (e.metaKey || e.ctrlKey)) { e.preventDefault(); generate(); }
-      if (phase === "input" && e.key === "Tab" && !e.shiftKey && document.activeElement?.tagName !== "TEXTAREA") {
-        e.preventDefault();
-        const next = (exampleIdx + 1) % EXAMPLES.length;
-        setExampleIdx(next);
-        setDescription(EXAMPLES[next]);
-      }
-      if (phase === "result" && e.key === "Escape") { e.preventDefault(); reset(); }
-    };
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
-  }, [phase, exampleIdx, generate, reset]);
-
   useEffect(() => {
     const supabase = createClient();
     supabase.auth.getUser().then(({ data }) => {
@@ -417,6 +401,22 @@ export default function CreateWorldPage() {
     setError(null);
     setRefining(false);
   };
+
+  // Keyboard shortcuts: Cmd/Ctrl+Enter to generate, Escape to reset, Tab to cycle examples
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (phase === "input" && e.key === "Enter" && (e.metaKey || e.ctrlKey)) { e.preventDefault(); generate(); }
+      if (phase === "input" && e.key === "Tab" && !e.shiftKey && document.activeElement?.tagName !== "TEXTAREA") {
+        e.preventDefault();
+        const next = (exampleIdx + 1) % EXAMPLES.length;
+        setExampleIdx(next);
+        setDescription(EXAMPLES[next]);
+      }
+      if (phase === "result" && e.key === "Escape") { e.preventDefault(); reset(); }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [phase, exampleIdx, generate, reset]);
 
   return (
     <LazyMotion features={domAnimation}>
