@@ -9,6 +9,10 @@ import { getLuminor } from '@/lib/luminors/config';
 import {
   PhArrowDown,
   PhArrowClockwise,
+  PhImageSquare,
+  PhMagnifyingGlass,
+  PhBrain,
+  PhMicrophone,
 } from '@/lib/phosphor-icons';
 import { ArcaneanMarkGlow, ArcaneanMarkSmall } from '@/components/brand/arcanea-mark';
 
@@ -357,6 +361,17 @@ export function ChatArea({
                     </span>
                   </button>
                 ))}
+              </div>
+
+              {/* Capabilities hint — tools users don't know exist */}
+              <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] text-white/20 animate-empty-fade-in" style={{ animationDelay: '350ms' }}>
+                <span className="flex items-center gap-1"><PhImageSquare className="w-3 h-3" /> Images</span>
+                <span className="text-white/10">·</span>
+                <span className="flex items-center gap-1"><PhMagnifyingGlass className="w-3 h-3" /> Web search</span>
+                <span className="text-white/10">·</span>
+                <span className="flex items-center gap-1"><PhBrain className="w-3 h-3" /> Deep thinking</span>
+                <span className="text-white/10">·</span>
+                <span className="flex items-center gap-1"><PhMicrophone className="w-3 h-3" /> Voice</span>
               </div>
 
               {/* Continue last session — subtle, not prominent */}
