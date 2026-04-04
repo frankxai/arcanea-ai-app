@@ -48,37 +48,42 @@ export async function POST(request: NextRequest, context: RouteContext) {
 
     const { creationId } = validation.data;
 
-    // Verify collection exists
-    const { data: collection, error: collError } = await supabaseServer
-      .from('collections')
-      .select('id')
-      .eq('id', collectionId)
-      .single();
+    // Run all three pre-insert checks in parallel
+    const [
+      { data: collection, error: collError },
+      { data: existing },
+      { data: lastItem },
+    ] = await Promise.all([
+      // Verify collection exists
+      supabaseServer
+        .from('collections')
+        .select('id')
+        .eq('id', collectionId)
+        .single(),
+      // Check for duplicate
+      supabaseServer
+        .from('collection_items')
+        .select('id')
+        .eq('collection_id', collectionId)
+        .eq('creation_id', creationId)
+        .maybeSingle(),
+      // Determine next sort_order
+      supabaseServer
+        .from('collection_items')
+        .select('sort_order')
+        .eq('collection_id', collectionId)
+        .order('sort_order', { ascending: false })
+        .limit(1)
+        .single(),
+    ]);
 
     if (collError || !collection) {
       return errorResponse('NOT_FOUND', 'Collection not found', 404);
     }
 
-    // Check for duplicate
-    const { data: existing } = await supabaseServer
-      .from('collection_items')
-      .select('id')
-      .eq('collection_id', collectionId)
-      .eq('creation_id', creationId)
-      .maybeSingle();
-
     if (existing) {
       return errorResponse('ALREADY_EXISTS', 'Creation is already in this collection', 409);
     }
-
-    // Determine next sort_order
-    const { data: lastItem } = await supabaseServer
-      .from('collection_items')
-      .select('sort_order')
-      .eq('collection_id', collectionId)
-      .order('sort_order', { ascending: false })
-      .limit(1)
-      .single();
 
     const nextSortOrder = lastItem ? lastItem.sort_order + 1 : 0;
 

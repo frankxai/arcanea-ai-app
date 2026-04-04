@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
+import { getCachedUser } from "@/lib/supabase/cached-auth";
 import { ElementBadge } from "@/components/worlds/ElementBadge";
 import { WorldActions } from "@/components/worlds/WorldActions";
 import { WorldDetailTabs, type WorldPalette } from "./world-detail-tabs";
@@ -9,10 +10,7 @@ import { WorldDetailTabs, type WorldPalette } from "./world-detail-tabs";
 // ── Data fetching ────────────────────────────────────────────────────
 
 async function getWorld(slug: string) {
-  const sb = await createClient();
-  const {
-    data: { user },
-  } = await sb.auth.getUser();
+  const [sb, user] = await Promise.all([createClient(), getCachedUser()]);
 
   const { data: world, error } = await sb
     .from("worlds")
@@ -27,12 +25,21 @@ async function getWorld(slug: string) {
   }
 
   const [characters, factions, locations, events] = await Promise.all([
-    sb.from("world_characters").select("*").eq("world_id", world.id),
-    sb.from("world_factions").select("*").eq("world_id", world.id),
-    sb.from("world_locations").select("*").eq("world_id", world.id),
+    sb
+      .from("world_characters")
+      .select("id, name, element, gate, origin_class, title, backstory, portrait_url, motivation, is_agent")
+      .eq("world_id", world.id),
+    sb
+      .from("world_factions")
+      .select("id, name, history, philosophy, territory")
+      .eq("world_id", world.id),
+    sb
+      .from("world_locations")
+      .select("id, name, description, region, significance, image_url")
+      .eq("world_id", world.id),
     sb
       .from("world_events")
-      .select("*")
+      .select("id, title, description, era, characters_involved, sort_order, consequences, date_in_world")
       .eq("world_id", world.id)
       .order("sort_order"),
   ]);

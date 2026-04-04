@@ -425,14 +425,16 @@ export async function POST(
       // ── 8. Deduct credits after completion ──────────────────────────────
       if (session && supabaseUrl && supabaseAnonKey) {
         // Fire and forget — do not await
-        void deductCredits(
+        deductCredits(
           supabaseUrl,
           supabaseAnonKey,
           session.userId,
           agent.id,
           agent.priceCredits,
           label,
-        );
+        ).catch((err) => {
+          console.error('[execute] deductCredits failed:', err);
+        });
       }
 
       // Log task to agent_tasks table (best-effort)
