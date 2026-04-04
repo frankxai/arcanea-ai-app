@@ -3,7 +3,7 @@
   "version": 2,
   "framework": "nextjs",
   "buildCommand": "cd apps/web && npx next build --webpack",
-  "installCommand": "corepack enable && pnpm install --no-frozen-lockfile",
+  "installCommand": "corepack enable && pnpm install",
   "outputDirectory": "apps/web/.next",
   "devCommand": "pnpm dev:web",
 
