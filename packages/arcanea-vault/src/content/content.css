@@ -1,0 +1,147 @@
+/* ─── Arcanea Vault Overlay ──────────────────────────────────────────────── */
+
+#arcanea-vault-overlay {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+#arcanea-vault-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: rgba(10, 14, 26, 0.92);
+  border: 1px solid rgba(127, 255, 212, 0.3);
+  border-radius: 10px 0 0 10px;
+  color: #7fffd4;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+#arcanea-vault-btn:hover {
+  background: rgba(10, 14, 26, 0.98);
+  border-color: rgba(127, 255, 212, 0.6);
+  box-shadow: 0 0 16px rgba(127, 255, 212, 0.15);
+}
+
+#arcanea-vault-btn.arcanea-vault-exporting {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+#arcanea-vault-menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  padding: 8px 4px;
+  background: rgba(10, 14, 26, 0.92);
+  border: 1px solid rgba(127, 255, 212, 0.3);
+  border-left: none;
+  border-radius: 0 10px 10px 0;
+  color: #7fffd4;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  transition: all 0.2s ease;
+}
+
+#arcanea-vault-menu-btn:hover {
+  background: rgba(10, 14, 26, 0.98);
+  border-color: rgba(127, 255, 212, 0.6);
+}
+
+.arcanea-vault-icon {
+  display: flex;
+  align-items: center;
+}
+
+.arcanea-vault-label {
+  letter-spacing: 0.01em;
+}
+
+/* ─── Context Menu ───────────────────────────────────────────────────────── */
+
+.arcanea-vault-menu {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  right: 0;
+  min-width: 180px;
+  background: rgba(10, 14, 26, 0.96);
+  border: 1px solid rgba(127, 255, 212, 0.25);
+  border-radius: 10px;
+  padding: 4px;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.arcanea-vault-menu-item {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  color: #e0e0e0;
+  font-size: 12px;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.arcanea-vault-menu-item:hover {
+  background: rgba(127, 255, 212, 0.1);
+  color: #7fffd4;
+}
+
+.arcanea-vault-menu-divider {
+  height: 1px;
+  background: rgba(127, 255, 212, 0.12);
+  margin: 4px 8px;
+}
+
+/* ─── Toast Notification ─────────────────────────────────────────────────── */
+
+.arcanea-vault-toast {
+  position: fixed;
+  bottom: 140px;
+  right: 20px;
+  z-index: 999999;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  backdrop-filter: blur(12px);
+  transform: translateY(10px);
+  opacity: 0;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.arcanea-vault-toast-visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.arcanea-vault-toast-success {
+  background: rgba(10, 14, 26, 0.92);
+  border: 1px solid rgba(127, 255, 212, 0.4);
+  color: #7fffd4;
+}
+
+.arcanea-vault-toast-error {
+  background: rgba(26, 10, 10, 0.92);
+  border: 1px solid rgba(255, 100, 100, 0.4);
+  color: #ff8888;
+}
