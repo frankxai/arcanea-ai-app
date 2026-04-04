@@ -19,22 +19,22 @@ import { ArcaneanMarkGlow, ArcaneanMarkSmall } from '@/components/brand/arcanea-
 const ACCENT = '#00bcd4';
 
 const CREATIVE_STARTERS = [
-  { icon: '\u2726', text: 'Design a magic system', hint: 'Build the rules of power' },
-  { icon: '\u25C6', text: 'Architect a dashboard', hint: 'Plan a data-rich interface' },
-  { icon: '\u2756', text: 'Write an opening scene', hint: 'Craft the first page that hooks' },
-  { icon: '\u2666', text: 'Compose a melody', hint: 'Create a theme with mood and structure' },
+  { icon: '\u2726', text: 'Design a magic system', hint: 'Elements, costs, limits, and lore' },
+  { icon: '\u25C6', text: 'Generate character art', hint: 'Portraits, armor, expressions' },
+  { icon: '\u2756', text: 'Write an opening scene', hint: 'Hook, conflict, voice — page one' },
+  { icon: '\u2666', text: 'Build a React component', hint: 'Production code with TypeScript' },
 ];
 
 /** Alias for backward compat — some parts of the file reference this name */
 const CAPABILITY_DOMAINS = CREATIVE_STARTERS;
 
 const SUBTITLES = [
-  "Stories, code, worlds, music \u2014 bring me the problem you can\u2019t solve alone.",
-  "I think in systems and ship in specifics. What\u2019s the idea?",
-  "Better at the second draft. Show me what you\u2019ve got.",
-  "I\u2019d rather ask one sharp question than list five options.",
-  'I see game theory in magic systems and contradiction in characters.',
-  'Built for makers. Not a general assistant.',
+  "Stories, code, worlds, music \u2014 type a prompt or pick a starter below.",
+  "16 specialist minds. Pick one or let Auto route your message.",
+  "Better at the second draft. Paste what you\u2019ve got so far.",
+  "Images take ~10s. Stories are instant. Worlds take a conversation.",
+  "Attach images, use @mentions for agents, or just type.",
+  "Built for makers. Not a general assistant.",
 ];
 
 function getSubtitle(): string {
