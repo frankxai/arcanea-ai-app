@@ -97,7 +97,23 @@ push_file() {
   local sha=""
   sha=$(gh api "repos/$repo/contents/$remote_path?ref=$branch" --jq '.sha' 2>/dev/null) || sha=""
 
-  if [ -n "$sha" ] && [ "$sha" != "null" ]; then
+  # For large files (>50KB base64), use JSON file input to avoid shell argument limits
+  local b64_size=${#b64}
+  if [ "$b64_size" -gt 65000 ]; then
+    local jsonfile="/tmp/ao_sync_body.json"
+    local b64file="/tmp/ao_sync_b64.txt"
+    base64 -w0 < "$local_path" > "$b64file"
+    if [ -n "$sha" ] && [ "$sha" != "null" ]; then
+      printf '{"message":"sync: %s","branch":"%s","sha":"%s","content":"' "$remote_path" "$branch" "$sha" > "$jsonfile"
+    else
+      printf '{"message":"sync: %s","branch":"%s","content":"' "$remote_path" "$branch" > "$jsonfile"
+    fi
+    cat "$b64file" >> "$jsonfile"
+    printf '"}' >> "$jsonfile"
+    gh api "repos/$repo/contents/$remote_path" -X PUT --input "$jsonfile" \
+      --jq '.content.path' 2>/dev/null && echo "  OK: $remote_path (large)" || echo "  FAIL: $remote_path"
+    rm -f "$jsonfile" "$b64file"
+  elif [ -n "$sha" ] && [ "$sha" != "null" ]; then
     gh api "repos/$repo/contents/$remote_path" \
       -X PUT -f "message=sync: $remote_path" -f "content=$b64" -f "branch=$branch" -f "sha=$sha" \
       --jq '.content.path' 2>/dev/null && echo "  OK: $remote_path (updated)" || echo "  FAIL: $remote_path"
