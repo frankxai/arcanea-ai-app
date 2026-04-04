@@ -80,9 +80,10 @@ const PROVIDERS: Record<string, ProviderConfig> = {
   },
 };
 
-// Rate limiting handled by Vercel's built-in Edge rate limiting
-// For custom limits, use Vercel KV: https://vercel.com/docs/storage/vercel-kv
-// TODO: Add Vercel KV rate limiting when scaling beyond MVP
+// Rate limiting — in-memory for MVP, upgrade to Redis/Vercel KV for scale
+import { getClientIdentifier, checkRateLimit } from '@/lib/rate-limit/rate-limiter';
+
+const CHAT_RATE_LIMIT = { maxRequests: 30, windowMs: 60_000 }; // 30 req/min
 
 interface ChatMessage {
   role: 'user' | 'assistant' | 'model' | 'system';
@@ -178,6 +179,25 @@ function createModel(providerId: string, apiKey: string, modelOverride?: string)
 }
 
 export async function POST(req: NextRequest) {
+  // --- Rate limiting ---
+  const clientId = getClientIdentifier(req);
+  const rl = checkRateLimit(clientId, CHAT_RATE_LIMIT);
+  if (!rl.allowed) {
+    return new Response(
+      JSON.stringify({ error: 'Too many requests. Please slow down.', retryAfter: Math.ceil((rl.resetTime - Date.now()) / 1000) }),
+      {
+        status: 429,
+        headers: {
+          'Content-Type': 'application/json',
+          'X-RateLimit-Limit': String(CHAT_RATE_LIMIT.maxRequests),
+          'X-RateLimit-Remaining': '0',
+          'X-RateLimit-Reset': new Date(rl.resetTime).toISOString(),
+          'Retry-After': String(Math.ceil((rl.resetTime - Date.now()) / 1000)),
+        },
+      },
+    );
+  }
+
   try {
     // --- Parse request ---
     const body: ChatRequest = await req.json();

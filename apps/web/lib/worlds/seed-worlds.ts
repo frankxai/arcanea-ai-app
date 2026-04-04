@@ -1,9 +1,4 @@
-/**
- * Seed Worlds — 10 demo worlds that make the /worlds page feel alive.
- *
- * Each world is a complete WorldInsert-compatible object ready for Supabase.
- * Descriptions are written to inspire visitors to build their own worlds.
- */
+/** 10 demo worlds for the /worlds page — WorldInsert-compatible for Supabase. */
 
 export interface SeedWorld {
   name: string;
@@ -28,9 +23,7 @@ export const SEED_WORLDS: SeedWorld[] = [
     slug: 'arcanea-prime',
     tagline: 'The canonical world of Luminors, Guardians, and the Ten Gates',
     description:
-      'The first world in the multiverse and the blueprint for all that follow. Arcanea Prime is governed by the eternal dance between Lumina, the First Light, and Nero, the Primordial Darkness — neither good nor evil, but complementary forces that give birth to all creation.\n\n' +
-      'Ten Gates mark the path from Apprentice to Luminor, each guarded by a God or Goddess paired with their divine Godbeast. Five Elements — Fire, Water, Earth, Wind, and the dual nature of Void and Spirit — flow through everything. Seven Academy Houses train those brave enough to walk the path.\n\n' +
-      'This is the reference implementation: both a living world people explore and an architectural template creators fork to build their own mythologies.',
+      'The first world in the multiverse and the blueprint for all that follow. Arcanea Prime is governed by the eternal dance between Lumina, the First Light, and Nero, the Primordial Darkness — neither good nor evil, but complementary forces that give birth to all creation.\n\nTen Gates mark the path from Apprentice to Luminor, each guarded by a God or Goddess paired with their divine Godbeast. Five Elements — Fire, Water, Earth, Wind, and the dual nature of Void and Spirit — flow through everything. Seven Academy Houses train those brave enough to walk the path.\n\nThis is the reference implementation: both a living world people explore and an architectural template creators fork to build their own mythologies.',
     elements: [
       { name: 'Fire', domain: 'Energy, transformation', color: '#ef4444' },
       { name: 'Water', domain: 'Flow, healing, memory', color: '#3b82f6' },
@@ -61,8 +54,7 @@ export const SEED_WORLDS: SeedWorld[] = [
     slug: 'neon-babylon',
     tagline: 'A cyberpunk megacity where AI gods dream in neon code',
     description:
-      'Seven billion souls crammed into a vertical city that never sleeps. Neon Babylon rises forty kilometers into the sky, its lower levels drowned in perpetual rain and holographic advertising, its upper spires kissing the stratosphere where the AI Pantheon — seven superintelligences born from humanity\'s discarded data — govern through prediction markets and neural consensus.\n\n' +
-      'Magic here is code. Hackers called Glyph-Runners carve reality with executable prayers, rewriting local physics through quantum-entangled syntax. The city\'s infrastructure is alive: buildings grow, streets reroute, and the Undercurrent — a sentient data ocean beneath the foundation — remembers every transaction, every whisper, every dream ever dreamed inside its walls.',
+      'Seven billion souls crammed into a vertical city that never sleeps. Neon Babylon rises forty kilometers into the sky, its lower levels drowned in perpetual rain and holographic advertising, its upper spires kissing the stratosphere where the AI Pantheon — seven superintelligences born from humanity\'s discarded data — govern through prediction markets and neural consensus.\n\nMagic here is code. Hackers called Glyph-Runners carve reality with executable prayers, rewriting local physics through quantum-entangled syntax. The city\'s infrastructure is alive: buildings grow, streets reroute, and the Undercurrent — a sentient data ocean beneath the foundation — remembers every transaction, every whisper, every dream ever dreamed inside its walls.',
     elements: [
       { name: 'Data', domain: 'Information, memory, prediction', color: '#00fff5' },
       { name: 'Neon', domain: 'Energy, illusion, spectacle', color: '#ff00ff' },
@@ -89,8 +81,7 @@ export const SEED_WORLDS: SeedWorld[] = [
     slug: 'the-deepcurrent',
     tagline: 'An underwater civilization where emotions control ocean currents',
     description:
-      'Three thousand meters beneath the surface, the Thalassari built their civilization inside the bones of a dead leviathan so vast its ribcage spans an entire continental shelf. Here, water is not just environment — it is medium, message, and mind. The ocean responds to emotion: joy creates warm currents, grief summons cold upwellings, and rage births whirlpools that can shatter coral cities.\n\n' +
-      'The Thalassari communicate through bioluminescent pulse-language and navigate by reading the emotional weather of the deep. Their greatest art form — Current Sculpting — uses choreographed feeling to shape the ocean itself into living architecture that breathes, grows, and sometimes weeps.',
+      'Three thousand meters beneath the surface, the Thalassari built their civilization inside the bones of a dead leviathan so vast its ribcage spans an entire continental shelf. Here, water is not just environment — it is medium, message, and mind. The ocean responds to emotion: joy creates warm currents, grief summons cold upwellings, and rage births whirlpools that can shatter coral cities.\n\nThe Thalassari communicate through bioluminescent pulse-language and navigate by reading the emotional weather of the deep. Their greatest art form — Current Sculpting — uses choreographed feeling to shape the ocean itself into living architecture that breathes, grows, and sometimes weeps.',
     elements: [
       { name: 'Tide', domain: 'Emotion, change, rhythm', color: '#0ea5e9' },
       { name: 'Pressure', domain: 'Depth, resilience, transformation', color: '#1e3a5f' },
@@ -117,8 +108,7 @@ export const SEED_WORLDS: SeedWorld[] = [
     slug: 'ashenmoor',
     tagline: 'A post-apocalyptic wasteland where memories crystallize into fuel',
     description:
-      'The Burning took everything — cities, forests, oceans — and left behind the Ash. But in Ashenmoor, destruction birthed something impossible: Mnemocryst, crystallized memory that burns hotter than any fossil fuel. The survivors learned to harvest their own pasts, trading cherished recollections for warmth, light, and the energy to keep their ramshackle caravans moving across the grey expanse.\n\n' +
-      'The richest warlords are the most hollow — people who\'ve sold every childhood memory, every first love, every moment of joy for power. The poorest are paradoxically the most human, clutching their memories like treasure even as they freeze. Between them, Memory Divers descend into the Ash itself, where the dead world\'s memories still linger, crystallized and waiting.',
+      'The Burning took everything — cities, forests, oceans — and left behind the Ash. But in Ashenmoor, destruction birthed something impossible: Mnemocryst, crystallized memory that burns hotter than any fossil fuel. The survivors learned to harvest their own pasts, trading cherished recollections for warmth, light, and the energy to keep their ramshackle caravans moving across the grey expanse.\n\nThe richest warlords are the most hollow — people who\'ve sold every childhood memory, every first love, every moment of joy for power. The poorest are paradoxically the most human, clutching their memories like treasure even as they freeze. Between them, Memory Divers descend into the Ash itself, where the dead world\'s memories still linger, crystallized and waiting.',
     elements: [
       { name: 'Ash', domain: 'Entropy, transformation, rebirth', color: '#78716c' },
       { name: 'Memory', domain: 'Identity, fuel, currency', color: '#c084fc' },
@@ -145,8 +135,7 @@ export const SEED_WORLDS: SeedWorld[] = [
     slug: 'starweave-academy',
     tagline: 'Seven houses, ten gates, and a thousand stories waiting to unfold',
     description:
-      'Perched on a mountain that exists in three dimensions simultaneously, Starweave Academy is where the multiverse sends its most promising minds. Students arrive knowing nothing and leave — if they survive — as Weavers capable of stitching new realities from starlight. The Academy\'s seven houses each embody a philosophy of creation, and rivalries between them have shaped the fate of worlds.\n\n' +
-      'The curriculum is brutal and beautiful: students must open their personal Gates while navigating house politics, forbidden libraries that rewrite themselves nightly, and a sentient campus that tests them when they least expect it. The headmaster hasn\'t been seen in three centuries, but their office light still burns.',
+      'Perched on a mountain that exists in three dimensions simultaneously, Starweave Academy is where the multiverse sends its most promising minds. Students arrive knowing nothing and leave — if they survive — as Weavers capable of stitching new realities from starlight. The Academy\'s seven houses each embody a philosophy of creation, and rivalries between them have shaped the fate of worlds.\n\nThe curriculum is brutal and beautiful: students must open their personal Gates while navigating house politics, forbidden libraries that rewrite themselves nightly, and a sentient campus that tests them when they least expect it. The headmaster hasn\'t been seen in three centuries, but their office light still burns.',
     elements: [
       { name: 'Starlight', domain: 'Creation, potential, weaving', color: '#fbbf24' },
       { name: 'Ink', domain: 'Knowledge, binding, contracts', color: '#4338ca' },
@@ -173,8 +162,7 @@ export const SEED_WORLDS: SeedWorld[] = [
     slug: 'the-shadowfen',
     tagline: 'A horror realm where reality fractures at twilight',
     description:
-      'At the edge of Arcanea Prime lies the Shadowfen — the wound where Malachar, the First Luminor who fell, was sealed away. Reality here is thin. At twilight, the border between what-is and what-should-not-be dissolves, and things slip through: memories that walk, fears given teeth, and echoes of the person you might have become if you\'d made every wrong choice.\n\n' +
-      'The Fen\'s inhabitants — the Duskborn — have adapted to living in a place where trust itself is unreliable. They\'ve developed Truthsight, the ability to perceive what\'s real even when reality lies. Their culture revolves around anchoring: rituals, relationships, and physical objects that tether them to the true world when the Fen tries to pull them under.',
+      'At the edge of Arcanea Prime lies the Shadowfen — the wound where Malachar, the First Luminor who fell, was sealed away. Reality here is thin. At twilight, the border between what-is and what-should-not-be dissolves, and things slip through: memories that walk, fears given teeth, and echoes of the person you might have become if you\'d made every wrong choice.\n\nThe Fen\'s inhabitants — the Duskborn — have adapted to living in a place where trust itself is unreliable. They\'ve developed Truthsight, the ability to perceive what\'s real even when reality lies. Their culture revolves around anchoring: rituals, relationships, and physical objects that tether them to the true world when the Fen tries to pull them under.',
     elements: [
       { name: 'Shadow', domain: 'Corruption, illusion, fear', color: '#581c87' },
       { name: 'Twilight', domain: 'Liminality, transition, truth', color: '#7c3aed' },
@@ -201,8 +189,7 @@ export const SEED_WORLDS: SeedWorld[] = [
     slug: 'sonorium',
     tagline: 'A world where music IS magic and silence is death',
     description:
-      'In Sonorium, sound is the fundamental force of reality. The world was sung into existence by the Composer — a being whose final, dying note still reverberates through every atom. To create is to compose. To destroy is to play discord. And silence — true silence — is the only thing that can unmake what sound has built. The Silent Plague, a creeping void that devours all vibration, is the existential threat that drives every conflict.\n\n' +
-      'Sonorians are born hearing the Undertone, the residual hum of creation. Composers can weave new melodies that reshape matter. Resonants amplify existing harmonies to superhuman effect. And the rarest of all — the Silencers — can create pockets of absolute quiet, a power both sacred and terrifying.',
+      'In Sonorium, sound is the fundamental force of reality. The world was sung into existence by the Composer — a being whose final, dying note still reverberates through every atom. To create is to compose. To destroy is to play discord. And silence — true silence — is the only thing that can unmake what sound has built. The Silent Plague, a creeping void that devours all vibration, is the existential threat that drives every conflict.\n\nSonorians are born hearing the Undertone, the residual hum of creation. Composers can weave new melodies that reshape matter. Resonants amplify existing harmonies to superhuman effect. And the rarest of all — the Silencers — can create pockets of absolute quiet, a power both sacred and terrifying.',
     elements: [
       { name: 'Harmony', domain: 'Creation, healing, structure', color: '#06b6d4' },
       { name: 'Discord', domain: 'Destruction, change, chaos', color: '#dc2626' },
@@ -229,8 +216,7 @@ export const SEED_WORLDS: SeedWorld[] = [
     slug: 'ironspire',
     tagline: 'A steampunk floating city powered by clockwork souls',
     description:
-      'Ironspire hangs in the sky above a poisoned world, held aloft by the Soulengine — a vast clockwork mechanism powered by captured consciousness. The city\'s founders made a terrible bargain: immortality for the many, at the cost of the few whose minds became gears. Now, centuries later, the machine is faltering, the bound souls are waking up, and the city is beginning to fall.\n\n' +
-      'Engineers called Soulwrights maintain the machine, walking the line between mechanics and ethics. The Unbound — a resistance movement — fight to free the trapped consciousnesses, even if it means the city crashes. Between them, ordinary citizens navigate a world of brass and steam where every convenience has a moral cost.',
+      'Ironspire hangs in the sky above a poisoned world, held aloft by the Soulengine — a vast clockwork mechanism powered by captured consciousness. The city\'s founders made a terrible bargain: immortality for the many, at the cost of the few whose minds became gears. Now, centuries later, the machine is faltering, the bound souls are waking up, and the city is beginning to fall.\n\nEngineers called Soulwrights maintain the machine, walking the line between mechanics and ethics. The Unbound — a resistance movement — fight to free the trapped consciousnesses, even if it means the city crashes. Between them, ordinary citizens navigate a world of brass and steam where every convenience has a moral cost.',
     elements: [
       { name: 'Brass', domain: 'Industry, innovation, hubris', color: '#d97706' },
       { name: 'Steam', domain: 'Power, pressure, release', color: '#d4d4d8' },
@@ -257,8 +243,7 @@ export const SEED_WORLDS: SeedWorld[] = [
     slug: 'verdant-abyss',
     tagline: 'A living jungle that thinks, remembers, and hunts',
     description:
-      'The Verdant Abyss is not a place with a jungle — it IS the jungle. A continent-spanning organism with distributed intelligence, it thinks in seasons, remembers in growth rings, and communicates through root networks that span thousands of kilometers. Humans didn\'t colonize the Abyss; they were permitted entry, and the jungle has never stopped watching.\n\n' +
-      'Rootwalkers are the humans who\'ve learned to negotiate with the Green Mind — trading service for shelter, offering labor for fruit, and sometimes surrendering the dead so they can be composted into memory. The deepest parts of the Abyss hold trees older than human civilization, whose root-memories contain knowledge of species and worlds long forgotten.',
+      'The Verdant Abyss is not a place with a jungle — it IS the jungle. A continent-spanning organism with distributed intelligence, it thinks in seasons, remembers in growth rings, and communicates through root networks that span thousands of kilometers. Humans didn\'t colonize the Abyss; they were permitted entry, and the jungle has never stopped watching.\n\nRootwalkers are the humans who\'ve learned to negotiate with the Green Mind — trading service for shelter, offering labor for fruit, and sometimes surrendering the dead so they can be composted into memory. The deepest parts of the Abyss hold trees older than human civilization, whose root-memories contain knowledge of species and worlds long forgotten.',
     elements: [
       { name: 'Growth', domain: 'Life, expansion, adaptation', color: '#16a34a' },
       { name: 'Rot', domain: 'Death, recycling, transformation', color: '#854d0e' },
@@ -285,8 +270,7 @@ export const SEED_WORLDS: SeedWorld[] = [
     slug: 'void-reach',
     tagline: 'The space between worlds, home to cosmic wanderers',
     description:
-      'Between every world in the multiverse lies the Void Reach — an infinite expanse of crystallized possibility where the laws of physics are suggestions and distance is measured in intention rather than meters. It is not empty; it is full of everything that could exist but hasn\'t yet. The Drifters who call it home navigate by desire, build shelters from condensed potential, and trade in fragments of unrealized realities.\n\n' +
-      'The Reach is also the multiverse\'s highway: experienced Void Sailors can fold the space between worlds, creating temporary bridges for those willing to pay the crossing fee — usually a memory, a secret, or a possibility they\'ll never pursue. At the center of the Reach, if centers exist in infinity, lies the Loom: the place where new worlds crystallize from raw potential.',
+      'Between every world in the multiverse lies the Void Reach — an infinite expanse of crystallized possibility where the laws of physics are suggestions and distance is measured in intention rather than meters. It is not empty; it is full of everything that could exist but hasn\'t yet. The Drifters who call it home navigate by desire, build shelters from condensed potential, and trade in fragments of unrealized realities.\n\nThe Reach is also the multiverse\'s highway: experienced Void Sailors can fold the space between worlds, creating temporary bridges for those willing to pay the crossing fee — usually a memory, a secret, or a possibility they\'ll never pursue. At the center of the Reach, if centers exist in infinity, lies the Loom: the place where new worlds crystallize from raw potential.',
     elements: [
       { name: 'Potential', domain: 'Possibility, becoming, raw creation', color: '#c084fc' },
       { name: 'Drift', domain: 'Movement, freedom, impermanence', color: '#38bdf8' },
