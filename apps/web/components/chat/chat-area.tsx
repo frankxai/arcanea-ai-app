@@ -19,10 +19,10 @@ import { ArcaneanMarkGlow, ArcaneanMarkSmall } from '@/components/brand/arcanea-
 const ACCENT = '#00bcd4';
 
 const CREATIVE_STARTERS = [
-  { icon: '\u2726', text: 'Design a magic system', hint: 'Elements, costs, limits, and lore' },
-  { icon: '\u25C6', text: 'Generate character art', hint: 'Portraits, armor, expressions' },
+  { icon: '\u2726', text: 'Design a magic system', hint: 'Elements, costs, limits, factions' },
+  { icon: '\u25C6', text: 'Create a character', hint: 'Name, backstory, portrait, motivation' },
   { icon: '\u2756', text: 'Write an opening scene', hint: 'Hook, conflict, voice — page one' },
-  { icon: '\u2666', text: 'Build a React component', hint: 'Production code with TypeScript' },
+  { icon: '\u2666', text: 'Build a world', hint: 'One sentence to a full universe' },
 ];
 
 /** Alias for backward compat — some parts of the file reference this name */
@@ -363,7 +363,7 @@ export function ChatArea({
               {hasMounted && lastSessionTitle && onContinueLastSession && (
                 <button
                   onClick={onContinueLastSession}
-                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-[11px] text-white/25 hover:text-white/45 hover:bg-white/[0.03] transition-all duration-200 mx-auto animate-empty-fade-in"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs text-white/35 hover:text-white/60 border border-white/[0.06] hover:border-white/[0.12] hover:bg-white/[0.04] transition-all duration-200 mx-auto animate-empty-fade-in"
                   style={{ animationDelay: '450ms' }}
                 >
                   <PhArrowClockwise className="w-3 h-3 shrink-0" />
