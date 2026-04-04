@@ -3,6 +3,7 @@
 import { useState, useCallback } from "react";
 import { m, LazyMotion, domAnimation, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { CosmicParticles } from "@/components/magic/particles";
 import {
   QUIZ_QUESTIONS,
   ORIGIN_RESULTS,
@@ -115,13 +116,22 @@ interface ResultCardProps {
 
 function ResultCard({ origin, onRetake }: ResultCardProps) {
   const result = ORIGIN_RESULTS[origin];
+  const [copied, setCopied] = useState(false);
+
+  const handleShare = useCallback(() => {
+    const shareMessage = `${result.shareText} — arcanea.ai/quiz`;
+    navigator.clipboard.writeText(shareMessage).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  }, [result.shareText]);
 
   return (
     <m.div
       initial={{ opacity: 0, scale: 0.96 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.45, ease: "easeOut" }}
-      className="w-full"
+      className="w-full relative"
     >
       {/* Glow orb */}
       <div
@@ -137,6 +147,7 @@ function ResultCard({ origin, onRetake }: ResultCardProps) {
           borderColor: `${result.color}30`,
           background: "rgba(255,255,255,0.03)",
           backdropFilter: "blur(16px)",
+          boxShadow: `0 0 40px ${result.color}15`,
         }}
       >
         {/* Origin class badge */}
@@ -193,31 +204,56 @@ function ResultCard({ origin, onRetake }: ResultCardProps) {
           {result.quote}
         </blockquote>
 
-        {/* Share text */}
+        {/* Share row */}
         <div
-          className="rounded-xl p-4"
+          className="rounded-xl p-4 flex items-start justify-between gap-4"
           style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
         >
-          <p className="text-white/40 text-xs uppercase tracking-wider mb-2">Share your result</p>
-          <p className="text-white/80 text-sm">{result.shareText}</p>
+          <div className="flex-1 min-w-0">
+            <p className="text-white/40 text-xs uppercase tracking-wider mb-1">Share your origin</p>
+            <p className="text-white/70 text-sm truncate">{result.shareText}</p>
+          </div>
+          <button
+            onClick={handleShare}
+            aria-label="Copy share text to clipboard"
+            className="shrink-0 flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1"
+            style={{
+              color: copied ? "#7fffd4" : result.color,
+              background: copied ? "rgba(127,255,212,0.12)" : `${result.color}15`,
+              border: `1px solid ${copied ? "rgba(127,255,212,0.3)" : result.color + "30"}`,
+            }}
+          >
+            {/* Inline clipboard SVG */}
+            {copied ? (
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M3 8.5l3.5 3.5 6.5-7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            ) : (
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <rect x="5" y="1" width="9" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.4"/>
+                <path d="M3 5H2.5A1.5 1.5 0 0 0 1 6.5v7A1.5 1.5 0 0 0 2.5 15h7A1.5 1.5 0 0 0 11 13.5V13" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+              </svg>
+            )}
+            {copied ? "Copied" : "Copy"}
+          </button>
         </div>
 
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row gap-3 pt-2">
           <Link
-            href="/auth/signup"
-            className="flex-1 text-center py-3 px-6 rounded-xl font-semibold text-sm transition-all duration-200"
+            href="/worlds/create"
+            className="flex-1 text-center py-3 px-6 rounded-xl font-semibold text-sm transition-all duration-200 hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1"
             style={{
-              background: `linear-gradient(135deg, ${result.color}30, ${result.color}15)`,
-              border: `1px solid ${result.color}40`,
+              background: `linear-gradient(135deg, ${result.color}35, ${result.color}18)`,
+              border: `1px solid ${result.color}45`,
               color: result.color,
             }}
           >
-            Claim your origin
+            Create Your Character
           </Link>
           <Link
-            href={`/lore`}
-            className="flex-1 text-center py-3 px-6 rounded-xl font-semibold text-sm border border-white/10 text-white/60 hover:text-white/90 hover:border-white/20 transition-all duration-200"
+            href="/lore"
+            className="flex-1 text-center py-3 px-6 rounded-xl font-semibold text-sm border border-white/10 text-white/60 hover:text-white/90 hover:border-white/20 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/20"
           >
             Explore the lore
           </Link>
@@ -225,7 +261,7 @@ function ResultCard({ origin, onRetake }: ResultCardProps) {
 
         <button
           onClick={onRetake}
-          className="w-full text-center text-white/30 text-xs hover:text-white/50 transition-colors pt-2"
+          className="w-full text-center text-white/30 text-xs hover:text-white/50 transition-colors pt-2 focus-visible:outline-none focus-visible:underline"
         >
           Retake the quiz
         </button>
@@ -273,8 +309,22 @@ export default function QuizClient() {
 
   return (
     <LazyMotion features={domAnimation}>
-      <div className="min-h-screen flex flex-col items-center px-4 py-20">
-        <div className="w-full max-w-2xl">
+      <div className="min-h-screen bg-[#09090b] flex flex-col items-center px-4 py-20 relative overflow-hidden">
+        <CosmicParticles />
+
+        {/* Background glow orbs */}
+        <div
+          className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full pointer-events-none"
+          style={{ background: "radial-gradient(circle, rgba(120,166,255,0.04) 0%, transparent 70%)" }}
+          aria-hidden="true"
+        />
+        <div
+          className="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full pointer-events-none"
+          style={{ background: "radial-gradient(circle, rgba(127,255,212,0.04) 0%, transparent 70%)" }}
+          aria-hidden="true"
+        />
+
+        <div className="w-full max-w-2xl relative z-10">
           {/* Header */}
           <m.div
             initial={{ opacity: 0, y: -16 }}
