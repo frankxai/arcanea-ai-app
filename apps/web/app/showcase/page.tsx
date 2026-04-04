@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 
-export const dynamic = "force-dynamic";
+// Static page — all data is hardcoded constants, no async fetch needed
 
 export const metadata: Metadata = {
   title: "Showcase — Arcanea",
