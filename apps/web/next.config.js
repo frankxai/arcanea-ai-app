@@ -65,9 +65,7 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  // eslint config moved to eslint.config.js (Next.js 16+)
   async headers() {
     return [
       {

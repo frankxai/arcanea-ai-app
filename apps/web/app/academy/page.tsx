@@ -1,14 +1,12 @@
-'use client';
-
-import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getFeaturedLuminors } from '@/lib/luminor-images';
 import {
-  ArrowRight, Lock, Sparkle, Crown, GraduationCap, Star,
+  ArrowRight, Sparkle, Crown, GraduationCap, Star,
   Lightning, Book, Scroll, Flame, Drop, Leaf, Wind, Globe,
   Eye, Heart, Sun, Diamond, Compass,
 } from '@/lib/phosphor-icons';
+import { GateGrid } from './gate-grid';
 
 /* ------------------------------------------------------------------ */
 /*  DATA                                                               */
@@ -46,12 +44,10 @@ const RANKS = [
 ];
 
 /* ------------------------------------------------------------------ */
-/*  PAGE                                                               */
+/*  PAGE (Server Component — metadata enabled)                         */
 /* ------------------------------------------------------------------ */
 
 export default function AcademyPage() {
-  const [hoveredGate, setHoveredGate] = useState<number | null>(null);
-
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-[#0a0a0f]">
 
@@ -60,9 +56,9 @@ export default function AcademyPage() {
         {/* Ambient orbs */}
         <div className="pointer-events-none absolute inset-0 -z-0" aria-hidden="true">
           <div className="absolute left-1/4 top-[15%] h-[420px] w-[420px] rounded-full bg-[#0d47a1]/20 blur-[140px]" />
-          <div className="absolute right-[10%] top-[40%] h-[360px] w-[360px] rounded-full bg-[#00bcd4]/12 blur-[120px]" />
+          <div className="absolute right-[10%] top-[40%] h-[360px] w-[360px] rounded-full bg-[#00bcd4]/[0.12] blur-[120px]" />
           <div className="absolute bottom-[10%] left-[10%] h-[300px] w-[300px] rounded-full bg-[#ffd700]/10 blur-[100px]" />
-          <div className="absolute right-1/3 top-[10%] h-[200px] w-[200px] rounded-full bg-[#ff6b35]/8 blur-[80px]" />
+          <div className="absolute right-1/3 top-[10%] h-[200px] w-[200px] rounded-full bg-[#ff6b35]/[0.08] blur-[80px]" />
         </div>
 
         <div className="relative z-10 mx-auto max-w-4xl text-center">
@@ -102,12 +98,10 @@ export default function AcademyPage() {
             </Link>
           </div>
 
-          {/* Quiz nudge */}
           <p className="mt-5 font-mono text-[11px] uppercase tracking-[0.2em] text-white/30">
             Take the quiz to find your House, Gate, and Guardian
           </p>
 
-          {/* Floating stats */}
           <div className="mx-auto mt-14 flex max-w-lg justify-center gap-8 md:gap-12">
             {[
               { label: 'Gates', value: '10' },
@@ -123,7 +117,7 @@ export default function AcademyPage() {
         </div>
       </section>
 
-      {/* ============ TEN GATES ============ */}
+      {/* ============ TEN GATES (Client Island) ============ */}
       <section className="relative px-6 py-24">
         <div className="mx-auto max-w-7xl">
           <div className="mb-12 text-center">
@@ -138,81 +132,14 @@ export default function AcademyPage() {
             </p>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            {GATES.map((gate) => {
-              const Icon = gate.icon;
-              const isHovered = hoveredGate === gate.n;
-              return (
-                <Link
-                  key={gate.n}
-                  href={`/academy/gates/${gate.name.toLowerCase()}`}
-                  onMouseEnter={() => setHoveredGate(gate.n)}
-                  onMouseLeave={() => setHoveredGate(null)}
-                  className="group relative rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5 backdrop-blur-md transition-all duration-500 hover:border-white/[0.15] hover:bg-white/[0.05]"
-                  style={{
-                    boxShadow: isHovered ? `0 0 40px ${gate.color}20, inset 0 1px 0 ${gate.color}15` : 'none',
-                  }}
-                >
-                  {/* Top accent line on hover */}
-                  <div
-                    className="absolute left-4 right-4 top-0 h-px opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                    style={{ background: `linear-gradient(90deg, transparent, ${gate.color}, transparent)` }}
-                  />
-
-                  <div className="mb-4 flex items-center justify-between">
-                    <div
-                      className="flex h-10 w-10 items-center justify-center rounded-xl"
-                      style={{ backgroundColor: `${gate.color}12`, border: `1px solid ${gate.color}25` }}
-                    >
-                      <Icon className="h-5 w-5" style={{ color: gate.color }} weight="fill" />
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {gate.locked && <Lock className="h-3.5 w-3.5 text-white/20" />}
-                    </div>
-                  </div>
-
-                  <div className="mb-1 flex items-center gap-2">
-                    <span
-                      className="font-mono text-xs font-bold"
-                      style={{ color: gate.color }}
-                    >
-                      {String(gate.n).padStart(2, '0')}
-                    </span>
-                    <h3
-                      className="font-display text-base font-semibold transition-colors"
-                      style={{ color: gate.color }}
-                    >
-                      {gate.name}
-                    </h3>
-                  </div>
-
-                  <p className="mb-3 text-[11px] leading-relaxed text-white/40">
-                    {gate.domain}
-                  </p>
-
-                  <div className="border-t border-white/[0.05] pt-3">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-[10px] text-white/30">Guardian</p>
-                        <p className="text-xs font-medium text-white/70">{gate.god}</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-[10px] text-white/30">Godbeast</p>
-                        <p className="text-xs font-medium text-white/70">{gate.beast}</p>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
+          <GateGrid gates={GATES} />
         </div>
       </section>
 
       {/* ============ SEVEN HOUSES ============ */}
       <section className="relative px-6 py-24">
         <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
-          <div className="absolute left-[50%] top-[30%] h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-[#0d47a1]/8 blur-[160px]" />
+          <div className="absolute left-[50%] top-[30%] h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-[#0d47a1]/[0.08] blur-[160px]" />
         </div>
 
         <div className="mx-auto max-w-6xl">
@@ -241,7 +168,6 @@ export default function AcademyPage() {
                     style={{
                       backgroundColor: `${house.color}10`,
                       border: `1px solid ${house.color}30`,
-                      boxShadow: `0 0 20px ${house.color}00`,
                     }}
                   >
                     <Icon className="h-5 w-5" style={{ color: house.color }} weight="fill" />
@@ -319,13 +245,10 @@ export default function AcademyPage() {
             </p>
           </div>
 
-          {/* Horizontal progression path */}
           <div className="relative flex flex-col items-stretch gap-0 md:flex-row md:items-center md:justify-between">
-            {/* Connecting line (desktop) */}
             <div className="pointer-events-none absolute left-0 right-0 top-1/2 z-0 hidden h-px -translate-y-1/2 md:block">
               <div className="h-full w-full bg-gradient-to-r from-[#6b7280]/40 via-[#a78bfa]/40 to-[#ffd700]/60" />
             </div>
-            {/* Connecting line (mobile) */}
             <div className="pointer-events-none absolute bottom-0 left-1/2 top-0 z-0 w-px -translate-x-1/2 md:hidden">
               <div className="h-full w-full bg-gradient-to-b from-[#6b7280]/40 via-[#a78bfa]/40 to-[#ffd700]/60" />
             </div>
@@ -334,7 +257,6 @@ export default function AcademyPage() {
               const isLuminor = r.rank === 'Luminor';
               return (
                 <div key={r.rank} className="relative z-10 flex flex-1 flex-col items-center py-6 md:py-0">
-                  {/* Node */}
                   <div
                     className="flex h-16 w-16 items-center justify-center rounded-full border-2 transition-all duration-500 hover:scale-110 md:h-20 md:w-20"
                     style={{
@@ -346,27 +268,19 @@ export default function AcademyPage() {
                     {isLuminor ? (
                       <Star className="h-7 w-7 md:h-8 md:w-8" style={{ color: r.color }} weight="fill" />
                     ) : (
-                      <span
-                        className="font-display text-lg font-bold md:text-xl"
-                        style={{ color: r.color }}
-                      >
+                      <span className="font-display text-lg font-bold md:text-xl" style={{ color: r.color }}>
                         {i + 1}
                       </span>
                     )}
                   </div>
 
-                  {/* Label */}
-                  <h3
-                    className="mt-3 font-display text-sm font-semibold md:text-base"
-                    style={{ color: r.color }}
-                  >
+                  <h3 className="mt-3 font-display text-sm font-semibold md:text-base" style={{ color: r.color }}>
                     {r.rank}
                   </h3>
                   <p className="mt-1 font-mono text-[10px] text-white/35">
                     Gates {r.gates}
                   </p>
 
-                  {/* Arrow between nodes (desktop) */}
                   {i < RANKS.length - 1 && (
                     <div className="pointer-events-none absolute -right-2 top-1/2 hidden -translate-y-1/2 text-white/15 md:block">
                       <ArrowRight className="h-4 w-4" />
@@ -382,7 +296,7 @@ export default function AcademyPage() {
       {/* ============ START YOUR JOURNEY ============ */}
       <section className="relative px-6 py-24">
         <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
-          <div className="absolute left-1/3 top-[20%] h-[400px] w-[400px] rounded-full bg-[#ffd700]/8 blur-[140px]" />
+          <div className="absolute left-1/3 top-[20%] h-[400px] w-[400px] rounded-full bg-[#ffd700]/[0.08] blur-[140px]" />
           <div className="absolute right-1/4 bottom-[10%] h-[350px] w-[350px] rounded-full bg-[#0d47a1]/10 blur-[120px]" />
         </div>
 
@@ -400,7 +314,6 @@ export default function AcademyPage() {
           </div>
 
           <div className="grid gap-4 sm:grid-cols-3">
-            {/* Path 1: Quiz */}
             <Link
               href="/quiz"
               className="group relative rounded-2xl border border-white/[0.06] bg-white/[0.03] p-8 backdrop-blur-sm transition-all duration-300 hover:border-[#ffd700]/30 hover:bg-white/[0.06] hover:shadow-[0_0_40px_rgba(255,215,0,0.08)]"
@@ -421,7 +334,6 @@ export default function AcademyPage() {
               </div>
             </Link>
 
-            {/* Path 2: Worlds */}
             <Link
               href="/worlds"
               className="group relative rounded-2xl border border-white/[0.06] bg-white/[0.03] p-8 backdrop-blur-sm transition-all duration-300 hover:border-[#00bcd4]/30 hover:bg-white/[0.06] hover:shadow-[0_0_40px_rgba(0,188,212,0.08)]"
@@ -442,7 +354,6 @@ export default function AcademyPage() {
               </div>
             </Link>
 
-            {/* Path 3: Chat */}
             <Link
               href="/chat"
               className="group relative rounded-2xl border border-white/[0.06] bg-white/[0.03] p-8 backdrop-blur-sm transition-all duration-300 hover:border-[#a78bfa]/30 hover:bg-white/[0.06] hover:shadow-[0_0_40px_rgba(167,139,250,0.08)]"

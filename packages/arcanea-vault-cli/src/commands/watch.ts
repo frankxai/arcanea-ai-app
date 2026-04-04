@@ -51,7 +51,7 @@ export async function watchCommand(options: WatchOptions): Promise<void> {
     }
   });
 
-  watcher.on('error', (error: Error) => {
+  watcher.on('error', (error: unknown) => {
     console.error('Watcher error:', error);
   });
 

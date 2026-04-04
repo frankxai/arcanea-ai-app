@@ -155,7 +155,7 @@ const FEATURES = [
     icon: Tree,
     title: "Knowledge Graph",
     description:
-      "An interactive force-directed map of every text, collection, and connection in the Library.",
+      "See how every idea connects. An interactive map of the Library's 190K words — texts, themes, and hidden pathways between them.",
     href: "/library/graph",
     accentHex: "#00897b",
     glowColor: "rgba(0, 137, 123, 0.15)",
@@ -180,24 +180,24 @@ const PATHWAYS = [
     image: "/guardians/v3/shinkami-hero-v3.webp",
   },
   {
-    title: "Create in Studio",
+    title: "Imagine Anything",
     description:
-      "Write, generate images, compose music, and build with multi-model AI flows.",
-    href: "/studio",
+      "Generate images from text — fantasy heroes, cosmic art, portraits, concept art. Twelve style presets ready to go.",
+    href: "/imagine",
     image: "/guardians/v3/lyssandria-hero-v3.webp",
   },
   {
     title: "Build Worlds",
     description:
-      "Design places, systems, factions, and entire mythologies from scratch.",
+      "Design places, systems, factions, and entire mythologies from scratch. Fork any world to make it yours.",
     href: "/worlds",
     image: "/guardians/v3/lyria-hero-v3.webp",
   },
   {
     title: "Compose Music",
     description:
-      "Create original music with AI-guided composition and melody-driven prompts.",
-    href: "/studio",
+      "Create original tracks aligned to the Ten Gates. Ambient, orchestral, electronic — each with its own frequency.",
+    href: "/music",
     image: "/guardians/v3/leyla-hero-v3.webp",
   },
   {
@@ -215,9 +215,9 @@ const PATHWAYS = [
     image: "/guardians/v3/alera-hero-v3.webp",
   },
   {
-    title: "Write with AI",
+    title: "Co-author with a Luminor",
     description:
-      "Co-author stories, chapters, and series with an AI writing partner.",
+      "Write stories, chapters, and series with a creative partner that knows your world's lore.",
     href: "/chat",
     image: "/guardians/v3/maylinn-hero-v3.webp",
   },
@@ -226,15 +226,15 @@ const PATHWAYS = [
 const FAQ_ITEMS = [
   {
     q: "What makes Arcanea different from other AI tools?",
-    a: "Sixteen specialized AI intelligences, each trained on 190K words of original creative philosophy — not generic AI. A three-layer intelligence architecture, 17 knowledge collections, and a 10-gate mastery framework. You pick the mind that fits your project.",
+    a: "Sixteen Luminors — specialized creative minds trained on 190K words of original philosophy, not generic AI. A mythology-driven intelligence layer, 17 knowledge collections, and a 10-gate mastery framework. You pick the Luminor that fits your project.",
   },
   {
-    q: "How do the AI intelligences work?",
-    a: "Each intelligence is specialized for a creative domain — writing, research, design, music, strategy. Trained on proprietary philosophy, not generic datasets. Pick one, describe your project, and build together.",
+    q: "How do the Luminors work?",
+    a: "Each Luminor is specialized for a creative domain — writing, research, design, music, strategy. Trained on Arcanea's philosophy, not generic datasets. Pick one, describe your project, and build together.",
   },
   {
-    q: "What is the Intelligence Library?",
-    a: "190K+ words of proprietary creative intelligence across 17 collections. Laws, meditations, parables, and dialogues — the knowledge foundation that trains every AI in the system.",
+    q: "What is the Library of Arcanea?",
+    a: "190K+ words of original creative philosophy across 17 collections. Laws, meditations, parables, and dialogues — the knowledge foundation that shapes every Luminor in the system.",
   },
   {
     q: "What is the Ten Gates system?",
@@ -242,11 +242,11 @@ const FAQ_ITEMS = [
   },
   {
     q: "Is Arcanea free?",
-    a: "Free to start, no credit card required. Full access to the Library, Gallery, Academy, and Worlds. Bring your own API key for unlimited AI chat and image generation.",
+    a: "Free to start, no credit card required. Full access to the Library, Gallery, Academy, and Worlds. Bring your own API key for unlimited chat and image generation.",
   },
   {
     q: "Is my work private?",
-    a: "Yes. We do not train on your data. What you build stays yours -- keep it in Arcanea or export it.",
+    a: "Yes. We do not train on your data. What you build stays yours — keep it in Arcanea or export it.",
   },
 ];
 

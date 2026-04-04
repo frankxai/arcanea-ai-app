@@ -1,11 +1,11 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Create',
-  description: 'Chat with AI companions — each with unique expertise in writing, coding, design, and research.',
+  title: 'Create | Arcanea',
+  description: 'Chat with sixteen Luminors — each specialized in writing, world-building, design, music, and research. One conversation can build an entire universe.',
   openGraph: {
-    title: 'Create',
-    description: 'Chat with AI companions for writing, coding, design, and research.',
+    title: 'Create | Arcanea',
+    description: 'Sixteen Luminors. One conversation. An entire universe.',
     type: 'website',
     images: [{ url: '/guardians/v3/elara-hero-v3.webp', width: 1024, height: 1024, alt: 'Elara — Guardian of the Starweave Gate' }],
   },

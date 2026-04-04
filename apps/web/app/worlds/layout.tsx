@@ -27,7 +27,7 @@ const jsonLd = {
   about: {
     "@type": "Thing",
     name: "Living Worlds",
-    description: "Forkable, shareable AI-powered creative universes",
+    description: "Forkable, shareable creative universes",
   },
 };
 

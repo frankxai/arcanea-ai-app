@@ -3,10 +3,10 @@ import { ReactNode } from 'react';
 
 export const metadata: Metadata = {
   title: 'Imagine — Arcanea',
-  description: 'AI-powered image generation. Describe what you see, generate it, animate it.',
+  description: 'Generative image creation. Describe what you see — Guardian Portraits, Godbeast Summons, Cosmic Vistas, and twelve more styles.',
   openGraph: {
     title: 'Imagine — Arcanea',
-    description: 'AI-powered generative art. Describe. Create. Animate.',
+    description: 'Describe what you see. The vision appears. Twelve style presets, animation, and favorites.',
     images: [{ url: '/guardians/v3/leyla-hero-v3.webp', width: 1024, height: 1024, alt: 'Leyla — Guardian of the Flow Gate' }],
   },
   twitter: {

@@ -14,16 +14,16 @@ import { Heart, X, Trash, Download } from '@/lib/phosphor-icons';
 // ---------------------------------------------------------------------------
 
 const FEATURED_TEMPLATES = [
-  { id: 'fantasy-hero', label: 'Fantasy Hero', prompt: 'Epic fantasy hero in crystalline armor standing on a cliff edge, cosmic sky behind, volumetric lighting, mythic scale' },
+  { id: 'guardian-portrait', label: 'Guardian Portrait', prompt: 'Divine Arcanean Guardian with cosmic aura, gold accents on sacred armor, glowing elemental energy, mythic portrait' },
+  { id: 'godbeast', label: 'Godbeast Summon', prompt: 'Majestic Arcanean Godbeast emerging from elemental energy, divine creature, crystalline scales, cosmic backdrop, mythic scale' },
+  { id: 'gate-vision', label: 'Gate Vision', prompt: 'Deep space nebula scene with cosmic dust, vibrant violet and teal colors, infinite scale, volumetric god-rays, sacred geometry' },
+  { id: 'eldrian-ruins', label: 'Eldrian Ruins', prompt: 'Professional concept art of ancient magical ruins, bold shapes, clear silhouettes, painterly finish, environmental storytelling, forgotten civilization' },
   { id: 'anime', label: 'Anime', prompt: 'Beautiful anime character illustration, studio quality, expressive eyes, dynamic pose, vibrant colors' },
-  { id: 'cosmic-art', label: 'Cosmic Art', prompt: 'Deep space nebula scene with cosmic dust, vibrant violet and teal colors, infinite scale, volumetric god-rays' },
   { id: 'portrait', label: 'Portrait', prompt: 'Cinematic portrait with dramatic lighting, shallow depth of field, Hasselblad quality, natural skin textures' },
-  { id: 'concept-art', label: 'Concept Art', prompt: 'Professional concept art for fantasy game, bold shapes, clear silhouettes, painterly finish, environmental storytelling' },
   { id: '3d-render', label: '3D Render', prompt: 'Ultra-detailed 3D render, subsurface scattering, ray-traced reflections, studio lighting, octane render quality' },
-  { id: 'guardian', label: 'Guardian', prompt: 'Divine Arcanean Guardian with cosmic aura, gold accents on sacred armor, glowing elemental energy, mythic portrait' },
+  { id: 'starweave', label: 'Starweave Vista', prompt: 'Vast cosmic landscape, aurora-streaked sky over crystalline mountains, teal and gold palette, mythic fantasy environment, breathtaking scale' },
   { id: 'cyberpunk', label: 'Cyberpunk', prompt: 'Cyberpunk street at night, neon reflections on rain-soaked pavement, holographic advertisements, cinematic composition' },
   { id: 'watercolor', label: 'Watercolor', prompt: 'Delicate watercolor painting, soft washes of color, wet-on-wet technique, gentle palette, fine detail work' },
-  { id: 'product', label: 'Product Shot', prompt: 'Professional product photography, clean white background, studio lighting, sharp detail, commercial quality' },
   { id: 'chibi', label: 'Chibi', prompt: 'Adorable chibi character, cute proportions, big expressive eyes, colorful, kawaii style illustration' },
   { id: 'cinematic', label: 'Cinematic', prompt: 'Cinematic film still, anamorphic widescreen, professional color grading, dramatic lighting, decisive moment' },
 ] as const;
@@ -458,7 +458,7 @@ export default function ImaginePage() {
       {!hasResults && !isGenerating && (
         <div className="text-center py-8 px-6">
           <div className="max-w-sm mx-auto">
-            <p className="text-white/20 text-sm">Type a prompt below to start creating</p>
+            <p className="text-white/20 text-sm">Describe what you see. The vision appears.</p>
           </div>
         </div>
       )}

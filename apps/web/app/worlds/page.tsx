@@ -20,8 +20,8 @@ const TEMPLATE_WORLDS: WorldCard[] = [
     name: "Arcanea Prime",
     tagline: "The original world of Luminors, Guardians, and the Ten Gates",
     creator: "Arcanea",
-    stars: 1111,
-    forks: 42,
+    stars: 0,
+    forks: 0,
     characters: 28,
     mood: "mythological",
     elements: [
@@ -39,8 +39,8 @@ const TEMPLATE_WORLDS: WorldCard[] = [
     name: "The Shadowfen",
     tagline: "Where Malachar's corruption seeps through fractured reality",
     creator: "Arcanea",
-    stars: 777,
-    forks: 18,
+    stars: 0,
+    forks: 0,
     characters: 12,
     mood: "horror",
     elements: [
@@ -55,8 +55,8 @@ const TEMPLATE_WORLDS: WorldCard[] = [
     name: "Starweave Academy",
     tagline: "Seven houses, ten gates, and a thousand stories waiting to unfold",
     creator: "Arcanea",
-    stars: 528,
-    forks: 31,
+    stars: 0,
+    forks: 0,
     characters: 19,
     mood: "fantasy",
     elements: [
