@@ -458,9 +458,32 @@ export default function CreateWorldPage() {
                   <span className="bg-clip-text text-transparent" style={{ backgroundImage: "linear-gradient(135deg, #00bcd4, #7c3aed, #ffd700)" }}>World</span>
                 </h1>
 
-                <p className="text-lg text-white/40 max-w-lg mb-10">
+                <p className="text-lg text-white/40 max-w-lg mb-8">
                   Describe your world in one sentence. AI will generate characters, locations, lore, and a color palette.
                 </p>
+
+                {/* Showcase examples */}
+                <div className="w-full max-w-2xl mb-10">
+                  <p className="text-xs text-white/25 uppercase tracking-wider mb-3 text-center">See what&apos;s possible</p>
+                  <div className="flex justify-center gap-3 flex-wrap">
+                    {[
+                      { name: "Arcanea Prime", tagline: "10 Gates, 5 Elements, one living mythology", chars: 28, gradient: "linear-gradient(135deg, #7fffd4, #1a237e, #ffd700)", href: "/lore" },
+                      { name: "The Shadowfen", tagline: "Horror bleeds through fractured reality", chars: 12, gradient: "linear-gradient(135deg, #4c1d95, #0f0f23, #7c2d12)", href: "/lore" },
+                      { name: "Starweave Academy", tagline: "Seven houses and a thousand untold stories", chars: 19, gradient: "linear-gradient(135deg, #78a6ff, #fbbf24, #7fffd4)", href: "/lore" },
+                    ].map((w) => (
+                      <Link key={w.name} href={w.href} className="group/card w-[180px] rounded-xl overflow-hidden border border-white/[0.06] hover:border-white/[0.15] transition-all hover:-translate-y-0.5">
+                        <div className="h-[80px] relative" style={{ background: w.gradient }}>
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#09090b] to-transparent opacity-70" />
+                        </div>
+                        <div className="p-3 bg-white/[0.02]">
+                          <p className="text-sm font-display font-semibold text-white group-hover/card:text-[#00bcd4] transition-colors truncate">{w.name}</p>
+                          <p className="text-[11px] text-white/35 truncate mt-0.5">{w.tagline}</p>
+                          <span className="inline-block mt-1.5 text-[10px] px-1.5 py-0.5 rounded bg-white/[0.04] text-white/30 border border-white/[0.06]">{w.chars} characters</span>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
 
                 <div className="w-full max-w-2xl mb-6">
                   <div className="relative rounded-2xl shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_4px_24px_rgba(0,0,0,0.4)] focus-within:shadow-[0_0_0_1px_rgba(0,188,212,0.3),0_8px_40px_rgba(0,0,0,0.4),0_0_80px_rgba(0,188,212,0.08)] transition-all duration-300">

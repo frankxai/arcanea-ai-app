@@ -5,6 +5,7 @@ import Link from "next/link";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import { CosmicParticles } from "@/components/magic/particles";
 import { MagnifyingGlass, Star, GitBranch, Users, ArrowRight, Plus } from "@/lib/phosphor-icons";
+import { WorldsOnboarding } from "@/components/worlds/WorldsOnboarding";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -86,12 +87,22 @@ function WorldCardComponent({ world }: { world: WorldCard }) {
     : `/worlds/${world.slug || world.id}`;
 
   return (
-    <div className="group relative rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden hover:border-white/[0.12] transition-all duration-300 hover:shadow-lg hover:shadow-[#00bcd4]/5">
+    <div className="group relative rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden hover:border-white/[0.12] transition-all duration-300 hover:shadow-lg hover:shadow-[#00bcd4]/5 hover:-translate-y-1">
       {/* Hero image / gradient */}
       <div
-        className="aspect-[16/10] relative overflow-hidden"
-        style={{ background: world.gradient }}
+        className="relative overflow-hidden"
+        style={{ background: world.gradient, height: 160 }}
       >
+        {/* Shimmer overlay */}
+        <div
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+          style={{
+            background:
+              "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.08) 45%, rgba(255,255,255,0.13) 50%, rgba(255,255,255,0.08) 55%, transparent 60%)",
+            backgroundSize: "200% 100%",
+            animation: "shimmer 2s infinite",
+          }}
+        />
         {/* Noise overlay */}
         <div
           className="absolute inset-0 opacity-20"
@@ -105,8 +116,18 @@ function WorldCardComponent({ world }: { world: WorldCard }) {
             Template
           </div>
         )}
+        {/* Active indicator for template worlds */}
+        {world.isTemplate && (
+          <div className="absolute top-3 right-3 flex items-center gap-1.5 px-2 py-1 rounded-full bg-black/40 backdrop-blur-md">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+            </span>
+            <span className="text-[10px] text-emerald-300 font-medium">Active</span>
+          </div>
+        )}
         {/* Hover glow */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#09090b] via-transparent to-transparent opacity-60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#09090b] via-transparent to-transparent opacity-60 group-hover:opacity-50 transition-opacity" />
       </div>
 
       {/* Content */}
@@ -119,17 +140,17 @@ function WorldCardComponent({ world }: { world: WorldCard }) {
           {world.tagline}
         </p>
 
-        {/* Element dots */}
-        <div className="flex items-center gap-1.5 mb-4">
+        {/* Element orbs */}
+        <div className="flex items-center gap-2 mb-4">
           {world.elements.map((el) => (
             <span
               key={el.name}
-              className="w-2.5 h-2.5 rounded-full ring-1 ring-white/10"
-              style={{ backgroundColor: el.color }}
+              className="w-3.5 h-3.5 rounded-full ring-1 ring-white/10 relative"
+              style={{ backgroundColor: el.color, boxShadow: `0 0 8px ${el.color}60, 0 0 16px ${el.color}25` }}
               title={el.name}
             />
           ))}
-          <span className="text-[11px] text-white/25 ml-1.5">
+          <span className="text-[11px] text-white/25 ml-1">
             {world.elements.map((e) => e.name).join(" / ")}
           </span>
         </div>
@@ -152,7 +173,13 @@ function WorldCardComponent({ world }: { world: WorldCard }) {
 
         {/* Creator + actions */}
         <div className="flex items-center justify-between pt-3 border-t border-white/[0.06]">
-          <span className="text-xs text-white/40">
+          <span className="flex items-center gap-2 text-xs text-white/40">
+            <span
+              className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold text-white/80 shrink-0"
+              style={{ backgroundColor: world.elements[0]?.color ?? "#00bcd4" }}
+            >
+              {world.creator.charAt(0).toUpperCase()}
+            </span>
             by{" "}
             <span className="text-white/60 font-medium">{world.creator}</span>
           </span>
@@ -181,6 +208,30 @@ function WorldCardComponent({ world }: { world: WorldCard }) {
 // ---------------------------------------------------------------------------
 // Main Client Component
 // ---------------------------------------------------------------------------
+
+function MultiverseStats({ worlds }: { worlds: WorldCard[] }) {
+  const totalWorlds = worlds.length;
+  const totalCharacters = worlds.reduce((s, w) => s + w.characters, 0);
+  const totalForks = worlds.reduce((s, w) => s + w.forks, 0);
+  const totalStars = worlds.reduce((s, w) => s + w.stars, 0);
+  const stats = [
+    { value: totalWorlds, label: "Worlds" },
+    { value: totalCharacters, label: "Characters" },
+    { value: totalForks, label: "Forks" },
+    { value: totalStars.toLocaleString(), label: "Stars" },
+  ];
+  return (
+    <div className="flex items-center justify-center gap-3 flex-wrap py-6">
+      {stats.map(({ value, label }, i) => (
+        <span key={label} className="flex items-center gap-1.5 text-sm">
+          <span className="font-display font-bold text-white" style={{ textShadow: "0 0 12px rgba(0,188,212,0.4)" }}>{value}</span>
+          <span className="text-white/35">{label}</span>
+          {i < stats.length - 1 && <span className="text-white/10 ml-2">·</span>}
+        </span>
+      ))}
+    </div>
+  );
+}
 
 export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
   const [activeMood, setActiveMood] = useState<WorldMood>("all");
@@ -216,6 +267,8 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
 
   return (
     <LazyMotion features={domAnimation}>
+      {/* Shimmer keyframe for card hover */}
+      <style dangerouslySetInnerHTML={{ __html: `@keyframes shimmer{0%{background-position:200% 0}to{background-position:-200% 0}}` }} />
       <main className="min-h-screen bg-[#09090b] text-white">
         {/* ── Hero ──────────────────────────────────────────────── */}
         <section className="relative pt-32 pb-16 overflow-hidden">
@@ -341,6 +394,11 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
           </div>
         </section>
 
+        {/* ── Pulse of the Multiverse ──────────────────────────── */}
+        <section className="max-w-7xl mx-auto px-6">
+          <MultiverseStats worlds={filteredWorlds.length > 0 ? filteredWorlds : worlds} />
+        </section>
+
         {/* ── World Grid ────────────────────────────────────────── */}
         <section className="max-w-7xl mx-auto px-6 pb-12">
           {filteredWorlds.length > 0 ? (
@@ -441,6 +499,9 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
           </div>
         </section>
       </main>
+
+      {/* First-visit onboarding overlay */}
+      <WorldsOnboarding />
     </LazyMotion>
   );
 }
