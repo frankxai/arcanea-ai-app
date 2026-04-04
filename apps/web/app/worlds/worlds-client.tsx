@@ -467,7 +467,9 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
                 <h2
                   className="text-3xl md:text-4xl font-display font-bold mb-4 text-white"
                 >
-                  The multiverse awaits its first world.
+                  {worlds.length > 0
+                    ? "Your world is next."
+                    : "Be the first to create a world in the multiverse."}
                 </h2>
                 <p className="text-white/45 max-w-xl mx-auto mb-8 leading-relaxed">
                   Every universe begins with a single idea. Create yours with
