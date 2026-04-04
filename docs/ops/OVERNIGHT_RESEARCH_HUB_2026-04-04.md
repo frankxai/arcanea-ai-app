@@ -386,12 +386,12 @@ Slice 3 + 5
 | Slice | Status | Branch | Notes |
 |-------|--------|--------|-------|
 | 1 | DONE | main | 5/5 agent definitions created |
-| 2 | DONE (3/4) | main | arcanea-research + research-scan + research-synthesis. Missing: research-benchmark |
+| 2 | DONE | main | All 4: arcanea-research + research-scan + research-synthesis + research-benchmark |
 | 3 | DONE | main | 11 files: 6 READMEs + 5 templates |
 | 4 | DONE | main | AGENTS.md + .arcanea/CLAUDE.md + luminor-research-module.md updated |
-| 5 | QUEUED | | Seed research scans — ready to execute |
-| 6 | QUEUED | | Enhance /research — ready to execute |
-| 7 | QUEUED | | Web scaffold — ready to execute |
+| 5 | DONE | main | 4 research docs: papers, github, books, synthesis. Committed bce30a5d |
+| 6 | IN PROGRESS | main | Enhancing existing /research command |
+| 7 | IN PROGRESS | main | Web scaffold: page.tsx, layout.tsx, loader.ts, types.ts |
 
 ---
 

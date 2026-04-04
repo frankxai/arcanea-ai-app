@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import { CosmicParticles } from "@/components/magic/particles";
+import { MagnifyingGlass, Star, GitBranch, Users, ArrowRight, Plus } from "@/lib/phosphor-icons";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -64,20 +65,7 @@ function SearchInput({
 }) {
   return (
     <div className="relative max-w-lg mx-auto">
-      <svg
-        className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30 pointer-events-none"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-        />
-      </svg>
+      <MagnifyingGlass className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30 pointer-events-none" aria-hidden="true" />
       <input
         type="text"
         value={value}
@@ -90,39 +78,7 @@ function SearchInput({
   );
 }
 
-function StarIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      aria-hidden="true"
-    >
-      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-    </svg>
-  );
-}
-
-function ForkIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <circle cx="12" cy="18" r="3" />
-      <circle cx="6" cy="6" r="3" />
-      <circle cx="18" cy="6" r="3" />
-      <path d="M18 9v2c0 .6-.4 1-1 1H7c-.6 0-1-.4-1-1V9" />
-      <path d="M12 12v3" />
-    </svg>
-  );
-}
+// Icons now imported from @/lib/phosphor-icons: Star, GitBranch, Users
 
 function WorldCardComponent({ world }: { world: WorldCard }) {
   const href = world.isTemplate
@@ -181,27 +137,15 @@ function WorldCardComponent({ world }: { world: WorldCard }) {
         {/* Stats row */}
         <div className="flex items-center gap-4 text-xs text-white/35 mb-4">
           <span className="flex items-center gap-1">
-            <StarIcon className="w-3.5 h-3.5 text-[#ffd700]/70" />
+            <Star className="w-3.5 h-3.5 text-[#ffd700]/70" weight="fill" />
             {world.stars.toLocaleString()}
           </span>
           <span className="flex items-center gap-1">
-            <ForkIcon className="w-3.5 h-3.5" />
+            <GitBranch className="w-3.5 h-3.5" />
             {world.forks}
           </span>
           <span className="flex items-center gap-1">
-            <svg
-              className="w-3.5 h-3.5"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              aria-hidden="true"
-            >
-              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-              <circle cx="9" cy="7" r="4" />
-              <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-            </svg>
+            <Users className="w-3.5 h-3.5" />
             {world.characters}
           </span>
         </div>
@@ -217,7 +161,7 @@ function WorldCardComponent({ world }: { world: WorldCard }) {
               className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium border border-white/[0.08] text-white/50 hover:text-[#ffd700] hover:border-[#ffd700]/30 hover:bg-[#ffd700]/5 transition-all"
               aria-label={`Star ${world.name}`}
             >
-              <StarIcon className="w-3.5 h-3.5" />
+              <Star className="w-3.5 h-3.5" weight="fill" />
               Star
             </button>
             <Link
@@ -225,20 +169,7 @@ function WorldCardComponent({ world }: { world: WorldCard }) {
               className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium bg-[#00bcd4]/10 border border-[#00bcd4]/20 text-[#00bcd4] hover:bg-[#00bcd4]/20 transition-all"
             >
               Explore
-              <svg
-                className="w-3 h-3"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
+              <ArrowRight className="w-3 h-3" />
             </Link>
           </div>
         </div>
@@ -492,20 +423,7 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
                       className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#00bcd4] to-[#7c3aed] text-white font-bold rounded-xl shadow-lg shadow-[#00bcd4]/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00bcd4]/60"
                     >
                       Create a World
-                      <svg
-                        className="w-4 h-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M12 4v16m8-8H4"
-                        />
-                      </svg>
+                      <Plus className="w-4 h-4" />
                     </Link>
                   </m.div>
                   <m.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
@@ -514,20 +432,7 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
                       className="inline-flex items-center gap-2 px-8 py-4 border border-white/[0.1] text-white/70 font-bold rounded-xl hover:bg-white/[0.04] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00bcd4]/60"
                     >
                       Explore Arcanea Lore
-                      <svg
-                        className="w-4 h-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M17 8l4 4m0 0l-4 4m4-4H3"
-                        />
-                      </svg>
+                      <ArrowRight className="w-4 h-4" />
                     </Link>
                   </m.div>
                 </div>

@@ -18,6 +18,21 @@ You are activating the Arcanea Research Intelligence System. The user has provid
 2. Read the Luminor Engineering Kernel at `.arcanea/prompts/luminor-engineering-kernel.md`
 3. Read the Research Specialization Module at `.arcanea/prompts/luminor-research-module.md`
 
+## Research Luminor Integration
+
+When the research topic maps to Arcanea domains (avatars, presence, consciousness, creativity, Gates, world-building, agents), route through the Research Luminor system:
+
+1. Read the Research Architect definition at `.arcanea/agents/research/research-architect.md`
+2. Follow the Mission Decomposition Protocol to break the topic into sub-questions
+3. Dispatch scouts in parallel:
+   - Academic claims → Paper Scout (`.arcanea/agents/research/paper-scout.md`)
+   - Tools/repos → GitHub Scout (`.arcanea/agents/research/github-scout.md`)
+   - Books/blogs/strategy → Book Scout (`.arcanea/agents/research/book-scout.md`)
+4. Save outputs to `docs/research/` using templates from `docs/research/templates/`
+5. Run Synthesis Luminor for cross-domain connections mapped to Gates
+
+For non-Arcanea research topics, use the standard research protocol below.
+
 ## Mission Protocol
 
 ### Phase 1 — Decomposition
