@@ -211,7 +211,7 @@ export default function DocsPage() {
                     className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#7fffd4] text-black font-semibold hover:scale-[1.03] transition-all duration-200"
                   >
                     <PhRocket className="w-4 h-4" />
-                    Get Started
+                    Read the Docs
                   </Link>
                   <Link
                     href="/developers/api"

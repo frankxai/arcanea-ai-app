@@ -644,7 +644,7 @@ export default function AgentsMarketplacePage() {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[#7fffd4]/5 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
           <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
             <TextReveal>
-              <p className="text-[#7fffd4] font-mono text-sm tracking-widest mb-4 uppercase">Get Started</p>
+              <p className="text-[#7fffd4] font-mono text-sm tracking-widest mb-4 uppercase">Deploy Now</p>
               <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">
                 Your Creation <AuroraText>Awaits</AuroraText>
               </h2>

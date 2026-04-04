@@ -114,7 +114,7 @@ export default function WelcomePage() {
             href="/onboarding"
             className="group flex items-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-[#ffd700] to-[#daa520] text-[#09090b] font-body font-semibold text-lg transition-all hover:scale-105 hover:shadow-glow-lg"
           >
-            Get Started
+            Enter the Multiverse
             <PhArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
           </Link>
 

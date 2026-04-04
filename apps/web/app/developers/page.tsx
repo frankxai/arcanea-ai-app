@@ -760,7 +760,7 @@ export default function DevelopersPage() {
                       className="flex items-center gap-1 text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity"
                       style={{ color: item.color }}
                     >
-                      <span>Get started</span>
+                      <span>Explore</span>
                       <Icons.ArrowRight />
                     </div>
                   </div>
