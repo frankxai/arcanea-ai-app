@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { ElementBadge } from "@/components/worlds/ElementBadge";
@@ -57,6 +58,19 @@ interface FactionRow {
   territory: unknown;
 }
 
+// ── Typed law/system shapes ─────────────────────────────────────────
+
+interface WorldLaw {
+  name: string;
+  description: string;
+}
+
+interface WorldSystem {
+  name: string;
+  type: string;
+  rules: string;
+}
+
 interface WorldData {
   id: string;
   slug: string;
@@ -78,26 +92,74 @@ interface WorldData {
 interface WorldDetailTabsProps {
   world: WorldData;
   palette: WorldPalette;
+  slug: string;
+  initialStarred?: boolean;
 }
 
 // ── Tabs ─────────────────────────────────────────────────────────────
 
 type Tab = "overview" | "characters" | "locations" | "timeline" | "creations";
 
+const TAB_ORDER: Tab[] = ["overview", "characters", "locations", "timeline", "creations"];
+
 const TABS: { key: Tab; label: string; count?: (w: WorldData) => number }[] = [
   { key: "overview", label: "Overview" },
-  {
-    key: "characters",
-    label: "Characters",
-    count: (w) => w.characters.length,
-  },
+  { key: "characters", label: "Characters", count: (w) => w.characters.length },
   { key: "locations", label: "Locations", count: (w) => w.locations.length },
   { key: "timeline", label: "Timeline", count: (w) => w.events.length },
   { key: "creations", label: "Creations" },
 ];
 
-export function WorldDetailTabs({ world, palette }: WorldDetailTabsProps) {
+export function WorldDetailTabs({ world, palette, slug, initialStarred = false }: WorldDetailTabsProps) {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
+  const [starred, setStarred] = useState(initialStarred);
+  const [starCount, setStarCount] = useState(world.star_count ?? 0);
+  const [forkCount] = useState(world.fork_count ?? 0);
+  const [forking, setForking] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const prevTabIndex = useRef(0);
+  const router = useRouter();
+
+  const handleTabChange = useCallback((tab: Tab) => {
+    prevTabIndex.current = TAB_ORDER.indexOf(activeTab);
+    setActiveTab(tab);
+  }, [activeTab]);
+
+  const currentIndex = TAB_ORDER.indexOf(activeTab);
+  const direction = currentIndex >= prevTabIndex.current ? 1 : -1;
+
+  const handleStar = useCallback(async () => {
+    const prevStarred = starred;
+    const prevCount = starCount;
+    setStarred(!starred);
+    setStarCount(starred ? starCount - 1 : starCount + 1);
+
+    try {
+      const res = await fetch(`/api/worlds/${slug}/star`, { method: "POST" });
+      if (!res.ok) throw new Error("Star failed");
+      const data = await res.json();
+      setStarred(data.starred);
+      setStarCount(data.star_count);
+    } catch {
+      setStarred(prevStarred);
+      setStarCount(prevCount);
+    }
+  }, [starred, starCount, slug]);
+
+  const handleFork = useCallback(async () => {
+    setForking(true);
+    try {
+      const res = await fetch(`/api/worlds/${slug}/fork`, { method: "POST" });
+      if (!res.ok) throw new Error("Fork failed");
+      const data = await res.json();
+      const forkSlug = data.fork_slug ?? data.data?.fork_slug;
+      if (forkSlug) {
+        router.push(`/worlds/${forkSlug}`);
+      }
+    } catch {
+      setForking(false);
+    }
+  }, [slug, router]);
 
   return (
     <LazyMotion features={domAnimation}>
@@ -106,7 +168,7 @@ export function WorldDetailTabs({ world, palette }: WorldDetailTabsProps) {
         <div>
           {/* Tab bar */}
           <div
-            className="flex gap-1 border-b border-white/[0.06] mb-8 overflow-x-auto scrollbar-hide"
+            className="flex gap-1 border-b border-white/[0.06] mb-8 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
             role="tablist"
             aria-label="World sections"
           >
@@ -118,7 +180,7 @@ export function WorldDetailTabs({ world, palette }: WorldDetailTabsProps) {
                   key={tab.key}
                   role="tab"
                   aria-selected={isActive}
-                  onClick={() => setActiveTab(tab.key)}
+                  onClick={() => handleTabChange(tab.key)}
                   className={cn(
                     "relative px-4 py-3 text-sm font-medium whitespace-nowrap transition-all",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00bcd4]/60 rounded-t-lg",
@@ -158,13 +220,14 @@ export function WorldDetailTabs({ world, palette }: WorldDetailTabsProps) {
           </div>
 
           {/* Tab content */}
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="wait" custom={direction}>
             <m.div
               key={activeTab}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.2 }}
+              custom={direction}
+              initial={{ opacity: 0, x: 12 * direction, scale: 0.98 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              exit={{ opacity: 0, x: -12 * direction, scale: 0.98 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
             >
               {activeTab === "overview" && (
                 <OverviewTab world={world} palette={palette} />
@@ -179,86 +242,139 @@ export function WorldDetailTabs({ world, palette }: WorldDetailTabsProps) {
           </AnimatePresence>
         </div>
 
-        {/* Sidebar */}
-        <aside className="hidden lg:block space-y-6">
-          <SidebarCard title="World Stats">
-            <div className="grid grid-cols-2 gap-3">
-              <MiniStat label="Characters" value={world.characters.length} />
-              <MiniStat label="Locations" value={world.locations.length} />
-              <MiniStat label="Events" value={world.events.length} />
-              <MiniStat label="Factions" value={world.factions.length} />
-            </div>
-          </SidebarCard>
-
-          {/* Palette preview */}
-          {world.elements.length > 0 && (
-            <SidebarCard title="Palette">
-              <div className="flex gap-2">
-                {world.elements.map((el) => {
-                  const hex = ELEMENT_HEX[el] || "#00bcd4";
-                  return (
-                    <div
-                      key={el}
-                      className="flex flex-col items-center gap-1.5"
-                    >
-                      <div
-                        className="w-10 h-10 rounded-xl ring-1 ring-white/10"
-                        style={{ backgroundColor: hex }}
-                      />
-                      <span className="text-[10px] text-white/30">{el}</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </SidebarCard>
-          )}
-
-          {/* Mood */}
-          {world.mood && (
-            <SidebarCard title="Mood">
-              <p className="text-sm text-white/50 capitalize leading-relaxed">
-                {world.mood}
-              </p>
-            </SidebarCard>
-          )}
-
-          {/* Fork source */}
-          {world.forked_from_id && (
-            <SidebarCard title="Forked From">
-              <span className="text-sm text-[#00bcd4]/60">
-                {world.forked_from_id}
-              </span>
-            </SidebarCard>
-          )}
-
-          {/* Fork CTA */}
-          <Link
-            href={`/chat?mode=world&fork=${world.slug}`}
-            className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl text-sm font-semibold bg-gradient-to-r from-[#00bcd4] to-[#7c3aed] text-white shadow-lg shadow-[#00bcd4]/15 hover:shadow-[#00bcd4]/25 transition-all"
+        {/* Sidebar — collapsible on mobile, always visible on lg+ */}
+        <aside className="space-y-6">
+          {/* Mobile toggle */}
+          <button
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            className="flex items-center justify-between w-full px-4 py-3 rounded-xl text-sm font-medium bg-white/[0.03] border border-white/[0.06] text-white/50 lg:hidden"
+            aria-expanded={sidebarOpen}
           >
+            <span>World Info</span>
             <svg
-              className="w-4 h-4"
-              viewBox="0 0 24 24"
+              className={cn("w-4 h-4 transition-transform", sidebarOpen && "rotate-180")}
               fill="none"
               stroke="currentColor"
-              strokeWidth={2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              viewBox="0 0 24 24"
               aria-hidden="true"
             >
-              <circle cx="12" cy="18" r="3" />
-              <circle cx="6" cy="6" r="3" />
-              <circle cx="18" cy="6" r="3" />
-              <path d="M18 9v2c0 .6-.4 1-1 1H7c-.6 0-1-.4-1-1V9" />
-              <path d="M12 12v3" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
-            Fork This World
-          </Link>
+          </button>
+
+          <div className={cn("space-y-6", sidebarOpen ? "block" : "hidden lg:block")}>
+            <SidebarCard title="World Stats">
+              <div className="grid grid-cols-3 gap-3">
+                <MiniStat label="Stars" value={starCount} icon="star" />
+                <MiniStat label="Forks" value={forkCount} icon="fork" />
+                <MiniStat label="Characters" value={world.characters.length} />
+                <MiniStat label="Locations" value={world.locations.length} />
+                <MiniStat label="Events" value={world.events.length} />
+                <MiniStat label="Factions" value={world.factions.length} />
+              </div>
+            </SidebarCard>
+
+            {world.elements.length > 0 && (
+              <SidebarCard title="Palette">
+                <div className="flex gap-2">
+                  {world.elements.map((el) => (
+                    <div key={el} className="flex flex-col items-center gap-1.5">
+                      <div className="w-10 h-10 rounded-xl ring-1 ring-white/10" style={{ backgroundColor: ELEMENT_HEX[el] || "#00bcd4" }} />
+                      <span className="text-[10px] text-white/30">{el}</span>
+                    </div>
+                  ))}
+                </div>
+              </SidebarCard>
+            )}
+            {world.mood && (
+              <SidebarCard title="Mood">
+                <p className="text-sm text-white/50 capitalize leading-relaxed">{world.mood}</p>
+              </SidebarCard>
+            )}
+            {world.forked_from_id && (
+              <SidebarCard title="Forked From">
+                <span className="text-sm text-[#00bcd4]/60">{world.forked_from_id}</span>
+              </SidebarCard>
+            )}
+
+            {/* Star CTA */}
+            <button
+              onClick={handleStar}
+              className={cn(
+                "flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl text-sm font-semibold transition-all",
+                starred ? "bg-[#ffd700]/15 border border-[#ffd700]/30 text-[#ffd700]"
+                  : "bg-white/[0.03] border border-[#ffd700]/20 text-[#ffd700]/70 hover:bg-[#ffd700]/10 hover:text-[#ffd700]"
+              )}
+            >
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill={starred ? "currentColor" : "none"} stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+              </svg>
+              {starred ? "Starred" : "Star This World"}
+            </button>
+
+            {/* Fork CTA */}
+            <button onClick={handleFork} disabled={forking}
+              className={cn(
+                "flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl text-sm font-semibold bg-gradient-to-r from-[#00bcd4] to-[#7c3aed] text-white shadow-lg shadow-[#00bcd4]/15 hover:shadow-[#00bcd4]/25 transition-all",
+                forking && "opacity-60 cursor-wait"
+              )}
+            >
+              {forking ? (
+                <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth={2} opacity={0.3} />
+                  <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" strokeWidth={2} strokeLinecap="round" />
+                </svg>
+              ) : (
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="18" r="3" /><circle cx="6" cy="6" r="3" /><circle cx="18" cy="6" r="3" />
+                  <path d="M18 9v2c0 .6-.4 1-1 1H7c-.6 0-1-.4-1-1V9" /><path d="M12 12v3" />
+                </svg>
+              )}
+              {forking ? "Forking..." : "Fork This World"}
+            </button>
+          </div>
         </aside>
       </div>
     </LazyMotion>
   );
 }
+
+// ── Law/System parsers ──────────────────────────────────────────────
+
+function parseLaws(raw: unknown): WorldLaw[] {
+  if (!Array.isArray(raw)) return [];
+  return raw.flatMap((item) => {
+    if (typeof item === "string") return [{ name: "", description: item }];
+    if (item && typeof item === "object" && "description" in item) {
+      return [{
+        name: typeof item.name === "string" ? item.name : "",
+        description: typeof item.description === "string" ? item.description : String(item.description),
+      }];
+    }
+    return [];
+  });
+}
+
+function parseSystems(raw: unknown): WorldSystem[] {
+  if (!Array.isArray(raw)) return [];
+  return raw.flatMap((item) => {
+    if (typeof item === "string") return [{ name: item, type: "magic", rules: "" }];
+    if (item && typeof item === "object" && "name" in item) {
+      return [{
+        name: typeof item.name === "string" ? item.name : String(item.name),
+        type: typeof item.type === "string" ? item.type : "magic",
+        rules: typeof item.rules === "string" ? item.rules : "",
+      }];
+    }
+    return [];
+  });
+}
+
+const SYSTEM_TYPE_COLORS: Record<string, { bg: string; border: string; text: string }> = {
+  magic: { bg: "bg-[#7c3aed]/10", border: "border-[#7c3aed]/20", text: "text-[#7c3aed]/70" },
+  technology: { bg: "bg-[#00bcd4]/10", border: "border-[#00bcd4]/20", text: "text-[#00bcd4]/70" },
+  hybrid: { bg: "bg-[#fbbf24]/10", border: "border-[#fbbf24]/20", text: "text-[#fbbf24]/70" },
+};
 
 // ── Tab: Overview ────────────────────────────────────────────────────
 
@@ -269,10 +385,8 @@ function OverviewTab({
   world: WorldData;
   palette: WorldPalette;
 }) {
-  const laws = Array.isArray(world.laws) ? (world.laws as string[]) : [];
-  const systems = Array.isArray(world.systems)
-    ? (world.systems as string[])
-    : [];
+  const laws = parseLaws(world.laws);
+  const systems = parseSystems(world.systems);
   const firstEvent = world.events[0];
 
   return (
@@ -315,7 +429,7 @@ function OverviewTab({
         </div>
       )}
 
-      {/* Laws */}
+      {/* Laws — structured cards */}
       {laws.length > 0 && (
         <div>
           <SectionLabel>Laws of the World</SectionLabel>
@@ -333,7 +447,12 @@ function OverviewTab({
                   >
                     {i + 1}
                   </span>
-                  <p className="text-sm text-white/55 leading-relaxed">{law}</p>
+                  <div className="min-w-0">
+                    {law.name && (
+                      <p className="text-sm font-semibold text-white/70 mb-1">{law.name}</p>
+                    )}
+                    <p className="text-sm text-white/55 leading-relaxed">{law.description}</p>
+                  </div>
                 </div>
               </GlassCard>
             ))}
@@ -341,19 +460,31 @@ function OverviewTab({
         </div>
       )}
 
-      {/* Systems */}
+      {/* Systems — typed cards with badge */}
       {systems.length > 0 && (
         <div>
           <SectionLabel>Magic &amp; Systems</SectionLabel>
-          <div className="flex flex-wrap gap-2">
-            {systems.map((sys) => (
-              <span
-                key={sys}
-                className="px-3 py-1.5 rounded-lg text-xs font-medium bg-[#7c3aed]/10 border border-[#7c3aed]/20 text-[#7c3aed]/70"
-              >
-                {sys}
-              </span>
-            ))}
+          <div className="grid sm:grid-cols-2 gap-3">
+            {systems.map((sys, i) => {
+              const typeKey = sys.type.toLowerCase();
+              const colors = SYSTEM_TYPE_COLORS[typeKey] || SYSTEM_TYPE_COLORS.magic;
+              return (
+                <GlassCard key={i}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className={cn(
+                      "text-[10px] uppercase tracking-widest font-semibold px-2 py-0.5 rounded border",
+                      colors.bg, colors.border, colors.text
+                    )}>
+                      {sys.type}
+                    </span>
+                  </div>
+                  <h4 className="text-sm font-semibold text-white/70 mb-1">{sys.name}</h4>
+                  {sys.rules && (
+                    <p className="text-xs text-white/40 leading-relaxed">{sys.rules}</p>
+                  )}
+                </GlassCard>
+              );
+            })}
           </div>
         </div>
       )}
@@ -399,7 +530,7 @@ function CharactersTab({ world }: { world: WorldData }) {
   }
 
   return (
-    <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
       {world.characters.map((char) => {
         const personality = char.personality as Record<string, unknown> | null;
         const traits = Array.isArray(personality?.traits)
@@ -424,7 +555,7 @@ function CharactersTab({ world }: { world: WorldData }) {
                     alt={`Portrait of ${char.name}`}
                     fill
                     className="object-cover object-top"
-                    sizes="(max-width: 768px) 100vw, 400px"
+                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 400px"
                   />
                 ) : (
                   <span
@@ -494,18 +625,8 @@ function CharactersTab({ world }: { world: WorldData }) {
               )}
 
               {/* Talk CTA */}
-              <Link
-                href={`/chat?character=${char.id}&world=${world.slug}`}
-                className="mt-auto flex items-center justify-center gap-1.5 w-full px-3 py-2 rounded-lg text-xs font-medium bg-[#00bcd4]/10 border border-[#00bcd4]/20 text-[#00bcd4] hover:bg-[#00bcd4]/20 transition-all"
-              >
-                <svg
-                  className="w-3.5 h-3.5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  aria-hidden="true"
-                >
+              <Link href={`/chat?character=${char.id}&world=${world.slug}`} className="mt-auto flex items-center justify-center gap-1.5 w-full px-3 py-2 rounded-lg text-xs font-medium bg-[#00bcd4]/10 border border-[#00bcd4]/20 text-[#00bcd4] hover:bg-[#00bcd4]/20 transition-all">
+                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                 </svg>
                 Talk to {char.name}
@@ -516,29 +637,13 @@ function CharactersTab({ world }: { world: WorldData }) {
       })}
 
       {/* Add character card */}
-      <Link
-        href={`/chat?mode=character&world=${world.slug}`}
-        className="group flex flex-col items-center justify-center min-h-[300px] rounded-2xl border-2 border-dashed border-white/[0.08] hover:border-[#00bcd4]/30 transition-all"
-      >
+      <Link href={`/chat?mode=character&world=${world.slug}`} className="group flex flex-col items-center justify-center min-h-[300px] rounded-2xl border-2 border-dashed border-white/[0.08] hover:border-[#00bcd4]/30 transition-all">
         <div className="w-12 h-12 rounded-full bg-white/[0.04] group-hover:bg-[#00bcd4]/10 flex items-center justify-center transition-all mb-3">
-          <svg
-            className="w-6 h-6 text-white/20 group-hover:text-[#00bcd4] transition-colors"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 4v16m8-8H4"
-            />
+          <svg className="w-6 h-6 text-white/20 group-hover:text-[#00bcd4] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
           </svg>
         </div>
-        <span className="text-sm text-white/30 group-hover:text-[#00bcd4]/70 transition-colors">
-          Add Character
-        </span>
+        <span className="text-sm text-white/30 group-hover:text-[#00bcd4]/70 transition-colors">Add Character</span>
       </Link>
     </div>
   );
@@ -581,22 +686,10 @@ function LocationsTab({ world }: { world: WorldData }) {
               />
             )}
             <div className="relative z-10 flex items-center gap-2">
-              <svg
-                className="w-4 h-4 text-white/30"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                aria-hidden="true"
-              >
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                <circle cx="12" cy="10" r="3" />
+              <svg className="w-4 h-4 text-white/30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
               </svg>
-              {loc.region && (
-                <span className="text-[10px] uppercase tracking-widest text-white/25 font-semibold">
-                  {loc.region}
-                </span>
-              )}
+              {loc.region && <span className="text-[10px] uppercase tracking-widest text-white/25 font-semibold">{loc.region}</span>}
             </div>
           </div>
 
@@ -740,146 +833,146 @@ function TimelineTab({
 
 function CreationsTab({ world }: { world: WorldData }) {
   return (
-    <EmptyState
-      message="Creations will appear here as you build inside this world — images, music, text, and more."
-      cta="Start Creating"
-      href={`/chat?mode=create&world=${world.slug}`}
-    />
+    <div className="space-y-8">
+      {/* Ghost card placeholders */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {[1, 2, 3].map((i) => (
+          <div
+            key={i}
+            className="aspect-[4/3] rounded-2xl animate-pulse"
+            style={{
+              background: "linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)",
+              border: "1px solid rgba(255,255,255,0.04)",
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Action cards */}
+      <div>
+        <SectionLabel>Start Creating</SectionLabel>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <CreationActionCard
+            href={`/chat?mode=story&world=${world.slug}`}
+            label="Write a Story"
+            description="Craft a narrative set in this world"
+            icon={
+              <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z" />
+                <path d="m15 5 4 4" />
+              </svg>
+            }
+          />
+          <CreationActionCard
+            href={`/chat?mode=imagine&world=${world.slug}`}
+            label="Generate an Image"
+            description="Visualize scenes, characters, or places"
+            icon={
+              <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+                <circle cx="9" cy="9" r="2" />
+                <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
+              </svg>
+            }
+          />
+          <CreationActionCard
+            href={`/chat?mode=music&world=${world.slug}`}
+            label="Compose Music"
+            description="Create a soundtrack for your world"
+            icon={
+              <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M9 18V5l12-2v13" />
+                <circle cx="6" cy="18" r="3" />
+                <circle cx="18" cy="16" r="3" />
+              </svg>
+            }
+          />
+        </div>
+      </div>
+
+      <p className="text-center text-white/25 text-xs">
+        Creations will appear here as you build inside this world.
+      </p>
+    </div>
+  );
+}
+
+function CreationActionCard({ href, label, description, icon }: { href: string; label: string; description: string; icon: React.ReactNode }) {
+  return (
+    <Link href={href} className="group flex flex-col items-center text-center gap-3 p-6 rounded-2xl transition-all hover:scale-[1.02]" style={GLASS_STYLE}>
+      <div className="w-12 h-12 rounded-xl bg-[#00bcd4]/10 border border-[#00bcd4]/20 flex items-center justify-center text-[#00bcd4]/60 group-hover:text-[#00bcd4] group-hover:bg-[#00bcd4]/15 transition-all">
+        {icon}
+      </div>
+      <div>
+        <p className="text-sm font-semibold text-white/70 group-hover:text-white/90 transition-colors mb-1">{label}</p>
+        <p className="text-xs text-white/30 leading-relaxed">{description}</p>
+      </div>
+    </Link>
   );
 }
 
 // ── Shared small components ──────────────────────────────────────────
 
+const GLASS_STYLE = {
+  background: "linear-gradient(145deg, rgba(12,12,20,0.92) 0%, rgba(9,9,11,0.96) 100%)",
+  border: "1px solid rgba(255,255,255,0.06)",
+  boxShadow: "inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 32px rgba(0,0,0,0.3)",
+} as const;
+
 function SectionLabel({ children }: { children: React.ReactNode }) {
-  return (
-    <h3 className="text-xs font-semibold text-white/40 uppercase tracking-widest mb-4">
-      {children}
-    </h3>
-  );
+  return <h3 className="text-xs font-semibold text-white/40 uppercase tracking-widest mb-4">{children}</h3>;
 }
 
-function GlassCard({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
+function GlassCard({ children, className }: { children: React.ReactNode; className?: string }) {
+  return <div className={cn("rounded-2xl p-5", className)} style={GLASS_STYLE}>{children}</div>;
+}
+
+function SidebarCard({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div
-      className={cn("rounded-2xl p-5", className)}
-      style={{
-        background:
-          "linear-gradient(145deg, rgba(12,12,20,0.92) 0%, rgba(9,9,11,0.96) 100%)",
-        border: "1px solid rgba(255,255,255,0.06)",
-        boxShadow:
-          "inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 32px rgba(0,0,0,0.3)",
-      }}
-    >
+    <div className="rounded-2xl p-5 space-y-4" style={GLASS_STYLE}>
+      <h3 className="text-xs font-semibold text-white/40 uppercase tracking-widest">{title}</h3>
       {children}
     </div>
   );
 }
 
-function SidebarCard({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div
-      className="rounded-2xl p-5 space-y-4"
-      style={{
-        background:
-          "linear-gradient(145deg, rgba(12,12,20,0.92) 0%, rgba(9,9,11,0.96) 100%)",
-        border: "1px solid rgba(255,255,255,0.06)",
-        boxShadow:
-          "inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 32px rgba(0,0,0,0.3)",
-      }}
-    >
-      <h3 className="text-xs font-semibold text-white/40 uppercase tracking-widest">
-        {title}
-      </h3>
-      {children}
-    </div>
-  );
-}
+const STAR_PATH = "M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2";
+const FORK_PATHS = "M18 9v2c0 .6-.4 1-1 1H7c-.6 0-1-.4-1-1V9M12 12v3";
 
-function MiniStat({ label, value }: { label: string; value: number }) {
+function MiniStat({ label, value, icon }: { label: string; value: number; icon?: string }) {
   return (
-    <div
-      className="rounded-xl px-3 py-3 text-center"
-      style={{
-        background: "rgba(255,255,255,0.02)",
-        border: "1px solid rgba(255,255,255,0.05)",
-      }}
-    >
-      <div className="text-xl font-display font-bold text-white/70 tabular-nums">
+    <div className="rounded-xl px-3 py-3 text-center" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}>
+      <div className="text-xl font-display font-bold text-white/70 tabular-nums flex items-center justify-center gap-1.5">
+        {icon === "star" && (
+          <svg className="w-3.5 h-3.5 text-[#ffd700]/50" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <polygon points={STAR_PATH} />
+          </svg>
+        )}
+        {icon === "fork" && (
+          <svg className="w-3.5 h-3.5 text-white/30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <circle cx="12" cy="18" r="3" /><circle cx="6" cy="6" r="3" /><circle cx="18" cy="6" r="3" /><path d={FORK_PATHS} />
+          </svg>
+        )}
         {value}
       </div>
-      <div className="text-[10px] text-white/30 uppercase tracking-wider mt-0.5">
-        {label}
-      </div>
+      <div className="text-[10px] text-white/30 uppercase tracking-wider mt-0.5">{label}</div>
     </div>
   );
 }
 
-function EmptyState({
-  message,
-  cta,
-  href,
-}: {
-  message: string;
-  cta: string;
-  href: string;
-}) {
+function EmptyState({ message, cta, href }: { message: string; cta: string; href: string }) {
   return (
     <div className="flex flex-col items-center justify-center py-16 text-center">
-      <div
-        className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4"
-        style={{
-          background: "rgba(255,255,255,0.03)",
-          border: "1px solid rgba(255,255,255,0.06)",
-        }}
-      >
-        <svg
-          className="w-7 h-7 text-white/15"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={1.5}
-            d="M12 4v16m8-8H4"
-          />
+      <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
+        <svg className="w-7 h-7 text-white/15" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
         </svg>
       </div>
-      <p className="text-white/35 text-sm max-w-md mb-4 leading-relaxed">
-        {message}
-      </p>
-      <Link
-        href={href}
-        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium bg-[#00bcd4]/10 border border-[#00bcd4]/20 text-[#00bcd4] hover:bg-[#00bcd4]/20 transition-all"
-      >
+      <p className="text-white/35 text-sm max-w-md mb-4 leading-relaxed">{message}</p>
+      <Link href={href} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium bg-[#00bcd4]/10 border border-[#00bcd4]/20 text-[#00bcd4] hover:bg-[#00bcd4]/20 transition-all">
         {cta}
-        <svg
-          className="w-3.5 h-3.5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M17 8l4 4m0 0l-4 4m4-4H3"
-          />
+        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
         </svg>
       </Link>
     </div>

@@ -488,7 +488,7 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <m.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
                     <Link
-                      href="/chat?mode=world"
+                      href="/worlds/create"
                       className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#00bcd4] to-[#7c3aed] text-white font-bold rounded-xl shadow-lg shadow-[#00bcd4]/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00bcd4]/60"
                     >
                       Create a World

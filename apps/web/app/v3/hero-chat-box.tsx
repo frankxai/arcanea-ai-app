@@ -29,7 +29,7 @@ const STARTER_CARDS = [
     icon: PhPaintBrush,
     label: "Design a world",
     prompt: "Help me design a new world — I want to define its elements, magic system, factions, and founding mythology",
-    href: "/chat?mode=world",
+    href: "/worlds/create",
   },
   {
     icon: PhCode,
@@ -142,7 +142,8 @@ export function HeroChatBox() {
           const Icon = card.icon;
           const handleClick = () => {
             if ("href" in card && card.href) {
-              window.location.href = `${card.href}&prompt=${encodeURIComponent(card.prompt)}`;
+              const sep = card.href.includes('?') ? '&' : '?';
+              window.location.href = `${card.href}${sep}prompt=${encodeURIComponent(card.prompt)}`;
             } else {
               goToChat(card.prompt);
             }

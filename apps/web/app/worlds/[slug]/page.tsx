@@ -195,7 +195,7 @@ export default async function WorldDetailPage({ params }: Props) {
 
       {/* ── Content ──────────────────────────────────────────── */}
       <section className="max-w-7xl mx-auto px-6 mt-10 pb-24">
-        <WorldDetailTabs world={world} palette={palette} />
+        <WorldDetailTabs world={world} palette={palette} slug={slug} />
       </section>
     </main>
   );

@@ -2,6 +2,7 @@ import { ImageResponse } from 'next/og'
 import { readFileSync } from 'fs'
 import { join } from 'path'
 
+export const dynamic = 'force-dynamic'
 export const alt = 'Arcanea — Living Intelligence for Creators'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
