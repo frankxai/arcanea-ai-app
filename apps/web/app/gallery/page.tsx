@@ -668,16 +668,16 @@ function CreationCard({ item, index = 0, mounted = true }: { item: CardItem; ind
 
   return (
     <div
-      className="group relative rounded-2xl overflow-hidden card-3d border border-white/[0.06] hover:border-white/[0.15] transition-all duration-300 hover:-translate-y-1"
+      className="group relative rounded-2xl overflow-hidden border border-white/[0.06] hover:border-white/[0.12] hover:scale-[1.02] transition-all duration-300 backdrop-blur-sm"
       style={{
         opacity: mounted ? 1 : 0,
         transform: mounted ? "translateY(0)" : "translateY(20px)",
-        transition: `opacity 0.5s ease ${staggerDelay}s, transform 0.5s ease ${staggerDelay}s, border-color 0.3s ease, box-shadow 0.3s ease`,
+        transition: `opacity 0.5s ease ${staggerDelay}s, transform 0.5s ease ${staggerDelay}s, border-color 0.3s ease, box-shadow 0.3s ease, scale 0.3s ease`,
         background: "rgba(255,255,255,0.02)",
       }}
       onMouseEnter={(e) => {
         const el = e.currentTarget;
-        el.style.boxShadow = `0 8px 32px rgba(0,0,0,0.3), 0 0 0 1px rgba(0,188,212,0.06)`;
+        el.style.boxShadow = "0 0 40px rgba(0,188,212,0.1), 0 8px 32px rgba(0,0,0,0.3)";
       }}
       onMouseLeave={(e) => {
         const el = e.currentTarget;
@@ -847,20 +847,34 @@ function FooterCTA({
       <p className="text-white/[0.20] font-sans mb-1 text-sm">
         Showing {shownCount} of {totalCount} creations
       </p>
-      <p className="text-white/[0.30] font-sans mb-6 max-w-md mx-auto">
+      <p className="text-white/[0.30] font-sans mb-8 max-w-md mx-auto">
         Every vision channels the Elements, resonates through the Gates, and
         becomes part of the living mythology.
       </p>
-      <Link
-        href="/studio"
-        className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#00bcd4]/10 border border-[#00bcd4]/20 text-[#00bcd4] font-sans text-sm hover:bg-[#00bcd4]/20 transition-all group btn-glow"
-      >
-        Create in Studio
-        <PhArrowRight
-          size={16}
-          className="group-hover:translate-x-0.5 transition-transform"
-        />
-      </Link>
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <Link
+          href="/imagine?prompt=A+luminous+portal+between+worlds%2C+surrounded+by+the+Five+Elements+in+perfect+harmony"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#00bcd4]/15 to-[#0d47a1]/10 border border-[#00bcd4]/25 text-[#00bcd4] font-sans text-sm hover:from-[#00bcd4]/25 hover:to-[#0d47a1]/20 hover:border-[#00bcd4]/40 transition-all duration-200 group shadow-[0_0_24px_rgba(0,188,212,0.08)] hover:shadow-[0_0_32px_rgba(0,188,212,0.15)]"
+        >
+          <PhImage size={16} weight="duotone" />
+          Generate an Image
+          <PhArrowRight
+            size={14}
+            className="group-hover:translate-x-0.5 transition-transform"
+          />
+        </Link>
+        <Link
+          href="/chat?message=Help+me+create+something+for+the+Gallery%2C+channeled+through+the+Five+Elements"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white/50 font-sans text-sm hover:bg-white/[0.07] hover:border-white/[0.14] hover:text-white/80 transition-all duration-200 group"
+        >
+          <PhSparkle size={16} weight="duotone" />
+          Ask the Guardian
+          <PhArrowRight
+            size={14}
+            className="group-hover:translate-x-0.5 transition-transform"
+          />
+        </Link>
+      </div>
     </div>
   );
 }
