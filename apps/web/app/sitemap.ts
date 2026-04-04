@@ -97,6 +97,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/books/book1`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
     { url: `${baseUrl}/books/book2`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
 
+    // ── Core Product Pages ──────────────────────────────────
+    { url: `${baseUrl}/worlds`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.95 },
+    { url: `${baseUrl}/worlds/create`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${baseUrl}/quiz`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${baseUrl}/factions`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${baseUrl}/showcase`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.85 },
+    { url: `${baseUrl}/voice`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+
     // ── Creation Tools (additional) ────────────────────────
     { url: `${baseUrl}/imagine`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
     { url: `${baseUrl}/creations`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.8 },
@@ -216,6 +224,33 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
+  // Dynamic world pages (from Supabase)
+  let worldPages: MetadataRoute.Sitemap = [];
+  try {
+    const { createClient } = await import('@supabase/supabase-js');
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    if (url && key) {
+      const sb = createClient(url, key);
+      const { data } = await sb
+        .from('worlds')
+        .select('slug, updated_at')
+        .eq('visibility', 'public')
+        .order('star_count', { ascending: false })
+        .limit(100);
+      if (data) {
+        worldPages = data.map((w) => ({
+          url: `${baseUrl}/worlds/${w.slug}`,
+          lastModified: w.updated_at ? new Date(w.updated_at) : new Date(),
+          changeFrequency: 'weekly' as const,
+          priority: 0.8,
+        }));
+      }
+    }
+  } catch {
+    // Supabase not available at build — skip dynamic worlds
+  }
+
   return [
     ...staticPages,
     ...guardianPages,
@@ -223,5 +258,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...libraryTextPages,
     ...gatePages,
     ...blogPages,
+    ...worldPages,
   ];
 }
