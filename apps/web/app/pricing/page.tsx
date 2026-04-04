@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import { Chat, ImageSquare, PencilSimple, Globe, Code } from "@phosphor-icons/react/dist/ssr";
 
 export const metadata: Metadata = {
   title: "Pricing — Create with Credits or Go Unlimited",
@@ -327,6 +328,75 @@ export default function PricingPage() {
             No credit card required to start. Credits never expire. Cancel
             anytime.
           </p>
+        </section>
+
+        {/* What You Can Create */}
+        <section className="pb-16">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-display font-semibold mb-2">
+              What You Can Create
+            </h2>
+            <p className="text-sm text-text-muted">
+              Every credit unlocks one creation
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 max-w-5xl mx-auto">
+            {[
+              {
+                Icon: Chat,
+                title: "AI Chat",
+                credits: "Free",
+                desc: "Unlimited conversations with Lumina",
+              },
+              {
+                Icon: ImageSquare,
+                title: "Image Generation",
+                credits: "1 credit",
+                desc: "Original images from your prompt",
+              },
+              {
+                Icon: PencilSimple,
+                title: "Story Writing",
+                credits: "1 credit",
+                desc: "Chapters, lore entries, and narratives",
+              },
+              {
+                Icon: Globe,
+                title: "World Building",
+                credits: "1 credit",
+                desc: "Characters, locations, and lore systems",
+              },
+              {
+                Icon: Code,
+                title: "Code Generation",
+                credits: "1 credit",
+                desc: "Scripts, agents, and creative tools",
+              },
+            ].map(({ Icon, title, credits, desc }) => (
+              <div
+                key={title}
+                className="flex flex-col gap-2 px-4 py-4 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:border-white/[0.10] transition-colors"
+              >
+                <div className="flex items-center gap-2">
+                  <Icon
+                    size={18}
+                    weight="duotone"
+                    style={{ color: "#00bcd4", flexShrink: 0 }}
+                  />
+                  <span className="font-semibold text-sm leading-tight">
+                    {title}
+                  </span>
+                </div>
+                <span className="inline-block self-start px-2 py-0.5 rounded-full bg-[#00bcd4]/10 text-[#00bcd4] text-[10px] font-mono">
+                  {credits}
+                </span>
+                <p className="text-[11px] text-text-muted leading-snug">
+                  {desc}
+                </p>
+              </div>
+            ))}
+          </div>
         </section>
 
         {/* Pricing Cards */}
