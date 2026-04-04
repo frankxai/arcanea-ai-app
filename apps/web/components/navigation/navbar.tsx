@@ -57,7 +57,7 @@ const navLinks: NavLink[] = [
   {
     href: "/gallery",
     label: "Explore",
-    also: ["/discover", "/library", "/lore", "/living-lore", "/factions", "/luminors", "/worlds"],
+    also: ["/discover", "/library", "/lore", "/living-lore", "/factions", "/luminors", "/worlds", "/showcase", "/changelog"],
     mega: [
       {
         title: "Discover",
@@ -80,10 +80,10 @@ const navLinks: NavLink[] = [
       {
         title: "Ecosystem",
         items: [
+          { href: "/showcase", label: "Showcase", desc: "Live engine demos" },
           { href: "/ecosystem", label: "Overview", desc: "27 repos, 43 packages" },
           { href: "/developers", label: "Developers", desc: "API & SDK docs" },
-          { href: "/research", label: "Research", desc: "Intelligence architecture" },
-          { href: "https://github.com/frankxai", label: "GitHub ↗", desc: "Open source repos" },
+          { href: "/changelog", label: "Changelog", desc: "Latest updates" },
         ],
       },
     ],

@@ -1,0 +1,62 @@
+{
+  "session": "showcase-demo-2026-04-04",
+  "timestamp": "2026-04-04T03:00:00Z",
+  "tools_fired": 8,
+  "creations": [
+    {
+      "tool": "generate_character",
+      "name": "Pyrlyn",
+      "type": "character",
+      "element": "Fire",
+      "rank": "Master",
+      "house": "Pyros",
+      "gates": 5
+    },
+    {
+      "tool": "generate_location",
+      "name": "The Tidal Place",
+      "type": "underwater temple",
+      "element": "Water",
+      "alignment": "balanced"
+    },
+    {
+      "tool": "generate_creature",
+      "name": "ShadeFox",
+      "type": "Shade fox",
+      "element": "Void",
+      "size": "small",
+      "temperament": "friendly"
+    },
+    {
+      "tool": "generate_quest",
+      "name": "Safe Passage for ShadeFox",
+      "type": "escort",
+      "difficulty": "master",
+      "linked": ["Pyrlyn", "ShadeFox", "The Tidal Place"]
+    },
+    {
+      "tool": "generate_artifact",
+      "name": "Maylinn's Sacred Crown",
+      "type": "crown",
+      "element": "Spirit",
+      "power": "legendary"
+    },
+    {
+      "tool": "generate_magic",
+      "name": "Shadow Sight",
+      "element": "Void",
+      "gate": 8,
+      "mastery": "Archmage"
+    },
+    {
+      "tool": "generate_name",
+      "names": ["Nixoth", "Nixiel", "Undix", "Undiel", "Fluyn", "Nixax"],
+      "element": "Water"
+    },
+    {
+      "tool": "analyze_factions",
+      "factions": 1,
+      "prediction": "Fire Coalition dominant — introduce disruption"
+    }
+  ]
+}
