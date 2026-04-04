@@ -164,7 +164,7 @@ export default function TermsPage() {
           {/* 4. AI-Generated Content */}
           <SectionHeading>4. AI-Generated Content</SectionHeading>
           <Paragraph>
-            Arcanea provides AI-powered tools for creative assistance. Regarding content
+            Arcanea provides tools for creative assistance. Regarding content
             generated through these tools:
           </Paragraph>
           <BulletList

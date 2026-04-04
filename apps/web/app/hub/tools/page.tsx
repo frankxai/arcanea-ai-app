@@ -27,7 +27,7 @@ import { MotionProvider, m } from '@/lib/motion';
 const TOOL_CATEGORIES = [
   {
     title: 'Writing',
-    description: 'AI-powered writing with 16 Luminor companions. Stories, lore, poetry, and creative non-fiction.',
+    description: 'Writing tools with 16 Luminor companions. Stories, lore, poetry, and creative non-fiction.',
     icon: PhPencilSimple,
     color: '#7fffd4',
     tools: ['AI Chat', 'Story Generator', 'Lore Writer', 'Poetry Forge'],
@@ -143,7 +143,7 @@ export default function ToolsPage() {
                 </div>
 
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold mb-6 tracking-tight">
-                  AI-powered instruments for{' '}
+                  Creative instruments for{' '}
                   <span className="bg-gradient-to-r from-[#ffd700] to-[#7fffd4] bg-clip-text text-transparent">
                     every stage of creation
                   </span>

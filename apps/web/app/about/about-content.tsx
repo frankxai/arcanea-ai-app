@@ -853,7 +853,7 @@ export function AboutContent() {
                 </h3>
                 <p className="text-text-secondary leading-relaxed mb-4">
                   500+ AI implementations. Former enterprise architect. Creator of Arcanea
-                  because the tools for building AI-powered creative worlds didn&apos;t exist --
+                  because the tools for building intelligent creative worlds didn&apos;t exist --
                   so he built the framework, the reference world, the Library, and the
                   open-source ecosystem from scratch.
                 </p>

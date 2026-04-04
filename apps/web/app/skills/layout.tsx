@@ -1,13 +1,13 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Skills Marketplace — 75+ Skills for AI-Powered Creation",
+  title: "Skills Marketplace — 75+ Creation Skills",
   description:
     "Browse and install 75+ production-grade skills for Claude Code, Cursor, and other AI agents. Development, creative writing, orchestration, and Arcanea world-building.",
   openGraph: {
     title: "Arcanea Skills Marketplace",
     description:
-      "75+ skills for AI-powered creation. Development, creative, intelligence, platform, and Arcanea world-building skills.",
+      "75+ skills for creation. Development, creative, intelligence, platform, and Arcanea world-building skills.",
     type: "website",
   },
   twitter: {

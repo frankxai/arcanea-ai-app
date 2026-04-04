@@ -200,7 +200,7 @@ const PLATFORMS = [
     name: "GitHub Copilot",
     label: "GitHub",
     description:
-      "AI-powered coding assistance inside Copilot. Arcanea coding philosophy, architectural patterns, and companion personas enhance every completion.",
+      "Intelligent coding assistance inside Copilot. Arcanea coding philosophy, architectural patterns, and companion personas enhance every completion.",
     features: [
       "Arcanea coding philosophy in Copilot context",
       "Arcanea design tokens and stack references",

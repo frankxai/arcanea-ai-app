@@ -237,7 +237,7 @@ export default function SkillsMarketplacePage() {
               </h1>
 
               <p className="text-xl md:text-2xl text-text-secondary max-w-3xl mx-auto mb-4">
-                75+ production-grade skills for AI-powered creation
+                75+ production-grade skills for creation
               </p>
 
               <p className="text-text-muted max-w-2xl mx-auto mb-10">

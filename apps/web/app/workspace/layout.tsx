@@ -2,10 +2,10 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Workspace | Arcanea',
-  description: 'Your creative workspace — manage sessions, creations, and works in progress with AI-powered tools.',
+  description: 'Your creative workspace — manage sessions, creations, and works in progress with creative tools.',
   openGraph: {
     title: 'Workspace | Arcanea',
-    description: 'Your creative workspace — manage sessions, creations, and works in progress with AI-powered tools.',
+    description: 'Your creative workspace — manage sessions, creations, and works in progress with creative tools.',
   },
   alternates: { canonical: '/workspace' },
 };

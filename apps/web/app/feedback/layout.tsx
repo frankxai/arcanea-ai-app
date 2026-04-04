@@ -7,13 +7,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Share Your Vision | Feedback",
     description:
-      "Your feedback shapes the living mythology. Help us build the future of AI-powered creation.",
+      "Your feedback shapes the living mythology. Help us build the future of creation.",
   },
   twitter: {
     card: "summary_large_image",
     title: "Share Your Vision | Feedback",
     description:
-      "Your feedback shapes the living mythology. Help us build the future of AI-powered creation.",
+      "Your feedback shapes the living mythology. Help us build the future of creation.",
   },
   alternates: { canonical: '/feedback' },
 };

@@ -2,10 +2,10 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Image Studio',
-  description: 'Generate images with AI-powered creation tools — guided by your chosen companion and element.',
+  description: 'Generate images with creation tools — guided by your chosen companion and element.',
   openGraph: {
     title: 'Image Studio',
-    description: 'Generate images with AI-powered creation tools.',
+    description: 'Generate images with creation tools.',
   },
   alternates: { canonical: '/studio/image' },
 };

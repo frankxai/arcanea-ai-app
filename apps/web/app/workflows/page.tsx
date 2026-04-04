@@ -72,7 +72,7 @@ const WORKFLOWS = [
     useCases: [
       "Know exactly what changed overnight before your first commit",
       "Catch failing tests before they reach CI",
-      "AI-powered analysis: what matters most today",
+      "Intelligent analysis: what matters most today",
     ],
   },
   {
@@ -278,7 +278,7 @@ export default function WorkflowsPage() {
               </div>
 
               <h1 className="text-fluid-3xl font-display font-bold mb-5">
-                AI-Powered
+                Intelligent
                 <span className="block text-gradient-brand">
                   Workflow Automation
                 </span>

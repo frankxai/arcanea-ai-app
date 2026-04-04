@@ -473,7 +473,7 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
                 </h2>
                 <p className="text-white/45 max-w-xl mx-auto mb-8 leading-relaxed">
                   Every universe begins with a single idea. Create yours with
-                  AI-powered world-building — define elements, characters, gates,
+                  intelligent world-building — define elements, characters, gates,
                   and lore. Then share it for others to explore and fork.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">

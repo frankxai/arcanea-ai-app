@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "ArcaneaClaw — The Creator Media Engine",
   description:
-    "AI-powered media pipeline that processes, classifies, scores, and publishes your creative media. Deploy on Railway, Docker, or Claude Code.",
+    "Intelligent media pipeline that processes, classifies, scores, and publishes your creative media. Deploy on Railway, Docker, or Claude Code.",
   openGraph: {
     title: "ArcaneaClaw — The Creator Media Engine",
     description:
@@ -31,7 +31,7 @@ const jsonLd = {
   applicationCategory: "DeveloperApplication",
   operatingSystem: "Linux, Docker, Railway",
   description:
-    "AI-powered creator media engine that processes, classifies, scores, and publishes creative media automatically.",
+    "Intelligent creator media engine that processes, classifies, scores, and publishes creative media automatically.",
   url: "https://arcanea.ai/claw",
   offers: {
     "@type": "Offer",
