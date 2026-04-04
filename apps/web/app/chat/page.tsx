@@ -56,6 +56,7 @@ import { useConversation, getMessageText } from '@/hooks/use-conversation';
 import type { LuminorConfig } from '@/lib/luminors/config';
 import { useChatSessions } from '@/hooks/use-chat-sessions';
 import { useWorldCharacterInit, type WorldCharacterContext } from '@/hooks/use-world-character-init';
+import { useChatWorldMode } from '@/hooks/use-chat-world-mode';
 import { useAutoSave } from '@/lib/arc/auto-save';
 import { analytics } from '@/lib/analytics/events';
 import type { ChatMessage as StoredMessage } from '@/lib/chat/local-store';
@@ -105,6 +106,9 @@ export default function ChatPage() {
 
   // World character initialization (from ?character=&world= query params)
   const worldCharInit = useWorldCharacterInit();
+
+  // World builder mode (from ?mode=world)
+  const worldMode = useChatWorldMode();
 
   const resolvedAgent = activeAgent?.type === 'luminor' ? (() => {
     const l = getLuminor(activeAgent.id);
@@ -157,6 +161,42 @@ export default function ChatPage() {
       quickActions: [],
     } as LuminorConfig);
   }, [worldCharInit.worldCharacter, conversation]);
+
+  // -------------------------------------------------------------------------
+  // World builder mode → activate as synthetic Luminor
+  // -------------------------------------------------------------------------
+
+  const worldModeApplied = useRef(false);
+  useEffect(() => {
+    if (worldModeApplied.current || !worldMode.isWorldMode) return;
+    worldModeApplied.current = true;
+    conversation.handleSelectLuminor({
+      id: 'world-builder-mode',
+      name: 'World Builder',
+      loreName: 'World Builder',
+      title: 'AI World-Building Assistant',
+      tagline: 'Describe your world and bring it to life',
+      team: 'creative' as never,
+      academy: 'Synthesis' as never,
+      color: '#7c3aed',
+      gradient: 'from-[#7c3aed] to-[#00bcd4]',
+      avatar: '/images/luminors/default.webp',
+      wisdom: { philosophy: '', greeting: '', farewell: '' } as never,
+      guardian: [],
+      specialty: 'World Building',
+      description: 'Guides creators through structured world design',
+      personality: [],
+      systemPrompt: worldMode.worldPrompt,
+      quickActions: [],
+    } as LuminorConfig);
+  }, [worldMode.isWorldMode, worldMode.worldPrompt, conversation]);
+
+  // Track user message count for world mode "Create" threshold
+  useEffect(() => {
+    if (!worldMode.isWorldMode) return;
+    const userMsgCount = conversation.messages.filter((m) => m.role === 'user').length;
+    worldMode.updateCount(userMsgCount);
+  }, [worldMode, conversation.messages]);
 
   // In-conversation search state
   const [showSearch, setShowSearch] = useState(false);
@@ -448,6 +488,12 @@ export default function ChatPage() {
                 <span className="max-w-[180px] truncate">{chatSessions.activeProject.title}</span>
               </div>
             )}
+            {worldMode.isWorldMode && (
+              <div className="hidden sm:flex items-center gap-1.5 rounded-full border border-[#7c3aed]/30 bg-[#7c3aed]/10 px-2.5 py-1 text-[11px] font-medium text-[#c4b5fd]">
+                <span className="w-2 h-2 rounded-full bg-[#7c3aed] animate-pulse" />
+                World Builder Mode
+              </div>
+            )}
           </div>
 
           <div className="flex items-center gap-1.5 sm:gap-2">
@@ -564,6 +610,58 @@ export default function ChatPage() {
           <div className="mx-4 mt-2 shrink-0">
             <div className="bg-red-500/5 border border-red-500/10 rounded-xl px-4 py-3">
               <p className="text-sm text-red-300">Failed to load character: {worldCharInit.error}</p>
+            </div>
+          </div>
+        )}
+
+        {/* -------- World Builder: "Create This World" CTA -------- */}
+        {worldMode.isWorldMode && worldMode.canCreateWorld && !worldMode.createdSlug && (
+          <div className="mx-4 mt-2 shrink-0">
+            <div className="bg-[#7c3aed]/5 border border-[#7c3aed]/15 rounded-xl px-4 py-3 flex items-center gap-3">
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-[#c4b5fd] font-medium">Your world is taking shape.</p>
+                <p className="text-[11px] text-white/30">Click to generate a full world from this conversation.</p>
+              </div>
+              <button
+                disabled={worldMode.isCreating}
+                onClick={() => {
+                  const msgs = conversation.messages.map((m) => ({
+                    role: m.role,
+                    content: getMessageText(m),
+                  }));
+                  worldMode.createWorld(msgs);
+                }}
+                className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-medium bg-[#7c3aed]/15 border border-[#7c3aed]/30 text-[#c4b5fd] hover:bg-[#7c3aed]/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+              >
+                {worldMode.isCreating ? (
+                  <>
+                    <span className="w-3 h-3 border-2 border-[#c4b5fd]/30 border-t-[#c4b5fd] rounded-full animate-spin" />
+                    Creating...
+                  </>
+                ) : (
+                  'Create This World'
+                )}
+              </button>
+            </div>
+          </div>
+        )}
+        {worldMode.createError && (
+          <div className="mx-4 mt-2 shrink-0">
+            <div className="bg-red-500/5 border border-red-500/10 rounded-xl px-4 py-3">
+              <p className="text-sm text-red-300">{worldMode.createError}</p>
+            </div>
+          </div>
+        )}
+        {worldMode.createdSlug && (
+          <div className="mx-4 mt-2 shrink-0">
+            <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-xl px-4 py-3 flex items-center gap-3">
+              <p className="text-sm text-emerald-300 flex-1">World created!</p>
+              <Link
+                href={`/worlds/${worldMode.createdSlug}`}
+                className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 hover:bg-emerald-500/20 transition-all"
+              >
+                View it &rarr;
+              </Link>
             </div>
           </div>
         )}
