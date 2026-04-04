@@ -313,26 +313,37 @@ export default function CoursesPage() {
             </div>
           </m.section>
 
-          {/* Coming Soon */}
+          {/* Courses launching soon — quiz CTA */}
           <section className="py-12 border-t border-white/5">
-            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 text-center">
-              <PhSparkle className="w-8 h-8 text-neutral-500 mx-auto mb-4" />
-              <h3 className="font-display text-lg font-semibold mb-2">More courses in development</h3>
-              <p className="text-sm text-neutral-400 max-w-lg mx-auto">
-                Courses for the Heart, Sight, Starweave, and Unity Gates are being crafted.
-                Each will open when the time is right.
-              </p>
+            <div className="relative bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] rounded-2xl p-8 text-center overflow-hidden">
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#ffd700]/5 via-transparent to-[#00bcd4]/5" />
+              <div className="relative">
+                <PhSparkle className="w-7 h-7 text-[#ffd700]/50 mx-auto mb-4" />
+                <h3 className="font-display text-lg font-semibold mb-2">Courses launching soon</h3>
+                <p className="text-sm text-neutral-400 max-w-lg mx-auto mb-6">
+                  Courses for the Heart, Sight, Starweave, and Unity Gates are being crafted.
+                  While you wait, take the quiz to discover which Gate calls to you first.
+                </p>
+                <Link
+                  href="/quiz"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#ffd700] to-[#f59e0b] text-[#0a0a0f] font-semibold text-sm hover:scale-[1.03] transition-all duration-200 shadow-[0_0_30px_rgba(255,215,0,0.2)]"
+                >
+                  <PhSparkle className="w-4 h-4" />
+                  Take the quiz while you wait
+                  <PhArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
             </div>
           </section>
 
           {/* CTA */}
           <section className="py-12 pb-20 text-center">
             <Link
-              href="/academy"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-gradient-to-r from-[#ffd700] to-[#a855f7] text-black font-bold text-lg hover:scale-[1.03] transition-all duration-200"
+              href="/quiz"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-gradient-to-r from-[#ffd700] to-[#f59e0b] text-black font-bold text-lg hover:scale-[1.03] transition-all duration-200 shadow-[0_0_40px_rgba(255,215,0,0.2)]"
             >
               <PhRocket className="w-5 h-5" />
-              Begin Your Journey
+              Discover Your Origin
               <PhArrowRight className="w-5 h-5" />
             </Link>
 

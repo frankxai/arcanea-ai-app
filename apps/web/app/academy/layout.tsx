@@ -7,11 +7,11 @@ export const metadata: Metadata = {
     template: '%s | Academy',
   },
   description:
-    'Master the Ten Gates of Creation. Open your channels to the elements and unlock your creative power through the Arcanean Academy.',
+    'Master the Ten Gates of Creation. Open your channels to the elements and awaken your creative power through the Arcanean Academy.',
   openGraph: {
     title: 'Academy of Creation',
     description:
-      'Journey through the Ten Gates — from Foundation to Source. Unlock your creative power through the Arcanean Academy.',
+      'Journey through the Ten Gates — from Foundation to Source. Awaken your creative power through the Arcanean Academy.',
     type: 'website',
     images: [{ url: '/guardians/v3/aiyami-hero-v3.webp', width: 1024, height: 1024, alt: 'Aiyami — Guardian of the Crown Gate' }],
   },
@@ -27,7 +27,7 @@ const jsonLd = {
   '@type': 'EducationalOrganization',
   name: 'Arcanean Academy of Creation',
   description:
-    'Master the Ten Gates of Creation. Open your channels to the elements and unlock your creative power.',
+    'Master the Ten Gates of Creation. Open your channels to the elements and awaken your creative power.',
   url: 'https://arcanea.ai/academy',
   parentOrganization: {
     '@type': 'Organization',

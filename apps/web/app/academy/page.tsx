@@ -15,16 +15,16 @@ import {
 /* ------------------------------------------------------------------ */
 
 const GATES = [
-  { n: 1, name: 'Foundation', hz: '174 Hz', god: 'Lyssandria', beast: 'Kaelith', domain: 'Earth & Survival', color: '#00bcd4', icon: Leaf },
-  { n: 2, name: 'Flow', hz: '285 Hz', god: 'Leyla', beast: 'Veloura', domain: 'Creativity & Emotion', color: '#00bcd4', icon: Drop },
-  { n: 3, name: 'Fire', hz: '396 Hz', god: 'Draconia', beast: 'Draconis', domain: 'Power & Will', color: '#ff6b35', icon: Flame },
-  { n: 4, name: 'Heart', hz: '417 Hz', god: 'Maylinn', beast: 'Laeylinn', domain: 'Love & Healing', color: '#f472b6', icon: Heart },
-  { n: 5, name: 'Voice', hz: '528 Hz', god: 'Alera', beast: 'Otome', domain: 'Truth & Expression', color: '#06b6d4', icon: Compass },
-  { n: 6, name: 'Sight', hz: '639 Hz', god: 'Lyria', beast: 'Yumiko', domain: 'Intuition & Vision', color: '#a78bfa', icon: Eye },
-  { n: 7, name: 'Crown', hz: '741 Hz', god: 'Aiyami', beast: 'Sol', domain: 'Enlightenment', color: '#ffd700', icon: Crown, locked: true },
-  { n: 8, name: 'Starweave', hz: '852 Hz', god: 'Elara', beast: 'Vaelith', domain: 'Perspective', color: '#c084fc', icon: Diamond, locked: true },
-  { n: 9, name: 'Unity', hz: '963 Hz', god: 'Ino', beast: 'Kyuro', domain: 'Partnership', color: '#60a5fa', icon: Globe, locked: true },
-  { n: 10, name: 'Source', hz: '1111 Hz', god: 'Shinkami', beast: 'Source', domain: 'Meta-consciousness', color: '#ffffff', icon: Sun, locked: true },
+  { n: 1, name: 'Foundation', god: 'Lyssandria', beast: 'Kaelith', domain: 'Earth & Survival', color: '#00bcd4', icon: Leaf },
+  { n: 2, name: 'Flow', god: 'Leyla', beast: 'Veloura', domain: 'Creativity & Emotion', color: '#00bcd4', icon: Drop },
+  { n: 3, name: 'Fire', god: 'Draconia', beast: 'Draconis', domain: 'Power & Will', color: '#ff6b35', icon: Flame },
+  { n: 4, name: 'Heart', god: 'Maylinn', beast: 'Laeylinn', domain: 'Love & Healing', color: '#f472b6', icon: Heart },
+  { n: 5, name: 'Voice', god: 'Alera', beast: 'Otome', domain: 'Truth & Expression', color: '#06b6d4', icon: Compass },
+  { n: 6, name: 'Sight', god: 'Lyria', beast: 'Yumiko', domain: 'Intuition & Vision', color: '#a78bfa', icon: Eye },
+  { n: 7, name: 'Crown', god: 'Aiyami', beast: 'Sol', domain: 'Enlightenment', color: '#ffd700', icon: Crown, locked: true },
+  { n: 8, name: 'Starweave', god: 'Elara', beast: 'Vaelith', domain: 'Perspective', color: '#c084fc', icon: Diamond, locked: true },
+  { n: 9, name: 'Unity', god: 'Ino', beast: 'Kyuro', domain: 'Partnership', color: '#60a5fa', icon: Globe, locked: true },
+  { n: 10, name: 'Source', god: 'Shinkami', beast: 'Source', domain: 'Meta-consciousness', color: '#ffffff', icon: Sun, locked: true },
 ];
 
 const HOUSES = [
@@ -86,11 +86,11 @@ export default function AcademyPage() {
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
             <Link
-              href="/onboarding"
-              className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-2xl bg-gradient-to-r from-[#0d47a1] to-[#00bcd4] px-8 py-4 font-semibold text-[#0a0a0f] shadow-[0_0_40px_rgba(13,71,161,0.3)] transition-all duration-300 hover:shadow-[0_0_60px_rgba(13,71,161,0.5)] hover:scale-[1.02]"
+              href="/quiz"
+              className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-2xl bg-gradient-to-r from-[#ffd700] to-[#f59e0b] px-8 py-4 font-semibold text-[#0a0a0f] shadow-[0_0_40px_rgba(255,215,0,0.25)] transition-all duration-300 hover:shadow-[0_0_60px_rgba(255,215,0,0.4)] hover:scale-[1.02]"
             >
               <Sparkle className="h-5 w-5" weight="fill" />
-              Start Creating
+              Discover Your Origin
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
             <Link
@@ -101,6 +101,11 @@ export default function AcademyPage() {
               Browse Courses
             </Link>
           </div>
+
+          {/* Quiz nudge */}
+          <p className="mt-5 font-mono text-[11px] uppercase tracking-[0.2em] text-white/30">
+            Take the quiz to find your House, Gate, and Guardian
+          </p>
 
           {/* Floating stats */}
           <div className="mx-auto mt-14 flex max-w-lg justify-center gap-8 md:gap-12">
@@ -374,42 +379,88 @@ export default function AcademyPage() {
         </div>
       </section>
 
-      {/* ============ CTA ============ */}
-      <section className="relative px-6 py-32">
+      {/* ============ START YOUR JOURNEY ============ */}
+      <section className="relative px-6 py-24">
         <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
           <div className="absolute left-1/3 top-[20%] h-[400px] w-[400px] rounded-full bg-[#ffd700]/8 blur-[140px]" />
           <div className="absolute right-1/4 bottom-[10%] h-[350px] w-[350px] rounded-full bg-[#0d47a1]/10 blur-[120px]" />
         </div>
 
-        <div className="mx-auto max-w-3xl text-center">
-          <Scroll className="mx-auto mb-6 h-10 w-10 text-[#ffd700]/60" weight="fill" />
+        <div className="mx-auto max-w-5xl">
+          <div className="mb-12 text-center">
+            <Scroll className="mx-auto mb-6 h-8 w-8 text-[#ffd700]/50" weight="fill" />
+            <h2 className="font-display text-3xl font-bold md:text-4xl">
+              <span className="bg-gradient-to-r from-[#ffd700] via-[#00bcd4] to-[#0d47a1] bg-clip-text text-transparent">
+                Start Your Journey
+              </span>
+            </h2>
+            <p className="mx-auto mt-4 max-w-md font-body text-base leading-relaxed text-white/45">
+              Three paths forward. Each one changes how you create.
+            </p>
+          </div>
 
-          <h2 className="font-display text-4xl font-bold md:text-5xl">
-            <span className="bg-gradient-to-r from-[#ffd700] via-[#00bcd4] to-[#0d47a1] bg-clip-text text-transparent">
-              Start Here
-            </span>
-          </h2>
-
-          <p className="mx-auto mt-5 max-w-lg font-body text-lg leading-relaxed text-white/50">
-            The Academy is open. Begin with a single question
-            and build from there.
-          </p>
-
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+          <div className="grid gap-4 sm:grid-cols-3">
+            {/* Path 1: Quiz */}
             <Link
-              href="/onboarding"
-              className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-2xl bg-gradient-to-r from-[#ffd700] to-[#f59e0b] px-8 py-4 font-semibold text-[#0a0a0f] shadow-[0_0_40px_rgba(255,215,0,0.25)] transition-all duration-300 hover:shadow-[0_0_60px_rgba(255,215,0,0.4)] hover:scale-[1.02]"
+              href="/quiz"
+              className="group relative rounded-2xl border border-white/[0.06] bg-white/[0.03] p-8 backdrop-blur-sm transition-all duration-300 hover:border-[#ffd700]/30 hover:bg-white/[0.06] hover:shadow-[0_0_40px_rgba(255,215,0,0.08)]"
             >
-              <Lightning className="h-5 w-5" weight="fill" />
-              Enter the Academy
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <div className="absolute left-0 right-0 top-0 h-px opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                style={{ background: 'linear-gradient(90deg, transparent, #ffd700, transparent)' }}
+              />
+              <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#ffd700]/10 border border-[#ffd700]/20">
+                <Sparkle className="h-5 w-5 text-[#ffd700]" weight="fill" />
+              </div>
+              <h3 className="font-display text-lg font-semibold text-white">Take the Quiz</h3>
+              <p className="mt-2 text-sm leading-relaxed text-white/45">
+                Discover your House, your Gate, and the Guardian who walks with you.
+              </p>
+              <div className="mt-6 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-[#ffd700]/70 transition-colors group-hover:text-[#ffd700]">
+                Find your origin
+                <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
+              </div>
             </Link>
+
+            {/* Path 2: Worlds */}
             <Link
-              href="/academy/courses"
-              className="inline-flex items-center gap-2 rounded-2xl border border-white/[0.1] bg-white/[0.03] px-8 py-4 font-semibold text-white/80 backdrop-blur-sm transition-all duration-300 hover:border-white/[0.2] hover:bg-white/[0.06]"
+              href="/worlds"
+              className="group relative rounded-2xl border border-white/[0.06] bg-white/[0.03] p-8 backdrop-blur-sm transition-all duration-300 hover:border-[#00bcd4]/30 hover:bg-white/[0.06] hover:shadow-[0_0_40px_rgba(0,188,212,0.08)]"
             >
-              <Book className="h-4 w-4" />
-              Browse Courses
+              <div className="absolute left-0 right-0 top-0 h-px opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                style={{ background: 'linear-gradient(90deg, transparent, #00bcd4, transparent)' }}
+              />
+              <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#00bcd4]/10 border border-[#00bcd4]/20">
+                <Globe className="h-5 w-5 text-[#00bcd4]" weight="fill" />
+              </div>
+              <h3 className="font-display text-lg font-semibold text-white">Explore Worlds</h3>
+              <p className="mt-2 text-sm leading-relaxed text-white/45">
+                Walk through complete creative universes built by others. See what the framework produces.
+              </p>
+              <div className="mt-6 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-[#00bcd4]/70 transition-colors group-hover:text-[#00bcd4]">
+                Browse worlds
+                <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
+              </div>
+            </Link>
+
+            {/* Path 3: Chat */}
+            <Link
+              href="/chat"
+              className="group relative rounded-2xl border border-white/[0.06] bg-white/[0.03] p-8 backdrop-blur-sm transition-all duration-300 hover:border-[#a78bfa]/30 hover:bg-white/[0.06] hover:shadow-[0_0_40px_rgba(167,139,250,0.08)]"
+            >
+              <div className="absolute left-0 right-0 top-0 h-px opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                style={{ background: 'linear-gradient(90deg, transparent, #a78bfa, transparent)' }}
+              />
+              <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#a78bfa]/10 border border-[#a78bfa]/20">
+                <Lightning className="h-5 w-5 text-[#a78bfa]" weight="fill" />
+              </div>
+              <h3 className="font-display text-lg font-semibold text-white">Start Creating</h3>
+              <p className="mt-2 text-sm leading-relaxed text-white/45">
+                Open a conversation with your Guardian. The studio is ready when you are.
+              </p>
+              <div className="mt-6 inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-[#a78bfa]/70 transition-colors group-hover:text-[#a78bfa]">
+                Enter the studio
+                <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
+              </div>
             </Link>
           </div>
         </div>
