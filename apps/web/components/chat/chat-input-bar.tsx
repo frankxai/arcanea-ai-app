@@ -947,7 +947,7 @@ export function ChatInputBar({
         )}
 
         {/* Toggles row */}
-        <div className="flex items-center justify-between px-3 py-2 border-t border-white/[0.05]" style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}>
+        <div className="flex items-center justify-between px-3 py-2 sm:py-2 border-t border-white/[0.05] gap-2" style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}>
           <div className="flex items-center gap-2 overflow-x-auto scrollbar-none">
             {/* Attach file */}
             <input

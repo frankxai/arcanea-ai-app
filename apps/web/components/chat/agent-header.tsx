@@ -53,7 +53,7 @@ export function AgentHeader({
               </span>
               <PhCaretDown className="w-3 h-3 text-white/30 group-hover:text-white/50 transition-colors" />
             </div>
-            <span className="text-[10px] text-white/30 leading-none">
+            <span className="text-[10px] text-white/30 leading-none hidden sm:block">
               {agentDisplay.specialty}
             </span>
           </div>
@@ -100,8 +100,8 @@ export function AgentHeader({
         </div>
       </div>
 
-      {/* Focus mode pills */}
-      <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none">
+      {/* Focus mode pills — horizontal scroll on all sizes */}
+      <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none -mx-1 px-1">
         {FOCUS_MODES.map((mode) => (
           <button
             key={mode.id}
