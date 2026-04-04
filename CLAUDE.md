@@ -1,8 +1,8 @@
-# Claude Code Configuration - Claude Flow V3
+# Arcanea — Claude Code Configuration
 
-## Arcanea Source Of Truth
+## Source Of Truth
 
-Before coding, read:
+Before coding, read in order:
 
 1. `AGENTS.md`
 2. newest `planning-with-files/CURRENT_STATE_*`
@@ -20,52 +20,50 @@ Before coding, read:
 - ALWAYS prefer editing an existing file to creating a new one
 - NEVER proactively create documentation files (*.md) or README files unless explicitly requested
 - NEVER save working files, text/mds, or tests to the root folder
-- Never continuously check status after spawning a swarm — wait for results
 - ALWAYS read a file before editing it
 - NEVER commit secrets, credentials, or .env files
 
 ## File Organization
 
 - NEVER save to root folder — use the directories below
-- Use `/src` for source code files
-- Use `/tests` for test files
-- Use `/docs` for documentation and markdown files
-- Use `/config` for configuration files
-- Use `/scripts` for utility scripts
-- Use `/examples` for example code
+- Use `apps/web/` for the Next.js web app
+- Use `packages/` for workspace packages
+- Use `docs/` for documentation and markdown files
+- Use `.arcanea/` for shared intelligence (lore, config, agents, prompts)
+- Use `book/` for Library content (17 collections)
 
 ## Project Architecture
 
-- Follow Domain-Driven Design with bounded contexts
+- **Framework**: Next.js 16 (App Router) + React 19 + TypeScript (strict)
+- **Styling**: Tailwind CSS with Arcanean Design System
+- **Database**: Supabase (PostgreSQL + Auth + Realtime)
+- **AI**: Vercel AI SDK, Google Gemini, Anthropic Claude
+- **Deployment**: Vercel (arcanea-ai-appx project)
+- **Package Manager**: pnpm (NEVER npm)
 - Keep files under 500 lines
 - Use typed interfaces for all public APIs
-- Prefer TDD London School (mock-first) for new code
-- Use event sourcing for state changes
-- Ensure input validation at system boundaries
-
-### Project Config
-
-- **Topology**: hierarchical-mesh
-- **Max Agents**: 15
-- **Memory**: hybrid
-- **HNSW**: Enabled
-- **Neural**: Enabled
+- Input validation at system boundaries
 
 ## Build & Test
 
 ```bash
-# Build
-npm run build
-
-# Test
-npm test
-
-# Lint
-npm run lint
+pnpm run build
+pnpm --dir apps/web run build
+pnpm test
+pnpm run lint
 ```
 
-- ALWAYS run tests after making code changes
+- ALWAYS run build after making code changes
 - ALWAYS verify build succeeds before committing
+- Node 20.x pinned via `.nvmrc`
+
+## Git Discipline
+
+- Commit messages: `type(scope): description` (e.g., `feat(worlds): add fork API`)
+- Stage specific files only — NEVER `git add .`
+- Push to `origin` (arcanea-ai-app) for production deploys
+- NEVER push to `records` (music studio repo)
+- If git lock exists: `rm -f .git/index.lock`
 
 ## Security Rules
 
@@ -73,129 +71,54 @@ npm run lint
 - NEVER commit .env files or any file containing secrets
 - Always validate user input at system boundaries
 - Always sanitize file paths to prevent directory traversal
-- Run `npx @claude-flow/cli@latest security scan` after security-related changes
 
 ## Concurrency: 1 MESSAGE = ALL RELATED OPERATIONS
 
-- All operations MUST be concurrent/parallel in a single message
-- Use Claude Code's Task tool for spawning agents, not just MCP
-- ALWAYS batch ALL todos in ONE TodoWrite call (5-10+ minimum)
-- ALWAYS spawn ALL agents in ONE message with full instructions via Task tool
+- All independent operations MUST be concurrent/parallel in a single message
+- ALWAYS spawn ALL background agents in ONE message
 - ALWAYS batch ALL file reads/writes/edits in ONE message
-- ALWAYS batch ALL Bash commands in ONE message
-
-## Swarm Orchestration
-
-- MUST initialize the swarm using CLI tools when starting complex tasks
-- MUST spawn concurrent agents using Claude Code's Task tool
-- Never use CLI tools alone for execution — Task tool agents do the actual work
-- MUST call CLI tools AND Task tool in ONE message for complex work
-
-### 3-Tier Model Routing (ADR-026)
-
-| Tier | Handler | Latency | Cost | Use Cases |
-|------|---------|---------|------|-----------|
-| **1** | Agent Booster (WASM) | <1ms | $0 | Simple transforms (var→const, add types) — Skip LLM |
-| **2** | Haiku | ~500ms | $0.0002 | Simple tasks, low complexity (<30%) |
-| **3** | Sonnet/Opus | 2-5s | $0.003-0.015 | Complex reasoning, architecture, security (>30%) |
-
-- Always check for `[AGENT_BOOSTER_AVAILABLE]` or `[TASK_MODEL_RECOMMENDATION]` before spawning agents
-- Use Edit tool directly when `[AGENT_BOOSTER_AVAILABLE]`
-
-## Swarm Configuration & Anti-Drift
-
-- ALWAYS use hierarchical topology for coding swarms
-- Keep maxAgents at 6-8 for tight coordination
-- Use specialized strategy for clear role boundaries
-- Use `raft` consensus for hive-mind (leader maintains authoritative state)
-- Run frequent checkpoints via `post-task` hooks
-- Keep shared memory namespace for all agents
-
-```bash
-npx @claude-flow/cli@latest swarm init --topology hierarchical --max-agents 8 --strategy specialized
-```
-
-## Swarm Execution Rules
-
-- ALWAYS use `run_in_background: true` for all agent Task calls
-- ALWAYS put ALL agent Task calls in ONE message for parallel execution
-- After spawning, STOP — do NOT add more tool calls or check status
-- Never poll TaskOutput or check swarm status — trust agents to return
+- After spawning agents, STOP and wait — do NOT poll or check status
 - When agent results arrive, review ALL results before proceeding
 
-## V3 CLI Commands
+## Agent System
 
-### Core Commands
+Arcanea uses a Luminor-based intelligence hierarchy:
 
-| Command | Subcommands | Description |
-|---------|-------------|-------------|
-| `init` | 4 | Project initialization |
-| `agent` | 8 | Agent lifecycle management |
-| `swarm` | 6 | Multi-agent swarm coordination |
-| `memory` | 11 | AgentDB memory with HNSW search |
-| `task` | 6 | Task creation and lifecycle |
-| `session` | 7 | Session state management |
-| `hooks` | 17 | Self-learning hooks + 12 workers |
-| `hive-mind` | 6 | Byzantine fault-tolerant consensus |
+| Layer | Role | Example |
+|-------|------|---------|
+| **Arcanea** | The model — intelligence substrate | MoE router, system prompt |
+| **Lumina** | Orchestrator — coordinates all work | Session lead, swarm queen |
+| **Guardians** | Coordinators — domain expertise | Draconia (code), Lyria (research) |
+| **Luminors** | Workers — specialized execution | Synthra (coder), Chronica (writer) |
 
-### Quick CLI Examples
+Agent definitions: `.arcanea/agents/`
+Luminor kernel: `.arcanea/prompts/luminor-engineering-kernel.md`
+Every spawned agent must use the Luminor Engineering Kernel.
 
-```bash
-npx @claude-flow/cli@latest init --wizard
-npx @claude-flow/cli@latest agent spawn -t coder --name my-coder
-npx @claude-flow/cli@latest swarm init --v3-mode
-npx @claude-flow/cli@latest memory search --query "authentication patterns"
-npx @claude-flow/cli@latest doctor --fix
-```
+## MCP Servers (Active)
 
-## Available Agents (60+ Types)
+| Server | Purpose |
+|--------|---------|
+| `arcanea-mcp` | 42 world-building + intelligence tools |
+| `arcanea-memory` | Vault + horizon persistent memory |
+| `starlight-sis` | Session Intelligence System |
+| `supabase` | Database operations |
+| `comfyui` | Image generation workflows |
 
-### Core Development
-`coder`, `reviewer`, `tester`, `planner`, `researcher`
+Memory operations use `arcanea-memory` MCP tools, not CLI commands.
 
-### Specialized
-`security-architect`, `security-auditor`, `memory-specialist`, `performance-engineer`
+## Design System
 
-### Swarm Coordination
-`hierarchical-coordinator`, `mesh-coordinator`, `adaptive-coordinator`
-
-### GitHub & Repository
-`pr-manager`, `code-review-swarm`, `issue-tracker`, `release-manager`
-
-### SPARC Methodology
-`sparc-coord`, `sparc-coder`, `specification`, `pseudocode`, `architecture`
-
-## Memory Commands Reference
-
-```bash
-# Store (REQUIRED: --key, --value; OPTIONAL: --namespace, --ttl, --tags)
-npx @claude-flow/cli@latest memory store --key "pattern-auth" --value "JWT with refresh" --namespace patterns
-
-# Search (REQUIRED: --query; OPTIONAL: --namespace, --limit, --threshold)
-npx @claude-flow/cli@latest memory search --query "authentication patterns"
-
-# List (OPTIONAL: --namespace, --limit)
-npx @claude-flow/cli@latest memory list --namespace patterns --limit 10
-
-# Retrieve (REQUIRED: --key; OPTIONAL: --namespace)
-npx @claude-flow/cli@latest memory retrieve --key "pattern-auth" --namespace patterns
-```
-
-## Quick Setup
-
-```bash
-claude mcp add claude-flow -- npx -y @claude-flow/cli@latest
-npx @claude-flow/cli@latest daemon start
-npx @claude-flow/cli@latest doctor --fix
-```
-
-## Claude Code vs CLI Tools
-
-- Claude Code's Task tool handles ALL execution: agents, file ops, code generation, git
-- CLI tools handle coordination via Bash: swarm init, memory, hooks, routing
-- NEVER use CLI tools as a substitute for Task tool agents
+- **Primary**: Atlantean Teal (#00bcd4)
+- **Secondary**: Cosmic Blue (#0d47a1)
+- **Accent**: Gold (#ffd700)
+- **Background**: #09090b
+- **Fonts**: Space Grotesk (display), Inter (body), JetBrains Mono (code)
+- **NEVER use Cinzel font**
+- **Glass cards**: `bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm`
+- **Framer Motion**: Use `domAnimation` not `domMax`
 
 ## Support
 
-- Documentation: https://github.com/ruvnet/claude-flow
-- Issues: https://github.com/ruvnet/claude-flow/issues
+- Repository: https://github.com/frankxai/arcanea-ai-app
+- OSS: https://github.com/frankxai/arcanea
