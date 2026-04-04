@@ -85,15 +85,42 @@ function elGlow(n: string) {
 }
 
 // ---------------------------------------------------------------------------
+// Genre Preview — predictive pill after 20+ chars
+// ---------------------------------------------------------------------------
+
+const GENRE_RULES: { keywords: string[]; genre: string; color: string }[] = [
+  { keywords: ["magic", "wizard", "spell", "enchant", "sorcery", "fantasy", "dragon", "elf"], genre: "Fantasy", color: "#7c3aed" },
+  { keywords: ["cyber", "neon", "hack", "android", "augment", "neural"], genre: "Cyberpunk", color: "#00bcd4" },
+  { keywords: ["underwater", "ocean", "sea", "coral", "abyss", "depth"], genre: "Aquatic", color: "#3b82f6" },
+  { keywords: ["space", "star", "galaxy", "nebula", "cosmic", "planet", "orbit"], genre: "Cosmic", color: "#fbbf24" },
+  { keywords: ["medieval", "knight", "castle", "kingdom", "feudal", "sword"], genre: "Medieval", color: "#a3a3a3" },
+  { keywords: ["horror", "dark", "death", "haunt", "shadow", "dread", "fear"], genre: "Horror", color: "#ef4444" },
+];
+
+function GenrePreview({ description }: { description: string }) {
+  if (description.length < 20) return null;
+  const lower = description.toLowerCase();
+  const match = GENRE_RULES.find((r) => r.keywords.some((k) => lower.includes(k)));
+  if (!match) return null;
+  return (
+    <m.div initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 4 }} className="flex items-center gap-2 mt-2 px-1">
+      <span className="relative flex h-2 w-2">
+        <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-50" style={{ backgroundColor: match.color }} />
+        <span className="relative inline-flex rounded-full h-2 w-2" style={{ backgroundColor: match.color }} />
+      </span>
+      <span className="text-xs text-white/40">{match.genre} World</span>
+    </m.div>
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Sub-components
 // ---------------------------------------------------------------------------
 
 function AuroraBackground() {
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-      <div className="absolute top-1/4 -left-32 w-[600px] h-[600px] bg-[#00bcd4]/[0.04] rounded-full blur-[120px] animate-pulse" />
-      <div className="absolute bottom-1/4 -right-32 w-[500px] h-[500px] bg-[#7c3aed]/[0.04] rounded-full blur-[120px]" style={{ animationDelay: "2s" }} />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-[#ffd700]/[0.02] rounded-full blur-[150px]" />
+      <div className="absolute top-1/4 -left-32 w-[600px] h-[600px] bg-[#00bcd4]/[0.04] rounded-full blur-[120px] animate-pulse" /><div className="absolute bottom-1/4 -right-32 w-[500px] h-[500px] bg-[#7c3aed]/[0.04] rounded-full blur-[120px]" style={{ animationDelay: "2s" }} /><div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-[#ffd700]/[0.02] rounded-full blur-[150px]" />
     </div>
   );
 }
@@ -248,6 +275,23 @@ export default function CreateWorldPage() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [saving, setSaving] = useState(false);
   const [refining, setRefining] = useState(false);
+  const [exampleIdx, setExampleIdx] = useState(-1);
+
+  // Keyboard shortcuts: Cmd/Ctrl+Enter to generate, Escape to reset, Tab to cycle examples
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (phase === "input" && e.key === "Enter" && (e.metaKey || e.ctrlKey)) { e.preventDefault(); generate(); }
+      if (phase === "input" && e.key === "Tab" && !e.shiftKey && document.activeElement?.tagName !== "TEXTAREA") {
+        e.preventDefault();
+        const next = (exampleIdx + 1) % EXAMPLES.length;
+        setExampleIdx(next);
+        setDescription(EXAMPLES[next]);
+      }
+      if (phase === "result" && e.key === "Escape") { e.preventDefault(); reset(); }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [phase, exampleIdx, generate, reset]);
 
   useEffect(() => {
     const supabase = createClient();
@@ -282,7 +326,6 @@ export default function CreateWorldPage() {
       });
 
       if (!res.ok) return;
-
       const data = await res.json();
       if (data.generated && data.imageData && data.mimeType) {
         setHeroImage(`data:${data.mimeType};base64,${data.imageData}`);
@@ -301,7 +344,6 @@ export default function CreateWorldPage() {
     setError(null);
     setHeroImage(null);
     setPhase("generating");
-
     try {
       const res = await fetch("/api/worlds/generate", {
         method: "POST",
@@ -406,24 +448,18 @@ export default function CreateWorldPage() {
                 transition={{ duration: 0.5 }}
                 className="flex flex-col items-center text-center"
               >
-                <div className="mb-2">
-                  <div className="inline-flex items-center gap-2 mb-4">
-                    <div className="h-px w-8 bg-gradient-to-r from-transparent to-[#00bcd4]/60" />
-                    <span className="text-[#00bcd4] font-mono text-xs tracking-widest uppercase">World Forge</span>
-                    <div className="h-px w-8 bg-gradient-to-l from-transparent to-[#00bcd4]/60" />
-                  </div>
+                <div className="inline-flex items-center gap-2 mb-6">
+                  <div className="h-px w-8 bg-gradient-to-r from-transparent to-[#00bcd4]/60" />
+                  <span className="text-[#00bcd4] font-mono text-xs tracking-widest uppercase">World Forge</span>
+                  <div className="h-px w-8 bg-gradient-to-l from-transparent to-[#00bcd4]/60" />
                 </div>
-
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4 leading-tight">
                   <span className="text-white">Create a </span>
-                  <span className="bg-clip-text text-transparent" style={{ backgroundImage: "linear-gradient(135deg, #00bcd4, #7c3aed, #ffd700)" }}>
-                    World
-                  </span>
+                  <span className="bg-clip-text text-transparent" style={{ backgroundImage: "linear-gradient(135deg, #00bcd4, #7c3aed, #ffd700)" }}>World</span>
                 </h1>
 
                 <p className="text-lg text-white/40 max-w-lg mb-10">
-                  Describe your world in one sentence. AI will generate
-                  characters, locations, lore, and a color palette.
+                  Describe your world in one sentence. AI will generate characters, locations, lore, and a color palette.
                 </p>
 
                 <div className="w-full max-w-2xl mb-6">
@@ -444,6 +480,9 @@ export default function CreateWorldPage() {
                     <span className="text-xs text-white/20">{description.length}/500</span>
                     {error && <span className="text-xs text-red-400">{error}</span>}
                   </div>
+                  <AnimatePresence>
+                    <GenrePreview description={description} />
+                  </AnimatePresence>
                 </div>
 
                 <m.button

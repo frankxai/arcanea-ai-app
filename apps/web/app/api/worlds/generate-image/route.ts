@@ -35,9 +35,13 @@ export async function POST(request: NextRequest) {
       case "creature":
         prompt = buildCreaturePrompt(blueprint);
         break;
+      case "world":
+        // Accept a pre-built prompt (e.g. from world generation's image_prompt field)
+        prompt = blueprint.prompt || `Create a breathtaking fantasy concept art panorama of a world called "${blueprint.name || 'Unknown'}". Epic landscape, cinematic lighting, no text, no watermarks.`;
+        break;
       default:
         return NextResponse.json(
-          { error: `Unknown type: ${type}. Use character, location, or creature.` },
+          { error: `Unknown type: ${type}. Use character, location, creature, or world.` },
           { status: 400 }
         );
     }
