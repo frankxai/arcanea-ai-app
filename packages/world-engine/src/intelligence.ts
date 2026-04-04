@@ -16,7 +16,11 @@ import type {
   NarrativeArc,
   ConflictSeed,
   WorldReport,
+  Quest,
+  FactionReport,
 } from "./types.js";
+
+import { pick } from "./generators.js";
 
 // ── Elemental Balance ────────────────────────────────────────────────────────
 
@@ -492,4 +496,223 @@ export function generateWorldReport(
   }
 
   return { health, grade, strengths, gaps, nextActions, narrativePotential, worldPersonality };
+}
+
+// ── Quest Generator ──────────────────────────────────────────────────────────
+
+export function generateQuest(
+  nodes: CreationNode[],
+  _edges: CreationEdge[],
+): Quest | null {
+  const characters = nodes.filter(n => n.type === "character");
+  const locations  = nodes.filter(n => n.type === "location");
+
+  if (nodes.length < 2) return null;
+
+  const questTypes: Quest["type"][] = [
+    "fetch", "escort", "investigate", "defend", "discover", "negotiate", "survive",
+  ];
+  const type = pick(questTypes);
+
+  const protagonist = characters[0] ?? nodes[0];
+  const target = nodes.length > 1 ? nodes[Math.floor(Math.random() * (nodes.length - 1)) + 1] : nodes[0];
+  const location = locations[0]?.name ?? "the Academy";
+
+  const questTemplates: Record<Quest["type"], () => Partial<Quest>> = {
+    fetch: () => ({
+      title: `The ${target.name} Retrieval`,
+      hook: `${target.name} has gone missing from ${location}. The last person to see it is dead.`,
+      objective: `Find and recover ${target.name} before it falls into the wrong hands.`,
+      complications: [
+        "The artifact is guarded by its own defense mechanism",
+        "Someone else is looking for it — and they're closer",
+        "It doesn't want to be found",
+      ],
+    }),
+    escort: () => ({
+      title: `Safe Passage for ${target.name}`,
+      hook: `${target.name} must reach ${location} alive. Simple — except for everything trying to stop them.`,
+      objective: `Escort ${target.name} through hostile territory to ${location}.`,
+      complications: [
+        "The route changes — elemental storms reroute the path",
+        "The protectee has a secret they're not sharing",
+        "An ambush was planned by someone who knew the route",
+      ],
+    }),
+    investigate: () => ({
+      title: `The ${protagonist.element ?? "Strange"} Anomaly`,
+      hook: `${protagonist.element ?? "Elemental"} energy is behaving wrong near ${location}. Someone needs to find out why before it spreads.`,
+      objective: `Investigate the anomaly, identify the cause, and contain it.`,
+      complications: [
+        "The anomaly is sentient",
+        "It's not a malfunction — someone caused it deliberately",
+        "Getting close to the source changes you",
+      ],
+    }),
+    defend: () => ({
+      title: `Siege of ${location}`,
+      hook: `${location} is under attack. Not from enemies — from the element itself turning hostile.`,
+      objective: `Defend ${location} through three waves of escalating threats.`,
+      complications: [
+        "The defenses are sabotaged from inside",
+        "Retreat is impossible — the exits are sealed",
+        "Victory requires sacrificing something the defenders value",
+      ],
+    }),
+    discover: () => ({
+      title: `Beyond the ${pick(["Eleventh", "Hidden", "Forgotten", "Impossible"])} Gate`,
+      hook: `A map has surfaced showing a Gate that shouldn't exist. If it's real, everything changes.`,
+      objective: `Find the hidden Gate and determine if it's genuine, a trap, or something worse.`,
+      complications: [
+        "The map is from Malachar's era",
+        "The Gate only exists at certain times",
+        "What's behind the Gate is watching",
+      ],
+    }),
+    negotiate: () => ({
+      title: `The ${protagonist.element ?? "Elemental"} Accord`,
+      hook: `Two factions are hours from war. ${protagonist.name} is the only one both sides will talk to.`,
+      objective: `Broker peace between the factions — but both sides have demands that contradict each other.`,
+      complications: [
+        "A third party benefits from war and is sabotaging talks",
+        "The demands are legitimate — there's no clean solution",
+        "The deadline is real — violence starts at dawn",
+      ],
+    }),
+    survive: () => ({
+      title: `The ${pick(["Long Night", "Void Tide", "Gate Storm", "Elemental Collapse"])}`,
+      hook: `It's not about winning. It's about still being alive when it ends.`,
+      objective: `Survive ${pick(["72 hours", "the convergence", "the night", "the trial"])} with limited resources and no reinforcements.`,
+      complications: [
+        "Resources run out faster than expected",
+        "Someone in the group is compromised",
+        "The threat adapts to every defense",
+      ],
+    }),
+  };
+
+  const template = questTemplates[type]();
+  const avgGate = characters.reduce((sum, c) => sum + ((c.gate as number | undefined) ?? 1), 0) / Math.max(characters.length, 1);
+
+  return {
+    title: template.title ?? `Quest of ${protagonist.name}`,
+    type,
+    hook: template.hook ?? "Something is wrong. You're the only one who can fix it.",
+    objective: template.objective ?? "Complete the mission.",
+    stakes: pick([
+      "The balance of an element hangs on the outcome",
+      "A character's Gate status is at risk",
+      "A location will be lost forever",
+      "A secret that could shatter the Academy will be revealed",
+    ]),
+    complications: template.complications ?? ["Nothing is as it seems"],
+    rewards: {
+      tangible: pick([
+        "A rare artifact attuned to the quest element",
+        "Access to a restricted area of the Academy",
+        "A creature bond opportunity",
+        "Materials for forging Gate-level equipment",
+      ]),
+      intangible: pick([
+        "A Gate advancement opportunity",
+        "Reputation with a faction",
+        "A truth about the character's origin",
+        "A relationship deepened or broken by the shared experience",
+      ]),
+    },
+    involvedCreations: [protagonist.name, target.name, ...locations.slice(0, 1).map(l => l.name)].filter(Boolean),
+    estimatedDifficulty:
+      avgGate <= 2 ? "apprentice" :
+      avgGate <= 4 ? "mage" :
+      avgGate <= 6 ? "master" :
+      avgGate <= 8 ? "archmage" : "luminor",
+  };
+}
+
+// ── Faction Dynamics ─────────────────────────────────────────────────────────
+
+export function analyzeFactions(
+  nodes: CreationNode[],
+  _edges: CreationEdge[],
+): FactionReport {
+  const characters = nodes.filter(n => n.type === "character");
+
+  const elementGroups = new Map<string, CreationNode[]>();
+  characters.forEach(c => {
+    const elem =
+      (c.element as string | undefined) ??
+      (c.metadata?.primaryElement as string | undefined) ??
+      "Unknown";
+    if (!elementGroups.has(elem)) elementGroups.set(elem, []);
+    elementGroups.get(elem)!.push(c);
+  });
+
+  const factions = [...elementGroups.entries()].map(([element, members]) => {
+    const avgGate = members.reduce((s, m) => s + ((m.gate as number | undefined) ?? 1), 0) / members.length;
+    const hasVillain = members.some(m =>
+      JSON.stringify(m.metadata).toLowerCase().includes("dark") ||
+      JSON.stringify(m.metadata).toLowerCase().includes("villain")
+    );
+    return {
+      name: `${element} Coalition`,
+      element,
+      members: members.map(m => m.name),
+      strength: Math.round(avgGate * members.length),
+      alignment: hasVillain ? "dark" as const : avgGate > 6 ? "light" as const : "neutral" as const,
+    };
+  });
+
+  const oppositions: Record<string, string> = {
+    Fire: "Water", Water: "Fire",
+    Earth: "Wind", Wind: "Earth",
+    Void: "Spirit", Spirit: "Void",
+  };
+  const tensions: FactionReport["tensions"] = [];
+
+  for (let i = 0; i < factions.length; i++) {
+    for (let j = i + 1; j < factions.length; j++) {
+      const f1 = factions[i];
+      const f2 = factions[j];
+      const isOpposed = oppositions[f1.element] === f2.element;
+      const strengthDiff = Math.abs(f1.strength - f2.strength);
+
+      if (isOpposed) {
+        tensions.push({
+          between: [f1.name, f2.name],
+          reason: `Natural elemental opposition between ${f1.element} and ${f2.element}`,
+          severity: strengthDiff > 5 ? "high" : strengthDiff > 2 ? "medium" : "low",
+        });
+      } else if (
+        f1.alignment !== f2.alignment &&
+        f1.alignment !== "neutral" &&
+        f2.alignment !== "neutral"
+      ) {
+        tensions.push({
+          between: [f1.name, f2.name],
+          reason: `Ideological conflict: ${f1.alignment} vs ${f2.alignment}`,
+          severity: "high",
+        });
+      }
+    }
+  }
+
+  const factionsWithStrength = [...factions].sort((a, b) => b.strength - a.strength);
+  const totalStrength = factions.reduce((s, f) => s + f.strength, 0);
+  const strongest = factionsWithStrength[0];
+  const dominanceRatio = strongest ? strongest.strength / Math.max(totalStrength, 1) : 0;
+
+  return {
+    factions,
+    tensions,
+    powerBalance: dominanceRatio > 0.6
+      ? `${strongest.name} dominates — ${Math.round(dominanceRatio * 100)}% of total power. This imbalance will drive conflict.`
+      : dominanceRatio > 0.4
+      ? `${strongest.name} leads but others are competitive. Political maneuvering is more likely than war.`
+      : "Relatively balanced — alliances matter more than individual faction strength.",
+    prediction: tensions.some(t => t.severity === "high" || t.severity === "war")
+      ? "Conflict is imminent. The current balance cannot hold."
+      : tensions.length > 0
+      ? "Tensions exist but can be managed. A catalyst event would change this."
+      : "Stable — but stability can be boring. Introduce a disruption.",
+  };
 }

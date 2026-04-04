@@ -1,6 +1,6 @@
 {
   "name": "@arcanea/world-engine",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Pure worldbuilding logic shared between the Arcanea MCP server and web app",
   "type": "module",
   "main": "dist/index.js",

@@ -1,0 +1,59 @@
+{
+  "name": "@arcanea/voice",
+  "version": "0.1.0",
+  "description": "Voice production system for AI coding agents. Record, transcribe, coach, route. Works with Claude Code, OpenCode, Cursor, and any terminal.",
+  "type": "module",
+  "bin": {
+    "arcanea-voice": "./bin/voice.mjs",
+    "voice": "./bin/voice.mjs"
+  },
+  "exports": {
+    ".": "./src/index.mjs",
+    "./transcribe": "./src/transcribe.mjs",
+    "./tts": "./src/tts.mjs",
+    "./mic": "./src/mic.mjs",
+    "./coach": "./src/coach.mjs"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "templates/",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "voice": "node bin/voice.mjs",
+    "test": "node bin/voice.mjs help"
+  },
+  "keywords": [
+    "arcanea",
+    "voice",
+    "transcription",
+    "whisper",
+    "groq",
+    "elevenlabs",
+    "tts",
+    "claude-code",
+    "opencode",
+    "developer-tools",
+    "voice-notes",
+    "ai-coaching"
+  ],
+  "author": "Arcanea <oss@arcanea.ai>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/frankxai/arcanea",
+    "directory": "packages/arcanea-voice"
+  },
+  "homepage": "https://arcanea.ai/voice",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "os": ["win32", "darwin", "linux"],
+  "dependencies": {},
+  "peerDependencies": {},
+  "peerDependenciesMeta": {
+    "edge-tts": { "optional": true }
+  }
+}

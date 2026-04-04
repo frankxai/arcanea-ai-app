@@ -245,3 +245,12 @@ vectors.db
 
 # Cursor AI rules
 .cursor/
+
+# Peak Performance local state
+.pp/
+
+# Separate nested repos (have their own .git)
+packages/peak-performance/
+
+# Binary docs in root (move to docs/ first)
+*.docx

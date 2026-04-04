@@ -29,6 +29,8 @@ export type {
   NarrativeAct,
   ConflictSeed,
   WorldReport,
+  Quest,
+  FactionReport,
   ElementAesthetics,
   RankVisual,
   CharacterBlueprint,
@@ -70,6 +72,8 @@ export {
   generateConflict,
   weaveNarrative,
   generateWorldReport,
+  generateQuest,
+  analyzeFactions,
 } from "./intelligence.js";
 
 // Visual prompt generators
