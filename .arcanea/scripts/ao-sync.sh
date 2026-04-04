@@ -57,19 +57,17 @@ push_file() {
   b64=$(base64 -w0 < "$local_path")
 
   # Check if file exists (get SHA for update)
-  local sha
-  sha=$(gh api "repos/$repo/contents/$remote_path" --jq '.sha' -q 2>/dev/null || echo "")
+  local sha=""
+  sha=$(gh api "repos/$repo/contents/$remote_path?ref=$branch" --jq '.sha' 2>/dev/null) || sha=""
 
-  local args=(-X PUT -f "message=sync: $remote_path" -f "content=$b64" -f "branch=$branch")
-  [ -n "$sha" ] && args+=(-f "sha=$sha")
-
-  local result
-  result=$(gh api "repos/$repo/contents/$remote_path" "${args[@]}" --jq '.content.path' 2>&1)
-
-  if [ $? -eq 0 ]; then
-    echo "  OK: $remote_path → $repo"
+  if [ -n "$sha" ] && [ "$sha" != "null" ]; then
+    gh api "repos/$repo/contents/$remote_path" \
+      -X PUT -f "message=sync: $remote_path" -f "content=$b64" -f "branch=$branch" -f "sha=$sha" \
+      --jq '.content.path' 2>/dev/null && echo "  OK: $remote_path (updated)" || echo "  FAIL: $remote_path"
   else
-    echo "  FAIL: $remote_path → $repo ($result)"
+    gh api "repos/$repo/contents/$remote_path" \
+      -X PUT -f "message=sync: $remote_path" -f "content=$b64" -f "branch=$branch" \
+      --jq '.content.path' 2>/dev/null && echo "  OK: $remote_path (created)" || echo "  FAIL: $remote_path"
   fi
 }
 
