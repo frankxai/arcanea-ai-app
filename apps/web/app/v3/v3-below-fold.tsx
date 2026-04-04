@@ -320,7 +320,7 @@ function MetricsStrip() {
   const isInView = useInView(ref, { once: true, margin: "-60px" });
 
   const metrics = [
-    { value: 16, suffix: "", label: "AI Intelligences", color: "#00bcd4", icon: Eye },
+    { value: 16, suffix: "", label: "Luminors", color: "#00bcd4", icon: Eye },
     {
       value: 17,
       suffix: "",
@@ -331,7 +331,7 @@ function MetricsStrip() {
     {
       value: 190,
       suffix: "K+",
-      label: "Words of Intelligence",
+      label: "Words of Lore",
       color: "#0d47a1",
       icon: Diamond,
     },
@@ -1487,7 +1487,7 @@ function WorldsShowcase() {
                         {world.tagline}
                       </p>
                       <span className="inline-flex items-center gap-2 text-sm text-[#a855f7]/75 group-hover:text-[#a855f7] transition-colors">
-                        Explore <ArrowRight className="w-4 h-4" />
+                        Enter this world <ArrowRight className="w-4 h-4" />
                       </span>
                     </div>
                   </div>
