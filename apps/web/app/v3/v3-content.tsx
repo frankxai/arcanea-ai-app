@@ -7,6 +7,7 @@ import { useRef, useState, useEffect } from "react";
 import navLogo from "@/assets/brand/arcanea-mark.jpg";
 import type { V3BelowFoldProps } from "./v3-below-fold";
 import { HeroChangingWords } from "./hero-changing-words";
+import { HeroShowcase } from "./hero-showcase";
 
 // ---------------------------------------------------------------------------
 // Lazy-load the chat box — it pulls in useRouter + phosphor icons which are
@@ -205,7 +206,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Chat with AI. Generate images. Build worlds. Write stories. Ship code. All in one place.
+            Type one sentence. Get a world with characters, locations, lore, and music. Free.
           </m.p>
 
           {/* Differentiator — what makes this different */}
@@ -259,6 +260,7 @@ export function V3Content({
   return (
     <>
       <HeroPortal />
+      <HeroShowcase />
       <V3BelowFold
         collectionsCount={collectionsCount}
         textsCount={textsCount}
