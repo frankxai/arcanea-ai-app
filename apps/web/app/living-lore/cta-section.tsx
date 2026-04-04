@@ -1,12 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { LazyMotion, domMax, m } from 'framer-motion';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { slideUp } from '@/lib/design/motion';
 
 export function CtaSection() {
   return (
-    <LazyMotion features={domMax}>
+    <LazyMotion features={domAnimation}>
       <m.section
         className="mt-16 text-center"
         variants={slideUp}

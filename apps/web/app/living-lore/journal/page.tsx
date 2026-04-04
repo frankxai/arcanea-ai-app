@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { LazyMotion, domMax, m } from 'framer-motion';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { slideUp, staggerContainer, staggerItem } from '@/lib/design/motion';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useLivingLoreProgress } from '@/hooks/use-living-lore-progress';
@@ -140,7 +140,7 @@ export default function JournalPage() {
   if (loading) return <JournalSkeleton />;
 
   return (
-    <LazyMotion features={domMax}>
+    <LazyMotion features={domAnimation}>
       <main className="mx-auto max-w-3xl px-6 pb-24 pt-8">
         {/* Breadcrumb */}
         <nav className="mb-8 text-sm" aria-label="Breadcrumb">

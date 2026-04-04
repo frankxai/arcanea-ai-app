@@ -1,6 +1,6 @@
 'use client';
 
-import { LazyMotion, domMax, m } from 'framer-motion';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { staggerContainer, staggerItem } from '@/lib/design/motion';
 import { CrewCard } from '@/components/living-lore/crew-card';
 import type { CrewMember } from '@/lib/living-lore/types';
@@ -11,7 +11,7 @@ interface Props {
 
 export function CrewPageAnimated({ crew }: Props) {
   return (
-    <LazyMotion features={domMax}>
+    <LazyMotion features={domAnimation}>
       <m.div
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         variants={staggerContainer('normal')}
