@@ -8,7 +8,7 @@
  * reading from session-scoped in-memory state. This makes the module usable
  * in any context (MCP server, web app, CLI, tests).
  */
-import type { CreationNode, CreationEdge, WorldGap, NarrativeArc, ConflictSeed, WorldReport } from "./types.js";
+import type { CreationNode, CreationEdge, WorldGap, NarrativeArc, ConflictSeed, WorldReport, Quest, FactionReport } from "./types.js";
 export declare function analyzeElementalBalance(nodes: CreationNode[]): {
     distribution: Record<string, number>;
     dominant: string | null;
@@ -24,4 +24,6 @@ export declare function detectGaps(nodes: CreationNode[], edges: CreationEdge[])
 export declare function generateConflict(nodes: CreationNode[], _edges: CreationEdge[]): ConflictSeed | null;
 export declare function weaveNarrative(nodes: CreationNode[], edges: CreationEdge[]): NarrativeArc | null;
 export declare function generateWorldReport(nodes: CreationNode[], edges: CreationEdge[]): WorldReport;
+export declare function generateQuest(nodes: CreationNode[], _edges: CreationEdge[]): Quest | null;
+export declare function analyzeFactions(nodes: CreationNode[], _edges: CreationEdge[]): FactionReport;
 //# sourceMappingURL=intelligence.d.ts.map

@@ -77,33 +77,88 @@ export declare function generateMagicAbility(options: GenerateMagicAbilityOption
     narrativeHooks: string[];
 };
 export declare function generateLocation(options?: GenerateLocationOptions): {
+    _type: string;
+    _note: string;
     name: string;
     type: string;
     dominantElement: string;
     alignment: "light" | "dark" | "balanced";
-    guardian: string;
-    gate: string;
-    description: string;
+    guardian: {
+        name: string;
+        domain: string;
+        gate: number;
+    };
+    atmosphere: {
+        visual: string;
+        sound: string;
+        smell: string;
+    };
     features: string[];
+    history: string;
+    secret: string;
+    narrativeHooks: string[];
 };
 export declare function generateCreature(options?: GenerateCreatureOptions): {
+    _type: string;
+    _note: string;
     name: string;
     species: string;
     element: string;
     size: "tiny" | "small" | "medium" | "large" | "massive";
     temperament: "neutral" | "hostile" | "friendly" | "sacred";
-    description: string;
+    appearance: {
+        body: string;
+        eyes: string;
+        distinctFeature: string;
+    };
+    behavior: {
+        temperamentDetail: string;
+        sound: string;
+        diet: string;
+    };
     abilities: string[];
-    habitat: string;
+    habitat: {
+        location: string;
+        behavior: string;
+    };
+    lore: {
+        godBeastConnection: string;
+        culturalSignificance: string;
+    };
+    narrativeHooks: string[];
 };
 export declare function generateArtifact(options?: GenerateArtifactOptions): {
+    _type: string;
+    _note: string;
     name: string;
     type: string;
     element: string;
     powerLevel: "minor" | "moderate" | "major" | "legendary";
-    guardian: string;
-    abilities: string[];
+    guardian: {
+        name: string;
+        domain: string;
+    };
+    origin: {
+        creator: string;
+        age: string;
+        location: string;
+    };
+    appearance: {
+        form: string;
+        material: string;
+        telltale: string;
+    };
+    abilities: {
+        primary: string;
+        secondary: string;
+        cost: string;
+    };
     requirement: string;
+    lore: {
+        previousWielders: string;
+        legend: string;
+    };
+    narrativeHooks: string[];
 };
 export declare function generateName(options?: GenerateNameOptions): {
     element: string;

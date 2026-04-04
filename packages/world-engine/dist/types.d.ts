@@ -125,6 +125,36 @@ export interface WorldReport {
     narrativePotential: string;
     worldPersonality: string;
 }
+export interface Quest {
+    title: string;
+    type: "fetch" | "escort" | "investigate" | "defend" | "discover" | "negotiate" | "survive";
+    hook: string;
+    objective: string;
+    stakes: string;
+    complications: string[];
+    rewards: {
+        tangible: string;
+        intangible: string;
+    };
+    involvedCreations: string[];
+    estimatedDifficulty: "apprentice" | "mage" | "master" | "archmage" | "luminor";
+}
+export interface FactionReport {
+    factions: Array<{
+        name: string;
+        element: string;
+        members: string[];
+        strength: number;
+        alignment: "light" | "dark" | "neutral";
+    }>;
+    tensions: Array<{
+        between: [string, string];
+        reason: string;
+        severity: "low" | "medium" | "high" | "war";
+    }>;
+    powerBalance: string;
+    prediction: string;
+}
 export interface ElementAesthetics {
     colors: string;
     atmosphere: string;
