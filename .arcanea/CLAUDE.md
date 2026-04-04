@@ -27,6 +27,7 @@ Execution control lives in `planning-with-files/`. Shared intelligence lives in 
 | `projects/sprints/` | Weekly sprint capacity and burndown |
 | `projects/log/` | Progress narrative logs |
 | `prompts/` | Session handoff prompts |
+| `agents/research/` | Research Luminor team (5 agents) |
 
 ## Central Orchestrator
 
@@ -48,6 +49,22 @@ The Master Plan contains:
 - Cross-cutting concerns (security, design, repo sync)
 
 **Skill**: `.claude/skills/arcanea-orchestrator.md` — auto-activates on architecture decisions
+
+## Research Hub
+
+Research Intelligence System lives in `docs/research/` with templates and agent-generated output.
+
+| Path | Purpose |
+|------|---------|
+| `docs/research/papers/` | Academic paper reviews |
+| `docs/research/github/` | Open source tool evaluations |
+| `docs/research/books/` | Book and blog insights |
+| `docs/research/benchmarks/` | Hardware/software benchmarks |
+| `docs/research/synthesis/` | Cross-domain synthesis documents |
+| `docs/research/templates/` | Standard output templates |
+| `.arcanea/agents/research/` | Research Luminor agent definitions |
+
+Commands: `/arcanea-research`, `/research-scan`, `/research-synthesis`, `/research-benchmark`
 
 ## Architecture Principle
 

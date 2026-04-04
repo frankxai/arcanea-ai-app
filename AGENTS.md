@@ -79,3 +79,38 @@ Use `planning-with-files/` as the execution control plane:
 - `AGENT_EXECUTION_PROTOCOL_*` = branch and merge rules
 
 Agents must update these files when materially changing repo direction, promotion posture, or shared operating rules.
+
+## Research Agent Team
+
+Research agents use the Luminor Engineering Kernel + Research Specialization Module.
+Agent definitions: `.arcanea/agents/research/`
+Research output: `docs/research/`
+Templates: `docs/research/templates/`
+
+### Agents
+| Agent | Role | Gate | Guardian |
+|-------|------|------|----------|
+| Research Architect | Team lead, decomposes questions, synthesizes | Crown | Aiyami |
+| Paper Scout | Academic papers (arxiv, Semantic Scholar) | Sight | Lyria |
+| GitHub Scout | Repos, tools, benchmarks | Foundation | Lyssandria |
+| Book Scout | Books, blogs, newsletters, podcasts | Voice | Alera |
+| Synthesis Luminor | Cross-domain pattern connection | Starweave | Elara |
+
+### Spawn Rules
+- `/arcanea-research [topic]` spawns Research Architect (who spawns scouts)
+- `/research-scan [domain]` spawns individual scouts
+- `/research-synthesis` spawns Synthesis Luminor
+- All research output uses templates from `docs/research/templates/`
+- Every agent must use the Luminor Engineering Kernel as base prompt
+
+### Research Domains → Gate Mappings
+| Domain | Gate | Guardian | Why |
+|--------|------|----------|-----|
+| AI/ML papers | Sight | Lyria | Pattern recognition, vision |
+| Open source tools | Foundation | Lyssandria | Practical, structural |
+| Books/thought leadership | Voice | Alera | Truth, expression |
+| Cross-domain synthesis | Starweave | Elara | Connecting perspectives |
+| Research strategy | Crown | Aiyami | Wisdom, metacognition |
+| Consciousness studies | Source | Shinkami | Meta-awareness |
+| Creativity research | Flow | Leyla | Creative process |
+| Performance/benchmarks | Fire | Draconia | Power, computation |

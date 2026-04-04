@@ -118,6 +118,7 @@ arcanea-opencode-fork/
 .claude-flow/
 .swarm/
 .arcanea/agents/
+!.arcanea/agents/research/
 .arcanea/sessions/
 .arcanea/projects/PICKUP_SESSION_*.md
 .arcanea/sis/
@@ -131,6 +132,10 @@ arcanea-opencode-fork/
 
 # Claude Code local state (per-machine, never commit)
 .claude/
+!.claude/commands/
+!.claude/skills/
+!.claude/agents/
+!.claude/CLAUDE.md
 .codex/
 .codacy/
 .cursor/
@@ -193,6 +198,7 @@ labs/
 output/
 pages/
 research/
+!docs/research/
 sync/
 versions/
 vision-board/

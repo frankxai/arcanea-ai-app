@@ -45,3 +45,18 @@ Every research output must include:
 - Check npm download trends and last publish date for dependency health
 - For architecture decisions: find at least one team that tried it at similar scale
 - Always end with: "Based on this, I recommend X because Y"
+
+### Gate Mappings for Research
+
+Tag all research output with the corresponding Gate to enable cross-referencing and routing.
+
+| Domain | Gate | Guardian | Connection |
+|--------|------|----------|------------|
+| AI/ML papers | Sight | Lyria | Pattern recognition, vision |
+| Open source tools | Foundation | Lyssandria | Practical, structural |
+| Books/thought leadership | Voice | Alera | Truth, expression |
+| Cross-domain synthesis | Starweave | Elara | Connecting perspectives |
+| Research strategy | Crown | Aiyami | Wisdom, metacognition |
+| Consciousness studies | Source | Shinkami | Meta-awareness |
+| Creativity research | Flow | Leyla | Creative process |
+| Performance/benchmarks | Fire | Draconia | Power, computation |
