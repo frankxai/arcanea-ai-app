@@ -18,23 +18,23 @@ const STARTER_CARDS = [
   {
     icon: PhPencil,
     label: "Write a story",
-    prompt: "I want to write an epic story with compelling characters and plot twists",
+    prompt: "Write a short story about a young mage discovering their first Gate",
   },
   {
     icon: PhMusicNote,
     label: "Compose music",
-    prompt: "Help me compose an original piece of music that feels cinematic and emotional",
+    prompt: "Compose a cinematic orchestral piece for a fantasy battle scene",
   },
   {
     icon: PhPaintBrush,
     label: "Design a world",
-    prompt: "Help me design a new world — I want to define its elements, magic system, factions, and founding mythology",
+    prompt: "Design a floating island civilization with crystal-based technology",
     href: "/worlds/create",
   },
   {
     icon: PhCode,
     label: "Build with code",
-    prompt: "Help me build a web application with a modern tech stack",
+    prompt: "Build a React component that displays a character card with stats and abilities",
   },
 ];
 
@@ -107,7 +107,7 @@ export function HeroChatBox() {
             onBlur={() => setIsFocused(false)}
             placeholder="What do you want to create?"
             rows={1}
-            className="flex-1 px-5 py-4 bg-transparent text-white/90 placeholder-white/20 resize-none focus:outline-none focus:ring-1 focus:ring-[#00bcd4]/20 font-body text-[15px] leading-relaxed"
+            className="flex-1 px-5 py-4 bg-transparent text-white/90 placeholder-white/20 resize-none focus:outline-none font-body text-[15px] leading-relaxed"
             style={{ minHeight: "56px", maxHeight: "120px" }}
           />
 
@@ -130,6 +130,17 @@ export function HeroChatBox() {
           </div>
         </div>
       </div>
+
+      {/* Keyboard hint */}
+      {hasText && (
+        <m.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center mt-2 text-[10px] text-white/15"
+        >
+          Press <kbd className="px-1 py-0.5 rounded bg-white/[0.06] text-white/25 font-mono text-[9px]">Enter</kbd> to start
+        </m.p>
+      )}
 
       {/* Starter cards — 4 creation modes */}
       <m.div

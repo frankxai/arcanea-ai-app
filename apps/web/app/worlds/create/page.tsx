@@ -39,6 +39,7 @@ interface GenerateResult {
   characters: GeneratedCharacter[];
   locations: GeneratedLocation[];
   event?: { title: string; description: string; era?: string };
+  image_prompt?: string;
   saved: boolean;
   world_id?: string;
 }
@@ -64,6 +65,25 @@ const PROGRESS_STEPS = [
   "Choosing a color palette...",
 ];
 
+const REFINE_SUFFIXES = [
+  "more dramatic and epic",
+  "darker and more mysterious",
+  "more whimsical and playful",
+  "grittier and more realistic",
+  "more ancient and mythological",
+];
+
+const EL_GLOW: Record<string, string> = {
+  fire: "shadow-red-500/30", water: "shadow-blue-400/30", earth: "shadow-emerald-500/30",
+  wind: "shadow-slate-300/30", void: "shadow-purple-500/30", spirit: "shadow-amber-400/30",
+  light: "shadow-yellow-300/30", shadow: "shadow-violet-600/30",
+};
+
+function elGlow(n: string) {
+  const k = n.toLowerCase();
+  return Object.entries(EL_GLOW).find(([x]) => k.includes(x))?.[1] ?? "shadow-[#00bcd4]/30";
+}
+
 // ---------------------------------------------------------------------------
 // Sub-components
 // ---------------------------------------------------------------------------
@@ -80,38 +100,21 @@ function AuroraBackground() {
 
 function GeneratingOverlay({ step }: { step: number }) {
   return (
-    <m.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="flex flex-col items-center justify-center min-h-[60vh] text-center px-6"
-    >
-      {/* Pulsing aurora orb */}
+    <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+      className="flex flex-col items-center justify-center min-h-[60vh] text-center px-6">
       <div className="relative w-28 h-28 mb-10">
         <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#00bcd4]/30 via-[#7c3aed]/20 to-[#ffd700]/20 animate-ping" style={{ animationDuration: "2s" }} />
         <div className="absolute inset-3 rounded-full bg-gradient-to-br from-[#00bcd4]/40 via-[#7c3aed]/30 to-[#ffd700]/30 animate-pulse" />
         <div className="absolute inset-6 rounded-full bg-gradient-to-br from-[#00bcd4] via-[#7c3aed] to-[#ffd700] opacity-50 blur-sm" />
         <div className="absolute inset-8 rounded-full bg-[#09090b]" />
       </div>
-
-      <p className="text-white/60 text-lg font-display mb-8">
-        Weaving the fabric of your universe...
-      </p>
-
+      <p className="text-white/60 text-lg font-display mb-8">Weaving the fabric of your universe...</p>
       <div className="space-y-3 max-w-xs">
         {PROGRESS_STEPS.map((label, i) => (
-          <m.div
-            key={label}
-            initial={{ opacity: 0, x: -12 }}
-            animate={i <= step ? { opacity: 1, x: 0 } : {}}
-            transition={{ delay: i * 0.15, duration: 0.4 }}
-            className={`flex items-center gap-3 text-sm ${
-              i <= step ? "text-white/70" : "text-white/10"
-            }`}
-          >
-            <span className={`w-2 h-2 rounded-full ${
-              i < step ? "bg-[#00bcd4]" : i === step ? "bg-[#00bcd4] animate-pulse" : "bg-white/10"
-            }`} />
+          <m.div key={label} initial={{ opacity: 0, x: -12 }}
+            animate={i <= step ? { opacity: 1, x: 0 } : {}} transition={{ delay: i * 0.15, duration: 0.4 }}
+            className={`flex items-center gap-3 text-sm ${i <= step ? "text-white/70" : "text-white/10"}`}>
+            <span className={`w-2 h-2 rounded-full ${i < step ? "bg-[#00bcd4]" : i === step ? "bg-[#00bcd4] animate-pulse" : "bg-white/10"}`} />
             {label}
           </m.div>
         ))}
@@ -120,60 +123,112 @@ function GeneratingOverlay({ step }: { step: number }) {
   );
 }
 
-function CharacterCard({ char, index }: { char: GeneratedCharacter; index: number }) {
+function HeroSection({ world, heroImage }: { world: GeneratedWorld; heroImage: string | null }) {
+  const from = world.palette?.primary || "#00bcd4";
+  const to = world.palette?.secondary || "#7c3aed";
+  const h = heroImage ? 320 : 200;
   return (
-    <m.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.6 + index * 0.15 }}
-      className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-5 hover:border-white/[0.12] transition-all"
-    >
-      <div className="flex items-start justify-between mb-2">
-        <h4 className="font-display font-semibold text-white">{char.name}</h4>
-        {char.element && (
-          <span className="text-[11px] px-2 py-0.5 rounded-full bg-[#00bcd4]/10 text-[#00bcd4] border border-[#00bcd4]/20">
-            {char.element}
-          </span>
-        )}
+    <m.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+      className="relative w-full rounded-2xl overflow-hidden mb-12" style={{ minHeight: h }}>
+      <div className="absolute inset-0" style={{ background: `linear-gradient(135deg, ${from}22, ${to}22, #09090b)` }} />
+      {heroImage && <img src={heroImage} alt={`Concept art for ${world.name}`} className="absolute inset-0 w-full h-full object-cover opacity-60" />}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#09090b] via-[#09090b]/60 to-transparent" />
+      <div className="relative z-10 flex flex-col items-center justify-end h-full px-6 py-10" style={{ minHeight: h }}>
+        <p className="text-[#00bcd4] font-mono text-xs tracking-widest uppercase mb-3">Your World</p>
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-3 text-center drop-shadow-lg">{world.name}</h2>
+        {world.tagline && <p className="text-lg text-white/60 max-w-xl text-center">{world.tagline}</p>}
       </div>
-      {char.title && <p className="text-xs text-white/40 mb-2">{char.title}</p>}
-      {char.backstory && <p className="text-sm text-white/50 leading-relaxed line-clamp-3">{char.backstory}</p>}
+    </m.div>
+  );
+}
+
+function ElementOrbs({ elements }: { elements: { name: string; domain: string; color: string }[] }) {
+  return (
+    <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
+      className="flex flex-wrap items-center justify-center gap-5 mb-12">
+      {elements.map((el, i) => (
+        <m.div key={el.name} initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.4 + i * 0.1 }} className="flex flex-col items-center gap-2">
+          <div className={`w-10 h-10 rounded-full shadow-lg ${elGlow(el.name)} relative`} style={{ backgroundColor: el.color }}>
+            <div className="absolute inset-0 rounded-full animate-pulse" style={{ boxShadow: `0 0 20px ${el.color}40, 0 0 40px ${el.color}20` }} />
+          </div>
+          <span className="text-xs text-white/50 font-medium">{el.name}</span>
+          <span className="text-[10px] text-white/25">{el.domain}</span>
+        </m.div>
+      ))}
+    </m.div>
+  );
+}
+
+const EL_STRIPE: Record<string, string> = {
+  fire: "#ef4444", water: "#3b82f6", earth: "#22c55e", wind: "#94a3b8", void: "#8b5cf6", spirit: "#fbbf24",
+};
+
+function CharacterCard({ char, index }: { char: GeneratedCharacter; index: number }) {
+  const el = char.element?.toLowerCase() || "";
+  const stripe = Object.entries(EL_STRIPE).find(([k]) => el.includes(k))?.[1] ?? "#00bcd4";
+  return (
+    <m.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 + index * 0.15 }}
+      className="rounded-xl bg-white/[0.03] border border-white/[0.06] hover:border-white/[0.12] transition-all overflow-hidden flex">
+      <div className="w-1 shrink-0" style={{ backgroundColor: stripe }} />
+      <div className="p-5 flex-1">
+        <div className="flex items-start justify-between mb-2">
+          <h4 className="font-display font-semibold text-white">{char.name}</h4>
+          {char.element && <span className="text-[11px] px-2 py-0.5 rounded-full bg-[#00bcd4]/10 text-[#00bcd4] border border-[#00bcd4]/20">{char.element}</span>}
+        </div>
+        {char.title && <p className="text-xs text-white/40 mb-1">{char.title}</p>}
+        {char.origin_class && <span className="inline-block text-[10px] px-2 py-0.5 rounded bg-[#7c3aed]/10 text-[#7c3aed]/70 border border-[#7c3aed]/20 mb-2">{char.origin_class}</span>}
+        {char.backstory && <p className="text-sm text-white/50 leading-relaxed line-clamp-3">{char.backstory}</p>}
+      </div>
     </m.div>
   );
 }
 
 function LocationCard({ loc, index }: { loc: GeneratedLocation; index: number }) {
   return (
-    <m.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.9 + index * 0.15 }}
-      className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-5 hover:border-white/[0.12] transition-all"
-    >
+    <m.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 + index * 0.15 }}
+      className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-5 hover:border-white/[0.12] transition-all">
+      {loc.region && <p className="text-[10px] text-[#7c3aed]/50 uppercase tracking-widest mb-2">{loc.region}</p>}
       <h4 className="font-display font-semibold text-white mb-1">{loc.name}</h4>
-      {loc.region && <p className="text-xs text-[#7c3aed]/70 mb-2">{loc.region}</p>}
-      {loc.description && <p className="text-sm text-white/50 leading-relaxed line-clamp-3">{loc.description}</p>}
+      {loc.description && <p className="text-sm text-white/50 leading-relaxed line-clamp-3 mb-2">{loc.description}</p>}
+      {loc.significance && <p className="text-xs text-white/30 italic line-clamp-2">{loc.significance}</p>}
     </m.div>
   );
 }
 
-function PalettePreview({ palette }: { palette: { primary: string; secondary: string; accent: string } }) {
+function FoundingEvent({ event, worldName }: { event: { title: string; description: string; era?: string }; worldName: string }) {
   return (
-    <m.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 1.2 }}
-      className="flex items-center gap-3"
-    >
-      <span className="text-xs text-white/30">Palette</span>
-      {[palette.primary, palette.secondary, palette.accent].map((color) => (
-        <div
-          key={color}
-          className="w-8 h-8 rounded-lg border border-white/10"
-          style={{ backgroundColor: color }}
-          title={color}
-        />
-      ))}
+    <m.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1 }}
+      className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-6 mb-10 relative overflow-hidden">
+      <div className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-[#ffd700]/30 via-[#ffd700]/10 to-transparent" />
+      <div className="absolute left-[19px] top-6 w-3 h-3 rounded-full bg-[#ffd700]/60 ring-2 ring-[#ffd700]/20" />
+      <div className="pl-8">
+        <div className="flex items-center gap-3 mb-3">
+          <p className="text-xs text-[#ffd700]/50 uppercase tracking-wider">Founding Event</p>
+          {event.era && <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#ffd700]/10 text-[#ffd700]/60 border border-[#ffd700]/20">{event.era}</span>}
+        </div>
+        <p className="text-xs text-white/25 mb-2">The beginning of {worldName}</p>
+        <h4 className="font-display font-semibold text-white mb-2">{event.title}</h4>
+        <p className="text-sm text-white/45 leading-relaxed">{event.description}</p>
+      </div>
+    </m.div>
+  );
+}
+
+function PaletteSection({ palette }: { palette: { primary: string; secondary: string; accent: string } }) {
+  const swatches = [["Primary", palette.primary], ["Secondary", palette.secondary], ["Accent", palette.accent]] as const;
+  return (
+    <m.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.2 }} className="mb-10">
+      <p className="text-sm font-mono text-white/30 uppercase tracking-wider mb-4">Palette</p>
+      <div className="flex gap-4">
+        {swatches.map(([label, color]) => (
+          <div key={label} className="flex flex-col items-center gap-2">
+            <div className="w-20 h-14 rounded-xl border border-white/10 shadow-lg" style={{ backgroundColor: color }} />
+            <span className="text-[10px] text-white/30">{label}</span>
+            <span className="text-[11px] text-white/50 font-mono">{color}</span>
+          </div>
+        ))}
+      </div>
     </m.div>
   );
 }
@@ -186,12 +241,14 @@ export default function CreateWorldPage() {
   const [phase, setPhase] = useState<Phase>("input");
   const [description, setDescription] = useState("");
   const [result, setResult] = useState<GenerateResult | null>(null);
+  const [heroImage, setHeroImage] = useState<string | null>(null);
+  const [imageLoading, setImageLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [progressStep, setProgressStep] = useState(0);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [saving, setSaving] = useState(false);
+  const [refining, setRefining] = useState(false);
 
-  // Check auth + pre-fill from query param on mount
   useEffect(() => {
     const supabase = createClient();
     supabase.auth.getUser().then(({ data }) => {
@@ -203,7 +260,6 @@ export default function CreateWorldPage() {
     if (prompt) setDescription(prompt.slice(0, 500));
   }, []);
 
-  // Progress step ticker during generation
   useEffect(() => {
     if (phase !== "generating") return;
     setProgressStep(0);
@@ -213,11 +269,37 @@ export default function CreateWorldPage() {
     return () => clearInterval(interval);
   }, [phase]);
 
-  const generate = useCallback(async () => {
-    const trimmed = description.trim();
+  const generateHeroImage = useCallback(async (imagePrompt: string, worldName: string) => {
+    setImageLoading(true);
+    try {
+      const res = await fetch("/api/worlds/generate-image", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "world",
+          blueprint: { prompt: imagePrompt, name: worldName },
+        }),
+      });
+
+      if (!res.ok) return;
+
+      const data = await res.json();
+      if (data.generated && data.imageData && data.mimeType) {
+        setHeroImage(`data:${data.mimeType};base64,${data.imageData}`);
+      }
+    } catch {
+      // Non-blocking — silently continue without image
+    } finally {
+      setImageLoading(false);
+    }
+  }, []);
+
+  const generate = useCallback(async (desc?: string) => {
+    const trimmed = (desc || description).trim();
     if (!trimmed || trimmed.length < 5) return;
 
     setError(null);
+    setHeroImage(null);
     setPhase("generating");
 
     try {
@@ -235,26 +317,27 @@ export default function CreateWorldPage() {
       const data: GenerateResult = await res.json();
       setResult(data);
       setPhase("result");
+
+      // Phase 2: generate hero image in background
+      if (data.image_prompt) {
+        generateHeroImage(data.image_prompt, data.world.name);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong.");
       setPhase("input");
     }
-  }, [description]);
+  }, [description, generateHeroImage]);
 
   const saveWorld = useCallback(async () => {
     if (!result || saving) return;
     setSaving(true);
 
     try {
-      // The generate endpoint already saves for authenticated users.
-      // If it was saved there, redirect directly.
       if (result.saved && result.world?.slug) {
         window.location.href = `/worlds/${result.world.slug}`;
         return;
       }
 
-      // Otherwise, save via a dedicated POST (for cases where
-      // the user was not authenticated during generation but signed in after).
       const res = await fetch("/api/worlds/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -273,11 +356,24 @@ export default function CreateWorldPage() {
     }
   }, [result, saving, description]);
 
+  const startRefine = () => {
+    setRefining(true);
+  };
+
+  const handleRefine = (suffix: string) => {
+    const newDesc = `${description} -- but make it ${suffix}`;
+    setDescription(newDesc.slice(0, 500));
+    setRefining(false);
+    generate(newDesc.slice(0, 500));
+  };
+
   const reset = () => {
     setPhase("input");
     setDescription("");
     setResult(null);
+    setHeroImage(null);
     setError(null);
+    setRefining(false);
   };
 
   return (
@@ -300,7 +396,7 @@ export default function CreateWorldPage() {
 
         <div className="relative z-10 max-w-4xl mx-auto px-6 pt-8 pb-24">
           <AnimatePresence mode="wait">
-            {/* ── Phase: Input ────────────────────────────── */}
+            {/* -- Phase: Input ----------------------------------------- */}
             {phase === "input" && (
               <m.div
                 key="input"
@@ -310,13 +406,10 @@ export default function CreateWorldPage() {
                 transition={{ duration: 0.5 }}
                 className="flex flex-col items-center text-center"
               >
-                {/* Header */}
                 <div className="mb-2">
                   <div className="inline-flex items-center gap-2 mb-4">
                     <div className="h-px w-8 bg-gradient-to-r from-transparent to-[#00bcd4]/60" />
-                    <span className="text-[#00bcd4] font-mono text-xs tracking-widest uppercase">
-                      World Forge
-                    </span>
+                    <span className="text-[#00bcd4] font-mono text-xs tracking-widest uppercase">World Forge</span>
                     <div className="h-px w-8 bg-gradient-to-l from-transparent to-[#00bcd4]/60" />
                   </div>
                 </div>
@@ -333,7 +426,6 @@ export default function CreateWorldPage() {
                   characters, locations, lore, and a color palette.
                 </p>
 
-                {/* Text area */}
                 <div className="w-full max-w-2xl mb-6">
                   <div className="relative rounded-2xl shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_4px_24px_rgba(0,0,0,0.4)] focus-within:shadow-[0_0_0_1px_rgba(0,188,212,0.3),0_8px_40px_rgba(0,0,0,0.4),0_0_80px_rgba(0,188,212,0.08)] transition-all duration-300">
                     <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/[0.035] via-white/[0.02] to-white/[0.025] backdrop-blur-2xl" />
@@ -341,10 +433,7 @@ export default function CreateWorldPage() {
                       value={description}
                       onChange={(e) => setDescription(e.target.value.slice(0, 500))}
                       onKeyDown={(e) => {
-                        if (e.key === "Enter" && !e.shiftKey) {
-                          e.preventDefault();
-                          generate();
-                        }
+                        if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); generate(); }
                       }}
                       placeholder="A floating archipelago where gravity is controlled by ancient crystals..."
                       rows={3}
@@ -357,11 +446,10 @@ export default function CreateWorldPage() {
                   </div>
                 </div>
 
-                {/* Generate button */}
                 <m.button
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
-                  onClick={generate}
+                  onClick={() => generate()}
                   disabled={description.trim().length < 5}
                   className={`px-10 py-4 rounded-xl font-bold text-base transition-all duration-200 ${
                     description.trim().length >= 5
@@ -372,11 +460,8 @@ export default function CreateWorldPage() {
                   Create World
                 </m.button>
 
-                {/* Example suggestions */}
                 <div className="mt-10 w-full max-w-2xl">
-                  <p className="text-xs text-white/20 mb-3 uppercase tracking-wider">
-                    Try one of these
-                  </p>
+                  <p className="text-xs text-white/20 mb-3 uppercase tracking-wider">Try one of these</p>
                   <div className="flex flex-wrap justify-center gap-2">
                     {EXAMPLES.map((ex) => (
                       <button
@@ -392,12 +477,12 @@ export default function CreateWorldPage() {
               </m.div>
             )}
 
-            {/* ── Phase: Generating ──────────────────────── */}
+            {/* -- Phase: Generating ------------------------------------ */}
             {phase === "generating" && (
               <GeneratingOverlay key="generating" step={progressStep} />
             )}
 
-            {/* ── Phase: Result ──────────────────────────── */}
+            {/* -- Phase: Result ---------------------------------------- */}
             {phase === "result" && result && (
               <m.div
                 key="result"
@@ -406,54 +491,38 @@ export default function CreateWorldPage() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                {/* World header */}
-                <m.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 }}
-                  className="text-center mb-12"
-                >
-                  <p className="text-[#00bcd4] font-mono text-xs tracking-widest uppercase mb-3">
-                    Your World
-                  </p>
-                  <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-3">
-                    {result.world.name}
-                  </h2>
-                  {result.world.tagline && (
-                    <p className="text-lg text-white/50 max-w-xl mx-auto mb-4">
-                      {result.world.tagline}
-                    </p>
-                  )}
-                  {result.world.description && (
-                    <m.p
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.3 }}
-                      className="text-sm text-white/35 max-w-2xl mx-auto leading-relaxed"
-                    >
-                      {result.world.description}
-                    </m.p>
-                  )}
-                </m.div>
+                {/* Hero section with image */}
+                <HeroSection world={result.world} heroImage={heroImage} />
 
-                {/* Element dots */}
-                {result.world.elements && result.world.elements.length > 0 && (
+                {/* Image loading indicator */}
+                {imageLoading && (
                   <m.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 0.4 }}
-                    className="flex items-center justify-center gap-3 mb-10"
+                    className="text-center mb-8"
                   >
-                    {result.world.elements.map((el) => (
-                      <div key={el.name} className="flex items-center gap-1.5">
-                        <span
-                          className="w-3 h-3 rounded-full ring-1 ring-white/10"
-                          style={{ backgroundColor: el.color }}
-                        />
-                        <span className="text-xs text-white/40">{el.name}</span>
-                      </div>
-                    ))}
+                    <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/[0.03] border border-white/[0.06]">
+                      <div className="w-2 h-2 rounded-full bg-[#00bcd4] animate-pulse" />
+                      <span className="text-xs text-white/40">Generating concept art...</span>
+                    </div>
                   </m.div>
+                )}
+
+                {/* Description */}
+                {result.world.description && (
+                  <m.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.3 }}
+                    className="text-sm text-white/35 max-w-2xl mx-auto leading-relaxed text-center mb-10"
+                  >
+                    {result.world.description}
+                  </m.p>
+                )}
+
+                {/* Element orbs */}
+                {result.world.elements && result.world.elements.length > 0 && (
+                  <ElementOrbs elements={result.world.elements} />
                 )}
 
                 {/* Characters */}
@@ -496,26 +565,11 @@ export default function CreateWorldPage() {
 
                 {/* Founding event */}
                 {result.event && (
-                  <m.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1.1 }}
-                    className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-6 mb-10"
-                  >
-                    <p className="text-xs text-[#ffd700]/60 uppercase tracking-wider mb-2">
-                      Founding Event{result.event.era ? ` -- ${result.event.era}` : ""}
-                    </p>
-                    <h4 className="font-display font-semibold text-white mb-2">
-                      {result.event.title}
-                    </h4>
-                    <p className="text-sm text-white/45 leading-relaxed">
-                      {result.event.description}
-                    </p>
-                  </m.div>
+                  <FoundingEvent event={result.event} worldName={result.world.name} />
                 )}
 
                 {/* Palette */}
-                {result.world.palette && <PalettePreview palette={result.world.palette} />}
+                {result.world.palette && <PaletteSection palette={result.world.palette} />}
 
                 {/* CTA */}
                 <m.div
@@ -557,12 +611,44 @@ export default function CreateWorldPage() {
                     )}
 
                     <button
+                      onClick={startRefine}
+                      className="inline-flex items-center gap-2 px-8 py-4 border border-[#ffd700]/20 text-[#ffd700]/60 font-bold rounded-xl hover:bg-[#ffd700]/[0.04] hover:text-[#ffd700]/80 transition-colors"
+                    >
+                      Refine
+                    </button>
+
+                    <button
                       onClick={reset}
                       className="inline-flex items-center gap-2 px-8 py-4 border border-white/[0.1] text-white/60 font-bold rounded-xl hover:bg-white/[0.04] transition-colors"
                     >
                       Start Over
                     </button>
                   </div>
+
+                  {/* Refine options */}
+                  <AnimatePresence>
+                    {refining && (
+                      <m.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="mt-6 overflow-hidden"
+                      >
+                        <p className="text-xs text-white/30 mb-3">Make it...</p>
+                        <div className="flex flex-wrap justify-center gap-2">
+                          {REFINE_SUFFIXES.map((suffix) => (
+                            <button
+                              key={suffix}
+                              onClick={() => handleRefine(suffix)}
+                              className="px-4 py-2 rounded-full text-[13px] text-[#ffd700]/50 hover:text-[#ffd700]/80 bg-[#ffd700]/[0.03] hover:bg-[#ffd700]/[0.08] border border-[#ffd700]/10 hover:border-[#ffd700]/30 transition-all duration-300"
+                            >
+                              {suffix}
+                            </button>
+                          ))}
+                        </div>
+                      </m.div>
+                    )}
+                  </AnimatePresence>
                 </m.div>
               </m.div>
             )}

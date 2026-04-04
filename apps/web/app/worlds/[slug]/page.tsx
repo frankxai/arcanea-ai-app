@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
 import { ElementBadge } from "@/components/worlds/ElementBadge";
+import { WorldActions } from "@/components/worlds/WorldActions";
 import { WorldDetailTabs, type WorldPalette } from "./world-detail-tabs";
 
 // ── Data fetching ────────────────────────────────────────────────────
@@ -197,6 +198,9 @@ export default async function WorldDetailPage({ params }: Props) {
       <section className="max-w-7xl mx-auto px-6 mt-10 pb-24">
         <WorldDetailTabs world={world} palette={palette} slug={slug} />
       </section>
+
+      {/* World Intelligence floating panel */}
+      <WorldActions slug={slug} />
     </main>
   );
 }
