@@ -23,6 +23,8 @@ import {
   generateWorldReport,
   generateConflict,
   weaveNarrative,
+  generateQuest,
+  analyzeFactions,
   characterToImagePrompt,
   locationToImagePrompt,
   creatureToImagePrompt,
@@ -36,7 +38,8 @@ const AVAILABLE_TOOLS = [
   "generate_character", "generate_magic", "generate_location",
   "generate_creature", "generate_artifact", "generate_name",
   "generate_story_prompt", "world_report", "generate_conflict",
-  "weave_narrative", "visualize_character", "visualize_location",
+  "weave_narrative", "generate_quest", "analyze_factions",
+  "visualize_character", "visualize_location",
   "visualize_creature", "get_canon",
 ] as const;
 
@@ -77,6 +80,12 @@ export async function POST(request: NextRequest) {
         break;
       case "weave_narrative":
         result = weaveNarrative([], []);
+        break;
+      case "generate_quest":
+        result = generateQuest([], []);
+        break;
+      case "analyze_factions":
+        result = analyzeFactions([], []);
         break;
       case "visualize_character":
         result = characterToImagePrompt(args);
