@@ -55,6 +55,7 @@ import {
 import { useConversation, getMessageText } from '@/hooks/use-conversation';
 import type { LuminorConfig } from '@/lib/luminors/config';
 import { useChatSessions } from '@/hooks/use-chat-sessions';
+import { useWorldCharacterInit, type WorldCharacterContext } from '@/hooks/use-world-character-init';
 import { useAutoSave } from '@/lib/arc/auto-save';
 import { analytics } from '@/lib/analytics/events';
 import type { ChatMessage as StoredMessage } from '@/lib/chat/local-store';
@@ -102,6 +103,9 @@ export default function ChatPage() {
   const [showAgentPicker, setShowAgentPicker] = useState(false);
   const [activeAgent, setActiveAgent] = useState<{ type: 'auto' | 'luminor'; id: string } | null>(null);
 
+  // World character initialization (from ?character=&world= query params)
+  const worldCharInit = useWorldCharacterInit();
+
   const resolvedAgent = activeAgent?.type === 'luminor' ? (() => {
     const l = getLuminor(activeAgent.id);
     return l ? { type: 'luminor' as const, id: l.id, name: l.name, avatar: l.avatar, specialty: l.specialty } : null;
@@ -122,6 +126,37 @@ export default function ChatPage() {
       window.history.replaceState(null, '', '/chat');
     }
   }, [searchParams]);
+
+  // -------------------------------------------------------------------------
+  // World character → activate as Luminor when loaded
+  // -------------------------------------------------------------------------
+
+  const worldCharApplied = useRef(false);
+  useEffect(() => {
+    if (worldCharApplied.current || !worldCharInit.worldCharacter) return;
+    worldCharApplied.current = true;
+    const wc = worldCharInit.worldCharacter;
+    // Inject as a synthetic Luminor so the system prompt flows through
+    conversation.handleSelectLuminor({
+      id: `world-char-${Date.now()}`,
+      name: wc.characterName,
+      loreName: wc.characterName,
+      title: `Character from ${wc.worldName}`,
+      tagline: `Chatting with ${wc.characterName}`,
+      team: 'creative' as never,
+      academy: 'Synthesis' as never,
+      color: '#00bcd4',
+      gradient: 'from-[#00bcd4] to-[#7c3aed]',
+      avatar: wc.characterPortrait || '/images/luminors/default.webp',
+      wisdom: { philosophy: '', greeting: '', farewell: '' } as never,
+      guardian: [],
+      specialty: 'World Character',
+      description: `${wc.characterName} from ${wc.worldName}`,
+      personality: [],
+      systemPrompt: wc.systemPrompt,
+      quickActions: [],
+    } as LuminorConfig);
+  }, [worldCharInit.worldCharacter, conversation]);
 
   // In-conversation search state
   const [showSearch, setShowSearch] = useState(false);
@@ -482,6 +517,56 @@ export default function ChatPage() {
           </div>
           );
         })()}
+
+        {/* -------- World character banner -------- */}
+        {worldCharInit.isLoading && (
+          <div className="mx-4 mt-2 shrink-0">
+            <div className="bg-[#00bcd4]/5 border border-[#00bcd4]/10 rounded-xl px-4 py-3 flex items-center gap-3">
+              <div className="w-4 h-4 border-2 border-[#00bcd4]/40 border-t-[#00bcd4] rounded-full animate-spin" />
+              <span className="text-sm text-[#9be7f2]">Loading character...</span>
+            </div>
+          </div>
+        )}
+        {worldCharInit.worldCharacter && (
+          <div className="mx-4 mt-2 shrink-0">
+            <div className="bg-[#00bcd4]/5 border border-[#00bcd4]/10 rounded-xl px-4 py-3 flex items-center gap-3">
+              {worldCharInit.worldCharacter.characterPortrait && (
+                <img
+                  src={worldCharInit.worldCharacter.characterPortrait}
+                  alt={worldCharInit.worldCharacter.characterName}
+                  className="w-8 h-8 rounded-full object-cover ring-1 ring-[#00bcd4]/30"
+                />
+              )}
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-[#9be7f2] font-medium truncate">
+                  Chatting with {worldCharInit.worldCharacter.characterName}
+                </p>
+                <p className="text-[11px] text-white/30">
+                  from {worldCharInit.worldCharacter.worldName}
+                </p>
+              </div>
+              <button
+                onClick={() => {
+                  worldCharApplied.current = false;
+                  worldCharInit.clearWorldCharacter();
+                  handleNewChat();
+                }}
+                className="p-1.5 rounded-lg text-white/25 hover:text-white/50 hover:bg-white/[0.04] transition-colors"
+                aria-label="End character chat"
+                title="End character chat"
+              >
+                <PhX className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        )}
+        {worldCharInit.error && (
+          <div className="mx-4 mt-2 shrink-0">
+            <div className="bg-red-500/5 border border-red-500/10 rounded-xl px-4 py-3">
+              <p className="text-sm text-red-300">Failed to load character: {worldCharInit.error}</p>
+            </div>
+          </div>
+        )}
 
         {/* -------- Chat area with messages + input bar -------- */}
         <ChatArea
