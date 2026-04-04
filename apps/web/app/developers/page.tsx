@@ -1,4 +1,17 @@
+import { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Developers — Build on Arcanea",
+  description:
+    "Build on the Arcanea platform. 27 repos, 35 npm packages, MCP server with 42 tools, and comprehensive APIs.",
+  openGraph: {
+    title: "Developers — Build on Arcanea",
+    description:
+      "Build on the Arcanea platform. 27 repos, 35 npm packages, MCP server with 42 tools, and comprehensive APIs.",
+  },
+  alternates: { canonical: "/developers" },
+};
 
 // ─── Inline SVG Icons ───────────────────────────────────────────────────────────
 type InlineSvgProps = { className?: string; style?: React.CSSProperties };

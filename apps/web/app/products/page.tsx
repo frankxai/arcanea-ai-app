@@ -1,5 +1,18 @@
+import { Metadata } from "next";
 import type { JSX } from "react";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Products — The Arcanea Ecosystem",
+  description:
+    "The complete Arcanea ecosystem — MCP servers, CLI tools, agent frameworks, and creative intelligence packages.",
+  openGraph: {
+    title: "Products — The Arcanea Ecosystem",
+    description:
+      "The complete Arcanea ecosystem — MCP servers, CLI tools, agent frameworks, and creative intelligence packages.",
+  },
+  alternates: { canonical: "/products" },
+};
 
 // ─── Types ─────────────────────────────────────────────────────────────────
 

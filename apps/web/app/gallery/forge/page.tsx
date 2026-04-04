@@ -176,7 +176,7 @@ export default function GalleryForgePage() {
                 <h1 className="text-4xl sm:text-5xl font-display font-bold mb-4 text-white">
                   Create stunning visuals with
                   <span className="block bg-gradient-to-r from-[#ffd700] via-[#7fffd4] to-[#78a6ff] bg-clip-text text-transparent">
-                    AI-powered imagination
+                    the Arcanean Forge
                   </span>
                 </h1>
 

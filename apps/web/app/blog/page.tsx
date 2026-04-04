@@ -3,14 +3,15 @@ import Link from "next/link";
 import { BLOG_POSTS, BLOG_CATEGORIES } from "@/lib/blog-data";
 
 export const metadata: Metadata = {
-  title: "Blog",
+  title: "Blog — Arcanea Intelligence",
   description:
-    "Latest insights, tutorials, and stories from the Arcanea universe. Discover creative techniques, platform updates, and practical wisdom.",
+    "Insights on AI-native creation, world-building frameworks, and the future of creative intelligence.",
   openGraph: {
-    title: "Blog",
+    title: "Blog — Arcanea Intelligence",
     description:
-      "Latest insights, tutorials, and stories from the Arcanea universe.",
+      "Insights on AI-native creation, world-building frameworks, and the future of creative intelligence.",
   },
+  alternates: { canonical: "/blog" },
 };
 
 // ─── Inline SVG Icons ───────────────────────────────────────────────────────────

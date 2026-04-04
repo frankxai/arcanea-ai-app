@@ -173,7 +173,7 @@ export default function CoursesPage() {
                 <h1 className="text-4xl sm:text-5xl font-display font-bold mb-6 tracking-tight">
                   Master the art of{' '}
                   <span className="bg-gradient-to-r from-[#ffd700] to-[#a855f7] bg-clip-text text-transparent">
-                    AI-powered creation
+                    world-building
                   </span>
                 </h1>
 

@@ -107,7 +107,7 @@ const navLinks: NavLink[] = [
   },
   {
     href: "/pricing",
-    label: "Pricing",
+    label: "Open Core",
     also: [],
   },
 ];

@@ -1,5 +1,18 @@
+import { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { WorldsClient, type WorldCard } from "./worlds-client";
+
+export const metadata: Metadata = {
+  title: "Worlds — Build Your Universe — Arcanea",
+  description:
+    "Build your own fantasy universe with the Living Worlds engine. Characters, locations, magic systems, and lore — all interconnected.",
+  openGraph: {
+    title: "Worlds — Build Your Universe — Arcanea",
+    description:
+      "Build your own fantasy universe with the Living Worlds engine. Characters, locations, magic systems, and lore — all interconnected.",
+  },
+  alternates: { canonical: "/worlds" },
+};
 
 // ---------------------------------------------------------------------------
 // Template worlds — always available as fallback
