@@ -88,7 +88,7 @@ export function EpisodeReader({ episode, connectedLore, encounters = [], nextEpi
             style={{ top: 3 }}
           >
             <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-2">
-              <p className="truncate text-sm font-semibold text-text-primary font-cinzel">
+              <p className="truncate text-sm font-semibold text-text-primary font-display">
                 {episode.title}
               </p>
               <span className="ml-4 shrink-0 text-xs text-text-muted">
@@ -141,7 +141,7 @@ export function EpisodeReader({ episode, connectedLore, encounters = [], nextEpi
             </span>
           </div>
 
-          <h1 className="font-cinzel text-3xl font-semibold text-text-primary md:text-4xl">
+          <h1 className="font-display text-3xl font-semibold text-text-primary md:text-4xl">
             {episode.title}
           </h1>
 
@@ -173,7 +173,7 @@ export function EpisodeReader({ episode, connectedLore, encounters = [], nextEpi
         <div className="lg:grid lg:grid-cols-[1fr_200px] lg:gap-10">
           {/* Episode content */}
           <div className="min-w-0">
-            <div className="prose prose-invert prose-sm max-w-none prose-headings:font-cinzel prose-headings:text-text-primary prose-p:text-text-muted prose-p:leading-relaxed prose-a:text-atlantean-teal-aqua prose-blockquote:border-l-atlantean-teal-aqua/30 prose-blockquote:text-text-muted/80">
+            <div className="prose prose-invert prose-sm max-w-none prose-headings:font-display prose-headings:text-text-primary prose-p:text-text-muted prose-p:leading-relaxed prose-a:text-atlantean-teal-aqua prose-blockquote:border-l-atlantean-teal-aqua/30 prose-blockquote:text-text-muted/80">
               <ReactMarkdown
                 components={{
                   h2: ({ children, ...props }: { children?: React.ReactNode } & React.ComponentProps<'h2'>) => {
@@ -247,7 +247,7 @@ export function EpisodeReader({ episode, connectedLore, encounters = [], nextEpi
             {/* Related Encounters */}
             {encounters.length > 0 && (
               <section className="mt-10 rounded-2xl border border-white/[0.06] bg-white/[0.03] p-6">
-                <h2 className="font-cinzel text-lg font-semibold text-text-primary mb-1">
+                <h2 className="font-display text-lg font-semibold text-text-primary mb-1">
                   Related Encounters
                 </h2>
                 <p className="text-xs text-text-muted mb-4">
@@ -310,7 +310,7 @@ export function EpisodeReader({ episode, connectedLore, encounters = [], nextEpi
                   className="flex w-full items-center justify-between text-left"
                 >
                   <div>
-                    <h2 className="font-cinzel text-lg font-semibold text-text-primary">
+                    <h2 className="font-display text-lg font-semibold text-text-primary">
                       Connected Lore
                     </h2>
                     <p className="text-xs text-text-muted">

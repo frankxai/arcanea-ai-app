@@ -33,7 +33,7 @@ export default async function LivingLorePage() {
               <p className="text-xs uppercase tracking-[0.25em] text-atlantean-teal-aqua mb-2">
                 New &mdash; Start Here
               </p>
-              <h2 className="font-cinzel text-xl md:text-2xl text-text-primary mb-1">
+              <h2 className="font-display text-xl md:text-2xl text-text-primary mb-1">
                 Meet the Crew
               </h2>
               <p className="text-sm text-text-muted max-w-md">
@@ -70,7 +70,7 @@ export default async function LivingLorePage() {
       {/* The Chronicle */}
       <AnimatedSection className="mt-16 space-y-6">
         <div>
-          <h2 className="text-2xl font-cinzel text-text-primary mb-2">
+          <h2 className="text-2xl font-display text-text-primary mb-2">
             The Chronicle
           </h2>
           <p className="text-text-muted text-sm">

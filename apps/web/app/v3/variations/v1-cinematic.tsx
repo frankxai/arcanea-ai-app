@@ -17,7 +17,7 @@ const GUARDIANS = [
 ];
 
 const S = {
-  cinzel: 'var(--font-display)',
+  display: 'var(--font-display)',
   crimson: 'Crimson Pro, serif',
   mono: 'JetBrains Mono, monospace',
   bg: '#0a0a0f',
@@ -64,7 +64,7 @@ function GlassBtn({ href, color, children }: { href: string; color: string; chil
   const hBorder = color === S.teal ? 'rgba(127,255,212,0.4)' : 'rgba(197,165,90,0.45)';
   return (
     <a href={href} className="inline-flex items-center gap-2 mt-10"
-      style={{ fontFamily: S.cinzel, fontSize: '14px', letterSpacing: '0.12em', color, padding: '14px 36px', border: `1px solid ${border}`, borderRadius: '8px', background: bg, backdropFilter: 'blur(12px)', transition: 'all 0.3s ease' }}
+      style={{ fontFamily: S.display, fontSize: '14px', letterSpacing: '0.12em', color, padding: '14px 36px', border: `1px solid ${border}`, borderRadius: '8px', background: bg, backdropFilter: 'blur(12px)', transition: 'all 0.3s ease' }}
       onMouseEnter={(e) => { e.currentTarget.style.background = hBg; e.currentTarget.style.borderColor = hBorder; }}
       onMouseLeave={(e) => { e.currentTarget.style.background = bg; e.currentTarget.style.borderColor = border; }}
     >{children}</a>
@@ -86,7 +86,7 @@ function CinemaPanel({ title, subtitle, align, children }: { title: string; subt
     <section className="reveal-item relative flex items-center" style={{ minHeight: '80vh', padding: '80px 0' }}>
       <div className={`mx-auto w-full max-w-6xl px-6 flex ${fd} items-center gap-16 flex-wrap lg:flex-nowrap`}>
         <div className={`flex-1 min-w-[280px] ${ta}`}>
-          <h2 style={{ fontFamily: S.cinzel, fontSize: 'clamp(32px,5vw,48px)', color: S.text, lineHeight: 1.2, letterSpacing: '0.04em' }}>{title}</h2>
+          <h2 style={{ fontFamily: S.display, fontSize: 'clamp(32px,5vw,48px)', color: S.text, lineHeight: 1.2, letterSpacing: '0.04em' }}>{title}</h2>
           <p className="mt-5" style={{ fontFamily: S.crimson, fontSize: '18px', color: 'rgba(232,230,225,0.6)', lineHeight: 1.7, maxWidth: align === 'center' ? '540px' : '440px', margin: align === 'center' ? '20px auto 0' : undefined }}>{subtitle}</p>
         </div>
         <div className="flex-1 min-w-[280px] flex items-center justify-center">{children}</div>
@@ -117,7 +117,7 @@ export function V1Cinematic() {
         <div aria-hidden className="absolute pointer-events-none"
           style={{ top: '50%', left: '50%', width: '700px', height: '400px', background: `radial-gradient(ellipse, rgba(127,255,212,0.12) 0%, rgba(127,255,212,0.03) 40%, transparent 70%)`, animation: 'auroraBreath 8s ease-in-out infinite', transformOrigin: '0 0' }} />
         <div className="relative z-10 text-center px-6" style={{ maxWidth: '900px' }}>
-          <h1 style={{ fontFamily: S.cinzel, fontSize: 'clamp(40px,8vw,110px)', fontWeight: 400, lineHeight: 1.05, letterSpacing: '0.02em' }}>
+          <h1 style={{ fontFamily: S.display, fontSize: 'clamp(40px,8vw,110px)', fontWeight: 400, lineHeight: 1.05, letterSpacing: '0.02em' }}>
             Where AI Meets Mythology
           </h1>
           <p className="mt-6" style={{ fontFamily: S.crimson, fontSize: 'clamp(16px,2vw,20px)', color: S.dim, lineHeight: 1.6, maxWidth: '520px', margin: '24px auto 0' }}>
@@ -130,7 +130,7 @@ export function V1Cinematic() {
       {/* GUARDIAN SHOWCASE */}
       <section className="reveal-item py-24">
         <div className="mx-auto max-w-6xl px-6">
-          <h2 className="text-center mb-12" style={{ fontFamily: S.cinzel, fontSize: 'clamp(28px,4vw,48px)', letterSpacing: '0.04em' }}>
+          <h2 className="text-center mb-12" style={{ fontFamily: S.display, fontSize: 'clamp(28px,4vw,48px)', letterSpacing: '0.04em' }}>
             The Ten Guardians
           </h2>
           <div className="relative">
@@ -141,7 +141,7 @@ export function V1Cinematic() {
                   <div key={g.name} className="flex-shrink-0 snap-center flex flex-col items-center justify-end"
                     style={{ width: '240px', height: '320px', background: S.glass, border: `1px solid ${S.glassBorder}`, borderRadius: '12px', padding: '24px 20px', backdropFilter: 'blur(8px)' }}>
                     <Icon size={28} weight="light" color={S.teal} />
-                    <p className="mt-4 text-center" style={{ fontFamily: S.cinzel, fontSize: '18px', letterSpacing: '0.08em' }}>{g.name}</p>
+                    <p className="mt-4 text-center" style={{ fontFamily: S.display, fontSize: '18px', letterSpacing: '0.08em' }}>{g.name}</p>
                     <p className="mt-1" style={{ fontFamily: S.mono, fontSize: '12px', color: S.teal, opacity: 0.7 }}>{g.hz} Hz</p>
                     <p className="mt-1" style={{ fontFamily: S.crimson, fontSize: '14px', color: 'rgba(232,230,225,0.5)' }}>{g.element}</p>
                   </div>
@@ -194,7 +194,7 @@ export function V1Cinematic() {
 
       {/* CTA */}
       <section className="reveal-item flex flex-col items-center justify-center py-32 px-6">
-        <h2 style={{ fontFamily: S.cinzel, fontSize: 'clamp(32px,5vw,56px)', letterSpacing: '0.04em', textAlign: 'center' }}>
+        <h2 style={{ fontFamily: S.display, fontSize: 'clamp(32px,5vw,56px)', letterSpacing: '0.04em', textAlign: 'center' }}>
           Begin Your Story
         </h2>
         <GlassBtn href="/discover" color={S.gold}>Start Creating <ArrowRight size={16} weight="bold" /></GlassBtn>
@@ -203,7 +203,7 @@ export function V1Cinematic() {
       {/* FOOTER */}
       <footer className="flex flex-col sm:flex-row items-center justify-between gap-4 px-6 py-8 mx-auto max-w-6xl"
         style={{ borderTop: '1px solid rgba(255,255,255,0.04)', fontFamily: S.crimson, fontSize: '14px', color: 'rgba(232,230,225,0.3)' }}>
-        <span style={{ fontFamily: S.cinzel, fontSize: '13px', letterSpacing: '0.1em', color: 'rgba(232,230,225,0.4)' }}>Arcanea</span>
+        <span style={{ fontFamily: S.display, fontSize: '13px', letterSpacing: '0.1em', color: 'rgba(232,230,225,0.4)' }}>Arcanea</span>
         <div className="flex gap-6">
           {['About', 'Library', 'Studio'].map((l) => (
             <a key={l} href={`/${l.toLowerCase()}`} className="hover:opacity-70 transition-opacity">{l}</a>

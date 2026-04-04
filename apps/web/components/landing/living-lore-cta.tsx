@@ -34,7 +34,7 @@ export function LivingLoreCTA() {
             <p className="text-xs uppercase tracking-[0.25em] text-text-muted mb-3">
               The Living Lore
             </p>
-            <h2 className="font-cinzel text-2xl md:text-3xl text-text-primary mb-2">
+            <h2 className="font-display text-2xl md:text-3xl text-text-primary mb-2">
               Follow seven beings through the Ten Gates
             </h2>
             <p className="text-text-muted text-sm max-w-lg mb-8">

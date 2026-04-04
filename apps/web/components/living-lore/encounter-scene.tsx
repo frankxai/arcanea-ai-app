@@ -155,7 +155,7 @@ export function EncounterScene({ encounter, crewMembers, choices = [] }: Encount
             <p className="text-[11px] uppercase tracking-widest text-text-dim font-semibold mb-3">
               Act {encounter.act} &mdash; Encounter
             </p>
-            <h2 className="font-cinzel text-xl md:text-2xl font-bold text-text-primary mb-6">
+            <h2 className="font-display text-xl md:text-2xl font-bold text-text-primary mb-6">
               {encounter.title}
             </h2>
 
@@ -207,7 +207,7 @@ export function EncounterScene({ encounter, crewMembers, choices = [] }: Encount
               <button
                 onClick={() => setSceneStarted(true)}
                 disabled={!preChatDone}
-                className="animate-pulse-glow font-cinzel text-sm font-semibold px-6 py-3 rounded-xl border border-atlantean-teal-aqua/30 bg-atlantean-teal-aqua/10 text-atlantean-teal-aqua hover:bg-atlantean-teal-aqua/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300"
+                className="animate-pulse-glow font-display text-sm font-semibold px-6 py-3 rounded-xl border border-atlantean-teal-aqua/30 bg-atlantean-teal-aqua/10 text-atlantean-teal-aqua hover:bg-atlantean-teal-aqua/20 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-300"
               >
                 Enter the Scene
               </button>
@@ -231,7 +231,7 @@ export function EncounterScene({ encounter, crewMembers, choices = [] }: Encount
                   </span>
                 ))}
               </div>
-              <span className="font-cinzel text-xs font-semibold text-text-primary truncate">
+              <span className="font-display text-xs font-semibold text-text-primary truncate">
                 {encounter.title}
               </span>
               {sceneComplete && (
@@ -384,7 +384,7 @@ export function EncounterScene({ encounter, crewMembers, choices = [] }: Encount
                     initial={{ scale: 0.8 }}
                     animate={{ scale: [0.8, 1.2, 1] }}
                     transition={{ duration: 0.6 }}
-                    className="font-cinzel text-lg font-semibold text-gold-bright text-glow-soft"
+                    className="font-display text-lg font-semibold text-gold-bright text-glow-soft"
                   >
                     Scene Complete
                   </m.p>

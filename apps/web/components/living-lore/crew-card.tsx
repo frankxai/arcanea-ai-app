@@ -30,7 +30,7 @@ export function CrewCard({ member, expanded = false }: CrewCardProps) {
           {member.avatar}
         </div>
         <div className="min-w-0 flex-1">
-          <h3 className="font-cinzel text-lg font-semibold text-text-primary group-hover:text-atlantean-teal-aqua transition-colors">
+          <h3 className="font-display text-lg font-semibold text-text-primary group-hover:text-atlantean-teal-aqua transition-colors">
             {member.name}
           </h3>
           <p className="text-xs text-text-muted">{member.title}</p>

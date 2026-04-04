@@ -20,7 +20,7 @@ export function QuickAccessSection() {
               href="/living-lore/chronicle"
               className="group block rounded-2xl liquid-glass p-6 hover:border-atlantean-teal-aqua/20 hover:shadow-[0_0_20px_rgba(127,255,212,0.12)] transition-all duration-300"
             >
-              <p className="font-cinzel text-sm font-semibold text-text-primary group-hover:text-atlantean-teal-aqua transition-colors">
+              <p className="font-display text-sm font-semibold text-text-primary group-hover:text-atlantean-teal-aqua transition-colors">
                 The Chronicle
               </p>
               <p className="text-xs text-text-muted mt-1">
@@ -33,7 +33,7 @@ export function QuickAccessSection() {
               href="/living-lore/crew"
               className="group block rounded-2xl liquid-glass p-6 hover:border-atlantean-teal-aqua/20 hover:shadow-[0_0_20px_rgba(127,255,212,0.12)] transition-all duration-300"
             >
-              <p className="font-cinzel text-sm font-semibold text-text-primary group-hover:text-atlantean-teal-aqua transition-colors">
+              <p className="font-display text-sm font-semibold text-text-primary group-hover:text-atlantean-teal-aqua transition-colors">
                 Meet the Crew
               </p>
               <p className="text-xs text-text-muted mt-1">
@@ -46,7 +46,7 @@ export function QuickAccessSection() {
               href="/living-lore/gallery"
               className="group block rounded-2xl liquid-glass p-6 hover:border-atlantean-teal-aqua/20 hover:shadow-[0_0_20px_rgba(127,255,212,0.12)] transition-all duration-300"
             >
-              <p className="font-cinzel text-sm font-semibold text-text-primary group-hover:text-atlantean-teal-aqua transition-colors">
+              <p className="font-display text-sm font-semibold text-text-primary group-hover:text-atlantean-teal-aqua transition-colors">
                 Gallery
               </p>
               <p className="text-xs text-text-muted mt-1">
@@ -59,7 +59,7 @@ export function QuickAccessSection() {
               href="/living-lore/journal"
               className="group block rounded-2xl liquid-glass p-6 hover:border-atlantean-teal-aqua/20 hover:shadow-[0_0_20px_rgba(127,255,212,0.12)] transition-all duration-300"
             >
-              <p className="font-cinzel text-sm font-semibold text-text-primary group-hover:text-atlantean-teal-aqua transition-colors">
+              <p className="font-display text-sm font-semibold text-text-primary group-hover:text-atlantean-teal-aqua transition-colors">
                 Your Journey
               </p>
               <p className="text-xs text-text-muted mt-1">

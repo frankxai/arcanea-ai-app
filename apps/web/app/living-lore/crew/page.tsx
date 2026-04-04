@@ -20,7 +20,7 @@ export default function CrewPage() {
 
       {/* Header */}
       <section className="mb-12 text-center">
-        <h1 className="font-cinzel text-4xl font-semibold text-gradient-cosmic md:text-5xl">
+        <h1 className="font-display text-4xl font-semibold text-gradient-cosmic md:text-5xl">
           The Crew
         </h1>
         <p className="mt-3 text-lg text-text-muted">

@@ -16,7 +16,7 @@ export function LivingLoreHero() {
             variants={slideUp}
             initial="hidden"
             animate="visible"
-            className="font-cinzel text-5xl md:text-6xl lg:text-7xl font-semibold text-gradient-cosmic"
+            className="font-display text-5xl md:text-6xl lg:text-7xl font-semibold text-gradient-cosmic"
           >
             The Living Lore
           </m.h1>

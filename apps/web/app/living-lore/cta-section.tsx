@@ -15,7 +15,7 @@ export function CtaSection() {
         viewport={{ once: true, margin: '-80px' }}
       >
         <div className="mx-auto max-w-lg rounded-2xl liquid-glass-elevated p-10">
-          <h2 className="font-cinzel text-xl font-semibold text-text-primary mb-3">
+          <h2 className="font-display text-xl font-semibold text-text-primary mb-3">
             Begin Your Journey
           </h2>
           <p className="text-text-muted text-sm mb-6">

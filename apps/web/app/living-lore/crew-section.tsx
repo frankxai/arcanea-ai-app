@@ -20,7 +20,7 @@ export function CrewSection({ crew }: Props) {
         viewport={{ once: true, margin: '-80px' }}
       >
         <div>
-          <h2 className="text-2xl font-cinzel text-text-primary mb-2">
+          <h2 className="text-2xl font-display text-text-primary mb-2">
             The Crew
           </h2>
           <p className="text-text-muted text-sm">

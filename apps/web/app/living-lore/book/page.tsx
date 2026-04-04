@@ -119,7 +119,7 @@ export default async function BookPage() {
             {meta.series} &mdash; Volume {meta.volume}
           </p>
 
-          <h1 className="font-cinzel text-3xl md:text-5xl text-gradient-cosmic mb-4">
+          <h1 className="font-display text-3xl md:text-5xl text-gradient-cosmic mb-4">
             {meta.title}
           </h1>
 
@@ -163,7 +163,7 @@ export default async function BookPage() {
 
       {/* Chapter List */}
       <section>
-        <h2 className="font-cinzel text-xl text-text-primary mb-6">
+        <h2 className="font-display text-xl text-text-primary mb-6">
           Chapters
         </h2>
 

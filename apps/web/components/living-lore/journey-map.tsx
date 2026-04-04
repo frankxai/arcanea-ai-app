@@ -145,7 +145,7 @@ export function JourneyMap({ acts, gatesOpen = 0 }: JourneyMapProps) {
                 <div className="flex items-center gap-3">
                   <div className="min-w-0 flex-1">
                     <h3
-                      className={`font-cinzel text-base font-semibold ${
+                      className={`font-display text-base font-semibold ${
                         isLocked
                           ? 'text-text-dim'
                           : 'text-text-primary'

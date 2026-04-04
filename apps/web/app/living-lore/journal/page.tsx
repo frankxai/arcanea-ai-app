@@ -165,7 +165,7 @@ export default function JournalPage() {
           initial="hidden"
           animate="visible"
         >
-          <h1 className="font-cinzel text-3xl font-semibold text-text-primary md:text-4xl">
+          <h1 className="font-display text-3xl font-semibold text-text-primary md:text-4xl">
             Your Journey
           </h1>
           <p className="mt-2 text-sm text-text-muted leading-relaxed">
@@ -186,7 +186,7 @@ export default function JournalPage() {
               <p className="text-[11px] uppercase tracking-widest text-text-dim font-semibold mb-2">
                 Magic Rank
               </p>
-              <h2 className="font-cinzel text-2xl font-bold text-gradient-cosmic text-glow-soft">
+              <h2 className="font-display text-2xl font-bold text-gradient-cosmic text-glow-soft">
                 {rank}
               </h2>
               <p className="mt-1 text-sm text-text-muted leading-relaxed">
@@ -242,7 +242,7 @@ export default function JournalPage() {
           initial="hidden"
           animate="visible"
         >
-          <m.h2 variants={staggerItem} className="font-cinzel text-lg font-semibold text-text-primary mb-4">
+          <m.h2 variants={staggerItem} className="font-display text-lg font-semibold text-text-primary mb-4">
             The Ten Gates
           </m.h2>
           <m.div
@@ -304,7 +304,7 @@ export default function JournalPage() {
           initial="hidden"
           animate="visible"
         >
-          <m.h2 variants={staggerItem} className="font-cinzel text-lg font-semibold text-text-primary mb-1">
+          <m.h2 variants={staggerItem} className="font-display text-lg font-semibold text-text-primary mb-1">
             Crew Bonds
           </m.h2>
           <m.p variants={staggerItem} className="text-xs text-text-muted mb-5">
@@ -390,7 +390,7 @@ export default function JournalPage() {
           initial="hidden"
           animate="visible"
         >
-          <m.h2 variants={staggerItem} className="font-cinzel text-lg font-semibold text-text-primary mb-4">
+          <m.h2 variants={staggerItem} className="font-display text-lg font-semibold text-text-primary mb-4">
             Recent Activity
           </m.h2>
 

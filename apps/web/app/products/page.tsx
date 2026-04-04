@@ -170,7 +170,7 @@ function ProductCard({ product }: { product: Product }) {
               {product.icon}
             </div>
             <div>
-              <h3 className="font-[family-name:var(--font-cinzel)] text-lg font-semibold text-white">
+              <h3 className="font-[family-name:var(--font-display)] text-lg font-semibold text-white">
                 {product.name}
               </h3>
               <p className="text-sm text-[#7fffd4]/80">{product.tagline}</p>
@@ -227,7 +227,7 @@ export default function ProductsPage(): JSX.Element {
           <p className="mb-4 text-sm font-medium uppercase tracking-[0.2em] text-[#7fffd4]/70">
             Arcanea Products
           </p>
-          <h1 className="font-[family-name:var(--font-cinzel)] text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+          <h1 className="font-[family-name:var(--font-display)] text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
             Infrastructure for the
             <br />
             <span className="bg-gradient-to-r from-[#7fffd4] via-[#78a6ff] to-[#ffd700] bg-clip-text text-transparent">
@@ -264,7 +264,7 @@ export default function ProductsPage(): JSX.Element {
         {/* ── Social Proof ──────────────────────────────────────────── */}
         <section className="mb-24">
           <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-10 text-center backdrop-blur-sm">
-            <p className="mb-2 font-[family-name:var(--font-cinzel)] text-2xl font-semibold text-white">
+            <p className="mb-2 font-[family-name:var(--font-display)] text-2xl font-semibold text-white">
               Trusted by 1,000+ AI agents
             </p>
             <p className="mb-8 text-sm text-white/40">
@@ -273,7 +273,7 @@ export default function ProductsPage(): JSX.Element {
             <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
               {STATS.map((stat) => (
                 <div key={stat.label} className="flex flex-col items-center gap-1">
-                  <span className="font-[family-name:var(--font-cinzel)] text-3xl font-bold text-[#7fffd4]">
+                  <span className="font-[family-name:var(--font-display)] text-3xl font-bold text-[#7fffd4]">
                     {stat.value}
                   </span>
                   <span className="text-sm text-white/50">{stat.label}</span>
@@ -285,7 +285,7 @@ export default function ProductsPage(): JSX.Element {
 
         {/* ── Bottom CTA ────────────────────────────────────────────── */}
         <section className="text-center">
-          <h2 className="font-[family-name:var(--font-cinzel)] text-2xl font-semibold text-white sm:text-3xl">
+          <h2 className="font-[family-name:var(--font-display)] text-2xl font-semibold text-white sm:text-3xl">
             One command. Everything your agent needs.
           </h2>
           <div className="mt-6 flex justify-center">

@@ -10,7 +10,7 @@ const T = {
   bg: '#09090b', card: '#18181b', border: 'rgba(255,255,255,0.06)',
   text: '#fafafa', muted: '#a1a1aa', dim: '#71717a',
   violet: '#8b5cf6', teal: '#7fffd4', red: '#ef4444', gold: '#ffd700',
-  cinzel: 'var(--font-display)', crimson: '"Crimson Pro", serif', mono: '"JetBrains Mono", monospace',
+  display: 'var(--font-display)', crimson: '"Crimson Pro", serif', mono: '"JetBrains Mono", monospace',
 } as const;
 
 const TABS = ['For You', 'Explore', 'Create'] as const;
@@ -68,7 +68,7 @@ const sideCard: CSSProperties = {
   background: T.card, border: `1px solid ${T.border}`, borderRadius: 16, padding: 20,
 };
 const sideHead: CSSProperties = {
-  fontFamily: T.cinzel, fontSize: 14, fontWeight: 700, letterSpacing: 1,
+  fontFamily: T.display, fontSize: 14, fontWeight: 700, letterSpacing: 1,
   margin: '0 0 14px', display: 'flex', alignItems: 'center', gap: 6,
 };
 
@@ -87,7 +87,7 @@ function CardContent({ id }: { id: string }) {
       borderRadius: 16, padding: '28px 24px',
     }}>
       <Quotes size={28} weight="fill" style={{ color: T.violet, opacity: 0.4, marginBottom: 8 }} />
-      <p style={{ fontFamily: T.cinzel, fontSize: 20, lineHeight: 1.6, color: T.text, margin: '0 0 12px' }}>
+      <p style={{ fontFamily: T.display, fontSize: 20, lineHeight: 1.6, color: T.text, margin: '0 0 12px' }}>
         Fear is not the enemy of creation. Indifference is.
       </p>
       <span style={{ fontFamily: T.crimson, fontSize: 13, color: T.muted }}>Laws of Arcanea, Text III</span>
@@ -141,7 +141,7 @@ export function V8Social() {
           maxWidth: 1200, margin: '0 auto', padding: '0 20px', height: 56,
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         }}>
-          <span style={{ fontFamily: T.cinzel, fontSize: 20, fontWeight: 700, letterSpacing: 2 }}>ARCANEA</span>
+          <span style={{ fontFamily: T.display, fontSize: 20, fontWeight: 700, letterSpacing: 2 }}>ARCANEA</span>
           <nav style={{ display: 'flex' }}>
             {TABS.map(tab => (
               <button key={tab} onClick={() => setActiveTab(tab)} style={{
@@ -179,7 +179,7 @@ export function V8Social() {
           }}>
             <div style={{ background: T.card, borderRadius: 14, padding: '32px 28px', textAlign: 'center' }}>
               <h1 style={{
-                fontFamily: T.cinzel, fontSize: 28, fontWeight: 700, margin: '0 0 8px',
+                fontFamily: T.display, fontSize: 28, fontWeight: 700, margin: '0 0 8px',
                 background: `linear-gradient(135deg,${T.text},${T.teal})`,
                 WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
               }}>Welcome to Arcanea</h1>
@@ -208,7 +208,7 @@ export function V8Social() {
                 <div style={{
                   width: 40, height: 40, borderRadius: '50%', background: c.grad,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontFamily: T.cinzel, fontSize: 14, fontWeight: 700, color: T.bg, flexShrink: 0,
+                  fontFamily: T.display, fontSize: 14, fontWeight: 700, color: T.bg, flexShrink: 0,
                 }}>{c.init}</div>
                 <div>
                   <span style={{ fontFamily: T.crimson, fontSize: 15, fontWeight: 600 }}>{c.user}</span>

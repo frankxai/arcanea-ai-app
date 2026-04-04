@@ -93,7 +93,7 @@ export function CrewDetailView({
             )}
             <div className="text-center sm:text-left">
               <h1
-                className="font-cinzel text-4xl font-semibold text-text-primary text-glow-soft"
+                className="font-display text-4xl font-semibold text-text-primary text-glow-soft"
                 style={{ textShadow: `0 0 20px ${member.color}40` }}
               >
                 {member.name}
@@ -188,7 +188,7 @@ export function CrewDetailView({
           animate="visible"
           className="liquid-glass mb-12 rounded-2xl p-6"
         >
-          <h2 className="mb-2 font-cinzel text-lg text-text-primary">
+          <h2 className="mb-2 font-display text-lg text-text-primary">
             Bond Level
           </h2>
           <p className="mb-4 text-xs text-text-muted">
@@ -212,10 +212,10 @@ export function CrewDetailView({
             animate="visible"
             className="mb-12"
           >
-            <h2 className="mb-4 font-cinzel text-2xl text-text-primary">
+            <h2 className="mb-4 font-display text-2xl text-text-primary">
               Backstory
             </h2>
-            <div className="prose prose-invert prose-sm max-w-none prose-headings:font-cinzel prose-headings:text-text-primary prose-p:leading-relaxed prose-p:text-text-muted">
+            <div className="prose prose-invert prose-sm max-w-none prose-headings:font-display prose-headings:text-text-primary prose-p:leading-relaxed prose-p:text-text-muted">
               <ReactMarkdown>{backstory}</ReactMarkdown>
             </div>
           </m.section>
@@ -224,7 +224,7 @@ export function CrewDetailView({
         {/* Encounters */}
         {encounters.length > 0 && (
           <section className="mb-12">
-            <h2 className="mb-2 font-cinzel text-2xl text-text-primary">
+            <h2 className="mb-2 font-display text-2xl text-text-primary">
               Encounters
             </h2>
             <p className="mb-4 text-sm text-text-muted">
@@ -273,7 +273,7 @@ export function CrewDetailView({
         {/* Connected Lore */}
         {connectedTexts.length > 0 && (
           <section>
-            <h2 className="mb-4 font-cinzel text-2xl text-text-primary">
+            <h2 className="mb-4 font-display text-2xl text-text-primary">
               Connected Lore
             </h2>
             <p className="mb-4 text-sm text-text-muted">

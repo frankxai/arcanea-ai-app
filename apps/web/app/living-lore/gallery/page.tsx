@@ -60,7 +60,7 @@ function GalleryCard({
         <div className="border-t border-white/[0.06] p-5">
           <div className="flex items-start justify-between gap-2">
             <div>
-              <h3 className="font-cinzel text-lg font-semibold text-text-primary transition-colors group-hover:text-atlantean-teal-aqua">
+              <h3 className="font-display text-lg font-semibold text-text-primary transition-colors group-hover:text-atlantean-teal-aqua">
                 {member.name}
               </h3>
               <p className="mt-0.5 text-xs text-text-muted">{member.title}</p>
@@ -140,7 +140,7 @@ export default function GalleryPage() {
           animate="visible"
           className="mb-12 text-center"
         >
-          <h1 className="font-cinzel text-4xl font-bold text-gradient-cosmic sm:text-5xl">
+          <h1 className="font-display text-4xl font-bold text-gradient-cosmic sm:text-5xl">
             The Crew
           </h1>
           <p className="mx-auto mt-4 max-w-lg text-text-muted">

@@ -25,7 +25,7 @@ export default function EncounterLandingPage() {
         <p className="text-xs uppercase tracking-[0.25em] text-atlantean-teal-aqua mb-4">
           Interactive Narrative
         </p>
-        <h1 className="font-cinzel text-3xl md:text-4xl text-text-primary mb-4">
+        <h1 className="font-display text-3xl md:text-4xl text-text-primary mb-4">
           Encounters live inside the Chronicle.
         </h1>
         <p className="text-text-muted leading-relaxed mb-8">

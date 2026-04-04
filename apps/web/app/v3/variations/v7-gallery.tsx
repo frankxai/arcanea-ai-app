@@ -34,7 +34,7 @@ const T = {
   bg: '#141414', text: '#d4d0c8', gold: '#c5a55a',
   dim: 'rgba(212,208,200,0.4)', divider: 'rgba(255,255,255,0.2)',
   shadow: 'rgba(0,0,0,0.5)',
-  cinzel: 'var(--font-display)', crimson: 'Crimson Pro, serif',
+  display: 'var(--font-display)', crimson: 'Crimson Pro, serif',
 } as const;
 
 const CSS = `
@@ -45,7 +45,7 @@ const CSS = `
 function Plaque({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
     <p className={className} style={{
-      fontFamily: T.cinzel, fontSize: '11px', letterSpacing: '0.25em',
+      fontFamily: T.display, fontSize: '11px', letterSpacing: '0.25em',
       textTransform: 'uppercase' as const, color: T.dim,
     }}>
       {children}
@@ -57,7 +57,7 @@ function ExhibitTitle({ title, subtitle }: { title: string; subtitle: string }) 
   return (
     <div className="mb-16 text-center">
       <h2 style={{
-        fontFamily: T.cinzel, fontSize: '13px', letterSpacing: '0.3em',
+        fontFamily: T.display, fontSize: '13px', letterSpacing: '0.3em',
         textTransform: 'uppercase' as const, color: T.gold, marginBottom: '12px',
       }}>
         {title}
@@ -112,7 +112,7 @@ function BookSpine({ book }: { book: typeof BOOKS[number] }) {
 function DiagramNode({ label, gold }: { label: string; gold?: boolean }) {
   return (
     <p style={{
-      fontFamily: T.cinzel, fontSize: gold ? '15px' : '13px',
+      fontFamily: T.display, fontSize: gold ? '15px' : '13px',
       letterSpacing: gold ? '0.2em' : '0.15em',
       color: gold ? T.gold : T.text, fontWeight: gold ? 600 : 400,
     }}>
@@ -140,7 +140,7 @@ export function V7Gallery() {
         {/* ENTRANCE */}
         <section className="flex flex-col items-center justify-center min-h-screen px-4">
           <h1 style={{
-            fontFamily: T.cinzel, fontSize: '14px',
+            fontFamily: T.display, fontSize: '14px',
             letterSpacing: '0.5em', textTransform: 'uppercase' as const, color: T.text,
           }}>
             ARCANEA
@@ -228,14 +228,14 @@ export function V7Gallery() {
             width: '40px', height: '1px', backgroundColor: T.divider,
           }} />
           <p style={{
-            fontFamily: T.cinzel, fontSize: '12px', letterSpacing: '0.4em',
+            fontFamily: T.display, fontSize: '12px', letterSpacing: '0.4em',
             textTransform: 'uppercase' as const, color: T.text, marginBottom: '20px',
           }}>
             Arcanea &mdash; Permanent Collection
           </p>
           <Plaque>Open Source &middot; Free Entry &middot; arcanea.ai</Plaque>
           <p className="mt-6" style={{
-            fontFamily: T.cinzel, fontSize: '11px', letterSpacing: '0.3em', color: T.dim,
+            fontFamily: T.display, fontSize: '11px', letterSpacing: '0.3em', color: T.dim,
           }}>
             Est. 2026
           </p>

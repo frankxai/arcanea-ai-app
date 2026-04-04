@@ -100,7 +100,7 @@ function IntroStep({ onContinue }: { onContinue: () => void }) {
         variants={fadeUp}
         initial="hidden"
         animate="visible"
-        className="font-cinzel text-3xl md:text-4xl lg:text-5xl text-text-primary leading-tight"
+        className="font-display text-3xl md:text-4xl lg:text-5xl text-text-primary leading-tight"
       >
         Seven beings were called to walk the Ten Gates.
       </m.h1>
@@ -163,7 +163,7 @@ function CrewStep({ member }: { member: CrewMember }) {
         variants={fadeUp}
         initial="hidden"
         animate="visible"
-        className="font-cinzel text-4xl md:text-5xl font-semibold text-text-primary text-glow-soft"
+        className="font-display text-4xl md:text-5xl font-semibold text-text-primary text-glow-soft"
         style={{ textShadow: `0 0 30px ${member.color}40` }}
       >
         {member.name}
@@ -235,7 +235,7 @@ function ChooseStep({
         variants={fadeUp}
         initial="hidden"
         animate="visible"
-        className="font-cinzel text-2xl md:text-3xl text-text-primary mb-2"
+        className="font-display text-2xl md:text-3xl text-text-primary mb-2"
       >
         Choose Your Companion
       </m.h2>
@@ -284,7 +284,7 @@ function ChooseStep({
                 {member.avatar}
               </div>
               <p
-                className="font-cinzel text-sm font-semibold text-text-primary"
+                className="font-display text-sm font-semibold text-text-primary"
                 style={
                   isSelected
                     ? { color: member.color, textShadow: `0 0 12px ${member.color}40` }

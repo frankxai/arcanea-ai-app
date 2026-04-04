@@ -52,7 +52,7 @@ export function ChronicleContent({ acts, allActs }: ChronicleContentProps) {
           initial="hidden"
           animate="visible"
         >
-          <h1 className="font-cinzel text-4xl font-semibold text-text-primary md:text-5xl">
+          <h1 className="font-display text-4xl font-semibold text-text-primary md:text-5xl">
             The Chronicle
           </h1>
           <p className="mt-3 text-lg text-text-muted">
@@ -95,7 +95,7 @@ export function ChronicleContent({ acts, allActs }: ChronicleContentProps) {
                     {actStub.number}
                   </span>
                   <div>
-                    <h2 className="font-cinzel text-xl font-semibold text-text-primary">
+                    <h2 className="font-display text-xl font-semibold text-text-primary">
                       Act {actStub.number}: {actStub.title}
                     </h2>
                     <p className="text-xs text-text-muted">
