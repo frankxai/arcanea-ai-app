@@ -26,18 +26,55 @@ OVERLAY_REPOS=(
 CLAUDE_REPO="frankxai/claude-arcanea"
 CLAUDE_BRANCH="master"
 
-# --- Shared .arcanea/ files to sync to OSS ---
-SHARED_PATHS=(
-  ".arcanea/ops/AGENT_BOOTSTRAP.md"
-  ".arcanea/ops/ao.md"
-  ".arcanea/ops/commands/status.md"
-  ".arcanea/ops/commands/handover.md"
-  ".arcanea/ops/commands/digest.md"
-  ".arcanea/ops/commands/cleanup.md"
-  ".arcanea/ops/commands/sync.md"
+# --- Shared .arcanea/ categories to sync to OSS ---
+# These are framework files that belong in the canonical OSS repo.
+# Product-specific files (sis/, sessions/, experiments/, memory/, secrets/) are excluded.
+SHARED_CATEGORIES=(
+  ".arcanea/ops"
+  ".arcanea/lore"
+  ".arcanea/config"
+  ".arcanea/prompts"
+  ".arcanea/agents"
   ".arcanea/scripts/ao-init.sh"
   ".arcanea/scripts/ao-init.ps1"
+  ".arcanea/scripts/ao-sync.sh"
+  ".arcanea/CLAUDE.md"
 )
+
+# Excluded from sync (product-specific or local-only)
+# .arcanea/sis/          — SIS bridge (product-specific)
+# .arcanea/sessions/     — local session state
+# .arcanea/experiments/  — experimental research
+# .arcanea/memory/       — local agent memory
+# .arcanea/secrets/      — credentials (never sync)
+# .arcanea/node_modules/ — dependencies
+# .arcanea/starlight-vault/ — local vault fragments
+# .arcanea/MASTER_PLAN.md — product vision (not ops)
+# .arcanea/plans/        — product planning
+# .arcanea/projects/     — product PM state
+# .arcanea/strategy/     — product strategy
+# .arcanea/reports/       — generated reports
+# .arcanea/runtime/      — local runtime state
+# .arcanea/voice/        — local voice recordings
+
+# Build the file list dynamically from categories
+SHARED_PATHS=()
+for cat in "${SHARED_CATEGORIES[@]}"; do
+  if [ -f "$cat" ]; then
+    SHARED_PATHS+=("$cat")
+  elif [ -d "$cat" ]; then
+    while IFS= read -r -d '' file; do
+      # Skip binaries, node_modules, secrets, .git
+      case "$file" in
+        */node_modules/*|*/secrets/*|*/.git/*|*.lock|*.png|*.jpg|*.wav) continue ;;
+      esac
+      SHARED_PATHS+=("$file")
+    done < <(find "$cat" -type f -print0 2>/dev/null)
+  fi
+done
+
+echo "Found ${#SHARED_PATHS[@]} shared files to sync"
+echo ""
 
 # --- Helper: push file to repo via GitHub API ---
 push_file() {
