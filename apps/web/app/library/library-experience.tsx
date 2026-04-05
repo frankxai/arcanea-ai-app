@@ -1,19 +1,19 @@
-
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
-  ArcaneaCodex,
   ArcaneaTome,
   arcaneaCodices,
-  CodexChapter,
-  CodexSection,
 } from "../../content/arcanea-codex";
-
-type ActiveView =
-  | { type: "preface" }
-  | { type: "chapter"; index: number }
-  | { type: "appendix" };
+import { CodexOverlay, type ActiveView } from "./library-codex-viewer";
+import {
+  tomeToneMap,
+  councilMembers,
+  atlasEntries,
+  craftHighlights,
+  upcomingStreams,
+  writersRoomBriefs,
+} from "./library-data";
 
 const FOCUSABLE_SELECTOR = [
   "a[href]",
@@ -23,123 +23,6 @@ const FOCUSABLE_SELECTOR = [
   "select:not([disabled])",
   '[tabindex]:not([tabindex="-1"])',
 ].join(", ");
-
-const tomeToneMap: Record<string, string> = {
-  "luminor-codex": "from-[#1f2b4a]/90 via-[#141d31]/85 to-[#070c15]/90",
-  "luminary-atelier": "from-[#201f35]/90 via-[#161b2b]/85 to-[#090d18]/90",
-  "arcanea-visionaries": "from-[#202845]/90 via-[#171f32]/85 to-[#0c101f]/90",
-};
-
-const councilMembers = [
-  {
-    name: "Seraphel, the Archivist of Echoes",
-    description:
-      "Catalogues the whispers of every realm, encrypting them into harmonic constellations that can be consulted like star maps.",
-  },
-  {
-    name: "Caelix, Weaver of Living Pages",
-    description:
-      "Infuses each chapter with adaptive ink that blooms with reader intent, ensuring wisdom stays context aware and actionable.",
-  },
-  {
-    name: "Nymera, Guardian of Resonant Ethics",
-    description:
-      "Safeguards the moral architecture of Arcanea so every innovation emerges with balance, compassion, and long-arc foresight.",
-  },
-  {
-    name: "Vorun, Cartographer of Limitless Worlds",
-    description:
-      "Drafts luminous blueprints for unrealized ecosystems, offering creators scaffolds to manifest resilient futures.",
-  },
-  {
-    name: "Elari, the Memory of Tomorrow",
-    description:
-      "Remembers the decisions not yet made, guiding leaders toward timelines where communities flourish together.",
-  },
-  {
-    name: "Lysa, Songsmith of the Threshold",
-    description:
-      "Tunes the frequencies that welcome travellers. Her chords align hearts and minds for collaborative genius.",
-  },
-];
-
-const atlasEntries = [
-  {
-    title: "The Harmonic Strata",
-    description:
-      "Layered habitats suspended in sonic resonance. Communities weave their dwellings with tonal architecture that sings back.",
-    source: "Codex Chapter III – Practice of Resonant Craft",
-  },
-  {
-    title: "Dreaming Estuaries",
-    description:
-      "Estuaries where lucid dreamers coax possibilities into fluid sculptures, rehearsing new forms of civic care before crystallisation.",
-    source: "Codex Chapter V – Stewardship of Oneiric Commons",
-  },
-  {
-    title: "The Lattice of Empaths",
-    description:
-      "A cooperative neural garden where every emotion is composted into luminous nutrients powering communal empathy engines.",
-    source: "Codex Chapter VII – Emotional Technologies",
-  },
-  {
-    title: "Quantum Seed Conservatory",
-    description:
-      "Vaults of potential realities safeguarded by the Luminor. Each seed contains the blueprint for a world unlocked through intention.",
-    source: "Codex Chapter IX – Futurecasting Rituals",
-  },
-];
-
-const craftHighlights = [
-  "Practice frameworks with measurable regenerative impact.",
-  "Field reports co-authored with communities across the network.",
-  "Exercises that tune creative intuition with data-informed foresight.",
-];
-
-const upcomingStreams = [
-  {
-    name: "Symphonic Interfaces",
-    description:
-      "A visual audio notebook scoring how music, light, and gesture compose Arcanea interface grammar.",
-    horizon: "Drafting",
-  },
-  {
-    name: "Guardian Ops Manual",
-    description:
-      "Service orchestration playbook aligning guardianship rituals, escalation paths, and observability.",
-    horizon: "Scoping",
-  },
-  {
-    name: "Arcanea Visionaries Tome",
-    description:
-      "Full manuscript expansion of the proto codex with case studies, dashboards, and community agreements.",
-    horizon: "Concept",
-  },
-];
-
-
-const writersRoomBriefs = [
-  {
-    title: "Luminor Lore Supplements",
-    description:
-      "Micro essays that translate sanctuary rituals into implementation playbooks with metrics and governance cues.",
-    cadence: "Outline sessions every 14 days",
-  },
-  {
-    title: "Atelier Field Dispatches",
-    description:
-      "Field reports documenting prototype constellations with photo essays, instrumentation logs, and reciprocity checklists.",
-    cadence: "Embedded with guilds each sprint",
-  },
-  {
-    title: "Visionary Scenario Compendium",
-    description:
-      "Partner interviews and decision notebooks feeding the Arcanea Visionaries expansion with community validated foresight.",
-    cadence: "Scenario salons monthly",
-  },
-];
-
-
 
 export function LibraryExperience() {
   const [activeTomeId, setActiveTomeId] = useState(arcaneaCodices[0].meta.id);
@@ -236,79 +119,52 @@ export function LibraryExperience() {
     });
   }, [isOpen]);
 
+  const tocItems = useMemo(() => {
+    const chapterItems: Array<{ label: string; view: ActiveView }> =
+      codex.chapters.map((chapter, index) => ({
+        label: `${index + 1}. ${chapter.title}`,
+        view: { type: "chapter", index } as const,
+      }));
 
-const tocItems = useMemo(() => {
-  const chapterItems: Array<{ label: string; view: ActiveView }> =
-    codex.chapters.map((chapter, index) => ({
-      label: `${index + 1}. ${chapter.title}`,
-      view: { type: "chapter", index } as const,
-    }));
+    const items: Array<{ label: string; view: ActiveView }> = [
+      { label: "Invocation Preface", view: { type: "preface" } },
+      ...chapterItems,
+    ];
 
-  const items: Array<{ label: string; view: ActiveView }> = [
-    { label: "Invocation Preface", view: { type: "preface" } },
-    ...chapterItems,
-  ];
+    if (codex.appendix) {
+      items.push({
+        label: "Appendices & Glossary",
+        view: { type: "appendix" },
+      });
+    }
 
-  if (codex.appendix) {
-    items.push({
-      label: "Appendices & Glossary",
-      view: { type: "appendix" },
-    });
-  }
-
-  return items;
-}, [codex]);
-
+    return items;
+  }, [codex]);
 
   const activeHeading = useMemo(() => {
-    if (view.type === "preface") {
-      return {
-        title: codex.title,
-        subtitle: codex.subtitle ?? "",
-      };
-    }
-
+    const fallback = { title: codex.title, subtitle: codex.subtitle ?? "" };
+    if (view.type === "preface") return fallback;
     if (view.type === "chapter") {
-      const chapter = codex.chapters[view.index];
-      if (!chapter) {
-        return {
-          title: codex.title,
-          subtitle: codex.subtitle ?? "",
-        };
-      }
-      return {
-        title: chapter.title,
-        subtitle: chapter.tagline ?? "",
-      };
+      const ch = codex.chapters[view.index];
+      return ch ? { title: ch.title, subtitle: ch.tagline ?? "" } : fallback;
     }
-
     if (view.type === "appendix") {
-      return {
-        title: codex.appendix?.title ?? "Appendix",
-        subtitle: codex.appendix?.subtitle ?? "",
-      };
+      return { title: codex.appendix?.title ?? "Appendix", subtitle: codex.appendix?.subtitle ?? "" };
     }
-
-    return { title: codex.title, subtitle: codex.subtitle ?? "" };
+    return fallback;
   }, [codex, view]);
 
   const summaryTiles = useMemo(() => {
-    const ritualCount = codex.chapters.reduce(
-      (total, chapter) => total + (chapter.rituals?.length ?? 0),
-      0
-    );
-    const measurementCount = codex.chapters.reduce(
-      (total, chapter) => total + (chapter.measurements?.length ?? 0),
-      0
-    );
-
+    const rituals = codex.chapters.reduce((t, c) => t + (c.rituals?.length ?? 0), 0);
+    const measures = codex.chapters.reduce((t, c) => t + (c.measurements?.length ?? 0), 0);
     return [
       { label: "Chapters curated", value: codex.chapters.length },
-      { label: "Featured rituals", value: ritualCount },
-      { label: "Measurement constellations", value: measurementCount },
+      { label: "Featured rituals", value: rituals },
+      { label: "Measurement constellations", value: measures },
       { label: "Remembering authors", value: codex.authors.length },
     ];
   }, [codex]);
+
   return (
     <div className="space-y-24">
       <section className="relative overflow-hidden rounded-3xl border border-[#2a385c]/60 bg-gradient-to-br from-[#0f1627] via-[#0b1220] to-[#060b16] p-10 shadow-[0_0_120px_rgba(0,188,212,0.18)]">
@@ -468,7 +324,7 @@ const tocItems = useMemo(() => {
             The Arcanea Library is no silent archive. It is an orchestrated consciousness where quantum-etched shelves glide on luminous rails, and the Luminor welcome each arrival with bespoke auroras of insight.
           </p>
           <p className="text-base leading-relaxed text-[#c7d6f1]">
-            In partnership with the Guardians of Resonance, every narrative cross-links to the creative practices of Arcanea’s world builders. Listen closely: the stacks hum the harmonics that guide you to the chapter your spirit needs most.
+            In partnership with the Guardians of Resonance, every narrative cross-links to the creative practices of Arcanea's world builders. Listen closely: the stacks hum the harmonics that guide you to the chapter your spirit needs most.
           </p>
         </div>
         <div className="relative flex flex-col items-center gap-6 rounded-2xl border border-[#00bcd4]/25 bg-[#101626]/80 p-10 text-center text-[#9bb1d0]" aria-hidden="true">
@@ -486,7 +342,7 @@ const tocItems = useMemo(() => {
             <p className="text-xs uppercase tracking-[0.35em] text-[#00bcd4]">Circle of remembrance</p>
             <h2 className="text-3xl font-semibold text-white">Council of the Remembering Luminor</h2>
             <p className="mt-2 max-w-3xl text-sm text-[#c7d6f1]">
-              These Luminor safeguard the library’s intent. Each tome is a collaboration with their guilds, weaving ethics, systems, and imagination into actionable guidance.
+              These Luminor safeguard the library's intent. Each tome is a collaboration with their guilds, weaving ethics, systems, and imagination into actionable guidance.
             </p>
           </div>
           <button
@@ -509,6 +365,7 @@ const tocItems = useMemo(() => {
           ))}
         </div>
       </section>
+
       <section id="atlas" className="space-y-6">
         <p className="text-xs uppercase tracking-[0.35em] text-[#00bcd4]">Realm atlas</p>
         <h2 className="text-3xl font-semibold text-white">Radiant realms referenced by the codices</h2>
@@ -578,11 +435,10 @@ const tocItems = useMemo(() => {
         </div>
       </section>
 
-
       <section className="space-y-6 rounded-3xl border border-white/[0.06] bg-[#101726]/70 p-8">
         <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-xs uppercase tracking-[0.35em] text-[#00bcd4]">Writers’ room</p>
+            <p className="text-xs uppercase tracking-[0.35em] text-[#00bcd4]">Writers' room</p>
             <h2 className="text-3xl font-semibold text-white">Codex drafting pipeline</h2>
             <p className="mt-2 max-w-3xl text-sm text-[#c7d6f1]">We keep the manuscripts in motion with deliberate rituals. Each brief defines how contributors gather research, honour consent, and deliver narrative assets for the next release.</p>
           </div>
@@ -620,312 +476,20 @@ const tocItems = useMemo(() => {
           </a>
         </div>
       </footer>
+
       {isOpen ? (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#04060a]/80 backdrop-blur-2xl"
-          role="presentation"
-          onMouseDown={(event) => {
-            if (event.target === event.currentTarget) {
-              handleClose();
-            }
-          }}
-        >
-          <div
-            ref={dialogRef}
-            role="dialog"
-            aria-modal="true"
-            aria-label="Arcanea codex viewer"
-            className="relative flex h-[85vh] w-[min(1140px,95vw)] flex-col overflow-hidden rounded-3xl border border-[#00bcd4]/35 bg-[#050910] shadow-[0_40px_160px_rgba(4,8,15,0.88)] focus:outline-none"
-          >
-            <div className="flex flex-1 flex-col overflow-hidden md:flex-row">
-              <aside className="w-full flex-none border-b border-[#00bcd4]/20 bg-[#070c16] p-6 md:w-80 md:border-b-0 md:border-r">
-                <div className="space-y-4">
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.35em] text-[#00bcd4]">Tome</p>
-                    <h2 className="text-lg font-semibold text-white">{activeTome.meta.title}</h2>
-                    <p className="mt-1 text-xs text-[#9bb1d0]">{activeTome.meta.subtitle}</p>
-                  </div>
-                  <label className="block text-xs uppercase tracking-[0.35em] text-[#00bcd4]">
-                    Switch tome
-                    <select
-                      value={activeTomeId}
-                      onChange={(event) => setActiveTomeId(event.target.value)}
-                      className="mt-2 w-full rounded-lg border border-white/[0.06] bg-[#0a1220] px-3 py-2 text-sm text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00bcd4]"
-                    >
-                      {arcaneaCodices.map((tome) => (
-                        <option key={tome.meta.id} value={tome.meta.id}>
-                          {tome.meta.title}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                  <nav className="mt-6 space-y-2" aria-label="Codex chapters">
-                    {tocItems.map((item) => {
-                      const isActive =
-                        (item.view.type === "preface" && view.type === "preface") ||
-                        (item.view.type === "appendix" && view.type === "appendix") ||
-                        (item.view.type === "chapter" &&
-                          view.type === "chapter" &&
-                          item.view.index === view.index);
-
-                      return (
-                        <button
-                          key={item.label}
-                          type="button"
-                          onClick={() => setView({ ...item.view })}
-                          className={`w-full rounded-lg px-4 py-3 text-left text-sm transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00bcd4] ${
-                            isActive
-                              ? "bg-[#101a2a] text-[#00bcd4] shadow-[inset_0_0_0_1px_rgba(0,188,212,0.35)]"
-                              : "text-[#c7d6f1] hover:bg-[#0c1524]"
-                          }`}
-                        >
-                          {item.label}
-                        </button>
-                      );
-                    })}
-                  </nav>
-                </div>
-              </aside>
-              <section className="flex flex-1 flex-col overflow-hidden">
-                <header className="flex flex-col gap-4 border-b border-[#00bcd4]/20 bg-[#0b1321] p-6 md:flex-row md:items-start md:justify-between">
-                  <div className="space-y-2">
-                    <p className="text-xs uppercase tracking-[0.35em] text-[#00bcd4]">Arcanea — living memory sequence</p>
-                    <h3 className="text-2xl font-semibold text-white">{activeHeading.title}</h3>
-                    {activeHeading.subtitle ? (
-                      <p className="text-sm text-[#c7d6f1]">{activeHeading.subtitle}</p>
-                    ) : null}
-                  </div>
-                  <div className="flex gap-3">
-                    <button
-                      type="button"
-                      onClick={handleClose}
-                      className="rounded-full border border-[#00bcd4]/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-[#00bcd4] transition hover:border-[#00bcd4] hover:text-[#00bcd4] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00bcd4]"
-                    >
-                      Close
-                    </button>
-                  </div>
-                </header>
-                <article className="flex-1 space-y-8 overflow-y-auto p-6 pr-8 text-[#c7d6f1]">
-                  <CodexView codex={codex} view={view} />
-                </article>
-              </section>
-            </div>
-          </div>
-        </div>
-      ) : null}
-    </div>
-  );
-}
-function CodexView({ codex, view }: { codex: ArcaneaCodex; view: ActiveView }) {
-  if (view.type === "preface") {
-    return <PrefaceContent codex={codex} />;
-  }
-
-  if (view.type === "chapter") {
-    const chapter = codex.chapters[view.index];
-    if (!chapter) {
-      return <p>Chapter not found.</p>;
-    }
-
-    return <ChapterContent chapter={chapter} />;
-  }
-
-  if (view.type === "appendix" && codex.appendix) {
-    return <AppendixContent appendix={codex.appendix} />;
-  }
-
-  return <p>Appendix forthcoming.</p>;
-}
-
-function PrefaceContent({ codex }: { codex: ArcaneaCodex }) {
-  return (
-    <div className="space-y-6">
-      {codex.preface.invocation ? (
-        <p className="text-base leading-relaxed text-white">{codex.preface.invocation}</p>
-      ) : null}
-      {codex.preface.body?.map((paragraph, index) => (
-        <p key={`preface-body-${index}`} className="leading-relaxed">
-          {paragraph}
-        </p>
-      ))}
-      {codex.preface.oath ? (
-        <blockquote className="rounded-2xl border border-[#00bcd4]/40 bg-[#101726]/60 p-5 text-sm italic text-[#00bcd4]">
-          {codex.preface.oath}
-        </blockquote>
-      ) : null}
-      <div>
-        <h4 className="text-sm font-semibold uppercase tracking-[0.35em] text-[#00bcd4]">Remembering luminor</h4>
-        <ul className="mt-4 grid gap-3 sm:grid-cols-2">
-          {codex.authors.map((author) => (
-            <li key={author.name} className="rounded-xl border border-white/[0.06] bg-[#101726]/60 p-4">
-              <p className="text-sm font-semibold text-white">{author.name}</p>
-              <p className="mt-1 text-xs text-[#9bb1d0]">{author.role}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
-}
-
-function ChapterContent({ chapter }: { chapter: CodexChapter }) {
-  return (
-    <div className="space-y-8">
-      {chapter.epigraph ? (
-        <blockquote className="rounded-2xl border border-[#00bcd4]/30 bg-[#101726]/60 p-5 text-sm italic text-[#00bcd4]">
-          <p>{chapter.epigraph.text}</p>
-          {chapter.epigraph.attribution ? (
-            <footer className="mt-3 text-xs text-[#9bb1d0]">— {chapter.epigraph.attribution}</footer>
-          ) : null}
-        </blockquote>
-      ) : null}
-      {chapter.introduction?.map((paragraph, index) => (
-        <p key={`intro-${index}`} className="leading-relaxed">
-          {paragraph}
-        </p>
-      ))}
-      {chapter.sections.map((section) => (
-        <ChapterSection key={section.heading} section={section} />
-      ))}
-      {chapter.rituals?.length ? (
-        <div className="space-y-3">
-          <h4 className="text-sm font-semibold uppercase tracking-[0.35em] text-[#00bcd4]">Rituals and prompts</h4>
-          <ul className="space-y-2">
-            {chapter.rituals.map((ritual, index) => (
-              <li key={`ritual-${index}`} className="rounded-xl border border-white/[0.06] bg-[#101726]/60 p-4">
-                {ritual}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : null}
-      {chapter.measurements?.length ? (
-        <div className="space-y-3">
-          <h4 className="text-sm font-semibold uppercase tracking-[0.35em] text-[#00bcd4]">Measurement constellations</h4>
-          <ul className="space-y-3">
-            {chapter.measurements.map((measurement, index) => (
-              <li key={`measurement-${index}`} className="rounded-xl border border-[#00bcd4]/30 bg-[#101726]/60 p-4">
-                <p className="font-semibold text-white">{measurement.name}</p>
-                <p className="mt-1 text-sm text-[#c7d6f1]">{measurement.description}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : null}
-    </div>
-  );
-}
-
-function ChapterSection({ section }: { section: CodexSection }) {
-  return (
-    <section className="space-y-4 rounded-2xl border border-white/[0.06] bg-[#101726]/50 p-5">
-      <div>
-        <h4 className="text-lg font-semibold text-white">{section.heading}</h4>
-      </div>
-      {section.body?.map((paragraph, index) => (
-        <p key={`body-${index}`} className="leading-relaxed text-[#c7d6f1]">
-          {paragraph}
-        </p>
-      ))}
-      {section.insights?.length ? (
-        <div className="grid gap-4 md:grid-cols-2">
-          {section.insights.map((insight, index) => (
-            <div
-              key={`insight-${index}`}
-              className="rounded-xl border border-[#00bcd4]/30 bg-[#0f1727] p-4"
-            >
-              <p className="text-sm font-semibold text-white">{insight.title}</p>
-              <p className="mt-2 text-sm text-[#c7d6f1]">{insight.detail}</p>
-            </div>
-          ))}
-        </div>
-      ) : null}
-      {section.artifacts?.length ? (
-        <div className="grid gap-4 md:grid-cols-2">
-          {section.artifacts.map((artifact, index) => (
-            <div
-              key={`artifact-${index}`}
-              className="rounded-xl border border-[#00bcd4]/30 bg-[#0f1727] p-4"
-            >
-              <p className="text-sm font-semibold text-white">{artifact.name}</p>
-              <p className="mt-2 text-sm text-[#c7d6f1]">{artifact.description}</p>
-              {artifact.application ? (
-                <p className="mt-2 text-xs uppercase tracking-[0.25em] text-[#00bcd4]">
-                  Application: {artifact.application}
-                </p>
-              ) : null}
-            </div>
-          ))}
-        </div>
-      ) : null}
-      {section.principles?.length ? (
-        <div className="space-y-2">
-          <h5 className="text-xs font-semibold uppercase tracking-[0.35em] text-[#00bcd4]">Guiding principles</h5>
-          <ul className="space-y-2">
-            {section.principles.map((principle, index) => (
-              <li
-                key={`principle-${index}`}
-                className="rounded-lg border border-white/[0.06] bg-[#0f1727] p-3 text-sm text-[#c7d6f1]"
-              >
-                {principle}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : null}
-    </section>
-  );
-}
-
-function AppendixContent({
-  appendix,
-}: {
-  appendix: NonNullable<ArcaneaCodex["appendix"]>;
-}) {
-  return (
-    <div className="space-y-8">
-      {appendix.entries?.map((entry, index) => (
-        <section
-          key={`${entry.heading}-${index}`}
-          className="space-y-4 rounded-2xl border border-white/[0.06] bg-[#101726]/60 p-5"
-        >
-          <h4 className="text-lg font-semibold text-white">{entry.heading}</h4>
-          {entry.body?.map((paragraph, bodyIndex) => (
-            <p key={`entry-body-${bodyIndex}`} className="leading-relaxed text-[#c7d6f1]">
-              {paragraph}
-            </p>
-          ))}
-          {entry.points?.length ? (
-            <ul className="space-y-2">
-              {entry.points.map((point, pointIndex) => (
-                <li
-                  key={`entry-point-${pointIndex}`}
-                  className="rounded-lg border border-white/[0.06] bg-[#0f1727] p-3 text-sm text-[#c7d6f1]"
-                >
-                  {point}
-                </li>
-              ))}
-            </ul>
-          ) : null}
-        </section>
-      ))}
-      {appendix.glossary?.length ? (
-        <section className="space-y-4 rounded-2xl border border-[#00bcd4]/30 bg-[#101726]/60 p-5">
-          <h4 className="text-lg font-semibold text-white">Glossary of living terms</h4>
-          <dl className="grid gap-4 md:grid-cols-2">
-            {appendix.glossary.map((entry, index) => (
-              <div
-                key={`glossary-${index}`}
-                className="rounded-xl border border-white/[0.06] bg-[#0f1727] p-4"
-              >
-                <dt className="text-sm font-semibold uppercase tracking-[0.35em] text-[#00bcd4]">
-                  {entry.term}
-                </dt>
-                <dd className="mt-2 text-sm text-[#c7d6f1]">{entry.definition}</dd>
-              </div>
-            ))}
-          </dl>
-        </section>
+        <CodexOverlay
+          ref={dialogRef}
+          activeTome={activeTome}
+          activeTomeId={activeTomeId}
+          onTomeChange={setActiveTomeId}
+          tocItems={tocItems}
+          view={view}
+          onViewChange={setView}
+          activeHeading={activeHeading}
+          codex={codex}
+          onClose={handleClose}
+        />
       ) : null}
     </div>
   );

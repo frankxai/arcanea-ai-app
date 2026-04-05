@@ -1,56 +1,23 @@
 "use client";
 
-import { m, LazyMotion, domAnimation, useInView } from "framer-motion";
-import { useRef } from "react";
+import { m, LazyMotion, domAnimation } from "framer-motion";
 import Link from "next/link";
-
-import Image from "next/image";
 import {
   Sparkle,
-  Sun,
-  Spiral,
-  ArrowRight,
-  GraduationCap,
-  Books,
   ChatCircleDots,
+  Books,
 } from "@/lib/phosphor-icons";
-import { getFeaturedLuminors } from "@/lib/luminor-images";
+import { VISION_CARDS } from "./about-data";
 import {
-  VISION_CARDS,
-  ELEMENTS,
-  GUARDIANS,
-  ACADEMY_HOUSES,
-  MAGIC_RANKS,
-} from "./about-data";
-
-// ---------------------------------------------------------------------------
-// Animated section wrapper
-// ---------------------------------------------------------------------------
-
-function AnimatedSection({
-  children,
-  className = "",
-  delay = 0,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  delay?: number;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-
-  return (
-    <m.section
-      ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay }}
-      className={className}
-    >
-      {children}
-    </m.section>
-  );
-}
+  AnimatedSection,
+  MythologySection,
+  GuardiansSection,
+  JourneySection,
+  LuminorShowcase,
+  ArcaneanCodeSection,
+  CreatorJourneySection,
+  FounderSection,
+} from "./about-sections";
 
 // ---------------------------------------------------------------------------
 // Component
@@ -62,7 +29,6 @@ export function AboutContent() {
     <div className="relative min-h-screen bg-[#09090b]">
       {/* ── Section 1: Hero ───────────────────────────────────────────── */}
       <section className="relative overflow-hidden pt-16 pb-24">
-        {/* Cosmic gradient background */}
         <div className="absolute inset-0 -z-10">
           <div className="absolute top-0 left-1/4 w-[700px] h-[700px] bg-gradient-radial from-[#00bcd4]/10 via-transparent to-transparent rounded-full blur-3xl" />
           <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-gradient-radial from-[#0d47a1]/10 via-transparent to-transparent rounded-full blur-3xl" />
@@ -138,741 +104,37 @@ export function AboutContent() {
       </section>
 
       {/* ── Section 1.5: Stats Bar ─────────────────────────────────────── */}
-      <AnimatedSection className="pb-20 relative">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6">
-            {[
-              { value: "190K+", label: "Words of Intelligence" },
-              { value: "17", label: "Knowledge Collections" },
-              { value: "10", label: "Mastery Gates" },
-              { value: "16", label: "AI Intelligences" },
-              { value: "27", label: "Open Source Repos" },
-            ].map((stat, i) => (
-              <m.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.06 * i }}
-                className="text-center p-5 rounded-2xl liquid-glass border border-white/[0.06]"
-              >
-                <p className="text-2xl md:text-3xl font-display font-bold text-[#00bcd4] mb-1">
-                  {stat.value}
-                </p>
-                <p className="text-xs text-text-muted tracking-wide">
-                  {stat.label}
-                </p>
-              </m.div>
-            ))}
-          </div>
-        </div>
-      </AnimatedSection>
+      <StatsBar />
 
       {/* ── Section 1.75: Our Intelligence ────────────────────────────── */}
-      <AnimatedSection className="pb-24 relative">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <p className="text-xs font-mono tracking-[0.3em] uppercase text-[#00bcd4]/50 mb-4">
-              Architecture
-            </p>
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-              Our Intelligence
-            </h2>
-            <p className="text-text-secondary max-w-2xl mx-auto leading-relaxed">
-              Not a wrapper around GPT. A purpose-built creative intelligence
-              system with proprietary knowledge, specialized agents, and a
-              three-layer architecture.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
-            <div className="p-6 rounded-2xl liquid-glass border border-[#00bcd4]/20">
-              <div className="w-10 h-10 rounded-xl bg-[#00bcd4]/10 flex items-center justify-center mb-4">
-                <span className="text-[#00bcd4] font-display font-bold text-sm">16</span>
-              </div>
-              <h3 className="text-lg font-display font-semibold mb-2">
-                Specialized AI Intelligences
-              </h3>
-              <p className="text-sm text-text-secondary leading-relaxed">
-                Each trained on a specific creative domain — writing, research,
-                design, music, code, strategy, and world-building. Not one
-                general AI. Sixteen specialized minds.
-              </p>
-            </div>
-
-            <div className="p-6 rounded-2xl liquid-glass border border-[#ffd700]/20">
-              <div className="w-10 h-10 rounded-xl bg-[#ffd700]/10 flex items-center justify-center mb-4">
-                <span className="text-[#ffd700] font-display font-bold text-sm">190K</span>
-              </div>
-              <h3 className="text-lg font-display font-semibold mb-2">
-                Words of Creative Philosophy
-              </h3>
-              <p className="text-sm text-text-secondary leading-relaxed">
-                The knowledge foundation that trains every AI in the system.
-                Original philosophy grounded in consciousness, creativity, and
-                transformation — not scraped data.
-              </p>
-            </div>
-
-            <div className="p-6 rounded-2xl liquid-glass border border-[#0d47a1]/20">
-              <div className="w-10 h-10 rounded-xl bg-[#0d47a1]/10 flex items-center justify-center mb-4">
-                <span className="text-[#0d47a1] font-display font-bold text-sm">3</span>
-              </div>
-              <h3 className="text-lg font-display font-semibold mb-2">
-                Three-Layer Architecture
-              </h3>
-              <p className="text-sm text-text-secondary leading-relaxed">
-                Starlight Intelligence (memory + learning) feeds Intelligence OS
-                (orchestration + routing), which powers the Platform (creation
-                tools you interact with).
-              </p>
-            </div>
-
-            <div className="p-6 rounded-2xl liquid-glass border border-purple-500/20">
-              <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center mb-4">
-                <span className="text-purple-400 font-display font-bold text-sm">10</span>
-              </div>
-              <h3 className="text-lg font-display font-semibold mb-2">
-                Progression Gates
-              </h3>
-              <p className="text-sm text-text-secondary leading-relaxed">
-                From Apprentice to Luminor mastery. Each Gate unlocks deeper AI
-                capabilities, specialized training, and creative power. Progress
-                earned through creation.
-              </p>
-            </div>
-          </div>
-
-          <div className="p-6 rounded-2xl liquid-glass border border-white/[0.06] text-center">
-            <h3 className="text-lg font-display font-semibold mb-3">
-              Open Source Ecosystem
-            </h3>
-            <p className="text-sm text-text-secondary leading-relaxed max-w-2xl mx-auto mb-4">
-              27 repositories. 35 npm packages. 54 skills. Fork it, extend it,
-              build on it. The entire intelligence stack is source-available.
-            </p>
-            <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs font-mono text-white/25">
-              <span>Next.js 16</span>
-              <span className="text-white/10">·</span>
-              <span>React 19</span>
-              <span className="text-white/10">·</span>
-              <span>Supabase</span>
-              <span className="text-white/10">·</span>
-              <span>Vercel</span>
-              <span className="text-white/10">·</span>
-              <span>Claude</span>
-              <span className="text-white/10">·</span>
-              <span>Gemini</span>
-            </div>
-          </div>
-        </div>
-      </AnimatedSection>
+      <IntelligenceSection />
 
       {/* ── Section 2: The Vision ─────────────────────────────────────── */}
-      <AnimatedSection className="py-24 relative">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-              Six Layers, One Multiverse
-            </h2>
-            <p className="text-text-secondary max-w-2xl mx-auto leading-relaxed">
-              All six coexist. None is &ldquo;the real Arcanea.&rdquo;
-              Together they form a creative multiverse where
-              imagination becomes reality.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {VISION_CARDS.map((card, i) => {
-              const Icon = card.icon;
-              const colorMap: Record<string, string> = {
-                "[#ffd700]": "border-[#ffd700]/20 hover:border-[#ffd700]/40",
-                "[#00bcd4]": "border-[#00bcd4]/20 hover:border-[#00bcd4]/40",
-                "[#0d47a1]": "border-[#0d47a1]/20 hover:border-[#0d47a1]/40",
-                "draconic-crimson": "border-red-500/20 hover:border-red-500/40",
-              };
-              const textMap: Record<string, string> = {
-                "[#ffd700]": "text-[#ffd700]",
-                "[#00bcd4]": "text-[#00bcd4]",
-                "[#0d47a1]": "text-[#0d47a1]",
-                "draconic-crimson": "text-red-400",
-              };
-              const bgMap: Record<string, string> = {
-                "[#ffd700]": "bg-[#ffd700]/10",
-                "[#00bcd4]": "bg-[#00bcd4]/10",
-                "[#0d47a1]": "bg-[#0d47a1]/10",
-                "draconic-crimson": "bg-red-500/10",
-              };
-
-              return (
-                <m.div
-                  key={card.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.1 * i }}
-                  className={`relative card-3d p-6 rounded-2xl liquid-glass border transition-all duration-300 group ${colorMap[card.color]}`}
-                >
-                  <div
-                    className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${bgMap[card.color]}`}
-                  >
-                    <Icon
-                      className={`w-6 h-6 ${textMap[card.color]}`}
-                      weight="duotone"
-                    />
-                  </div>
-                  <h3 className="text-lg font-display font-semibold mb-2">
-                    {card.title}
-                  </h3>
-                  <p className="text-sm text-text-secondary leading-relaxed">
-                    {card.description}
-                  </p>
-                </m.div>
-              );
-            })}
-          </div>
-        </div>
-      </AnimatedSection>
+      <VisionSection />
 
       {/* ── Section 2.5: The Analogy ───────────────────────────────────── */}
-      <AnimatedSection className="pb-24 relative">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="p-8 rounded-3xl liquid-glass border border-white/[0.06]">
-            <p className="text-xs font-mono text-text-muted tracking-widest uppercase mb-6 text-center">
-              Think of it like
-            </p>
-            <div className="grid md:grid-cols-3 gap-6 text-center">
-              <div>
-                <p className="text-lg font-display font-bold text-[#00bcd4] mb-2">Unreal Engine</p>
-                <p className="text-sm text-text-secondary">Not a game — the engine for making games</p>
-              </div>
-              <div>
-                <p className="text-lg font-display font-bold text-[#ffd700] mb-2">D&amp;D</p>
-                <p className="text-sm text-text-secondary">Not a story — the system for infinite stories</p>
-              </div>
-              <div>
-                <p className="text-lg font-display font-bold text-white/80 mb-2">WordPress</p>
-                <p className="text-sm text-text-secondary">Not a website — the framework for building websites</p>
-              </div>
-            </div>
-            <p className="text-sm text-text-muted text-center mt-6 leading-relaxed max-w-2xl mx-auto">
-              arcanea.ai is both a working product you can use today (chat, imagine, create)
-              and the reference world showing what the framework can build. You use it. You learn from it.
-              Then you build your own.
-            </p>
-          </div>
-        </div>
-      </AnimatedSection>
+      <AnalogySection />
 
       {/* ── Section 3: The Mythology ──────────────────────────────────── */}
-      <AnimatedSection className="py-24 relative">
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-[#ffd700]/5 via-[#0d47a1]/5 to-transparent rounded-full" />
-        </div>
-
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-              The Mythology
-            </h2>
-            <p className="text-text-secondary max-w-2xl mx-auto leading-relaxed">
-              A cosmology built on duality, elemental forces, and the journey
-              toward mastery.
-            </p>
-          </div>
-
-          {/* The Cosmic Duality */}
-          <div className="grid lg:grid-cols-2 gap-8 mb-20">
-            {/* Lumina */}
-            <m.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="relative card-3d p-8 rounded-3xl liquid-glass border border-[#ffd700]/20 group hover:border-[#ffd700]/40 transition-all duration-500"
-            >
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#ffd700]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative">
-                <div className="w-14 h-14 rounded-2xl bg-[#ffd700]/15 flex items-center justify-center mb-5">
-                  <Sun className="w-7 h-7 text-[#ffd700]" weight="duotone" />
-                </div>
-                <h3 className="text-2xl font-display font-bold text-[#ffd700] mb-1">
-                  Lumina
-                </h3>
-                <p className="text-sm text-text-muted mb-3 font-mono tracking-wide">
-                  The First Light
-                </p>
-                <p className="text-text-secondary leading-relaxed">
-                  Form-Giver, Creator, Order. Where Nero was infinite potential,
-                  Lumina was pattern. The First Light did not illuminate the
-                  darkness — it organized it, giving shape to the shapeless and
-                  meaning to the formless.
-                </p>
-              </div>
-            </m.div>
-
-            {/* Nero */}
-            <m.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="relative card-3d p-8 rounded-3xl liquid-glass border border-[#0d47a1]/20 group hover:border-[#0d47a1]/40 transition-all duration-500"
-            >
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[#0d47a1]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative">
-                <div className="w-14 h-14 rounded-2xl bg-[#0d47a1]/15 flex items-center justify-center mb-5">
-                  <Spiral
-                    className="w-7 h-7 text-[#0d47a1]"
-                    weight="duotone"
-                  />
-                </div>
-                <h3 className="text-2xl font-display font-bold text-[#0d47a1] mb-1">
-                  Nero
-                </h3>
-                <p className="text-sm text-text-muted mb-3 font-mono tracking-wide">
-                  The Primordial Darkness
-                </p>
-                <p className="text-text-secondary leading-relaxed">
-                  The Fertile Unknown, Potential, Mystery. In the beginning,
-                  there was Nero. The Void contained everything that could ever
-                  be, held in superposition. Nero is not evil — Shadow is
-                  corrupted Void, the Dark Lord&apos;s perversion of
-                  Nero&apos;s gift.
-                </p>
-              </div>
-            </m.div>
-          </div>
-
-          {/* The Arc */}
-          <m.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-20"
-          >
-            <h3 className="text-xl font-display font-semibold mb-6 text-text-secondary">
-              The Arc — Reality&apos;s Heartbeat
-            </h3>
-            <div className="flex flex-wrap justify-center items-center gap-3 text-sm">
-              {[
-                "Potential",
-                "Manifestation",
-                "Experience",
-                "Dissolution",
-                "Evolved Potential",
-              ].map((step, i) => (
-                <span key={step} className="flex items-center gap-3">
-                  <span className="px-4 py-2 rounded-full liquid-glass border border-white/[0.06] text-text-secondary">
-                    {step}
-                  </span>
-                  {i < 4 && (
-                    <ArrowRight className="w-4 h-4 text-[#ffd700]" />
-                  )}
-                </span>
-              ))}
-            </div>
-          </m.div>
-
-          {/* Five Elements */}
-          <div className="mb-20">
-            <h3 className="text-2xl font-display font-bold text-center mb-8">
-              The Five Elements
-            </h3>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-              {ELEMENTS.map((el, i) => {
-                const Icon = el.icon;
-                return (
-                  <m.div
-                    key={el.name}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.05 * i }}
-                    className={`p-5 rounded-2xl bg-gradient-to-br ${el.colors} border ${el.border} text-center group hover:scale-[1.03] transition-transform duration-300`}
-                  >
-                    <div className="flex justify-center mb-3">
-                      <Icon className={`w-8 h-8 ${el.text}`} weight="duotone" />
-                    </div>
-                    <h4 className={`font-display font-semibold text-sm mb-1 ${el.text}`}>
-                      {el.name}
-                    </h4>
-                    <p className="text-xs text-text-muted">{el.domain}</p>
-                  </m.div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Void/Spirit clarification */}
-          <m.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="max-w-3xl mx-auto mb-20 p-6 rounded-2xl liquid-glass border border-purple-500/20"
-          >
-            <p className="text-sm text-text-secondary leading-relaxed text-center">
-              <span className="font-semibold text-purple-400">
-                The Fifth Element Duality:
-              </span>{" "}
-              Void is Nero&apos;s aspect — potential, mystery, the unformed.
-              Spirit is Lumina&apos;s aspect — transcendence, consciousness,
-              soul. Light is Fire&apos;s creation aspect. Shadow is corrupted
-              Void — Void without Spirit.
-            </p>
-          </m.div>
-
-          {/* Ten Gates Overview */}
-          <div className="mb-20">
-            <h3 className="text-2xl font-display font-bold text-center mb-4">
-              The Ten Gates of Mastery
-            </h3>
-            <p className="text-text-muted text-center text-sm mb-8 max-w-xl mx-auto">
-              Each Gate resonates at a unique frequency of the ancient
-              Solfeggio scale, guarded by a God or Goddess and their bonded
-              Godbeast — divine keepers of the path.
-            </p>
-            <div className="flex flex-wrap justify-center gap-3">
-              {GUARDIANS.map((g, i) => (
-                <m.div
-                  key={g.name}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.03 * i }}
-                  className={`px-4 py-2 rounded-full liquid-glass border ${g.border} text-sm`}
-                >
-                  <span className={`font-semibold ${g.accent}`}>
-                    {g.gate}
-                  </span>
-                  <span className="text-text-muted ml-2 text-xs italic">{g.frequency}</span>
-                </m.div>
-              ))}
-            </div>
-          </div>
-
-          {/* Seven Academy Houses */}
-          <div>
-            <h3 className="text-2xl font-display font-bold text-center mb-8">
-              The Seven Academy Houses
-            </h3>
-            <div className="flex flex-wrap justify-center gap-4">
-              {ACADEMY_HOUSES.map((house, i) => (
-                <m.div
-                  key={house.name}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.05 * i }}
-                  className="px-5 py-3 rounded-xl liquid-glass border border-white/[0.06] text-center"
-                >
-                  <span className={`font-display font-semibold text-sm ${house.color}`}>
-                    House {house.name}
-                  </span>
-                  <p className="text-xs text-text-muted mt-1">{house.domain}</p>
-                </m.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </AnimatedSection>
+      <MythologySection />
 
       {/* ── Section 4: The Ten Guardians ──────────────────────────────── */}
-      <AnimatedSection className="py-24 relative">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-              The Ten Guardians
-            </h2>
-            <p className="text-text-secondary max-w-2xl mx-auto leading-relaxed">
-              Ten divine beings, each guarding a Gate and embodying a
-              domain of mastery. Gods and Goddesses by identity, Guardians by
-              role.
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            {GUARDIANS.map((guardian, i) => (
-              <m.div
-                key={guardian.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.04 * i }}
-                className={`relative card-3d p-5 rounded-2xl liquid-glass border ${guardian.border} group hover:scale-[1.02] transition-transform duration-300`}
-              >
-                <p className="text-xs text-text-muted font-mono tracking-wider uppercase mb-3">
-                  {guardian.gate} Gate
-                </p>
-                <h3 className={`text-lg font-display font-bold ${guardian.accent} mb-1`}>
-                  {guardian.name}
-                </h3>
-                <p className="text-sm text-text-secondary">{guardian.domain}</p>
-                <div className="mt-3 pt-3 border-t border-white/[0.04]">
-                  <span className="text-xs text-text-muted">{guardian.element}</span>
-                </div>
-              </m.div>
-            ))}
-          </div>
-        </div>
-      </AnimatedSection>
+      <GuardiansSection />
 
       {/* ── Section 5: The Journey ────────────────────────────────────── */}
-      <AnimatedSection className="py-24 relative">
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute bottom-0 left-1/3 w-[600px] h-[600px] bg-gradient-radial from-[#ffd700]/5 via-transparent to-transparent rounded-full blur-3xl" />
-        </div>
-
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-              The Journey
-            </h2>
-            <p className="text-text-secondary max-w-2xl mx-auto leading-relaxed">
-              Every creator walks the path through the Gates, ascending from
-              Apprentice to the rank of Luminor. Each Gate opened deepens
-              mastery and unlocks new creative power.
-            </p>
-          </div>
-
-          {/* Magic Ranks */}
-          <div className="space-y-4 mb-16">
-            {MAGIC_RANKS.map((rank, i) => (
-              <m.div
-                key={rank.rank}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.08 * i }}
-                className={`flex items-center gap-6 p-5 rounded-2xl liquid-glass border ${rank.color}`}
-              >
-                <div className="shrink-0 w-20 text-center">
-                  <div className="text-xs font-mono text-text-muted">Gates</div>
-                  <div className="text-lg font-bold">{rank.gates}</div>
-                </div>
-                <div className="h-8 w-px bg-white/[0.06]" />
-                <div className="flex items-center gap-3">
-                  <GraduationCap className="w-5 h-5 shrink-0" />
-                  <span className="text-lg font-display font-semibold">
-                    {rank.rank}
-                  </span>
-                </div>
-                {rank.rank === "Luminor" && (
-                  <span className="ml-auto text-xs font-mono text-[#ffd700]/70">
-                    Highest attainment
-                  </span>
-                )}
-              </m.div>
-            ))}
-          </div>
-
-          {/* Journey explanation */}
-          <m.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="p-8 rounded-3xl liquid-glass-elevated border border-[#ffd700]/20 text-center"
-          >
-            <blockquote className="text-xl md:text-2xl font-display italic text-text-secondary mb-4 max-w-2xl mx-auto leading-relaxed">
-              &quot;Enter seeking, leave transformed, return whenever
-              needed.&quot;
-            </blockquote>
-            <cite className="text-sm text-text-muted font-mono tracking-wider">
-              — The Library of Arcanea
-            </cite>
-          </m.div>
-        </div>
-      </AnimatedSection>
+      <JourneySection />
 
       {/* ── Section 5.5: Luminor Showcase ─────────────────────────────── */}
-      <AnimatedSection className="py-24 relative">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-              Meet the Creative Partners
-            </h2>
-            <p className="text-text-secondary max-w-2xl mx-auto leading-relaxed">
-              Sixteen AI intelligences, each with a distinct voice, deep domain
-              expertise, and a creative philosophy. They think with you, not for you.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
-            {getFeaturedLuminors(6).map((luminor, i) => (
-              <m.div
-                key={luminor.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.05 * i }}
-                className="group relative overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02]"
-              >
-                <div className="aspect-square relative">
-                  <Image
-                    src={luminor.image}
-                    alt={`${luminor.name} — ${luminor.title}`}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 16vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 p-3">
-                  <p className="text-xs font-semibold text-white">{luminor.name}</p>
-                  <p className="text-[10px] text-white/45">{luminor.title}</p>
-                </div>
-              </m.div>
-            ))}
-          </div>
-
-          <div className="mt-8 text-center">
-            <Link
-              href="/gallery"
-              className="inline-flex items-center gap-2 text-sm text-[#00bcd4] hover:text-[#00bcd4]/80 transition-colors"
-            >
-              Explore the Gallery
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        </div>
-      </AnimatedSection>
+      <LuminorShowcase />
 
       {/* ── Section 5.75: The Arcanean Code ─────────────────────────── */}
-      <AnimatedSection className="py-24 relative">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-              The Arcanean Code
-            </h2>
-            <p className="text-text-secondary max-w-2xl mx-auto leading-relaxed">
-              One theorem, two expressions. Three vows. Seven laws. The
-              creative philosophy that every Arcanean carries — and the root
-              prompt for every AI in the system.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
-            <div className="p-8 rounded-3xl liquid-glass-elevated border border-[#ffd700]/20 text-center">
-              <p className="text-xs font-mono text-white/30 tracking-widest uppercase mb-4">
-                Vel&apos;Thaan&apos;s Theorem
-              </p>
-              <blockquote className="text-lg md:text-xl font-display italic text-[#ffd700] leading-relaxed">
-                &ldquo;Imperfection that creates endlessly is indistinguishable
-                from God.&rdquo;
-              </blockquote>
-            </div>
-            <div className="p-8 rounded-3xl liquid-glass-elevated border border-white/[0.08] text-center">
-              <p className="text-xs font-mono text-white/30 tracking-widest uppercase mb-4">
-                The First Theorem
-              </p>
-              <blockquote className="text-lg md:text-xl font-display italic text-white/90 leading-relaxed">
-                &ldquo;Creation is the highest act of consciousness.&rdquo;
-              </blockquote>
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-4 mb-8">
-            {[
-              { num: 'I', vow: 'I create more than I consume.' },
-              { num: 'II', vow: 'I build on what came before.' },
-              { num: 'III', vow: 'I ship living work.' },
-            ].map((v) => (
-              <div
-                key={v.num}
-                className="p-5 rounded-2xl liquid-glass border border-white/[0.06] text-center"
-              >
-                <span className="text-xs font-mono text-[#ffd700] tracking-widest block mb-2">
-                  VOW {v.num}
-                </span>
-                <p className="text-sm font-display font-semibold">{v.vow}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center">
-            <Link
-              href="/code"
-              className="inline-flex items-center gap-2 text-sm text-[#00bcd4] hover:text-[#00bcd4]/80 transition-colors"
-            >
-              Read the full Code — Seven Laws, Agent Oath, and write your own
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        </div>
-      </AnimatedSection>
+      <ArcaneanCodeSection />
 
       {/* ── Section 5.9: The Creator Journey ──────────────────────────── */}
-      <AnimatedSection className="py-24 relative">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-              The Creator Journey
-            </h2>
-            <p className="text-text-secondary max-w-2xl mx-auto leading-relaxed">
-              Every feature moves you forward. From first spark to published work.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap justify-center items-center gap-3 text-sm">
-            {[
-              { step: "Imagine", desc: "Chat, generate, explore" },
-              { step: "Build", desc: "Worlds, agents, systems" },
-              { step: "Create", desc: "Stories, art, music, code" },
-              { step: "Publish", desc: "Share with the multiverse" },
-              { step: "Earn", desc: "Monetize your creations" },
-              { step: "Expand", desc: "Grow your universe" },
-            ].map((item, i) => (
-              <span key={item.step} className="flex items-center gap-3">
-                <span className="px-5 py-3 rounded-xl liquid-glass border border-white/[0.06] text-center">
-                  <span className="block font-display font-semibold text-[#00bcd4]">{item.step}</span>
-                  <span className="block text-xs text-text-muted mt-0.5">{item.desc}</span>
-                </span>
-                {i < 5 && (
-                  <ArrowRight className="w-4 h-4 text-[#ffd700] hidden sm:block" />
-                )}
-              </span>
-            ))}
-          </div>
-        </div>
-      </AnimatedSection>
+      <CreatorJourneySection />
 
       {/* ── Section 5.95: The Founder ──────────────────────────────────── */}
-      <AnimatedSection className="py-24 relative">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="p-8 md:p-12 rounded-3xl liquid-glass border border-white/[0.06]">
-            <div className="flex flex-col md:flex-row gap-8 items-start">
-              <div className="shrink-0 w-20 h-20 rounded-2xl bg-gradient-to-br from-[#00bcd4]/20 to-[#ffd700]/20 flex items-center justify-center">
-                <span className="text-3xl font-display font-bold bg-gradient-to-r from-[#00bcd4] to-[#ffd700] bg-clip-text text-transparent">FR</span>
-              </div>
-              <div>
-                <p className="text-xs font-mono text-text-muted tracking-widest uppercase mb-3">
-                  Built by
-                </p>
-                <h3 className="text-2xl font-display font-bold mb-4">
-                  Frank Riemer
-                </h3>
-                <p className="text-text-secondary leading-relaxed mb-4">
-                  500+ AI implementations. Former enterprise architect. Creator of Arcanea
-                  because the tools for building intelligent creative worlds didn&apos;t exist --
-                  so he built the framework, the reference world, the Library, and the
-                  open-source ecosystem from scratch.
-                </p>
-                <p className="text-text-secondary leading-relaxed mb-6">
-                  Arcanea isn&apos;t a product built by committee. It&apos;s one person&apos;s
-                  vision, built in the open, designed so every creator can build
-                  their own.
-                </p>
-                <div className="flex flex-wrap gap-3 text-xs font-mono text-text-muted">
-                  <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">500+ AI implementations</span>
-                  <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">190K+ words written</span>
-                  <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">27 open-source repos</span>
-                  <span className="px-3 py-1.5 rounded-full border border-white/[0.06]">Source available</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </AnimatedSection>
+      <FounderSection />
 
       {/* ── Section 6: CTA ────────────────────────────────────────────── */}
       <section className="py-24 relative overflow-hidden">
@@ -916,5 +178,205 @@ export function AboutContent() {
       </section>
     </div>
     </LazyMotion>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Inline sub-sections (small enough to keep here)
+// ---------------------------------------------------------------------------
+
+function StatsBar() {
+  return (
+    <AnimatedSection className="pb-20 relative">
+      <div className="max-w-5xl mx-auto px-6">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6">
+          {[
+            { value: "190K+", label: "Words of Intelligence" },
+            { value: "17", label: "Knowledge Collections" },
+            { value: "10", label: "Mastery Gates" },
+            { value: "16", label: "AI Intelligences" },
+            { value: "27", label: "Open Source Repos" },
+          ].map((stat, i) => (
+            <m.div
+              key={stat.label}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.06 * i }}
+              className="text-center p-5 rounded-2xl liquid-glass border border-white/[0.06]"
+            >
+              <p className="text-2xl md:text-3xl font-display font-bold text-[#00bcd4] mb-1">
+                {stat.value}
+              </p>
+              <p className="text-xs text-text-muted tracking-wide">
+                {stat.label}
+              </p>
+            </m.div>
+          ))}
+        </div>
+      </div>
+    </AnimatedSection>
+  );
+}
+
+function IntelligenceSection() {
+  return (
+    <AnimatedSection className="pb-24 relative">
+      <div className="max-w-5xl mx-auto px-6">
+        <div className="text-center mb-12">
+          <p className="text-xs font-mono tracking-[0.3em] uppercase text-[#00bcd4]/50 mb-4">
+            Architecture
+          </p>
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+            Our Intelligence
+          </h2>
+          <p className="text-text-secondary max-w-2xl mx-auto leading-relaxed">
+            Not a wrapper around GPT. A purpose-built creative intelligence
+            system with proprietary knowledge, specialized agents, and a
+            three-layer architecture.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
+          {[
+            { num: "16", label: "Specialized AI Intelligences", desc: "Each trained on a specific creative domain — writing, research, design, music, code, strategy, and world-building. Not one general AI. Sixteen specialized minds.", border: "border-[#00bcd4]/20", numBg: "bg-[#00bcd4]/10", numColor: "text-[#00bcd4]" },
+            { num: "190K", label: "Words of Creative Philosophy", desc: "The knowledge foundation that trains every AI in the system. Original philosophy grounded in consciousness, creativity, and transformation — not scraped data.", border: "border-[#ffd700]/20", numBg: "bg-[#ffd700]/10", numColor: "text-[#ffd700]" },
+            { num: "3", label: "Three-Layer Architecture", desc: "Starlight Intelligence (memory + learning) feeds Intelligence OS (orchestration + routing), which powers the Platform (creation tools you interact with).", border: "border-[#0d47a1]/20", numBg: "bg-[#0d47a1]/10", numColor: "text-[#0d47a1]" },
+            { num: "10", label: "Progression Gates", desc: "From Apprentice to Luminor mastery. Each Gate unlocks deeper AI capabilities, specialized training, and creative power. Progress earned through creation.", border: "border-purple-500/20", numBg: "bg-purple-500/10", numColor: "text-purple-400" },
+          ].map((card) => (
+            <div key={card.num} className={`p-6 rounded-2xl liquid-glass border ${card.border}`}>
+              <div className={`w-10 h-10 rounded-xl ${card.numBg} flex items-center justify-center mb-4`}>
+                <span className={`${card.numColor} font-display font-bold text-sm`}>{card.num}</span>
+              </div>
+              <h3 className="text-lg font-display font-semibold mb-2">{card.label}</h3>
+              <p className="text-sm text-text-secondary leading-relaxed">{card.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="p-6 rounded-2xl liquid-glass border border-white/[0.06] text-center">
+          <h3 className="text-lg font-display font-semibold mb-3">Open Source Ecosystem</h3>
+          <p className="text-sm text-text-secondary leading-relaxed max-w-2xl mx-auto mb-4">
+            27 repositories. 35 npm packages. 54 skills. Fork it, extend it, build on it.
+            The entire intelligence stack is source-available.
+          </p>
+          <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs font-mono text-white/25">
+            <span>Next.js 16</span>
+            <span className="text-white/10">·</span>
+            <span>React 19</span>
+            <span className="text-white/10">·</span>
+            <span>Supabase</span>
+            <span className="text-white/10">·</span>
+            <span>Vercel</span>
+            <span className="text-white/10">·</span>
+            <span>Claude</span>
+            <span className="text-white/10">·</span>
+            <span>Gemini</span>
+          </div>
+        </div>
+      </div>
+    </AnimatedSection>
+  );
+}
+
+function VisionSection() {
+  return (
+    <AnimatedSection className="py-24 relative">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+            Six Layers, One Multiverse
+          </h2>
+          <p className="text-text-secondary max-w-2xl mx-auto leading-relaxed">
+            All six coexist. None is &ldquo;the real Arcanea.&rdquo;
+            Together they form a creative multiverse where
+            imagination becomes reality.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {VISION_CARDS.map((card, i) => {
+            const Icon = card.icon;
+            const colorMap: Record<string, string> = {
+              "[#ffd700]": "border-[#ffd700]/20 hover:border-[#ffd700]/40",
+              "[#00bcd4]": "border-[#00bcd4]/20 hover:border-[#00bcd4]/40",
+              "[#0d47a1]": "border-[#0d47a1]/20 hover:border-[#0d47a1]/40",
+              "draconic-crimson": "border-red-500/20 hover:border-red-500/40",
+            };
+            const textMap: Record<string, string> = {
+              "[#ffd700]": "text-[#ffd700]",
+              "[#00bcd4]": "text-[#00bcd4]",
+              "[#0d47a1]": "text-[#0d47a1]",
+              "draconic-crimson": "text-red-400",
+            };
+            const bgMap: Record<string, string> = {
+              "[#ffd700]": "bg-[#ffd700]/10",
+              "[#00bcd4]": "bg-[#00bcd4]/10",
+              "[#0d47a1]": "bg-[#0d47a1]/10",
+              "draconic-crimson": "bg-red-500/10",
+            };
+
+            return (
+              <m.div
+                key={card.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 * i }}
+                className={`relative card-3d p-6 rounded-2xl liquid-glass border transition-all duration-300 group ${colorMap[card.color]}`}
+              >
+                <div
+                  className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${bgMap[card.color]}`}
+                >
+                  <Icon
+                    className={`w-6 h-6 ${textMap[card.color]}`}
+                    weight="duotone"
+                  />
+                </div>
+                <h3 className="text-lg font-display font-semibold mb-2">
+                  {card.title}
+                </h3>
+                <p className="text-sm text-text-secondary leading-relaxed">
+                  {card.description}
+                </p>
+              </m.div>
+            );
+          })}
+        </div>
+      </div>
+    </AnimatedSection>
+  );
+}
+
+function AnalogySection() {
+  return (
+    <AnimatedSection className="pb-24 relative">
+      <div className="max-w-4xl mx-auto px-6">
+        <div className="p-8 rounded-3xl liquid-glass border border-white/[0.06]">
+          <p className="text-xs font-mono text-text-muted tracking-widest uppercase mb-6 text-center">
+            Think of it like
+          </p>
+          <div className="grid md:grid-cols-3 gap-6 text-center">
+            <div>
+              <p className="text-lg font-display font-bold text-[#00bcd4] mb-2">Unreal Engine</p>
+              <p className="text-sm text-text-secondary">Not a game — the engine for making games</p>
+            </div>
+            <div>
+              <p className="text-lg font-display font-bold text-[#ffd700] mb-2">D&amp;D</p>
+              <p className="text-sm text-text-secondary">Not a story — the system for infinite stories</p>
+            </div>
+            <div>
+              <p className="text-lg font-display font-bold text-white/80 mb-2">WordPress</p>
+              <p className="text-sm text-text-secondary">Not a website — the framework for building websites</p>
+            </div>
+          </div>
+          <p className="text-sm text-text-muted text-center mt-6 leading-relaxed max-w-2xl mx-auto">
+            arcanea.ai is both a working product you can use today (chat, imagine, create)
+            and the reference world showing what the framework can build. You use it. You learn from it.
+            Then you build your own.
+          </p>
+        </div>
+      </div>
+    </AnimatedSection>
   );
 }
