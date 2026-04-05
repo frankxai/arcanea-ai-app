@@ -30,9 +30,9 @@ const footerLinks = {
     links: [
       { href: "/academy", label: "Academy" },
       { href: "/academy/courses", label: "Courses" },
+      { href: "/models", label: "Model Arena" },
       { href: "/developers", label: "Developers" },
       { href: "https://github.com/frankxai", label: "GitHub", external: true },
-      { href: "https://discord.gg/arcanea", label: "Discord", external: true },
     ],
   },
   company: {
