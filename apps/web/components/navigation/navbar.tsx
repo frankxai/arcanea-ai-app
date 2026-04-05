@@ -75,6 +75,7 @@ const navLinks: NavLink[] = [
           { href: "/library", label: "Library", desc: "200K+ words of wisdom" },
           { href: "/lore", label: "Lore", desc: "Mythology & cosmology" },
           { href: "/lore/guardians", label: "Guardians", desc: "The Ten Gate-keepers" },
+          { href: "/glossary", label: "Glossary", desc: "Arcanean terminology" },
           { href: "/living-lore", label: "Chronicles", desc: "Interactive stories" },
         ],
       },
@@ -93,7 +94,7 @@ const navLinks: NavLink[] = [
   {
     href: "/academy",
     label: "Learn",
-    also: ["/academy/courses", "/academy/gates", "/academy/houses", "/academy/ranks"],
+    also: ["/academy/courses", "/academy/gates", "/academy/houses", "/academy/ranks", "/skills", "/bestiary", "/quiz"],
     mega: [
       {
         title: "Academy",
@@ -102,6 +103,14 @@ const navLinks: NavLink[] = [
           { href: "/academy/courses", label: "Courses", desc: "Structured learning paths" },
           { href: "/academy/houses", label: "Houses", desc: "Seven Academy Houses" },
           { href: "/quiz", label: "Origin Quiz", desc: "Discover your class" },
+        ],
+      },
+      {
+        title: "Mastery",
+        items: [
+          { href: "/skills", label: "Skill Tree", desc: "50 abilities, 10 Gates" },
+          { href: "/bestiary", label: "Bestiary", desc: "Name your creative blocks" },
+          { href: "/arcs", label: "Arcs", desc: "Narrative progression" },
         ],
       },
     ],

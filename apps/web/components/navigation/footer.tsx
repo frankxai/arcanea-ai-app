@@ -20,9 +20,9 @@ const footerLinks = {
     links: [
       { href: "/library", label: "Library" },
       { href: "/lore", label: "Lore" },
-      { href: "/lore/guardians", label: "Guardians" },
       { href: "/factions", label: "Factions" },
-      { href: "/discover", label: "Discover" },
+      { href: "/glossary", label: "Glossary" },
+      { href: "/showcase", label: "Showcase" },
     ],
   },
   learn: {
