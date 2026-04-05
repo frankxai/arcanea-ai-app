@@ -68,8 +68,8 @@ describe('getLuminorForSkill exact match', () => {
 
   const research = getLuminorForSkill('research');
   assert(
-    research !== null && research.luminor === 'oracle',
-    'research -> oracle'
+    research !== null && research.luminor === 'visionary',
+    'research -> visionary'
   );
 
   const design = getLuminorForSkill('design');
@@ -169,7 +169,7 @@ describe('getSkillsForLuminor coverage', () => {
     'logicus', 'synthra', 'debugon', 'nexus',
     'prismatic', 'melodia', 'motio', 'formis',
     'chronica', 'veritas', 'lexicon', 'poetica',
-    'oracle', 'analytica', 'memoria', 'futura',
+    'visionary', 'analytica', 'memoria', 'futura',
   ];
 
   for (const id of luminorIds) {
@@ -275,7 +275,7 @@ describe('SKILL_LUMINOR_MAP data integrity', () => {
     'logicus', 'synthra', 'debugon', 'nexus',
     'prismatic', 'melodia', 'motio', 'formis',
     'chronica', 'veritas', 'lexicon', 'poetica',
-    'oracle', 'analytica', 'memoria', 'futura',
+    'visionary', 'analytica', 'memoria', 'futura',
   ]);
 
   const validGuardians = new Set([

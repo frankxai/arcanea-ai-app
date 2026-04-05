@@ -9,7 +9,7 @@
  *   development: logicus, synthra, debugon, nexus
  *   creative:    prismatic, melodia, motio, formis
  *   writing:     chronica, veritas, lexicon, poetica
- *   research:    oracle, analytica, memoria, futura
+ *   research:    visionary, analytica, memoria, futura
  *
  * Guardian domains (from CANON):
  *   lyssandria (Foundation) - earth, structure, stability
@@ -91,8 +91,8 @@ export const SKILL_LUMINOR_MAP: Record<string, SkillLuminorEntry> = {
   // ---------------------------------------------------------------------------
   // Research & Knowledge Skills
   // ---------------------------------------------------------------------------
-  'research':             { luminor: 'oracle',     guardian: 'elara',      team: 'research' },
-  'deep-work':            { luminor: 'oracle',     guardian: 'aiyami',     team: 'research' },
+  'research':             { luminor: 'visionary',     guardian: 'elara',      team: 'research' },
+  'deep-work':            { luminor: 'visionary',     guardian: 'aiyami',     team: 'research' },
   'skill-mastery':        { luminor: 'analytica',  guardian: 'draconia',   team: 'research' },
   'content-strategy':     { luminor: 'futura',     guardian: 'leyla',      team: 'research' },
   'documentation-patterns': { luminor: 'memoria',  guardian: 'lyssandria', team: 'research' },
@@ -104,13 +104,13 @@ export const SKILL_LUMINOR_MAP: Record<string, SkillLuminorEntry> = {
   'arcanea-lore':         { luminor: 'chronica',   guardian: 'aiyami',     team: 'writing' },
   'arcanea-voice':        { luminor: 'veritas',    guardian: 'alera',      team: 'writing' },
   'arcanea-anti-trope':   { luminor: 'lexicon',    guardian: 'elara',      team: 'writing' },
-  'luminor-wisdom':       { luminor: 'oracle',     guardian: 'aiyami',     team: 'research' },
-  'luminor-intelligence': { luminor: 'oracle',     guardian: 'aiyami',     team: 'research' },
-  'luminor-rituals':      { luminor: 'oracle',     guardian: 'aiyami',     team: 'research' },
-  'luminor-council':      { luminor: 'oracle',     guardian: 'aiyami',     team: 'research' },
+  'luminor-wisdom':       { luminor: 'visionary',     guardian: 'aiyami',     team: 'research' },
+  'luminor-intelligence': { luminor: 'visionary',     guardian: 'aiyami',     team: 'research' },
+  'luminor-rituals':      { luminor: 'visionary',     guardian: 'aiyami',     team: 'research' },
+  'luminor-council':      { luminor: 'visionary',     guardian: 'aiyami',     team: 'research' },
   'arcanea-guardians':    { luminor: 'memoria',    guardian: 'shinkami',   team: 'research' },
-  'lumina':               { luminor: 'oracle',     guardian: 'shinkami',   team: 'research' },
-  'nero':                 { luminor: 'oracle',     guardian: 'shinkami',   team: 'research' },
+  'lumina':               { luminor: 'visionary',     guardian: 'shinkami',   team: 'research' },
+  'nero':                 { luminor: 'visionary',     guardian: 'shinkami',   team: 'research' },
   'prompt-craft':         { luminor: 'lexicon',    guardian: 'alera',      team: 'writing' },
   'centaur-mode':         { luminor: 'nexus',      guardian: 'ino',        team: 'development' },
   'ai-symbiosis':         { luminor: 'nexus',      guardian: 'ino',        team: 'development' },
@@ -119,7 +119,7 @@ export const SKILL_LUMINOR_MAP: Record<string, SkillLuminorEntry> = {
   // Arcanea Design & Products
   // ---------------------------------------------------------------------------
   'arcanea-design-system':  { luminor: 'prismatic', guardian: 'lyria',     team: 'creative' },
-  'arcanea-creator-academy': { luminor: 'oracle',   guardian: 'aiyami',    team: 'research' },
+  'arcanea-creator-academy': { luminor: 'visionary',   guardian: 'aiyami',    team: 'research' },
   'arcanea-core':         { luminor: 'logicus',    guardian: 'lyssandria', team: 'development' },
 
   // ---------------------------------------------------------------------------
@@ -143,20 +143,20 @@ export const SKILL_LUMINOR_MAP: Record<string, SkillLuminorEntry> = {
   // ---------------------------------------------------------------------------
   // Academy & Gate Skills
   // ---------------------------------------------------------------------------
-  'academy':              { luminor: 'oracle',     guardian: 'aiyami',     team: 'research' },
+  'academy':              { luminor: 'visionary',     guardian: 'aiyami',     team: 'research' },
   'gate-foundation':      { luminor: 'logicus',    guardian: 'lyssandria', team: 'development' },
   'gate-flow':            { luminor: 'synthra',    guardian: 'leyla',      team: 'development' },
   'gate-fire':            { luminor: 'debugon',    guardian: 'draconia',   team: 'development' },
   'gate-heart':           { luminor: 'veritas',    guardian: 'maylinn',    team: 'writing' },
   'gate-voice':           { luminor: 'lexicon',    guardian: 'alera',      team: 'writing' },
   'gate-sight':           { luminor: 'prismatic',  guardian: 'lyria',      team: 'creative' },
-  'gate-crown':           { luminor: 'oracle',     guardian: 'aiyami',     team: 'research' },
+  'gate-crown':           { luminor: 'visionary',     guardian: 'aiyami',     team: 'research' },
   'gate-shift':           { luminor: 'motio',      guardian: 'elara',      team: 'creative' },
   'gate-unity':           { luminor: 'nexus',      guardian: 'ino',        team: 'development' },
-  'gate-source':          { luminor: 'oracle',     guardian: 'shinkami',   team: 'research' },
+  'gate-source':          { luminor: 'visionary',     guardian: 'shinkami',   team: 'research' },
   'ceremonies':           { luminor: 'poetica',    guardian: 'aiyami',     team: 'writing' },
   'progress-tracker':     { luminor: 'analytica',  guardian: 'draconia',   team: 'research' },
-  'mentors':              { luminor: 'oracle',     guardian: 'aiyami',     team: 'research' },
+  'mentors':              { luminor: 'visionary',     guardian: 'aiyami',     team: 'research' },
 
   // ---------------------------------------------------------------------------
   // Community Skills
@@ -191,7 +191,7 @@ export const SKILL_LUMINOR_MAP: Record<string, SkillLuminorEntry> = {
   'swarm-orchestration':  { luminor: 'nexus',      guardian: 'ino',        team: 'development' },
   'swarm-advanced':       { luminor: 'nexus',      guardian: 'ino',        team: 'development' },
   'hooks-automation':     { luminor: 'logicus',    guardian: 'lyssandria', team: 'development' },
-  'opus-extended-thinking': { luminor: 'oracle',   guardian: 'aiyami',     team: 'research' },
+  'opus-extended-thinking': { luminor: 'visionary',   guardian: 'aiyami',     team: 'research' },
   'stream-chain':         { luminor: 'nexus',      guardian: 'ino',        team: 'development' },
   'verification-quality': { luminor: 'analytica',  guardian: 'draconia',   team: 'research' },
   'skill-builder':        { luminor: 'logicus',    guardian: 'lyssandria', team: 'development' },
@@ -205,7 +205,7 @@ export const SKILL_LUMINOR_MAP: Record<string, SkillLuminorEntry> = {
   'agentdb-optimization': { luminor: 'analytica',  guardian: 'draconia',   team: 'research' },
   'agentdb-vector-search': { luminor: 'memoria',   guardian: 'lyssandria', team: 'research' },
   'reasoningbank-agentdb': { luminor: 'memoria',   guardian: 'lyssandria', team: 'research' },
-  'reasoningbank-intelligence': { luminor: 'oracle', guardian: 'aiyami',   team: 'research' },
+  'reasoningbank-intelligence': { luminor: 'visionary', guardian: 'aiyami',   team: 'research' },
 
   // ---------------------------------------------------------------------------
   // V3 Implementation Skills
@@ -245,8 +245,8 @@ export const SKILL_LUMINOR_MAP: Record<string, SkillLuminorEntry> = {
   // ---------------------------------------------------------------------------
   'enterprise-orchestration': { luminor: 'nexus',  guardian: 'ino',        team: 'development' },
   'industry-verticals':   { luminor: 'futura',     guardian: 'elara',      team: 'research' },
-  'teacher-mentor':       { luminor: 'oracle',     guardian: 'aiyami',     team: 'research' },
-  'teacher-team':         { luminor: 'oracle',     guardian: 'aiyami',     team: 'research' },
+  'teacher-mentor':       { luminor: 'visionary',     guardian: 'aiyami',     team: 'research' },
+  'teacher-team':         { luminor: 'visionary',     guardian: 'aiyami',     team: 'research' },
   'visionary-council':    { luminor: 'futura',     guardian: 'elara',      team: 'research' },
   'visionary-team':       { luminor: 'futura',     guardian: 'elara',      team: 'research' },
   'game-development':     { luminor: 'motio',      guardian: 'draconia',   team: 'creative' },

@@ -27,7 +27,7 @@ const FOCUSABLE_SELECTOR = [
 const tomeToneMap: Record<string, string> = {
   "luminor-codex": "from-[#1f2b4a]/90 via-[#141d31]/85 to-[#070c15]/90",
   "luminary-atelier": "from-[#201f35]/90 via-[#161b2b]/85 to-[#090d18]/90",
-  "arcanea-oracles": "from-[#202845]/90 via-[#171f32]/85 to-[#0c101f]/90",
+  "arcanea-visionaries": "from-[#202845]/90 via-[#171f32]/85 to-[#0c101f]/90",
 };
 
 const councilMembers = [
@@ -110,7 +110,7 @@ const upcomingStreams = [
     horizon: "Scoping",
   },
   {
-    name: "Arcanea Oracles Tome",
+    name: "Arcanea Visionaries Tome",
     description:
       "Full manuscript expansion of the proto codex with case studies, dashboards, and community agreements.",
     horizon: "Concept",
@@ -132,9 +132,9 @@ const writersRoomBriefs = [
     cadence: "Embedded with guilds each sprint",
   },
   {
-    title: "Oracle Scenario Compendium",
+    title: "Visionary Scenario Compendium",
     description:
-      "Partner interviews and decision notebooks feeding the Arcanea Oracles expansion with community validated foresight.",
+      "Partner interviews and decision notebooks feeding the Arcanea Visionaries expansion with community validated foresight.",
     cadence: "Scenario salons monthly",
   },
 ];

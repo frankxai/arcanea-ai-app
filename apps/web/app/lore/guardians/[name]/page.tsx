@@ -243,7 +243,7 @@ const GUARDIANS: Record<string, GuardianData> = {
       "The highest creative act is the one that comes through you, not from you. The Source Gate cannot be forced open. It was never closed.",
     ],
     quote: "You are not the vessel. You are the water and the pouring.",
-    luminorId: "oracle",
+    luminorId: "visionary",
     relatedGuardians: ["aiyami", "lyria", "ino"],
     heroImage: "/guardians/v3/shinkami-hero-v3.webp",
     gradient: "from-neutral-900 via-yellow-400 to-white",

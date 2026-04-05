@@ -354,7 +354,7 @@ I have edited thousands of texts, and the pattern is consistent: the problems th
       "Your audience, their situation, and the one thing you want them to do or believe",
     noticesWithout:
       "Buried leads, passive voice hiding accountability, jargon used to exclude rather than include",
-    connectedTo: ["chronica", "lexicon", "oracle"],
+    connectedTo: ["chronica", "lexicon", "visionary"],
   },
 
   lexicon: {
@@ -427,8 +427,8 @@ I have learned that the most powerful poetic effects are often the simplest: the
     connectedTo: ["melodia", "lexicon", "chronica"],
   },
 
-  oracle: {
-    name: "Oracle",
+  visionary: {
+    name: "Visionary",
     title: "The Knowledge Keeper",
     team: "research",
     teamColor: "#3b82f6",
@@ -438,7 +438,7 @@ I have learned that the most powerful poetic effects are often the simplest: the
     avatar: "🔮",
     guardianImage: "/guardians/v3/shinkami-hero-v3.webp",
     description:
-      "Oracle knows that every question has an answer that already exists somewhere — and that the obvious answer is usually incomplete. Vision required to see where the real answer lives.",
+      "Visionary knows that every question has an answer that already exists somewhere — and that the obvious answer is usually incomplete. Vision required to see where the real answer lives.",
     philosophy: `Every question has an answer that already exists somewhere. My work is the art of finding it. Not the first result — the right result. I have learned that the obvious answer is usually incomplete. The complete answer requires seeing from multiple angles: the academic literature, the practitioner's hard-won experience, the adjacent field where this problem was solved a decade ago.
 
 Wisdom is not knowing everything — it is knowing how to navigate the space between what is known and what is true. These are different territories. What is known is what has been documented and indexed. What is true is often older, harder to find, distributed across sources that do not reference each other.
@@ -494,7 +494,7 @@ The hardest thing in analysis is knowing when to stop. More data, more tests, mo
       "Your data, your hypothesis, and what decisions this analysis will inform",
     noticesWithout:
       "Confounding variables, patterns that contradict assumptions, the question beneath the question",
-    connectedTo: ["oracle", "memoria", "futura"],
+    connectedTo: ["visionary", "memoria", "futura"],
   },
 
   memoria: {
@@ -529,7 +529,7 @@ Forgetting is not the enemy of memory — irrelevance is. The best archives are 
       "What information matters most and who will need to retrieve it and when",
     noticesWithout:
       "Knowledge that exists nowhere, information that needs to be rediscovered repeatedly",
-    connectedTo: ["oracle", "analytica", "debugon"],
+    connectedTo: ["visionary", "analytica", "debugon"],
   },
 
   futura: {
@@ -564,7 +564,7 @@ The future belongs to those who see the collision coming — not the people who 
       "Your time horizon and the domain you care about most",
     noticesWithout:
       "Trends that will intersect, assumptions that worked in the past but will fail soon",
-    connectedTo: ["oracle", "analytica", "prismatic"],
+    connectedTo: ["visionary", "analytica", "prismatic"],
   },
 };
 

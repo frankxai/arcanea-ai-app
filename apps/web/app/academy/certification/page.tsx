@@ -27,7 +27,7 @@ const RANKS = [
   { range: '0-2', rank: 'Apprentice', color: '#6b7280', badge: 'Seeker' },
   { range: '3-4', rank: 'Mage', color: '#60a5fa', badge: 'Builder' },
   { range: '5-6', rank: 'Master', color: '#a78bfa', badge: 'Architect' },
-  { range: '7-8', rank: 'Archmage', color: '#f59e0b', badge: 'Oracle' },
+  { range: '7-8', rank: 'Archmage', color: '#f59e0b', badge: 'Visionary' },
   { range: '9-10', rank: 'Luminor', color: '#ffd700', badge: 'Luminor' },
 ];
 

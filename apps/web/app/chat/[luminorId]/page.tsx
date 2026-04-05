@@ -45,7 +45,7 @@ const COMPANION_STARTERS: Record<string, string[]> = {
   veritas: ['Rewrite this for clarity:', 'Help me write copy for...', "This message isn't landing:"],
   lexicon: ['What is the right word for...', 'Help me name this:', 'Analyze this language:'],
   poetica: ['Write a poem about...', 'Help me with these lyrics:', 'Find the rhythm in...'],
-  oracle: ['Research this topic:', 'What do we know about...', 'Find the best sources for...'],
+  visionary: ['Research this topic:', 'What do we know about...', 'Find the best sources for...'],
   analytica: ['Analyze this data:', 'What pattern do you see in...', 'Help me interpret...'],
   memoria: ['Help me organize this:', 'Design a knowledge system for...', 'How should I structure this information?'],
   futura: ['Where is this trend going?', 'What will this field look like in 5 years?', 'Anticipate the change in...'],

@@ -185,7 +185,7 @@ export const SOUL_AGENT_MAP: Record<string, string> = {
   lore:      'melodia',     // both: harmonic continuity, canon resonance
 
   // Research team
-  sage:      'oracle',      // both: knowledge synthesis, hidden connections
+  sage:      'visionary',   // both: knowledge synthesis, hidden connections
   muse:      'analytica',   // both: cross-domain patterns, evidence gathering
   scout:     'futura',      // both: forward exploration, new angles
   archivist: 'memoria',    // both: organized recall, information architecture

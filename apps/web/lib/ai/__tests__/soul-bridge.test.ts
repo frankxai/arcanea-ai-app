@@ -161,13 +161,13 @@ describe('getSoulAgentForLuminor', () => {
   );
 
   // Research team mappings
-  const oracleAgent = getSoulAgentForLuminor('oracle');
+  const visionaryAgent = getSoulAgentForLuminor('visionary');
   assert(
-    oracleAgent !== undefined && oracleAgent.id === 'sage',
-    'oracle maps to sage'
+    visionaryAgent !== undefined && visionaryAgent.id === 'sage',
+    'visionary maps to sage'
   );
   assert(
-    oracleAgent !== undefined && oracleAgent.team === 'research',
+    visionaryAgent !== undefined && visionaryAgent.team === 'research',
     'sage is on research team'
   );
 
