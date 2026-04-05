@@ -275,7 +275,7 @@ export default function ArcaneaOSPage() {
 
                   <div className="flex flex-wrap gap-4">
                     <Link
-                      href="/platform"
+                      href="/ecosystem"
                       className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-primary text-white font-semibold shadow-glow-brand hover:scale-[1.03] transition-all duration-200"
                     >
                       Explore Platform

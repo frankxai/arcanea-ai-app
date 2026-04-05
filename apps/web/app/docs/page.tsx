@@ -66,7 +66,7 @@ const API_SECTIONS = [
   {
     title: 'Luminor Intelligence',
     description: 'Access the 16 Luminor companions for domain-specific creative guidance.',
-    href: '/luminor-intelligence',
+    href: '/luminors',
     icon: PhCompass,
     color: '#ffd700',
   },
@@ -124,7 +124,7 @@ const DOC_CATEGORIES = [
     links: [
       { label: 'AI Chat & Luminors', href: '/chat' },
       { label: 'Vision Generator', href: '/design-lab' },
-      { label: 'World Builder', href: '/world-builder' },
+      { label: 'World Builder', href: '/worlds/create' },
     ],
   },
   {

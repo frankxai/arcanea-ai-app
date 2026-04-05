@@ -50,7 +50,7 @@ const CONTRIBUTION_PATHS = [
   {
     title: 'Templates & Worlds',
     description: 'Build worlds using the Arcanea framework. Create templates others can use. Sell premium worlds.',
-    href: '/world-builder',
+    href: '/worlds/create',
     examples: ['World templates', 'Character archetypes', 'Magic system blueprints', 'Campaign frameworks'],
     icon: '🌍',
     color: '#34d399',

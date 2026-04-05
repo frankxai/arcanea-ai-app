@@ -75,7 +75,7 @@ const LAYERS = [
     accent: "#ffd700",
     description: "Everything is forkable. Build your own world on top of the Arcanea framework.",
     stats: ["43 npm packages", "80+ skills", "20+ agent types", "5 harness overlays"],
-    features: ["oh-my-arcanea", "claude-code-oracle-skills", "arcanea-skills-opensource", "arcanea-opencode"],
+    features: ["oh-my-arcanea", "claude-code-enterprise-skills", "arcanea-skills-opensource", "arcanea-opencode"],
   },
 ];
 
@@ -120,7 +120,7 @@ const REPO_GROUPS: { category: string; accent: string; repos: Repo[] }[] = [
     accent: "#ffd700",
     repos: [
       { name: "oh-my-arcanea", desc: "Canonical Claude Code harness -- 54 skills, hooks, agents", lang: "TypeScript", status: "active" },
-      { name: "claude-code-oracle-skills", desc: "Oracle Cloud + enterprise AI skill pack", lang: "TypeScript", status: "stable" },
+      { name: "claude-code-enterprise-skills", desc: "Enterprise AI skill pack", lang: "TypeScript", status: "stable" },
       { name: "arcanea-opencode", desc: "TUI buddy with free model routing (MiniMax, R1, Gemini)", lang: "TypeScript", status: "experimental" },
       { name: "arcanea-skills-opensource", desc: "Community skill registry -- fork and extend", lang: "TypeScript", status: "active" },
     ],
@@ -380,8 +380,8 @@ export default function EcosystemHubPage() {
                 <a href="https://github.com/frankxai/arcanea" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-semibold hover:bg-white/10 transition-all">
                   <IconGitBranch className="w-4 h-4" /> Contribute on GitHub
                 </a>
-                <Link href="/architecture" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-semibold hover:bg-white/10 transition-all">
-                  Architecture Diagrams <IconArrow className="w-4 h-4" />
+                <Link href="/developers" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-semibold hover:bg-white/10 transition-all">
+                  Developer Docs <IconArrow className="w-4 h-4" />
                 </Link>
               </div>
             </div>

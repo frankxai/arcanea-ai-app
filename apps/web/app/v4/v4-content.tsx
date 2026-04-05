@@ -182,8 +182,8 @@ export function V4Content({
             <Link href="/chat" className="px-6 py-3 rounded-xl bg-cyan-300/25 border border-cyan-300/45 text-cyan-50 font-semibold hover:bg-cyan-300/35 transition">
               Start Creating
             </Link>
-            <Link href="/design-labs/3D-evolution" className="px-6 py-3 rounded-xl bg-white/10 border border-white/25 text-white font-semibold hover:bg-white/15 transition">
-              View Proposal
+            <Link href="/roadmap" className="px-6 py-3 rounded-xl bg-white/10 border border-white/25 text-white font-semibold hover:bg-white/15 transition">
+              View Roadmap
             </Link>
           </div>
         </div>

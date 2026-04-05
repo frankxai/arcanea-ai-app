@@ -110,7 +110,7 @@ export function HeroV2({ stats }: HeroV2Props) {
             className="inline-flex mb-8"
           >
             <Link
-              href="/hub/updates"
+              href="/changelog"
               className="group inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-atlantean-teal-aqua/10 to-creation-prism-purple/10 border border-atlantean-teal-aqua/20 backdrop-blur-sm hover:border-atlantean-teal-aqua/40 transition-all"
             >
               <span className="flex h-2 w-2 relative">

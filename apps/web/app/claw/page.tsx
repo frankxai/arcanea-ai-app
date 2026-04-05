@@ -545,7 +545,7 @@ export default function ClawPage() {
                   </svg>
                 </a>
                 <Link
-                  href="/hub/updates/arcanea-claw"
+                  href="/changelog"
                   className="inline-flex items-center gap-2 px-8 py-4 rounded-xl liquid-glass border border-white/[0.08] text-text-primary font-semibold hover:border-atlantean-teal-aqua/30 transition-all duration-200"
                 >
                   Read the Announcement
