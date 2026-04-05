@@ -8,6 +8,9 @@ import {
   type AIModel,
   type ArcaneanWorkflow,
 } from "@/lib/models-data";
+import { fetchLiveModels, type LiveModelData } from "@/lib/openrouter-live";
+
+export const revalidate = 3600;
 
 /* ------------------------------------------------------------------ */
 /*  Metadata                                                           */
@@ -612,6 +615,193 @@ function ImageArenaTeaser() {
   );
 }
 
+/* ------------------------------------------------------------------ */
+/*  Live Badge                                                         */
+/* ------------------------------------------------------------------ */
+
+function LiveBadge({ cached }: { cached?: boolean }) {
+  if (cached) {
+    return (
+      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-medium tracking-wider uppercase bg-white/[0.04] text-white/30 border border-white/[0.06]">
+        cached data
+      </span>
+    );
+  }
+  return (
+    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-medium tracking-wider uppercase bg-[#7fffd4]/5 text-[#7fffd4]/70 border border-[#7fffd4]/15">
+      <span className="w-1.5 h-1.5 rounded-full bg-[#7fffd4] animate-pulse" />
+      Live from OpenRouter
+    </span>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Live Free Models                                                   */
+/* ------------------------------------------------------------------ */
+
+function LiveFreeModelsSection({ live }: { live: LiveModelData }) {
+  const freeModels = live.models
+    .filter((m) => m.is_free && m.modality.includes("text"))
+    .sort((a, b) => b.context_length - a.context_length)
+    .slice(0, 16);
+
+  if (!freeModels.length) return null;
+
+  return (
+    <section className="mb-24">
+      <div className="flex items-center gap-3 mb-10">
+        <div className="flex-1">
+          <span className="inline-block text-xs font-medium tracking-widest uppercase text-[#7fffd4]/60 mb-3">
+            Free This Week
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white font-[family-name:var(--font-display)]">
+            Free Models on OpenRouter
+          </h2>
+          <p className="mt-3 text-base text-white/50 max-w-2xl">
+            {live.meta.free} models at zero cost. Sorted by context window. Updated hourly.
+          </p>
+        </div>
+        <LiveBadge />
+      </div>
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        {freeModels.map((model) => (
+          <div
+            key={model.id}
+            className="group relative bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] rounded-2xl p-5 hover:border-[#7fffd4]/20 transition-colors"
+          >
+            <div className="flex items-start justify-between mb-3">
+              <div>
+                <h3 className="text-sm font-semibold text-white">
+                  {model.name}
+                </h3>
+                <p className="text-xs text-white/40 mt-0.5">
+                  {model.provider}
+                </p>
+              </div>
+              <FreeBadge />
+            </div>
+            <div className="space-y-2 text-xs text-white/50">
+              <div className="flex justify-between">
+                <span>Context</span>
+                <span className="text-white/70">
+                  {formatContext(model.context_length)}
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span>Max Output</span>
+                <span className="text-white/70">
+                  {model.max_completion > 0
+                    ? formatContext(model.max_completion)
+                    : "--"}
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span>Modality</span>
+                <span className="text-white/70">{model.modality}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Live Pricing Section                                               */
+/* ------------------------------------------------------------------ */
+
+function LivePricingSection({ live }: { live: LiveModelData }) {
+  const top = live.models
+    .filter((m) => !m.is_free && m.context_length > 0)
+    .sort((a, b) => b.context_length - a.context_length)
+    .slice(0, 20);
+
+  if (!top.length) return null;
+
+  return (
+    <section className="mb-24">
+      <div className="flex items-center gap-3 mb-10">
+        <div className="flex-1">
+          <span className="inline-block text-xs font-medium tracking-widest uppercase text-[#ffd700]/60 mb-3">
+            Live Pricing
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white font-[family-name:var(--font-display)]">
+            Top 20 by Context Window
+          </h2>
+          <p className="mt-3 text-base text-white/50 max-w-2xl">
+            Real per-million-token pricing from OpenRouter. The largest context windows available today.
+          </p>
+        </div>
+        <LiveBadge />
+      </div>
+      <div className="overflow-x-auto rounded-2xl border border-white/[0.06]">
+        <table className="w-full text-sm text-left">
+          <thead>
+            <tr className="border-b border-white/[0.06] bg-white/[0.02]">
+              <th className="px-4 py-3 text-xs font-medium text-white/40 uppercase tracking-wider">
+                #
+              </th>
+              <th className="px-4 py-3 text-xs font-medium text-white/40 uppercase tracking-wider">
+                Model
+              </th>
+              <th className="px-4 py-3 text-xs font-medium text-white/40 uppercase tracking-wider">
+                Provider
+              </th>
+              <th className="px-4 py-3 text-xs font-medium text-white/40 uppercase tracking-wider text-right">
+                Context
+              </th>
+              <th className="px-4 py-3 text-xs font-medium text-white/40 uppercase tracking-wider text-right">
+                Max Output
+              </th>
+              <th className="px-4 py-3 text-xs font-medium text-white/40 uppercase tracking-wider text-right">
+                Input $/M
+              </th>
+              <th className="px-4 py-3 text-xs font-medium text-white/40 uppercase tracking-wider text-right">
+                Output $/M
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {top.map((model, i) => (
+              <tr
+                key={model.id}
+                className="border-b border-white/[0.03] hover:bg-white/[0.02] transition-colors"
+              >
+                <td className="px-4 py-3 text-white/30 font-mono text-xs">
+                  {i + 1}
+                </td>
+                <td className="px-4 py-3 font-medium text-white">
+                  {model.name}
+                </td>
+                <td className="px-4 py-3 text-white/50">{model.provider}</td>
+                <td className="px-4 py-3 text-white/50 text-right font-mono text-xs">
+                  {formatContext(model.context_length)}
+                </td>
+                <td className="px-4 py-3 text-white/50 text-right font-mono text-xs">
+                  {model.max_completion > 0
+                    ? formatContext(model.max_completion)
+                    : "--"}
+                </td>
+                <td className="px-4 py-3 text-[#7fffd4] text-right font-mono text-xs">
+                  ${model.pricing_prompt_per_mtok.toFixed(2)}
+                </td>
+                <td className="px-4 py-3 text-[#7fffd4] text-right font-mono text-xs">
+                  ${model.pricing_completion_per_mtok.toFixed(2)}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  CTA                                                                */
+/* ------------------------------------------------------------------ */
+
 function ArenaCTA() {
   return (
     <section className="text-center py-16">
@@ -650,7 +840,16 @@ function ArenaCTA() {
 /*  Page                                                               */
 /* ------------------------------------------------------------------ */
 
-export default function ModelsArenaPage() {
+export default async function ModelsArenaPage() {
+  const live = await fetchLiveModels();
+  const isLive = live !== null;
+
+  const totalModels = isLive ? live.meta.total : AI_MODELS.length;
+  const freeCount = isLive ? live.meta.free : getFreeModels().length;
+  const providerCount = isLive
+    ? live.meta.providers
+    : new Set(AI_MODELS.map((m) => m.provider)).size;
+
   return (
     <div className="relative min-h-screen bg-cosmic-deep">
       <ArenaJsonLd />
@@ -665,24 +864,28 @@ export default function ModelsArenaPage() {
           </h1>
           <p className="text-lg text-white/50 max-w-2xl mx-auto leading-relaxed">
             Transparent model intelligence for creators. Live benchmarks, free
-            model tracking, and production routing across {AI_MODELS.length}{" "}
-            models from{" "}
-            {new Set(AI_MODELS.map((m) => m.provider)).size} providers.
-            Updated weekly.
+            model tracking, and production routing across {totalModels}{" "}
+            models from {providerCount} providers.
+            {isLive ? " Updated hourly from OpenRouter." : " Updated weekly."}
           </p>
-          <div className="mt-6 flex items-center justify-center gap-6 text-xs text-white/30">
-            <span>{AI_MODELS.length} models tracked</span>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs text-white/30">
+            <span>{totalModels} models on OpenRouter</span>
             <span className="w-1 h-1 rounded-full bg-white/20" />
-            <span>{getFreeModels().length} free on Zen</span>
+            <span>{freeCount} free models</span>
             <span className="w-1 h-1 rounded-full bg-white/20" />
             <span>
-              Last updated {MODEL_WEEKLY_UPDATES[0]?.weekOf ?? "recently"}
+              {isLive
+                ? `Last fetched ${new Date(live.meta.lastFetched).toLocaleDateString("en-US", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })}`
+                : `Last updated ${MODEL_WEEKLY_UPDATES[0]?.weekOf ?? "recently"}`}
             </span>
+            <span className="w-1 h-1 rounded-full bg-white/20" />
+            <LiveBadge cached={!isLive} />
           </div>
         </header>
 
-        <FreeModelsSection />
+        {isLive ? <LiveFreeModelsSection live={live} /> : <FreeModelsSection />}
         <BenchmarkTable />
+        {isLive && <LivePricingSection live={live} />}
         <WorkflowMap />
         <ModelDeepDives />
         <UpdateLog />
