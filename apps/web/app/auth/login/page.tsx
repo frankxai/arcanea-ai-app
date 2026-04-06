@@ -269,9 +269,20 @@ export default function LoginPage() {
   return (
     <MotionProvider>
     <div className="relative flex items-center justify-center min-h-[calc(100dvh-4rem)] px-4 py-12">
-      {/* Background radial glow */}
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
-        <div className="w-[600px] h-[600px] rounded-full bg-atlantean-teal-aqua/[0.04] blur-[120px]" />
+      {/* Background — cosmic depth with aurora */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 bg-[#09090b]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-[radial-gradient(circle,rgba(0,188,212,0.06)_0%,rgba(13,71,161,0.03)_40%,transparent_70%)] blur-[80px]" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-[radial-gradient(ellipse,rgba(168,85,247,0.04)_0%,transparent_70%)] blur-[60px]" />
+        {/* Subtle grid texture */}
+        <div
+          className="absolute inset-0 opacity-[0.012]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px)",
+            backgroundSize: "80px 80px",
+          }}
+        />
       </div>
 
       <m.div
@@ -280,19 +291,25 @@ export default function LoginPage() {
         transition={{ duration: 0.5 }}
         className="relative w-full max-w-md"
       >
-        {/* Header */}
+        {/* Header — branded with gate symbol */}
         <div className="text-center mb-10">
-          <Link href="/" className="inline-block mb-8">
-            <span className="font-display text-2xl font-bold text-text-primary drop-shadow-[0_0_12px_rgba(0,188,212,0.3)]">
-              Arcanea
-            </span>
+          <Link href="/" className="inline-block mb-6 group">
+            {/* Gate symbol with teal glow */}
+            <div className="relative mx-auto w-14 h-14 flex items-center justify-center">
+              <div className="absolute inset-[-4px] rounded-xl bg-[radial-gradient(circle,rgba(0,188,212,0.2)_0%,transparent_70%)] blur-sm group-hover:blur-md transition-all duration-500" />
+              <div className="relative w-12 h-12 rounded-xl border border-white/[0.1] bg-white/[0.03] flex items-center justify-center shadow-[0_4px_24px_rgba(0,188,212,0.15)]">
+                <span className="font-display text-lg font-bold bg-gradient-to-br from-[#00bcd4] to-[#ffd700] bg-clip-text text-transparent">
+                  A
+                </span>
+              </div>
+            </div>
           </Link>
 
           <h1 className="text-2xl sm:text-3xl font-display font-bold text-text-primary mb-2">
             Welcome back
           </h1>
           <p className="text-text-secondary font-body text-sm">
-            Continue creating
+            The gate awaits
           </p>
         </div>
 
@@ -394,14 +411,23 @@ export default function LoginPage() {
 
         {/* Sign up link */}
         <p className="text-center mt-8 font-body text-text-secondary text-sm">
-          New to Arcanea?{" "}
+          New to the multiverse?{" "}
           <Link
             href="/auth/signup"
             className="text-atlantean-teal-aqua hover:text-atlantean-teal-aqua/80 transition-colors font-semibold"
           >
-            Create an account
+            Enter Arcanea
           </Link>
         </p>
+
+        {/* Trust signals */}
+        <div className="flex items-center justify-center gap-4 mt-6 text-[11px] text-text-muted/50 font-mono">
+          <span>486K+ words</span>
+          <span className="w-1 h-1 rounded-full bg-white/10" />
+          <span>16 Luminors</span>
+          <span className="w-1 h-1 rounded-full bg-white/10" />
+          <span>Open source</span>
+        </div>
       </m.div>
     </div>
     </MotionProvider>
