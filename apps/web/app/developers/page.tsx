@@ -342,10 +342,17 @@ export default function DevelopersPage() {
                   <Icons.Github />
                   Explore the Repo
                 </a>
-                <Link href="/skills" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200">
+                <Link href="/ecosystem" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl liquid-glass border border-white/[0.06] text-text-primary font-semibold hover:border-crystal/30 hover:bg-crystal/5 transition-all duration-200">
                   <Icons.Zap />
-                  Create a Skill
+                  Full Ecosystem
                 </Link>
+              </div>
+              <div className="flex flex-wrap justify-center gap-3 mt-4">
+                <Link href="/install" className="text-sm text-white/40 hover:text-white/70 transition-colors">Install Tools</Link>
+                <span className="text-white/20">·</span>
+                <Link href="/contribute" className="text-sm text-white/40 hover:text-white/70 transition-colors">Contribute</Link>
+                <span className="text-white/20">·</span>
+                <Link href="/docs" className="text-sm text-white/40 hover:text-white/70 transition-colors">API Docs</Link>
               </div>
             </div>
           </div>

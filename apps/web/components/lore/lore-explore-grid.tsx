@@ -78,7 +78,7 @@ const EXPLORATIONS = [
     darkGradient: true,
   },
   {
-    href: '/codex/materials',
+    href: '/library',
     title: 'Arcanean Materials',
     description: 'Crystals, metals, and shards born from the Luminor Fallout',
     icon: PhDiamond,

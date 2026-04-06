@@ -560,11 +560,32 @@ export function ResultScreen({ guardian, onRestart, onSave, saveStatus, isAuthen
               )}
             </m.div>
 
+            {/* Journey links — connect to the rest of Arcanea */}
+            <m.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.1, duration: 0.4 }}
+              className="grid grid-cols-3 gap-2 pt-2"
+            >
+              <Link href="/academy" className="flex flex-col items-center gap-1.5 rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 text-center transition-all hover:border-white/[0.12] hover:bg-white/[0.05]">
+                <span className="text-xs font-semibold text-white/70">Academy</span>
+                <span className="text-[10px] text-white/30">Master the Gates</span>
+              </Link>
+              <Link href="/worlds" className="flex flex-col items-center gap-1.5 rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 text-center transition-all hover:border-white/[0.12] hover:bg-white/[0.05]">
+                <span className="text-xs font-semibold text-white/70">Worlds</span>
+                <span className="text-[10px] text-white/30">Explore universes</span>
+              </Link>
+              <Link href="/gallery" className="flex flex-col items-center gap-1.5 rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 text-center transition-all hover:border-white/[0.12] hover:bg-white/[0.05]">
+                <span className="text-xs font-semibold text-white/70">Gallery</span>
+                <span className="text-[10px] text-white/30">See creations</span>
+              </Link>
+            </m.div>
+
             {/* Secondary action */}
             <m.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 1.1, duration: 0.4 }}
+              transition={{ delay: 1.2, duration: 0.4 }}
               className="flex items-center justify-center pt-2"
             >
               <button
