@@ -5,6 +5,7 @@ import {
   getFreeModels,
   type AIModel,
 } from "@/lib/models-data";
+import { fetchLiveModels } from "@/lib/openrouter-live";
 import {
   SectionHeading,
   FreeBadge,
@@ -16,6 +17,8 @@ import {
   ImageArenaTeaser,
   ArenaCTA,
 } from "./models-arena-components";
+import ModelExplorer from "./model-explorer";
+import { CostCalculator } from "./cost-calculator";
 
 export const revalidate = 3600;
 
@@ -261,7 +264,13 @@ function BenchmarkTable() {
 /*  Page                                                               */
 /* ------------------------------------------------------------------ */
 
-export default function ModelsArenaPage() {
+export default async function ModelsArenaPage() {
+  const live = await fetchLiveModels();
+  const modelCount = live?.meta.total ?? AI_MODELS.length;
+  const freeCount = live?.meta.free ?? getFreeModels().length;
+  const providerCount = live?.meta.providers ?? new Set(AI_MODELS.map((m) => m.provider)).size;
+  const isLive = live !== null;
+
   return (
     <div className="relative min-h-screen bg-cosmic-deep">
       <ArenaJsonLd />
@@ -276,24 +285,52 @@ export default function ModelsArenaPage() {
           </h1>
           <p className="text-lg text-white/50 max-w-2xl mx-auto leading-relaxed">
             Transparent model intelligence for creators. Live benchmarks, free
-            model tracking, and production routing across {AI_MODELS.length}{" "}
-            models from{" "}
-            {new Set(AI_MODELS.map((m) => m.provider)).size} providers.
-            Updated weekly.
+            model tracking, and production routing across {modelCount}{" "}
+            models from {providerCount} providers.
+            {isLive ? " Updated hourly from OpenRouter." : " Updated weekly."}
           </p>
           <div className="mt-6 flex items-center justify-center gap-6 text-xs text-white/30">
-            <span>{AI_MODELS.length} models tracked</span>
+            <span>{modelCount} models tracked</span>
             <span className="w-1 h-1 rounded-full bg-white/20" />
-            <span>{getFreeModels().length} free on Zen</span>
+            <span>{freeCount} free</span>
             <span className="w-1 h-1 rounded-full bg-white/20" />
-            <span>
-              Last updated {MODEL_WEEKLY_UPDATES[0]?.weekOf ?? "recently"}
-            </span>
+            {isLive ? (
+              <span className="inline-flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#7fffd4] animate-pulse" />
+                Live from OpenRouter
+              </span>
+            ) : (
+              <span>Last updated {MODEL_WEEKLY_UPDATES[0]?.weekOf ?? "recently"}</span>
+            )}
           </div>
         </header>
 
+        {/* Interactive Explorer — client component with live data */}
+        {live && (
+          <section className="mb-24">
+            <SectionHeading
+              tag="Explore"
+              title="Model Explorer"
+              subtitle={`Search, filter, and compare ${live.meta.total} models with real-time pricing from OpenRouter.`}
+            />
+            <ModelExplorer models={live.models} />
+          </section>
+        )}
+
         <FreeModelsSection />
         <BenchmarkTable />
+        {/* Cost Calculator — client component */}
+        {live && (
+          <section className="mb-24">
+            <SectionHeading
+              tag="Calculate"
+              title="Cost Calculator"
+              subtitle="Estimate monthly costs for your use case. Real pricing from OpenRouter."
+            />
+            <CostCalculator models={live.models} />
+          </section>
+        )}
+
         <WorkflowMap />
         <ModelDeepDives />
         <UpdateLog />
