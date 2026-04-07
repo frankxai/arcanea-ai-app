@@ -13,13 +13,13 @@ import { executeSearch } from '@/lib/search/providers';
 export const runtime = 'edge';
 
 export async function POST(req: NextRequest) {
-  const { query, maxResults = 5, provider } = await req.json();
-
-  if (!query || typeof query !== 'string' || query.trim().length === 0) {
-    return NextResponse.json({ error: 'Query is required' }, { status: 400 });
-  }
-
   try {
+    const { query, maxResults = 5, provider } = await req.json();
+
+    if (!query || typeof query !== 'string' || query.trim().length === 0) {
+      return NextResponse.json({ error: 'Query is required' }, { status: 400 });
+    }
+
     const result = await executeSearch(query.trim(), {
       provider,
       maxResults: Math.min(Math.max(Number(maxResults) || 5, 1), 10),

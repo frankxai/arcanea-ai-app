@@ -32,24 +32,28 @@ interface StatusResponse {
 }
 
 export async function GET() {
-  const stripe = checkEnvKey('STRIPE_SECRET_KEY');
-  const googleAi = checkEnvKey('GOOGLE_AI_API_KEY', 'GOOGLE_GENERATIVE_AI_API_KEY');
-  const anthropic = checkEnvKey('ANTHROPIC_API_KEY');
-  const supabase = await checkSupabase();
+  try {
+    const stripe = checkEnvKey('STRIPE_SECRET_KEY');
+    const googleAi = checkEnvKey('GOOGLE_AI_API_KEY', 'GOOGLE_GENERATIVE_AI_API_KEY');
+    const anthropic = checkEnvKey('ANTHROPIC_API_KEY');
+    const supabase = await checkSupabase();
 
-  const result: StatusResponse = {
-    healthy: supabase.ok && stripe.ok && googleAi.ok && anthropic.ok,
-    timestamp: new Date().toISOString(),
-    services: { supabase, stripe, googleAi, anthropic },
-  };
+    const result: StatusResponse = {
+      healthy: supabase.ok && stripe.ok && googleAi.ok && anthropic.ok,
+      timestamp: new Date().toISOString(),
+      services: { supabase, stripe, googleAi, anthropic },
+    };
 
-  return NextResponse.json(result, {
-    status: result.healthy ? 200 : 503,
-    headers: {
-      'Cache-Control': 'no-store, no-cache, must-revalidate',
-      'Content-Type': 'application/json',
-    },
-  });
+    return NextResponse.json(result, {
+      status: result.healthy ? 200 : 503,
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate',
+        'Content-Type': 'application/json',
+      },
+    });
+  } catch {
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
 }
 
 /**

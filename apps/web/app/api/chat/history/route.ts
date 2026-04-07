@@ -159,74 +159,81 @@ function sanitizeMessages(input: unknown): StoredMessage[] {
 // ---------------------------------------------------------------------------
 
 export async function GET(req: NextRequest) {
-  const params = req.nextUrl.searchParams;
-  const luminorId = params.get('luminorId') || 'default';
-  const requestedUserId = params.get('userId');
-  const beforeId = params.get('before') ?? undefined;
-  const limit = Math.max(1, Math.min(200, Number(params.get('limit') || 50)));
+  try {
+    const params = req.nextUrl.searchParams;
+    const luminorId = params.get('luminorId') || 'default';
+    const requestedUserId = params.get('userId');
+    const beforeId = params.get('before') ?? undefined;
+    const limit = Math.max(1, Math.min(200, Number(params.get('limit') || 50)));
 
-  const authUserId = await getAuthenticatedUserId();
+    const authUserId = await getAuthenticatedUserId();
 
-  // --- Supabase path (authenticated users) ---
-  if (authUserId) {
-    try {
-      const { getChatHistory } = await import(
-        '@/lib/services/chat-service'
-      );
-      const result = await getChatHistory(authUserId, luminorId, {
-        limit,
-        beforeId,
-      });
+    // --- Supabase path (authenticated users) ---
+    if (authUserId) {
+      try {
+        const { getChatHistory } = await import(
+          '@/lib/services/chat-service'
+        );
+        const result = await getChatHistory(authUserId, luminorId, {
+          limit,
+          beforeId,
+        });
 
-      const payload: HistoryResponse = {
-        sessionId: result.sessionId,
-        messages: result.messages.map((m) => ({
-          id: m.id,
-          role: m.role as ChatRole,
-          content: m.content,
-          timestamp: m.createdAt,
-        })),
-        bondState: result.bondState,
-        hasMore: result.hasMore,
-      };
+        const payload: HistoryResponse = {
+          sessionId: result.sessionId,
+          messages: result.messages.map((m) => ({
+            id: m.id,
+            role: m.role as ChatRole,
+            content: m.content,
+            timestamp: m.createdAt,
+          })),
+          bondState: result.bondState,
+          hasMore: result.hasMore,
+        };
 
-      return NextResponse.json(payload, {
-        headers: { 'Cache-Control': 'no-store' },
-      });
-    } catch (err) {
-      console.error('[chat/history GET] Supabase error — falling back to file store:', err);
-      // Fall through to file store
+        return NextResponse.json(payload, {
+          headers: { 'Cache-Control': 'no-store' },
+        });
+      } catch (err) {
+        console.error('[chat/history GET] Supabase error — falling back to file store:', err);
+        // Fall through to file store
+      }
     }
+
+    // --- File-based fallback (anonymous or Supabase unavailable) ---
+    const userKey = requestedUserId || 'guest';
+    const store = await readFileStore();
+    const allMessages = store.users[userKey]?.[luminorId] || [];
+
+    let start = 0;
+    let end = allMessages.length;
+
+    if (beforeId) {
+      const beforeIndex = allMessages.findIndex((msg) => msg.id === beforeId);
+      end = beforeIndex >= 0 ? beforeIndex : allMessages.length;
+      start = Math.max(0, end - limit);
+    } else {
+      start = Math.max(0, allMessages.length - limit);
+    }
+
+    const messages = allMessages.slice(start, end);
+    const userTurns = allMessages.filter((m) => m.role === 'user').length;
+
+    const payload: HistoryResponse = {
+      messages,
+      bondState: deriveBondState(userTurns),
+      hasMore: start > 0,
+    };
+
+    return NextResponse.json(payload, {
+      headers: { 'Cache-Control': 'no-store' },
+    });
+  } catch {
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 },
+    );
   }
-
-  // --- File-based fallback (anonymous or Supabase unavailable) ---
-  const userKey = requestedUserId || 'guest';
-  const store = await readFileStore();
-  const allMessages = store.users[userKey]?.[luminorId] || [];
-
-  let start = 0;
-  let end = allMessages.length;
-
-  if (beforeId) {
-    const beforeIndex = allMessages.findIndex((msg) => msg.id === beforeId);
-    end = beforeIndex >= 0 ? beforeIndex : allMessages.length;
-    start = Math.max(0, end - limit);
-  } else {
-    start = Math.max(0, allMessages.length - limit);
-  }
-
-  const messages = allMessages.slice(start, end);
-  const userTurns = allMessages.filter((m) => m.role === 'user').length;
-
-  const payload: HistoryResponse = {
-    messages,
-    bondState: deriveBondState(userTurns),
-    hasMore: start > 0,
-  };
-
-  return NextResponse.json(payload, {
-    headers: { 'Cache-Control': 'no-store' },
-  });
 }
 
 // ---------------------------------------------------------------------------

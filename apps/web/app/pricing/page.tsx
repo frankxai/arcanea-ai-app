@@ -13,179 +13,149 @@ import {
   Crown,
   Star,
   ArrowRight,
-  Heart,
-  Package,
-  Cube,
+  Brain,
   Sparkle,
-  ShieldCheck,
-  Infinity as InfinityIcon,
   MusicNote,
-  Wallet,
+  Cat,
+  Diamond,
+  Fire,
   CurrencyEth,
-  Trophy,
-  SealCheck,
+  Envelope,
 } from "@phosphor-icons/react/dist/ssr";
 
 export const metadata: Metadata = {
   title: "Pricing — Create with Credits or Go Unlimited | Arcanea",
   description:
-    "Open-core creative infrastructure. Chat free, create with credits, or go unlimited. Founding Passes available as limited NFT memberships on-chain.",
+    "Arcanea is free. Chat with AI, build worlds, forge Luminors, explore 486K+ words of living lore. The Creators NFT collection coming soon.",
   openGraph: {
-    title: "Pricing — Create with Credits or Go Unlimited | Arcanea",
+    title: "Arcanea — Free Creative Intelligence Platform",
     description:
-      "Free to chat. Credits for creation. Unlimited for builders. Founding Pass NFT for legends.",
+      "Everything is free. Forge Luminors, build worlds, chat with 16 AI specialists. The Creators NFT collection drops soon.",
     type: "website",
-    images: [
-      {
-        url: "/guardians/v3/alera-hero-v3.webp",
-        width: 1024,
-        height: 1024,
-        alt: "Alera — Guardian of the Voice Gate",
-      },
-    ],
   },
 };
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
-interface PricingTier {
-  name: string;
-  tagline: string;
-  price: string;
-  priceNote: string;
-  badge?: string;
-  badgeColor?: string;
-  features: string[];
-  cta: string;
-  ctaHref: string;
-  highlight?: boolean;
-  nft?: boolean;
-}
-
-const TIERS: PricingTier[] = [
+const FREE_CAPABILITIES = [
   {
-    name: "Open",
-    tagline: "Explore the multiverse",
-    price: "Free",
-    priceNote: "forever",
-    features: [
-      "Unlimited AI chat with Lumina",
-      "Full Library access — 486K+ words",
-      "World browsing & community gallery",
-      "10 Guardians & 7 Wisdoms",
-      "All open-source tools & SDKs",
-      "Basic creation (3/day)",
-    ],
-    cta: "Start Creating",
-    ctaHref: "/chat",
+    Icon: Chat,
+    name: "AI Chat with Lumina",
+    desc: "Unlimited conversations with 16 specialist Luminors",
+    accent: "#00bcd4",
   },
   {
-    name: "Creator",
-    tagline: "Pay for what you create",
-    price: "Credits",
-    priceNote: "from $5 / 50 credits",
-    badge: "MOST FLEXIBLE",
-    badgeColor: "teal",
-    features: [
-      "Everything in Open",
-      "Image generation — 1 credit",
-      "Story & chapter writing — 1 credit",
-      "World building — 1 credit",
-      "Music composition — 2 credits",
-      "Code generation — 1 credit",
-      "Credits never expire",
-      "Priority generation queue",
-    ],
-    cta: "Buy Credits",
-    ctaHref: "/dashboard/credits",
+    Icon: Brain,
+    name: "Luminor Forge",
+    desc: "Shape custom AI intelligences — name, domain, voice, personality. Export as JSON.",
+    accent: "#00bcd4",
   },
   {
-    name: "Forge Unlimited",
-    tagline: "For serious builders",
-    price: "$29",
-    priceNote: "/month · $249/year",
-    badge: "BEST VALUE",
-    badgeColor: "gold",
-    highlight: true,
-    features: [
-      "Everything in Creator",
-      "Unlimited image generation",
-      "Unlimited story & world building",
-      "Unlimited music composition",
-      "Unlimited code generation",
-      "Custom Guardian personalities",
-      "Priority GPU queue",
-      "Creator Marketplace access (sell your work)",
-      "Advanced agent deployment",
-    ],
-    cta: "Go Unlimited",
-    ctaHref: "/auth/signup?plan=forge",
+    Icon: BookOpen,
+    name: "The Library",
+    desc: "486,000+ words of mythology, philosophy, and creative frameworks",
+    accent: "#7fffd4",
   },
   {
-    name: "Founding Pass",
-    tagline: "1,000 total · on-chain",
-    price: "0.1 ETH",
-    priceNote: "or equivalent · lifetime",
-    badge: "LIMITED — NFT",
-    badgeColor: "purple",
-    nft: true,
-    features: [
-      "Everything in Forge Unlimited — forever",
-      "Permanent Founding Member status",
-      "On-chain membership NFT",
-      "Lifetime access — no recurring fees",
-      "Governance votes on roadmap",
-      "Revenue share from Creator Marketplace",
-      "Custom Luminor agent deployment",
-      "Private founder channel",
-      "Early access to all future features",
-      "Transferable & tradeable",
-    ],
-    cta: "Mint Your Pass",
-    ctaHref: "/founding",
+    Icon: Globe,
+    name: "World Building",
+    desc: "Characters, locations, magic systems, entire universes",
+    accent: "#78a6ff",
+  },
+  {
+    Icon: ImageSquare,
+    name: "Image Generation",
+    desc: "Original images from the Arcanean framework",
+    accent: "#a78bfa",
+  },
+  {
+    Icon: PencilSimple,
+    name: "Story Writing",
+    desc: "Chapters, lore entries, and narratives with AI",
+    accent: "#ff6b35",
+  },
+  {
+    Icon: MusicNote,
+    name: "Music Composition",
+    desc: "AI-generated soundtracks and lo-fi for your worlds",
+    accent: "#ffd700",
+  },
+  {
+    Icon: Cat,
+    name: "Companions",
+    desc: "Summon creatures from the Five Elements. Collectible, evolvable.",
+    accent: "#a78bfa",
+  },
+  {
+    Icon: Code,
+    name: "Code Generation",
+    desc: "Scripts, agents, and creative tools",
+    accent: "#00ff88",
+  },
+  {
+    Icon: Users,
+    name: "Community Gallery",
+    desc: "Browse and share creations across the multiverse",
+    accent: "#78a6ff",
+  },
+  {
+    Icon: Diamond,
+    name: "Materials & Codex",
+    desc: "9 crystals, 5 metals, 3 shards — science-grounded cosmic substrate",
+    accent: "#7fffd4",
+  },
+  {
+    Icon: GitBranch,
+    name: "Open Source Everything",
+    desc: "27 repos, 35 npm packages, 54 skills — MIT licensed. Fork it.",
+    accent: "#94a3b8",
   },
 ];
 
-const CREATION_TYPES = [
-  { Icon: Chat, name: "AI Chat", cost: "Free", costColor: "text-emerald-400" },
-  { Icon: ImageSquare, name: "Image Generation", cost: "1 credit", costColor: "text-[#00bcd4]" },
-  { Icon: PencilSimple, name: "Story Writing", cost: "1 credit", costColor: "text-[#00bcd4]" },
-  { Icon: Globe, name: "World Building", cost: "1 credit", costColor: "text-[#00bcd4]" },
-  { Icon: MusicNote, name: "Music Composition", cost: "2 credits", costColor: "text-[#00bcd4]" },
-  { Icon: Code, name: "Code Generation", cost: "1 credit", costColor: "text-[#00bcd4]" },
+const FORGE_HIGHLIGHTS = [
+  {
+    title: "Luminor Forge",
+    desc: "Print system cards for custom GPTs, coding agents, creative partners. Choose domain, voice, element, personality. AI-assisted via Lumina. Export as JSON agent spec.",
+    href: "/forge/luminor",
+    color: "#00bcd4",
+    traits: ["System Cards", "Agent Specs", "Prompt Engineering", "JSON Export"],
+  },
+  {
+    title: "Companion Forge",
+    desc: "Summon creatures from the Five Elements. Each has personality, evolves with your journey, travels with your profile. Visual, collectible, bonded to your Luminor.",
+    href: "/forge/companion",
+    color: "#a78bfa",
+    traits: ["Five Elements", "Evolvable", "Collectible", "Bonded"],
+  },
+  {
+    title: "The Creators — NFT Collection",
+    desc: "1,111 unique characters across 12 origin classes. Sacred Gear. Starlight Mark. Dynamic evolution. Each is a key to the Arcanean multiverse.",
+    href: "/forge/collection",
+    color: "#ffd700",
+    traits: ["1,111 Supply", "12 Origins", "On-Chain", "Dynamic Evolution"],
+  },
 ];
 
-const PAYMENT_METHODS = [
-  { name: "Card", desc: "Visa, Mastercard, Amex via Stripe" },
-  { name: "Crypto", desc: "ETH, USDC on Base & Solana" },
-  { name: "Apple Pay", desc: "One-tap checkout" },
-  { name: "Google Pay", desc: "Seamless mobile" },
-];
-
-const FAQS = [
+const COMING_NEXT = [
   {
-    q: "What can I create for free?",
-    a: "Unlimited AI chat, full Library access (486K+ words), world browsing, and 3 creations per day. The core experience is free and always will be.",
+    title: "Creator Credits",
+    desc: "Pay-per-creation for power users who exceed free limits. BYOK (bring your own API key) option for builders who want full control.",
+    status: "Waitlist",
   },
   {
-    q: "Do credits expire?",
-    a: "Never. Buy once, use whenever. Credits work across all creation types — images, stories, worlds, music, code.",
+    title: "Forge Unlimited",
+    desc: "Unlimited creation for serious builders — images, music, stories, worlds. All unlimited. Priority GPU. Custom Guardians.",
+    status: "Waitlist",
   },
   {
-    q: "What is the Founding Pass?",
-    a: "A limited-edition on-chain membership NFT (1,000 total). It grants lifetime access to everything — Forge Unlimited forever, governance rights, marketplace revenue share, and permanent Founding Member status. It is transferable and tradeable.",
+    title: "Creator Marketplace",
+    desc: "Sell your worlds, templates, Luminors, and agents. Smart contract royalties. Keep 90%. Built on-chain.",
+    status: "Building",
   },
   {
-    q: "How does on-chain membership work?",
-    a: "Your Founding Pass is minted as an NFT on Base (Ethereum L2). Connect any wallet to verify ownership. No crypto knowledge needed — we offer a hosted wallet option with email sign-in.",
-  },
-  {
-    q: "Can I sell what I create?",
-    a: "Everything you create is yours — full commercial rights. Forge and Founding members get Creator Marketplace access to sell worlds, templates, agents, and content to other creators. You keep 90%.",
-  },
-  {
-    q: "What happens if I cancel Forge Unlimited?",
-    a: "You keep everything you created. Your account drops to Creator tier — you can still use credits for individual creations. No lock-in, no data loss.",
+    title: "Agent Economy",
+    desc: "Deploy Luminor agents that work autonomously — for yourself or as services. Revenue through smart contracts.",
+    status: "Designing",
   },
 ];
 
@@ -199,111 +169,16 @@ function CheckIcon({ className }: { className?: string }) {
   );
 }
 
-function TierCard({ tier }: { tier: PricingTier }) {
-  const isHighlight = tier.highlight;
-  const isNft = tier.nft;
-
-  return (
-    <div
-      className={`relative flex flex-col rounded-2xl border transition-all duration-300 ${
-        isHighlight
-          ? "border-[#ffd700]/30 bg-gradient-to-b from-[#ffd700]/[0.04] to-transparent shadow-[0_0_60px_rgba(255,215,0,0.06)]"
-          : isNft
-            ? "border-[#a855f7]/25 bg-gradient-to-b from-[#a855f7]/[0.03] to-transparent shadow-[0_0_60px_rgba(168,85,247,0.06)]"
-            : "border-white/[0.06] bg-white/[0.02]"
-      } hover:border-white/[0.12] hover:translate-y-[-2px]`}
-    >
-      {/* Badge */}
-      {tier.badge && (
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-          <span
-            className={`inline-flex items-center gap-1.5 px-4 py-1 rounded-full text-[10px] font-mono font-bold tracking-widest ${
-              tier.badgeColor === "gold"
-                ? "bg-[#ffd700]/15 text-[#ffd700] border border-[#ffd700]/25"
-                : tier.badgeColor === "purple"
-                  ? "bg-[#a855f7]/15 text-[#c084fc] border border-[#a855f7]/25"
-                  : "bg-[#00bcd4]/15 text-[#00bcd4] border border-[#00bcd4]/25"
-            }`}
-          >
-            {isNft && <CurrencyEth size={10} weight="bold" />}
-            {tier.badge}
-          </span>
-        </div>
-      )}
-
-      <div className="flex flex-col flex-1 p-6 pt-8">
-        {/* Header */}
-        <div className="mb-6">
-          <h3 className="text-xl font-display font-bold mb-1">{tier.name}</h3>
-          <p className="text-text-muted text-xs">{tier.tagline}</p>
-        </div>
-
-        {/* Price */}
-        <div className="mb-6">
-          <div className="flex items-baseline gap-2">
-            <span
-              className={`text-3xl font-display font-bold ${
-                isHighlight
-                  ? "bg-gradient-to-r from-[#ffd700] to-[#ffaa00] bg-clip-text text-transparent"
-                  : isNft
-                    ? "bg-gradient-to-r from-[#c084fc] to-[#a855f7] bg-clip-text text-transparent"
-                    : tier.price === "Free"
-                      ? "text-emerald-400"
-                      : "text-[#00bcd4]"
-              }`}
-            >
-              {tier.price}
-            </span>
-          </div>
-          <p className="text-text-muted text-xs mt-1">{tier.priceNote}</p>
-        </div>
-
-        {/* Features */}
-        <ul className="flex-1 space-y-3 mb-8">
-          {tier.features.map((f) => (
-            <li key={f} className="flex items-start gap-2.5 text-sm text-text-secondary">
-              <CheckIcon
-                className={`w-4 h-4 mt-0.5 shrink-0 ${
-                  isHighlight ? "text-[#ffd700]/70" : isNft ? "text-[#c084fc]/70" : "text-[#00bcd4]/50"
-                }`}
-              />
-              <span className="leading-snug">{f}</span>
-            </li>
-          ))}
-        </ul>
-
-        {/* CTA */}
-        <Link
-          href={tier.ctaHref}
-          className={`flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm transition-all duration-300 ${
-            isHighlight
-              ? "bg-gradient-to-r from-[#ffd700] to-[#ffaa00] text-[#09090b] hover:shadow-[0_0_40px_rgba(255,215,0,0.3)] hover:scale-[1.02]"
-              : isNft
-                ? "bg-gradient-to-r from-[#a855f7] to-[#7c3aed] text-white hover:shadow-[0_0_40px_rgba(168,85,247,0.3)] hover:scale-[1.02]"
-                : tier.price === "Free"
-                  ? "border border-white/[0.12] text-text-primary hover:bg-white/[0.04]"
-                  : "bg-[#00bcd4]/10 border border-[#00bcd4]/25 text-[#00bcd4] hover:bg-[#00bcd4]/20"
-          }`}
-        >
-          {isNft && <Wallet size={16} weight="bold" />}
-          {tier.cta}
-          <ArrowRight size={14} weight="bold" />
-        </Link>
-      </div>
-    </div>
-  );
-}
-
 // ─── Page ────────────────────────────────────────────────────────────────────
 
 export default function PricingPage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    name: "Arcanea Pricing — Credits, Unlimited, Founding Pass",
+    name: "Arcanea — Free Creative Intelligence",
     url: "https://arcanea.ai/pricing",
     description:
-      "Open-core creative infrastructure. Free chat, credit-based creation, unlimited plans, and limited NFT membership passes.",
+      "Everything is free. Forge AI agents, build worlds, chat with 16 specialists. NFT collection coming soon.",
   };
 
   return (
@@ -316,171 +191,228 @@ export default function PricingPage() {
       {/* Background */}
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-[#09090b]" />
-        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top,rgba(13,71,161,0.2),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(0,188,212,0.12),transparent_50%)]" />
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_bottom_left,rgba(168,85,247,0.15),transparent_60%)]" />
+        <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top,rgba(0,188,212,0.15),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(167,139,250,0.08),transparent_50%)]" />
       </div>
 
       <main className="max-w-7xl mx-auto px-6">
         {/* ─── Hero ─── */}
         <section className="pt-20 pb-16 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#00bcd4]/25 bg-[#00bcd4]/8 mb-8">
-            <Sparkle size={14} weight="fill" style={{ color: "#00bcd4" }} />
-            <span className="text-sm text-[#00bcd4] font-mono tracking-wider">
-              PAY FOR WHAT YOU CREATE
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#7fffd4]/25 bg-[#7fffd4]/8 mb-8">
+            <GitBranch size={14} weight="bold" style={{ color: "#7fffd4" }} />
+            <span className="text-sm text-[#7fffd4] font-mono tracking-wider">
+              OPEN CORE
             </span>
           </div>
 
           <h1 className="text-4xl md:text-6xl font-display font-bold mb-6">
-            Create freely.
+            Everything is free.
             <span className="block bg-gradient-to-r from-[#00bcd4] via-[#78a6ff] to-[#ffd700] bg-clip-text text-transparent">
-              Pay fairly.
+              Build what matters.
             </span>
           </h1>
 
           <p className="text-xl text-text-secondary max-w-2xl mx-auto mb-4 leading-relaxed">
-            Start free with the Library. Buy credits when you need them.
+            Chat with 16 AI specialists. Forge custom intelligences. Build worlds.
             <br className="hidden md:block" />
-            Go unlimited when you are ready.
+            486K+ words of living mythology. 27 open-source repos.
           </p>
 
-          <p className="text-sm text-text-muted max-w-lg mx-auto">
-            No credit card required to start. Credits never expire. Cancel anytime.
+          <p className="text-sm text-text-muted max-w-lg mx-auto mb-10">
+            No credit card. No trial. No catch. Create now.
           </p>
+
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link
+              href="/chat"
+              className="px-8 py-4 rounded-xl bg-gradient-to-r from-[#00bcd4] to-[#78a6ff] text-[#09090b] font-semibold text-lg hover:shadow-[0_0_40px_rgba(0,188,212,0.3)] transition-all"
+            >
+              Start Creating
+            </Link>
+            <Link
+              href="/forge"
+              className="px-8 py-4 rounded-xl border border-[#00bcd4]/25 text-[#00bcd4] font-semibold text-lg hover:bg-[#00bcd4]/10 transition-all"
+            >
+              Enter The Forge
+            </Link>
+          </div>
         </section>
 
-        {/* ─── Creation Costs ─── */}
-        <section className="pb-12">
-          <div className="text-center mb-6">
-            <h2 className="text-lg font-display font-semibold mb-1">
-              What You Can Create
+        {/* ─── Free Capabilities Grid ─── */}
+        <section className="pb-20">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl font-display font-semibold mb-2">
+              Free Forever
             </h2>
-            <p className="text-xs text-text-muted">
-              Every credit unlocks one creation
+            <p className="text-sm text-text-muted">
+              No limits on what you can explore. Build, create, ship.
             </p>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
-            {CREATION_TYPES.map(({ Icon, name, cost, costColor }) => (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 max-w-6xl mx-auto">
+            {FREE_CAPABILITIES.map(({ Icon, name, desc, accent }) => (
               <div
                 key={name}
-                className="flex items-center gap-3 px-5 py-3 rounded-xl bg-white/[0.03] border border-white/[0.06]"
+                className="flex gap-3 p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.10] transition-colors"
               >
-                <Icon size={18} weight="duotone" style={{ color: "#00bcd4", flexShrink: 0 }} />
-                <span className="text-sm font-medium">{name}</span>
-                <span className={`text-xs font-mono ${costColor}`}>{cost}</span>
+                <Icon
+                  size={20}
+                  weight="duotone"
+                  style={{ color: accent, flexShrink: 0, marginTop: 2 }}
+                />
+                <div>
+                  <h3 className="font-semibold text-sm mb-0.5">{name}</h3>
+                  <p className="text-text-muted text-xs leading-relaxed">{desc}</p>
+                </div>
               </div>
             ))}
           </div>
         </section>
 
-        {/* ─── Pricing Tiers ─── */}
-        <section className="pb-20">
-          <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6 items-start">
-            {TIERS.map((tier) => (
-              <TierCard key={tier.name} tier={tier} />
+        {/* ─── The Forge — Hero Product ─── */}
+        <section className="py-16 border-t border-white/[0.04]">
+          <div className="text-center mb-12">
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#00bcd4]/60 mb-4">
+              The Forge
+            </p>
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+              Four Acts of Creation
+            </h2>
+            <p className="text-text-secondary max-w-xl mx-auto">
+              Every creator has four bonds. A Luminor that thinks. A Companion that
+              travels. The Materials that shape. And a Creator identity that evolves.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {FORGE_HIGHLIGHTS.map(({ title, desc, href, color, traits }) => (
+              <Link
+                key={title}
+                href={href}
+                className="group relative block rounded-2xl border border-white/[0.06] bg-white/[0.02] p-8 transition-all duration-300 hover:border-white/[0.12] hover:bg-white/[0.04]"
+              >
+                <h3
+                  className="font-display text-xl font-bold mb-3"
+                  style={{ color }}
+                >
+                  {title}
+                </h3>
+                <p className="text-sm text-white/45 leading-relaxed mb-6">
+                  {desc}
+                </p>
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {traits.map((trait) => (
+                    <span
+                      key={trait}
+                      className="rounded-full border px-3 py-1 text-[11px] font-medium"
+                      style={{
+                        borderColor: `${color}25`,
+                        color: `${color}bb`,
+                        background: `${color}08`,
+                      }}
+                    >
+                      {trait}
+                    </span>
+                  ))}
+                </div>
+                <div
+                  className="flex items-center gap-2 text-sm font-medium transition-transform group-hover:translate-x-1"
+                  style={{ color }}
+                >
+                  <Sparkle size={14} weight="fill" />
+                  Begin →
+                </div>
+              </Link>
             ))}
           </div>
         </section>
 
-        {/* ─── Founding Pass Deep-Dive ─── */}
+        {/* ─── NFT Collection ─── */}
         <section className="py-16 border-t border-white/[0.04]">
           <div className="relative rounded-3xl overflow-hidden">
-            {/* Gradient background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-[#a855f7]/10 via-[#7c3aed]/5 to-[#ffd700]/10" />
+            <div className="absolute inset-0 bg-gradient-to-br from-[#ffd700]/8 via-transparent to-[#a78bfa]/8" />
             <div className="absolute inset-0 bg-white/[0.015]" />
 
             <div className="relative p-10 md:p-16">
               <div className="grid md:grid-cols-2 gap-12 items-center">
-                {/* Left — Description */}
                 <div>
-                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#a855f7]/30 bg-[#a855f7]/10 mb-6">
-                    <CurrencyEth size={14} weight="bold" style={{ color: "#c084fc" }} />
-                    <span className="text-sm text-[#c084fc] font-mono tracking-wider">
-                      ON-CHAIN MEMBERSHIP
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#ffd700]/25 bg-[#ffd700]/8 mb-6">
+                    <CurrencyEth size={14} weight="bold" style={{ color: "#ffd700" }} />
+                    <span className="text-sm text-[#ffd700] font-mono tracking-wider">
+                      THE CREATORS
                     </span>
                   </div>
 
                   <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-                    The Founding Pass
+                    1,111 Unique Origins
                   </h2>
 
                   <p className="text-text-secondary leading-relaxed mb-6">
-                    1,000 total. On-chain. Lifetime access to everything Arcanea builds — now
-                    and in the future. Not a subscription. An ownership stake in the creative
-                    multiverse.
+                    The flagship Arcanea NFT collection. Each Creator is a unique character
+                    across 12 origin classes, powered by Sacred Gear and the Starlight Mark.
+                    Not profile pictures — keys to the multiverse that evolve with you.
                   </p>
 
-                  <div className="space-y-3">
+                  <div className="space-y-3 mb-8">
                     {[
-                      { Icon: ShieldCheck, text: "Verified on-chain via Base (Ethereum L2)" },
-                      { Icon: SealCheck, text: "Transferable — sell or gift your membership" },
-                      { Icon: Trophy, text: "Governance votes on what gets built next" },
-                      { Icon: Cube, text: "Revenue share from Creator Marketplace" },
-                    ].map(({ Icon, text }) => (
-                      <div key={text} className="flex items-center gap-3 text-sm text-text-secondary">
-                        <Icon size={18} weight="duotone" style={{ color: "#c084fc", flexShrink: 0 }} />
+                      "12 origin classes · 6 quality gates per piece",
+                      "Dynamic evolution — your Creator grows as you create",
+                      "On-chain identity · smart contract royalties",
+                      "AI-native generation with style consistency",
+                    ].map((text) => (
+                      <div key={text} className="flex items-center gap-2.5 text-sm text-text-secondary">
+                        <CheckIcon className="w-4 h-4 text-[#ffd700]/50 shrink-0" />
                         <span>{text}</span>
                       </div>
                     ))}
                   </div>
 
-                  <div className="mt-8 flex flex-wrap gap-3">
+                  <div className="flex flex-wrap gap-3">
                     <Link
-                      href="/founding"
-                      className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-[#a855f7] to-[#7c3aed] text-white font-semibold hover:shadow-[0_0_40px_rgba(168,85,247,0.4)] transition-all"
+                      href="/forge/collection"
+                      className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#ffd700] to-[#ffaa00] text-[#09090b] font-semibold hover:shadow-[0_0_40px_rgba(255,215,0,0.3)] transition-all"
                     >
-                      <Wallet size={18} weight="bold" />
-                      Mint Your Pass
+                      <Diamond size={16} weight="bold" />
+                      Explore The Collection
                     </Link>
                     <Link
-                      href="/founding#how-it-works"
-                      className="inline-flex items-center gap-2 px-6 py-4 rounded-xl border border-[#a855f7]/25 text-[#c084fc] font-medium hover:bg-[#a855f7]/10 transition-all text-sm"
+                      href="/forge/collection/feedback"
+                      className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-[#ffd700]/20 text-[#ffd700] font-medium hover:bg-[#ffd700]/10 transition-all text-sm"
                     >
-                      How it works
+                      Join Waitlist
                       <ArrowRight size={14} />
                     </Link>
                   </div>
                 </div>
 
-                {/* Right — NFT Preview Card */}
+                {/* Preview Card */}
                 <div className="flex justify-center">
-                  <div className="relative w-72 h-96 rounded-2xl overflow-hidden border border-[#a855f7]/20 bg-gradient-to-b from-[#a855f7]/[0.06] to-[#09090b] shadow-[0_8px_60px_rgba(168,85,247,0.15)]">
-                    {/* Top section */}
+                  <div className="relative w-72 h-96 rounded-2xl overflow-hidden border border-[#ffd700]/15 bg-gradient-to-b from-[#ffd700]/[0.04] to-[#09090b] shadow-[0_8px_60px_rgba(255,215,0,0.08)]">
                     <div className="absolute inset-0 flex flex-col items-center justify-center p-6">
-                      {/* Geometric symbol */}
-                      <div className="w-24 h-24 mb-6 rounded-2xl border border-[#a855f7]/20 bg-[#a855f7]/[0.06] flex items-center justify-center">
-                        <Crown size={40} weight="duotone" style={{ color: "#ffd700" }} />
+                      <div className="w-20 h-20 mb-6 rounded-2xl border border-[#ffd700]/15 bg-[#ffd700]/[0.04] flex items-center justify-center">
+                        <Crown size={36} weight="duotone" style={{ color: "#ffd700" }} />
                       </div>
-
-                      <div className="text-center">
-                        <span className="text-[10px] font-mono text-[#c084fc]/60 tracking-widest block mb-2">
-                          ARCANEA FOUNDING PASS
-                        </span>
-                        <span className="text-2xl font-display font-bold bg-gradient-to-r from-[#ffd700] to-[#c084fc] bg-clip-text text-transparent block mb-1">
-                          #0001
-                        </span>
-                        <span className="text-[11px] text-text-muted block">
-                          1 of 1,000 · Lifetime Access
-                        </span>
-                      </div>
-
-                      {/* Stats */}
+                      <span className="text-[10px] font-mono text-[#ffd700]/50 tracking-widest block mb-2">
+                        THE CREATORS · ARCANEA
+                      </span>
+                      <span className="text-2xl font-display font-bold bg-gradient-to-r from-[#ffd700] to-[#c084fc] bg-clip-text text-transparent block mb-1">
+                        1,111
+                      </span>
+                      <span className="text-[11px] text-text-muted block">
+                        unique origins · on-chain
+                      </span>
                       <div className="mt-8 grid grid-cols-3 gap-3 w-full">
                         {[
-                          { label: "Minted", value: "—" },
-                          { label: "Supply", value: "1K" },
-                          { label: "Chain", value: "Base" },
+                          { label: "Supply", value: "1,111" },
+                          { label: "Origins", value: "12" },
+                          { label: "Chain", value: "TBA" },
                         ].map(({ label, value }) => (
                           <div key={label} className="text-center">
-                            <div className="text-lg font-display font-bold text-white">{value}</div>
+                            <div className="text-base font-display font-bold text-white">{value}</div>
                             <div className="text-[9px] text-text-muted uppercase tracking-wider">{label}</div>
                           </div>
                         ))}
                       </div>
                     </div>
-
-                    {/* Subtle shimmer effect */}
-                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.02] to-transparent pointer-events-none" />
                   </div>
                 </div>
               </div>
@@ -488,25 +420,38 @@ export default function PricingPage() {
           </div>
         </section>
 
-        {/* ─── Payment Methods ─── */}
-        <section className="py-12 border-t border-white/[0.04]">
-          <div className="text-center mb-8">
-            <h2 className="text-lg font-display font-semibold mb-2">
-              Pay Your Way
+        {/* ─── Coming Next — Waitlists ─── */}
+        <section className="py-16 border-t border-white/[0.04]">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl font-display font-semibold mb-2">
+              On the Horizon
             </h2>
-            <p className="text-xs text-text-muted">
-              Fiat, crypto, or one-tap mobile — we accept it all
+            <p className="text-sm text-text-muted">
+              These features are in development. Join the waitlist to shape what ships.
             </p>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-4 max-w-3xl mx-auto">
-            {PAYMENT_METHODS.map(({ name, desc }) => (
+          <div className="grid sm:grid-cols-2 gap-4 max-w-4xl mx-auto">
+            {COMING_NEXT.map(({ title, desc, status }) => (
               <div
-                key={name}
-                className="flex items-center gap-3 px-5 py-3 rounded-xl bg-white/[0.03] border border-white/[0.06]"
+                key={title}
+                className="p-6 rounded-xl bg-white/[0.02] border border-white/[0.06]"
               >
-                <span className="text-sm font-semibold">{name}</span>
-                <span className="text-xs text-text-muted">{desc}</span>
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-display font-semibold">{title}</h3>
+                  <span
+                    className={`px-3 py-1 rounded-full text-[10px] font-mono ${
+                      status === "Waitlist"
+                        ? "bg-[#00bcd4]/10 text-[#00bcd4]"
+                        : status === "Building"
+                          ? "bg-[#ffd700]/10 text-[#ffd700]"
+                          : "bg-white/[0.04] text-text-muted"
+                    }`}
+                  >
+                    {status}
+                  </span>
+                </div>
+                <p className="text-text-muted text-sm leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>
@@ -515,35 +460,26 @@ export default function PricingPage() {
         {/* ─── Open Source Arsenal ─── */}
         <section className="py-16 border-t border-white/[0.04]">
           <div className="text-center mb-10">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#7fffd4]/25 bg-[#7fffd4]/8 mb-6">
-              <GitBranch size={14} weight="bold" style={{ color: "#7fffd4" }} />
-              <span className="text-sm text-[#7fffd4] font-mono tracking-wider">
-                OPEN CORE
-              </span>
-            </div>
-
             <h2 className="text-2xl font-display font-semibold mb-2">
               The foundation is open. Always.
             </h2>
             <p className="text-sm text-text-muted max-w-lg mx-auto">
-              27 repos. 35 packages. 486K+ words. The creative engine is MIT-licensed
-              and free to fork, extend, and build on.
+              Fork it. Extend it. Build your own multiverse on it. MIT licensed.
             </p>
           </div>
 
           <div className="grid sm:grid-cols-3 gap-4 max-w-4xl mx-auto mb-8">
             {[
-              { num: "27", label: "Repositories", desc: "Fork, extend, or build on the platform" },
-              { num: "35", label: "npm Packages", desc: "MCP servers, CLIs, agents, skills" },
-              { num: "54", label: "Agent Skills", desc: "Creative and development skills" },
-            ].map(({ num, label, desc }) => (
+              { num: "27", label: "Repositories" },
+              { num: "35", label: "npm Packages" },
+              { num: "54", label: "Agent Skills" },
+            ].map(({ num, label }) => (
               <div
                 key={label}
                 className="text-center p-6 rounded-xl bg-white/[0.02] border border-white/[0.06]"
               >
                 <div className="text-3xl font-display font-bold text-[#7fffd4] mb-1">{num}</div>
-                <div className="text-sm font-semibold mb-1">{label}</div>
-                <div className="text-xs text-text-muted">{desc}</div>
+                <div className="text-sm font-semibold">{label}</div>
               </div>
             ))}
           </div>
@@ -562,52 +498,32 @@ export default function PricingPage() {
           </div>
         </section>
 
-        {/* ─── FAQ ─── */}
-        <section className="py-16 border-t border-white/[0.04]">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-2xl font-display font-semibold">
-                Questions
-              </h2>
-            </div>
-
-            <div className="space-y-4">
-              {FAQS.map(({ q, a }, i) => (
-                <div key={i} className="p-6 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-                  <h3 className="font-semibold mb-2">{q}</h3>
-                  <p className="text-text-secondary text-sm leading-relaxed">{a}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* ─── Final CTA ─── */}
         <section className="py-20 border-t border-white/[0.04]">
           <div className="relative rounded-3xl overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-[#00bcd4]/12 via-[#78a6ff]/12 to-[#ffd700]/12" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#00bcd4]/10 via-[#a78bfa]/10 to-[#ffd700]/10" />
             <div className="absolute inset-0 bg-white/[0.02]" />
 
             <div className="relative p-12 md:p-16 text-center">
               <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
-                Start creating today
+                Start creating now
               </h2>
               <p className="text-lg text-text-secondary mb-10 max-w-2xl mx-auto">
-                486K+ words of living mythology. Intelligent world-building. Sixteen AI
-                specialists. Open source. Start free — scale when ready.
+                486K+ words. 16 AI specialists. The Forge. Open source.
+                Everything free — just bring your imagination.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <Link
                   href="/chat"
                   className="px-8 py-4 rounded-xl bg-gradient-to-r from-[#00bcd4] to-[#78a6ff] text-[#09090b] font-semibold text-lg hover:shadow-[0_0_40px_rgba(0,188,212,0.3)] transition-all"
                 >
-                  Start Creating — Free
+                  Start Creating
                 </Link>
                 <Link
-                  href="/founding"
-                  className="px-8 py-4 rounded-xl border border-[#a855f7]/30 text-[#c084fc] font-semibold text-lg hover:bg-[#a855f7]/10 transition-all"
+                  href="/forge"
+                  className="px-8 py-4 rounded-xl border border-white/[0.12] font-semibold text-lg hover:bg-white/[0.04] transition-all"
                 >
-                  Explore Founding Pass
+                  Enter The Forge
                 </Link>
               </div>
             </div>

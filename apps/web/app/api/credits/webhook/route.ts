@@ -68,6 +68,7 @@ const RELEVANT_EVENTS = new Set<string>([
 // ─── Handler ─────────────────────────────────────────────────────────────────
 
 export async function POST(req: Request) {
+  try {
   const stripeKey = process.env.STRIPE_SECRET_KEY;
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
@@ -323,7 +324,9 @@ export async function POST(req: Request) {
   } catch (error) {
     const message = error instanceof Error ? error.message : "Webhook handler error";
     console.error("Stripe webhook processing error:", message);
-    // Return 200 to prevent Stripe from retrying -- log the error for investigation
     return NextResponse.json({ received: true, error: message });
+  }
+  } catch {
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

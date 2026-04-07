@@ -85,12 +85,15 @@ const DEMO_STATS: CommunityStats = {
 };
 
 export async function GET() {
-  const live = await fetchLiveStats();
+  try {
+    const live = await fetchLiveStats();
 
-  // Use live stats if we have real data, otherwise demo
-  const stats = live && live.creators > 0 ? live : DEMO_STATS;
+    const stats = live && live.creators > 0 ? live : DEMO_STATS;
 
-  return NextResponse.json(stats, {
-    headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600" },
-  });
+    return NextResponse.json(stats, {
+      headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600" },
+    });
+  } catch {
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
 }

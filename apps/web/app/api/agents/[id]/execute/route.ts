@@ -278,6 +278,7 @@ export async function POST(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
+  try {
   const { id } = await params;
 
   // ── 1. Validate request body ─────────────────────────────────────────────
@@ -469,4 +470,10 @@ export async function POST(
       'x-arcanea-credits': String(agent.priceCredits),
     },
   });
+  } catch {
+    return new Response(
+      JSON.stringify({ error: 'Internal server error' }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } },
+    );
+  }
 }
