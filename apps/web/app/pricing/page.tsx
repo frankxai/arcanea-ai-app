@@ -23,7 +23,7 @@ import {
   Wallet,
   CurrencyEth,
   Trophy,
-  CircleWavyCheck,
+  SealCheck,
 } from "@phosphor-icons/react/dist/ssr";
 
 export const metadata: Metadata = {
@@ -413,7 +413,7 @@ export default function PricingPage() {
                   <div className="space-y-3">
                     {[
                       { Icon: ShieldCheck, text: "Verified on-chain via Base (Ethereum L2)" },
-                      { Icon: CircleWavyCheck, text: "Transferable — sell or gift your membership" },
+                      { Icon: SealCheck, text: "Transferable — sell or gift your membership" },
                       { Icon: Trophy, text: "Governance votes on what gets built next" },
                       { Icon: Cube, text: "Revenue share from Creator Marketplace" },
                     ].map(({ Icon, text }) => (

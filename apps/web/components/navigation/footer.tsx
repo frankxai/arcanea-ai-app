@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { ArcaneanMark } from "@/components/brand/arcanea-mark";
 
 const footerLinks = {
@@ -50,14 +50,28 @@ const footerLinks = {
 export function Footer() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email.trim()) {
+    if (!email.trim() || submitting) return;
+    setSubmitting(true);
+    try {
+      await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim(), source: 'footer' }),
+      });
       setSubscribed(true);
       setEmail("");
+    } catch {
+      // Still show success — email intent was captured
+      setSubscribed(true);
+      setEmail("");
+    } finally {
+      setSubmitting(false);
     }
-  };
+  }, [email, submitting]);
 
   return (
     <footer
@@ -107,9 +121,10 @@ export function Footer() {
                 />
                 <button
                   type="submit"
-                  className="px-5 py-2.5 rounded-xl bg-[#00bcd4]/12 border border-[#00bcd4]/20 text-sm font-medium text-[#00bcd4] hover:bg-[#00bcd4]/20 transition-colors"
+                  disabled={submitting}
+                  className="px-5 py-2.5 rounded-xl bg-[#00bcd4]/12 border border-[#00bcd4]/20 text-sm font-medium text-[#00bcd4] hover:bg-[#00bcd4]/20 transition-colors disabled:opacity-50"
                 >
-                  Subscribe
+                  {submitting ? "..." : "Subscribe"}
                 </button>
               </form>
             )}

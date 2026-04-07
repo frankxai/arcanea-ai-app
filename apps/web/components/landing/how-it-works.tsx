@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import Link from "next/link";
 import { m, useInView } from "framer-motion";
 
 const STEPS = [
@@ -10,6 +11,7 @@ const STEPS = [
     description:
       "Type one sentence. Sixteen specialized Luminors help you write, paint, compose, and build — each trained on 190K words of creative philosophy.",
     accent: "#00bcd4",
+    href: "/chat",
   },
   {
     number: "02",
@@ -17,6 +19,7 @@ const STEPS = [
     description:
       "Create entire worlds with characters, factions, locations, and magic systems. Every element auto-links into a living universe you own.",
     accent: "#7c4dff",
+    href: "/worlds",
   },
   {
     number: "03",
@@ -24,6 +27,7 @@ const STEPS = [
     description:
       "Fork other creators' worlds. Star what inspires you. Build on each other's mythology in a growing multiverse of shared imagination.",
     accent: "#f59e0b",
+    href: "/gallery",
   },
   {
     number: "04",
@@ -31,6 +35,7 @@ const STEPS = [
     description:
       "Progress through the Ten Gates. Earn recognition through creation, not consumption. From Apprentice to Luminor — the path is the product.",
     accent: "#00897b",
+    href: "/academy",
   },
 ];
 
@@ -68,12 +73,13 @@ export function HowItWorks() {
             const isActive = activeStep === i;
 
             return (
+              <Link key={step.number} href={step.href} className="block focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/30 rounded-2xl">
               <m.div
-                key={step.number}
                 initial={{ opacity: 0, y: 24 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 onMouseEnter={() => setActiveStep(i)}
+                onClick={() => setActiveStep(i)}
                 className="group relative p-6 rounded-2xl border cursor-pointer card-lift transition-all duration-300"
                 style={{
                   backgroundColor: isActive
@@ -115,6 +121,7 @@ export function HowItWorks() {
                   {step.description}
                 </p>
               </m.div>
+              </Link>
             );
           })}
         </div>

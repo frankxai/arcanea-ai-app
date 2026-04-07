@@ -1,6 +1,10 @@
 import type { Config } from 'tailwindcss';
 
+// Import the canonical Arcanea design preset
+const arcaneaDesignPreset = require('../../packages/arcanea-design-preset.js');
+
 const config: Config = {
+  presets: [arcaneaDesignPreset],
   darkMode: ['class'],
   content: [
     './app/**/*.{ts,tsx}',
@@ -16,6 +20,9 @@ const config: Config = {
       },
     },
     extend: {
+      // NOTE: Base colors, fonts, shadows, and animations are provided by the preset
+      // (packages/arcanea-design-preset.js). This config only extends with app-specific overrides.
+      // For base tokens, reference the preset as the source of truth.
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
@@ -50,7 +57,7 @@ const config: Config = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
-        // Arcanean Cosmic Colors
+        // Arcanean Cosmic Colors — app-specific HSL variable layer
         cosmic: {
           void: 'hsl(var(--cosmic-void))',
           deep: 'hsl(var(--cosmic-deep))',
@@ -141,14 +148,14 @@ const config: Config = {
           soft: 'hsl(var(--aquamarine-soft))',
           deep: 'hsl(var(--aquamarine-deep))',
         },
-        // Brand accent (iridescent shift)
+        // Brand accent (iridescent shift) — overrides preset
         brand: {
           primary: 'hsl(var(--aquamarine))',
           hover: 'hsl(var(--peacock-blue))',
           active: 'hsl(var(--peacock-green))',
           focus: 'hsl(var(--peacock-purple-bright))',
         },
-        // Semantic Colors
+        // Semantic Colors — app overrides with HSL variables
         success: {
           light: 'hsl(var(--success-light))',
           DEFAULT: 'hsl(var(--success))',
@@ -197,14 +204,13 @@ const config: Config = {
             opacity: '0.9'
           },
         },
+        // shimmer: preset provides it, but with different definition (backgroundPosition vs translateX)
+        // Using app version: backgroundPosition-based (CSS animation)
         'shimmer': {
           '0%': { backgroundPosition: '200% 0' },
           '100%': { backgroundPosition: '-200% 0' },
         },
-        'float': {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-10px)' },
-        },
+        // float, float-slow, rotate-slow — extends preset
         'float-slow': {
           '0%, 100%': { transform: 'translateY(0px)' },
           '50%': { transform: 'translateY(-20px)' },
@@ -277,6 +283,7 @@ const config: Config = {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' },
         },
+        // fade-in, scale-in: overrides preset (different timing)
         'fade-in': {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
@@ -313,8 +320,9 @@ const config: Config = {
       animation: {
         // Cosmic
         'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
-        'shimmer': 'shimmer 3s linear infinite',
-        'float': 'float 3s ease-in-out infinite',
+        'shimmer': 'shimmer 3s linear infinite',  // overrides preset timing
+        // float, breathe, spin-slow: provided by preset
+        // float-slow, rotate-slow — extends preset
         'float-slow': 'float-slow 6s ease-in-out infinite',
         'rotate-slow': 'rotate-slow 20s linear infinite',
         // Atlantean
@@ -336,25 +344,16 @@ const config: Config = {
         // Standard
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        'fade-in': 'fade-in 0.3s ease-out',
+        'fade-in': 'fade-in 0.3s ease-out',  // overrides preset timing
         'fade-out': 'fade-out 0.3s ease-out',
         'slide-in-from-top': 'slide-in-from-top 0.3s ease-out',
         'slide-in-from-bottom': 'slide-in-from-bottom 0.3s ease-out',
         'slide-in-from-left': 'slide-in-from-left 0.3s ease-out',
         'slide-in-from-right': 'slide-in-from-right 0.3s ease-out',
-        'scale-in': 'scale-in 0.2s ease-out',
+        'scale-in': 'scale-in 0.2s ease-out',  // overrides preset timing
         'search-slide-in': 'search-slide-in 0.2s ease-out both',
       },
-      fontFamily: {
-        // Display — Space Grotesk for bold, modern headings
-        display: ['var(--font-display)', 'Space Grotesk', 'system-ui', 'sans-serif'],
-        // Body — Inter for all body and narrative text
-        body: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
-        // Sans — Inter for UI elements, navigation, labels, forms
-        sans: ['var(--font-inter)', 'Inter', 'system-ui', 'sans-serif'],
-        // Mono — JetBrains Mono for code and technical data
-        mono: ['var(--font-jetbrains-mono)', 'JetBrains Mono', 'Consolas', 'monospace'],
-      },
+      // fontFamily: provided by preset, identical values
       fontSize: {
         'xs': ['0.75rem', { lineHeight: '1rem' }],
         'sm': ['0.875rem', { lineHeight: '1.25rem' }],
@@ -376,19 +375,17 @@ const config: Config = {
         xs: '2px',
       },
       boxShadow: {
+        // Glow system — overrides preset with cyan variant
         'glow-sm': '0 0 10px rgba(0, 188, 212, 0.15)',
         'glow-md': '0 0 20px rgba(0, 188, 212, 0.25)',
         'glow-lg': '0 0 40px rgba(0, 188, 212, 0.35)',
         'glow-xl': '0 0 60px rgba(0, 188, 212, 0.45)',
         'glow-brand': '0 0 20px rgba(0, 137, 123, 0.3)',
+        // Academy-specific shadows — extends preset
         'atlantean': '0 0 25px rgba(38, 204, 204, 0.5)',
         'draconic': '0 0 25px rgba(255, 198, 26, 0.5)',
         'creation': '0 0 25px rgba(255, 230, 128, 0.5)',
-        // Elevation system from Design Bible
-        'elevation-1': '0 2px 8px rgba(0,0,0,0.2), 0 0 1px rgba(255,255,255,0.05)',
-        'elevation-2': '0 4px 16px rgba(0,0,0,0.3), 0 0 1px rgba(255,255,255,0.06)',
-        'elevation-3': '0 8px 32px rgba(0,0,0,0.4), 0 0 1px rgba(255,255,255,0.08)',
-        'elevation-4': '0 16px 64px rgba(0,0,0,0.5), 0 0 1px rgba(255,255,255,0.1)',
+        // elevation-1-4: provided by preset, identical values
       },
     },
   },
