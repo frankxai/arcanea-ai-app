@@ -74,8 +74,8 @@ The Arcanean UI represents **a portal into creative consciousness**:
 
 #### Draconic Academy (Visual/Sky)
 ```css
-/* Crimson fire with golden scales */
---draconic-crimson: #d92952;     /* Dragon fire */
+/* Dragon fire with golden scales */
+--draconic-fire: #d92952;        /* Dragon fire */
 --draconic-gold: #ffc61a;        /* Scale gold */
 --draconic-sky: #2d8fe6;         /* Soaring heights */
 
@@ -99,10 +99,10 @@ The Arcanean UI represents **a portal into creative consciousness**:
 ### Font Stack
 ```css
 /* Display (Headings, Titles) */
-font-family: 'Cinzel', 'Cormorant Garamond', serif;
+font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
 
 /* Body (Content, UI) */
-font-family: 'Crimson Pro', 'Source Serif Pro', Georgia, serif;
+font-family: 'Newsreader', 'Source Serif Pro', Georgia, serif;
 
 /* Code (Monospace) */
 font-family: 'JetBrains Mono', 'Fira Code', monospace;
@@ -277,7 +277,7 @@ font-family: 'JetBrains Mono', 'Fira Code', monospace;
 <button className="
   bg-gold-bright
   text-cosmic-void
-  font-display font-semibold
+  font-sans font-semibold
   px-6 py-3
   rounded-md
   hover:bg-gold-medium
@@ -303,7 +303,7 @@ font-family: 'JetBrains Mono', 'Fira Code', monospace;
 
 // Academy Button
 <button className={cn(
-  "px-6 py-3 rounded-md font-display transition-all duration-200",
+  "px-6 py-3 rounded-md font-sans transition-all duration-200",
   academy === 'atlantean' && "bg-atlantean-teal text-cosmic-void hover:glow-atlantean",
   academy === 'draconic' && "bg-draconic-gold text-cosmic-void hover:glow-draconic",
   academy === 'creation' && "bg-creation-gold text-cosmic-void hover:glow-creation"
@@ -564,8 +564,8 @@ const ARCANEA_TOKENS = {
     },
   },
   fonts: {
-    display: 'Cinzel, serif',
-    body: 'Crimson Pro, serif',
+    display: 'Space Grotesk, sans-serif',
+    body: 'Newsreader, serif',
     mono: 'JetBrains Mono, monospace',
   },
   radii: {

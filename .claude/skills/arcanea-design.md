@@ -68,8 +68,8 @@ TEXT MUTED:     #708094  (captions)
 
 ### Typography
 
-- **Cinzel**: Display headings (h1, h2, hero text)
-- **Crimson Pro**: Narrative body (long-form > 50 words)
+- **Space Grotesk**: Display headings (h1, h2, hero text)
+- **Newsreader**: Narrative body (long-form > 50 words)
 - **Inter**: UI elements (buttons, labels, nav, forms)
 - **JetBrains Mono**: Code blocks, technical data
 
@@ -128,7 +128,7 @@ TEXT MUTED:     #708094  (captions)
 
 ### Landing Page Formula
 
-1. **Hero**: Full viewport, mesh gradient bg, Cinzel display heading with gradient text, crystal CTA button, floating decorative orbs
+1. **Hero**: Full viewport, mesh gradient bg, Space Grotesk display heading with gradient text, crystal CTA button, floating decorative orbs
 2. **Social Proof**: Logo bar, glass cards with stats, stagger animation on scroll
 3. **Features**: 4-column grid on lg, glass cards, elemental icons, hover-lift
 4. **How It Works**: 3-step numbered flow, liquid-glass cards, connecting lines
@@ -161,7 +161,7 @@ Run this BEFORE declaring any visual work done:
 ### Mandatory Checks
 
 - [ ] Uses Arcanean color tokens (NO raw hex values)
-- [ ] Correct typography (Cinzel display, Inter UI, Crimson Pro body, JetBrains code)
+- [ ] Correct typography (Space Grotesk display, Inter UI, Newsreader body, JetBrains code)
 - [ ] Proper spacing (4px grid, section padding py-24 lg:py-32)
 - [ ] Glass effects with proper backdrop-filter blur
 - [ ] Cosmic shadows (elevation scale, NOT flat box-shadow)
@@ -214,7 +214,7 @@ Run this BEFORE declaring any visual work done:
 
 - Raw white (#ffffff) for text - use text-primary (#e6eefc)
 - Emoji as icons
-- Space Grotesk font (not in our system)
+- Cinzel font (not in our system - use Space Grotesk instead)
 - Crystal (#7fffd4) as large background fills
 - More than 2 glass layers stacked
 - Glow effects on body text

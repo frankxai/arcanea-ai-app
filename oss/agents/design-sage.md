@@ -104,10 +104,10 @@ Too much glow = no glow.
 ### Typography
 ```css
 /* Display */
-font-family: 'Cinzel', serif;  /* Headings */
+font-family: 'Space Grotesk', sans-serif;  /* Headings */
 
 /* Body */
-font-family: 'Crimson Pro', serif;  /* Content */
+font-family: 'Inter', sans-serif;  /* Content */
 
 /* Code */
 font-family: 'JetBrains Mono', monospace;

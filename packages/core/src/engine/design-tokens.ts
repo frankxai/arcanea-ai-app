@@ -62,9 +62,9 @@ export const COLORS = {
 // ============================================
 
 export const FONTS = {
-  display: "'Cinzel', serif",
-  body: "'Crimson Pro', serif",
-  sans: "'Inter', sans-serif",
+  display: "'Space Grotesk', sans-serif",
+  body: "'Inter', sans-serif",
+  serif: "'Newsreader', serif",
   code: "'JetBrains Mono', monospace",
 } as const;
 

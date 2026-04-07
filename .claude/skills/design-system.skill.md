@@ -1,3 +1,5 @@
+> **⚠️ DEPRECATED** — This skill is superseded by `design-gods.md` (strict quality enforcement) and `arcanea-design.md` (workflow modes). Do not use for new work. Kept for reference only.
+
 ---
 name: arcanea-design-system
 version: "1.0.0"
@@ -21,10 +23,10 @@ Use this system for ALL UI generation.
 
 ## 2. Typography
 
-- **Headings:** `font-cinzel` (Serif Display). Uppercase for H1/H2.
-- **Body:** `font-inter` (Sans). Clean, readable.
-- **Narrative:** `font-crimson-pro` (Serif). For lore text.
-- **Code:** `font-jetbrains` (Mono).
+- **Headings:** `font-display` (Space Grotesk). Uppercase for H1/H2.
+- **Body:** `font-sans` (Inter). Clean, readable.
+- **Narrative:** `font-serif` (Newsreader). For lore text.
+- **Code:** `font-mono` (JetBrains Mono).
 
 ## 3. The "Glass" Effect (Critical)
 
@@ -59,10 +61,10 @@ Never use flat backgrounds for cards. Use this stack:
 ```tsx
 <div className="relative p-8 rounded-3xl overflow-hidden glass group">
   <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-  <h3 className="font-cinzel text-2xl text-transparent bg-clip-text bg-gradient-to-r from-tea-200 to-teal-400 mb-4">
+  <h3 className="font-display text-2xl text-transparent bg-clip-text bg-gradient-to-r from-tea-200 to-teal-400 mb-4">
     The First Gate
   </h3>
-  <p className="font-crimson-pro text-lg text-secondary leading-relaxed">
+  <p className="font-serif text-lg text-secondary leading-relaxed">
     Begin your journey where the roots meet the stone.
   </p>
 </div>

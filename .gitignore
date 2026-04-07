@@ -242,6 +242,9 @@ SECURITY_FIXES/
 !.github/
 !.github/workflows/
 
+# Personal business/finance (NEVER commit)
+docs/business/
+
 # Database files
 vectors.db
 *.db

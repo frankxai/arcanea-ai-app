@@ -1,3 +1,5 @@
+> **⚠️ DEPRECATED** — This skill is superseded by `design-gods.md` and `arcanea-design.md`. Academy-specific theming is in `arcanea/design-system/SKILL.md`. Do not use for new work.
+
 ---
 name: Arcanea Design System
 description: Complete visual design language for Arcanea - cosmic theme tokens, component patterns, animation standards, and Academy-specific aesthetics
