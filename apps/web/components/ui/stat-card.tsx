@@ -162,7 +162,7 @@ const StatCard = React.forwardRef<HTMLDivElement, StatCardProps>(
           {stat.icon && (
             <div
               className={cn(
-                "mb-3 sm:mb-4 flex items-center justify-center rounded-xl",
+                "mb-3 sm:mb-4 flex items-center justify-center rounded-lg",
                 "bg-crystal/10 text-crystal",
                 sizes.icon,
               )}
@@ -233,7 +233,7 @@ const StatCard = React.forwardRef<HTMLDivElement, StatCardProps>(
           <div className="relative z-10">
             <div
               className={cn(
-                "rounded-xl bg-text-muted/20 mb-3 sm:mb-4",
+                "rounded-lg bg-text-muted/20 mb-3 sm:mb-4",
                 sizes.icon,
               )}
             />

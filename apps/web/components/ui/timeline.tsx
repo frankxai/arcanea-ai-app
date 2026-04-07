@@ -112,7 +112,7 @@ const Timeline = React.forwardRef<HTMLDivElement, TimelineProps>(
 
             const eventClasses = cn("relative", contentAlignment[orientation]);
 
-            const cardClasses = variant === "card" && "rounded-xl";
+            const cardClasses = variant === "card" && "rounded-2xl";
 
             if (animated) {
               return (
@@ -160,6 +160,7 @@ const Timeline = React.forwardRef<HTMLDivElement, TimelineProps>(
                           "p-4 sm:p-5",
                           "bg-[rgba(18,24,38,0.65)] backdrop-blur-[16px]",
                           "border border-[rgba(0,188,212,0.12)]",
+                          "rounded-2xl",
                           "hover:border-[rgba(0,188,212,0.25)] transition-colors",
                         )}
                       >
@@ -259,6 +260,7 @@ const Timeline = React.forwardRef<HTMLDivElement, TimelineProps>(
                         "p-4 sm:p-5",
                         "bg-[rgba(18,24,38,0.65)] backdrop-blur-[16px]",
                         "border border-[rgba(0,188,212,0.12)]",
+                        "rounded-2xl",
                         "hover:border-[rgba(0,188,212,0.25)] transition-colors",
                       )}
                     >

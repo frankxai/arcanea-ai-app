@@ -10,15 +10,36 @@ import { cn } from '@/lib/utils';
 const cardVariants = cva(
   [
     'rounded-2xl border transition-all duration-200',
-    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crystal/40',
+    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-atlantean-teal/40',
   ],
   {
     variants: {
       variant: {
+        // SURFACE — the default card. Solid background, subtle border. No glass.
         default: [
-          'bg-[rgba(18,24,38,0.65)] backdrop-blur-[16px]',
-          'border-[rgba(0,188,212,0.12)]',
+          'bg-cosmic-surface',
+          'border-cosmic-border',
         ],
+        // INTERACTIVE — surface + hover lift + border glow. For clickable cards.
+        interactive: [
+          'bg-cosmic-surface',
+          'border-cosmic-border',
+          'cursor-pointer',
+          'hover:-translate-y-1 hover:border-atlantean-teal/20 hover:shadow-glow-sm',
+        ],
+        // ELEVATED — glass. ONLY for modals, popovers, command palette, overlays.
+        elevated: [
+          'bg-[rgba(18,24,38,0.85)] backdrop-blur-[20px]',
+          'border-[rgba(0,188,212,0.18)]',
+          'shadow-elevation-3',
+        ],
+        // GHOST — transparent, border only. For outline/bordered cards.
+        ghost: [
+          'bg-transparent',
+          'border-cosmic-border',
+        ],
+
+        // ── Legacy variants (kept for backward compat, prefer above) ──
         'liquid-glass-subtle': [
           'bg-[rgba(26,35,50,0.45)] backdrop-blur-[12px]',
           'border-[rgba(0,188,212,0.08)]',
@@ -31,9 +52,7 @@ const cardVariants = cva(
         iridescent: [
           'bg-[rgba(18,24,38,0.75)] backdrop-blur-[16px]',
           'border-[rgba(0,188,212,0.15)]',
-          'overflow-hidden',
-          // Shimmer layer handled by after pseudo
-          'relative',
+          'overflow-hidden relative',
           'after:absolute after:inset-0 after:pointer-events-none',
           'after:bg-gradient-to-br after:from-[rgba(0,188,212,0.04)] after:via-transparent after:to-[rgba(13,71,161,0.04)]',
           'after:animate-iridescent-shift after:opacity-60',
@@ -48,7 +67,7 @@ const cardVariants = cva(
         false: '',
       },
       glowOnHover: {
-        true: 'hover:border-crystal/30 hover:shadow-glow-sm',
+        true: 'hover:border-atlantean-teal/30 hover:shadow-glow-sm',
         false: '',
       },
     },
@@ -59,6 +78,15 @@ const cardVariants = cva(
     },
   }
 );
+
+// ─── Spring config (consistent across all animated cards) ────────────────────
+
+const CARD_SPRING = {
+  type: 'spring' as const,
+  stiffness: 280,
+  damping: 26,
+  mass: 0.7,
+};
 
 // ─── Props ───────────────────────────────────────────────────────────────────
 
@@ -92,12 +120,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
           ref={ref}
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{
-            type: 'spring',
-            stiffness: 280,
-            damping: 26,
-            mass: 0.7,
-          }}
+          transition={CARD_SPRING}
           className={classes}
           {...props}
         >
@@ -122,10 +145,7 @@ const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn(
-        'flex flex-col space-y-1.5 p-6 pb-4',
-        className
-      )}
+      className={cn('flex flex-col space-y-1.5 p-6 pb-4', className)}
       {...props}
     />
   )
@@ -175,7 +195,7 @@ const CardFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
       ref={ref}
       className={cn(
         'flex items-center px-6 pb-6 pt-4',
-        'border-t border-[rgba(0,188,212,0.08)] mt-auto gap-3',
+        'border-t border-cosmic-border mt-auto gap-3',
         className
       )}
       {...props}
@@ -210,4 +230,5 @@ export {
   CardFooter,
   CardImage,
   cardVariants,
+  CARD_SPRING,
 };

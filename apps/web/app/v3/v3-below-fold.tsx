@@ -1,8 +1,8 @@
 "use client";
 
-import { m, useInView } from "framer-motion";
+import { m, useInView, AnimatePresence } from "framer-motion";
 import { MotionProvider } from "@/lib/motion";
-import { useRef, useState } from "react";
+import { useRef, useState, useCallback } from "react";
 import {
   Plus,
   Minus,
@@ -82,6 +82,13 @@ function FAQItem({
   index: number;
 }) {
   const [open, setOpen] = useState(false);
+  const [contentHeight, setContentHeight] = useState(0);
+
+  const measureRef = useCallback((node: HTMLDivElement | null) => {
+    if (node) {
+      setContentHeight(node.scrollHeight);
+    }
+  }, []);
 
   return (
     <m.div
@@ -93,26 +100,28 @@ function FAQItem({
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="w-full text-left py-6 flex items-start justify-between gap-4 border-b border-white/[0.06] group cursor-pointer"
+        aria-expanded={open}
+        className="w-full text-left py-6 flex items-start justify-between gap-4 border-b border-white/[0.06] group cursor-pointer min-h-[56px]"
       >
         <span className="text-base font-medium text-white/80 group-hover:text-white transition-colors leading-snug">
           {item.q}
         </span>
-        <span className="flex-shrink-0 mt-0.5 w-6 h-6 rounded-full border border-white/[0.10] flex items-center justify-center group-hover:border-white/[0.20] transition-colors">
+        <span className="flex-shrink-0 mt-0.5 w-8 h-8 rounded-full border border-white/[0.10] flex items-center justify-center group-hover:border-white/[0.20] transition-colors">
           {open ? (
-            <Minus className="w-3 h-3 text-white/40" />
+            <Minus className="w-3.5 h-3.5 text-white/40" />
           ) : (
-            <Plus className="w-3 h-3 text-white/40" />
+            <Plus className="w-3.5 h-3.5 text-white/40" />
           )}
         </span>
       </button>
       <m.div
+        ref={measureRef}
         initial={false}
         animate={{
-          height: open ? "auto" : 0,
+          height: open ? contentHeight : 0,
           opacity: open ? 1 : 0,
         }}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
         className="overflow-hidden"
       >
         <p className="py-5 text-sm text-white/45 leading-relaxed max-w-2xl font-body">

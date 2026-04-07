@@ -35,7 +35,7 @@ export function UpgradeGate({ feature, tier, children, fallback }: UpgradeGatePr
   const message = getUpgradeMessage(feature, tier);
 
   return (
-    <div className="relative rounded-xl border border-white/[0.06] bg-[#09090b]/80 p-6 text-center">
+    <div className="relative rounded-2xl border border-white/[0.06] bg-[#09090b]/80 p-6 text-center">
       <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full border border-[#00bcd4]/30 bg-[#00bcd4]/10">
         <svg
           className="h-5 w-5 text-[#00bcd4]"

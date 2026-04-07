@@ -56,7 +56,7 @@
 
 @theme inline {
   --font-sans: 'Inter', 'Inter Fallback', system-ui;
-  --font-serif: 'Crimson Pro', 'Crimson Pro Fallback', serif;
+  --font-serif: 'Newsreader', 'Newsreader Fallback', serif;
   --font-mono: 'JetBrains Mono', 'JetBrains Mono Fallback', monospace;
   --font-display: var(--font-display), 'Space Grotesk Fallback', serif;
   

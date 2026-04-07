@@ -209,15 +209,38 @@ function HeroPortal() {
             Type one sentence. Get a world with characters, locations, lore, and music. Free.
           </m.p>
 
-          {/* Differentiator — what makes this different */}
+          {/* Value Prop — explicit for cold visitors */}
           <m.p
-            className="max-w-md mx-auto text-xs text-white/20 leading-relaxed -mt-8 mb-12 md:mb-14 font-body"
+            className="max-w-lg mx-auto text-xs text-white/25 leading-relaxed -mt-8 mb-4 font-body"
             initial={{ opacity: 0 }}
             animate={isLoaded ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.25 }}
           >
-            Sixteen Luminors at your side. Two hundred thousand words of living lore. Built in the open.
+            The AI creative universe for storytellers, world-builders, and makers.
           </m.p>
+
+          {/* Trust signals — social proof */}
+          <m.div
+            className="flex items-center justify-center gap-3 md:gap-5 mb-12 md:mb-14"
+            initial={{ opacity: 0 }}
+            animate={isLoaded ? { opacity: 1 } : {}}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            {[
+              { value: "486K+", label: "words" },
+              { value: "16", label: "AI specialists" },
+              { value: "27", label: "repos" },
+              { value: "10", label: "gates" },
+            ].map(({ value, label }, i) => (
+              <div key={label} className="flex items-center gap-3">
+                {i > 0 && <span className="w-px h-3 bg-white/[0.06]" />}
+                <div className="text-center">
+                  <span className="text-[11px] font-display font-bold text-white/30">{value}</span>
+                  <span className="text-[9px] text-white/15 ml-1 font-mono">{label}</span>
+                </div>
+              </div>
+            ))}
+          </m.div>
 
           {/* Chat box — THE hero element */}
           <m.div
@@ -236,7 +259,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.7 }}
           >
-            17 Collections &middot; Open Source &middot; Free to Start
+            Open Source &middot; Free to Start &middot; No Credit Card
           </m.p>
         </div>
       </m.div>

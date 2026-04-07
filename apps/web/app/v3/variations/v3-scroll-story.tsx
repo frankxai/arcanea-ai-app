@@ -95,7 +95,7 @@ function ChapterHero() {
             });
             return (
               <p key={li} className={li === 2 ? 'mt-8' : 'mt-2'} style={{
-                fontFamily: 'Crimson Pro, serif', lineHeight: 1.6,
+                fontFamily: 'Newsreader, serif', lineHeight: 1.6,
                 fontSize: li === 2 ? 'clamp(20px,3vw,28px)' : 'clamp(22px,3.5vw,32px)',
                 fontStyle: li < 2 ? 'italic' : 'normal', color: li === 2 ? A : '#d4d4d4',
               }}>{spans}</p>
@@ -148,7 +148,7 @@ function ChapterGuardians() {
                   fontSize: act ? 'clamp(20px,2.5vw,32px)' : 'clamp(16px,2vw,22px)',
                   color: act ? g.c : 'rgba(212,212,212,0.3)',
                 }}>{g.name}</span>
-                {act && <span style={{ fontFamily: 'Crimson Pro, serif', fontSize: 14, color: 'rgba(212,212,212,0.4)', marginLeft: 8 }}>{g.el}</span>}
+                {act && <span style={{ fontFamily: 'Newsreader, serif', fontSize: 14, color: 'rgba(212,212,212,0.4)', marginLeft: 8 }}>{g.el}</span>}
                 {act && <div aria-hidden style={{ width: 40, height: 40, borderRadius: '50%', background: `radial-gradient(circle, ${g.c}22, transparent 70%)`, position: 'absolute', right: 'clamp(24px,6vw,80px)', filter: 'blur(12px)' }} />}
               </div>
             );
@@ -184,11 +184,11 @@ function ChapterLibrary() {
         </div>
         <div className="text-center relative z-10">
           <p style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 'clamp(48px,10vw,96px)', color: A, fontWeight: 300, transition: 'all 0.3s ease' }}>{count}</p>
-          <p style={{ fontFamily: 'Crimson Pro, serif', fontSize: 18, color: 'rgba(212,212,212,0.5)', marginTop: 4 }}>texts of creation wisdom</p>
+          <p style={{ fontFamily: 'Newsreader, serif', fontSize: 18, color: 'rgba(212,212,212,0.5)', marginTop: 4 }}>texts of creation wisdom</p>
           <div className="flex flex-wrap justify-center gap-3 mt-8 max-w-lg mx-auto">
             {LIB_CATS.map((cat, i) => (
               <span key={cat} style={{
-                fontFamily: 'Crimson Pro, serif', fontSize: 14, color: '#d4d4d4',
+                fontFamily: 'Newsreader, serif', fontSize: 14, color: '#d4d4d4',
                 padding: '4px 14px', border: '1px solid rgba(212,212,212,0.1)', borderRadius: 20,
                 opacity: i < catVis ? 1 : 0, transform: i < catVis ? 'scale(1)' : 'scale(0.8)',
                 transition: `all 0.4s ease ${i * 0.05}s`,
@@ -196,7 +196,7 @@ function ChapterLibrary() {
             ))}
           </div>
           <p className="mt-10 mx-auto" style={{
-            fontFamily: 'Crimson Pro, serif', fontSize: 'clamp(16px,2vw,22px)', fontStyle: 'italic',
+            fontFamily: 'Newsreader, serif', fontSize: 'clamp(16px,2vw,22px)', fontStyle: 'italic',
             color: 'rgba(212,212,212,0.6)', maxWidth: 480,
             opacity: qVis ? 1 : 0, transform: qVis ? 'translateY(0)' : 'translateY(12px)', transition: 'all 0.7s ease',
           }}>&ldquo;These books are not entertainment. They are equipment for living.&rdquo;</p>
@@ -262,7 +262,7 @@ function ChapterCTA() {
         ))}
       </div>
       <div className="text-center px-6 relative z-10" style={{ opacity: on ? 1 : 0, transform: on ? 'translateY(0)' : 'translateY(24px)', transition: 'all 1s cubic-bezier(0.16,1,0.3,1)' }}>
-        <p style={{ fontFamily: 'Crimson Pro, serif', fontSize: 'clamp(18px,2.5vw,24px)', fontStyle: 'italic', color: 'rgba(212,212,212,0.5)', maxWidth: 500, margin: '0 auto', lineHeight: 1.6 }}>
+        <p style={{ fontFamily: 'Newsreader, serif', fontSize: 'clamp(18px,2.5vw,24px)', fontStyle: 'italic', color: 'rgba(212,212,212,0.5)', maxWidth: 500, margin: '0 auto', lineHeight: 1.6 }}>
           Enter seeking. Leave transformed.<br />Return whenever needed.
         </p>
         <a href="/discover" className="group inline-flex items-center gap-2 mt-12" style={{

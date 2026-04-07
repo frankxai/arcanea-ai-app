@@ -38,7 +38,7 @@ const variantConfig = {
 
 const alertVariants = cva(
   [
-    'relative flex gap-3 rounded-xl p-4',
+    'relative flex gap-3 rounded-2xl p-4',
     'border border-[rgba(0,188,212,0.10)]',
     'backdrop-blur-[16px]',
     'border-l-4',
@@ -128,7 +128,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
             onClick={onDismiss}
             aria-label={dismissLabel}
             className={cn(
-              'shrink-0 self-start rounded-md p-1 text-text-muted',
+              'shrink-0 self-start rounded-lg p-1 text-text-muted',
               'hover:text-text-primary hover:bg-cosmic-raised/60',
               'transition-colors duration-150',
               'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crystal/50'

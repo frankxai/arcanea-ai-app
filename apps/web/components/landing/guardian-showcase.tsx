@@ -140,6 +140,7 @@ export function GuardianShowcase() {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: i * 0.08 }}
             >
+              <Link href="/lore/guardians" className="block focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/30 rounded-2xl">
               <GlowCard
                 glass="none"
                 glowColor={g.glowColor}
@@ -184,6 +185,7 @@ export function GuardianShowcase() {
                   </div>
                 </div>
               </GlowCard>
+              </Link>
             </m.div>
           ))}
         </div>

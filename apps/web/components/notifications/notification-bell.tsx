@@ -309,11 +309,15 @@ export function NotificationBell() {
                     {group.items.map((n) => (
                       <a
                         key={n.id}
-                        href={n.link || '#'}
-                        onClick={() => {
+                        href={n.link || undefined}
+                        role={n.link ? undefined : 'button'}
+                        tabIndex={0}
+                        onClick={(e) => {
+                          if (!n.link) e.preventDefault()
                           if (!n.read) handleMarkOneRead(n.id)
+                          if (!n.link) closeDropdown()
                         }}
-                        className={`block p-3 hover:bg-white/[0.06] transition-all duration-150 border-b border-white/[0.04] ${
+                        className={`block p-3 hover:bg-white/[0.06] transition-all duration-150 border-b border-white/[0.04] cursor-pointer ${
                           !n.read ? 'bg-[#00bcd4]/[0.04]' : ''
                         }`}
                       >

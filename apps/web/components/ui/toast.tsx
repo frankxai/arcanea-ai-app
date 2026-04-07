@@ -117,7 +117,7 @@ function ToastCard({
       aria-live="polite"
       aria-atomic="true"
       className={cn(
-        'pointer-events-auto relative flex w-full max-w-sm overflow-hidden rounded-xl',
+        'pointer-events-auto relative flex w-full max-w-sm overflow-hidden rounded-2xl',
         'bg-[rgba(18,24,38,0.92)] backdrop-blur-[16px]',
         'border border-[rgba(0,188,212,0.12)]',
         'shadow-[0_8px_32px_rgba(0,0,0,0.4)]',
@@ -159,7 +159,7 @@ function ToastCard({
         onClick={handleDismiss}
         aria-label="Dismiss notification"
         className={cn(
-          'shrink-0 rounded-md p-1 text-text-muted',
+          'shrink-0 rounded-lg p-1 text-text-muted',
           'hover:text-text-primary hover:bg-cosmic-raised/50',
           'transition-colors duration-150',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crystal/50'

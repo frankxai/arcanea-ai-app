@@ -175,6 +175,7 @@ function MegaDropdown({ sections, onClose }: { sections: NavSection[]; onClose: 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openMega, setOpenMega] = useState<string | null>(null);
+  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const megaTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -305,11 +306,15 @@ export function Navbar() {
               aria-label="Mobile navigation"
               className="mx-4 rounded-2xl liquid-glass-elevated border border-white/[0.08] overflow-hidden"
             >
-              <div className="p-4 space-y-1">
+              <div className="p-3 space-y-0.5">
                 {navLinks.map((link, i) => {
                   const isActive =
                     pathname === link.href ||
-                    pathname?.startsWith(link.href + "/");
+                    pathname?.startsWith(link.href + "/") ||
+                    (link.also?.some(p => pathname === p || pathname?.startsWith(p + "/")) ?? false);
+                  const hasMega = !!link.mega;
+                  const isExpanded = mobileExpanded === link.label;
+
                   return (
                     <m.div
                       key={link.href}
@@ -317,33 +322,68 @@ export function Navbar() {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.25, delay: i * 0.04 }}
                     >
-                      <Link
-                        href={link.href}
-                        aria-current={isActive ? "page" : undefined}
-                        onClick={() => setMobileMenuOpen(false)}
-                        className={`block px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
-                          isActive
-                            ? "text-[#00bcd4] bg-[#00bcd4]/10"
-                            : "text-white/70 hover:text-white hover:bg-white/[0.04]"
-                        }`}
-                      >
-                        {link.label}
-                      </Link>
-                      {/* Show sub-items on mobile */}
-                      {link.mega && (
-                        <div className="ml-4 mt-1 space-y-0.5">
-                          {link.mega.flatMap(s => s.items).slice(0, 4).map((item) => (
-                            <Link
-                              key={item.href}
-                              href={item.href}
-                              onClick={() => setMobileMenuOpen(false)}
-                              className="block px-4 py-2 rounded-lg text-xs text-white/40 hover:text-white/70 transition-colors"
-                            >
-                              {item.label}
-                            </Link>
-                          ))}
-                        </div>
-                      )}
+                      <div className="flex items-center">
+                        <Link
+                          href={link.href}
+                          aria-current={isActive ? "page" : undefined}
+                          onClick={() => setMobileMenuOpen(false)}
+                          className={`flex-1 px-4 py-3.5 rounded-xl text-sm font-medium transition-colors min-h-[48px] flex items-center ${
+                            isActive
+                              ? "text-[#00bcd4] bg-[#00bcd4]/10"
+                              : "text-white/70 active:text-white active:bg-white/[0.06]"
+                          }`}
+                        >
+                          {link.label}
+                        </Link>
+                        {hasMega && (
+                          <button
+                            type="button"
+                            onClick={() => setMobileExpanded(isExpanded ? null : link.label)}
+                            aria-expanded={isExpanded}
+                            aria-label={`${isExpanded ? "Collapse" : "Expand"} ${link.label} submenu`}
+                            className="p-3 rounded-xl text-white/40 active:bg-white/[0.06] min-w-[48px] min-h-[48px] flex items-center justify-center"
+                          >
+                            <svg width="12" height="12" viewBox="0 0 10 10" className={`transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}>
+                              <path d="M2 4L5 7L8 4" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+                            </svg>
+                          </button>
+                        )}
+                      </div>
+                      {/* Accordion sub-items */}
+                      <AnimatePresence initial={false}>
+                        {hasMega && isExpanded && (
+                          <m.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                            className="overflow-hidden"
+                          >
+                            <div className="pl-3 pb-2 space-y-0.5">
+                              {link.mega!.map((section) => (
+                                <div key={section.title}>
+                                  <p className="px-4 pt-2 pb-1 text-[10px] uppercase tracking-[0.15em] text-white/25 font-semibold">
+                                    {section.title}
+                                  </p>
+                                  {section.items.map((item) => (
+                                    <Link
+                                      key={item.href}
+                                      href={item.href}
+                                      onClick={() => setMobileMenuOpen(false)}
+                                      className="flex items-center justify-between px-4 py-2.5 rounded-xl text-sm text-white/50 active:text-white active:bg-white/[0.06] transition-colors min-h-[44px]"
+                                    >
+                                      <span>{item.label}</span>
+                                      {item.desc && (
+                                        <span className="text-[11px] text-white/20 ml-3 hidden xs:inline">{item.desc}</span>
+                                      )}
+                                    </Link>
+                                  ))}
+                                </div>
+                              ))}
+                            </div>
+                          </m.div>
+                        )}
+                      </AnimatePresence>
                     </m.div>
                   );
                 })}
@@ -351,29 +391,18 @@ export function Navbar() {
                 <div className="h-px bg-white/[0.08] my-3" />
 
                 <m.div
-                  className="px-1"
+                  className="flex items-center gap-3 px-1"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.2, delay: 0.25 }}
                 >
+                  <SearchBar compact />
                   <NotificationBell />
                   <UserNav />
                 </m.div>
               </div>
             </nav>
           </m.div>
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <m.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setMobileMenuOpen(false)}
-            className="fixed inset-0 z-30 bg-black/65 backdrop-blur-sm md:hidden"
-          />
         )}
       </AnimatePresence>
     </LazyMotion>

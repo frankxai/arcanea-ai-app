@@ -10,7 +10,7 @@ const T = {
   bg: '#09090b', card: '#18181b', border: 'rgba(255,255,255,0.06)',
   text: '#fafafa', muted: '#a1a1aa', dim: '#71717a',
   violet: '#8b5cf6', teal: '#7fffd4', red: '#ef4444', gold: '#ffd700',
-  display: 'var(--font-display)', crimson: '"Crimson Pro", serif', mono: '"JetBrains Mono", monospace',
+  display: 'var(--font-display)', crimson: '"Newsreader", serif', mono: '"JetBrains Mono", monospace',
 } as const;
 
 const TABS = ['For You', 'Explore', 'Create'] as const;

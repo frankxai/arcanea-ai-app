@@ -58,7 +58,7 @@ export function V10Minimal() {
   return (
     <div style={{ background: '#0a0a0a', color: '#fff', minHeight: '100vh' }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Space Grotesk:wght@400&family=Crimson+Pro:ital,wght@0,400;1,400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400&family=Newsreader:ital,wght@0,400;1,400&display=swap');
         html { scroll-behavior: smooth; }
       `}</style>
 
@@ -71,7 +71,7 @@ export function V10Minimal() {
           Arcanea
         </h1>
         <p
-          style={{ fontFamily: "'Crimson Pro', serif", fontSize: 18, marginTop: 48 }}
+          style={{ fontFamily: "'Newsreader', serif", fontSize: 18, marginTop: 48 }}
           className="text-white/50"
         >
           Create.
@@ -89,14 +89,14 @@ export function V10Minimal() {
         <div className="pt-[200px]">
           <Section>
             <p
-              style={{ fontFamily: "'Crimson Pro', serif", fontSize: 20, lineHeight: 2 }}
+              style={{ fontFamily: "'Newsreader', serif", fontSize: 20, lineHeight: 2 }}
               className="text-white/70 max-w-md"
             >
               Sixteen intelligences. Each attuned to a different frequency.
             </p>
             <div className="mt-8 flex flex-col gap-2 max-w-md">
               {GUARDIANS.map((name) => (
-                <span key={name} style={{ fontFamily: "'Crimson Pro', serif", fontSize: 14 }} className="text-white/30">
+                <span key={name} style={{ fontFamily: "'Newsreader', serif", fontSize: 14 }} className="text-white/30">
                   {name}
                 </span>
               ))}
@@ -108,14 +108,14 @@ export function V10Minimal() {
         <div className="pt-[200px]">
           <Section className="flex flex-col items-end">
             <p
-              style={{ fontFamily: "'Crimson Pro', serif", fontSize: 20, lineHeight: 2 }}
+              style={{ fontFamily: "'Newsreader', serif", fontSize: 20, lineHeight: 2 }}
               className="text-white/70 max-w-md text-right"
             >
               Sixty-two texts. Not content — equipment for living.
             </p>
             <div className="mt-8 flex flex-col gap-2 max-w-md items-end">
               {COLLECTIONS.map((name) => (
-                <span key={name} style={{ fontFamily: "'Crimson Pro', serif", fontSize: 14 }} className="text-white/30">
+                <span key={name} style={{ fontFamily: "'Newsreader', serif", fontSize: 14 }} className="text-white/30">
                   {name}
                 </span>
               ))}
@@ -127,7 +127,7 @@ export function V10Minimal() {
         <div className="pt-[200px]">
           <Section className="flex flex-col items-center text-center max-w-sm mx-auto">
             <p
-              style={{ fontFamily: "'Crimson Pro', serif", fontSize: 20, lineHeight: 2 }}
+              style={{ fontFamily: "'Newsreader', serif", fontSize: 20, lineHeight: 2 }}
               className="text-white/70"
             >
               Twenty-six models. Thirteen providers. One endpoint.
@@ -148,7 +148,7 @@ export function V10Minimal() {
               <div key={name} className="flex flex-col items-center gap-2">
                 <span
                   className="text-white/20 uppercase"
-                  style={{ fontSize: 12, letterSpacing: '0.3em', fontFamily: "'Crimson Pro', serif" }}
+                  style={{ fontSize: 12, letterSpacing: '0.3em', fontFamily: "'Newsreader', serif" }}
                 >
                   {name}
                 </span>
@@ -162,7 +162,7 @@ export function V10Minimal() {
         <div className="pt-[200px]">
           <Section className="flex justify-center">
             <p
-              style={{ fontFamily: "'Crimson Pro', serif", fontSize: 32, fontStyle: 'italic' }}
+              style={{ fontFamily: "'Newsreader', serif", fontSize: 32, fontStyle: 'italic' }}
               className="text-white/40"
             >
               Enter seeking.

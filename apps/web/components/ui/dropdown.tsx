@@ -103,15 +103,16 @@ function DropdownItemComponent({ item, onClose }: ItemProps) {
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       className={cn(
-        'group flex w-full items-center gap-2.5 rounded-md px-2.5 py-2',
+        'group flex w-full items-center gap-2.5 rounded-lg px-3 py-3',
         'text-sm font-sans text-left',
         'transition-colors duration-100',
+        'min-h-[44px]',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crystal/50 focus-visible:ring-inset',
         item.disabled
           ? 'opacity-40 cursor-not-allowed pointer-events-none'
           : item.destructive
-          ? 'text-error hover:bg-error/10 hover:text-error cursor-pointer'
-          : 'text-text-secondary hover:bg-cosmic-raised/70 hover:text-text-primary cursor-pointer'
+          ? 'text-error hover:bg-error/10 hover:text-error active:bg-error/15 cursor-pointer'
+          : 'text-text-secondary hover:bg-cosmic-raised/70 active:bg-cosmic-raised hover:text-text-primary cursor-pointer'
       )}
     >
       {item.icon && (
@@ -231,13 +232,24 @@ const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
       }
     };
 
-    // Focus first item when opened
+    // Focus first item when opened & adjust position if overflowing viewport
     React.useEffect(() => {
       if (!isOpen) return;
       const firstItem = menuRef.current?.querySelector<HTMLElement>(
         '[role="menuitem"]:not([aria-disabled="true"])'
       );
       firstItem?.focus();
+
+      // Viewport-aware positioning: nudge menu if it overflows right edge
+      if (menuRef.current) {
+        const rect = menuRef.current.getBoundingClientRect();
+        if (rect.right > window.innerWidth - 8) {
+          menuRef.current.style.transform = `translateX(${window.innerWidth - 8 - rect.right}px)`;
+        }
+        if (rect.left < 8) {
+          menuRef.current.style.transform = `translateX(${8 - rect.left}px)`;
+        }
+      }
     }, [isOpen]);
 
     const contentWidth =
@@ -266,7 +278,7 @@ const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
           onClick={toggle}
           className={cn(
             'inline-flex items-center gap-1.5',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crystal/50 rounded-md'
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-crystal/50 rounded-lg'
           )}
         >
           {trigger}
@@ -299,7 +311,7 @@ const Dropdown = React.forwardRef<HTMLDivElement, DropdownProps>(
               style={{ width: contentWidth, minWidth: '11rem' }}
               className={cn(
                 'absolute top-full mt-1.5 z-50',
-                'rounded-xl p-1.5',
+                'rounded-2xl p-1.5',
                 'bg-[rgba(18,24,38,0.95)] backdrop-blur-[20px]',
                 'border border-[rgba(0,188,212,0.14)]',
                 'shadow-[0_8px_32px_rgba(0,0,0,0.45),0_0_1px_rgba(255,255,255,0.06)]',

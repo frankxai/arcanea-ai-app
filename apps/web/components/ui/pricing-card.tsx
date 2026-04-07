@@ -217,14 +217,14 @@ const PricingCard = React.forwardRef<HTMLDivElement, PricingCardProps>(
       return (
         <div ref={ref} className={cn(cardClasses, "animate-pulse")}>
           <div className="p-6 sm:p-8 space-y-4">
-            <div className="h-6 w-24 bg-text-muted/20 rounded" />
-            <div className="h-10 w-32 bg-text-muted/20 rounded" />
-            <div className="h-10 w-full bg-text-muted/15 rounded" />
+            <div className="h-6 w-24 bg-text-muted/20 rounded-lg" />
+            <div className="h-10 w-32 bg-text-muted/20 rounded-lg" />
+            <div className="h-10 w-full bg-text-muted/15 rounded-lg" />
             <div className="h-px bg-text-muted/10" />
             <div className="space-y-3">
-              <div className="h-4 w-full bg-text-muted/15 rounded" />
-              <div className="h-4 w-4/5 bg-text-muted/15 rounded" />
-              <div className="h-4 w-3/5 bg-text-muted/15 rounded" />
+              <div className="h-4 w-full bg-text-muted/15 rounded-lg" />
+              <div className="h-4 w-4/5 bg-text-muted/15 rounded-lg" />
+              <div className="h-4 w-3/5 bg-text-muted/15 rounded-lg" />
             </div>
           </div>
         </div>

@@ -347,7 +347,7 @@ export function V2Bento() {
       <section className="mx-auto w-full max-w-3xl px-6 pb-24 text-center">
         <m.blockquote
           className="text-2xl font-light italic leading-relaxed md:text-3xl"
-          style={{ fontFamily: 'Crimson Pro, Georgia, serif', color: 'rgba(255,255,255,0.65)' }}
+          style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'rgba(255,255,255,0.65)' }}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}

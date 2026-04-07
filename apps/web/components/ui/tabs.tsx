@@ -126,7 +126,7 @@ const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
           className={cn(
             variant === 'underline'
               ? 'flex gap-0 border-b border-[rgba(0,188,212,0.12)]'
-              : 'flex gap-1 p-1 rounded-xl bg-[rgba(18,24,38,0.65)] backdrop-blur-[16px] border border-[rgba(0,188,212,0.10)] w-fit',
+              : 'flex gap-1 p-1 rounded-2xl bg-[rgba(18,24,38,0.65)] backdrop-blur-[16px] border border-[rgba(0,188,212,0.10)] w-fit',
             tabsClassName
           )}
         >
@@ -152,7 +152,7 @@ const Tabs = React.forwardRef<HTMLDivElement, TabsProps>(
                   'disabled:pointer-events-none disabled:opacity-40',
                   variant === 'underline'
                     ? cn(
-                        'px-4 py-2.5 rounded-t-md',
+                        'px-4 py-2.5 rounded-t-lg',
                         isActive ? 'text-crystal' : 'text-text-muted hover:text-text-secondary'
                       )
                     : cn(

@@ -18,7 +18,7 @@ const GUARDIANS = [
 
 const S = {
   display: 'var(--font-display)',
-  crimson: 'Crimson Pro, serif',
+  crimson: 'Newsreader, serif',
   mono: 'JetBrains Mono, monospace',
   bg: '#0a0a0f',
   text: '#e8e6e1',

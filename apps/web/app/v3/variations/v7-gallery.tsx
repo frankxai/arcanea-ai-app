@@ -34,7 +34,7 @@ const T = {
   bg: '#141414', text: '#d4d0c8', gold: '#c5a55a',
   dim: 'rgba(212,208,200,0.4)', divider: 'rgba(255,255,255,0.2)',
   shadow: 'rgba(0,0,0,0.5)',
-  display: 'var(--font-display)', crimson: 'Crimson Pro, serif',
+  display: 'var(--font-display)', crimson: 'Newsreader, serif',
 } as const;
 
 const CSS = `
