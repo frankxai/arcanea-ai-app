@@ -943,15 +943,6 @@ importers:
         specifier: ^5.3.0
         version: 5.9.3
 
-  packages/peak-performance:
-    devDependencies:
-      tsx:
-        specifier: ^4.19.0
-        version: 4.21.0
-      typescript:
-        specifier: ^5.7.0
-        version: 5.9.3
-
   packages/prompt-books:
     devDependencies:
       typescript:
