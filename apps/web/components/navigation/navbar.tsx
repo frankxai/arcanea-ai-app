@@ -213,7 +213,7 @@ export function Navbar() {
               className="flex items-center gap-2 text-base font-display font-semibold text-white/90 tracking-tight hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#00bcd4]/30 rounded"
             >
               <ArcaneanMark size={22} />
-              <span>Arcanea</span>
+              <span>Arcanea™</span>
             </Link>
 
             {/* Desktop nav with mega dropdowns */}

@@ -386,7 +386,7 @@ export default function PrivacyPage() {
         <div className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent mt-12 mb-8" />
 
         <footer className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-text-muted">
-          <p>Arcanea &mdash; Build Your Universe</p>
+          <p>Arcanea™ &mdash; Build Your Universe</p>
           <div className="flex gap-6">
             <Link href="/terms" className="hover:text-atlantean-teal-aqua transition-colors">
               Terms of Service

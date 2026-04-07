@@ -228,7 +228,7 @@ export default function TermsPage() {
           </Paragraph>
           <BulletList
             items={[
-              'The Arcanea name, logo, and visual identity',
+              'The Arcanea™ name, logo, and visual identity',
               'The Ten Gates system, Guardian characters, Godbeast designs, and mythology',
               'The Library of Arcanea texts and content',
               'The Academy system, magic rank structure, and game mechanics',
@@ -373,7 +373,7 @@ export default function TermsPage() {
         <div className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent mt-12 mb-8" />
 
         <footer className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-text-muted">
-          <p>Arcanea &mdash; Build Your Universe</p>
+          <p>Arcanea™ &mdash; Build Your Universe</p>
           <div className="flex gap-6">
             <Link href="/privacy" className="hover:text-atlantean-teal-aqua transition-colors">
               Privacy Policy

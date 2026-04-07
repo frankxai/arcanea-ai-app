@@ -75,7 +75,7 @@ export function Footer() {
               className="flex items-center gap-2.5 font-display font-bold text-lg text-white hover:text-[#00bcd4] transition-colors"
             >
               <ArcaneanMark size={28} glow />
-              Arcanea
+              Arcanea™
             </Link>
             <p className="text-[11px] uppercase tracking-[0.2em] text-white/28 mt-1.5">
               Creative Intelligence
@@ -152,7 +152,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-5 pt-8 border-t border-white/[0.06]">
           <span className="text-xs text-white/36">
-            &copy; {new Date().getFullYear()} Arcanea. All rights reserved.
+            &copy; {new Date().getFullYear()} Arcanea™. All rights reserved.
           </span>
 
           <div className="flex items-center gap-4 text-xs text-white/36">

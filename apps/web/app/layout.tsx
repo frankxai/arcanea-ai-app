@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_APP_URL || "https://arcanea.ai",
   ),
   title: {
-    default: "Arcanea — Creative Intelligence Platform",
+    default: "Arcanea™ — Creative Intelligence Platform",
     template: "%s | Arcanea",
   },
   description:
