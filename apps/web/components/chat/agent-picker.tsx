@@ -132,7 +132,7 @@ export function AgentPicker({ open, onClose, onSelect, currentAgentId }: AgentPi
 
           {/* Create new */}
           <a
-            href="/forge/create"
+            href="/forge/luminor"
             className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl border border-dashed border-white/[0.08] hover:border-[#ffd700]/30 hover:bg-[#ffd700]/5 transition-all text-left group"
           >
             <div className="w-9 h-9 rounded-xl border border-dashed border-white/[0.08] group-hover:border-[#ffd700]/30 flex items-center justify-center transition-colors">

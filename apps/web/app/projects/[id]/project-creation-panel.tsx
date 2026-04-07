@@ -3,6 +3,7 @@
 import { useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { Link, Sparkle, X } from '@/lib/phosphor-icons';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import type { ProjectCreationRecord, ProjectSessionRecord } from '@/lib/projects/server';
@@ -55,7 +56,7 @@ export function ProjectCreationPanel({
               <div key={creation.id} className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
                 <div className="flex items-start gap-3">
                   {creation.thumbnailUrl ? (
-                    <img src={creation.thumbnailUrl} alt={creation.title} className="h-12 w-12 rounded-xl object-cover" />
+                    <Image src={creation.thumbnailUrl} alt={creation.title} width={48} height={48} className="h-12 w-12 rounded-xl object-cover" />
                   ) : (
                     <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-white/45">
                       <Sparkle size={18} />

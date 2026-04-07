@@ -1,5 +1,15 @@
+import { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
+
+export const metadata: Metadata = {
+  title: "Profile — Arcanea",
+  description: "Your creator profile — showcase your worlds, creations, and achievements.",
+  openGraph: {
+    title: "Profile — Arcanea",
+    description: "Your creator profile — showcase your worlds, creations, and achievements.",
+  },
+};
 
 export default async function ProfileRedirect() {
   let user = null

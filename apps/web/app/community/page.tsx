@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import Link from "next/link";
 import {
   PhChatCircle,
@@ -24,6 +25,15 @@ import {
   QUICK_LINKS,
   OSS_STATS,
 } from './community-data';
+
+export const metadata: Metadata = {
+  title: "Community — Arcanea",
+  description: "Join the Arcanean community — collaborate, share, and co-create.",
+  openGraph: {
+    title: "Community — Arcanea",
+    description: "Join the Arcanean community — collaborate, share, and co-create.",
+  },
+};
 
 // ─── Page Component ────────────────────────────────────────────────────────────
 

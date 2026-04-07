@@ -5,7 +5,7 @@ A stunning, production-ready component for choosing your AI Luminor companion in
 ## Design Philosophy
 
 **Bold, Distinctive Aesthetic**:
-- **Typography**: Cinzel (elegant display) + Crimson Pro (refined body) - avoiding generic Inter/Roboto
+- **Typography**: Space Grotesk (display) + Inter (body) — premium tech aesthetic
 - **Animations**: Academy-specific (water flow, fire flicker, light shimmer)
 - **Colors**: Authentic cosmic theme with academy-specific palettes
 - **Motion**: Orchestrated entrance with staggered reveals using Framer Motion
@@ -219,7 +219,7 @@ Add custom animations in your Tailwind config.
 - **Design System**: Arcanean Cosmic Theme
 - **Animations**: Framer Motion 11.15.0
 - **Icons**: Lucide React
-- **Typography**: Cinzel + Crimson Pro (Google Fonts)
+- **Typography**: Space Grotesk + Inter (Google Fonts)
 - **Inspired by**: Character.ai depth + Genspark intelligence
 
 ---
@@ -228,11 +228,11 @@ Add custom animations in your Tailwind config.
 
 ### Why These Fonts?
 
-**Cinzel**: Elegant, classical serif that evokes ancient magic and timeless wisdom. Perfect for Luminor names and headings.
+**Space Grotesk**: Modern geometric sans-serif with character — premium tech feel for Luminor names and headings.
 
-**Crimson Pro**: Refined, highly readable serif optimized for digital displays. Complements Cinzel while maintaining distinction.
+**Inter**: Highly legible UI font optimized for digital screens. Pairs with Space Grotesk while maintaining distinction.
 
-**Not Used**: Inter, Roboto, system fonts - too generic, lacks character for a magical interface.
+**Newsreader**: Editorial serif for literary/lore content where a classical voice is needed.
 
 ### Animation Strategy
 

@@ -141,7 +141,7 @@ export default function AnalyticsPage() {
           >
             Arcanea Analytics
           </h1>
-          <p className="text-white/35 mt-2 text-sm" style={{ fontFamily: 'var(--font-body, Crimson Pro, serif)' }}>
+          <p className="text-white/35 mt-2 text-sm" style={{ fontFamily: 'var(--font-serif, Newsreader, serif)' }}>
             The pulse of the Arcanean multiverse
           </p>
         </div>

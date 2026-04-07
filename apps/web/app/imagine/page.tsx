@@ -3,6 +3,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { m, AnimatePresence, LazyMotion, domAnimation } from 'framer-motion';
+import Image from 'next/image';
 import Link from 'next/link';
 import { PromptInput } from '@/components/imagine/PromptInput';
 import { ImageCard } from '@/components/imagine/ImageCard';
@@ -510,7 +511,7 @@ export default function ImaginePage() {
                   <div className="grid grid-cols-2 gap-2">
                     {favorites.map((fav) => (
                       <m.div key={fav.id} layout className="group relative rounded-xl overflow-hidden">
-                        <img src={fav.blobUrl} alt={fav.prompt} className="w-full aspect-square object-cover" loading="lazy" />
+                        <Image src={fav.blobUrl} alt={fav.prompt} width={200} height={200} className="w-full aspect-square object-cover" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
                           <div className="absolute bottom-0 left-0 right-0 p-2.5">
                             <p className="text-[10px] text-white/60 line-clamp-2 mb-2">{fav.prompt}</p>

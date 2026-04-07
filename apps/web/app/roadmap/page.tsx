@@ -1,8 +1,17 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { RoadmapHero } from '@/components/roadmap/roadmap-hero';
 import { RoadmapPhases } from '@/components/roadmap/roadmap-phases';
+
+const RoadmapHero = dynamic(() => import('@/components/roadmap/roadmap-hero').then(mod => ({ default: mod.RoadmapHero })), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-screen flex items-center justify-center">
+      <div className="w-6 h-6 border-2 border-[#00bcd4]/20 border-t-[#00bcd4] rounded-full animate-spin" />
+    </div>
+  ),
+});
 
 export default function RoadmapPage() {
   return (

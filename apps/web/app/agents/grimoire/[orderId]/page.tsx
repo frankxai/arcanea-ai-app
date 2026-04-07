@@ -545,7 +545,7 @@ export default function GrimoireResultPage({
                     {/* Streaming content */}
                     <div className="p-6 sm:p-8 max-h-[480px] overflow-y-auto">
                       {streamedContent ? (
-                        <div className="prose prose-sm max-w-none text-[#4a3520] [font-family:'Crimson_Pro',serif] text-[15px] leading-relaxed whitespace-pre-wrap">
+                        <div className="prose prose-sm max-w-none text-[#4a3520] font-serif text-[15px] leading-relaxed whitespace-pre-wrap">
                           {streamedContent}
                           <m.span
                             className="inline-block w-0.5 h-4 bg-[#c8a96e] ml-0.5 align-middle"

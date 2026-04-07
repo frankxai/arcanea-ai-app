@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
 
 // ---------------------------------------------------------------------------
@@ -158,7 +159,7 @@ function HeroSection({ world, heroImage }: { world: GeneratedWorld; heroImage: s
     <m.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
       className="relative w-full rounded-2xl overflow-hidden mb-12" style={{ minHeight: h }}>
       <div className="absolute inset-0" style={{ background: `linear-gradient(135deg, ${from}22, ${to}22, #09090b)` }} />
-      {heroImage && <img src={heroImage} alt={`Concept art for ${world.name}`} className="absolute inset-0 w-full h-full object-cover opacity-60" />}
+      {heroImage && <Image src={heroImage} alt={`Concept art for ${world.name}`} fill className="absolute inset-0 object-cover opacity-60" sizes="100vw" />}
       <div className="absolute inset-0 bg-gradient-to-t from-[#09090b] via-[#09090b]/60 to-transparent" />
       <div className="relative z-10 flex flex-col items-center justify-end h-full px-6 py-10" style={{ minHeight: h }}>
         <p className="text-[#00bcd4] font-mono text-xs tracking-widest uppercase mb-3">Your World</p>
