@@ -11,7 +11,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useChat } from '@ai-sdk/react';
 import { TextStreamChatTransport } from 'ai';
-import { LazyMotion, domMax, m, AnimatePresence } from 'framer-motion';
+import { LazyMotion, domAnimation, m, AnimatePresence } from 'framer-motion';
 import { staggerContainer, staggerItem, transitions, springs } from '@/lib/design/motion';
 import type { Encounter, CrewMember, StoryChoice as StoryChoiceType } from '@/lib/living-lore/types';
 import { getCrewMember } from '@/lib/living-lore/crew-data';
@@ -147,7 +147,7 @@ export function EncounterScene({ encounter, crewMembers, choices = [] }: Encount
   const openingParagraphs = encounter.openingScript.split('\n\n');
 
   return (
-    <LazyMotion features={domMax}>
+    <LazyMotion features={domAnimation}>
       <div className="flex flex-col h-full max-w-3xl mx-auto">
         {/* Opening script */}
         {!sceneStarted && (

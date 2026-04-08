@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { LazyMotion, domMax, m, AnimatePresence } from 'framer-motion';
+import { LazyMotion, domAnimation, m, AnimatePresence } from 'framer-motion';
 import { staggerContainer, staggerItem, transitions, springs } from '@/lib/design/motion';
 import type { StoryChoice as StoryChoiceType } from '@/lib/living-lore/types';
 import { getCrewMember } from '@/lib/living-lore/crew-data';
@@ -17,7 +17,7 @@ export function StoryChoice({ choice, onSelect, selectedId, disabled }: StoryCho
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   return (
-    <LazyMotion features={domMax}>
+    <LazyMotion features={domAnimation}>
       <m.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}

@@ -1,6 +1,6 @@
 'use client';
 
-import { LazyMotion, domMax, m } from 'framer-motion';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { staggerContainer, staggerItem, hoverPresets } from '@/lib/design/motion';
 import Link from 'next/link';
 import type { ActInfo } from '@/lib/living-lore/types';
@@ -72,7 +72,7 @@ export function JourneyMap({ acts, gatesOpen = 0 }: JourneyMapProps) {
       }));
 
   return (
-    <LazyMotion features={domMax} strict>
+    <LazyMotion features={domAnimation} strict>
       <m.div
         variants={staggerContainer('slow')}
         initial="hidden"

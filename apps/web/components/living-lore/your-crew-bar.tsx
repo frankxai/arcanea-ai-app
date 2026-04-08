@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { LazyMotion, domMax, m } from 'framer-motion';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
 import { transitions, springs } from '@/lib/design/motion';
 import type { CrewBond } from '@/lib/living-lore/types';
 import { getAllCrew } from '@/lib/living-lore/crew-data';
@@ -28,7 +28,7 @@ export function YourCrewBar({ selectedCompanion, bonds, compact }: YourCrewBarPr
   };
 
   return (
-    <LazyMotion features={domMax}>
+    <LazyMotion features={domAnimation}>
       <m.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}

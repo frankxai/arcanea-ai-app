@@ -3,7 +3,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
-import { LazyMotion, domMax, m, AnimatePresence } from 'framer-motion';
+import { LazyMotion, domAnimation, m, AnimatePresence } from 'framer-motion';
 import type { Episode, Encounter } from '@/lib/living-lore/types';
 import type { Text } from '@/lib/content/types';
 import { getCrewMember } from '@/lib/living-lore/crew-data';
@@ -73,7 +73,7 @@ export function EpisodeReader({ episode, connectedLore, encounters = [], nextEpi
   }, [completed, completing, episode.slug, episode.act]);
 
   return (
-    <LazyMotion features={domMax}>
+    <LazyMotion features={domAnimation}>
       <ReadingProgressBar />
 
       {/* Sticky compact header */}

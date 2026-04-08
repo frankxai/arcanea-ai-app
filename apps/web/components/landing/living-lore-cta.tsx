@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { LazyMotion, domMax, m } from 'framer-motion';
+import { LazyMotion, domAnimation, m } from 'framer-motion';
 import {
   slideUp,
   staggerContainer,
@@ -16,7 +16,7 @@ import { CREW } from '@/lib/living-lore/crew-data';
  */
 export function LivingLoreCTA() {
   return (
-    <LazyMotion features={domMax}>
+    <LazyMotion features={domAnimation}>
       <m.section
         variants={slideUp}
         initial="hidden"

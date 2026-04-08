@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { LazyMotion, domMax, m, AnimatePresence } from 'framer-motion';
+import { LazyMotion, domAnimation, m, AnimatePresence } from 'framer-motion';
 import { transitions, springs } from '@/lib/design/motion';
 import { CREW } from '@/lib/living-lore/crew-data';
 import type { CrewMember } from '@/lib/living-lore/types';
@@ -405,7 +405,7 @@ export function CrewOnboarding({ onComplete, onSkip }: CrewOnboardingProps) {
   const crewIndex = !isIntro && !isChoose ? step - 1 : -1;
 
   return (
-    <LazyMotion features={domMax} strict>
+    <LazyMotion features={domAnimation} strict>
       <div className="relative flex min-h-[100dvh] flex-col">
         {/* Ambient background orbs */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
