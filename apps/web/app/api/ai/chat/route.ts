@@ -11,7 +11,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { createAnthropic } from '@ai-sdk/anthropic';
 import { createOpenAI } from '@ai-sdk/openai';
-import { convertToModelMessages, streamText, type UIMessage } from 'ai';
+import { streamText } from 'ai';
 import { createArcanea } from '@/lib/ai/arcanea-intelligence';
 import { GATEWAY_MODELS, EXTENDED_PROVIDERS } from '@/lib/gateway/catalog';
 import { createChatTools } from '@/lib/chat/tools';
@@ -342,14 +342,7 @@ export async function POST(req: NextRequest) {
       content: extractMessageText(msg),
     }));
 
-    const uiMessages = messages.map((msg) => ({
-      role: (msg.role === 'model' ? 'assistant' : msg.role) as 'user' | 'assistant' | 'system',
-      parts: msg.parts ?? (msg.content ? [{ type: 'text' as const, text: msg.content }] : []),
-    }));
-
-    const modelMessages = await convertToModelMessages(
-      uiMessages as Array<Omit<UIMessage, 'id'>>,
-    );
+    const modelMessages = normalizedMessages;
 
     // --- MoE Router: classify intent and blend expert fragments ---
     // If a specific systemPrompt is provided (e.g., from /chat/[luminorId]),
