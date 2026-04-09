@@ -1,0 +1,27 @@
+title: "The Heart of Pyrathis"
+slug: heart-of-pyrathis
+tier: community
+status: in-progress
+
+authors:
+  - name: FrankX
+    github: frankxai
+    role: creator
+
+ai_transparency:
+  models_used:
+    - id: claude-opus-4-6
+      provider: anthropic
+      role: story-architecture-and-drafting
+  human_contribution: 25%
+  ai_contribution: 75%
+  method: "Human concept mashup and direction. AI-drafted prose from detailed architectural prompts. Human curation."
+
+license: CC-BY-NC-SA-4.0
+content_rating: general
+tags: [epic-fantasy, dragons, sci-fi, volcano, shapeshifters, lightsabers, found-family]
+
+acknowledgments: |
+  A genre mashup that shouldn't work and does. Alien dragons, volcanic werewolves,
+  mini-Yoda sages with lightsabers, immortal space elves, and a dying planet.
+  Written with Claude Opus 4.6 on the Arcanea publishing platform.

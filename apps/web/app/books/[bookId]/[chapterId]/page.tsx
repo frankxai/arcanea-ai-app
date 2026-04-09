@@ -83,6 +83,10 @@ const BOOK_META: Record<string, { title: string; dir: string }> = {
     title: 'The Tides of Silence',
     dir: join(process.cwd(), '..', '..', 'book', 'tides-of-silence', 'chapters'),
   },
+  'heart-of-pyrathis': {
+    title: 'The Heart of Pyrathis',
+    dir: join(process.cwd(), '..', '..', 'book', 'heart-of-pyrathis', 'chapters'),
+  },
 };
 
 /* ------------------------------------------------------------------ */

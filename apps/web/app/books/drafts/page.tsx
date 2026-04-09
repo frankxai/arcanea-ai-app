@@ -38,11 +38,13 @@ interface DraftBook {
 const ACCENT_MAP: Record<string, string> = {
   'forge-of-ruin': 'red',
   'tides-of-silence': 'cyan',
+  'heart-of-pyrathis': 'amber',
 };
 
 const COVER_MAP: Record<string, string> = {
   'forge-of-ruin': '/images/books/forge-of-ruin-cover-nb2.png',
   'tides-of-silence': '/images/books/tides-of-silence-cover.png',
+  'heart-of-pyrathis': '/images/books/heart-of-pyrathis-cover.png',
 };
 
 async function exists(path: string): Promise<boolean> {

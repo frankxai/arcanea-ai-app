@@ -165,6 +165,14 @@ const BOOKS: Record<string, BookDef> = {
     status: 'in-progress',
     dir: join(process.cwd(), '..', '..', 'book', 'tides-of-silence', 'chapters'),
   },
+  'heart-of-pyrathis': {
+    title: 'The Heart of Pyrathis',
+    subtitle: 'Alien Dragons on a Volcano Planet — Draft',
+    description:
+      'A Cinderfang who can\'t shift. A three-foot sage with a lightsaber. An exiled space elf. A dying dragon. They must descend to the planet\'s core to reignite a grieving world — but someone must become the fire.',
+    status: 'in-progress',
+    dir: join(process.cwd(), '..', '..', 'book', 'heart-of-pyrathis', 'chapters'),
+  },
 };
 
 const STATUS_STYLES: Record<BookStatus, { bg: string; text: string; label: string }> = {

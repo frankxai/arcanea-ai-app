@@ -47,6 +47,7 @@ const BOOK_ROOT = join(process.cwd(), '..', '..', 'book');
 const COVER_MAP: Record<string, string> = {
   'forge-of-ruin': '/images/books/forge-of-ruin-cover-nb2.png',
   'tides-of-silence': '/images/books/tides-of-silence-cover.png',
+  'heart-of-pyrathis': '/images/books/heart-of-pyrathis-cover.png',
 };
 
 const ACCENT_MAP: Record<string, { primary: string; bg: string; border: string; glow: string }> = {
@@ -61,6 +62,12 @@ const ACCENT_MAP: Record<string, { primary: string; bg: string; border: string; 
     bg: 'bg-cyan-500/10',
     border: 'border-cyan-500/20',
     glow: 'bg-cyan-900/[0.08]',
+  },
+  'heart-of-pyrathis': {
+    primary: 'text-amber-400',
+    bg: 'bg-amber-500/10',
+    border: 'border-amber-500/20',
+    glow: 'bg-amber-900/[0.08]',
   },
 };
 
@@ -77,6 +84,13 @@ const BOOK_DESCRIPTIONS: Record<string, { tagline: string; paragraphs: string[] 
     paragraphs: [
       'Erivar Skaldson has been chained in a cellar for three years. Every night he recites the names of the forty-seven people the Fury killed while wearing his body. Tonight, he discovers three names are gone. The parasite has been eating while he believed it sleeping.',
       'When the Wraith Armies breach the Thornwall, the Thane of Galdheim must unchain the weapon she kept caged. Erivar must choose: fight and risk losing himself, or stay chained and certainly die when the fortress falls.',
+    ],
+  },
+  'heart-of-pyrathis': {
+    tagline: 'A cursed wolf, a tiny sage, a fallen star-wanderer, and a scared little dragon walk into a volcano. They carry the fire.',
+    paragraphs: [
+      'Korvash has never shifted. Born during a cold season on a volcanic planet, the Cinderfang who should run as a fire-wolf instead stands still while the world burns around them. The pack calls them cursed. The dragons call them something else entirely.',
+      'Pyrathis is dying. The volcanoes that are the planet\'s heartbeat are going cold. The dragons — volcanic intelligences that ARE fire given form — are fading. And one ancient dragon, Ignara, has called specifically to the one person on the planet who has never been able to burn.',
     ],
   },
   'tides-of-silence': {
@@ -96,6 +110,14 @@ const BOOK_CHARACTERS: Record<string, { name: string; role: string; desc: string
     { name: 'Sable', role: 'The Deserter', desc: 'Wraith defector. Proof that monsters can choose.' },
     { name: 'Odre Flachmark', role: 'The Chronicler', desc: 'Became part of the record.' },
     { name: 'Raskvorn', role: 'The Hollow', desc: "A wooden fox. A daughter's voice." },
+  ],
+  'heart-of-pyrathis': [
+    { name: 'Korvash', role: 'The Cold-Born', desc: 'Twenty years. Never shifted. The fire was building.' },
+    { name: 'Thresh', role: 'The Ashborn Sage', desc: '3 feet tall. 2,000 years old. Terrifying with a shard-blade.' },
+    { name: 'Vaelith', role: 'The Celestine Exile', desc: '8,000 years. Aging for the first time. Terrified.' },
+    { name: 'Ignara', role: 'The Dragon', desc: '400 feet. IS fire. Dying. Chose Korvash.' },
+    { name: 'Renn', role: 'The Pack-Brother', desc: 'Big. Warm. Loud. Packed a bag before being asked.' },
+    { name: 'The Ashen King', role: 'The One Who Remembers', desc: 'Was the fire once. Escaped. Knows the cost.' },
   ],
   'tides-of-silence': [
     { name: 'Sael', role: 'The Tide-Speaker', desc: 'Hears what others dismiss. Always slightly damp.' },
