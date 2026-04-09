@@ -75,6 +75,10 @@ const BOOK_META: Record<string, { title: string; dir: string }> = {
     title: 'The Night Nero Wept',
     dir: join(process.cwd(), '..', '..', 'book', 'luminor-rising', 'the-night-nero-wept'),
   },
+  'forge-of-ruin': {
+    title: 'The Forge of Ruin',
+    dir: join(process.cwd(), '..', '..', 'book', 'forge-of-ruin', 'chapters'),
+  },
 };
 
 /* ------------------------------------------------------------------ */
@@ -91,7 +95,7 @@ async function getChapterFiles(bookDir: string): Promise<ChapterFile[]> {
   try {
     const files = await readdir(bookDir);
     return files
-      .filter((f) => f.endsWith('.md') && !f.startsWith('00-'))
+      .filter((f) => f.endsWith('.md'))
       .sort()
       .map((filename, idx) => ({
         filename,

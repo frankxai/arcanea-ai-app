@@ -149,6 +149,14 @@ const BOOKS: Record<string, BookDef> = {
     status: 'in-progress',
     dir: join(process.cwd(), '..', '..', 'book', 'luminor-rising', 'the-night-nero-wept'),
   },
+  'forge-of-ruin': {
+    title: 'The Forge of Ruin',
+    subtitle: 'A Dark Epic Fantasy — Draft',
+    description:
+      'A berserker named Erivar Skaldson whose rage is a parasitic entity bonded to his bloodline. Each time he surrenders to the Fury, he loses a piece of who he was. The story asks whether destruction can be a path to salvation — or only annihilation.',
+    status: 'in-progress',
+    dir: join(process.cwd(), '..', '..', 'book', 'forge-of-ruin', 'chapters'),
+  },
 };
 
 const STATUS_STYLES: Record<BookStatus, { bg: string; text: string; label: string }> = {
