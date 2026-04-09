@@ -1,15 +1,21 @@
 export default function Loading() {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 animate-pulse">
-      <div className="h-12 w-72 bg-white/[0.04] rounded-xl mb-4 mx-auto" />
-      <div className="h-4 w-96 bg-white/[0.04] rounded mb-6 mx-auto" />
-      <div className="h-12 w-48 bg-white/[0.06] rounded-xl mb-16 mx-auto" />
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} className="h-40 bg-white/[0.04] rounded-2xl" />
-        ))}
+    <div className="min-h-screen bg-[#09090b]">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="pt-20 pb-8 text-center animate-pulse">
+          <div className="h-3 w-40 mx-auto rounded bg-white/[0.06] mb-4" />
+          <div className="h-10 w-64 mx-auto rounded bg-white/[0.06] mb-4" />
+          <div className="h-4 w-48 mx-auto rounded bg-white/[0.06]" />
+          <div className="flex justify-center gap-2 mt-6">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="h-7 w-24 rounded-full bg-white/[0.04]" />
+            ))}
+          </div>
+        </div>
+        <div className="h-[60vh] rounded-2xl bg-white/[0.02] flex items-center justify-center">
+          <div className="w-2 h-2 rounded-full bg-white/10 animate-ping" />
+        </div>
       </div>
-      <div className="h-14 w-56 bg-white/[0.06] rounded-xl mx-auto" />
     </div>
   );
 }

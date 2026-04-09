@@ -58,7 +58,7 @@ const navLinks: NavLink[] = [
   {
     href: "/gallery",
     label: "Explore",
-    also: ["/discover", "/library", "/lore", "/living-lore", "/factions", "/luminors", "/worlds", "/showcase", "/changelog", "/models"],
+    also: ["/discover", "/library", "/lore", "/living-lore", "/factions", "/luminors", "/worlds", "/showcase", "/changelog", "/models", "/arcanea-vault"],
     mega: [
       {
         title: "Discover",
@@ -77,6 +77,7 @@ const navLinks: NavLink[] = [
           { href: "/lore/guardians", label: "Guardians", desc: "The Ten Gate-keepers" },
           { href: "/glossary", label: "Glossary", desc: "Arcanean terminology" },
           { href: "/living-lore", label: "Chronicles", desc: "Interactive stories" },
+          { href: "/arcanea-vault", label: "Starlight Vaults", desc: "Intelligence constellation" },
         ],
       },
       {

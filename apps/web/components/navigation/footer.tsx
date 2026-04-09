@@ -23,6 +23,7 @@ const footerLinks = {
       { href: "/factions", label: "Factions" },
       { href: "/glossary", label: "Glossary" },
       { href: "/showcase", label: "Showcase" },
+      { href: "/arcanea-vault", label: "Starlight Vaults" },
     ],
   },
   learn: {
