@@ -1,0 +1,27 @@
+[build]
+builder = "nixpacks"
+nixpacksVersion = "1.x"
+
+# Nixpacks auto-detects Node; we add pandoc via aptPkgs
+[build.nixpacks]
+aptPkgs = ["pandoc", "python3.11"]
+
+[build.nixpacks.env]
+NODE_ENV = "production"
+NIXPACKS_NODE_VERSION = "20"
+
+[deploy]
+startCommand = "node packages/publishing-house/dist/orchestrator/maestro.js"
+healthcheckPath = "/health"
+healthcheckTimeout = 5
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 3
+
+[deploy.env]
+PORT = "8080"
+# Set these in Railway dashboard — never commit real values
+# ANTHROPIC_API_KEY = ""
+# SUPABASE_URL = ""
+# SUPABASE_KEY = ""
+# NOTION_TOKEN = ""
+# STRIPE_API_KEY = ""

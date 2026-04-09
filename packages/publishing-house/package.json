@@ -1,0 +1,116 @@
+{
+  "name": "@arcanea/publishing-house",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Agentic Publishing Intelligence Layer — 5 Managed Agent Claw definitions for autonomous content creation, distribution, and marketing.",
+  "main": "dist/agents/index.js",
+  "types": "dist/agents/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/agents/index.d.ts",
+      "import": "./dist/agents/index.js"
+    },
+    "./agents/*": {
+      "types": "./dist/agents/*.d.ts",
+      "import": "./dist/agents/*.js"
+    },
+    "./notion": {
+      "types": "./dist/notion/schemas.d.ts",
+      "import": "./dist/notion/schemas.js"
+    },
+    "./notion/types": {
+      "types": "./dist/notion/types.d.ts",
+      "import": "./dist/notion/types.js"
+    },
+    "./notion/setup": {
+      "types": "./dist/notion/setup-databases.d.ts",
+      "import": "./dist/notion/setup-databases.js"
+    },
+    "./claws/herald": {
+      "types": "./dist/claws/herald/types.d.ts",
+      "import": "./dist/claws/herald/types.js"
+    },
+    "./claws/herald/draft": {
+      "types": "./dist/claws/herald/draft.d.ts",
+      "import": "./dist/claws/herald/draft.js"
+    },
+    "./claws/herald/schedule": {
+      "types": "./dist/claws/herald/schedule.d.ts",
+      "import": "./dist/claws/herald/schedule.js"
+    },
+    "./claws/scribe/types": {
+      "types": "./dist/claws/scribe/types.d.ts",
+      "import": "./dist/claws/scribe/types.js"
+    },
+    "./claws/scribe/format": {
+      "types": "./dist/claws/scribe/format.d.ts",
+      "import": "./dist/claws/scribe/format.js"
+    },
+    "./claws/scribe/distribute": {
+      "types": "./dist/claws/scribe/distribute.d.ts",
+      "import": "./dist/claws/scribe/distribute.js"
+    },
+    "./claws/scribe/translate": {
+      "types": "./dist/claws/scribe/translate.d.ts",
+      "import": "./dist/claws/scribe/translate.js"
+    },
+    "./billing": {
+      "types": "./dist/billing/tiers.d.ts",
+      "import": "./dist/billing/tiers.js"
+    },
+    "./billing/license": {
+      "types": "./dist/billing/license.d.ts",
+      "import": "./dist/billing/license.js"
+    },
+    "./billing/types": {
+      "types": "./dist/billing/types.d.ts",
+      "import": "./dist/billing/types.js"
+    },
+    "./orchestrator": {
+      "types": "./dist/orchestrator/maestro.d.ts",
+      "import": "./dist/orchestrator/maestro.js"
+    },
+    "./orchestrator/session-manager": {
+      "types": "./dist/orchestrator/session-manager.d.ts",
+      "import": "./dist/orchestrator/session-manager.js"
+    },
+    "./orchestrator/types": {
+      "types": "./dist/orchestrator/types.d.ts",
+      "import": "./dist/orchestrator/types.js"
+    }
+  },
+  "files": [
+    "dist",
+    "agents/*.json"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "tsc --noEmit"
+  },
+  "keywords": [
+    "publishing",
+    "agents",
+    "managed-agents",
+    "mcp",
+    "claude",
+    "arcanea"
+  ],
+  "author": "FrankX <frank@arcanea.ai>",
+  "license": "BSL-1.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/frankxai/arcanea-ai-app"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@notionhq/client": "^2.2.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "better-sqlite3": "^12.8.0",
+    "typescript": "^5.7.0"
+  }
+}

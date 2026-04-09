@@ -1,0 +1,39 @@
+# Arcanea Publishing House — Docker Compose
+# Usage: docker compose up -d
+# Fully offline mode: docker compose --profile offline up -d
+
+services:
+  publishing-house:
+    build:
+      context: ../../..
+      dockerfile: packages/publishing-house/deploy/Dockerfile
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+    depends_on:
+      supabase-local:
+        condition: service_started
+        required: false
+
+  # Optional: local Postgres for fully offline / free-tier usage
+  # Activate with: docker compose --profile offline up -d
+  supabase-local:
+    image: postgres:15-alpine
+    profiles:
+      - offline
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: arcanea
+      POSTGRES_PASSWORD: arcanea_local
+      POSTGRES_DB: publishing_house
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  pgdata:

@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "outDir": "dist",
+    "rootDir": ".",
+    "strict": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true
+  },
+  "include": ["agents/**/*.ts", "notion/**/*.ts", "claws/**/*.ts", "db/**/*.ts", "quality/**/*.ts", "billing/**/*.ts", "orchestrator/**/*.ts"],
+  "exclude": ["dist", "node_modules"]
+}
