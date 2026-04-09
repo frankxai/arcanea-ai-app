@@ -1,0 +1,30 @@
+title: "The Tides of Silence"
+slug: tides-of-silence
+tier: featured
+status: in-progress
+
+authors:
+  - name: FrankX
+    github: frankxai
+    role: creator
+  - name: Mina Aranicki
+    role: co-creator
+
+ai_transparency:
+  models_used:
+    - id: claude-opus-4-6
+      provider: anthropic
+      role: story-architecture-and-drafting
+  human_contribution: 30%
+  ai_contribution: 70%
+  method: "Human story concept and direction. AI-drafted prose from detailed architectural prompts. Human curation and editing."
+
+license: CC-BY-NC-SA-4.0
+content_rating: general
+tags: [literary-fantasy, water-magic, ocean, worldbuilding, le-guin, ghibli]
+
+acknowledgments: |
+  World concept co-created by FrankX and Mina Aranicki. Story architecture,
+  character design, and thematic direction by human authors. Prose generation
+  by Claude Opus 4.6, curated and edited by humans. Cover art by Nano Banana 2
+  (Gemini 3.1). Published on Arcanea — written in the open.

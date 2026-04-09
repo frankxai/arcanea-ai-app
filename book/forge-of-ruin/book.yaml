@@ -1,0 +1,30 @@
+title: "The Forge of Ruin"
+slug: forge-of-ruin
+tier: featured
+status: in-progress
+
+authors:
+  - name: FrankX
+    github: frankxai
+    role: creator
+  - name: Logan
+    role: co-author
+
+ai_transparency:
+  models_used:
+    - id: claude-opus-4-6
+      provider: anthropic
+      role: story-architecture-and-drafting
+  human_contribution: 30%
+  ai_contribution: 70%
+  method: "Human story concept and direction. AI-drafted prose from detailed architectural prompts. Human curation and editing."
+
+license: CC-BY-NC-SA-4.0
+content_rating: mature
+tags: [dark-fantasy, berserker, norse, grimdark]
+
+acknowledgments: |
+  Story conceived by FrankX and Logan. Character psychology, plot architecture,
+  and thematic design by human authors. Prose generation by Claude Opus 4.6,
+  curated and edited by humans. Cover art by Nano Banana 2 (Gemini 3.1).
+  Published on Arcanea — written in the open.
