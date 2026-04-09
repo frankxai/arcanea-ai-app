@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
-import { loadVaultData } from '@/lib/vault-loader';
+import Link from 'next/link';
+import { fetchPublicVaults } from '@/lib/starlight-api';
 import { VAULT_CONFIG, type VaultCategory } from '@/lib/vault-data';
 import { VaultConstellation } from './vault-constellation';
 import { VaultPanels } from './vault-panels';
@@ -19,7 +20,7 @@ function formatDate(ts: number): string {
 }
 
 export default async function VaultPage() {
-  const data = await loadVaultData();
+  const data = await fetchPublicVaults();
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -97,8 +98,28 @@ export default async function VaultPage() {
         </section>
 
         {/* ── Vault Panels ── */}
-        <section className="pb-24">
+        <section className="pb-16">
           <VaultPanels vaults={data.vaults} entries={data.entries} />
+        </section>
+
+        {/* ── CTAs ── */}
+        <section className="pb-24 text-center space-y-4">
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link
+              href="/starlight-intelligence"
+              className="px-6 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm font-medium text-[#e6eefc] hover:bg-white/[0.08] transition-colors"
+            >
+              How it works
+            </Link>
+            <a
+              href="https://starlightintelligence.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3 rounded-xl bg-[#00bcd4]/10 border border-[#00bcd4]/20 text-sm font-medium text-[#00bcd4] hover:bg-[#00bcd4]/20 transition-colors"
+            >
+              Deploy your own vault
+            </a>
+          </div>
         </section>
       </main>
     </div>

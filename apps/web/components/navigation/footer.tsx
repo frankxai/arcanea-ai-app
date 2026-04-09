@@ -33,6 +33,7 @@ const footerLinks = {
       { href: "/academy/courses", label: "Courses" },
       { href: "/models", label: "Model Arena" },
       { href: "/developers", label: "Developers" },
+      { href: "/starlight-intelligence", label: "Starlight Intelligence" },
       { href: "https://github.com/frankxai", label: "GitHub", external: true },
     ],
   },
