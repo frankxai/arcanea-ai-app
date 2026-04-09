@@ -157,6 +157,14 @@ const BOOKS: Record<string, BookDef> = {
     status: 'in-progress',
     dir: join(process.cwd(), '..', '..', 'book', 'forge-of-ruin', 'chapters'),
   },
+  'tides-of-silence': {
+    title: 'The Tides of Silence',
+    subtitle: 'A Water Magic World — Draft',
+    description:
+      'A world with no land. Sentient oceans going silent. A Tide-Speaker named Sael must descend into the deep to discover why someone is deliberately deafening the world — and whether the silence is death or metamorphosis.',
+    status: 'in-progress',
+    dir: join(process.cwd(), '..', '..', 'book', 'tides-of-silence', 'chapters'),
+  },
 };
 
 const STATUS_STYLES: Record<BookStatus, { bg: string; text: string; label: string }> = {

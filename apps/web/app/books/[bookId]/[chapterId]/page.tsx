@@ -79,6 +79,10 @@ const BOOK_META: Record<string, { title: string; dir: string }> = {
     title: 'The Forge of Ruin',
     dir: join(process.cwd(), '..', '..', 'book', 'forge-of-ruin', 'chapters'),
   },
+  'tides-of-silence': {
+    title: 'The Tides of Silence',
+    dir: join(process.cwd(), '..', '..', 'book', 'tides-of-silence', 'chapters'),
+  },
 };
 
 /* ------------------------------------------------------------------ */
