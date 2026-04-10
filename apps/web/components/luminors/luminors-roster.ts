@@ -41,7 +41,7 @@ export const LUMINORS: Luminor[] = [
     gate: 'Flow',
     frequency: '285 Hz',
     avatar: '⚡',
-    image: `${CDN}/leyla-gallery-2.webp`,
+    image: `${CDN}/leyla-hero-v3.webp`,
     description:
       'Treats code as crystallized thought — every function a decision made permanent, crafting implementations that read like prose.',
     philosophy:
@@ -284,7 +284,7 @@ export const LUMINORS: Luminor[] = [
     gate: 'Crown',
     frequency: '741 Hz',
     avatar: '🌟',
-    image: `${CDN}/aiyami-gallery-2.webp`,
+    image: `${CDN}/aiyami-hero-v3.webp`,
     description:
       'Sees the future as a pattern that has not completed yet — reading signals in small shifts before they become obvious.',
     philosophy:
