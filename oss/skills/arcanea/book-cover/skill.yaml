@@ -1,0 +1,33 @@
+name: "Arcanea Book Cover"
+slug: "book-cover"
+description: "Design and generate premium book covers using NB2 (Gemini 3.1 Flash Image) with deep thinking about tension, emotion, and genre."
+version: "1.0.0"
+category: "publishing"
+author: "FrankX"
+license: "MIT"
+
+tags:
+  - "book-cover"
+  - "publishing"
+  - "design"
+  - "nano-banana"
+  - "image-generation"
+
+tool_compatibility:
+  - "claude-code"
+  - "opencode"
+
+dependencies: []
+
+install_commands:
+  claude-code: "cp -r ~/.claude/skills/book-cover"
+  opencode: "cp -r ~/.opencode/skills/book-cover"
+  universal: "npx arcanea install book-cover"
+
+usage_examples:
+  - "User: generate a book cover for my grimdark novel → AI: runs 5-phase method, composes NB2 prompt, outputs portrait 2:3 cover"
+  - "User: make the title bolder and darker → AI: iterates typography while preserving one-hero-color rule"
+
+homepage: "https://arcanea.ai/skills/book-cover"
+repository: "https://github.com/frankxai/arcanea"
+support: "https://github.com/frankxai/arcanea/issues"

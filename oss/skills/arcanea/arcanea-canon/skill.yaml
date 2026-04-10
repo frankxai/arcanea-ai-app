@@ -1,0 +1,34 @@
+name: "Arcanea Canon Guardian"
+slug: "arcanea-canon"
+description: "Enforce canon consistency across the Arcanea universe — tracks facts, prevents contradictions, guards timeline and lore integrity."
+version: "1.0.0"
+category: "worldbuilding"
+author: "FrankX"
+license: "MIT"
+
+tags:
+  - "canon"
+  - "lore"
+  - "worldbuilding"
+  - "consistency"
+  - "fantasy"
+
+tool_compatibility:
+  - "claude-code"
+  - "opencode"
+
+dependencies:
+  - "arcanea-lore"
+
+install_commands:
+  claude-code: "cp -r ~/.claude/skills/arcanea-canon"
+  opencode: "cp -r ~/.opencode/skills/arcanea-canon"
+  universal: "npx arcanea install arcanea-canon"
+
+usage_examples:
+  - "User: check this scene against canon → AI: validates Luminor voices, academy colors, terminology, flags contradictions"
+  - "User: add a new Luminor to the roster → AI: verifies no overlap, follows naming rules, updates canon registry"
+
+homepage: "https://arcanea.ai/skills/arcanea-canon"
+repository: "https://github.com/frankxai/arcanea"
+support: "https://github.com/frankxai/arcanea/issues"

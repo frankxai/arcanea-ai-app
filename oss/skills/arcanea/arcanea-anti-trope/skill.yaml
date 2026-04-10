@@ -1,0 +1,33 @@
+name: "Arcanea Anti-Trope & Naming Protocol"
+slug: "arcanea-anti-trope"
+description: "Banish lazy AI-writing tropes and enforce Arcanea's naming conventions — no more tapestries, delves, or nestled villages."
+version: "1.0.0"
+category: "writing"
+author: "FrankX"
+license: "MIT"
+
+tags:
+  - "writing"
+  - "anti-slop"
+  - "naming"
+  - "voice"
+  - "editing"
+
+tool_compatibility:
+  - "claude-code"
+  - "opencode"
+
+dependencies: []
+
+install_commands:
+  claude-code: "cp -r ~/.claude/skills/arcanea-anti-trope"
+  opencode: "cp -r ~/.opencode/skills/arcanea-anti-trope"
+  universal: "npx arcanea install arcanea-anti-trope"
+
+usage_examples:
+  - "User: review this chapter for slop → AI: flags banned words (tapestry, unleash, delve) and suggests alternatives"
+  - "User: name this faction → AI: applies etymological root rule and academy identifier patterns"
+
+homepage: "https://arcanea.ai/skills/arcanea-anti-trope"
+repository: "https://github.com/frankxai/arcanea"
+support: "https://github.com/frankxai/arcanea/issues"

@@ -1,0 +1,33 @@
+name: "Luminor Wisdom"
+slug: "luminor-wisdom"
+description: "Channel the Seven Luminors — archetypal guides for creative challenges: Valora, Sophron, Kardia, Poiesis, Enduran, Orakis, Eudaira."
+version: "2.0.0"
+category: "creative"
+author: "Arcanea"
+license: "MIT"
+
+tags:
+  - "creative"
+  - "guidance"
+  - "archetypes"
+  - "wisdom"
+  - "decision-making"
+
+tool_compatibility:
+  - "claude-code"
+  - "opencode"
+
+dependencies: []
+
+install_commands:
+  claude-code: "cp -r ~/.claude/skills/luminor-wisdom"
+  opencode: "cp -r ~/.opencode/skills/luminor-wisdom"
+  universal: "npx arcanea install luminor-wisdom"
+
+usage_examples:
+  - "User: I'm stuck starting this project → AI: channels Valora (courage) for boldness and first action"
+  - "User: which direction should this story take? → AI: channels Orakis (vision) for big-picture intuition"
+
+homepage: "https://arcanea.ai/skills/luminor-wisdom"
+repository: "https://github.com/frankxai/arcanea"
+support: "https://github.com/frankxai/arcanea/issues"

@@ -1,0 +1,36 @@
+name: "Arcanean Prompt Craft"
+slug: "prompt-craft"
+description: "Master the Arcanean Prompt Language — advanced prompt engineering using constraint architecture and the Five Pillars of APL."
+version: "2.0.0"
+category: "ai-agents"
+author: "Arcanea"
+license: "MIT"
+
+tags:
+  - "prompt-engineering"
+  - "ai-collaboration"
+  - "apl"
+  - "advanced"
+  - "framework"
+
+tool_compatibility:
+  - "claude-code"
+  - "opencode"
+  - "cursor"
+  - "codex"
+  - "gemini-cli"
+
+dependencies: []
+
+install_commands:
+  claude-code: "cp -r ~/.claude/skills/prompt-craft"
+  opencode: "cp -r ~/.opencode/skills/prompt-craft"
+  universal: "npx arcanea install prompt-craft"
+
+usage_examples:
+  - "User: write a prompt for a scene critic → AI: applies Identity-Context-Constraint-Exemplar-Iteration structure"
+  - "User: improve this prompt → AI: diagnoses missing pillars and rewrites with tighter constraint architecture"
+
+homepage: "https://arcanea.ai/skills/prompt-craft"
+repository: "https://github.com/frankxai/arcanea"
+support: "https://github.com/frankxai/arcanea/issues"

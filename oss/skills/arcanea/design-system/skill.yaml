@@ -1,0 +1,35 @@
+name: "Arcanean Design System (Cosmic)"
+slug: "design-system"
+description: "The cosmic visual language — depth, glows, gold accents, glass surfaces, and restraint as the three principles of Arcanean UI."
+version: "2.0.0"
+category: "design"
+author: "Arcanea"
+license: "MIT"
+
+tags:
+  - "design"
+  - "ui"
+  - "ux"
+  - "visual"
+  - "theming"
+  - "css"
+
+tool_compatibility:
+  - "claude-code"
+  - "opencode"
+  - "cursor"
+
+dependencies: []
+
+install_commands:
+  claude-code: "cp -r ~/.claude/skills/design-system"
+  opencode: "cp -r ~/.opencode/skills/design-system"
+  universal: "npx arcanea install design-system"
+
+usage_examples:
+  - "User: style this button as Arcanean → AI: applies cosmic-surface background, gold-medium accent, depth glow"
+  - "User: what's the cosmic-void color? → AI: returns #0b0e14 with usage guidance for deepest backgrounds"
+
+homepage: "https://arcanea.ai/skills/design-system"
+repository: "https://github.com/frankxai/arcanea"
+support: "https://github.com/frankxai/arcanea/issues"

@@ -4,6 +4,11 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import matter from 'gray-matter';
+import { createClient } from '@/lib/supabase/server';
+import { StarRating } from '@/components/books/StarRating';
+import { ReviewList } from '@/components/books/ReviewList';
+import { ReviewForm } from '@/components/books/ReviewForm';
+import GuardianReport from '@/components/books/GuardianReport';
 
 export const dynamic = 'force-dynamic';
 
@@ -228,6 +233,60 @@ export default async function DraftBookPage({ params }: PageProps) {
   const humanPct = manifest.ai_transparency?.human_contribution || '?';
   const aiPct = manifest.ai_transparency?.ai_contribution || '?';
 
+  // ---------- Ratings context (server-side, RLS-respecting) ----------
+  let heroRating: { average: number; count: number } = { average: 0, count: 0 };
+  let currentUserId: string | null = null;
+  let isAuthor = false;
+  let existingRating: { stars: number; review: string | null } | null = null;
+
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const supabase = (await createClient()) as any;
+
+    const { data: bookRow } = await supabase
+      .from('books')
+      .select('id, star_average, rating_count')
+      .eq('slug', slug)
+      .maybeSingle();
+
+    if (bookRow) {
+      const row = bookRow as { id: string; star_average: number | null; rating_count: number | null };
+      heroRating = {
+        average: Number(row.star_average ?? 0),
+        count: Number(row.rating_count ?? 0),
+      };
+
+      const { data: userResp } = await supabase.auth.getUser();
+      const user = userResp?.user ?? null;
+      if (user) {
+        currentUserId = user.id;
+
+        const { data: authorRow } = await supabase
+          .from('book_authors')
+          .select('role')
+          .eq('book_id', row.id)
+          .eq('user_id', user.id)
+          .maybeSingle();
+        isAuthor = !!authorRow;
+
+        if (!isAuthor) {
+          const { data: myRatingRow } = await supabase
+            .from('book_ratings')
+            .select('stars, review')
+            .eq('book_id', row.id)
+            .eq('user_id', user.id)
+            .maybeSingle();
+          if (myRatingRow) {
+            const r = myRatingRow as { stars: number; review: string | null };
+            existingRating = { stars: r.stars, review: r.review };
+          }
+        }
+      }
+    }
+  } catch (err) {
+    console.error('[DraftBookPage] ratings context unavailable:', err);
+  }
+
   return (
     <div className="min-h-screen bg-[#0a0a0f]">
       {/* Hero */}
@@ -273,6 +332,16 @@ export default async function DraftBookPage({ params }: PageProps) {
               </>
             )}
           </div>
+
+          {heroRating.count > 0 && (
+            <div className="mt-6 flex items-center justify-center gap-3">
+              <StarRating value={heroRating.average} size="md" />
+              <span className="text-xs text-white/40 tabular-nums">
+                {heroRating.average.toFixed(1)} &middot; {heroRating.count.toLocaleString()}{' '}
+                {heroRating.count === 1 ? 'review' : 'reviews'}
+              </span>
+            </div>
+          )}
 
           {chapters.length > 0 && (
             <Link
@@ -347,6 +416,38 @@ export default async function DraftBookPage({ params }: PageProps) {
           </div>
         </section>
       )}
+
+      {/* Guardian Intelligence Rating */}
+      <GuardianReport bookSlug={slug} />
+
+      {/* Ratings & Reviews */}
+      <section className="max-w-2xl mx-auto px-6 pb-16">
+        <h2 className="text-sm font-display font-semibold text-white/60 uppercase tracking-wider mb-6 text-center">
+          Ratings & Reviews
+        </h2>
+
+        {currentUserId && !isAuthor && (
+          <div className="mb-6">
+            <ReviewForm bookSlug={slug} existingRating={existingRating} />
+          </div>
+        )}
+
+        {isAuthor && (
+          <div className="mb-6 bg-white/[0.02] border border-white/[0.06] rounded-xl p-4 backdrop-blur-sm text-center">
+            <p className="text-xs text-white/40">
+              Authors cannot rate their own books. Thanks for forging this one.
+            </p>
+          </div>
+        )}
+
+        {!currentUserId && (
+          <div className="mb-6">
+            <ReviewForm bookSlug={slug} existingRating={null} />
+          </div>
+        )}
+
+        <ReviewList bookSlug={slug} />
+      </section>
 
       {/* Chapters */}
       <section className="max-w-2xl mx-auto px-6 pb-32">

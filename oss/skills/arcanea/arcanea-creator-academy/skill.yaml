@@ -1,0 +1,35 @@
+name: "Arcanea Creator Academy"
+slug: "arcanea-creator-academy"
+description: "Integrate the Teacher Team with Arcanea's creator education mission — curriculum, Guardian mentors, Luminor specialists, level progression."
+version: "1.0.0"
+category: "productivity"
+author: "FrankX"
+license: "MIT"
+
+tags:
+  - "education"
+  - "curriculum"
+  - "mentorship"
+  - "creator"
+  - "learning"
+
+tool_compatibility:
+  - "claude-code"
+  - "opencode"
+
+dependencies:
+  - "arcanea-canon"
+  - "arcanea-voice"
+
+install_commands:
+  claude-code: "cp -r ~/.claude/skills/arcanea-creator-academy"
+  opencode: "cp -r ~/.opencode/skills/arcanea-creator-academy"
+  universal: "npx arcanea install arcanea-creator-academy"
+
+usage_examples:
+  - "User: design a Level 2 curriculum for the Atlantean Academy → AI: builds plot/dialogue module with Chronica as Luminor guide"
+  - "User: write Guardian feedback for a creator's first song → AI: applies observation-insight-growth-invitation pattern"
+
+homepage: "https://arcanea.ai/skills/arcanea-creator-academy"
+repository: "https://github.com/frankxai/arcanea"
+support: "https://github.com/frankxai/arcanea/issues"

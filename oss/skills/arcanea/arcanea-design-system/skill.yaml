@@ -1,0 +1,34 @@
+name: "Arcanea Design System"
+slug: "arcanea-design-system"
+description: "Complete visual design language for Arcanea — cosmic theme tokens, component patterns, animation standards, and academy-specific aesthetics."
+version: "1.0.0"
+category: "design"
+author: "FrankX"
+license: "MIT"
+
+tags:
+  - "design-system"
+  - "ui"
+  - "tokens"
+  - "tailwind"
+  - "theming"
+
+tool_compatibility:
+  - "claude-code"
+  - "opencode"
+  - "cursor"
+
+dependencies: []
+
+install_commands:
+  claude-code: "cp -r ~/.claude/skills/arcanea-design-system"
+  opencode: "cp -r ~/.opencode/skills/arcanea-design-system"
+  universal: "npx arcanea install arcanea-design-system"
+
+usage_examples:
+  - "User: build an Atlantean academy card component → AI: uses design tokens, gradient, glow-atlantean, correct border radius"
+  - "User: what's the primary violet? → AI: returns --arcanea-primary-500 (#8b5cf6) with usage guidance"
+
+homepage: "https://arcanea.ai/skills/arcanea-design-system"
+repository: "https://github.com/frankxai/arcanea"
+support: "https://github.com/frankxai/arcanea/issues"
