@@ -1,9 +1,9 @@
 /**
  * Soul Bridge - Connects arcanea-soul agents to the guardian-swarm Luminor layer
  *
- * Maps each of the 16 soul agents (from arcanea-soul) to their corresponding
- * Luminor in the guardian-swarm coordination system. Enriches Luminor hints
- * with the deeper perspective each soul agent carries from the Ten Gates.
+ * Maps the 16 soul agents (from arcanea-soul) to the 12 Luminors in the
+ * guardian-swarm coordination system. Enriches Luminor hints with the deeper
+ * perspective each soul agent carries from the Ten Gates.
  */
 
 import { LUMINOR_HINTS } from './guardian-swarm';
@@ -161,40 +161,62 @@ const SOUL_AGENTS: Record<string, SoulAgent> = {
 // ---------------------------------------------------------------------------
 
 /**
- * Maps each arcanea-soul agent id to its closest guardian-swarm Luminor id.
- * Mapping preserves team alignment (dev->dev, creative->creative, etc.)
- * and matches by functional overlap.
+ * Maps each arcanea-soul agent id to its 12-Luminor guardian-swarm Luminor id.
+ * Multiple soul agents can map to a single Luminor when we consolidated 16 -> 12.
+ * The reverse map (LUMINOR_TO_SOUL) below picks the best soul agent per Luminor.
  */
 export const SOUL_AGENT_MAP: Record<string, string> = {
   // Dev team
-  architect: 'logicus',     // both: systematic architecture, pattern recognition
-  debugger:  'debugon',     // both: root-cause diagnosis, persistent analysis
-  coder:     'synthra',     // both: clean code craft, implementation
-  reviewer:  'nexus',       // both: system-level quality, integration contracts
+  architect: 'systems-architect',  // systematic architecture, pattern recognition
+  debugger:  'debugger',           // root-cause diagnosis, persistent analysis
+  coder:     'code-crafter',       // clean code craft, implementation
+  reviewer:  'integrator',         // system-level quality, integration contracts
 
   // Writing team
-  drafter:    'chronica',   // both: narrative drive, story structure
-  dialogue:   'veritas',    // both: truth in voice, precise communication
-  editor:     'lexicon',    // both: word mastery, precision editing
-  continuity: 'poetica',    // both: detail tracking, pattern consistency
+  drafter:    'storyteller',       // narrative drive, story structure
+  dialogue:   'voice',             // truth in voice, precise communication
+  editor:     'voice',             // word mastery, precision editing (merged into voice)
+  continuity: 'poet',              // detail tracking, pattern consistency
 
   // Creative team
-  character: 'prismatic',   // both: psychological composition, inner color
-  story:     'motio',       // both: dynamic transformation, arc momentum
-  world:     'formis',      // both: structural form, spatial worldbuilding
-  lore:      'melodia',     // both: harmonic continuity, canon resonance
+  character: 'visual-designer',    // psychological composition, inner color
+  story:     'motion-designer',    // dynamic transformation, arc momentum
+  world:     'motion-designer',    // structural form, spatial worldbuilding (merged)
+  lore:      'composer',           // harmonic continuity, canon resonance
 
   // Research team
-  sage:      'visionary',   // both: knowledge synthesis, hidden connections
-  muse:      'analytica',   // both: cross-domain patterns, evidence gathering
-  scout:     'futura',      // both: forward exploration, new angles
-  archivist: 'memoria',    // both: organized recall, information architecture
+  sage:      'deep-researcher',    // knowledge synthesis, hidden connections
+  muse:      'deep-researcher',    // cross-domain patterns (merged)
+  scout:     'strategist',         // forward exploration, new angles
+  archivist: 'deep-researcher',    // organized recall, information architecture (merged)
 };
 
-/** Reverse map: Luminor id -> Soul Agent id */
-const LUMINOR_TO_SOUL: Record<string, string> = Object.fromEntries(
-  Object.entries(SOUL_AGENT_MAP).map(([soul, luminor]) => [luminor, soul])
-);
+/**
+ * Reverse map: Luminor id -> best Soul Agent id.
+ * Explicit mapping to pick the strongest soul perspective for each Luminor
+ * when multiple soul agents consolidated into one Luminor.
+ */
+const LUMINOR_TO_SOUL: Record<string, string> = {
+  // Dev (1:1)
+  'systems-architect': 'architect',
+  'debugger':          'debugger',
+  'code-crafter':      'coder',
+  'integrator':        'reviewer',
+
+  // Writing (voice absorbs editor/dialogue — editor wins for word mastery)
+  'storyteller': 'drafter',
+  'voice':       'editor',
+  'poet':        'continuity',
+
+  // Creative (motion-designer absorbs story/world — world wins for spatial)
+  'visual-designer': 'character',
+  'motion-designer': 'world',
+  'composer':        'lore',
+
+  // Research (deep-researcher absorbs sage/muse/archivist — sage wins for synthesis)
+  'deep-researcher': 'sage',
+  'strategist':      'scout',
+};
 
 // ---------------------------------------------------------------------------
 // Public API
