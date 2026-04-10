@@ -7,6 +7,7 @@ import { VaultPanels } from './vault-panels';
 import { SplitText } from '@/components/motion/split-text';
 import { Reveal, StaggerReveal } from '@/components/motion/reveal';
 import { Magnetic } from '@/components/motion/magnetic';
+import { GradientMesh } from '@/components/motion/gradient-mesh';
 
 export const metadata: Metadata = {
   title: 'Starlight Vaults — Memory that compounds | Arcanea',
@@ -43,7 +44,7 @@ export default async function VaultPage() {
       {/* Background */}
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-[#09090b]" />
-        <div className="absolute inset-0 opacity-25 bg-[radial-gradient(ellipse_at_20%_20%,rgba(0,188,212,0.08),transparent_55%),radial-gradient(ellipse_at_80%_80%,rgba(167,139,250,0.05),transparent_55%)]" />
+        <GradientMesh colors={['#00bcd4', '#a78bfa', '#f472b6']} intensity={0.07} />
       </div>
 
       <main className="max-w-6xl mx-auto px-6">
