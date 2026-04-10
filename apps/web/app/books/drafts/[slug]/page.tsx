@@ -46,8 +46,8 @@ const BOOK_ROOT = join(process.cwd(), '..', '..', 'book');
 
 const COVER_MAP: Record<string, string> = {
   'forge-of-ruin': '/images/books/forge-of-ruin-cover-nb2.png',
-  'tides-of-silence': '/images/books/tides-of-silence-cover.png',
-  'heart-of-pyrathis': '/images/books/heart-of-pyrathis-cover.png',
+  'tides-of-silence': '/images/books/tides-of-silence-cover-v2.png',
+  'heart-of-pyrathis': '/images/books/heart-of-pyrathis-cover-v2.png',
 };
 
 const ACCENT_MAP: Record<string, { primary: string; bg: string; border: string; glow: string }> = {
