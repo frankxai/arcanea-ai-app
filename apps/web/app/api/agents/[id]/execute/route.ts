@@ -26,6 +26,7 @@ import { createOpenAI } from '@ai-sdk/openai';
 import { streamText } from 'ai';
 import { CATALOG_BY_ID } from '@/lib/agents/marketplace/catalog';
 import { GATEWAY_MODELS, EXTENDED_PROVIDERS } from '@/lib/gateway/catalog';
+import { LUMINORS } from '@/lib/luminors/config';
 
 export const runtime = 'edge';
 
@@ -278,6 +279,7 @@ export async function POST(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
+  const requestStarted = Date.now();
   try {
   const { id } = await params;
 
@@ -299,7 +301,44 @@ export async function POST(
     : {};
 
   // ── 2. Resolve agent spec ────────────────────────────────────────────────
+  // Resolution order: 12 Chosen Luminors → marketplace catalog → marketplace_agents table
   let agent = CATALOG_BY_ID[id] ?? null;
+
+  // Check the 12 Chosen Luminors first (canonical, always free, always available)
+  if (!agent) {
+    const chosen = LUMINORS[id];
+    if (chosen) {
+      agent = {
+        id: chosen.id,
+        name: chosen.name,
+        title: chosen.loreName,
+        category: chosen.team,
+        description: chosen.tagline,
+        longDescription: chosen.description,
+        priceCredits: 0, // Chosen Luminors are always free
+        element: 'Spirit',
+        gateAlignment: chosen.title, // e.g. "Gate of Structure"
+        icon: chosen.avatar,
+        color: chosen.color,
+        gradient: chosen.gradient,
+        capabilities: [],
+        inputPlaceholder: '',
+        examplePrompts: chosen.quickActions?.map((qa) => qa.prompt) ?? [],
+        spec: {
+          systemPrompt: chosen.systemPrompt,
+          name: chosen.name,
+          title: chosen.loreName,
+          tagline: chosen.tagline,
+          temperature: 0.7,
+          origin: 'chosen',
+        },
+        rating: 5.0,
+        usageCount: 0,
+        isFeatured: true,
+        creatorId: null, // Arcanea canonical, no creator royalty
+      } as unknown as NonNullable<typeof agent>;
+    }
+  }
 
   if (!agent) {
     // Try Supabase marketplace_agents table
@@ -457,6 +496,68 @@ export async function POST(
             });
           } catch {
             // Non-fatal
+          }
+        })();
+      }
+
+      // Registry Protocol telemetry — usage_events + revenue_events
+      // This is the feedback loop for the marketplace: every invocation
+      // flows through here, regardless of whether it's a Chosen Luminor or
+      // a user-forged marketplace agent. Non-blocking, best-effort.
+      if (supabaseUrl && supabaseAnonKey) {
+        void (async () => {
+          try {
+            const { createClient } = await import('@supabase/supabase-js');
+            const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY ?? supabaseAnonKey;
+            const admin = createClient(supabaseUrl, serviceKey);
+
+            // Approximate token count from text length (Vercel AI SDK edge
+            // doesn't always surface usage; ~4 chars per token is a safe estimate)
+            const estimatedTokens = Math.ceil((input.length + text.length) / 4);
+            const durationMs = Date.now() - requestStarted;
+
+            // 1. usage_events — every invocation
+            await admin.from('usage_events').insert({
+              agent_id: agent.id,
+              platform_id: null, // native arcanea.ai invocation
+              deployment_id: null,
+              user_id: session?.userId ?? null,
+              tokens_used: estimatedTokens,
+              duration_ms: durationMs,
+              credits_consumed: agent.priceCredits,
+              metadata: {
+                model: label,
+                origin: agent.creatorId ? 'forged' : 'chosen',
+                streaming: true,
+              },
+            });
+
+            // 2. revenue_events — only for creator-forged agents with a price
+            if (agent.creatorId && agent.priceCredits > 0) {
+              // Compute split via SQL function for consistency
+              const { data: split } = await admin.rpc('calculate_revenue_split', {
+                p_gross: agent.priceCredits,
+                p_platform_id: null,
+              });
+              const row = Array.isArray(split) ? split[0] : split;
+              const platformFee: number = row?.platform_fee ?? 0;
+              const creatorPayout: number = row?.creator_payout ?? 0;
+
+              await admin.from('revenue_events').insert({
+                agent_id: agent.id,
+                creator_id: agent.creatorId,
+                platform_id: null,
+                deployment_id: null,
+                gross_amount: agent.priceCredits,
+                platform_fee: platformFee,
+                creator_payout: creatorPayout,
+                affiliate_id: null,
+                affiliate_payout: 0,
+                event_type: 'usage',
+              });
+            }
+          } catch (err) {
+            console.error('[execute] registry telemetry failed:', err);
           }
         })();
       }

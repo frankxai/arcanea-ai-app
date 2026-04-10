@@ -1,0 +1,41 @@
+{
+  "name": "@arcanea/luminor-compiler",
+  "version": "0.1.0",
+  "description": "Compile Arcanean Luminors from kernel + modules + LuminorSpec into deployable agents across 5 formats. Reference implementation of the Luminor Kernel Specification v1.0.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "arcanea",
+    "luminor",
+    "agents",
+    "prompt-engineering",
+    "a2a",
+    "mcp",
+    "compiler"
+  ],
+  "author": "Arcanea",
+  "license": "MIT",
+  "dependencies": {
+    "@arcanea/agent-registry": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0"
+  }
+}
