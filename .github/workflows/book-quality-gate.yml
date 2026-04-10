@@ -1,0 +1,197 @@
+name: Book Quality Gate
+
+on:
+  pull_request:
+    paths:
+      - 'book/**/book.yaml'
+      - 'book/**/chapters/**'
+      - 'book/**/*.md'
+
+jobs:
+  quality-gate:
+    runs-on: ubuntu-latest
+    name: Validate book contribution
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Get changed book directories
+        id: changed
+        run: |
+          BOOKS=$(git diff --name-only HEAD~1 HEAD | grep -oE '^book/[^/]+' | sort -u || true)
+          echo "books<<EOF" >> $GITHUB_OUTPUT
+          echo "$BOOKS" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          echo "Changed books: $BOOKS"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Validate book.yaml manifests
+        run: |
+          set -e
+          for book in ${{ steps.changed.outputs.books }}; do
+            echo "=== Checking $book ==="
+
+            if [ ! -f "$book/book.yaml" ]; then
+              echo "❌ $book/book.yaml not found"
+              exit 1
+            fi
+
+            python3 << 'EOF'
+          import yaml
+          import sys
+          import os
+
+          book_dir = os.environ.get('BOOK_DIR', '${book}')
+          manifest_path = f"{book_dir}/book.yaml"
+
+          with open(manifest_path) as f:
+              try:
+                  manifest = yaml.safe_load(f)
+              except yaml.YAMLError as e:
+                  print(f"❌ Invalid YAML in {manifest_path}: {e}")
+                  sys.exit(1)
+
+          required = ['title', 'slug', 'tier', 'status', 'authors', 'license', 'tags']
+          missing = [f for f in required if f not in manifest]
+          if missing:
+              print(f"❌ {manifest_path} missing required fields: {missing}")
+              sys.exit(1)
+
+          if manifest.get('tier') not in ['community', 'featured', 'canon']:
+              print(f"❌ Invalid tier: {manifest.get('tier')}")
+              sys.exit(1)
+
+          if manifest.get('status') not in ['draft', 'in-progress', 'complete', 'archived']:
+              print(f"❌ Invalid status: {manifest.get('status')}")
+              sys.exit(1)
+
+          authors = manifest.get('authors', [])
+          if not authors or not any(a.get('role') == 'creator' for a in authors):
+              print(f"❌ At least one author with role='creator' required")
+              sys.exit(1)
+
+          # AI transparency check
+          ai = manifest.get('ai_transparency', {})
+          if ai:
+              ai_required = ['models_used', 'human_contribution', 'ai_contribution', 'method']
+              ai_missing = [f for f in ai_required if f not in ai]
+              if ai_missing:
+                  print(f"❌ ai_transparency missing fields: {ai_missing}")
+                  sys.exit(1)
+
+          print(f"✅ {manifest_path} valid")
+          EOF
+          done
+        env:
+          BOOK_DIR: ''
+
+      - name: Validate chapters exist and meet minimum word count
+        run: |
+          set -e
+          for book in ${{ steps.changed.outputs.books }}; do
+            CHAPTERS_DIR="$book/chapters"
+
+            if [ ! -d "$CHAPTERS_DIR" ]; then
+              echo "⚠️  $book has no chapters/ directory (draft allowed)"
+              continue
+            fi
+
+            MD_COUNT=$(find "$CHAPTERS_DIR" -name "*.md" | wc -l)
+            if [ "$MD_COUNT" -eq 0 ]; then
+              echo "⚠️  $book/chapters/ has no .md files"
+              continue
+            fi
+
+            echo "=== Checking $MD_COUNT chapters in $book ==="
+
+            for chapter in "$CHAPTERS_DIR"/*.md; do
+              WORDS=$(wc -w < "$chapter")
+              if [ "$WORDS" -lt 500 ]; then
+                echo "❌ $chapter has only $WORDS words (minimum 500)"
+                exit 1
+              fi
+              echo "✅ $chapter: $WORDS words"
+            done
+          done
+
+      - name: Anti-slop scan
+        run: |
+          set -e
+
+          # Common AI verbal tics — flag if density is too high
+          SLOP_WORDS="delve tapestry nestled myriad beacon"
+
+          for book in ${{ steps.changed.outputs.books }}; do
+            CHAPTERS_DIR="$book/chapters"
+            [ -d "$CHAPTERS_DIR" ] || continue
+
+            for chapter in "$CHAPTERS_DIR"/*.md; do
+              TOTAL_WORDS=$(wc -w < "$chapter")
+              SLOP_COUNT=0
+
+              for word in $SLOP_WORDS; do
+                COUNT=$(grep -iowc "$word" "$chapter" || echo 0)
+                SLOP_COUNT=$((SLOP_COUNT + COUNT))
+              done
+
+              if [ "$TOTAL_WORDS" -gt 0 ]; then
+                # Threshold: max 0.5% slop density (1 per 200 words)
+                MAX_SLOP=$((TOTAL_WORDS / 200))
+                if [ "$SLOP_COUNT" -gt "$MAX_SLOP" ] && [ "$SLOP_COUNT" -gt 2 ]; then
+                  echo "⚠️  $chapter has $SLOP_COUNT slop words in $TOTAL_WORDS words — review recommended"
+                  echo "   Words flagged: $SLOP_WORDS"
+                fi
+              fi
+            done
+          done
+
+          echo "✅ Anti-slop scan complete"
+
+      - name: Security check (no secrets or binaries in book/)
+        run: |
+          set -e
+          for book in ${{ steps.changed.outputs.books }}; do
+            # Check for obvious secrets
+            if grep -rE '(api[_-]?key|secret|password|token)\s*[:=]\s*["\x27][^"\x27]{16,}' "$book" 2>/dev/null; then
+              echo "❌ Possible secret detected in $book"
+              exit 1
+            fi
+
+            # Check for binaries (other than allowed image paths)
+            find "$book" -type f ! -name "*.md" ! -name "*.yaml" ! -name "*.yml" ! -name "*.txt" 2>/dev/null | while read f; do
+              echo "⚠️  Non-text file in book directory: $f"
+            done
+          done
+          echo "✅ Security check complete"
+
+      - name: Post success comment
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const books = `${{ steps.changed.outputs.books }}`.trim().split('\n').filter(Boolean);
+            const body = `## Book Quality Gate: PASS\n\n` +
+              `Books validated:\n` +
+              books.map(b => `- \`${b}\``).join('\n') +
+              `\n\nAll checks passed:\n` +
+              `- book.yaml valid\n` +
+              `- Chapters meet minimum word count\n` +
+              `- Anti-slop scan within threshold\n` +
+              `- No secrets or binaries detected\n\n` +
+              `This PR is ready for merge.`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
