@@ -79,11 +79,11 @@ describe('resolveSwarm', () => {
   );
 
   assert(
-    soloResult.activeLuminors.length === 4,
-    `solo mode: activates 4 luminors (got ${soloResult.activeLuminors.length})`
+    soloResult.activeLuminors.length === 3,
+    `solo mode: activates 3 luminors (got ${soloResult.activeLuminors.length})`
   );
 
-  const expectedLuminors = ['debugon', 'motio', 'chronica', 'analytica'];
+  const expectedLuminors = ['debugger', 'motion-designer', 'deep-researcher'];
   const actualIds = soloResult.activeLuminors.map(l => l.id).sort();
   assert(
     JSON.stringify(actualIds) === JSON.stringify(expectedLuminors.sort()),
@@ -172,8 +172,8 @@ describe('data integrity', () => {
   );
 
   assert(
-    Object.keys(LUMINOR_HINTS).length === 16,
-    `exactly 16 luminors (got ${Object.keys(LUMINOR_HINTS).length})`
+    Object.keys(LUMINOR_HINTS).length === 12,
+    `exactly 12 luminors (got ${Object.keys(LUMINOR_HINTS).length})`
   );
 
   // All mapped luminors have hints

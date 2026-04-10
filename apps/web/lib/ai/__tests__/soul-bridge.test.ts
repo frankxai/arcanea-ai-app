@@ -41,8 +41,8 @@ function describe(suite: string, fn: () => void) {
 describe('SOUL_AGENT_MAP coverage', () => {
   const allLuminorIds = Object.keys(LUMINOR_HINTS);
   assert(
-    allLuminorIds.length === 16,
-    `LUMINOR_HINTS has exactly 16 entries (got ${allLuminorIds.length})`
+    allLuminorIds.length === 12,
+    `LUMINOR_HINTS has exactly 12 entries (got ${allLuminorIds.length})`
   );
 
   assert(
@@ -73,120 +73,96 @@ describe('SOUL_AGENT_MAP coverage', () => {
 // ---------------------------------------------------------------------------
 
 describe('getSoulAgentForLuminor', () => {
-  // Dev team mappings
-  const logicusAgent = getSoulAgentForLuminor('logicus');
+  // Dev team mappings (1:1)
+  const architectAgent = getSoulAgentForLuminor('systems-architect');
   assert(
-    logicusAgent !== undefined && logicusAgent.id === 'architect',
-    'logicus maps to architect'
+    architectAgent !== undefined && architectAgent.id === 'architect',
+    'systems-architect maps to architect'
   );
   assert(
-    logicusAgent !== undefined && logicusAgent.team === 'dev',
+    architectAgent !== undefined && architectAgent.team === 'dev',
     'architect is on dev team'
   );
 
-  const debugonAgent = getSoulAgentForLuminor('debugon');
+  const debuggerAgent = getSoulAgentForLuminor('debugger');
   assert(
-    debugonAgent !== undefined && debugonAgent.id === 'debugger',
-    'debugon maps to debugger'
+    debuggerAgent !== undefined && debuggerAgent.id === 'debugger',
+    'debugger maps to debugger'
   );
 
-  const synthraAgent = getSoulAgentForLuminor('synthra');
+  const coderAgent = getSoulAgentForLuminor('code-crafter');
   assert(
-    synthraAgent !== undefined && synthraAgent.id === 'coder',
-    'synthra maps to coder'
+    coderAgent !== undefined && coderAgent.id === 'coder',
+    'code-crafter maps to coder'
   );
 
-  const nexusAgent = getSoulAgentForLuminor('nexus');
+  const integratorAgent = getSoulAgentForLuminor('integrator');
   assert(
-    nexusAgent !== undefined && nexusAgent.id === 'reviewer',
-    'nexus maps to reviewer'
+    integratorAgent !== undefined && integratorAgent.id === 'reviewer',
+    'integrator maps to reviewer'
   );
 
-  // Writing team mappings
-  const chronicaAgent = getSoulAgentForLuminor('chronica');
+  // Writing team mappings (voice absorbs editor/dialogue — editor wins)
+  const storytellerAgent = getSoulAgentForLuminor('storyteller');
   assert(
-    chronicaAgent !== undefined && chronicaAgent.id === 'drafter',
-    'chronica maps to drafter'
+    storytellerAgent !== undefined && storytellerAgent.id === 'drafter',
+    'storyteller maps to drafter'
   );
   assert(
-    chronicaAgent !== undefined && chronicaAgent.team === 'writing',
+    storytellerAgent !== undefined && storytellerAgent.team === 'writing',
     'drafter is on writing team'
   );
 
-  const veritasAgent = getSoulAgentForLuminor('veritas');
+  const voiceAgent = getSoulAgentForLuminor('voice');
   assert(
-    veritasAgent !== undefined && veritasAgent.id === 'dialogue',
-    'veritas maps to dialogue'
+    voiceAgent !== undefined && voiceAgent.id === 'editor',
+    'voice maps to editor (word mastery wins over dialogue)'
   );
 
-  const lexiconAgent = getSoulAgentForLuminor('lexicon');
+  const poetAgent = getSoulAgentForLuminor('poet');
   assert(
-    lexiconAgent !== undefined && lexiconAgent.id === 'editor',
-    'lexicon maps to editor'
+    poetAgent !== undefined && poetAgent.id === 'continuity',
+    'poet maps to continuity'
   );
 
-  const poeticaAgent = getSoulAgentForLuminor('poetica');
+  // Creative team mappings (motion-designer absorbs story/world — world wins)
+  const visualDesignerAgent = getSoulAgentForLuminor('visual-designer');
   assert(
-    poeticaAgent !== undefined && poeticaAgent.id === 'continuity',
-    'poetica maps to continuity'
-  );
-
-  // Creative team mappings
-  const prismaticAgent = getSoulAgentForLuminor('prismatic');
-  assert(
-    prismaticAgent !== undefined && prismaticAgent.id === 'character',
-    'prismatic maps to character'
+    visualDesignerAgent !== undefined && visualDesignerAgent.id === 'character',
+    'visual-designer maps to character'
   );
   assert(
-    prismaticAgent !== undefined && prismaticAgent.team === 'creative',
+    visualDesignerAgent !== undefined && visualDesignerAgent.team === 'creative',
     'character is on creative team'
   );
 
-  const motioAgent = getSoulAgentForLuminor('motio');
+  const motionDesignerAgent = getSoulAgentForLuminor('motion-designer');
   assert(
-    motioAgent !== undefined && motioAgent.id === 'story',
-    'motio maps to story'
+    motionDesignerAgent !== undefined && motionDesignerAgent.id === 'world',
+    'motion-designer maps to world (spatial wins over story)'
   );
 
-  const formisAgent = getSoulAgentForLuminor('formis');
+  const composerAgent = getSoulAgentForLuminor('composer');
   assert(
-    formisAgent !== undefined && formisAgent.id === 'world',
-    'formis maps to world'
+    composerAgent !== undefined && composerAgent.id === 'lore',
+    'composer maps to lore'
   );
 
-  const melodiaAgent = getSoulAgentForLuminor('melodia');
+  // Research team mappings (deep-researcher absorbs sage/muse/archivist — sage wins)
+  const deepResearcherAgent = getSoulAgentForLuminor('deep-researcher');
   assert(
-    melodiaAgent !== undefined && melodiaAgent.id === 'lore',
-    'melodia maps to lore'
-  );
-
-  // Research team mappings
-  const visionaryAgent = getSoulAgentForLuminor('visionary');
-  assert(
-    visionaryAgent !== undefined && visionaryAgent.id === 'sage',
-    'visionary maps to sage'
+    deepResearcherAgent !== undefined && deepResearcherAgent.id === 'sage',
+    'deep-researcher maps to sage (synthesis wins)'
   );
   assert(
-    visionaryAgent !== undefined && visionaryAgent.team === 'research',
+    deepResearcherAgent !== undefined && deepResearcherAgent.team === 'research',
     'sage is on research team'
   );
 
-  const analyticaAgent = getSoulAgentForLuminor('analytica');
+  const strategistAgent = getSoulAgentForLuminor('strategist');
   assert(
-    analyticaAgent !== undefined && analyticaAgent.id === 'muse',
-    'analytica maps to muse'
-  );
-
-  const futuraAgent = getSoulAgentForLuminor('futura');
-  assert(
-    futuraAgent !== undefined && futuraAgent.id === 'scout',
-    'futura maps to scout'
-  );
-
-  const memoriaAgent = getSoulAgentForLuminor('memoria');
-  assert(
-    memoriaAgent !== undefined && memoriaAgent.id === 'archivist',
-    'memoria maps to archivist'
+    strategistAgent !== undefined && strategistAgent.id === 'scout',
+    'strategist maps to scout'
   );
 });
 
@@ -196,7 +172,7 @@ describe('getSoulAgentForLuminor', () => {
 
 describe('getSoulAgentForLuminor data structure', () => {
   // Check that returned agents have all required fields
-  const agent = getSoulAgentForLuminor('logicus');
+  const agent = getSoulAgentForLuminor('systems-architect');
   assert(agent !== undefined, 'returns an agent object');
   assert(
     typeof agent!.id === 'string' && agent!.id.length > 0,
@@ -249,7 +225,7 @@ describe('getSoulAgentForLuminor unknown ID', () => {
 
 describe('enrichLuminorHint', () => {
   // Valid luminor with soul agent
-  const hint = enrichLuminorHint('logicus');
+  const hint = enrichLuminorHint('systems-architect');
   assert(
     hint.length > 0,
     'returns non-empty string for valid luminor'
@@ -268,13 +244,13 @@ describe('enrichLuminorHint', () => {
   );
 
   // Verify the enriched hint combines base + soul perspective
-  const debugHint = enrichLuminorHint('debugon');
+  const debugHint = enrichLuminorHint('debugger');
   assert(
     debugHint.includes('persistent diagnosis') && debugHint.includes('Soul:'),
-    'debugon hint combines base hint with soul perspective'
+    'debugger hint combines base hint with soul perspective'
   );
 
-  // All 16 luminors should produce non-empty enriched hints
+  // All 12 luminors should produce non-empty enriched hints
   const allLuminorIds = Object.keys(LUMINOR_HINTS);
   let allNonEmpty = true;
   for (const id of allLuminorIds) {
@@ -283,7 +259,7 @@ describe('enrichLuminorHint', () => {
       allNonEmpty = false;
     }
   }
-  assert(allNonEmpty, 'all 16 luminors produce non-empty enriched hints');
+  assert(allNonEmpty, 'all 12 luminors produce non-empty enriched hints');
 });
 
 // ---------------------------------------------------------------------------
@@ -306,7 +282,7 @@ describe('enrichLuminorHint unknown luminor', () => {
 // ---------------------------------------------------------------------------
 
 describe('enrichLuminorHint perspective extraction', () => {
-  const hint = enrichLuminorHint('logicus');
+  const hint = enrichLuminorHint('systems-architect');
   // architect's perspective starts: "I see systems the way a master builder sees a cathedral."
   assert(
     hint.includes('I see systems the way a master builder sees a cathedral.'),

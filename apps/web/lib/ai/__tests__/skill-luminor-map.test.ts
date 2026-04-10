@@ -42,8 +42,8 @@ function describe(suite: string, fn: () => void) {
 describe('getLuminorForSkill exact match', () => {
   const debug = getLuminorForSkill('debug');
   assert(
-    debug !== null && debug.luminor === 'debugon',
-    'debug -> debugon'
+    debug !== null && debug.luminor === 'debugger',
+    'debug -> debugger'
   );
   assert(
     debug !== null && debug.guardian === 'draconia',
@@ -56,26 +56,26 @@ describe('getLuminorForSkill exact match', () => {
 
   const music = getLuminorForSkill('music');
   assert(
-    music !== null && music.luminor === 'melodia',
-    'music -> melodia'
+    music !== null && music.luminor === 'composer',
+    'music -> composer'
   );
 
   const story = getLuminorForSkill('story');
   assert(
-    story !== null && story.luminor === 'chronica',
-    'story -> chronica'
+    story !== null && story.luminor === 'storyteller',
+    'story -> storyteller'
   );
 
   const research = getLuminorForSkill('research');
   assert(
-    research !== null && research.luminor === 'visionary',
-    'research -> visionary'
+    research !== null && research.luminor === 'deep-researcher',
+    'research -> deep-researcher'
   );
 
   const design = getLuminorForSkill('design');
   assert(
-    design !== null && design.luminor === 'prismatic',
-    'design -> prismatic'
+    design !== null && design.luminor === 'visual-designer',
+    'design -> visual-designer'
   );
 });
 
@@ -87,36 +87,36 @@ describe('getLuminorForSkill normalization', () => {
   // Uppercase
   const upper = getLuminorForSkill('DEBUG');
   assert(
-    upper !== null && upper.luminor === 'debugon',
-    'uppercase DEBUG normalizes to debug -> debugon'
+    upper !== null && upper.luminor === 'debugger',
+    'uppercase DEBUG normalizes to debug -> debugger'
   );
 
   // Mixed case
   const mixed = getLuminorForSkill('Code-Review');
   assert(
-    mixed !== null && mixed.luminor === 'synthra',
-    'mixed case Code-Review normalizes to code-review -> synthra'
+    mixed !== null && mixed.luminor === 'code-crafter',
+    'mixed case Code-Review normalizes to code-review -> code-crafter'
   );
 
   // Whitespace
   const whitespace = getLuminorForSkill('  debug  ');
   assert(
-    whitespace !== null && whitespace.luminor === 'debugon',
-    'trimmed whitespace matches debug -> debugon'
+    whitespace !== null && whitespace.luminor === 'debugger',
+    'trimmed whitespace matches debug -> debugger'
   );
 
   // Underscores to hyphens
   const underscore = getLuminorForSkill('code_review');
   assert(
-    underscore !== null && underscore.luminor === 'synthra',
-    'underscores normalized to hyphens: code_review -> synthra'
+    underscore !== null && underscore.luminor === 'code-crafter',
+    'underscores normalized to hyphens: code_review -> code-crafter'
   );
 
   // Spaces to hyphens
   const spaces = getLuminorForSkill('code review');
   assert(
-    spaces !== null && spaces.luminor === 'synthra',
-    'spaces normalized to hyphens: "code review" -> synthra'
+    spaces !== null && spaces.luminor === 'code-crafter',
+    'spaces normalized to hyphens: "code review" -> code-crafter'
   );
 
   // Strip arcanea- prefix
@@ -136,8 +136,8 @@ describe('getLuminorForSkill normalization', () => {
   // Add arcanea- prefix when needed
   const canon = getLuminorForSkill('canon');
   assert(
-    canon !== null && canon.luminor === 'memoria',
-    'canon adds arcanea- prefix -> arcanea-canon -> memoria'
+    canon !== null && canon.luminor === 'deep-researcher',
+    'canon adds arcanea- prefix -> arcanea-canon -> deep-researcher'
   );
 });
 
@@ -161,15 +161,15 @@ describe('getLuminorForSkill unknown skill', () => {
 });
 
 // ---------------------------------------------------------------------------
-// getSkillsForLuminor: all 16 Luminors
+// getSkillsForLuminor: all 12 Luminors
 // ---------------------------------------------------------------------------
 
 describe('getSkillsForLuminor coverage', () => {
   const luminorIds = [
-    'logicus', 'synthra', 'debugon', 'nexus',
-    'prismatic', 'melodia', 'motio', 'formis',
-    'chronica', 'veritas', 'lexicon', 'poetica',
-    'visionary', 'analytica', 'memoria', 'futura',
+    'systems-architect', 'code-crafter', 'debugger',
+    'visual-designer', 'composer', 'motion-designer',
+    'storyteller', 'voice', 'poet',
+    'deep-researcher', 'strategist', 'integrator',
   ];
 
   for (const id of luminorIds) {
@@ -181,15 +181,15 @@ describe('getSkillsForLuminor coverage', () => {
   }
 
   // Verify returned skills actually map back to the luminor
-  const logicusSkills = getSkillsForLuminor('logicus');
+  const architectSkills = getSkillsForLuminor('systems-architect');
   let allCorrect = true;
-  for (const skill of logicusSkills) {
-    if (SKILL_LUMINOR_MAP[skill].luminor !== 'logicus') {
-      console.error(`    skill "${skill}" does not map back to logicus`);
+  for (const skill of architectSkills) {
+    if (SKILL_LUMINOR_MAP[skill].luminor !== 'systems-architect') {
+      console.error(`    skill "${skill}" does not map back to systems-architect`);
       allCorrect = false;
     }
   }
-  assert(allCorrect, 'all logicus skills map back to logicus');
+  assert(allCorrect, 'all systems-architect skills map back to systems-architect');
 });
 
 // ---------------------------------------------------------------------------
@@ -272,10 +272,10 @@ describe('getSkillsForTeam', () => {
 
 describe('SKILL_LUMINOR_MAP data integrity', () => {
   const validLuminors = new Set([
-    'logicus', 'synthra', 'debugon', 'nexus',
-    'prismatic', 'melodia', 'motio', 'formis',
-    'chronica', 'veritas', 'lexicon', 'poetica',
-    'visionary', 'analytica', 'memoria', 'futura',
+    'systems-architect', 'code-crafter', 'debugger',
+    'visual-designer', 'composer', 'motion-designer',
+    'storyteller', 'voice', 'poet',
+    'deep-researcher', 'strategist', 'integrator',
   ]);
 
   const validGuardians = new Set([
