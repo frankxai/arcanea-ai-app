@@ -3,7 +3,7 @@
  * Uses the admin client for read operations. Public data, no auth required.
  */
 
-import { createAdminClient } from '@/lib/supabase/server';
+import { createRegistryAdminClient } from '@/lib/registry/supabase';
 
 export interface RegistryAgent {
   id: string;
@@ -57,7 +57,7 @@ export interface SearchParams {
  */
 export async function searchAgents(params: SearchParams = {}): Promise<RegistryAgent[]> {
   try {
-    const supabase = createAdminClient();
+    const supabase = createRegistryAdminClient();
     let query = supabase
       .from('marketplace_agents')
       .select('*')
@@ -92,7 +92,7 @@ export async function searchAgents(params: SearchParams = {}): Promise<RegistryA
  */
 export async function getAgent(id: string): Promise<RegistryAgent | null> {
   try {
-    const supabase = createAdminClient();
+    const supabase = createRegistryAdminClient();
     const { data, error } = await supabase
       .from('marketplace_agents')
       .select('*')
@@ -116,7 +116,7 @@ export async function getAgent(id: string): Promise<RegistryAgent | null> {
  */
 export async function getRegistryStats(): Promise<RegistryStats> {
   try {
-    const supabase = createAdminClient();
+    const supabase = createRegistryAdminClient();
 
     const [agentsRes, deploymentsRes, platformsRes] = await Promise.all([
       supabase.from('marketplace_agents').select('category', { count: 'exact' }).eq('is_published', true),
@@ -150,7 +150,7 @@ export async function getAgentStats(agentId: string): Promise<{
   platforms_reached: number;
 }> {
   try {
-    const supabase = createAdminClient();
+    const supabase = createRegistryAdminClient();
     const [deploysRes, usagesRes] = await Promise.all([
       supabase.from('attribution_events').select('platform_id', { count: 'exact' }).eq('agent_id', agentId).eq('event_type', 'deploy'),
       supabase.from('usage_events').select('id', { count: 'exact', head: true }).eq('agent_id', agentId),
@@ -176,7 +176,7 @@ export async function getAgentStats(agentId: string): Promise<{
  */
 export async function getRelatedAgents(agent: RegistryAgent, limit = 4): Promise<RegistryAgent[]> {
   try {
-    const supabase = createAdminClient();
+    const supabase = createRegistryAdminClient();
     const { data } = await supabase
       .from('marketplace_agents')
       .select('*')

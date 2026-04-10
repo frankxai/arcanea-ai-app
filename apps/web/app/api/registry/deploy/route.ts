@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { createClient, createAdminClient } from '@/lib/supabase/server';
+import { createClient } from '@/lib/supabase/server';
+import { createRegistryAdminClient } from '@/lib/registry/supabase';
 
 const DeploySchema = z.object({
   agent_id: z.string().min(1),
@@ -38,7 +39,7 @@ export async function POST(request: Request) {
   }
 
   // Admin client for writes (bypass RLS for service ops)
-  const admin = createAdminClient();
+  const admin = createRegistryAdminClient();
 
   // Verify agent
   const { data: agent, error: agentError } = await admin

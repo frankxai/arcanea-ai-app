@@ -70,22 +70,21 @@ export interface UsageEvent {
   createdAt: string;
 }
 
-// ─── Revenue Events ─────────────────────────────────────────
+// ─── Attribution Events ─────────────────────────────────────
+// Abundance mode: pure reach + usage tracking, no money splits.
+// Every deploy, use, fork, or mention creates an attribution event.
+// Tips are voluntary and optional.
 
-export type RevenueEventType = 'deploy' | 'usage' | 'affiliate' | 'tip';
+export type AttributionEventType = 'deploy' | 'usage' | 'mention' | 'tip' | 'fork';
 
-export interface RevenueEvent {
+export interface AttributionEvent {
   id: string;
   agentId: string;
   creatorId: string;
   platformId: string | null;
   deploymentId: string | null;
-  grossAmount: number;
-  platformFee: number;
-  creatorPayout: number;
-  affiliateId?: string;
-  affiliatePayout: number;
-  eventType: RevenueEventType;
+  tipAmount: number; // 0 unless voluntary tip
+  eventType: AttributionEventType;
   createdAt: string;
 }
 
@@ -179,15 +178,6 @@ export interface DeployAgentInput {
   config?: Record<string, unknown>;
   apiKeysRef?: Record<string, string>;
 }
-
-// ─── Revenue Split ──────────────────────────────────────────
-
-export interface RevenueSplit {
-  platformFee: number;
-  creatorPayout: number;
-}
-
-export const DEFAULT_PLATFORM_FEE_RATE = 0.15;
 
 // ─── Platform API Keys ──────────────────────────────────────
 

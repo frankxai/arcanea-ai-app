@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { createClient, createAdminClient } from '@/lib/supabase/server';
+import { createClient } from '@/lib/supabase/server';
+import { createRegistryAdminClient } from '@/lib/registry/supabase';
 
 const UsageSchema = z.object({
   agent_id: z.string().min(1),
@@ -36,7 +37,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
   }
 
-  const admin = createAdminClient();
+  const admin = createRegistryAdminClient();
   const { data, error } = await admin
     .from('usage_events')
     .insert({

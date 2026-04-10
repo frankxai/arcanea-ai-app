@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { createAdminClient } from '@/lib/supabase/server';
+import { createRegistryAdminClient } from '@/lib/registry/supabase';
 
 /**
  * GET /api/registry/attribution
@@ -18,7 +18,7 @@ export async function GET(request: Request) {
   const platform_id = searchParams.get('platform_id');
   const since = searchParams.get('since');
 
-  const admin = createAdminClient();
+  const admin = createRegistryAdminClient();
   let query = admin
     .from('attribution_events')
     .select('*')

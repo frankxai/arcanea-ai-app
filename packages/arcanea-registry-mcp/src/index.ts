@@ -4,25 +4,27 @@ import { registerPublishTool } from './tools/publish.js';
 import { registerDeployTool } from './tools/deploy.js';
 import { registerStatusTool } from './tools/status.js';
 import { registerUsageTool } from './tools/usage.js';
-import { registerEarnTool } from './tools/earn.js';
+import { registerAttributionTool } from './tools/attribution.js';
 import { registerSkillsTool } from './tools/skills.js';
 import { registerPlatformsTool } from './tools/platforms.js';
 
 export function createRegistryServer(): McpServer {
   const server = new McpServer({
     name: 'arcanea-registry',
-    version: '0.1.0',
+    version: '0.2.0',
   });
 
-  // Core registry operations
+  // Discovery & publishing
   registerSearchTool(server);
   registerPublishTool(server);
+
+  // Deployment
   registerDeployTool(server);
   registerStatusTool(server);
 
-  // Analytics & revenue
+  // Analytics & attribution (abundance model — pure reach, no money splits)
   registerUsageTool(server);
-  registerEarnTool(server);
+  registerAttributionTool(server);
 
   // Skills & platforms
   registerSkillsTool(server);

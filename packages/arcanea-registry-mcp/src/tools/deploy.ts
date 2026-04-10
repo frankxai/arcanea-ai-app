@@ -17,7 +17,7 @@ export function registerDeployTool(server: McpServer) {
       // Verify agent exists
       const { data: agent, error: agentError } = await supabase
         .from('marketplace_agents')
-        .select('id, title, creator_id, price_credits, is_open, is_published, usage_count')
+        .select('id, title, creator_id, is_open, is_published, usage_count')
         .eq('id', agent_id)
         .single();
 
@@ -47,33 +47,18 @@ export function registerDeployTool(server: McpServer) {
         return { content: [{ type: 'text' as const, text: `Deploy failed: ${deployError.message}` }], isError: true };
       }
 
-      // Handle revenue for paid agents
-      let revenueEvent = null;
-      if (agent.price_credits > 0 && agent.creator_id) {
-        const { data: split } = await supabase
-          .rpc('calculate_revenue_split', {
-            p_gross: agent.price_credits,
-            p_platform_id: platform_id ?? null,
+      // Emit attribution event — pure reach tracking, no money
+      if (agent.creator_id) {
+        await supabase
+          .from('attribution_events')
+          .insert({
+            agent_id,
+            creator_id: agent.creator_id,
+            platform_id: platform_id ?? null,
+            deployment_id: deployment.id,
+            tip_amount: 0,
+            event_type: 'deploy',
           });
-
-        const splitData = Array.isArray(split) ? split[0] : split;
-        if (splitData) {
-          const { data: rev } = await supabase
-            .from('revenue_events')
-            .insert({
-              agent_id,
-              creator_id: agent.creator_id,
-              platform_id: platform_id ?? null,
-              deployment_id: deployment.id,
-              gross_amount: agent.price_credits,
-              platform_fee: splitData.platform_fee,
-              creator_payout: splitData.creator_payout,
-              event_type: 'deploy',
-            })
-            .select()
-            .single();
-          revenueEvent = rev;
-        }
       }
 
       // Increment usage count on the agent
@@ -106,11 +91,7 @@ export function registerDeployTool(server: McpServer) {
             agent_title: agent.title,
             platform_id: platform_id ?? 'local',
             status: 'active',
-            revenue: revenueEvent ? {
-              gross: revenueEvent.gross_amount,
-              platform_fee: revenueEvent.platform_fee,
-              creator_payout: revenueEvent.creator_payout,
-            } : null,
+            attribution_recorded: agent.creator_id !== null,
           }, null, 2),
         }],
       };
