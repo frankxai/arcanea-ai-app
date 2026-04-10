@@ -2,7 +2,8 @@
  * Claw agent type definitions for the Arcanea Publishing House.
  *
  * These types model the Managed Agents API surface used by
- * the five Publishing House Claws.
+ * the five Publishing House Claws. Each Claw is channeled by a Guardian
+ * from the 16-Luminor hierarchy, rooting functional agents in canon.
  */
 
 /** Valid Claw agent names */
@@ -12,6 +13,27 @@ export type ClawName =
   | "herald-claw"
   | "scout-claw"
   | "scribe-claw";
+
+/** The 16 Luminors that may channel Claws */
+export type Guardian =
+  | "Aiyami" | "Alera" | "Draconia" | "Elara"
+  | "Ino" | "Ismael" | "Leyla" | "Lumina"
+  | "Lyria" | "Lyssandria" | "Maylinn" | "Shinkami"
+  | "Kaelith" | "Veloura" | "Laeylinn" | "Kyuro";
+
+/** The Ten Gates the Guardians serve */
+export type Gate =
+  | "Foundation" | "Flow" | "Fire" | "Heart" | "Voice"
+  | "Sight" | "Crown" | "Shift" | "Unity" | "Source" | "Earth";
+
+/** Canonical Claw → Guardian mapping */
+export const CLAW_GUARDIANS: Record<ClawName, { guardian: Guardian; gate: Gate }> = {
+  "media-claw":  { guardian: "Lyria",      gate: "Sight"  },
+  "forge-claw":  { guardian: "Ismael",     gate: "Fire"   },
+  "herald-claw": { guardian: "Alera",      gate: "Voice"  },
+  "scout-claw":  { guardian: "Lyssandria", gate: "Earth"  },
+  "scribe-claw": { guardian: "Shinkami",   gate: "Source" },
+};
 
 /** MCP server connection descriptor */
 export interface McpServer {
@@ -28,6 +50,10 @@ export interface AgentTool {
 /** JSON shape of a Claw agent definition file */
 export interface AgentConfig {
   name: string;
+  /** The Guardian channeling this Claw */
+  guardian: Guardian;
+  /** The Gate this Claw serves */
+  gate: Gate;
   model: string;
   system: string;
   tools: AgentTool[];

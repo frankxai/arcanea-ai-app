@@ -34,6 +34,9 @@ import {
   runClawLocal,
 } from "./session-manager.js";
 
+import { logPublish } from "./logging.js";
+import { parseJsonResponse, buildLocalTasteResult } from "./utils.js";
+
 // ---------------------------------------------------------------------------
 // Constants
 // ---------------------------------------------------------------------------
@@ -407,96 +410,5 @@ async function runDistribution(
   return results;
 }
 
-// ---------------------------------------------------------------------------
-// Logging
-// ---------------------------------------------------------------------------
-
-/**
- * Log a publish event. Currently writes to console; SQLite/Supabase
- * integration is handled by the db/ module (Task 3).
- */
-async function logPublish(entry: PublishLogEntry): Promise<void> {
-  // TODO: integrate with ../db/sqlite.ts when available
-  // For now, structured console output
-  const summary = [
-    `[publish-log] ${entry.status.toUpperCase()}`,
-    `  title: ${entry.title}`,
-    `  author: ${entry.author}`,
-    `  score: ${entry.qualityScore} (${entry.qualityTier})`,
-    `  platforms: ${entry.platforms}`,
-    `  at: ${entry.publishedAt}`,
-  ].join("\n");
-
-  console.log(summary);
-}
-
-// ---------------------------------------------------------------------------
-// JSON Parsing Helpers
-// ---------------------------------------------------------------------------
-
-/**
- * Extract and parse JSON from an agent's text response.
- *
- * Handles responses that contain markdown code fences or
- * have surrounding prose around the JSON payload.
- */
-function parseJsonResponse<T>(raw: string, context: string): T {
-  // Try direct parse first
-  try {
-    return JSON.parse(raw) as T;
-  } catch {
-    // Ignore — try extraction
-  }
-
-  // Extract from markdown code fence
-  const fenceMatch = /```(?:json)?\s*\n?([\s\S]*?)```/.exec(raw);
-  if (fenceMatch) {
-    try {
-      return JSON.parse(fenceMatch[1].trim()) as T;
-    } catch {
-      // Fall through
-    }
-  }
-
-  // Extract first JSON object or array
-  const jsonMatch = /[\[{][\s\S]*[\]}]/.exec(raw);
-  if (jsonMatch) {
-    try {
-      return JSON.parse(jsonMatch[0]) as T;
-    } catch {
-      // Fall through
-    }
-  }
-
-  throw new Error(
-    `Failed to parse JSON from ${context} response. Raw output:\n${raw.slice(0, 500)}`,
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Local Fallback Helper
-// ---------------------------------------------------------------------------
-
-/**
- * Build a minimal TasteResult when running locally without an API.
- *
- * In local mode the quality scoring is deferred to the human operator
- * or a subsequent Claude Code session. This returns a "needs-review"
- * placeholder so the pipeline can still report meaningful structure.
- */
-function buildLocalTasteResult(_prompt: string): TasteResult {
-  return {
-    technical: 0,
-    aesthetic: 0,
-    canon: 0,
-    impact: 0,
-    uniqueness: 0,
-    total: 0,
-    tier: "reject",
-    feedback: [
-      "Local mode: quality scoring requires a Claude Code session or ANTHROPIC_API_KEY.",
-      "Run with --dry-run to preview, or set ANTHROPIC_API_KEY for automated scoring.",
-    ],
-    passesGate: false,
-  };
-}
+// Logging, JSON parsing, and local-mode helpers are imported from
+// ./logging.js and ./utils.js to keep this file focused on pipeline flow.

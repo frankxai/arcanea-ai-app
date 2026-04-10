@@ -114,8 +114,10 @@ export interface PublishLogEntry {
   qualityScore: number;
   qualityTier: string;
   platforms: string;
-  status: "success" | "partial" | "failed" | "dry-run";
+  status: "success" | "partial" | "failed" | "dry-run" | "published";
   publishedAt: string;
   createdAt: string;
   metadata?: string;
+  assetId?: string;
+  url?: string;
 }

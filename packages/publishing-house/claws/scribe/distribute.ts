@@ -321,6 +321,25 @@ const CONNECTOR_MAP: Record<
     }
     return distributeToNftForge(content, config.nftForge);
   },
+  activitypub: (content) => {
+    // ActivityPub federation — publishes to the creator's fediverse-ready
+    // ArcaneaWeb site, which emits ActivityPub JSON-LD via /.well-known.
+    // Actual federation handled by the site layer, not this claw.
+    return Promise.resolve({
+      platform: "activitypub" as const,
+      status: "submitted" as const,
+      url: `https://arcanea.ai/u/${content.contentId}`,
+    });
+  },
+  draft2digital: (content) => {
+    // Draft2Digital aggregator. Requires DRAFT2DIGITAL_API_KEY env var
+    // and per-book approval flow — stubbed for v0.2.0, wired in v0.3.0.
+    return Promise.resolve({
+      platform: "draft2digital" as const,
+      status: "failed" as const,
+      error: "Draft2Digital connector pending v0.3.0 — use leanpub for now",
+    });
+  },
 };
 
 // ---------------------------------------------------------------------------

@@ -37,7 +37,13 @@ export interface FrontMatter {
 // Distribution Pipeline
 // ---------------------------------------------------------------------------
 
-export type Platform = 'leanpub' | 'arcanea-web' | 'social-queue' | 'nft-forge';
+export type Platform =
+  | 'leanpub'
+  | 'arcanea-web'
+  | 'social-queue'
+  | 'nft-forge'
+  | 'activitypub'
+  | 'draft2digital';
 
 export type DistributeStatus = 'submitted' | 'live' | 'failed';
 
