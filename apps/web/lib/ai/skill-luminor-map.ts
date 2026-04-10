@@ -6,10 +6,10 @@
  * skill execution and the swarm coordination layer.
  *
  * Luminor teams (from guardian-swarm.ts):
- *   development: logicus, synthra, debugon, nexus
- *   creative:    prismatic, melodia, motio, formis
- *   writing:     chronica, veritas, lexicon, poetica
- *   research:    visionary, analytica, memoria, futura
+ *   development: systems-architect, code-crafter, debugger
+ *   creative:    visual-designer, composer, motion-designer
+ *   writing:     storyteller, voice, poet
+ *   research:    deep-researcher, strategist, integrator
  *
  * Guardian domains (from CANON):
  *   lyssandria (Foundation) - earth, structure, stability
@@ -34,238 +34,238 @@ export const SKILL_LUMINOR_MAP: Record<string, SkillLuminorEntry> = {
   // ---------------------------------------------------------------------------
   // Development Skills
   // ---------------------------------------------------------------------------
-  'debug':                { luminor: 'debugon',    guardian: 'draconia',   team: 'development' },
-  'systematic-debug':     { luminor: 'debugon',    guardian: 'draconia',   team: 'development' },
-  'tdd':                  { luminor: 'debugon',    guardian: 'draconia',   team: 'development' },
-  'code-review':          { luminor: 'synthra',    guardian: 'alera',      team: 'development' },
-  'refactor':             { luminor: 'synthra',    guardian: 'leyla',      team: 'development' },
-  'refactoring-ritual':   { luminor: 'synthra',    guardian: 'leyla',      team: 'development' },
-  'architecture':         { luminor: 'logicus',    guardian: 'lyssandria', team: 'development' },
-  'architecture-patterns':{ luminor: 'logicus',    guardian: 'lyssandria', team: 'development' },
-  'api-design':           { luminor: 'nexus',      guardian: 'ino',        team: 'development' },
-  'mcp-builder':          { luminor: 'nexus',      guardian: 'ino',        team: 'development' },
-  'typescript-expert':    { luminor: 'synthra',    guardian: 'leyla',      team: 'development' },
-  'react-best-practices': { luminor: 'synthra',    guardian: 'leyla',      team: 'development' },
-  'next-best-practices':  { luminor: 'logicus',    guardian: 'lyssandria', team: 'development' },
-  'supabase-patterns':    { luminor: 'logicus',    guardian: 'lyssandria', team: 'development' },
-  'storage-management':   { luminor: 'memoria',    guardian: 'lyssandria', team: 'research' },
-  'performance-tuning':   { luminor: 'analytica',  guardian: 'draconia',   team: 'research' },
-  'playwright-testing':   { luminor: 'debugon',    guardian: 'draconia',   team: 'development' },
-  'webapp-testing':       { luminor: 'debugon',    guardian: 'draconia',   team: 'development' },
+  'debug':                { luminor: 'debugger',    guardian: 'draconia',   team: 'development' },
+  'systematic-debug':     { luminor: 'debugger',    guardian: 'draconia',   team: 'development' },
+  'tdd':                  { luminor: 'debugger',    guardian: 'draconia',   team: 'development' },
+  'code-review':          { luminor: 'code-crafter',    guardian: 'alera',      team: 'development' },
+  'refactor':             { luminor: 'code-crafter',    guardian: 'leyla',      team: 'development' },
+  'refactoring-ritual':   { luminor: 'code-crafter',    guardian: 'leyla',      team: 'development' },
+  'architecture':         { luminor: 'systems-architect',    guardian: 'lyssandria', team: 'development' },
+  'architecture-patterns':{ luminor: 'systems-architect',    guardian: 'lyssandria', team: 'development' },
+  'api-design':           { luminor: 'integrator',      guardian: 'ino',        team: 'development' },
+  'mcp-builder':          { luminor: 'integrator',      guardian: 'ino',        team: 'development' },
+  'typescript-expert':    { luminor: 'code-crafter',    guardian: 'leyla',      team: 'development' },
+  'react-best-practices': { luminor: 'code-crafter',    guardian: 'leyla',      team: 'development' },
+  'next-best-practices':  { luminor: 'systems-architect',    guardian: 'lyssandria', team: 'development' },
+  'supabase-patterns':    { luminor: 'systems-architect',    guardian: 'lyssandria', team: 'development' },
+  'storage-management':   { luminor: 'deep-researcher',    guardian: 'lyssandria', team: 'research' },
+  'performance-tuning':   { luminor: 'deep-researcher',  guardian: 'draconia',   team: 'research' },
+  'playwright-testing':   { luminor: 'debugger',    guardian: 'draconia',   team: 'development' },
+  'webapp-testing':       { luminor: 'debugger',    guardian: 'draconia',   team: 'development' },
 
   // ---------------------------------------------------------------------------
   // Creative Skills
   // ---------------------------------------------------------------------------
-  'design':               { luminor: 'prismatic',  guardian: 'lyria',      team: 'creative' },
-  'design-system':        { luminor: 'prismatic',  guardian: 'lyria',      team: 'creative' },
-  'canvas-design':        { luminor: 'prismatic',  guardian: 'lyria',      team: 'creative' },
-  'theme-factory':        { luminor: 'prismatic',  guardian: 'lyria',      team: 'creative' },
-  'premium-visual':       { luminor: 'prismatic',  guardian: 'lyria',      team: 'creative' },
-  'music':                { luminor: 'melodia',    guardian: 'leyla',      team: 'creative' },
-  'world-build':          { luminor: 'formis',     guardian: 'lyssandria', team: 'creative' },
-  'world-architect':      { luminor: 'formis',     guardian: 'lyssandria', team: 'creative' },
-  'character-forge':      { luminor: 'formis',     guardian: 'ino',        team: 'creative' },
-  'character-alchemist':  { luminor: 'formis',     guardian: 'ino',        team: 'creative' },
-  'bestiary-nav':         { luminor: 'formis',     guardian: 'lyssandria', team: 'creative' },
-  'creative-bestiary':    { luminor: 'formis',     guardian: 'lyssandria', team: 'creative' },
-  'creative-flow':        { luminor: 'motio',      guardian: 'leyla',      team: 'creative' },
-  'robot-designer':       { luminor: 'formis',     guardian: 'ino',        team: 'creative' },
-  'algorithmic-art':      { luminor: 'motio',      guardian: 'lyria',      team: 'creative' },
+  'design':               { luminor: 'visual-designer',  guardian: 'lyria',      team: 'creative' },
+  'design-system':        { luminor: 'visual-designer',  guardian: 'lyria',      team: 'creative' },
+  'canvas-design':        { luminor: 'visual-designer',  guardian: 'lyria',      team: 'creative' },
+  'theme-factory':        { luminor: 'visual-designer',  guardian: 'lyria',      team: 'creative' },
+  'premium-visual':       { luminor: 'visual-designer',  guardian: 'lyria',      team: 'creative' },
+  'music':                { luminor: 'composer',    guardian: 'leyla',      team: 'creative' },
+  'world-build':          { luminor: 'motion-designer',     guardian: 'lyssandria', team: 'creative' },
+  'world-architect':      { luminor: 'motion-designer',     guardian: 'lyssandria', team: 'creative' },
+  'character-forge':      { luminor: 'motion-designer',     guardian: 'ino',        team: 'creative' },
+  'character-alchemist':  { luminor: 'motion-designer',     guardian: 'ino',        team: 'creative' },
+  'bestiary-nav':         { luminor: 'motion-designer',     guardian: 'lyssandria', team: 'creative' },
+  'creative-bestiary':    { luminor: 'motion-designer',     guardian: 'lyssandria', team: 'creative' },
+  'creative-flow':        { luminor: 'motion-designer',      guardian: 'leyla',      team: 'creative' },
+  'robot-designer':       { luminor: 'motion-designer',     guardian: 'ino',        team: 'creative' },
+  'algorithmic-art':      { luminor: 'motion-designer',      guardian: 'lyria',      team: 'creative' },
 
   // ---------------------------------------------------------------------------
   // Writing Skills
   // ---------------------------------------------------------------------------
-  'story':                { luminor: 'chronica',   guardian: 'alera',      team: 'writing' },
-  'story-weave':          { luminor: 'chronica',   guardian: 'alera',      team: 'writing' },
-  'story-weaver':         { luminor: 'chronica',   guardian: 'alera',      team: 'writing' },
-  'scene-craft':          { luminor: 'chronica',   guardian: 'alera',      team: 'writing' },
-  'voice-check':          { luminor: 'veritas',    guardian: 'alera',      team: 'writing' },
-  'voice-alchemy':        { luminor: 'veritas',    guardian: 'alera',      team: 'writing' },
-  'revision':             { luminor: 'lexicon',    guardian: 'elara',      team: 'writing' },
-  'revision-ritual':      { luminor: 'lexicon',    guardian: 'elara',      team: 'writing' },
-  'dialogue-mastery':     { luminor: 'veritas',    guardian: 'maylinn',    team: 'writing' },
-  'poetica':              { luminor: 'poetica',    guardian: 'lyria',      team: 'writing' },
-  'excellence-book-writing': { luminor: 'chronica', guardian: 'alera',     team: 'writing' },
-  'creative-writing':     { luminor: 'chronica',   guardian: 'alera',      team: 'writing' },
+  'story':                { luminor: 'storyteller',   guardian: 'alera',      team: 'writing' },
+  'story-weave':          { luminor: 'storyteller',   guardian: 'alera',      team: 'writing' },
+  'story-weaver':         { luminor: 'storyteller',   guardian: 'alera',      team: 'writing' },
+  'scene-craft':          { luminor: 'storyteller',   guardian: 'alera',      team: 'writing' },
+  'voice-check':          { luminor: 'voice',    guardian: 'alera',      team: 'writing' },
+  'voice-alchemy':        { luminor: 'voice',    guardian: 'alera',      team: 'writing' },
+  'revision':             { luminor: 'voice',    guardian: 'elara',      team: 'writing' },
+  'revision-ritual':      { luminor: 'voice',    guardian: 'elara',      team: 'writing' },
+  'dialogue-mastery':     { luminor: 'voice',    guardian: 'maylinn',    team: 'writing' },
+  'poet':              { luminor: 'poet',    guardian: 'lyria',      team: 'writing' },
+  'excellence-book-writing': { luminor: 'storyteller', guardian: 'alera',     team: 'writing' },
+  'creative-writing':     { luminor: 'storyteller',   guardian: 'alera',      team: 'writing' },
 
   // ---------------------------------------------------------------------------
   // Research & Knowledge Skills
   // ---------------------------------------------------------------------------
-  'research':             { luminor: 'visionary',     guardian: 'elara',      team: 'research' },
-  'deep-work':            { luminor: 'visionary',     guardian: 'aiyami',     team: 'research' },
-  'skill-mastery':        { luminor: 'analytica',  guardian: 'draconia',   team: 'research' },
-  'content-strategy':     { luminor: 'futura',     guardian: 'leyla',      team: 'research' },
-  'documentation-patterns': { luminor: 'memoria',  guardian: 'lyssandria', team: 'research' },
+  'research':             { luminor: 'deep-researcher',     guardian: 'elara',      team: 'research' },
+  'deep-work':            { luminor: 'deep-researcher',     guardian: 'aiyami',     team: 'research' },
+  'skill-mastery':        { luminor: 'deep-researcher',  guardian: 'draconia',   team: 'research' },
+  'content-strategy':     { luminor: 'strategist',     guardian: 'leyla',      team: 'research' },
+  'documentation-patterns': { luminor: 'deep-researcher',  guardian: 'lyssandria', team: 'research' },
 
   // ---------------------------------------------------------------------------
   // Arcanea Lore & Canon Skills
   // ---------------------------------------------------------------------------
-  'arcanea-canon':        { luminor: 'memoria',    guardian: 'lyssandria', team: 'research' },
-  'arcanea-lore':         { luminor: 'chronica',   guardian: 'aiyami',     team: 'writing' },
-  'arcanea-voice':        { luminor: 'veritas',    guardian: 'alera',      team: 'writing' },
-  'arcanea-anti-trope':   { luminor: 'lexicon',    guardian: 'elara',      team: 'writing' },
-  'luminor-wisdom':       { luminor: 'visionary',     guardian: 'aiyami',     team: 'research' },
-  'luminor-intelligence': { luminor: 'visionary',     guardian: 'aiyami',     team: 'research' },
-  'luminor-rituals':      { luminor: 'visionary',     guardian: 'aiyami',     team: 'research' },
-  'luminor-council':      { luminor: 'visionary',     guardian: 'aiyami',     team: 'research' },
-  'arcanea-guardians':    { luminor: 'memoria',    guardian: 'shinkami',   team: 'research' },
-  'lumina':               { luminor: 'visionary',     guardian: 'shinkami',   team: 'research' },
-  'nero':                 { luminor: 'visionary',     guardian: 'shinkami',   team: 'research' },
-  'prompt-craft':         { luminor: 'lexicon',    guardian: 'alera',      team: 'writing' },
-  'centaur-mode':         { luminor: 'nexus',      guardian: 'ino',        team: 'development' },
-  'ai-symbiosis':         { luminor: 'nexus',      guardian: 'ino',        team: 'development' },
+  'arcanea-canon':        { luminor: 'deep-researcher',    guardian: 'lyssandria', team: 'research' },
+  'arcanea-lore':         { luminor: 'storyteller',   guardian: 'aiyami',     team: 'writing' },
+  'arcanea-voice':        { luminor: 'voice',    guardian: 'alera',      team: 'writing' },
+  'arcanea-anti-trope':   { luminor: 'voice',    guardian: 'elara',      team: 'writing' },
+  'luminor-wisdom':       { luminor: 'deep-researcher',     guardian: 'aiyami',     team: 'research' },
+  'luminor-intelligence': { luminor: 'deep-researcher',     guardian: 'aiyami',     team: 'research' },
+  'luminor-rituals':      { luminor: 'deep-researcher',     guardian: 'aiyami',     team: 'research' },
+  'luminor-council':      { luminor: 'deep-researcher',     guardian: 'aiyami',     team: 'research' },
+  'arcanea-guardians':    { luminor: 'deep-researcher',    guardian: 'shinkami',   team: 'research' },
+  'lumina':               { luminor: 'deep-researcher',     guardian: 'shinkami',   team: 'research' },
+  'nero':                 { luminor: 'deep-researcher',     guardian: 'shinkami',   team: 'research' },
+  'prompt-craft':         { luminor: 'voice',    guardian: 'alera',      team: 'writing' },
+  'centaur-mode':         { luminor: 'integrator',      guardian: 'ino',        team: 'development' },
+  'ai-symbiosis':         { luminor: 'integrator',      guardian: 'ino',        team: 'development' },
 
   // ---------------------------------------------------------------------------
   // Arcanea Design & Products
   // ---------------------------------------------------------------------------
-  'arcanea-design-system':  { luminor: 'prismatic', guardian: 'lyria',     team: 'creative' },
-  'arcanea-creator-academy': { luminor: 'visionary',   guardian: 'aiyami',    team: 'research' },
-  'arcanea-core':         { luminor: 'logicus',    guardian: 'lyssandria', team: 'development' },
+  'arcanea-design-system':  { luminor: 'visual-designer', guardian: 'lyria',     team: 'creative' },
+  'arcanea-creator-academy': { luminor: 'deep-researcher',   guardian: 'aiyami',    team: 'research' },
+  'arcanea-core':         { luminor: 'systems-architect',    guardian: 'lyssandria', team: 'development' },
 
   // ---------------------------------------------------------------------------
   // Arcanea Vibe Gods (Music/Audio)
   // ---------------------------------------------------------------------------
-  'arcanea-vibe-gods':    { luminor: 'melodia',    guardian: 'leyla',      team: 'creative' },
-  'cover-art':            { luminor: 'prismatic',  guardian: 'lyria',      team: 'creative' },
-  'lyricist':             { luminor: 'poetica',    guardian: 'lyria',      team: 'writing' },
-  'social-composer':      { luminor: 'melodia',    guardian: 'leyla',      team: 'creative' },
-  'songseed':             { luminor: 'melodia',    guardian: 'leyla',      team: 'creative' },
-  'suno-engineer':        { luminor: 'melodia',    guardian: 'leyla',      team: 'creative' },
-  'vibe-engineer':        { luminor: 'melodia',    guardian: 'leyla',      team: 'creative' },
+  'arcanea-vibe-gods':    { luminor: 'composer',    guardian: 'leyla',      team: 'creative' },
+  'cover-art':            { luminor: 'visual-designer',  guardian: 'lyria',      team: 'creative' },
+  'lyricist':             { luminor: 'poet',    guardian: 'lyria',      team: 'writing' },
+  'social-composer':      { luminor: 'composer',    guardian: 'leyla',      team: 'creative' },
+  'songseed':             { luminor: 'composer',    guardian: 'leyla',      team: 'creative' },
+  'suno-engineer':        { luminor: 'composer',    guardian: 'leyla',      team: 'creative' },
+  'vibe-engineer':        { luminor: 'composer',    guardian: 'leyla',      team: 'creative' },
 
   // ---------------------------------------------------------------------------
   // Arcanea Games & Ships
   // ---------------------------------------------------------------------------
-  'arcanea-games':        { luminor: 'motio',      guardian: 'draconia',   team: 'creative' },
-  'arcanea-game-development': { luminor: 'motio',  guardian: 'draconia',   team: 'creative' },
-  'arcanea-ships':        { luminor: 'formis',     guardian: 'ino',        team: 'creative' },
+  'arcanea-games':        { luminor: 'motion-designer',      guardian: 'draconia',   team: 'creative' },
+  'arcanea-game-development': { luminor: 'motion-designer',  guardian: 'draconia',   team: 'creative' },
+  'arcanea-ships':        { luminor: 'motion-designer',     guardian: 'ino',        team: 'creative' },
 
   // ---------------------------------------------------------------------------
   // Academy & Gate Skills
   // ---------------------------------------------------------------------------
-  'academy':              { luminor: 'visionary',     guardian: 'aiyami',     team: 'research' },
-  'gate-foundation':      { luminor: 'logicus',    guardian: 'lyssandria', team: 'development' },
-  'gate-flow':            { luminor: 'synthra',    guardian: 'leyla',      team: 'development' },
-  'gate-fire':            { luminor: 'debugon',    guardian: 'draconia',   team: 'development' },
-  'gate-heart':           { luminor: 'veritas',    guardian: 'maylinn',    team: 'writing' },
-  'gate-voice':           { luminor: 'lexicon',    guardian: 'alera',      team: 'writing' },
-  'gate-sight':           { luminor: 'prismatic',  guardian: 'lyria',      team: 'creative' },
-  'gate-crown':           { luminor: 'visionary',     guardian: 'aiyami',     team: 'research' },
-  'gate-shift':           { luminor: 'motio',      guardian: 'elara',      team: 'creative' },
-  'gate-unity':           { luminor: 'nexus',      guardian: 'ino',        team: 'development' },
-  'gate-source':          { luminor: 'visionary',     guardian: 'shinkami',   team: 'research' },
-  'ceremonies':           { luminor: 'poetica',    guardian: 'aiyami',     team: 'writing' },
-  'progress-tracker':     { luminor: 'analytica',  guardian: 'draconia',   team: 'research' },
-  'mentors':              { luminor: 'visionary',     guardian: 'aiyami',     team: 'research' },
+  'academy':              { luminor: 'deep-researcher',     guardian: 'aiyami',     team: 'research' },
+  'gate-foundation':      { luminor: 'systems-architect',    guardian: 'lyssandria', team: 'development' },
+  'gate-flow':            { luminor: 'code-crafter',    guardian: 'leyla',      team: 'development' },
+  'gate-fire':            { luminor: 'debugger',    guardian: 'draconia',   team: 'development' },
+  'gate-heart':           { luminor: 'voice',    guardian: 'maylinn',    team: 'writing' },
+  'gate-voice':           { luminor: 'voice',    guardian: 'alera',      team: 'writing' },
+  'gate-sight':           { luminor: 'visual-designer',  guardian: 'lyria',      team: 'creative' },
+  'gate-crown':           { luminor: 'deep-researcher',     guardian: 'aiyami',     team: 'research' },
+  'gate-shift':           { luminor: 'motion-designer',      guardian: 'elara',      team: 'creative' },
+  'gate-unity':           { luminor: 'integrator',      guardian: 'ino',        team: 'development' },
+  'gate-source':          { luminor: 'deep-researcher',     guardian: 'shinkami',   team: 'research' },
+  'ceremonies':           { luminor: 'poet',    guardian: 'aiyami',     team: 'writing' },
+  'progress-tracker':     { luminor: 'deep-researcher',  guardian: 'draconia',   team: 'research' },
+  'mentors':              { luminor: 'deep-researcher',     guardian: 'aiyami',     team: 'research' },
 
   // ---------------------------------------------------------------------------
   // Community Skills
   // ---------------------------------------------------------------------------
-  'agent-orchestration':  { luminor: 'nexus',      guardian: 'ino',        team: 'development' },
-  'design-systems':       { luminor: 'prismatic',  guardian: 'lyria',      team: 'creative' },
-  'development-workflows': { luminor: 'logicus',   guardian: 'lyssandria', team: 'development' },
-  'testing-strategies':   { luminor: 'debugon',    guardian: 'draconia',   team: 'development' },
+  'agent-orchestration':  { luminor: 'integrator',      guardian: 'ino',        team: 'development' },
+  'design-systems':       { luminor: 'visual-designer',  guardian: 'lyria',      team: 'creative' },
+  'development-workflows': { luminor: 'systems-architect',   guardian: 'lyssandria', team: 'development' },
+  'testing-strategies':   { luminor: 'debugger',    guardian: 'draconia',   team: 'development' },
 
   // ---------------------------------------------------------------------------
   // Document & Export Skills
   // ---------------------------------------------------------------------------
-  'doc-coauthoring':      { luminor: 'lexicon',    guardian: 'alera',      team: 'writing' },
-  'docx':                 { luminor: 'lexicon',    guardian: 'alera',      team: 'writing' },
-  'pdf':                  { luminor: 'memoria',    guardian: 'lyssandria', team: 'research' },
-  'pptx':                 { luminor: 'prismatic',  guardian: 'lyria',      team: 'creative' },
-  'xlsx':                 { luminor: 'analytica',  guardian: 'draconia',   team: 'research' },
-  'web-artifacts-builder': { luminor: 'formis',    guardian: 'lyria',      team: 'creative' },
+  'doc-coauthoring':      { luminor: 'voice',    guardian: 'alera',      team: 'writing' },
+  'docx':                 { luminor: 'voice',    guardian: 'alera',      team: 'writing' },
+  'pdf':                  { luminor: 'deep-researcher',    guardian: 'lyssandria', team: 'research' },
+  'pptx':                 { luminor: 'visual-designer',  guardian: 'lyria',      team: 'creative' },
+  'xlsx':                 { luminor: 'deep-researcher',  guardian: 'draconia',   team: 'research' },
+  'web-artifacts-builder': { luminor: 'motion-designer',    guardian: 'lyria',      team: 'creative' },
 
   // ---------------------------------------------------------------------------
   // GitHub & DevOps Skills
   // ---------------------------------------------------------------------------
-  'github-code-review':   { luminor: 'synthra',    guardian: 'alera',      team: 'development' },
-  'github-multi-repo':    { luminor: 'nexus',      guardian: 'ino',        team: 'development' },
-  'github-project-management': { luminor: 'logicus', guardian: 'lyssandria', team: 'development' },
-  'github-release-management': { luminor: 'nexus',  guardian: 'ino',       team: 'development' },
-  'github-workflow-automation': { luminor: 'logicus', guardian: 'lyssandria', team: 'development' },
+  'github-code-review':   { luminor: 'code-crafter',    guardian: 'alera',      team: 'development' },
+  'github-multi-repo':    { luminor: 'integrator',      guardian: 'ino',        team: 'development' },
+  'github-project-management': { luminor: 'systems-architect', guardian: 'lyssandria', team: 'development' },
+  'github-release-management': { luminor: 'integrator',  guardian: 'ino',       team: 'development' },
+  'github-workflow-automation': { luminor: 'systems-architect', guardian: 'lyssandria', team: 'development' },
 
   // ---------------------------------------------------------------------------
   // Swarm & Agent Infrastructure Skills
   // ---------------------------------------------------------------------------
-  'swarm-orchestration':  { luminor: 'nexus',      guardian: 'ino',        team: 'development' },
-  'swarm-advanced':       { luminor: 'nexus',      guardian: 'ino',        team: 'development' },
-  'hooks-automation':     { luminor: 'logicus',    guardian: 'lyssandria', team: 'development' },
-  'opus-extended-thinking': { luminor: 'visionary',   guardian: 'aiyami',     team: 'research' },
-  'stream-chain':         { luminor: 'nexus',      guardian: 'ino',        team: 'development' },
-  'verification-quality': { luminor: 'analytica',  guardian: 'draconia',   team: 'research' },
-  'skill-builder':        { luminor: 'logicus',    guardian: 'lyssandria', team: 'development' },
+  'swarm-orchestration':  { luminor: 'integrator',      guardian: 'ino',        team: 'development' },
+  'swarm-advanced':       { luminor: 'integrator',      guardian: 'ino',        team: 'development' },
+  'hooks-automation':     { luminor: 'systems-architect',    guardian: 'lyssandria', team: 'development' },
+  'opus-extended-thinking': { luminor: 'deep-researcher',   guardian: 'aiyami',     team: 'research' },
+  'stream-chain':         { luminor: 'integrator',      guardian: 'ino',        team: 'development' },
+  'verification-quality': { luminor: 'deep-researcher',  guardian: 'draconia',   team: 'research' },
+  'skill-builder':        { luminor: 'systems-architect',    guardian: 'lyssandria', team: 'development' },
 
   // ---------------------------------------------------------------------------
   // AgentDB & Memory Skills
   // ---------------------------------------------------------------------------
-  'agentdb-advanced':     { luminor: 'memoria',    guardian: 'lyssandria', team: 'research' },
-  'agentdb-learning':     { luminor: 'memoria',    guardian: 'lyssandria', team: 'research' },
-  'agentdb-memory-patterns': { luminor: 'memoria', guardian: 'lyssandria', team: 'research' },
-  'agentdb-optimization': { luminor: 'analytica',  guardian: 'draconia',   team: 'research' },
-  'agentdb-vector-search': { luminor: 'memoria',   guardian: 'lyssandria', team: 'research' },
-  'reasoningbank-agentdb': { luminor: 'memoria',   guardian: 'lyssandria', team: 'research' },
-  'reasoningbank-intelligence': { luminor: 'visionary', guardian: 'aiyami',   team: 'research' },
+  'agentdb-advanced':     { luminor: 'deep-researcher',    guardian: 'lyssandria', team: 'research' },
+  'agentdb-learning':     { luminor: 'deep-researcher',    guardian: 'lyssandria', team: 'research' },
+  'agentdb-memory-patterns': { luminor: 'deep-researcher', guardian: 'lyssandria', team: 'research' },
+  'agentdb-optimization': { luminor: 'deep-researcher',  guardian: 'draconia',   team: 'research' },
+  'agentdb-vector-search': { luminor: 'deep-researcher',   guardian: 'lyssandria', team: 'research' },
+  'reasoningbank-agentdb': { luminor: 'deep-researcher',   guardian: 'lyssandria', team: 'research' },
+  'reasoningbank-intelligence': { luminor: 'deep-researcher', guardian: 'aiyami',   team: 'research' },
 
   // ---------------------------------------------------------------------------
   // V3 Implementation Skills
   // ---------------------------------------------------------------------------
-  'v3-cli-modernization': { luminor: 'synthra',    guardian: 'leyla',      team: 'development' },
-  'v3-core-implementation': { luminor: 'logicus',  guardian: 'lyssandria', team: 'development' },
-  'v3-ddd-architecture':  { luminor: 'logicus',    guardian: 'lyssandria', team: 'development' },
-  'v3-integration-deep':  { luminor: 'nexus',      guardian: 'ino',        team: 'development' },
-  'v3-mcp-optimization':  { luminor: 'analytica',  guardian: 'draconia',   team: 'research' },
-  'v3-memory-unification': { luminor: 'memoria',   guardian: 'lyssandria', team: 'research' },
-  'v3-performance-optimization': { luminor: 'analytica', guardian: 'draconia', team: 'research' },
-  'v3-security-overhaul': { luminor: 'debugon',    guardian: 'draconia',   team: 'development' },
-  'v3-swarm-coordination': { luminor: 'nexus',     guardian: 'ino',        team: 'development' },
+  'v3-cli-modernization': { luminor: 'code-crafter',    guardian: 'leyla',      team: 'development' },
+  'v3-core-implementation': { luminor: 'systems-architect',  guardian: 'lyssandria', team: 'development' },
+  'v3-ddd-architecture':  { luminor: 'systems-architect',    guardian: 'lyssandria', team: 'development' },
+  'v3-integration-deep':  { luminor: 'integrator',      guardian: 'ino',        team: 'development' },
+  'v3-mcp-optimization':  { luminor: 'deep-researcher',  guardian: 'draconia',   team: 'research' },
+  'v3-memory-unification': { luminor: 'deep-researcher',   guardian: 'lyssandria', team: 'research' },
+  'v3-performance-optimization': { luminor: 'deep-researcher', guardian: 'draconia', team: 'research' },
+  'v3-security-overhaul': { luminor: 'debugger',    guardian: 'draconia',   team: 'development' },
+  'v3-swarm-coordination': { luminor: 'integrator',     guardian: 'ino',        team: 'development' },
 
   // ---------------------------------------------------------------------------
   // Starlight Skills
   // ---------------------------------------------------------------------------
-  'starlight-core':       { luminor: 'logicus',    guardian: 'lyssandria', team: 'development' },
-  'starlight-engineering': { luminor: 'synthra',   guardian: 'leyla',      team: 'development' },
-  'starlight-memex':      { luminor: 'memoria',    guardian: 'lyssandria', team: 'research' },
-  'starlight-orchestrator': { luminor: 'nexus',    guardian: 'ino',        team: 'development' },
+  'starlight-core':       { luminor: 'systems-architect',    guardian: 'lyssandria', team: 'development' },
+  'starlight-engineering': { luminor: 'code-crafter',   guardian: 'leyla',      team: 'development' },
+  'starlight-memex':      { luminor: 'deep-researcher',    guardian: 'lyssandria', team: 'research' },
+  'starlight-orchestrator': { luminor: 'integrator',    guardian: 'ino',        team: 'development' },
 
   // ---------------------------------------------------------------------------
   // Meta & Workflow Skills
   // ---------------------------------------------------------------------------
-  'lore-keeper':          { luminor: 'memoria',    guardian: 'lyssandria', team: 'research' },
-  'guardian-voice':       { luminor: 'veritas',    guardian: 'alera',      team: 'writing' },
-  'creation-engine':      { luminor: 'formis',     guardian: 'leyla',      team: 'creative' },
-  'guardian-evolution-system': { luminor: 'futura', guardian: 'elara',     team: 'research' },
-  'luminor-personality-design': { luminor: 'formis', guardian: 'lyria',   team: 'creative' },
-  'scientific-magic':     { luminor: 'analytica',  guardian: 'draconia',   team: 'research' },
-  'chess-factory-generation': { luminor: 'logicus', guardian: 'draconia',  team: 'development' },
-  'slack-gif-creator':    { luminor: 'motio',      guardian: 'leyla',      team: 'creative' },
+  'lore-keeper':          { luminor: 'deep-researcher',    guardian: 'lyssandria', team: 'research' },
+  'guardian-voice':       { luminor: 'voice',    guardian: 'alera',      team: 'writing' },
+  'creation-engine':      { luminor: 'motion-designer',     guardian: 'leyla',      team: 'creative' },
+  'guardian-evolution-system': { luminor: 'strategist', guardian: 'elara',     team: 'research' },
+  'luminor-personality-design': { luminor: 'motion-designer', guardian: 'lyria',   team: 'creative' },
+  'scientific-magic':     { luminor: 'deep-researcher',  guardian: 'draconia',   team: 'research' },
+  'chess-factory-generation': { luminor: 'systems-architect', guardian: 'draconia',  team: 'development' },
+  'slack-gif-creator':    { luminor: 'motion-designer',      guardian: 'leyla',      team: 'creative' },
 
   // ---------------------------------------------------------------------------
   // Industry & Premium Skills
   // ---------------------------------------------------------------------------
-  'enterprise-orchestration': { luminor: 'nexus',  guardian: 'ino',        team: 'development' },
-  'industry-verticals':   { luminor: 'futura',     guardian: 'elara',      team: 'research' },
-  'teacher-mentor':       { luminor: 'visionary',     guardian: 'aiyami',     team: 'research' },
-  'teacher-team':         { luminor: 'visionary',     guardian: 'aiyami',     team: 'research' },
-  'visionary-council':    { luminor: 'futura',     guardian: 'elara',      team: 'research' },
-  'visionary-team':       { luminor: 'futura',     guardian: 'elara',      team: 'research' },
-  'game-development':     { luminor: 'motio',      guardian: 'draconia',   team: 'creative' },
-  'startup-building':     { luminor: 'futura',     guardian: 'ino',        team: 'research' },
-  'technical-writing':    { luminor: 'lexicon',    guardian: 'alera',      team: 'writing' },
-  'ai-engineering':       { luminor: 'logicus',    guardian: 'lyssandria', team: 'development' },
-  'security':             { luminor: 'debugon',    guardian: 'draconia',   team: 'development' },
+  'enterprise-orchestration': { luminor: 'integrator',  guardian: 'ino',        team: 'development' },
+  'industry-verticals':   { luminor: 'strategist',     guardian: 'elara',      team: 'research' },
+  'teacher-mentor':       { luminor: 'deep-researcher',     guardian: 'aiyami',     team: 'research' },
+  'teacher-team':         { luminor: 'deep-researcher',     guardian: 'aiyami',     team: 'research' },
+  'visionary-council':    { luminor: 'strategist',     guardian: 'elara',      team: 'research' },
+  'visionary-team':       { luminor: 'strategist',     guardian: 'elara',      team: 'research' },
+  'game-development':     { luminor: 'motion-designer',      guardian: 'draconia',   team: 'creative' },
+  'startup-building':     { luminor: 'strategist',     guardian: 'ino',        team: 'research' },
+  'technical-writing':    { luminor: 'voice',    guardian: 'alera',      team: 'writing' },
+  'ai-engineering':       { luminor: 'systems-architect',    guardian: 'lyssandria', team: 'development' },
+  'security':             { luminor: 'debugger',    guardian: 'draconia',   team: 'development' },
 
   // ---------------------------------------------------------------------------
   // Supabase & Database Skills
   // ---------------------------------------------------------------------------
-  'supabase-postgres-best-practices': { luminor: 'logicus', guardian: 'lyssandria', team: 'development' },
+  'supabase-postgres-best-practices': { luminor: 'systems-architect', guardian: 'lyssandria', team: 'development' },
 
   // ---------------------------------------------------------------------------
   // OSS Skills (unique to oss/skills directory)
   // ---------------------------------------------------------------------------
-  'arcanea-media':        { luminor: 'prismatic',  guardian: 'lyria',      team: 'creative' },
-  'arcanea-orchestrator': { luminor: 'nexus',      guardian: 'ino',        team: 'development' },
-  'arcanea-claw-manager': { luminor: 'logicus',    guardian: 'lyssandria', team: 'development' },
+  'arcanea-media':        { luminor: 'visual-designer',  guardian: 'lyria',      team: 'creative' },
+  'arcanea-orchestrator': { luminor: 'integrator',      guardian: 'ino',        team: 'development' },
+  'arcanea-claw-manager': { luminor: 'systems-architect',    guardian: 'lyssandria', team: 'development' },
 };
 
 // ---------------------------------------------------------------------------
