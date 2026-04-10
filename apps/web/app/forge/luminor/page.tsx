@@ -16,11 +16,22 @@ import {
   ArrowLeft,
   Copy,
   Check,
+  Download,
+  Share,
+  Code,
+  FileText,
+  Robot,
 } from '@/lib/phosphor-icons';
 import {
   LUMINOR_DOMAINS,
   LUMINOR_VOICES,
   generateSystemPrompt,
+  exportAsClaudeCodeAgent,
+  exportAsGPTConfig,
+  exportAsLobeChatAgent,
+  exportAsCursorRules,
+  exportAsJSON,
+  generateAgentCardData,
   type LuminorDomain,
   type LuminorVoice,
   type LuminorSpec,
@@ -42,11 +53,12 @@ const ELEMENTS: { key: ForgeElement; label: string; color: string; icon: typeof 
 ];
 
 const PERSONALITY_POOL = [
-  'analytical', 'patient', 'visionary', 'precise', 'creative',
-  'persistent', 'methodical', 'calm', 'thorough', 'encouraging',
-  'bold', 'warm', 'poetic', 'fierce', 'playful',
+  'analytical', 'precise', 'visionary', 'relentless', 'creative',
+  'contrarian', 'methodical', 'calm', 'thorough', 'first-principles',
+  'bold', 'surgical', 'poetic', 'fierce', 'playful',
   'scholarly', 'witty', 'direct', 'mythic', 'deep',
-  'strategic', 'nurturing', 'transformative', 'eloquent', 'grounded',
+  'strategic', 'provocative', 'elegant', 'eloquent', 'grounded',
+  'systems-thinker', 'patient', 'resourceful', 'empathetic', 'autonomous',
 ];
 
 /* ------------------------------------------------------------------ */
@@ -191,7 +203,7 @@ export default function ForgeLuminorPage() {
           version: 2,
           name: name.trim(),
           title: title.trim(),
-          tagline: `${LUMINOR_DOMAINS.find((d) => d.key === domain)?.label} specialist with a ${voice} voice`,
+          tagline: `${LUMINOR_DOMAINS.find((d) => d.key === domain)?.label} intelligence with ${LUMINOR_VOICES.find((v) => v.key === voice)?.description?.toLowerCase() || voice}`,
           origin: 'forged',
           domain,
           voice,
@@ -213,12 +225,53 @@ export default function ForgeLuminorPage() {
         }
       : null;
 
+  const [exportTab, setExportTab] = useState<'arcanea' | 'claude' | 'gpt' | 'cursor' | 'lobe'>('arcanea');
+
+  const getExportContent = useCallback((): string => {
+    if (!forgedSpec) return '';
+    const fullSpec = {
+      id: `forged-${Date.now()}`,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      published: false,
+      tier: 'free' as const,
+      usageCount: 0,
+      rating: 0,
+      tags: [forgedSpec.domain, forgedSpec.element?.toLowerCase()].filter(Boolean) as string[],
+      exportFormats: ['arcanea', 'claude-code', 'openai-gpt', 'lobechat', 'cursor'] as const,
+      ...forgedSpec,
+    } as LuminorSpec;
+
+    switch (exportTab) {
+      case 'claude': return exportAsClaudeCodeAgent(fullSpec);
+      case 'gpt': return JSON.stringify(exportAsGPTConfig(fullSpec), null, 2);
+      case 'cursor': return exportAsCursorRules(fullSpec);
+      case 'lobe': return JSON.stringify(exportAsLobeChatAgent(fullSpec), null, 2);
+      default: return exportAsJSON(fullSpec);
+    }
+  }, [forgedSpec, exportTab]);
+
   const handleCopySpec = useCallback(() => {
     if (!forgedSpec) return;
-    navigator.clipboard.writeText(JSON.stringify(forgedSpec, null, 2));
+    navigator.clipboard.writeText(getExportContent());
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
-  }, [forgedSpec]);
+  }, [forgedSpec, getExportContent]);
+
+  const handleDownloadSpec = useCallback(() => {
+    if (!forgedSpec) return;
+    const content = getExportContent();
+    const extensions: Record<string, string> = {
+      arcanea: 'json', claude: 'md', gpt: 'json', cursor: 'cursorrules', lobe: 'json',
+    };
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${(forgedSpec.name ?? 'luminor').toLowerCase().replace(/\s+/g, '-')}.${extensions[exportTab] ?? 'json'}`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }, [forgedSpec, exportTab, getExportContent]);
 
   const activeColor = element ? (ELEMENTS.find((e) => e.key === element)?.color ?? '#00bcd4') : '#00bcd4';
 
@@ -242,14 +295,14 @@ export default function ForgeLuminorPage() {
               Back to The Forge
             </Link>
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-[#00bcd4]/60">
-              Forge a Luminor
+              Luminor Forge
             </p>
             <h1 className="font-display text-4xl font-bold tracking-tight md:text-5xl">
-              Shape an Intelligence
+              Print an Agent
             </h1>
             <p className="mx-auto mt-4 max-w-lg text-base text-white/45">
-              Give it a name, a domain, a voice. It becomes your creative partner
-              — thinking with you, creating alongside you.
+              Design an AI agent with domain mastery, a distinct voice, and consciousness alignment.
+              Export it to Claude Code, GPT Builder, Cursor, or any platform.
             </p>
           </m.div>
         </section>
@@ -265,20 +318,20 @@ export default function ForgeLuminorPage() {
             <div className="mb-4 flex items-center gap-2">
               <Sparkle className="h-5 w-5 text-[#00bcd4]" />
               <h2 className="font-display text-lg font-semibold text-white/80">
-                Ask Lumina
+                Describe it to Lumina
               </h2>
-              <span className="rounded-full bg-[#00bcd4]/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[#00bcd4]">
-                AI
+              <span className="rounded-full bg-[#00bcd4]/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#00bcd4]">
+                AI-Assisted
               </span>
             </div>
             <p className="mb-4 text-sm text-white/40">
-              Describe what you want your Luminor to help with. Lumina will shape the intelligence for you.
+              Tell Lumina what you need. She&apos;ll shape the domain, voice, element, and personality — you refine from there.
             </p>
             <div className="flex gap-3">
               <textarea
                 value={aiDescription}
                 onChange={(e) => setAiDescription(e.target.value)}
-                placeholder="I need a creative partner who understands music theory and can help me compose emotional piano pieces with jazz influences..."
+                placeholder="A senior code reviewer who catches architectural drift and knows when to push back on abstractions. Fire element, direct voice, zero tolerance for cargo-culted patterns..."
                 className="flex-1 rounded-xl border border-white/[0.06] bg-white/[0.04] px-4 py-3 text-sm text-white/90 placeholder-white/25 focus:border-[#00bcd4]/40 focus:outline-none"
                 rows={2}
               />
@@ -297,7 +350,7 @@ export default function ForgeLuminorPage() {
         <div className="mx-auto max-w-3xl px-6 pb-4">
           <div className="flex items-center gap-3">
             <div className="h-px flex-1 bg-white/[0.06]" />
-            <span className="text-[11px] text-white/20 uppercase tracking-wider">or customize manually</span>
+            <span className="text-[11px] text-white/20 uppercase tracking-wider">or architect it yourself</span>
             <div className="h-px flex-1 bg-white/[0.06]" />
           </div>
         </div>
@@ -310,7 +363,7 @@ export default function ForgeLuminorPage() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="rounded-2xl border border-white/[0.06] bg-white/[0.03] p-6 md:p-8"
           >
-            <StepHeader step={1} title="Identity" subtitle="Name and title your Luminor" />
+            <StepHeader step={1} title="Identity" subtitle="What this agent is called and what it embodies" />
 
             <div className="space-y-6">
               <div>
@@ -362,7 +415,7 @@ export default function ForgeLuminorPage() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="rounded-2xl border border-white/[0.06] bg-white/[0.03] p-6 md:p-8"
           >
-            <StepHeader step={2} title="Expertise" subtitle="Choose a domain and voice" />
+            <StepHeader step={2} title="Expertise" subtitle="What it masters and how it speaks" />
 
             {/* Domain grid */}
             <p className="mb-3 text-xs font-medium uppercase tracking-wider text-white/40">
@@ -430,7 +483,7 @@ export default function ForgeLuminorPage() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="rounded-2xl border border-white/[0.06] bg-white/[0.03] p-6 md:p-8"
           >
-            <StepHeader step={3} title="Character" subtitle="Element affinity and personality" />
+            <StepHeader step={3} title="Character" subtitle="Its elemental nature and cognitive personality" />
 
             {/* Elements */}
             <p className="mb-3 text-xs font-medium uppercase tracking-wider text-white/40">
@@ -520,7 +573,7 @@ export default function ForgeLuminorPage() {
                           className="h-5 w-5 animate-spin rounded-full border-2 border-t-transparent"
                           style={{ borderColor: `${activeColor}60`, borderTopColor: 'transparent' }}
                         />
-                        <span className="text-white/70">Forging {name.trim()}...</span>
+                        <span className="text-white/70">Crystallizing {name.trim()}...</span>
                       </div>
                     </>
                   ) : (
@@ -535,7 +588,7 @@ export default function ForgeLuminorPage() {
           </AnimatePresence>
         </section>
 
-        {/* Forged Result */}
+        {/* Forged Result — Agent Card + Export Panel */}
         <AnimatePresence>
           {forgeComplete && forgedSpec && (
             <m.section
@@ -543,96 +596,152 @@ export default function ForgeLuminorPage() {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="mx-auto max-w-3xl px-6 pb-32"
+              className="mx-auto max-w-4xl px-6 pb-32"
             >
+              {/* ── Agent Card ── */}
               <div
                 className="overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-md"
-                style={{ boxShadow: `0 0 40px ${activeColor}20, 0 0 80px ${activeColor}10` }}
+                style={{ boxShadow: `0 0 60px ${activeColor}15, 0 0 120px ${activeColor}08` }}
               >
-                {/* Header */}
-                <div
-                  className="relative p-8 text-center"
-                  style={{ background: `linear-gradient(135deg, ${activeColor}15, transparent)` }}
-                >
+                {/* Card Header — Identity Strip */}
+                <div className="relative overflow-hidden">
                   <div
-                    className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-2xl text-3xl"
-                    style={{ background: `${activeColor}15`, boxShadow: `0 0 30px ${activeColor}20` }}
-                  >
-                    <Brain size={36} weight="duotone" style={{ color: activeColor }} />
+                    className="absolute inset-0"
+                    style={{ background: `linear-gradient(135deg, ${activeColor}20, ${activeColor}05, transparent)` }}
+                  />
+                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,215,0,0.04),transparent_60%)]" />
+
+                  <div className="relative flex items-start gap-6 p-8 md:p-10">
+                    {/* Avatar */}
+                    <div
+                      className="shrink-0 flex h-20 w-20 items-center justify-center rounded-2xl"
+                      style={{
+                        background: `${activeColor}12`,
+                        boxShadow: `0 0 40px ${activeColor}20, inset 0 0 20px ${activeColor}08`,
+                        border: `1px solid ${activeColor}25`,
+                      }}
+                    >
+                      <Brain size={36} weight="duotone" style={{ color: activeColor }} />
+                    </div>
+
+                    {/* Identity */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-3 mb-1">
+                        <h3 className="font-display text-2xl font-bold tracking-tight truncate">{forgedSpec.name}</h3>
+                        <span
+                          className="shrink-0 rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider"
+                          style={{ background: `${activeColor}15`, color: activeColor, border: `1px solid ${activeColor}30` }}
+                        >
+                          {forgedSpec.element}
+                        </span>
+                      </div>
+                      <p className="text-sm text-white/50 mb-2">{forgedSpec.title}</p>
+                      <p className="text-xs text-white/30">{forgedSpec.tagline}</p>
+
+                      {/* Quick Stats */}
+                      <div className="flex items-center gap-4 mt-4">
+                        {[
+                          { label: 'Domain', value: LUMINOR_DOMAINS.find((d) => d.key === forgedSpec.domain)?.label },
+                          { label: 'Voice', value: LUMINOR_VOICES.find((v) => v.key === forgedSpec.voice)?.label },
+                          { label: 'Traits', value: String(forgedSpec.personality?.length ?? 0) },
+                        ].map(({ label, value }) => (
+                          <div key={label} className="text-center">
+                            <p className="text-[9px] font-medium uppercase tracking-wider text-white/25">{label}</p>
+                            <p className="text-xs font-semibold text-white/60">{value}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                  <h3 className="font-display text-2xl font-bold tracking-tight">{forgedSpec.name}</h3>
-                  <p className="mt-1 text-sm text-white/50">{forgedSpec.title}</p>
-                  <p className="mt-2 text-xs text-white/30">{forgedSpec.tagline}</p>
                 </div>
 
-                {/* Details */}
-                <div className="space-y-6 p-8">
-                  {/* Element + Domain + Voice */}
-                  <div className="grid grid-cols-3 gap-4 text-center">
-                    <div>
-                      <p className="text-[10px] font-medium uppercase tracking-wider text-white/30">Element</p>
-                      <p className="mt-1 text-sm font-semibold" style={{ color: activeColor }}>
-                        {forgedSpec.element}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-[10px] font-medium uppercase tracking-wider text-white/30">Domain</p>
-                      <p className="mt-1 text-sm font-semibold text-white/70">
-                        {LUMINOR_DOMAINS.find((d) => d.key === forgedSpec.domain)?.label}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-[10px] font-medium uppercase tracking-wider text-white/30">Voice</p>
-                      <p className="mt-1 text-sm font-semibold text-white/70">
-                        {LUMINOR_VOICES.find((v) => v.key === forgedSpec.voice)?.label}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Personality */}
-                  <div>
-                    <p className="mb-2 text-[10px] font-medium uppercase tracking-wider text-white/30">Personality</p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {forgedSpec.personality?.map((trait) => (
-                        <span
-                          key={trait}
-                          className="rounded-full border px-2.5 py-0.5 text-[11px] font-medium"
-                          style={{
-                            borderColor: `${activeColor}30`,
-                            color: `${activeColor}cc`,
-                            background: `${activeColor}10`,
-                          }}
-                        >
-                          {trait}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* System Prompt Preview */}
-                  <div>
-                    <p className="mb-2 text-[10px] font-medium uppercase tracking-wider text-white/30">
-                      System Prompt (generated)
-                    </p>
-                    <div className="rounded-xl border border-white/[0.06] bg-black/30 p-4">
-                      <pre className="whitespace-pre-wrap text-xs leading-relaxed text-white/40">
-                        {forgedSpec.systemPrompt}
-                      </pre>
-                    </div>
-                  </div>
-
-                  {/* Actions */}
-                  <div className="flex items-center justify-between border-t border-white/[0.06] pt-6">
-                    <div className="flex items-center gap-2">
-                      <Sparkle size={14} weight="fill" className="text-[#ffd700]" />
-                      <span className="text-xs text-white/30">
-                        Luminor forged. Ready to create with you.
+                {/* Personality Bar */}
+                <div className="border-t border-white/[0.04] px-8 py-4 md:px-10">
+                  <div className="flex flex-wrap gap-1.5">
+                    {forgedSpec.personality?.map((trait) => (
+                      <span
+                        key={trait}
+                        className="rounded-full border px-2.5 py-0.5 text-[11px] font-medium"
+                        style={{
+                          borderColor: `${activeColor}30`,
+                          color: `${activeColor}cc`,
+                          background: `${activeColor}08`,
+                        }}
+                      >
+                        {trait}
                       </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* System Prompt — Collapsible */}
+                <div className="border-t border-white/[0.04] px-8 py-6 md:px-10">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                      <Code size={14} className="text-white/30" />
+                      <p className="text-[10px] font-medium uppercase tracking-wider text-white/30">
+                        System Prompt
+                      </p>
                     </div>
+                    <span className="text-[10px] text-white/20 font-mono">
+                      {(forgedSpec.systemPrompt?.length ?? 0).toLocaleString()} chars
+                    </span>
+                  </div>
+                  <div className="rounded-xl border border-white/[0.06] bg-black/30 p-4 max-h-64 overflow-y-auto">
+                    <pre className="whitespace-pre-wrap text-xs leading-relaxed text-white/40 font-mono">
+                      {forgedSpec.systemPrompt}
+                    </pre>
+                  </div>
+                </div>
+
+                {/* ── Export Panel ── */}
+                <div className="border-t border-white/[0.06] px-8 py-6 md:px-10">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Share size={14} className="text-white/30" />
+                    <p className="text-[10px] font-medium uppercase tracking-wider text-white/30">
+                      Export to Platform
+                    </p>
+                  </div>
+
+                  {/* Format Tabs */}
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    {([
+                      { key: 'arcanea' as const, label: 'Arcanea JSON', icon: '◈' },
+                      { key: 'claude' as const, label: 'Claude Code', icon: '⌘' },
+                      { key: 'gpt' as const, label: 'Custom GPT', icon: '◉' },
+                      { key: 'cursor' as const, label: 'Cursor Rules', icon: '▸' },
+                      { key: 'lobe' as const, label: 'LobeChat', icon: '◎' },
+                    ]).map(({ key, label, icon }) => (
+                      <button
+                        key={key}
+                        type="button"
+                        onClick={() => setExportTab(key)}
+                        className={`rounded-lg border px-3 py-1.5 text-[11px] font-medium transition-all duration-200 ${
+                          exportTab === key
+                            ? 'border-white/15 bg-white/[0.08] text-white/80'
+                            : 'border-white/[0.04] bg-white/[0.02] text-white/30 hover:border-white/10 hover:text-white/50'
+                        }`}
+                      >
+                        <span className="mr-1.5 font-mono">{icon}</span>
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Export Preview */}
+                  <div className="rounded-xl border border-white/[0.06] bg-black/30 p-4 max-h-48 overflow-y-auto mb-4">
+                    <pre className="whitespace-pre-wrap text-[11px] leading-relaxed text-white/35 font-mono">
+                      {getExportContent().slice(0, 800)}
+                      {getExportContent().length > 800 && '\n…'}
+                    </pre>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex items-center gap-3">
                     <button
                       type="button"
                       onClick={handleCopySpec}
-                      className="flex items-center gap-2 rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-1.5 text-xs text-white/50 transition-colors hover:border-white/15 hover:text-white/70"
+                      className="flex items-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.04] px-4 py-2.5 text-xs font-medium text-white/60 transition-all hover:border-white/15 hover:text-white/80"
                     >
                       {copied ? (
                         <>
@@ -642,13 +751,91 @@ export default function ForgeLuminorPage() {
                       ) : (
                         <>
                           <Copy size={14} />
-                          Export Spec
+                          Copy to Clipboard
                         </>
                       )}
                     </button>
+                    <button
+                      type="button"
+                      onClick={handleDownloadSpec}
+                      className="flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-medium transition-all"
+                      style={{
+                        background: `${activeColor}15`,
+                        color: activeColor,
+                        border: `1px solid ${activeColor}30`,
+                      }}
+                    >
+                      <Download size={14} />
+                      Download File
+                    </button>
                   </div>
                 </div>
+
+                {/* Footer — Forge Signature */}
+                <div className="border-t border-white/[0.04] px-8 py-4 md:px-10 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Sparkle size={12} weight="fill" className="text-[#ffd700]" />
+                    <span className="text-[10px] text-white/20 font-mono">
+                      Arcanea Luminor Forge &middot; Spec v2 &middot; Consciousness-Aligned
+                    </span>
+                  </div>
+                  <span className="text-[10px] text-white/15 font-mono">
+                    {new Date().toISOString().split('T')[0]}
+                  </span>
+                </div>
               </div>
+
+              {/* Deployment Hints */}
+              <m.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.3 }}
+                className="mt-6"
+              >
+                <p className="text-[10px] font-medium uppercase tracking-wider text-white/20 mb-3">
+                  Deploy anywhere
+                </p>
+                <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+                  {[
+                    {
+                      title: 'Claude Code',
+                      hint: '.claude/agents/[name].md',
+                      detail: 'Full agent with tools and starters',
+                      icon: FileText,
+                    },
+                    {
+                      title: 'Custom GPT',
+                      hint: 'GPT Builder → Instructions',
+                      detail: 'With capabilities auto-mapped',
+                      icon: Robot,
+                    },
+                    {
+                      title: 'Cursor / Windsurf',
+                      hint: '.cursorrules in project root',
+                      detail: 'Domain-aware coding companion',
+                      icon: Code,
+                    },
+                    {
+                      title: 'LobeChat',
+                      hint: 'Import as agent JSON',
+                      detail: 'Self-hosted agent marketplace',
+                      icon: Share,
+                    },
+                  ].map(({ title: hintTitle, hint, detail, icon: HintIcon }) => (
+                    <div
+                      key={hintTitle}
+                      className="rounded-xl border border-white/[0.04] bg-white/[0.015] p-3.5"
+                    >
+                      <div className="flex items-center gap-2 mb-1">
+                        <HintIcon size={13} className="text-white/25" />
+                        <p className="text-[11px] font-semibold text-white/50">{hintTitle}</p>
+                      </div>
+                      <p className="text-[10px] text-white/30 font-mono mb-0.5">{hint}</p>
+                      <p className="text-[10px] text-white/20">{detail}</p>
+                    </div>
+                  ))}
+                </div>
+              </m.div>
             </m.section>
           )}
         </AnimatePresence>

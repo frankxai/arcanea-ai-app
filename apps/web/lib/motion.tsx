@@ -5,42 +5,8 @@ import { ReactNode } from 'react';
 
 /**
  * MotionProvider — wraps children with framer-motion's LazyMotion to reduce
- * the initial JS bundle. Instead of importing the full `motion` module (~33 kB),
- * pages wrapped in this provider can use `m.div`, `m.span`, etc. which only
- * load the `domAnimation` feature set (~7 kB) on demand.
- *
- * Usage:
- *   import { MotionProvider } from '@/lib/motion';
- *   import { m } from 'framer-motion';
- *
- *   export default function Page() {
- *     return (
- *       <MotionProvider>
- *         <m.div animate={{ opacity: 1 }}>Hello</m.div>
- *       </MotionProvider>
- *     );
- *   }
- *
- * The `strict` prop ensures that any accidental use of `motion.*` inside
- * the provider tree throws an error, catching bundle-size regressions early.
- *
- * For pages that need the full feature set (layout animations, drag, etc.),
- * swap `domAnimation` for `domMax`:
- *
- *   import { LazyMotion, domMax } from 'framer-motion';
- *
- * Migration strategy (incremental):
- *   1. Wrap the page/layout in <MotionProvider>
- *   2. Replace `motion.div` with `m.div` (etc.) inside that tree
- *   3. Remove the direct `import { motion } from 'framer-motion'`
- *   4. Verify animations still work
- *
- * Top candidates for migration (by file size & motion usage):
- *   - apps/web/app/v3/v3-below-fold.tsx        (1313 lines, ~30 motion.div instances)
- *   - apps/web/app/academy/gate-quiz/page.tsx   (1251 lines, AnimatePresence + motion)
- *   - apps/web/app/v2/v2-content.tsx            (1204 lines, ~25 motion.div instances)
- *   - apps/web/app/v1/v1-content.tsx            (1169 lines)
- *   - apps/web/app/library/graph/graph-visualization.tsx (1125 lines)
+ * the initial JS bundle. Pages wrapped in this provider use `m.div` instead
+ * of `motion.div` to load only the `domAnimation` feature set (~7 kB).
  */
 export function MotionProvider({ children }: { children: ReactNode }) {
   return (
@@ -50,8 +16,53 @@ export function MotionProvider({ children }: { children: ReactNode }) {
   );
 }
 
-/**
- * Re-export `m` for convenience so consumers can do:
- *   import { MotionProvider, m } from '@/lib/motion';
- */
 export { m };
+
+/**
+ * Motion primitives — April 2026 top-tier easing curves and spring configs.
+ * NEVER use default easeOut. Always reference these.
+ */
+
+export const EASE = {
+  smooth: [0.22, 1, 0.36, 1] as [number, number, number, number],
+  apple:  [0.16, 1, 0.3, 1] as [number, number, number, number],
+  mat:    [0.4, 0, 0.2, 1] as [number, number, number, number],
+  anti:   [0.83, 0, 0.17, 1] as [number, number, number, number],
+} as const;
+
+export const SPRING = {
+  gentle:  { type: 'spring', stiffness: 120, damping: 20, mass: 1 } as const,
+  snappy:  { type: 'spring', stiffness: 260, damping: 20, mass: 1 } as const,
+  bouncy:  { type: 'spring', stiffness: 400, damping: 15, mass: 1 } as const,
+  slow:    { type: 'spring', stiffness: 80, damping: 25, mass: 1 } as const,
+} as const;
+
+export const STAGGER = {
+  fast:     { staggerChildren: 0.05, delayChildren: 0.1 },
+  standard: { staggerChildren: 0.08, delayChildren: 0.15 },
+  dramatic: { staggerChildren: 0.12, delayChildren: 0.25 },
+} as const;
+
+export const DURATION = {
+  micro:     0.15,
+  standard:  0.3,
+  dramatic:  0.5,
+  cinematic: 0.8,
+} as const;
+
+export const fadeInUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: DURATION.standard, ease: EASE.smooth } },
+};
+
+export const blurInFocus = {
+  hidden: { opacity: 0, filter: 'blur(12px)' },
+  visible: { opacity: 1, filter: 'blur(0px)', transition: { duration: DURATION.dramatic, ease: EASE.smooth } },
+};
+
+export const staggerParent = {
+  hidden: {},
+  visible: { transition: STAGGER.standard },
+};
+
+export const VIEWPORT = { once: true, margin: '-80px' } as const;

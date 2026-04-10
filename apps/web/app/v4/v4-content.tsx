@@ -113,7 +113,7 @@ export function V4Content({
         <div className="grid md:grid-cols-3 gap-4">
           <Link href="/lore/guardians" className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 hover:bg-white/[0.05] transition">
             <PhShieldStar className="w-7 h-7 text-cyan-100" />
-            <p className="mt-4 text-xs uppercase tracking-[0.2em] text-white/50">16 Luminors · 4 Teams</p>
+            <p className="mt-4 text-xs uppercase tracking-[0.2em] text-white/50">12 Luminors · 4 Teams</p>
             <h3 className="mt-2 text-xl font-semibold">Creative Companions</h3>
             <p className="mt-3 text-sm text-white/70">Each one thinks differently. Create with the one that matches your mind.</p>
           </Link>

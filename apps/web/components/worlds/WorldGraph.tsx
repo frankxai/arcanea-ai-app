@@ -11,8 +11,8 @@ import ReactFlow, {
   type NodeProps,
   type Node as ReactFlowNode,
   type Edge as ReactFlowEdge,
-} from 'reactflow';
-import 'reactflow/dist/style.css';
+} from '@xyflow/react';
+import '@xyflow/react/dist/style.css';
 import { m } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import {

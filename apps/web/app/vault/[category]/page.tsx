@@ -134,7 +134,7 @@ export default async function VaultCategoryPage({ params }: Props) {
             <div className="w-16 h-16 mx-auto rounded-2xl flex items-center justify-center mb-4" style={{ backgroundColor: `${config.color}08` }}>
               <div className="w-4 h-4 rounded-full opacity-30" style={{ backgroundColor: config.color }} />
             </div>
-            <p className="text-[#708094] text-sm">Awaiting first insight.</p>
+            <p className="text-[#708094] text-sm">Empty.</p>
             <p className="text-[#708094]/50 text-xs mt-1">Entries appear here as the vault grows.</p>
           </div>
         )}

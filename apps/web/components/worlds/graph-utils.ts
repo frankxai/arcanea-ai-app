@@ -1,4 +1,4 @@
-import type { Node as ReactFlowNode, Edge as ReactFlowEdge } from 'reactflow';
+import type { Node as ReactFlowNode, Edge as ReactFlowEdge } from '@xyflow/react';
 
 // ─── Domain types ────────────────────────────────────────────────────────────
 

@@ -121,7 +121,7 @@ export function HeroCinematic() {
           animate="visible"
           variants={fadeUp}
         >
-          16 Luminors. Writing, design, code, music, research.
+          12 Luminors. Writing, design, code, music, research.
           <br className="hidden md:block" />
           One platform for everything you create.
         </m.p>

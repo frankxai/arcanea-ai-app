@@ -424,7 +424,7 @@ export default function LoginPage() {
         <div className="flex items-center justify-center gap-4 mt-6 text-[11px] text-text-muted/50 font-mono">
           <span>486K+ words</span>
           <span className="w-1 h-1 rounded-full bg-white/10" />
-          <span>16 Luminors</span>
+          <span>12 Luminors</span>
           <span className="w-1 h-1 rounded-full bg-white/10" />
           <span>Open source</span>
         </div>

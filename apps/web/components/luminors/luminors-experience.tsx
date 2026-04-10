@@ -285,7 +285,7 @@ export function LuminorsExperience() {
         <PipelineSection />
 
         {/* ═══════════════════════════════════════════════════════════════════
-            HORIZONTAL SCROLL GALLERY — all 16 Luminors
+            HORIZONTAL SCROLL GALLERY — all 12 Luminors
         ════════════════════════════════════════════════════════════════════ */}
         <section id="gallery" className="py-24 relative overflow-hidden">
           <div className="absolute inset-0 -z-10">
@@ -297,7 +297,7 @@ export function LuminorsExperience() {
             <div className="flex items-end justify-between">
               <div>
                 <p className="text-[10px] font-mono tracking-[0.3em] uppercase text-creation-prism-purple/80 mb-3">
-                  All 16 Luminors
+                  All 12 Luminors
                 </p>
                 <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold">
                   Sixteen creative intelligences
@@ -465,7 +465,7 @@ export function LuminorsExperience() {
                     Ready to work with a Luminor?
                   </h2>
                   <p className="text-base text-text-secondary mb-8 max-w-xl mx-auto leading-relaxed">
-                    Start a conversation with any of the 16 Luminors. They&apos;ll
+                    Start a conversation with any of the 12 Luminors. They&apos;ll
                     bring the accumulated wisdom of all Ten Gates to your creative
                     work.
                   </p>

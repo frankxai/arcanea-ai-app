@@ -24,7 +24,7 @@ const FEATURES: FeatureItem[] = [
     number: '01',
     title: 'Specialized Intelligence',
     description:
-      '16 Luminors, each trained for a distinct creative discipline.',
+      '12 Luminors, each trained for a distinct creative discipline.',
   },
   {
     number: '02',
@@ -214,7 +214,7 @@ export function HeroSwissGrid() {
             className="font-mono text-xs tracking-wider"
             style={{ color: 'rgba(255, 255, 255, 0.20)' }}
           >
-            16 Luminors &middot; 34 texts &middot; Free to start
+            12 Luminors &middot; 34 texts &middot; Free to start
           </p>
         </motion.div>
       </div>

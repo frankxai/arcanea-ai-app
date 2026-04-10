@@ -39,12 +39,12 @@ export interface VaultData {
 // ── Vault Config ─────────────────────────────────────────────────────────────
 
 export const VAULT_CONFIG: Record<VaultCategory, { label: string; guardian: string; color: string; tagline: string }> = {
-  strategic: { label: 'Strategic', guardian: 'Aiyami', color: '#fbbf24', tagline: 'Decisions. Outcomes. Strategy.' },
-  technical: { label: 'Technical', guardian: 'Lyssandria', color: '#34d399', tagline: 'Patterns. Architecture. Truth.' },
-  creative:  { label: 'Creative', guardian: 'Leyla', color: '#60a5fa', tagline: 'Voice. Vision. Flow.' },
-  operational: { label: 'Operational', guardian: 'Draconia', color: '#f97316', tagline: 'Execution. Velocity. Fire.' },
-  wisdom:    { label: 'Wisdom', guardian: 'Lyria', color: '#a78bfa', tagline: 'Perception. Depth. Sight.' },
-  horizon:   { label: 'Horizon', guardian: 'Maylinn', color: '#f472b6', tagline: 'Append-only. Designed to outlast us.' },
+  strategic: { label: 'Strategic', guardian: 'Aiyami', color: '#fbbf24', tagline: 'Decisions and outcomes.' },
+  technical: { label: 'Technical', guardian: 'Lyssandria', color: '#34d399', tagline: 'Architecture and patterns.' },
+  creative:  { label: 'Creative', guardian: 'Leyla', color: '#60a5fa', tagline: 'Voice and vision.' },
+  operational: { label: 'Operational', guardian: 'Draconia', color: '#f97316', tagline: 'Execution and discipline.' },
+  wisdom:    { label: 'Wisdom', guardian: 'Lyria', color: '#a78bfa', tagline: 'Depth and pattern recognition.' },
+  horizon:   { label: 'Horizon', guardian: 'Maylinn', color: '#f472b6', tagline: 'Append-only. Permanent record.' },
 };
 
 export const VAULT_CATEGORIES: VaultCategory[] = ['strategic', 'technical', 'creative', 'operational', 'wisdom', 'horizon'];

@@ -115,7 +115,7 @@ export function HeroBento() {
                 className="mt-4 max-w-xl text-lg leading-relaxed"
                 style={{ color: 'rgba(255, 255, 255, 0.55)' }}
               >
-                16 Luminors for writing, design, code, music, and research
+                12 Luminors for writing, design, code, music, and research
                 — backed by an original library of philosophical wisdom.
               </p>
             </div>
@@ -135,7 +135,7 @@ export function HeroBento() {
             </div>
           </motion.div>
 
-          {/* ── Left Tall Card: Hero Image + "16 Luminors" (2 cols, 2 rows) ── */}
+          {/* ── Left Tall Card: Hero Image + "12 Luminors" (2 cols, 2 rows) ── */}
           <motion.div
             className={`${CARD_BASE} relative col-span-1 row-span-1 min-h-[280px] overflow-hidden sm:col-span-1 lg:col-span-2 lg:row-span-2`}
             custom={1}

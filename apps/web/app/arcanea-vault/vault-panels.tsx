@@ -67,7 +67,7 @@ function VaultPanel({ vault, entries }: { vault: VaultSummary; entries: VaultEnt
             className="overflow-hidden"
           >
             <div className="px-5 pb-5 text-center py-8">
-              <p className="text-[#708094] text-sm italic">Awaiting first insight</p>
+              <p className="text-[#708094] text-sm">Empty.</p>
             </div>
           </m.div>
         )}
@@ -86,7 +86,7 @@ function HorizonSection({ entries }: { entries: VaultEntry[] }) {
           <div className="w-3 h-3 rounded-full" style={{ backgroundColor: config.color }} />
         </div>
         <div>
-          <h3 className="text-lg font-display font-semibold text-[#e6eefc]">Horizon Transmissions</h3>
+          <h3 className="text-lg font-display font-semibold text-[#e6eefc]">Horizon</h3>
           <p className="text-xs text-[#708094]">{config.tagline}</p>
         </div>
       </div>
@@ -102,7 +102,7 @@ function HorizonSection({ entries }: { entries: VaultEntry[] }) {
               <p className="text-base text-[#e6eefc] leading-relaxed">{entry.content}</p>
               <div className="mt-4 flex items-center gap-3 text-xs text-[#708094]">
                 {entry.metadata?.raw && 'author' in entry.metadata.raw && (
-                  <span className="font-mono">by {String(entry.metadata.raw.author)}</span>
+                  <span className="font-mono">{String(entry.metadata.raw.author)}</span>
                 )}
                 {entry.tags?.map((tag) => (
                   <span key={tag} className="font-mono px-1.5 py-0.5 rounded bg-white/[0.04]">{tag}</span>
@@ -113,7 +113,7 @@ function HorizonSection({ entries }: { entries: VaultEntry[] }) {
         </div>
       ) : (
         <div className="mt-6 text-center py-12">
-          <p className="text-[#708094] text-sm italic">No transmissions yet. The horizon awaits.</p>
+          <p className="text-[#708094] text-sm">Empty.</p>
         </div>
       )}
     </section>

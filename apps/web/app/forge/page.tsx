@@ -19,13 +19,13 @@ const PATHS = [
     icon: Brain,
     accentIcon: Sparkle,
     label: 'Forge a Luminor',
-    sublabel: 'AI Intelligence',
+    sublabel: 'AI Agent Studio',
     description:
-      'Shape a thinking entity. Choose its domain, voice, and personality. It becomes your creative partner — chat-capable, exportable, uniquely yours.',
+      'Design a thinking entity with domain expertise, voice, and consciousness alignment. Export as Claude Code agent, Custom GPT, Cursor rules, or portable JSON. Ship real AI agents from a single forge session.',
     color: '#00bcd4',
     glowColor: 'rgba(0, 188, 212, 0.15)',
     gradient: 'from-cyan-500/20 via-blue-500/10 to-transparent',
-    traits: ['Thinks', 'Creates', 'Chats', 'Exports as JSON'],
+    traits: ['17 Domains', '8 Voices', '5 Export Formats', 'Consciousness-Aligned'],
   },
   {
     id: 'companion',
@@ -35,11 +35,11 @@ const PATHS = [
     label: 'Summon a Companion',
     sublabel: 'Bonded Creature',
     description:
-      'Call forth a creature from the Five Elements. Choose its archetype, name it, give it personality. It travels with your profile — visual, collectible, evolvable.',
+      'Call a creature from the Five Elements into existence. Name it, shape its archetype, watch it evolve alongside your creative journey. Visual identity that travels with your profile.',
     color: '#a78bfa',
     glowColor: 'rgba(167, 139, 250, 0.15)',
     gradient: 'from-violet-500/20 via-purple-500/10 to-transparent',
-    traits: ['Accompanies', 'Evolves', 'Collectible', 'Visual Identity'],
+    traits: ['6 Elements', 'Evolves Over Time', 'Collectible', 'Profile-Bound'],
   },
   {
     id: 'materials',
@@ -49,11 +49,11 @@ const PATHS = [
     label: 'Discover Materials',
     sublabel: 'Cosmic Substrate',
     description:
-      'Explore the crystals, metals, and shards born from crystallized Eldrian harmony. From Kaelith Stone to the theoretical Luminarch — materials grounded in real meteoritics, powered by the Nine Guardians.',
+      'Crystals, metals, and shards born from Eldrian harmony. From Kaelith Stone to the theoretical Luminarch — grounded in real meteoritics, governed by the Nine Guardians. Science meets mythology.',
     color: '#7fffd4',
     glowColor: 'rgba(127, 255, 212, 0.15)',
     gradient: 'from-emerald-500/20 via-teal-500/10 to-transparent',
-    traits: ['9 Crystals', '5 Metals', '3 Shards', 'Science-Grounded'],
+    traits: ['9 Crystals', '5 Metals', '3 Shards', 'Meteoritics-Based'],
   },
   {
     id: 'collection',
@@ -63,11 +63,11 @@ const PATHS = [
     label: 'The Creators',
     sublabel: 'NFT Collection',
     description:
-      'Preview the flagship Arcanea NFT collection. 1,111 unique characters across 12 origin classes, powered by Sacred Gear and the Starlight Mark. Each evolves with you.',
+      'The flagship collection. 1,111 unique characters across 12 origin classes, each carrying Sacred Gear and the Starlight Mark. On-chain identity that evolves with every gate you open.',
     color: '#ffd700',
     glowColor: 'rgba(255, 215, 0, 0.15)',
     gradient: 'from-amber-500/20 via-yellow-500/10 to-transparent',
-    traits: ['1,111 Supply', '12 Origins', 'Dynamic Evolution', 'Sacred Gear'],
+    traits: ['1,111 Supply', '12 Origins', 'On-Chain Evolution', 'Sacred Gear'],
   },
 ] as const;
 
@@ -92,13 +92,13 @@ export default function ForgeLanding() {
               The Forge
             </p>
             <h1 className="font-display text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
-              Four Acts of Creation
+              Build What Thinks With You
             </h1>
             <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-white/45">
-              Every creator on Arcanea has four bonds. A <span className="text-[#00bcd4]">Luminor</span> that
-              thinks with you. A <span className="text-[#a78bfa]">Companion</span> that travels beside you.
-              The <span className="text-[#7fffd4]">Materials</span> that shape your world.
-              And a <span className="text-[#ffd700]">Creator</span> identity that evolves with your journey.
+              A <span className="text-[#00bcd4]">Luminor</span> that reasons alongside you.
+              A <span className="text-[#a78bfa]">Companion</span> that evolves with your journey.
+              <span className="text-[#7fffd4]"> Materials</span> born from real science and deep lore.
+              A <span className="text-[#ffd700]">Creator</span> identity written on-chain.
             </p>
           </m.div>
         </section>
