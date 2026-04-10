@@ -209,7 +209,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Type one sentence. Get a world with characters, locations, lore, and music. Free.
+            Type one sentence. Get a world with characters, locations, lore, and music. Yours to own.
           </m.p>
 
           {/* Value Prop — explicit for cold visitors */}
@@ -262,7 +262,7 @@ function HeroPortal() {
             animate={isLoaded ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.7 }}
           >
-            Open Source &middot; Free to Start &middot; No Credit Card
+            Open Source &middot; Own Your Data &middot; BYOK Forever
           </m.p>
         </div>
       </m.div>

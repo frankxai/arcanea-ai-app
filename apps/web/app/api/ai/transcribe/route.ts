@@ -9,11 +9,28 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { getClientIdentifier, checkRateLimit } from '@/lib/rate-limit/rate-limiter';
 
 export const runtime = 'edge';
 export const maxDuration = 30;
 
+// 5 transcriptions per minute — protects Groq/OpenAI quota
+const TRANSCRIBE_RATE_LIMIT = { maxRequests: 5, windowMs: 60_000 };
+
 export async function POST(req: NextRequest) {
+  // Rate limit check
+  const clientId = getClientIdentifier(req);
+  const rl = checkRateLimit(clientId, TRANSCRIBE_RATE_LIMIT);
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: 'Rate limit exceeded. Try again in a minute.' },
+      {
+        status: 429,
+        headers: { 'Retry-After': String(Math.ceil((rl.resetTime - Date.now()) / 1000)) },
+      }
+    );
+  }
+
   try {
     const formData = await req.formData();
     const audioFile = formData.get('audio') as File;

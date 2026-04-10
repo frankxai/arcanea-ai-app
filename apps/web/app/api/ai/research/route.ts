@@ -12,11 +12,31 @@
 
 import { NextRequest } from 'next/server';
 import { conductResearch } from '@/lib/ai/research';
+import { getClientIdentifier, checkRateLimit } from '@/lib/rate-limit/rate-limiter';
 
 export const runtime = 'edge';
 export const maxDuration = 120;
 
+// Research is expensive — strict rate limit to prevent abuse
+const RESEARCH_RATE_LIMIT = { maxRequests: 5, windowMs: 60_000 };
+
 export async function POST(req: NextRequest) {
+  // Rate limit check
+  const clientId = getClientIdentifier(req);
+  const rl = checkRateLimit(clientId, RESEARCH_RATE_LIMIT);
+  if (!rl.allowed) {
+    return new Response(
+      JSON.stringify({ error: 'Rate limit exceeded. Try again in a minute.' }),
+      {
+        status: 429,
+        headers: {
+          'Content-Type': 'application/json',
+          'Retry-After': String(Math.ceil((rl.resetTime - Date.now()) / 1000)),
+        },
+      }
+    );
+  }
+
   let body: { question?: string; maxSearches?: number };
   try {
     body = await req.json();

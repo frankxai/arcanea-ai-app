@@ -24,13 +24,13 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 
 export const metadata: Metadata = {
-  title: "Pricing — Create with Credits or Go Unlimited | Arcanea",
+  title: "Pricing — BYOK. Own your IP. Sovereign by default | Arcanea",
   description:
-    "Arcanea is free. Chat with AI, build worlds, forge Luminors, explore 486K+ words of living lore. The Creators NFT collection coming soon.",
+    "Arcanea is BYOK-first. Your API keys stay in your browser. Your creations stay yours. Export anytime. No vendor lock-in. 27 open source repos you can fork.",
   openGraph: {
-    title: "Arcanea — Free Creative Intelligence Platform",
+    title: "Arcanea — Sovereign Creative Intelligence",
     description:
-      "Everything is free. Forge Luminors, build worlds, chat with 16 AI specialists. The Creators NFT collection drops soon.",
+      "BYOK. Own your keys, IP, and data. Forge custom Luminors. Build worlds. Export anytime.",
     type: "website",
   },
 };
@@ -205,20 +205,20 @@ export default function PricingPage() {
           </div>
 
           <h1 className="text-4xl md:text-6xl font-display font-bold mb-6">
-            Everything is free.
+            Keep your keys.
             <span className="block bg-gradient-to-r from-[#00bcd4] via-[#78a6ff] to-[#ffd700] bg-clip-text text-transparent">
-              Build what matters.
+              Keep your IP.
             </span>
           </h1>
 
           <p className="text-xl text-text-secondary max-w-2xl mx-auto mb-4 leading-relaxed">
-            Chat with 16 AI specialists. Forge custom intelligences. Build worlds.
+            BYOK-first. Your API keys stay in your browser.
             <br className="hidden md:block" />
-            486K+ words of living mythology. 27 open-source repos.
+            Your creations stay yours. Export anytime. No vendor lock-in.
           </p>
 
           <p className="text-sm text-text-muted max-w-lg mx-auto mb-10">
-            No credit card. No trial. No catch. Create now.
+            Sovereign by default. Open source. 27 repos you can fork.
           </p>
 
           <div className="flex flex-wrap justify-center gap-4">

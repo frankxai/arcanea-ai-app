@@ -34,8 +34,12 @@ const FAQ_ITEMS = [
     a: "A progression framework from Apprentice to Luminor. Each Gate maps to a creative capacity. Progress is earned through creation, not purchases.",
   },
   {
-    q: "Is Arcanea free?",
-    a: "Free to start, no credit card required. Full access to the Library, Gallery, Academy, and Worlds. Bring your own API key for unlimited chat and image generation.",
+    q: "How does BYOK work?",
+    a: "Bring your own API key. Your key lives in your browser's localStorage — we never see it or store it on our servers. Pay OpenAI, Anthropic, or Google directly at cost. No markup, no middleman, no vendor lock-in. You own your usage, billing, and data.",
+  },
+  {
+    q: "Do you train on my data?",
+    a: "No. Never. Your creations, conversations, and worlds are yours. Export anytime as markdown, JSON, or your preferred format. The database is yours to run locally too if you want full sovereignty.",
   },
   {
     q: "Is my work private?",

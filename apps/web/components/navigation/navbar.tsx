@@ -128,13 +128,13 @@ const navLinks: NavLink[] = [
 function MegaDropdown({ sections, onClose }: { sections: NavSection[]; onClose: () => void }) {
   return (
     <m.div
-      initial={{ opacity: 0, y: 8, scale: 0.98 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, y: 4, scale: 0.99 }}
-      transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-      className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-auto min-w-[480px]"
+      initial={{ opacity: 0, y: 12, scale: 0.97, filter: 'blur(8px)' }}
+      animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+      exit={{ opacity: 0, y: 6, scale: 0.98, filter: 'blur(4px)' }}
+      transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+      className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-auto min-w-[480px]"
     >
-      <div className="rounded-2xl liquid-glass-elevated border border-white/[0.08] shadow-[0_16px_48px_rgba(0,0,0,0.5)] overflow-hidden">
+      <div className="rounded-2xl bg-[#0a0e16]/80 backdrop-blur-2xl backdrop-saturate-150 border border-white/[0.08] shadow-[0_32px_80px_-12px_rgba(0,0,0,0.6),0_0_0_1px_rgba(255,255,255,0.03)_inset] overflow-hidden">
         <div className={`grid gap-0 divide-x divide-white/[0.06] p-1 ${
           sections.length === 1 ? "grid-cols-1" : sections.length === 2 ? "grid-cols-2" : "grid-cols-3"
         }`}>
@@ -150,13 +150,14 @@ function MegaDropdown({ sections, onClose }: { sections: NavSection[]; onClose: 
                     href={item.href}
                     onClick={onClose}
                     {...(item.label.includes("↗") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                    className="flex flex-col gap-0.5 px-3 py-2.5 rounded-xl hover:bg-white/[0.04] transition-colors group"
+                    className="relative flex flex-col gap-0.5 px-3 py-2.5 rounded-xl hover:bg-white/[0.05] transition-all duration-200 group"
                   >
-                    <span className="text-[13px] font-medium text-white/80 group-hover:text-[#00bcd4] transition-colors">
+                    <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-0 rounded-r-full bg-[#00bcd4] group-hover:h-6 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]" />
+                    <span className="text-[13px] font-medium text-white/80 group-hover:text-[#00bcd4] group-hover:translate-x-0.5 transition-all duration-200">
                       {item.label}
                     </span>
                     {item.desc && (
-                      <span className="text-[11px] text-white/30 group-hover:text-white/40 transition-colors">
+                      <span className="text-[11px] text-white/30 group-hover:text-white/50 group-hover:translate-x-0.5 transition-all duration-200">
                         {item.desc}
                       </span>
                     )}

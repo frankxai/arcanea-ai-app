@@ -12,9 +12,13 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { getClientIdentifier, checkRateLimit } from '@/lib/rate-limit/rate-limiter';
 
 export const runtime = 'edge';
 export const maxDuration = 30;
+
+// 10 TTS requests per minute — protects OpenAI TTS quota
+const TTS_RATE_LIMIT = { maxRequests: 10, windowMs: 60_000 };
 
 const VOICES = ['alloy', 'echo', 'fable', 'onyx', 'nova', 'shimmer'] as const;
 type Voice = (typeof VOICES)[number];
@@ -39,6 +43,19 @@ const PERSONA_MAP: Record<string, { voice: Voice; model: 'tts-1' | 'tts-1-hd' }>
 };
 
 export async function POST(req: NextRequest) {
+  // Rate limit check
+  const clientId = getClientIdentifier(req);
+  const rl = checkRateLimit(clientId, TTS_RATE_LIMIT);
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: 'Rate limit exceeded. Try again in a minute.' },
+      {
+        status: 429,
+        headers: { 'Retry-After': String(Math.ceil((rl.resetTime - Date.now()) / 1000)) },
+      }
+    );
+  }
+
   try {
     const { text, voice, model, persona, speed } = await req.json();
 
