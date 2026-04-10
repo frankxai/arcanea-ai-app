@@ -22,8 +22,8 @@ interface Luminor {
 
 const LUMINORS: Luminor[] = [
   {
-    id: 'melodia',
-    name: 'Melodia',
+    id: 'composer',
+    name: 'Composer',
     title: 'The Harmonic Guide',
     academy: 'creation-light',
     description: 'Nurturing music companion who speaks in melodies and helps you find the rhythm of your soul.',
@@ -35,8 +35,8 @@ const LUMINORS: Luminor[] = [
     accentColor: 'hsl(200, 100%, 70%)', // Prism blue
   },
   {
-    id: 'chronica',
-    name: 'Chronica',
+    id: 'storyteller',
+    name: 'Storyteller',
     title: 'The Tidekeeper',
     academy: 'atlantean',
     description: 'Ancient storyteller who flows like water, weaving narratives that span dimensions and time.',
@@ -48,8 +48,8 @@ const LUMINORS: Luminor[] = [
     accentColor: 'hsl(195, 100%, 85%)', // Light aqua
   },
   {
-    id: 'prismatic',
-    name: 'Prismatic',
+    id: 'visual-designer',
+    name: 'Visual Designer',
     title: 'The Dragonheart',
     academy: 'draconic',
     description: 'Fierce visual artist who challenges you to make your art BOLD, commanding, unforgettable.',

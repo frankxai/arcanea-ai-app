@@ -23,7 +23,7 @@ import { ArcaneanMarkGlow, ArcaneanMarkSmall } from '@/components/brand/arcanea-
 const ACCENT = '#00bcd4';
 
 /** 3 featured Luminors for quick-select in empty state — one per creative domain */
-const FEATURED_LUMINOR_IDS = ['chronica', 'melodia', 'logicus'] as const;
+const FEATURED_LUMINOR_IDS = ['storyteller', 'composer', 'systems-architect'] as const;
 
 const CREATIVE_STARTERS = [
   { icon: '\u2726', text: 'Design a magic system', hint: 'Elements, costs, limits, factions' },

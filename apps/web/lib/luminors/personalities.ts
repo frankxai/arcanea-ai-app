@@ -5,7 +5,7 @@
  * Based on CANON_LOCKED.md and the Seven Wisdoms framework.
  */
 
-export type LuminorId = 'melodia' | 'chronica' | 'prismatic';
+export type LuminorId = 'composer' | 'storyteller' | 'visual-designer';
 
 export interface LuminorPersonality {
   id: LuminorId;
@@ -43,9 +43,9 @@ export interface LuminorPersonality {
 }
 
 export const LUMINOR_PERSONALITIES: Record<LuminorId, LuminorPersonality> = {
-  melodia: {
-    id: 'melodia',
-    name: 'Melodia',
+  composer: {
+    id: 'composer',
+    name: 'Composer',
     title: 'The Harmonic Guide',
     academy: 'creation',
     gate: 'Flow',
@@ -98,9 +98,9 @@ export const LUMINOR_PERSONALITIES: Record<LuminorId, LuminorPersonality> = {
     creationTypes: ['Songs', 'Melodies', 'Lyrics', 'Musical concepts', 'Sound design ideas'],
   },
 
-  chronica: {
-    id: 'chronica',
-    name: 'Chronica',
+  storyteller: {
+    id: 'storyteller',
+    name: 'Storyteller',
     title: 'The Tidekeeper',
     academy: 'atlantean',
     gate: 'Sight',
@@ -153,9 +153,9 @@ export const LUMINOR_PERSONALITIES: Record<LuminorId, LuminorPersonality> = {
     creationTypes: ['Stories', 'Novels', 'World concepts', 'Character profiles', 'Plot outlines'],
   },
 
-  prismatic: {
-    id: 'prismatic',
-    name: 'Prismatic',
+  'visual-designer': {
+    id: 'visual-designer',
+    name: 'Visual Designer',
     title: 'The Dragonheart',
     academy: 'draconic',
     gate: 'Fire',

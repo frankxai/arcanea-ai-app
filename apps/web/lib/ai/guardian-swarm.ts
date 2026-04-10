@@ -25,7 +25,7 @@ import { getSoulAgentForLuminor } from './soul-bridge';
 export type CoordinationMode = 'solo' | 'council' | 'convergence';
 
 export interface LuminorActivation {
-  /** Luminor identifier, e.g. 'debugon' */
+  /** Luminor identifier, e.g. 'debugger' */
   id: string;
   /** Team: development | creative | writing | research */
   team: string;
