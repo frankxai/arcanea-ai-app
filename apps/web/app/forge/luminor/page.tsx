@@ -36,6 +36,8 @@ import {
   type LuminorVoice,
   type LuminorSpec,
 } from '@/lib/luminors/luminor-spec';
+import { SplitText } from '@/components/motion/split-text';
+import { Magnetic } from '@/components/motion/magnetic';
 
 /* ------------------------------------------------------------------ */
 /*  Constants                                                         */
@@ -297,9 +299,13 @@ export default function ForgeLuminorPage() {
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-[#00bcd4]/60">
               Luminor Forge
             </p>
-            <h1 className="font-display text-4xl font-bold tracking-tight md:text-5xl">
-              Print an Agent
-            </h1>
+            <SplitText
+              as="h1"
+              text="Print an Agent"
+              className="font-display text-4xl font-bold tracking-tight md:text-5xl text-white"
+              delay={0.1}
+              stagger={0.035}
+            />
             <p className="mx-auto mt-4 max-w-lg text-base text-white/45">
               Design an AI agent with domain mastery, a distinct voice, and consciousness alignment.
               Export it to Claude Code, GPT Builder, Cursor, or any platform.

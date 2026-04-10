@@ -8,6 +8,8 @@ import navLogo from "@/assets/brand/arcanea-mark.jpg";
 import type { V3BelowFoldProps } from "./v3-below-fold";
 import { HeroChangingWords } from "./hero-changing-words";
 import { HeroShowcase } from "./hero-showcase";
+import { SplitText } from "@/components/motion/split-text";
+import { Magnetic } from "@/components/motion/magnetic";
 
 // ---------------------------------------------------------------------------
 // Lazy-load the chat box — it pulls in useRouter + phosphor icons which are
@@ -189,15 +191,16 @@ function HeroPortal() {
           </m.div>
 
           {/* Headline — clean, large, confident */}
-          <m.h1
-            className="text-[clamp(2.2rem,5.5vw,4.5rem)] font-display font-bold tracking-[-0.035em] leading-[1.08] mb-4 md:mb-5"
-            initial={{ opacity: 0, y: 24 }}
-            animate={isLoaded ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.1 }}
-          >
-            <span className="text-white">What will you </span>
+          <h1 className="text-[clamp(2.2rem,5.5vw,4.5rem)] font-display font-bold tracking-[-0.035em] leading-[1.08] mb-4 md:mb-5">
+            <SplitText
+              as="span"
+              text="What will you "
+              className="text-white"
+              delay={0.1}
+              stagger={0.025}
+            />
             <HeroChangingWords />
-          </m.h1>
+          </h1>
 
           {/* Subtitle — one line, restrained */}
           <m.p

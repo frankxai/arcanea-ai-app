@@ -19,6 +19,7 @@ import type { Collection, Situation } from '../../lib/content/types';
 import { useAuth } from '../../lib/auth/context';
 import { getLabel } from '../../lib/vocabulary';
 import { useReadingProgress } from '../../hooks/use-reading-progress';
+import { GlowCard } from '@/components/motion/glow-card';
 
 interface LibraryBrowseProps {
   collections: Collection[];
@@ -370,9 +371,10 @@ interface CollectionCardProps {
 
 function CollectionCard({ collection, totalCollections, progress, readingTime }: CollectionCardProps) {
   return (
+    <GlowCard color="#00bcd4" size={320} className="rounded-2xl border border-white/[0.06] bg-gradient-to-br from-[#1a2332] via-[#121826] to-[#0b0e14] transition-colors hover:border-white/[0.15]">
     <Link
       href={`/library/${collection.slug}`}
-      className="group relative overflow-hidden rounded-2xl border border-cosmic-border bg-gradient-to-br from-cosmic-surface via-cosmic-deep to-cosmic-void p-6 transition-all hover:border-atlantean-teal/50 hover:shadow-[0_0_50px_rgba(0,188,212,0.15)]"
+      className="group relative block overflow-hidden rounded-2xl p-6"
     >
       <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" aria-hidden="true">
         <div className="absolute -left-16 top-1/2 h-40 w-40 -translate-y-1/2 rounded-full bg-atlantean-teal/15 blur-3xl" />
@@ -445,5 +447,6 @@ function CollectionCard({ collection, totalCollections, progress, readingTime }:
         </div>
       </div>
     </Link>
+    </GlowCard>
   );
 }
