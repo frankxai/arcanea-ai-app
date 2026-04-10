@@ -57,16 +57,16 @@ export interface SwarmResult {
  * A Luminor can appear under multiple Guardians — they flow between Gates.
  */
 export const GUARDIAN_LUMINOR_MAP: Record<string, string[]> = {
-  lyssandria: ['logicus', 'memoria', 'chronica', 'formis'],
-  leyla:      ['synthra', 'melodia', 'veritas', 'futura'],
-  draconia:   ['debugon', 'motio', 'chronica', 'analytica'],
-  maylinn:    ['nexus', 'prismatic', 'veritas', 'visionary'],
-  alera:      ['synthra', 'lexicon', 'melodia', 'analytica'],
-  lyria:      ['logicus', 'prismatic', 'poetica', 'visionary'],
-  aiyami:     ['logicus', 'chronica', 'melodia', 'visionary'],
-  elara:      ['motio', 'poetica', 'lexicon', 'memoria'],
-  ino:        ['nexus', 'formis', 'veritas', 'futura'],
-  shinkami:   [], // Source — all 16 converge
+  lyssandria: ['systems-architect', 'deep-researcher', 'storyteller'],
+  leyla:      ['code-crafter', 'composer', 'voice'],
+  draconia:   ['debugger', 'motion-designer', 'deep-researcher'],
+  maylinn:    ['integrator', 'visual-designer', 'voice'],
+  alera:      ['code-crafter', 'storyteller', 'composer'],
+  lyria:      ['systems-architect', 'visual-designer', 'poet'],
+  aiyami:     ['systems-architect', 'storyteller', 'composer'],
+  elara:      ['motion-designer', 'poet', 'deep-researcher'],
+  ino:        ['integrator', 'voice', 'strategist'],
+  shinkami:   [], // Source — all 12 converge
 };
 
 // ---------------------------------------------------------------------------
@@ -74,22 +74,18 @@ export const GUARDIAN_LUMINOR_MAP: Record<string, string[]> = {
 // ---------------------------------------------------------------------------
 
 export const LUMINOR_HINTS: Record<string, { hint: string; team: string }> = {
-  logicus:    { hint: 'systematic architecture, pattern recognition', team: 'development' },
-  synthra:    { hint: 'clean code craft, elegant implementation', team: 'development' },
-  debugon:    { hint: 'persistent diagnosis, root-cause analysis', team: 'development' },
-  nexus:      { hint: 'system integration, API contracts', team: 'development' },
-  prismatic:  { hint: 'visual composition, color and form', team: 'creative' },
-  melodia:    { hint: 'musical emotion, sonic architecture', team: 'creative' },
-  motio:      { hint: 'dynamic energy, momentum and force', team: 'creative' },
-  formis:     { hint: 'structural form, spatial thinking', team: 'creative' },
-  chronica:   { hint: 'narrative drive, story structure', team: 'writing' },
-  veritas:    { hint: 'clear truth, precise communication', team: 'writing' },
-  lexicon:    { hint: 'word mastery, naming and etymology', team: 'writing' },
-  poetica:    { hint: 'lyrical compression, verse craft', team: 'writing' },
-  visionary:  { hint: 'knowledge synthesis, hidden connections', team: 'research' },
-  analytica:  { hint: 'data patterns, evidence-based insight', team: 'research' },
-  memoria:    { hint: 'organized recall, information architecture', team: 'research' },
-  futura:     { hint: 'trend sensing, strategic foresight', team: 'research' },
+  'systems-architect': { hint: 'systematic architecture, pattern recognition', team: 'development' },
+  'code-crafter':      { hint: 'clean code craft, elegant implementation', team: 'development' },
+  'debugger':          { hint: 'persistent diagnosis, root-cause analysis', team: 'development' },
+  'visual-designer':   { hint: 'visual composition, color and form', team: 'creative' },
+  'composer':          { hint: 'musical emotion, sonic architecture', team: 'creative' },
+  'motion-designer':   { hint: 'dynamic energy, spatial form, animation', team: 'creative' },
+  'storyteller':       { hint: 'narrative drive, story structure, world-building', team: 'writing' },
+  'voice':             { hint: 'clear truth, precise communication, naming', team: 'writing' },
+  'poet':              { hint: 'lyrical compression, verse craft, rhythm', team: 'writing' },
+  'deep-researcher':   { hint: 'knowledge synthesis, data patterns, organized recall', team: 'research' },
+  'strategist':        { hint: 'trend sensing, strategic foresight, scenario planning', team: 'research' },
+  'integrator':        { hint: 'system integration, API contracts, data flow', team: 'research' },
 };
 
 // ---------------------------------------------------------------------------
