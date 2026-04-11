@@ -7,7 +7,7 @@ import {
   Award,
   Sparkles,
   Plus,
-  Github,
+  Code2 as Github, // lucide-react 1.8 removed Github icon; Code2 is the closest visual match
   ExternalLink,
   Users,
   LifeBuoy,
