@@ -3,16 +3,26 @@
  * for a book and renders the composite score, grade badge, radar chart,
  * and per-Guardian breakdown cards.
  *
- * Fetches directly via the admin client (guardian_reviews has public SELECT,
- * but using admin here keeps the read path consistent with the scorer and
- * works even when the user is logged out).
- *
- * Handles the empty state ("not yet reviewed") and the DB-unavailable state
- * gracefully — this component should NEVER break page render.
+ * Built on Card + Badge + GlassCard primitives and lucide-react icons.
+ * Handles the empty state and DB-unavailable state gracefully — this
+ * component should NEVER break page render.
  */
 
+import type { ReactNode } from 'react';
+import {
+  Sparkles,
+  Award,
+  Star,
+  Feather,
+  Flame,
+  Lightbulb,
+  Compass,
+  Heart,
+} from 'lucide-react';
 import { loadLatestReport } from '@/lib/books/guardian-scorer';
 import type { GuardianScore } from '@/lib/books/guardian-scorer';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge, type BadgeProps } from '@/components/ui/badge';
 import { GuardianRadar, type GuardianGrade } from './GuardianRadar';
 import { GuardianNotesToggle } from './GuardianNotesToggle';
 
@@ -21,85 +31,77 @@ interface GuardianReportProps {
 }
 
 interface GuardianDisplay {
-  id: string;
   name: string;
   dimension: string;
-  icon: string;
+  icon: ReactNode;
   accent: string;
   tagline: string;
 }
 
-// Visual metadata for each Guardian card (kept in sync with guardian-prompts.ts)
 const GUARDIAN_DISPLAY: Record<string, GuardianDisplay> = {
   alera: {
-    id: 'alera',
     name: 'Alera',
     dimension: 'Voice',
-    icon: 'VOI',
+    icon: <Feather className="h-4 w-4" aria-hidden="true" />,
     accent: 'text-cyan-300',
     tagline: 'Guardian of the Voice Gate',
   },
   draconia: {
-    id: 'draconia',
     name: 'Draconia',
     dimension: 'Craft',
-    icon: 'CRF',
+    icon: <Flame className="h-4 w-4" aria-hidden="true" />,
     accent: 'text-red-300',
     tagline: 'Guardian of the Craft Gate',
   },
   lyria: {
-    id: 'lyria',
     name: 'Lyria',
     dimension: 'Originality',
-    icon: 'ORG',
+    icon: <Lightbulb className="h-4 w-4" aria-hidden="true" />,
     accent: 'text-violet-300',
     tagline: 'Guardian of the Originality Gate',
   },
   lyssandria: {
-    id: 'lyssandria',
     name: 'Lyssandria',
     dimension: 'Depth',
-    icon: 'DPT',
+    icon: <Compass className="h-4 w-4" aria-hidden="true" />,
     accent: 'text-emerald-300',
     tagline: 'Guardian of the Depth Gate',
   },
   maylinn: {
-    id: 'maylinn',
     name: 'Maylinn',
     dimension: 'Resonance',
-    icon: 'RES',
+    icon: <Heart className="h-4 w-4" aria-hidden="true" />,
     accent: 'text-amber-300',
     tagline: 'Guardian of the Resonance Gate',
   },
 };
 
-const GRADE_BADGE: Record<
-  GuardianGrade,
-  { label: string; color: string; border: string; bg: string }
-> = {
+interface GradeMeta {
+  label: string;
+  variant: BadgeProps['variant'];
+  icon: ReactNode;
+}
+
+const GRADE_META: Record<GuardianGrade, GradeMeta> = {
   luminor: {
     label: 'Luminor Grade',
-    color: 'text-[#ffd700]',
-    border: 'border-[#ffd700]/30',
-    bg: 'bg-[#ffd700]/[0.06]',
+    variant: 'gold',
+    icon: <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />,
   },
   master: {
     label: 'Master Grade',
-    color: 'text-slate-200',
-    border: 'border-slate-300/30',
-    bg: 'bg-slate-300/[0.05]',
+    variant: 'outline',
+    icon: <Award className="h-3.5 w-3.5" aria-hidden="true" />,
   },
   apprentice: {
     label: 'Apprentice Grade',
-    color: 'text-[#cd7f32]',
-    border: 'border-[#cd7f32]/30',
-    bg: 'bg-[#cd7f32]/[0.06]',
+    variant: 'fire',
+    icon: <Star className="h-3.5 w-3.5" aria-hidden="true" />,
   },
   none: {
     label: 'Unrated',
-    color: 'text-white/50',
-    border: 'border-white/[0.08]',
-    bg: 'bg-white/[0.02]',
+    variant: 'outline',
+    icon: null,
   },
 };
 
@@ -137,7 +139,7 @@ function scoresByDimension(scores: GuardianScore[]): {
 function EmptyState() {
   return (
     <section className="max-w-3xl mx-auto px-6 pb-16">
-      <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-10 text-center backdrop-blur-sm">
+      <Card variant="ghost" className="p-10 text-center backdrop-blur-sm">
         <p className="text-[10px] uppercase tracking-[0.3em] text-white/30 mb-3">
           Guardian Intelligence
         </p>
@@ -149,7 +151,7 @@ function EmptyState() {
           Lyria, Lyssandria, and Maylinn. The author can call them from the
           draft studio when the work is ready.
         </p>
-      </div>
+      </Card>
     </section>
   );
 }
@@ -170,77 +172,79 @@ export default async function GuardianReport({ bookSlug }: GuardianReportProps) 
 
   const { scores, composite, grade, assessedAt } = report;
   const radarScores = scoresByDimension(scores);
-  const badge = GRADE_BADGE[grade];
+  const gradeMeta = GRADE_META[grade];
 
   return (
-    <section className="max-w-3xl mx-auto px-6 pb-16">
-      <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-8 backdrop-blur-sm">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <p className="text-[10px] uppercase tracking-[0.3em] text-white/30 mb-3">
+    <section className="max-w-3xl mx-auto px-6 pb-16 space-y-6">
+      {/* Composite score card */}
+      <Card variant="ghost" className="backdrop-blur-sm">
+        <CardHeader className="items-center text-center">
+          <p className="text-[10px] uppercase tracking-[0.3em] text-white/30">
             Guardian Intelligence Rating
           </p>
-          <div className="flex items-baseline justify-center gap-2 mb-3">
-            <span className="text-6xl font-display font-bold text-white/95">
-              {composite.toFixed(1)}
-            </span>
+          <CardTitle className="flex items-baseline justify-center gap-2 text-6xl font-bold text-white/95">
+            {composite.toFixed(1)}
             <span className="text-xl text-white/30 font-mono">/ 10</span>
+          </CardTitle>
+          <div className="pt-2">
+            <Badge variant={gradeMeta.variant} icon={gradeMeta.icon} className="uppercase tracking-[0.2em]">
+              {gradeMeta.label}
+            </Badge>
           </div>
-          <span
-            className={`inline-block text-[11px] uppercase tracking-[0.2em] px-3 py-1.5 rounded-full border ${badge.border} ${badge.bg} ${badge.color}`}
-          >
-            {badge.label}
-          </span>
-        </div>
+        </CardHeader>
 
-        {/* Radar */}
-        <div className="flex justify-center mb-8">
-          <GuardianRadar scores={radarScores} grade={grade} size={320} />
-        </div>
+        <CardContent>
+          {/* Radar */}
+          <div className="flex justify-center mb-8">
+            <GuardianRadar scores={radarScores} grade={grade} size={320} />
+          </div>
 
-        {/* Per-Guardian cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {scores.map((s) => {
-            const display = GUARDIAN_DISPLAY[s.guardian];
-            if (!display) return null;
-            return (
-              <div
-                key={`${s.guardian}:${s.dimension}`}
-                className="bg-white/[0.02] border border-white/[0.06] rounded-xl p-4 hover:bg-white/[0.04] transition-colors"
-              >
-                <div className="flex items-start justify-between gap-3 mb-2">
-                  <div>
-                    <p className={`text-xs font-mono uppercase tracking-wider ${display.accent}/80`}>
-                      {display.icon} &middot; {display.dimension}
-                    </p>
-                    <p className="text-sm font-display font-semibold text-white/85 mt-0.5">
-                      {display.name}
-                    </p>
+          {/* Per-Guardian cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {scores.map((s) => {
+              const display = GUARDIAN_DISPLAY[s.guardian];
+              if (!display) return null;
+              return (
+                <Card
+                  key={`${s.guardian}:${s.dimension}`}
+                  variant="ghost"
+                  className="p-4 hover:bg-white/[0.04] transition-colors"
+                >
+                  <div className="flex items-start justify-between gap-3 mb-2">
+                    <div>
+                      <p className={`flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider ${display.accent}`}>
+                        {display.icon}
+                        <span>{display.dimension}</span>
+                      </p>
+                      <p className="text-sm font-display font-semibold text-white/85 mt-0.5">
+                        {display.name}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-2xl font-display font-bold text-white/90 leading-none font-mono">
+                        {s.score.toFixed(1)}
+                      </p>
+                      <p className="text-[10px] text-white/30">/ 10</p>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <p className="text-2xl font-display font-bold text-white/90 leading-none font-mono">
-                      {s.score.toFixed(1)}
-                    </p>
-                    <p className="text-[10px] text-white/30">/ 10</p>
-                  </div>
-                </div>
 
-                <p className="text-xs text-white/60 leading-relaxed italic mb-3">
-                  &ldquo;{s.assessment}&rdquo;
-                </p>
+                  <p className="text-xs text-white/60 leading-relaxed italic mb-3">
+                    &ldquo;{s.assessment}&rdquo;
+                  </p>
 
-                <GuardianNotesToggle notes={s.detailedNotes} />
-              </div>
-            );
-          })}
-        </div>
+                  <GuardianNotesToggle notes={s.detailedNotes} />
+                </Card>
+              );
+            })}
+          </div>
 
-        {/* Footer */}
-        <div className="mt-6 pt-4 border-t border-white/[0.06] flex items-center justify-between text-[10px] uppercase tracking-wider text-white/25">
-          <span>Last assessed: {daysAgo(assessedAt)}</span>
-          <span className="font-mono">{scores[0]?.modelId || 'claude'}</span>
-        </div>
-      </div>
+          {/* Footer */}
+          <div className="mt-6 pt-4 border-t border-white/[0.06] flex items-center justify-between text-[10px] uppercase tracking-wider text-white/25">
+            <span>Last assessed: {daysAgo(assessedAt)}</span>
+            <span className="font-mono">{scores[0]?.modelId || 'claude'}</span>
+          </div>
+        </CardContent>
+      </Card>
     </section>
   );
 }

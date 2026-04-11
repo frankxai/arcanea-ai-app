@@ -1,13 +1,15 @@
 'use client';
 
 /**
- * StarRating — display or interactive 5-star widget.
+ * StarRating — display or interactive 5-star widget built on lucide-react icons.
  *
  * Non-interactive when `onChange` is omitted.
- * Keyboard accessible: arrow keys change preview, space/enter commits.
+ * Keyboard accessible: arrow keys change preview, space/enter commits,
+ * number keys 1-5 set directly.
  */
 
 import { useState, useCallback, KeyboardEvent } from 'react';
+import { Star, StarHalf } from 'lucide-react';
 
 export interface StarRatingProps {
   value?: number;
@@ -19,47 +21,47 @@ export interface StarRatingProps {
   ariaLabel?: string;
 }
 
-const SIZE_MAP: Record<NonNullable<StarRatingProps['size']>, { star: string; text: string; gap: string }> = {
-  sm: { star: 'w-4 h-4', text: 'text-xs', gap: 'gap-0.5' },
-  md: { star: 'w-5 h-5', text: 'text-sm', gap: 'gap-1' },
-  lg: { star: 'w-7 h-7', text: 'text-base', gap: 'gap-1.5' },
+const SIZE_MAP: Record<NonNullable<StarRatingProps['size']>, { px: number; text: string; gap: string }> = {
+  sm: { px: 16, text: 'text-xs', gap: 'gap-0.5' },
+  md: { px: 20, text: 'text-sm', gap: 'gap-1' },
+  lg: { px: 28, text: 'text-base', gap: 'gap-1.5' },
 };
 
 const FILLED_COLOR = '#00bcd4';
-const EMPTY_COLOR = 'rgba(255,255,255,0.18)';
+const EMPTY_COLOR = 'rgba(255,255,255,0.2)';
 
-function StarGlyph({
-  fill,
-  className,
-}: {
-  fill: 'full' | 'half' | 'empty';
-  className?: string;
-}) {
-  const id = `star-half-${Math.random().toString(36).slice(2, 9)}`;
-  const color = fill === 'empty' ? EMPTY_COLOR : FILLED_COLOR;
-
+function StarGlyph({ fill, size }: { fill: 'full' | 'half' | 'empty'; size: number }) {
+  const transition = 'transition-transform duration-150';
+  if (fill === 'half') {
+    // Render an empty star behind a half-filled overlay for a true "half" look.
+    return (
+      <span className={`relative inline-block ${transition}`} style={{ width: size, height: size }}>
+        <Star
+          size={size}
+          fill={EMPTY_COLOR}
+          stroke={EMPTY_COLOR}
+          strokeWidth={1.5}
+          className="absolute inset-0"
+        />
+        <StarHalf
+          size={size}
+          fill={FILLED_COLOR}
+          stroke={FILLED_COLOR}
+          strokeWidth={1.5}
+          className="absolute inset-0"
+        />
+      </span>
+    );
+  }
+  const color = fill === 'full' ? FILLED_COLOR : EMPTY_COLOR;
   return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      {fill === 'half' && (
-        <defs>
-          <linearGradient id={id}>
-            <stop offset="50%" stopColor={FILLED_COLOR} />
-            <stop offset="50%" stopColor={EMPTY_COLOR} />
-          </linearGradient>
-        </defs>
-      )}
-      <path
-        d="M12 2.5l2.95 5.98 6.6.96-4.78 4.66 1.13 6.58L12 17.6l-5.9 3.08 1.13-6.58L2.45 9.44l6.6-.96L12 2.5z"
-        fill={fill === 'half' ? `url(#${id})` : color}
-        stroke={fill === 'empty' ? 'rgba(255,255,255,0.25)' : FILLED_COLOR}
-        strokeWidth="0.75"
-      />
-    </svg>
+    <Star
+      size={size}
+      fill={color}
+      stroke={color}
+      strokeWidth={1.5}
+      className={transition}
+    />
   );
 }
 
@@ -129,14 +131,7 @@ export function StarRating({
           else if (display >= i - 0.5) fill = 'half';
           else fill = 'empty';
 
-          const star = (
-            <StarGlyph
-              fill={fill}
-              className={`${sizes.star} transition-all duration-150 ${
-                interactive ? 'hover:scale-110' : ''
-              }`}
-            />
-          );
+          const star = <StarGlyph fill={fill} size={sizes.px} />;
 
           if (!interactive) {
             return (
@@ -155,7 +150,7 @@ export function StarRating({
               onBlur={() => setHover(null)}
               onClick={() => commit(i)}
               aria-label={`${i} star${i === 1 ? '' : 's'}`}
-              className="bg-transparent border-0 p-0 m-0 focus:outline-none"
+              className="bg-transparent border-0 p-0 m-0 focus:outline-none hover:scale-110 transition-transform"
             >
               {star}
             </button>

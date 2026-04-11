@@ -1,5 +1,5 @@
-name: "Centaur Mode"
-slug: "centaur-mode"
+name: "Arcanea Centaur Mode"
+slug: "arcanea-centaur-mode"
 description: "Advanced human-AI co-creation methodology — master the Centaur Principle for results neither human nor AI could achieve alone."
 version: "2.0.0"
 category: "creative"
@@ -20,14 +20,14 @@ tool_compatibility:
 dependencies: []
 
 install_commands:
-  claude-code: "cp -r ~/.claude/skills/centaur-mode"
-  opencode: "cp -r ~/.opencode/skills/centaur-mode"
-  universal: "npx arcanea install centaur-mode"
+  claude-code: "cp -r ~/.claude/skills/arcanea-centaur-mode"
+  opencode: "cp -r ~/.opencode/skills/arcanea-centaur-mode"
+  universal: "npx arcanea install arcanea-centaur-mode"
 
 usage_examples:
   - "User: I want to co-write a story with you → AI: enters Spark-and-Fuel mode, alternates generation and curation"
   - "User: help me iterate on this idea → AI: applies Rough-Draft-to-Polish mode, humans set taste, AI handles variation"
 
-homepage: "https://arcanea.ai/skills/centaur-mode"
+homepage: "https://arcanea.ai/skills/arcanea-centaur-mode"
 repository: "https://github.com/frankxai/arcanea"
 support: "https://github.com/frankxai/arcanea/issues"

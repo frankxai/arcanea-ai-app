@@ -1,7 +1,9 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { GitBranch, Package, Sparkles } from 'lucide-react';
 import { getAllSkills, getCategories } from '@/lib/skills/loader';
 import SkillSearch from '@/components/skills/SkillSearch';
+import { Badge } from '@/components/ui/badge';
 
 export const dynamic = 'force-dynamic';
 
@@ -37,7 +39,8 @@ export default async function SkillsMarketplacePage() {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] rounded-full bg-[#00bcd4]/[0.04] blur-[140px] pointer-events-none" />
 
         <div className="relative max-w-5xl mx-auto px-6 pt-24 pb-16 text-center">
-          <p className="text-[10px] uppercase tracking-[0.3em] text-[#00bcd4]/70 mb-4">
+          <p className="text-[10px] uppercase tracking-[0.3em] text-[#00bcd4]/70 mb-4 inline-flex items-center gap-2 justify-center">
+            <Sparkles className="h-3 w-3" aria-hidden="true" />
             Arcanea Open Library
           </p>
 
@@ -51,33 +54,16 @@ export default async function SkillsMarketplacePage() {
           </p>
 
           {/* Stats row */}
-          <div className="flex items-center justify-center gap-8 sm:gap-12 text-sm">
-            <div className="text-center">
-              <div className="font-display text-2xl text-white/90">
-                {skills.length}
-              </div>
-              <div className="text-[10px] uppercase tracking-widest text-white/30 mt-1">
-                Skills
-              </div>
-            </div>
-            <div className="w-px h-10 bg-white/10" />
-            <div className="text-center">
-              <div className="font-display text-2xl text-white/90">
-                {categories.length || '—'}
-              </div>
-              <div className="text-[10px] uppercase tracking-widest text-white/30 mt-1">
-                Categories
-              </div>
-            </div>
-            <div className="w-px h-10 bg-white/10" />
-            <div className="text-center">
-              <div className="inline-block text-[11px] font-medium px-2.5 py-1 rounded-md bg-[#ffd700]/10 border border-[#ffd700]/30 text-[#ffd700]">
-                Open Source
-              </div>
-              <div className="text-[10px] uppercase tracking-widest text-white/30 mt-2">
-                MIT Licensed
-              </div>
-            </div>
+          <div className="flex items-center justify-center gap-3 sm:gap-4 flex-wrap">
+            <Badge variant="crystal" size="md" icon={<Package className="h-3 w-3" />}>
+              {skills.length} Skills
+            </Badge>
+            <Badge variant="default" size="md">
+              {categories.length || '—'} Categories
+            </Badge>
+            <Badge variant="gold" size="md" icon={<GitBranch className="h-3 w-3" />}>
+              MIT Licensed
+            </Badge>
           </div>
         </div>
       </section>

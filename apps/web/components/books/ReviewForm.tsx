@@ -4,13 +4,18 @@
  * ReviewForm — submit or update a star rating + review for a book.
  *
  * - Uses the browser Supabase client to check auth; redirects to /login when absent.
- * - POSTs to /api/books/[slug]/ratings for create + update (upsert semantics).
+ * - POSTs (new) or PATCHes (update) /api/books/[slug]/ratings for upsert semantics.
  * - DELETEs the same endpoint to remove the caller's rating.
+ * - Feedback via sonner toasts.
  */
 
 import { useState, useEffect, useCallback, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import { LogIn, Trash2 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
 import { StarRating } from './StarRating';
 
 const MAX_REVIEW_CHARS = 5000;
@@ -21,18 +26,12 @@ export interface ReviewFormProps {
   onSubmit?: () => void;
 }
 
-type Status =
-  | { kind: 'idle' }
-  | { kind: 'loading' }
-  | { kind: 'success'; message: string }
-  | { kind: 'error'; message: string };
-
 export function ReviewForm({ bookSlug, existingRating, onSubmit }: ReviewFormProps) {
   const router = useRouter();
   const [stars, setStars] = useState<number>(existingRating?.stars ?? 0);
   const [review, setReview] = useState<string>(existingRating?.review ?? '');
   const [hasExisting, setHasExisting] = useState<boolean>(!!existingRating);
-  const [status, setStatus] = useState<Status>({ kind: 'idle' });
+  const [loading, setLoading] = useState<boolean>(false);
   const [authChecked, setAuthChecked] = useState<boolean>(false);
   const [authed, setAuthed] = useState<boolean>(false);
 
@@ -65,20 +64,16 @@ export function ReviewForm({ bookSlug, existingRating, onSubmit }: ReviewFormPro
       }
 
       if (stars < 1 || stars > 5) {
-        setStatus({ kind: 'error', message: 'Please select a star rating.' });
+        toast.error('Please select a star rating.');
         return;
       }
 
       if (review.length > MAX_REVIEW_CHARS) {
-        setStatus({
-          kind: 'error',
-          message: `Review is too long (max ${MAX_REVIEW_CHARS} characters).`,
-        });
+        toast.error(`Review is too long (max ${MAX_REVIEW_CHARS} characters).`);
         return;
       }
 
-      setStatus({ kind: 'loading' });
-
+      setLoading(true);
       const method = hasExisting ? 'PATCH' : 'POST';
 
       try {
@@ -90,26 +85,19 @@ export function ReviewForm({ bookSlug, existingRating, onSubmit }: ReviewFormPro
 
         if (!res.ok) {
           const body = await res.json().catch(() => ({}));
-          setStatus({
-            kind: 'error',
-            message: body?.error ?? 'Failed to save your rating.',
-          });
+          toast.error(body?.error ?? 'Failed to save your rating.');
           return;
         }
 
+        toast.success(hasExisting ? 'Rating updated.' : 'Thanks for your rating!');
         setHasExisting(true);
-        setStatus({
-          kind: 'success',
-          message: hasExisting ? 'Rating updated.' : 'Thanks for your rating!',
-        });
         onSubmit?.();
         router.refresh();
       } catch (err) {
         console.error('[ReviewForm] submit failed:', err);
-        setStatus({
-          kind: 'error',
-          message: 'Network error. Please try again.',
-        });
+        toast.error('Network error. Please try again.');
+      } finally {
+        setLoading(false);
       }
     },
     [authed, bookSlug, hasExisting, onSubmit, review, router, stars],
@@ -117,26 +105,25 @@ export function ReviewForm({ bookSlug, existingRating, onSubmit }: ReviewFormPro
 
   const handleDelete = useCallback(async () => {
     if (!authed || !hasExisting) return;
-    setStatus({ kind: 'loading' });
+    setLoading(true);
     try {
       const res = await fetch(`/api/books/${bookSlug}/ratings`, { method: 'DELETE' });
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
-        setStatus({
-          kind: 'error',
-          message: body?.error ?? 'Failed to delete your rating.',
-        });
+        toast.error(body?.error ?? 'Failed to delete your rating.');
         return;
       }
       setStars(0);
       setReview('');
       setHasExisting(false);
-      setStatus({ kind: 'success', message: 'Your rating has been removed.' });
+      toast.success('Your rating has been removed.');
       onSubmit?.();
       router.refresh();
     } catch (err) {
       console.error('[ReviewForm] delete failed:', err);
-      setStatus({ kind: 'error', message: 'Network error. Please try again.' });
+      toast.error('Network error. Please try again.');
+    } finally {
+      setLoading(false);
     }
   }, [authed, bookSlug, hasExisting, onSubmit, router]);
 
@@ -154,17 +141,16 @@ export function ReviewForm({ bookSlug, existingRating, onSubmit }: ReviewFormPro
         <p className="text-sm text-white/60 mb-3">
           Sign in to rate this book and leave a review.
         </p>
-        <a
-          href={`/login?redirect=/books/drafts/${bookSlug}`}
-          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-[#00bcd4] bg-[#00bcd4]/10 border border-[#00bcd4]/30 rounded-lg hover:bg-[#00bcd4]/20 transition-colors"
-        >
-          Sign in to review
-        </a>
+        <Button asChild variant="secondary">
+          <a href={`/login?redirect=/books/drafts/${bookSlug}`}>
+            <LogIn className="h-4 w-4" aria-hidden="true" />
+            Sign in to review
+          </a>
+        </Button>
       </div>
     );
   }
 
-  const isLoading = status.kind === 'loading';
   const remaining = MAX_REVIEW_CHARS - review.length;
 
   return (
@@ -192,14 +178,13 @@ export function ReviewForm({ bookSlug, existingRating, onSubmit }: ReviewFormPro
         >
           Review <span className="text-white/25 normal-case">(optional)</span>
         </label>
-        <textarea
+        <Textarea
           id={`review-${bookSlug}`}
           value={review}
           onChange={(e) => setReview(e.target.value)}
           maxLength={MAX_REVIEW_CHARS}
-          rows={5}
+          minRows={5}
           placeholder="Share what moved you about this book..."
-          className="w-full bg-white/[0.03] border border-white/[0.08] rounded-lg px-3 py-2 text-sm text-white/90 placeholder:text-white/25 focus:outline-none focus:border-[#00bcd4]/50 focus:ring-1 focus:ring-[#00bcd4]/30 resize-y"
         />
         <div className="mt-1 flex justify-between text-[10px] text-white/30">
           <span>Markdown is not rendered. Plain text only.</span>
@@ -209,38 +194,22 @@ export function ReviewForm({ bookSlug, existingRating, onSubmit }: ReviewFormPro
         </div>
       </div>
 
-      {status.kind === 'error' && (
-        <div className="text-xs text-red-300 bg-red-500/10 border border-red-500/20 rounded-md px-3 py-2">
-          {status.message}
-        </div>
-      )}
-      {status.kind === 'success' && (
-        <div className="text-xs text-[#00bcd4] bg-[#00bcd4]/10 border border-[#00bcd4]/20 rounded-md px-3 py-2">
-          {status.message}
-        </div>
-      )}
-
       <div className="flex flex-wrap items-center gap-3 pt-1">
-        <button
-          type="submit"
-          disabled={isLoading || stars < 1}
-          className="px-5 py-2 text-sm font-medium text-[#00bcd4] bg-[#00bcd4]/10 border border-[#00bcd4]/30 rounded-lg hover:bg-[#00bcd4]/20 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-        >
-          {isLoading
-            ? 'Saving...'
-            : hasExisting
-              ? 'Update Rating'
-              : 'Submit Rating'}
-        </button>
+        <Button type="submit" disabled={loading || stars < 1} variant="default">
+          {loading ? 'Saving...' : hasExisting ? 'Update Rating' : 'Submit Rating'}
+        </Button>
         {hasExisting && (
-          <button
+          <Button
             type="button"
+            variant="ghost"
+            size="sm"
             onClick={handleDelete}
-            disabled={isLoading}
-            className="px-4 py-2 text-xs text-white/50 border border-white/[0.08] rounded-lg hover:text-red-300 hover:border-red-500/30 disabled:opacity-40 transition-colors"
+            disabled={loading}
+            className="text-white/50 hover:text-red-300"
           >
+            <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
             Delete my rating
-          </button>
+          </Button>
         )}
       </div>
     </form>

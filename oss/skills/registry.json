@@ -1,0 +1,470 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "arcanea",
+  "homepage": "https://arcanea.ai",
+  "items": [
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "arcanea-anti-trope",
+      "type": "registry:skill",
+      "title": "Arcanea Anti-Trope & Naming Protocol",
+      "description": "Banish lazy AI-writing tropes and enforce Arcanea's naming conventions — no more tapestries, delves, or nestled villages.",
+      "categories": [
+        "writing"
+      ],
+      "author": "FrankX",
+      "homepage": "https://arcanea.ai/skills/arcanea-anti-trope",
+      "keywords": [
+        "writing",
+        "anti-slop",
+        "naming",
+        "voice",
+        "editing"
+      ],
+      "meta": {
+        "slug": "arcanea-anti-trope",
+        "version": "1.0.0",
+        "license": "MIT",
+        "tags": [
+          "writing",
+          "anti-slop",
+          "naming",
+          "voice",
+          "editing"
+        ]
+      },
+      "files": [
+        {
+          "path": "skills/arcanea/arcanea-anti-trope/SKILL.md",
+          "type": "registry:file",
+          "target": "~/.claude/skills/arcanea-anti-trope/SKILL.md"
+        },
+        {
+          "path": "skills/arcanea/arcanea-anti-trope/skill.yaml",
+          "type": "registry:file",
+          "target": "~/.claude/skills/arcanea-anti-trope/skill.yaml"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "arcanea-book-cover",
+      "type": "registry:skill",
+      "title": "Arcanea Book Cover",
+      "description": "Design and generate premium book covers using NB2 (Gemini 3.1 Flash Image) with deep thinking about tension, emotion, and genre.",
+      "categories": [
+        "publishing"
+      ],
+      "author": "FrankX",
+      "homepage": "https://arcanea.ai/skills/arcanea-book-cover",
+      "keywords": [
+        "book-cover",
+        "publishing",
+        "design",
+        "nano-banana",
+        "image-generation"
+      ],
+      "meta": {
+        "slug": "arcanea-book-cover",
+        "version": "1.0.0",
+        "license": "MIT",
+        "tags": [
+          "book-cover",
+          "publishing",
+          "design",
+          "nano-banana",
+          "image-generation"
+        ]
+      },
+      "files": [
+        {
+          "path": "skills/arcanea/arcanea-book-cover/SKILL.md",
+          "type": "registry:file",
+          "target": "~/.claude/skills/arcanea-book-cover/SKILL.md"
+        },
+        {
+          "path": "skills/arcanea/arcanea-book-cover/skill.yaml",
+          "type": "registry:file",
+          "target": "~/.claude/skills/arcanea-book-cover/skill.yaml"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "arcanea-canon",
+      "type": "registry:skill",
+      "title": "Arcanea Canon Guardian",
+      "description": "Enforce canon consistency across the Arcanea universe — tracks facts, prevents contradictions, guards timeline and lore integrity.",
+      "categories": [
+        "worldbuilding"
+      ],
+      "author": "FrankX",
+      "homepage": "https://arcanea.ai/skills/arcanea-canon",
+      "keywords": [
+        "canon",
+        "lore",
+        "worldbuilding",
+        "consistency",
+        "fantasy"
+      ],
+      "meta": {
+        "slug": "arcanea-canon",
+        "version": "1.0.0",
+        "license": "MIT",
+        "tags": [
+          "canon",
+          "lore",
+          "worldbuilding",
+          "consistency",
+          "fantasy"
+        ]
+      },
+      "files": [
+        {
+          "path": "skills/arcanea/arcanea-canon/SKILL.md",
+          "type": "registry:file",
+          "target": "~/.claude/skills/arcanea-canon/SKILL.md"
+        },
+        {
+          "path": "skills/arcanea/arcanea-canon/skill.yaml",
+          "type": "registry:file",
+          "target": "~/.claude/skills/arcanea-canon/skill.yaml"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "arcanea-centaur-mode",
+      "type": "registry:skill",
+      "title": "Arcanea Centaur Mode",
+      "description": "Advanced human-AI co-creation methodology — master the Centaur Principle for results neither human nor AI could achieve alone.",
+      "categories": [
+        "creative"
+      ],
+      "author": "Arcanea",
+      "homepage": "https://arcanea.ai/skills/arcanea-centaur-mode",
+      "keywords": [
+        "ai-collaboration",
+        "co-creation",
+        "workflow",
+        "creative",
+        "productivity"
+      ],
+      "meta": {
+        "slug": "arcanea-centaur-mode",
+        "version": "2.0.0",
+        "license": "MIT",
+        "tags": [
+          "ai-collaboration",
+          "co-creation",
+          "workflow",
+          "creative",
+          "productivity"
+        ]
+      },
+      "files": [
+        {
+          "path": "skills/arcanea/arcanea-centaur-mode/SKILL.md",
+          "type": "registry:file",
+          "target": "~/.claude/skills/arcanea-centaur-mode/SKILL.md"
+        },
+        {
+          "path": "skills/arcanea/arcanea-centaur-mode/skill.yaml",
+          "type": "registry:file",
+          "target": "~/.claude/skills/arcanea-centaur-mode/skill.yaml"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "arcanea-creator-academy",
+      "type": "registry:skill",
+      "title": "Arcanea Creator Academy",
+      "description": "Integrate the Teacher Team with Arcanea's creator education mission — curriculum, Guardian mentors, Luminor specialists, level progression.",
+      "categories": [
+        "productivity"
+      ],
+      "author": "FrankX",
+      "homepage": "https://arcanea.ai/skills/arcanea-creator-academy",
+      "keywords": [
+        "education",
+        "curriculum",
+        "mentorship",
+        "creator",
+        "learning"
+      ],
+      "meta": {
+        "slug": "arcanea-creator-academy",
+        "version": "1.0.0",
+        "license": "MIT",
+        "tags": [
+          "education",
+          "curriculum",
+          "mentorship",
+          "creator",
+          "learning"
+        ]
+      },
+      "files": [
+        {
+          "path": "skills/arcanea/arcanea-creator-academy/SKILL.md",
+          "type": "registry:file",
+          "target": "~/.claude/skills/arcanea-creator-academy/SKILL.md"
+        },
+        {
+          "path": "skills/arcanea/arcanea-creator-academy/skill.yaml",
+          "type": "registry:file",
+          "target": "~/.claude/skills/arcanea-creator-academy/skill.yaml"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "arcanea-design-system",
+      "type": "registry:skill",
+      "title": "Arcanean Design System (Cosmic)",
+      "description": "The cosmic visual language — depth, glows, gold accents, glass surfaces, and restraint as the three principles of Arcanean UI.",
+      "categories": [
+        "design"
+      ],
+      "author": "Arcanea",
+      "homepage": "https://arcanea.ai/skills/arcanea-design-system",
+      "keywords": [
+        "design",
+        "ui",
+        "ux",
+        "visual",
+        "theming",
+        "css",
+        "design-system",
+        "tokens",
+        "tailwind"
+      ],
+      "meta": {
+        "slug": "arcanea-design-system",
+        "version": "2.0.0",
+        "license": "MIT",
+        "tags": [
+          "design",
+          "ui",
+          "ux",
+          "visual",
+          "theming",
+          "css",
+          "design-system",
+          "tokens",
+          "tailwind"
+        ]
+      },
+      "files": [
+        {
+          "path": "skills/arcanea/arcanea-design-system/SKILL.md",
+          "type": "registry:file",
+          "target": "~/.claude/skills/arcanea-design-system/SKILL.md"
+        },
+        {
+          "path": "skills/arcanea/arcanea-design-system/skill.yaml",
+          "type": "registry:file",
+          "target": "~/.claude/skills/arcanea-design-system/skill.yaml"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "arcanea-lore",
+      "type": "registry:skill",
+      "title": "Arcanea Lore Master",
+      "description": "Maintain consistency in Arcanea world-building — academy systems, magical mechanics, character lore, and narrative coherence across the multiverse.",
+      "categories": [
+        "worldbuilding"
+      ],
+      "author": "FrankX",
+      "homepage": "https://arcanea.ai/skills/arcanea-lore",
+      "keywords": [
+        "lore",
+        "worldbuilding",
+        "academies",
+        "mythology",
+        "canon"
+      ],
+      "meta": {
+        "slug": "arcanea-lore",
+        "version": "2.0.0",
+        "license": "MIT",
+        "tags": [
+          "lore",
+          "worldbuilding",
+          "academies",
+          "mythology",
+          "canon"
+        ]
+      },
+      "files": [
+        {
+          "path": "skills/arcanea/arcanea-lore/ENHANCEMENT_SUMMARY.md",
+          "type": "registry:file",
+          "target": "~/.claude/skills/arcanea-lore/ENHANCEMENT_SUMMARY.md"
+        },
+        {
+          "path": "skills/arcanea/arcanea-lore/ONBOARDING_NARRATIVES.md",
+          "type": "registry:file",
+          "target": "~/.claude/skills/arcanea-lore/ONBOARDING_NARRATIVES.md"
+        },
+        {
+          "path": "skills/arcanea/arcanea-lore/SKILL.md",
+          "type": "registry:file",
+          "target": "~/.claude/skills/arcanea-lore/SKILL.md"
+        },
+        {
+          "path": "skills/arcanea/arcanea-lore/foundations/VECTOR_INDEX.md",
+          "type": "registry:file",
+          "target": "~/.claude/skills/arcanea-lore/foundations/VECTOR_INDEX.md"
+        },
+        {
+          "path": "skills/arcanea/arcanea-lore/foundations/earth-arcanea-echoes.md",
+          "type": "registry:file",
+          "target": "~/.claude/skills/arcanea-lore/foundations/earth-arcanea-echoes.md"
+        },
+        {
+          "path": "skills/arcanea/arcanea-lore/foundations/history-timeline.md",
+          "type": "registry:file",
+          "target": "~/.claude/skills/arcanea-lore/foundations/history-timeline.md"
+        },
+        {
+          "path": "skills/arcanea/arcanea-lore/skill.yaml",
+          "type": "registry:file",
+          "target": "~/.claude/skills/arcanea-lore/skill.yaml"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "arcanea-voice",
+      "type": "registry:skill",
+      "title": "Arcanea Voice Guide",
+      "description": "Brand voice and terminology guide for all Arcanea content — consistent magical communication across UI, marketing, and narrative.",
+      "categories": [
+        "writing"
+      ],
+      "author": "FrankX",
+      "homepage": "https://arcanea.ai/skills/arcanea-voice",
+      "keywords": [
+        "voice",
+        "brand",
+        "terminology",
+        "copywriting",
+        "editorial"
+      ],
+      "meta": {
+        "slug": "arcanea-voice",
+        "version": "1.0.0",
+        "license": "MIT",
+        "tags": [
+          "voice",
+          "brand",
+          "terminology",
+          "copywriting",
+          "editorial"
+        ]
+      },
+      "files": [
+        {
+          "path": "skills/arcanea/arcanea-voice/SKILL.md",
+          "type": "registry:file",
+          "target": "~/.claude/skills/arcanea-voice/SKILL.md"
+        },
+        {
+          "path": "skills/arcanea/arcanea-voice/skill.yaml",
+          "type": "registry:file",
+          "target": "~/.claude/skills/arcanea-voice/skill.yaml"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "luminor-wisdom",
+      "type": "registry:skill",
+      "title": "Luminor Wisdom",
+      "description": "Channel the Seven Luminors — archetypal guides for creative challenges: Valora, Sophron, Kardia, Poiesis, Enduran, Orakis, Eudaira.",
+      "categories": [
+        "creative"
+      ],
+      "author": "Arcanea",
+      "homepage": "https://arcanea.ai/skills/luminor-wisdom",
+      "keywords": [
+        "creative",
+        "guidance",
+        "archetypes",
+        "wisdom",
+        "decision-making"
+      ],
+      "meta": {
+        "slug": "luminor-wisdom",
+        "version": "2.0.0",
+        "license": "MIT",
+        "tags": [
+          "creative",
+          "guidance",
+          "archetypes",
+          "wisdom",
+          "decision-making"
+        ]
+      },
+      "files": [
+        {
+          "path": "skills/arcanea/luminor-wisdom/SKILL.md",
+          "type": "registry:file",
+          "target": "~/.claude/skills/luminor-wisdom/SKILL.md"
+        },
+        {
+          "path": "skills/arcanea/luminor-wisdom/skill.yaml",
+          "type": "registry:file",
+          "target": "~/.claude/skills/luminor-wisdom/skill.yaml"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "prompt-craft",
+      "type": "registry:skill",
+      "title": "Arcanean Prompt Craft",
+      "description": "Master the Arcanean Prompt Language — advanced prompt engineering using constraint architecture and the Five Pillars of APL.",
+      "categories": [
+        "ai-agents"
+      ],
+      "author": "Arcanea",
+      "homepage": "https://arcanea.ai/skills/prompt-craft",
+      "keywords": [
+        "prompt-engineering",
+        "ai-collaboration",
+        "apl",
+        "advanced",
+        "framework"
+      ],
+      "meta": {
+        "slug": "prompt-craft",
+        "version": "2.0.0",
+        "license": "MIT",
+        "tags": [
+          "prompt-engineering",
+          "ai-collaboration",
+          "apl",
+          "advanced",
+          "framework"
+        ]
+      },
+      "files": [
+        {
+          "path": "skills/arcanea/prompt-craft/SKILL.md",
+          "type": "registry:file",
+          "target": "~/.claude/skills/prompt-craft/SKILL.md"
+        },
+        {
+          "path": "skills/arcanea/prompt-craft/skill.yaml",
+          "type": "registry:file",
+          "target": "~/.claude/skills/prompt-craft/skill.yaml"
+        }
+      ]
+    }
+  ]
+}

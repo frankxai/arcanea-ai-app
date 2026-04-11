@@ -1,6 +1,9 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Command } from 'cmdk';
+import { Search, X } from 'lucide-react';
+
 import type { Skill } from '@/lib/skills/loader';
 import SkillCard from './SkillCard';
 
@@ -9,99 +12,107 @@ interface SkillSearchProps {
   categories: string[];
 }
 
-const DEBOUNCE_MS = 300;
-
+/**
+ * Raycast-style command palette search for the skill marketplace.
+ *
+ * - Uses cmdk for fuzzy search, grouping, and keyboard navigation
+ * - Cmd/Ctrl+K focuses the input from anywhere on the page
+ * - Category chips filter the underlying dataset
+ * - Results render as a grid of SkillCards wrapped in CommandItem so
+ *   cmdk still controls visibility, ordering, and empty state
+ */
 export default function SkillSearch({ skills, categories }: SkillSearchProps) {
   const [query, setQuery] = useState('');
-  const [debouncedQuery, setDebouncedQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  // Debounce the query
+  // Cmd/Ctrl+K to focus the search input
   useEffect(() => {
-    const id = setTimeout(() => setDebouncedQuery(query), DEBOUNCE_MS);
-    return () => clearTimeout(id);
-  }, [query]);
-
-  const filtered = useMemo(() => {
-    const q = debouncedQuery.trim().toLowerCase();
-    return skills.filter((s) => {
-      if (activeCategory && (s.category || '') !== activeCategory) {
-        return false;
+    const handler = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        inputRef.current?.focus();
       }
-      if (!q) return true;
-      const haystack = [
-        s.name,
-        s.description,
-        s.category || '',
-        ...(s.tags || []),
-        ...(s.triggers || []),
-      ]
-        .join(' ')
-        .toLowerCase();
-      return haystack.includes(q);
-    });
-  }, [skills, debouncedQuery, activeCategory]);
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, []);
+
+  // Pre-filter by category — cmdk handles the fuzzy text search.
+  const visibleSkills = useMemo(() => {
+    if (!activeCategory) return skills;
+    return skills.filter((s) => (s.category || '') === activeCategory);
+  }, [skills, activeCategory]);
+
+  // Group visible skills by category for rendering in CommandGroups.
+  const grouped = useMemo(() => {
+    const map = new Map<string, Skill[]>();
+    for (const skill of visibleSkills) {
+      const key = skill.category || 'Uncategorized';
+      const arr = map.get(key) ?? [];
+      arr.push(skill);
+      map.set(key, arr);
+    }
+    return Array.from(map.entries()).sort((a, b) => a[0].localeCompare(b[0]));
+  }, [visibleSkills]);
 
   return (
-    <div>
-      {/* Search bar */}
+    <Command
+      className="w-full"
+      // Custom filter that searches across name, description, tags, and triggers.
+      filter={(value, search) => {
+        if (!search) return 1;
+        const haystack = value.toLowerCase();
+        const needle = search.toLowerCase().trim();
+        if (!needle) return 1;
+        // Simple substring + token match scoring.
+        if (haystack.includes(needle)) return 1;
+        const tokens = needle.split(/\s+/).filter(Boolean);
+        if (tokens.every((t) => haystack.includes(t))) return 0.6;
+        return 0;
+      }}
+      shouldFilter
+      label="Search skills"
+    >
+      {/* Search input */}
       <div className="relative mb-6">
-        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none">
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            />
-          </svg>
-        </div>
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search skills by name, description, or tag..."
-          className="w-full rounded-xl bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm pl-11 pr-4 py-3 text-sm text-white/90 placeholder:text-white/30 focus:outline-none focus:border-[#00bcd4]/40 transition-colors"
+        <Search
+          className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white/30"
+          aria-hidden="true"
         />
-        {query && (
+        <Command.Input
+          ref={inputRef}
+          value={query}
+          onValueChange={setQuery}
+          placeholder="Search skills by name, description, or tag..."
+          className="w-full rounded-xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-sm px-11 py-3 text-sm text-white/90 placeholder:text-white/30 focus:border-[#00bcd4]/40 focus:outline-none transition-colors"
+        />
+        {query ? (
           <button
             type="button"
             onClick={() => setQuery('')}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/70 transition-colors"
             aria-label="Clear search"
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 transition-colors hover:text-white/70"
           >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
+            <X className="h-4 w-4" />
           </button>
+        ) : (
+          <kbd className="pointer-events-none absolute right-4 top-1/2 hidden -translate-y-1/2 items-center gap-1 rounded border border-white/[0.08] bg-white/[0.04] px-1.5 py-0.5 font-mono text-[10px] text-white/40 sm:inline-flex">
+            <span className="text-[11px]">⌘</span>K
+          </kbd>
         )}
       </div>
 
       {/* Category chips */}
       {categories.length > 0 && (
-        <div className="flex flex-wrap gap-2 mb-8">
+        <div className="mb-8 flex flex-wrap gap-2">
           <button
             type="button"
             onClick={() => setActiveCategory(null)}
-            className={`text-xs px-3 py-1.5 rounded-full border transition-all ${
+            className={`rounded-full border px-3 py-1.5 text-xs transition-all ${
               activeCategory === null
-                ? 'bg-[#00bcd4]/15 border-[#00bcd4]/40 text-[#00bcd4]'
-                : 'bg-white/[0.03] border-white/[0.06] text-white/50 hover:text-white/80 hover:border-white/20'
+                ? 'border-[#00bcd4]/40 bg-[#00bcd4]/15 text-[#00bcd4]'
+                : 'border-white/[0.06] bg-white/[0.03] text-white/50 hover:border-white/20 hover:text-white/80'
             }`}
           >
             All
@@ -111,10 +122,10 @@ export default function SkillSearch({ skills, categories }: SkillSearchProps) {
               key={c}
               type="button"
               onClick={() => setActiveCategory(c)}
-              className={`text-xs px-3 py-1.5 rounded-full border transition-all ${
+              className={`rounded-full border px-3 py-1.5 text-xs transition-all ${
                 activeCategory === c
-                  ? 'bg-[#00bcd4]/15 border-[#00bcd4]/40 text-[#00bcd4]'
-                  : 'bg-white/[0.03] border-white/[0.06] text-white/50 hover:text-white/80 hover:border-white/20'
+                  ? 'border-[#00bcd4]/40 bg-[#00bcd4]/15 text-[#00bcd4]'
+                  : 'border-white/[0.06] bg-white/[0.03] text-white/50 hover:border-white/20 hover:text-white/80'
               }`}
             >
               {c}
@@ -123,25 +134,41 @@ export default function SkillSearch({ skills, categories }: SkillSearchProps) {
         </div>
       )}
 
-      {/* Results count */}
-      <div className="mb-4 text-xs text-white/30">
-        {filtered.length} {filtered.length === 1 ? 'skill' : 'skills'}
-        {debouncedQuery && ` matching "${debouncedQuery}"`}
-        {activeCategory && ` in ${activeCategory}`}
-      </div>
-
-      {/* Grid */}
-      {filtered.length > 0 ? (
-        <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((s) => (
-            <SkillCard key={s.slug} skill={s} />
-          ))}
-        </div>
-      ) : (
-        <div className="text-center py-16 text-white/30 text-sm">
+      {/* Result list — rendered as grid cells, cmdk controls visibility */}
+      <Command.List className="block">
+        <Command.Empty className="py-16 text-center text-sm text-white/30">
           No skills match your search.
-        </div>
-      )}
-    </div>
+        </Command.Empty>
+
+        {grouped.map(([category, items]) => (
+          <Command.Group
+            key={category}
+            heading={category}
+            className="mb-8 [&_[cmdk-group-heading]]:mb-3 [&_[cmdk-group-heading]]:mt-2 [&_[cmdk-group-heading]]:text-[10px] [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-widest [&_[cmdk-group-heading]]:text-white/30"
+          >
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+              {items.map((s) => (
+                <Command.Item
+                  key={s.slug}
+                  value={[
+                    s.name,
+                    s.description,
+                    s.category || '',
+                    ...(s.tags || []),
+                    ...(s.triggers || []),
+                  ].join(' ')}
+                  className="!block !p-0 !bg-transparent data-[selected=true]:!bg-transparent"
+                  onSelect={() => {
+                    // no-op: navigation handled by the SkillCard's Link
+                  }}
+                >
+                  <SkillCard skill={s} />
+                </Command.Item>
+              ))}
+            </div>
+          </Command.Group>
+        ))}
+      </Command.List>
+    </Command>
   );
 }

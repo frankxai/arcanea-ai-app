@@ -1,0 +1,84 @@
+# ============================================================================
+# Arcanea Skill Metadata — SAMPLE / REFERENCE TEMPLATE
+# ============================================================================
+# Copy this file to `skill.yaml` inside your skill directory and fill in.
+# See SCHEMA.md for full field documentation and validation rules.
+# ----------------------------------------------------------------------------
+
+# ---- REQUIRED FIELDS -------------------------------------------------------
+
+# Human-readable display name (title case, <50 chars)
+name: "Example Skill Name"
+
+# URL-safe identifier — MUST match the directory name
+slug: "example-skill-name"
+
+# One-sentence summary for cards/previews (100-200 chars, verb-first)
+description: "Do one clear useful thing for creators — this line shows up in search and cards, so make it count."
+
+# Semantic version (MAJOR.MINOR.PATCH)
+version: "1.0.0"
+
+# Controlled vocabulary — MUST be one of:
+# writing | design | development | worldbuilding | productivity | creative | ai-agents | publishing
+category: "creative"
+
+# Creator or org name
+author: "FrankX"
+
+# SPDX license identifier (MIT, Apache-2.0, CC-BY-SA-4.0, CC0-1.0, AGPL-3.0)
+license: "MIT"
+
+# ---- RECOMMENDED FIELDS ----------------------------------------------------
+
+# 3-7 searchable tags (lowercase, hyphen-separated)
+tags:
+  - "example"
+  - "template"
+  - "reference"
+  - "documentation"
+
+# Which CLI harnesses this skill supports
+tool_compatibility:
+  - "claude-code"
+  - "opencode"
+  # - "cursor"
+  # - "codex"
+  # - "gemini-cli"
+
+# Other skill slugs this one depends on (empty array if none)
+dependencies: []
+
+# Per-harness install commands
+install_commands:
+  claude-code: "cp -r ~/.claude/skills/example-skill-name"
+  opencode: "cp -r ~/.opencode/skills/example-skill-name"
+  universal: "npx arcanea install example-skill-name"
+
+# ---- OPTIONAL METADATA -----------------------------------------------------
+
+# 2-3 short example invocations (<140 chars each)
+usage_examples:
+  - "User: do X with my project → AI: uses skill to accomplish Y following the documented pattern"
+  - "User: help me with Z → AI: applies skill framework and returns structured output"
+
+# Canonical documentation URL
+homepage: "https://arcanea.ai/skills/example-skill-name"
+
+# Source repository (defaults to Arcanea OSS if omitted)
+repository: "https://github.com/frankxai/arcanea"
+
+# Visual previews for marketplace (16:9 PNG/JPG)
+screenshots: []
+  # - "https://arcanea.ai/screenshots/example-1.png"
+
+# Link to CHANGELOG file
+changelog: "https://github.com/frankxai/arcanea/blob/main/oss/skills/arcanea/example-skill-name/CHANGELOG.md"
+
+# Issue tracker or support forum
+support: "https://github.com/frankxai/arcanea/issues"
+
+# ---- AUTO-POPULATED — DO NOT SET MANUALLY ---------------------------------
+# last_updated: <ISO8601>
+# stars: <int>
+# downloads: <int>

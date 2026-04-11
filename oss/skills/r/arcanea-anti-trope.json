@@ -1,0 +1,45 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "arcanea-anti-trope",
+  "type": "registry:skill",
+  "title": "Arcanea Anti-Trope & Naming Protocol",
+  "description": "Banish lazy AI-writing tropes and enforce Arcanea's naming conventions — no more tapestries, delves, or nestled villages.",
+  "categories": [
+    "writing"
+  ],
+  "author": "FrankX",
+  "homepage": "https://arcanea.ai/skills/arcanea-anti-trope",
+  "keywords": [
+    "writing",
+    "anti-slop",
+    "naming",
+    "voice",
+    "editing"
+  ],
+  "meta": {
+    "slug": "arcanea-anti-trope",
+    "version": "1.0.0",
+    "license": "MIT",
+    "tags": [
+      "writing",
+      "anti-slop",
+      "naming",
+      "voice",
+      "editing"
+    ]
+  },
+  "files": [
+    {
+      "path": "skills/arcanea/arcanea-anti-trope/SKILL.md",
+      "content": "# Arcanea Anti-Trope & Naming Protocol\r\n\r\n> *\"We do not 'unleash' potential; we cultivate it. We do not weave 'tapestries' of fate; we forge chains of consequence. Speak clearly, or do not speak at all.\"*\r\n\r\n## 1. The Banned Lexicon (AI Hallucinations)\r\n\r\nThese words are forbidden in Arcanea narrative voice unless used in a strictly literal, physical sense. They are the markers of \"lazy AI\" writing.\r\n\r\n| The Forbidden Word | Why It's Banned | The Better Alternative |\r\n|--------------------|-----------------|------------------------|\r\n| **Delve** | Overused, implies generic depth without detail. | Investigate, excavate, study, pierce, analyze. |\r\n| **Tapestry** | The ultimate AI cliché for complexity. | Network, system, architecture, collision, knot. |\r\n| **Unleash** | Hyperbolic, comic-book power fantasy. | Release, unbind, trigger, deploy, open. |\r\n| **Elevate** | Corporate marketing speak disguised as magic. | Raise, sharpen, refine, heighten, transcend. |\r\n| **Unlock** | Gamified language. | Access, reveal, decrypt, open, solve. |\r\n| **Symphony** | Unless actual music is playing, it's lazy. | Coordination, alignment, resonance, chorus. |\r\n| **Nestled** | Every AI village is \"nestled\". | Hidden, perched, buried, anchored, set. |\r\n| **Testament** | \"A testament to...\" is passive filler. | Proof, scar, monument, result, evidence. |\r\n| **Realms** | (Context specific) Don't use for \"areas\". | Domains, zones, territories, disciplines. |\r\n| **Nexus** | Generic sci-fi center. | Hub, core, convergence, heart, intersection. |\r\n| **Luminous** | (Context specific) We use this, but EARN it. | Radiant, burning, searing, pale, glowing. |\r\n| **Whispers** | \"Whispers of the past...\" is a trope. | Echoes, records, dust, scars, remnants. |\r\n\r\n## 2. Naming Conventions\r\n\r\n### The \"Star Wars\" Rule\r\nNames must not sound like random syllables (e.g., *Xyloph*, *Zorpt*). They must have etymological roots (Latin, Greek, Norse, Sanskrit) or clear phonetics.\r\n\r\n**Bad:** *Kael'thas*, *Xylar*, *Morpheus* (Matrix stolen).\r\n**Good:** *Lumina* (Light), *Nero* (Black/Water), *Vorun* (Vor/Truth).\r\n\r\n### The \"Noun-Verb\" Rule\r\nAvoid \"The [Adjective] [Noun]\" formula for everything.\r\n**Bad:** *The Silent Watcher*, *The Dark Blade*, *The Eternal Flame*.\r\n**Good:** *Azariel*, *The Hungry Void*, *Yggdrasil*.\r\n\r\n### The Academy Identifiers\r\n*   **Atlantean:** Fluid, soft vowels, double 'l', 's', 'th'. (e.g., *Lúmendell*, *Thalassa*).\r\n*   **Draconic:** Hard consonants, 'k', 'r', 'z', 'd'. (e.g., *Krozar*, *Drakon*).\r\n*   **Creation:** Musical, rhythmic, 'a', 'o', 'm', 'n'. (e.g., *Melodia*, *Harmonia*).\r\n\r\n## 3. Structural Tropes to Avoid\r\n\r\n### The \"Chosen One\" Trap\r\nArcanea is about **collaboration**, not a single savior.\r\n*   **Avoid:** \"Only you can save the realm.\"\r\n*   **Embrace:** \"Only together can we sustain the Arc.\"\r\n\r\n### The \"Ancient Evil Awakens\" Trap\r\n*   **Avoid:** A generic dark lord waking up because \"it is time.\"\r\n*   **Embrace:** Systems decaying due to neglect (Entropy). The Dark Lord (Malachar) is a *result* of broken compassion, not just \"evil\".\r\n\r\n### The \"Magic Feather\" Trap\r\n*   **Avoid:** Artifacts that do everything for you.\r\n*   **Embrace:** Tools that amplify *effort*. Magic requires cost (Energy Laws).\r\n\r\n## 4. The \"Human Check\"\r\nBefore finalizing any text, read it aloud. If you sound like a movie trailer voiceover (\"In a world where...\"), delete it. If you sound like a marketing brochure (\"Elevate your experience...\"), delete it.\r\n\r\n**The Goal:** Write like a historian of a world that actually exists.\r\n",
+      "type": "registry:file",
+      "target": "~/.claude/skills/arcanea-anti-trope/SKILL.md"
+    },
+    {
+      "path": "skills/arcanea/arcanea-anti-trope/skill.yaml",
+      "content": "name: \"Arcanea Anti-Trope & Naming Protocol\"\nslug: \"arcanea-anti-trope\"\ndescription: \"Banish lazy AI-writing tropes and enforce Arcanea's naming conventions — no more tapestries, delves, or nestled villages.\"\nversion: \"1.0.0\"\ncategory: \"writing\"\nauthor: \"FrankX\"\nlicense: \"MIT\"\n\ntags:\n  - \"writing\"\n  - \"anti-slop\"\n  - \"naming\"\n  - \"voice\"\n  - \"editing\"\n\ntool_compatibility:\n  - \"claude-code\"\n  - \"opencode\"\n\ndependencies: []\n\ninstall_commands:\n  claude-code: \"cp -r ~/.claude/skills/arcanea-anti-trope\"\n  opencode: \"cp -r ~/.opencode/skills/arcanea-anti-trope\"\n  universal: \"npx arcanea install arcanea-anti-trope\"\n\nusage_examples:\n  - \"User: review this chapter for slop → AI: flags banned words (tapestry, unleash, delve) and suggests alternatives\"\n  - \"User: name this faction → AI: applies etymological root rule and academy identifier patterns\"\n\nhomepage: \"https://arcanea.ai/skills/arcanea-anti-trope\"\nrepository: \"https://github.com/frankxai/arcanea\"\nsupport: \"https://github.com/frankxai/arcanea/issues\"\n",
+      "type": "registry:file",
+      "target": "~/.claude/skills/arcanea-anti-trope/skill.yaml"
+    }
+  ]
+}

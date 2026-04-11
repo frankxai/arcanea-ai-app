@@ -1,17 +1,21 @@
-name: "Arcanea Design System"
+name: "Arcanean Design System (Cosmic)"
 slug: "arcanea-design-system"
-description: "Complete visual design language for Arcanea — cosmic theme tokens, component patterns, animation standards, and academy-specific aesthetics."
-version: "1.0.0"
+description: "The cosmic visual language — depth, glows, gold accents, glass surfaces, and restraint as the three principles of Arcanean UI."
+version: "2.0.0"
 category: "design"
-author: "FrankX"
+author: "Arcanea"
 license: "MIT"
 
 tags:
-  - "design-system"
+  - "design"
   - "ui"
+  - "ux"
+  - "visual"
+  - "theming"
+  - "css"
+  - "design-system"
   - "tokens"
   - "tailwind"
-  - "theming"
 
 tool_compatibility:
   - "claude-code"
@@ -26,8 +30,9 @@ install_commands:
   universal: "npx arcanea install arcanea-design-system"
 
 usage_examples:
-  - "User: build an Atlantean academy card component → AI: uses design tokens, gradient, glow-atlantean, correct border radius"
-  - "User: what's the primary violet? → AI: returns --arcanea-primary-500 (#8b5cf6) with usage guidance"
+  - "User: style this button as Arcanean → AI: applies cosmic-surface background, gold-medium accent, depth glow"
+  - "User: what's the cosmic-void color? → AI: returns #0b0e14 with usage guidance for deepest backgrounds"
+  - "User: build an Atlantean academy card → AI: uses glass, atlantean-teal, glow-atlantean on hover"
 
 homepage: "https://arcanea.ai/skills/arcanea-design-system"
 repository: "https://github.com/frankxai/arcanea"

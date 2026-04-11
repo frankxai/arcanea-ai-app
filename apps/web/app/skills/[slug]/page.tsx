@@ -3,11 +3,19 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import ReactMarkdown from 'react-markdown';
 import {
+  ArrowLeft,
+  BookOpen,
+  ExternalLink,
+  Tag,
+  Users,
+} from 'lucide-react';
+import {
   getAllSkills,
   getSkillBySlug,
   type Skill,
 } from '@/lib/skills/loader';
 import InstallTabs from '@/components/skills/InstallTabs';
+import { Badge } from '@/components/ui/badge';
 
 export const dynamic = 'force-dynamic';
 
@@ -34,28 +42,6 @@ export async function generateMetadata({
     alternates: { canonical: `/skills/${skill.slug}` },
     robots: { index: true, follow: true },
   };
-}
-
-function Badge({
-  children,
-  tone = 'default',
-}: {
-  children: React.ReactNode;
-  tone?: 'default' | 'teal' | 'gold';
-}) {
-  const tones: Record<string, string> = {
-    default:
-      'bg-white/[0.04] border-white/[0.08] text-white/60',
-    teal: 'bg-[#00bcd4]/10 border-[#00bcd4]/30 text-[#00bcd4]',
-    gold: 'bg-[#ffd700]/10 border-[#ffd700]/30 text-[#ffd700]',
-  };
-  return (
-    <span
-      className={`inline-flex items-center text-[10px] uppercase tracking-widest px-2 py-1 rounded-md border ${tones[tone]}`}
-    >
-      {children}
-    </span>
-  );
 }
 
 function RelatedSkills({
@@ -112,16 +98,25 @@ export default async function SkillDetailPage({ params }: PageProps) {
         <div className="relative max-w-5xl mx-auto px-6 pt-16 pb-12">
           <Link
             href="/skills"
-            className="inline-block text-xs text-white/30 hover:text-white/60 transition-colors mb-8"
+            className="inline-flex items-center gap-1.5 text-xs text-white/30 hover:text-white/60 transition-colors mb-8"
           >
-            ← All Skills
+            <ArrowLeft className="h-3 w-3" aria-hidden="true" />
+            All Skills
           </Link>
 
           <div className="flex flex-wrap items-center gap-2 mb-5">
-            {skill.category && <Badge tone="teal">{skill.category}</Badge>}
-            {skill.version && <Badge>v{skill.version}</Badge>}
-            {skill.author && <Badge>by {skill.author}</Badge>}
-            {skill.license && <Badge tone="gold">{skill.license}</Badge>}
+            {skill.category && (
+              <Badge variant="crystal" icon={<Tag className="h-3 w-3" />}>
+                {skill.category}
+              </Badge>
+            )}
+            {skill.version && <Badge variant="default">v{skill.version}</Badge>}
+            {skill.author && (
+              <Badge variant="default" icon={<Users className="h-3 w-3" />}>
+                by {skill.author}
+              </Badge>
+            )}
+            {skill.license && <Badge variant="gold">{skill.license}</Badge>}
           </div>
 
           <h1 className="text-4xl sm:text-5xl font-display font-bold tracking-tight text-white/95 mb-5 max-w-3xl">
@@ -199,7 +194,8 @@ export default async function SkillDetailPage({ params }: PageProps) {
 
             {/* Full markdown */}
             <div className="mb-12">
-              <h2 className="font-display text-xl font-semibold text-white/95 mb-4">
+              <h2 className="font-display text-xl font-semibold text-white/95 mb-4 inline-flex items-center gap-2">
+                <BookOpen className="h-5 w-5 text-[#00bcd4]/80" aria-hidden="true" />
                 Documentation
               </h2>
               <article className="skill-prose">
@@ -215,7 +211,8 @@ export default async function SkillDetailPage({ params }: PageProps) {
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white/70 text-sm hover:text-[#00bcd4] hover:border-[#00bcd4]/30 transition-colors"
               >
-                View source on GitHub →
+                View source on GitHub
+                <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
               </Link>
             </div>
           </div>

@@ -119,7 +119,7 @@ Two paths:
 3. Recommended: 1200x1800px, portrait ratio, < 2MB
 
 **Path B: Use the `/arcanea-book-cover` skill**
-- Install the Arcanea skill pack (`npx arcanea install book-cover`)
+- Install the Arcanea skill pack (`npx arcanea install arcanea-book-cover`)
 - Run the skill and it generates a cover via NB2
 - The skill handles validation and optimal prompting
 

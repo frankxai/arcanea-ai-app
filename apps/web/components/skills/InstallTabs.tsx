@@ -1,101 +1,106 @@
 'use client';
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useState } from 'react';
+import { Check, Copy } from 'lucide-react';
+import { toast } from 'sonner';
+
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/components/ui/tabs';
 import type { Skill } from '@/lib/skills/loader';
 
-type ToolId = 'claude-code' | 'opencode' | 'cursor' | 'codex' | 'gemini' | 'npx';
+type ToolId =
+  | 'claude-code'
+  | 'opencode'
+  | 'cursor'
+  | 'codex'
+  | 'gemini-cli'
+  | 'universal';
 
 interface ToolDef {
   id: ToolId;
   label: string;
   buildCommand: (slug: string, skill: Skill) => string;
+  description: (label: string) => string;
 }
 
 const TOOLS: ToolDef[] = [
   {
     id: 'claude-code',
     label: 'Claude Code',
-    buildCommand: (slug) => `cp -r skills/${slug} ~/.claude/skills/`,
+    buildCommand: (slug) => `cp -r oss/skills/arcanea/${slug} ~/.claude/skills/`,
+    description: (label) =>
+      `Copies the skill directory to your ${label} skills folder. Restart the tool to load.`,
   },
   {
     id: 'opencode',
     label: 'OpenCode',
-    buildCommand: (slug) => `cp -r skills/${slug} ~/.opencode/skills/`,
+    buildCommand: (slug) => `cp -r oss/skills/arcanea/${slug} ~/.opencode/skills/`,
+    description: (label) =>
+      `Copies the skill directory to your ${label} skills folder. Restart the tool to load.`,
   },
   {
     id: 'cursor',
     label: 'Cursor',
-    buildCommand: (slug) => `cp -r skills/${slug} ~/.cursor/skills/`,
+    buildCommand: (slug) => `cp -r oss/skills/arcanea/${slug} ~/.cursor/skills/`,
+    description: (label) =>
+      `Copies the skill directory to your ${label} skills folder. Restart the tool to load.`,
   },
   {
     id: 'codex',
     label: 'Codex',
-    buildCommand: (slug) => `cp -r skills/${slug} ~/.codex/skills/`,
+    buildCommand: (slug) => `cp -r oss/skills/arcanea/${slug} ~/.codex/skills/`,
+    description: (label) =>
+      `Copies the skill directory to your ${label} skills folder. Restart the tool to load.`,
   },
   {
-    id: 'gemini',
+    id: 'gemini-cli',
     label: 'Gemini CLI',
-    buildCommand: (slug) => `cp -r skills/${slug} ~/.gemini/skills/`,
+    buildCommand: (slug) => `cp -r oss/skills/arcanea/${slug} ~/.gemini/skills/`,
+    description: (label) =>
+      `Copies the skill directory to your ${label} skills folder. Restart the tool to load.`,
   },
   {
-    id: 'npx',
+    id: 'universal',
     label: 'Universal (npx)',
     buildCommand: (slug, skill) =>
       skill.installCommand || `npx arcanea install ${slug}`,
+    description: () =>
+      'Universal installer that detects your AI tool and copies the skill to the correct directory.',
   },
 ];
 
-function CopyButton({ text }: { text: string }) {
+function CopyButton({ text, label }: { text: string; label: string }) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
+      toast.success(`Copied ${label} install command`, { description: text });
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      /* ignore */
+      toast.error('Failed to copy command');
     }
-  }, [text]);
+  }, [text, label]);
 
   return (
     <button
       type="button"
       onClick={handleCopy}
-      className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white/[0.04] border border-white/[0.06] text-white/60 hover:text-[#00bcd4] hover:border-[#00bcd4]/30 transition-colors text-xs font-medium"
+      className="shrink-0 inline-flex items-center gap-1.5 rounded-md border border-white/[0.06] bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-white/60 transition-colors hover:border-[#00bcd4]/30 hover:text-[#00bcd4]"
     >
       {copied ? (
         <>
-          <svg
-            className="w-3.5 h-3.5 text-green-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M5 13l4 4L19 7"
-            />
-          </svg>
+          <Check className="h-3.5 w-3.5 text-green-400" />
           Copied
         </>
       ) : (
         <>
-          <svg
-            className="w-3.5 h-3.5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
-            />
-          </svg>
+          <Copy className="h-3.5 w-3.5" />
           Copy
         </>
       )}
@@ -104,49 +109,35 @@ function CopyButton({ text }: { text: string }) {
 }
 
 export default function InstallTabs({ skill }: { skill: Skill }) {
-  const [active, setActive] = useState<ToolId>('claude-code');
-
-  const activeTool = TOOLS.find((t) => t.id === active) ?? TOOLS[0];
-  const command = useMemo(
-    () => activeTool.buildCommand(skill.slug, skill),
-    [activeTool, skill]
-  );
-
   return (
-    <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] backdrop-blur-sm overflow-hidden">
-      {/* Tabs */}
-      <div className="flex flex-wrap border-b border-white/[0.06] bg-black/20">
-        {TOOLS.map((t) => (
-          <button
-            key={t.id}
-            type="button"
-            onClick={() => setActive(t.id)}
-            className={`px-4 py-3 text-xs font-medium transition-colors border-b-2 ${
-              active === t.id
-                ? 'text-[#00bcd4] border-[#00bcd4]'
-                : 'text-white/50 border-transparent hover:text-white/80'
-            }`}
-          >
-            {t.label}
-          </button>
-        ))}
-      </div>
+    <div className="rounded-xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-sm p-4">
+      <Tabs defaultValue="claude-code" className="w-full">
+        <TabsList className="flex w-full flex-wrap justify-start">
+          {TOOLS.map((t) => (
+            <TabsTrigger key={t.id} value={t.id}>
+              {t.label}
+            </TabsTrigger>
+          ))}
+        </TabsList>
 
-      {/* Command */}
-      <div className="p-5">
-        <div className="flex items-center gap-3 rounded-lg bg-black/40 border border-white/[0.04] px-4 py-3">
-          <code className="flex-1 font-mono text-[13px] text-white/80 overflow-x-auto whitespace-nowrap">
-            <span className="text-[#00bcd4]/60 mr-2">$</span>
-            {command}
-          </code>
-          <CopyButton text={command} />
-        </div>
-        <p className="mt-3 text-[11px] text-white/30">
-          {active === 'npx'
-            ? 'Universal installer that detects your AI tool and copies the skill to the correct directory.'
-            : `Copies the skill directory to your ${activeTool.label} skills folder. Restart the tool to load.`}
-        </p>
-      </div>
+        {TOOLS.map((tool) => {
+          const command = tool.buildCommand(skill.slug, skill);
+          return (
+            <TabsContent key={tool.id} value={tool.id} className="mt-4">
+              <div className="flex items-center gap-3 rounded-lg border border-white/[0.04] bg-black/40 px-4 py-3">
+                <code className="flex-1 overflow-x-auto whitespace-nowrap font-mono text-[13px] text-white/80">
+                  <span className="mr-2 text-[#00bcd4]/60">$</span>
+                  {command}
+                </code>
+                <CopyButton text={command} label={tool.label} />
+              </div>
+              <p className="mt-3 text-[11px] text-white/30">
+                {tool.description(tool.label)}
+              </p>
+            </TabsContent>
+          );
+        })}
+      </Tabs>
     </div>
   );
 }
