@@ -422,6 +422,27 @@ export async function POST(
 
   let systemPrompt = agentSystemPrompt;
 
+  // ReasoningBank RETRIEVE — fetch relevant memory items BEFORE response
+  // Non-blocking fallback: if retrieval fails, we proceed without memory.
+  try {
+    const { retrieveMemoryItems, formatMemoryItemsForPrompt } = await import(
+      '@/lib/memory/reasoning-bank'
+    );
+    const memoryItems = await retrieveMemoryItems({
+      luminorId: agent.id,
+      userId: session?.userId ?? null,
+      queryText: input,
+      topK: 5,
+      threshold: 0.6,
+    });
+    const memoryBlock = formatMemoryItemsForPrompt(memoryItems);
+    if (memoryBlock) {
+      systemPrompt = `${systemPrompt}${memoryBlock}`;
+    }
+  } catch {
+    // Fail-open: memory retrieval never blocks execution
+  }
+
   // Inject user context if available
   if (session?.userId) {
     const userName = (context.userName as string) ?? 'Creator';
@@ -496,6 +517,27 @@ export async function POST(
             });
           } catch {
             // Non-fatal
+          }
+        })();
+      }
+
+      // ReasoningBank — JUDGE + DISTILL + CONSOLIDATE (fire-and-forget)
+      // Runs the distillation loop in the background so the response
+      // is never blocked. If a principle is extracted, it's stored as
+      // a memory item for future RETRIEVE calls.
+      if (supabaseUrl) {
+        void (async () => {
+          try {
+            const { learnFromExchange } = await import('@/lib/memory/reasoning-bank');
+            await learnFromExchange({
+              luminorId: agent.id,
+              userId: session?.userId ?? null,
+              userInput: input,
+              agentOutput: text,
+              model: label,
+            });
+          } catch (err) {
+            console.error('[execute] reasoning-bank learn failed:', err);
           }
         })();
       }
