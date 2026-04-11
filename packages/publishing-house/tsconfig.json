@@ -14,6 +14,6 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true
   },
-  "include": ["agents/**/*.ts", "notion/**/*.ts", "claws/**/*.ts", "db/**/*.ts", "quality/**/*.ts", "billing/**/*.ts", "orchestrator/**/*.ts"],
+  "include": ["agents/**/*.ts", "notion/**/*.ts", "claws/**/*.ts", "db/**/*.ts", "quality/**/*.ts", "billing/**/*.ts", "orchestrator/**/*.ts", "deploy/**/*.ts"],
   "exclude": ["dist", "node_modules"]
 }

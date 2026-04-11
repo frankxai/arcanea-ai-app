@@ -1,0 +1,70 @@
+# Railway deployment config for @arcanea/publishing-house orchestrator
+#
+# Deploys the TypeScript Maestro + SQLite + cron scheduler as a long-running
+# Node service on Railway. Primary self-host target for the Publishing House.
+#
+# Usage:
+#   cd packages/publishing-house
+#   railway init
+#   railway link
+#   railway up
+#
+# Environment variables to set in Railway dashboard:
+#   ANTHROPIC_API_KEY          (optional — unlocks Managed Agents runtime)
+#   SUPABASE_URL               (optional — unlocks cloud sync)
+#   SUPABASE_KEY               (optional — unlocks cloud sync)
+#   NOTION_TOKEN               (optional — unlocks editorial dashboard)
+#   LEANPUB_API_KEY            (optional — unlocks Leanpub distribution)
+#   ARCANEA_CLAW_KERNEL_PATH   (required — path to luminor-claw-kernel.md inside container)
+#   ARCANEA_DB_PATH            (recommended — sqlite db path for publish_log)
+#
+# At minimum with no keys set: the orchestrator runs local mode with SQLite
+# and dispatches work via structured prompts for Claude Code execution.
+
+[build]
+builder = "nixpacks"
+
+[build.nixpacksPlan.phases.setup]
+nixPkgs = ["nodejs_20", "pandoc", "python311"]
+
+[build.nixpacksPlan.phases.install]
+cmds = [
+  "corepack enable",
+  "corepack prepare pnpm@9.0.0 --activate",
+  "pnpm install --frozen-lockfile --filter @arcanea/publishing-house"
+]
+
+[build.nixpacksPlan.phases.build]
+cmds = [
+  "pnpm --filter @arcanea/publishing-house run build"
+]
+
+[deploy]
+startCommand = "node packages/publishing-house/dist/deploy/server.js"
+healthcheckPath = "/health"
+healthcheckTimeout = 10
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3
+
+[deploy.env]
+NODE_ENV = "production"
+PORT = "8080"
+ARCANEA_CLAW_KERNEL_PATH = "/app/.arcanea/prompts/luminor-claw-kernel.md"
+ARCANEA_DB_PATH = "/app/data/publishing-house.db"
+
+# Cron jobs — Railway free tier includes scheduled workflows
+# These trigger internal endpoints on the running service.
+[[cron]]
+name = "publish-scan-hourly"
+schedule = "0 * * * *"
+command = "curl -X POST http://localhost:8080/cron/scan"
+
+[[cron]]
+name = "social-queue-drain"
+schedule = "*/15 * * * *"
+command = "curl -X POST http://localhost:8080/cron/social-drain"
+
+[[cron]]
+name = "scout-trend-watch"
+schedule = "0 */6 * * *"
+command = "curl -X POST http://localhost:8080/cron/scout-watch"
