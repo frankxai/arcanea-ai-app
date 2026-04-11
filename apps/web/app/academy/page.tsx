@@ -8,6 +8,9 @@ import {
   Eye, Heart, Sun, Diamond, Compass,
 } from '@/lib/phosphor-icons';
 import { GateGrid } from './gate-grid';
+import { SplitText } from '@/components/motion/split-text';
+import { Magnetic } from '@/components/motion/magnetic';
+import { Reveal } from '@/components/motion/reveal';
 
 export const metadata: Metadata = {
   title: "Academy — Master the Ten Gates — Arcanea",
@@ -83,9 +86,13 @@ export default function AcademyPage() {
           </div>
 
           <h1 className="font-display text-5xl font-bold leading-[1.1] tracking-tight md:text-6xl lg:text-7xl">
-            <span className="bg-gradient-to-r from-[#ffd700] via-[#f59e0b] to-[#ffd700] bg-clip-text text-transparent">
-              The Arcanean Academy
-            </span>
+            <SplitText
+              as="span"
+              text="The Arcanean Academy"
+              className="bg-gradient-to-r from-[#ffd700] via-[#f59e0b] to-[#ffd700] bg-clip-text text-transparent"
+              delay={0.2}
+              stagger={0.04}
+            />
           </h1>
 
           <p className="mx-auto mt-6 max-w-2xl font-body text-lg leading-relaxed text-white/60 md:text-xl">
@@ -94,21 +101,25 @@ export default function AcademyPage() {
           </p>
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <Link
-              href="/quiz"
-              className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-2xl bg-gradient-to-r from-[#ffd700] to-[#f59e0b] px-8 py-4 font-semibold text-[#0a0a0f] shadow-[0_0_40px_rgba(255,215,0,0.25)] transition-all duration-300 hover:shadow-[0_0_60px_rgba(255,215,0,0.4)] hover:scale-[1.02]"
-            >
-              <Sparkle className="h-5 w-5" weight="fill" />
-              Discover Your Origin
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-            <Link
-              href="/academy/courses"
-              className="inline-flex items-center gap-2 rounded-2xl border border-white/[0.1] bg-white/[0.03] px-8 py-4 font-semibold text-white/80 backdrop-blur-sm transition-all duration-300 hover:border-white/[0.2] hover:bg-white/[0.06]"
-            >
-              <Book className="h-4 w-4" />
-              Browse Courses
-            </Link>
+            <Magnetic>
+              <Link
+                href="/quiz"
+                className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-2xl bg-gradient-to-r from-[#ffd700] to-[#f59e0b] px-8 py-4 font-semibold text-[#0a0a0f] shadow-[0_0_40px_rgba(255,215,0,0.25)] transition-all duration-300 hover:shadow-[0_0_60px_rgba(255,215,0,0.4)]"
+              >
+                <Sparkle className="h-5 w-5" weight="fill" />
+                Discover Your Origin
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </Magnetic>
+            <Magnetic>
+              <Link
+                href="/academy/courses"
+                className="inline-flex items-center gap-2 rounded-2xl border border-white/[0.1] bg-white/[0.03] px-8 py-4 font-semibold text-white/80 backdrop-blur-sm transition-all duration-300 hover:border-white/[0.2] hover:bg-white/[0.06]"
+              >
+                <Book className="h-4 w-4" />
+                Browse Courses
+              </Link>
+            </Magnetic>
           </div>
 
           <p className="mt-5 font-mono text-[11px] uppercase tracking-[0.2em] text-white/30">

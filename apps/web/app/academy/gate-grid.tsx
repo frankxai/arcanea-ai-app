@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Lock } from '@/lib/phosphor-icons';
 import type { ComponentType } from 'react';
+import { LiquidGlass } from '@/components/motion/liquid-glass';
 
 interface Gate {
   n: number;
@@ -25,12 +26,18 @@ export function GateGrid({ gates }: { gates: Gate[] }) {
         const Icon = gate.icon;
         const isHovered = hoveredGate === gate.n;
         return (
-          <Link
+          <LiquidGlass
             key={gate.n}
+            intensity="subtle"
+            tint={gate.color}
+            className="group relative rounded-2xl border border-white/[0.06] hover:border-white/[0.15] transition-colors duration-500"
+            noise={false}
+          >
+          <Link
             href={`/academy/gates/${gate.name.toLowerCase()}`}
             onMouseEnter={() => setHoveredGate(gate.n)}
             onMouseLeave={() => setHoveredGate(null)}
-            className="group relative rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5 backdrop-blur-md transition-all duration-500 hover:border-white/[0.15] hover:bg-white/[0.05]"
+            className="relative block p-5"
             style={{
               boxShadow: isHovered ? `0 0 40px ${gate.color}20, inset 0 1px 0 ${gate.color}15` : 'none',
             }}
@@ -85,6 +92,7 @@ export function GateGrid({ gates }: { gates: Gate[] }) {
               </div>
             </div>
           </Link>
+          </LiquidGlass>
         );
       })}
     </div>

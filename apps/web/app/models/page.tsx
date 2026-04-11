@@ -5,6 +5,7 @@ import {
   getFreeModels,
   type AIModel,
 } from "@/lib/models-data";
+import { SplitText } from "@/components/motion/split-text";
 import { fetchLiveModels } from "@/lib/openrouter-live";
 import {
   SectionHeading,
@@ -280,9 +281,13 @@ export default async function ModelsArenaPage() {
           <span className="inline-block text-xs font-medium tracking-widest uppercase text-[#7fffd4]/60 mb-4">
             Intelligence Layer
           </span>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white font-[family-name:var(--font-display)] mb-6">
-            AI Model Arena
-          </h1>
+          <SplitText
+            as="h1"
+            text="AI Model Arena"
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white font-[family-name:var(--font-display)] mb-6"
+            delay={0.1}
+            stagger={0.04}
+          />
           <p className="text-lg text-white/50 max-w-2xl mx-auto leading-relaxed">
             Transparent model intelligence for creators. Live benchmarks, free
             model tracking, and production routing across {modelCount}{" "}

@@ -6,6 +6,11 @@ import { LazyMotion, domAnimation, m } from "framer-motion";
 import { CosmicParticles } from "@/components/magic/particles";
 import { MagnifyingGlass, Star, GitBranch, Users, ArrowRight, Plus } from "@/lib/phosphor-icons";
 import { WorldsOnboarding } from "@/components/worlds/WorldsOnboarding";
+import { SplitText } from "@/components/motion/split-text";
+import { TiltCard } from "@/components/motion/tilt-card";
+import { LiquidGlass } from "@/components/motion/liquid-glass";
+import { Magnetic } from "@/components/motion/magnetic";
+import { GradientMesh } from "@/components/motion/gradient-mesh";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -86,8 +91,11 @@ function WorldCardComponent({ world }: { world: WorldCard }) {
     ? "/lore"
     : `/worlds/${world.slug || world.id}`;
 
+  const primaryColor = world.elements[0]?.color ?? '#00bcd4';
+
   return (
-    <div className="group relative rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden hover:border-white/[0.12] transition-all duration-300 hover:shadow-lg hover:shadow-[#00bcd4]/5 hover:-translate-y-1">
+    <TiltCard intensity={5}>
+    <LiquidGlass intensity="standard" tint={primaryColor} className="group relative rounded-2xl border border-white/[0.06] hover:border-white/[0.14] transition-colors duration-300">
       {/* Hero image / gradient */}
       <div
         className="relative overflow-hidden"
@@ -201,7 +209,8 @@ function WorldCardComponent({ world }: { world: WorldCard }) {
           </div>
         </div>
       </div>
-    </div>
+    </LiquidGlass>
+    </TiltCard>
   );
 }
 
@@ -299,13 +308,8 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
               <div className="h-px w-10 bg-gradient-to-l from-transparent to-[#00bcd4]/60" />
             </m.div>
 
-            <m.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.05 }}
-              className="text-4xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-6"
-            >
-              <span className="text-white">Explore </span>
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-6 tracking-tight">
+              <SplitText as="span" text="Explore " className="text-white" delay={0.05} stagger={0.03} />
               <span
                 className="bg-clip-text text-transparent"
                 style={{
@@ -315,7 +319,7 @@ export function WorldsClient({ worlds }: { worlds: WorldCard[] }) {
               >
                 Worlds
               </span>
-            </m.h1>
+            </h1>
 
             <m.p
               initial={{ opacity: 0, y: 20 }}

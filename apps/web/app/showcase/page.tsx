@@ -1,5 +1,9 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import { SplitText } from "@/components/motion/split-text";
+import { Reveal } from "@/components/motion/reveal";
+import { LiquidGlass } from "@/components/motion/liquid-glass";
+import { Magnetic } from "@/components/motion/magnetic";
 
 // Static page — all data is hardcoded constants, no async fetch needed
 
@@ -207,8 +211,8 @@ export default function ShowcasePage() {
             </span>
           </div>
 
-          <h1 className="font-display text-4xl font-bold text-white sm:text-6xl">
-            One Prompt.{" "}
+          <h1 className="font-display text-4xl font-bold text-white sm:text-6xl tracking-tight">
+            <SplitText as="span" text="One Prompt. " className="text-white" delay={0.1} stagger={0.03} />
             <span className="bg-gradient-to-r from-[#00bcd4] via-[#7fffd4] to-[#ffd700] bg-clip-text text-transparent">
               A Connected World.
             </span>

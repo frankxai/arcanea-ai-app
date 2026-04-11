@@ -14,6 +14,7 @@
 import { loadAgent, createSession, streamEvents } from "../agents/index.js";
 import type { AgentEvent, EnvironmentConfig } from "../agents/types.js";
 import { loadClawKernel } from "../agents/kernel-loader.js";
+import { loadDefaultModulesForClaw, composeFullPrompt } from "../agents/module-loader.js";
 import { PUBLISHING_LUMINORS, buildAgentConfigFromLuminor } from "../agents/hierarchy.js";
 import type {
   ClawName,
@@ -230,11 +231,23 @@ export async function runClawLocal(
     throw new Error(`Unknown claw: ${clawName}`);
   }
 
-  const kernel = await loadClawKernel();
+  // Load in parallel: kernel + default modules for this Claw
+  const [kernel, modules] = await Promise.all([
+    loadClawKernel(),
+    loadDefaultModulesForClaw(clawName).catch(() => [] as string[]),
+  ]);
+
+  // Build the Claw-specific section via the agent config
   const agentConfig = buildAgentConfigFromLuminor(luminor, kernel);
+  // Extract just the Claw section (everything after the kernel) to avoid duplication
+  const kernelEnd = agentConfig.system.indexOf('## YOUR CLAW');
+  const clawSection = kernelEnd >= 0 ? agentConfig.system.slice(kernelEnd) : agentConfig.system;
+
+  // Compose: Kernel + Modules + Claw section
+  const fullPrompt = composeFullPrompt(kernel, modules, clawSection);
 
   return [
-    agentConfig.system,
+    fullPrompt,
     "",
     "---",
     "",

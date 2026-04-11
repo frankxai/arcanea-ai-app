@@ -16,6 +16,9 @@ import {
 } from "@/lib/phosphor-icons";
 import type { CreationType, ElementName } from "@/lib/database/types/api-responses";
 import { ELEMENT_COLORS, ELEMENT_ICONS, TYPE_ICONS, TYPE_LABELS } from "./gallery-data";
+import { SplitText } from "@/components/motion/split-text";
+import { TiltCard } from "@/components/motion/tilt-card";
+import { LiquidGlass } from "@/components/motion/liquid-glass";
 
 // ---------------------------------------------------------------------------
 // Shared types
@@ -86,13 +89,8 @@ export function HeroSection({
 
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
           <div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-4 leading-tight" style={{
-              opacity: mounted ? 1 : 0,
-              transform: mounted ? "translateY(0)" : "translateY(16px)",
-              transition: "opacity 0.6s ease, transform 0.6s ease",
-              transitionDelay: "0.1s",
-            }}>
-              Gallery of{" "}
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-4 leading-tight tracking-tight">
+              <SplitText as="span" text="Gallery of " className="text-white" delay={0.1} stagger={0.03} />
               <span className="bg-gradient-to-r from-[#00bcd4] via-[#78a6ff] to-[#ffd700] bg-clip-text text-transparent bg-[length:200%_100%] animate-[shimmer_6s_ease-in-out_infinite]">
                 Creation
               </span>
@@ -382,21 +380,17 @@ export function CreationCard({ item, index = 0, mounted = true }: { item: CardIt
   const staggerDelay = Math.min(index * 0.05, 0.6);
 
   return (
-    <div
-      className="group relative rounded-2xl overflow-hidden border border-white/[0.06] hover:border-white/[0.12] hover:scale-[1.02] transition-all duration-300 backdrop-blur-sm"
+    <TiltCard intensity={4}>
+    <LiquidGlass
+      intensity="subtle"
+      tint={elementStyle.accent ?? '#00bcd4'}
+      className="group relative rounded-2xl overflow-hidden border border-white/[0.06] hover:border-white/[0.14] transition-colors duration-300"
+      noise={false}
+    ><div
       style={{
         opacity: mounted ? 1 : 0,
         transform: mounted ? "translateY(0)" : "translateY(20px)",
-        transition: `opacity 0.5s ease ${staggerDelay}s, transform 0.5s ease ${staggerDelay}s, border-color 0.3s ease, box-shadow 0.3s ease, scale 0.3s ease`,
-        background: "rgba(255,255,255,0.02)",
-      }}
-      onMouseEnter={(e) => {
-        const el = e.currentTarget;
-        el.style.boxShadow = "0 0 40px rgba(0,188,212,0.1), 0 8px 32px rgba(0,0,0,0.3)";
-      }}
-      onMouseLeave={(e) => {
-        const el = e.currentTarget;
-        el.style.boxShadow = "";
+        transition: `opacity 0.5s ease ${staggerDelay}s, transform 0.5s ease ${staggerDelay}s`,
       }}
     >
       {/* Gradient thumbnail area */}
@@ -473,6 +467,8 @@ export function CreationCard({ item, index = 0, mounted = true }: { item: CardIt
         </div>
       </div>
     </div>
+    </LiquidGlass>
+    </TiltCard>
   );
 }
 
