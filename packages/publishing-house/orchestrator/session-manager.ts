@@ -14,7 +14,7 @@
 import { loadAgent, createSession, streamEvents } from "../agents/index.js";
 import type { AgentEvent, EnvironmentConfig } from "../agents/types.js";
 import { loadClawKernel } from "../agents/kernel-loader.js";
-import { PUBLISHING_HANDS, buildAgentConfigFromHand } from "../agents/hierarchy.js";
+import { PUBLISHING_LUMINORS, buildAgentConfigFromLuminor } from "../agents/hierarchy.js";
 import type {
   ClawName,
   DeployMode,
@@ -225,13 +225,13 @@ export async function runClawLocal(
   clawName: ClawName,
   task: string,
 ): Promise<string> {
-  const hand = PUBLISHING_HANDS[clawName];
-  if (!hand) {
+  const luminor = PUBLISHING_LUMINORS[clawName];
+  if (!luminor) {
     throw new Error(`Unknown claw: ${clawName}`);
   }
 
   const kernel = await loadClawKernel();
-  const agentConfig = buildAgentConfigFromHand(hand, kernel);
+  const agentConfig = buildAgentConfigFromLuminor(luminor, kernel);
 
   return [
     agentConfig.system,
@@ -249,8 +249,8 @@ export async function runClawLocal(
     "```json",
     "{",
     `  "claw": "${clawName}",`,
-    `  "luminor": "${hand.luminor.name}",`,
-    `  "gate": "${hand.luminor.gate}",`,
+    `  "luminor": "${luminor.name}",`,
+    `  "gate": "${luminor.gate}",`,
     '  "runtime": "local-claude-code",',
     '  "status": "success" | "partial" | "failed" | "needs-review",',
     '  "output": {',

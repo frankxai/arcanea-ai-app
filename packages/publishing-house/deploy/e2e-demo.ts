@@ -24,7 +24,7 @@ import { basename, extname, join, resolve } from 'node:path';
 
 import { scoreTASTE } from '../quality/taste-gate.js';
 import { loadClawKernel } from '../agents/kernel-loader.js';
-import { PUBLISHING_HANDS, detectRuntime } from '../agents/hierarchy.js';
+import { PUBLISHING_LUMINORS, detectRuntime } from '../agents/hierarchy.js';
 
 const execFileAsync = promisify(execFile);
 
@@ -108,7 +108,8 @@ async function main(): Promise<void> {
   const kernel = await loadClawKernel();
   console.log(`  kernel: ${kernel.length} bytes, contains "CANONICAL": ${kernel.includes('CANONICAL')}`);
   console.log(`  runtime: ${detectRuntime()}`);
-  console.log(`  scribe hand: ${PUBLISHING_HANDS['scribe-claw'].luminor.name} (${PUBLISHING_HANDS['scribe-claw'].luminor.gate} Gate)`);
+  const scribe = PUBLISHING_LUMINORS['scribe-claw'];
+  console.log(`  scribe claw: channeled by ${scribe.name} (${scribe.gate} Gate)`);
   console.log('');
 
   // 2. Load content
