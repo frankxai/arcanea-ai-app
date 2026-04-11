@@ -9,6 +9,8 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import { CosmicBackground } from "@/lib/arcanea-ui/CosmicBackground";
 import { GlobalGlowTrackerLazy } from "@/components/ui/global-glow-tracker-lazy";
+import { Toaster } from "@/components/ui/sonner";
+import { LuminaBubble } from "@/components/lumina/lumina-bubble";
 
 function CosmicBackgroundFallback() {
   return (
@@ -185,6 +187,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             </main>
             <Footer />
           </div>
+          <LuminaBubble />
+          <Toaster />
           <SpeedInsights />
           <Analytics />
         </AuthProvider>
