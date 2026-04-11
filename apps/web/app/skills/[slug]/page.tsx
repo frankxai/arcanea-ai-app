@@ -16,6 +16,19 @@ import {
 } from '@/lib/skills/loader';
 import InstallTabs from '@/components/skills/InstallTabs';
 import { Badge } from '@/components/ui/badge';
+import { LiquidGlass } from '@/components/ui/liquid-glass';
+
+// Map skill category to a Liquid Glass tint
+const CATEGORY_TINT: Record<string, 'crystal' | 'gold' | 'fire' | 'void' | 'water' | 'neutral'> = {
+  architecture: 'crystal',
+  design: 'void',
+  development: 'water',
+  writing: 'gold',
+  creative: 'gold',
+  research: 'crystal',
+  operations: 'fire',
+  analysis: 'water',
+};
 
 export const dynamic = 'force-dynamic';
 
@@ -88,6 +101,7 @@ export default async function SkillDetailPage({ params }: PageProps) {
   if (!skill) notFound();
 
   const allSkills = await getAllSkills();
+  const heroTint = CATEGORY_TINT[skill.category?.toLowerCase() ?? ''] ?? 'crystal';
 
   return (
     <div className="min-h-screen bg-[#0a0a0f] text-white/90">
@@ -104,6 +118,7 @@ export default async function SkillDetailPage({ params }: PageProps) {
             All Skills
           </Link>
 
+          <LiquidGlass intensity="strong" tint={heroTint} glow="medium" className="p-8 sm:p-10">
           <div className="flex flex-wrap items-center gap-2 mb-5">
             {skill.category && (
               <Badge variant="crystal" icon={<Tag className="h-3 w-3" />}>
@@ -139,6 +154,7 @@ export default async function SkillDetailPage({ params }: PageProps) {
               ))}
             </div>
           )}
+          </LiquidGlass>
         </div>
       </section>
 
@@ -151,7 +167,9 @@ export default async function SkillDetailPage({ params }: PageProps) {
               <h2 className="font-display text-xl font-semibold text-white/95 mb-4">
                 Install
               </h2>
-              <InstallTabs skill={skill} />
+              <LiquidGlass intensity="medium" tint={heroTint} glow="soft" className="p-6">
+                <InstallTabs skill={skill} />
+              </LiquidGlass>
             </div>
 
             {/* Usage examples */}
@@ -160,16 +178,18 @@ export default async function SkillDetailPage({ params }: PageProps) {
                 <h2 className="font-display text-xl font-semibold text-white/95 mb-4">
                   Usage Examples
                 </h2>
-                <ul className="space-y-2">
-                  {skill.usageExamples.map((ex, i) => (
-                    <li
-                      key={i}
-                      className="rounded-lg bg-white/[0.02] border border-white/[0.04] px-4 py-3 text-sm text-white/70 font-mono"
-                    >
-                      {ex}
-                    </li>
-                  ))}
-                </ul>
+                <LiquidGlass intensity="subtle" tint="neutral" glow="none" className="p-4">
+                  <ul className="space-y-2">
+                    {skill.usageExamples.map((ex, i) => (
+                      <li
+                        key={i}
+                        className="rounded-lg bg-white/[0.02] border border-white/[0.04] px-4 py-3 text-sm text-white/70 font-mono"
+                      >
+                        {ex}
+                      </li>
+                    ))}
+                  </ul>
+                </LiquidGlass>
               </div>
             )}
 

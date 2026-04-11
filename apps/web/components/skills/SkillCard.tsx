@@ -13,15 +13,27 @@ import {
 import { toast } from 'sonner';
 
 import {
-  Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { LiquidGlass } from '@/components/ui/liquid-glass';
 import { Badge } from '@/components/ui/badge';
 import type { Skill } from '@/lib/skills/loader';
+
+// Map skill category to LiquidGlass tint
+const CATEGORY_TINT: Record<string, 'crystal' | 'gold' | 'fire' | 'void' | 'water' | 'neutral'> = {
+  architecture: 'crystal',
+  design: 'void',
+  development: 'water',
+  writing: 'gold',
+  creative: 'gold',
+  research: 'crystal',
+  operations: 'fire',
+  analysis: 'water',
+};
 
 const TOOL_LABELS: Record<string, string> = {
   'claude-code': 'Claude',
@@ -63,18 +75,20 @@ export default function SkillCard({ skill }: { skill: Skill }) {
     [installCommand]
   );
 
+  const tint = CATEGORY_TINT[skill.category?.toLowerCase() ?? ''] ?? 'crystal';
+
   return (
     <Link
       href={`/skills/${skill.slug}`}
       className="group block h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00bcd4]/40 rounded-2xl"
     >
-      <Card
-        variant="interactive"
-        className="relative flex h-full flex-col overflow-hidden transition-all group-hover:border-[#00bcd4]/30"
+      <LiquidGlass
+        intensity="medium"
+        tint={tint}
+        glow="soft"
+        interactive
+        className="flex h-full flex-col"
       >
-        {/* Gradient accent on hover */}
-        <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-[#00bcd4]/10 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-
         <CardHeader className="relative pb-2">
           <div className="flex items-start justify-between gap-3">
             <div className="flex-1 min-w-0">
@@ -136,7 +150,7 @@ export default function SkillCard({ skill }: { skill: Skill }) {
             </button>
           </div>
         </CardFooter>
-      </Card>
+      </LiquidGlass>
     </Link>
   );
 }

@@ -22,9 +22,18 @@ import {
 import { loadLatestReport } from '@/lib/books/guardian-scorer';
 import type { GuardianScore } from '@/lib/books/guardian-scorer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { LiquidGlass } from '@/components/ui/liquid-glass';
 import { Badge, type BadgeProps } from '@/components/ui/badge';
 import { GuardianRadar, type GuardianGrade } from './GuardianRadar';
 import { GuardianNotesToggle } from './GuardianNotesToggle';
+
+// Map Guardian grade to a Liquid Glass tint
+const GRADE_TINT: Record<GuardianGrade, 'gold' | 'crystal' | 'fire' | 'neutral'> = {
+  luminor: 'gold',
+  master: 'crystal',
+  apprentice: 'fire',
+  none: 'neutral',
+};
 
 interface GuardianReportProps {
   bookSlug: string;
@@ -174,10 +183,12 @@ export default async function GuardianReport({ bookSlug }: GuardianReportProps) 
   const radarScores = scoresByDimension(scores);
   const gradeMeta = GRADE_META[grade];
 
+  const reportTint = GRADE_TINT[grade];
+
   return (
     <section className="max-w-3xl mx-auto px-6 pb-16 space-y-6">
-      {/* Composite score card */}
-      <Card variant="ghost" className="backdrop-blur-sm">
+      {/* Composite score card — signature Liquid Glass */}
+      <LiquidGlass intensity="strong" tint={reportTint} glow="intense">
         <CardHeader className="items-center text-center">
           <p className="text-[10px] uppercase tracking-[0.3em] text-white/30">
             Guardian Intelligence Rating
@@ -194,21 +205,28 @@ export default async function GuardianReport({ bookSlug }: GuardianReportProps) 
         </CardHeader>
 
         <CardContent>
-          {/* Radar */}
+          {/* Radar — subtle Liquid Glass */}
           <div className="flex justify-center mb-8">
-            <GuardianRadar scores={radarScores} grade={grade} size={320} />
+            <LiquidGlass intensity="subtle" tint="crystal" glow="none" interactive={false} className="p-4">
+              <GuardianRadar scores={radarScores} grade={grade} size={320} />
+            </LiquidGlass>
           </div>
 
-          {/* Per-Guardian cards */}
+          {/* Per-Guardian dimension cards — each is its own Liquid Glass */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {scores.map((s) => {
               const display = GUARDIAN_DISPLAY[s.guardian];
               if (!display) return null;
+              // Tint per-dimension: score >= 8.5 → gold, >= 7 → crystal, else neutral
+              const dimTint: 'gold' | 'crystal' | 'neutral' =
+                s.score >= 8.5 ? 'gold' : s.score >= 7 ? 'crystal' : 'neutral';
               return (
-                <Card
+                <LiquidGlass
                   key={`${s.guardian}:${s.dimension}`}
-                  variant="ghost"
-                  className="p-4 hover:bg-white/[0.04] transition-colors"
+                  intensity="subtle"
+                  tint={dimTint}
+                  glow="soft"
+                  className="p-4"
                 >
                   <div className="flex items-start justify-between gap-3 mb-2">
                     <div>
@@ -233,7 +251,7 @@ export default async function GuardianReport({ bookSlug }: GuardianReportProps) 
                   </p>
 
                   <GuardianNotesToggle notes={s.detailedNotes} />
-                </Card>
+                </LiquidGlass>
               );
             })}
           </div>
@@ -244,7 +262,7 @@ export default async function GuardianReport({ bookSlug }: GuardianReportProps) 
             <span className="font-mono">{scores[0]?.modelId || 'claude'}</span>
           </div>
         </CardContent>
-      </Card>
+      </LiquidGlass>
     </section>
   );
 }

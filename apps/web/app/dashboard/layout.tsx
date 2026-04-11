@@ -1,15 +1,3 @@
-import type { Metadata } from 'next'
-
-export const metadata: Metadata = {
-  title: 'Dashboard',
-  description: 'Your creative command center. Track progress, manage creations, and work with your companions.',
-  openGraph: {
-    title: 'Dashboard',
-    description: 'Your creative command center on Arcanea.',
-  },
-  alternates: { canonical: '/dashboard' },
-}
-
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return children
 }

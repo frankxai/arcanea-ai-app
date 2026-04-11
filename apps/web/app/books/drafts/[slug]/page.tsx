@@ -9,6 +9,7 @@ import { StarRating } from '@/components/books/StarRating';
 import { ReviewList } from '@/components/books/ReviewList';
 import { ReviewForm } from '@/components/books/ReviewForm';
 import GuardianReport from '@/components/books/GuardianReport';
+import { LiquidGlass } from '@/components/ui/liquid-glass';
 
 export const dynamic = 'force-dynamic';
 
@@ -233,6 +234,16 @@ export default async function DraftBookPage({ params }: PageProps) {
   const humanPct = manifest.ai_transparency?.human_contribution || '?';
   const aiPct = manifest.ai_transparency?.ai_contribution || '?';
 
+  // Tint the Liquid Glass hero based on the book's accent
+  const bookTint: 'fire' | 'crystal' | 'gold' | 'neutral' =
+    slug === 'forge-of-ruin'
+      ? 'fire'
+      : slug === 'tides-of-silence'
+      ? 'crystal'
+      : slug === 'heart-of-pyrathis'
+      ? 'gold'
+      : 'neutral';
+
   // ---------- Ratings context (server-side, RLS-respecting) ----------
   let heroRating: { average: number; count: number } = { average: 0, count: 0 };
   let currentUserId: string | null = null;
@@ -300,11 +311,12 @@ export default async function DraftBookPage({ params }: PageProps) {
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0f]/60 via-[#0a0a0f]/80 to-[#0a0a0f]" />
         <div className={`absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full ${accent.glow} blur-[120px]`} />
 
-        <div className="relative max-w-3xl mx-auto px-6 pt-24 pb-16 text-center">
+        <div className="relative max-w-3xl mx-auto px-6 pt-24 pb-16">
           <Link href="/books/drafts" className="inline-block text-xs text-white/30 hover:text-white/50 transition-colors mb-8">
             &larr; All Drafts
           </Link>
 
+          <LiquidGlass intensity="strong" tint={bookTint} glow="medium" className="p-8 sm:p-12 text-center">
           <p className={`text-[10px] uppercase tracking-[0.3em] ${accent.primary}/60 mb-4`}>
             Draft in Progress
           </p>
@@ -351,12 +363,13 @@ export default async function DraftBookPage({ params }: PageProps) {
               Begin Reading <span className="text-xs opacity-60">&rarr;</span>
             </Link>
           )}
+          </LiquidGlass>
         </div>
       </section>
 
       {/* Book Description + Cover */}
       <section className="max-w-2xl mx-auto px-6 pb-16">
-        <div className="bg-white/[0.02] border border-white/[0.06] rounded-2xl p-8 backdrop-blur-sm flex flex-col sm:flex-row gap-6">
+        <LiquidGlass intensity="medium" tint={bookTint} glow="soft" className="p-8 flex flex-col sm:flex-row gap-6">
           {cover && (
             /* eslint-disable-next-line @next/next/no-img-element */
             <img src={cover} alt={`${manifest.title} cover`} className="w-32 sm:w-40 flex-shrink-0 rounded-lg shadow-2xl self-start" />
@@ -398,7 +411,7 @@ export default async function DraftBookPage({ params }: PageProps) {
               </div>
             </div>
           </div>
-        </div>
+        </LiquidGlass>
       </section>
 
       {/* Characters */}
@@ -407,11 +420,11 @@ export default async function DraftBookPage({ params }: PageProps) {
           <h2 className="text-sm font-display font-semibold text-white/60 uppercase tracking-wider mb-6 text-center">The Cast</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {characters.map((c) => (
-              <div key={c.name} className="bg-white/[0.02] border border-white/[0.06] rounded-xl p-4 hover:bg-white/[0.04] transition-colors">
+              <LiquidGlass key={c.name} intensity="subtle" tint="neutral" glow="none" className="p-4">
                 <p className={`text-xs font-medium ${accent.primary}/70 mb-1`}>{c.role}</p>
                 <p className="text-sm font-display font-semibold text-white/80 mb-1">{c.name}</p>
                 <p className="text-xs text-white/30 leading-relaxed">{c.desc}</p>
-              </div>
+              </LiquidGlass>
             ))}
           </div>
         </section>
