@@ -1,0 +1,118 @@
+name: Sync arcanea-openclaw with upstream
+
+# Runs weekly on Sunday at 03:00 UTC to pull latest from openclaw/openclaw
+# into frankxai/arcanea-openclaw. If clean fast-forward: auto-push. If
+# conflicts: creates a sync/ branch and opens a PR for manual review.
+#
+# Manual trigger: Actions tab → "Sync arcanea-openclaw with upstream" → Run workflow
+#
+# To enable:
+#   1. Ensure SYNC_PAT secret is set with a PAT that has `repo` scope on arcanea-openclaw
+#   2. Push this file to main
+#   3. Workflow runs next Sunday (or trigger manually)
+
+on:
+  schedule:
+    # Every Sunday at 03:00 UTC (04:00/05:00 Amsterdam depending on DST)
+    - cron: '0 3 * * 0'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run only (no push)'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout arcanea-openclaw
+        uses: actions/checkout@v4
+        with:
+          repository: frankxai/arcanea-openclaw
+          token: ${{ secrets.SYNC_PAT }}
+          fetch-depth: 50
+          path: openclaw
+
+      - name: Configure git
+        working-directory: openclaw
+        run: |
+          git config user.name "arcanea-sync-bot"
+          git config user.email "sync@arcanea.ai"
+
+      - name: Add upstream remote
+        working-directory: openclaw
+        run: |
+          git remote add upstream https://github.com/openclaw/openclaw.git
+          git fetch upstream main --depth=50
+
+      - name: Count drift
+        id: drift
+        working-directory: openclaw
+        run: |
+          BEHIND=$(git rev-list --count HEAD..upstream/main)
+          AHEAD=$(git rev-list --count upstream/main..HEAD)
+          echo "behind=$BEHIND" >> $GITHUB_OUTPUT
+          echo "ahead=$AHEAD" >> $GITHUB_OUTPUT
+          echo "Fork is $BEHIND behind, $AHEAD ahead"
+
+      - name: Already up to date
+        if: steps.drift.outputs.behind == '0'
+        run: |
+          echo "arcanea-openclaw is already current with upstream. Nothing to do."
+
+      - name: Attempt fast-forward
+        if: steps.drift.outputs.behind != '0'
+        id: ff
+        working-directory: openclaw
+        continue-on-error: true
+        run: |
+          if git merge --ff-only upstream/main; then
+            echo "result=success" >> $GITHUB_OUTPUT
+          else
+            echo "result=failed" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Push fast-forward
+        if: steps.drift.outputs.behind != '0' && steps.ff.outputs.result == 'success' && !inputs.dry_run
+        working-directory: openclaw
+        run: |
+          git push origin HEAD
+          echo "Pushed ${{ steps.drift.outputs.behind }} commits from upstream"
+
+      - name: Create sync branch for manual merge
+        if: steps.drift.outputs.behind != '0' && steps.ff.outputs.result == 'failed' && !inputs.dry_run
+        working-directory: openclaw
+        run: |
+          git reset --hard HEAD
+          BRANCH="sync/upstream-$(date +%Y-%m-%d)"
+          git checkout -b "$BRANCH"
+          if git merge upstream/main --no-edit; then
+            git push -u origin "$BRANCH"
+            echo "Created branch $BRANCH with clean merge"
+            gh pr create \
+              --repo frankxai/arcanea-openclaw \
+              --base main \
+              --head "$BRANCH" \
+              --title "sync: upstream openclaw/main $(date +%Y-%m-%d)" \
+              --body "Automated weekly sync from upstream openclaw/openclaw. $AHEAD local commits preserved, $BEHIND upstream commits merged." || true
+          else
+            echo "Conflicts detected — manual resolution required"
+            exit 1
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.SYNC_PAT }}
+          AHEAD: ${{ steps.drift.outputs.ahead }}
+          BEHIND: ${{ steps.drift.outputs.behind }}
+
+      - name: Report
+        if: always()
+        run: |
+          echo "## Sync Report" >> $GITHUB_STEP_SUMMARY
+          echo "- Behind upstream: ${{ steps.drift.outputs.behind }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Local ahead: ${{ steps.drift.outputs.ahead }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Fast-forward: ${{ steps.ff.outputs.result || 'n/a' }}" >> $GITHUB_STEP_SUMMARY
