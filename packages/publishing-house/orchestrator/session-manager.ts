@@ -13,6 +13,8 @@
 
 import { loadAgent, createSession, streamEvents } from "../agents/index.js";
 import type { AgentEvent, EnvironmentConfig } from "../agents/types.js";
+import { loadClawKernel } from "../agents/kernel-loader.js";
+import { PUBLISHING_HANDS, buildAgentConfigFromHand } from "../agents/hierarchy.js";
 import type {
   ClawName,
   DeployMode,
@@ -214,9 +216,60 @@ const CLAW_ROLE_DESCRIPTIONS: Record<ClawName, string> = {
  * Generate a structured prompt for Claude Code to execute as a subagent.
  *
  * This is the local fallback when no ANTHROPIC_API_KEY is available.
- * The returned string is designed to be passed to Claude Code's Agent tool.
+ * The returned string is the composed Luminor Kernel + Hand + Task,
+ * ready to be passed to Claude Code's Agent tool.
+ *
+ * Async because it loads the canonical Claw Kernel from disk.
  */
-export function runClawLocal(
+export async function runClawLocal(
+  clawName: ClawName,
+  task: string,
+): Promise<string> {
+  const hand = PUBLISHING_HANDS[clawName];
+  if (!hand) {
+    throw new Error(`Unknown claw: ${clawName}`);
+  }
+
+  const kernel = await loadClawKernel();
+  const agentConfig = buildAgentConfigFromHand(hand, kernel);
+
+  return [
+    agentConfig.system,
+    "",
+    "---",
+    "",
+    "## CURRENT TASK",
+    "",
+    task,
+    "",
+    "## REQUIRED OUTPUT",
+    "",
+    "Return a JSON object matching the Claw envelope contract:",
+    "",
+    "```json",
+    "{",
+    `  "claw": "${clawName}",`,
+    `  "luminor": "${hand.luminor.name}",`,
+    `  "gate": "${hand.luminor.gate}",`,
+    '  "runtime": "local-claude-code",',
+    '  "status": "success" | "partial" | "failed" | "needs-review",',
+    '  "output": {',
+    '    "artifacts": [],',
+    '    "warnings": [],',
+    '    "nextSteps": []',
+    '  }',
+    '}',
+    "```",
+    "",
+    "Do not return prose — return the structured envelope.",
+  ].join("\n");
+}
+
+/**
+ * Synchronous wrapper for runClawLocal that returns a simpler role-based prompt.
+ * Use this when async loading of the Kernel is not possible (e.g., in hot paths).
+ */
+export function runClawLocalSync(
   clawName: ClawName,
   task: string,
 ): string {
@@ -235,6 +288,8 @@ export function runClawLocal(
     "- Do not create files unless the task explicitly requires it",
     "- Follow Arcanea design system tokens",
     "- Be concise and actionable",
+    "",
+    "Note: This is the sync fallback. For full Kernel + Hand composition, use runClawLocal() (async).",
   ].join("\n");
 }
 

@@ -74,7 +74,7 @@ async function runQualityGate(
   }
 
   // Local fallback: return the prompt for Claude Code Agent tool
-  const prompt = runClawLocal("scout-claw", task);
+  const prompt = await runClawLocal("scout-claw", task);
   return buildLocalTasteResult(prompt);
 }
 
