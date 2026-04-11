@@ -7,6 +7,7 @@ import { toUiMessage, serializeMessages } from '@/lib/chat/message-utils';
 import { useChatSearch } from '@/hooks/use-chat-search';
 import { useChatShortcuts } from '@/hooks/use-chat-shortcuts';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 
 import { ChatLayout } from '@/components/chat/chat-layout';
@@ -297,10 +298,13 @@ export default function ChatPage() {
           <div className="mx-4 mt-2 shrink-0">
             <div className="bg-[#00bcd4]/5 border border-[#00bcd4]/10 rounded-xl px-4 py-3 flex items-center gap-3">
               {worldCharInit.worldCharacter.characterPortrait && (
-                <img
+                <Image
                   src={worldCharInit.worldCharacter.characterPortrait}
                   alt={worldCharInit.worldCharacter.characterName}
+                  width={32}
+                  height={32}
                   className="w-8 h-8 rounded-full object-cover ring-1 ring-[#00bcd4]/30"
+                  unoptimized
                 />
               )}
               <div className="flex-1 min-w-0">

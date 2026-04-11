@@ -3,6 +3,7 @@ import { SplitText } from "@/components/motion/split-text";
 import { LiquidGlass } from "@/components/motion/liquid-glass";
 import { Magnetic } from "@/components/motion/magnetic";
 import { Reveal } from "@/components/motion/reveal";
+import { LayerCards } from "./layer-cards";
 
 // ─── Inline SVG Icons ─────────────────────────────────────────────────────────
 
@@ -239,29 +240,7 @@ export default function EcosystemHubPage() {
             <p className="text-white/40 text-sm mt-1">Product, intelligence, and open source — each layer powers the next.</p>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-5">
-            {LAYERS.map((layer) => (
-              <LiquidGlass key={layer.title} intensity="standard" tint={layer.accent} className="group relative rounded-2xl border border-white/[0.06] hover:border-white/[0.14] transition-colors p-6 sm:p-8">
-                <div className="relative">
-                  <p className="text-[10px] font-mono uppercase tracking-widest mb-1" style={{ color: `${layer.accent}99` }}>{layer.subtitle}</p>
-                  <h3 className="text-xl font-display font-bold mb-3" style={{ color: layer.accent }}>{layer.title}</h3>
-                  <p className="text-sm text-white/40 leading-relaxed mb-5">{layer.description}</p>
-                  <div className="grid grid-cols-2 gap-2 mb-5">
-                    {layer.stats.map((s) => (
-                      <div key={s} className="px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.04]">
-                        <p className="text-[11px] text-white/50 font-mono">{s}</p>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {layer.features.map((f) => (
-                      <span key={f} className="text-[10px] font-mono px-2.5 py-1 rounded-full border" style={{ color: `${layer.accent}cc`, borderColor: `${layer.accent}30`, backgroundColor: `${layer.accent}08` }}>{f}</span>
-                    ))}
-                  </div>
-                </div>
-              </LiquidGlass>
-            ))}
-          </div>
+          <LayerCards layers={LAYERS} />
         </section>
 
         {/* ── Repository Map ───────────────────────────────────────────── */}

@@ -15,6 +15,8 @@ import { WorldsShowcase } from "@/components/landing/worlds-showcase";
 import { SplitText } from "@/components/motion/split-text";
 import { Magnetic } from "@/components/motion/magnetic";
 import { Reveal } from "@/components/motion/reveal";
+import { NumberTicker } from "@/components/motion/number-ticker";
+import { Marquee } from "@/components/motion/marquee";
 
 // ---------------------------------------------------------------------------
 // Data
@@ -227,21 +229,48 @@ export function V3BelowFold({
 
             <Reveal y={16} delay={0.6}>
               <div className="grid grid-cols-4 gap-4 md:gap-8 max-w-2xl mx-auto mb-12">
-                {[
-                  { value: "27", label: "repos" },
-                  { value: "43", label: "packages" },
-                  { value: "80+", label: "skills" },
-                  { value: "MIT", label: "license" },
-                ].map((stat) => (
-                  <div key={stat.label} className="text-center">
-                    <p className="text-2xl md:text-3xl font-display font-bold bg-gradient-to-b from-[#7fffd4] to-[#00bcd4] bg-clip-text text-transparent">
-                      {stat.value}
-                    </p>
-                    <p className="text-[10px] font-mono tracking-widest uppercase text-white/25 mt-1">
-                      {stat.label}
-                    </p>
-                  </div>
-                ))}
+                <div className="text-center">
+                  <p className="text-2xl md:text-3xl font-display font-bold bg-gradient-to-b from-[#7fffd4] to-[#00bcd4] bg-clip-text text-transparent">
+                    <NumberTicker value={27} delay={0.6} />
+                  </p>
+                  <p className="text-[10px] font-mono tracking-widest uppercase text-white/25 mt-1">repos</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl md:text-3xl font-display font-bold bg-gradient-to-b from-[#7fffd4] to-[#00bcd4] bg-clip-text text-transparent">
+                    <NumberTicker value={43} delay={0.7} />
+                  </p>
+                  <p className="text-[10px] font-mono tracking-widest uppercase text-white/25 mt-1">packages</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl md:text-3xl font-display font-bold bg-gradient-to-b from-[#7fffd4] to-[#00bcd4] bg-clip-text text-transparent">
+                    <NumberTicker value={80} delay={0.8} suffix="+" />
+                  </p>
+                  <p className="text-[10px] font-mono tracking-widest uppercase text-white/25 mt-1">skills</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-2xl md:text-3xl font-display font-bold bg-gradient-to-b from-[#7fffd4] to-[#00bcd4] bg-clip-text text-transparent">
+                    MIT
+                  </p>
+                  <p className="text-[10px] font-mono tracking-widest uppercase text-white/25 mt-1">license</p>
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal y={12} delay={1.0}>
+              <div className="mt-4 mb-10">
+                <p className="text-[10px] font-mono tracking-[0.3em] uppercase text-white/20 text-center mb-4">
+                  The stack that makes it possible
+                </p>
+                <Marquee duration={35}>
+                  {["Next.js 16", "React 19", "TypeScript", "Tailwind", "Framer Motion", "Three.js", "Supabase", "Vercel", "Claude", "Gemini", "OpenRouter", "MCP"].map((tech) => (
+                    <span
+                      key={tech}
+                      className="inline-flex items-center px-5 py-2 rounded-full bg-white/[0.03] border border-white/[0.06] text-xs font-mono text-white/50 whitespace-nowrap"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </Marquee>
               </div>
             </Reveal>
 
@@ -271,28 +300,6 @@ export function V3BelowFold({
         </section>
 
         <AtmosphericDivider variant="teal" />
-
-        {/* 4. Built With — tech trust strip */}
-        <section className="py-12 md:py-16">
-          <div className="max-w-4xl mx-auto px-6">
-            <p className="text-[10px] font-mono tracking-[0.3em] uppercase text-white/20 text-center mb-5">
-              Built With
-            </p>
-            <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-xs font-mono text-white/25">
-              <span>Next.js 16</span>
-              <span className="text-white/10">·</span>
-              <span>React 19</span>
-              <span className="text-white/10">·</span>
-              <span>Supabase</span>
-              <span className="text-white/10">·</span>
-              <span>Vercel</span>
-              <span className="text-white/10">·</span>
-              <span>Claude</span>
-              <span className="text-white/10">·</span>
-              <span>Gemini</span>
-            </div>
-          </div>
-        </section>
 
         <AtmosphericDivider variant="purple" />
 
