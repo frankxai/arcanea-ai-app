@@ -3,6 +3,7 @@
 import { m, useInView, AnimatePresence } from "framer-motion";
 import { MotionProvider } from "@/lib/motion";
 import { useRef, useState, useCallback } from "react";
+import Link from "next/link";
 import {
   Plus,
   Minus,
@@ -11,6 +12,9 @@ import { HowItWorks } from "@/components/landing/how-it-works";
 import { CTASection } from "@/components/landing/cta-section";
 import { GuardianShowcase } from "@/components/landing/guardian-showcase";
 import { WorldsShowcase } from "@/components/landing/worlds-showcase";
+import { SplitText } from "@/components/motion/split-text";
+import { Magnetic } from "@/components/motion/magnetic";
+import { Reveal } from "@/components/motion/reveal";
 
 // ---------------------------------------------------------------------------
 // Data
@@ -200,6 +204,73 @@ export function V3BelowFold({
 
         {/* 4. FAQ — objection handling */}
         <FAQInline />
+
+        {/* 4b. Built in the open — ecosystem narrative */}
+        <section className="py-24 md:py-32">
+          <div className="max-w-4xl mx-auto px-6 text-center">
+            <Reveal y={12} blur>
+              <p className="text-[11px] font-mono tracking-[0.3em] uppercase text-[#7fffd4]/60 mb-5">
+                Open Source · Sovereign · Forkable
+              </p>
+            </Reveal>
+
+            <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-6 tracking-tight leading-[1.1]">
+              <SplitText as="span" text="Built in the open." className="text-white" delay={0.1} stagger={0.035} />
+            </h2>
+
+            <Reveal y={12} delay={0.4}>
+              <p className="text-lg text-white/45 max-w-2xl mx-auto mb-12 leading-relaxed">
+                27 repos. 43 packages. 80+ skills. MIT licensed. Fork anything.
+                Run it locally. Keep your keys. Own your data.
+              </p>
+            </Reveal>
+
+            <Reveal y={16} delay={0.6}>
+              <div className="grid grid-cols-4 gap-4 md:gap-8 max-w-2xl mx-auto mb-12">
+                {[
+                  { value: "27", label: "repos" },
+                  { value: "43", label: "packages" },
+                  { value: "80+", label: "skills" },
+                  { value: "MIT", label: "license" },
+                ].map((stat) => (
+                  <div key={stat.label} className="text-center">
+                    <p className="text-2xl md:text-3xl font-display font-bold bg-gradient-to-b from-[#7fffd4] to-[#00bcd4] bg-clip-text text-transparent">
+                      {stat.value}
+                    </p>
+                    <p className="text-[10px] font-mono tracking-widest uppercase text-white/25 mt-1">
+                      {stat.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+
+            <Reveal y={8} delay={0.8}>
+              <div className="flex flex-wrap justify-center gap-3">
+                <Magnetic>
+                  <Link
+                    href="/ecosystem"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#7fffd4]/10 border border-[#7fffd4]/25 text-sm font-medium text-[#7fffd4] hover:bg-[#7fffd4]/20 transition-colors"
+                  >
+                    Explore the ecosystem
+                  </Link>
+                </Magnetic>
+                <Magnetic>
+                  <a
+                    href="https://github.com/frankxai"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-sm font-medium text-white/70 hover:bg-white/[0.08] transition-colors"
+                  >
+                    View on GitHub ↗
+                  </a>
+                </Magnetic>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        <AtmosphericDivider variant="teal" />
 
         {/* 4. Built With — tech trust strip */}
         <section className="py-12 md:py-16">

@@ -1,4 +1,8 @@
 import Link from "next/link";
+import { SplitText } from "@/components/motion/split-text";
+import { LiquidGlass } from "@/components/motion/liquid-glass";
+import { Magnetic } from "@/components/motion/magnetic";
+import { Reveal } from "@/components/motion/reveal";
 
 // ─── Inline SVG Icons ─────────────────────────────────────────────────────────
 
@@ -190,11 +194,10 @@ export default function EcosystemHubPage() {
                 <span className="text-xs font-mono tracking-widest uppercase text-[#7fffd4]">Ecosystem Hub</span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold mb-6 leading-tight text-white">
-                The Arcanea Ecosystem
-                <span className="block bg-gradient-to-r from-[#7fffd4] via-[#78a6ff] to-[#ffd700] bg-clip-text text-transparent">
-                  One creative multiverse.
-                </span>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold mb-6 leading-tight text-white tracking-tight">
+                <SplitText as="span" text="27 repos." className="text-white" delay={0.1} stagger={0.04} />
+                {" "}
+                <SplitText as="span" text="One ecosystem." className="bg-gradient-to-r from-[#7fffd4] via-[#78a6ff] to-[#ffd700] bg-clip-text text-transparent" delay={0.5} stagger={0.04} />
               </h1>
 
               <p className="text-lg text-white/50 leading-relaxed max-w-2xl mb-10">
@@ -213,12 +216,16 @@ export default function EcosystemHubPage() {
               </div>
 
               <div className="flex flex-wrap gap-4">
-                <a href="https://github.com/frankxai/arcanea" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#7fffd4] text-black font-semibold hover:brightness-110 transition-all">
-                  <IconGitBranch className="w-4 h-4" /> View on GitHub
-                </a>
-                <Link href="/developers" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-semibold hover:bg-white/10 transition-all">
-                  Developer Docs <IconArrow className="w-4 h-4" />
-                </Link>
+                <Magnetic>
+                  <a href="https://github.com/frankxai/arcanea" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#7fffd4] text-black font-semibold hover:brightness-110 transition-all">
+                    <IconGitBranch className="w-4 h-4" /> View on GitHub
+                  </a>
+                </Magnetic>
+                <Magnetic>
+                  <Link href="/developers" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-semibold hover:bg-white/10 transition-all">
+                    Developer Docs <IconArrow className="w-4 h-4" />
+                  </Link>
+                </Magnetic>
               </div>
             </div>
           </div>
@@ -234,8 +241,7 @@ export default function EcosystemHubPage() {
 
           <div className="grid lg:grid-cols-3 gap-5">
             {LAYERS.map((layer) => (
-              <div key={layer.title} className="group relative rounded-2xl overflow-hidden bg-white/[0.03] border border-white/[0.06] hover:border-white/[0.14] transition-all p-6 sm:p-8">
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" style={{ background: `radial-gradient(circle at 50% 0%, ${layer.accent}08, transparent 70%)` }} />
+              <LiquidGlass key={layer.title} intensity="standard" tint={layer.accent} className="group relative rounded-2xl border border-white/[0.06] hover:border-white/[0.14] transition-colors p-6 sm:p-8">
                 <div className="relative">
                   <p className="text-[10px] font-mono uppercase tracking-widest mb-1" style={{ color: `${layer.accent}99` }}>{layer.subtitle}</p>
                   <h3 className="text-xl font-display font-bold mb-3" style={{ color: layer.accent }}>{layer.title}</h3>
@@ -253,7 +259,7 @@ export default function EcosystemHubPage() {
                     ))}
                   </div>
                 </div>
-              </div>
+              </LiquidGlass>
             ))}
           </div>
         </section>
@@ -275,7 +281,8 @@ export default function EcosystemHubPage() {
                 </div>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
                   {group.repos.map((repo) => (
-                    <a key={repo.name} href={`https://github.com/frankxai/${repo.name}`} target="_blank" rel="noopener noreferrer" className="group/card relative rounded-xl overflow-hidden bg-white/[0.03] border border-white/[0.06] hover:border-white/[0.14] transition-all p-5">
+                    <LiquidGlass key={repo.name} intensity="subtle" tint={group.accent} className="rounded-xl border border-white/[0.06] hover:border-white/[0.14] transition-colors" noise={false}>
+                    <a href={`https://github.com/frankxai/${repo.name}`} target="_blank" rel="noopener noreferrer" className="group/card block relative p-5">
                       <div className="flex items-start justify-between mb-2">
                         <span className="font-mono text-xs text-white font-medium group-hover/card:text-[#7fffd4] transition-colors truncate mr-2">{repo.name}</span>
                         <IconExternal className="w-3 h-3 text-white/20 shrink-0 mt-0.5" />
@@ -288,6 +295,7 @@ export default function EcosystemHubPage() {
                         <span className="text-[10px] font-mono px-1.5 py-0.5 rounded" style={{ color: STATUS_COLORS[repo.status], backgroundColor: `${STATUS_COLORS[repo.status]}10` }}>{repo.status}</span>
                       </div>
                     </a>
+                    </LiquidGlass>
                   ))}
                 </div>
               </div>
