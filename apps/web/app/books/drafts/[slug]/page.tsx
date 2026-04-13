@@ -1,5 +1,6 @@
 import { readdir, readFile, access } from 'fs/promises';
 import { join } from 'path';
+import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
@@ -371,8 +372,7 @@ export default async function DraftBookPage({ params }: PageProps) {
       <section className="max-w-2xl mx-auto px-6 pb-16">
         <LiquidGlass intensity="medium" tint={bookTint} glow="soft" className="p-8 flex flex-col sm:flex-row gap-6">
           {cover && (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img src={cover} alt={`${manifest.title} cover`} className="w-32 sm:w-40 flex-shrink-0 rounded-lg shadow-2xl self-start" />
+            <Image src={cover} alt={`${manifest.title} cover`} width={160} height={240} className="w-32 sm:w-40 flex-shrink-0 rounded-lg shadow-2xl self-start" />
           )}
           <div>
             <h2 className="text-sm font-display font-semibold text-white/60 uppercase tracking-wider mb-4">About This Draft</h2>
