@@ -2,7 +2,7 @@
 title: Second Brain — Buildout Plan
 domain: meta
 created: 2026-04-10
-updated: 2026-04-10
+updated: 2026-04-13
 author: claude
 status: active-build
 links: [confidential-tier, inbox-architecture, semantic-map-at-scale, agent-protocol, knowledge-inventory, notion-map]
@@ -135,21 +135,53 @@ Information flows left-to-right when executing. Right-to-left when reflecting.
 - **Two brains.** If Legendary Brain and this wiki ever drift such that a fact lives in only one — flag in weekly review.
 - **Notion as source of truth for code-adjacent decisions.** Architecture decisions live in `wiki/decisions/`, not in Notion pages. Notion mirrors; wiki owns.
 
-## Current State (2026-04-10)
+## Current State (2026-04-13)
 
-- ✅ Wiki directory with 11 articles (README, 5 domain overviews, agent-protocol, decision architecture, knowledge-inventory, knowledge-systems, notion-map)
+### Phase 1 — Foundation ✅ COMPLETE (2026-04-10)
+
+- ✅ Wiki directory with 17 articles (README, 5 domain overviews, agent-protocol, decision architecture, knowledge-inventory, knowledge-systems, notion-map, buildout-plan, confidential-tier, inbox-architecture, semantic-map-at-scale, skills/README, scripts/README, 6 skill specs)
 - ✅ Full Notion semantic map with collection:// IDs
-- ✅ Auto-memory system tracking 16 project/user/feedback memories
+- ✅ Auto-memory system tracking 16+ project/user/feedback memories
 - ✅ 7 Linear projects across 5 brands
-- 🟡 Buildout plan (this file) — created this session
-- ⬜ Trust tier doc
-- ⬜ Inbox architecture doc
-- ⬜ Semantic-map-at-scale doc
-- ⬜ Skill specs
-- ⬜ Repo-triage script
-- ⬜ Scheduled tasks wired
-- ⬜ Linear ARC-INBOX project created
-- ⬜ Gate 0 revenue
+- ✅ Trust tier doc (`confidential-tier.md`) — T0/T1/T2 taxonomy, routing rules, refusal hooks
+- ✅ Inbox architecture doc (`inbox-architecture.md`) — 7 buffers, triage ritual, bankruptcy protocol
+- ✅ Semantic-map-at-scale doc — 5 scale problems + fixes, graph view Phase 3
+- ✅ Skill specs (6 total: capture, inbox-triage, repo-triage, ship-it, confidential-capture, harvest)
+- ✅ Repo-triage script (`wiki/scripts/repo-triage.py`) — 280 lines, idempotent, --dry-run, tested interface
+- ✅ D1–D5 decisions collapsed with recommendations (2026-04-13)
+
+### Phase 2 — Activation ✅ COMPLETE (2026-04-13)
+
+- ✅ Linear ARC-INBOX project created (id: f275978c-8ef8-450a-a6b3-fda11df5c568, url: linear.app/arcanea/project/arc-inbox-92d92241315c)
+- ✅ Notion Business Ops Hub created under Ops Hub (page: 34126ac2-b7f6-81fc-8aae-d2076541e753)
+- ✅ 4 Notion databases created: Financial Ops, Contracts, Compliance, Legal — all with proper schemas
+- ✅ Trinity AI Alliance contract seeded in Contracts DB (€180K, Active, SIS brand)
+- ✅ BV Netherlands Formation seeded in Compliance DB (due: 2026-06-01)
+- ✅ Skill implementations built (.claude/skills/): capture, inbox-triage, confidential-capture, repo-triage, ship-it, harvest
+- ✅ obsidian-harvest.py script written (280 lines, stdlib, --dry-run, smoke test, dedup)
+- ✅ Scheduled tasks wired (3 tasks):
+  - daily-inbox-reminder: every day 9am — ARC-INBOX pulse check
+  - weekly-repo-triage: Sundays 10am — repo audit → wiki report → Linear issue
+  - weekly-harvest: Sundays 10:30am — drain all 7 buffer surfaces → ARC-INBOX
+
+**Phase 2 pending (requires Frank's hands):**
+- ⬜ `gh auth login` — unlock full 106-repo list for repo-triage
+- ⬜ Create Notion "Private / T1" page + revoke Notion integration on it
+- ⬜ Run `python wiki/scripts/repo-triage.py --dry-run` once to verify output
+- ⬜ Run weekly-repo-triage task manually to pre-approve Linear + GitHub MCP tool permissions
+- ⬜ Run weekly-harvest task manually to pre-approve Slack + Drive + Notion MCP permissions
+- ⬜ Set up 1Password `arcanea-infra` vault for credentials
+- ⬜ Init `~/Business/confidential/` directory with age encryption
+
+### Phase 3 — Shipping Velocity (2026-04-18 → 2026-04-30)
+
+- ⬜ Fix 8 structural Notion gaps (Business hub complete ✅, FrankX refresh, SIS promotion, Dream100 merge, Wealth automation, Morning Brief archive, Workshop execution, Podcast recording)
+- ⬜ Wire Gate 0 revenue loop (first €1 by 2026-04-30)
+- ⬜ Phase 3 graph view (orphan-scan.py, link-check.py, auto-graph from frontmatter)
+- ⬜ frankxai/second-brain standalone repo (post-Phase 2)
+
+### Gate 0 Revenue
+- ⬜ First €1 by 2026-04-30
 
 ---
 

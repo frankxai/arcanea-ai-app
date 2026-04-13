@@ -2,7 +2,7 @@
 title: Notion Workspace — Complete Semantic Map
 domain: meta
 created: 2026-04-10
-updated: 2026-04-10
+updated: 2026-04-13
 author: claude
 status: growing
 links: [knowledge-inventory, knowledge-systems, ../arcanea/overview, ../frankx/overview, ../sis/overview]
@@ -25,6 +25,12 @@ Full index of every page, database, and semantic connection across the Notion wo
 ├── Legendary Brain (7947ce2d-6865)             ← Frank's personal brain
 ├── Second Brain / PARA (ecf31968)              ← Reference structure
 ├── Ultimate Brain for Notion ×3 (5160f71b, 15e26ac2-8039, 15e26ac2-8075)  ← TJF templates
+├── Ops Hub (33726ac2)                          ← Operations management & docs
+│   └── 🏢 Business Ops Hub (34126ac2)         ← Financial/legal/compliance [NEW 2026-04-13]
+│       ├── Financial Ops DB (collection://902b909a) ← Income/expense/subscriptions
+│       ├── Contracts DB (collection://6123dccb)     ← Trinity €180K seeded
+│       ├── Compliance DB (collection://157a214f)    ← BV Netherlands due 2026-06-01
+│       └── Legal DB (collection://917f6eab)         ← Trademark/IP/copyright
 └── [Becoming] (405b498c) — private personal dev tree (519K chars, not fully indexed)
     └── Amsterdam Dream100 & Locations (33626ac2-80f2)
         └── Private Amsterdam Dream100 (33626ac2-80c7)

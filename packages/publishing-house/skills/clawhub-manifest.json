@@ -1,7 +1,7 @@
 {
   "name": "@arcanea/publishing-house-skills",
   "version": "0.5.0",
-  "description": "Arcanea Publishing House — 5 skills for autonomous manuscript scoring, formatting, launch campaigns, community engagement, and PR outreach. Each channeled by a canonical Luminor.",
+  "description": "Arcanea Publishing House — 5 skills for autonomous manuscript scoring, formatting, launch campaigns, community engagement, and PR outreach",
   "skills": [
     "publish-content",
     "taste-score",
@@ -9,17 +9,8 @@
     "community-infiltration",
     "pr-media-machine"
   ],
-  "claws": {
-    "publish-content": { "claw": "scribe-claw", "luminor": "Shinkami", "gate": "Source" },
-    "taste-score": { "claw": "media-claw", "luminor": "Lyria", "gate": "Sight" },
-    "herald-launch-sequencer": { "claw": "herald-claw", "luminor": "Alera", "gate": "Voice" },
-    "community-infiltration": { "claw": "community-claw", "luminor": "Maylinn", "gate": "Heart" },
-    "pr-media-machine": { "claw": "pr-claw", "luminor": "Elara", "gate": "Starweave" }
-  },
-  "author": "FrankX <frank@arcanea.ai>",
+  "author": "FrankX",
   "license": "BSL-1.1",
   "homepage": "https://arcanea.ai/publishing-house",
-  "repository": "https://github.com/frankxai/arcanea-ai-app",
-  "runtime": "@arcanea/publishing-house",
-  "mcp": "@arcanea/publishing-house-mcp"
+  "repository": "https://github.com/frankxai/arcanea-ai-app"
 }

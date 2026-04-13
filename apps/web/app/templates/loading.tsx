@@ -8,7 +8,7 @@ export default function Loading() {
           <div className="h-5 w-96 mx-auto rounded bg-white/[0.04]" />
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-16">
-          {Array.from({ length: 5 }).map((_, i) => (
+          {Array.from({ length: 7 }).map((_, i) => (
             <div key={i} className="h-72 rounded-2xl bg-white/[0.03]" />
           ))}
         </div>
