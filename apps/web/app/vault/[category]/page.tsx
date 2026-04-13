@@ -39,7 +39,7 @@ export default async function VaultCategoryPage({ params }: Props) {
 
   return (
     <div className="relative min-h-screen">
-      <div className="fixed inset-0 -z-10">
+      <div className="fixed inset-0 -z-10 overflow-hidden">
         <div className="absolute inset-0 bg-[#09090b]" />
         <GradientMesh colors={[config.color, '#0d47a1', '#a78bfa']} intensity={0.05} />
       </div>

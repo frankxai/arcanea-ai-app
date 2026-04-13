@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default function StarlightIntelligencePage() {
   return (
     <div className="relative min-h-screen">
-      <div className="fixed inset-0 -z-10">
+      <div className="fixed inset-0 -z-10 overflow-hidden">
         <div className="absolute inset-0 bg-[#09090b]" />
         <GradientMesh colors={['#00bcd4', '#a78bfa', '#f472b6']} intensity={0.06} />
       </div>
