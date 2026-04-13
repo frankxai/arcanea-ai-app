@@ -488,6 +488,16 @@ export async function getAllSeries(): Promise<BookSeries[]> {
       contentType: 'standalone',
       layout: 'sagas',
     },
+    {
+      id: 'song-of-van-linh',
+      dir: join(BOOK_DIR, 'song-of-van-linh', 'chapters'),
+      title: 'The Song of Van Linh',
+      subtitle: 'Vietnamese mythology meets modern fantasy',
+      description: 'In modern Hanoi, a wildlife biologist discovers she can hear the voice of every living creature — a gift tied to an ancient Gate between Earth and Arcanea. As ecological destruction poisons Vietnam\'s rivers, she must journey from the neon streets to the flooded temples of the Mekong Delta. Ghibli warmth meets epic fantasy meets romantasy.',
+      status: 'in-progress',
+      contentType: 'novel',
+      layout: 'flat',
+    },
   ];
 
   const result: BookSeries[] = [];

@@ -87,6 +87,10 @@ const BOOK_META: Record<string, { title: string; dir: string }> = {
     title: 'The Heart of Pyrathis',
     dir: join(process.cwd(), '..', '..', 'book', 'heart-of-pyrathis', 'chapters'),
   },
+  'song-of-van-linh': {
+    title: 'The Girl Who Heard the River',
+    dir: join(process.cwd(), '..', '..', 'book', 'song-of-van-linh', 'chapters'),
+  },
 };
 
 /* ------------------------------------------------------------------ */

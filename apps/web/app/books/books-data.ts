@@ -29,6 +29,18 @@ export const FEATURED_PASSAGES = [
     book: 'The Three Academies',
     href: '/books/book1/the-foundation-opens',
   },
+  {
+    text: 'She did not mean it the way people usually mean it. She did not mean I understand your situation. She meant I know. I know what three days of silence sounds like. I know what it is to be left in the world after the heartbeat stops.',
+    chapter: 'Chapter One: Subject 7',
+    book: 'The Girl Who Heard the River',
+    href: '/books/song-of-van-linh/01-subject-7',
+  },
+  {
+    text: 'You\'ve been calling a river a problem for fifteen years. The river doesn\'t care what you call it. It goes where it goes.',
+    chapter: 'Chapter Two: The Frequency of Starlings',
+    book: 'The Girl Who Heard the River',
+    href: '/books/song-of-van-linh/02-the-frequency-of-starlings',
+  },
 ];
 
 // ============================================================
@@ -386,6 +398,15 @@ export const SERIES_ACCENTS: Record<string, SeriesAccent> = {
     glow: 'via-yellow-900/[0.03]',
     symbol: '✧',
     topEdge: 'from-transparent via-yellow-400/30 to-transparent',
+  },
+  'song-of-van-linh': {
+    border: 'border-teal-500/15 hover:border-teal-400/30',
+    hover: 'hover:shadow-[0_0_40px_rgba(20,184,166,0.08)]',
+    badge: 'bg-teal-500/10 border-teal-500/25',
+    badgeText: 'text-teal-400',
+    glow: 'via-teal-900/[0.03]',
+    symbol: '🐢',
+    topEdge: 'from-transparent via-teal-400/30 to-transparent',
   },
 };
 

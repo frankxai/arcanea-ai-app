@@ -173,6 +173,14 @@ const BOOKS: Record<string, BookDef> = {
     status: 'in-progress',
     dir: join(process.cwd(), '..', '..', 'book', 'heart-of-pyrathis', 'chapters'),
   },
+  'song-of-van-linh': {
+    title: 'The Girl Who Heard the River',
+    subtitle: 'Book One — The Song of Van Linh',
+    description:
+      'In modern Hanoi, a wildlife biologist named An discovers she can hear the voice of every living creature — a gift tied to an ancient Gate between Earth and the realm of Arcanea. As ecological destruction poisons Vietnam\'s rivers and silences its sacred animals, An must journey from the neon streets of Hanoi to the flooded temples of the Mekong Delta, guided by an ancient crystalline creature who chose her and drawn toward a man whose own gift is as dangerous as it is magnetic. Vietnamese mythology meets Ghibli warmth meets Arcanea canon.',
+    status: 'in-progress',
+    dir: join(process.cwd(), '..', '..', 'book', 'song-of-van-linh', 'chapters'),
+  },
 };
 
 const STATUS_STYLES: Record<BookStatus, { bg: string; text: string; label: string }> = {

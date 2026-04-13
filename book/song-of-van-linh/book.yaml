@@ -1,0 +1,31 @@
+title: "The Girl Who Heard the River"
+slug: song-of-van-linh
+tier: featured
+status: in-progress
+
+authors:
+  - name: FrankX
+    github: frankxai
+    role: creator
+
+ai_transparency:
+  models_used:
+    - id: claude-opus-4-6
+      provider: anthropic
+      role: story-architecture-characters-worldbuilding-and-drafting
+  human_contribution: 25%
+  ai_contribution: 75%
+  method: "Human concept, direction, cultural vision, and editorial guidance. AI-drafted prose from deep architectural prompts with Vietnamese mythology research. Human curation and editing."
+
+license: CC-BY-NC-SA-4.0
+content_rating: adult
+tags: [vietnamese-mythology, contemporary-fantasy, romantasy, ecological, ghibli, arcanea-universe]
+
+acknowledgments: |
+  Book One of The Song of Van Linh — a four-book series set in modern Vietnam
+  where ancient mythology bleeds through the cracks of the contemporary world.
+  Story conceived by FrankX. Vietnamese mythology, Ghibli atmosphere, ecological
+  themes, and romantic tension designed by human author. Prose generation by
+  Claude Opus 4.6, curated and edited by humans. Connected to the Arcanea
+  universe through the Unity Gate and Tu Linh sacred animals.
+  Published on Arcanea — written in the open.

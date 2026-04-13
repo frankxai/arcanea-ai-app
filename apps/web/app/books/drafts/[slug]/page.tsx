@@ -55,6 +55,7 @@ const COVER_MAP: Record<string, string> = {
   'forge-of-ruin': '/images/books/forge-of-ruin-cover-nb2.png',
   'tides-of-silence': '/images/books/tides-of-silence-cover-v2.png',
   'heart-of-pyrathis': '/images/books/heart-of-pyrathis-cover-v2.png',
+  'song-of-van-linh': '/images/books/song-of-van-linh-cover.png',
 };
 
 const ACCENT_MAP: Record<string, { primary: string; bg: string; border: string; glow: string }> = {
@@ -75,6 +76,12 @@ const ACCENT_MAP: Record<string, { primary: string; bg: string; border: string; 
     bg: 'bg-amber-500/10',
     border: 'border-amber-500/20',
     glow: 'bg-amber-900/[0.08]',
+  },
+  'song-of-van-linh': {
+    primary: 'text-teal-400',
+    bg: 'bg-teal-500/10',
+    border: 'border-teal-500/20',
+    glow: 'bg-teal-900/[0.08]',
   },
 };
 
@@ -107,6 +114,14 @@ const BOOK_DESCRIPTIONS: Record<string, { tagline: string; paragraphs: string[] 
       'Sael hears the dissonance first. A wrong note in the Gyre\'s ancient song. The instruments show nothing. The Council files the reading. And beneath the silence, something enormous is changing.',
     ],
   },
+  'song-of-van-linh': {
+    tagline: 'A wildlife biologist who built a wall around her gift. An ancient turtle who remembers when gods walked the earth. A river that is dying because the world stopped listening.',
+    paragraphs: [
+      'Nguyen Thuy An has not named an animal since she was nine. The night her dog died in her arms, she felt every last thing he felt — the confusion, the fading, the looking for her. She built a wall. She became a biologist. She learned to care from a distance, with data, through protocols.',
+      'Then a traumatized clouded leopard cub refuses to eat, and An breaks her own rule. The wall collapses. The voices come through — every creature in Hanoi, speaking in frequencies she cannot unhear. Her grandmother dies and leaves a journal in a script that shifts between Vietnamese and something older. The turtle in Hoan Kiem Lake surfaces at midnight and speaks her name.',
+      'Vietnamese mythology meets Studio Ghibli warmth meets Arcanea canon. A four-book series about ecological grief, ancestral memory, and the cost of listening — set in a modern Vietnam where the ancient never left, it just learned to wear different clothes.',
+    ],
+  },
 };
 
 const BOOK_CHARACTERS: Record<string, { name: string; role: string; desc: string }[]> = {
@@ -132,6 +147,14 @@ const BOOK_CHARACTERS: Record<string, { name: string; role: string; desc: string
     { name: 'Vel', role: 'The Deep Diver', desc: 'Has seen the bottom. Came back changed.' },
     { name: 'Kael Drast', role: 'The Current-Cutter', desc: 'Freedom he imposes is the same as control.' },
     { name: 'The Ancient', role: 'The Ocean', desc: 'It has no name. It is the naming.' },
+  ],
+  'song-of-van-linh': [
+    { name: 'Nguyen Thuy An', role: 'The Listener', desc: 'Built a wall at nine. The cub broke it at twenty-four.' },
+    { name: 'Tran Minh Quan', role: 'The Seer', desc: 'Saw what she was. Walked away. Could not stay away.' },
+    { name: 'Linh Chi', role: 'The Ancient Companion', desc: 'Not a pet. A recognition. Centuries of waiting.' },
+    { name: 'Ba Noi', role: 'The Last Listener', desc: 'Held the Gate for thirty years. Alone.' },
+    { name: 'Rua', role: 'The Sacred Turtle', desc: 'The lake\'s memory of itself. Still breathing.' },
+    { name: 'Hoang Van Phuc', role: 'The Pragmatist', desc: 'Right about the wrong things. That is what makes him dangerous.' },
   ],
 };
 
@@ -239,7 +262,7 @@ export default async function DraftBookPage({ params }: PageProps) {
   const bookTint: 'fire' | 'crystal' | 'gold' | 'neutral' =
     slug === 'forge-of-ruin'
       ? 'fire'
-      : slug === 'tides-of-silence'
+      : slug === 'tides-of-silence' || slug === 'song-of-van-linh'
       ? 'crystal'
       : slug === 'heart-of-pyrathis'
       ? 'gold'
