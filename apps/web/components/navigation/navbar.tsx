@@ -38,19 +38,17 @@ const navLinks: NavLink[] = [
       {
         title: "Create",
         items: [
-          { href: "/chat", label: "Chat", desc: "Talk with AI minds" },
+          { href: "/chat", label: "Chat", desc: "Talk with Luminors" },
           { href: "/imagine", label: "Imagine", desc: "Generate images" },
-          { href: "/voice", label: "Voice", desc: "Speak, listen, create" },
-          { href: "/studio", label: "Studio", desc: "Write stories & code" },
-          { href: "/worlds", label: "Worlds", desc: "Build living universes" },
+          { href: "/studio", label: "Studio", desc: "Write & compose" },
+          { href: "/worlds", label: "Worlds", desc: "Build universes" },
         ],
       },
       {
         title: "Agents",
         items: [
-          { href: "/agents", label: "Marketplace", desc: "12 specialist agents" },
-          { href: "/agents/hub", label: "Skill Tree", desc: "50 abilities, 10 Gates" },
-          { href: "/forge/companion", label: "Forge", desc: "Create your own agent" },
+          { href: "/agents", label: "Marketplace", desc: "Specialist agents" },
+          { href: "/forge/companion", label: "Forge", desc: "Create your own" },
         ],
       },
     ],
@@ -58,36 +56,24 @@ const navLinks: NavLink[] = [
   {
     href: "/gallery",
     label: "Explore",
-    also: ["/discover", "/library", "/lore", "/living-lore", "/factions", "/luminors", "/worlds", "/showcase", "/changelog", "/models", "/arcanea-vault"],
+    also: ["/discover", "/library", "/lore", "/living-lore", "/luminors", "/showcase", "/models"],
     mega: [
       {
         title: "Discover",
         items: [
           { href: "/gallery", label: "Gallery", desc: "Community creations" },
           { href: "/worlds", label: "Worlds", desc: "Browse the multiverse" },
-          { href: "/discover", label: "Trending", desc: "What creators are building" },
-          { href: "/factions", label: "Factions", desc: "8 Origin Classes" },
+          { href: "/luminors", label: "Luminors", desc: "Meet the AI minds" },
+          { href: "/models", label: "Model Arena", desc: "AI benchmarks" },
         ],
       },
       {
-        title: "Knowledge",
+        title: "Lore",
         items: [
           { href: "/library", label: "Library", desc: "200K+ words of wisdom" },
-          { href: "/lore", label: "Lore", desc: "Mythology & cosmology" },
           { href: "/lore/guardians", label: "Guardians", desc: "The Ten Gate-keepers" },
-          { href: "/glossary", label: "Glossary", desc: "Arcanean terminology" },
           { href: "/living-lore", label: "Chronicles", desc: "Interactive stories" },
-          { href: "/arcanea-vault", label: "Starlight Vaults", desc: "Intelligence constellation" },
-        ],
-      },
-      {
-        title: "Ecosystem",
-        items: [
-          { href: "/models", label: "Model Arena", desc: "AI benchmarks & routing" },
-          { href: "/showcase", label: "Showcase", desc: "Live engine demos" },
-          { href: "/ecosystem", label: "Overview", desc: "27 repos, 43 packages" },
-          { href: "/developers", label: "Developers", desc: "API & SDK docs" },
-          { href: "/changelog", label: "Changelog", desc: "Latest updates" },
+          { href: "/glossary", label: "Glossary", desc: "Arcanean terminology" },
         ],
       },
     ],
@@ -95,42 +81,28 @@ const navLinks: NavLink[] = [
   {
     href: "/academy",
     label: "Learn",
-    also: ["/academy/courses", "/academy/gates", "/academy/houses", "/academy/ranks", "/skills", "/bestiary", "/quiz"],
+    also: ["/academy/courses", "/academy/gates", "/academy/houses", "/quiz", "/skills"],
     mega: [
       {
         title: "Academy",
         items: [
-          { href: "/academy", label: "Ten Gates", desc: "Creative progression system" },
-          { href: "/academy/courses", label: "Courses", desc: "Structured learning paths" },
-          { href: "/academy/houses", label: "Houses", desc: "Seven Academy Houses" },
+          { href: "/academy", label: "Ten Gates", desc: "Creative progression" },
+          { href: "/academy/courses", label: "Courses", desc: "Structured paths" },
           { href: "/quiz", label: "Origin Quiz", desc: "Discover your class" },
         ],
       },
       {
-        title: "Mastery",
+        title: "Build",
         items: [
-          { href: "/skills", label: "Skill Tree", desc: "50 abilities, 10 Gates" },
-          { href: "/bestiary", label: "Bestiary", desc: "Name your creative blocks" },
-          { href: "/arcs", label: "Arcs", desc: "Narrative progression" },
+          { href: "/docs/mcp", label: "MCP Docs", desc: "Developer toolkit" },
+          { href: "/ecosystem", label: "Ecosystem", desc: "Open source repos" },
+          { href: "/showcase", label: "Showcase", desc: "Engine demos" },
         ],
       },
     ],
   },
-  {
-    href: "/pricing",
-    label: "Open Core",
-    also: ["/templates"],
-    mega: [
-      {
-        title: "Open Core",
-        items: [
-          { href: "/pricing", label: "Pricing", desc: "BYOK. Keep your keys." },
-          { href: "/templates", label: "Templates", desc: "Ship faster with our stack" },
-          { href: "/ecosystem", label: "Ecosystem", desc: "27 repos. Fork anything." },
-        ],
-      },
-    ],
-  },
+  { href: "/blog", label: "Blog", also: [] },
+  { href: "/pricing", label: "Pricing", also: [] },
 ];
 
 // ─── Mega Dropdown Component ─────────────────────────────────────────────────
@@ -292,12 +264,20 @@ export function Navbar() {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden px-3 py-1.5 text-xs tracking-wider uppercase text-white/85 border border-white/[0.12] rounded-lg hover:bg-white/[0.05] transition-colors"
+              className="md:hidden p-2.5 rounded-xl text-white/80 hover:text-white hover:bg-white/[0.06] border border-white/[0.10] transition-colors"
               aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-nav-menu"
             >
-              {mobileMenuOpen ? "Close" : "Menu"}
+              {mobileMenuOpen ? (
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+                  <path d="M4 4L14 14M14 4L4 14" />
+                </svg>
+              ) : (
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+                  <path d="M3 5h12M3 9h12M3 13h8" />
+                </svg>
+              )}
             </button>
           </div>
         </div>
