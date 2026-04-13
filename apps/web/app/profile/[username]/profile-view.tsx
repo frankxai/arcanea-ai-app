@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { LazyMotion, domMax, m } from 'framer-motion'
+import { LazyMotion, domAnimation, m } from 'framer-motion'
 import {
   PhPencilSimple,
   PhStar,
@@ -78,7 +78,7 @@ export function ProfilePageClient({
     : '??'
 
   return (
-    <LazyMotion features={domMax} strict>
+    <LazyMotion features={domAnimation} strict>
       <div className="min-h-screen bg-black">
         {/* Hero banner with gradient */}
         <div className={`h-48 sm:h-56 bg-gradient-to-r ${gateGradient} relative`}>
