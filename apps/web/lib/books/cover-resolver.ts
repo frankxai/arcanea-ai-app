@@ -163,7 +163,7 @@ export async function registerCover(input: RegisterCoverInput): Promise<BookCove
       model_id: input.modelId,
       model_tier: input.modelTier,
       prompt: input.prompt,
-      generation_params: input.generationParams || {},
+      generation_params: (input.generationParams ?? {}) as any,
       generation_cost_usd: input.generationCostUsd,
       width: input.width,
       height: input.height,

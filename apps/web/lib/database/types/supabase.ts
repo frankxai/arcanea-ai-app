@@ -2279,6 +2279,341 @@ export type Database = {
           },
         ]
       }
+      // ============================================================
+      // Open Library (migration 20260410000001_open_library.sql)
+      // Hand-maintained until `supabase gen types` can run against a
+      // healthy project. See apps/web/lib/books/ for consumers.
+      // ============================================================
+      books: {
+        Row: {
+          id: string
+          slug: string
+          title: string
+          subtitle: string | null
+          description: string | null
+          tagline: string | null
+          tier: "community" | "featured" | "canon"
+          status: "draft" | "in-progress" | "complete" | "archived"
+          cover_id: string | null
+          tags: string[] | null
+          genre: string | null
+          content_rating: string | null
+          license: string | null
+          total_word_count: number | null
+          chapter_count: number | null
+          star_average: number | null
+          rating_count: number | null
+          view_count: number | null
+          guardian_score: number | null
+          ai_metadata: Json | null
+          acknowledgments: string | null
+          created_at: string
+          updated_at: string
+          published_at: string | null
+        }
+        Insert: {
+          id?: string
+          slug: string
+          title: string
+          subtitle?: string | null
+          description?: string | null
+          tagline?: string | null
+          tier?: "community" | "featured" | "canon"
+          status?: "draft" | "in-progress" | "complete" | "archived"
+          cover_id?: string | null
+          tags?: string[] | null
+          genre?: string | null
+          content_rating?: string | null
+          license?: string | null
+          total_word_count?: number | null
+          chapter_count?: number | null
+          star_average?: number | null
+          rating_count?: number | null
+          view_count?: number | null
+          guardian_score?: number | null
+          ai_metadata?: Json | null
+          acknowledgments?: string | null
+          created_at?: string
+          updated_at?: string
+          published_at?: string | null
+        }
+        Update: {
+          id?: string
+          slug?: string
+          title?: string
+          subtitle?: string | null
+          description?: string | null
+          tagline?: string | null
+          tier?: "community" | "featured" | "canon"
+          status?: "draft" | "in-progress" | "complete" | "archived"
+          cover_id?: string | null
+          tags?: string[] | null
+          genre?: string | null
+          content_rating?: string | null
+          license?: string | null
+          total_word_count?: number | null
+          chapter_count?: number | null
+          star_average?: number | null
+          rating_count?: number | null
+          view_count?: number | null
+          guardian_score?: number | null
+          ai_metadata?: Json | null
+          acknowledgments?: string | null
+          created_at?: string
+          updated_at?: string
+          published_at?: string | null
+        }
+        Relationships: []
+      }
+      book_authors: {
+        Row: {
+          book_id: string
+          user_id: string | null
+          author_name: string
+          author_github: string | null
+          role:
+            | "creator"
+            | "co_author"
+            | "co_creator"
+            | "editor"
+            | "contributor"
+            | "illustrator"
+            | "translator"
+          contribution_note: string | null
+          order_index: number | null
+          added_at: string
+        }
+        Insert: {
+          book_id: string
+          user_id?: string | null
+          author_name: string
+          author_github?: string | null
+          role:
+            | "creator"
+            | "co_author"
+            | "co_creator"
+            | "editor"
+            | "contributor"
+            | "illustrator"
+            | "translator"
+          contribution_note?: string | null
+          order_index?: number | null
+          added_at?: string
+        }
+        Update: {
+          book_id?: string
+          user_id?: string | null
+          author_name?: string
+          author_github?: string | null
+          role?:
+            | "creator"
+            | "co_author"
+            | "co_creator"
+            | "editor"
+            | "contributor"
+            | "illustrator"
+            | "translator"
+          contribution_note?: string | null
+          order_index?: number | null
+          added_at?: string
+        }
+        Relationships: []
+      }
+      book_covers: {
+        Row: {
+          id: string
+          book_id: string
+          version: number
+          status: "draft" | "active" | "archived"
+          storage_tier: "git" | "supabase"
+          storage_path: string
+          public_url: string
+          model_id: string | null
+          model_tier: string | null
+          prompt: string | null
+          generation_params: Json | null
+          generation_cost_usd: number | null
+          generated_by: string | null
+          approved_by: string | null
+          approved_at: string | null
+          width: number | null
+          height: number | null
+          file_size_bytes: number | null
+          mime_type: string | null
+          dominant_colors: string[] | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          book_id: string
+          version?: number
+          status?: "draft" | "active" | "archived"
+          storage_tier: "git" | "supabase"
+          storage_path: string
+          public_url: string
+          model_id?: string | null
+          model_tier?: string | null
+          prompt?: string | null
+          generation_params?: Json | null
+          generation_cost_usd?: number | null
+          generated_by?: string | null
+          approved_by?: string | null
+          approved_at?: string | null
+          width?: number | null
+          height?: number | null
+          file_size_bytes?: number | null
+          mime_type?: string | null
+          dominant_colors?: string[] | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          book_id?: string
+          version?: number
+          status?: "draft" | "active" | "archived"
+          storage_tier?: "git" | "supabase"
+          storage_path?: string
+          public_url?: string
+          model_id?: string | null
+          model_tier?: string | null
+          prompt?: string | null
+          generation_params?: Json | null
+          generation_cost_usd?: number | null
+          generated_by?: string | null
+          approved_by?: string | null
+          approved_at?: string | null
+          width?: number | null
+          height?: number | null
+          file_size_bytes?: number | null
+          mime_type?: string | null
+          dominant_colors?: string[] | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+      book_chapters: {
+        Row: {
+          id: string
+          book_id: string
+          slug: string
+          number: number
+          title: string
+          subtitle: string | null
+          git_path: string
+          word_count: number | null
+          excerpt: string | null
+          status: "draft" | "published" | "revised"
+          published_at: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          book_id: string
+          slug: string
+          number: number
+          title: string
+          subtitle?: string | null
+          git_path: string
+          word_count?: number | null
+          excerpt?: string | null
+          status?: "draft" | "published" | "revised"
+          published_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          book_id?: string
+          slug?: string
+          number?: number
+          title?: string
+          subtitle?: string | null
+          git_path?: string
+          word_count?: number | null
+          excerpt?: string | null
+          status?: "draft" | "published" | "revised"
+          published_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      book_ratings: {
+        Row: {
+          id: string
+          book_id: string
+          user_id: string
+          stars: number
+          review: string | null
+          is_hidden: boolean | null
+          reported_count: number | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          book_id: string
+          user_id: string
+          stars: number
+          review?: string | null
+          is_hidden?: boolean | null
+          reported_count?: number | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          book_id?: string
+          user_id?: string
+          stars?: number
+          review?: string | null
+          is_hidden?: boolean | null
+          reported_count?: number | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      guardian_reviews: {
+        Row: {
+          id: string
+          book_id: string
+          guardian: "alera" | "draconia" | "lyria" | "lyssandria" | "maylinn"
+          dimension: "voice" | "craft" | "originality" | "depth" | "resonance"
+          score: number
+          assessment: string | null
+          detailed_notes: string | null
+          model_id: string | null
+          prompt_version: string | null
+          assessed_at: string
+        }
+        Insert: {
+          id?: string
+          book_id: string
+          guardian: "alera" | "draconia" | "lyria" | "lyssandria" | "maylinn"
+          dimension: "voice" | "craft" | "originality" | "depth" | "resonance"
+          score: number
+          assessment?: string | null
+          detailed_notes?: string | null
+          model_id?: string | null
+          prompt_version?: string | null
+          assessed_at?: string
+        }
+        Update: {
+          id?: string
+          book_id?: string
+          guardian?: "alera" | "draconia" | "lyria" | "lyssandria" | "maylinn"
+          dimension?: "voice" | "craft" | "originality" | "depth" | "resonance"
+          score?: number
+          assessment?: string | null
+          detailed_notes?: string | null
+          model_id?: string | null
+          prompt_version?: string | null
+          assessed_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       chapter_reaction_counts: {
@@ -2401,6 +2736,14 @@ export type Database = {
       }
     }
     Functions: {
+      // ============================================================
+      // Open Library functions (hand-maintained, see migration
+      // 20260410000001_open_library.sql)
+      // ============================================================
+      set_active_cover: {
+        Args: { p_book_id: string; p_cover_id: string }
+        Returns: undefined
+      }
       check_and_unlock_gates: {
         Args: { p_user_id: string }
         Returns: undefined

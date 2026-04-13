@@ -113,7 +113,9 @@ export const SKILL_LUMINOR_MAP: Record<string, SkillLuminorEntry> = {
   'nero':                 { luminor: 'deep-researcher',     guardian: 'shinkami',   team: 'research' },
   'prompt-craft':         { luminor: 'voice',    guardian: 'alera',      team: 'writing' },
   'centaur-mode':         { luminor: 'integrator',      guardian: 'ino',        team: 'development' },
+  'arcanea-centaur-mode': { luminor: 'integrator',      guardian: 'ino',        team: 'development' },
   'ai-symbiosis':         { luminor: 'integrator',      guardian: 'ino',        team: 'development' },
+  'arcanea-book-cover':   { luminor: 'visual-designer', guardian: 'lyria',     team: 'creative' },
 
   // ---------------------------------------------------------------------------
   // Arcanea Design & Products

@@ -6,7 +6,11 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? 'example-an
 const shouldRunWebServer = !process.env.PLAYWRIGHT_NO_WEB_SERVER;
 
 export default defineConfig({
-  testDir: './e2e',
+  // Pick up both the legacy `e2e/` suite and the new `tests/e2e/` Open
+  // Library suite. testDir is set to the repo-app root and testMatch is
+  // explicit about which files count as specs.
+  testDir: '.',
+  testMatch: ['e2e/**/*.spec.ts', 'tests/e2e/**/*.spec.ts'],
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,

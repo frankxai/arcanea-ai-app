@@ -88,7 +88,8 @@ export async function POST(
     }
 
     // 2. Look up the book (admin client bypasses RLS; we do authorization below)
-    const admin = createAdminClient();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const admin = createAdminClient() as any;
     const { data: book, error: bookErr } = await admin
       .from('books')
       .select('id, slug')

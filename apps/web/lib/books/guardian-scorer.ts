@@ -474,7 +474,8 @@ export async function scoreSingleDimension(
 export async function loadLatestReport(
   bookSlug: string,
 ): Promise<GuardianReport | null> {
-  const admin = createAdminClient();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const admin = createAdminClient() as any;
 
   const { data: book, error: bookErr } = await admin
     .from('books')
@@ -502,7 +503,8 @@ export async function loadLatestReport(
     latest.push(r);
   }
 
-  const scores: GuardianScore[] = latest.map((r) => ({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const scores: GuardianScore[] = latest.map((r: any) => ({
     guardian: r.guardian as GuardianId,
     dimension: r.dimension as GuardianDimension,
     score: Number(r.score),
