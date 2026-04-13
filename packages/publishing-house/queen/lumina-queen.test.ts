@@ -34,6 +34,12 @@ async function main(): Promise<void> {
     { request: 'mint a new NFT from this character', expected: 'mint' },
     { request: 'monitor BookTok for fantasy trends', expected: 'scout' },
     { request: 'generate a Scout report on the market', expected: 'report' },
+    { request: 'edit this manuscript for structural issues', expected: 'edit' },
+    { request: 'review my chapter for developmental feedback', expected: 'edit' },
+    { request: 'engage with the BookTok community about this book', expected: 'engage' },
+    { request: 'find micro-influencers who cover fantasy fiction', expected: 'engage' },
+    { request: 'pitch this book to journalists covering AI fiction', expected: 'pitch' },
+    { request: 'generate a media kit for the book launch', expected: 'pitch' },
     { request: 'hello world', expected: 'unknown' },
   ];
 
@@ -67,6 +73,18 @@ async function main(): Promise<void> {
   check('scout routes to scout-claw', scoutDecision.chosenClaw === 'scout-claw');
   check('scout channels Lyssandria', scoutDecision.chosenLuminor?.name === 'Lyssandria');
 
+  const editDecision = routeRequest('edit my manuscript');
+  check('edit routes to editor-claw', editDecision.chosenClaw === 'editor-claw');
+  check('edit channels Aiyami', editDecision.chosenLuminor?.name === 'Aiyami');
+
+  const engageDecision = routeRequest('engage with reader community');
+  check('engage routes to community-claw', engageDecision.chosenClaw === 'community-claw');
+  check('engage channels Maylinn', engageDecision.chosenLuminor?.name === 'Maylinn');
+
+  const pitchDecision = routeRequest('pitch to journalists');
+  check('pitch routes to pr-claw', pitchDecision.chosenClaw === 'pr-claw');
+  check('pitch channels Elara', pitchDecision.chosenLuminor?.name === 'Elara');
+
   console.log('\n=== Preview with Credentials ===');
   const preview = previewRouting('publish and translate to Dutch');
   check('preview has decision', preview.decision !== undefined);
@@ -84,12 +102,15 @@ async function main(): Promise<void> {
   check('Prompt contains Kernel', prompt.includes('CANONICAL'));
   check('Prompt contains Lumina identity', prompt.includes('Lumina'));
   check('Prompt contains First Light', prompt.includes('First Light'));
-  check('Prompt contains all 5 Claws', [
+  check('Prompt contains all 8 Claws', [
     'media-claw',
     'forge-claw',
     'herald-claw',
     'scout-claw',
     'scribe-claw',
+    'editor-claw',
+    'community-claw',
+    'pr-claw',
   ].every(claw => prompt.includes(claw)));
   check('Prompt contains intent routing', prompt.includes('Intent Classification'));
 

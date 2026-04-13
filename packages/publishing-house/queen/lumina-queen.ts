@@ -139,7 +139,7 @@ export function classifyIntent(request: string): Intent {
   }
 
   // 12. Community engagement (UGC, reader mentions, community interaction)
-  if (/\bcommunity\b|\bengage\b|\binfluencer\b|\bugc\b|\breader\b.*\bment/i.test(lower)) {
+  if (/\bcommunity\b|\bengage\b|\binfluencers?\b|\bugc\b|\breader\b.*\bment/i.test(lower)) {
     return 'engage';
   }
 
