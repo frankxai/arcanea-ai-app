@@ -1,12 +1,14 @@
 /**
- * Smoke test for Luminor → Claw composition (v0.4, 2-layer model).
+ * Smoke test for Luminor → Claw composition (v0.5, 2-layer model).
  *
  * Verifies:
  *   1. Kernel loads from the canonical path
- *   2. All 5 Luminors are defined with complete craft metadata
+ *   2. All 8 Luminors are defined with complete craft metadata
  *   3. buildAgentConfigFromLuminor composes Kernel + Luminor into a valid AgentConfig
- *   4. Runtime detection works
- *   5. Compatibility checks work
+ *   4. getLuminorByClaw works for all 8
+ *   5. Runtime detection works
+ *   6. Compatibility checks work for all 8
+ *   7. Specific assertions for extended Claws (editor, community, pr)
  *
  * Run with: node dist/agents/compose.test.js
  */
@@ -40,14 +42,20 @@ async function main(): Promise<void> {
   check('Kernel mentions TASTE 5D', kernel.includes('TASTE 5D'));
   check('Kernel references Luminors', kernel.includes('Shinkami') && kernel.includes('Lyria'));
 
-  console.log('\n=== Publishing Luminors ===');
+  console.log('\n=== Publishing Luminors (all 8) ===');
   const clawNames: ClawName[] = [
     'media-claw',
     'forge-claw',
     'herald-claw',
     'scout-claw',
     'scribe-claw',
+    'editor-claw',
+    'community-claw',
+    'pr-claw',
   ];
+
+  check('Exactly 8 Claws registered', Object.keys(PUBLISHING_LUMINORS).length === 8,
+    `got ${Object.keys(PUBLISHING_LUMINORS).length}`);
 
   for (const clawName of clawNames) {
     const luminor = PUBLISHING_LUMINORS[clawName];
@@ -58,8 +66,15 @@ async function main(): Promise<void> {
     check(`${clawName} has inputs`, luminor.inputs.length > 0);
     check(`${clawName} has outputs`, luminor.outputs.length > 0);
     check(`${clawName} has compatible runtimes`, luminor.compatibleRuntimes.length > 0);
-    check(`${clawName} can run locally`, luminor.compatibleRuntimes.includes('local-claude-code'));
+    check(`${clawName} has requiredMcp`, luminor.requiredMcp !== undefined);
     check(`${clawName} has refusals`, luminor.refusals.length > 0);
+    check(
+      `${clawName} has voice`,
+      luminor.voice !== undefined &&
+        typeof luminor.voice.precision === 'number' &&
+        typeof luminor.voice.mythicCompression === 'number' &&
+        typeof luminor.voice.dryHumor === 'number',
+    );
     check(
       `${clawName} voice sums ~100`,
       Math.abs((luminor.voice.precision + luminor.voice.mythicCompression + luminor.voice.dryHumor) - 100) <= 2,
@@ -72,10 +87,27 @@ async function main(): Promise<void> {
   check('getLuminorByGuardian(Lyria) returns Luminor', lyria !== undefined);
   check('Lyria channels media-claw', lyria?.clawName === 'media-claw');
 
-  const byClaw = getLuminorByClaw('scribe-claw');
-  check('getLuminorByClaw(scribe-claw) returns Shinkami', byClaw.name === 'Shinkami');
+  console.log('\n=== getLuminorByClaw for all 8 ===');
+  const expectedNames: Record<ClawName, string> = {
+    'media-claw': 'Lyria',
+    'forge-claw': 'Ismael',
+    'herald-claw': 'Alera',
+    'scout-claw': 'Lyssandria',
+    'scribe-claw': 'Shinkami',
+    'editor-claw': 'Aiyami',
+    'community-claw': 'Maylinn',
+    'pr-claw': 'Elara',
+  };
+  for (const clawName of clawNames) {
+    const luminor = getLuminorByClaw(clawName);
+    check(
+      `getLuminorByClaw(${clawName}) returns ${expectedNames[clawName]}`,
+      luminor.name === expectedNames[clawName],
+      `got ${luminor.name}`,
+    );
+  }
 
-  console.log('\n=== Agent Config Composition ===');
+  console.log('\n=== Agent Config Composition (all 8) ===');
   for (const clawName of clawNames) {
     const luminor = PUBLISHING_LUMINORS[clawName];
     const config = buildAgentConfigFromLuminor(luminor, kernel);
@@ -96,19 +128,49 @@ async function main(): Promise<void> {
   const runtime = detectRuntime();
   check(`Current runtime detected: ${runtime}`, runtime !== undefined);
 
-  console.log('\n=== Compatibility Check ===');
+  console.log('\n=== Compatibility Check (all 8 on local-claude-code) ===');
   for (const clawName of clawNames) {
     const luminor = PUBLISHING_LUMINORS[clawName];
     const compatible = canRunHere(luminor, 'local-claude-code');
     check(`${clawName} can run on local-claude-code`, compatible);
   }
 
+  console.log('\n=== Extended Claw Specific Assertions ===');
+
+  // editor-claw uses claude-opus-4-6 (NOT sonnet)
+  const editor = PUBLISHING_LUMINORS['editor-claw'];
+  check(
+    'editor-claw uses claude-opus-4-6',
+    editor.defaultModel === 'claude-opus-4-6',
+    `got ${editor.defaultModel}`,
+  );
+  check(
+    'editor-claw does NOT use sonnet',
+    !editor.defaultModel.includes('sonnet'),
+  );
+
+  // community-claw has 'openclaw' in its compatible runtimes
+  const community = PUBLISHING_LUMINORS['community-claw'];
+  check(
+    'community-claw has openclaw runtime',
+    community.compatibleRuntimes.includes('openclaw'),
+    `runtimes: ${community.compatibleRuntimes.join(', ')}`,
+  );
+
+  // pr-claw has 'Starweave' as its gate
+  const pr = PUBLISHING_LUMINORS['pr-claw'];
+  check(
+    'pr-claw gate is Starweave',
+    pr.gate === 'Starweave',
+    `got ${pr.gate}`,
+  );
+
   console.log('\n' + '='.repeat(40));
   if (failures === 0) {
-    console.log('✅ ALL TESTS PASSED');
+    console.log('ALL TESTS PASSED');
     process.exit(0);
   } else {
-    console.error(`❌ ${failures} TEST(S) FAILED`);
+    console.error(`${failures} TEST(S) FAILED`);
     process.exit(1);
   }
 }
