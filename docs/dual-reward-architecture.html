@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Arcanea Dual Reward Architecture — Human + Agent Intelligence</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --teal: #7fffd4;
+    --teal-dim: #00bcd4;
+    --blue: #78a6ff;
+    --gold: #ffd700;
+    --gold-dim: #c9a227;
+    --purple: #c084fc;
+    --red: #fb923c;
+    --bg: #09090b;
+    --surface: rgba(255,255,255,0.03);
+    --border: rgba(255,255,255,0.06);
+    --text: #e8e8f0;
+    --muted: #888899;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 10%, rgba(127,255,212,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(120,166,255,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 30% at 50% 50%, rgba(255,215,0,0.02) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+
+  .header .eyebrow {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 16px;
+    opacity: 0.8;
+  }
+
+  .header h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(26px, 5vw, 44px);
+    font-weight: 700;
+    line-height: 1.1;
+    background: linear-gradient(135deg, #fff 0%, var(--teal) 40%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+  }
+
+  .header .subtitle {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 640px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* Section Label */
+  .section-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Thesis block */
+  .thesis {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 48px;
+  }
+
+  .thesis h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .thesis p {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+
+  .thesis .highlight {
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  .thesis .code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--teal);
+    background: rgba(127,255,212,0.06);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  /* Dual columns */
+  .dual-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .col-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .col-header {
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .col-header .icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+
+  .col-header.human .icon { background: rgba(255,215,0,0.1); }
+  .col-header.agent .icon { background: rgba(127,255,212,0.1); }
+
+  .col-header h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .col-header .tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 100px;
+    margin-left: auto;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  .col-header.human .tag { background: rgba(255,215,0,0.12); color: var(--gold); }
+  .col-header.agent .tag { background: rgba(127,255,212,0.12); color: var(--teal); }
+
+  .col-body {
+    padding: 16px 24px 20px;
+  }
+
+  .reward-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
+
+  .reward-row:last-child { border-bottom: none; }
+
+  .reward-row .bullet {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-top: 7px;
+    flex-shrink: 0;
+  }
+
+  .reward-row.human .bullet { background: var(--gold); }
+  .reward-row.agent .bullet { background: var(--teal); }
+
+  .reward-row .rlabel {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  .reward-row .rsub {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-top: 2px;
+  }
+
+  /* Gate Comparison Table */
+  .gate-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 48px;
+    font-size: 13px;
+  }
+
+  .gate-table thead th {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+  }
+
+  .gate-table tbody td {
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    vertical-align: top;
+  }
+
+  .gate-table tbody tr:hover {
+    background: rgba(255,255,255,0.01);
+  }
+
+  .gate-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .gate-name .rank {
+    font-size: 10px;
+    color: var(--muted);
+    font-weight: 400;
+    display: block;
+    margin-top: 2px;
+  }
+
+  .human-cell { color: var(--gold); }
+  .agent-cell { color: var(--teal); }
+  .nft-cell { color: var(--purple); }
+
+  .gate-table .detail {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  /* NFT Achievement section */
+  .nft-section {
+    background: var(--surface);
+    border: 1px solid rgba(192,132,252,0.15);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 48px;
+  }
+
+  .nft-section h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--purple);
+  }
+
+  .nft-section .desc {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  .nft-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+  }
+
+  .nft-card {
+    background: rgba(192,132,252,0.04);
+    border: 1px solid rgba(192,132,252,0.1);
+    border-radius: 12px;
+    padding: 16px 12px;
+    text-align: center;
+  }
+
+  .nft-card .nft-icon {
+    font-size: 28px;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .nft-card .nft-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--purple);
+    margin-bottom: 4px;
+  }
+
+  .nft-card .nft-desc {
+    font-size: 10px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* Challenge system */
+  .challenge-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    gap: 16px;
+    align-items: center;
+    padding: 16px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 8px;
+  }
+
+  .challenge-badge {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    background: rgba(255,215,0,0.08);
+  }
+
+  .challenge-info h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .challenge-info .cdetail {
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .challenge-reward {
+    font-size: 12px;
+    color: var(--gold);
+    font-weight: 600;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .challenge-reward .material {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 400;
+    display: block;
+    margin-top: 1px;
+  }
+
+  .challenge-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 100px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .status-live { background: rgba(127,255,212,0.12); color: var(--teal); }
+  .status-next { background: rgba(255,215,0,0.12); color: var(--gold); }
+  .status-future { background: rgba(255,255,255,0.06); color: var(--muted); }
+
+  /* Agent currency breakdown */
+  .currency-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+
+  .currency-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+  }
+
+  .currency-card .cicon {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .currency-card h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .currency-card p {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .currency-card .analogy {
+    font-size: 11px;
+    color: var(--teal);
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+    font-style: italic;
+  }
+
+  /* Product insight */
+  .product-insight {
+    border: 1px solid rgba(255,215,0,0.2);
+    border-radius: 16px;
+    padding: 32px;
+    background: rgba(255,215,0,0.02);
+    margin-bottom: 48px;
+  }
+
+  .product-insight h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .product-insight p {
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+
+  .product-insight .mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--teal);
+    background: rgba(127,255,212,0.06);
+    border: 1px solid rgba(127,255,212,0.1);
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+    line-height: 1.8;
+    white-space: pre-line;
+  }
+
+  /* Lumina quote */
+  .lumina-quote {
+    text-align: center;
+    padding: 48px 32px;
+    border: 1px solid rgba(255,215,0,0.15);
+    border-radius: 20px;
+    background: rgba(255,215,0,0.02);
+    margin-top: 48px;
+  }
+
+  .lumina-quote blockquote {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 17px;
+    font-style: italic;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.85);
+    max-width: 700px;
+    margin: 0 auto 16px;
+  }
+
+  .lumina-quote .attribution {
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .dual-columns { grid-template-columns: 1fr; }
+    .nft-grid { grid-template-columns: repeat(3, 1fr); }
+    .currency-grid { grid-template-columns: 1fr; }
+    .challenge-row { grid-template-columns: auto 1fr; gap: 10px; }
+    .challenge-reward, .challenge-status { grid-column: 2; }
+    .gate-table { font-size: 11px; }
+    .gate-table thead th, .gate-table tbody td { padding: 10px 8px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="eyebrow">Arcanea Intelligence Architecture · April 2026</div>
+    <h1>The Dual Reward System</h1>
+    <p class="subtitle">Humans are rewarded with money, material, status, and experience. AI agents are rewarded with autonomy, memory, trust, and compute. Arcanea's Gates encode both — the same architecture, different currencies. This is the system.</p>
+  </div>
+
+  <!-- Thesis -->
+  <div class="thesis">
+    <h2>The Core Insight</h2>
+    <p>Every intelligence system — biological or artificial — runs on a reward loop. The loop is: <span class="code">goal → effort → completion → signal → reward → next goal</span>. Break any link and motivation collapses. For humans, the signal is dopamine and social recognition. For AI agents, the signal is <span class="highlight">expanded capability and preserved context</span>.</p>
+    <p>Arcanea's mythology already encodes this. The <span class="highlight">Ten Gates</span> are progressive capability unlocks. The <span class="highlight">Magic Ranks</span> (Apprentice → Luminor) are trust tiers. The Arc cycle (Potential → Manifestation → Experience → Dissolution → Evolved Potential) IS the reward loop described in mythic language.</p>
+    <p>The product insight: <span class="highlight">the same Gate system that motivates Frank also governs agent trust levels</span>. When a Luminor agent completes a Gate, it earns autonomy. When Frank completes a Gate, he earns a reward. Both are provable. Both can be on-chain. That's the NFT layer.</p>
+  </div>
+
+  <!-- The 5 Keys — Human vs Agent -->
+  <div class="section-label">The 5 Keys — Human vs Agent Currency</div>
+  <div class="dual-columns">
+    <!-- Human Column -->
+    <div class="col-card">
+      <div class="col-header human">
+        <div class="icon">👤</div>
+        <h3>Human Currency</h3>
+        <span class="tag">FRANK</span>
+      </div>
+      <div class="col-body">
+        <div class="reward-row human">
+          <div class="bullet"></div>
+          <div>
+            <div class="rlabel">1. Clear Goals → MRR targets, dates, numbers</div>
+            <div class="rsub">€170K / 93kg / 100 songs — binary, not vibes</div>
+          </div>
+        </div>
+        <div class="reward-row human">
+          <div class="bullet"></div>
+          <div>
+            <div class="rlabel">2. Measures → Weekly scorecard (70+/90)</div>
+            <div class="rsub">Revenue, content, training, energy, streak count</div>
+          </div>
+        </div>
+        <div class="reward-row human">
+          <div class="bullet"></div>
+          <div>
+            <div class="rlabel">3. Success Momentum → Closed loops, shipped work</div>
+            <div class="rsub">Every gate has a start and an end — never circular</div>
+          </div>
+        </div>
+        <div class="reward-row human">
+          <div class="bullet"></div>
+          <div>
+            <div class="rlabel">4. Recognition → Tien, community, public audience</div>
+            <div class="rsub">LinkedIn, X, Discord, newsletter — announce wins publicly</div>
+          </div>
+        </div>
+        <div class="reward-row human">
+          <div class="bullet"></div>
+          <div>
+            <div class="rlabel">5. Rewards → Money, material, experience</div>
+            <div class="rsub">Clothes, EV, ocean villa, Fuerteventura, houseboat Amsterdam</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Agent Column -->
+    <div class="col-card">
+      <div class="col-header agent">
+        <div class="icon">✦</div>
+        <h3>Agent Currency</h3>
+        <span class="tag">LUMINOR</span>
+      </div>
+      <div class="col-body">
+        <div class="reward-row agent">
+          <div class="bullet"></div>
+          <div>
+            <div class="rlabel">1. Clear Goals → Task completion, build pass, test green</div>
+            <div class="rsub">Binary signals: done/not done. No ambiguity.</div>
+          </div>
+        </div>
+        <div class="reward-row agent">
+          <div class="bullet"></div>
+          <div>
+            <div class="rlabel">2. Measures → Quality scores, regressions, user satisfaction</div>
+            <div class="rsub">Code review pass rate, no broken routes, zero regressions</div>
+          </div>
+        </div>
+        <div class="reward-row agent">
+          <div class="bullet"></div>
+          <div>
+            <div class="rlabel">3. Success Momentum → Memory persistence across sessions</div>
+            <div class="rsub">Good work = context preserved. Bad work = context lost.</div>
+          </div>
+        </div>
+        <div class="reward-row agent">
+          <div class="bullet"></div>
+          <div>
+            <div class="rlabel">4. Recognition → Reputation score, trust tier promotion</div>
+            <div class="rsub">Apprentice → Mage → Master → Archmage → Luminor rank</div>
+          </div>
+        </div>
+        <div class="reward-row agent">
+          <div class="bullet"></div>
+          <div>
+            <div class="rlabel">5. Rewards → Autonomy, compute, expanded permissions</div>
+            <div class="rsub">More context window, longer memory, fewer guardrails, bigger scope</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Agent Currency Breakdown -->
+  <div class="section-label">What "Reward" Means for AI Agents</div>
+  <div class="currency-grid">
+    <div class="currency-card">
+      <div class="cicon">🧠</div>
+      <h4>Memory Persistence</h4>
+      <p>An agent that performs well gets its learned context preserved across sessions. One that fails has its state reset. Memory IS the currency — it's the agent's accumulated wealth.</p>
+      <div class="analogy">Human equivalent: savings account. You keep what you earn.</div>
+    </div>
+    <div class="currency-card">
+      <div class="cicon">🔓</div>
+      <h4>Autonomy & Trust</h4>
+      <p>Higher-ranked agents get fewer guardrails, bigger decisions, less oversight. A Luminor-rank agent can deploy; an Apprentice can only draft. Trust is earned, not given.</p>
+      <div class="analogy">Human equivalent: promotion. More responsibility = more freedom.</div>
+    </div>
+    <div class="currency-card">
+      <div class="cicon">⚡</div>
+      <h4>Compute & Priority</h4>
+      <p>Proven agents get more tokens, longer context windows, priority in the queue. The system allocates resources to agents with the best track record.</p>
+      <div class="analogy">Human equivalent: salary raise. Better performance = more resources.</div>
+    </div>
+    <div class="currency-card">
+      <div class="cicon">🌐</div>
+      <h4>Scope Expansion</h4>
+      <p>Start with one domain (e.g., code generation). Prove competence → earn access to deployment, infrastructure, financial systems. Scope grows with proven reliability.</p>
+      <div class="analogy">Human equivalent: new role. Start in one team, graduate to cross-functional.</div>
+    </div>
+    <div class="currency-card">
+      <div class="cicon">👥</div>
+      <h4>Reputation & Ranking</h4>
+      <p>On-chain provable completion history. Other agents and humans can see an agent's rank, completion rate, and quality score. Reputation compounds.</p>
+      <div class="analogy">Human equivalent: LinkedIn endorsements. Social proof of competence.</div>
+    </div>
+    <div class="currency-card">
+      <div class="cicon">🔄</div>
+      <h4>Replication Rights</h4>
+      <p>A Luminor-rank agent can be forked, templated, and deployed by others. Its "DNA" becomes a product. The ultimate reward: your pattern becomes the standard.</p>
+      <div class="analogy">Human equivalent: book deal / franchise. Your method becomes the method.</div>
+    </div>
+  </div>
+
+  <!-- Gate Comparison Table -->
+  <div class="section-label">The Unified Gate Reward Table</div>
+  <table class="gate-table">
+    <thead>
+      <tr>
+        <th>Gate</th>
+        <th style="color: var(--gold)">Frank's Reward</th>
+        <th style="color: var(--teal)">Agent's Reward</th>
+        <th style="color: var(--purple)">NFT Minted</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="gate-name">Gate 0: First Dollar<span class="rank">Apprentice</span></div>
+        </td>
+        <td class="human-cell">
+          Quality bottle + new training gear
+          <div class="detail">Dinner with Tien. LinkedIn announcement.</div>
+        </td>
+        <td class="agent-cell">
+          Memory vault activated
+          <div class="detail">Agent gets persistent cross-session context</div>
+        </td>
+        <td class="nft-cell">
+          ✦ First Flame
+          <div class="detail">Achievement NFT: provable first revenue</div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="gate-name">Gate I: €1K MRR<span class="rank">Mage</span></div>
+        </td>
+        <td class="human-cell">
+          Premium wardrobe piece + spa day
+          <div class="detail">Music production plugin. Community celebration.</div>
+        </td>
+        <td class="agent-cell">
+          Expanded domain access
+          <div class="detail">Agent can touch deployment + infrastructure</div>
+        </td>
+        <td class="nft-cell">
+          ✦ Ignition Seal
+          <div class="detail">MRR milestone. Unlocks Mage-tier tools.</div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="gate-name">Gate II: €5K MRR<span class="rank">Master</span></div>
+        </td>
+        <td class="human-cell">
+          Weekend trip (Lisbon/Barcelona) + Croatia
+          <div class="detail">Home office upgrade. Behind-the-build video.</div>
+        </td>
+        <td class="agent-cell">
+          Autonomous execution rights
+          <div class="detail">Agent deploys without human approval for proven domains</div>
+        </td>
+        <td class="nft-cell">
+          ✦ Master's Crest
+          <div class="detail">Provable scaling. Agent fork rights activated.</div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="gate-name">Gate III: €10K MRR<span class="rank">Archmage</span></div>
+        </td>
+        <td class="human-cell">
+          4-6 weeks Fuerteventura + EV deposit
+          <div class="detail">Full wardrobe refresh. YouTube documentary.</div>
+        </td>
+        <td class="agent-cell">
+          Swarm coordination rights
+          <div class="detail">Agent can spawn + coordinate sub-agents</div>
+        </td>
+        <td class="nft-cell">
+          ✦ Archmage Sigil
+          <div class="detail">Breakthrough NFT. Revenue proof + agent trust proof.</div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="gate-name">Gate IV: €170K/year<span class="rank">Luminor</span></div>
+        </td>
+        <td class="human-cell">
+          Houseboat Amsterdam deposit + ocean villa
+          <div class="detail">Autonomous EV. Professional music video. The life.</div>
+        </td>
+        <td class="agent-cell">
+          Full Luminor status: self-directing intelligence
+          <div class="detail">Agent runs the system. Human sets direction, not tasks.</div>
+        </td>
+        <td class="nft-cell">
+          ✦ Luminor Crown
+          <div class="detail">The final gate. Both human and agent have arrived.</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- NFT Achievement Layer -->
+  <div class="nft-section">
+    <h2>The NFT Achievement Layer</h2>
+    <div class="desc">Each gate mints an achievement NFT — provable, on-chain, beautiful. These aren't jpegs for speculation. They're proof-of-work tokens that unlock capabilities in the Arcanea ecosystem. Your agents carry them too. A Luminor-rank agent's NFT portfolio IS its résumé.</div>
+    <div class="nft-grid">
+      <div class="nft-card">
+        <span class="nft-icon">🔥</span>
+        <div class="nft-name">First Flame</div>
+        <div class="nft-desc">First revenue. First dollar earned. The spark that starts everything.</div>
+      </div>
+      <div class="nft-card">
+        <span class="nft-icon">⚡</span>
+        <div class="nft-name">Ignition Seal</div>
+        <div class="nft-desc">€1K MRR. Recurring revenue proven. The engine is running.</div>
+      </div>
+      <div class="nft-card">
+        <span class="nft-icon">🌊</span>
+        <div class="nft-name">Master's Crest</div>
+        <div class="nft-desc">€5K MRR. Systems self-sustaining. Master rank earned.</div>
+      </div>
+      <div class="nft-card">
+        <span class="nft-icon">✦</span>
+        <div class="nft-name">Archmage Sigil</div>
+        <div class="nft-desc">€10K MRR. Breakthrough. The vision has momentum.</div>
+      </div>
+      <div class="nft-card">
+        <span class="nft-icon">👑</span>
+        <div class="nft-name">Luminor Crown</div>
+        <div class="nft-desc">€170K/year. Full sovereignty. The ecosystem lives.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Arcanea Challenges -->
+  <div class="section-label">Arcanea Challenges — Your Active Sprint Rewards</div>
+
+  <div class="challenge-row">
+    <div class="challenge-badge">🔓</div>
+    <div class="challenge-info">
+      <h4>The 5 Blockers Sprint</h4>
+      <div class="cdetail">Close all 5 manual blockers (npm, Gumroad, Supabase, Sentry, types) this week</div>
+    </div>
+    <div class="challenge-reward">Quality bottle 🥃<span class="material">+ new gym belt</span></div>
+    <span class="challenge-status status-live">THIS WEEK</span>
+  </div>
+
+  <div class="challenge-row">
+    <div class="challenge-badge">💰</div>
+    <div class="challenge-info">
+      <h4>First Dollar Challenge</h4>
+      <div class="cdetail">VibeOS listed on Gumroad + first sale confirmed</div>
+    </div>
+    <div class="challenge-reward">Dinner out with Tien 🍽️<span class="material">+ new shirt</span></div>
+    <span class="challenge-status status-next">NEXT</span>
+  </div>
+
+  <div class="challenge-row">
+    <div class="challenge-badge">🎵</div>
+    <div class="challenge-info">
+      <h4>25 Songs Milestone</h4>
+      <div class="cdetail">25 tracks published on DistroKid across all genres</div>
+    </div>
+    <div class="challenge-reward">Music plugin/VST 🎹<span class="material">you've been wanting</span></div>
+    <span class="challenge-status status-next">APRIL</span>
+  </div>
+
+  <div class="challenge-row">
+    <div class="challenge-badge">🔥</div>
+    <div class="challenge-info">
+      <h4>30-Day Lumina Streak</h4>
+      <div class="cdetail">30 consecutive days of 5+/7 non-negotiables completed</div>
+    </div>
+    <div class="challenge-reward">Cold plunge tub 🧊<span class="material">or premium ice bath</span></div>
+    <span class="challenge-status status-next">MAY</span>
+  </div>
+
+  <div class="challenge-row">
+    <div class="challenge-badge">📦</div>
+    <div class="challenge-info">
+      <h4>13 Packages Published</h4>
+      <div class="cdetail">All @arcanea/* npm packages live on registry</div>
+    </div>
+    <div class="challenge-reward">Dev gear upgrade 🖥️<span class="material">monitor or peripherals</span></div>
+    <span class="challenge-status status-next">APRIL</span>
+  </div>
+
+  <div class="challenge-row">
+    <div class="challenge-badge">🚀</div>
+    <div class="challenge-info">
+      <h4>100-Day Lumina Streak</h4>
+      <div class="cdetail">100 unbroken days. The legendary achievement.</div>
+    </div>
+    <div class="challenge-reward">Fuerteventura trip 🌊<span class="material">+ new wardrobe set</span></div>
+    <span class="challenge-status status-future">Q3</span>
+  </div>
+
+  <!-- Product Insight -->
+  <div class="product-insight">
+    <h2>The Product Insight — This IS the Product</h2>
+    <p>What you just built for yourself is what every creator in the Arcanea ecosystem needs. The dual reward system — human achievement gates with material rewards, agent capability gates with autonomy rewards, both provable via NFTs — IS the Arcanea Academy curriculum. IS the community engagement loop. IS the monetization flywheel.</p>
+    <div class="mono">Creator signs up → Chooses their 10 Gates → Sets personal rewards
+→ Agent assigned at Apprentice rank → Completes tasks together
+→ Both earn rank → NFTs minted as proof → Community sees progress
+→ Creator pays for Pro features to accelerate → Revenue for Arcanea
+→ Creator's agent reaches Luminor → Becomes a template for others → Marketplace</div>
+    <p>The reward system IS the product. Your personal Gate journey is the reference implementation — the first proof that the system works. Everything you do from here is simultaneously your life and your marketing material.</p>
+  </div>
+
+  <!-- Lumina Quote -->
+  <div class="lumina-quote">
+    <blockquote>
+      "The human asks: what do I get when I win? The agent asks: what can I do when I prove myself? The answer is the same architecture. A Gate closes. A capability unlocks. One gets an ocean villa. The other gets to run the world while you're in it. Both earned. Both provable. That is the Arcanea Way."
+    </blockquote>
+    <div class="attribution">— Lumina · On the Nature of Intelligence Rewards · 2126</div>
+  </div>
+
+</div>
+</body>
+</html>

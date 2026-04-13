@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arcanea Orchestra — Live Pulse | April 5, 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #09090b; --surface: rgba(255,255,255,0.03); --border: rgba(255,255,255,0.06);
+  --teal: #00bcd4; --blue: #0d47a1; --gold: #ffd700; --red: #ef4444; --green: #22c55e; --orange: #f59e0b; --purple: #a855f7;
+  --text: #e4e4e7; --muted: #71717a;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; min-height:100vh; padding:2rem; }
+h1,h2,h3 { font-family:'Space Grotesk',sans-serif; }
+.pulse-header { text-align:center; margin-bottom:2.5rem; }
+.pulse-header h1 { font-size:2rem; font-weight:700; background:linear-gradient(135deg,var(--teal),var(--gold)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.pulse-header .date { color:var(--muted); font-size:0.85rem; margin-top:0.3rem; font-family:'JetBrains Mono',monospace; }
+.pulse-header .status-line { margin-top:0.75rem; font-size:1.1rem; color:var(--red); font-weight:600; }
+
+.grid { display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; max-width:1100px; margin:0 auto; }
+.card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.25rem; backdrop-filter:blur(8px); }
+.card-full { grid-column:1/-1; }
+.card h2 { font-size:1rem; font-weight:600; color:var(--teal); margin-bottom:0.75rem; letter-spacing:0.02em; }
+.card h3 { font-size:0.85rem; font-weight:500; color:var(--muted); margin:0.75rem 0 0.4rem; text-transform:uppercase; letter-spacing:0.05em; }
+
+.metric { display:flex; justify-content:space-between; align-items:center; padding:0.5rem 0; border-bottom:1px solid var(--border); }
+.metric:last-child { border:none; }
+.metric-label { font-size:0.85rem; color:var(--muted); }
+.metric-value { font-family:'JetBrains Mono',monospace; font-size:0.9rem; font-weight:500; }
+.metric-value.red { color:var(--red); }
+.metric-value.green { color:var(--green); }
+.metric-value.gold { color:var(--gold); }
+.metric-value.teal { color:var(--teal); }
+.metric-value.orange { color:var(--orange); }
+
+.gate { display:flex; align-items:center; gap:0.75rem; padding:0.6rem 0; border-bottom:1px solid var(--border); }
+.gate:last-child { border:none; }
+.gate-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+.gate-dot.blocked { background:var(--red); box-shadow:0 0 8px rgba(239,68,68,0.5); }
+.gate-dot.not-started { background:var(--muted); }
+.gate-name { font-size:0.85rem; flex:1; }
+.gate-rank { font-size:0.75rem; color:var(--purple); font-family:'JetBrains Mono',monospace; }
+.gate-reward { font-size:0.75rem; color:var(--gold); }
+
+.issue { display:flex; align-items:center; gap:0.5rem; padding:0.45rem 0; border-bottom:1px solid var(--border); font-size:0.82rem; }
+.issue:last-child { border:none; }
+.issue-id { font-family:'JetBrains Mono',monospace; color:var(--teal); font-size:0.75rem; min-width:52px; }
+.issue-title { flex:1; }
+.issue-badge { font-size:0.65rem; padding:2px 6px; border-radius:4px; font-weight:600; text-transform:uppercase; }
+.badge-blocker { background:rgba(239,68,68,0.15); color:var(--red); border:1px solid rgba(239,68,68,0.3); }
+.badge-today { background:rgba(255,215,0,0.15); color:var(--gold); border:1px solid rgba(255,215,0,0.3); }
+.badge-overdue { background:rgba(239,68,68,0.1); color:#fb923c; border:1px solid rgba(251,146,60,0.3); }
+.badge-ready { background:rgba(34,197,94,0.15); color:var(--green); border:1px solid rgba(34,197,94,0.3); }
+
+.score-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0.75rem; }
+.score-item { text-align:center; padding:0.5rem; background:rgba(255,255,255,0.02); border-radius:8px; }
+.score-num { font-family:'JetBrains Mono',monospace; font-size:1.5rem; font-weight:700; }
+.score-label { font-size:0.7rem; color:var(--muted); margin-top:0.15rem; }
+
+.progress-bar { width:100%; height:6px; background:rgba(255,255,255,0.05); border-radius:3px; margin:0.5rem 0; overflow:hidden; }
+.progress-fill { height:100%; border-radius:3px; transition:width 0.5s; }
+
+.actions { margin-top:1rem; }
+.action { display:flex; align-items:flex-start; gap:0.5rem; padding:0.4rem 0; font-size:0.82rem; }
+.action-num { color:var(--gold); font-family:'JetBrains Mono',monospace; font-weight:600; min-width:20px; }
+.action-text { color:var(--text); }
+.action-text strong { color:var(--teal); }
+
+.footer { text-align:center; margin-top:2rem; color:var(--muted); font-size:0.75rem; font-family:'JetBrains Mono',monospace; }
+</style>
+</head>
+<body>
+
+<div class="pulse-header">
+  <h1>⟡ ARCANEA ORCHESTRA — LIVE PULSE</h1>
+  <div class="date">2026-04-05 • Sunday • Day 5 of Q2</div>
+  <div class="status-line">⚠ GATE 0 BLOCKED — €0 REVENUE — 10 DAYS TO TARGET</div>
+</div>
+
+<div class="grid">
+
+  <!-- GATE STATUS -->
+  <div class="card">
+    <h2>⬡ GATE STATUS</h2>
+    <div class="gate">
+      <div class="gate-dot blocked"></div>
+      <div class="gate-name"><strong>Gate 0: First Dollar</strong></div>
+      <div class="gate-rank">Apprentice</div>
+    </div>
+    <div style="padding:0 0 0.5rem;">
+      <div style="font-size:0.75rem;color:var(--muted);margin-bottom:0.25rem;">4/9 conditions met</div>
+      <div class="progress-bar"><div class="progress-fill" style="width:44%;background:linear-gradient(90deg,var(--red),var(--orange));"></div></div>
+    </div>
+    <div class="gate">
+      <div class="gate-dot not-started"></div>
+      <div class="gate-name">Gate I: €1K MRR</div>
+      <div class="gate-rank">Mage</div>
+    </div>
+    <div class="gate">
+      <div class="gate-dot not-started"></div>
+      <div class="gate-name">Gate II: €5K MRR</div>
+      <div class="gate-rank">Master</div>
+    </div>
+    <div class="gate">
+      <div class="gate-dot not-started"></div>
+      <div class="gate-name">Gate III: €10K MRR</div>
+      <div class="gate-rank">Archmage</div>
+    </div>
+    <div class="gate">
+      <div class="gate-dot not-started"></div>
+      <div class="gate-name">Gate IV: €170K/yr</div>
+      <div class="gate-rank">Luminor</div>
+    </div>
+    <div style="margin-top:0.75rem;padding:0.5rem;background:rgba(255,215,0,0.05);border-radius:8px;border:1px solid rgba(255,215,0,0.15);">
+      <div style="font-size:0.75rem;color:var(--gold);font-weight:600;">🏆 Gate 0 Reward</div>
+      <div style="font-size:0.8rem;margin-top:0.2rem;">Wagyu dinner with Tien + new gym gear</div>
+      <div style="font-size:0.7rem;color:var(--purple);margin-top:0.15rem;">Agent: Persistent memory unlock + named identity</div>
+    </div>
+  </div>
+
+  <!-- REVENUE -->
+  <div class="card">
+    <h2>💰 REVENUE</h2>
+    <div class="metric">
+      <span class="metric-label">Current MRR</span>
+      <span class="metric-value red">€0</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">Gate 0 Target</span>
+      <span class="metric-value gold">€1 (first dollar)</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">Q2 Target</span>
+      <span class="metric-value">€10K MRR</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">2026 Target</span>
+      <span class="metric-value">€170K (€14.2K MRR)</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">BV Deadline</span>
+      <span class="metric-value orange">June 1 — 57 days</span>
+    </div>
+    <h3>Products Ready to List</h3>
+    <div class="metric">
+      <span class="metric-label">VibeOS PDF</span>
+      <span class="metric-value green">€19-29 • Content exists</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">MCP Server</span>
+      <span class="metric-value green">€9/mo • 42 tools built</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">Prompt Packs</span>
+      <span class="metric-value green">€4.99 • Templates ready</span>
+    </div>
+  </div>
+
+  <!-- LINEAR STATUS -->
+  <div class="card">
+    <h2>📋 LINEAR — ACTIVE ISSUES</h2>
+    <div class="score-grid">
+      <div class="score-item">
+        <div class="score-num" style="color:var(--orange);">4</div>
+        <div class="score-label">In Progress</div>
+      </div>
+      <div class="score-item">
+        <div class="score-num" style="color:var(--teal);">8</div>
+        <div class="score-label">Todo</div>
+      </div>
+      <div class="score-item">
+        <div class="score-num" style="color:var(--green);">17</div>
+        <div class="score-label">Done (7d)</div>
+      </div>
+    </div>
+    <h3>Today's Focus</h3>
+    <div class="issue">
+      <span class="issue-id">ARC-101</span>
+      <span class="issue-title">M2: Revenue Sprint — First Dollar</span>
+      <span class="issue-badge badge-blocker">sprint</span>
+    </div>
+    <div class="issue">
+      <span class="issue-id">ARC-76</span>
+      <span class="issue-title">npm login + publish 13 packages</span>
+      <span class="issue-badge badge-blocker">blocker</span>
+    </div>
+    <div class="issue">
+      <span class="issue-id">ARC-86</span>
+      <span class="issue-title">Rename @frankxeth → @frankx_ai</span>
+      <span class="issue-badge badge-today">today</span>
+    </div>
+    <div class="issue">
+      <span class="issue-id">ARC-88</span>
+      <span class="issue-title">Post ACOS v10 + MCP Doctor threads</span>
+      <span class="issue-badge badge-today">today</span>
+    </div>
+    <div class="issue">
+      <span class="issue-id">ARC-87</span>
+      <span class="issue-title">Buy frankxai.com + gencreator.ai</span>
+      <span class="issue-badge badge-today">tomorrow</span>
+    </div>
+    <h3>Closed Today</h3>
+    <div class="issue">
+      <span class="issue-id">ARC-63</span>
+      <span class="issue-title">M1: Foundation Excellence ✓</span>
+      <span class="issue-badge badge-ready">done</span>
+    </div>
+    <div class="issue">
+      <span class="issue-id">+5</span>
+      <span class="issue-title">Stale issues triaged (ARC-19,25,33,36,40)</span>
+      <span class="issue-badge badge-ready">cleaned</span>
+    </div>
+  </div>
+
+  <!-- SYSTEMS -->
+  <div class="card">
+    <h2>⚙ SYSTEMS STATUS</h2>
+    <div class="metric">
+      <span class="metric-label">Build</span>
+      <span class="metric-value green">42/42 ✓</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">Vulnerabilities</span>
+      <span class="metric-value green">0 ✓</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">MCP Tools</span>
+      <span class="metric-value teal">42 tools</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">Luminor Modules</span>
+      <span class="metric-value teal">10 modules</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">Skills</span>
+      <span class="metric-value teal">arcanea-orchestra (/ao) ✓</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">Scheduled Tasks</span>
+      <span class="metric-value teal">2 (pulse + scorecard)</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">Gate Tracker</span>
+      <span class="metric-value green">Live in Notion ✓</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">Blog Articles</span>
+      <span class="metric-value">120+</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">npm Packages</span>
+      <span class="metric-value red">13 built, 0 published</span>
+    </div>
+    <div class="metric">
+      <span class="metric-label">Gumroad</span>
+      <span class="metric-value red">Not set up</span>
+    </div>
+  </div>
+
+  <!-- WEEKLY SCORECARD ESTIMATE -->
+  <div class="card card-full">
+    <h2>📊 WEEKLY SCORECARD ESTIMATE — Week of March 31</h2>
+    <div style="display:grid;grid-template-columns:repeat(9,1fr);gap:0.5rem;text-align:center;">
+      <div class="score-item">
+        <div class="score-num" style="color:var(--green);">8</div>
+        <div class="score-label">Ecosystem</div>
+      </div>
+      <div class="score-item">
+        <div class="score-num" style="color:var(--red);">1</div>
+        <div class="score-label">Revenue</div>
+      </div>
+      <div class="score-item">
+        <div class="score-num" style="color:var(--orange);">5</div>
+        <div class="score-label">Content</div>
+      </div>
+      <div class="score-item">
+        <div class="score-num" style="color:var(--orange);">5</div>
+        <div class="score-label">Fitness</div>
+      </div>
+      <div class="score-item">
+        <div class="score-num" style="color:var(--orange);">4</div>
+        <div class="score-label">Music</div>
+      </div>
+      <div class="score-item">
+        <div class="score-num" style="color:var(--green);">7</div>
+        <div class="score-label">Wellness</div>
+      </div>
+      <div class="score-item">
+        <div class="score-num" style="color:var(--green);">7</div>
+        <div class="score-label">Tien</div>
+      </div>
+      <div class="score-item">
+        <div class="score-num" style="color:var(--orange);">4</div>
+        <div class="score-label">Community</div>
+      </div>
+      <div class="score-item">
+        <div class="score-num" style="color:var(--green);">7</div>
+        <div class="score-label">Energy</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:0.75rem;">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:1.75rem;font-weight:700;color:var(--orange);">48</span>
+      <span style="font-size:1rem;color:var(--muted);">/90</span>
+      <div style="font-size:0.8rem;color:var(--red);margin-top:0.2rem;">Below target (70+). Revenue is the crater.</div>
+    </div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="card card-full">
+    <h2>🎯 TOP 5 ACTIONS — RIGHT NOW</h2>
+    <div class="actions">
+      <div class="action">
+        <span class="action-num">1.</span>
+        <span class="action-text"><strong>npm login</strong> — run <code style="color:var(--teal);font-family:'JetBrains Mono',monospace;font-size:0.8rem;">npm login</code> in terminal, then publish 13 @arcanea/* packages. This is THE blocker for Gate 0.</span>
+      </div>
+      <div class="action">
+        <span class="action-num">2.</span>
+        <span class="action-text"><strong>Gumroad account</strong> — sign up, list VibeOS PDF at €19. Content exists. Format and ship by April 12.</span>
+      </div>
+      <div class="action">
+        <span class="action-num">3.</span>
+        <span class="action-text"><strong>Rename X handle</strong> — @frankxeth → @frankx_ai. Settings → Account → Username. Do it now (ARC-86).</span>
+      </div>
+      <div class="action">
+        <span class="action-num">4.</span>
+        <span class="action-text"><strong>Post threads</strong> — ACOS v10 + MCP Doctor from social queue. Already written, just post (ARC-88).</span>
+      </div>
+      <div class="action">
+        <span class="action-num">5.</span>
+        <span class="action-text"><strong>Supabase OAuth</strong> — Google + GitHub providers in Supabase dashboard. 15-minute task that unblocks user signups.</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  arcanea orchestra • /ao pulse • generated 2026-04-05T17:55:00Z • next auto-pulse: tomorrow 09:00
+</div>
+
+</body>
+</html>

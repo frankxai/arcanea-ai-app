@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Frank's Reward Architecture — The Arcanea Gates of Achievement</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --teal: #7fffd4;
+    --teal-dim: #00bcd4;
+    --blue: #78a6ff;
+    --gold: #ffd700;
+    --gold-dim: #c9a227;
+    --purple: #9b59b6;
+    --bg: #09090b;
+    --surface: rgba(255,255,255,0.03);
+    --border: rgba(255,255,255,0.06);
+    --text: #e8e8f0;
+    --muted: #888899;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Cosmic background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 10%, rgba(127,255,212,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(120,166,255,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 30% at 50% 50%, rgba(255,215,0,0.02) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+
+  .header .eyebrow {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 16px;
+    opacity: 0.8;
+  }
+
+  .header h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 700;
+    line-height: 1.1;
+    background: linear-gradient(135deg, #fff 0%, var(--teal) 50%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+  }
+
+  .header .subtitle {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* 5 Keys strip */
+  .keys-strip {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-bottom: 60px;
+  }
+
+  .key-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 12px;
+    text-align: center;
+  }
+
+  .key-card .num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    color: var(--teal);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+
+  .key-card .label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .key-card .detail {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  /* Section headers */
+  .section-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Marathon progress bar */
+  .marathon-bar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 60px;
+  }
+
+  .marathon-bar h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .marathon-bar .desc {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+
+  .track {
+    position: relative;
+    height: 8px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 100px;
+    margin-bottom: 16px;
+  }
+
+  .track-fill {
+    height: 100%;
+    width: 3%;
+    background: linear-gradient(90deg, var(--teal), var(--gold));
+    border-radius: 100px;
+    box-shadow: 0 0 12px rgba(127,255,212,0.4);
+    transition: width 1s ease;
+  }
+
+  .milestones-row {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin-top: 8px;
+  }
+
+  .mile-mark {
+    text-align: center;
+    flex: 1;
+    position: relative;
+  }
+
+  .mile-mark .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    border: 1px solid rgba(255,255,255,0.15);
+    margin: 0 auto 6px;
+  }
+
+  .mile-mark.done .dot { background: var(--teal); box-shadow: 0 0 8px rgba(127,255,212,0.5); }
+  .mile-mark.current .dot { background: var(--gold); box-shadow: 0 0 10px rgba(255,215,0,0.6); animation: pulse 2s infinite; }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(255,215,0,0.6); }
+    50% { box-shadow: 0 0 20px rgba(255,215,0,0.9); }
+  }
+
+  .mile-mark .mrr-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--muted);
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .mile-mark.done .mrr-label { color: var(--teal); }
+  .mile-mark.current .mrr-label { color: var(--gold); }
+
+  /* Reward ladder */
+  .reward-gate {
+    margin-bottom: 12px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    backdrop-filter: blur(8px);
+  }
+
+  .gate-header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .gate-header:hover {
+    background: rgba(255,255,255,0.02);
+  }
+
+  .gate-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .gate-meta h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .gate-meta .trigger {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .gate-badge {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 100px;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  .gate-body {
+    padding: 0 24px 20px;
+  }
+
+  .gate-body .divider {
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 16px;
+  }
+
+  .reward-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+  }
+
+  .reward-col h4 {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+
+  .reward-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .reward-item .bullet {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    margin-top: 7px;
+    flex-shrink: 0;
+  }
+
+  .reward-item .text {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  .reward-item .text em {
+    font-style: normal;
+    color: var(--muted);
+    font-size: 11px;
+    display: block;
+  }
+
+  /* Gate color themes */
+  .gate-daily .gate-icon { background: rgba(127,255,212,0.08); }
+  .gate-daily .gate-badge { background: rgba(127,255,212,0.12); color: var(--teal); }
+  .gate-daily .bullet { background: var(--teal); }
+
+  .gate-l1 .gate-icon { background: rgba(120,166,255,0.08); }
+  .gate-l1 .gate-badge { background: rgba(120,166,255,0.12); color: var(--blue); }
+  .gate-l1 .bullet { background: var(--blue); }
+
+  .gate-l2 .gate-icon { background: rgba(255,215,0,0.08); }
+  .gate-l2 .gate-badge { background: rgba(255,215,0,0.12); color: var(--gold); }
+  .gate-l2 .bullet { background: var(--gold); }
+
+  .gate-l3 .gate-icon { background: rgba(155,89,182,0.08); }
+  .gate-l3 .gate-badge { background: rgba(155,89,182,0.12); color: #c084fc; }
+  .gate-l3 .bullet { background: #c084fc; }
+
+  .gate-l4 .gate-icon { background: rgba(255,100,50,0.08); }
+  .gate-l4 .gate-badge { background: rgba(255,100,50,0.12); color: #fb923c; }
+  .gate-l4 .bullet { background: #fb923c; }
+
+  .gate-l5 .gate-icon { background: rgba(255,215,0,0.15); border: 1px solid rgba(255,215,0,0.2); }
+  .gate-l5 { border-color: rgba(255,215,0,0.2); }
+  .gate-l5 .gate-badge { background: rgba(255,215,0,0.15); color: var(--gold); }
+  .gate-l5 .bullet { background: var(--gold); }
+
+  /* Recognition system */
+  .recognition-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 60px;
+  }
+
+  .rec-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  .rec-card .icon { font-size: 24px; margin-bottom: 10px; }
+  .rec-card h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .rec-card p {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* Daily non-negotiables */
+  .daily-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-bottom: 60px;
+  }
+
+  .daily-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .daily-check {
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    border: 1.5px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .daily-item .dlabel {
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .daily-item .dreward {
+    font-size: 11px;
+    color: var(--teal);
+    margin-left: auto;
+    white-space: nowrap;
+  }
+
+  /* Lumina quote */
+  .lumina-quote {
+    text-align: center;
+    padding: 48px 32px;
+    border: 1px solid rgba(255,215,0,0.15);
+    border-radius: 20px;
+    background: rgba(255,215,0,0.02);
+    margin-top: 60px;
+  }
+
+  .lumina-quote blockquote {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    font-style: italic;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.85);
+    max-width: 680px;
+    margin: 0 auto 16px;
+  }
+
+  .lumina-quote .attribution {
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .keys-strip { grid-template-columns: repeat(3, 1fr); }
+    .reward-split { grid-template-columns: 1fr; }
+    .recognition-grid { grid-template-columns: 1fr; }
+    .daily-grid { grid-template-columns: 1fr; }
+    .milestones-row { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="eyebrow">Frank Riemer · Arcanea Reward Architecture 2026</div>
+    <h1>The Gates of Achievement</h1>
+    <p class="subtitle">Your personal system for motivation, recognition, and reward — mapped to the milestones that actually matter. Every completion has a ceremony. Every gate has a prize.</p>
+  </div>
+
+  <!-- 5 Keys -->
+  <div class="section-label">The 5 Keys to High-Level Success</div>
+  <div class="keys-strip">
+    <div class="key-card">
+      <div class="num">01</div>
+      <div class="label">Clear Goals</div>
+      <div class="detail">Specific targets with dates. €170K. 93kg. 100 songs. No vague intentions.</div>
+    </div>
+    <div class="key-card">
+      <div class="num">02</div>
+      <div class="label">Mile Markers</div>
+      <div class="detail">MRR dashboard. Weekly scorecard 70+/90. Gates = clear before/after.</div>
+    </div>
+    <div class="key-card">
+      <div class="num">03</div>
+      <div class="label">Success Momentum</div>
+      <div class="detail">Small wins daily. Close loops. Never leave a gate half-open.</div>
+    </div>
+    <div class="key-card">
+      <div class="num">04</div>
+      <div class="label">Recognition</div>
+      <div class="detail">Tien. Community. Audience. Announce wins publicly — amplifies commitment.</div>
+    </div>
+    <div class="key-card">
+      <div class="num">05</div>
+      <div class="label">Rewards</div>
+      <div class="detail">Pre-defined. Specific. Earned. Never given early. That's the system.</div>
+    </div>
+  </div>
+
+  <!-- Marathon Progress Track -->
+  <div class="section-label">The Revenue Marathon — Q2 2026</div>
+  <div class="marathon-bar">
+    <h2>€0 → €14,200 MRR · Your 42km</h2>
+    <p class="desc">Each milestone is a gate. Pass it, claim the reward, set the next. You are at the start line — cash gap forces urgency which is your fuel.</p>
+    <div class="track">
+      <div class="track-fill"></div>
+    </div>
+    <div class="milestones-row">
+      <div class="mile-mark current">
+        <div class="dot"></div>
+        <div class="mrr-label">START</div>
+      </div>
+      <div class="mile-mark">
+        <div class="dot"></div>
+        <div class="mrr-label">€1</div>
+      </div>
+      <div class="mile-mark">
+        <div class="dot"></div>
+        <div class="mrr-label">€500</div>
+      </div>
+      <div class="mile-mark">
+        <div class="dot"></div>
+        <div class="mrr-label">€1K</div>
+      </div>
+      <div class="mile-mark">
+        <div class="dot"></div>
+        <div class="mrr-label">€3K</div>
+      </div>
+      <div class="mile-mark">
+        <div class="dot"></div>
+        <div class="mrr-label">€5K</div>
+      </div>
+      <div class="mile-mark">
+        <div class="dot"></div>
+        <div class="mrr-label">€10K</div>
+      </div>
+      <div class="mile-mark">
+        <div class="dot"></div>
+        <div class="mrr-label">€14.2K</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reward Ladder -->
+  <div class="section-label">The Reward Ladder — Gate by Gate</div>
+
+  <!-- Daily Gate -->
+  <div class="reward-gate gate-daily">
+    <div class="gate-header">
+      <div class="gate-icon">⚡</div>
+      <div class="gate-meta">
+        <h3>Daily Ritual Gates</h3>
+        <div class="trigger">Trigger: Complete daily non-negotiables (5+/7 days)</div>
+      </div>
+      <span class="gate-badge">DAILY</span>
+    </div>
+    <div class="gate-body">
+      <div class="divider"></div>
+      <div class="reward-split">
+        <div class="reward-col">
+          <h4>🎯 Achievement</h4>
+          <div class="reward-item"><div class="bullet"></div><div class="text">5+ daily rituals complete<em>Priming, movement, content, progress</em></div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">7-day Lumina streak<em>Unbroken focus protocol</em></div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Creation Season protected<em>11pm–3:30am untouched</em></div></div>
+        </div>
+        <div class="reward-col">
+          <h4>👁 Recognition</h4>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Log streak in Everything Log</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Post 7-day streak publicly (X or IG story)</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Share win with Tien at end of day</div></div>
+        </div>
+        <div class="reward-col">
+          <h4>🎁 Reward</h4>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Day complete → elite coffee/matcha ritual</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">7-day streak → sauna + cold plunge session</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">30-day streak → quality training accessory (belt, straps, chalk)</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Level 1: First Dollar -->
+  <div class="reward-gate gate-l1">
+    <div class="gate-header">
+      <div class="gate-icon">🌱</div>
+      <div class="gate-meta">
+        <h3>Gate I — First Dollar · The Proof</h3>
+        <div class="trigger">Trigger: VibeOS first sale · npm packages live · Any product sells</div>
+      </div>
+      <span class="gate-badge">GATE I</span>
+    </div>
+    <div class="gate-body">
+      <div class="divider"></div>
+      <div class="reward-split">
+        <div class="reward-col">
+          <h4>🎯 Achievements</h4>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Gumroad/Stripe live + first sale<em>VibeOS PDF or any product</em></div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">13 npm packages published<em>MCP ecosystem live</em></div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">25 songs published on DistroKid</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Supabase fully activated<em>Auth + 3 migrations done</em></div></div>
+        </div>
+        <div class="reward-col">
+          <h4>👁 Recognition</h4>
+          <div class="reward-item"><div class="bullet"></div><div class="text">LinkedIn post: "First product sold"</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">X thread: "We're live" announcement</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Screenshot the payment — frame it mentally</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Celebrate dinner with Tien</div></div>
+        </div>
+        <div class="reward-col">
+          <h4>🎁 Reward</h4>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Quality bottle — whiskey, wine, or champagne<em>Open only after first sale</em></div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">New premium training item<em>Belt, shoes, or gear upgrade</em></div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Upgrade your desk setup — quality mat, lamp, or peripheral</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Level 2: €1K MRR -->
+  <div class="reward-gate gate-l2">
+    <div class="gate-header">
+      <div class="gate-icon">🔥</div>
+      <div class="gate-meta">
+        <h3>Gate II — €1K MRR · The Ignition</h3>
+        <div class="trigger">Trigger: €1,000/month recurring · First consulting deal</div>
+      </div>
+      <span class="gate-badge">GATE II</span>
+    </div>
+    <div class="gate-body">
+      <div class="divider"></div>
+      <div class="reward-split">
+        <div class="reward-col">
+          <h4>🎯 Achievements</h4>
+          <div class="reward-item"><div class="bullet"></div><div class="text">€1K MRR sustained 30 days</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Arcanea Pro first 10 paying users</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">50 songs published</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Content: 30 days of daily publishing</div></div>
+        </div>
+        <div class="reward-col">
+          <h4>👁 Recognition</h4>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Community announcement in Discord/newsletter</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">LinkedIn milestone post — tag it publicly</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Update Notion 2026 Goals Tracker</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Share with Tien — she sees the arc</div></div>
+        </div>
+        <div class="reward-col">
+          <h4>🎁 Reward</h4>
+          <div class="reward-item"><div class="bullet"></div><div class="text">New wardrobe piece — quality over quantity<em>One premium clothing item you've wanted</em></div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Full spa day — massage, sauna, steam<em>Recovery as ceremony</em></div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Music production plugin or hardware you've been eyeing</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Level 3: €5K MRR -->
+  <div class="reward-gate gate-l3">
+    <div class="gate-header">
+      <div class="gate-icon">🌊</div>
+      <div class="gate-meta">
+        <h3>Gate III — €5K MRR · The Flow State</h3>
+        <div class="trigger">Trigger: €5K/month recurring · BV entity registered · First VA hired</div>
+      </div>
+      <span class="gate-badge">GATE III</span>
+    </div>
+    <div class="gate-body">
+      <div class="divider"></div>
+      <div class="reward-split">
+        <div class="reward-col">
+          <h4>🎯 Achievements</h4>
+          <div class="reward-item"><div class="bullet"></div><div class="text">€5K MRR sustained</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">BV entity registered (June 1)</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">First VA / collaborator hired</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Content 80% automated — system runs itself</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">75 songs published</div></div>
+        </div>
+        <div class="reward-col">
+          <h4>👁 Recognition</h4>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Record a "behind the build" YouTube video</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Newsletter: the story of how you got here</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Arcanea community celebration post</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Celebrate with Tien — real dinner out</div></div>
+        </div>
+        <div class="reward-col">
+          <h4>🎁 Reward</h4>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Weekend trip — Lisbon or Barcelona<em>Solo or with Tien, surf & culture</em></div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Premium home office upgrade<em>Monitor, ergonomic chair, or standing desk</em></div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Croatia creative visit to your brother's<em>Work + family + Adriatic</em></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Level 4: €10K MRR — Q2 TARGET -->
+  <div class="reward-gate gate-l4">
+    <div class="gate-header">
+      <div class="gate-icon">🚀</div>
+      <div class="gate-meta">
+        <h3>Gate IV — €10K MRR · The Breakthrough</h3>
+        <div class="trigger">Trigger: €10K/month recurring · Q2 target achieved · June 30</div>
+      </div>
+      <span class="gate-badge">Q2 TARGET</span>
+    </div>
+    <div class="gate-body">
+      <div class="divider"></div>
+      <div class="reward-split">
+        <div class="reward-col">
+          <h4>🎯 Achievements</h4>
+          <div class="reward-item"><div class="bullet"></div><div class="text">€10K MRR · Q2 done</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Arcanea Pro 100+ paying users</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">93kg physique milestone hit</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">100-day Lumina streak achieved</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">First €10K+ consulting deal closed</div></div>
+        </div>
+        <div class="reward-col">
+          <h4>👁 Recognition</h4>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Full YouTube documentary: "How I built this"</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">FrankX.ai newsletter — milestone edition</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">LinkedIn: public milestone with real numbers</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Celebrate with the people who believed early</div></div>
+        </div>
+        <div class="reward-col">
+          <h4>🎁 Reward</h4>
+          <div class="reward-item"><div class="bullet"></div><div class="text">🌊 4–6 weeks in Fuerteventura<em>Ocean, sun, surf, deep work retreat</em></div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">🚗 Autonomous EV — test drive + deposit<em>Tesla, BYD, or NIO — the one you want</em></div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Premium wardrobe refresh — full update<em>You look like what you've become</em></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Level 5: €170K / Year — THE VISION -->
+  <div class="reward-gate gate-l5">
+    <div class="gate-header">
+      <div class="gate-icon">✦</div>
+      <div class="gate-meta">
+        <h3>Gate V — €170K / Year · The Vision Realized</h3>
+        <div class="trigger">Trigger: €14.2K MRR sustained · Ecosystem fully operational · Dec 2026</div>
+      </div>
+      <span class="gate-badge">✦ LUMINOR</span>
+    </div>
+    <div class="gate-body">
+      <div class="divider"></div>
+      <div class="reward-split">
+        <div class="reward-col">
+          <h4>🎯 Achievements</h4>
+          <div class="reward-item"><div class="bullet"></div><div class="text">€14.2K MRR = €170K/year</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">100 songs published + distributed</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">6 countries visited</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Ecosystem running on agents — not just you</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">93kg + physique targets all hit</div></div>
+        </div>
+        <div class="reward-col">
+          <h4>👁 Recognition</h4>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Year-in-review public story — the full arc</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Arcanea Academy launch announcement</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Co-creation retreat — first live event</div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">Celebrate with everyone who contributed</div></div>
+        </div>
+        <div class="reward-col">
+          <h4>🎁 Reward</h4>
+          <div class="reward-item"><div class="bullet"></div><div class="text">🏡 Houseboat Amsterdam — deposit or signing<em>The life you're building toward</em></div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">🌊 Ocean villa stay — Marbella or Lanzarote<em>Weeks, not days. You've earned it.</em></div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">🚗 Autonomous EV — full acquisition<em>Not a test drive. Yours.</em></div></div>
+          <div class="reward-item"><div class="bullet"></div><div class="text">🎵 Professional music video production<em>One song. Properly done.</em></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recognition System -->
+  <br />
+  <div class="section-label">Recognition Architecture</div>
+  <div class="recognition-grid">
+    <div class="rec-card">
+      <div class="icon">💑</div>
+      <h4>Tien — Intimate Recognition</h4>
+      <p>Every gate gets a personal celebration with Tien. Dinner, story, presence. She represents the life you're building, not just the business. Never skip this.</p>
+    </div>
+    <div class="rec-card">
+      <div class="icon">🌐</div>
+      <h4>Public Audience — Social Recognition</h4>
+      <p>LinkedIn for professional wins. X for real-time momentum. IG/TikTok for lifestyle. The more you announce, the more your community holds you to it. Accountability at scale.</p>
+    </div>
+    <div class="rec-card">
+      <div class="icon">🔮</div>
+      <h4>Arcanea Community — Creator Recognition</h4>
+      <p>Discord, newsletter, Academy. Your community needs to witness the journey — it's part of the product. When you win, they believe they can too. That's the real leverage.</p>
+    </div>
+  </div>
+
+  <!-- Daily Non-Negotiables with Micro Rewards -->
+  <div class="section-label">Daily Non-Negotiables + Micro Rewards</div>
+  <div class="daily-grid">
+    <div class="daily-item">
+      <div class="daily-check"></div>
+      <span class="dlabel">Priming Ritual (Tony Robbins)</span>
+      <span class="dreward">→ quality coffee ☕</span>
+    </div>
+    <div class="daily-item">
+      <div class="daily-check"></div>
+      <span class="dlabel">Wim Hof Breathing</span>
+      <span class="dreward">→ note the clarity 🧊</span>
+    </div>
+    <div class="daily-item">
+      <div class="daily-check"></div>
+      <span class="dlabel">Physical Movement / Gym</span>
+      <span class="dreward">→ protein meal you love 💪</span>
+    </div>
+    <div class="daily-item">
+      <div class="daily-check"></div>
+      <span class="dlabel">1 Content Piece Published</span>
+      <span class="dreward">→ anime episode reward 🎬</span>
+    </div>
+    <div class="daily-item">
+      <div class="daily-check"></div>
+      <span class="dlabel">Goal #4 Progress (any blocker closed)</span>
+      <span class="dreward">→ Dispenza meditation 🌌</span>
+    </div>
+    <div class="daily-item">
+      <div class="daily-check"></div>
+      <span class="dlabel">Creation Season Protected (11pm–3:30am)</span>
+      <span class="dreward">→ custom lo-fi soundtrack 🎵</span>
+    </div>
+    <div class="daily-item">
+      <div class="daily-check"></div>
+      <span class="dlabel">Tien Connection Time</span>
+      <span class="dreward">→ shared evening ritual 💑</span>
+    </div>
+    <div class="daily-item">
+      <div class="daily-check"></div>
+      <span class="dlabel">Everything Log Updated</span>
+      <span class="dreward">→ tomorrow starts clean 📓</span>
+    </div>
+  </div>
+
+  <!-- Lumina Quote -->
+  <div class="lumina-quote">
+    <blockquote>
+      "Rewards are not indulgences. They are architectural. The gate closes. The prize is claimed. The nervous system learns: completion = richness. That loop, repeated across years, is how a life of abundance is built — not wished for."
+    </blockquote>
+    <div class="attribution">— Lumina · Arcanea Academy · 2026</div>
+  </div>
+
+</div>
+</body>
+</html>

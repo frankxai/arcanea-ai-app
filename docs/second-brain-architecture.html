@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Second Brain Architecture — FrankX Empire</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #09090b; --surface: rgba(255,255,255,0.03); --border: rgba(255,255,255,0.06);
+    --teal: #00bcd4; --blue: #0d47a1; --gold: #ffd700; --green: #22c55e; --red: #ef4444;
+    --orange: #f59e0b; --purple: #8b5cf6; --pink: #ec4899;
+    --text: #e4e4e7; --muted: #71717a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; line-height: 1.6; }
+
+  .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+
+  h1 { font-family: 'Space Grotesk', sans-serif; font-size: 2.5rem; font-weight: 700;
+    background: linear-gradient(135deg, var(--teal), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem; }
+  h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 600; color: var(--teal); margin: 2rem 0 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+  h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 500; color: var(--gold); margin: 1.5rem 0 0.5rem; }
+
+  .subtitle { color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem; }
+  .karpathy { background: rgba(0,188,212,0.08); border: 1px solid rgba(0,188,212,0.2); border-radius: 8px; padding: 1rem 1.5rem; margin: 1.5rem 0; font-style: italic; color: var(--teal); }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  @media (max-width: 900px) { .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } }
+
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; backdrop-filter: blur(8px); }
+  .card-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+  .card-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 700; }
+  .card-title { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 1rem; }
+
+  .brand-arcanea .card-icon { background: rgba(0,188,212,0.15); color: var(--teal); }
+  .brand-frankx .card-icon { background: rgba(255,215,0,0.15); color: var(--gold); }
+  .brand-sis .card-icon { background: rgba(139,92,246,0.15); color: var(--purple); }
+  .brand-business .card-icon { background: rgba(34,197,94,0.15); color: var(--green); }
+  .brand-music .card-icon { background: rgba(236,72,153,0.15); color: var(--pink); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 0.5rem 0; }
+  th { text-align: left; padding: 0.5rem; color: var(--muted); font-weight: 500; border-bottom: 1px solid var(--border); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  td { padding: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.02); }
+
+  code, .mono { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
+  .code-block { background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; overflow-x: auto; white-space: pre; font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; line-height: 1.5; color: var(--muted); margin: 1rem 0; }
+  .code-block .dir { color: var(--teal); } .code-block .file { color: var(--text); } .code-block .comment { color: #4a4a5a; }
+
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+  .tag-live { background: rgba(34,197,94,0.15); color: var(--green); }
+  .tag-exists { background: rgba(0,188,212,0.15); color: var(--teal); }
+  .tag-create { background: rgba(255,215,0,0.15); color: var(--gold); }
+  .tag-build { background: rgba(139,92,246,0.15); color: var(--purple); }
+  .tag-missing { background: rgba(239,68,68,0.15); color: var(--red); }
+
+  .flow-diagram { display: flex; align-items: center; justify-content: center; gap: 0.5rem; flex-wrap: wrap; padding: 1.5rem; }
+  .flow-node { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem 1rem; text-align: center; min-width: 120px; }
+  .flow-node.primary { border-color: var(--teal); background: rgba(0,188,212,0.08); }
+  .flow-node.wiki { border-color: var(--gold); background: rgba(255,215,0,0.08); }
+  .flow-arrow { color: var(--muted); font-size: 1.5rem; }
+
+  .principle { display: flex; gap: 1rem; align-items: flex-start; margin: 1rem 0; }
+  .principle-num { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--gold); min-width: 2rem; }
+  .principle-text { flex: 1; }
+  .principle-title { font-weight: 600; color: var(--text); margin-bottom: 0.25rem; }
+  .principle-desc { color: var(--muted); font-size: 0.9rem; }
+
+  .sync-line { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0; font-size: 0.85rem; }
+  .sync-from { color: var(--teal); min-width: 140px; font-weight: 500; }
+  .sync-arrow { color: var(--muted); }
+  .sync-to { color: var(--gold); min-width: 140px; font-weight: 500; }
+  .sync-method { color: var(--muted); font-size: 0.8rem; }
+
+  .status-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+
+  .section-divider { border: none; border-top: 1px solid var(--border); margin: 3rem 0 2rem; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Second Brain Architecture</h1>
+<p class="subtitle">FrankX Empire — Karpathy-Inspired LLM Wiki × Multi-Brand Knowledge System × Agent-Maintained<br>
+<span class="mono" style="color:var(--muted)">Generated: April 8, 2026 | Architect: Frank Riemer + Claude</span></p>
+
+<div class="karpathy">
+"Instead of having your AI re-read raw documents every time, have the AI incrementally build and maintain a persistent wiki — a structured, interlinked collection of markdown files that compounds over time." — Andrej Karpathy, April 2026
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<h2>1. Core Principles (Karpathy + Frank Hybrid)</h2>
+
+<div class="principle"><div class="principle-num">1</div><div class="principle-text"><div class="principle-title">Wiki Over RAG</div><div class="principle-desc">Don't re-read raw docs. AI maintains a persistent, structured, interlinked markdown wiki that compounds knowledge over time. Every session leaves the wiki smarter.</div></div></div>
+<div class="principle"><div class="principle-num">2</div><div class="principle-text"><div class="principle-title">One Brain, Many Brands</div><div class="principle-desc">Single knowledge graph spans all brands (Arcanea, FrankX, SIS, Music, Academies). Cross-pollination is a feature, not a bug. A lesson learned in Arcanea engineering applies to SIS consulting.</div></div></div>
+<div class="principle"><div class="principle-num">3</div><div class="principle-text"><div class="principle-title">Each Brand Gets Full Stack</div><div class="principle-desc">Local folder + GitHub repo + Notion hub + Linear project + Google Drive folder + wiki section. Standardized naming. No exceptions.</div></div></div>
+<div class="principle"><div class="principle-num">4</div><div class="principle-text"><div class="principle-title">Agent-Native from Day 1</div><div class="principle-desc">Every surface is designed for AI agents to read, write, and maintain. Markdown wiki = primary substrate. Notion/Linear/Drive = team interfaces. Agents grow the wiki; humans harvest insights.</div></div></div>
+<div class="principle"><div class="principle-num">5</div><div class="principle-text"><div class="principle-title">Local-First, Cloud-Synced</div><div class="principle-desc">Local folders are source of truth for code + wiki. Cloud tools (Notion, Linear, Drive) are team interfaces + backup. Google Drive = primary media storage. Cloudflare R2 = future CDN.</div></div></div>
+<div class="principle"><div class="principle-num">6</div><div class="principle-text"><div class="principle-title">Obsidian = Personal Lens</div><div class="principle-desc">Obsidian vault is Frank's personal journal, reflections, book notes, and creative sparks. It feeds INTO the wiki but is not the wiki itself. Private thoughts stay private.</div></div></div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<hr class="section-divider">
+<h2>2. Brand Entities & Their Full Stack</h2>
+
+<div class="status-grid">
+  <div class="card brand-business">
+    <div class="card-header"><div class="card-icon">B</div><div><div class="card-title">Business (Holding)</div><div style="font-size:0.75rem;color:var(--muted)">BV Ops, Finance, Legal, Tax</div></div></div>
+    <table>
+      <tr><td>Local</td><td class="mono">C:\Users\frank\Business\</td><td><span class="tag tag-exists">exists</span></td></tr>
+      <tr><td>GitHub</td><td class="mono">—</td><td><span class="tag tag-missing">n/a (no code)</span></td></tr>
+      <tr><td>Notion</td><td>Ops Hub (scattered)</td><td><span class="tag tag-create">consolidate</span></td></tr>
+      <tr><td>Linear</td><td>—</td><td><span class="tag tag-create">create team</span></td></tr>
+      <tr><td>GDrive</td><td>—</td><td><span class="tag tag-create">create folder</span></td></tr>
+      <tr><td>Wiki</td><td class="mono">wiki/business/</td><td><span class="tag tag-build">build</span></td></tr>
+    </table>
+  </div>
+
+  <div class="card brand-arcanea">
+    <div class="card-header"><div class="card-icon">A</div><div><div class="card-title">Arcanea</div><div style="font-size:0.75rem;color:var(--muted)">Creative Intelligence Platform</div></div></div>
+    <table>
+      <tr><td>Local</td><td class="mono">C:\...\arcanea-ai-app\</td><td><span class="tag tag-live">live</span></td></tr>
+      <tr><td>GitHub</td><td class="mono">frankxai/arcanea-ai-app</td><td><span class="tag tag-live">live</span></td></tr>
+      <tr><td>Notion</td><td>4 overlapping hubs</td><td><span class="tag tag-create">consolidate</span></td></tr>
+      <tr><td>Linear</td><td>ARC team (12 projects)</td><td><span class="tag tag-live">live</span></td></tr>
+      <tr><td>GDrive</td><td>—</td><td><span class="tag tag-create">create folder</span></td></tr>
+      <tr><td>Wiki</td><td class="mono">wiki/arcanea/</td><td><span class="tag tag-build">build</span></td></tr>
+    </table>
+  </div>
+
+  <div class="card brand-frankx">
+    <div class="card-header"><div class="card-icon">F</div><div><div class="card-title">FrankX.ai</div><div style="font-size:0.75rem;color:var(--muted)">Personal Brand & Content</div></div></div>
+    <table>
+      <tr><td>Local</td><td class="mono">C:\Users\frank\FrankX\</td><td><span class="tag tag-create">create</span></td></tr>
+      <tr><td>GitHub</td><td class="mono">frankxai/frankx-ai</td><td><span class="tag tag-create">create</span></td></tr>
+      <tr><td>Notion</td><td>Hub + Command Center</td><td><span class="tag tag-create">consolidate</span></td></tr>
+      <tr><td>Linear</td><td>—</td><td><span class="tag tag-create">create project</span></td></tr>
+      <tr><td>GDrive</td><td>—</td><td><span class="tag tag-create">create folder</span></td></tr>
+      <tr><td>Wiki</td><td class="mono">wiki/frankx/</td><td><span class="tag tag-build">build</span></td></tr>
+    </table>
+  </div>
+
+  <div class="card brand-sis">
+    <div class="card-header"><div class="card-icon">S</div><div><div class="card-title">Starlight Intelligence</div><div style="font-size:0.75rem;color:var(--muted)">Enterprise AI Consulting</div></div></div>
+    <table>
+      <tr><td>Local</td><td class="mono">C:\Users\frank\SIS\</td><td><span class="tag tag-create">create</span></td></tr>
+      <tr><td>GitHub</td><td class="mono">frankxai/starlight-intel</td><td><span class="tag tag-create">create</span></td></tr>
+      <tr><td>Notion</td><td>Ecosystem & Vision (1 pg)</td><td><span class="tag tag-create">expand</span></td></tr>
+      <tr><td>Linear</td><td>—</td><td><span class="tag tag-create">create project</span></td></tr>
+      <tr><td>GDrive</td><td>—</td><td><span class="tag tag-create">create folder</span></td></tr>
+      <tr><td>Wiki</td><td class="mono">wiki/sis/</td><td><span class="tag tag-build">build</span></td></tr>
+    </table>
+  </div>
+
+  <div class="card brand-music">
+    <div class="card-header"><div class="card-icon">M</div><div><div class="card-title">Music Empire</div><div style="font-size:0.75rem;color:var(--muted)">AI Music Academy + FrankX Music</div></div></div>
+    <table>
+      <tr><td>Local</td><td class="mono">C:\Users\frank\Music\</td><td><span class="tag tag-create">create</span></td></tr>
+      <tr><td>GitHub</td><td>—</td><td><span class="tag tag-missing">n/a (media)</span></td></tr>
+      <tr><td>Notion</td><td>AI Musicians Hub</td><td><span class="tag tag-exists">exists</span></td></tr>
+      <tr><td>Linear</td><td>Content Production (shared)</td><td><span class="tag tag-exists">shared</span></td></tr>
+      <tr><td>GDrive</td><td>—</td><td><span class="tag tag-create">create folder</span></td></tr>
+      <tr><td>Wiki</td><td class="mono">wiki/music/</td><td><span class="tag tag-build">build</span></td></tr>
+    </table>
+  </div>
+
+  <div class="card" style="border-color: rgba(245,158,11,0.3);">
+    <div class="card-header"><div class="card-icon" style="background:rgba(245,158,11,0.15);color:var(--orange);">+</div><div><div class="card-title">Future Brands</div><div style="font-size:0.75rem;color:var(--muted)">AnimeLegends, GenCreator, Academies</div></div></div>
+    <table>
+      <tr><td>Pattern</td><td colspan="2">Same full stack per brand. Clone template folder, create Notion hub, add Linear project, create Drive folder, seed wiki section.</td></tr>
+      <tr><td>Template</td><td class="mono" colspan="2">Business/templates/new-brand/</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<hr class="section-divider">
+<h2>3. Local Folder Architecture</h2>
+
+<div class="grid-2">
+<div>
+<h3>Windows Filesystem (C: drive)</h3>
+<div class="code-block"><span class="dir">C:\Users\frank\</span>
+├── <span class="dir">Business\</span>                    <span class="comment"># Holding company ops</span>
+│   ├── <span class="dir">ops\</span>                      <span class="comment"># CLAUDE.md, connection map</span>
+│   ├── <span class="dir">finance\</span>                  <span class="comment"># Excel, tax, cash flow</span>
+│   ├── <span class="dir">legal\</span>                    <span class="comment"># BV, contracts</span>
+│   ├── <span class="dir">brands\</span>                   <span class="comment"># BRAND-REGISTRY.md</span>
+│   ├── <span class="dir">templates\</span>                <span class="comment"># New brand template</span>
+│   └── <span class="dir">wiki\</span>                     <span class="comment"># ★ SECOND BRAIN WIKI ROOT</span>
+│       ├── <span class="file">README.md</span>             <span class="comment"># Entry point + nav</span>
+│       ├── <span class="dir">arcanea\</span>              <span class="comment"># Arcanea domain knowledge</span>
+│       ├── <span class="dir">frankx\</span>               <span class="comment"># FrankX domain knowledge</span>
+│       ├── <span class="dir">sis\</span>                  <span class="comment"># SIS domain knowledge</span>
+│       ├── <span class="dir">music\</span>                <span class="comment"># Music domain knowledge</span>
+│       ├── <span class="dir">business\</span>             <span class="comment"># BV, finance, tax knowledge</span>
+│       ├── <span class="dir">decisions\</span>            <span class="comment"># Cross-brand decisions</span>
+│       ├── <span class="dir">learnings\</span>            <span class="comment"># Patterns, insights</span>
+│       ├── <span class="dir">people\</span>               <span class="comment"># Network, advisors, allies</span>
+│       └── <span class="dir">meta\</span>                 <span class="comment"># Wiki maintenance protocol</span>
+│
+├── <span class="dir">arcanea-ai-app\</span>               <span class="comment"># Arcanea engineering repo</span>
+│   ├── <span class="dir">.arcanea\</span>                 <span class="comment"># Intelligence hub</span>
+│   ├── <span class="dir">.claude\</span>                  <span class="comment"># Claude Code config</span>
+│   ├── <span class="dir">apps\web\</span>                 <span class="comment"># Next.js 16 app</span>
+│   ├── <span class="dir">packages\</span>                 <span class="comment"># 42 shared packages</span>
+│   ├── <span class="dir">book\</span>                     <span class="comment"># Library (17 collections)</span>
+│   └── <span class="dir">planning-with-files\</span>      <span class="comment"># Agent execution layer</span>
+│
+├── <span class="dir">FrankX\</span>                       <span class="comment"># ★ NEW — Personal brand</span>
+│   ├── <span class="dir">content\</span>                  <span class="comment"># Blog drafts, social posts</span>
+│   ├── <span class="dir">media\</span>                    <span class="comment"># Photos, videos, thumbnails</span>
+│   ├── <span class="dir">products\</span>                 <span class="comment"># PDFs, courses, templates</span>
+│   └── <span class="file">CLAUDE.md</span>                <span class="comment"># Brand context for agents</span>
+│
+├── <span class="dir">SIS\</span>                          <span class="comment"># ★ NEW — Enterprise consulting</span>
+│   ├── <span class="dir">clients\</span>                  <span class="comment"># Client folders (encrypted)</span>
+│   ├── <span class="dir">proposals\</span>                <span class="comment"># Pitch decks, SOWs</span>
+│   ├── <span class="dir">frameworks\</span>               <span class="comment"># Consulting frameworks</span>
+│   └── <span class="file">CLAUDE.md</span>                <span class="comment"># SIS agent context</span>
+│
+├── <span class="dir">Music\</span>                        <span class="comment"># ★ NEW — Music production</span>
+│   ├── <span class="dir">tracks\</span>                   <span class="comment"># DAW projects, stems</span>
+│   ├── <span class="dir">releases\</span>                 <span class="comment"># Mastered tracks, artwork</span>
+│   ├── <span class="dir">academy\</span>                  <span class="comment"># AI Music Academy content</span>
+│   └── <span class="file">CLAUDE.md</span>                <span class="comment"># Music agent context</span>
+│
+└── <span class="dir">Documents\Obsidian\</span>           <span class="comment"># Personal vault (OneDrive)</span>
+    ├── <span class="dir">daily\</span>                    <span class="comment"># Journal entries</span>
+    ├── <span class="dir">ideas\</span>                    <span class="comment"># Brain dumps</span>
+    ├── <span class="dir">reading\</span>                  <span class="comment"># Book notes</span>
+    └── <span class="dir">vault\</span>                    <span class="comment"># Permanent reference</span></div>
+</div>
+<div>
+<h3>Key Design Decisions</h3>
+<div class="card" style="margin-bottom:1rem;">
+  <h3 style="margin-top:0;">Wiki Location: Business/wiki/</h3>
+  <p style="font-size:0.85rem;color:var(--muted);">The wiki lives under Business/ because it spans ALL brands. It's not owned by any single repo. Business/ = holding company = parent of all brands. Agents in any workspace can read/write to it via path reference.</p>
+</div>
+<div class="card" style="margin-bottom:1rem;">
+  <h3 style="margin-top:0;">Each Brand Has CLAUDE.md</h3>
+  <p style="font-size:0.85rem;color:var(--muted);">When an agent opens any folder (Arcanea, FrankX, SIS, Music), it reads that brand's CLAUDE.md first. This file contains: brand identity, Notion hub ID, Linear project ID, Google Drive folder ID, wiki section path, naming conventions.</p>
+</div>
+<div class="card" style="margin-bottom:1rem;">
+  <h3 style="margin-top:0;">Media Strategy</h3>
+  <p style="font-size:0.85rem;color:var(--muted);">Local media/ folders for active work. Google Drive for archival + sharing. Future: Cloudflare R2 for CDN delivery of published assets (book covers, course thumbnails, product images).</p>
+</div>
+<div class="card">
+  <h3 style="margin-top:0;">Obsidian ≠ Wiki</h3>
+  <p style="font-size:0.85rem;color:var(--muted);">Obsidian = Frank's private thoughts, journal, reflections. Wiki = shared knowledge that agents can access and grow. Personal insights flow FROM Obsidian INTO wiki when they become actionable. Never the reverse.</p>
+</div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<hr class="section-divider">
+<h2>4. Cloud Platform Architecture</h2>
+
+<div class="grid-3">
+<div class="card">
+  <h3 style="margin-top:0;">Notion — Team Knowledge</h3>
+  <table>
+    <tr><th>Hub</th><th>Status</th></tr>
+    <tr><td>🏢 Business Ops Hub</td><td><span class="tag tag-create">consolidate</span></td></tr>
+    <tr><td>✦ Arcanea Hub</td><td><span class="tag tag-create">consolidate 4→1</span></td></tr>
+    <tr><td>⚡ FrankX.ai Hub</td><td><span class="tag tag-create">consolidate 4→1</span></td></tr>
+    <tr><td>🌟 SIS Hub</td><td><span class="tag tag-create">expand from 1 pg</span></td></tr>
+    <tr><td>🎵 Music Hub</td><td><span class="tag tag-exists">exists</span></td></tr>
+    <tr><td>📊 Empire Dashboard</td><td><span class="tag tag-create">create unified</span></td></tr>
+  </table>
+  <p style="font-size:0.75rem;color:var(--muted);margin-top:0.5rem;">Each hub: Start Here page, Products, Content Calendar, Team, Decisions log, linked databases</p>
+</div>
+
+<div class="card">
+  <h3 style="margin-top:0;">Linear — Task Execution</h3>
+  <table>
+    <tr><th>Team/Project</th><th>Status</th></tr>
+    <tr><td>ARC: Arcanea (12 projects)</td><td><span class="tag tag-live">live</span></td></tr>
+    <tr><td>FX: FrankX.ai</td><td><span class="tag tag-create">create project</span></td></tr>
+    <tr><td>SIS: Starlight Intel</td><td><span class="tag tag-create">create project</span></td></tr>
+    <tr><td>BIZ: Business Ops</td><td><span class="tag tag-create">create project</span></td></tr>
+    <tr><td>MUS: Music Empire</td><td><span class="tag tag-create">create project</span></td></tr>
+  </table>
+  <p style="font-size:0.75rem;color:var(--muted);margin-top:0.5rem;">Issue prefixes: ARC-###, FX-###, SIS-###, BIZ-###, MUS-###</p>
+</div>
+
+<div class="card">
+  <h3 style="margin-top:0;">Google Drive — Media + Docs</h3>
+  <table>
+    <tr><th>Folder</th><th>Status</th></tr>
+    <tr><td>📁 FrankX Empire/</td><td><span class="tag tag-create">create root</span></td></tr>
+    <tr><td>&nbsp;&nbsp;📁 Arcanea/</td><td><span class="tag tag-create">create</span></td></tr>
+    <tr><td>&nbsp;&nbsp;📁 FrankX/</td><td><span class="tag tag-create">create</span></td></tr>
+    <tr><td>&nbsp;&nbsp;📁 SIS/</td><td><span class="tag tag-create">create</span></td></tr>
+    <tr><td>&nbsp;&nbsp;📁 Music/</td><td><span class="tag tag-create">create</span></td></tr>
+    <tr><td>&nbsp;&nbsp;📁 Business/</td><td><span class="tag tag-create">create</span></td></tr>
+    <tr><td>&nbsp;&nbsp;📁 Shared Assets/</td><td><span class="tag tag-create">create</span></td></tr>
+  </table>
+  <p style="font-size:0.75rem;color:var(--muted);margin-top:0.5rem;">Each: /media, /docs, /products, /templates. Future CDN: R2 bucket per brand.</p>
+</div>
+</div>
+
+<div class="grid-2" style="margin-top:1.5rem;">
+<div class="card">
+  <h3 style="margin-top:0;">GitHub — Code Repos</h3>
+  <table>
+    <tr><th>Repo</th><th>Purpose</th><th>Status</th></tr>
+    <tr><td class="mono">frankxai/arcanea-ai-app</td><td>Arcanea platform</td><td><span class="tag tag-live">live</span></td></tr>
+    <tr><td class="mono">frankxai/arcanea</td><td>OSS / public</td><td><span class="tag tag-live">live</span></td></tr>
+    <tr><td class="mono">frankxai/frankx-ai</td><td>FrankX.ai site + content</td><td><span class="tag tag-create">create</span></td></tr>
+    <tr><td class="mono">frankxai/starlight-intel</td><td>SIS frameworks + tools</td><td><span class="tag tag-create">create</span></td></tr>
+    <tr><td class="mono">frankxai/second-brain</td><td>Wiki (Karpathy-style)</td><td><span class="tag tag-build">build</span></td></tr>
+  </table>
+</div>
+
+<div class="card">
+  <h3 style="margin-top:0;">Obsidian — Personal Vault</h3>
+  <table>
+    <tr><th>Section</th><th>Purpose</th><th>Sync</th></tr>
+    <tr><td>daily/</td><td>Journal + Dispenza log</td><td>OneDrive</td></tr>
+    <tr><td>ideas/</td><td>Brain dumps → wiki intake</td><td>OneDrive</td></tr>
+    <tr><td>reading/</td><td>Book notes → wiki/learnings</td><td>OneDrive</td></tr>
+    <tr><td>vault/</td><td>Permanent reference</td><td>OneDrive</td></tr>
+    <tr><td>lumina/</td><td>100-day streak log</td><td>OneDrive</td></tr>
+  </table>
+  <p style="font-size:0.75rem;color:var(--muted);margin-top:0.5rem;">No Obsidian MCP exists. Access via: local file read when Cowork points to vault, or build custom MCP.</p>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<hr class="section-divider">
+<h2>5. The Living Wiki (Karpathy-Style)</h2>
+
+<div class="karpathy">
+The wiki is the knowledge substrate. Every session, every decision, every lesson learned gets distilled into interlinked markdown articles. Agents grow it. Humans harvest insights. It never stops compounding.
+</div>
+
+<div class="code-block"><span class="dir">Business/wiki/</span>                        <span class="comment"># ★ THE SECOND BRAIN</span>
+├── <span class="file">README.md</span>                         <span class="comment"># Master index + navigation</span>
+├── <span class="file">MAINTENANCE.md</span>                    <span class="comment"># Agent protocol for wiki growth</span>
+│
+├── <span class="dir">arcanea/</span>                          <span class="comment"># ═══ ARCANEA DOMAIN ═══</span>
+│   ├── <span class="file">overview.md</span>                   <span class="comment"># What is Arcanea, north star, status</span>
+│   ├── <span class="file">architecture.md</span>               <span class="comment"># Next.js 16 + React 19 + Supabase + Vercel</span>
+│   ├── <span class="file">design-system.md</span>              <span class="comment"># Tokens, fonts, glass cards, colors</span>
+│   ├── <span class="file">mcp-server.md</span>                 <span class="comment"># 42 tools, SDK 1.29, HTTP transport</span>
+│   ├── <span class="file">luminor-framework.md</span>          <span class="comment"># Agent hierarchy, prompts, kernel</span>
+│   ├── <span class="file">content-library.md</span>            <span class="comment"># 1M+ words, 17 collections, 23 covers</span>
+│   ├── <span class="file">revenue-path.md</span>               <span class="comment"># ACOS PDF, VibeOS, npm packages, pricing</span>
+│   ├── <span class="file">blockers.md</span>                   <span class="comment"># Current blockers with status + impact</span>
+│   └── <span class="file">changelog.md</span>                  <span class="comment"># Major changes (agent-maintained)</span>
+│
+├── <span class="dir">frankx/</span>                           <span class="comment"># ═══ FRANKX.AI DOMAIN ═══</span>
+│   ├── <span class="file">overview.md</span>                   <span class="comment"># Personal brand, AI architect positioning</span>
+│   ├── <span class="file">content-strategy.md</span>           <span class="comment"># Platforms, cadence, voice, audience</span>
+│   ├── <span class="file">products.md</span>                   <span class="comment"># Courses, templates, coaching, PDFs</span>
+│   ├── <span class="file">audience.md</span>                   <span class="comment"># Superfans, segments, growth metrics</span>
+│   └── <span class="file">x-presence.md</span>                 <span class="comment"># @frankx_ai strategy, threads, engagement</span>
+│
+├── <span class="dir">sis/</span>                              <span class="comment"># ═══ STARLIGHT INTELLIGENCE ═══</span>
+│   ├── <span class="file">overview.md</span>                   <span class="comment"># Enterprise AI consulting vision</span>
+│   ├── <span class="file">frameworks.md</span>                 <span class="comment"># ACOS, CoE patterns, maturity models</span>
+│   ├── <span class="file">oracle-experience.md</span>          <span class="comment"># What Frank learned at Oracle AI CoE</span>
+│   ├── <span class="file">target-clients.md</span>             <span class="comment"># Enterprise verticals, deal sizes</span>
+│   └── <span class="file">proposals.md</span>                  <span class="comment"># Pitch templates, SOW patterns</span>
+│
+├── <span class="dir">music/</span>                            <span class="comment"># ═══ MUSIC EMPIRE ═══</span>
+│   ├── <span class="file">overview.md</span>                   <span class="comment"># AI Music Academy + FrankX Music</span>
+│   ├── <span class="file">production-pipeline.md</span>        <span class="comment"># Suno, DAWs, mastering, distribution</span>
+│   ├── <span class="file">releases.md</span>                   <span class="comment"># Track catalog, streaming stats</span>
+│   └── <span class="file">lo-fi-soundtracks.md</span>          <span class="comment"># Custom anime/lo-fi composition notes</span>
+│
+├── <span class="dir">business/</span>                         <span class="comment"># ═══ HOLDING COMPANY ═══</span>
+│   ├── <span class="file">bv-formation.md</span>               <span class="comment"># Dutch BV, June 1, 2026, requirements</span>
+│   ├── <span class="file">financial-model.md</span>            <span class="comment"># Cash flow, burn rate, revenue projections</span>
+│   ├── <span class="file">subscriptions.md</span>              <span class="comment"># ~€346/mo, all tools tracked</span>
+│   ├── <span class="file">gate-system.md</span>                <span class="comment"># Gate 0→IV, /ao Orchestra, milestones</span>
+│   └── <span class="file">tax-structure.md</span>              <span class="comment"># Netherlands tax, VAT, crypto obligations</span>
+│
+├── <span class="dir">decisions/</span>                        <span class="comment"># ═══ CROSS-BRAND DECISIONS ═══</span>
+│   ├── <span class="file">2026-04-04_gtd-architecture.md</span> <span class="comment"># Tool routing locked</span>
+│   ├── <span class="file">2026-04-05_reward-system.md</span>   <span class="comment"># /ao Orchestra design</span>
+│   ├── <span class="file">2026-04-08_second-brain.md</span>    <span class="comment"># This architecture decision</span>
+│   └── <span class="file">template.md</span>                   <span class="comment"># Decision record template</span>
+│
+├── <span class="dir">learnings/</span>                        <span class="comment"># ═══ PATTERNS & INSIGHTS ═══</span>
+│   ├── <span class="file">agent-patterns.md</span>             <span class="comment"># What works with AI agents</span>
+│   ├── <span class="file">shipping-lessons.md</span>           <span class="comment"># Revenue > perfection, unblock fast</span>
+│   ├── <span class="file">design-system-lessons.md</span>      <span class="comment"># Cinzel purge, centralization journey</span>
+│   └── <span class="file">oracle-lessons.md</span>             <span class="comment"># Enterprise AI, what scales, what doesn't</span>
+│
+├── <span class="dir">people/</span>                           <span class="comment"># ═══ NETWORK ═══</span>
+│   ├── <span class="file">tien.md</span>                       <span class="comment"># Partner, recognition system</span>
+│   ├── <span class="file">brother-croatia.md</span>            <span class="comment"># Creative hub, retreat location</span>
+│   ├── <span class="file">advisors.md</span>                   <span class="comment"># Key advisors, mentors</span>
+│   └── <span class="file">dream100.md</span>                   <span class="comment"># Influencer network strategy</span>
+│
+└── <span class="dir">meta/</span>                             <span class="comment"># ═══ WIKI MAINTENANCE ═══</span>
+    ├── <span class="file">agent-protocol.md</span>             <span class="comment"># How agents grow the wiki</span>
+    ├── <span class="file">interlinking-guide.md</span>         <span class="comment"># [[link]] conventions</span>
+    ├── <span class="file">growth-log.md</span>                 <span class="comment"># Wiki article count, word count over time</span>
+    └── <span class="file">review-schedule.md</span>            <span class="comment"># When to prune, update, expand</span></div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<hr class="section-divider">
+<h2>6. Sync & Data Flow</h2>
+
+<div class="card">
+<h3 style="margin-top:0;">How Everything Connects</h3>
+
+<div class="sync-line"><span class="sync-from">Obsidian (ideas/)</span><span class="sync-arrow">→</span><span class="sync-to">Wiki (learnings/)</span><span class="sync-method">Manual or agent weekly harvest</span></div>
+<div class="sync-line"><span class="sync-from">Linear Issues</span><span class="sync-arrow">→</span><span class="sync-to">Wiki (blockers.md)</span><span class="sync-method">Agent reads Linear MCP → updates wiki</span></div>
+<div class="sync-line"><span class="sync-from">Notion Hubs</span><span class="sync-arrow">→</span><span class="sync-to">Wiki (overview.md)</span><span class="sync-method">Agent reads Notion MCP → syncs status</span></div>
+<div class="sync-line"><span class="sync-from">GitHub Commits</span><span class="sync-arrow">→</span><span class="sync-to">Wiki (changelog.md)</span><span class="sync-method">Agent reads git log → distills changes</span></div>
+<div class="sync-line"><span class="sync-from">Planning Files</span><span class="sync-arrow">→</span><span class="sync-to">Wiki (gate-system.md)</span><span class="sync-method">Agent reads CURRENT_STATE → updates gates</span></div>
+<div class="sync-line"><span class="sync-from">Auto-Memory</span><span class="sync-arrow">↔</span><span class="sync-to">Wiki (decisions/)</span><span class="sync-method">Bidirectional: memory decisions → wiki articles, wiki → memory refs</span></div>
+<div class="sync-line"><span class="sync-from">Google Drive</span><span class="sync-arrow">↔</span><span class="sync-to">Local media/</span><span class="sync-method">Drive desktop sync or manual upload</span></div>
+<div class="sync-line"><span class="sync-from">Wiki (all)</span><span class="sync-arrow">→</span><span class="sync-to">GitHub second-brain</span><span class="sync-method">Git push from Business/wiki/ to frankxai/second-brain</span></div>
+<div class="sync-line"><span class="sync-from">Local folders</span><span class="sync-arrow">→</span><span class="sync-to">OneDrive</span><span class="sync-method">Windows native sync (Business/, Obsidian/)</span></div>
+<div class="sync-line"><span class="sync-from">Local media</span><span class="sync-arrow">→</span><span class="sync-to">Cloudflare R2</span><span class="sync-method">Future: CLI upload for published assets</span></div>
+</div>
+
+<div class="flow-diagram" style="margin-top:1.5rem;">
+  <div class="flow-node">📱 Obsidian<br><span style="font-size:0.7rem;color:var(--muted)">Personal</span></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node wiki">📚 Wiki<br><span style="font-size:0.7rem;color:var(--gold)">Second Brain</span></div>
+  <div class="flow-arrow">←</div>
+  <div class="flow-node">📋 Linear<br><span style="font-size:0.7rem;color:var(--muted)">Tasks</span></div>
+  <br style="width:100%">
+  <div class="flow-node">📝 Notion<br><span style="font-size:0.7rem;color:var(--muted)">Team Docs</span></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node wiki">📚 Wiki<br><span style="font-size:0.7rem;color:var(--gold)">Second Brain</span></div>
+  <div class="flow-arrow">←</div>
+  <div class="flow-node">💻 GitHub<br><span style="font-size:0.7rem;color:var(--muted)">Code</span></div>
+  <br style="width:100%">
+  <div class="flow-node">📁 Drive<br><span style="font-size:0.7rem;color:var(--muted)">Media</span></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node wiki">📚 Wiki<br><span style="font-size:0.7rem;color:var(--gold)">Second Brain</span></div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node primary">🤖 Agents<br><span style="font-size:0.7rem;color:var(--teal)">Maintain + Grow</span></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<hr class="section-divider">
+<h2>7. Naming Conventions (Cross-Platform Standard)</h2>
+
+<div class="card">
+<table>
+  <tr><th style="width:20%">Context</th><th style="width:30%">Convention</th><th style="width:25%">Example</th><th>Notes</th></tr>
+  <tr><td>Wiki articles</td><td class="mono">kebab-case.md</td><td class="mono">revenue-path.md</td><td>Always lowercase, no dates in filename (dates in frontmatter)</td></tr>
+  <tr><td>Wiki decisions</td><td class="mono">YYYY-MM-DD_slug.md</td><td class="mono">2026-04-08_second-brain.md</td><td>Dated prefix for chronological sort</td></tr>
+  <tr><td>Local folders</td><td class="mono">PascalCase/</td><td class="mono">Business/, FrankX/, SIS/</td><td>Top-level brand folders match brand names</td></tr>
+  <tr><td>Sub-folders</td><td class="mono">kebab-case/</td><td class="mono">content/, media/, products/</td><td>Internal folders always kebab</td></tr>
+  <tr><td>Linear issues</td><td class="mono">PREFIX-###: Verb Object</td><td class="mono">ARC-101: Ship first dollar</td><td>Prefix per brand: ARC, FX, SIS, BIZ, MUS</td></tr>
+  <tr><td>Linear projects</td><td class="mono">Brand: Project Name</td><td class="mono">Arcanea: MCP Server</td><td>Brand prefix in project name</td></tr>
+  <tr><td>Notion pages</td><td class="mono">Brand — Page Title</td><td class="mono">Arcanea — Design System</td><td>Em dash separator, no dates in titles</td></tr>
+  <tr><td>Notion databases</td><td class="mono">Plural Nouns</td><td class="mono">Products, Issues, Goals</td><td>Consistent across all hubs</td></tr>
+  <tr><td>GitHub repos</td><td class="mono">kebab-case</td><td class="mono">arcanea-ai-app</td><td>Under frankxai/ org</td></tr>
+  <tr><td>Git branches</td><td class="mono">type/scope-desc</td><td class="mono">feat/wiki-init</td><td>Types: feat, fix, docs, chore</td></tr>
+  <tr><td>Git commits</td><td class="mono">type(scope): desc</td><td class="mono">feat(wiki): seed arcanea domain</td><td>Scope = brand or module</td></tr>
+  <tr><td>Drive folders</td><td class="mono">Brand/Category/</td><td class="mono">Arcanea/Media/</td><td>PascalCase, matches local structure</td></tr>
+  <tr><td>Drive files</td><td class="mono">YYYYMMDD_Type_Title</td><td class="mono">20260408_Proposal_SIS_Acme.pdf</td><td>Date prefix for chronological sort</td></tr>
+  <tr><td>Obsidian notes</td><td class="mono">YYYY-MM-DD Topic.md</td><td class="mono">2026-04-08 Revenue Crisis.md</td><td>Space separator (Obsidian convention)</td></tr>
+  <tr><td>Auto-memory</td><td class="mono">type_slug.md</td><td class="mono">project_arcanea_state.md</td><td>Types: user_, feedback_, project_, reference_</td></tr>
+  <tr><td>Planning files</td><td class="mono">TYPE_YYYY-MM-DD.md</td><td class="mono">CURRENT_STATE_2026-04-08.md</td><td>SCREAMING_CASE type, dated</td></tr>
+</table>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<hr class="section-divider">
+<h2>8. Agent Maintenance Protocol</h2>
+
+<div class="grid-2">
+<div class="card">
+  <h3 style="margin-top:0;">Daily Agent Pass (9am, automated)</h3>
+  <table>
+    <tr><td>1</td><td>Read Linear active issues → update wiki/*/blockers.md</td></tr>
+    <tr><td>2</td><td>Read planning-files/CURRENT_STATE → update wiki/business/gate-system.md</td></tr>
+    <tr><td>3</td><td>Check revenue status → update wiki/arcanea/revenue-path.md</td></tr>
+    <tr><td>4</td><td>Count wiki articles + words → update wiki/meta/growth-log.md</td></tr>
+    <tr><td>5</td><td>Create interlinks between new and existing articles</td></tr>
+  </table>
+</div>
+
+<div class="card">
+  <h3 style="margin-top:0;">Weekly Agent Pass (Sundays, automated)</h3>
+  <table>
+    <tr><td>1</td><td>Harvest Obsidian ideas/ → wiki/learnings/ (new articles)</td></tr>
+    <tr><td>2</td><td>Scan Notion hubs → update wiki overviews</td></tr>
+    <tr><td>3</td><td>Review git log (all repos) → update wiki changelogs</td></tr>
+    <tr><td>4</td><td>Prune stale articles (>30 days without update → flag for review)</td></tr>
+    <tr><td>5</td><td>Generate wiki health report: coverage, gaps, staleness</td></tr>
+    <tr><td>6</td><td>Cross-pollinate: find patterns across brands → wiki/learnings/</td></tr>
+  </table>
+</div>
+</div>
+
+<div class="card" style="margin-top:1.5rem;">
+  <h3 style="margin-top:0;">Wiki Article Template</h3>
+  <div class="code-block"><span class="comment">---</span>
+<span class="dir">title:</span> <span class="file">Article Title</span>
+<span class="dir">domain:</span> <span class="file">arcanea | frankx | sis | music | business</span>
+<span class="dir">created:</span> <span class="file">2026-04-08</span>
+<span class="dir">updated:</span> <span class="file">2026-04-08</span>
+<span class="dir">author:</span> <span class="file">frank | claude | agent</span>
+<span class="dir">status:</span> <span class="file">seed | growing | mature | stale</span>
+<span class="dir">links:</span> <span class="file">[revenue-path, gate-system, blockers]</span>
+<span class="comment">---</span>
+
+<span class="comment"># Article Title</span>
+
+<span class="file">Core content here. Written in clear, dense prose.</span>
+<span class="file">Interlink to related articles: see [[arcanea/design-system]]</span>
+<span class="file">Reference external sources: [Linear ARC-101](https://linear.app/arcanea/issue/ARC-101)</span>
+
+<span class="comment">## Key Facts</span>
+<span class="file">- Fact 1</span>
+<span class="file">- Fact 2</span>
+
+<span class="comment">## Open Questions</span>
+<span class="file">- Question that needs resolution</span>
+
+<span class="comment">## History</span>
+<span class="file">- 2026-04-08: Article created (seed)</span>
+<span class="file">- 2026-04-15: Updated with Gate 0 achievement data</span></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<hr class="section-divider">
+<h2>9. Obsidian Integration (Without MCP)</h2>
+
+<div class="card">
+  <p style="font-size:0.9rem;margin-bottom:1rem;">No Obsidian MCP exists in the registry. Three integration paths:</p>
+  <table>
+    <tr><th>Option</th><th>How</th><th>Effort</th><th>Verdict</th></tr>
+    <tr><td><strong>A. File-based access</strong></td><td>Point Cowork at Obsidian vault folder on OneDrive. Read/write directly.</td><td>0 effort</td><td><span class="tag tag-live">use now</span></td></tr>
+    <tr><td><strong>B. Build Obsidian MCP</strong></td><td>Custom MCP server that reads vault, searches, creates notes. Use /mcp-builder skill.</td><td>2-4 hours</td><td><span class="tag tag-create">build later</span></td></tr>
+    <tr><td><strong>C. Obsidian REST plugin</strong></td><td>Install Obsidian Local REST API plugin + point MCP at localhost</td><td>30 min</td><td><span class="tag tag-create">consider</span></td></tr>
+  </table>
+  <p style="font-size:0.8rem;color:var(--muted);margin-top:0.5rem;"><strong>Recommendation:</strong> Start with A (file-based). If you find yourself wanting search/backlink features, build B using the mcp-builder skill. Option C requires Obsidian to be running.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<hr class="section-divider">
+<h2>10. Build Sequence</h2>
+
+<div class="card">
+<table>
+  <tr><th>#</th><th>Action</th><th>Who</th><th>Time</th><th>Status</th></tr>
+  <tr><td>1</td><td>Create Google Drive folder structure (FrankX Empire/ + 6 sub-folders)</td><td>Claude</td><td>5 min</td><td><span class="tag tag-create">now</span></td></tr>
+  <tr><td>2</td><td>Seed wiki structure in Business/wiki/ (README + all domain folders + templates)</td><td>Claude</td><td>15 min</td><td><span class="tag tag-create">now</span></td></tr>
+  <tr><td>3</td><td>Create FrankX + SIS Linear projects</td><td>Claude</td><td>5 min</td><td><span class="tag tag-create">now</span></td></tr>
+  <tr><td>4</td><td>Consolidate Notion hubs (merge 4 Arcanea → 1, merge 4 FrankX → 1)</td><td>Claude</td><td>20 min</td><td><span class="tag tag-create">next</span></td></tr>
+  <tr><td>5</td><td>Create Empire Dashboard in Notion (unified cross-brand view)</td><td>Claude</td><td>15 min</td><td><span class="tag tag-create">next</span></td></tr>
+  <tr><td>6</td><td>Seed wiki articles (10 core articles across all domains)</td><td>Claude</td><td>30 min</td><td><span class="tag tag-create">next</span></td></tr>
+  <tr><td>7</td><td>Create local folder structure (FrankX/, SIS/, Music/ with CLAUDE.md)</td><td>Frank</td><td>10 min</td><td><span class="tag tag-missing">frank</span></td></tr>
+  <tr><td>8</td><td>Set up scheduled tasks (daily + weekly wiki maintenance)</td><td>Claude</td><td>10 min</td><td><span class="tag tag-build">after seed</span></td></tr>
+  <tr><td>9</td><td>Init frankxai/second-brain GitHub repo</td><td>Frank</td><td>5 min</td><td><span class="tag tag-missing">frank</span></td></tr>
+  <tr><td>10</td><td>Build Obsidian MCP (optional, if file-based isn't enough)</td><td>Claude</td><td>2-4 hrs</td><td><span class="tag tag-build">later</span></td></tr>
+</table>
+</div>
+
+<div style="text-align:center;margin-top:3rem;padding:2rem;border-top:1px solid var(--border);">
+  <p style="font-family:'Space Grotesk',sans-serif;font-size:1.2rem;color:var(--gold);">One Brain. Many Brands. Agent-Maintained. Compounding Forever.</p>
+  <p style="color:var(--muted);font-size:0.8rem;margin-top:0.5rem;">Architecture v1.0 — April 8, 2026 — Frank Riemer × Claude</p>
+</div>
+
+</div>
+</body>
+</html>

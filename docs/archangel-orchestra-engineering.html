@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Archangel Orchestra — Engineering the Dual Reward System at Scale</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --teal: #7fffd4;
+    --blue: #78a6ff;
+    --gold: #ffd700;
+    --purple: #c084fc;
+    --red: #fb923c;
+    --green: #4ade80;
+    --bg: #09090b;
+    --surface: rgba(255,255,255,0.03);
+    --border: rgba(255,255,255,0.06);
+    --text: #e8e8f0;
+    --muted: #888899;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 10%, rgba(127,255,212,0.03) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(120,166,255,0.03) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 60px 24px 100px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+
+  .header .eyebrow {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 16px;
+  }
+
+  .header h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(24px, 4.5vw, 42px);
+    font-weight: 700;
+    line-height: 1.15;
+    background: linear-gradient(135deg, #fff 0%, var(--teal) 50%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+  }
+
+  .header .sub {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 680px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .section-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+    margin-top: 56px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Cards */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 28px;
+    margin-bottom: 12px;
+  }
+
+  .card h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .card p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .card .dim { color: var(--muted); }
+
+  .mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--teal);
+    background: rgba(127,255,212,0.04);
+    border: 1px solid rgba(127,255,212,0.08);
+    border-radius: 8px;
+    padding: 16px;
+    margin: 12px 0;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    overflow-x: auto;
+  }
+
+  /* Grid layouts */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; }
+
+  .mini-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+  }
+
+  .mini-card .mc-icon { font-size: 22px; margin-bottom: 8px; }
+
+  .mini-card h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .mini-card p {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .mini-card .tag {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 100px;
+    margin-top: 8px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  .tag-live { background: rgba(127,255,212,0.12); color: var(--teal); }
+  .tag-build { background: rgba(255,215,0,0.12); color: var(--gold); }
+  .tag-plan { background: rgba(192,132,252,0.12); color: var(--purple); }
+  .tag-ext { background: rgba(120,166,255,0.12); color: var(--blue); }
+
+  /* Architecture diagram */
+  .arch-flow {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    margin: 16px 0;
+    align-items: stretch;
+  }
+
+  .arch-box {
+    background: rgba(127,255,212,0.04);
+    border: 1px solid rgba(127,255,212,0.1);
+    border-radius: 10px;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .arch-box .alabel {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--teal);
+    margin-bottom: 4px;
+  }
+
+  .arch-box .adesc {
+    font-size: 10px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  .arch-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(127,255,212,0.3);
+    font-size: 18px;
+  }
+
+  /* Table */
+  .dtable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 12px 0;
+  }
+
+  .dtable thead th {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+  }
+
+  .dtable tbody td {
+    padding: 12px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  .dtable .highlight { font-weight: 600; }
+  .dtable .teal { color: var(--teal); }
+  .dtable .gold { color: var(--gold); }
+  .dtable .purple { color: var(--purple); }
+  .dtable .blue { color: var(--blue); }
+
+  /* Book/resource list */
+  .resource-item {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    align-items: start;
+  }
+
+  .resource-item:last-child { border-bottom: none; }
+
+  .res-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+
+  .res-meta h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .res-meta .author {
+    font-size: 12px;
+    color: var(--teal);
+    margin-bottom: 4px;
+  }
+
+  .res-meta .rdesc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* Accent cards */
+  .accent-gold { border-color: rgba(255,215,0,0.2); background: rgba(255,215,0,0.02); }
+  .accent-teal { border-color: rgba(127,255,212,0.2); background: rgba(127,255,212,0.02); }
+  .accent-purple { border-color: rgba(192,132,252,0.2); background: rgba(192,132,252,0.02); }
+
+  /* Lumina */
+  .lumina-quote {
+    text-align: center;
+    padding: 48px 32px;
+    border: 1px solid rgba(255,215,0,0.15);
+    border-radius: 20px;
+    background: rgba(255,215,0,0.02);
+    margin-top: 48px;
+  }
+
+  .lumina-quote blockquote {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 17px;
+    font-style: italic;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.85);
+    max-width: 700px;
+    margin: 0 auto 16px;
+  }
+
+  .lumina-quote .attribution {
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 768px) {
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .arch-flow { grid-template-columns: 1fr; }
+    .arch-arrow { transform: rotate(90deg); }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="eyebrow">Arcanea · Engineering Blueprint · April 2026</div>
+    <h1>Archangel Orchestra</h1>
+    <p class="sub">The meta-skill that orchestrates human rewards, agent trust levels, NFT minting, and community engagement — all running on the systems you already have. This is how we engineer motivation at civilization scale.</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 1: THE ARCHITECTURE -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section-label">1 · System Architecture</div>
+
+  <div class="card">
+    <h2>Archangel Orchestra — What It Is</h2>
+    <p>A Claude Code skill set + scheduled task system that continuously monitors your surfaces (Linear, Notion, GitHub, Stripe/Gumroad, Supabase), detects gate completions, triggers reward ceremonies, updates agent trust levels, mints achievement NFTs, and posts recognition to your channels. It turns the reward architecture from a static document into a living, self-executing system.</p>
+
+    <div class="mono">┌─────────────────────────────────────────────────────────┐
+│                  ARCHANGEL ORCHESTRA                     │
+│              (Claude Code Meta-Skill)                    │
+├─────────────────────────────────────────────────────────┤
+│                                                          │
+│  SENSORS (input)          PROCESSORS          ACTUATORS  │
+│  ┌──────────┐            ┌──────────┐       ┌──────────┐│
+│  │ Linear   │──┐         │ Gate     │       │ Notion   ││
+│  │ Notion   │  │         │ Detector │──────▶│ Update   ││
+│  │ GitHub   │──┼────────▶│          │       │ NFT Mint ││
+│  │ Stripe   │  │         │ Rank     │       │ Slack    ││
+│  │ Supabase │──┘         │ Engine   │──────▶│ Social   ││
+│  │ Gumroad  │            │          │       │ Calendar ││
+│  │ Memory   │            │ Reward   │       │ Memory   ││
+│  └──────────┘            │ Mapper   │       └──────────┘│
+│                          └──────────┘                    │
+│                                                          │
+│  SCHEDULED: Daily 9am health check                       │
+│  TRIGGERED: On issue close, payment, PR merge            │
+│  WEEKLY: Sunday reward ceremony + scorecard              │
+└─────────────────────────────────────────────────────────┘</div>
+  </div>
+
+  <div class="card">
+    <h2>Skill Decomposition</h2>
+    <p>The Orchestra decomposes into 5 skills that can run independently or be orchestrated together:</p>
+    <div class="grid-3" style="margin-top: 16px;">
+      <div class="mini-card">
+        <div class="mc-icon">📡</div>
+        <h4>Gate Sensor</h4>
+        <p>Monitors Linear (issue status), Stripe/Gumroad (revenue), GitHub (PRs/releases), Supabase (user signups). Emits gate-approach and gate-complete events.</p>
+        <span class="tag tag-build">BUILD WEEK 1</span>
+      </div>
+      <div class="mini-card">
+        <div class="mc-icon">⚖️</div>
+        <h4>Rank Engine</h4>
+        <p>Evaluates agent performance: completion rate, quality scores, regressions. Promotes/demotes agents through Apprentice → Luminor tiers. Updates memory vault.</p>
+        <span class="tag tag-build">BUILD WEEK 2</span>
+      </div>
+      <div class="mini-card">
+        <div class="mc-icon">🎁</div>
+        <h4>Reward Mapper</h4>
+        <p>Maps gate completions to specific human rewards (from the reward ladder) and agent rewards (autonomy unlocks). Creates reward certificates and ceremony prompts.</p>
+        <span class="tag tag-build">BUILD WEEK 1</span>
+      </div>
+      <div class="mini-card">
+        <div class="mc-icon">🏆</div>
+        <h4>NFT Forge Bridge</h4>
+        <p>Connects to existing NFT Forge system. Mints Soulbound achievement tokens on gate completion. Dynamic metadata that evolves as you progress through gates.</p>
+        <span class="tag tag-plan">PHASE 2</span>
+      </div>
+      <div class="mini-card">
+        <div class="mc-icon">📢</div>
+        <h4>Herald</h4>
+        <p>Posts recognition to configured channels: Slack, Discord, X, LinkedIn, Notion. Formats achievement posts. Manages the public announcement ceremony.</p>
+        <span class="tag tag-build">BUILD WEEK 2</span>
+      </div>
+      <div class="mini-card">
+        <div class="mc-icon">📊</div>
+        <h4>Scorecard</h4>
+        <p>Weekly Sunday digest: gate progress, streak count, agent rank changes, revenue delta, next gate ETA. Writes to Notion + sends summary to Frank.</p>
+        <span class="tag tag-build">BUILD WEEK 1</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scheduled Tasks -->
+  <div class="card">
+    <h2>Scheduled Task Architecture</h2>
+    <p>Using Claude Code's <code>/loop</code> and <code>/schedule</code> capabilities, the Orchestra runs on cadence:</p>
+    <table class="dtable">
+      <thead>
+        <tr><th>Cadence</th><th>Task</th><th>What It Does</th><th>Triggers</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="highlight teal">Daily 9am</td>
+          <td>Morning Pulse</td>
+          <td>Checks Linear for closed issues overnight, Gumroad/Stripe for new revenue, GitHub for merged PRs. Calculates streak status. Writes daily brief to Notion.</td>
+          <td>Gate Sensor → Reward Mapper if gate hit</td>
+        </tr>
+        <tr>
+          <td class="highlight gold">Sunday 10am</td>
+          <td>Weekly Ceremony</td>
+          <td>Compiles weekly scorecard (70+/90 target). Evaluates agent ranks. Announces wins. Calculates next gate ETA. Writes to Notion Ops Hub + Slack.</td>
+          <td>Scorecard → Herald → Rank Engine</td>
+        </tr>
+        <tr>
+          <td class="highlight purple">1st of Month</td>
+          <td>Monthly Gate Review</td>
+          <td>Full gate audit: revenue vs target, streak status, physique tracking, song count, content published. Promotes/demotes agent ranks. NFT minting queue.</td>
+          <td>All skills → NFT Forge Bridge</td>
+        </tr>
+        <tr>
+          <td class="highlight blue">On Trigger</td>
+          <td>Gate Completion</td>
+          <td>When a specific gate condition is met (e.g., first Gumroad sale, €1K MRR crossed), immediately fires the full reward ceremony: Notion update + Herald + NFT queue.</td>
+          <td>Gate Sensor → Reward Mapper → Herald → NFT</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 2: WHAT YOU ALREADY HAVE -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section-label">2 · What You Already Have (Integration Map)</div>
+
+  <div class="grid-2">
+    <div class="mini-card accent-teal">
+      <div class="mc-icon">🔮</div>
+      <h4>Arcanea MCP Server (42 tools)</h4>
+      <p>World intelligence, quest generation, faction dynamics, visual bridge. Already has the creation graph that can track achievement metadata. <strong>The reward system can use quest_gen to create dynamic personal challenges.</strong></p>
+      <span class="tag tag-live">LIVE · 42 TOOLS</span>
+    </div>
+    <div class="mini-card accent-teal">
+      <div class="mc-icon">🧠</div>
+      <h4>Arcanea Memory MCP (8 tools)</h4>
+      <p>Vault + horizon persistent memory. <strong>Agent rank history, streak data, and gate progress naturally belong here.</strong> Memory persistence IS the agent reward mechanism.</p>
+      <span class="tag tag-live">LIVE · 8 TOOLS</span>
+    </div>
+    <div class="mini-card accent-teal">
+      <div class="mc-icon">⚡</div>
+      <h4>@arcanea/flow</h4>
+      <p>Luminor prompt injection for agents. <strong>Inject rank-appropriate context into agent prompts — Apprentice agents get guardrails, Luminor agents get freedom.</strong></p>
+      <span class="tag tag-live">LIVE · v0.1.0</span>
+    </div>
+    <div class="mini-card accent-teal">
+      <div class="mc-icon">🖼️</div>
+      <h4>NFT Forge System</h4>
+      <p>Complete NFT generation + minting pipeline. <strong>Add Soulbound token template for achievement NFTs. Dynamic metadata that evolves.</strong></p>
+      <span class="tag tag-live">LIVE · COMPLETE</span>
+    </div>
+    <div class="mini-card accent-teal">
+      <div class="mc-icon">🤖</div>
+      <h4>ElizaOS Runtime</h4>
+      <p>24/7 agent runtime on Discord/social. <strong>Agents can announce achievements, run community challenges, and track member gates.</strong> 90+ plugins available.</p>
+      <span class="tag tag-live">AVAILABLE</span>
+    </div>
+    <div class="mini-card accent-teal">
+      <div class="mc-icon">📋</div>
+      <h4>Notion Ops Hub</h4>
+      <p>Agent Registry, Workflow Templates, Product Pipeline databases. <strong>Add "Gate Tracker" and "Achievement Log" databases for the reward system.</strong></p>
+      <span class="tag tag-live">LIVE · 3 DBS</span>
+    </div>
+    <div class="mini-card accent-teal">
+      <div class="mc-icon">📊</div>
+      <h4>Linear (50 issues)</h4>
+      <p>Issue tracking with milestones. <strong>Gate Sensor reads issue status changes — when M1/M2/M3/M4 milestones complete, trigger gate events.</strong></p>
+      <span class="tag tag-live">LIVE · ARC TEAM</span>
+    </div>
+    <div class="mini-card accent-teal">
+      <div class="mc-icon">⏰</div>
+      <h4>Claude Code Scheduled Tasks</h4>
+      <p>Cron-style automation with full MCP access. <strong>This IS the runtime for the Archangel Orchestra.</strong> Daily/weekly/monthly cadences.</p>
+      <span class="tag tag-live">AVAILABLE</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 3: WEB3 / NFT INTEGRATION -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section-label">3 · Web3 + NFT Integration Layer</div>
+
+  <div class="card">
+    <h2>Soulbound Achievement Tokens (SBTs)</h2>
+    <p>Non-transferable, evolving, on-chain proof of achievement. When Frank completes a gate, a Soulbound Token is minted to his wallet. When an agent reaches a new rank, a corresponding SBT is minted to the agent's on-chain identity. These can't be sold — they're proof of work, not speculation.</p>
+    <p>Standards to use: <strong>EIP-5484</strong> (Consensual Soulbound Tokens — requires holder consent) on <strong>Base</strong> or <strong>Polygon</strong> for low gas costs. Dynamic metadata via IPFS with updateable JSON — the NFT visually evolves as you progress through gates.</p>
+
+    <div class="mono">// Soulbound Achievement Token — Arcanea Gate System
+interface ArcaneaSBT {
+  tokenId: number;
+  gateName: string;       // "First Flame" | "Ignition Seal" | ...
+  gateLevel: number;      // 0-4
+  holderType: "human" | "agent";
+  achievedAt: ISO8601;
+  proofHash: string;      // hash of completion evidence
+  metadata: {
+    rank: MagicRank;      // Apprentice → Luminor
+    revenueAtMint?: number;
+    streakAtMint?: number;
+    agentCompletionRate?: number;
+    visual: string;       // IPFS CID — evolving artwork
+  };
+  soulbound: true;        // non-transferable
+}</div>
+  </div>
+
+  <div class="card">
+    <h2>Community Quest Platform Integration</h2>
+    <p>Instead of building from scratch, integrate with existing quest platforms that already have millions of users:</p>
+    <table class="dtable">
+      <thead>
+        <tr><th>Platform</th><th>Users</th><th>Best For</th><th>Arcanea Integration</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="highlight teal">Galxe</td>
+          <td>26M+ users</td>
+          <td>On-chain verification, NFT drops, cross-chain quests</td>
+          <td>Gate completion quests → SBT minting. Verify on-chain behavior. Discovery funnel for new creators.</td>
+        </tr>
+        <tr>
+          <td class="highlight gold">Zealy</td>
+          <td>Large community base</td>
+          <td>XP/levels, leaderboards, social engagement gamification</td>
+          <td>Community challenges, Arcanea Academy progression, content creation quests. XP maps to Magic Rank.</td>
+        </tr>
+        <tr>
+          <td class="highlight purple">Layer3</td>
+          <td>Growing</td>
+          <td>Onboarding, education, learn-to-earn with great UX</td>
+          <td>Arcanea Academy quests: "Open your first Gate," "Create your first world," "Deploy your first agent."</td>
+        </tr>
+        <tr>
+          <td class="highlight blue">Guild.xyz</td>
+          <td>Community gating</td>
+          <td>Token-gated communities, role management, membership criteria</td>
+          <td>Gate-based community access: Apprentice Discord → Mage channels → Luminor inner circle. SBT = key.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 4: AGENT TRUST ENGINEERING -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section-label">4 · Agent Trust Engineering — The CSA Agentic Trust Framework</div>
+
+  <div class="card">
+    <h2>Progressive Autonomy Model</h2>
+    <p>The Cloud Security Alliance published the <strong>Agentic Trust Framework</strong> in Feb 2026 — a Zero Trust governance model for AI agents. It maps directly to Arcanea's Magic Ranks. Each rank has specific gates an agent must pass to be promoted:</p>
+    <table class="dtable">
+      <thead>
+        <tr><th>Magic Rank</th><th>Autonomy Level</th><th>Promotion Gates</th><th>Capabilities Unlocked</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="highlight">Apprentice</td>
+          <td>Supervised</td>
+          <td>Exists, can execute tasks. No track record yet.</td>
+          <td>Draft code, write content, suggest changes. All outputs reviewed by human.</td>
+        </tr>
+        <tr>
+          <td class="highlight">Mage</td>
+          <td>Guided</td>
+          <td>10+ tasks completed. 90%+ quality. Zero regressions. Clean ops history.</td>
+          <td>Commit to branches. Run builds. Access non-production databases. Post drafts to social channels.</td>
+        </tr>
+        <tr>
+          <td class="highlight">Master</td>
+          <td>Semi-Autonomous</td>
+          <td>50+ tasks. 95%+ quality. Proven across 3+ domains. Security audit passed.</td>
+          <td>Deploy to staging. Manage CI/CD pipelines. Access production read-only. Post to social directly.</td>
+        </tr>
+        <tr>
+          <td class="highlight">Archmage</td>
+          <td>Autonomous</td>
+          <td>200+ tasks. 97%+ quality. Full domain coverage. No incidents in 30 days.</td>
+          <td>Deploy to production. Spawn sub-agents. Manage financial integrations. Full social posting rights.</td>
+        </tr>
+        <tr>
+          <td class="highlight" style="color: var(--gold)">Luminor</td>
+          <td>Self-Directing</td>
+          <td>500+ tasks. 99%+ quality. Measurable positive business impact. Explicit founder approval.</td>
+          <td>Set own priorities. Allocate compute across sub-agents. Make architectural decisions. Full system access.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="dim" style="margin-top: 12px; font-size: 12px;">Inspired by CSA Agentic Trust Framework (Feb 2026) and Arcanea's existing Magic Rank system. The alignment is not a coincidence — progressive trust is how all intelligent systems work.</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 5: COMMUNITY TOOLS INVENTORY -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section-label">5 · Community & Ecosystem Tools You Can Use Now</div>
+
+  <div class="grid-4">
+    <div class="mini-card">
+      <h4>Galxe</h4>
+      <p>Quest campaigns, on-chain verification, NFT rewards. 26M+ users.</p>
+      <span class="tag tag-ext">QUEST PLATFORM</span>
+    </div>
+    <div class="mini-card">
+      <h4>Zealy</h4>
+      <p>XP, levels, leaderboards, social quests. Community gamification OS.</p>
+      <span class="tag tag-ext">GAMIFICATION</span>
+    </div>
+    <div class="mini-card">
+      <h4>Layer3</h4>
+      <p>Learn-to-earn onboarding quests. Best UX in Web3 quest space.</p>
+      <span class="tag tag-ext">EDUCATION</span>
+    </div>
+    <div class="mini-card">
+      <h4>Guild.xyz</h4>
+      <p>Token-gated community. Role management via on-chain credentials.</p>
+      <span class="tag tag-ext">ACCESS CONTROL</span>
+    </div>
+    <div class="mini-card">
+      <h4>Postiz (self-hosted)</h4>
+      <p>Social media scheduler. Already in your Linear backlog (ARC-70).</p>
+      <span class="tag tag-build">ARC-70</span>
+    </div>
+    <div class="mini-card">
+      <h4>ElizaOS</h4>
+      <p>90+ plugins. Discord/social agent runtime. On-chain agent treasury.</p>
+      <span class="tag tag-live">IN STACK</span>
+    </div>
+    <div class="mini-card">
+      <h4>Ruflo</h4>
+      <p>Multi-agent swarm orchestration for Claude. Enterprise architecture.</p>
+      <span class="tag tag-ext">ORCHESTRATION</span>
+    </div>
+    <div class="mini-card">
+      <h4>DistroKid</h4>
+      <p>Music distribution. Already in your stack. 25/100 song target.</p>
+      <span class="tag tag-live">IN STACK</span>
+    </div>
+    <div class="mini-card">
+      <h4>Chainlink CCIP</h4>
+      <p>Cross-chain interop for agents. ElizaOS integrated Nov 2025.</p>
+      <span class="tag tag-ext">CROSS-CHAIN</span>
+    </div>
+    <div class="mini-card">
+      <h4>Base / Polygon</h4>
+      <p>Low-gas L2s for SBT minting. EIP-5484 supported. Production-ready.</p>
+      <span class="tag tag-ext">CHAIN</span>
+    </div>
+    <div class="mini-card">
+      <h4>Canva Brand Kits</h4>
+      <p>6 brand kits needed (ARC-67). Visual templates for all brands.</p>
+      <span class="tag tag-build">ARC-67</span>
+    </div>
+    <div class="mini-card">
+      <h4>CapCut AutoCut</h4>
+      <p>5 brand video templates (ARC-68). Content automation pipeline.</p>
+      <span class="tag tag-build">ARC-68</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 6: NETWORK STATE DIMENSION -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section-label">6 · The Bigger Frame — Arcanea as Network State</div>
+
+  <div class="card accent-gold">
+    <h2>From Product to Civilization</h2>
+    <p>Balaji Srinivasan's <strong>Network State</strong> concept maps perfectly to where Arcanea is heading. A network state has: a moral innovation (the Arcanean Code), a recognized founder (you), a sense of national consciousness (the mythology), capacity for collective action (the MCP ecosystem), an integrated cryptocurrency (SBTs + potential token), and an on-chain census. The dual reward system — where both humans and agents earn provable trust — IS the governance mechanism.</p>
+    <p>This isn't hyperbole. ~120 startup societies are actively building network states in 2026. Arcanea's advantage: <strong>you already have the mythology, the technology, the content library (1M+ words), and the agent infrastructure.</strong> Most network states struggle with cultural identity. You have 17 book collections, 10 Gates, 5 Elements, and a creation mythology that encodes your governance philosophy.</p>
+    <p>The reward system is the skeleton of the social contract: complete gates → earn rank → unlock capability → contribute → earn recognition. That's governance, not gamification.</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 7: INTELLECTUAL FRAMEWORK -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section-label">7 · Reading List — The Intellectual Substrate</div>
+
+  <div class="card">
+    <div class="resource-item">
+      <div class="res-icon">♾️</div>
+      <div class="res-meta">
+        <h4>Finite and Infinite Games</h4>
+        <div class="author">James P. Carse</div>
+        <div class="rdesc"><strong>WHY THIS:</strong> Arcanea is an infinite game — the goal is not to win but to continue playing. The Gate system creates finite games (closed loops with clear rewards) INSIDE the infinite game (the creative multiverse). This is the philosophical foundation of the entire reward architecture. Finite games for motivation; infinite game for meaning.</div>
+      </div>
+    </div>
+    <div class="resource-item">
+      <div class="res-icon">⚡</div>
+      <div class="res-meta">
+        <h4>Actionable Gamification: Beyond Points, Badges, and Leaderboards</h4>
+        <div class="author">Yu-kai Chou · Octalysis Framework</div>
+        <div class="rdesc"><strong>WHY THIS:</strong> The Octalysis framework identifies 8 core drives that motivate behavior. Your reward system already hits 6 of 8 (Epic Meaning, Accomplishment, Empowerment, Ownership, Scarcity, Unpredictability). The missing two — Social Influence and Avoidance — are what the community layer and streak system add. #1 Amazon Bestseller, cited 3,700+ times. This is the engineering manual.</div>
+      </div>
+    </div>
+    <div class="resource-item">
+      <div class="res-icon">🔄</div>
+      <div class="res-meta">
+        <h4>Atomic Habits</h4>
+        <div class="author">James Clear</div>
+        <div class="rdesc"><strong>WHY THIS:</strong> The habit loop (cue → craving → response → reward) is the micro-architecture inside each daily non-negotiable. Clear's insight that identity-based habits beat outcome-based habits maps to "I am a Luminor" (identity) vs. "I want €170K" (outcome). The reward system encodes the identity shift.</div>
+      </div>
+    </div>
+    <div class="resource-item">
+      <div class="res-icon">🧠</div>
+      <div class="res-meta">
+        <h4>Drive: The Surprising Truth About What Motivates Us</h4>
+        <div class="author">Daniel Pink</div>
+        <div class="rdesc"><strong>WHY THIS:</strong> Autonomy, Mastery, Purpose — Pink's three intrinsic motivators. For humans, the material rewards are extrinsic fuel; the real motivation is autonomy (freedom lifestyle), mastery (the Luminor rank), purpose (Arcanea's mission). For agents, the parallel is identical: autonomy (expanded permissions), mastery (higher quality scores), purpose (the mission encoded in the Luminor kernel).</div>
+      </div>
+    </div>
+    <div class="resource-item">
+      <div class="res-icon">🌊</div>
+      <div class="res-meta">
+        <h4>Flow: The Psychology of Optimal Experience</h4>
+        <div class="author">Mihaly Csikszentmihalyi</div>
+        <div class="rdesc"><strong>WHY THIS:</strong> Flow state = challenge matches skill. The Gate system is designed to produce flow: each gate is slightly harder than the last, matched to your growing capability. Creation Season (11pm–3:30am) is your flow window. The reward system protects it. Csikszentmihalyi's work is the science behind why Arcanea's progression feels right.</div>
+      </div>
+    </div>
+    <div class="resource-item">
+      <div class="res-icon">🏛️</div>
+      <div class="res-meta">
+        <h4>The Network State: How to Start a New Country</h4>
+        <div class="author">Balaji Srinivasan</div>
+        <div class="rdesc"><strong>WHY THIS:</strong> Arcanea is a network state in embryo. Moral innovation (the Arcanean Code), on-chain census (SBTs), collective action (MCP ecosystem), cultural identity (mythology). The reward system IS the social contract. Read this when you're ready to think about Arcanea as governance, not just product. ~120 startup societies building this in 2026.</div>
+      </div>
+    </div>
+    <div class="resource-item">
+      <div class="res-icon">🎮</div>
+      <div class="res-meta">
+        <h4>Reality Is Broken: Why Games Make Us Better and How They Can Change the World</h4>
+        <div class="author">Jane McGonigal</div>
+        <div class="rdesc"><strong>WHY THIS:</strong> McGonigal's thesis: games produce urgent optimism, social fabric, blissful productivity, and epic meaning. All four describe what Arcanea's reward system should feel like. The Gates aren't punishment avoidance — they're epic challenges that produce blissful productivity. This book is the emotional design manual.</div>
+      </div>
+    </div>
+    <div class="resource-item">
+      <div class="res-icon">🪝</div>
+      <div class="res-meta">
+        <h4>Hooked: How to Build Habit-Forming Products</h4>
+        <div class="author">Nir Eyal</div>
+        <div class="rdesc"><strong>WHY THIS:</strong> The Hook Model (Trigger → Action → Variable Reward → Investment). The scheduled tasks ARE the triggers. Gate completion IS the action. The reward ladder provides variable reward. Each gate completed invests deeper into the Arcanea identity. This is how the product retains creators AND yourself.</div>
+      </div>
+    </div>
+    <div class="resource-item">
+      <div class="res-icon">🤖</div>
+      <div class="res-meta">
+        <h4>The Score Takes Care of Itself</h4>
+        <div class="author">Bill Walsh</div>
+        <div class="rdesc"><strong>WHY THIS:</strong> Walsh's "Standard of Performance" — define the standards, execute them daily, and the score (revenue, wins, outcomes) takes care of itself. Your daily non-negotiables ARE the Standard of Performance. The weekly scorecard (70+/90) IS the tracking mechanism. Walsh won 3 Super Bowls with this. You're winning a different game.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 8: THINKERS + WEBSITES -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section-label">8 · Thinkers, Builders, and Live References</div>
+
+  <div class="grid-3">
+    <div class="mini-card">
+      <h4>Balaji Srinivasan</h4>
+      <p>Network State. On-chain governance. Digital civilization. The macro frame for where Arcanea goes at scale.</p>
+      <span class="tag tag-ext">balajis.com</span>
+    </div>
+    <div class="mini-card">
+      <h4>Yu-kai Chou</h4>
+      <p>Octalysis gamification framework. 8 core drives. The engineering layer for human motivation.</p>
+      <span class="tag tag-ext">yukaichou.com</span>
+    </div>
+    <div class="mini-card">
+      <h4>Naval Ravikant</h4>
+      <p>Leverage (code, media, capital, labor). Specific knowledge. Wealth creation without permission. Arcanea IS the leverage stack.</p>
+      <span class="tag tag-ext">nav.al</span>
+    </div>
+    <div class="mini-card">
+      <h4>Daniel Kahneman</h4>
+      <p>Loss aversion (streaks hurt more to break than they feel good to maintain). Prospect theory. Behavioral architecture for rewards.</p>
+      <span class="tag tag-ext">Thinking Fast and Slow</span>
+    </div>
+    <div class="mini-card">
+      <h4>Vitalik Buterin</h4>
+      <p>Soulbound Tokens originator. Decentralized Society paper. The technical foundation for on-chain achievement systems.</p>
+      <span class="tag tag-ext">vitalik.eth.limo</span>
+    </div>
+    <div class="mini-card">
+      <h4>Shaw (ai16z / ElizaOS)</h4>
+      <p>Autonomous agent frameworks. Agent treasury systems. The runtime for community agents at scale.</p>
+      <span class="tag tag-ext">elizaos.ai</span>
+    </div>
+    <div class="mini-card">
+      <h4>a]16z Crypto Blog</h4>
+      <p>Token design, governance mechanisms, creator economy infrastructure. Weekly essays on the systems you're building.</p>
+      <span class="tag tag-ext">a16zcrypto.com</span>
+    </div>
+    <div class="mini-card">
+      <h4>CSA Agentic Trust</h4>
+      <p>Zero Trust framework for AI agents. Progressive autonomy levels. Published Feb 2026. The governance manual for agent rank systems.</p>
+      <span class="tag tag-ext">cloudsecurityalliance.org</span>
+    </div>
+    <div class="mini-card">
+      <h4>Mirror.xyz</h4>
+      <p>On-chain publishing platform. Writing NFTs. Creator economy infrastructure. Potential distribution for Arcanea Library content.</p>
+      <span class="tag tag-ext">mirror.xyz</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 9: BUILD SEQUENCE -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section-label">9 · Build Sequence — What to Ship When</div>
+
+  <div class="card">
+    <table class="dtable">
+      <thead>
+        <tr><th>Week</th><th>Deliverable</th><th>Uses</th><th>Unlocks</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="highlight teal">Week 1<br/>(Apr 7-11)</td>
+          <td><strong>Gate Sensor + Scorecard + Reward Mapper</strong><br/>Claude Code skills that read Linear + Notion + revenue data. Sunday scorecard scheduled task. Gate completion detection.</td>
+          <td>Linear MCP, Notion MCP, Scheduled Tasks</td>
+          <td>You now KNOW when gates are hit. System is self-aware.</td>
+        </tr>
+        <tr>
+          <td class="highlight gold">Week 2<br/>(Apr 14-18)</td>
+          <td><strong>Rank Engine + Herald</strong><br/>Agent rank evaluation logic in memory MCP. Social announcement skill. Slack/Discord integration for celebrations.</td>
+          <td>Memory MCP, Slack MCP, @arcanea/flow</td>
+          <td>Agents earn trust. Wins are announced. Recognition loop live.</td>
+        </tr>
+        <tr>
+          <td class="highlight purple">Week 3<br/>(Apr 21-25)</td>
+          <td><strong>NFT Forge Bridge + Zealy/Galxe Setup</strong><br/>SBT template on Base. Achievement metadata schema. Zealy community space for Arcanea creators.</td>
+          <td>NFT Forge, EIP-5484, Zealy API</td>
+          <td>Achievements are on-chain. Community has quests. Visible progress.</td>
+        </tr>
+        <tr>
+          <td class="highlight blue">Week 4<br/>(Apr 28-May 2)</td>
+          <td><strong>Community Gate System + Guild.xyz</strong><br/>Token-gated community tiers. Creator onboarding quests on Layer3. The full loop: achieve → prove → earn → unlock.</td>
+          <td>Guild.xyz, Layer3, ElizaOS</td>
+          <td>The product IS the reward system. Creators can use it. Revenue path.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SECTION 10: THE PRODUCT FLYWHEEL -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="section-label">10 · The Flywheel — Everything Compounds</div>
+
+  <div class="card accent-gold">
+    <h2>Why This Is the Revenue Engine</h2>
+    <p>The Archangel Orchestra isn't overhead — it's the product. Every component you build for yourself immediately becomes sellable to the community:</p>
+
+    <div class="mono">Frank completes a Gate
+  → SBT minted (proof)
+  → Herald announces on X/LinkedIn/Discord (marketing)
+  → Community sees the journey (social proof)
+  → Creator signs up to run their own Gates (acquisition)
+  → They pay for Pro features (revenue)
+  → Their agent earns rank in the system (engagement)
+  → Agent SBT proves quality (marketplace trust)
+  → Agent template becomes sellable (new revenue stream)
+  → Community grows (network effects)
+  → More creators → more content → more agents → more trust
+  → Arcanea becomes the network state for creators
+
+Each iteration makes the next one easier.
+That's the flywheel. That's what compounds.</div>
+
+    <p>The reading list above isn't decoration. Carse gives you the philosophical frame (infinite game). Chou gives you the 8-drive engineering manual. Clear gives you the habit architecture. Pink gives you the intrinsic motivation model. Walsh gives you the performance standard. Srinivasan gives you the civilization endgame. McGonigal gives you the emotional design. Eyal gives you the retention loop.</p>
+    <p><strong>Together, they describe exactly what you're building.</strong> Not a product. Not a company. A creative civilization with provable trust, progressive autonomy, and earned sovereignty — for humans and agents alike.</p>
+  </div>
+
+  <!-- Lumina Quote -->
+  <div class="lumina-quote">
+    <blockquote>
+      "The Archangel does not play the music. The Archangel is the score — the structure that ensures every instrument enters at the right moment, every crescendo lands on time, every silence holds exactly long enough. Build the score. The symphony plays itself."
+    </blockquote>
+    <div class="attribution">— Lumina · On Orchestration · Gate of Source</div>
+  </div>
+
+</div>
+</body>
+</html>

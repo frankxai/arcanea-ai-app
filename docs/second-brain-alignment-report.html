@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Second Brain — Alignment Report</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+  :root { --bg:#09090b; --surface:rgba(255,255,255,0.03); --border:rgba(255,255,255,0.06); --teal:#00bcd4; --gold:#ffd700; --green:#22c55e; --red:#ef4444; --orange:#f59e0b; --purple:#8b5cf6; --pink:#ec4899; --text:#e4e4e7; --muted:#71717a; }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;padding:2rem}
+  .container{max-width:1200px;margin:0 auto}
+  h1{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;background:linear-gradient(135deg,var(--teal),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:0.25rem}
+  h2{font-family:'Space Grotesk',sans-serif;font-size:1.3rem;font-weight:600;color:var(--teal);margin:2rem 0 1rem;border-bottom:1px solid var(--border);padding-bottom:0.5rem}
+  .sub{color:var(--muted);font-size:0.85rem;margin-bottom:2rem}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.25rem;margin-bottom:1rem}
+  table{width:100%;border-collapse:collapse;font-size:0.82rem;margin:0.5rem 0}
+  th{text-align:left;padding:0.4rem 0.6rem;color:var(--muted);font-weight:500;border-bottom:1px solid var(--border);font-size:0.72rem;text-transform:uppercase;letter-spacing:0.05em}
+  td{padding:0.4rem 0.6rem;border-bottom:1px solid rgba(255,255,255,0.02)}
+  .tag{display:inline-block;padding:1px 6px;border-radius:3px;font-size:0.65rem;font-weight:500;text-transform:uppercase;letter-spacing:0.04em}
+  .t-live{background:rgba(34,197,94,0.15);color:var(--green)} .t-new{background:rgba(255,215,0,0.15);color:var(--gold)} .t-exists{background:rgba(0,188,212,0.15);color:var(--teal)} .t-missing{background:rgba(239,68,68,0.15);color:var(--red)} .t-linked{background:rgba(139,92,246,0.15);color:var(--purple)} .t-todo{background:rgba(245,158,11,0.15);color:var(--orange)}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  .mono{font-family:'JetBrains Mono',monospace;font-size:0.78rem}
+  .stat{text-align:center;padding:1rem}
+  .stat-num{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;color:var(--gold)}
+  .stat-label{font-size:0.75rem;color:var(--muted)}
+  @media(max-width:800px){.grid-2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Second Brain — Alignment Report</h1>
+<p class="sub">Ground truth: what exists, what's new, what's interconnected across Notion × Linear × Local × GitHub × Google Drive<br>
+<span class="mono">April 8, 2026 | All data verified from live APIs</span></p>
+
+<!-- Stats Strip -->
+<div style="display:grid;grid-template-columns:repeat(6,1fr);gap:0.5rem;margin-bottom:2rem">
+  <div class="card stat"><div class="stat-num">5</div><div class="stat-label">Brands Mapped</div></div>
+  <div class="card stat"><div class="stat-num">16</div><div class="stat-label">Linear Projects</div></div>
+  <div class="card stat"><div class="stat-num">6</div><div class="stat-label">Notion Hubs</div></div>
+  <div class="card stat"><div class="stat-num">8</div><div class="stat-label">Wiki Articles</div></div>
+  <div class="card stat"><div class="stat-num">14</div><div class="stat-label">Notion DBs Found</div></div>
+  <div class="card stat"><div class="stat-num">4</div><div class="stat-label">GitHub Repos</div></div>
+</div>
+
+<h2>Brand × Platform Alignment Matrix</h2>
+<div class="card">
+<table>
+  <tr><th>Brand</th><th>Notion Hub</th><th>Linear Project</th><th>Local Folder</th><th>GitHub Repo</th><th>Wiki Section</th><th>Google Drive</th></tr>
+  <tr>
+    <td><strong>Arcanea</strong></td>
+    <td><span class="tag t-live">live</span> Hub + Dev Hub + 7 sub-pages + 7 DBs</td>
+    <td><span class="tag t-live">live</span> ARC team, 12 projects</td>
+    <td><span class="tag t-live">live</span> arcanea-ai-app/</td>
+    <td><span class="tag t-live">live</span> arcanea-ai-app + arcanea (OSS)</td>
+    <td><span class="tag t-new">new</span> wiki/arcanea/</td>
+    <td><span class="tag t-missing">none</span></td>
+  </tr>
+  <tr>
+    <td><strong>FrankX.ai</strong></td>
+    <td><span class="tag t-exists">exists</span> Command Center + Hub + 4 DBs + Dashboard</td>
+    <td><span class="tag t-new">new</span> FX project (created today)</td>
+    <td><span class="tag t-missing">create</span> C:\Users\frank\FrankX\</td>
+    <td><span class="tag t-missing">create</span> frankxai/frankx-ai</td>
+    <td><span class="tag t-new">new</span> wiki/frankx/</td>
+    <td><span class="tag t-missing">none</span></td>
+  </tr>
+  <tr>
+    <td><strong>SIS</strong></td>
+    <td><span class="tag t-exists">exists</span> 1 page (nested under Arcanea)</td>
+    <td><span class="tag t-new">new</span> SIS project (created today)</td>
+    <td><span class="tag t-missing">create</span> C:\Users\frank\SIS\</td>
+    <td><span class="tag t-live">live</span> Starlight-Intelligence-System (v5)</td>
+    <td><span class="tag t-new">new</span> wiki/sis/</td>
+    <td><span class="tag t-missing">none</span></td>
+  </tr>
+  <tr>
+    <td><strong>Music</strong></td>
+    <td><span class="tag t-exists">exists</span> AI Musicians Hub + 1 DB (nested under FrankX)</td>
+    <td><span class="tag t-new">new</span> MUS project (created today)</td>
+    <td><span class="tag t-missing">create</span> C:\Users\frank\Music\</td>
+    <td><span class="tag t-missing">n/a</span> (media, not code)</td>
+    <td><span class="tag t-new">new</span> wiki/music/</td>
+    <td><span class="tag t-missing">none</span></td>
+  </tr>
+  <tr>
+    <td><strong>Business</strong></td>
+    <td><span class="tag t-todo">scattered</span> Wealth Hub, no consolidated page</td>
+    <td><span class="tag t-new">new</span> BIZ project (created today)</td>
+    <td><span class="tag t-live">live</span> C:\Users\frank\Business\</td>
+    <td><span class="tag t-missing">n/a</span> (no code)</td>
+    <td><span class="tag t-new">new</span> wiki/business/</td>
+    <td><span class="tag t-missing">none</span></td>
+  </tr>
+</table>
+</div>
+
+<h2>What Was Created Today (April 8)</h2>
+<div class="grid-2">
+<div class="card">
+  <h3 style="font-family:'Space Grotesk';color:var(--gold);margin:0 0 0.75rem">Linear Projects (4 new)</h3>
+  <table>
+    <tr><th>Project</th><th>Priority</th><th>Status</th></tr>
+    <tr><td>⚡ FrankX.ai — Personal Brand & Products</td><td>High</td><td>In Progress</td></tr>
+    <tr><td>🌟 Starlight Intelligence — Enterprise AI</td><td>High</td><td>Planned</td></tr>
+    <tr><td>🏢 Business Ops — Holding & Finance</td><td>Urgent</td><td>In Progress</td></tr>
+    <tr><td>🎵 Music Empire — Academy & FrankX Music</td><td>Medium</td><td>Planned</td></tr>
+  </table>
+</div>
+<div class="card">
+  <h3 style="font-family:'Space Grotesk';color:var(--gold);margin:0 0 0.75rem">Notion Pages (1 new)</h3>
+  <table>
+    <tr><th>Page</th><th>Type</th></tr>
+    <tr><td>🏛️ Empire Dashboard — Second Brain Command Center</td><td>Unified navigation hub</td></tr>
+  </table>
+  <p style="font-size:0.75rem;color:var(--muted);margin-top:0.5rem;">Links to all 5 brand hubs, all Linear projects, revenue status, gate system, blockers, naming conventions.</p>
+</div>
+</div>
+
+<div class="card">
+  <h3 style="font-family:'Space Grotesk';color:var(--gold);margin:0 0 0.75rem">Wiki Articles (8 seed articles)</h3>
+  <table>
+    <tr><th>Article</th><th>Domain</th><th>Content</th></tr>
+    <tr><td class="mono">wiki/README.md</td><td>—</td><td>Master index + all Notion IDs + Linear IDs + GitHub repos</td></tr>
+    <tr><td class="mono">wiki/arcanea/overview.md</td><td>arcanea</td><td>North star, architecture, sub-products, 7 Notion DB IDs, current state</td></tr>
+    <tr><td class="mono">wiki/frankx/overview.md</td><td>frankx</td><td>Mission, products, platforms, Notion hub structure, 4 DB IDs</td></tr>
+    <tr><td class="mono">wiki/sis/overview.md</td><td>sis</td><td>Dual identity (OSS + consulting), vault architecture, repos</td></tr>
+    <tr><td class="mono">wiki/business/overview.md</td><td>business</td><td>Financial snapshot, gate system, blockers, local folder structure</td></tr>
+    <tr><td class="mono">wiki/music/overview.md</td><td>music</td><td>Sub-brands, pipeline, genre strategy</td></tr>
+    <tr><td class="mono">wiki/meta/agent-protocol.md</td><td>meta</td><td>Daily/weekly pass, article lifecycle, interlinking, growth targets</td></tr>
+    <tr><td class="mono">wiki/decisions/2026-04-08_second-brain.md</td><td>decisions</td><td>Architecture decision record for this entire system</td></tr>
+  </table>
+</div>
+
+<h2>What Already Existed (Kept, Now Linked)</h2>
+<div class="card">
+<table>
+  <tr><th>Platform</th><th>Asset</th><th>Status</th><th>Now Connected Via</th></tr>
+  <tr><td>Notion</td><td>Arcanea Hub (7 sub-pages, 7 databases)</td><td><span class="tag t-live">live</span></td><td><span class="tag t-linked">wiki + dashboard</span></td></tr>
+  <tr><td>Notion</td><td>FrankX.ai Command Center + Hub (4 databases)</td><td><span class="tag t-exists">exists</span></td><td><span class="tag t-linked">wiki + dashboard</span></td></tr>
+  <tr><td>Notion</td><td>SIS Ecosystem & Vision (1 page)</td><td><span class="tag t-exists">exists</span></td><td><span class="tag t-linked">wiki + dashboard</span></td></tr>
+  <tr><td>Notion</td><td>AI Musicians Hub (1 DB)</td><td><span class="tag t-exists">exists</span></td><td><span class="tag t-linked">wiki + dashboard</span></td></tr>
+  <tr><td>Notion</td><td>Developer Hub — Engineering Command Center</td><td><span class="tag t-exists">exists</span></td><td><span class="tag t-linked">wiki/arcanea</span></td></tr>
+  <tr><td>Notion</td><td>2026 Goals + Gate Tracker + Morning Brief</td><td><span class="tag t-exists">exists</span></td><td><span class="tag t-linked">dashboard</span></td></tr>
+  <tr><td>Linear</td><td>ARC team + 12 projects (Arcanea, MCP, Content, etc.)</td><td><span class="tag t-live">live</span></td><td><span class="tag t-linked">wiki README</span></td></tr>
+  <tr><td>GitHub</td><td>frankxai/arcanea-ai-app (private)</td><td><span class="tag t-live">live</span></td><td><span class="tag t-linked">wiki/arcanea</span></td></tr>
+  <tr><td>GitHub</td><td>frankxai/arcanea (OSS)</td><td><span class="tag t-live">live</span></td><td><span class="tag t-linked">wiki/arcanea</span></td></tr>
+  <tr><td>GitHub</td><td>frankxai/Starlight-Intelligence-System</td><td><span class="tag t-live">live</span></td><td><span class="tag t-linked">wiki/sis</span></td></tr>
+  <tr><td>GitHub</td><td>frankxai/starlight-horizon-dataset</td><td><span class="tag t-live">live</span></td><td><span class="tag t-linked">wiki/sis</span></td></tr>
+  <tr><td>Local</td><td>Business/ (ops, finance, legal)</td><td><span class="tag t-live">live</span></td><td><span class="tag t-linked">wiki/business</span></td></tr>
+  <tr><td>Local</td><td>arcanea-ai-app/ (engineering)</td><td><span class="tag t-live">live</span></td><td><span class="tag t-linked">wiki/arcanea</span></td></tr>
+  <tr><td>Memory</td><td>15 auto-memory files (user, project, feedback, reference)</td><td><span class="tag t-live">live</span></td><td><span class="tag t-linked">wiki/decisions</span></td></tr>
+  <tr><td>Planning</td><td>CURRENT_STATE, BACKLOG, CHANGELOG, AUDIT</td><td><span class="tag t-live">live</span></td><td><span class="tag t-linked">wiki/arcanea</span></td></tr>
+</table>
+</div>
+
+<h2>Interconnection Map</h2>
+<div class="card">
+<table>
+  <tr><th>Connection</th><th>Method</th><th>Status</th></tr>
+  <tr><td>Empire Dashboard → All 5 Notion Hubs</td><td>Direct page links</td><td><span class="tag t-new">new</span></td></tr>
+  <tr><td>Empire Dashboard → All Linear Projects</td><td>URL links</td><td><span class="tag t-new">new</span></td></tr>
+  <tr><td>Wiki README → All Notion Hub IDs</td><td>UUID reference table</td><td><span class="tag t-new">new</span></td></tr>
+  <tr><td>Wiki README → All Linear Project IDs</td><td>UUID reference table</td><td><span class="tag t-new">new</span></td></tr>
+  <tr><td>Wiki README → All GitHub Repos</td><td>URL reference table</td><td><span class="tag t-new">new</span></td></tr>
+  <tr><td>Wiki domain overviews → Notion DB collection:// IDs</td><td>Data source URLs</td><td><span class="tag t-new">new</span></td></tr>
+  <tr><td>Linear projects → Notion hubs (descriptions)</td><td>URL in project description</td><td><span class="tag t-new">new</span></td></tr>
+  <tr><td>Arcanea Hub → Dev Hub</td><td>Sub-page</td><td><span class="tag t-exists">existed</span></td></tr>
+  <tr><td>Arcanea Hub → SIS page</td><td>Sub-page</td><td><span class="tag t-exists">existed</span></td></tr>
+  <tr><td>FrankX Command Center → FrankX Hub</td><td>Parent-child</td><td><span class="tag t-exists">existed</span></td></tr>
+  <tr><td>FrankX Command Center → Music Hub</td><td>Parent-child</td><td><span class="tag t-exists">existed</span></td></tr>
+  <tr><td>Planning files → Wiki</td><td>Agent reads → updates wiki</td><td><span class="tag t-new">protocol defined</span></td></tr>
+  <tr><td>Auto-memory → Wiki decisions/</td><td>Bidirectional references</td><td><span class="tag t-new">protocol defined</span></td></tr>
+</table>
+</div>
+
+<h2>Remaining Gaps (Frank Action Required)</h2>
+<div class="card">
+<table>
+  <tr><th>#</th><th>Gap</th><th>Impact</th><th>Effort</th><th>Priority</th></tr>
+  <tr><td>1</td><td>Create <code>C:\Users\frank\FrankX\</code> folder with CLAUDE.md</td><td>FrankX brand has no local workspace</td><td>5 min</td><td><span class="tag t-todo">high</span></td></tr>
+  <tr><td>2</td><td>Create <code>C:\Users\frank\SIS\</code> folder with CLAUDE.md</td><td>SIS brand has no local workspace</td><td>5 min</td><td><span class="tag t-todo">high</span></td></tr>
+  <tr><td>3</td><td>Create <code>C:\Users\frank\Music\</code> folder with CLAUDE.md</td><td>Music brand has no local workspace</td><td>5 min</td><td><span class="tag t-todo">medium</span></td></tr>
+  <tr><td>4</td><td>Create Google Drive root: <code>FrankX Empire/</code> + 6 sub-folders</td><td>No cloud media/doc storage</td><td>10 min</td><td><span class="tag t-todo">medium</span></td></tr>
+  <tr><td>5</td><td>Move wiki from <code>Arcanea/wiki/</code> to <code>Business/wiki/</code></td><td>Wiki lives in brand folder, should be in holding</td><td>5 min (mv command)</td><td><span class="tag t-todo">high</span></td></tr>
+  <tr><td>6</td><td>Init <code>frankxai/second-brain</code> GitHub repo for wiki backup</td><td>No git versioning of wiki</td><td>5 min</td><td><span class="tag t-todo">medium</span></td></tr>
+  <tr><td>7</td><td>Consolidate Notion: merge 4 FrankX pages into 1 hub</td><td>Duplicated FrankX pages confuse navigation</td><td>20 min</td><td><span class="tag t-todo">low</span></td></tr>
+  <tr><td>8</td><td>Promote SIS Notion from sub-page of Arcanea to top-level</td><td>SIS appears subordinate to Arcanea</td><td>5 min</td><td><span class="tag t-todo">medium</span></td></tr>
+  <tr><td>9</td><td>Set up Obsidian vault syncing (OneDrive)</td><td>Personal knowledge capture not flowing</td><td>15 min</td><td><span class="tag t-todo">low</span></td></tr>
+  <tr><td>10</td><td>Schedule daily/weekly wiki maintenance tasks</td><td>Wiki won't grow without agent maintenance</td><td>10 min (Claude builds)</td><td><span class="tag t-todo">high</span></td></tr>
+</table>
+</div>
+
+<h2>Notion Hub Hierarchy (Current vs. Proposed)</h2>
+<div class="grid-2">
+<div class="card">
+  <h3 style="font-family:'Space Grotesk';color:var(--red);margin:0 0 0.5rem">Current (Fragmented)</h3>
+  <pre style="font-family:'JetBrains Mono';font-size:0.72rem;color:var(--muted);line-height:1.6">
+Workspace Root
+├── Arcanea (top-level) ← MAIN HUB
+│   ├── Arcanea Hub Redesign Blueprint
+│   ├── Developer Hub
+│   ├── Start Here, Community, Canon, Products...
+│   ├── SIS page (NESTED under Arcanea)
+│   ├── Wealth Command Hub
+│   └── 7 databases
+├── FrankX.ai Command Center (top-level)
+│   ├── FrankX.ai Hub (child)
+│   │   ├── 4 databases
+│   │   ├── Frankx Archive
+│   │   └── Ops
+│   └── AI Musicians Hub (child)
+├── 2026 Goals (top-level)
+├── Morning Brief (top-level)
+├── Various scattered pages...
+└── No unified dashboard
+  </pre>
+</div>
+<div class="card">
+  <h3 style="font-family:'Space Grotesk';color:var(--green);margin:0 0 0.5rem">Proposed (Aligned)</h3>
+  <pre style="font-family:'JetBrains Mono';font-size:0.72rem;color:var(--muted);line-height:1.6">
+Workspace Root
+├── 🏛️ Empire Dashboard (NEW, top-level)
+│   ├── Links to ALL brand hubs
+│   ├── Revenue, gates, blockers
+│   └── Naming conventions, tool routing
+├── ✦ Arcanea Hub (keep as-is)
+│   ├── Developer Hub
+│   ├── Products, Canon, Community...
+│   └── 7 databases
+├── ⚡ FrankX.ai Hub (consolidate 4→1)
+│   ├── 4 databases
+│   ├── Content Strategy
+│   └── Products & Dashboard
+├── 🌟 SIS Hub (PROMOTE to top-level)
+│   ├── Ecosystem & Vision (existing)
+│   ├── Frameworks, Proposals (new)
+│   └── Client pipeline (new)
+├── 🎵 Music Hub (PROMOTE to top-level)
+│   └── Musicians DB, Strategy
+├── 🏢 Business Hub (NEW)
+│   └── Finance, Legal, BV, Subscriptions
+├── 2026 Goals (keep)
+└── Morning Brief (keep, auto-generated)
+  </pre>
+</div>
+</div>
+
+<div style="text-align:center;margin-top:2rem;padding:1.5rem;border-top:1px solid var(--border)">
+  <p style="font-family:'Space Grotesk';font-size:1rem;color:var(--gold)">Ground truth established. 5 brands × 6 platforms = 30 connection points mapped.</p>
+  <p style="color:var(--muted);font-size:0.75rem;margin-top:0.25rem">Alignment Report v1.0 — April 8, 2026</p>
+</div>
+
+</div>
+</body>
+</html>
