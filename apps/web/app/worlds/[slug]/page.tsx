@@ -1,7 +1,24 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/server";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const sb = await createClient();
+  const { data: world } = await sb.from("worlds").select("name, description, element").eq("slug", slug).single();
+  if (!world) return { title: "World Not Found — Arcanea" };
+  return {
+    title: `${world.name} — Arcanea Worlds`,
+    description: world.description?.slice(0, 160) || `Explore ${world.name}, a ${world.element || ""} world on Arcanea.`,
+    openGraph: {
+      title: `${world.name} — Arcanea Worlds`,
+      description: world.description?.slice(0, 160) || `Explore ${world.name} on Arcanea.`,
+      url: `https://www.arcanea.ai/worlds/${slug}`,
+    },
+  };
+}
 import { getCachedUser } from "@/lib/supabase/cached-auth";
 import { ElementBadge } from "@/components/worlds/ElementBadge";
 import { WorldActions } from "@/components/worlds/WorldActions";
