@@ -25,7 +25,7 @@ import { z } from 'zod';
 export function buildMemoryEditTool(luminorId: string, userId: string) {
   return tool({
     description: `Update your persistent memory about this creator. Use when you learn something important about the creator that should persist across conversations — their preferences, project context, skill level, past decisions. This memory is private to your relationship with this specific creator.`,
-    parameters: z.object({
+    inputSchema: z.object({
       operation: z.enum(['append', 'replace', 'note']).describe(
         'append: add to existing memory. replace: overwrite all (use sparingly). note: add a single observation.'
       ),
@@ -33,7 +33,7 @@ export function buildMemoryEditTool(luminorId: string, userId: string) {
         'The information to remember. Be specific and actionable. Example: "Creator is building a Next.js 16 app with Supabase. Prefers functional components. Working on a publishing pipeline."'
       ),
     }),
-    execute: async ({ operation, content }) => {
+    execute: async ({ operation, content }: { operation: 'append' | 'replace' | 'note'; content: string }) => {
       try {
         const { createClient } = await import('@supabase/supabase-js');
         const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -62,7 +62,7 @@ export function buildMemoryEditTool(luminorId: string, userId: string) {
         const currentContent = (existing as { content?: string } | null)?.content ?? '';
 
         // Compute new content based on operation
-        let newContent: string;
+        let newContent = '';
         const timestamp = new Date().toISOString().slice(0, 10);
 
         switch (operation) {

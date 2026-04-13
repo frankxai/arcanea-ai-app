@@ -475,13 +475,34 @@ export async function POST(
   const { model, label } = resolved;
   const temperature = agent.spec?.temperature ?? 0.7;
 
-  // ── 7. Stream response ───────────────────────────────────────────────────
+  // ── 7. Resolve tools for this Luminor ─────────────────────────────────────
+  // Dynamic import for edge compatibility — tool-resolver pulls in zod + ai/tool
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let luminorTools: Record<string, any> | undefined;
+  try {
+    const { resolveToolsForLuminor, teamToDomain } = await import(
+      '@/lib/luminors/tool-resolver'
+    );
+    const domain = agent.spec?.domain ?? teamToDomain(agent.category ?? 'development');
+    const resolved = resolveToolsForLuminor({
+      luminorId: agent.id,
+      domain,
+      userId: session?.userId ?? null,
+      authenticated: !!session,
+    });
+    luminorTools = Object.keys(resolved).length > 0 ? resolved : undefined;
+  } catch {
+    // Fail-open: if tool resolution fails, proceed without tools
+  }
+
+  // ── 8. Stream response ───────────────────────────────────────────────────
   const result = streamText({
     model,
     system: systemPrompt,
     messages: [{ role: 'user', content: input }],
     temperature,
     maxOutputTokens: 4096,
+    ...(luminorTools ? { tools: luminorTools, maxSteps: 5 } : {}),
     onFinish: ({ text }) => {
       // ── 8. Deduct credits after completion ──────────────────────────────
       if (session && supabaseUrl && supabaseAnonKey) {

@@ -33,12 +33,12 @@ const VALID_LUMINOR_IDS = [
 export function buildHandoffTool() {
   return tool({
     description: `Hand off to another Luminor when the task crosses into a different domain. Available Luminors: ${VALID_LUMINOR_IDS.join(', ')}. Use this when you recognize the creator needs a specialist you are not. Example: a Systems Architect receiving a music question should hand off to the Composer.`,
-    parameters: z.object({
+    inputSchema: z.object({
       toLuminorId: z.enum(VALID_LUMINOR_IDS).describe('The Luminor ID to hand off to'),
       reason: z.string().describe('Why you are handing off (1 sentence, shown to the creator)'),
       context: z.string().describe('The specific question or task to pass to the specialist (rewrite the creator\'s request in terms the specialist will understand)'),
     }),
-    execute: async ({ toLuminorId, reason, context }) => {
+    execute: async ({ toLuminorId, reason, context }: { toLuminorId: string; reason: string; context: string }) => {
       try {
         // Call the executor endpoint for the target Luminor
         // Use internal URL to avoid network overhead in same-process calls
