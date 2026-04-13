@@ -12,13 +12,14 @@ interface AgentPickerProps {
 }
 
 const TEAM_LABELS: Record<Team, { label: string; color: string }> = {
+  orchestrator: { label: 'Orchestrator', color: '#00bcd4' },
   development: { label: 'Development', color: '#60a5fa' },
   creative: { label: 'Creative', color: '#fbbf24' },
   writing: { label: 'Writing', color: '#34d399' },
   research: { label: 'Research', color: '#a78bfa' },
 };
 
-const TEAM_ORDER: Team[] = ['development', 'creative', 'writing', 'research'];
+const TEAM_ORDER: Team[] = ['orchestrator', 'development', 'creative', 'writing', 'research'];
 
 export function AgentPicker({ open, onClose, onSelect, currentAgentId }: AgentPickerProps) {
   const [search, setSearch] = useState('');
@@ -39,10 +40,12 @@ export function AgentPicker({ open, onClose, onSelect, currentAgentId }: AgentPi
 
   const grouped = useMemo(() => {
     const groups: Record<Team, LuminorConfig[]> = {
-      development: [], creative: [], writing: [], research: [],
+      orchestrator: [], development: [], creative: [], writing: [], research: [],
     };
     for (const l of filtered) {
-      groups[l.team].push(l);
+      if (groups[l.team]) {
+        groups[l.team].push(l);
+      }
     }
     return groups;
   }, [filtered]);
