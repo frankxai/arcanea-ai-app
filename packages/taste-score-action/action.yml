@@ -1,0 +1,36 @@
+name: 'Arcanea TASTE Score'
+description: 'Run the TASTE 5D quality gate on markdown files. Scores Technical, Aesthetic, Canon, Impact, Uniqueness.'
+author: 'FrankX'
+branding:
+  icon: 'check-circle'
+  color: 'blue'
+inputs:
+  path:
+    description: 'Path to markdown file or directory to score'
+    required: true
+    default: '.'
+  min-score:
+    description: 'Minimum TASTE score to pass (0-100)'
+    required: false
+    default: '60'
+  characters:
+    description: 'Comma-separated known character names for canon check'
+    required: false
+  factions:
+    description: 'Comma-separated known faction names'
+    required: false
+  locations:
+    description: 'Comma-separated known location names'
+    required: false
+outputs:
+  score:
+    description: 'Composite TASTE score (0-100)'
+  tier:
+    description: 'Quality tier: hero/gallery/thumbnail/reject'
+  passes:
+    description: 'Whether the content passes the minimum score gate'
+  report:
+    description: 'Full JSON report'
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
