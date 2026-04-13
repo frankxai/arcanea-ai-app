@@ -1,0 +1,48 @@
+{
+  "name": "@arcanea/publishing-house-mcp",
+  "version": "0.5.0",
+  "description": "MCP server exposing the Arcanea Publishing House — 7 tools for manuscript submission, TASTE scoring, formatting, routing, claw invocation, campaign launch, and library queries.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "arcanea-publishing-mcp": "./dist/cli.js"
+  },
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/cli.js",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "mcp",
+    "arcanea",
+    "publishing",
+    "taste",
+    "quality-gate",
+    "manuscript",
+    "model-context-protocol",
+    "claude"
+  ],
+  "author": "FrankX <frank@arcanea.ai>",
+  "license": "BSL-1.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/frankxai/arcanea-ai-app"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@arcanea/publishing-house": "workspace:*",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "@types/node": "^20.10.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

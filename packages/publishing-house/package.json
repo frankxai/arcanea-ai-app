@@ -14,6 +14,38 @@
       "types": "./dist/agents/*.d.ts",
       "import": "./dist/agents/*.js"
     },
+    "./agents/hierarchy": {
+      "types": "./dist/agents/hierarchy.d.ts",
+      "import": "./dist/agents/hierarchy.js"
+    },
+    "./agents/hierarchy.js": {
+      "types": "./dist/agents/hierarchy.d.ts",
+      "import": "./dist/agents/hierarchy.js"
+    },
+    "./agents/kernel-loader": {
+      "types": "./dist/agents/kernel-loader.d.ts",
+      "import": "./dist/agents/kernel-loader.js"
+    },
+    "./agents/module-loader": {
+      "types": "./dist/agents/module-loader.d.ts",
+      "import": "./dist/agents/module-loader.js"
+    },
+    "./agents/types": {
+      "types": "./dist/agents/types.d.ts",
+      "import": "./dist/agents/types.js"
+    },
+    "./quality/taste-gate": {
+      "types": "./dist/quality/taste-gate.d.ts",
+      "import": "./dist/quality/taste-gate.js"
+    },
+    "./quality/types": {
+      "types": "./dist/quality/types.d.ts",
+      "import": "./dist/quality/types.js"
+    },
+    "./queen/lumina-queen": {
+      "types": "./dist/queen/lumina-queen.d.ts",
+      "import": "./dist/queen/lumina-queen.js"
+    },
     "./notion": {
       "types": "./dist/notion/schemas.d.ts",
       "import": "./dist/notion/schemas.js"
