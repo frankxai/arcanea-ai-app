@@ -345,39 +345,84 @@ if ($m.Family -eq "publishing") {
     $qc = "QC: Peak ${pk}dB, Mean ${mn}dB - $verdict"
 }
 
-# ─── Coach ────────────────────────────────────────────────────────────────
+# ─── Intelligent Coach (Groq LLM) ────────────────────────────────────────
 $words = @($text -split '\s+' | Where-Object { $_ }); $wc = $words.Count
-$sents = @(($text -split '[.!?]+' | Where-Object { $_.Trim() })).Count
-if ($sents -eq 0) { $sents = 1 }
-$fillers = @("um","uh","like","you know","basically","actually","literally")
-$fc = 0; foreach ($f in $fillers) { $fc += ([regex]::Matches($text.ToLower(), "\b$f\b")).Count }
-Write-Host "  [COACH] ${wc}w ${sents}s ${fc} fillers" -ForegroundColor DarkCyan
+Write-Host "  Thinking..." -ForegroundColor Magenta -NoNewline
+
+$coachText = $null
+$modeContext = switch ($m.Family) {
+    "thinking"   { "The user is thinking out loud or journaling." }
+    "publishing" { "The user is recording content for publication." }
+    "workflow"   { "The user is capturing a work item or decision." }
+    default      { "The user is speaking freely." }
+}
+
+# Groq LLM — free, fast, intelligent response to what was actually said
+if ($GROQ_KEY) {
+    $systemPrompt = @"
+You are Lumina, a sharp and warm thinking partner. The user just recorded a voice note. Respond to what they SAID — the content, the ideas, the decisions. Be a brilliant companion:
+- If they shared news or a life event: acknowledge it genuinely, reflect on what it means
+- If they described a problem: offer a sharp insight or reframe
+- If they had an idea: build on it, spot what's strong, flag what's missing
+- If they're strategizing: add the angle they haven't considered
+- If they're venting: validate, then redirect toward action
+$modeContext
+Rules: 2-3 sentences MAX. Speak like a trusted advisor, not a robot. No word counts. No filler analysis. No generic encouragement. Be SPECIFIC to what they said. Sound natural when read aloud.
+"@
+    $escaped = ($text -replace '\\','\\\\' -replace '"','\"' -replace "`n",' ' -replace "`r",'').Substring(0, [math]::Min($text.Length, 2000))
+    $chatBody = @{
+        model = "llama-3.3-70b-versatile"
+        messages = @(
+            @{ role = "system"; content = $systemPrompt }
+            @{ role = "user"; content = $escaped }
+        )
+        max_tokens = 150
+        temperature = 0.7
+    } | ConvertTo-Json -Depth 4 -Compress
+
+    try {
+        $chatResp = Invoke-WebRequest -Uri "https://api.groq.com/openai/v1/chat/completions" `
+            -Method POST -Headers @{ "Authorization" = "Bearer $GROQ_KEY"; "Content-Type" = "application/json" } `
+            -Body $chatBody -ErrorAction Stop
+        $chatJson = $chatResp.Content | ConvertFrom-Json
+        $coachText = $chatJson.choices[0].message.content.Trim()
+    } catch {
+        $coachText = $null
+    }
+}
+
+# Fallback: brief contextual note (no dumb word counts)
+if (-not $coachText) {
+    $coachText = "Captured. ${wc} words on clipboard."
+}
+
+Write-Host " done" -ForegroundColor Magenta
+Write-Host ""
+Write-Host "  [LUMINA] $coachText" -ForegroundColor Cyan
+Write-Host ""
 
 # ─── Log ──────────────────────────────────────────────────────────────────
 $entry = "`n## $ts [$($m.Name)]`nMode: $Mode | $($m.Rate/1000)kHz | $($MIC_INFO.Tier) | $backend`n"
 if ($qc) { $entry += "$qc`n" }
-$entry += "Coach: ${wc}w ${sents}s ${fc}f`n`n> $text`n`n---`n"
+$entry += "Lumina: $coachText`n`n> $text`n`n---`n"
 Add-Content $LOG $entry -Encoding UTF8
 
 # ─── Clipboard ────────────────────────────────────────────────────────────
 $text | Set-Clipboard
 Write-Host "  Copied to clipboard" -ForegroundColor Green
 
-# ─── Voice Coach Response ─────────────────────────────────────────────────
-$coachText = "${wc} words. ${sents} sentences."
-if ($fc -gt 3) { $coachText += " ${fc} fillers, try reducing." }
-elseif ($fc -eq 0) { $coachText += " Zero fillers. Clean." }
-if ($qc -match "PUBLISH-READY") { $coachText += " Publish ready." }
-elseif ($qc -match "CLIPPING") { $coachText += " Clipping detected. Step back from mic." }
-
+# ─── Voice Response (speak the intelligent reply) ─────────────────────────
 $coachFile = "$env:TEMP\arcanea_coach"
 $coachBackend = "none"
 $isPremiumMode = @("strategy", "newsletter", "voiceover", "arcanea") -contains $Mode
 
-# 1. ElevenLabs Lily (premium modes only — preserve 30min/mo budget)
+# Escape coach text for TTS
+$ttsText = ($coachText -replace '"','\"' -replace "`n",' ' -replace "`r",'')
+
+# 1. ElevenLabs Lily (premium modes only)
 if ($ELEVEN_KEY -and $isPremiumMode -and $coachBackend -eq "none") {
-    $voiceId = "pFZP5JQG7iQj"  # Lily - velvety British actress = Lumina voice
-    $body = "{`"text`":`"$coachText`",`"model_id`":`"eleven_turbo_v2_5`"}"
+    $voiceId = "pFZP5JQG7iQj"
+    $body = "{`"text`":`"$ttsText`",`"model_id`":`"eleven_turbo_v2_5`"}"
     try {
         Invoke-WebRequest -Uri "https://api.elevenlabs.io/v1/text-to-speech/$voiceId" `
             -Method POST -Headers @{ "xi-api-key" = $ELEVEN_KEY; "Content-Type" = "application/json" } `
@@ -388,30 +433,30 @@ if ($ELEVEN_KEY -and $isPremiumMode -and $coachBackend -eq "none") {
     } catch {}
 }
 
-# 2. Groq Orpheus Autumn (free, unlimited — daily coaching)
+# 2. Groq Orpheus (free, daily use)
 if ($GROQ_KEY -and $coachBackend -eq "none") {
-    $body = "{`"model`":`"canopylabs/orpheus-v1-english`",`"input`":`"$coachText`",`"voice`":`"hannah`",`"response_format`":`"wav`"}"
+    $body = "{`"model`":`"canopylabs/orpheus-v1-english`",`"input`":`"$ttsText`",`"voice`":`"hannah`",`"response_format`":`"wav`"}"
     try {
         Invoke-WebRequest -Uri "https://api.groq.com/openai/v1/audio/speech" `
             -Method POST -Headers @{ "Authorization" = "Bearer $GROQ_KEY"; "Content-Type" = "application/json" } `
             -Body $body -OutFile "$coachFile.wav" -ErrorAction Stop
         if ((Test-Path "$coachFile.wav") -and (Get-Item "$coachFile.wav").Length -gt 5000) {
-            $coachFile = "$coachFile.wav"; $coachBackend = "groq/autumn"
+            $coachFile = "$coachFile.wav"; $coachBackend = "groq/hannah"
         }
     } catch {}
 }
 
-# 3. Edge TTS (always free fallback)
+# 3. Edge TTS (offline fallback)
 if ($coachBackend -eq "none") {
-    & edge-tts --voice "en-GB-SoniaNeural" --text $coachText --write-media "$coachFile.mp3" 2>$null
+    & edge-tts --voice "en-GB-SoniaNeural" --text $ttsText --write-media "$coachFile.mp3" 2>$null
     if ((Test-Path "$coachFile.mp3") -and (Get-Item "$coachFile.mp3").Length -gt 500) {
-        $coachFile = "$coachFile.mp3"; $coachBackend = "edge/ava"
+        $coachFile = "$coachFile.mp3"; $coachBackend = "edge/sonia"
     }
 }
 
 if ($coachBackend -ne "none") {
     Start-Process -FilePath $coachFile
-    Write-Host "  [VOICE] $coachText [$coachBackend]" -ForegroundColor DarkCyan
+    Write-Host "  [VOICE] $coachBackend" -ForegroundColor DarkGray
 }
 
 # ─── Route ────────────────────────────────────────────────────────────────
