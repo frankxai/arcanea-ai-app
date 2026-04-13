@@ -1043,6 +1043,25 @@ importers:
         specifier: ^5.7.0
         version: 5.9.3
 
+  packages/publishing-house-mcp:
+    dependencies:
+      '@arcanea/publishing-house':
+        specifier: workspace:*
+        version: link:../publishing-house
+      '@modelcontextprotocol/sdk':
+        specifier: ^1.29.0
+        version: 1.29.0(zod@4.3.6)
+      zod:
+        specifier: ^4.3.6
+        version: 4.3.6
+    devDependencies:
+      '@types/node':
+        specifier: ^20.10.0
+        version: 20.19.39
+      typescript:
+        specifier: ^5.7.0
+        version: 5.9.3
+
   packages/rituals:
     devDependencies:
       '@types/node':

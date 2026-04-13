@@ -11,20 +11,20 @@ npm install -g arcanea
 Or run directly without installing:
 
 ```bash
-npx arcanea install book-cover
+npx arcanea install arcanea-book-cover
 ```
 
 ## Usage
 
 - `arcanea list` — browse available skills
 - `arcanea search "writing"` — find skills matching a query
-- `arcanea install book-cover` — install into detected tools
-- `arcanea install book-cover --tool claude-code` — install into a specific tool
-- `arcanea install book-cover --force` — overwrite existing install
+- `arcanea install arcanea-book-cover` — install into detected tools
+- `arcanea install arcanea-book-cover --tool claude-code` — install into a specific tool
+- `arcanea install arcanea-book-cover --force` — overwrite existing install
 - `arcanea update` — update all installed skills
-- `arcanea update book-cover` — update a specific skill
-- `arcanea uninstall book-cover` — remove from the current tool
-- `arcanea uninstall book-cover --all` — remove from every detected tool
+- `arcanea update arcanea-book-cover` — update a specific skill
+- `arcanea uninstall arcanea-book-cover` — remove from the current tool
+- `arcanea uninstall arcanea-book-cover --all` — remove from every detected tool
 
 ## Supported Tools
 

@@ -26,6 +26,7 @@
     "clean": "turbo run clean",
     "supabase:project-graph:plan": "tsx scripts/project-graph-activate.ts --plan",
     "supabase:project-graph:apply": "tsx scripts/project-graph-activate.ts --apply",
+    "build:registry": "node oss/skills/scripts/build-registry.mjs",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,md,json}\"",
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,md,json}\"",
     "changeset": "changeset",
