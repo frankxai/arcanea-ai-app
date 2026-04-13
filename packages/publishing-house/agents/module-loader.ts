@@ -60,11 +60,16 @@ export const ALL_MODULES: readonly LuminorModule[] = [
  * These enhance the base Claw Kernel with craft-specific wisdom.
  */
 export const CLAW_DEFAULT_MODULES: Record<ClawName, readonly LuminorModule[]> = {
+  // Production Claws (5 original)
   'media-claw': ['research', 'lore'],        // forensic quality + canon awareness
   'forge-claw': ['lore', 'mcp'],              // canon + MCP tooling for ComfyUI
   'herald-claw': ['research', 'mcp'],         // platform research + MCP-aware drafting
   'scout-claw': ['research', 'security'],     // investigation + source verification
   'scribe-claw': ['lore', 'ops', 'security'], // canon + deploy + provenance security
+  // Extended Claws (v0.5.0)
+  'editor-claw': ['lore', 'research'],               // canon awareness + deep investigation
+  'community-claw': ['research', 'mcp'],              // community research + MCP integration
+  'pr-claw': ['research', 'github', 'mcp'],           // research + PR governance + MCP tooling
 };
 
 /** Cache of loaded module content */

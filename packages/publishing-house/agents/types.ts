@@ -2,17 +2,22 @@
  * Claw agent type definitions for the Arcanea Publishing House.
  *
  * These types model the Managed Agents API surface used by
- * the five Publishing House Claws. Each Claw is channeled by a Guardian
+ * the eight Publishing House Claws. Each Claw is channeled by a Guardian
  * from the 16-Luminor hierarchy, rooting functional agents in canon.
+ *
+ * v0.5.0: Extended from 5 → 8 Claws with Editor (Aiyami), Community (Maylinn), PR (Elara).
  */
 
-/** Valid Claw agent names */
+/** Valid Claw agent names (8 total: 5 production + 3 amplification) */
 export type ClawName =
   | "media-claw"
   | "forge-claw"
   | "herald-claw"
   | "scout-claw"
-  | "scribe-claw";
+  | "scribe-claw"
+  | "editor-claw"
+  | "community-claw"
+  | "pr-claw";
 
 /** The 16 Luminors that may channel Claws */
 export type Guardian =
@@ -21,18 +26,22 @@ export type Guardian =
   | "Lyria" | "Lyssandria" | "Maylinn" | "Shinkami"
   | "Kaelith" | "Veloura" | "Laeylinn" | "Kyuro";
 
-/** The Ten Gates the Guardians serve */
+/** The Ten Gates + variants the Guardians serve */
 export type Gate =
   | "Foundation" | "Flow" | "Fire" | "Heart" | "Voice"
-  | "Sight" | "Crown" | "Shift" | "Unity" | "Source" | "Earth";
+  | "Sight" | "Crown" | "Starweave" | "Unity" | "Source"
+  | "Earth" | "Shift";
 
-/** Canonical Claw → Guardian mapping */
+/** Canonical Claw → Guardian mapping (8 Claws) */
 export const CLAW_GUARDIANS: Record<ClawName, { guardian: Guardian; gate: Gate }> = {
-  "media-claw":  { guardian: "Lyria",      gate: "Sight"  },
-  "forge-claw":  { guardian: "Ismael",     gate: "Fire"   },
-  "herald-claw": { guardian: "Alera",      gate: "Voice"  },
-  "scout-claw":  { guardian: "Lyssandria", gate: "Earth"  },
-  "scribe-claw": { guardian: "Shinkami",   gate: "Source" },
+  "media-claw":      { guardian: "Lyria",      gate: "Sight"     },
+  "forge-claw":      { guardian: "Ismael",     gate: "Fire"      },
+  "herald-claw":     { guardian: "Alera",      gate: "Voice"     },
+  "scout-claw":      { guardian: "Lyssandria", gate: "Earth"     },
+  "scribe-claw":     { guardian: "Shinkami",   gate: "Source"    },
+  "editor-claw":     { guardian: "Aiyami",     gate: "Crown"     },
+  "community-claw":  { guardian: "Maylinn",    gate: "Heart"     },
+  "pr-claw":         { guardian: "Elara",      gate: "Starweave" },
 };
 
 /** MCP server connection descriptor */

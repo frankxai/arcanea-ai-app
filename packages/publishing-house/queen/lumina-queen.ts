@@ -34,7 +34,7 @@ import type { Luminor, Runtime } from '../agents/hierarchy.js';
 // Intent Classification
 // ---------------------------------------------------------------------------
 
-/** The kind of request Lumina can route */
+/** The kind of request Lumina can route (14 intents across 8 Claws) */
 export type Intent =
   | 'publish'      // full pipeline: format + cover + social + distribute
   | 'score'        // TASTE quality gate only
@@ -47,9 +47,12 @@ export type Intent =
   | 'mint'         // NFT generation + minting
   | 'scout'        // market/trend scan
   | 'report'       // generate a Scout report
+  | 'edit'         // developmental / line / proofread editing (NEW v0.5)
+  | 'engage'       // community engagement + UGC monitoring (NEW v0.5)
+  | 'pitch'        // media outreach + PR (NEW v0.5)
   | 'unknown';     // couldn't classify
 
-/** Which Claw handles which intent */
+/** Which Claw handles which intent (8 Claws, 14 intents) */
 const INTENT_ROUTING: Record<Intent, ClawName | null> = {
   publish: 'scribe-claw',
   score: 'media-claw',
@@ -62,6 +65,9 @@ const INTENT_ROUTING: Record<Intent, ClawName | null> = {
   mint: 'forge-claw',
   scout: 'scout-claw',
   report: 'scout-claw',
+  edit: 'editor-claw',
+  engage: 'community-claw',
+  pitch: 'pr-claw',
   unknown: null,
 };
 
@@ -127,7 +133,22 @@ export function classifyIntent(request: string): Intent {
     return 'mint';
   }
 
-  // 11. Scout (least specific, catches trends/monitoring)
+  // 11. Edit (developmental / line / proofread — deep manuscript review)
+  if (/\bedit\b|\breview\b.*\bmanuscript\b|\bdevelopmental\b|\bproofread\b|\bline edit\b|\beditorial\b|\bfeedback\b.*\bstructur/i.test(lower)) {
+    return 'edit';
+  }
+
+  // 12. Community engagement (UGC, reader mentions, community interaction)
+  if (/\bcommunity\b|\bengage\b|\binfluencer\b|\bugc\b|\breader\b.*\bment/i.test(lower)) {
+    return 'engage';
+  }
+
+  // 13. PR outreach (media kit, journalist pitch, podcast outreach)
+  if (/\bpitch\b|\bjournalist\b|\bmedia kit\b|\bpodcast\b.*\boutreach\b|\bpress\b|\bpr\b/i.test(lower)) {
+    return 'pitch';
+  }
+
+  // 14. Scout (least specific, catches trends/monitoring)
   if (/\bscout\b|\btrend\b|\bmonitor\b|\bcompetitor\b|\bwatch\b.*\bmarket\b|\bbooktok\b/i.test(lower)) {
     return 'scout';
   }
