@@ -1,13 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { getClientIdentifier, checkRateLimit } from "@/lib/rate-limit/rate-limiter";
 
-/**
- * POST /api/feedback
- *
- * Saves feedback to Supabase `feedback` table.
- * Works for both authenticated and anonymous users.
- */
+const FEEDBACK_RATE_LIMIT = { maxRequests: 5, windowMs: 60_000 };
+
 export async function POST(req: NextRequest) {
+  const rl = checkRateLimit(getClientIdentifier(req), FEEDBACK_RATE_LIMIT);
+  if (!rl.allowed) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+  }
+
   try {
     const body = await req.json();
 
@@ -67,14 +69,7 @@ export async function POST(req: NextRequest) {
         console.warn("[Feedback] Supabase admin client unavailable");
       }
     } else {
-      // Fallback: log only
-      console.log("[Feedback]", {
-        type: feedbackType,
-        message: message.trim().slice(0, 500),
-        email: email || null,
-        userId,
-        timestamp: new Date().toISOString(),
-      });
+      // Supabase unavailable — feedback acknowledged but not persisted
     }
 
     return NextResponse.json({ ok: true });

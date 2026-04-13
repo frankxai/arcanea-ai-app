@@ -9,10 +9,18 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { executeSearch } from '@/lib/search/providers';
+import { getClientIdentifier, checkRateLimit } from '@/lib/rate-limit/rate-limiter';
 
 export const runtime = 'edge';
 
+const SEARCH_RATE_LIMIT = { maxRequests: 10, windowMs: 60_000 };
+
 export async function POST(req: NextRequest) {
+  const rl = checkRateLimit(getClientIdentifier(req), SEARCH_RATE_LIMIT);
+  if (!rl.allowed) {
+    return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429, headers: { 'Retry-After': String(Math.ceil((rl.resetTime - Date.now()) / 1000)) } });
+  }
+
   try {
     const { query, maxResults = 5, provider } = await req.json();
 

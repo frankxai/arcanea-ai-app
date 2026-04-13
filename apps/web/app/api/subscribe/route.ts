@@ -1,7 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { getClientIdentifier, checkRateLimit } from '@/lib/rate-limit/rate-limiter';
+
+const SUBSCRIBE_RATE_LIMIT = { maxRequests: 3, windowMs: 60_000 };
 
 export async function POST(req: NextRequest) {
+  const rl = checkRateLimit(getClientIdentifier(req), SUBSCRIBE_RATE_LIMIT);
+  if (!rl.allowed) {
+    return NextResponse.json({ success: false, error: 'Too many requests' }, { status: 429 });
+  }
+
   try {
     const { email, source } = await req.json();
 

@@ -12,6 +12,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { ARCANEAN_WORKFLOWS } from '@/lib/models-data';
+import { getClientIdentifier, checkRateLimit } from '@/lib/rate-limit/rate-limiter';
 
 // ---------------------------------------------------------------------------
 // ISR cache — revalidate every hour
@@ -165,7 +166,14 @@ function transform(raw: OpenRouterModel): TransformedModel {
 // Route handler
 // ---------------------------------------------------------------------------
 
+const MODELS_RATE_LIMIT = { maxRequests: 20, windowMs: 60_000 };
+
 export async function GET(request: NextRequest) {
+  const rl = checkRateLimit(getClientIdentifier(request), MODELS_RATE_LIMIT);
+  if (!rl.allowed) {
+    return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429 });
+  }
+
   const freeOnly = request.nextUrl.searchParams.get('free') === 'true';
 
   try {
