@@ -221,12 +221,12 @@ playwright.config.js
 postcss.config.js
 tailwind.config.js
 
-# Misc local-only
-assets/
-content/
-design/
-public/
-styles/
+# Misc local-only (root-level dirs that aren't app code)
+/assets/
+/content/
+/design/
+/styles/
+# NOTE: public/ is NOT ignored — apps/web/public/ contains deployed static assets
 src/
 spec/
 tests/
