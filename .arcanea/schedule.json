@@ -1,0 +1,145 @@
+{
+  "_meta": {
+    "description": "Arcanea Autonomous Intelligence Scheduler — source of truth for all scheduled tasks",
+    "lastUpdated": "2026-04-05",
+    "managedBy": "Cowork + Claude Code",
+    "storageLocation": "C:\\Users\\frank\\OneDrive\\Dokumente\\Claude\\Scheduled\\"
+  },
+  "tasks": [
+    {
+      "id": "morning-intel-brief",
+      "name": "Morning Intelligence Brief",
+      "emoji": "🌅",
+      "cron": "0 6 * * *",
+      "schedule": "Daily 06:00",
+      "category": "intelligence",
+      "surface": "Cowork",
+      "costTier": "low",
+      "outputs": ["Notion page", "Slack DM"],
+      "feeds": ["financial-runway-watchdog"],
+      "exitCondition": "Notion page created with all sections",
+      "desc": "Build health · uncommitted file count · 5 blocker status · BV countdown · top 3 priorities"
+    },
+    {
+      "id": "financial-runway-watchdog",
+      "name": "Financial Runway Watchdog",
+      "emoji": "💰",
+      "cron": "30 8 * * 1-5",
+      "schedule": "Weekdays 08:30",
+      "category": "revenue",
+      "surface": "Cowork",
+      "costTier": "low",
+      "outputs": ["Slack 3-line alert"],
+      "feeds": ["blocker-resolution-nudge"],
+      "exitCondition": "Slack message sent with BV countdown + gate status + single action",
+      "desc": "BV countdown to 2026-06-01 · Stripe/Supabase gate check · fastest path to first dollar"
+    },
+    {
+      "id": "blocker-resolution-nudge",
+      "name": "Blocker Resolution Nudge",
+      "emoji": "⚡",
+      "cron": "0 9 * * 1-5",
+      "schedule": "Weekdays 09:00",
+      "category": "revenue",
+      "surface": "Cowork",
+      "costTier": "low",
+      "outputs": ["Slack message", "Notion Ops Hub update"],
+      "feeds": [],
+      "exitCondition": "Slack message sent with blocker name + exact steps + time estimate",
+      "desc": "5 blockers in priority order · Gumroad/Stripe first · exact resolution steps"
+    },
+    {
+      "id": "nightly-git-hygiene",
+      "name": "Nightly Git Hygiene",
+      "emoji": "🧹",
+      "cron": "0 2 * * *",
+      "schedule": "Daily 02:00",
+      "category": "maintenance",
+      "surface": "Claude Code",
+      "costTier": "medium",
+      "outputs": ["Notion report"],
+      "feeds": ["nightly-memory-consolidation"],
+      "exitCondition": "Notion report written with file count + batches + branch list",
+      "constraint": "NEVER commit or delete — report only",
+      "desc": "File inventory by directory · stale branch detection · commit batch suggestions · worktree audit"
+    },
+    {
+      "id": "nightly-memory-consolidation",
+      "name": "Nightly Memory Consolidation",
+      "emoji": "🧠",
+      "cron": "30 3 * * *",
+      "schedule": "Daily 03:30",
+      "category": "intelligence",
+      "surface": "Cowork",
+      "costTier": "low",
+      "outputs": [".auto-memory files", "consolidation_log.md append"],
+      "feeds": ["morning-intel-brief"],
+      "exitCondition": "MEMORY.md updated, consolidation_log.md appended",
+      "desc": "Compare .auto-memory against CURRENT_STATE · update stale entries · capture new decisions"
+    },
+    {
+      "id": "weekly-strategy-synthesis",
+      "name": "Weekly Strategy Synthesis",
+      "emoji": "🗺️",
+      "cron": "0 20 * * 0",
+      "schedule": "Sundays 20:00",
+      "category": "intelligence",
+      "surface": "Claude Code",
+      "costTier": "high",
+      "outputs": ["planning-with-files (3 CURRENT_* files)", "Notion weekly review"],
+      "feeds": ["morning-intel-brief"],
+      "exitCondition": "All 3 planning files updated + Notion page with 'One Decision' section",
+      "maxIterations": 3,
+      "desc": "Synthesize week shipped/blocked · update control plane · set revenue-first priorities · one decision needed"
+    },
+    {
+      "id": "canon-drift-detector",
+      "name": "Canon Integrity Scan",
+      "emoji": "📜",
+      "cron": "0 21 * * 6",
+      "schedule": "Saturdays 21:00",
+      "category": "quality",
+      "surface": "Claude Code",
+      "costTier": "medium",
+      "outputs": ["Notion Canon Drift Report"],
+      "feeds": [],
+      "exitCondition": "Notion report written — violations listed or 'integrity verified'",
+      "desc": "Scan book/, agents/, prompts/, UI for CANON_LOCKED.md violations across 13 surfaces"
+    },
+    {
+      "id": "worktree-branch-cleaner",
+      "name": "Worktree & Branch Cleaner",
+      "emoji": "✂️",
+      "cron": "0 1 * * 0",
+      "schedule": "Sundays 01:00",
+      "category": "maintenance",
+      "surface": "Claude Code",
+      "costTier": "low",
+      "outputs": ["Notion cleanup report", "bash cleanup script (not executed)"],
+      "feeds": ["weekly-strategy-synthesis"],
+      "exitCondition": "Notion report with prunable list + cleanup script in code block",
+      "constraint": "NEVER execute git destructive commands — script only",
+      "desc": "Worktree audit · merged branch detection · cleanup script generation"
+    }
+  ],
+  "rules": {
+    "loopDiscipline": [
+      "Every loop must have a bounded scope defined by planning-with-files",
+      "Every loop must have a programmatic exit condition",
+      "Every loop output must land in Notion or planning-with-files — never silent",
+      "No loop auto-commits, auto-deploys, or runs destructive git operations",
+      "Claude Code only for bounded high-reasoning work — ElizaOS for 24/7 presence"
+    ],
+    "routingMatrix": {
+      "highReasoning_bounded": "Claude Code",
+      "opsReports_notionSync": "Cowork",
+      "alwaysOn_social_community": "ElizaOS",
+      "guardianSocialAgents": "ArcaneaClaws"
+    },
+    "scaleInflection": {
+      "at100worlds": "Shard Strategy Synthesis by world-cluster",
+      "at1000users": "ArcaneaClaws take over social ops",
+      "at10000users": "Claude Code reserved for reasoning only, ElizaOS handles all presence"
+    }
+  }
+}

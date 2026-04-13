@@ -1,7 +1,7 @@
 ---
 name: "Arcanea Orchestrator"
-description: "Central ops orchestrator for the Arcanea ecosystem. Use when: coordinating multi-agent work, reviewing branch/promotion state, digesting other agent outputs, cleaning worktrees, coaching on ops workflow, planning overnight/sustained sessions, or when the user says /arcanea-orchestrator. Subcommands: status, promote, digest, coach, cleanup, plan, handover."
-version: "2.0.0"
+description: "Central ops orchestrator for the Arcanea ecosystem. Use when: coordinating multi-agent work, reviewing branch/promotion state, digesting other agent outputs, cleaning worktrees, coaching on ops workflow, planning overnight/sustained sessions, publishing content, or when the user says /arcanea-orchestrator. Subcommands: status, promote, digest, coach, cleanup, plan, handover, publish."
+version: "2.1.0"
 ---
 
 # Arcanea Orchestrator
@@ -25,6 +25,7 @@ Parse the user's input to determine which mode to activate:
 | `/arcanea-orchestrator cleanup` | **cleanup** | Clean stale worktrees and branches |
 | `/arcanea-orchestrator plan` | **plan** | Plan a sustained execution session |
 | `/arcanea-orchestrator handover` | **handover** | Write a durable handover doc |
+| `/arcanea-orchestrator publish` | **publish** | Run the Agentic Publishing House pipeline |
 
 If no subcommand is given, default to **status**.
 
@@ -214,6 +215,97 @@ Teach Frank the optimal Opus 4.6 ops workflow.
    - Front-load context reading (AGENTS.md, planning-with-files) in the first message
    - Don't re-read files you already have in context
    - Use Agent tool for research, keep main context for decisions
+
+---
+
+## Mode: PUBLISH
+
+The Agentic Publishing House pipeline. Formats, quality-gates, distributes, and markets content.
+
+### Usage
+
+```
+/ao publish                    # Interactive — asks what to publish
+/ao publish <path>             # Publish specific file/chapter
+/ao publish --dry-run <path>   # Quality gate + preview, no side effects
+/ao publish --all <collection> # Publish entire collection
+```
+
+### Pipeline
+
+```
+1. QUALITY GATE — Run TASTE 5D scoring (offline, no API needed)
+   Score ≥ 80: HERO — auto-approve for all platforms
+   Score 60-79: GALLERY — approve with feedback
+   Score < 60: REJECT — return feedback, do not publish
+
+2. FORMAT — Pandoc: MD → EPUB, PDF, DOCX, HTML
+   Uses packages/publishing-house/claws/scribe/format.ts
+
+3. COVER ART — Select from Asset Library or generate via ComfyUI
+   Uses Media Claw (Managed Agent or local subagent)
+
+4. DISTRIBUTE — Push to configured platforms
+   Leanpub (API), arcanea.ai (Vercel), Social Queue, NFT Forge
+   Uses packages/publishing-house/claws/scribe/distribute.ts
+
+5. MARKET — Draft social campaign
+   X threads, IG captions, LinkedIn, Threads, Bluesky
+   Uses packages/publishing-house/claws/herald/draft.ts
+
+6. TRANSLATE (optional) — Multi-language output
+   8 languages: nl, de, es, pt, ja, fr, zh, ko
+   Uses packages/publishing-house/claws/scribe/translate.ts
+```
+
+### Deploy Mode Detection
+
+The orchestrator checks `ANTHROPIC_API_KEY`:
+- **Set** → Uses Claude Managed Agents (cloud sessions, parallel execution)
+- **Not set** → Falls back to Claude Code local subagents (free tier)
+
+### Running the Pipeline
+
+```typescript
+// From packages/publishing-house/orchestrator/maestro.ts
+import { publishContent, publishDryRun } from '@arcanea/publishing-house/orchestrator';
+
+// Dry run
+const preview = await publishDryRun({
+  sourcePath: 'book/luminor-rising/the-first-bonding/chapter-01.md',
+  title: 'The Warmth Before the Name',
+  author: 'FrankX',
+  platforms: ['leanpub', 'arcanea-web'],
+});
+
+// Full publish
+const result = await publishContent({
+  sourcePath: 'book/luminor-rising/the-first-bonding/chapter-01.md',
+  title: 'The Warmth Before the Name',
+  author: 'FrankX',
+  platforms: ['leanpub', 'arcanea-web', 'social-queue'],
+  translateTo: ['nl', 'de', 'es'],
+});
+```
+
+### TASTE Scoring Reference
+
+| Dimension | What It Measures | Weight |
+|-----------|-----------------|--------|
+| **T**echnical | Structure, readability, links, heading hierarchy | 20% |
+| **A**esthetic | Visual assets, alt text, dimensions, styling | 20% |
+| **S**tory/Canon | World Graph alignment, character/faction consistency | 20% |
+| **T**ransformative | Hook strength, pacing, dialogue, sensory language | 20% |
+| **E**xperiential | AI slop detection, vocabulary diversity, cliche density | 20% |
+
+### Notion Dashboard
+
+If Notion MCP is connected, results are logged to the Publishing House databases:
+- Editorial Board: content status updated
+- Distribution Tracker: platform URLs recorded
+- Analytics: initial metrics seeded
+
+---
 
 ### Later: Arcanea Orchestrator as Its Own App
 
