@@ -30,6 +30,7 @@ interface Blueprint {
   stack: string[];
   github: string;
   demo?: string;
+  deploy?: string;
   color: string;
 }
 
@@ -73,13 +74,14 @@ const BLUEPRINTS: Blueprint[] = [
   {
     id: 'motion',
     name: 'Motion + UI Kit',
-    desc: '12 motion primitives + 40 UI components. LiquidGlass, TiltCard, GlowCard, SplitText, Marquee, AnimatedBeam.',
+    desc: '12 motion primitives + 40 UI components. LiquidGlass, TiltCard, GlowCard, SplitText, Marquee, AnimatedBeam. Standalone template available.',
     audience: 'Design engineers',
     loc: '2,900',
     files: ['components/motion/', 'components/ui/', 'packages/arcanea-design-preset.js'],
     stack: ['React 19', 'Framer Motion 11', 'Tailwind', 'Radix UI'],
-    github: 'https://github.com/frankxai/arcanea-ai-app/tree/main/apps/web/components/motion',
+    github: 'https://github.com/frankxai/cosmic-landing-template',
     demo: '/arcanea-vault',
+    deploy: 'https://vercel.com/new/clone?repository-url=https://github.com/frankxai/cosmic-landing-template',
     color: '#00bcd4',
   },
   {
@@ -311,7 +313,18 @@ export default function BlueprintsPage() {
                           View source
                         </a>
                       </Magnetic>
-                      {b.demo && (
+                      {b.deploy ? (
+                        <Magnetic>
+                          <a
+                            href={b.deploy}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="py-2 px-4 rounded-xl text-xs font-medium bg-gradient-to-r from-[#00bcd4]/15 to-[#0d47a1]/15 border border-[#00bcd4]/20 text-[#00bcd4] transition-colors hover:from-[#00bcd4]/25 hover:to-[#0d47a1]/25"
+                          >
+                            Deploy
+                          </a>
+                        </Magnetic>
+                      ) : b.demo ? (
                         <Magnetic>
                           <Link
                             href={b.demo}
@@ -320,7 +333,7 @@ export default function BlueprintsPage() {
                             Demo
                           </Link>
                         </Magnetic>
-                      )}
+                      ) : null}
                     </div>
                   </div>
                 </LiquidGlass>
