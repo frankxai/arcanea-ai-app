@@ -263,3 +263,6 @@ packages/peak-performance/
 
 # Binary docs in root (move to docs/ first)
 *.docx
+
+# Cloned reference repos (not production code)
+infra/
