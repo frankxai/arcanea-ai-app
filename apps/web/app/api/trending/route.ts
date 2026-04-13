@@ -11,6 +11,8 @@ export async function GET(request: NextRequest) {
 
     const supabase = await createClient();
 
+    // trending_creations is a view that may not exist yet in all environments.
+    // Gracefully return empty array instead of 500.
     let query = supabase
       .from('trending_creations')
       .select('*')
@@ -21,7 +23,14 @@ export async function GET(request: NextRequest) {
     if (gate) query = query.eq('gate', gate);
 
     const { data, error } = await query;
-    if (error) throw error;
+
+    // If the table/view doesn't exist, return empty rather than 500
+    if (error) {
+      if (error.code === '42P01' || error.message?.includes('does not exist')) {
+        return successResponse({ creations: [], page, pageSize });
+      }
+      throw error;
+    }
 
     return successResponse({
       creations: data ?? [],
