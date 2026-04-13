@@ -56,6 +56,25 @@
 | A2A Agent Card endpoint: `/agents/:id/.well-known/agent-card.json` | 2h | Compiler | Claude |
 | Marketplace browse/filter/search page | 8h | Embeddings backfilled | Claude |
 
+### P3.5 — Publishing House Claw Distribution (NEW 2026-04-13)
+
+> Full strategy: `planning-with-files/CLAW_DISTRIBUTION_STRATEGY_2026-04-13.md`
+
+| Task | Est | Blocker | Owner | Channel |
+|------|-----|---------|-------|---------|
+| Publish `@arcanea/publishing-house` to npm | 1h | Builds clean ✓ | Frank | npm |
+| Publish `@arcanea/publishing-house-mcp` to npm | 1h | Builds clean ✓ | Frank | npm |
+| Submit taste-score + publish-content to anthropics/skills PR | 2h | npm published | Claude | anthropics/skills |
+| Register MCP server on Smithery | 1h | npm published | Frank | Smithery |
+| Submit 5 skills to openclaw/clawhub PR | 4h | SKILL.md files ready ✓ | Claude | ClawHub |
+| Push Docker image to Docker Hub | 2h | Dockerfile tested ✓ | Claude | Docker Hub |
+| Publish Railway template from deployed project | 1h | Railway deploy working | Frank | Railway |
+| Submit to Cline MCP Marketplace (issue + logo) | 1h | MCP registered | Claude | Cline |
+| PR to 4 awesome-lists (claude-skills, agent-skills, etc.) | 2h | Repo public | Claude | GitHub |
+| Create `arcanea/taste-score-action` GitHub Action | 4h | npm published | Claude | GitHub Actions |
+
+**8 Claws, 87 skills mapped, 12 channels identified, 45 skills transportable.**
+
 ### P5 — Future (next sprint after above)
 
 | Task | Est | Owner |
@@ -65,6 +84,12 @@
 | A2A push mode (webhook notifications) | 1d | Claude |
 | Skills as runtime primitive (bind `.claude/skills/` to Luminors) | 1d | Claude |
 | Multi-modal tools (image gen, code execution) | 2d | Claude |
+| Editor Claw (Aiyami) TypeScript implementation | 2d | Claude |
+| Fork qwibitai/nanoclaw as arcanea-publishing-node | 2d | Frank |
+| Deploy Paperclip as Publishing House OS | 3d | Claude |
+| ERC-8004 agent registration for 8 Claws | 1d | Claude |
+| x402 payment integration | 1d | Claude |
+| Story Protocol IP licensing layer | 1d | Claude |
 | Founding Circle landing page + waitlist | 1d | Claude |
 
 ## Cross-Repo Sync Needed

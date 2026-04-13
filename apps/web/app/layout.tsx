@@ -12,6 +12,7 @@ import { GlobalGlowTrackerLazy } from "@/components/ui/global-glow-tracker-lazy"
 import { Toaster } from "@/components/ui/sonner";
 import { LuminaBubble } from "@/components/lumina/lumina-bubble";
 
+
 function CosmicBackgroundFallback() {
   return (
     <div
@@ -112,11 +113,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       lang="en"
       style={{ colorScheme: "dark" }}
       className={cn(
-        spaceGrotesk.variable,
-        inter.variable,
-        jetbrainsMono.variable,
-        newsreader.variable,
-      )}
+              spaceGrotesk.variable,
+              inter.variable,
+              jetbrainsMono.variable,
+              newsreader.variable,
+              "font-sans",
+            )}
     >
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />

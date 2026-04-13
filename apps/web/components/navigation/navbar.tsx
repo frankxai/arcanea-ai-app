@@ -119,7 +119,17 @@ const navLinks: NavLink[] = [
   {
     href: "/pricing",
     label: "Open Core",
-    also: [],
+    also: ["/templates"],
+    mega: [
+      {
+        title: "Open Core",
+        items: [
+          { href: "/pricing", label: "Pricing", desc: "BYOK. Keep your keys." },
+          { href: "/templates", label: "Templates", desc: "Ship faster with our stack" },
+          { href: "/ecosystem", label: "Ecosystem", desc: "27 repos. Fork anything." },
+        ],
+      },
+    ],
   },
 ];
 

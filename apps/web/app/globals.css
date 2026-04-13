@@ -11,6 +11,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    @apply font-sans;
   }
 
   :root {
@@ -132,26 +133,26 @@
     --blur-2xl: blur(60px);
 
     /* === SHADCN/UI COMPATIBILITY === */
-    --background: var(--cosmic-deep);
-    --foreground: var(--text-primary);
-    --card: var(--cosmic-surface);
-    --card-foreground: var(--text-primary);
-    --popover: var(--cosmic-raised);
-    --popover-foreground: var(--text-primary);
-    --primary: 262 83% 66%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: var(--atlantean-teal);
-    --secondary-foreground: var(--cosmic-void);
-    --muted: var(--cosmic-border);
-    --muted-foreground: var(--text-muted);
-    --accent: 160 100% 75%;
-    --accent-foreground: var(--cosmic-void);
-    --destructive: var(--error);
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.145 0 0);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.145 0 0);
+    --primary: oklch(0.205 0 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(0.97 0 0);
+    --secondary-foreground: oklch(0.205 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.556 0 0);
+    --accent: oklch(0.97 0 0);
+    --accent-foreground: oklch(0.205 0 0);
+    --destructive: oklch(0.577 0.245 27.325);
     --destructive-foreground: var(--text-primary);
-    --border: var(--cosmic-border);
-    --input: var(--cosmic-border-bright);
-    --ring: 262 83% 66%;
-    --radius: 0.5rem;
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.922 0 0);
+    --ring: oklch(0.708 0 0);
+    --radius: 0.625rem;
 
     /* === ANIMATION TIMING (2026 industry standard) === */
     --duration-instant: 100ms;
@@ -166,11 +167,53 @@
     --ambient-slow: 20s;
     --ambient-medium: 12s;
     --ambient-fast: 6s;
+    --chart-1: oklch(0.87 0 0);
+    --chart-2: oklch(0.556 0 0);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.145 0 0);
+    --sidebar-primary: oklch(0.205 0 0);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.97 0 0);
+    --sidebar-accent-foreground: oklch(0.205 0 0);
+    --sidebar-border: oklch(0.922 0 0);
+    --sidebar-ring: oklch(0.708 0 0);
   }
 
   .dark {
-    --background: var(--cosmic-deep);
-    --foreground: var(--text-primary);
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.205 0 0);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.205 0 0);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.922 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+    --secondary: oklch(0.269 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+    --accent: oklch(0.269 0 0);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.556 0 0);
+    --chart-1: oklch(0.87 0 0);
+    --chart-2: oklch(0.556 0 0);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+    --sidebar: oklch(0.205 0 0);
+    --sidebar-foreground: oklch(0.985 0 0);
+    --sidebar-primary: oklch(0.488 0.243 264.376);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.269 0 0);
+    --sidebar-accent-foreground: oklch(0.985 0 0);
+    --sidebar-border: oklch(1 0 0 / 10%);
+    --sidebar-ring: oklch(0.556 0 0);
   }
 
   .light {
@@ -210,6 +253,16 @@
     --accent: var(--creation-prism-blue);
     --accent-foreground: var(--cosmic-void);
     --ring: var(--creation-gold-pure);
+  }
+  .theme {
+    --font-heading: var(--font-sans);
+    --font-sans: var(--font-sans);
+  }
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
 
@@ -695,7 +748,6 @@
   .link-underline:hover::after {
     width: 100%;
   }
-
 
   /* Cursor glow card — mouse-tracking highlight (used by GlowCard component) */
   .glow-card {
