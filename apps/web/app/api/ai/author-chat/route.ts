@@ -11,6 +11,7 @@ import { createAnthropic } from '@ai-sdk/anthropic';
 import { streamText } from 'ai';
 import { readFile, readdir, access } from 'fs/promises';
 import { join } from 'path';
+import yaml from 'js-yaml';
 import { getClientIdentifier, checkRateLimit } from '@/lib/rate-limit/rate-limiter';
 
 const BOOK_ROOT = join(process.cwd(), '..', '..', 'book');
@@ -21,11 +22,31 @@ async function exists(p: string) {
   try { await access(p); return true; } catch { return false; }
 }
 
+interface BookManifest {
+  curated_context?: {
+    characters?: boolean;
+    worldbuilding?: boolean;
+    outline?: boolean;
+    canon?: boolean;
+  };
+}
+
+async function loadBookManifest(bookSlug: string): Promise<BookManifest> {
+  const yamlPath = join(BOOK_ROOT, bookSlug, 'book.yaml');
+  if (!(await exists(yamlPath))) return {};
+  const raw = await readFile(yamlPath, 'utf-8');
+  return (yaml.load(raw) as BookManifest) ?? {};
+}
+
 async function loadBookContext(bookSlug: string, currentChapter?: string): Promise<string> {
   const bookDir = join(BOOK_ROOT, bookSlug);
   const parts: string[] = [];
 
-  // Load CANON (trusted, human-curated) — only if it exists
+  // Load book manifest for curated context flags
+  const manifest = await loadBookManifest(bookSlug);
+  const curated = manifest.curated_context ?? {};
+
+  // Load CANON (trusted, human-curated) — always loaded regardless of flags
   const canonPath = join(process.cwd(), '..', '..', '.arcanea', 'lore', 'CANON_LOCKED.md');
   if (await exists(canonPath)) {
     const content = await readFile(canonPath, 'utf-8');
@@ -45,21 +66,43 @@ async function loadBookContext(bookSlug: string, currentChapter?: string): Promi
     }
   }
 
-  // Load outline — draft, for reference only
-  const outlineDir = join(bookDir, 'outline');
-  if (await exists(outlineDir)) {
-    const files = await readdir(outlineDir);
-    for (const f of files.filter(f => f.endsWith('.md')).slice(0, 1)) {
-      const content = await readFile(join(outlineDir, f), 'utf-8');
-      parts.push(`## Story Blueprint (DRAFT — author's working notes, not yet reviewed)\n${content.slice(0, 3000)}`);
+  // Load outline — default behavior is to load as DRAFT unless explicitly disabled
+  if (curated.outline !== false) {
+    const outlineDir = join(bookDir, 'outline');
+    if (await exists(outlineDir)) {
+      const files = await readdir(outlineDir);
+      for (const f of files.filter(f => f.endsWith('.md')).slice(0, 1)) {
+        const content = await readFile(join(outlineDir, f), 'utf-8');
+        parts.push(`## Story Blueprint (DRAFT — author's working notes, not yet reviewed)\n${content.slice(0, 3000)}`);
+      }
     }
   }
 
-  // NOTE: Character sheets and world bible are NOT loaded as context.
-  // They are AI-generated drafts that have not been curated by the author.
-  // The author must review and approve them before they become trusted context.
-  // When the author marks them as curated (book.yaml curated_context: true),
-  // they will be loaded here.
+  // Load character sheets only if curated by the author
+  if (curated.characters) {
+    const charsDir = join(bookDir, 'characters');
+    if (await exists(charsDir)) {
+      const files = await readdir(charsDir);
+      const mdFiles = files.filter(f => f.endsWith('.md')).slice(0, 5);
+      for (const f of mdFiles) {
+        const content = await readFile(join(charsDir, f), 'utf-8');
+        parts.push(`## Character Sheet — CURATED (${f.replace(/\.md$/, '')})\n${content.slice(0, 2000)}`);
+      }
+    }
+  }
+
+  // Load worldbuilding only if curated by the author
+  if (curated.worldbuilding) {
+    const worldDir = join(bookDir, 'worldbuilding');
+    if (await exists(worldDir)) {
+      const files = await readdir(worldDir);
+      const mdFiles = files.filter(f => f.endsWith('.md')).slice(0, 3);
+      for (const f of mdFiles) {
+        const content = await readFile(join(worldDir, f), 'utf-8');
+        parts.push(`## World Bible — CURATED (${f.replace(/\.md$/, '')})\n${content.slice(0, 3000)}`);
+      }
+    }
+  }
 
   return parts.join('\n\n---\n\n');
 }
@@ -147,11 +190,13 @@ export async function POST(req: NextRequest) {
       bookSlug,
       currentChapter,
       model: requestedModel,
+      userApiKey,
     } = body as {
       messages: AuthorChatMessage[];
       bookSlug?: string;
       currentChapter?: string;
       model?: string;
+      userApiKey?: string;
     };
 
     if (!messages || messages.length === 0) {
@@ -162,10 +207,11 @@ export async function POST(req: NextRequest) {
     }
 
     // --- Resolve API key ---
-    const apiKey = process.env.ANTHROPIC_API_KEY;
-    if (!apiKey) {
+    // If user provides their own key (BYOK), use it; otherwise fall back to server key
+    const effectiveApiKey = userApiKey || process.env.ANTHROPIC_API_KEY;
+    if (!effectiveApiKey) {
       return new Response(
-        'No Anthropic API key configured. Set ANTHROPIC_API_KEY on Vercel.',
+        'No Anthropic API key configured. Provide your own key or set ANTHROPIC_API_KEY on Vercel.',
         { status: 503, headers: { 'Content-Type': 'text/plain' } },
       );
     }
@@ -174,10 +220,12 @@ export async function POST(req: NextRequest) {
     const bookContext = bookSlug ? await loadBookContext(bookSlug, currentChapter) : '';
 
     // --- Create model ---
-    const anthropic = createAnthropic({ apiKey });
-    const modelId = requestedModel === 'sonnet'
-      ? 'claude-sonnet-4-20250514'
-      : 'claude-haiku-4-5-20251001';
+    const anthropic = createAnthropic({ apiKey: effectiveApiKey });
+    const modelId = requestedModel === 'opus'
+      ? 'claude-opus-4-6'
+      : requestedModel === 'sonnet'
+        ? 'claude-sonnet-4-20250514'
+        : 'claude-haiku-4-5-20251001';
 
     // --- Normalize messages ---
     const normalizedMessages = messages.map((msg) => ({

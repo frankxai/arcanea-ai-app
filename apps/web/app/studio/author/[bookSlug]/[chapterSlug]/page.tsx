@@ -3,6 +3,8 @@ import { join } from 'path';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import yaml from 'js-yaml';
+import { remark } from 'remark';
+import remarkHtml from 'remark-html';
 
 import { ChapterNav } from '../../components/chapter-nav';
 import { AuthorAIPanel } from '../../components/author-ai-panel';
@@ -105,6 +107,10 @@ export default async function AuthorWorkspacePage({ params }: PageProps) {
   const chapterTitle =
     chapterContent.match(/^#\s+(.+)$/m)?.[1]?.trim() || chapterSlug;
 
+  // Convert markdown to HTML for the rich editor (Tiptap/Novel.js)
+  const htmlResult = await remark().use(remarkHtml).process(chapterContent);
+  const chapterHtml = String(htmlResult);
+
   return (
     <div className="h-screen flex flex-col bg-[#09090b] overflow-hidden">
       {/* Top bar */}
@@ -133,7 +139,7 @@ export default async function AuthorWorkspacePage({ params }: PageProps) {
             <AuthorEditor
               bookSlug={bookSlug}
               chapterSlug={chapterSlug}
-              initialContent={chapterContent}
+              initialHtml={chapterHtml}
             />
           </div>
         </main>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 interface Chapter {
@@ -19,6 +20,28 @@ interface ChapterNavProps {
 
 export function ChapterNav({ bookSlug, chapters, currentSlug, totalWords }: ChapterNavProps) {
   const [collapsed, setCollapsed] = useState(false);
+  const [newTitle, setNewTitle] = useState('');
+  const [creatingChapter, setCreatingChapter] = useState(false);
+  const router = useRouter();
+
+  const handleCreateChapter = async () => {
+    if (!newTitle.trim()) return;
+    setCreatingChapter(true);
+    try {
+      const res = await fetch(`/api/author/${bookSlug}/chapters`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: newTitle.trim() }),
+      });
+      const data = await res.json();
+      if (data.slug) {
+        router.push(`/studio/author/${bookSlug}/${data.slug}`);
+        setNewTitle('');
+      }
+    } finally {
+      setCreatingChapter(false);
+    }
+  };
 
   if (collapsed) {
     return (
@@ -82,6 +105,24 @@ export function ChapterNav({ bookSlug, chapters, currentSlug, totalWords }: Chap
           );
         })}
       </nav>
+
+      {/* New Chapter */}
+      <div className="p-3 border-t border-white/[0.06]">
+        <input
+          value={newTitle}
+          onChange={(e) => setNewTitle(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && handleCreateChapter()}
+          placeholder="New chapter title..."
+          className="w-full px-2 py-1.5 rounded-md bg-white/[0.03] border border-white/[0.06] text-[10px] text-white/60 placeholder:text-white/15 focus:outline-none focus:border-[#00bcd4]/30 mb-2"
+        />
+        <button
+          onClick={handleCreateChapter}
+          disabled={!newTitle.trim() || creatingChapter}
+          className="w-full px-2 py-1.5 rounded-md bg-[#00bcd4]/10 border border-[#00bcd4]/20 text-[10px] text-[#00bcd4] hover:bg-[#00bcd4]/20 disabled:opacity-30 transition-all"
+        >
+          {creatingChapter ? 'Creating...' : '+ New Chapter'}
+        </button>
+      </div>
     </aside>
   );
 }

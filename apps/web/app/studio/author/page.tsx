@@ -2,6 +2,7 @@ import { readdir, readFile, access } from 'fs/promises';
 import { join } from 'path';
 import Link from 'next/link';
 import { ArrowRight } from '@/lib/phosphor-icons';
+import { NewBookDialog } from './components/new-book-dialog';
 
 const BOOK_ROOT = join(process.cwd(), '..', '..', 'book');
 
@@ -280,11 +281,14 @@ export default async function AuthorStudioPage() {
             );
           })}
 
+          {/* New Book creation card */}
+          <NewBookDialog />
+
           {books.length === 0 && (
             <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-md p-10 text-center">
               <p className="font-sans text-white/40">
                 No books found in <code className="font-mono text-white/25">book/</code>.
-                Create a directory with a <code className="font-mono text-white/25">chapters/</code> folder to get started.
+                Use the button above to create your first book.
               </p>
             </div>
           )}

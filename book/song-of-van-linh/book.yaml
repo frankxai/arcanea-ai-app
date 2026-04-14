@@ -17,6 +17,13 @@ ai_transparency:
   ai_contribution: 75%
   method: "Human concept, direction, cultural vision, and editorial guidance. AI-drafted prose from deep architectural prompts with Vietnamese mythology research. Human curation and editing."
 
+# Context trust — only curated directories are loaded as AI context
+curated_context:
+  characters: false    # Not yet reviewed by author
+  worldbuilding: false # Not yet reviewed by author
+  outline: true        # Author approved the blueprint
+  canon: true          # CANON_LOCKED is always trusted
+
 license: CC-BY-NC-SA-4.0
 content_rating: adult
 tags: [vietnamese-mythology, contemporary-fantasy, romantasy, ecological, ghibli, arcanea-universe]

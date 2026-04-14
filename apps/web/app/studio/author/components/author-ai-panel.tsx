@@ -1,7 +1,9 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useChat } from '@ai-sdk/react';
+
+type ModelTier = 'haiku' | 'sonnet' | 'opus';
 
 interface AuthorAIPanelProps {
   bookSlug: string;
@@ -17,13 +19,37 @@ const SUGGESTED_PROMPTS = [
   'Does this scene advance both plot and character?',
 ];
 
+const STORAGE_KEY = 'arcanea-author-api-key';
+
 export function AuthorAIPanel({ bookSlug, currentChapter }: AuthorAIPanelProps) {
   const [collapsed, setCollapsed] = useState(false);
+  const [apiKey, setApiKey] = useState('');
+  const [model, setModel] = useState<ModelTier>('haiku');
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Load API key from localStorage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      setApiKey(saved);
+      setModel('sonnet'); // Auto-upgrade when key is present
+    }
+  }, []);
+
+  const saveKey = useCallback((key: string) => {
+    setApiKey(key);
+    if (key) {
+      localStorage.setItem(STORAGE_KEY, key);
+      setModel('sonnet');
+    } else {
+      localStorage.removeItem(STORAGE_KEY);
+      setModel('haiku');
+    }
+  }, []);
 
   const { messages, input, setInput, handleSubmit, isLoading } = useChat({
     api: '/api/ai/author-chat',
-    body: { bookSlug, currentChapter },
+    body: { bookSlug, currentChapter, model, userApiKey: apiKey || undefined },
   });
 
   useEffect(() => {
@@ -61,6 +87,43 @@ export function AuthorAIPanel({ bookSlug, currentChapter }: AuthorAIPanelProps) 
             &rarr;
           </button>
         </div>
+
+        {/* BYOK Settings */}
+        <details className="mt-2">
+          <summary className="text-[10px] text-white/20 cursor-pointer hover:text-white/40">
+            Model: {model === 'haiku' ? 'Haiku (free)' : model === 'sonnet' ? 'Sonnet (your key)' : 'Opus (your key)'}
+          </summary>
+          <div className="mt-2 space-y-2">
+            <input
+              type="password"
+              value={apiKey}
+              onChange={(e) => saveKey(e.target.value)}
+              placeholder="sk-ant-... (your Anthropic API key)"
+              className="w-full px-2 py-1.5 rounded-md bg-white/[0.03] border border-white/[0.06] text-[10px] text-white/60 placeholder:text-white/15 focus:outline-none focus:border-[#00bcd4]/30"
+            />
+            <p className="text-[9px] text-white/15">
+              Your key stays in your browser. Only sent to our API route to proxy the request.
+              Get one at console.anthropic.com
+            </p>
+            {apiKey && (
+              <div className="flex gap-1">
+                {(['haiku', 'sonnet', 'opus'] as const).map((m) => (
+                  <button
+                    key={m}
+                    onClick={() => setModel(m)}
+                    className={`px-2 py-1 rounded text-[10px] ${
+                      model === m
+                        ? 'bg-[#00bcd4]/20 text-[#00bcd4] border border-[#00bcd4]/30'
+                        : 'bg-white/[0.03] text-white/30 border border-white/[0.06]'
+                    }`}
+                  >
+                    {m.charAt(0).toUpperCase() + m.slice(1)}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </details>
       </div>
 
       {/* Messages */}
